@@ -1,0 +1,205 @@
+{
+  "schema": "pcp-release-checks/2",
+  "date": "2026-11-15",
+  "edition": "humanizer, literature and exact local correspondence revision",
+  "source_pin": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "source_files": {
+    "long/reasoning-record.md": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+    "long/reasoning-record.json": "8bd050e2e1cd5f8676884d4404e5ed01845e7c171b07cec5659c2b75d1ccb611",
+    "long/reasoning-record.pdf": "87d000671158d1161c7e7f2ca4dbbad77dfce9775c95810e8637ce0553481e2b",
+    "short/paper.md": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+    "short/correspondence.json": "072bef4210fb2c735cdc9a0c594ffec356eb46007a17d1d749542d6dfbc89aa2",
+    "short/paper.pdf": "3dcc5fa9cadbbd3f3343ba8f2bd83cf20cad22d8282faf0610aa3f4d06789cf5",
+    "expository/main.md": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+    "expository/correspondence.json": "e4c53766751c5935ae6aa028315aa5489ccc07a311457a41e1084134bc943c55",
+    "expository/main.pdf": "8827a957fa76826196448739ce1f66997b3910ced55377afa485829fac6dd190"
+  },
+  "graph_sha256": "f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea",
+  "paper_review": "humanizer/README.md",
+  "package_tests": {
+    "run": 710,
+    "result": "OK",
+    "skipped": 2,
+    "scope": "Current unchanged package code; opt-in pinned Lean integration fixtures skipped",
+    "receipt": "humanizer/package-tests.json"
+  },
+  "bundle": {
+    "bundle_id": "pcp-a0ce13ed-curated",
+    "edition": "audited local correspondence",
+    "assembled": "passed",
+    "check_bundle": "passed",
+    "export": "passed",
+    "manifest_sha256": "f23d3b26881458f5326e218dd53a08ff23860834f512e34d003926f3a37ba8f8",
+    "manifest_file_checks": {
+      "graph.json": true,
+      "papers/long.md": true,
+      "papers/long.json": true,
+      "papers/short.md": true,
+      "papers/short.json": true,
+      "papers/expository.md": true,
+      "papers/expository.json": true
+    },
+    "manifest_all_file_hashes_match": true,
+    "zip_sha256": "8ac76496d9d9853f2984a24b1f9cc0871c3f67c9b68fb17b2b5d5ee9259dba7b",
+    "zip_integrity_error": null,
+    "zip_members": [
+      "graph.json",
+      "manifest.json",
+      "papers/expository.json",
+      "papers/expository.md",
+      "papers/long.json",
+      "papers/long.md",
+      "papers/short.json",
+      "papers/short.md"
+    ],
+    "paper_states": [
+      "draft",
+      "draft",
+      "draft"
+    ],
+    "extraction_status": "not_run",
+    "semantic_certification": false,
+    "scope": "Byte and structural checks; bounded correspondence audits, not Lean build or complete independent proof certification.",
+    "prior_receipt": "work/pcp-humanizer/bundle-validation-prior-81ce.json",
+    "consumer_journey": {
+      "endpoint-direct": 9,
+      "endpoint-prerequisites": 9,
+      "line-direct": 1,
+      "line-prerequisites": 1,
+      "source-selected-records": 10,
+      "zip-theorem": 1
+    },
+    "consumer_journey_correction": "Initial source query used a non-existent guessed PolynomialLine.lean record and failed; corrected to the graph-declared PolynomialLineCharacterization.lean source and passed."
+  },
+  "pdfs": {
+    "pages": 72,
+    "all_page_visual_review": "accepted",
+    "resolved_companion_annotations": 20,
+    "canonical_check": "humanizer/canonical-pdf-check.json",
+    "relocated_check": "humanizer/delivery-pdf-check.json"
+  },
+  "reader": {
+    "pr": "https://github.com/wcook04/proof-reader/pull/12",
+    "reviewed_head": "db6737b25fdcb02eef0af5010b2f289cc3931c9e",
+    "merge_revision": "9b318731666247e513094e9a6f040e4f3d27207f",
+    "deployment": "https://github.com/wcook04/proof-reader/actions/runs/43746731469",
+    "status": "success",
+    "selected_passages": {
+      "long": 46,
+      "short": 12,
+      "expository": 16
+    },
+    "python_tests": 112,
+    "web_source_tests": 11,
+    "browser_journey_checks": 380,
+    "review": "humanizer/reader-refresh-review.md",
+    "live_files": [
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-full-argument/edition.json",
+        "status": 200,
+        "sha256": "2a9b6eefd12229265d8fc4aa80571aea6b4d9e65696e05469ce6e226266fa0eb",
+        "reviewed_sha256": "2a9b6eefd12229265d8fc4aa80571aea6b4d9e65696e05469ce6e226266fa0eb",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-full-argument/reading.html",
+        "status": 200,
+        "sha256": "f0a0026e792fc83e395240e1caece4e2ff361fe7ea5651efe5fed5dadeb03268",
+        "reviewed_sha256": "f0a0026e792fc83e395240e1caece4e2ff361fe7ea5651efe5fed5dadeb03268",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-full-argument/source.md",
+        "status": 200,
+        "sha256": "764e86507c87c51c489a5da3987eab836cd86ff8f869f26024638e13bca1ba30",
+        "reviewed_sha256": "764e86507c87c51c489a5da3987eab836cd86ff8f869f26024638e13bca1ba30",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-full-argument/source.json",
+        "status": 200,
+        "sha256": "36fdeef2013a31f02347c6ecc5ded5bcbc7123012da0afbe500784266e9d5dc7",
+        "reviewed_sha256": "36fdeef2013a31f02347c6ecc5ded5bcbc7123012da0afbe500784266e9d5dc7",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-specialist/edition.json",
+        "status": 200,
+        "sha256": "39959b4cd7780fd2cdc39034e95121c70be88e68a1dd8c824a30132da76fd64e",
+        "reviewed_sha256": "39959b4cd7780fd2cdc39034e95121c70be88e68a1dd8c824a30132da76fd64e",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-specialist/reading.html",
+        "status": 200,
+        "sha256": "35828969323dd12e7582ad011c293548af55e7a80d664199549a33bed5bbf480",
+        "reviewed_sha256": "35828969323dd12e7582ad011c293548af55e7a80d664199549a33bed5bbf480",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-specialist/source.md",
+        "status": 200,
+        "sha256": "4a3017513a157537b9d39224b95c230a8a19edfdf3f945b7a561738ff1753a35",
+        "reviewed_sha256": "4a3017513a157537b9d39224b95c230a8a19edfdf3f945b7a561738ff1753a35",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-specialist/source.json",
+        "status": 200,
+        "sha256": "dd5b40998ecca2b7bd8d1d24c9bf2d9fff58fa9149c349a4990ffbdfb084656f",
+        "reviewed_sha256": "dd5b40998ecca2b7bd8d1d24c9bf2d9fff58fa9149c349a4990ffbdfb084656f",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-exposition/edition.json",
+        "status": 200,
+        "sha256": "ddf5d9084d82352cadf5c56bd9c53d47847883527c8b027bc0c095cc63de4b97",
+        "reviewed_sha256": "ddf5d9084d82352cadf5c56bd9c53d47847883527c8b027bc0c095cc63de4b97",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-exposition/reading.html",
+        "status": 200,
+        "sha256": "807579ce72037e6feea85ea99af0fe8cee75de8e079e03eae428145d85450bfb",
+        "reviewed_sha256": "807579ce72037e6feea85ea99af0fe8cee75de8e079e03eae428145d85450bfb",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-exposition/source.md",
+        "status": 200,
+        "sha256": "43b126bc897f294fb4d8e6619f3ff919305975e399fb03d3833a361b01fe22ba",
+        "reviewed_sha256": "43b126bc897f294fb4d8e6619f3ff919305975e399fb03d3833a361b01fe22ba",
+        "matches_reviewed_build": true
+      },
+      {
+        "url": "https://wcook04.github.io/proof-reader/papers/pcp-exposition/source.json",
+        "status": 200,
+        "sha256": "8b8e8011d3f3fe18e12c5acc898856dabb5f31b8eb94af06b35f7591e7983736",
+        "reviewed_sha256": "8b8e8011d3f3fe18e12c5acc898856dabb5f31b8eb94af06b35f7591e7983736",
+        "matches_reviewed_build": true
+      }
+    ]
+  },
+  "delivery_packet": {
+    "sha256": "ac80213428c9e3abc610e3d3d1a7cc059d63701505523a89fa15566babe2cd9f",
+    "file_count": 14,
+    "zip_integrity": "passed",
+    "payload_hashes": "passed"
+  },
+  "first_edition_receipt": {
+    "file": "release-checks-initial.json",
+    "sha256": "ba625c3bb541d8d084d2aa9c9846a9cb8fe9453386f447f31bc22ca172580e8e",
+    "scope": "Initial fresh-clone installation and validation; does not certify later paper or mapping bytes"
+  },
+  "acquisition": "acquisition-status.json",
+  "formal_boundary": {
+    "new_full_library_build": false,
+    "extraction_status": "not_run",
+    "semantic_certification": false,
+    "paper_states": [
+      "draft",
+      "draft",
+      "draft"
+    ]
+  }
+}

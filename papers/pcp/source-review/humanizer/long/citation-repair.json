@@ -1,0 +1,132 @@
+{
+  "trigger": "Rendered long PDF showed orphaned lowercase link fragments after removal of Lean: prefixes.",
+  "before_sha256": "1d9cf0f3d38363daaad2f363804372c3b8534de23aeb7a0638bc5485debd3736",
+  "after_sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+  "repair": "Make the thirty affected citation labels grammatical See references; join paired references. No proof text, mathematical expressions, citation targets, passage IDs or headings changed.",
+  "repairs": [
+    {
+      "old": "[verifier definitions][intro-verifier]",
+      "new": "See the [verifier definitions][intro-verifier]"
+    },
+    {
+      "old": "[polynomial distance][lean-distance]",
+      "new": "See the [polynomial-distance bound][lean-distance]"
+    },
+    {
+      "old": "[grid interpolation][lean-interpolation]",
+      "new": "See the [grid interpolation proof][lean-interpolation]"
+    },
+    {
+      "old": "[grid decomposition][lean-grid]",
+      "new": "See the [grid decomposition][lean-grid]"
+    },
+    {
+      "old": "[certificate and substitution bounds][lean-certificate]",
+      "new": "See the [certificate and substitution bounds][lean-certificate]"
+    },
+    {
+      "old": "[finite-field line characterization][lean-lines]",
+      "new": "See the [finite-field line characterization][lean-lines]"
+    },
+    {
+      "old": "[corrected generator test][lean-generator]",
+      "new": "See the [corrected generator test][lean-generator]"
+    },
+    {
+      "old": "[weighted constraint soundness][lean-weighted]",
+      "new": "See the [weighted-constraint soundness proof][lean-weighted]"
+    },
+    {
+      "old": "[proximity theorem][lean-generator]",
+      "new": "See the [proximity theorem][lean-generator]"
+    },
+    {
+      "old": "[local correction][lean-correction]",
+      "new": "See the [local-correction bound][lean-correction]"
+    },
+    {
+      "old": "[line-table correction][lean-line-correction]",
+      "new": "See the [line-table correction bound][lean-line-correction]"
+    },
+    {
+      "old": "[bivariate agreement][lean-bivariate]",
+      "new": "See the [bivariate agreement theorem][lean-bivariate]"
+    },
+    {
+      "old": "[column selection][lean-column-selection]",
+      "new": "See the [column-selection argument][lean-column-selection]"
+    },
+    {
+      "old": "[bounded polynomial kernel][lean-matrix]",
+      "new": "See the [bounded polynomial-kernel construction][lean-matrix]"
+    },
+    {
+      "old": "[assembled error-locator certificate][lean-locator]",
+      "new": "See the [assembled error-locator certificate][lean-locator]"
+    },
+    {
+      "old": "[clean rectangle][lean-rectangle]",
+      "new": "See the [clean-rectangle construction][lean-rectangle]"
+    },
+    {
+      "old": "[agreement from the rectangle][lean-coarse]",
+      "new": "See the [agreement argument from the rectangle][lean-coarse]"
+    },
+    {
+      "old": "[sharpening coarse agreement][lean-boost]",
+      "new": "See the [sharpening of coarse agreement][lean-boost]"
+    },
+    {
+      "old": "[test definition][lean-point-test]",
+      "new": "See the [test definition][lean-point-test]"
+    },
+    {
+      "old": "[complete soundness theorem][lean-point-soundness]",
+      "new": "See the [complete soundness theorem][lean-point-soundness]"
+    },
+    {
+      "old": "[all-parameter correction][lean-point-correction]",
+      "new": "See the [all-parameter correction definition][lean-point-correction]"
+    },
+    {
+      "old": "[fixed-parameter estimate][lean-parameter]",
+      "new": "See the [fixed-parameter estimate][lean-parameter]"
+    },
+    {
+      "old": "[crossing consistency][lean-crossing]",
+      "new": "See the [crossing-consistency lemma][lean-crossing]"
+    },
+    {
+      "old": "[candidate-row variant][lean-candidate]",
+      "new": "See the [candidate-row variant][lean-candidate]"
+    },
+    {
+      "old": "[mixed-plane sampling][lean-mixed]",
+      "new": "See the [mixed-plane sampling estimates][lean-mixed]"
+    },
+    {
+      "old": "[endpoint consistency][lean-endpoint]",
+      "new": "See the [endpoint-consistency bound][lean-endpoint]"
+    },
+    {
+      "old": "[ruled-surface sampling][lean-ruled-sampling]",
+      "new": "See the [ruled-surface sampling estimates][lean-ruled-sampling]"
+    },
+    {
+      "old": "[ruled-surface rigidity][lean-ruled]",
+      "new": "See the [ruled-surface rigidity argument][lean-ruled]"
+    },
+    {
+      "old": "[explicit constants][lean-point-constants]",
+      "new": "See the [explicit constants][lean-point-constants]"
+    },
+    {
+      "old": "[degree-zero soundness][lean-constant]",
+      "new": "See the [degree-zero soundness proof][lean-constant]"
+    }
+  ],
+  "math_unchanged": true,
+  "urls_unchanged": true,
+  "markers_unchanged": true,
+  "headings_unchanged": true
+}

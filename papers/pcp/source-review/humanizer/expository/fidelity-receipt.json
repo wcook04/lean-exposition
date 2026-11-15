@@ -1,0 +1,54 @@
+{
+  "baseline_sha256": "2e2333ca4727a5f8d510f5de8f184a4139f33122ae2d12ca3d29f2b9bec4d913",
+  "final_sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+  "checks": {
+    "mathematical_spans": {
+      "count_before": 521,
+      "count_after": 521,
+      "byte_identical_sequence": true
+    },
+    "inline_code": {
+      "count_before": 1,
+      "count_after": 1,
+      "byte_identical_sequence": true
+    },
+    "table_rows": {
+      "count_before": 9,
+      "count_after": 9,
+      "byte_identical_sequence": true
+    },
+    "headings": {
+      "count_before": 21,
+      "count_after": 21,
+      "byte_identical_sequence": true
+    },
+    "passage_markers": {
+      "count_before": 36,
+      "count_after": 36,
+      "byte_identical_sequence": true
+    },
+    "existing_urls": {
+      "preserved": true,
+      "added": [
+        "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf"
+      ]
+    },
+    "existing_link_definitions": {
+      "count_before": 11,
+      "count_after": 12,
+      "preserved": true
+    },
+    "paragraph_log": {
+      "blocks": 158,
+      "edited": 38,
+      "kept": 120,
+      "final_text_matches": true
+    },
+    "marks_normalizer": {
+      "run": true,
+      "changed_prose_only": true,
+      "attributed_prose_excluded": true,
+      "no_change": true
+    }
+  }
+}

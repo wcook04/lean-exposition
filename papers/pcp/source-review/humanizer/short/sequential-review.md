@@ -1,0 +1,19 @@
+# Sequential review of the revised specialist paper
+
+Reviewed the complete source in order at SHA256 `c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377`, after the prose pass and source-attribution corrections. This is a manuscript-source read, not a rendered-PDF read. Rendering and final display inspection belong to the parent integration task.
+
+| Region | Reading check and disposition |
+| --- | --- |
+| Title, subtitle, abstract | The theorem's five resource/correctness properties precede the mechanism. Credit and quantitative scope remain. The closing repetition was removed. |
+| §1 | The common quantifier order, fixed proof before random seed, exact seed length and reverse inclusion remain verbatim. Historical attribution now distinguishes ALMSS from its Arora–Safra precursor. The field-symbol versus bit-query problem is explicit. |
+| §2 | Both vertex and edge constraints remain, including the K4/F4 example showing why the edge condition alone fails. Monic division, zero remainder, certificate packing, degree bound and public adjacency are all still explained. |
+| §3 | The evaluation identity and honest/decoded degree distinction remain. The received row is explicitly close to its chosen polynomial. Homogeneous labels remain maps on the field, so the nonlinear composition equation is type-consistent. Self-correction uses fresh full labels and does not assume uniform substituted labels. |
+| §4, weighted test | Full generator, nonzero weights, field hypothesis, rejection threshold and distance are unchanged. Exact-line characterization, robust correction and the historical failed test have separate attributions and roles. The counterexample retains dimension, field family, distance fraction and its limited claim. |
+| §4, binary and outer tests | The sharp linearity citation now includes the source's unrestricted stated form. Unit preservation and the degree-one case remain. High-rejection rows use the trivial distance bound; the test's ten-query formal variant still differs explicitly from v2's eight-query algorithm. Full and homogeneous distance bounds refer to one polynomial. |
+| §5 | Targets remain arbitrary and potentially nonuniform. Rejection is part of failure, auxiliary advice remains arbitrary, and the probability averages over homogeneous labels. The root-bound terms and both ZERO inequalities remain exact. Derived reads still use actual fresh randomness and incur their error through rejection. |
+| §6 | The four decoded polynomials are chosen once by (13), then fixed. Shared physical tables and independent branch seeds remain explicit. The difference and vanishing arguments use those same polynomials, with the unchanged degree 5D, field inequalities and constant gap. |
+| §7 | Parameter minimality still controls logarithmic randomness and polynomial proof size. Whole-field sampling, its rejection factor, 187 reads, concrete resource bounds, huge numerical constants, same-proof amplification and polynomial runtime remain. The NP reduction and finite-prefix converse remain intact. |
+| Formal correspondence and credits | All six Lean theorem links and the source/evidence link remain. Concrete versus reference NP, homogeneous labels, whole-field sampling, independent seeds and ten-query test remain. The ordinary counterexample is not represented as Lean-checked; explanatory authorship claims no new PCP theorem. |
+| References | Existing entries/links remain. Four added works are used in the body. Rubinfeld–Sudan's retained preprint numbering is distinguished from the published numbering used by v2. |
+
+No mathematical weakness was smoothed over. The only attribution qualifications found during this pass were repaired and independently reviewed. Some paragraphs still have several short sentences, nominalizations or lists because they state different hypotheses, objects or steps. Those were kept after checking their purpose rather than altered to match a measured average.

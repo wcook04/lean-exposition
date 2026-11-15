@@ -1,0 +1,56 @@
+{
+  "manuscript_sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+  "scope": "Public-safe audit artifacts for the final long revision; third-party proof extracts and metric specimen text excluded.",
+  "artifacts": [
+    {
+      "file": "paragraph-review.json",
+      "sha256": "b1893ed4458010b7a8ec9809802dd8246b18144da6fa62f544cdcb64e9c6cb09",
+      "bytes": 688588
+    },
+    {
+      "file": "review-notes.md",
+      "sha256": "f0d8b229fbd4309ff44c8764b544f1f915d4ad8e6c8fa7ba1b642cf3f162ac63",
+      "bytes": 15330
+    },
+    {
+      "file": "preservation-check.json",
+      "sha256": "eb6edddf28bb6ddd703a4ebf81274e1c0da023265eff45aab5ba7cf1011ea1bd",
+      "bytes": 1126
+    },
+    {
+      "file": "preservation-check-first-pass.json",
+      "sha256": "87b9c43dbf86228bc4c66afa3248486568bb74cb9708ce4c85ca1ae633a73ec0",
+      "bytes": 986
+    },
+    {
+      "file": "citation-repair.json",
+      "sha256": "e08299cb0184b3454ce8e17508cc74b7e791202bc8763b1522c5718956c24964",
+      "bytes": 4816
+    },
+    {
+      "file": "corpus-manifest.json",
+      "sha256": "07d868b1765bb84da5ffd90313f1a2630ae4a7837f6d1118d92338e72e543323",
+      "bytes": 3701
+    },
+    {
+      "file": "register-metrics-public.json",
+      "sha256": "2b4366d65f4ea237b4f03803c9f9ccd28a2f2c148e38e348fa3b3fccafb406c3",
+      "bytes": 54722
+    },
+    {
+      "file": "final-sequential-read.md",
+      "sha256": "330318aa02cbad319f0a5eda4d6906b065113cacc1618cdbc7c42c2e8666b1a9",
+      "bytes": 3484
+    },
+    {
+      "file": "literature-moves.md",
+      "sha256": "537c9148b476a818d4ff92976bb102f2344d1110cf2397d40646493ca2e18001",
+      "bytes": 6593
+    },
+    {
+      "file": "final-preservation-receipt.md",
+      "sha256": "0641da3e8129eb3a390e935a6b9e6c12346366ea51aca83b6dd2547ddc612dfb",
+      "bytes": 5319
+    }
+  ]
+}

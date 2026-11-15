@@ -6,7 +6,7 @@ Lean Exposition lets you read a mathematical paper beside the proof written in L
 
 **[Open Theorem 1 with its Lean proof](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result).** No installation is needed. Statements with a dark tick have a link to the code. You can also [explore the proof steps](https://wcook04.github.io/lean-exposition-site/map/) or [read the recorded check results](https://wcook04.github.io/lean-exposition-site/checks/).
 
-This repository contains the website, three example papers, a Python tool and four writing guides. The guides describe how to explain a Lean proof at different levels of detail. A person or an AI assistant writes the papers; the tool checks the supplied files and packages them for reading.
+This repository contains the website, worked mathematical papers, a Python tool and four writing guides. The guides describe how to explain a Lean proof at different levels of detail. A person or an AI assistant writes the papers; the tool checks the supplied files and packages them for reading.
 
 **Run the tool** (Python 3.11 or newer; Lean is not needed):
 
@@ -113,8 +113,8 @@ successfully, and reviewing the mathematics answer different questions.
 
 | Location | What you will find |
 | --- | --- |
-| [papers/](papers/) · [reading guide](papers/README.md) | The three papers and a separate [paper on the design](papers/architecture/README.md) |
-| [examples/](examples/) · [example guide](examples/README.md) | The small Lean proof, the pinned OpenAI sources, a Prove2Me intake and a standalone bundle reader |
+| [papers/](papers/) · [reading guide](papers/README.md) | The QAOA / SK papers, [three accounts of the algebraic PCP proof](papers/pcp/README.md), and a separate [paper on the design](papers/architecture/README.md) |
+| [examples/](examples/) · [example guide](examples/README.md) | The small Lean proof, pinned OpenAI and [PCP sources](examples/pcp/README.md), a Prove2Me intake and a standalone bundle reader |
 | [skills/](skills/) · [writing methods](skills/README.md) | The four writing methods |
 | [src/lean_exposition/](src/lean_exposition/) | The Python command-line tool, read-only [web backend](src/lean_exposition/web.py), schemas and templates |
 | [site/](site/) · [site guide](site/README.md) | The reading website's source |

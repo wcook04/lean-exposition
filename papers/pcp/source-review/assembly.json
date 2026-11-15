@@ -1,0 +1,25 @@
+{
+  "operation": "Revise an already assembled long manuscript for prose clarity, literature attribution and grammatical source-link labels",
+  "status": "source and render review complete; corrected canonical correspondence and selected-reader review complete within stated scope",
+  "source_pin": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "initial_assembly": {
+    "file": "assembly-initial.json",
+    "sha256": "d7c01065a4e0dd71ed854124b60f2567cd89e4898296b1d52d19f549516a8056",
+    "initial_long_sha256": "cc9fc82c4525c6977040666e2f8fe6a0dfc3ca4514af49b16b81d007011f42bd"
+  },
+  "intermediate_revision": {
+    "sha256": "1d9cf0f3d38363daaad2f363804372c3b8534de23aeb7a0638bc5485debd3736",
+    "status": "superseded by grammatical repair to standalone source-link lead-ins; not current final source"
+  },
+  "output": "../long/reasoning-record.md",
+  "sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+  "passages": 72,
+  "whitespace_words": 17623,
+  "preservation_review": "humanizer/mathematical-preservation-review.md",
+  "scope": "Current identity records revision of the existing paper, not reproduction by original chapter concatenation; no new Lean build or kernel extraction.",
+  "final_readback": "humanizer/long/final-sequential-read.md",
+  "revision_receipt": "humanizer/long/final-preservation-receipt.md",
+  "pdf_review": "humanizer/long-pdf-review.md",
+  "correspondence_review": "humanizer/mapping-review-corrected.md",
+  "reader_review": "humanizer/reader-refresh-review.md"
+}

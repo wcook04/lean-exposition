@@ -1,0 +1,62 @@
+{
+  "purpose": "Public archive projections replacing host-specific absolute paths with labelled source locators. These labels identify repository content or privately retained evidence; they are not download URLs.",
+  "source_excerpt_changes": "None; no source excerpts added.",
+  "numeric_features_and_manuscript_specimens": "Identical to the raw originals.",
+  "manuscript_edited": false,
+  "files": [
+    {
+      "original_file": "profile.json",
+      "original_sha256": "5cd80e8e44ab48cca82f53a340619bb3c82dead4eb8304fa814ac83daee724e0",
+      "projection_file": "profile-public.json",
+      "projection_sha256": "843ca3ec6cd60239d6752bc2e9622f2194725ca20802740a077f7e8f3bfe9e50",
+      "changed_fields": [
+        {
+          "json_pointer": "/documents/0/path",
+          "replacement": "private-annex:pcp-sources/core/source-v2 (expanded TeX input order; see literature-register.md)"
+        },
+        {
+          "json_pointer": "/documents/1/path",
+          "replacement": "private-annex:pcp-sources/foundations/arora-safra-jacm.txt"
+        },
+        {
+          "json_pointer": "/documents/2/path",
+          "replacement": "private-annex:pcp-sources/foundations/almss-journal.txt"
+        }
+      ],
+      "all_other_values_identical": true,
+      "original_bytes_unchanged": true
+    },
+    {
+      "original_file": "before-profile.json",
+      "original_sha256": "704801f0d57a041761c6ce7b3ab3791df1ff016b96a2bd9556e53bba5788d113",
+      "projection_file": "before-profile-public.json",
+      "projection_sha256": "4a30a4da655dc28f747185424ed541fa12466e977fd82d4bfd8961c351440082",
+      "changed_fields": [
+        {
+          "json_pointer": "/manuscript",
+          "replacement": "private-audit:pcp-humanizer/before/short/paper.md (baseline SHA256 72d165920fbc02aa7b58bc626c3e6899cd2f099089a80cb10efa792279127577)"
+        }
+      ],
+      "all_other_values_identical": true,
+      "original_bytes_unchanged": true
+    },
+    {
+      "original_file": "after-profile.json",
+      "original_sha256": "44331b414131c1d16376f1bec816fa39ffa1a0af5b53ae034f2068b85e1eff57",
+      "projection_file": "after-profile-public.json",
+      "projection_sha256": "6895136473416c018f0a3618d306d3e80e64b8a52af7972a8e6b45788ae791aa",
+      "changed_fields": [
+        {
+          "json_pointer": "/manuscript",
+          "replacement": "repository:papers/pcp/short/paper.md"
+        },
+        {
+          "json_pointer": "/baseline",
+          "replacement": "private-audit:pcp-humanizer/before/short/paper.md (baseline SHA256 72d165920fbc02aa7b58bc626c3e6899cd2f099089a80cb10efa792279127577)"
+        }
+      ],
+      "all_other_values_identical": true,
+      "original_bytes_unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,2080 @@
+{
+  "schema": "pcp-chapter-evidence/1",
+  "chapter": "algebra plus assigned introduction",
+  "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "authoring_status": "complete draft; source inspection and selective AI review, pending parent integration",
+  "lean_validation": "No build, kernel replay, or elaborated-type extraction performed by this chapter author. Public source links and byte hashes identify source only.",
+  "claim_boundaries": [
+    "Generator test uses full multiplicative generator, nonzero Lagrange weights, q>2c; old order-(c+1) unit-weight test is distinct.",
+    "Point-versus-line uses whole-field parameter sampling, explicit q>=1000000d^3 and rejection<=1/4000000, conclusion distance<=2 rejection.",
+    "Bivariate theorem has individual degree<=d, d>0, q>=1000d^3; does not assert total degree<=d.",
+    "All local-correction probabilities refer to specified samplers; line-table correction only bounds accepted wrong answers.",
+    "Old-test counterexample is an ordinary symbolic derivation reviewed separately, not a Lean-checked result or new-priority claim.",
+    "Public arXiv v2 is not established identical to final SOSA proceedings edition."
+  ],
+  "imported_textbook_results": [
+    "Univariate root bound over an integral domain",
+    "Finite-dimensional linear algebra, determinant expansion and elementary field arithmetic",
+    "Elementary finite probability, union bound, Markov inequality"
+  ],
+  "checks": {
+    "algebra.md": {
+      "sha256": "5d22ab32ab81f127bb8e13a63d746948cb894f6f294f8fabee1198598c08c093",
+      "word_count_whitespace": 5377,
+      "paired_passages": 26,
+      "math_delimiters": "dollar delimiters balanced; not a rendered-output check"
+    },
+    "introduction.md": {
+      "sha256": "6ca447e6831ad5990e7840620d0ed1612ff527137a98d40aa42bfef9a991121b",
+      "word_count_whitespace": 1354,
+      "paired_passages": 4,
+      "math_delimiters": "dollar delimiters balanced; not a rendered-output check"
+    }
+  },
+  "sources": [
+    {
+      "path": "PCP/Algebraic/PolynomialDistance.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean",
+      "sha256": "b308435d039c441386651284dccfabb91a8c5144ec2fe369d84927a9df756f46",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "eval_zero_agreement_le",
+          "line": 29,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L29"
+        },
+        {
+          "source_name": "eval_agreement_le",
+          "line": 35,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L35"
+        },
+        {
+          "source_name": "eval_distance_ge",
+          "line": 49,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L49"
+        },
+        {
+          "source_name": "eval_distance_zero_ge",
+          "line": 58,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L58"
+        },
+        {
+          "source_name": "eq_of_eval_agreement_gt",
+          "line": 64,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L64"
+        },
+        {
+          "source_name": "eval_injective_of_totalDegree_lt_card",
+          "line": 73,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L73"
+        },
+        {
+          "source_name": "eq_of_eval_close",
+          "line": 85,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L85"
+        },
+        {
+          "source_name": "isLowDegree_eval",
+          "line": 106,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L106"
+        },
+        {
+          "source_name": "IsLowDegree.relativeDistance_ge",
+          "line": 109,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L109"
+        },
+        {
+          "source_name": "IsLowDegree.eq_of_close",
+          "line": 117,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean#L117"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/GridInterpolation.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean",
+      "sha256": "e51c245bcd58818a49a47097e3e92c2d45c0d85242f25cf3142747e127b5bf58",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "degreeOf_toMvPolynomial_le",
+          "line": 27,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L27"
+        },
+        {
+          "source_name": "eval_basis",
+          "line": 46,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L46"
+        },
+        {
+          "source_name": "degreeOf_basis_le",
+          "line": 63,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L63"
+        },
+        {
+          "source_name": "interpolate_apply",
+          "line": 80,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L80"
+        },
+        {
+          "source_name": "degreeOf_interpolate_le",
+          "line": 90,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L90"
+        },
+        {
+          "source_name": "totalDegree_interpolate_le",
+          "line": 100,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L100"
+        },
+        {
+          "source_name": "eq_zero_of_eval_grid_eq_zero",
+          "line": 113,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L113"
+        },
+        {
+          "source_name": "eq_of_eval_grid_eq",
+          "line": 146,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L146"
+        },
+        {
+          "source_name": "interpolate_eval",
+          "line": 157,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L157"
+        },
+        {
+          "source_name": "existsUnique_extension",
+          "line": 170,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean#L170"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/GridVanishing.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean",
+      "sha256": "c83d997bd9b991bed002a8c04648a6e93a58b4a324408bd4fdaf31a45b15557d",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "eval_coordinate",
+          "line": 40,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L40"
+        },
+        {
+          "source_name": "eval_coordinate_eq_zero",
+          "line": 44,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L44"
+        },
+        {
+          "source_name": "coordinate_vanishesOn",
+          "line": 50,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L50"
+        },
+        {
+          "source_name": "coordinate_ne_zero",
+          "line": 57,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L57"
+        },
+        {
+          "source_name": "totalDegree_mul_eq",
+          "line": 67,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L67"
+        },
+        {
+          "source_name": "totalDegree_coordinate",
+          "line": 73,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L73"
+        },
+        {
+          "source_name": "eq_zero_of_totalDegree_lt",
+          "line": 83,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L83"
+        },
+        {
+          "source_name": "vanishesOn_of_eq_sum",
+          "line": 91,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L91"
+        },
+        {
+          "source_name": "exists_decomposition",
+          "line": 100,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L100"
+        },
+        {
+          "source_name": "vanishesOn_iff_exists_decomposition",
+          "line": 134,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean#L134"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/VanishingCertificate.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean",
+      "sha256": "f8a240c66a7507cbfd78bfabc0e858e1342ae7ad2bf5e8bb1ded5b5b2a25add6",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "eval_substitute",
+          "line": 46,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L46"
+        },
+        {
+          "source_name": "IsCertificate.vanishesOn",
+          "line": 62,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L62"
+        },
+        {
+          "source_name": "substitute_certificate",
+          "line": 79,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L79"
+        },
+        {
+          "source_name": "eval_certificate",
+          "line": 87,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L87"
+        },
+        {
+          "source_name": "certificate_isCertificate",
+          "line": 91,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L91"
+        },
+        {
+          "source_name": "totalDegree_certificate_le",
+          "line": 99,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L99"
+        },
+        {
+          "source_name": "vanishesOn_iff_exists_certificate",
+          "line": 119,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L119"
+        },
+        {
+          "source_name": "totalDegree_substitute_zero_le",
+          "line": 134,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L134"
+        },
+        {
+          "source_name": "totalDegree_substitute_coordinate_le",
+          "line": 142,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean#L142"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PolynomialLineCharacterization.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean",
+      "sha256": "da00cd9aef5152da10e797f99ef2c7e55fd7061e698a5821087fcb87a35da3fa",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "hasLowDegreeLines_eval",
+          "line": 32,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L32"
+        },
+        {
+          "source_name": "totalDegree_toMvPolynomial_le",
+          "line": 39,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L39"
+        },
+        {
+          "source_name": "totalDegree_interpolateSlices_le",
+          "line": 55,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L55"
+        },
+        {
+          "source_name": "eval_interpolateSlices",
+          "line": 69,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L69"
+        },
+        {
+          "source_name": "eval_interpolateSlices_eq",
+          "line": 76,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L76"
+        },
+        {
+          "source_name": "exists_polynomial_of_hasLowDegreeLines",
+          "line": 104,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L104"
+        },
+        {
+          "source_name": "hasLowDegreeLines_iff_exists_polynomial",
+          "line": 154,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L154"
+        },
+        {
+          "source_name": "exists_polynomial_of_hasLowDegreeLines_finite",
+          "line": 163,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L163"
+        },
+        {
+          "source_name": "hasLowDegreeLines_iff_exists_polynomial_finite",
+          "line": 184,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean#L184"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+      "sha256": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "smallError_pos",
+          "line": 42,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L42"
+        },
+        {
+          "source_name": "smallError_lt",
+          "line": 44,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L44"
+        },
+        {
+          "source_name": "check_eq_interpolation",
+          "line": 55,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L55"
+        },
+        {
+          "source_name": "check_congr",
+          "line": 67,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L67"
+        },
+        {
+          "source_name": "generator_ne_zero",
+          "line": 78,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L78"
+        },
+        {
+          "source_name": "nodes_ne_zero",
+          "line": 81,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L81"
+        },
+        {
+          "source_name": "nodes_injective",
+          "line": 84,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L84"
+        },
+        {
+          "source_name": "weights_ne_zero",
+          "line": 93,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L93"
+        },
+        {
+          "source_name": "sum_weights",
+          "line": 107,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L107"
+        },
+        {
+          "source_name": "eval_zero_eq_sum",
+          "line": 113,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L113"
+        },
+        {
+          "source_name": "polynomial_predict",
+          "line": 125,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L125"
+        },
+        {
+          "source_name": "exists_generator",
+          "line": 145,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L145"
+        },
+        {
+          "source_name": "zero_of_constraints",
+          "line": 151,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L151"
+        },
+        {
+          "source_name": "exists_univariate",
+          "line": 195,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L195"
+        },
+        {
+          "source_name": "exists_polynomial",
+          "line": 225,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L225"
+        },
+        {
+          "source_name": "check_eval",
+          "line": 244,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L244"
+        },
+        {
+          "source_name": "check_eq_zero_iff_exists_polynomial",
+          "line": 252,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L252"
+        },
+        {
+          "source_name": "exists_close",
+          "line": 274,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L274"
+        },
+        {
+          "source_name": "rejectionRate_nodes",
+          "line": 311,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L311"
+        },
+        {
+          "source_name": "exists_close",
+          "line": 322,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean#L322"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/WeightedConstraintSoundness.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean",
+      "sha256": "a6dbba1c588a52f02b81e5f5d1b997df14bc5572969005475fdb5eafc60cf9e2",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "distance_correction_le",
+          "line": 38,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L38"
+        },
+        {
+          "source_name": "weighted_distance_le",
+          "line": 43,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L43"
+        },
+        {
+          "source_name": "shifted_error",
+          "line": 55,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L55"
+        },
+        {
+          "source_name": "grid_comm",
+          "line": 64,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L64"
+        },
+        {
+          "source_name": "grid_error",
+          "line": 82,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L82"
+        },
+        {
+          "source_name": "pair_error_le",
+          "line": 92,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L92"
+        },
+        {
+          "source_name": "prediction_error_le",
+          "line": 130,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L130"
+        },
+        {
+          "source_name": "correction_satisfies",
+          "line": 136,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean#L136"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/StandardLocalCorrection.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean",
+      "sha256": "83d99c2a1ebc7b0d9d88235d58c54db3dbc95688e6656ae4e5bb813c2e728e27",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "goodNodes_of_generator",
+          "line": 20,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean#L20"
+        },
+        {
+          "source_name": "GoodNodes.ne_zero",
+          "line": 24,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean#L24"
+        },
+        {
+          "source_name": "GoodNodes.weight_ne_zero",
+          "line": 26,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean#L26"
+        },
+        {
+          "source_name": "correct_congr",
+          "line": 44,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean#L44"
+        },
+        {
+          "source_name": "correct_eval",
+          "line": 52,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean#L52"
+        },
+        {
+          "source_name": "failure_le",
+          "line": 63,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean#L63"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/LineTableLocalCorrection.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean",
+      "sha256": "6ff2ad650d3b081d73fde62d1adce7e66e117e8977f6d0139e071a9b2b75ef55",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "agreement_on_units_le",
+          "line": 36,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L36"
+        },
+        {
+          "source_name": "distance_on_units_ge",
+          "line": 55,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L55"
+        },
+        {
+          "source_name": "table_ne_restrict_of_origin_ne",
+          "line": 72,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L72"
+        },
+        {
+          "source_name": "origin_error_mul_le",
+          "line": 81,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L81"
+        },
+        {
+          "source_name": "origin_error_le",
+          "line": 108,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L108"
+        },
+        {
+          "source_name": "affine_units_distance",
+          "line": 121,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L121"
+        },
+        {
+          "source_name": "origin_error_le_comparison_add_distance",
+          "line": 134,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L134"
+        },
+        {
+          "source_name": "accepted_wrong_honest_le",
+          "line": 150,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L150"
+        },
+        {
+          "source_name": "fraction_le_add_of_imp_or",
+          "line": 180,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L180"
+        },
+        {
+          "source_name": "accepted_wrong_le",
+          "line": 205,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L205"
+        },
+        {
+          "source_name": "correct_eval",
+          "line": 241,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L241"
+        },
+        {
+          "source_name": "correct_wrong_le",
+          "line": 249,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L249"
+        },
+        {
+          "source_name": "affine_units_label_distance",
+          "line": 283,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L283"
+        },
+        {
+          "source_name": "homogeneous_distance_eq_half",
+          "line": 308,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L308"
+        },
+        {
+          "source_name": "origin_error_le_twice_binary_comparison",
+          "line": 319,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L319"
+        },
+        {
+          "source_name": "binary_origin_error_le_binary_comparison",
+          "line": 337,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L337"
+        },
+        {
+          "source_name": "binary_origin_error_le_comparison_add_oracle_distance",
+          "line": 356,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean#L356"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BivariateAgreement.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreement.lean",
+      "sha256": "9dc7fa8512f0d8b2445176f2094455e297b48c18bdeb475713819f92c4e021cc",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "fieldSize_bounds",
+          "line": 36,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreement.lean#L36"
+        },
+        {
+          "source_name": "exists_nearby_of_close_columns",
+          "line": 57,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreement.lean#L57"
+        },
+        {
+          "source_name": "exists_polynomial_of_row_column_agreement",
+          "line": 141,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreement.lean#L141"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BivariateColumnSelection.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateColumnSelection.lean",
+      "sha256": "26eb0309cc0d2201abb8fca9b36f866c6d90ecc4a3d8af62b7d1c3f3839f88a8",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "exists_embedding_of_expect_le_half",
+          "line": 30,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateColumnSelection.lean#L30"
+        },
+        {
+          "source_name": "mean_column_distance_le",
+          "line": 69,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateColumnSelection.lean#L69"
+        },
+        {
+          "source_name": "mean_column_error_le",
+          "line": 85,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateColumnSelection.lean#L85"
+        },
+        {
+          "source_name": "exists_good_columns",
+          "line": 94,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateColumnSelection.lean#L94"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PolynomialMatrixKernel.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean",
+      "sha256": "49090a4a6e113314f325ef03a55c1559ead995eb312476c09919a9ffa56753ac",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "natDegree_det_le",
+          "line": 38,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L38"
+        },
+        {
+          "source_name": "eval_det",
+          "line": 54,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L54"
+        },
+        {
+          "source_name": "det_eq_zero_of_many_singular_specializations",
+          "line": 65,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L65"
+        },
+        {
+          "source_name": "maximal_minor_eq_zero_of_many_singular_specializations",
+          "line": 83,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L83"
+        },
+        {
+          "source_name": "exists_polynomial_kernel_of_many_singular_specializations",
+          "line": 100,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L100"
+        },
+        {
+          "source_name": "exists_bounded_kernel_of_minor",
+          "line": 118,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L118"
+        },
+        {
+          "source_name": "exists_bounded_kernel_of_maximal_minors",
+          "line": 180,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L180"
+        },
+        {
+          "source_name": "exists_bounded_kernel_of_maximal_minors_fintype",
+          "line": 237,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L237"
+        },
+        {
+          "source_name": "exists_bounded_polynomial_kernel_of_many_singular_specializations",
+          "line": 265,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean#L265"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BerlekampWelchCertificate.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean",
+      "sha256": "186786ff43ca8d24ccc6645c95e003bde54be0c4d5aa72955e49a9b1476ff831",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "series_injective",
+          "line": 40,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L40"
+        },
+        {
+          "source_name": "natDegree_series_le",
+          "line": 45,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L45"
+        },
+        {
+          "source_name": "eval_series",
+          "line": 51,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L51"
+        },
+        {
+          "source_name": "assemble_injective",
+          "line": 90,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L90"
+        },
+        {
+          "source_name": "rowPolynomial_assemble",
+          "line": 105,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L105"
+        },
+        {
+          "source_name": "degreeOf_inY_zero",
+          "line": 115,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L115"
+        },
+        {
+          "source_name": "degreeOf_inY_one_le",
+          "line": 126,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L126"
+        },
+        {
+          "source_name": "degreeOf_assemble_zero_le",
+          "line": 136,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L136"
+        },
+        {
+          "source_name": "degreeOf_assemble_one_le",
+          "line": 146,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L146"
+        },
+        {
+          "source_name": "rowPolynomial_assemble_eq_eval_series",
+          "line": 159,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L159"
+        },
+        {
+          "source_name": "matrix_mulVec_assemble",
+          "line": 165,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L165"
+        },
+        {
+          "source_name": "equations_of_kernel",
+          "line": 186,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L186"
+        },
+        {
+          "source_name": "assembled_locator_ne_zero",
+          "line": 198,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L198"
+        },
+        {
+          "source_name": "certificate_of_kernel",
+          "line": 221,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L221"
+        },
+        {
+          "source_name": "exists_certificate_of_good_specializations",
+          "line": 237,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean#L237"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BivariateCleanRectangle.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean",
+      "sha256": "15aefdef1570d1e0de6ca5d2ff267a71b24b82016362c2ab6ebe7daf9e3b216f",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "fraction_exists_mem_le",
+          "line": 37,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L37"
+        },
+        {
+          "source_name": "fraction_good_ge",
+          "line": 56,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L56"
+        },
+        {
+          "source_name": "expect_rowErrors_le",
+          "line": 83,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L83"
+        },
+        {
+          "source_name": "fraction_many_rowErrors_le",
+          "line": 102,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L102"
+        },
+        {
+          "source_name": "fraction_exists_column_zero_le",
+          "line": 119,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L119"
+        },
+        {
+          "source_name": "certificate_row_eq",
+          "line": 141,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L141"
+        },
+        {
+          "source_name": "agreement_of_certificate_row",
+          "line": 160,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L160"
+        },
+        {
+          "source_name": "fraction_clean_rows_ge",
+          "line": 177,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L177"
+        },
+        {
+          "source_name": "card_zero_columns_le",
+          "line": 214,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L214"
+        },
+        {
+          "source_name": "exists_nonzero_columns",
+          "line": 241,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean#L241"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BivariateAgreementFromRectangle.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean",
+      "sha256": "567cf0416a93c45376ff6f8d0acdea054506f06ee855632d54f56e6e41aadd3c",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "card_agreements_gt",
+          "line": 34,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L34"
+        },
+        {
+          "source_name": "sample_disagreementCount_ge",
+          "line": 60,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L60"
+        },
+        {
+          "source_name": "expect_rowErrors_le",
+          "line": 90,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L90"
+        },
+        {
+          "source_name": "all_columns_recovered",
+          "line": 112,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L112"
+        },
+        {
+          "source_name": "rowDistance_le",
+          "line": 127,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L127"
+        },
+        {
+          "source_name": "gridDistance_le_rowDistance",
+          "line": 156,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L156"
+        },
+        {
+          "source_name": "exists_nearby_polynomial",
+          "line": 174,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L174"
+        },
+        {
+          "source_name": "exists_nearby_polynomial_one_ninth",
+          "line": 202,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean#L202"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BivariateAgreementBoost.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementBoost.lean",
+      "sha256": "9d38a1459104f5b3579198bc004dfdaac72f73934c3733689fc7d3b731992189",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "rowDistance_mul_le",
+          "line": 31,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementBoost.lean#L31"
+        },
+        {
+          "source_name": "transverse_error_le",
+          "line": 70,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementBoost.lean#L70"
+        },
+        {
+          "source_name": "rowDistance_le_three_mul",
+          "line": 88,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementBoost.lean#L88"
+        },
+        {
+          "source_name": "distance_le_four_mul",
+          "line": 105,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementBoost.lean#L105"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineTest.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineTest.lean",
+      "sha256": "9c6174fc5b466b69402136c0d57fa72f0ac7ebdab7034fb7b243dc2ad861093a",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "rejectionRate_eq_relativeDistance",
+          "line": 67,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineTest.lean#L67"
+        },
+        {
+          "source_name": "rejectionRate_nonneg",
+          "line": 74,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineTest.lean#L74"
+        },
+        {
+          "source_name": "rejectionRate_le_one",
+          "line": 77,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineTest.lean#L77"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineSoundness.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineSoundness.lean",
+      "sha256": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "exists_polynomial_correction",
+          "line": 34,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineSoundness.lean#L34"
+        },
+        {
+          "source_name": "exists_close_of_small_rejection",
+          "line": 58,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineSoundness.lean#L58"
+        },
+        {
+          "source_name": "pointLineSoundness_largeField",
+          "line": 80,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineSoundness.lean#L80"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineCorrection.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean",
+      "sha256": "46ede20ac24a051c6768c37307eb1cb90f5acb18389640c6feafcd580b8214b1",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "exists_minimizer",
+          "line": 33,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L33"
+        },
+        {
+          "source_name": "minimizes",
+          "line": 45,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L45"
+        },
+        {
+          "source_name": "value_eq_of_error_lt_half",
+          "line": 50,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L50"
+        },
+        {
+          "source_name": "prediction_error_le",
+          "line": 62,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L62"
+        },
+        {
+          "source_name": "distance_le_twice_prediction_error",
+          "line": 71,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L71"
+        },
+        {
+          "source_name": "prediction_error_eq_rejectionRate",
+          "line": 119,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L119"
+        },
+        {
+          "source_name": "distance_correction_le",
+          "line": 135,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L135"
+        },
+        {
+          "source_name": "distance_decoded_correction_le",
+          "line": 142,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L142"
+        },
+        {
+          "source_name": "rejectionRate_correction_le",
+          "line": 149,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L149"
+        },
+        {
+          "source_name": "correction_eq_of_error_lt_half",
+          "line": 156,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean#L156"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineParameterError.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean",
+      "sha256": "04309f6274542c6f96745b5a07b2234e47a362e57579179614615bee6713d448",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "rejectionAt_nonneg",
+          "line": 59,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L59"
+        },
+        {
+          "source_name": "mean_rejectionAt_eq_rejectionRate",
+          "line": 63,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L63"
+        },
+        {
+          "source_name": "mean_decodedLineError_eq_rejectionRate",
+          "line": 79,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L79"
+        },
+        {
+          "source_name": "shifted_parameter_error_eq_rejectionRate",
+          "line": 86,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L86"
+        },
+        {
+          "source_name": "rejectionAt_le_add_div",
+          "line": 99,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L99"
+        },
+        {
+          "source_name": "rejectionAt_le",
+          "line": 142,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L142"
+        },
+        {
+          "source_name": "rejectionAt_le_four_mul",
+          "line": 151,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean#L151"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/BivariateCrossingSoundness.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCrossingSoundness.lean",
+      "sha256": "7183eef65f1945c756092ff2fd8bee00dc6e4b401a206310e5da9a9f70d3a3f6",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "crossing_bestApproximation_eq",
+          "line": 32,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCrossingSoundness.lean#L32"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/CandidateCrossing.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/CandidateCrossing.lean",
+      "sha256": "d4cf783b0e88dcd8a63d1b08164276bdf7945143a77ac26a8686d4590b0582bd",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "crossing_eq",
+          "line": 27,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/CandidateCrossing.lean#L27"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/MixedPlaneSampling.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean",
+      "sha256": "33fa0f3659173ec69d58c9cfe98fed5fb0fa7efe0fb7af4a4cff5fb2211dfb77",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "mixedPlanePoint_eq_row",
+          "line": 41,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L41"
+        },
+        {
+          "source_name": "mixedPlanePoint_eq_column",
+          "line": 47,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L47"
+        },
+        {
+          "source_name": "expect_pair",
+          "line": 57,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L57"
+        },
+        {
+          "source_name": "expect_mixedRowMean_at",
+          "line": 76,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L76"
+        },
+        {
+          "source_name": "expect_mixedRowMean",
+          "line": 86,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L86"
+        },
+        {
+          "source_name": "expect_mixedColumnMean",
+          "line": 103,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L103"
+        },
+        {
+          "source_name": "expect_mixedRowMean_le",
+          "line": 117,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L117"
+        },
+        {
+          "source_name": "expect_mixedColumnMean_le",
+          "line": 130,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L130"
+        },
+        {
+          "source_name": "mixedRowError_eq_mean",
+          "line": 166,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L166"
+        },
+        {
+          "source_name": "mixedColumnError_eq_mean",
+          "line": 173,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L173"
+        },
+        {
+          "source_name": "mixedLocalColumnError_eq_mean",
+          "line": 184,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L184"
+        },
+        {
+          "source_name": "mixedLocalRowError_eq_mean",
+          "line": 191,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L191"
+        },
+        {
+          "source_name": "expect_mixedRowError_le",
+          "line": 199,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L199"
+        },
+        {
+          "source_name": "expect_mixedColumnError_le",
+          "line": 207,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L207"
+        },
+        {
+          "source_name": "expect_mixedLocalColumnError_le",
+          "line": 216,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L216"
+        },
+        {
+          "source_name": "expect_mixedLocalRowError_le",
+          "line": 225,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L225"
+        },
+        {
+          "source_name": "expect_mixedLocalRowError_decoded_le",
+          "line": 243,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean#L243"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineEndpointConsistency.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean",
+      "sha256": "af4c019538dbbf399d311dc32d2233bc3d26b4024f77c0a90b1d56dfd6446a27",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "crossing_errors_eq",
+          "line": 34,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean#L34"
+        },
+        {
+          "source_name": "crossing_row_prediction",
+          "line": 59,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean#L59"
+        },
+        {
+          "source_name": "crossing_column_prediction",
+          "line": 66,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean#L66"
+        },
+        {
+          "source_name": "fraction_endpoint_disagreement_le",
+          "line": 77,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean#L77"
+        },
+        {
+          "source_name": "endpoint_error_le",
+          "line": 108,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean#L108"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/RuledSurfaceSampling.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean",
+      "sha256": "4a75c72a5420967ad76fb9c885d18cb4f1bd9182be76ab05ed989d9821d6309b",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "relativeDistance_eq_expect",
+          "line": 26,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L26"
+        },
+        {
+          "source_name": "expect_relativeDistance_swap",
+          "line": 30,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L30"
+        },
+        {
+          "source_name": "relativeDistance_prod_eq_expect",
+          "line": 36,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L36"
+        },
+        {
+          "source_name": "ruledPoint_eq_column",
+          "line": 53,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L53"
+        },
+        {
+          "source_name": "rows_degree",
+          "line": 76,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L76"
+        },
+        {
+          "source_name": "columns_degree",
+          "line": 79,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L79"
+        },
+        {
+          "source_name": "surface_of_ne",
+          "line": 94,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L94"
+        },
+        {
+          "source_name": "distance_direction",
+          "line": 101,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L101"
+        },
+        {
+          "source_name": "expect_scaled_pair",
+          "line": 110,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L110"
+        },
+        {
+          "source_name": "distance_scaled_pair",
+          "line": 116,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L116"
+        },
+        {
+          "source_name": "expect_le_add_exception",
+          "line": 124,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L124"
+        },
+        {
+          "source_name": "row_point_error_le",
+          "line": 135,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L135"
+        },
+        {
+          "source_name": "expect_own_row_error_le",
+          "line": 167,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L167"
+        },
+        {
+          "source_name": "expect_global_row_error_le",
+          "line": 177,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L177"
+        },
+        {
+          "source_name": "expect_column_error_of_ne",
+          "line": 189,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L189"
+        },
+        {
+          "source_name": "expect_global_column_error_le",
+          "line": 198,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L198"
+        },
+        {
+          "source_name": "column_point_error_of_ne",
+          "line": 221,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L221"
+        },
+        {
+          "source_name": "expect_local_row_error_le",
+          "line": 234,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L234"
+        },
+        {
+          "source_name": "endpoint_error_le",
+          "line": 253,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L253"
+        },
+        {
+          "source_name": "expect_local_column_error_le",
+          "line": 267,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean#L267"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/RuledSurfaceRigidity.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceRigidity.lean",
+      "sha256": "59ae4b2ef9fd2e0937b9079ab5937ec45d80f19f7f0be25092cdded581c197fe",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "bestApproximation_eval_eq_of_endpoint_bounds",
+          "line": 34,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceRigidity.lean#L34"
+        },
+        {
+          "source_name": "hasLowDegreeLines_of_endpoint_bounds",
+          "line": 74,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceRigidity.lean#L74"
+        },
+        {
+          "source_name": "exists_polynomial_of_endpoint_bounds",
+          "line": 95,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceRigidity.lean#L95"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineConstants.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstants.lean",
+      "sha256": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "smallError_pos",
+          "line": 30,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstants.lean#L30"
+        },
+        {
+          "source_name": "field_bounds",
+          "line": 32,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstants.lean#L32"
+        },
+        {
+          "source_name": "field_bound_linear",
+          "line": 54,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstants.lean#L54"
+        },
+        {
+          "source_name": "rigidity_budget",
+          "line": 62,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstants.lean#L62"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Algebraic/PointLineConstant.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean",
+      "sha256": "b39716dbec3042881445ddef483b484922c0a76252d98da4edce3ff283329bf8",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "exists_constant_close",
+          "line": 40,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L40"
+        },
+        {
+          "source_name": "consecutive_distance_eq_pairDisagreement",
+          "line": 87,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L87"
+        },
+        {
+          "source_name": "consecutive_error_eq",
+          "line": 101,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L101"
+        },
+        {
+          "source_name": "pairDisagreement_le_twice_lineError",
+          "line": 115,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L115"
+        },
+        {
+          "source_name": "eval_degree_zero_table",
+          "line": 135,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L135"
+        },
+        {
+          "source_name": "pairDisagreement_le_twice_rejectionRate_degree_zero",
+          "line": 145,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L145"
+        },
+        {
+          "source_name": "exists_constant_close_degree_zero",
+          "line": 153,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L153"
+        },
+        {
+          "source_name": "exists_close_degree_zero",
+          "line": 160,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L160"
+        },
+        {
+          "source_name": "pointLineSoundness_degree_zero",
+          "line": 167,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean#L167"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Verifier/Definition.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean",
+      "sha256": "9251c711540860428f8227a9d8e08c1e02eaf68fd7b054acdaac340f2b360f11",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "card_addresses_lt_two_pow",
+          "line": 53,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L53"
+        },
+        {
+          "source_name": "eval_congr",
+          "line": 68,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L68"
+        },
+        {
+          "source_name": "accProb_nonneg",
+          "line": 106,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L106"
+        },
+        {
+          "source_name": "accProb_le_one",
+          "line": 109,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L109"
+        },
+        {
+          "source_name": "accProb_congr_of_readsBelow",
+          "line": 122,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L122"
+        },
+        {
+          "source_name": "CanonicalRandomness.logRandomness",
+          "line": 157,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L157"
+        },
+        {
+          "source_name": "CanonicalRandomness.eq_closedForm",
+          "line": 166,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L166"
+        },
+        {
+          "source_name": "accProb_eq_one_iff",
+          "line": 172,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L172"
+        },
+        {
+          "source_name": "finiteWitnessCheck_eq_true_iff",
+          "line": 212,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L212"
+        },
+        {
+          "source_name": "oracleOfWitness_prefix",
+          "line": 217,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L217"
+        },
+        {
+          "source_name": "length_witness_of_oracle",
+          "line": 221,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean#L221"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Theorem.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean",
+      "sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "np_subset_pcp",
+          "line": 25,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L25"
+        },
+        {
+          "source_name": "pcp_subset_np",
+          "line": 39,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L39"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/ReverseConcrete.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean",
+      "sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "pcp_subset_np_concrete",
+          "line": 33,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean#L33"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    },
+    {
+      "path": "PCP/Complexity/ReferenceNPConverse.lean",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean",
+      "sha256": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+      "inspected_copy_matches_pinned_checkout": true,
+      "declaration_locators": [
+        {
+          "source_name": "of_inNP",
+          "line": 20,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L20"
+        },
+        {
+          "source_name": "mem_iff_inNP",
+          "line": 34,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L34"
+        },
+        {
+          "source_name": "inNP_iff_mem",
+          "line": 39,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L39"
+        }
+      ],
+      "basis": "source-level statement and proof inspection; not elaboration or kernel replay"
+    }
+  ],
+  "external_sources": [
+    {
+      "path": "work/pcp-sources/core/paper-v1.pdf",
+      "sha256": "2abc01344b762470a3db6c5a923190489c5afe14a314d6a2d38eb7b1b12f0ce7",
+      "redistribution": "reference_only"
+    },
+    {
+      "path": "work/pcp-sources/core/paper-v2.pdf",
+      "sha256": "764824336d1de4f95e1fe9c774d157e419578157c408dfd016f3903d73d73795",
+      "redistribution": "reference_only"
+    },
+    {
+      "path": "work/pcp-sources/core/source-v1/main.tex",
+      "sha256": "9b21956e4138ee4210f6a2cd9731dab80a7e90c91cc4c2b6b5d9dcf294448651",
+      "redistribution": "local_working_evidence"
+    },
+    {
+      "path": "work/pcp-sources/core/source-v2/preliminaries.tex",
+      "sha256": "d36ae006f3a41a6e22e7235614caf1338fe34c25a11de8464b210a1bab0e3449",
+      "redistribution": "local_working_evidence"
+    },
+    {
+      "path": "work/pcp-sources/core/source-v2/technical_tools.tex",
+      "sha256": "0c6fbe16c347a80e0c82373413e14844d4bf947da9183768ca1bbdce72baae10",
+      "redistribution": "local_working_evidence"
+    },
+    {
+      "path": "work/pcp-sources/foundations/arora-safra-jacm.pdf",
+      "sha256": "0b6e123f83b5ed1436a77da30324d37f95349e6001739fbfd3c053096ed8f20c",
+      "redistribution": "reference_only"
+    },
+    {
+      "path": "work/pcp-sources/foundations/almss-journal.pdf",
+      "sha256": "740ad430efb4474b369f8b0e9662b890d410cdce366cacc491c4874b289b99cb",
+      "redistribution": "reference_only"
+    },
+    {
+      "path": "work/pcp-reviews/old-test-counterexample.md",
+      "sha256": "9e3f4415c695bec1eb385af70aa60667b1a5ec197d21f17aa5bf2bc097e81f44",
+      "redistribution": "local_working_evidence"
+    }
+  ],
+  "passages": [
+    {
+      "id": "pcp-long-algebra-scope",
+      "manuscript": "algebra.md",
+      "body_sha256": "04fb6cb17c6aef4d4d83e3a44cf93ba85cda4858d34d4b887885083205e2f5fc",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [],
+      "citations": [
+        "https://arxiv.org/abs/2608.17429v2"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-polynomial-distance",
+      "manuscript": "algebra.md",
+      "body_sha256": "777e47761c22fa1832a44e266773eea989e68694bcf3b8ebf4158dbcac4d0136",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PolynomialDistance.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialDistance.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-grid-interpolation",
+      "manuscript": "algebra.md",
+      "body_sha256": "35a12df8faec214aa09f26a38fba9a8d63254ef6d9d3d381d53cf7cda6fd136e",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/GridInterpolation.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridInterpolation.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-grid-vanishing",
+      "manuscript": "algebra.md",
+      "body_sha256": "fe230dcdadbbaa12d9eb4f7b8811d5697a45e6fdbf2d999f7afeb6d0a16ebd18",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/GridVanishing.lean",
+        "PCP/Algebraic/VanishingCertificate.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GridVanishing.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean"
+      ],
+      "curated_graph_node_ids": [
+        "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
+        "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
+      ],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-line-characterization",
+      "manuscript": "algebra.md",
+      "body_sha256": "69c0a2a48466b1dc4e4a755927b0828185ee87b73f4db97f6441368f98b414c0",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PolynomialLineCharacterization.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialLineCharacterization.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-generator-test",
+      "manuscript": "algebra.md",
+      "body_sha256": "046c6a5ee3ad6044e48d7133fa993d906b9c32379491181c9dac50071a42b173",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/GeneratorLowDegreeTest.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean"
+      ],
+      "curated_graph_node_ids": [
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
+      ],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-weighted-plurality",
+      "manuscript": "algebra.md",
+      "body_sha256": "25c617dbe4ce00a40e79dfc1dffb420ada9cb5300e09a62ace3454beea41a0e3",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/WeightedConstraintSoundness.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/WeightedConstraintSoundness.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-generator-soundness",
+      "manuscript": "algebra.md",
+      "body_sha256": "e800a1d34c8536c79ef2444b2dd936c6100a8088377edf66de95fa566f93f8c4",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/GeneratorLowDegreeTest.lean"
+      ],
+      "citations": [
+        "https://arxiv.org/abs/2608.17429v2",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean"
+      ],
+      "curated_graph_node_ids": [
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
+      ],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-old-test-counterexample",
+      "manuscript": "algebra.md",
+      "body_sha256": "b15e545632bf176b728267f606ff8b89a1c6886095174010b3a84153b2a581d7",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [],
+      "citations": [
+        "https://arxiv.org/abs/2608.17429v1",
+        "https://arxiv.org/abs/2608.17429v2"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-standard-correction",
+      "manuscript": "algebra.md",
+      "body_sha256": "50fe5769b96b4e841f2fd4b003462f1811dab6f5b33d78fd3ba1a73d5985a4da",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/StandardLocalCorrection.lean"
+      ],
+      "citations": [
+        "https://arxiv.org/abs/2608.17429v2",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/StandardLocalCorrection.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-line-table-correction",
+      "manuscript": "algebra.md",
+      "body_sha256": "6dd61446c1383a7a95afc9b774817b08b02e2f99f7648a2f58d01c104e834eb0",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/LineTableLocalCorrection.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/LineTableLocalCorrection.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-bivariate-statement",
+      "manuscript": "algebra.md",
+      "body_sha256": "bdd3984ffd0122e698c0ef1c13703fa9bd3176fc80e379b7246ded853aac3685",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/BivariateAgreement.lean"
+      ],
+      "citations": [
+        "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+        "https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreement.lean"
+      ],
+      "curated_graph_node_ids": [
+        "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement"
+      ],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-column-selection",
+      "manuscript": "algebra.md",
+      "body_sha256": "2a65f5895edfc59512541a3b3e60874d4152444c492a949143a07683f2567ac8",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/BivariateColumnSelection.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateColumnSelection.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-error-locator",
+      "manuscript": "algebra.md",
+      "body_sha256": "915cf0b5fa003126c00513a8b8a9cbe181f1809f488196e93b242df0e66f7494",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PolynomialMatrixKernel.lean",
+        "PCP/Algebraic/BerlekampWelchCertificate.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PolynomialMatrixKernel.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BerlekampWelchCertificate.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-clean-rectangle",
+      "manuscript": "algebra.md",
+      "body_sha256": "622f462dd2fa9e4ac9078b11648bfd134d4b28ac36b95f2f8d747c3614238f64",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/BivariateCleanRectangle.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCleanRectangle.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-coarse-agreement",
+      "manuscript": "algebra.md",
+      "body_sha256": "8bf2a30c5d65f40369c722a0ec534204c535707d380ff8504e347841e4eadce2",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/BivariateAgreementFromRectangle.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementFromRectangle.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-agreement-boost",
+      "manuscript": "algebra.md",
+      "body_sha256": "396b01b5eeac9e5072d4fa47d023e30d9e5f79981e3e7f42d1c8779edf0a2da2",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/BivariateAgreementBoost.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreementBoost.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-point-line-statement",
+      "manuscript": "algebra.md",
+      "body_sha256": "6aab80607940af67db819df956c3ec3afeccd5d34b41d7da2e5132827fd9fd63",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PointLineTest.lean",
+        "PCP/Algebraic/PointLineSoundness.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineTest.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineSoundness.lean"
+      ],
+      "curated_graph_node_ids": [
+        "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection"
+      ],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-nearest-lines",
+      "manuscript": "algebra.md",
+      "body_sha256": "cdf372387959fde419c2b59b10ad81aa3fcf4e8a4edaaeb77795e53ee77d4116",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PointLineCorrection.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineCorrection.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-fixed-parameter",
+      "manuscript": "algebra.md",
+      "body_sha256": "ad03290343e59d00a15fd45f2bb73cd014447307176e48c852b6bd28d58b2300",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PointLineParameterError.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineParameterError.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-crossing",
+      "manuscript": "algebra.md",
+      "body_sha256": "b5c232861aaedbd51a0131ec72e9826489ba356f54e9baf23936fdc3f03e15a0",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/BivariateCrossingSoundness.lean",
+        "PCP/Algebraic/CandidateCrossing.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateCrossingSoundness.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/CandidateCrossing.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-mixed-plane",
+      "manuscript": "algebra.md",
+      "body_sha256": "e846b18d071557415392edd673f1c49171654cde6f3c9e0149b3577503ac5223",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/MixedPlaneSampling.lean",
+        "PCP/Algebraic/PointLineEndpointConsistency.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/MixedPlaneSampling.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineEndpointConsistency.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-ruled-surface",
+      "manuscript": "algebra.md",
+      "body_sha256": "374c59edb4c68e2354ab69661a339b771d7c8a71a04e421f515dfd9ab53c33c6",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/RuledSurfaceSampling.lean",
+        "PCP/Algebraic/RuledSurfaceRigidity.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceSampling.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RuledSurfaceRigidity.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-point-line-constants",
+      "manuscript": "algebra.md",
+      "body_sha256": "f661d0e726fd8a50a8621dad2ceb2d2f0643f5df0d572bf8e14a15995d0f788e",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PointLineConstants.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstants.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-degree-zero",
+      "manuscript": "algebra.md",
+      "body_sha256": "f81f5aae85677e90913aabf24de219a8b40493f2d61d63679710c320ab2453fd",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Algebraic/PointLineConstant.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineConstant.lean"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-algebra-source-boundary",
+      "manuscript": "algebra.md",
+      "body_sha256": "451f19ef96df001d3a36c4230f6def88d36a6b68899cca3f33ead33e9f35aabe",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [],
+      "citations": [],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-intro-theorem",
+      "manuscript": "introduction.md",
+      "body_sha256": "ca30d0b7b002a2f4db4222ed8a76906792d3dc91c0cb672cba24e9418c0a2560",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [
+        "PCP/Verifier/Definition.lean",
+        "PCP/Theorem.lean",
+        "PCP/ReverseConcrete.lean",
+        "PCP/Complexity/ReferenceNPConverse.lean"
+      ],
+      "citations": [
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean",
+        "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean"
+      ],
+      "curated_graph_node_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.pcp_subset_np_concrete",
+        "PCP.ReferenceNP.inNP_iff_mem"
+      ],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-intro-roadmap",
+      "manuscript": "introduction.md",
+      "body_sha256": "22146d802f712c72f38ba3c7e4c1b0249287d665c2e10e6d150556cb8c43033c",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [],
+      "citations": [],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-intro-readers",
+      "manuscript": "introduction.md",
+      "body_sha256": "83b9d7600742840666f21a294b04ee6b9e740c5cbfe50270cb0e265339ca426e",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [],
+      "citations": [],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    },
+    {
+      "id": "pcp-long-intro-source-editions",
+      "manuscript": "introduction.md",
+      "body_sha256": "c0062ee754f14efec113687e29fb330ff3811988a20ec9ca8a0633b85ab7918b",
+      "hash_scope": "exact text between paired comment markers, including surrounding newlines",
+      "source_paths": [],
+      "citations": [
+        "https://arxiv.org/abs/2608.17429v2"
+      ],
+      "curated_graph_node_ids": [],
+      "support_status": "authored source correspondence; no claim that curated graph discharges every premise"
+    }
+  ],
+  "review_dispositions": [
+    {
+      "report": "work/pcp-reviews/algebra-math-review.md",
+      "finding": "Crossing lemma omitted positive degree and cubic field bound",
+      "disposition": "accepted and fixed explicitly at pcp-long-algebra-crossing; positive-degree context and epsilon conditions also explicit at mixed-plane passage"
+    },
+    {
+      "report": "work/pcp-reviews/algebra-math-review.md",
+      "finding": "Independently could imply statistical independence in ruled-surface proof",
+      "disposition": "accepted; changed to Separately"
+    }
+  ]
+}

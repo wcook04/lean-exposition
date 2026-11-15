@@ -1,0 +1,46 @@
+{
+  "source_candidate_revision": "f31deb70bda5d476706fc4c086a6b19a9e8a0aa2",
+  "scope": "Fresh-clone checks of the committed paper corpus and separately installed package; later publication-receipt edits do not change the bundled paper, mapping or graph bytes.",
+  "installation": "noneditable wheel installed from a fresh local clone into a separate virtual environment",
+  "unit_tests": {
+    "run": 710,
+    "result": "OK",
+    "skipped": 2,
+    "skip_reason": "opt-in pinned Lean integration fixtures; no fresh Lean run"
+  },
+  "layout": "passed",
+  "local_links": "passed",
+  "prior_qaoa_source_audit": "passed",
+  "pcp_bundle": {
+    "validate": "passed",
+    "assemble": "passed",
+    "check": "passed",
+    "inspect": "passed",
+    "export": "passed",
+    "query_journey": "passed",
+    "sha256": "017e7cbaa379e8c8a2c016fb05060d8c0a5297abb018b14082136d7c2f82c4a3",
+    "matches_original_bundle": true
+  },
+  "reader": {
+    "merge_revision": "c662163e1e3d73349ceb24e233eb7543b9f4e25d",
+    "deployment": "https://github.com/wcook04/proof-reader/actions/runs/43741382463",
+    "status": "success",
+    "deployed_files_matching_reviewed_build": 9,
+    "fresh_clone_install_and_build": "passed",
+    "unit_tests": 112,
+    "web_source_tests": 11,
+    "existing_browser_journey_checks": 380,
+    "pcp_specific_visual_review": "all three accounts; companion links, source links, scrolling, pinning, laptop width and quantitative soundness"
+  },
+  "secret_scan": {
+    "reader_history": "no findings in 71 scanned commits",
+    "source_history": "229 commits scanned; two findings inspected and identified as the literal synthetic API value in existing mocked tests",
+    "source_candidate": "no findings",
+    "whitespace_review": "Two line-ending TeX control-space commands and one final blank line in an archived review were deliberately preserved; git diff --check reports those locations."
+  },
+  "formal_boundary": {
+    "new_full_library_build": false,
+    "graph_extraction_status": "not_run",
+    "semantic_certification": false
+  }
+}

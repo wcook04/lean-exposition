@@ -1,0 +1,695 @@
+{
+  "documents": [
+    {
+      "format": "tex",
+      "label": "amireddy-et-al-v2.tex",
+      "path": "private-annex:pcp-sources/core/source-v2 (expanded TeX input order; see literature-register.md)",
+      "prose_words": 13654,
+      "sentences": 782
+    },
+    {
+      "format": "md",
+      "label": "arora-safra-jacm.txt",
+      "path": "private-annex:pcp-sources/foundations/arora-safra-jacm.txt",
+      "prose_words": 18993,
+      "sentences": 1089
+    },
+    {
+      "format": "md",
+      "label": "almss-journal.txt",
+      "path": "private-annex:pcp-sources/foundations/almss-journal.txt",
+      "prose_words": 15812,
+      "sentences": 895
+    }
+  ],
+  "features": {
+    "abstract_words": {
+      "desc": "abstract length in tokens (missing when the document has no abstract)",
+      "exploratory": false,
+      "floor": 15.0,
+      "iqr": 3.5,
+      "max": 219.0,
+      "median": 213.0,
+      "min": 212.0,
+      "n": 3,
+      "q1": 212.5,
+      "q3": 216.0,
+      "scale": 15.0,
+      "values": {
+        "almss-journal.txt": 212.0,
+        "amireddy-et-al-v2.tex": 219.0,
+        "arora-safra-jacm.txt": 213.0
+      }
+    },
+    "ai_lexicon_rate": {
+      "desc": "AI-lexicon words (delve, leverage, robust, notably, crucial, landscape, ...) per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.26633064478028434,
+      "max": 0.6591475025633514,
+      "median": 0.21060390670246934,
+      "min": 0.1264862130027827,
+      "n": 3,
+      "q1": 0.16854505985262602,
+      "q3": 0.43487570463291036,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 0.1264862130027827,
+        "amireddy-et-al-v2.tex": 0.6591475025633514,
+        "arora-safra-jacm.txt": 0.21060390670246934
+      }
+    },
+    "apparatus_rate": {
+      "desc": "repository apparatus in prose (inline code, hex hashes, bare URLs, shell commands, SHA-256 mentions) per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.0,
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 3,
+      "q1": 0.0,
+      "q3": 0.0,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 0.0,
+        "amireddy-et-al-v2.tex": 0.0,
+        "arora-safra-jacm.txt": 0.0
+      }
+    },
+    "colon_rate": {
+      "desc": "colons per 1000 words (prose only)",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 0.6004389647791752,
+      "max": 6.767012395648874,
+      "median": 6.212815247722845,
+      "min": 5.5661344660905225,
+      "n": 3,
+      "q1": 5.889474856906684,
+      "q3": 6.489913821685859,
+      "scale": 0.6004389647791752,
+      "values": {
+        "almss-journal.txt": 6.767012395648874,
+        "amireddy-et-al-v2.tex": 5.5661344660905225,
+        "arora-safra-jacm.txt": 6.212815247722845
+      }
+    },
+    "connective_open_share": {
+      "desc": "share of sentences opening with a discourse connective (Thus, Hence, Then, Indeed, Moreover, However, In particular, ...)",
+      "exploratory": true,
+      "floor": 0.01,
+      "iqr": 0.011283479795414775,
+      "max": 0.11753902662993572,
+      "median": 0.10613810741687979,
+      "min": 0.09497206703910614,
+      "n": 3,
+      "q1": 0.10055508722799297,
+      "q3": 0.11183856702340775,
+      "scale": 0.011283479795414775,
+      "values": {
+        "almss-journal.txt": 0.09497206703910614,
+        "amireddy-et-al-v2.tex": 0.10613810741687979,
+        "arora-safra-jacm.txt": 0.11753902662993572
+      }
+    },
+    "contrast_rate": {
+      "desc": "contrastive framing ('not X, but Y', 'X, not Y', 'rather than', 'instead of') per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 0.10514711712460834,
+      "max": 0.5265097667561733,
+      "median": 0.36619305697963966,
+      "min": 0.3162155325069567,
+      "n": 3,
+      "q1": 0.34120429474329816,
+      "q3": 0.4463514118679065,
+      "scale": 0.5,
+      "values": {
+        "almss-journal.txt": 0.3162155325069567,
+        "amireddy-et-al-v2.tex": 0.36619305697963966,
+        "arora-safra-jacm.txt": 0.5265097667561733
+      }
+    },
+    "em_dash_rate": {
+      "desc": "em dashes per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 0.3800325439643174,
+      "max": 1.0530195335123467,
+      "median": 0.8221603845180875,
+      "min": 0.29295444558371175,
+      "n": 3,
+      "q1": 0.5575574150508996,
+      "q3": 0.937589959015217,
+      "scale": 0.5,
+      "values": {
+        "almss-journal.txt": 0.8221603845180875,
+        "amireddy-et-al-v2.tex": 0.29295444558371175,
+        "arora-safra-jacm.txt": 1.0530195335123467
+      }
+    },
+    "en_dash_rate": {
+      "desc": "spaced en dashes used as dashes per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 0.0,
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 3,
+      "q1": 0.0,
+      "q3": 0.0,
+      "scale": 0.5,
+      "values": {
+        "almss-journal.txt": 0.0,
+        "amireddy-et-al-v2.tex": 0.0,
+        "arora-safra-jacm.txt": 0.0
+      }
+    },
+    "heading_rate": {
+      "desc": "headings per 1000 words",
+      "exploratory": true,
+      "floor": 0.3,
+      "iqr": 1.9911103989180257,
+      "max": 4.61403251794346,
+      "median": 1.644320769036175,
+      "min": 0.6318117201074079,
+      "n": 3,
+      "q1": 1.1380662445717915,
+      "q3": 3.129176643489817,
+      "scale": 1.9911103989180257,
+      "values": {
+        "almss-journal.txt": 1.644320769036175,
+        "amireddy-et-al-v2.tex": 4.61403251794346,
+        "arora-safra-jacm.txt": 0.6318117201074079
+      }
+    },
+    "hedge_rate": {
+      "desc": "boundary disclaimers ('does not establish', 'remains open', 'no claim', ...) per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.026325488337808668,
+      "max": 0.052650976675617335,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 3,
+      "q1": 0.0,
+      "q3": 0.026325488337808668,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 0.0,
+        "amireddy-et-al-v2.tex": 0.0,
+        "arora-safra-jacm.txt": 0.052650976675617335
+      }
+    },
+    "i_rate": {
+      "desc": "first-person 'I' per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.0,
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 3,
+      "q1": 0.0,
+      "q3": 0.0,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 0.0,
+        "amireddy-et-al-v2.tex": 0.0,
+        "arora-safra-jacm.txt": 0.0
+      }
+    },
+    "intensifier_rate": {
+      "desc": "intensifiers (precisely, exactly, genuinely, directly, explicitly, ...) per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 0.43824977850072677,
+      "max": 1.2450563937307748,
+      "median": 0.6324310650139134,
+      "min": 0.3685568367293213,
+      "n": 3,
+      "q1": 0.5004939508716174,
+      "q3": 0.9387437293723442,
+      "scale": 0.5,
+      "values": {
+        "almss-journal.txt": 0.6324310650139134,
+        "amireddy-et-al-v2.tex": 1.2450563937307748,
+        "arora-safra-jacm.txt": 0.3685568367293213
+      }
+    },
+    "let_open_share": {
+      "desc": "share of sentences opening with Let/Suppose/Fix/Assume/Consider",
+      "exploratory": false,
+      "floor": 0.01,
+      "iqr": 0.03184000342911028,
+      "max": 0.10613810741687979,
+      "median": 0.04591368227731864,
+      "min": 0.042458100558659215,
+      "n": 3,
+      "q1": 0.044185891417988926,
+      "q3": 0.0760258948470992,
+      "scale": 0.03184000342911028,
+      "values": {
+        "almss-journal.txt": 0.042458100558659215,
+        "amireddy-et-al-v2.tex": 0.10613810741687979,
+        "arora-safra-jacm.txt": 0.04591368227731864
+      }
+    },
+    "list_item_rate": {
+      "desc": "list items per 1000 words",
+      "exploratory": true,
+      "floor": 0.5,
+      "iqr": 2.4259861035509362,
+      "max": 5.273180020506811,
+      "median": 4.300531242094611,
+      "min": 0.4212078134049387,
+      "n": 3,
+      "q1": 2.360869527749775,
+      "q3": 4.786855631300711,
+      "scale": 2.4259861035509362,
+      "values": {
+        "almss-journal.txt": 4.300531242094611,
+        "amireddy-et-al-v2.tex": 5.273180020506811,
+        "arora-safra-jacm.txt": 0.4212078134049387
+      }
+    },
+    "long_sent_share": {
+      "desc": "share of sentences with > 30 tokens",
+      "exploratory": false,
+      "floor": 0.02,
+      "iqr": 0.007216433105761172,
+      "max": 0.15217391304347827,
+      "median": 0.1452513966480447,
+      "min": 0.13774104683195593,
+      "n": 3,
+      "q1": 0.14149622174000032,
+      "q3": 0.1487126548457615,
+      "scale": 0.02,
+      "values": {
+        "almss-journal.txt": 0.1452513966480447,
+        "amireddy-et-al-v2.tex": 0.15217391304347827,
+        "arora-safra-jacm.txt": 0.13774104683195593
+      }
+    },
+    "meta_narration_rate": {
+      "desc": "meta-narration ('Here is', 'The point is', 'The key idea', 'Crucially', 'Importantly', 'This section ...', 'The mechanism', 'The hard step', ...) per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.18090434449684434,
+      "max": 0.947717580161112,
+      "median": 0.8854034910194789,
+      "min": 0.5859088911674235,
+      "n": 3,
+      "q1": 0.7356561910934512,
+      "q3": 0.9165605355902955,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 0.8854034910194789,
+        "amireddy-et-al-v2.tex": 0.5859088911674235,
+        "arora-safra-jacm.txt": 0.947717580161112
+      }
+    },
+    "negation_rate": {
+      "desc": "negations (not, no, never, none, cannot, without, n't) per 1000 words",
+      "exploratory": true,
+      "floor": 1.0,
+      "iqr": 1.2216094724127657,
+      "max": 5.738956457642289,
+      "median": 4.806476094105743,
+      "min": 3.295737512816757,
+      "n": 3,
+      "q1": 4.05110680346125,
+      "q3": 5.272716275874016,
+      "scale": 1.2216094724127657,
+      "values": {
+        "almss-journal.txt": 4.806476094105743,
+        "amireddy-et-al-v2.tex": 3.295737512816757,
+        "arora-safra-jacm.txt": 5.738956457642289
+      }
+    },
+    "nominalization_rate": {
+      "desc": "nominalisations (-tion, -ment, -ness, -ity, -ance, -ence, -ism) per 1000 words",
+      "exploratory": true,
+      "floor": 2.0,
+      "iqr": 1.4512009446280132,
+      "max": 49.069869635271715,
+      "median": 46.96467119465066,
+      "min": 46.16746774601568,
+      "n": 3,
+      "q1": 46.566069470333176,
+      "q3": 48.01727041496119,
+      "scale": 2.0,
+      "values": {
+        "almss-journal.txt": 46.16746774601568,
+        "amireddy-et-al-v2.tex": 49.069869635271715,
+        "arora-safra-jacm.txt": 46.96467119465066
+      }
+    },
+    "note_that_rate": {
+      "desc": "'note that' per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.39790724697634583,
+      "max": 2.12391973048191,
+      "median": 1.7901332069709892,
+      "min": 1.3281052365292183,
+      "n": 3,
+      "q1": 1.5591192217501038,
+      "q3": 1.9570264687264496,
+      "scale": 0.39790724697634583,
+      "values": {
+        "almss-journal.txt": 1.3281052365292183,
+        "amireddy-et-al-v2.tex": 2.12391973048191,
+        "arora-safra-jacm.txt": 1.7901332069709892
+      }
+    },
+    "para_len_cv": {
+      "desc": "coefficient of variation of paragraph length",
+      "exploratory": false,
+      "floor": 0.05,
+      "iqr": 0.13043225417793458,
+      "max": 1.1375837251655443,
+      "median": 0.8788087818360941,
+      "min": 0.8767192168096755,
+      "n": 3,
+      "q1": 0.8777639993228847,
+      "q3": 1.0081962535008193,
+      "scale": 0.13043225417793458,
+      "values": {
+        "almss-journal.txt": 1.1375837251655443,
+        "amireddy-et-al-v2.tex": 0.8767192168096755,
+        "arora-safra-jacm.txt": 0.8788087818360941
+      }
+    },
+    "para_len_mean": {
+      "desc": "mean paragraph length in tokens",
+      "exploratory": true,
+      "floor": 5.0,
+      "iqr": 11.896981424148606,
+      "max": 63.776315789473685,
+      "median": 48.6859756097561,
+      "min": 39.98235294117647,
+      "n": 3,
+      "q1": 44.334164275466286,
+      "q3": 56.23114569961489,
+      "scale": 11.896981424148606,
+      "values": {
+        "almss-journal.txt": 48.6859756097561,
+        "amireddy-et-al-v2.tex": 63.776315789473685,
+        "arora-safra-jacm.txt": 39.98235294117647
+      }
+    },
+    "para_summary_end_share": {
+      "desc": "share of paragraphs (>= 3 sentences) whose last sentence opens with Thus/Hence/So/Therefore/In short/...",
+      "exploratory": false,
+      "floor": 0.02,
+      "iqr": 0.04491725768321513,
+      "max": 0.1111111111111111,
+      "median": 0.06481481481481481,
+      "min": 0.02127659574468085,
+      "n": 3,
+      "q1": 0.04304570527974783,
+      "q3": 0.08796296296296297,
+      "scale": 0.04491725768321513,
+      "values": {
+        "almss-journal.txt": 0.02127659574468085,
+        "amireddy-et-al-v2.tex": 0.06481481481481481,
+        "arora-safra-jacm.txt": 0.1111111111111111
+      }
+    },
+    "paren_rate": {
+      "desc": "parentheticals containing words per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 2.1863291062692074,
+      "max": 12.64862130027827,
+      "median": 12.63623440214816,
+      "min": 8.275963087739857,
+      "n": 3,
+      "q1": 10.456098744944008,
+      "q3": 12.642427851213215,
+      "scale": 2.1863291062692074,
+      "values": {
+        "almss-journal.txt": 12.64862130027827,
+        "amireddy-et-al-v2.tex": 8.275963087739857,
+        "arora-safra-jacm.txt": 12.63623440214816
+      }
+    },
+    "passive_share": {
+      "desc": "share of sentences with a passive construction (proxy)",
+      "exploratory": false,
+      "floor": 0.02,
+      "iqr": 0.015475024600809323,
+      "max": 0.15243342516069788,
+      "median": 0.14860335195530727,
+      "min": 0.12148337595907928,
+      "n": 3,
+      "q1": 0.13504336395719327,
+      "q3": 0.1505183885580026,
+      "scale": 0.02,
+      "values": {
+        "almss-journal.txt": 0.14860335195530727,
+        "amireddy-et-al-v2.tex": 0.12148337595907928,
+        "arora-safra-jacm.txt": 0.15243342516069788
+      }
+    },
+    "question_share": {
+      "desc": "share of sentences that are questions",
+      "exploratory": false,
+      "floor": 0.005,
+      "iqr": 0.002918043490003499,
+      "max": 0.0076726342710997444,
+      "median": 0.004469273743016759,
+      "min": 0.0018365472910927456,
+      "n": 3,
+      "q1": 0.0031529105170547524,
+      "q3": 0.0060709540070582515,
+      "scale": 0.005,
+      "values": {
+        "almss-journal.txt": 0.004469273743016759,
+        "amireddy-et-al-v2.tex": 0.0076726342710997444,
+        "arora-safra-jacm.txt": 0.0018365472910927456
+      }
+    },
+    "same_opener_share": {
+      "desc": "share of sentences opening with the same word as the previous sentence",
+      "exploratory": false,
+      "floor": 0.01,
+      "iqr": 0.018265970563304312,
+      "max": 0.08784773060029283,
+      "median": 0.05995475113122172,
+      "min": 0.05131578947368421,
+      "n": 3,
+      "q1": 0.055635270302452966,
+      "q3": 0.07390124086575728,
+      "scale": 0.018265970563304312,
+      "values": {
+        "almss-journal.txt": 0.05131578947368421,
+        "amireddy-et-al-v2.tex": 0.08784773060029283,
+        "arora-safra-jacm.txt": 0.05995475113122172
+      }
+    },
+    "self_reference_rate": {
+      "desc": "'this paper/note/record/revision/...' per 1000 words",
+      "exploratory": true,
+      "floor": 0.3,
+      "iqr": 0.2612402555870055,
+      "max": 1.3281052365292183,
+      "median": 1.1583214868635814,
+      "min": 0.8056247253552072,
+      "n": 3,
+      "q1": 0.9819731061093944,
+      "q3": 1.2432133616963998,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 1.3281052365292183,
+        "amireddy-et-al-v2.tex": 0.8056247253552072,
+        "arora-safra-jacm.txt": 1.1583214868635814
+      }
+    },
+    "semicolon_rate": {
+      "desc": "semicolons per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 0.782178364939941,
+      "max": 2.1502656210473057,
+      "median": 1.2109724635391987,
+      "min": 0.5859088911674235,
+      "n": 3,
+      "q1": 0.8984406773533111,
+      "q3": 1.680619042293252,
+      "scale": 0.782178364939941,
+      "values": {
+        "almss-journal.txt": 2.1502656210473057,
+        "amireddy-et-al-v2.tex": 0.5859088911674235,
+        "arora-safra-jacm.txt": 1.2109724635391987
+      }
+    },
+    "sent_len_cv": {
+      "desc": "coefficient of variation of sentence length (sd/mean)",
+      "exploratory": false,
+      "floor": 0.03,
+      "iqr": 0.009932413499526227,
+      "max": 0.6159459216664218,
+      "median": 0.6078282546600183,
+      "min": 0.5960810946673695,
+      "n": 3,
+      "q1": 0.6019546746636939,
+      "q3": 0.6118870881632201,
+      "scale": 0.03,
+      "values": {
+        "almss-journal.txt": 0.6078282546600183,
+        "amireddy-et-al-v2.tex": 0.5960810946673695,
+        "arora-safra-jacm.txt": 0.6159459216664218
+      }
+    },
+    "sent_len_mean": {
+      "desc": "mean sentence length in tokens (math placeholder = 1 token)",
+      "exploratory": false,
+      "floor": 1.0,
+      "iqr": 0.7736251410935964,
+      "max": 20.502557544757032,
+      "median": 18.986225895316803,
+      "min": 18.955307262569832,
+      "n": 3,
+      "q1": 18.97076657894332,
+      "q3": 19.744391720036916,
+      "scale": 1.0,
+      "values": {
+        "almss-journal.txt": 18.955307262569832,
+        "amireddy-et-al-v2.tex": 20.502557544757032,
+        "arora-safra-jacm.txt": 18.986225895316803
+      }
+    },
+    "sent_len_sd": {
+      "desc": "standard deviation of sentence length",
+      "exploratory": false,
+      "floor": 1.0,
+      "iqr": 0.3498078074036588,
+      "max": 12.221186944759507,
+      "median": 11.694488408057794,
+      "min": 11.521571329952192,
+      "n": 3,
+      "q1": 11.608029869004993,
+      "q3": 11.957837676408651,
+      "scale": 1.0,
+      "values": {
+        "almss-journal.txt": 11.521571329952192,
+        "amireddy-et-al-v2.tex": 12.221186944759507,
+        "arora-safra-jacm.txt": 11.694488408057794
+      }
+    },
+    "short_sent_share": {
+      "desc": "share of sentences with < 10 tokens",
+      "exploratory": false,
+      "floor": 0.02,
+      "iqr": 0.024562645755391632,
+      "max": 0.20385674931129477,
+      "median": 0.19441340782122904,
+      "min": 0.1547314578005115,
+      "n": 3,
+      "q1": 0.17457243281087026,
+      "q3": 0.1991350785662619,
+      "scale": 0.024562645755391632,
+      "values": {
+        "almss-journal.txt": 0.19441340782122904,
+        "amireddy-et-al-v2.tex": 0.1547314578005115,
+        "arora-safra-jacm.txt": 0.20385674931129477
+      }
+    },
+    "status_vocab_rate": {
+      "desc": "workflow/status words (Lean, Comparator, receipt, formal, checked, verified, record, ledger, pipeline, evidence class) per 1000 words",
+      "exploratory": false,
+      "floor": 0.5,
+      "iqr": 2.4659987635388187,
+      "max": 10.424893381772232,
+      "median": 8.348090058183658,
+      "min": 5.492895854694595,
+      "n": 3,
+      "q1": 6.920492956439126,
+      "q3": 9.386491719977945,
+      "scale": 2.4659987635388187,
+      "values": {
+        "almss-journal.txt": 8.348090058183658,
+        "amireddy-et-al-v2.tex": 5.492895854694595,
+        "arora-safra-jacm.txt": 10.424893381772232
+      }
+    },
+    "this_open_share": {
+      "desc": "share of sentences opening with This/These/That/Those",
+      "exploratory": true,
+      "floor": 0.01,
+      "iqr": 0.0032047237227531833,
+      "max": 0.047750229568411386,
+      "median": 0.04219948849104859,
+      "min": 0.041340782122905026,
+      "n": 3,
+      "q1": 0.041770135306976805,
+      "q3": 0.04497485902972999,
+      "scale": 0.01,
+      "values": {
+        "almss-journal.txt": 0.041340782122905026,
+        "amireddy-et-al-v2.tex": 0.04219948849104859,
+        "arora-safra-jacm.txt": 0.047750229568411386
+      }
+    },
+    "triad_rate": {
+      "desc": "rule-of-three lists 'A, B, and C' per 1000 words",
+      "exploratory": false,
+      "floor": 0.3,
+      "iqr": 0.15474505237329594,
+      "max": 0.8221603845180875,
+      "median": 0.5791607434317907,
+      "min": 0.5126702797714955,
+      "n": 3,
+      "q1": 0.5459155116016431,
+      "q3": 0.700660563974939,
+      "scale": 0.3,
+      "values": {
+        "almss-journal.txt": 0.8221603845180875,
+        "amireddy-et-al-v2.tex": 0.5126702797714955,
+        "arora-safra-jacm.txt": 0.5791607434317907
+      }
+    },
+    "we_rate": {
+      "desc": "'we' per 1000 words",
+      "exploratory": false,
+      "floor": 1.0,
+      "iqr": 11.514474379716235,
+      "max": 34.3489087446902,
+      "median": 12.585378193776878,
+      "min": 11.319959985257727,
+      "n": 3,
+      "q1": 11.952669089517302,
+      "q3": 23.467143469233537,
+      "scale": 11.514474379716235,
+      "values": {
+        "almss-journal.txt": 12.585378193776878,
+        "amireddy-et-al-v2.tex": 34.3489087446902,
+        "arora-safra-jacm.txt": 11.319959985257727
+      }
+    },
+    "word_len_mean": {
+      "desc": "mean letters per word",
+      "exploratory": true,
+      "floor": 0.05,
+      "iqr": 0.23950956475133545,
+      "max": 4.738904350373517,
+      "median": 4.315393372122439,
+      "min": 4.2598852208708475,
+      "n": 3,
+      "q1": 4.287639296496643,
+      "q3": 4.527148861247978,
+      "scale": 0.23950956475133545,
+      "values": {
+        "almss-journal.txt": 4.315393372122439,
+        "amireddy-et-al-v2.tex": 4.738904350373517,
+        "arora-safra-jacm.txt": 4.2598852208708475
+      }
+    }
+  },
+  "name": "Algebraic PCP research papers: Amireddy et al v2, AS 1998, ALMSS journal manuscript",
+  "version": "lean_exposition.register/1"
+}

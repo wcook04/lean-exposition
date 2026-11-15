@@ -8,6 +8,7 @@ substantive mathematical drafts.
 | --- | --- |
 | [Minimal Lean proof](minimal/README.md) | Start here to inspect a saved, actual extraction of “P and Q implies Q and P”, or rerun it with the pinned Lean toolchain. |
 | [QAOA / SK sources](qaoa-sk/README.md) | Follow the exact manuscripts and formal sources behind the worked papers, including the distinction between the broader manuscript and narrower formal targets. |
+| [Algebraic PCP sources](pcp/README.md) | Follow the source-level map behind three accounts of Troy Lee's formalization, with mathematical reviews and finite examples kept separate from a fresh Lean run. |
 | [Prove2Me intake](prove2me/README.md) | Read public theorem metadata and decomposition links while keeping platform evidence distinct from local proof checking. |
 | [Independent bundle reader](consumer/README.md) | Inspect the exported papers and graph using Python's standard library, without installing this package. |
 

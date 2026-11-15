@@ -1,0 +1,40 @@
+{
+  "bundle_id": "pcp-a0ce13ed-curated",
+  "edition": "citation-only long successor",
+  "assembled": "passed",
+  "check_bundle": "passed",
+  "export": "passed",
+  "manifest_sha256": "1be50d8211c0b8a55c847373c76f1fb00315536cafb485b2e74689e38c7edb7c",
+  "manifest_file_checks": {
+    "graph.json": true,
+    "papers/long.md": true,
+    "papers/long.json": true,
+    "papers/short.md": true,
+    "papers/short.json": true,
+    "papers/expository.md": true,
+    "papers/expository.json": true
+  },
+  "manifest_all_file_hashes_match": true,
+  "zip_sha256": "81ce615798ddf8eb63b52a244ca9dd45584df65a26c3aff84f501269b74f9266",
+  "zip_integrity_error": null,
+  "zip_members": [
+    "graph.json",
+    "manifest.json",
+    "papers/expository.json",
+    "papers/expository.md",
+    "papers/long.json",
+    "papers/long.md",
+    "papers/short.json",
+    "papers/short.md"
+  ],
+  "paper_states": [
+    "draft",
+    "draft",
+    "draft"
+  ],
+  "extraction_status": "not_run",
+  "semantic_certification": false,
+  "long_sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+  "scope": "Byte and structural checks; not Lean build or independent proof certification.",
+  "prior_receipt": "work/pcp-humanizer/bundle-validation-prior-0c888.json"
+}

@@ -1,0 +1,462 @@
+{
+  "schema_version": "1.2",
+  "stage": "short",
+  "state": "draft",
+  "path": "papers/short.md",
+  "content_sha256": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+  "graph_sha256": "f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea",
+  "selected_goal_ids": [
+    "PCP.np_subset_pcp",
+    "PCP.pcp_subset_np_concrete",
+    "PCP.ReferenceNP.inNP_iff_mem"
+  ],
+  "claim_ids": [
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+    "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+    "PCP.Algebraic.Hadamard.testQueries_length",
+    "PCP.Algebraic.Hadamard.test_soundness",
+    "PCP.Algebraic.HadamardComposition.encode_query",
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "PCP.Algebraic.SetMultilinear.eval_encode",
+    "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+    "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
+    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "PCP.ReferenceNP.inNP_iff_mem",
+    "PCP.np_subset_pcp",
+    "PCP.pcp_subset_np_concrete",
+    "ordinary:v1-old-test-counterexample"
+  ],
+  "citation_ids": [
+    "almss:45",
+    "almss:69",
+    "blr:4",
+    "citation:bchks",
+    "citation:friedl-sudan",
+    "citation:kaufman-sudan",
+    "citation:rubinfeld-sudan",
+    "paper:0",
+    "paper:1",
+    "paper:10",
+    "paper:11",
+    "paper:12",
+    "paper:13",
+    "paper:14",
+    "paper:15",
+    "paper:16",
+    "paper:17",
+    "paper:18",
+    "paper:19",
+    "paper:2",
+    "paper:3",
+    "paper:4",
+    "paper:5",
+    "paper:6",
+    "paper:7",
+    "paper:8",
+    "paper:9",
+    "paper:additional:0",
+    "paper:additional:1",
+    "paper:additional:2",
+    "paper:additional:3",
+    "paper:grid:0",
+    "paper:grid:1",
+    "paper:grid:2",
+    "paper:grid:3",
+    "paper:v1:test",
+    "safra:52"
+  ],
+  "assumption_ids": [],
+  "unresolved_ids": [
+    "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+    "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
+    "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+    "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+    "PCP.Algebraic.Hadamard.testQueries_length",
+    "PCP.Algebraic.Hadamard.test_soundness",
+    "PCP.Algebraic.HadamardComposition.encode_query",
+    "PCP.Algebraic.HadamardDerivedOracle.rejection_transfer",
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "PCP.Algebraic.SetMultilinear.eval_encode",
+    "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
+    "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+    "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
+    "PCP.Algebraic.ThreeColorFields.chosen_parameters",
+    "PCP.Algebraic.ThreeColorFinalAssembly.of_runtime",
+    "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+    "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
+    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+    "PCP.ReferenceNP.inNP_iff_mem",
+    "PCP.np_subset_pcp",
+    "PCP.pcp_subset_np_concrete",
+    "ordinary:v1-old-test-counterexample"
+  ],
+  "passages": [
+    {
+      "anchor": "pcp-short-abstract",
+      "text_sha256": "f6121a431174993fada0f7f067bd5e95a65feebb04fb497b26aef3ffc911fa78",
+      "claim_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:0",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:18",
+        "paper:19",
+        "paper:3",
+        "paper:4",
+        "paper:5",
+        "paper:6",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Overall mechanism and exact scope; explanatory reconstruction, not a novelty or fresh-build claim. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-theorem",
+      "text_sha256": "fa61f25a67423fd1261a25d175bf4e91c9bcce51c3978f5cadc5a45edc6a0bfd",
+      "claim_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.pcp_subset_np_concrete",
+        "PCP.ReferenceNP.inNP_iff_mem"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:0",
+        "paper:1",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:18",
+        "paper:19",
+        "paper:2",
+        "paper:3",
+        "paper:4",
+        "paper:5",
+        "paper:6",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "One verifier and all constants fixed before input; per-run bit-query budget; one proof fixed before all coins. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-colour-constraints",
+      "text_sha256": "f614565cd20e2a5b69cc00a76f247624e1e95172c1ca6074b0442a95e856744b",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-short-digit-encoding",
+      "text_sha256": "2ba3588f352c79c58324dc572b489e09c27b2c6e18d5c4c96b533d218b7d31f4",
+      "claim_ids": [
+        "PCP.Algebraic.SetMultilinear.eval_encode"
+      ],
+      "citation_ids": [
+        "paper:17"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Honest input degree strictly below b^c; arbitrary decoded polynomial degree at most c*b^c; no claim of recovered set-multilinear form. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-hadamard-encoding",
+      "text_sha256": "e509984c127c805b6d6ca056e46f1211e7fc4e5c7046a28503a78c4651881084",
+      "claim_ids": [
+        "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+        "PCP.Algebraic.HadamardComposition.encode_query",
+        "PCP.Algebraic.Hadamard.selfCorrect_failure_le"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-short-weighted-test",
+      "text_sha256": "5d09c5958fd7b1b49c3e3ea850ec383e1133fc0c8e26a353231263d4af4d1e02",
+      "claim_ids": [
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+        "ordinary:v1-old-test-counterexample"
+      ],
+      "citation_ids": [
+        "citation:bchks",
+        "citation:friedl-sudan",
+        "citation:kaufman-sudan",
+        "citation:rubinfeld-sudan",
+        "paper:12",
+        "paper:v1:test"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Generator/Lagrange correction q>2c and strict rejection threshold. Infinite v1 counterexample is ordinary reviewed deduction, not Lean checked or attributed as Lee's exact example. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation. The four new citations identify the distinct antecedent results named in the passage; they are not asserted to have identical hypotheses or conclusions. The cited antecedent references have their own source records and may differ in hypotheses and conclusions from the formal statement."
+    },
+    {
+      "anchor": "pcp-short-binary-decoding",
+      "text_sha256": "389c9fe6e933a7bf8344430cabaa06c5d17ac3ab976f92757410e6efc09e8ad8",
+      "claim_ids": [
+        "PCP.Algebraic.Hadamard.test_soundness",
+        "PCP.Algebraic.Hadamard.testQueries_length",
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+      ],
+      "citation_ids": [
+        "blr:4",
+        "citation:bchks",
+        "paper:12",
+        "paper:15",
+        "paper:16",
+        "paper:additional:0",
+        "paper:additional:3"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Combined-test rejection controls each check; r=1 separate; pinned cubic HadTest uses10 queries while v2 uses8. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-outer-decoding",
+      "text_sha256": "15b5d2fec0571b566d6c80786545a87a1bfe44dc3238ba5aa9c43cd1ae684db0",
+      "claim_ids": [
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+        "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:additional:0",
+        "paper:additional:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Whole-field line parameter; exact q and rejection thresholds; same decoded polynomial controls full and homogeneous distances. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-outer-correction",
+      "text_sha256": "32eba368abd9104c4e23ccfbd7434fc72214567e18837a789f314aebb96b58be",
+      "claim_ids": [
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le"
+      ],
+      "citation_ids": [
+        "paper:10",
+        "paper:12"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Fixed target, label averaged; failure includes rejection; depends on rejection at that target and allows arbitrary auxiliary table. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-zero",
+      "text_sha256": "3609139f3976f250424642d9e3c448ad92a3fea275fba4388f2cf795b9f2fdf4",
+      "claim_ids": [
+        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-short-assembly",
+      "text_sha256": "613696c051e6bc171776323a1dbefa78f286269600b800478278f6f23880f9c8",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "One common decoding for all seven checks; includes degree capacity m(h-1)<=D and exact error-budget minimum. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    },
+    {
+      "anchor": "pcp-short-resources",
+      "text_sha256": "da92734a9fe374857d87b99a2bb43b97a49eebeafafc023628f750ec5dcfa8b5",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-short-complexity",
+      "text_sha256": "2d0c72f19c7e65a3a3d093bb93df481fb1e57db946085a29b9e72632248616e2",
+      "claim_ids": [
+        "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
+      ],
+      "citation_ids": [
+        "paper:4"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-short-formal-correspondence",
+      "text_sha256": "bf955dfdc8024c2fa36d00acb3a54b41ae0949f5a928ebcf09b8f7e4140ba37b",
+      "claim_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.pcp_subset_np_concrete",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "ordinary:v1-old-test-counterexample",
+        "PCP.ReferenceNP.inNP_iff_mem"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:0",
+        "paper:1",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:18",
+        "paper:19",
+        "paper:2",
+        "paper:3",
+        "paper:4",
+        "paper:5",
+        "paper:6",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "paper:v1:test",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Formal source correspondences retained; new run status owned by long verification record; explanatory counterexample remains ordinary deduction. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+    }
+  ],
+  "review_state": "not_reviewed",
+  "review_notes": [
+    "Author-provided passage evidence was bound to exact document and graph bytes and checked for node resolution. This is not independent mathematical review or a fresh Lean build.",
+    "Author precision edit clarified the counterexample domain and reference-NP correspondence; affected passages were rebound to revised author evidence. Independent review remains pending.",
+    "Rebound graph edition after separately recorded finite exposition checker was added; no source statement or manuscript passage changed.",
+    "Final source graph includes separately rerun exposition examples. Exposition reader-driven edits were rebound; mapping does not convert reader review or finite checks into Lean verification.",
+    "Humanizer revision rebound after independent preservation review. Passage scope and source-node selection remain as before; the revision adds source attributions in prose and bibliography whose individual graph citation records were not previously captured. Full correctness and fresh Lean verification are not inferred.",
+    "Bibliographic graph now includes source-specific antecedent citations BCHKS, Rubinfeld\u2013Sudan, Kaufman\u2013Sudan and Friedl\u2013Sudan, with differing hypotheses preserved; no proof edges or Lean verification were added.",
+    "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl\u2013Sudan, Rubinfeld\u2013Sudan and Kaufman\u2013Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
+    "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged."
+  ]
+}

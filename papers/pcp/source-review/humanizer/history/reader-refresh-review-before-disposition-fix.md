@@ -1,0 +1,24 @@
+# PCP reader refresh review
+
+Canonical manuscript SHA-256: long `1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588`; specialist `c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377`; exposition `4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303`. Reader text matches after companion-link substitution.
+
+The parent identified a specialist mapping where the Hadamard-row discussion was linked to the later binary polynomial decoder. The repaired link selects the no-small-rejection, same-polynomial conclusion beside equation (11) and the actual `BinaryLocalRowDecoding.exists_polynomial_distance_le` source. Parent accepted the earlier screenshot of the corresponding conclusion. A source-level review then identified repeated downstream fallbacks for intermediate steps; source-read rows and links were corrected against pinned source at `a0ce13ed0fa264f051c1278e039596ce65557fa4`. Comparison remains held; no new Lean extraction, axiom report, or proof dependencies are asserted.
+
+Independent source reviews: `pcp-humanizer/reader-theorem-correspondence-review.md` and foundations reviewer handoff; final rechecks pending. Browser captures: `pcp-refresh-specialist-corrected.png`, `pcp-refresh-exposition.png`, `pcp-refresh-gap-corrected.png`.
+
+Formula-only direct passage links were omitted because the current quotation/anchor contract cannot bind a standalone display. The declarations remain indexed and the manuscripts retain their inline source links. Omitted long anchors: `pcp-long-algebra-polynomial-distance`, `pcp-long-algebra-grid-vanishing`, `pcp-long-algebra-standard-correction`, `pcp-long-algebra-nearest-lines`, `pcp-long-outer-correction-soundness`, `pcp-long-zero-certificate`, `pcp-long-zero-actual-test`, `pcp-long-zero-soundness`, `pcp-long-derived-oracle-transfer`, `pcp-long-assembled-zero-soundness`, `pcp-long-parameters`, `pcp-long-fair-bits`, `pcp-long-resources`, `pcp-long-seed-transport`. Specialist: `pcp-short-digit-encoding`, `pcp-short-resources`, `linked-source-15`, `linked-source-16`. Exposition: `linked-source-15`. The long `pcp-long-eight-tables` direct link was also omitted: the accurate target is a structure placed on the graph's separate type shelf; adding a claim edge to it makes this version's graph fail. It is omitted from the selected reader dataset but remains in the unchanged pinned source and manuscript inline link. These are selected entry points, not exhaustive paragraph coverage.
+
+Foundations recheck additionally identified incomplete setup quotes for `pcp-long-algebra-coarse-agreement`, `pcp-long-algebra-generator-test`, and `pcp-long-algebra-mixed-plane`. These direct links were omitted; the agreement-boost link was rebound to the complete 4ε conclusion.
+
+Independent theorem recheck accepted the three complete prose counterparts for specialist outer decoding, outer correction and ZERO; those direct links were restored with their correct local source rows. The line-characterization highlight was moved from the setup to its complete polynomial-existence conclusion.
+
+Final selected passage counts: long 46, specialist 12, exposition 16. `pcp-long-local-constraints` was additionally omitted because the renderer duplicated text when a highlighted quote began with the manuscript's inline Markdown link; the actual Lean declaration and inline link remain. The NP tableau quote excludes its embedded inline link for the same reason. Foundations rechecked remaining algebra lead mappings, and the independent theorem reviewer accepted the remaining long/specialist correspondences and restored specialist conclusions. The parent inspected and accepted `pcp-reader-final-line.png` and `pcp-reader-final-specialist-correction.png`.
+
+Final reader-data SHA-256 (links / selected source data):
+- long `7cf6581bd4fabe6926d011dd406a46f48e4bd51c582b651f4b1c43ce83ebcb6d` / `d30a988f342ad3639b4f92612501c196088394db64d31008ee5e7a2f2d542997`
+- specialist `31b2c4c5b56e50257fdf45862f0cd044481ab628b9be4d6d336c99aeba17b9c6` / `25ceaaacbe82ced97ecf4f101fff58538879eab07d35cd87b5dee3a6e20e2ea8`
+- exposition `68d7464ecaf64c42060a37c4fa8ee67e2ec51b1e397f960b2cd2972cfbf5253b` / `7ad594e943415af979a7b759c720d9d8cc1b5ae7709580264f873c3eb9d05c2e`
+
+Validation: all five paper checks and reader build; 112 Python tests; 11 web source tests; production Vite build. Browser journey and final Git checks recorded at completion. The original guide, app code, and pinned Lean tree are outside the change.
+
+Final browser journey passed 380 checks in 93 seconds. Additional browser navigation opened the exact-line, specialist correction and exposition weighted-test declarations without page errors. Scoped commit `db6737b25fdcb02eef0af5010b2f289cc3931c9e` is proposed in [Proof Reader PR 12](https://github.com/wcook04/proof-reader/pull/12); merge and publication are parent-owned.

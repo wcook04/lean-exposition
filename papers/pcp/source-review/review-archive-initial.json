@@ -1,0 +1,112 @@
+{
+  "schema": "pcp-review-archive/1",
+  "date": "2026-11-15",
+  "policy": "Byte-identical copies of task-local reports/evidence. Their original paths and pending statuses describe the captured author/reviewer turn; review-summary.md reports subsequent integration state. No fresh Lean execution is asserted.",
+  "entries": [
+    {
+      "file": "algebra-math-review.md",
+      "sha256": "b19f96445585ce6877cd2949cf31b3160cc0db27fcc67e7dd209209894b8a449",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/algebra-math-review.md"
+    },
+    {
+      "file": "binary-math-review.md",
+      "sha256": "cd3f16693ce12bbccf3672e015c35127af50dd2f2f60ba10fabd940ac402014d",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/binary-math-review.md"
+    },
+    {
+      "file": "theorem-math-review.md",
+      "sha256": "46f9fe3297d2bc93b875857ab52548259967bbbb40b02f9886c0c3ee61972caa",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/theorem-math-review.md"
+    },
+    {
+      "file": "specialist-math-review.md",
+      "sha256": "5d018374fbbc6181a2d33505ae0fbf71877b7a865fe8be1b5c76de46d309034f",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/specialist-math-review.md"
+    },
+    {
+      "file": "exposition-reader-review.md",
+      "sha256": "fa5d892131e8a42d79e6e6979bb2d18ebe550bcd7c5f6357e19710ead5dd4532",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/exposition-reader-review.md"
+    },
+    {
+      "file": "specialist-authoring.md",
+      "sha256": "c8413fdb0ad25856b31c5ee19713dfec91de7b226c97a886cc0f2ae3542d5132",
+      "role": "authoring record",
+      "source_snapshot": "../pcp-reviews/specialist-authoring.md"
+    },
+    {
+      "file": "exposition-authoring.md",
+      "sha256": "948139c62ccb2eeca45b82ea3ac4c34b3cf26db963fa39feafb56df856008f26",
+      "role": "authoring record",
+      "source_snapshot": "../pcp-reviews/exposition-authoring.md"
+    },
+    {
+      "file": "algebra-evidence.json",
+      "sha256": "df0b898a86ae61931c5a23894cbde13df4403898e52eb52453de3718611e7e2c",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/algebra-evidence.json"
+    },
+    {
+      "file": "binary-evidence.json",
+      "sha256": "0d740a64cfa60dcc1fd8e79af5d317e843ef0456bb13906fa8916574ada249de",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/binary-evidence.json"
+    },
+    {
+      "file": "theorem-evidence.json",
+      "sha256": "a8f3e7a9fabb05d8af31072973db60e47421aee722d75f6a1586bafd9f0c11cf",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/theorem-evidence.json"
+    },
+    {
+      "file": "short-evidence.json",
+      "sha256": "c44af6f4fdf203269c7ba8cb6a7981ce03ec46b6a001945cb29cf1d37fd76cf5",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/short-evidence.json"
+    },
+    {
+      "file": "bundle-validation.json",
+      "sha256": "3359bdabc1e41bba91a27f3d506023118a5198a4a7ae25a9ec718f7777dc0e06",
+      "role": "final structural bundle validation",
+      "source_snapshot": "../pcp-bundle-validation.json"
+    },
+    {
+      "file": "long-pdf-review.md",
+      "sha256": "99a81a099ccaee65659f8c0c874f6881a3aa7d75e25bd57b7ee4b33d71155e24",
+      "role": "AI full-page final PDF visual review and recorded navigation checks",
+      "source_snapshot": "../pcp-reviews/long-pdf-review.md"
+    },
+    {
+      "file": "short-pdf-review.md",
+      "sha256": "3e9aa6f6b699c302d896f9a516498334eccbd3641e47ee44b51966ea5d0f0595",
+      "role": "AI full-page final PDF visual review and recorded navigation checks",
+      "source_snapshot": "../pcp-reviews/short-pdf-review.md"
+    },
+    {
+      "file": "exposition-pdf-review.md",
+      "sha256": "1bc6139bbe5a186ec3f9d12a1868127da46d07f9cd12fe6ba693837a4a80b7c9",
+      "role": "AI full-page final PDF visual review and recorded navigation checks",
+      "source_snapshot": "../pcp-reviews/exposition-pdf-review.md"
+    },
+    {
+      "file": "companion-link-check.json",
+      "sha256": "dd466771b1ed34967b09179625b5c189df6c56d97ba207cfc81dc9f7ff203c06",
+      "role": "structural companion-PDF and named-destination validation",
+      "source_snapshot": "../pdf-build/companion-link-check.json"
+    },
+    {
+      "file": "delivery-pdf-check.json",
+      "sha256": "dd466771b1ed34967b09179625b5c189df6c56d97ba207cfc81dc9f7ff203c06",
+      "role": "structural link check of relocated delivery PDF packet",
+      "source_snapshot": "../pcp-delivery-pdf-check.json"
+    }
+  ],
+  "pending": [],
+  "accepted_exposition_source_sha256": "2e2333ca4727a5f8d510f5de8f184a4139f33122ae2d12ca3d29f2b9bec4d913",
+  "completed_scope": "Source-based AI review, finite examples, structural bundle validation and final rendered PDF review. No fresh full Lean run, kernel dependency extraction, semantic certification or human reader study."
+}

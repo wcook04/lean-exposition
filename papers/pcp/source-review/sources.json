@@ -1,0 +1,371 @@
+{
+  "date": "2026-11-15",
+  "policy": "Reference records only. The source PDFs are retained privately; this file does not grant redistribution rights or report independent mathematical verification.",
+  "sources": [
+    {
+      "id": "simple-algebraic-pcp-v1",
+      "title": "A Simple Algebraic Proof of the PCP Theorem",
+      "authors": [
+        "Prashanth Amireddy",
+        "Amik Raj Behera",
+        "Srikanth Srinivasan",
+        "Madhu Sudan",
+        "Sophus Valentin Willumsgaard"
+      ],
+      "version": "v1",
+      "date": "2026-08-18T06:47:54Z",
+      "url": "https://arxiv.org/abs/2608.17429v1",
+      "download_url": "https://arxiv.org/pdf/2608.17429v1",
+      "sha256": "2abc01344b762470a3db6c5a923190489c5afe14a314d6a2d38eb7b1b12f0ce7",
+      "rights_evidence": "CC BY 4.0; https://arxiv.org/abs/2608.17429v1",
+      "use": "Historical edition documenting corrected test"
+    },
+    {
+      "id": "simple-algebraic-pcp-v2",
+      "title": "A Simple Algebraic Proof of the PCP Theorem",
+      "authors": [
+        "Prashanth Amireddy",
+        "Amik Raj Behera",
+        "Srikanth Srinivasan",
+        "Madhu Sudan",
+        "Sophus Valentin Willumsgaard"
+      ],
+      "version": "v2",
+      "date": "2026-10-22T17:32:55Z",
+      "url": "https://arxiv.org/abs/2608.17429v2",
+      "download_url": "https://arxiv.org/pdf/2608.17429v2",
+      "sha256": "764824336d1de4f95e1fe9c774d157e419578157c408dfd016f3903d73d73795",
+      "rights_evidence": "CC BY 4.0; https://arxiv.org/abs/2608.17429v2",
+      "use": "Corrected primary reference"
+    },
+    {
+      "id": "arora-barak-book",
+      "title": "Computational Complexity: A Modern Approach",
+      "authors": [
+        "Sanjeev Arora",
+        "Boaz Barak"
+      ],
+      "version": "January 2007 internet draft",
+      "date": "see edition",
+      "url": "https://theory.cs.princeton.edu/complexity/book.pdf",
+      "sha256": "da0881782a35bde6a0779a2eb1a8d480f39fbddf70bbb92824d1dc5550a033b2",
+      "rights_evidence": "Title page: not to be reproduced or distributed without authors’ permission.",
+      "use": "Definition 2.1 NP (ch. 2, p. 2.2); Definition 18.1 PCP (ch. 18, p. 18.2), sections 18.4 and 19.3.2. Published edition Definition 11.4 has not been independently verified in this draft; numbering differs."
+    },
+    {
+      "id": "arora-safra-jacm",
+      "title": "Probabilistic Checking of Proofs: A New Characterization of NP",
+      "authors": [
+        "Sanjeev Arora",
+        "Shmuel Safra"
+      ],
+      "version": "JACM 45(1), January 1998, pp. 70–122",
+      "date": "see edition",
+      "url": "https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf",
+      "sha256": "0b6e123f83b5ed1436a77da30324d37f95349e6001739fbfd3c053096ed8f20c",
+      "rights_evidence": "First page permits personal/classroom copying subject to conditions; other copying/posting requires permission.",
+      "use": "Section 5.2, Lemma 5.2.1, Lemma 5.2.2, Corollary 5.2.3, Lemmas 5.2.5 and 5.2.7; source of bivariate agreement route used in Lean."
+    },
+    {
+      "id": "almss-journal",
+      "title": "Proof Verification and the Hardness of Approximation Problems",
+      "authors": [
+        "Sanjeev Arora",
+        "Carsten Lund",
+        "Rajeev Motwani",
+        "Madhu Sudan",
+        "Mario Szegedy"
+      ],
+      "version": "author-hosted journal manuscript, corresponding to JACM 45(3), 1998",
+      "date": "see edition",
+      "url": "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+      "sha256": "740ad430efb4474b369f8b0e9662b890d410cdce366cacc491c4874b289b99cb",
+      "rights_evidence": "No explicit license observed; author-hosted; rights unknown.",
+      "use": "Appendix Theorem 69 states Arora–Safra bivariate agreement; section 4 linearity test; low-degree analysis used by point-line proof. Manuscript numbering confirmed, compare publisher before assuming identical journal pagination."
+    },
+    {
+      "id": "blr-author",
+      "title": "Self-Testing/Correcting with Applications to Numerical Problems",
+      "authors": [
+        "Manuel Blum",
+        "Michael Luby",
+        "Ronitt Rubinfeld"
+      ],
+      "version": "author-hosted manuscript; JCSS 47(3), December 1993, pp. 549–595, DOI 10.1016/0022-0000(93)90044-W",
+      "date": "see edition",
+      "url": "https://people.csail.mit.edu/ronitt/papers/selftestcorrect.pdf",
+      "sha256": "e797e79d880ef026b824d788a68edcb9e52bc8cb36e0234a3d36c64d9b52baee",
+      "rights_evidence": "No explicit license observed; author-hosted; rights unknown.",
+      "use": "Section 4.2 generic linear self-testing; group homomorphism testing underlying BLR in paper appendix B and Lean BLR. Manuscript is not identified as publisher typeset edition."
+    },
+    {
+      "id": "bchks",
+      "title": "Linearity testing in characteristic two",
+      "authors": [
+        "M. Bellare",
+        "D. Coppersmith",
+        "J. Håstad",
+        "M. Kiwi",
+        "M. Sudan"
+      ],
+      "version": "author manuscript",
+      "date": "1996",
+      "url": "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+      "sha256": "02a2af5639db713749b3515586190b3bd90ad11bfb5d0099f8e28a1f34d22a65",
+      "rights_evidence": "Personal use only; express warning PDF p.2",
+      "use": "Direct: v2 Theorem B.1; acquired manuscript Theorem 1.1 p.4 and Theorem 1.2 p.5."
+    },
+    {
+      "id": "friedl-sudan",
+      "title": "Some improvements to total degree tests",
+      "authors": [
+        "Katalin Friedl",
+        "Madhu Sudan"
+      ],
+      "version": "arXiv:1307.3975v1, 15 July 2013; corrected typographical errors relative to 1995 conference version",
+      "date": "1995",
+      "url": "https://arxiv.org/pdf/1307.3975v1",
+      "sha256": "0bc8d8dd1f3aa9bc7df9da2da74601847056722a13a3e4f14453c31037168af8",
+      "rights_evidence": "Unknown; no redistribution license established",
+      "use": "Direct: v2 Appendix A applies Lemma 4, PDF p.2; compare its q − q/p − 1 ≥ d hypothesis."
+    },
+    {
+      "id": "rubinfeld-sudan",
+      "title": "Robust characterizations of polynomials with applications to program testing",
+      "authors": [
+        "Ronitt Rubinfeld",
+        "Madhu Sudan"
+      ],
+      "version": "pre-publication manuscript, to appear SIAM J. Computing",
+      "date": "1996",
+      "url": "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+      "sha256": "cc472a6295152927f4ab0abdd808692a20e82984c8341d38a487fce814e89d29",
+      "rights_evidence": "Unknown; SIAM publisher records copyright 1996",
+      "use": "Direct: v2 §3.2 points to Theorem 4.1; check exact numbering in publisher edition; manuscript extraction uses OCR-imperfect text."
+    },
+    {
+      "id": "kaufman-sudan",
+      "title": "Algebraic property testing: the role of invariance",
+      "authors": [
+        "Tali Kaufman",
+        "Madhu Sudan"
+      ],
+      "version": "STOC conference manuscript",
+      "date": "2008",
+      "url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+      "sha256": "9974d3155db954563f5f3b48babbc6991d2f3484c0fd41b4712b889e9630664a",
+      "rights_evidence": "ACM copyright notice on p.1; redistribution permission unknown",
+      "use": "Direct: v2 §3.2 explicitly points to Theorem 2.9; manuscript §2, theorem 2.9; full proofs of 2.10 and 2.11 deferred to full version."
+    },
+    {
+      "id": "harsha-et-al",
+      "title": "An improved line-point low-degree test",
+      "authors": [
+        "Prahladh Harsha",
+        "Mrinal Kumar",
+        "Ramprasad Saptharishi",
+        "Madhu Sudan"
+      ],
+      "version": "author manuscript dated by PDF metadata 9 April 2024; FOCS 2024 cited version",
+      "date": "2024",
+      "url": "https://mrinalkr.bitbucket.io/papers/ldt1.pdf",
+      "sha256": "ace58f7374fffc89b9a52dd875dc95c8a78c5c5c45799f02263a8e5ca5c36b32",
+      "rights_evidence": "Unknown; no redistribution license established",
+      "use": "Context: v2 Remark 2.13. PDF §1 Theorems 1.1, 1.2, 1.5; compare hypotheses before use."
+    },
+    {
+      "id": "shoup-2005",
+      "title": "A computational introduction to number theory and algebra",
+      "authors": [
+        "Victor Shoup"
+      ],
+      "version": "Version 1, 15 January 2005, first edition",
+      "date": "2005",
+      "url": "https://shoup.net/ntb/ntb-v1.pdf",
+      "sha256": "ff9b88ec20d4f075e9814eab0e53f3660c49ef6dd36b11713b49a6d2b2197676",
+      "rights_evidence": "PDF front matter CC BY-NC-ND 2.0; printed distribution exclusive to Cambridge",
+      "use": "Direct: v2 Fact 2.3 cites Chapter 20. Book §20.2 pp.450–453 and Theorem 20.11 p.453; §21.1 p.462 addresses algorithmic irreducible construction. Verify complete poly(q) generator algorithm rather than attributing it verbatim."
+    },
+    {
+      "id": "amireddy-ideals-2026",
+      "title": "Ideals, Macaulay Bases, and PCPs",
+      "authors": [
+        "Prashanth Amireddy",
+        "Amik Raj Behera",
+        "Srikanth Srinivasan",
+        "Madhu Sudan",
+        "Sophus Valentin Willumsgaard"
+      ],
+      "version": "arXiv v3",
+      "date": "2026-03-24",
+      "url": "https://arxiv.org/pdf/2511.03703v3",
+      "sha256": "3b23d19a84e669e6be388e0697453f3b1f01acadfd66a51e0934cbcb842f9b14",
+      "rights_evidence": "CC BY 4.0; https://arxiv.org/abs/2511.03703",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "ben-sasson-sudan-2008",
+      "title": "Short PCPs with Polylog Query Complexity",
+      "authors": [
+        "Eli Ben-Sasson",
+        "Madhu Sudan"
+      ],
+      "version": "SIAM J. Comput. 38(2)",
+      "date": "2008",
+      "url": "https://people.csail.mit.edu/madhu/papers/2005/rspcpp-full.pdf",
+      "sha256": "0b1580e9931e171c10001915767fdfbc4a4f7c09fbde89a375b477a8a4419795",
+      "rights_evidence": "PDF first page © 2008 SIAM; no open license identified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "dinur-et-al-2011",
+      "title": "PCP Characterizations of NP: Toward a Polynomially-Small Error-Probability",
+      "authors": [
+        "Irit Dinur",
+        "Eldar Fischer",
+        "Guy Kindler",
+        "Ran Raz",
+        "Shmuel Safra"
+      ],
+      "version": "Computational Complexity 20",
+      "date": "2011-08-04",
+      "url": "https://d-nb.info/1199799165/34",
+      "sha256": "87d5262d9d20e4f113ae7edf950f9be3d7184df96eb0209b88f89a2cd676a2c6",
+      "rights_evidence": "PDF p. 413 says © authors and open access; precise license not yet verified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "barak-et-al-2015",
+      "title": "Making the Long Code Shorter",
+      "authors": [
+        "Boaz Barak",
+        "Parikshit Gopalan",
+        "Johan Håstad",
+        "Raghu Meka",
+        "Prasad Raghavendra",
+        "David Steurer"
+      ],
+      "version": "SIAM J. Comput. 44(5)",
+      "date": "2015-10-27",
+      "url": "https://www.csc.kth.se/~johanh/shortcode.pdf",
+      "sha256": "fe9e9e90ad9f78da0afe42fbdb44682ee850550ac111041f29425a19e7df3777",
+      "rights_evidence": "PDF first page © 2015 SIAM; no open license identified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "ben-sasson-et-al-2006",
+      "title": "Robust PCPs of Proximity, Shorter PCPs, and Applications to Coding",
+      "authors": [
+        "Eli Ben-Sasson",
+        "Oded Goldreich",
+        "Prahladh Harsha",
+        "Madhu Sudan",
+        "Salil Vadhan"
+      ],
+      "version": "author-hosted full version",
+      "date": "2006-01",
+      "url": "https://people.csail.mit.edu/madhu/papers/2004/bghsv-full.pdf",
+      "sha256": "ff46a605d18cd6b3443239574edd8d2e9073cd8b49a32d41c989f72ac44f6ee1",
+      "rights_evidence": "No explicit license identified in copy; copyright status unverified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "zippel-1979",
+      "title": "Probabilistic Algorithms for Sparse Polynomials",
+      "authors": [
+        "Richard Zippel"
+      ],
+      "version": "EUROSAM 1979 proceedings scan",
+      "date": "1979",
+      "url": "https://www.cecm.sfu.ca/~monaganm/teaching/TopicsinCA15/zippel79.pdf",
+      "sha256": "08ac61f3a98cc2f7f7985f2f83250cc7beaaaf0762d6f16ac9ee39d5fba12bd6",
+      "rights_evidence": "No explicit license identified; rights unverified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "implementation",
+      "title": "Implementation of a simple algebraic PCP",
+      "authors": [
+        "Prashanth Amireddy",
+        "Amik Raj Behera",
+        "Srikanth Srinivasan",
+        "Madhu Sudan",
+        "Sophus Valentin Willumsgaard"
+      ],
+      "version": "git 612bc3ba9a8488b0c948d193d525f4a1eb170060",
+      "date": "2026-10-15",
+      "url": "https://github.com/SophusWald/Implementaiton-of-A-Simple-Algebraic-Proof-of-the-PCP-Theorem-",
+      "sha256": null,
+      "rights_evidence": "No LICENSE or COPYING file in tracked tree; no reuse license identified. Git commit pins source.",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "dinur-reingold-2006",
+      "title": "Assignment Testers: Towards a Combinatorial Proof of the PCP-Theorem",
+      "authors": [
+        "Irit Dinur",
+        "Omer Reingold"
+      ],
+      "version": "author manuscript",
+      "date": "2006-01-29",
+      "url": "http://www.wisdom.weizmann.ac.il/~dinuri/mypapers/pcptesters.pdf",
+      "sha256": "26b89d67b0cadaf6d50f6094783acb418396bb5ea348c438edef6f2f85f40236",
+      "rights_evidence": "No explicit license identified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "dinur-2007",
+      "title": "The PCP Theorem by Gap Amplification",
+      "authors": [
+        "Irit Dinur"
+      ],
+      "version": "author manuscript hosted at University of Maryland",
+      "date": "2007-02-13",
+      "url": "https://www.cs.umd.edu/users/gasarch/TOPICS/pcp/dinur.pdf",
+      "sha256": "9cfd388b4397717ce221e3c2e0b2c56656f890eebe28fba7f9b6dd4eaebfc51b",
+      "rights_evidence": "No explicit license identified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "goldreich-2025",
+      "title": "Proving the PCP Theorem with 1.5 proof compositions",
+      "authors": [
+        "Oded Goldreich"
+      ],
+      "version": "ECCC TR25-182 original",
+      "date": "2025-11-16",
+      "url": "https://eccc.weizmann.ac.il/report/2025/182/download/",
+      "sha256": "ffda110b08c3106bed437fb14ba598b4e82c7c2b657a28fae971f920c99461c6",
+      "rights_evidence": "No explicit license identified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "goldreich-revision",
+      "title": "Proving the PCP Theorem with 1.5 proof compositions",
+      "authors": [
+        "Oded Goldreich"
+      ],
+      "version": "ECCC TR25-182 revision 1",
+      "date": "2025-11-17",
+      "url": "https://eccc.weizmann.ac.il/report/2025/182/revision/1/download/",
+      "sha256": "f893aaeb4ba0a06a515cf130a86e27a3904cb47e8852ab0aade597bb7d0948a0",
+      "rights_evidence": "No explicit license identified",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    },
+    {
+      "id": "bfl-1991",
+      "title": "Non-deterministic exponential time has two-prover interactive protocols",
+      "authors": [
+        "László Babai",
+        "Lance Fortnow",
+        "Carsten Lund"
+      ],
+      "version": "author-hosted manuscript of Computational Complexity 1 (1991), 3–40; pagination not publisher verified",
+      "date": "1991",
+      "url": "https://lance.fortnow.com/papers/files/mip2.pdf",
+      "sha256": "9ce427aa7c41e9ec45a84ba13311b18895cd7a8a0f59a0ab10adbc3137b61f5a",
+      "rights_evidence": "No license identified in manuscript; author-hosted copy does not establish redistribution terms",
+      "use": "See source reading notes and passage citations; acquisition alone is not proof review."
+    }
+  ]
+}

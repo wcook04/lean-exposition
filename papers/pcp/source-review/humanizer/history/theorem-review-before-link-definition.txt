@@ -1,0 +1,260 @@
+# Reader theorem correspondence audit
+
+Status: accepted after repair and final semantic recheck. This receipt covers every original final-theorem/complexity passage in the long reader (23), both long introduction passages, and all 16 original specialist passages. The final selected reader retains 18 of those 25 long passages and 12 of the 16 specialist passages; omissions and exact reviewed hashes are recorded below. It does not substitute a top-level-claims count for passage review.
+
+Pinned source: `a0ce13ed0fa264f051c1278e039596ce65557fa4`. The review compares mathematical assertions, quantifiers, hypotheses and construction stage with actual source-level declarations and selected proof bodies. It does not change any declaration evidence status or claim a new elaboration/build.
+
+Initial long links SHA256: `9bca245d7cefc42f901a70eebdf53eb5449f43890bc822eb9d5d0f9593494ad2`. Initial specialist links SHA256: `1e479c3c1e9da8d9cb692774aba662514f7a14a3de8b3f9e64bc4a3e1cb63a58`.
+
+The reader requires a quote within one Markdown block. The initial recommendations below sought a substantive complete assertion rather than a setup ending “is”, “set”, “at most”, “exactly”, or “if”. Subsequent renderer inspection established that displayed formulas cannot currently serve as direct quote anchors. The parent therefore chose exact existing prose where available and omitted unsupported formula-only direct mappings. The final disposition below supersedes initial formula-anchor suggestions; no renderer contract was changed. Neighboring mathematical hypotheses remain necessary context for selected prose conclusions.
+
+## Long final-theorem passages and introductions
+
+### pcp-long-intro-theorem
+
+- Exact counterpart: `PCP.np_subset_pcp` — `PCP/Theorem.lean:25`.
+- Quote/action: KEEP: current complete theorem-summary paragraph.
+
+### pcp-long-intro-roadmap
+
+- Exact counterpart for the selected generic certificate sentence: `PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate` — `PCP/Algebraic/VanishingCertificate.lean:119`.
+- Quote/action: Replace final assembly endpoint. Select complete sentence “A polynomial vanishing on the whole grid has a certificate built from the grid's coordinate vanishing polynomials.” The whole canonical roadmap also uses `PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_certificates` — `PCP/Algebraic/ThreeColorGrid.lean:135` — for its graph-specific application; that graph theorem is not the sole counterpart of the generic selected sentence.
+
+### pcp-long-final-target
+
+- Exact counterpart: `PCP.np_subset_pcp` — `PCP/Theorem.lean:25`.
+- Quote/action: Keep declaration. Select complete quantifier-order sentences “The constants, polynomial, verifier and implementation are chosen before the input. The proof may depend on the input but is fixed before the random seed.” The present setup ends before its promised conditions.
+
+### pcp-long-colour-equations
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne` — `PCP/Algebraic/ThreeColorAlgebra.lean:60`.
+- Quote/action: Keep declaration. Select complete assertion immediately after the displayed (u−v)^3=1: “holds exactly when $u\ne v$.” with its visible equation context, or the later complete scalar-assignment iff paragraph. Do not select only the field/colour introduction.
+
+### pcp-long-grid-constraints
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints` — `PCP/Algebraic/ThreeColorGrid.lean:117`.
+- Quote/action: Replace bare Satisfies conversion. Select complete colouring/vanishing sentences beginning “A proper colouring makes $A_P$ vanish…”; stop before public-adjacency computation discussion. The current quote instead asserts graph padding.
+
+### pcp-long-eight-tables
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorVerifier.Proof` — `PCP/Algebraic/ThreeColorVerifier.lean:37`.
+- Quote/action: Replace final rejection theorem. Quote “The received proof contains four primary tables and four encoded line tables.” exactly; this is a definition correspondence, not a proved rejection claim.
+
+### pcp-long-derived-constraints
+
+- Exact counterpart: `PCP.Algebraic.HadamardDerivedOracle.answer_encode` — `PCP/Algebraic/HadamardDerivedOracle.lean:58`.
+- Exact counterpart: `PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le` — `PCP/Algebraic/HadamardDerivedOracle.lean:110`.
+- Quote/action: Replace downstream ZERO transfer. Select the paragraph beginning “For an exact Hadamard row…” covering honest recovery and twice-average row error. If retaining the last downstream-transfer sentence too, add DerivedZeroOnGrid.rejection_transfer as an additional counterpart; it does not prove the row statement by itself.
+
+### pcp-long-query-budget
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorVerifier.queries_length_le` — `PCP/Algebraic/ThreeColorVerifier.lean:362`.
+- Quote/action: Keep declaration. Quote complete paragraph “Their sum is $20c+107$…” through “physical bit reads.” For seven separate branch bounds use branchQueryBound / branchQueries_length_le as well. Current introduction has no bound.
+
+### pcp-long-completeness
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true` — `PCP/Algebraic/ThreeColorVerifierCompleteness.lean:101`.
+- Quote/action: Use the direct every-seed theorem. Select completed paragraph “Every outer low-degree test accepts…” through “Consequently every seven-component random seed accepts.”, or the complete every-seed assertion alone, with degree hypothesis visible nearby.
+
+### pcp-long-decoding-contract
+
+- Exact counterpart: `PCP.Algebraic.EncodedLineLowDegreeTest.exists_close` — `PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325`.
+- Quote/action: Keep declaration; select complete sentence “the four outer tests supply four actual polynomials $P,Q_*,M_A,M_B$, each of total degree at most $D$.” This uses four instances of the same contract, not a new four-table theorem. Current quote only starts field assumptions.
+
+### pcp-long-difference-soundness
+
+- Exact counterpart: `PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors` — `PCP/Algebraic/BinaryDifferenceConsistency.lean:204`.
+- Quote/action: Replace final rejection theorem. KEEP current completed three-bit replacement paragraph. The separate identity conclusion, if selected instead, belongs to BinaryDifferenceConsistency.eq_differencePolynomial_of_close.
+
+### pcp-long-assembled-zero-soundness
+
+- Exact counterpart: `PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound` — `PCP/Algebraic/DerivedZeroOnGridSoundness.lean:246`.
+- Quote/action: Replace rejection_transfer alone. Quote the complete displayed lower-bound inequality containing (1−5Dh/Q)/2 and (1+2C_c)(κ+2ε)+2ε+5D/(Q−1), with assumptions in visible context.
+
+### pcp-long-gap
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable` — `PCP/Algebraic/ThreeColorVerifierSoundness.lean:117`.
+- Quote/action: KEEP current complete non-colourable-graph rejection assertion and declaration.
+
+### pcp-long-parameters
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorParameterChoice.volume_le` — `PCP/Algebraic/ThreeColorParameterChoice.lean:58`.
+- Exact counterpart: `PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one` — `PCP/Algebraic/ThreeColorParameterChoice.lean:79`.
+- Quote/action: Replace unrelated generic field threshold selection. Quote complete displayed a2^a ≤ 4 max{8,clog₂N} ≤ 32(clog₂N+1) and title it logarithmic parameter volume. The source volume definition uses the least exponent established immediately above.
+
+### pcp-long-fair-bits
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq` — `PCP/Algebraic/ThreeColorFullFieldSampling.lean:160`.
+- Quote/action: Replace later canonical-verifier guarantees. Quote the exact displayed rejection-retention identity. The zero-seed behavior itself is ThreeColorFullFieldSampling.test / queries / test_of_not_valid / queries_of_not_valid, not a conclusion of the canonical resource theorem.
+
+### pcp-long-resources
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorBinaryVerifier.verification_guarantees` — `PCP/Algebraic/ThreeColorBinaryVerifier.lean:250`.
+- Quote/action: Replace later canonical stage. Quote the complete three-line displayed r(N), proofLength(N), and query≤187 bounds. Table-count proof introductions instead require ThreeColorResourceBounds.card_query_le.
+
+### pcp-long-amplification
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees` — `PCP/Algebraic/ThreeColorAmplifiedVerifier.lean:72`.
+- Quote/action: Keep declaration; quote complete sentence “Repetition leaves the proof-length polynomial unchanged and multiplies the query and random-bit budgets by the fixed constant $R$.” Do not attach the introductory arithmetic sentence alone. The intermediate reciprocal estimate is RationalRepetitionBound.acceptance_pow_le_reciprocal.
+
+### pcp-long-runtime
+
+- Exact counterpart: `PCP.Lang.ThreeColorRuntime.polyTimeAlg` — `PCP/Complexity/ThreeColorRuntime.lean:11`.
+- Quote/action: KEEP current complete runtime paragraph. It concerns the graph verifier, not the NP-to-graph reduction.
+
+### pcp-long-np-tableau
+
+- Exact counterpart: `PCP.Machine.NPTableau.exists_accepts_iff` — `PCP/Complexity/NPTableau.lean:142`.
+- Quote/action: Replace final executable graph reduction. Select completed paragraph beginning “Represent a computation by…” and ending with the finite-tableau equivalence. Exact witness-specific version: NPTableau.exists_rows_iff.
+
+### pcp-long-local-constraints
+
+- Exact counterpart: `PCP.Machine.TableauCells.step_represents` — `PCP/Complexity/TableauCells.lean:155`.
+- Quote/action: Replace final executable graph reduction. Select the complete sentence “[The cell-step reconstruction][lean-tableau-cells] proves that a row representing a real configuration, with linked prefix and satisfying cell constraints, represents exactly its successor.” The full constraint satisfiability iff instead belongs to NPCellConstraints.satisfiable_accepts_iff.
+
+### pcp-long-clause-reduction
+
+- Exact counterpart: `PCP.Reduction.FiniteDomainConstraints.satisfiable_iff` — `PCP/Reduction/FiniteDomainConstraints.lean:119`.
+- Quote/action: Replace final executable graph reduction. KEEP current completed one-hot paragraph; this is the exact finite-domain↔Boolean satisfaction equivalence.
+
+### pcp-long-colouring-gadget
+
+- Exact counterpart: `PCP.Reduction.NAEThreeColor.colorable_iff` — `PCP/Reduction/NAEThreeColor.lean:241`.
+- Quote/action: Replace final executable graph reduction. Select full paragraph beginning “To encode NAE by a graph,” which describes the actual palette/triangle graph and both coloring directions. The separate OR→two-NAE identity belongs to NAEThreeColor.or_iff_two_nae.
+
+### pcp-long-reduction-runtime
+
+- Exact counterpart: `PCP.Reduction.NPThreeColorRuntime.of_inNP_program` — `PCP/Reduction/NPThreeColorRuntime.lean:257`.
+- Quote/action: Keep declaration. Select the completed first sentence of paragraph beginning “More explicitly, [the program-bearing reduction theorem]…” containing f,p,P,C,e, exact output, polynomial cost, output length and colourability iff.
+
+### pcp-long-seed-transport
+
+- Exact counterpart: `PCP.Verifier.Reduction.clog_eval_add_two_le` — `PCP/Verifier/ReductionResources.lean:35`.
+- Quote/action: Replace final assembly endpoint for the selected arithmetic step. Quote the complete displayed ceiling-log inequality with p(n)+2 and e·clog₂(n+2)+clog₂(p(1)+2).
+
+### pcp-long-converse
+
+- Exact counterpart: `PCP.pcp_subset_np_concrete` — `PCP/ReverseConcrete.lean:33`.
+- Quote/action: KEEP current reverse-inclusion proof-method paragraph and exact endpoint. Its implementation calls the finite-witness checker via the concrete cost model; do not infer an NP forward result from it.
+
+## All specialist passages
+
+### pcp-short-abstract
+
+- Exact counterpart: `PCP.np_subset_pcp` — `PCP/Theorem.lean:25`.
+- Quote/action: KEEP complete theorem-summary sentence.
+
+### pcp-short-theorem
+
+- Exact counterpart: `PCP.np_subset_pcp` — `PCP/Theorem.lean:25`.
+- Quote/action: Keep declaration. Select the two complete statements “If $x\in L$, there is one proof accepted for every random seed. If $x\notin L$, every proof is accepted with probability at most $1/2$.” instead of the setup ending “exactly”. Resource formula remains adjacent visible context.
+
+### pcp-short-colour-constraints
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints` — `PCP/Algebraic/ThreeColorGrid.lean:117`.
+- Quote/action: Select the first two complete sentences about honest vanishing and converse colouring. Exclude the GF(4) counterexample and degree-bound sentence from this direct claim quote; those are distinct assertions.
+
+### pcp-short-digit-encoding
+
+- Exact counterpart: `PCP.Algebraic.SetMultilinear.eval_encode` — `PCP/Algebraic/SetMultilinear.lean:101`.
+- Quote/action: Keep declaration; quote displayed Eq.(4), the complete evaluation identity, instead of the definition introduction ending “is”.
+
+### pcp-short-weighted-test
+
+- Exact counterpart: `PCP.Algebraic.GeneratorLowDegreeTest.exists_close` — `PCP/Algebraic/GeneratorLowDegreeTest.lean:274`.
+- Quote/action: Keep declaration; quote the complete sentence beginning “If (10) rejects with probability…” and concluding “within 2δ of a degree-c polynomial.” The current generator/nodes introduction is not the soundness conclusion.
+
+### pcp-short-binary-decoding
+
+- Exact counterpart: `PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le` — `PCP/Algebraic/BinaryLocalRowDecoding.lean:108`.
+- Quote/action: PRESERVE parent’s Eq.(11) scope and this declaration. Improve completeness by selecting Eq.(11)’s full bound block, or the complete following sentence “There is no small-rejection premise in (11), and both bounds concern the same decoded polynomial.” Do not move back to the preceding Hadamard/BLR claim.
+
+### pcp-short-outer-decoding
+
+- Exact counterpart: `PCP.Algebraic.EncodedLineLowDegreeTest.exists_close` — `PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325`.
+- Quote/action: Keep declaration; select full Eq.(13) distance-bound block, with degree/threshold in visible neighboring text. Current test-algorithm paragraph is a definition, not exists_close’s assertion.
+
+### pcp-short-outer-correction
+
+- Exact counterpart: `PCP.Algebraic.BinaryLocalCorrection.failure_le` — `PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222`.
+- Quote/action: Keep declaration; select full Eq.(14) failure bound. Current motivation paragraph does not assert that bound.
+
+### pcp-short-zero
+
+- Exact counterpart: `PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound` — `PCP/Algebraic/BinaryZeroOnGridSoundness.lean:249`.
+- Quote/action: Select full Eq.(15) bound. The current quote is only the ideal polynomial check, whereas rejectionRate_ge concerns actual two-corrector rejection and proximity losses.
+
+### pcp-short-resources
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one` — `PCP/Algebraic/ThreeColorParameterChoice.lean:79`.
+- Quote/action: Replace generic field-threshold construction; quote full Eq.(22), a2^a≤32(clog₂N+1), title “Logarithmic parameter volume”.
+
+### pcp-short-complexity
+
+- Exact counterpart: `PCP.Lang.ThreeColorRuntime.polyTimeAlg` — `PCP/Complexity/ThreeColorRuntime.lean:11`.
+- Quote/action: Replace NPThreeColorRuntime.of_inNP_program. KEEP current graph-verifier arithmetic/compilation paragraph.
+
+### linked-source-12
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true` — `PCP/Algebraic/ThreeColorVerifierCompleteness.lean:101`.
+- Quote/action: Use direct every-seed completeness theorem; quote first three complete sentences ending “perfect completeness.” Exclude the following shared-decoding soundness sentence.
+
+### linked-source-13
+
+- Exact counterpart: `PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees` — `PCP/Algebraic/ThreeColorAmplifiedVerifier.lean:72`.
+- Quote/action: Keep declaration; narrow quote to complete sentence “Repetition multiplies randomness and queries by a fixed constant and preserves the proof bound and perfect completeness.” The intermediate reciprocal estimate is a separate lemma.
+
+### linked-source-14
+
+- Exact counterpart: `PCP.pcp_subset_np_concrete` — `PCP/ReverseConcrete.lean:33`.
+- Quote/action: KEEP complete converse paragraph and correct endpoint.
+
+### linked-source-15
+
+- Exact counterpart: `PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition` — `PCP/Algebraic/GridVanishing.lean:134`.
+- Quote/action: Replace packed-certificate equivalence for this repeated-division claim. Quote displayed decomposition A(X)=Σ Z_H(X_i)U_i(X), with the preceding iff sentence visible. It is Lemma2.9, not Corollary2.10.
+
+### linked-source-16
+
+- Exact counterpart: `PCP.Algebraic.PointLineTest.exists_close_of_small_rejection` — `PCP/Algebraic/PointLineSoundness.lean:58`.
+- Quote/action: Keep declaration; select complete conclusion paragraph following field/error-threshold display, beginning “and degree-$D$ line polynomials disagree…” through “total-degree-$D$ polynomial.” Include the explicit threshold display as a second same-declaration passage if the parser cannot select a multi-block conditional. Do not keep only “states that if”.
+
+## Confirmed errors and scope
+
+The systematic failure was substituting an available downstream theorem for the local claim: final soundness for table layout/difference coupling, final NP reduction for tableaus/one-hot/gadgets, generic field-threshold choice for the graph-dependent least exponent, and canonical resource guarantees for whole-field sampling and raw graph resources. Several correct declarations were attached only to introductory prose before the actual assertion. The specialist ZERO quote additionally described the ideal test while selecting the actual-test rejection theorem.
+
+The existing Eq.(11) BinaryLocalRowDecoding correction is retained. The GF(4) counterexample is ordinary explanatory mathematics; it is not silently included in a quote attributed to the colourability equivalence. Definition correspondences such as the eight-table Proof structure remain definition correspondences.
+
+No canonical graph, app mapping, manuscript or evidence status has been edited by this reviewer. Findings were sent to both prior_funnel_routes (reader/app owner) and download_pcp_core (canonical mapping/bundle owner). Their repairs were inspected before the acceptance below.
+
+## Final recheck and disposition
+
+Accepted on 15 November 2026 against the files and hashes below. The canonical correspondence and selected reader coverage are distinct contracts.
+
+The canonical sidecar review accepts the local source assertions for all 25 long introduction/final-theorem anchors and all 14 specialist canonical anchors. In particular, the generic certificate theorem, the three Hadamard distance/composition/self-correction declarations, the actual difference-test coupling, the actual ZERO lower bound, the graph-dependent parameter volume, the whole-field sampling identity, the raw graph resource theorem, and the separate tableau, one-hot, NAE gadget and executable-reduction results now match the relevant assertions. The Hadamard additions were checked directly against the pinned declaration and proof text. A canonical multi-paragraph passage can contain further explanatory reasoning: its sidecar explicitly says that a mapped declaration supports a local assertion, not every sentence in that passage. This is bounded source correspondence, not complete dependency extraction, a new Lean build, or an upgrade of evidence status.
+
+For the selected reader, all remaining 18 scoped long passages and all 12 specialist passages have mathematically appropriate declarations and exact existing prose assertions. The long roadmap now selects the generic certificate result. The reduction-runtime quote states the complete returned program, cost, output-length and colourability contract. The Eq.(11) link still selects the same-polynomial/no-small-rejection conclusion of `BinaryLocalRowDecoding.exists_polynomial_distance_le`. The restored specialist outer-decoding, outer-correction and ZERO quotes express their actual label scope or conditional conclusions, with the quantitative bounds and required proximity/field assumptions visible in adjacent manuscript text.
+
+The seven omitted long passages in this audit's scope are:
+
+- `pcp-long-assembled-zero-soundness`, `pcp-long-parameters`, `pcp-long-fair-bits`, `pcp-long-resources`, and `pcp-long-seed-transport`: the substantive direct assertions are displayed formulas; generic introductory or nearby prose was not used as a substitute.
+- `pcp-long-eight-tables`: its exact counterpart is the `ThreeColorVerifier.Proof` structure. The reader owner observed a runtime graph failure for claim edges to that separately shelved structure. It remains in canonical source correspondence and the manuscript's inline source link, but is absent from the selected declaration dataset. It is not represented as a theorem.
+- `pcp-long-local-constraints`: the exact cell-successor sentence is semantically supported by `TableauCells.step_represents`, but the reader owner observed duplicated trailing prose when highlighting its existing Markdown source hyperlink. The direct highlight was removed; the pinned inline source link and indexed declaration remain.
+
+The four omitted original specialist links are `pcp-short-digit-encoding`, `pcp-short-resources`, `linked-source-15` (grid decomposition), and `linked-source-16` (point-versus-line). The first three substantive quantitative assertions are display-math statements. The point-versus-line theorem's quantitative conditional crosses a display/prose boundary; its direct mapping was omitted, while the source declaration remains indexed and the manuscript's explanation and references remain. These are reduced UI coverage, not missing mathematical claims or an assertion that the omitted source has been checked by the reader.
+
+All omitted theorem declarations above remain in the corresponding `generated/lean.json` statement indexes. The sole exception is the explicitly recorded `Proof` structure. The original manuscript source links and canonical source correspondence are preserved.
+
+The repository's actual `resolve_markdown` and `locate_markdown` functions were run on the final files: all 46 selected long-reader passages and all 12 specialist passages resolved uniquely to their intended source blocks and rendered quotes. That mechanical check covers every selected passage in those two files; semantic review here is limited to the 18 retained long passages in this audit's assigned scope and all 12 retained specialist passages. Other long chapters have separate reviewers. No unresolved correction remains in this assigned semantic scope.
+
+### Exact reviewed artifacts
+
+| Artifact | SHA256 |
+| --- | --- |
+| `work/proof-reader/papers/pcp-full-argument/links.json` | `7cf6581bd4fabe6926d011dd406a46f48e4bd51c582b651f4b1c43ce83ebcb6d` |
+| `work/proof-reader/papers/pcp-specialist/links.json` | `31b2c4c5b56e50257fdf45862f0cd044481ab628b9be4d6d336c99aeba17b9c6` |
+| `work/proof-reader/papers/pcp-full-argument/generated/lean.json` | `d30a988f342ad3639b4f92612501c196088394db64d31008ee5e7a2f2d542997` |
+| `work/proof-reader/papers/pcp-specialist/generated/lean.json` | `25ceaaacbe82ced97ecf4f101fff58538879eab07d35cd87b5dee3a6e20e2ea8` |
+| `work/lean-exposition/examples/pcp/evidence-graph.json` | `f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea` |
+| `work/lean-exposition/papers/pcp/long/reasoning-record.json` | `8bd050e2e1cd5f8676884d4404e5ed01845e7c171b07cec5659c2b75d1ccb611` |
+| `work/lean-exposition/papers/pcp/short/correspondence.json` | `072bef4210fb2c735cdc9a0c594ffec356eb46007a17d1d749542d6dfbc89aa2` |

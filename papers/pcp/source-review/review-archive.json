@@ -1,0 +1,678 @@
+{
+  "schema": "pcp-review-archive/1",
+  "date": "2026-11-15",
+  "policy": "Byte-identical copies of task-local reports/evidence. Their original paths and pending statuses describe the captured author/reviewer turn; review-summary.md reports subsequent integration state. No fresh Lean execution is asserted.",
+  "entries": [
+    {
+      "file": "algebra-math-review.md",
+      "sha256": "b19f96445585ce6877cd2949cf31b3160cc0db27fcc67e7dd209209894b8a449",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/algebra-math-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "binary-math-review.md",
+      "sha256": "cd3f16693ce12bbccf3672e015c35127af50dd2f2f60ba10fabd940ac402014d",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/binary-math-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "theorem-math-review.md",
+      "sha256": "46f9fe3297d2bc93b875857ab52548259967bbbb40b02f9886c0c3ee61972caa",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/theorem-math-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "specialist-math-review.md",
+      "sha256": "5d018374fbbc6181a2d33505ae0fbf71877b7a865fe8be1b5c76de46d309034f",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/specialist-math-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "exposition-reader-review.md",
+      "sha256": "fa5d892131e8a42d79e6e6979bb2d18ebe550bcd7c5f6357e19710ead5dd4532",
+      "role": "independent AI review",
+      "source_snapshot": "../pcp-reviews/exposition-reader-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "specialist-authoring.md",
+      "sha256": "c8413fdb0ad25856b31c5ee19713dfec91de7b226c97a886cc0f2ae3542d5132",
+      "role": "authoring record",
+      "source_snapshot": "../pcp-reviews/specialist-authoring.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "exposition-authoring.md",
+      "sha256": "948139c62ccb2eeca45b82ea3ac4c34b3cf26db963fa39feafb56df856008f26",
+      "role": "authoring record",
+      "source_snapshot": "../pcp-reviews/exposition-authoring.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "algebra-evidence.json",
+      "sha256": "df0b898a86ae61931c5a23894cbde13df4403898e52eb52453de3718611e7e2c",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/algebra-evidence.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "binary-evidence.json",
+      "sha256": "0d740a64cfa60dcc1fd8e79af5d317e843ef0456bb13906fa8916574ada249de",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/binary-evidence.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "theorem-evidence.json",
+      "sha256": "a8f3e7a9fabb05d8af31072973db60e47421aee722d75f6a1586bafd9f0c11cf",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/theorem-evidence.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "short-evidence.json",
+      "sha256": "c44af6f4fdf203269c7ba8cb6a7981ce03ec46b6a001945cb29cf1d37fd76cf5",
+      "role": "chapter/source evidence",
+      "source_snapshot": "../pcp-chapters/short-evidence.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "bundle-validation.json",
+      "sha256": "3359bdabc1e41bba91a27f3d506023118a5198a4a7ae25a9ec718f7777dc0e06",
+      "role": "final structural bundle validation",
+      "source_snapshot": "../pcp-bundle-validation.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "long-pdf-review.md",
+      "sha256": "99a81a099ccaee65659f8c0c874f6881a3aa7d75e25bd57b7ee4b33d71155e24",
+      "role": "AI full-page final PDF visual review and recorded navigation checks",
+      "source_snapshot": "../pcp-reviews/long-pdf-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "short-pdf-review.md",
+      "sha256": "3e9aa6f6b699c302d896f9a516498334eccbd3641e47ee44b51966ea5d0f0595",
+      "role": "AI full-page final PDF visual review and recorded navigation checks",
+      "source_snapshot": "../pcp-reviews/short-pdf-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "exposition-pdf-review.md",
+      "sha256": "1bc6139bbe5a186ec3f9d12a1868127da46d07f9cd12fe6ba693837a4a80b7c9",
+      "role": "AI full-page final PDF visual review and recorded navigation checks",
+      "source_snapshot": "../pcp-reviews/exposition-pdf-review.md",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "companion-link-check.json",
+      "sha256": "dd466771b1ed34967b09179625b5c189df6c56d97ba207cfc81dc9f7ff203c06",
+      "role": "structural companion-PDF and named-destination validation",
+      "source_snapshot": "../pdf-build/companion-link-check.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "delivery-pdf-check.json",
+      "sha256": "dd466771b1ed34967b09179625b5c189df6c56d97ba207cfc81dc9f7ff203c06",
+      "role": "structural link check of relocated delivery PDF packet",
+      "source_snapshot": "../pcp-delivery-pdf-check.json",
+      "edition": "initial",
+      "scope": "historical; not acceptance of the revised manuscripts or PDFs"
+    },
+    {
+      "file": "humanizer/literature-grounding-audit.md",
+      "sha256": "ddabddfe63019d9b29ceec64f693f4b862db8dc38925b4f0bcac2354bcd9af1c",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/literature-grounding-audit.md",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/exposition-preservation-reader-review.md",
+      "sha256": "eb6981b9e193b4d25316d615020c4d0be60d508869f1d5a8e7a70541bbbf8f55",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/exposition-preservation-reader-review.md",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/short/paragraph-decisions-before-edits.json",
+      "sha256": "a881210d1523c7cbad1d85609b6b6ae3fc9051411026cece38845498b1b6f81a",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/paragraph-decisions-before-edits.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/short/paragraph-review-final.json",
+      "sha256": "72d1d05cc81cf12c5cad34df66f2d448d04f1e37dbe1fdf40a10277d9a8a52d4",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/paragraph-review-final.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/short/preservation-checks.json",
+      "sha256": "44bec971a6b2a935982ec7e444cc3be4cb06e74feb24520666f143b6ee1b3df1",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/preservation-checks.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/short/marks-check.json",
+      "sha256": "21180bed603934780f9bd0d75fbb76d0a6846075a250200f51319b8b924e24cf",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/marks-check.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/short/literature-register.md",
+      "sha256": "0621a988e0e8febd9c7338a1136e946383d60ed9ea6ef12051dab35253cf5999",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/literature-register.md",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/short/sequential-review.md",
+      "sha256": "d296e1fb84bf612c1eacf7004cdd88bd1c5cf1bfc3afab1f27a8898e08877f09",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/sequential-review.md",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/paragraph-review.json",
+      "sha256": "2bf29e98286524d98cc2941d336f66d5075f23e53393e74cc74e44c14002b876",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/paragraph-review.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/paragraph-jobs.tsv",
+      "sha256": "85572cb62f3101c6cd0495cfc2442a3a5c4483cb869d769d172fb1a1608efa68",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/paragraph-jobs.tsv",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/sequential-review.md",
+      "sha256": "25b238d6ee8bd436e93f843c2de165dfc25949013941b9bbe83bf150608973e5",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/sequential-review.md",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/measurements.md",
+      "sha256": "ffe02d89ad1f7bdea0706b514770763169f5bc1647b5a052b844285d0b2c3335",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/measurements.md",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/metrics-summary.json",
+      "sha256": "c407baa6858effcb96c8e87e7d0cd41a3db5106b7a19459edc52b35cca4680fc",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/metrics-summary.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/fidelity-receipt.json",
+      "sha256": "eb4b87988cd179075257bfdd8946e3f040f6db37f063d3ad0a08f56c07f264b6",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/fidelity-receipt.json",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "humanizer/expository/bundled-preservation-validation.txt",
+      "sha256": "e134f446145a0f06f011051b771e01d1064c55bcb0b56c95f77186b5477c8ccd",
+      "role": "prose/literature revision evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/bundled-preservation-validation.txt",
+      "copy": "byte-identical; third-party source extracts excluded from archive selection"
+    },
+    {
+      "file": "assembly-initial.json",
+      "sha256": "d7c01065a4e0dd71ed854124b60f2567cd89e4898296b1d52d19f549516a8056",
+      "role": "immutable first-edition historical record",
+      "edition": "initial"
+    },
+    {
+      "file": "review-archive-initial.json",
+      "sha256": "e175a7359f1e4c00c4d1ad3339857e793187e6e1615006dc8296ceaddcd36e74",
+      "role": "immutable first-edition historical record",
+      "edition": "initial"
+    },
+    {
+      "file": "review-summary-initial.md",
+      "sha256": "f291f2084ae7afd59203f756bc14d7c5270ea59169845c584bf87b2e6ec92bd5",
+      "role": "immutable first-edition historical record",
+      "edition": "initial"
+    },
+    {
+      "file": "humanizer/bundle-validation.json",
+      "sha256": "102402f9d3ffb29a6c3cab55d848fec7326294f262f63327f0945ef30a4f94f9",
+      "role": "superseded pre-correction bundle structural validation",
+      "edition": "humanizer-pre-correction",
+      "source_snapshot": "work/pcp-humanizer/bundle-validation.json",
+      "copy": "byte-identical",
+      "scope": "Structural success only; semantic mapping review reopened and this receipt is not final corrected-bundle acceptance."
+    },
+    {
+      "file": "humanizer/bundle-validation-prior-0c888.json",
+      "sha256": "524190132ae73537e9b3829b55118cb7adc88a1a69dade65d706b1e5b78665ac",
+      "role": "superseded intermediate humanizer bundle validation",
+      "edition": "humanizer-intermediate",
+      "source_snapshot": "work/pcp-humanizer/bundle-validation-prior-0c888.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/graph-review.md",
+      "sha256": "66ba31390153ea4bca3e4b3c0b487c35c928b755266f9e7b62f38ff673a64566",
+      "role": "reference-only bibliographic graph review",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/graph-review.md",
+      "copy": "byte-identical",
+      "scope": "Bibliographic review of the earlier humanizer graph b7d92ed; the final correspondence bundle adds five source records. No extracted dependency claim."
+    },
+    {
+      "file": "humanizer/mathematical-preservation-review.md",
+      "sha256": "5ca9f441683f5a85fff90fd02bcf2005578ae5ed8517f8844d5b68af7babf099",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/mathematical-preservation-review.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long-pdf-review.md",
+      "sha256": "9b6c6d1639d29bdf4fa26574b0a4cd05682cf421b7257c6b9e053c78beb706e6",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long-pdf-review.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/short-pdf-review.md",
+      "sha256": "43c2238d911fcd7056cd99f1659e0bc11eb3a2800cdd671207a0a1cfcda1dfab",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short-pdf-review.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/exposition-pdf-review.md",
+      "sha256": "db0ce9c6b4065aa7c2ee2f0288f47870dcd0d120e9a6805e628bfa4ba94f0d55",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/exposition-pdf-review.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/companion-link-check.json",
+      "sha256": "cdc584927d94a76caa2205ab62d08c61a4869f6b48b5cc5bae67856c350b7e9d",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/companion-link-check.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/canonical-pdf-check.json",
+      "sha256": "cdc584927d94a76caa2205ab62d08c61a4869f6b48b5cc5bae67856c350b7e9d",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/canonical-pdf-check.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/delivery-pdf-check.json",
+      "sha256": "cdc584927d94a76caa2205ab62d08c61a4869f6b48b5cc5bae67856c350b7e9d",
+      "role": "current revision source/render/navigation evidence",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/delivery-pdf-check.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/expository/literature-review.md",
+      "sha256": "9eb03790f20235c6c9a276b77588b5d7b09225d6b2de5431fe60f1be462b4551",
+      "role": "exposition literature review; source title corrected without changing manuscript",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/expository/literature-review.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/history/pre-correction-mappings/long.json",
+      "sha256": "9b12ace7e3daca1a95ed288bbc00ba52db0d348af2ccd73e21b67175d4934293",
+      "role": "superseded pre-correction passage mapping",
+      "edition": "humanizer-pre-correction",
+      "zip_member": "papers/long.json",
+      "bundle_sha256": "81ce615798ddf8eb63b52a244ca9dd45584df65a26c3aff84f501269b74f9266"
+    },
+    {
+      "file": "humanizer/history/pre-correction-mappings/short.json",
+      "sha256": "1b9dbc0f7579b9ab2def5b832b189bdb854bd0cbb22a0379b00d669ee64a7df1",
+      "role": "superseded pre-correction passage mapping",
+      "edition": "humanizer-pre-correction",
+      "zip_member": "papers/short.json",
+      "bundle_sha256": "81ce615798ddf8eb63b52a244ca9dd45584df65a26c3aff84f501269b74f9266"
+    },
+    {
+      "file": "humanizer/history/pre-correction-mappings/expository.json",
+      "sha256": "4cb85588a5e02451e3dbac5b1170bc81761af314cafb10c707be3d493c9ec1e5",
+      "role": "superseded pre-correction passage mapping",
+      "edition": "humanizer-pre-correction",
+      "zip_member": "papers/expository.json",
+      "bundle_sha256": "81ce615798ddf8eb63b52a244ca9dd45584df65a26c3aff84f501269b74f9266"
+    },
+    {
+      "file": "humanizer/history/pre-correction-mappings/manifest.json",
+      "sha256": "1be50d8211c0b8a55c847373c76f1fb00315536cafb485b2e74689e38c7edb7c",
+      "role": "superseded mapping bundle provenance",
+      "edition": "humanizer-pre-correction"
+    },
+    {
+      "file": "humanizer/history/pre-correction-mappings/provenance.json",
+      "sha256": "e5746c754e3d83188534e675be0fd7032d906b6f7ea72f659ab872d0b0fe4645",
+      "role": "superseded mapping bundle provenance",
+      "edition": "humanizer-pre-correction"
+    },
+    {
+      "file": "humanizer/long/paragraph-review.json",
+      "sha256": "b1893ed4458010b7a8ec9809802dd8246b18144da6fa62f544cdcb64e9c6cb09",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/paragraph-review.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/review-notes.md",
+      "sha256": "f0d8b229fbd4309ff44c8764b544f1f915d4ad8e6c8fa7ba1b642cf3f162ac63",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/review-notes.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/preservation-check.json",
+      "sha256": "eb6edddf28bb6ddd703a4ebf81274e1c0da023265eff45aab5ba7cf1011ea1bd",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/preservation-check.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/preservation-check-first-pass.json",
+      "sha256": "87b9c43dbf86228bc4c66afa3248486568bb74cb9708ce4c85ca1ae633a73ec0",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-intermediate",
+      "source_snapshot": "work/pcp-humanizer/long/preservation-check-first-pass.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/citation-repair.json",
+      "sha256": "e08299cb0184b3454ce8e17508cc74b7e791202bc8763b1522c5718956c24964",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/citation-repair.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/corpus-manifest.json",
+      "sha256": "07d868b1765bb84da5ffd90313f1a2630ae4a7837f6d1118d92338e72e543323",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/corpus-manifest.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/register-metrics-public.json",
+      "sha256": "2b4366d65f4ea237b4f03803c9f9ccd28a2f2c148e38e348fa3b3fccafb406c3",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/register-metrics-public.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/final-sequential-read.md",
+      "sha256": "330318aa02cbad319f0a5eda4d6906b065113cacc1618cdbc7c42c2e8666b1a9",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/final-sequential-read.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/literature-moves.md",
+      "sha256": "537c9148b476a818d4ff92976bb102f2344d1110cf2397d40646493ca2e18001",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/literature-moves.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/final-preservation-receipt.md",
+      "sha256": "0641da3e8129eb3a390e935a6b9e6c12346366ea51aca83b6dd2547ddc612dfb",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/final-preservation-receipt.md",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/long/public-artifact-manifest.json",
+      "sha256": "28d81b77dc6e8e862d1ecb2e9974f6773281c1053208d8d2292f73e2a21ee4c0",
+      "role": "long final revision audit; source-author manifest verified",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/long/public-artifact-manifest.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/ordinary-checks-rerun.json",
+      "sha256": "28f2fddc51aa6423d0c0e0871511a9086ce066a5f044505f49ffd8d3529072d4",
+      "role": "ordinary finite calculations rerun at final manuscript hashes",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/ordinary-checks-rerun.json",
+      "copy": "byte-identical"
+    },
+    {
+      "file": "humanizer/short/profile-public.json",
+      "sha256": "843ca3ec6cd60239d6752bc2e9622f2194725ca20802740a077f7e8f3bfe9e50",
+      "role": "portable public profile projection",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/profile-public.json",
+      "copy": "byte-identical author-supplied projection; raw originals retained privately and bound by provenance"
+    },
+    {
+      "file": "humanizer/short/before-profile-public.json",
+      "sha256": "4a30a4da655dc28f747185424ed541fa12466e977fd82d4bfd8961c351440082",
+      "role": "portable public profile projection",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/before-profile-public.json",
+      "copy": "byte-identical author-supplied projection; raw originals retained privately and bound by provenance"
+    },
+    {
+      "file": "humanizer/short/after-profile-public.json",
+      "sha256": "6895136473416c018f0a3618d306d3e80e64b8a52af7972a8e6b45788ae791aa",
+      "role": "portable public profile projection",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/after-profile-public.json",
+      "copy": "byte-identical author-supplied projection; raw originals retained privately and bound by provenance"
+    },
+    {
+      "file": "humanizer/short/profile-projection-provenance.json",
+      "sha256": "5088286bf1f156ddcec069635f74364cbc5576ce3777bccb834c09ec2340494f",
+      "role": "profile projection provenance, original hashes and exact changed fields",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/short/profile-projection-provenance.json",
+      "copy": "byte-identical author-supplied projection; raw originals retained privately and bound by provenance"
+    },
+    {
+      "file": "humanizer/package-tests.json",
+      "sha256": "54f6bdf9a7974e28f6ff6d5cfda4ecd065d7a903d50aa5d0b389955b1013b0d1",
+      "role": "current source-package unit-test summary with private raw-log hash",
+      "edition": "humanizer-revision",
+      "source_snapshot": "work/pcp-humanizer/package-tests.json",
+      "copy": "byte-identical summary; raw test log privately retained"
+    },
+    {
+      "file": "humanizer/history/mapping-review-initial.md",
+      "sha256": "d3317897af92d68d56a516288584fba9ee5ae60c847b6e7f9202c8a981461dc4",
+      "role": "historical mapping report; superseded scope",
+      "edition": "initial",
+      "source_snapshot": "git:f9a55040e2607e2fc22bedb66e536ce9f1e09140:papers/pcp/source-review/mapping-review.md",
+      "copy": "byte-identical",
+      "scope": "Historical only. Structural validation and initial reviews did not establish adequate semantic matching; later correspondence repair supersedes these associations."
+    },
+    {
+      "file": "humanizer/history/mapping-review-pre-correction.md",
+      "sha256": "d83450b1807ec6c00f16c1d4d6ba09ae2386dcf49791d52f16ee098568bf5c02",
+      "role": "historical mapping report; superseded scope",
+      "edition": "humanizer-pre-correction",
+      "source_snapshot": "papers/pcp/source-review/mapping-review.md before correspondence correction; report names bundle 81ce6157",
+      "copy": "byte-identical",
+      "scope": "Historical only. Structural validation and initial reviews did not establish adequate semantic matching; later correspondence repair supersedes these associations."
+    },
+    {
+      "file": "humanizer/bundle-validation-corrected.json",
+      "sha256": "31b431f717b186b4a33ddfda4376550f0b15dc0a0d1437a1639646f8fd390d16",
+      "role": "corrected canonical correspondence and structural bundle evidence",
+      "edition": "humanizer-corrected-correspondence",
+      "source_snapshot": "work/pcp-humanizer/bundle-validation.json",
+      "copy": "byte-identical",
+      "scope": "Canonical mapping/bundle review; final reader quote selection is a separate check."
+    },
+    {
+      "file": "humanizer/mapping-review-corrected.md",
+      "sha256": "b338b65f7ae9f2e5bf078c7ecb125d354df44f29a0cc9ad3b2061a6007d89db4",
+      "role": "corrected canonical correspondence and structural bundle evidence",
+      "edition": "humanizer-corrected-correspondence",
+      "source_snapshot": "papers/pcp/source-review/mapping-review.md",
+      "copy": "byte-identical",
+      "scope": "Canonical mapping/bundle review; final reader quote selection is a separate check."
+    },
+    {
+      "file": "acquisition-status.json",
+      "sha256": "6d612b7230b03ef5a39fb83178c58279704c07018ae26c1f233bb25bcf2215b7",
+      "role": "public bibliography acquisition disposition",
+      "edition": "humanizer-revision",
+      "source_snapshot": "Private acquisition receipt and recorded context acquisition notes; original receipt hash recorded in projection",
+      "copy": "public projection excluding private annex paths"
+    },
+    {
+      "file": "humanizer/reader-algebra-correspondence-review.md",
+      "sha256": "5cec32e29277ff0e5eea3999866baa8f833b3c8917d5b084f22627bd68c6d184",
+      "role": "bounded source-data correspondence review with final repair disposition",
+      "edition": "humanizer-corrected-correspondence",
+      "source_snapshot": "work/pcp-humanizer/reader-algebra-correspondence-review.md",
+      "copy": "byte-identical",
+      "scope": "Selected local source correspondence; distinguishes canonical mappings, reader data, screenshot review and Lean kernel status."
+    },
+    {
+      "file": "humanizer/reader-theorem-correspondence-review.md",
+      "sha256": "ae9b896135d87cef88f020a51aa2b93fe12214a950a831f8a48dcbede522c295",
+      "role": "bounded source-data correspondence review with final repair disposition",
+      "edition": "humanizer-corrected-correspondence",
+      "source_snapshot": "work/pcp-humanizer/reader-theorem-correspondence-review.md",
+      "copy": "byte-identical",
+      "scope": "Selected local source correspondence; distinguishes canonical mappings, reader data, screenshot review and Lean kernel status."
+    },
+    {
+      "file": "humanizer/reader-refresh-review.md",
+      "sha256": "7d1a5363af305c1b7fb71467a6ef0785b22bbf5f34becb61f784f0851c94c1c0",
+      "role": "final selected-reader data, omission, validation and review receipt",
+      "edition": "humanizer-corrected-correspondence",
+      "source_snapshot": "work/pcp-reader-refresh-review.md",
+      "copy": "byte-identical",
+      "scope": "46/12/16 selected links; final source/data hashes, bounded correspondence and rendered-reader checks. Deployment remains separate."
+    },
+    {
+      "file": "humanizer/history/reader-refresh-review-before-disposition-fix.md",
+      "sha256": "0463673659bb3c89e2572680bc6229cc790378fd92fbf3ba8c1e76d939cce3bf",
+      "role": "superseded receipt before stale pending wording was corrected; data and accepted commit unchanged",
+      "edition": "humanizer-intermediate",
+      "copy": "byte-identical original receipt"
+    },
+    {
+      "file": "humanizer/history/theorem-review-before-link-definition.txt",
+      "sha256": "eb1a8838792e1e2520dbb8b928502500c4f3cbeb9a6415c0848fd8a2555d5fdf",
+      "role": "historical receipt before missing quoted reference definition was added",
+      "edition": "humanizer-intermediate",
+      "copy": "byte-identical original; .txt preserves the original unresolved Markdown quote as documentary text"
+    }
+  ],
+  "pending": [],
+  "accepted_exposition_source_sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+  "historical_completed_scope": "Source-based AI review, finite examples, structural bundle validation and final rendered PDF review. No fresh full Lean run, kernel dependency extraction, semantic certification or human reader study.",
+  "current_edition": "humanizer-revision",
+  "source_and_pdf_status": "Final three revised sources, sequential readings and mathematical-preservation reviews accepted; all 72 PDF pages visually reviewed and all 20 companion annotations resolved in canonical and relocated packets.",
+  "completed_scope": [
+    "Paragraph-level prose review of all three manuscripts, with preserved mathematical material and source-specific literature comparisons.",
+    "Independent mathematical-preservation reviews and final sequential source reads, with warm-reading and AI-review limitations explicit.",
+    "All-page PDF inspection and canonical/relocated companion-destination checks.",
+    "Ordinary finite examples and current source-package unit tests; two opt-in pinned Lean fixtures skipped.",
+    "Corrected canonical passage correspondence, structural bundle/consumer checks, and selected reader source-data/rendered-view reviews."
+  ],
+  "current_manuscripts": [
+    {
+      "paper": "long",
+      "file": "papers/pcp/long/reasoning-record.md",
+      "sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588"
+    },
+    {
+      "paper": "short",
+      "file": "papers/pcp/short/paper.md",
+      "sha256": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377"
+    },
+    {
+      "paper": "expository",
+      "file": "papers/pcp/expository/main.md",
+      "sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303"
+    }
+  ],
+  "current_correspondence": {
+    "bundle_zip_sha256": "8ac76496d9d9853f2984a24b1f9cc0871c3f67c9b68fb17b2b5d5ee9259dba7b",
+    "graph_sha256": "f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea",
+    "canonical_review": "humanizer/mapping-review-corrected.md",
+    "canonical_receipt": "humanizer/bundle-validation-corrected.json",
+    "reader_review": "humanizer/reader-refresh-review.md",
+    "selected_reader_links": {
+      "long": 46,
+      "short": 12,
+      "expository": 16
+    },
+    "coverage": "Selected source entry points, not exhaustive statement matching; formula-only and other unsupported quote links are omitted as recorded in reader review.",
+    "extraction_status": "not_run",
+    "semantic_certification": false,
+    "paper_states": [
+      "draft",
+      "draft",
+      "draft"
+    ]
+  },
+  "separate_release_record": "release-checks.json is maintained by the coordinating agent; this archive does not claim deployment completion."
+}

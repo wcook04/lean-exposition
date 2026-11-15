@@ -1,0 +1,47 @@
+{
+  "schema": "pcp-ordinary-checks/1",
+  "date": "2026-11-15",
+  "working_directory": "repository root",
+  "python": "3.12.7",
+  "example_checks": [
+    {
+      "command": [
+        "python3",
+        "papers/pcp/expository/check_examples.py"
+      ],
+      "script_sha256": "743563475ac1fb850d79537fb89291a03980a182d80115a94169988be30ee118",
+      "exit_code": 0,
+      "stdout_sha256": "9fc951be4224ff73f209579dcf718edaf6a94895aff01429c2bf921fa5aa305d",
+      "retained_output": "papers/pcp/expository/examples-output.txt",
+      "retained_output_exact_match": true
+    },
+    {
+      "command": [
+        "python3",
+        "papers/pcp/expository/check_exposition_examples.py"
+      ],
+      "script_sha256": "b1c375fa0c8ab21ed9f415cbe375ac449252bdeefc074094539925e6e8016cfe",
+      "exit_code": 0,
+      "stdout_sha256": "550aff6fe4c7ff5ad727b8ca24f351d38d97c92930a4965fbf9ec14bbf019969",
+      "retained_output": "papers/pcp/expository/exposition-examples-output.txt",
+      "retained_output_exact_match": true
+    }
+  ],
+  "graph_validation": {
+    "command": [
+      "lean-exposition",
+      "validate",
+      "examples/pcp/evidence-graph.json"
+    ],
+    "graph_sha256": "a986e7db76f7fe65d774240dbac012dfb1cf76fa04d0bebae00c69ff63744b90",
+    "exit_code": 0,
+    "extraction_status": "not_run",
+    "semantic_certification": false
+  },
+  "command_interfaces_checked": [
+    "lean-exposition assemble --help",
+    "lean-exposition check-bundle --help",
+    "python3 papers/pcp/render.py --help"
+  ],
+  "scope": "Finite ordinary computations, source-byte records and structural graph validation only. These are not a Lean proof run, general theorem proof, reader learning study or rendered-output acceptance."
+}

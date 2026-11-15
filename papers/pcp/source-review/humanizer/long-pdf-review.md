@@ -1,0 +1,11 @@
+# Humanized long PDF review
+
+Reviewed `work/pdf-build-humanized/long/reasoning-record.pdf`, SHA-256 `7f287871f2b4d9763d9f50298e85efd1bd7a321f82ee5ed622f0209d5dd08eae`, rendered from frozen source `1d9cf0f3d38363daaad2f363804372c3b8534de23aeb7a0638bc5485debd3736`. Inspected all 43 rendered pages individually at full-page reading scale. No clipping, missing glyph boxes, overlapping equations, broken tables, or obstructive page breaks found. Page 4's interpolation set-difference symbol displays correctly. The source-account and references on pages 41–43 are legible and within margins despite the two reported underfull-box warnings. Parent's separate companion-link receipt reports all 20 annotations checked.
+
+**Reader-facing issue:** several source hyperlinks appear as orphaned lowercase sentence fragments after the preceding sentence, e.g. “polynomial distance.” and “grid interpolation.” on page 4, “bivariate agreement.” on page 10, and “fixed-parameter estimate.” on page 13. These render clearly and remain clickable, but removal of their former lead-in makes the prose read as an error. The parent was notified; the visual verdict is conditional on a decision or repair of these fragments. Any new PDF bytes require a fresh recheck.
+
+This is a rendered-layout and reading check, not a Lean kernel build or mathematical proof validation. The independent mathematical-preservation review is in `mathematical-preservation-review.md`.
+
+## Successor final visual disposition
+
+Accepted the successor PDF after inspecting each of its 43 rendered page images at reading size, including the source account and bibliography. PDF SHA-256: `87d000671158d1161c7e7f2ca4dbbad77dfce9775c95810e8637ce0553481e2b`; source SHA-256: `1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588`. These hashes were independently checked against the current files. The earlier orphaned citation fragments have been repaired. No clipping, missing glyphs, overlapping formulas, or broken table layout was observed; the table spanning pages 29–30 repeats its header. Bibliography and source-account wrapping are legible. The parent separately reports that all 20 companion annotations passed in `work/pcp-humanizer/companion-link-check.json`. This is a visual review and does not assert a new Lean kernel check.

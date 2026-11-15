@@ -1,0 +1,498 @@
+{
+  "schema": "pcp-specialist-candidate-evidence/1",
+  "artifact": "work/lean-exposition/papers/pcp/short/paper.md",
+  "artifact_sha256": "72d165920fbc02aa7b58bc626c3e6899cd2f099089a80cb10efa792279127577",
+  "source_pin": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "status": "author source-reading and sequential self-review complete; parent independent review, rendering and binding pending",
+  "assurance": "Candidate evidence, not canonical mapping, compiled dependency graph, fresh Lean build or human comprehension evidence.",
+  "long_chapters_read_in_full": [
+    "work/pcp-chapters/algebra.md",
+    "work/pcp-chapters/binary.md",
+    "work/pcp-chapters/theorem.md"
+  ],
+  "primary_paper": "arXiv:2608.17429v2",
+  "passages": [
+    {
+      "passage_id": "pcp-short-abstract",
+      "passage_sha256": "c4f3b84e15f4dc01143e9bd0996db778d934ada65005eed1ffc59d4c7b620fdb",
+      "node_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.np_subset_pcp",
+          "locator": "PCP/Theorem.lean:25",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean",
+          "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+        },
+        {
+          "node_id": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+          "locator": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+          "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+          "locator": "PCP/Algebraic/ThreeColorVerifierSoundness.lean:117",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "source_sha256": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-final-target",
+        "pcp-long-encoded-line-soundness",
+        "pcp-long-difference-soundness"
+      ],
+      "boundary": "Overall mechanism and exact scope; explanatory reconstruction, not a novelty or fresh-build claim.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-theorem",
+      "passage_sha256": "fcba8adad34d2ad8f11fa0c2402eb98aa3bd3d7a04d3af6b22b9ea7155956775",
+      "node_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.pcp_subset_np_concrete",
+        "PCP.ReferenceNP.inNP_iff_mem"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.np_subset_pcp",
+          "locator": "PCP/Theorem.lean:25",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean",
+          "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+        },
+        {
+          "node_id": "PCP.pcp_subset_np_concrete",
+          "locator": "PCP/ReverseConcrete.lean:33",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean",
+          "source_sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c"
+        },
+        {
+          "node_id": "PCP.ReferenceNP.inNP_iff_mem",
+          "locator": "PCP/Complexity/ReferenceNPConverse.lean:39",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean",
+          "source_sha256": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-final-target",
+        "pcp-long-converse"
+      ],
+      "boundary": "One verifier and all constants fixed before input; per-run bit-query budget; one proof fixed before all coins.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-colour-constraints",
+      "passage_sha256": "e27d13b305f7b46eebe45be4c579e33b360dbfc5e182c9e1a240f2938ec7d3a4",
+      "node_ids": [
+        "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
+        "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+        "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
+          "locator": "PCP/Algebraic/ThreeColorAlgebra.lean:60",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAlgebra.lean",
+          "source_sha256": "fc6eee6c8ae126f32b4ad96cef8ba55576c30d4ce7f55f607493a6d0e9eb1813"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+          "locator": "PCP/Algebraic/ThreeColorGrid.lean:91",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorGrid.lean",
+          "source_sha256": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e"
+        },
+        {
+          "node_id": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+          "locator": "PCP/Algebraic/VanishingCertificate.lean:119",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/VanishingCertificate.lean",
+          "source_sha256": "f8a240c66a7507cbfd78bfabc0e858e1342ae7ad2bf5e8bb1ded5b5b2a25add6"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-colour-equations",
+        "pcp-long-grid-constraints",
+        "pcp-long-algebra-grid-vanishing"
+      ],
+      "boundary": "Requires both vertex and edge constraints, nonempty grid, public adjacency extension and degree-bounded certificate.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-digit-encoding",
+      "passage_sha256": "98f3a5430e7139d729d17fa603f12fde3365089d8e53975c84ee25d41e0b535d",
+      "node_ids": [
+        "PCP.Algebraic.SetMultilinear.eval_encode"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.SetMultilinear.eval_encode",
+          "locator": "PCP/Algebraic/SetMultilinear.lean:101",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinear.lean",
+          "source_sha256": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-set-multilinear"
+      ],
+      "boundary": "Honest input degree strictly below b^c; arbitrary decoded polynomial degree at most c*b^c; no claim of recovered set-multilinear form.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-hadamard-encoding",
+      "passage_sha256": "8a9f3d693ca87ea64be25c6c6c0306f57cd9a24f190b16fb59917568df383ace",
+      "node_ids": [
+        "PCP.Algebraic.Hadamard.test_soundness",
+        "PCP.Algebraic.HadamardDerivedOracle.rejection_transfer"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.Hadamard.test_soundness",
+          "locator": "PCP/Algebraic/HadamardSoundness.lean:29",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardSoundness.lean",
+          "source_sha256": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa"
+        },
+        {
+          "node_id": "PCP.Algebraic.HadamardDerivedOracle.rejection_transfer",
+          "locator": "PCP/Algebraic/HadamardDerivedOracle.lean:166",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardDerivedOracle.lean",
+          "source_sha256": "b561f7840dd937d9d97db5234efec9407b9842faddfc367352f682173769da6f"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-hadamard-labels",
+        "pcp-long-hadamard-composition",
+        "pcp-long-derived-oracle-transfer"
+      ],
+      "boundary": "Full and homogeneous half-distance identities; fixed-request fresh-mask correction; field labels identified through coordinate isomorphism.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-weighted-test",
+      "passage_sha256": "04a941d925c90260c4acb025780b686734fa13d082bf9961c14aedc5c1d8f29c",
+      "node_ids": [
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+        "ordinary:v1-old-test-counterexample"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+          "locator": "PCP/Algebraic/GeneratorLowDegreeTest.lean:274",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+          "source_sha256": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4"
+        },
+        {
+          "node_id": "ordinary:v1-old-test-counterexample",
+          "locator": "papers/pcp/source-review/old-test-counterexample.md",
+          "url": "urn:sha256:9e3f4415c695bec1eb385af70aa60667b1a5ec197d21f17aa5bf2bc097e81f44",
+          "source_sha256": "9e3f4415c695bec1eb385af70aa60667b1a5ec197d21f17aa5bf2bc097e81f44"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-algebra-generator-test",
+        "pcp-long-algebra-weighted-plurality",
+        "pcp-long-algebra-old-test-counterexample"
+      ],
+      "boundary": "Generator/Lagrange correction q>2c and strict rejection threshold. Infinite v1 counterexample is ordinary reviewed deduction, not Lean checked or attributed as Lee's exact example.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-binary-decoding",
+      "passage_sha256": "d87dee265bca3a49a925c8c2ddb957e753d22340bc6269d8b9e84b4ff22590b3",
+      "node_ids": [
+        "PCP.Algebraic.Hadamard.test_soundness",
+        "PCP.Algebraic.Hadamard.testQueries_length",
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.Hadamard.test_soundness",
+          "locator": "PCP/Algebraic/HadamardSoundness.lean:29",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardSoundness.lean",
+          "source_sha256": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa"
+        },
+        {
+          "node_id": "PCP.Algebraic.Hadamard.testQueries_length",
+          "locator": "PCP/Algebraic/HadamardTest.lean:89",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardTest.lean",
+          "source_sha256": "e98d517ad8a075351efc3c7f7375b3c7a2c8c379281e259d0ec9ba228fe8aa5c"
+        },
+        {
+          "node_id": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+          "locator": "PCP/Algebraic/BinaryLocalRowDecoding.lean:108",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+          "source_sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-hadamard-soundness",
+        "pcp-long-hadamard-row-decoding",
+        "pcp-long-binary-weighted-test"
+      ],
+      "boundary": "Combined-test rejection controls each check; r=1 separate; pinned cubic HadTest uses10 queries while v2 uses8.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-outer-decoding",
+      "passage_sha256": "d0990178d703c4d2ad8f503bf8b90f998cee48374cf183713c2f6e1c4f474d33",
+      "node_ids": [
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+        "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+          "locator": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+          "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+        },
+        {
+          "node_id": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+          "locator": "PCP/Algebraic/PointLineSoundness.lean:58",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/PointLineSoundness.lean",
+          "source_sha256": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74"
+        },
+        {
+          "node_id": "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+          "locator": "PCP/Algebraic/BivariateAgreement.lean:141",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BivariateAgreement.lean",
+          "source_sha256": "9dc7fa8512f0d8b2445176f2094455e297b48c18bdeb475713819f92c4e021cc"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-encoded-line-soundness",
+        "pcp-long-algebra-point-line-statement",
+        "pcp-long-algebra-ruled-surface"
+      ],
+      "boundary": "Whole-field line parameter; exact q and rejection thresholds; same decoded polynomial controls full and homogeneous distances.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-outer-correction",
+      "passage_sha256": "32eba368abd9104c4e23ccfbd7434fc72214567e18837a789f314aebb96b58be",
+      "node_ids": [
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+          "locator": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+          "source_sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-outer-local-corrector",
+        "pcp-long-outer-correction-soundness"
+      ],
+      "boundary": "Fixed target, label averaged; failure includes rejection; depends on rejection at that target and allows arbitrary auxiliary table.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-zero",
+      "passage_sha256": "3609139f3976f250424642d9e3c448ad92a3fea275fba4388f2cf795b9f2fdf4",
+      "node_ids": [
+        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+        "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+          "locator": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean:301",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+          "source_sha256": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e"
+        },
+        {
+          "node_id": "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
+          "locator": "PCP/Algebraic/DerivedZeroOnGridSoundness.lean:187",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+          "source_sha256": "6e58a5b2b12060f38bc3c640be2169ef0ddbd3652deed85ce5453c094fd7cfa0"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-zero-soundness",
+        "pcp-long-derived-oracle-transfer"
+      ],
+      "boundary": "Nonuniform targets corrected; replacement error enters multiplied rejection term; derived primary must equal actual degree-bounded polynomial.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-assembly",
+      "passage_sha256": "795128b98bc9d34f0b48421823bc98666eee80665951a5ab4927252371f92bdc",
+      "node_ids": [
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+          "locator": "PCP/Algebraic/ThreeColorVerifierSoundness.lean:117",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "source_sha256": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
+          "locator": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean:130",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+          "source_sha256": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-decoding-contract",
+        "pcp-long-difference-soundness",
+        "pcp-long-assembled-zero-soundness",
+        "pcp-long-gap"
+      ],
+      "boundary": "One common decoding for all seven checks; includes degree capacity m(h-1)<=D and exact error-budget minimum.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-resources",
+      "passage_sha256": "761ac579b9f2a574939825c252491ce425f50ae517b17cf92525387e13081942",
+      "node_ids": [
+        "PCP.Algebraic.ThreeColorFields.chosen_parameters",
+        "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
+        "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Algebraic.ThreeColorFields.chosen_parameters",
+          "locator": "PCP/Algebraic/ThreeColorFields.lean:171",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFields.lean",
+          "source_sha256": "4881f7870c78f56c35ec7f620ab11bf46c5ce002141764ca3c301cb2cbf96966"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
+          "locator": "PCP/Algebraic/ThreeColorCanonicalVerifier.lean:168",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorCanonicalVerifier.lean",
+          "source_sha256": "181b533bdd83154f2c39b4b26ee606f6805e16639ca97cf6772549edff426a32"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+          "locator": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean:72",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+          "source_sha256": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-parameters",
+        "pcp-long-fair-bits",
+        "pcp-long-resources",
+        "pcp-long-amplification"
+      ],
+      "boundary": "Formal parameter choices; whole-field exceptional acceptance loses factor1/16;187 base queries; amplification same fixed proof.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-complexity",
+      "passage_sha256": "2d0c72f19c7e65a3a3d093bb93df481fb1e57db946085a29b9e72632248616e2",
+      "node_ids": [
+        "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+        "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+        "PCP.Algebraic.ThreeColorFinalAssembly.of_runtime",
+        "PCP.pcp_subset_np_concrete"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+          "locator": "PCP/Complexity/ThreeColorRuntime.lean:11",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorRuntime.lean",
+          "source_sha256": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c"
+        },
+        {
+          "node_id": "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+          "locator": "PCP/Reduction/NPThreeColorRuntime.lean:257",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColorRuntime.lean",
+          "source_sha256": "949beaa45a454ec0e3e713e5d8065d6459054ddf4353616f9d73bf845db43d34"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorFinalAssembly.of_runtime",
+          "locator": "PCP/Algebraic/ThreeColorFinalAssembly.lean:54",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFinalAssembly.lean",
+          "source_sha256": "d81de382ca0a80c3f5a4f2a2e5a92e626f9002ec726e176367c3207014c4d4aa"
+        },
+        {
+          "node_id": "PCP.pcp_subset_np_concrete",
+          "locator": "PCP/ReverseConcrete.lean:33",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean",
+          "source_sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-runtime",
+        "pcp-long-np-tableau",
+        "pcp-long-local-constraints",
+        "pcp-long-clause-reduction",
+        "pcp-long-colouring-gadget",
+        "pcp-long-seed-transport",
+        "pcp-long-converse"
+      ],
+      "boundary": "Runtime and NP reduction explicit, not inferred from query bounds; finite prefix enumeration proves converse in same model.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    },
+    {
+      "passage_id": "pcp-short-formal-correspondence",
+      "passage_sha256": "1dc6e4b0f2697eddfff4b79258ebb142f6d3628740b23572397e6b3138b14478",
+      "node_ids": [
+        "PCP.np_subset_pcp",
+        "PCP.pcp_subset_np_concrete",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "ordinary:v1-old-test-counterexample",
+        "PCP.ReferenceNP.inNP_iff_mem"
+      ],
+      "source_loci": [
+        {
+          "node_id": "PCP.np_subset_pcp",
+          "locator": "PCP/Theorem.lean:25",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean",
+          "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+        },
+        {
+          "node_id": "PCP.pcp_subset_np_concrete",
+          "locator": "PCP/ReverseConcrete.lean:33",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean",
+          "source_sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c"
+        },
+        {
+          "node_id": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+          "locator": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+          "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+        },
+        {
+          "node_id": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+          "locator": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+          "source_sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f"
+        },
+        {
+          "node_id": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+          "locator": "PCP/Algebraic/ThreeColorVerifierSoundness.lean:117",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "source_sha256": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b"
+        },
+        {
+          "node_id": "ordinary:v1-old-test-counterexample",
+          "locator": "papers/pcp/source-review/old-test-counterexample.md",
+          "url": "urn:sha256:9e3f4415c695bec1eb385af70aa60667b1a5ec197d21f17aa5bf2bc097e81f44",
+          "source_sha256": "9e3f4415c695bec1eb385af70aa60667b1a5ec197d21f17aa5bf2bc097e81f44"
+        },
+        {
+          "node_id": "PCP.ReferenceNP.inNP_iff_mem",
+          "locator": "PCP/Complexity/ReferenceNPConverse.lean:39",
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L39-L41"
+        }
+      ],
+      "full_argument_passages": [
+        "pcp-long-final-target",
+        "pcp-long-algebra-source-boundary"
+      ],
+      "boundary": "Formal source correspondences retained; new run status owned by long verification record; explanatory counterexample remains ordinary deduction.",
+      "evidence_class": "source-reconstructed argument; mixed ordinary deduction where explicitly identified"
+    }
+  ]
+}
