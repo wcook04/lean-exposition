@@ -1,0 +1,197 @@
+{
+  "scope": "Exact honest subroutine-address illustration over F4; not a production parameter instance, complete verifier, statistical soundness check, or Lean replay.",
+  "colouring": [
+    "1",
+    "omega"
+  ],
+  "ambient_point": "omega",
+  "chi_at_point": "0",
+  "Z_at_point": "1",
+  "Val_at_point": "1",
+  "masked_derived_query": {
+    "labels": [
+      "Z1",
+      "1+Z2+Z1*Z2"
+    ],
+    "bits": [
+      0,
+      1
+    ],
+    "xor": 1
+  },
+  "corrections": [
+    {
+      "target": "A",
+      "target_point": [
+        "omega",
+        "0"
+      ],
+      "purpose": "comparison",
+      "z": 1,
+      "inner_target": [
+        "1",
+        "1",
+        "1"
+      ],
+      "inner_points": [
+        [
+          "1",
+          "omega^2",
+          "1"
+        ],
+        [
+          "1",
+          "omega",
+          "1"
+        ]
+      ],
+      "field_values": [
+        "omega",
+        "omega^2"
+      ],
+      "labels": [
+        "Z1+Z2",
+        "Z2"
+      ],
+      "bits": [
+        1,
+        1
+      ],
+      "xor": 0,
+      "expected_primary_bit": 0
+    },
+    {
+      "target": "A",
+      "target_point": [
+        "omega",
+        "0"
+      ],
+      "purpose": "return",
+      "z": 0,
+      "inner_target": [
+        "1",
+        "0",
+        "0"
+      ],
+      "inner_points": [
+        [
+          "1",
+          "omega",
+          "0"
+        ],
+        [
+          "1",
+          "omega^2",
+          "0"
+        ]
+      ],
+      "field_values": [
+        "omega",
+        "omega^2"
+      ],
+      "labels": [
+        "Z1+Z2",
+        "Z2"
+      ],
+      "bits": [
+        1,
+        1
+      ],
+      "xor": 0,
+      "expected_primary_bit": 0
+    },
+    {
+      "target": "B",
+      "target_point": [
+        "omega",
+        "1"
+      ],
+      "purpose": "comparison",
+      "z": 1,
+      "inner_target": [
+        "1",
+        "1",
+        "1"
+      ],
+      "inner_points": [
+        [
+          "1",
+          "omega^2",
+          "1"
+        ],
+        [
+          "1",
+          "omega",
+          "1"
+        ]
+      ],
+      "field_values": [
+        "0",
+        "0"
+      ],
+      "labels": [
+        "Z1+Z2",
+        "Z2"
+      ],
+      "bits": [
+        0,
+        0
+      ],
+      "xor": 0,
+      "expected_primary_bit": 0
+    },
+    {
+      "target": "B",
+      "target_point": [
+        "omega",
+        "1"
+      ],
+      "purpose": "return",
+      "z": 0,
+      "inner_target": [
+        "1",
+        "0",
+        "0"
+      ],
+      "inner_points": [
+        [
+          "1",
+          "omega",
+          "0"
+        ],
+        [
+          "1",
+          "omega^2",
+          "0"
+        ]
+      ],
+      "field_values": [
+        "1",
+        "1"
+      ],
+      "labels": [
+        "Z1+Z2",
+        "Z2"
+      ],
+      "bits": [
+        1,
+        0
+      ],
+      "xor": 1,
+      "expected_primary_bit": 1
+    }
+  ],
+  "assertions": [
+    "all four field points satisfy the colouring-certificate identity",
+    "all four line parameters satisfy both displayed restrictions and digit evaluations",
+    "all 4^4 affine functions on F4^3 and all 4^3 targets satisfy the fixed-direction two-node interpolation identity",
+    "all 16 masks return the honest derived bit",
+    "all eight auxiliary read values, two primary comparison bits, and final ZERO equalities match"
+  ],
+  "final_zero_equalities": {
+    "b0": 0,
+    "bZ": 1,
+    "derived_p": 1,
+    "accepts": true
+  }
+}

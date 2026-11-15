@@ -1,0 +1,728 @@
+{
+  "schema": "pcp-round2-response-repair-audit/1",
+  "input_packet": "pcp-review-round2-1-full-argument",
+  "date": "2026-11-15",
+  "authored_revision": "f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6",
+  "reader_revision": "f500810cd5de90b100940ea7d7d048f54f3bf7c7",
+  "lean_revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "status_counts": {
+    "alternative_successful": 2,
+    "fixed": 18,
+    "not_fixed": 2,
+    "retained_correctly": 18
+  },
+  "evidence_limits": "AI model audit, not independent human feedback or a fresh Lean/kernel build. Browser claims are live-session observations, not an executed frozen-build test. Structural findings outside F01–F40 are in review.md.",
+  "rows": [
+    {
+      "id": "F01",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long lines 800–833, pcp-long-set-multilinear: Dec(Enc(p))=p explicitly in F[Y] before injectivity; evaluation identity afterward.",
+        "SetMultilinear.lean 67–121 proves decode_encode then encode_injective_on; SetMultilinearDecode.lean 54–80 handles arbitrary decoded polynomials.",
+        "Old/current binary diff read; the earlier evaluation-only inference has been removed."
+      ],
+      "reader_consequence": "The reader can justify formal-polynomial injectivity over a finite field without adding an invalid extra degree<q assumption.",
+      "next_action": "Retain the formal identity and Y^q−Y warning; no further repair needed.",
+      "original_finding": "Evaluation recovery alone does not imply formal-polynomial injectivity over a finite field when b^c may exceed q. The injectivity theorem is true, and its formal left-inverse proof is already in the Lean source.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Moved formal decoding before injectivity and proved the monomial left inverse. Added the finite-field evaluation counterexample and the exact injectivity source."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F02",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long line 886 identifies the scalar homogeneous case of corrected Claim 3.7.",
+        "ABSSW v2 technical_tools.tex 168–198 and appendix-claim-consistency.tex 54–99 give precisely P(Y)=eta Y for homogeneity; v1 main.tex 829–853 has no final homogeneity clause.",
+        "HadamardComposition.lean 20–24 retains a conflicting historical comment; no pinned-source modification made."
+      ],
+      "reader_consequence": "The manuscript no longer implies that the corrected paper asserts the false general homogeneity claim.",
+      "next_action": "Keep current prose. Put any warning about the unchanged Lean comment in an editorial provenance note; do not reopen the repaired manuscript attribution or rewrite the frozen source.",
+      "original_finding": "Bundled v2 Claim 3.7 states only the homogeneous scalar case P(Y)=eta Y, exactly the case used. Bundled v1 has no final homogeneity clause. A Lean comment alleges a broader false clause, but it does not describe these bundled editions.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Replaced the incorrect historical attribution with corrected v2 Claim 3.7’s scalar homogeneous assertion; compared both retained editions."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F03",
+      "status": "fixed",
+      "current_evidence": [
+        "Current primary lines 594–638 define R_y, C_z, all four discrepancies and the averaging space v,w,s.",
+        "MixedPlaneSampling.lean definitions mixedRowError/mixedColumnError/mixedLocalRowError/mixedLocalColumnError and their mean bounds; PointLineEndpointConsistency.lean crossing_errors_eq and endpoint_error_le."
+      ],
+      "reader_consequence": "The reader can now distinguish own-line and transverse errors, and identify why exactly one bound uses fixed-parameter rejection.",
+      "next_action": "Retain the formulas and distribution explanation; no mathematical addition is needed.",
+      "original_finding": "The four required discrepancies are not defined as formulas at the point where the mixed-plane proof invokes them. A reader must reconstruct which local discrepancy is transverse, which coordinate varies, and why only one uses the fixed-parameter estimate.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Displayed the row and column polynomials and all four discrepancies, with their distributions and the fixed-parameter distinction."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F04",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long lines 1879–1883 name the reference nondeterministic-machine NP class in the vendored Complexitylib and explain both directions.",
+        "ReferenceNPBridge.lean 36–77 supplies a separate checker cost proof, concrete checker machine and bounded-choice witness construction.",
+        "ReferencePairDecider.lean 42–60 and ReferenceBoundedVerifier.lean 17–52 supply translated reference decision, computed witness-bound enforcement and polynomial time; ReferenceNPConverse.lean composes both directions."
+      ],
+      "reader_consequence": "The earlier unexplained representation jump is now explained accurately. The reader knows what each imported simulation establishes without being required to reconstruct its machine states.",
+      "next_action": "Retain the two-direction explanation and declared import boundary. In the proposed global redesign add exact contract/source links, but do not treat absence of all machine micro-proofs as an unfixed instance of this finding.",
+      "original_finding": "The reference-NP equivalence is supported by concrete source constructions, but this final paragraph does not name the reference class or explain either direction.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Explained both reference-NP simulations and their bounded witnesses. The lower-level machine simulations remain identified imported results."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F05",
+      "status": "fixed",
+      "current_evidence": [
+        "reader/primary/edition.json lean.scope and provenance distinguish retained extracted interface records, statement-only compilation for PCP.np_subset_pcp, and other source excerpts.",
+        "analytics.free_of_axioms is empty; unknown empty axiom arrays are not promoted to axiom-free findings.",
+        "Live index B08 explicitly says the forward proof was not built or axiom-reported by that extraction, other source-read proofs have no extracted dependencies or axiom reports, and 52 indexed proofs lack an axiom report."
+      ],
+      "reader_consequence": "The inspected reader no longer presents absent proof metadata as a negative axiom result or statement elaboration as proof verification.",
+      "next_action": "Preserve the scoped disclosures. Any future proof-build or axiom claim needs its own matching report; this review adds no such evidence.",
+      "original_finding": "Global source-read/unextracted status coexists with forward-theorem statement-compiled provenance and an analytics.free_of_axioms list containing declarations with empty axiom arrays. These are distinct evidence states; the report-generation code was not audited.",
+      "original_paper": "reader/edition.json",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Separated declaration evidence in the reader. Unknown axiom reports no longer generate axiom-free claims; statement compilation is explicitly distinct from a proof build."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F06",
+      "status": "fixed",
+      "current_evidence": [
+        "Current primary lines 640–693 identify the modified target zero column and uniform nonzero columns before the five-error ledger.",
+        "RuledSurfaceRigidity.lean bestApproximation_eval_eq_of_endpoint_bounds and hasLowDegreeLines_of_endpoint_bounds."
+      ],
+      "reader_consequence": "The purpose of the surface and the need for a candidate-row crossing lemma can be recovered before the accounting.",
+      "next_action": "Preserve this purpose paragraph and its five-error ledger.",
+      "original_finding": "The geometric purpose of the surface can be said before its five-error accounting: the target line is the modified zero column, while every nonzero column is a uniformly sampled oriented line.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Explained the modified target column and uniform nonzero columns before the retained five-event argument."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F07",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long line 1717 defines the step input as input, seed and answer history, and its output as halt verdict or next proof address.",
+        "The same paragraph states equality with the specified bounded query tree on both answer branches.",
+        "CostModel.lean 16–25,41–45,62–64 gives VerifierAlg, bounded ofStep and ImplementedBy."
+      ],
+      "reader_consequence": "The runtime proof is now tied to the actual semantic verifier, rather than some unrelated efficient function.",
+      "next_action": "Retain. An exact displayed equation is useful in an import-contract box. If added, state that depth exhaustion rejects; ImplementedBy concerns bounded unfolding and should not be strengthened into unconditional raw-callback termination.",
+      "original_finding": "The runtime section explains cost and semantic composition well. One concrete definition of its verifier step and ImplementedBy would connect that work to the endpoint signature.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Defined verdict/address verifier steps and equality with the bounded query tree on both answers at every queried branch."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F08",
+      "status": "fixed",
+      "current_evidence": [
+        "pcp-long-algebra-crossing now includes BivariateCrossingSoundness.crossing_bestApproximation_eq alongside PointLineCrossing.crossing_eq_of_nearby_polynomial; candidate-row crossing has a separate precise entry.",
+        "pcp-long-rigidity-budget links the actual arithmetic conclusion to PointLineConstants.rigidity_budget; the field-bound ingredient remains separately identified.",
+        "pcp-long-encoded-line-test now selects the query upper bound, while pcp-long-encoded-line-completeness links test_eval to honest every-seed acceptance.",
+        "pcp-long-outer-local-corrector links BinaryLocalCorrection.run and sample; pcp-long-outer-correction-soundness separately links failure_le.",
+        "pcp-long-decoding-contract selects four actual polynomials and includes ThreeColorVerifier.colorable_of_rejection_lt, the assembly proof region, and EncodedLineLowDegreeTest.exists_close."
+      ],
+      "reader_consequence": "The revised selections supply the missing roles and local contexts without treating ingredients, specializations and assembly steps as interchangeable theorem statements. This is a targeted check of the original six role issues, not a new exhaustive audit of all 54 associations.",
+      "next_action": "Retain these additions. When revising architecture, carry the roles and full-hypothesis links forward. F09 is a separate unchanged selection and remains open.",
+      "original_finding": "Five selected cards support an ingredient or subclaim and one crossing card supports a specialization. These useful entry points should expose their roles; the digit injectivity inference is treated separately in F01.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added narrower crossing, rigidity, completeness, corrector-procedure and four-decoding selections. Retained ingredient links with their proper scope."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F09",
+      "status": "not_fixed",
+      "current_evidence": [
+        "reader/primary/edition.json: passage pcp-long-algebra-generator-soundness has source_block md-302 and sole target GeneratorLowDegreeTest.exists_close.",
+        "Its quoted content is still only “Apply this result to (A6), with n = c + 1. If”. evidence/current-associations.json agrees.",
+        "The new rigidity-budget association concerns a different theorem, PointLineConstants.rigidity_budget."
+      ],
+      "reader_consequence": "The selectable reader passage still does not state the threshold or proximity conclusion it claims to explain. The mathematical proof is unaffected.",
+      "next_action": "Select a complete prose statement containing q>2c, the rejection threshold and degree/distance conclusion. Keep the displayed proof. Main reviewer may supplement with actual UI observation.",
+      "original_finding": "The selected source quote ends before the hypothesis and conclusion that the formal theorem supports.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added an association for the prose conclusion of the explicit gap argument, retaining display mathematics and the separate budget source."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F10",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long line 968 begins product argument with r>=2; line 984 separately treats r=1.",
+        "HadamardSoundness.lean 29–61 and BilinearHadamard.lean 74–137 implement this exact split."
+      ],
+      "reader_consequence": "A reader does not temporarily apply a nonexistent product test at r=1.",
+      "next_action": "Retain; no additional case discussion required.",
+      "original_finding": "The product-check paragraph should explicitly begin with r≥2. The text handles r=1 correctly later, but temporarily invokes a test that is absent in that case.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added r≥2 before the product test; retained the separate linear case."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F11",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long line 1466 explicitly says a correction parameter satisfying GoodNodes and separately retains the prescribed generator nodes.",
+        "ThreeColorVerifierSoundness.lean 58–71 has separate IsGeneratorNodes and StandardLocalCorrection.GoodNodes hypotheses."
+      ],
+      "reader_consequence": "The final application no longer suggests that every acceptable correction parameter must generate the entire multiplicative group.",
+      "next_action": "Retain the separation. A direct internal link to the earlier GoodNodes definition would improve navigation but is not a remaining mathematical repair.",
+      "original_finding": "The final assembly changes terminology from the precisely defined GoodNodes correction parameter to a local-correction generator. GoodNodes need not mean a full multiplicative generator.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Replaced generator terminology by a correction parameter satisfying GoodNodes."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F12",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long line 1143 returns a formal polynomial in F[X1,...,Xk].",
+        "EncodedLineLowDegreeSoundness.lean 325–359 returns an MvPolynomial with totalDegree bound."
+      ],
+      "reader_consequence": "The later argument can use formal polynomial identities without a type ambiguity.",
+      "next_action": "Retain notation; use P(x) only for evaluation.",
+      "original_finding": "The function-arrow notation for P partially undoes the chapter-opening distinction between a formal polynomial and its evaluation function. The later argument needs formal polynomial identities.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Specified a formal polynomial with a total-degree bound and separated it from evaluation."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F13",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long lines 1533–1537 contain the requested one-row c=4 constant table; the symbolic gap and strict inequalities remain adjacent.",
+        "Fresh exact Fraction computation in check_final_arithmetic.py gives K4=105408, E4=1054138, S4=1054166, C4=1054082 and T4=4444715947277, matching the table.",
+        "ThreeColorSoundnessBudget.lean 27–39 and 142–155 retain the exact minimum and sufficient budget."
+      ],
+      "reader_consequence": "The displayed gap and amplification count can be reproduced without searching back through the binary chapter.",
+      "next_action": "Keep the table; do not replace the symbolic proof with numerical checking.",
+      "original_finding": "The gap is correct, but a one-row c=4 constant table would avoid forcing readers to trace K, E, S and C across the preceding chapter to reproduce the displayed exact gap.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added the exact c=4 constant table and retained the symbolic proof."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F14",
+      "status": "alternative_successful",
+      "current_evidence": [
+        "Current long B16–B18, lines 1182–1200, assigns costs e, R_a, delta, root loss, e, R_a in order.",
+        "Current specialist lines 275–287 explicitly collects 2e+2R_a+delta+D/[2(q−1)].",
+        "BinaryLocalCorrectionSoundness.lean 222–313 proves the same unconditional failure inequality."
+      ],
+      "reader_consequence": "All losses can be recovered locally; another event table in the long paper would duplicate adjacent proof prose.",
+      "next_action": "Accept the deliberate non-addition. If the whole paper is redesigned, one global contract table may index B16 without repeating its derivation.",
+      "original_finding": "The two occurrences each of e and R_a are correct and have different causes; a compact event ledger would make C(c) memorable.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "alternative_applied",
+        "action": "Retained the existing event-by-event derivation; the specialist account now collects the two correction and two rejection costs explicitly. A second long table would repeat those adjacent paragraphs."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F15",
+      "status": "fixed",
+      "current_evidence": [
+        "Current primary weighted-plurality paragraph following A10 supplies k=c+2, the linear forms, accepted subspace and exact denominator.",
+        "Original Kaufman–Sudan PDF p.5, Definitions 2.3,2.5,2.8 and Theorem 2.9, inspected visually."
+      ],
+      "reader_consequence": "The source connection is now an actual specialization. Two-ary independence requires distinguished-center independence; the present nonzero-node proof is sufficient.",
+      "next_action": "Keep the specialization and the direct fixed-center proof. Do not add a spurious every-pair-independence requirement.",
+      "original_finding": "Those hypotheses can be checked exactly: k=c+2, ell_1(u,v)=u, ell_(i+1)=u+a_i v, W={y_0=sum w_i y_i}; q>2c supplies the preceding exact characterization and a_i nonzero supplies 2-ary independence.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added the Kaufman–Sudan forms, accepted subspace and threshold specialization, keeping the direct weighted proof."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F16",
+      "status": "alternative_successful",
+      "current_evidence": [
+        "Long lines 869–871 retain the full/homogeneous metric warning.",
+        "Exposition lines 797–808 gives 256 full, 16 affine, 8 homogeneous labels; replacing homogeneous entries by another message changes four answers.",
+        "Fresh exhaustive check in check_binary_contracts.py verifies full error 1/64 and homogeneous error 1/2."
+      ],
+      "reader_consequence": "The optional example works in the teaching companion and preserves the long account's proof-focused pace.",
+      "next_action": "Keep example there. Add a direct companion-section link only if the chosen main reading route needs it.",
+      "original_finding": "The two-metric warning is correct. A small example can make its role memorable: r=t=3 gives 256 full labels and eight homogeneous labels, so corrupting exactly the latter gives full error 1/32 and homogeneous error one.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "alternative_applied",
+        "action": "Placed the optional 256/16/8-label example in the worked exposition. The long account retains the simultaneous-metric theorem."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F17",
+      "status": "fixed",
+      "current_evidence": [
+        "The original finding's paper is the specialist companion; current short line 417 now says Mathlib's finite multi-stack machine model.",
+        "Current long line 1717 identifies Mathlib's finite multi-stack FinTM2 model; the reference-NP simulation remains separate at 1879–1883.",
+        "Machine.lean 9–12,64–73 fixes the immediate concrete model."
+      ],
+      "reader_consequence": "The immediate compiler target is no longer conflated with the reference multitape model.",
+      "next_action": "Retain in both accounts.",
+      "original_finding": "The immediate PolyTimeAlg target is Mathlib FinTM2, described in the source as a finite multi-stack model. The separate reference-NP bridge uses a multitape model.",
+      "original_paper": "papers/short/paper.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Corrected the machine description to Mathlib’s finite multi-stack FinTM2 model."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F18",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 23–31 retain all-language choices before inputs, one input-dependent proof before randomness, and addresses on every branch.",
+        "Current long lines 1325–1332 repeat the endpoint faithfully and line 1711 retains the fixed-proof amplification reminder.",
+        "Theorem.lean 25–33 and Verifier/Definition.lean CompleteAt, SoundAt, ReadsBelow agree with these quantifiers."
+      ],
+      "reader_consequence": "The prose supports both the PCP quantifier order and the finite-prefix reverse inclusion.",
+      "next_action": "Preserve the full endpoint and the short repetition reminder. If moving the proof spine earlier, delete only a redundant complete theorem restatement, not these qualifiers.",
+      "original_finding": "The prose accurately distinguishes language-uniform choices, input-dependent proof existence and a fixed proof before randomness. It also bounds addresses on all answer branches.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Preserve in long and specialist theorem; keep a shorter reminder at repetition, where the quantifier matters again."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F19",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current primary old-test-counterexample passage, lines 323–344.",
+        "ABSSW v1 main.tex 716–742 defines the defeated test and its claimed arbitrary large-field regime.",
+        "Fresh check_algebra.py: 0/256 old-test rejections, 240/256 corrected-test rejections, 12/16 minimum quadratic distance in GF(16)."
+      ],
+      "reader_consequence": "The unbounded-field family still refutes the old local lemma without implying a cheating proof for the entire verifier.",
+      "next_action": "Keep the full quantifier and fibrewise root argument; move the history to an aside or appendix if adopting a shorter first route.",
+      "original_finding": "The family q=2^(2k), c=2, f(x)=x_1^4 defeats v1 for every proposed absolute field-size constant C by taking k sufficiently large. Its rejection is zero and distance from degree-two polynomials is at least 1−4/q.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Keep the family, fibrewise root bound, and narrow scope. The GF(16) run may be used only as an illustration."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F20",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current primary generator-test passage lines 198–226.",
+        "GeneratorLowDegreeTest.lean read in full; zero_of_constraints, exists_univariate and exists_polynomial use full generator nodes and nonzero weights."
+      ],
+      "reader_consequence": "The corrected characterization remains explicit and handles c=0 and arbitrary characteristic.",
+      "next_action": "Preserve full-generator, propagation and exact-line hypotheses; do not replace them with generic distinct-node language.",
+      "original_finding": "The propagation proof uses a full multiplicative orbit and a nonzero last interpolation coefficient; it also handles c=0. The q>2c hypothesis feeds the exact-line characterization.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain the propagation argument and its explicit full-generator hypothesis."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F21",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current primary bivariate statement and proof, lines 390–511.",
+        "BivariateAgreement.lean read in full, particularly exists_polynomial_of_row_column_agreement at lines 141–165.",
+        "ALMSS original PDF p.48 Theorem 69 and Arora–Safra original PDF pp.39–43, selected exact lemmas."
+      ],
+      "reader_consequence": "The account justifies the arbitrary-approximant strengthening and concrete constants rather than misattributing them to a historical black box.",
+      "next_action": "Keep d>0, individual degree, arbitrary approximants and explicit constants together. A clean-rectangle preview can improve proof order without changing the result.",
+      "original_finding": "The statement identifies the exact strengthening used by the formal variant and supplies the construction rather than importing the strengthened theorem under the historical name.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain the positive-degree, cubic field-size, individual-degree and arbitrary-approximant qualifications together."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F22",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current primary fixed-parameter passage lines 554–574.",
+        "PointLineParameterError.lean read in full: rejectionAt_le_add_div and rejectionAt_le_four_mul.",
+        "ALMSS retained PDF Remark 63 explicitly assumes coherent tie choices; the manuscript pays for exceptional lines instead."
+      ],
+      "reader_consequence": "Arbitrary nearest-polynomial ties are handled correctly; no unjustified parameter covariance is introduced.",
+      "next_action": "Keep strict good-line radius, Markov exceptional-line term and distinction from coherent-choice arguments.",
+      "original_finding": "The proof transports nearest approximants only on good lines where separation proves uniqueness, paying for the bad lines.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Preserve the strict good-line condition and the exceptional-line term delta-prime/r."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F23",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current primary ruled-surface passage chooses Q before y0 and retains the same-Q sentence after the positive-probability estimate.",
+        "RuledSurfaceRigidity.lean read in full: one bestApproximation supplies every parameter in hasLowDegreeLines_of_endpoint_bounds."
+      ],
+      "reader_consequence": "The proof gets one polynomial on the entire target line rather than an unrelated polynomial for each point.",
+      "next_action": "Preserve the ordering of choices and deterministic-right-side explanation.",
+      "original_finding": "This sentence prevents exchanging a parameter-dependent existence statement with the existence of one polynomial for the whole target line.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain it adjacent to the positive-probability calculation, including the fact that the two right-hand values are deterministic."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F24",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 822–833 distinguish honest degree<b^c from arbitrary decoded degree<=cb^c.",
+        "SetMultilinearDecode.lean 22–80 proves evaluation and substitution degree bounds for arbitrary Q."
+      ],
+      "reader_consequence": "Soundness does not assume the adversarial polynomial has honest set-multilinear form.",
+      "next_action": "Preserve both degree bounds and their distinct uses.",
+      "original_finding": "The honest degree bound <b^c and arbitrary decoded bound c b^c are correctly separated.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain the distinction in all three accounts; do not force honest form without an additional test."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F25",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long line 958 states list length 2r+4 and ten at r=3, versus v2 eight-query top-only tester.",
+        "HadamardTest.lean 59–96 lists the checks and exact query-list length, permitting duplicate locations.",
+        "ABSSW v2 technical_tools.tex 309–348,389–414 specifies top product test and eight queries; current long outer bounds use at most."
+      ],
+      "reader_consequence": "Resources are attached to the actual formal verifier rather than silently copied from a different algorithm.",
+      "next_action": "Retain; aggregate counts should remain upper bounds, not claims of distinct-address counts.",
+      "original_finding": "The v2 eight-query tester and the formal 2r+4-query tester are genuinely different algorithms. Retaining lower-degree multiplication checks accounts for ten queries at r=3, while soundness needs only the top check.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Keep the explicit difference. Describe final aggregate counts as upper bounds rather than distinct-address exact counts."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F26",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long B7, lines 998–1009, uses one decoded value for both metrics and disclaims efficient decoding.",
+        "B11, lines 1058–1074, repeats the threshold argument for one degree<=c polynomial.",
+        "HadamardRowDecoding.lean 34–135 and BinaryLocalRowDecoding.lean 39–176 verify the simultaneous conclusions with no global small-error premise."
+      ],
+      "reader_consequence": "The final proof can reuse a single decoded object across label distributions.",
+      "next_action": "Preserve. Do not replace by unrelated existential witnesses or add an unnecessary uniqueness/Markov step.",
+      "original_finding": "Choosing one good-row witness and an arbitrary bad-row witness gives simultaneous pointwise bounds, then averaging. A single generic threshold lemma captures this and the later binary-polynomial row decoder.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. A named short lemma is optional. Preserve each local threshold, each metric, and the nonalgorithmic nature of selection."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F27",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1474–1485 explicitly choose four actual polynomials once and give full degree-three and homogeneous-label proximity for those same choices.",
+        "ThreeColorVerifierSoundness.lean 89–96 chooses P, MVal, Q and MProp once and passes their properties into ThreeColorDecodedSoundness.colorable_of_rejection_bounds.",
+        "ThreeColorDecodedSoundness.lean 86–171 reuses those witnesses in the difference and both ZERO applications."
+      ],
+      "reader_consequence": "The local tests genuinely yield one colouring/certificate system; separate existential choices are not silently exchanged.",
+      "next_action": "Preserve. Bring this common-witness invariant into the early proof-contract table in the redesign.",
+      "original_finding": "The formal existential witnesses are reused for full and homogeneous distances and for all later consistency checks. The manuscript explicitly keeps this invariant.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain the same-choice sentence and the companion exposition exercise. Do not replace restricted-label guarantees with a full-label-only distance."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F28",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1080–1095 states target fixed, direction and homogeneous label random and emphasizes the averaged-label guarantee.",
+        "Current long lines 1161,1202 repeats the same probability boundary for outer correction.",
+        "BinaryStandardLocalCorrection.lean 60–99 samples (direction,label); fresh c=0 F4 example witnesses failure of a stronger fixed-label statement."
+      ],
+      "reader_consequence": "The exposition does not promise a false pointwise-label reliability bound.",
+      "next_action": "Keep qualifier in every compact contract and companion summary.",
+      "original_finding": "The corrector guarantee preserves random label averaging; it does not assert correctness for every prescribed label of an arbitrary received table.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Preserve this qualifier in every summary and in the outer-correction probability statement."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F29",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1173–1202 states rejection or a wrong returned bit, with no smallness assumption on R_a and no auxiliary closeness premise.",
+        "BinaryLocalCorrectionSoundness.lean 222–313 compares Option-valued output to some(correct_bit), charging rejection as error."
+      ],
+      "reader_consequence": "ZERO can charge a corrector abort to its own rejection, which is needed for B21.",
+      "next_action": "Retain event definition; do not paraphrase it as correctness conditional on acceptance.",
+      "original_finding": "The bound concerns the unconditional failure event, not correctness conditioned on acceptance and not merely accepted-wrong output.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Preserve the event definition, no-smallness statement and absence of auxiliary proximity hypotheses."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F30",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1236–1244 explains errors concentrated on nonuniform certificate slices and uses two local-correction calls.",
+        "BinaryZeroOnGridCorrection.lean 25–112 separates common point/label from two independent remaining call seeds.",
+        "BinaryZeroOnGridSoundness.lean 210–298 derives the actual bound."
+      ],
+      "reader_consequence": "The reader understands why direct certificate reads are unsound and why correction is needed.",
+      "next_action": "Preserve thin-slice obstruction and shared-label description.",
+      "original_finding": "The motivation correctly identifies why global proximity cannot justify reading certificate values on the two selected slices.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain this motivating obstruction and the shared-point/shared-label description."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F31",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long line 1305 explicitly hypothesizes a degree<=D polynomial P with P(x)=A_x(g(x)); arbitrary point dependence is not asserted sufficient.",
+        "HadamardDerivedOracle.lean 12–155 keeps the fresh seed explicit.",
+        "DerivedZeroOnGridSoundness.lean 246–285 has Q-family degree, formal P, and hvalue as separate hypotheses."
+      ],
+      "reader_consequence": "A nonpolynomial point-dependent family cannot silently enter the root-bound argument.",
+      "next_action": "Preserve polynomiality and fresh-seed requirements; retain multiplier 1+2C in B25.",
+      "original_finding": "The transfer separates the univariate degree bound in the queried value from polynomiality in the outer point.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Preserve this hypothesis and its application through explicitly polynomial vertex and edge constraints."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F32",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1297–1317 couple actual and ideal rejection and retain (1+2C(c))(kappa_actual+2epsilon) in B25.",
+        "Current long lines 1511–1516 carry the same multiplied replacement loss into the final assembly.",
+        "DerivedZeroOnGridSoundness.lean 246–284 applies rejection_transfer and multiplies its bound by the nonnegative ZERO soundness coefficient; ThreeColorDecodedSoundness.lean 117–125 retains it."
+      ],
+      "reader_consequence": "Fresh mask error enters the rejection term with its full multiplier; the proof does not fix a favorable mask or silently change the verifier distribution.",
+      "next_action": "Retain both the coupling explanation and the multiplied term wherever the ZERO contract is summarized.",
+      "original_finding": "The fresh-mask coupling is inserted into the actual ZERO rejection term, so the large coefficient is necessary for this argument.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain the coupled-distribution explanation and this factor in all compressed occurrences."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F33",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1502–1517 give the primary bound D, constraint degrees 3D and 5D, and common ZERO parameter 5D.",
+        "ThreeColorDecodedSoundness.lean 130–171 instantiates the two vanishing lemmas with D:=5*D after the primary witnesses have already been supplied."
+      ],
+      "reader_consequence": "The polynomial-degree losses are accounted for without unnecessarily re-running primary decoding at degree 5D.",
+      "next_action": "Keep the distinct degree roles. Do not impose the cubic point-line field bound at 5D as a false repair.",
+      "original_finding": "The 3D/5D inflation is carried through the root and certificate-substitution losses without redecoding primary tables.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Keep the separate primary degree D and constraint degree 5D roles."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F34",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1684–1711 retain exact g4, whole-field gap, R, same-proof independence, the elementary inequality and the amplified query budget.",
+        "Fresh exact arithmetic verifies g4=1/71115455156448, delta=1/1137847282503168 and 187R=212777441828092416.",
+        "ThreeColorAmplifiedVerifier.lean 31–78 retains unchanged proof length, multiplied canonical seed budget and soundness at most one half."
+      ],
+      "reader_consequence": "The theorem's asymptotic meaning and its impractical explicit constants remain clear; independence is correctly taken over seeds for one proof.",
+      "next_action": "Retain. Resource optimization is outside the current explanatory repair.",
+      "original_finding": "The statement keeps the proof fixed and openly reports the enormous fixed constants, making the asymptotic nature of the construction clear.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Retain the exact rational gap and amplified count; a c=4 constant table may make their derivation easier to reproduce."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F35",
+      "status": "retained_correctly",
+      "current_evidence": [
+        "Current long lines 1723–1733 retain arbitrary-word callback correctness, a separate query-storage bound, cost composition and the declared supporting-lemma boundary.",
+        "ThreeColorBaseCorrect.lean 14–40 covers valid/invalid arbitrary words; ThreeColorBasePolynomial.lean 20–60 discharges the retained query-size premise; ThreeColorRuntime.lean 11–15 composes the genuine callback certificate."
+      ],
+      "reader_consequence": "The route from testing to machine time stays meaningful and avoids counting oracle reads as total computation time.",
+      "next_action": "Preserve the three-layer sequence. Move the import boundary forward and add an exact interface table instead of expanding every compiler proof.",
+      "original_finding": "Semantic callback correctness is asserted on arbitrary words, stored query sizes are bounded separately, and compiler micro-proofs are explicitly outside the explanatory derivation.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "retained",
+        "action": "Preserved. Preserve the correctness/cost/compilation sequence and the explicit supporting-lemma boundary at long1703."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F36",
+      "status": "fixed",
+      "current_evidence": [
+        "Current long line 1334 announces d as grid dimension, m as digit base, Q as field size, decoded degree D=cm^c and Q_* as difference polynomial.",
+        "These roles are used consistently in the subsequent soundness, parameter and resource calculations read here."
+      ],
+      "reader_consequence": "The final chapter's change of symbol roles is now explicit before any new inequalities use them.",
+      "next_action": "Retain the local notation bridge. A redesign may standardize the primary reading route but should avoid mechanical renaming that obscures source correspondence.",
+      "original_finding": "Several symbols change local roles between chapters: the digit base b becomes m, d becomes grid dimension, and Q becomes field cardinality after a polynomial use.",
+      "original_paper": "papers/long/reasoning-record.md",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added a local notation bridge before the final assembly; no global renaming."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F37",
+      "status": "fixed",
+      "current_evidence": [
+        "Direct full-size inspection of current PDF page 1 shows the compact italic explanatory byline, naming Cook/AI assistance, Troy Lee and the original authors.",
+        "Current Markdown line 10 and the final Source and verification account retain the fuller attribution and review limits."
+      ],
+      "reader_consequence": "The isolated opening page now carries explanatory and original-work credit.",
+      "next_action": "Retain the byline and detailed final credit; do not imply author approval or theorem authorship by the exposition team.",
+      "original_finding": "The supplied source frontmatter names the explanatory authorship and original-work attribution, but the rendered opening shows no byline. Full credit is present at page 42.",
+      "original_paper": "papers/long/reasoning-record.pdf",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Added the rendered byline and preserved the detailed attribution and limits of review."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F38",
+      "status": "fixed",
+      "current_evidence": [
+        "Direct full-size inspection of current PDF page 30 shows all four rows of the primary-table comparison together with their header; no clipping was observed.",
+        "Fresh check_pdfs.py execution confirms valid companion PDF file/destination links. This link check does not test browser interaction."
+      ],
+      "reader_consequence": "The four objects can be compared on one page. Unrelated small page-break issues do not reopen this fixed table finding.",
+      "next_action": "Keep the table together after reorganization. Optional separate polish: keep the point-line theorem across pp.12–13 and the constants introduction/table across pp.33–34 together where feasible.",
+      "original_finding": "The compact four-row primary-table comparison is split across pages 29–30, two rows on each page. Its header repeats and no clipping was observed.",
+      "original_paper": "papers/long/reasoning-record.pdf",
+      "author_response": {
+        "status": "incorporated",
+        "action": "The compact primary-table comparison is now together; the renderer reserves space for short tables and keeps display leads with their formulas."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F39",
+      "status": "not_fixed",
+      "assessment_scope": "Live desktop deployment tested on 2026-11-15; frozen static build interaction remains not assessed.",
+      "current_evidence": [
+        "Two ordinary clicks on the specialist-paper link from the long Reading this account section remained on the full-argument route; the observed href was ./#/pcp-specialist. A waitForURL after the second click timed out.",
+        "Direct navigation to https://wcook04.github.io/proof-reader/#/pcp-specialist loaded that destination.",
+        "Clicking the specialist bivariate error-locator construction link, href ./#/pcp-full-argument/@4-bivariate-agreement, remained on #/pcp-specialist/@pcp-short-outer-decoding; a later observation confirmed the same route.",
+        "support/browser_observations.json B01–B05 records the action/result sequence. The live page displayed current repairs, but no whole-bundle byte comparison with the frozen revision was performed.",
+        "The attempted localhost test did not reach the scratch server and displayed a different paper inventory. It is excluded from the defect evidence."
+      ],
+      "reader_consequence": "The promised ordinary companion route failed in the observed session; the anchored round trip could not proceed through its first leg. An intact href is not evidence of a successful user interaction.",
+      "next_action": "Reproduce the exact ordinary clicks on the intended current build, correct the demonstrated routing behavior, and replay companion-section and browser-Back sequences. Do not infer a cause or frozen-build failure from these observations alone.",
+      "original_finding": "Two normal clicks on the specialist companion link remained on the full-argument route in this session, whereas direct navigation to its stated href loaded the specialist destination.",
+      "original_paper": "live proof reader",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Fixed companion-route handling and history restoration; tested every anchored companion link in Chrome."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    },
+    {
+      "id": "F40",
+      "status": "fixed",
+      "assessment_scope": "Current frozen labels and the tested live digit-definition/source/whole-file route.",
+      "current_evidence": [
+        "Current digit-encoding passage records use the full heading A high-degree univariate polynomial as a low-degree multivariate polynomial rather than A as a section identifier.",
+        "Live source links showed that full heading. Whole file displayed Back to The digit-substitution map; the return restored the selected definition at #/pcp-full-argument/@pcp-long-digit-decoder.",
+        "The tested path did not display the former Back to §A label. An initial locator timeout was resolved by an action on the observed DOM button and is not classified as a reader defect."
+      ],
+      "reader_consequence": "The inspected labels no longer turn the leading article into an apparent appendix identifier.",
+      "next_action": "Retain explicit heading/declaration labels. Preserve them when adding new return links; no broad device/history certification is implied.",
+      "original_finding": "The back label uses A from the English article at the beginning of a section title, creating an ambiguous apparent section number.",
+      "original_paper": "live proof reader",
+      "author_response": {
+        "status": "incorporated",
+        "action": "Changed section labels so an initial article is not interpreted as an appendix letter."
+      },
+      "adjudication_basis": "Current prose/source/behavior inspected as described; original author action is not treated as confirmation."
+    }
+  ]
+}

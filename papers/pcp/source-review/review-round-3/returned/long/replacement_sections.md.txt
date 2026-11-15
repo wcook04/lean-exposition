@@ -1,0 +1,195 @@
+# Proposed replacement passages and integration map
+
+These passages are editorial proposals for the next edition. They have not been merged into the supplied manuscript. Use them to replace or relocate existing material; appending all of them would defeat the proposed reduction in repeated setup. The present theorem statement, complete algebraic proofs and complete binary proofs remain part of the account.
+
+## 1. Replace the short reading-purpose passage after the precise theorem
+
+### What this account proves and what it imports
+
+We reconstruct the algebraic tests, the conversion from field values to proof bits, the eight-table verifier, and the high-level reduction from a bounded NP computation. The detailed proofs below include bivariate agreement, point-versus-line soundness, local correction at prescribed points, and the exact error estimates used in the final verifier. We use the formal development's proved compiler and machine simulations through the contracts stated below; their machine-state transition proofs are not reproduced here.
+
+Polynomial time means computation by Mathlib's finite multi-stack `FinTM2` machines with the formalization's fixed public encodings. A relation checker receives an encoded pair `x # w`. A verifier step receives `x # r # u`, where `r` is the random string and `u` is the sequence of proof answers already received. A requested proof address is represented in binary. The reference class is Complexitylib's nondeterministic-machine class `NP = ⋃k NTIME(n^k)`. The two simulations in the final chapter identify it with the certificate model in the theorem.
+
+There are two routes through the account. The first follows the verifier and its soundness proof using the contracts in the next section, then reads their complete proofs in the algebraic and binary chapters. The second enters at one of those contracts, checks its hypotheses and derivation, and follows its return link to the exact use. The specialist companion gives a shorter version of the assembly; the exposition supplies worked examples. No companion is required to supply a missing hypothesis in this account.
+
+Throughout soundness, fix one received proof. The four primary tests must yield four particular polynomials, and every subsequent comparison must use those choices. Two binary distances will be needed for the same decoded object: one averaged over all labels of the relevant degree, and one averaged over homogeneous linear labels. The latter label set can be small, so the first estimate alone does not imply the second.
+
+**Integration note.** Retain the exact endpoint and its fixed-proof/address qualifiers immediately before this passage. Move the current full restatement of the endpoint at the start of the final chapter to a short cross-reference. The brief fixed-proof reminder at repetition still belongs at its use.
+
+## 2. Bring the verifier forward: objects, contracts and assembly
+
+### The objects the verifier will test
+
+Let `F` be a characteristic-two field of cardinality `Q` containing a primitive cube root of unity. Let `H⊂F` be the nonempty finite grid alphabet of size `h`, and embed the graph vertices in `H^d`. The three roots of `Z³−1` are the permitted colours. Interpolation extends a colouring to a polynomial `P`. A second polynomial `Q_*` will be required to equal `P(X)−P(Y)`. With the public adjacency interpolant `E`, the two constraints are
+
+\[
+A_P(X)=P(X)^3-1,\qquad
+B_P(X,Y)=E(X,Y)\bigl(Q_*(X,Y)^3-1\bigr).
+\]
+
+The first must vanish on `H^d`; the second must vanish on `H^{2d}`. The grid-vanishing theorem expresses each condition using a polynomial certificate. Denote the certificates by `M_A(X,Z)` and `M_B(X,Y,Z,W)`. Their extra variables encode the coordinate division witnesses, so they have `2d` and `4d` field coordinates respectively.
+
+The received proof has four primary binary tables and one auxiliary line table for each primary table. A principal entry is a Boolean observation of a claimed field value. The colour and difference tables support degree-three labels, because the verifier must form cubic expressions. The certificate tables need degree-one labels. All auxiliary line tables in this formal variant use degree-one labels after the digit encoding.
+
+| Primary object | Field coordinates | Principal label degree | Purpose |
+|---|---:|---:|---|
+| Colour `P` | `d` | 3 | Supply the colouring and its cubic vertex constraint |
+| Vertex certificate `M_A` | `2d` | 1 | Certify that `A_P` vanishes on the vertex grid |
+| Difference `Q_*` | `2d` | 3 | Supply the edge difference and its cubic constraint |
+| Edge certificate `M_B` | `4d` | 1 | Certify that `B_P` vanishes on the edge grid |
+
+The verifier performs seven checks on those eight received tables: one encoded-line low-degree test for each primary/auxiliary pair; a corrected grid test for the vertex constraint; a corrected grid test for the edge constraint; and a difference-consistency check. All seven must accept. Their seeds are drawn in the specified product space, including sampled data for branches whose answers may later be unused.
+
+### Contracts proved in the detailed chapters
+
+The table records what each result provides. Its theorem link must include the full field-size, degree and node hypotheses; the table is an index, not a weakened replacement for the statement.
+
+| Result | Output used by the assembly | Qualification that must remain visible | Next use |
+|---|---|---|---|
+| Grid interpolation and vanishing, A2–A4 | Honest polynomials and certificate identities | Formal equality; individual degree for interpolation; total degree for substitution bounds | Perfect completeness |
+| Corrected weighted test, A6–A12 | Proximity to degree `≤c` from small rejection | Full multiplicative generator for the exact characterization; weighted constraints | Inner binary polynomial decoding |
+| Bivariate and point-line soundness, A15–A30 | One nearby polynomial of bounded total degree | Arbitrary nearest-line ties; all-field line parameter in the formal test | Outer binary decoding |
+| Hadamard and inner-row decoding, B7/B11 | One decoded value or polynomial with two distance bounds | The same witness for full and homogeneous labels; no efficient decoder claim | Encoded-line soundness |
+| Encoded-line soundness, B15 | One formal polynomial of degree `≤D` | Small rejection and field-size assumptions; full-label bound and homogeneous-label bound | Four fixed primary witnesses |
+| Outer correction, B16 | A bound on rejection or a wrong returned bit | Every spatial target; average over a uniform homogeneous label; nonzero outer parameter; arbitrary auxiliary table | Both certificate requests in ZERO |
+| ZERO and derived ZERO, B21/B25 | Rejection lower bound when a bounded-degree polynomial fails to vanish on its grid | Correct nonuniform certificate requests; fresh randomness; separate polynomiality premise; multiplied replacement cost | Vertex and edge constraints |
+
+### Why small rejection gives one colouring
+
+In the final construction, `c≥1` is the inner degree, `m≥1` is the digit radix, and `D=cm^c` bounds the four decoded polynomials. Assume `d(h−1)≤D`, so interpolation gives the public adjacency polynomial degree at most `2d(h−1)≤2D`. The constants `S_c` and `C_c` are the decoding and correction constants of B15 and B16. Fix a received proof whose total rejection is `κ`. Each of the four low-degree checks rejects with probability at most `κ`. Under the displayed decoding threshold, choose the four output polynomials once. Write `ε=S_cκ` for their common error bound. The colour and difference polynomials satisfy the full degree-three bounds used by derived cubic queries; all four satisfy the homogeneous-label bounds used by weighted comparisons and correction. Every check below refers to these choices.
+
+If `Q_*(X,Y)−P(X)+P(Y)` were a nonzero formal polynomial of degree at most `D`, the root bound and the exact half-distance of homogeneous encodings would give disagreement at least `(1−D/Q)/2`. Replacing the three received answers by the decoded answers costs at most `3ε`. Thus
+
+\[
+\kappa+3\varepsilon<\frac{1-D/Q}{2}
+\]
+
+forces the difference identity.
+
+The decoded vertex and edge constraints then have degrees at most `3D` and `5D`. Both can be tested using the common ZERO degree bound `5D`. If either fails to vanish on its grid, the derived-ZERO estimate gives
+
+\[
+\frac{1-5Dh/Q}{2}
+\le (1+2C_c)(\kappa+2\varepsilon)
+      +2\varepsilon+\frac{5D}{Q-1}.
+\]
+
+The `2ε` inside the parentheses is the fresh derived-read replacement cost. It enters the rejection argument and is therefore multiplied by `1+2C_c`. The other `2ε` comes from the two certificate-proximity charges. The last term is the nonzero-parameter correction loss. The parameter chapter makes the reverse strict inequality hold, so both constraints vanish. The grid values of `P` are then one proper three-colouring.
+
+For a genuine colouring, interpolation, exact certificate identities and honest encoded line restrictions make every check accept on every seed. The resource chapter chooses one parameter family satisfying both completeness and soundness hypotheses, converts the finite seed space to fair bits, and repeats the same-proof verifier enough times to reach soundness one half.
+
+**Integration note.** This is the beginning of the existing final proof moved forward. Retain its full numerical inequalities, exact parameter choice and detailed argument later in the same route. Do not repeat the entire table and assembly twice. The current notation conversion should be retained beside the first use of this chapter's `d,m,Q,D`.
+
+## 3. Replace the binary chapter's opening transition
+
+An auxiliary line table describes a high-degree univariate polynomial, but a test needs only its value at one selected parameter. Reading all its coefficients would use too many bits. The digit encoding replaces that polynomial by a low-degree polynomial in more coordinates, so a local procedure can recover the selected evaluation with a bounded number of field-value probes. The Hadamard encoding then exposes the required Boolean observations of those field values as individual proof bits.
+
+Soundness must also handle a corrupted encoding. An arbitrary low-degree inner polynomial need not have the special form of an honest digit encoding, so its decoded degree has a larger bound. A received Hadamard word need not be close on homogeneous labels merely because it is close on all labels. We prove decoding statements that keep both metrics for the same object, then use them to test and correct the outer polynomial. The promised interfaces are the encoded-line theorem B15 and the outer-correction bound B16; the following derivations establish their exact hypotheses and losses.
+
+**Integration note.** Replace the existing broad introduction to the two encodings. Keep the formal `Dec∘Enc` identity, arbitrary-decoding degree argument, exact label spaces and all subsequent proofs.
+
+## 4. Two local insertions
+
+### A complete generator-soundness selection for F09
+
+Suppose `q>2c`. Let the test use a generator of the full multiplicative group `F×`, its first `c+1` powers as nodes, and the Lagrange weights for prediction at zero. If its rejection probability is
+
+\[
+\delta<\frac{1}{2(c+2)^2},
+\]
+
+then there is a formal polynomial `P` of total degree at most `c` with `Δ(f,P)≤2δ`.
+
+For a renderer that cannot select across a display, use the single-paragraph form: “Suppose `q>2c` and the test using a generator of `F×` with its Lagrange weights rejects with probability `δ<1/[2(c+2)²]`. Then a formal polynomial of total degree at most `c` agrees with the received function outside a set of relative size at most `2δ`.” Associate the whole assertion with `GeneratorLowDegreeTest.exists_close`. The displays and derivation remain immediately afterward.
+
+### State the rectangle target before constructing the error locator
+
+Our next goal is a rectangle on which the chosen row and column polynomials agree exactly: `d+1` columns and sufficiently many rows. The `d+1` columns will determine a polynomial of degree at most `d` in the horizontal coordinate; agreement on many rows will then show that most row polynomials are its restrictions. To obtain this rectangle despite the inconsistent entries, we first construct polynomials `E` and `N` whose specialization satisfies `N(X,y)=E(X,y)R_y(X)` for each row `y` in the good set `S` just defined. Nonvanishing of `E` on the selected columns will let us cancel it at the rows that survive.
+
+**Integration note.** Place this goal after selecting the good columns and before the matrix/minor construction. Keep the existing exact counts, kernel proof, nonzero argument, row exclusions and final sharpening. Use the current row/column notation consistently when integrating; the identity above follows the orientation of the existing A17–A18 proof.
+
+## 5. State the exact implementation relation and imported contracts
+
+For a verifier step, write
+
+\[
+A(x,r,u)\in\{\operatorname{halt}(0),\operatorname{halt}(1)\}
+\cup\{\operatorname{query}(j):j\in\mathbb N\},
+\]
+
+where `u` records the answers received so far in order. Unfold the step function for at most `ℓ` proof reads to obtain `T_ℓ(A,x,r,u)`. A halt produces a leaf. A query with positive remaining budget produces both answer branches. A further query request at depth zero produces a rejecting leaf. The implementation condition is
+
+\[
+T_\ell(A,x,\operatorname{bits}(s),[]) = V(x,s)
+\quad\text{for every input }x\text{ and legal seed }s.
+\]
+
+This is `ImplementedBy`. It identifies the bounded protocol with the verifier on every answer branch, independently of the proof's honesty. Polynomial time is a separate property of `A` in the encoded input length `|x|+|r|+|u|+2`.
+
+The mathematical proof uses the following established machine results. Their low-level transition proofs remain in the formal source.
+
+| Source result | Exact guarantee used | Role |
+|---|---|---|
+| `Machine.PolyTimeRel`, `Machine.PolyTimeAlg` and the public codecs | Concrete finite multi-stack machines decide a relation or compute a verifier step in polynomial time in encoded input length | Fixes the immediate models of NP and verifier efficiency |
+| `ThreeColorBaseBranches.correct` in `ThreeColorBaseCorrect.lean` | On arbitrary input, random and answer words, the callback emits the specified query list and verdict; an invalid whole-field seed accepts with no queries | Matches the program to the mathematical seven-check protocol |
+| `ThreeColorBaseBranches.program_polynomial_cost`; `ThreeColorRuntime.polyTimeAlg` | Input-independent constants bound the complete callback cost polynomially; compilation supplies a concrete machine for the amplified algorithm | Establishes actual machine time in addition to query count |
+| `NPThreeColorRuntime.of_inNP_program` | An NP certificate supplies a graph map, a realizing program, a charged-time polynomial and an output-size polynomial; colourability is equivalent to the original membership condition | Makes the tableau and gadget reduction executable |
+| `InputReductionRuntime.polyTimeAlg`; `ThreeColorFinalAssembly.of_runtime` | The graph program runs on the input component while preserving seed and answer components; its machine certificate composes with the verifier's | Transfers the graph verifier to the original language |
+| `polyTimeRel_finiteWitnessCheck_concrete` in `StandardModel.lean` | An implemented polynomial-time verifier with canonical logarithmic seeds yields a polynomial-time relation checking all seeds against a finite witness; missing bits read zero | Implements the reverse inclusion |
+| `PCP.ReferenceNP.to_inNP` in `ReferenceNPBridge.lean` | A reference nondeterministic machine with polynomial clock `T` yields a concrete deterministic checker for choice words of length at most `T(|x|)`; the checker's runtime is proved separately | Converts reference NP to the concrete certificate model |
+| `ReferencePair.exists_decider`; `ReferenceBoundedVerifier.mem_NP_of_bounded_verifier`; `PCP.ReferenceNP.of_inNP` in `ReferenceNPConverse.lean` | A concrete checker becomes a reference decider with an all-input polynomial clock and malformed-input guard; bounded guessing computes and enforces the witness polynomial | Converts concrete certificates to reference NP |
+
+For the last row, if `q` bounds witness length, `t_setup` bounds computation of that bound, and `t_M` is the translated pair decider's clock, the retained source gives the sufficient polynomial clock
+
+\[
+t_{\rm setup}(n)+4n+5q(n)+20+t_M(2n+2+q(n)).
+\]
+
+The pair-length expression belongs to the reference codec, which differs from the delimiter codec of the concrete checker. The parsing and codec conversion are part of the imported simulation. No premise says that the original relation rejects overlong certificates; the bounded-guess machine enforces the bound itself.
+
+**Exact source entries, all under the pinned `formal/lean/PCP/` snapshot:** `Complexity/CostModel.lean`, `QueryTree.ofStep` and `Verifier.ImplementedBy`; `Complexity/Machine.lean`; `Complexity/ThreeColorBaseCorrect.lean`, `correct`; `Complexity/ThreeColorBasePolynomial.lean`, `program_polynomial_cost`; `Complexity/ThreeColorRuntime.lean`, `polyTimeAlg`; `Reduction/NPThreeColorRuntime.lean`, `of_inNP_program`; `Complexity/InputReductionRuntime.lean`; `Algebraic/ThreeColorFinalAssembly.lean`; `Complexity/StandardModel.lean`; `Complexity/ReferenceNPBridge.lean`, `checker_cost`, `checker_polyTime`, `to_inNP`; `Complexity/ReferenceNTMWitness.lean`, `decides_iff_witness`; `Complexity/ReferencePairFP.lean`; `Complexity/ReferencePairDecider.lean`, `exists_decider`; `Complexity/ReferenceBoundedVerifier.lean`, `bound` and `mem_NP_of_bounded_verifier`; `Complexity/ReferenceNPConverse.lean`.
+
+**Integration note.** Keep a compact version of this table near the opening, and put the exact equation and detailed references at the implementation entry. Do not print the same table twice. The original two-direction simulation paragraphs may remain as the explanation of the last two rows.
+
+## 6. Pair the exact seed formula with its derivation
+
+Let
+
+\[
+b_1=1+t,\quad b_2=1+t+\binom t2,\quad
+b_3=1+t+\binom t2+\binom t3
+\]
+
+be the coefficient counts of the Boolean label spaces. The degree-one and degree-three Hadamard tests use `3b₁` and `2b₃+2b₁+b₂` seed bits respectively. The inner test on `cm` field coordinates uses
+
+\[
+I=1+3tcm+2t+3b_1=4+3tcm+5t
+\]
+
+bits. The choice bit and sampled data for both alternatives are counted even when one alternative is unused. Put `u=binom(t,2)` and `v=binom(t,3)` only within the following table. The two ZERO entries initially exclude their nonzero-field draws.
+
+| Branch | Power-of-two seed exponent | Nonzero-field draws |
+|---|---|---:|
+| Colour low-degree | `2td+4tcm+12t+9+3u+2v` | 0 |
+| Vertex-certificate low-degree | `4td+4tcm+10t+7` | 0 |
+| Difference low-degree | `4td+4tcm+12t+9+3u+2v` | 0 |
+| Edge-certificate low-degree | `8td+4tcm+10t+7` | 0 |
+| Vertex ZERO | `5td+8tcm+12t+9+u+v` | 2 |
+| Edge ZERO | `10td+8tcm+12t+9+u+v` | 2 |
+| Difference consistency | `2td+t` | 0 |
+
+The original product seed space therefore has cardinality
+
+\[
+(Q-1)^4\,2^{35td+32tcm+69t+50+8\binom t2+6\binom t3}.
+\]
+
+Replacing four nonzero-field draws by whole-field draws adds `4t` binary coordinates, giving
+
+\[
+r=35td+32tcm+73t+50+8\binom t2+6\binom t3.
+\]
+
+This product count is made before any branch returns early. Immediate acceptance on an invalid seed does not change the seed distribution or reduce its canonical budget. The exact counting definitions and equalities are in `Algebraic/ThreeColorSeedSize.lean`, including `coefficientBits`, `hadamardBits`, `innerBits`, `outerBits`, `derivedBits`, `originalBits_eq_sum`, `card_branch` and `card_sample`. The coefficient addition was freshly checked in this response's `checks/check_final_arithmetic.py`.
+
+**Integration note.** Either place this table immediately beside the exact formula or move both to a resource appendix. In the main proof, retain the inequalities showing that this count is `O(log N)` under the chosen parameters. The asymptotic argument must still be readable without consulting the appendix.

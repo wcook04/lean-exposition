@@ -10,7 +10,7 @@ attribution: "Original algebraic argument: Prashanth Amireddy, Amik Raj Behera, 
 *An explanatory account prepared by Will Cook with AI assistance, following Troy Lee's formalization of the algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard.*
 
 <!-- passage:pcp-long-intro-theorem -->
-A polynomial-time verifier can check membership in any NP language by reading a constant number of bits from a suitably encoded proof. It uses only logarithmically many random bits, accepts a correct proof with certainty, and rejects every purported proof of a false statement with probability at least one half. This account explains the algebraic construction and the machine-level steps that establish this statement in Troy Lee's Lean formalization.
+A polynomial-time verifier can check membership in any NP language by reading a constant number of bits from a suitably encoded proof. It uses only logarithmically many random bits, accepts a correct proof with certainty, and rejects every purported proof of a false statement with probability at least one half. We reconstruct the algebraic argument in Troy Lee's Lean formalization and explain how its implementation and machine-simulation theorems establish these resource bounds.
 
 Here is the precise version. Let $L$ be a language of finite binary strings. Say that $L$ is in NP if there are a polynomial $p_0$ and a deterministic polynomial-time Boolean relation $R(x,w)$ such that
 
@@ -33,7 +33,7 @@ $$
 \mathrm{NP}\subseteq\mathrm{PCP}(O(\log n),O(1)).
 $$
 
-Conversely, any language with a verifier satisfying these effectiveness, length, completeness and soundness conditions is in NP. Guess the polynomially bounded proof prefix and check every random seed. There are polynomially many seeds because $2^{r(n)}\le 2^b[2(n+2)]^a$. Each simulation takes polynomial time. An input with a perfectly accepted proof passes this deterministic check; a false input cannot pass it because acceptance on every seed would contradict the soundness bound of one half. The final chapter supplies the concrete implementation and witness-checker details in both directions. Together the inclusions give
+Conversely, any language with a verifier satisfying these effectiveness, length, completeness and soundness conditions is in NP. Guess the polynomially bounded proof prefix and check every random seed. There are polynomially many seeds because $2^{r(n)}\le 2^b[2(n+2)]^a$. Each simulation takes polynomial time. An input with a perfectly accepted proof passes this deterministic check; a false input cannot pass it because acceptance on every seed would contradict the soundness bound of one half. The first chapter supplies the implementation and witness-checker arguments in both directions, using the machine results identified below. Together the inclusions give
 
 $$
 \mathrm{NP}=\mathrm{PCP}(O(\log n),O(1)).
@@ -45,25 +45,19 @@ The formal statement uses an infinite Boolean oracle $\pi:\mathbb N\to\{0,1\}$ a
 ## How the proof is organized
 
 <!-- passage:pcp-long-intro-roadmap -->
-The construction first treats graph three-colourability. A colouring is interpolated from a finite grid to a polynomial. Two families of equations express that every vertex has one of three permitted colours and adjacent vertices have different colours. A polynomial vanishing on the whole grid has a certificate built from the grid's coordinate vanishing polynomials. A verifier can therefore test a colouring through its low-degree encoding and these vanishing certificates.
+The construction treats graph three-colourability first. Interpolation turns a colouring into a polynomial. Two polynomial constraints express colour validity and separation across edges; grid-vanishing certificates make them testable at random ambient points. The proof stores binary encodings of four polynomials and their line restrictions. Its seven checks must force one consistent colouring from arbitrary received bits.
 
-There are two obstacles to checking only constantly many **bits**. A corrupted table may not be a polynomial at all, so low-degree testing must produce an actual nearby polynomial from the observed rejection probability. Also, a field element or a line polynomial can contain many bits, so counting a field-valued query as one proof query would not establish the theorem. The proof handles the obstacles in successive stages.
+We begin with that verifier and prove the global implication from low rejection to colourability, using precise testing and correction statements. The chapter also gives perfect completeness, parameter choices, fair-bit sampling, repetition and the reductions to and from NP. The later chapters prove the algebraic and binary statements used in this assembly. Thus a reader can first see what each estimate must accomplish, then follow its proof without changing the verifier under discussion.
 
-The first chapter establishes the algebraic tools. It proves interpolation and grid vanishing, then the corrected weighted low-degree test and the associated local correctors. It also proves point-versus-line soundness from bivariate agreement. Its explicit field-size and error bounds are carried into the subsequent tests.
-
-The second chapter encodes polynomial values as bits. A set-multilinear encoding lowers the degree needed by an inner test. Hadamard labels let the verifier request individual Boolean linear or polynomial observations of a field element. Linearity testing and local correction turn consistency checks on those bits into the hypotheses needed by the algebraic tests. The resulting encoded-line test, outer local corrector and zero-on-grid test have constant physical bit-query bounds.
-
-The final chapter combines four primary tables and four auxiliary line tables in a verifier with seven checks. A proper colouring supplies a proof accepted on every seed. Conversely, sufficiently small rejection forces four nearby polynomials; the consistency and vanishing checks force those polynomials to encode a proper colouring. Explicit parameter choices give polynomial proof length, logarithmic randomness and a constant positive rejection gap. Repetition brings soundness down to one half. The proof then implements uniform finite sampling using fair random bits, bounds the running time, and carries a concrete NP reduction through to the verifier above.
-
-These are implications about the same proof tables and the same verifier. In particular, the line tables used to test certificates are also used when correcting those certificates inside later checks. Every decoding statement is applied with its stated label distribution, degree bound and error constant. The detailed account retains these connections because an isolated correct testing lemma would not by itself establish the assembled PCP theorem.
+The algebraic chapter reconstructs the corrected weighted test and point-versus-line soundness, including the bivariate agreement and ruled-surface arguments. The binary chapter proves how two encodings give constant-query tests, how one decoded polynomial satisfies both required label-distance bounds, and how correction handles the nonuniform points requested by a grid certificate. The same auxiliary tables are used for testing and correction throughout.
 <!-- /passage:pcp-long-intro-roadmap -->
 
 ## Reading this account
 
 <!-- passage:pcp-long-intro-readers -->
-The mathematical prerequisites are finite fields, polynomials in several variables, elementary linear algebra, and finite probability. Basic complexity terminology is introduced through the theorem above; the final chapter explains the additional machine and resource accounting. The proof uses normalized Hamming distance, written $\Delta(f,g)=\Pr[f\ne g]$. The same letter may name a degree parameter in different chapters; each local statement fixes its meaning. A distinction worth keeping throughout is between total degree and degree in each variable, and between a formal polynomial and its evaluation function over a finite field.
+The mathematical prerequisites are finite fields, polynomials in several variables, elementary linear algebra, and finite probability. Basic complexity terminology is introduced through the theorem above; the first chapter explains the additional machine and resource accounting. The proof uses normalized Hamming distance, written $\Delta(f,g)=\Pr[f\ne g]$. The same letter may name a degree parameter in different chapters; each local statement fixes its meaning. A distinction worth keeping throughout is between total degree and degree in each variable, and between a formal polynomial and its evaluation function over a finite field.
 
-This is the long account. It contains the intermediate estimates, reconstruction of the substantial algebraic inputs, parameter substitutions, and boundary cases needed to follow the complete argument. The [specialist paper](../short/paper.md) presents the theorem and main proof structure with less local detail. The [exposition with worked examples](../expository/main.md) develops the construction through concrete calculations. These companion texts have different reading purposes; the detailed proofs remain here, and the linked Lean statements provide the exact formal counterparts.
+The detailed proofs include the intermediate estimates, parameter substitutions and boundary cases. The machine-level transition proofs are used through the following contracts; their semantics and cost bounds remain in the formal source. The [specialist paper](../short/paper.md) presents the theorem and main proof structure with less local detail. The [exposition with worked examples](../expository/main.md) develops the construction through concrete calculations. These companion texts have different reading purposes; the detailed proofs remain here, and the linked Lean statements provide the exact formal counterparts.
 
 <!-- /passage:pcp-long-intro-readers -->
 
@@ -74,6 +68,646 @@ This is the long account. It contains the intermediate estimates, reconstruction
 [intro-theorem]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean
 [intro-reverse]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean
 [intro-reference]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean
+
+
+### Implementation results used in the argument
+
+<!-- passage:pcp-long-implementation-contracts -->
+The immediate model uses deterministic finite multi-stack machines with fixed public encodings. A verifier step takes an input, seed and answer history, and either returns a verdict or requests the next proof address. Its implementation condition identifies the verifier with the query tree obtained by unfolding this step for a bounded number of queries, on both possible answers at every branch. A further query at depth zero becomes rejection. This condition alone does not assert that the unrestricted callback halts within that depth. Polynomial running time is a separate machine property.
+
+| Established source result | Guarantee used here | Application in this account |
+| --- | --- | --- |
+| [Callback correctness][lean-runtime-correct] | The program computes the mathematical query list and verdict for arbitrary input, seed and answer history. | The seven-check verifier's implementation |
+| [Charged cost][lean-runtime-cost] and [machine compilation][lean-runtime] | Polynomial bounds on the complete callback, storage and repetition protocol give a polynomial-time machine. | Time complexity, separately from the number of proof reads |
+| [Executable NP reduction][lean-np-runtime] | A concrete certificate checker yields a polynomial-time graph map, with polynomial output size and the required membership equivalence. | Transport from NP to three-colourability |
+| [Finite-witness checker][intro-reverse] | Canonical logarithmic randomness and a polynomial address bound permit polynomial-time checking of every seed against a finite proof prefix. | Reverse inclusion |
+| [Reference-machine simulations][intro-reference] | The concrete certificate class equals the pinned nondeterministic-machine definition of NP, in both directions. | Interpretation of the endpoint |
+
+The sections on implementation, reduction and the reverse inclusion explain how these results compose. The algebraic testing and correction arguments are proved below rather than imported through this table.
+<!-- /passage:pcp-long-implementation-contracts -->
+
+## From the algebraic tests to the PCP theorem
+
+<!-- passage:pcp-long-final-target -->
+We first construct the three-colouring verifier and prove its completeness, soundness and resource bounds. The later algebraic and binary chapters establish the testing statements used here. Throughout this chapter, $d$ is the grid dimension, $m$ the digit base, and $Q=|F|$ the field size. The fixed inner degree is $c$ and the decoded degree bound is $D=cm^c$. The difference polynomial is written $Q_*$.
+
+The construction follows Amireddy, Behera, Srinivasan, Sudan and Willumsgaard's corrected [paper, Section 7][paper-pcp], with the concrete choices in Lee's formalization. The paper invokes NP-completeness after proving the three-colouring construction. The formalization also constructs the NP reduction, fair-bit sampler and polynomial-time machine; their composition occupies the rest of this chapter.
+<!-- /passage:pcp-long-final-target -->
+
+### Three colours as polynomial equations
+
+<!-- passage:pcp-long-colour-equations -->
+Let $F$ be a finite field of characteristic two, of cardinality $Q$, containing a primitive cube root of unity $\omega$. The three colours will be
+
+$$
+\mathcal C=\{1,\omega,\omega^2\}.
+$$
+
+These are distinct, and they are exactly the roots of $Z^3-1$. For two valid colours $u,v$, the equation
+
+$$
+(u-v)^3=1
+$$
+
+holds exactly when $u\ne v$. To prove the nontrivial direction, characteristic two gives
+
+$$
+(u-v)^4=u^4-v^4=u-v,
+$$
+
+because $u^3=v^3=1$. If $u\ne v$, cancellation of the nonzero factor $u-v$ yields $(u-v)^3=1$. Conversely, $u=v$ would make the left side zero. Thus an assignment $f:V(G)\to F$ is a proper three-colouring precisely when
+
+$$
+f(v)^3-1=0\quad(v\in V(G)),\qquad
+(f(v)-f(w))^3-1=0\quad(vw\in E(G)).
+$$
+
+Both families matter. For example, assign the four vertices of $K_4$ the four elements of $\mathbb F_4$. Every difference across an edge is a nonzero element of $\mathbb F_4$, hence has cube one. All edge equations hold, although $K_4$ is not three-colourable. The vertex assigned zero violates its vertex equation. The formal [colour algebra][lean-colour-algebra] proves both implications with the vertex condition present.
+<!-- /passage:pcp-long-colour-equations -->
+
+<!-- passage:pcp-long-grid-constraints -->
+Choose a nonempty set $H\subseteq F$, of size $h$, and a dimension $d$ large enough to place the input graph's vertices in $H^d$. Unused grid points are isolated vertices. Extending a colouring arbitrarily to these points preserves three-colourability in both directions.
+
+Let $P$ be the coordinatewise interpolation of the colour assignment on $H^d$, and let $E$ be the interpolation of the graph's zero-one adjacency function on $H^d\times H^d$. Writing
+
+$$
+d_0=d(h-1),
+$$
+
+we have $\deg P\le d_0$ and $\deg E\le2d_0$. Form the difference and constraint polynomials
+
+$$
+\begin{aligned}
+Q_P(X,Y)&=P(X)-P(Y),\\
+A_P(X)&=P(X)^3-1,\\
+B_P(X,Y)&=E(X,Y)\bigl(Q_P(X,Y)^3-1\bigr).
+\end{aligned}
+$$
+
+Their total degrees are at most $d_0,3d_0,5d_0$, respectively. A proper colouring makes $A_P$ vanish on $H^d$ and $B_P$ vanish on $H^{2d}$. Conversely, these two vanishing conditions, together with $Q_P(X,Y)=P(X)-P(Y)$, recover a proper colouring by the preceding scalar argument. The factor $E$ is the public graph's actual adjacency extension: it equals one on edges and zero on nonedges at grid points. It is computed from the input, not supplied by the prover. The [grid construction][lean-colour-grid] implements this equivalence.
+
+Put $Z_H(T)=\prod_{u\in H}(T-u)$. The grid-vanishing theorem, proved in the algebraic chapter, writes any polynomial $A$ vanishing on $H^k$ as $\sum_i Z_H(X_i)U_i(X)$. Its certificate $M(X,Y)=\sum_iY_iU_i(X)$ satisfies $M(X,0)=0$ and $M(X,Z_H(X))=A(X)$, with $\deg M\le\deg A$. Conversely these identities imply grid vanishing, even if a proposed $M$ is nonlinear in $Y$. Apply the theorem to obtain $M_A,M_B$. The sufficient degree bound $5d_0$ covers the colour polynomial and both certificate polynomials. The proper-colouring certificate has two blocks of $2d$ variables; the implementation flattens the first two vertex-coordinate blocks before passing them to the same certificate routines. This is a coordinate bijection and preserves evaluations, total degree and normalized distances.
+<!-- /passage:pcp-long-grid-constraints -->
+
+### The eight tables and seven checks
+
+<!-- passage:pcp-long-eight-tables -->
+Fix binary coordinates $\rho:F\to\mathbb F_2^t$, where $Q=2^t$. A degree-$r$ Hadamard row for $u\in F$ stores $R(\rho(u))$ at each squarefree Boolean polynomial label $R$ of degree at most $r$. Degree-one labels are affine; homogeneous labels have zero constant term. They preserve sums and distinguish unequal field values with probability one half when sampled uniformly.
+
+The received proof contains four primary tables and four encoded line tables. An honest proof has the following mathematical contents:
+
+| Primary polynomial | Number of field coordinates | Primary binary encoding |
+| --- | ---: | --- |
+| $P$, the colour extension | $d$ | degree-three Hadamard encoding |
+| $M_A$, the vertex certificate | $2d$ | degree-one Hadamard encoding |
+| $Q_P$, the difference polynomial | $2d$ | degree-three Hadamard encoding |
+| $M_B$, the edge certificate | $4d$ | degree-one Hadamard encoding |
+
+Each primary table has one encoded line table. In the formal implementation every auxiliary line table uses degree-one labels. For a primary domain $F^k$, an auxiliary address consists of an oriented line $(u,v)\in F^k\times F^k$, an inner point $w\in F^{cm}$, and an affine Boolean label. Honest rows encode the line restriction after digit expansion: writing each exponent below $m^c$ in base $m$ turns it into a product of $c$ variables, of total degree $c$. Substitution $\Phi(z)_{i,j}=z^{jm^i}$ recovers the original line value. The binary chapter proves these statements and explains why an arbitrary decoded inner polynomial can have outer degree as large as $D=cm^c$. The paper's Section 7 lists degree-three auxiliary labels for colour and difference; the formal variant uses degree-one auxiliary labels throughout. In particular, the line table used to test a certificate is the same physical table used to correct that certificate inside ZERO. There is no second certificate table whose consistency would have to be assumed. The [proof datatype and read function][lean-seven-checks] specify all eight tags and their address spaces.
+
+The verifier runs four encoded-line low-degree tests, one on each primary/line-table pair. It also runs ZERO on the vertex constraint, ZERO on the edge constraint, and a difference check. It accepts exactly when all seven accept. Each check receives an independent seed with the prescribed finite uniform distribution. This makes each branch's marginal distribution the one analysed in its soundness theorem. Since failure of a branch forces failure of the conjunction, each branch's rejection probability is at most the full rejection probability.
+<!-- /passage:pcp-long-eight-tables -->
+
+<!-- passage:pcp-long-derived-constraints -->
+The constraint polynomials are not extra proof tables. Suppose $p(x,\Lambda)$ is the received degree-three row intended to encode $P(x)$. To request a linear bit of $P(x)^3-1$, transform the desired linear label $L$ into the degree-three Boolean label $\Lambda_{Z^3-1,L}$ supplied by the encoding lemma. Draw a fresh uniform degree-three label $R$, read
+
+$$
+p(x,R+\Lambda_{Z^3-1,L})+p(x,R),
+$$
+
+and return their sum in $\mathbb F_2$. The corresponding edge query uses the difference table and the label for $Z\mapsto E(x,y)(Z^3-1)$. Thus each derived read costs two physical bits.
+
+For an exact Hadamard row, linearity in the **label** gives the requested bit exactly, even though $Z\mapsto Z^3-1$ is nonlinear in the field value. For a row close on average to the correct encoding, the two sampled labels are individually uniform, so the probability of an incorrect derived read is bounded by twice the row error. The formal verifier uses fresh masks as part of the actual test seed. Its soundness argument carries this replacement error through the ZERO inequality; it does not postulate a globally good fixed mask.
+
+The difference check selects independent uniform $x,y\in F^d$ and a homogeneous linear functional $L:F\to\mathbb F_2$. It compares the difference table's bit with the sum of the colour-table bits at $x$ and $y$. Homogeneity is essential to the displayed additive identity. The formal proof uses exactly the homogeneous-label distance guarantee supplied by the encoded-line theorem, rather than a stronger assertion about arbitrary affine labels.
+<!-- /passage:pcp-long-derived-constraints -->
+
+<!-- passage:pcp-long-query-budget -->
+The seven physical query bounds, in the order colour, vertex certificate, difference, edge certificate, vertex ZERO, edge ZERO, and difference check, are
+
+$$
+2c+18,\quad2c+14,\quad2c+18,\quad2c+14,
+\quad6c+20,\quad6c+20,\quad3.
+$$
+
+Their sum is $20c+107$, independent of the graph size. Taking $c=4$ bounds one unamplified run by at most $26+22+26+22+44+44+3=187$ physical bit reads. This count includes the fresh derived reads. A separate congruence theorem says that two proof oracles agreeing on the listed addresses give the same verdict; the count therefore measures actual information read from the proof, rather than merely the number of named subroutines. The [query-list theorem][lean-query-budget] establishes both facts.
+<!-- /passage:pcp-long-query-budget -->
+
+### Perfect completeness
+
+<!-- passage:pcp-long-completeness -->
+Start with a proper colouring. Interpolate it to obtain $P$, put the exact difference polynomial $Q_P$ in the difference table, and choose grid-vanishing certificates $M_A,M_B$. Put the exact encodings and exact encoded restrictions to lines in their eight locations. Assume the honest degree capacity
+
+$$
+5d(h-1)<m^c,
+$$
+
+where $m$ is the base used by the degree-reducing inner encoding.
+
+Every outer low-degree test accepts because it sees an exact polynomial of degree below $m^c$ and its honest encoded line restrictions. The two-query derived read agrees exactly with the requested constraint encoding for every mask. Each ZERO check accepts because its polynomial has the supplied vanishing certificate. Finally,
+
+$$
+L(Q_P(x,y))=L(P(x))+L(P(y))
+$$
+
+for every homogeneous label $L$, so the difference check also accepts. The same eight tables satisfy all these statements simultaneously. Consequently every seven-component random seed accepts. This proves perfect completeness. The [honest-proof construction][lean-completeness] supplies the certificates and verifies each branch.
+<!-- /passage:pcp-long-completeness -->
+
+### Soundness of the seven-check verifier
+
+<!-- passage:pcp-long-decoding-contract -->
+Set $D=cm^c$. Suppose the field and grid satisfy
+
+$$
+Q\ge10^6D^3,\qquad Q\ge100Dh,
+\qquad d(h-1)\le D,
+$$
+
+with $c,m,h\ge1$ and a primitive cube root of unity. The weighted test uses the first $c+1$ powers of a generator of $F^\times$ and their Lagrange weights. For correction, the $c+1$ powers of its chosen parameter must be distinct and nonzero (the source condition `GoodNodes`); choosing the same generator suffices here. Let $\kappa$ be the rejection probability of an arbitrary received proof. The argument will show that sufficiently small $\kappa$ forces the graph to be three-colourable.
+
+The constants used by the binary tests are
+
+$$
+K_c=4(c+2)^2(112(c+2)+60),\quad
+E_c=2((c+1)K_c+29),\quad S_c=28+E_c,\quad
+C_c=2+2(c+1)K_c.
+$$
+
+We need the following three statements, proved in the binary chapter.
+
+| Statement | Guarantee used in the assembly |
+| --- | --- |
+| Encoded-line soundness (B15) | Under the field bound and $E_c\kappa\le1/4\,000\,000$, one degree-$D$ polynomial has both full-label and homogeneous-label distance at most $S_c\kappa$ from the primary table. Auxiliary rows are arbitrary. |
+| Outer correction (B16) | At each fixed target $a$, homogeneous primary error $\delta$ gives failure probability at most $C_cR_a+\delta+D/[2(Q-1)]$. Failure means rejection or a wrong bit; $R_a$ is actual rejection, and the label is uniform homogeneous. |
+| Derived ZERO (B25) | Suppose the point-dependent derived values equal one fixed polynomial, and this polynomial and its certificate have degree at most $D$. If the polynomial fails to vanish on the grid, its ideal rejection lower bound is at most $(1+2C_c)(\kappa+2\varepsilon)+2\delta_M+D/(Q-1)$. Here $\varepsilon$ is full primary error and $\delta_M$ is homogeneous certificate error. |
+
+The first statement chooses the witnesses. The second handles prescribed certificate targets, which need not be uniform. The third uses that correction twice, retaining both actual rejection and the fresh-mask replacement error. We now apply them with the same received tables. If
+
+$$
+E_c\kappa\le\frac1{4\,000\,000},
+$$
+
+the four outer tests supply four actual polynomials $P,Q_*,M_A,M_B$, each of total degree at most $D$. They give full degree-three label distance at most
+
+$$
+\varepsilon=S_c\kappa
+$$
+
+for $P,Q_*$, and homogeneous linear-label distance at most $\varepsilon$ for all four relevant primary tables. These polynomials are chosen once for the received proof; the later argument uses those same choices. No closeness assumption is imposed on the auxiliary line tables. Their actual test behaviour is already part of the decoding theorem. These are the decoded polynomials used in [the assembled soundness proof][lean-soundness].
+<!-- /passage:pcp-long-decoding-contract -->
+
+<!-- passage:pcp-long-difference-soundness -->
+First identify the decoded difference polynomial. Replace the three received bits in the difference test by their decoded homogeneous bits. The replacement can change the verdict only if one of these three bits differs, an event of probability at most $3\varepsilon$. Hence the ideal consistency check rejects with probability at most $\kappa+3\varepsilon$.
+
+For a nonzero field element $z$, exactly half of the homogeneous linear functionals satisfy $L(z)=1$. Therefore this ideal rejection rate is exactly half the relative distance between the field-valued functions $Q_*(x,y)$ and $P(x)-P(y)$. If these polynomials differed, their difference would be a nonzero polynomial of degree at most $D$, and the polynomial zero bound would give relative disagreement at least $1-D/Q$. It follows that
+
+$$
+\kappa+3\varepsilon<\frac{1-D/Q}{2}
+$$
+
+forces the polynomial identity $Q_*(X,Y)=P(X)-P(Y)$. This is an identity of polynomials, not merely agreement at most sampled points. The [difference-consistency theorem][lean-difference] makes the strict inequality explicit.
+<!-- /passage:pcp-long-difference-soundness -->
+
+<!-- passage:pcp-long-assembled-zero-soundness -->
+Now consider the decoded vertex constraint $A_P=P^3-1$. Its degree is at most $3D$. For the edge constraint, the public adjacency polynomial has degree at most $2D$; using the just-proved difference identity, the decoded edge constraint
+
+$$
+B_P=E\bigl((P(X)-P(Y))^3-1\bigr)
+$$
+
+has degree at most $5D$. Both certificates have degree at most $D$, so the common degree bound $5D$ is sufficient for the two ZERO arguments.
+
+The derived-ZERO inequality (B25) says that if either decoded constraint fails to vanish on its grid, then
+
+$$
+\frac{1-5Dh/Q}{2}
+\le
+(1+2C_c)(\kappa+2\varepsilon)
++2\varepsilon+\frac{5D}{Q-1}.
+$$
+
+Here $2\varepsilon$ inside the parentheses is the replacement loss from the derived read. Multiplying it by $1+2C_c$ is necessary: it enters the same rejection term as the actual ZERO failure probability. The other $2\varepsilon$ comes from the two uses of the certificate's homogeneous proximity bound. The last term is the nonzero-parameter local-correction loss. These terms cannot be dropped by choosing a favourable random seed after the fact.
+
+Consequently, the strict reverse inequality forces $A_P$ to vanish on $H^d$ and $B_P$ to vanish on $H^{2d}$. The scalar colour equations then make $P|_{H^d}$ a proper colouring. The coordinate flattening in the edge branch is a bijection, so its normalized error and vanishing statements transport unchanged. The [decoded soundness theorem][lean-decoded] performs these two applications to the same decoded colour and difference polynomials.
+<!-- /passage:pcp-long-assembled-zero-soundness -->
+
+<!-- passage:pcp-long-gap -->
+An explicit positive gap makes all three inequalities hold at once. Define
+
+$$
+\begin{aligned}
+A_c&=1+2C_c,\\
+B_c&=1+3S_c,\\
+T_c&=A_c(1+2S_c)+2S_c,\\
+g_c&=\min\left\{
+\frac{1}{4\,000\,000(E_c+1)},
+\frac{1}{16B_c},
+\frac{1}{16(T_c+1)}\right\}.
+\end{aligned}
+$$
+
+At the chosen value $c=4$, the constants evaluate to
+
+| $K_4$ | $E_4$ | $S_4$ | $C_4$ | $T_4$ |
+| ---: | ---: | ---: | ---: | ---: |
+| $105408$ | $1054138$ | $1054166$ | $1054082$ | $4444715947277$ |
+
+All denominators are positive, so $g_c>0$. If $0\le\kappa<g_c$, then $E_c\kappa\le1/4\,000\,000$, $\kappa+3S_c\kappa<1/16$, and $A_c(\kappa+2S_c\kappa)+2S_c\kappa<1/16$. The field bound $Q\ge100Dh$, with $D,h\ge1$, gives
+
+$$
+\frac DQ\le\frac14,\qquad
+\frac{5Dh}{Q}\le\frac14,\qquad
+\frac{5D}{Q-1}\le\frac18.
+$$
+
+For the last inequality, $Q\ge100D$ implies $Q-1\ge40D$. The difference error is then below $1/16<3/8$, and the total ZERO error is below $1/16+1/8=3/16<3/8$. These bounds prove the required strict comparisons. Thus rejection below $g_c$ implies colourability. Taking the contrapositive, **every received proof of a non-three-colourable graph has rejection probability at least $g_c$**. The [budget lemmas][lean-budget] establish this explicit rejection gap.
+<!-- /passage:pcp-long-gap -->
+
+### Parameters for every finite graph
+
+<!-- passage:pcp-long-parameters -->
+The formalization chooses a concrete parameter family different from the paper's asymptotic display. For a graph with $N$ vertices, let $a$ be the least integer at least two with
+
+$$
+\lceil\log _2N\rceil\le a2^a.
+$$
+
+Use the natural ceiling-log convention at $N=0,1$; the definition still selects $a=2$. Put
+
+$$
+s=2^a,\quad d=m=h=s,\quad c=4,
+\quad t=12a+32,\quad Q=2^t=2^{32}s^{12}.
+$$
+
+The finite field is represented by binary coefficient arrays modulo a computed monic irreducible polynomial of degree $t$. The coordinate map $F\cong\mathbb F_2^t$ reads these stored coefficients. Since $t$ is divisible by four, $3\mid Q-1$; bounded searches in the field's numeric order supply a primitive cube root and a generator of $F^{\times}$. The grid $H$ is the first $s$ field elements in this numeric order. It need not be a subfield.
+
+The grid has $h^d=s^s=2^{a2^a}\ge N$ points. With $D=4s^4$, the soundness field requirement holds because
+
+$$
+10^6D^3=64\,000\,000s^{12}\le2^{32}s^{12}=Q.
+$$
+
+Also $100Dh=400s^5\le Q$. Since $s\ge4$,
+
+$$
+5s(s-1)<s^4=m^c,
+$$
+
+which supplies the honest-degree capacity. All hypotheses of completeness and soundness are therefore met for the same field, grid and roots. The [parameter family][lean-parameters] and [least-exponent argument][lean-choice] include small graph sizes explicitly.
+
+To obtain the logarithmic resource bounds, minimality matters. If $a>2$, then
+
+$$
+(a-1)2^{a-1}<\lceil\log _2N\rceil,
+\qquad
+a2^a\le4(a-1)2^{a-1}.
+$$
+
+If $a=2$, the volume $a2^a$ is eight. Both cases yield
+
+$$
+a2^a\le4\max\{8,\lceil\log _2N\rceil\}
+\le32(\lceil\log _2N\rceil+1).
+$$
+
+Thus a resource bounded by a fixed multiple of $a2^a$ is logarithmic in $N$; a resource bounded by $2^{O(a2^a)}$ is polynomial in $N$. Merely knowing that the grid can hold the graph would not give these upper bounds.
+<!-- /passage:pcp-long-parameters -->
+
+### From finite samples to fair random bits
+
+<!-- passage:pcp-long-fair-bits -->
+Some mathematical correctors use uniformly distributed nonzero field parameters. Sampling uniformly from $F^{\times}$ with a fixed fair-bit budget is inconvenient because $Q-1$ is not a power of two. The implemented verifier instead samples all four such parameters from the whole field. If any is zero, it accepts immediately and makes no queries. Otherwise it runs the seven-check verifier.
+
+Conditioned on all four being nonzero, the decoded seed has exactly the original product-uniform distribution. Every other coordinate is unchanged. Therefore
+
+$$
+\Pr[\text{new verifier rejects}]
+=\left(\frac{Q-1}{Q}\right)^4
+\Pr[\text{original verifier rejects}].
+$$
+
+Since $Q\ge2$, the factor is at least $1/16$. Perfect completeness survives, and non-colourable graphs have rejection at least $\delta=g_4/16$. This is an exact counting identity on the two finite seed spaces, as proved by [whole-field sampling][lean-sampling]; it does not use an approximation to a uniform distribution.
+
+Every remaining random coordinate is a field vector, a Boolean coefficient vector or a finite product of such objects. The chosen linear coordinates and explicit product codecs give a bijection between the entire seed space and a fixed-length bit string. Uniform bit strings therefore induce exactly the required distribution. Likewise, a tagged mixed-radix codec packs the eight physical tables into one finite binary word. Encoding and decoding are inverse, and the query list is translated through the same codec.
+<!-- /passage:pcp-long-fair-bits -->
+
+<!-- passage:pcp-long-resources -->
+Here is how polynomial proof length follows for the actual eight-table address space. A degree-$r$ Boolean label on $t$ coordinates has
+
+$$
+b_r(t)=\sum_{j=0}^{r}\binom tj
+$$
+
+binary coefficients, so there are $C_r=2^{b_r(t)}$ labels. The four primary-table lengths are
+
+$$
+Q^dC_3,\quad Q^{2d}C_1,\quad Q^{2d}C_3,\quad Q^{4d}C_1.
+$$
+
+A line table for a polynomial on $j$ coordinates indexes two field points specifying a line, the $cm$ coordinates of its reduced-degree encoding, and a linear Boolean label. Its length is $Q^{2j+cm}C_1$. Thus the four auxiliary lengths are
+
+$$
+Q^{2d+cm}C_1,\quad Q^{4d+cm}C_1,\quad
+Q^{4d+cm}C_1,\quad Q^{8d+cm}C_1.
+$$
+
+Since $b_1(t)\le b_3(t)\le(t+1)^3$, the sum of these eight lengths is at most
+
+$$
+2^{(8d+cm)t+(t+1)^3+3}.
+$$
+
+For $d=m=2^a$, $c=4$ and $t=12a+32$, the exponent is at most $132\,000a2^a$. One elementary estimate controls the cubic term: $a^2\le4\cdot2^a$ for every natural $a$, and $12a+33\le32a$ for $a\ge2$. Hence $(t+1)^3\le131\,072a2^a$; the remaining linear terms fit within the stated bound.
+
+For the seed count, write $u=\binom t2$ and $v=\binom t3$ in the following table. The affine and cubic Hadamard tests use $3(1+t)$ and $5+5t+3u+2v$ bits. The inner test uses $1+3tcm+2t+3(1+t)=4+3tcm+5t$ bits, including the fair choice bit and the data sampled for both alternatives. Expanding the seven product seeds gives:
+
+| Check | Power-of-two exponent | Nonzero-field draws |
+| --- | --- | ---: |
+| Colour low-degree | $2td+4tcm+12t+9+3u+2v$ | $0$ |
+| Vertex-certificate low-degree | $4td+4tcm+10t+7$ | $0$ |
+| Difference low-degree | $4td+4tcm+12t+9+3u+2v$ | $0$ |
+| Edge-certificate low-degree | $8td+4tcm+10t+7$ | $0$ |
+| Vertex ZERO | $5td+8tcm+12t+9+u+v$ | $2$ |
+| Edge ZERO | $10td+8tcm+12t+9+u+v$ | $2$ |
+| Difference consistency | $2td+t$ | $0$ |
+
+The original seed space therefore has size $(Q-1)^4 2^{35td+32tcm+69t+50+8u+6v}$. Replacing the four nonzero-field draws by whole-field draws adds $4t$ bits. The exact fair-bit seed length is
+
+$$
+r=35td+32tcm+73t+50+8\binom t2+6\binom t3.
+$$
+
+This counts every product coordinate, even when a branch ignores it or the whole-field wrapper accepts early. The same elementary estimates bound $r$ by $10^6a2^a$. Combining both estimates with $a2^a\le32(\lceil\log_2N\rceil+1)$, and using $2^{\lceil\log_2N\rceil}\le2\max\{1,N\}$, gives
+
+$$
+\begin{aligned}
+r(N)&\le32\,000\,000(\lceil\log _2N\rceil+1),\\
+\operatorname{proofLength}(N)&\le(4\max\{1,N\})^{4\,224\,000},\\
+\#\operatorname{queries}&\le187.
+\end{aligned}
+$$
+
+These are proved upper bounds, with very large constants. They establish the complexity class statement; they are not practical resource estimates. The proof-size estimate concerns the actual packed eight-table address space, and the query estimate concerns addresses in that space. [The exact seed count][lean-seed-size], [address-space estimates][lean-resources] and [binary-verifier guarantees][lean-binary] give these calculations together with perfect completeness and the rejection bound.
+
+For an encoded graph input $x$, its decoded vertex count is at most $n=|x|$. The verifier uses the canonical budget
+
+$$
+r_0(n)=32\,000\,000\lceil\log _2(n+2)\rceil+32\,000\,000.
+$$
+
+It ignores the surplus bits beyond those needed by the exact seed codec. Every shorter bit string has exactly the same number of extensions, so prefix sampling preserves the acceptance probability. The proof address bound becomes the natural-coefficient polynomial
+
+$$
+p_0(n)=\bigl(4(n+1)\bigr)^{4\,224\,000}.
+$$
+
+The nonadaptive list of at most 187 physical reads is compiled into a decision tree of that depth. Its evaluation equals the algebraic verdict for every oracle, and all syntactic addresses are below $p_0(n)$. The [canonical verifier][lean-canonical] proves these properties for every bit string, including malformed graph encodings according to its fixed decoder.
+<!-- /passage:pcp-long-resources -->
+
+### Repetition on one fixed proof
+
+<!-- passage:pcp-long-amplification -->
+With the constants fixed above, exact rational arithmetic gives
+
+$$
+g_4=\frac1{71\,115\,455\,156\,448},\qquad
+\delta=\frac1{1\,137\,847\,282\,503\,168}.
+$$
+
+Set $R=\lceil1/\delta\rceil$. Run the base verifier $R$ times with independent seeds on the **same** proof, and accept only if every run accepts. For a fixed proof with single-run acceptance $u$, independence gives acceptance $u^R$. In a no-instance, $u\le1-\delta$, so it remains to show $(1-\delta)^R\le1/2$.
+
+An elementary inequality proves this without logarithmic approximation:
+
+$$
+(1+k\delta)(1-\delta)^k\le1
+\quad(k\ge0, 0\le\delta\le1).
+$$
+
+The base case is equality. For the induction step,
+
+$$
+(1+(k+1)\delta)(1-\delta)
+=1+k\delta-(k+1)\delta^2\le1+k\delta;
+$$
+
+multiply by the nonnegative factor $(1-\delta)^k$. Since $R\delta\ge1$, division gives
+
+$$
+(1-\delta)^R\le\frac1{1+R\delta}\le\frac12.
+$$
+
+The same honest proof still accepts on every repeated seed. Repetition leaves the proof-length polynomial unchanged and multiplies the query and random-bit budgets by the fixed constant $R$. Here $R=1\,137\,847\,282\,503\,168$ and $187R=212\,777\,441\,828\,092\,416$. The [rational repetition bound][lean-repetition-bound] and [amplified verifier][lean-amplified] retain these fixed choices. A prover cannot supply a different proof after seeing each seed; the probability statement quantifies over one proof before the product distribution.
+<!-- /passage:pcp-long-amplification -->
+
+### The polynomial-time implementation
+
+<!-- passage:pcp-long-runtime -->
+The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this. The formal implementation computes the parameters, field arithmetic, seed codecs, query addresses and verdict in a fixed program language and compiles that language to Mathlib's finite multi-stack `FinTM2` machine model. A verifier step takes the input, random seed and answer history, then either halts with a verdict or requests the next proof address. The implementation relation states that executing these steps produces the specified bounded query tree, on both possible answers at every queried branch.
+
+The concrete operations can be bounded as follows. Parameter selection is a bounded search for the least admissible $a$. Field elements have $t=12a+32$ binary coefficients; arithmetic reduces polynomial representatives modulo the computed irreducible modulus, and inversion uses powering. The modulus, cube root and full generator are obtained by bounded finite searches, with candidate tests expressed in the same finite arithmetic. Their search ranges are polynomial in the field cardinality $Q$, and $Q=2^{32}s^{12}$ is polynomially bounded in the input length. For example, the charged modulus-construction cost is at most $7\,000\,000(Q+1)^7$; each root search costs at most $400\,000\,000(Q+4)^6$; the combined field-and-roots routine costs at most $10^9(Q+4)^7$. [These cost proofs][lean-field-cost] include candidate testing and storage. The runtime construction computes the parameters and arithmetic data from the input. For the underlying finite-field construction, see Shoup [Sections 20.2 and 21.1][shoup], especially the irreducible-polynomial existence result in Theorem 20.11. Shoup also analyses irreducibility testing and randomized construction. The deterministic bounded searches and charged cost estimates above are those of the formal implementation.
+
+The public edge extension is evaluated from the input adjacency matrix by finite interpolation sums. The grid and its pair space have polynomial size because $s^s=2^{a2^a}$ and the preceding volume bound is logarithmic. Lagrange weights, degree-reduction coordinates and label transformations use bounded arithmetic loops. The proof-address values are polynomially bounded by $p_0(n)$; the implementation proves bounds for the sizes of their stored representations as well as for the number of addresses.
+
+The base callback has two passes. A discovery pass constructs the exact list of physical queries. A replay pass evaluates the algebraic verdict using the answer history at those addresses. The invalid whole-field-seed case emits no queries and returns acceptance. [Callback correctness][lean-runtime-correct] proves that these outputs agree with the mathematical query list and verdict for arbitrary input, seed and answer words. This is stronger than correctness only on honest proof responses.
+
+For cost, the proof assigns polynomial bounds to the setup, generated-query storage and branch computations, then substitutes each bound into the routine that consumes it. Concretely, if query storage is bounded by $C_q(n+1)^{d_q}$ and a branch's cost has degree $d_b$ in the size of its input/history, the combined proof takes an exponent at least
+
+$$
+\max\{84,d_q,(d_q+1)d_b\}.
+$$
+
+Constants are enlarged to absorb the two passes, fixed seven-branch overhead and setup. The resulting theorem bounds the charged cost by $C(|x|+|r|+|u|+1)^e$ for every answer history $u$. The [polynomial-cost proof][lean-runtime-cost] retains the query-size premise until the separately proved storage bound supplies it.
+
+The repetition protocol slices the random string into $R$ blocks, invokes this same callback, and manages the answer history. Because $R$ is fixed, the protocol's loop and storage overhead are polynomial. Its compiler and public input/output codecs preserve the callback's semantics and translate the charged cost to a step bound on the finite machine. Thus [the runtime theorem][lean-runtime] concludes polynomial-time implementation of the actual amplified query algorithm. The low-level compiler, array arithmetic and finite-search proofs are supporting implementation lemmas; this account uses their stated semantic and cost guarantees and explains their composition, rather than reproducing their individual machine-state derivations.
+<!-- /passage:pcp-long-runtime -->
+
+### From every NP verifier to a graph
+
+<!-- passage:pcp-long-np-tableau -->
+Fix an NP language $L$, a Boolean witness relation $R(x,w)$, a natural-coefficient witness bound $q$, and its concrete polynomial-time checker. Then
+
+$$
+x\in L\iff\exists w\ (|w|\le q(|x|)\ \text{and}\ R(x,w)=1).
+$$
+
+Let $T_0$ be the checker's time polynomial. At input length $n$, one bound valid for all permitted witnesses is
+
+$$
+T(n)=T_0(n+q(n)+1).
+$$
+
+The $+1$ accounts for the delimiter in the fixed pair encoding. If the machine pushes at most $B$ cells per step, a sufficient stack-space bound is
+
+$$
+S(n)=n+q(n)+1+B T(n).
+$$
+
+Represent a computation by $T(n)+1$ rows of bounded configurations, with the witness length and bits included. The constraints enforce the initial row, every adjacent transition and the accepting final row. Halting is padded by the machine's bounded-evaluation convention. Every true computation gives such a tableau within the space bound. Conversely, determinism and the transition constraints force each successive row to be the actual machine configuration, so an accepting tableau gives a witness with $R(x,w)=1$. This proves the [finite tableau equivalence][lean-tableau] for all witness lengths from zero through $q(n)$.
+<!-- /passage:pcp-long-np-tableau -->
+
+<!-- passage:pcp-long-local-constraints -->
+To make the tableau a bounded-arity constraint system, use a finite alphabet fixed by the source machine. Each row has one control-and-prefix variable and one optional-symbol variable for each stack position below $S(n)$. Let $w_0$ be the machine's fixed window size. Link constraints identify the stored prefix with the first $w_0$ cells of every stack.
+
+The locality theorem for the machine states that a successor stack consists of the output produced from this prefix followed by the untouched old suffix starting at position $w_0$. The possible output-prefix lengths are bounded by a machine-fixed number $b_0$. Consequently the new symbol at position $j$ is either a symbol in that computed output prefix, or the old symbol at
+
+$$
+w_0+(j-\lambda),
+$$
+
+where $\lambda\le b_0$ is the actual output-prefix length. A cell constraint reads the old prefix, the new cell, and the $b_0+1$ candidate old cells corresponding to every possible $\lambda$. The finite transition table selects the correct candidate. This gives fixed arity without placing an entire, input-sized stack in one variable. Positions outside the space bound read a single distinguished blank variable. [The cell-step reconstruction][lean-tableau-cells] proves that a row representing a real configuration, with linked prefix and satisfying cell constraints, represents exactly its successor. The proved growth bound ensures that no actual successor cell is lost at the boundary.
+
+Initial constraints fix the input bits, delimiter and all other stacks. In the next $q(n)$ positions they permit guessed Boolean symbols or blanks; adjacent constraints require every blank to be followed by a blank. Thus those cells describe exactly a witness of some length from zero through $q(n)$, without requiring the checker to reject longer words. Final constraints fix the accepting halt configuration. Induction on the rows now reconstructs a real accepting computation from a satisfying assignment. Reading the rows of a real accepting computation supplies the converse.
+
+For $k$ stacks, the source gives the variable count
+
+$$
+v(n)=(T(n)+1)(1+kS(n))+1,
+$$
+
+including a blank variable. The constraint count is
+
+$$
+c(n)=1+(T(n)+1)kw_0+T(n)+T(n)kS(n)
++2(1+kS(n))+q(n).
+$$
+
+Both are polynomials: the terms count the blank test, prefix links, control steps, cell steps, two boundaries and witness-adjacency tests respectively. The [cell-constraint construction][lean-cell-constraints] and [assembled reduction][lean-np-reduction] provide these directions and the explicit index codecs. There is also a machine-fixed degenerate case: if the proposed accepting output contains a symbol outside the machine's finite reachable support, the checker can never accept. The reduction then emits a fixed non-three-colourable graph. Thus the theorem needs no extra assumption that acceptance is possible.
+<!-- /passage:pcp-long-local-constraints -->
+
+<!-- passage:pcp-long-clause-reduction -->
+A constraint over an alphabet of size $A$ is converted to Boolean constraints by one-hot coding. Each source variable receives $A$ bits, exactly one of which is true; its true index is the encoded symbol. Validity constraints enforce this condition. A relation inspects the relevant one-hot blocks and accepts precisely the tuples accepted by the original finite relation. The alphabet size and local arity are constants fixed by the original machine. [The finite-domain encoding][lean-one-hot] proves that decoding a satisfying one-hot assignment and encoding a source assignment preserve all constraints.
+
+For completeness of the next step, consider any Boolean relation $R_e$ on $k_0$ input bits. For every pattern $p\in\{0,1\}^{k_0}$, introduce flags $z_0,\ldots,z_{k_0}$ with
+
+$$
+z_0=0,\qquad z_{i+1}=z_i\lor(x_i\mathbin{\mathrm{xor}}p_i),
+\qquad R_e(p)\lor z_{k_0}=1.
+$$
+
+An OR equation $z=x\lor y$ is enforced by the three clauses
+
+$$
+(z\lor\neg x),\qquad(z\lor\neg y),\qquad(\neg z\lor x\lor y),
+$$
+
+padding short clauses with false. The flags are forced to record whether the actual input differs from the prefix of $p$. Thus the final clause is automatic when $x\ne p$, and when $x=p$ it requires $R_e(x)=1$. This proves both directions of the reduction, with $2^{k_0}(3k_0+2)$ three-literal clauses per relation. It is polynomial because $k_0$ is fixed, not because an exponential in a varying arity would be harmless. These are the actual [Boolean clauses][lean-boolean-clauses] used by the implementation.
+<!-- /passage:pcp-long-clause-reduction -->
+
+<!-- passage:pcp-long-colouring-gadget -->
+A three-literal OR clause $a\lor b\lor c$ is equivalent to the existence of a fresh bit $z$ satisfying
+
+$$
+\operatorname{NAE}(a,b,z),\qquad
+\operatorname{NAE}(\neg z,c,0),
+$$
+
+where NAE means that the three values are not all equal. If $a=b=0$, the first clause forces $z=1$, and the second then forces $c=1$. If $a=b=1$, take $z=0$, which makes the second clause automatic. If $a\ne b$, take $z=0$, and both hold. These cases prove equivalence.
+
+To encode NAE by a graph, make a palette triangle with colours $0,1,2$. Each Boolean variable has two adjacent vertices, one for itself and one for its negation; both are joined to palette vertex 2. They must therefore receive complementary colours 0 and 1. Constant literals 0 and 1 use the corresponding palette vertices. For a NAE clause, make a new triangle and join its $i$-th vertex to the vertex for its $i$-th literal. If the three literal colours are equal, every vertex of the new triangle is forbidden that colour, so three distinct colours are impossible. If the literals are not all equal, the triangle can be coloured: for literal colours $(0,0,1)$, use triangle colours $(1,2,0)$; complementing or permuting yields the other cases. A colouring of the whole graph can first be relabelled so the palette has colours 0,1,2, after which it yields a satisfying Boolean assignment. The [NAE graph theorem][lean-nae] proves these two constructions.
+
+The graph has one palette triangle, two vertices per Boolean variable and three vertices per NAE clause. Encoding its adjacency matrix therefore has quadratic length in those counts. Composing with the one-hot and fixed-arity constructions gives a polynomial-length graph encoding $f(x)$, with
+
+$$
+G_{f(x)}\text{ is three-colourable}\iff x\in L.
+$$
+<!-- /passage:pcp-long-colouring-gadget -->
+
+<!-- passage:pcp-long-reduction-runtime -->
+The reduction is executable. The program computes $T(n)$, $S(n)$ and the fixed source dimensions, enumerates the tableau variables and relations using arithmetic sum/product indices, emits the fixed-arity clauses and gadgets, and writes the graph's bitstring. The fixed finite alphabet and fixed relation arity make truth-table enumeration constant work per relation up to the machine-dependent factor $2^{k_0}$. Matrix emission is polynomial in the already bounded vertex count.
+
+More explicitly, the [program-bearing reduction theorem][lean-np-runtime] returns $f,p,P,C,e$, all depending only on the NP certificate, such that on every input $x$, program $P$ emits exactly $f(x)$, its charged cost is at most $C(|x|+1)^e$, the output length is at most $p(|x|)$, and graph colourability is equivalent to $x\in L$. The source derives the program cost from fixed polynomial preprocessing plus a sixth-degree bound in the preprocessing size and the variable/constraint counts. Substitution of their polynomial bounds is again a polynomial. The compiler and fixed public symbol codecs give the corresponding finite-machine certificate. These retained data are what the final verifier uses to preprocess its input.
+<!-- /passage:pcp-long-reduction-runtime -->
+
+### Transporting the verifier through the reduction
+
+<!-- passage:pcp-long-seed-transport -->
+Let the amplified graph verifier use exactly $A\lceil\log _2(n+2)\rceil+B$ random bits, and let $|f(x)|\le p(|x|)$, where $p\in\mathbb N[X]$. Put $e=\deg p$, using the source's natural-degree convention for the zero polynomial. Since the coefficients are nonnegative,
+
+$$
+p(n)\le p(1)(n+2)^e,
+\qquad
+p(n)+2\le(p(1)+2)(n+2)^e.
+$$
+
+The first inequality follows term by term from $n^i\le(n+2)^e$ for every exponent with nonzero coefficient; the second also uses $(n+2)^e\ge1$. Therefore
+
+$$
+\lceil\log _2(p(n)+2)\rceil
+\le e\lceil\log _2(n+2)\rceil
++\lceil\log _2(p(1)+2)\rceil.
+$$
+
+Choose source randomness
+
+$$
+a=Ae,\qquad b=A\lceil\log _2(p(1)+2)\rceil+B.
+$$
+
+These formulas remain valid for constant and zero polynomials; the slope can be zero. On $x$, compute $f(x)$, use the initial portion of the random word needed by the graph verifier, and ignore the rest. Equal-size fibres of the prefix map preserve the exact acceptance probability. If the graph proof bound is $p_0$, the transported bound is $p_0\circ p$, by monotonicity of natural-coefficient polynomials. The query budget is unchanged. [The resource-transport proof][lean-transport] gives these formulas, while [final assembly][lean-assembly] composes the executable reduction with the actual query algorithm.
+
+This completes the forward theorem: membership in $L$ gives an honest proof for the reduced colourable graph; nonmembership gives a non-colourable graph and hence acceptance at most $1/2$ for every proof. Polynomial preprocessing composed with the polynomial-time graph protocol remains polynomial. All coefficients and degrees depend on the original NP verifier, never on the particular input or proof.
+<!-- /passage:pcp-long-seed-transport -->
+
+### The reverse inclusion
+
+<!-- passage:pcp-long-converse -->
+Suppose a language has a verifier satisfying the target conditions. An NP witness can be the first $p(n)$ proof bits. The deterministic witness checker runs the verifier for every random seed and accepts exactly if all runs accept.
+
+There are polynomially many seeds. Indeed,
+
+$$
+2^{a\lceil\log _2(n+2)\rceil+b}
+\le2^b\bigl(2(n+2)\bigr)^a.
+$$
+
+For each seed, at most $\ell$ answers are requested. Each address is below $p(n)$, and looking up a bit in the supplied finite witness takes polynomial time even using a linear scan. The implementation of each query step is polynomial in the input, random string and bounded answer history. Enumerating all seeds, simulating these runs and accumulating their conjunction therefore takes polynomial time. The [concrete finite-witness checker][lean-concrete-converse] supplies this closure in the same finite-machine model.
+
+If $x\in L$, perfect completeness gives a proof accepted on every seed. Truncating it to its first $p(n)$ bits preserves every run because no branch reads another address. Conversely, if a finite witness is accepted on every seed, extend it by zeros to an infinite oracle. The acceptance probability of this oracle is one. If $x\notin L$, soundness would make it at most $1/2$, a contradiction. Thus the finite witness relation characterizes $L$, proving the reverse inclusion.
+
+The remaining task is to identify this certificate class with the reference nondeterministic-machine definition of NP in the unchanged vendored Complexitylib. The [reference-NP equivalence][lean-reference-np] uses two concrete simulations.
+
+For the direction from a polynomial-time nondeterministic machine to certificates, a witness records the bounded sequence of nondeterministic choices. A deterministic path checker follows the supplied choices and checks that the machine has accepted when the list ends; the time bound limits the admissible witness length. Its compiled program has polynomial cost, giving a certificate verifier in the concrete model used above.
+
+For the converse, translate the concrete certificate checker into a reference decision machine. A bounded-guess construction computes and enforces the polynomial witness-length bound, guesses a witness within it, and runs the translated checker. An accepting branch exists exactly when an accepted certificate does. The translation and bounded-guess theorems supply the simulation and runtime guarantees; they are imported machine proofs, not additional premises left to the reader. Together these directions identify the certificate class in the PCP theorem with the intended reference NP class.
+<!-- /passage:pcp-long-converse -->
+
+[paper-pcp]: https://arxiv.org/html/2608.17429v2#S7
+[lean-theorem]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L25
+[lean-colour-algebra]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAlgebra.lean#L94
+[lean-colour-grid]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorGrid.lean#L135
+[lean-seven-checks]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L37
+[lean-query-budget]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L362
+[lean-completeness]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierCompleteness.lean#L101
+[lean-soundness]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean#L58
+[lean-difference]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryDifferenceConsistency.lean#L297
+[lean-decoded]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorDecodedSoundness.lean#L86
+[lean-budget]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSoundnessBudget.lean#L142
+[lean-parameters]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameters.lean#L168
+[lean-choice]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameterChoice.lean#L89
+[lean-sampling]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFullFieldSampling.lean#L160
+[lean-binary]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorBinaryVerifier.lean#L250
+[lean-canonical]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorCanonicalVerifier.lean#L168
+[lean-repetition-bound]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RationalRepetitionBound.lean#L59
+[lean-amplified]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean#L72
+[lean-runtime-correct]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBaseCorrect.lean#L14
+[lean-runtime-cost]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBasePolynomial.lean#L55
+[lean-runtime]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorRuntime.lean#L11
+[lean-tableau]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPTableau.lean#L142
+[lean-cell-constraints]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPCellConstraints.lean#L227
+[lean-np-reduction]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColor.lean#L144
+[lean-boolean-clauses]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteBooleanConstraints.lean#L187
+[lean-nae]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NAEThreeColor.lean#L241
+[lean-np-runtime]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColorRuntime.lean#L257
+[lean-transport]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/ReductionResources.lean#L35
+[lean-assembly]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFinalAssembly.lean#L54
+[lean-concrete-converse]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean#L33
+[lean-reference-np]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L39
+[lean-seed-size]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSeedSize.lean#L170
+[lean-resources]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorResourceBounds.lean#L44
+[lean-field-cost]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorFieldSetupCost.lean#L45
+[lean-tableau-cells]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/TableauCells.lean#L155
+[lean-one-hot]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteDomainConstraints.lean#L119
+
 
 ## Algebraic tests and correction
 
@@ -299,7 +933,9 @@ The plurality correction and double-sampling argument follow the approach of Rub
 <!-- /passage:pcp-long-algebra-weighted-plurality -->
 
 <!-- passage:pcp-long-algebra-generator-soundness -->
-Apply this result to (A6), with $n=c+1$. If
+Suppose $q>2c$. If the test using a generator of $F^\times$ and its Lagrange weights rejects with probability $\delta<1/[2(c+2)^2]$, then a formal polynomial of total degree at most $c$ agrees with $f$ outside a set of relative size at most $2\delta$.
+
+Indeed, apply the preceding robustness result to (A6), with $n=c+1$. Its hypothesis is
 
 $$
 \delta<\frac{1}{2(c+2)^2},
@@ -317,33 +953,7 @@ This is the corrected low-degree soundness statement. It needs $q>2c$, not a cub
 
 <!-- /passage:pcp-long-algebra-generator-soundness -->
 
-<!-- passage:pcp-long-algebra-old-test-counterexample -->
-The earlier test's failure can be seen in a family of arbitrarily large fields, so it is not merely a small-field exception. Let $q=2^{2k}$ for any $k\ge2$, set $c=2$, and choose $\omega$ of order three in $F_q^\times$. Such an element exists because $3$ divides $q-1$. In any dimension $m\ge1$, put $f(x)=x_1^4$. The unit-weight test in v1 accepts when
 
-$$
-f(u)+\sum_{i=1}^3 f(u+\omega^i v)=0.
-$$
-
-The characteristic-two Frobenius identity $(a+b)^4=a^4+b^4$ gives, for every pair $u,v$,
-
-$$
-f(u)+\sum_{i=1}^3 f(u+\omega^i v)
-=4u_1^4+v_1^4\sum_{i=1}^3\omega^{4i}=0.
-$$
-
-Here $4=0$, $\omega^4=\omega$, and $1+\omega+\omega^2=0$. Thus the test accepts with probability one. Nevertheless, for every polynomial $P$ of total degree at most two, fix the other $m-1$ coordinates. The polynomial
-
-$$
-X^4-P(X,x_2,\ldots,x_m)
-$$
-
-has degree exactly four and leading coefficient one. It has at most four roots, so averaging over the fixed coordinates proves $\Delta(f,P)\ge1-4/q$. In particular $f$ is not a degree-two polynomial function. The same argument excludes representations of individual degree at most two.
-
-The fields in this family are unbounded. For any proposed absolute constant $C$, choose $k$ large enough that $q>Cc^3=8C$. Then choose $0<\delta<1/[2(c+2)^2]$ with $2\delta<1-4/q$. The word passes every old test but violates the claimed proximity conclusion of v1 Lemma 3.3 under its stated large-field condition. This identifies a failure of that scalar characterization and soundness lemma; it does not construct a cheating proof for every check of the final PCP verifier.
-
-In v2, Fact 2.7 and Lemma 3.3 use the full multiplicative generator and the weights (A6), for which the proof above applies. The v2 acknowledgments thank Troy Lee for pointing out the earlier mistake in Lemma 3.3. The calculation here is an ordinary derived explanation of the correction, not a claim that this particular example was Lee's, a novelty claim, or a separately Lean-checked counterexample. [Paper v1, Fact 2.7 and Lemma 3.3][paper-v1]; [corrected v2 and acknowledgments][paper].
-
-<!-- /passage:pcp-long-algebra-old-test-counterexample -->
 
 ### 3. Recovering a specified value
 
@@ -416,6 +1026,8 @@ Let $e(y)$ count the discrepant entries among these $10d$ columns. Its mean is a
 <!-- /passage:pcp-long-algebra-column-selection -->
 
 <!-- passage:pcp-long-algebra-error-locator -->
+We seek a rectangle on which the chosen row and column polynomials agree exactly: $d+1$ columns and sufficiently many rows. The columns will determine a polynomial of degree at most $d$ in the horizontal coordinate; agreement on many rows will identify most row polynomials with its restrictions. The error locator below removes the inconsistent entries while leaving such a rectangle.
+
 To describe the inconsistent entries algebraically, we use the error-locator construction of [Arora–Safra, Lemma 5.2.5 and its polynomial extension in Lemma 5.2.7][arora-safra]. Seek bivariate polynomials $E,N$ satisfying
 
 $$
@@ -1315,610 +1927,39 @@ $$
 
 The replacement error is multiplied by $1+2C(c)$, because it enters through ZERO's rejection term. Omitting that factor would change the quantitative argument. The formal sources are [fresh derived answers](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardDerivedOracle.lean) and [their use in ZERO](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/DerivedZeroOnGridSoundness.lean).
 
-The next part applies (B15), (B21), and (B25) to the four principal proof tables. The same decoded polynomials supplied by the low-degree tests will be used in the grid and difference checks. That common choice is what turns separate local tests into a contradiction for a graph without a proper three-colouring.
+These establish the testing and correction statements used in the [seven-check soundness argument](#soundness-of-the-seven-check-verifier). In particular, (B15) supplies the fixed witnesses, and (B25) constrains their derived vertex and edge polynomials. Retaining those witnesses through all the checks is what yields one proper colouring.
 
 <!-- /passage:pcp-long-derived-oracle-transfer -->
 
-## From the algebraic tests to the PCP theorem
+## Appendix. Failure of the earlier scalar test
 
-<!-- passage:pcp-long-final-target -->
-The preceding tests give a verifier for graph three-colourability. This chapter assembles that verifier and then transfers it to every language in NP. The result has the following quantifier order. For every language $L\subseteq\{0,1\}^{*}$ with a polynomial-time witness relation, there are one verifier $V$, one polynomial-time implementation of its query protocol, natural numbers $a,b,\ell$, and a polynomial $p\in\mathbb N[X]$, such that every input $x$ of length $n$ satisfies these conditions:
+<!-- passage:pcp-long-algebra-old-test-counterexample -->
+The earlier test's failure can be seen in a family of arbitrarily large fields, so it is not merely a small-field exception. Let $q=2^{2k}$ for any $k\ge2$, set $c=2$, and choose $\omega$ of order three in $F_q^\times$. Such an element exists because $3$ divides $q-1$. In any dimension $m\ge1$, put $f(x)=x_1^4$. The unit-weight test in v1 accepts when
 
-1. The verifier uses exactly $a\lceil\log _2(n+2)\rceil+b$ fair random bits and makes at most $\ell$ proof-bit queries.
-2. Every proof address on every branch is less than $p(n)$.
-3. If $x\in L$, some fixed proof is accepted for every random seed.
-4. If $x\notin L$, every fixed proof is accepted with probability at most $1/2$.
-
-The constants, polynomial, verifier and implementation are chosen before the input. The proof may depend on the input but is fixed before the random seed. This is the content of [the forward theorem][lean-theorem]. A separate argument below gives the reverse inclusion in the same machine model. Here $\ell$ denotes a query budget; the number of actual reads may be smaller on some seeds.
-
-For this final chapter, $d$ denotes the grid dimension, $m$ the digit base (previously $b$), and $Q$ the field cardinality (previously $q$). The decoded degree bound is $D=cm^c$; the difference polynomial will be written $Q_*$. These choices keep the final parameter statements close to their source.
-
-The algebraic construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. We follow the corrected [arXiv v2, Section 7][paper-pcp], with the concrete choices and additional reductions in Troy Lee's formalization. The paper proves the three-colouring construction and invokes NP-completeness. The formalization also constructs the NP reduction, the fair-bit sampler and the polynomial-time machine. Its exact choices need not coincide with the asymptotic parameter choices in the paper.
-<!-- /passage:pcp-long-final-target -->
-
-### Three colours as polynomial equations
-
-<!-- passage:pcp-long-colour-equations -->
-Let $F$ be a finite field of characteristic two, of cardinality $Q$, containing a primitive cube root of unity $\omega$. The three colours will be
-
-$$
-\mathcal C=\{1,\omega,\omega^2\}.
-$$
-
-These are distinct, and they are exactly the roots of $Z^3-1$. For two valid colours $u,v$, the equation
-
-$$
-(u-v)^3=1
-$$
-
-holds exactly when $u\ne v$. To prove the nontrivial direction, characteristic two gives
-
-$$
-(u-v)^4=u^4-v^4=u-v,
-$$
-
-because $u^3=v^3=1$. If $u\ne v$, cancellation of the nonzero factor $u-v$ yields $(u-v)^3=1$. Conversely, $u=v$ would make the left side zero. Thus an assignment $f:V(G)\to F$ is a proper three-colouring precisely when
-
-$$
-f(v)^3-1=0\quad(v\in V(G)),\qquad
-(f(v)-f(w))^3-1=0\quad(vw\in E(G)).
-$$
-
-Both families matter. For example, assign the four vertices of $K_4$ the four elements of $\mathbb F_4$. Every difference across an edge is a nonzero element of $\mathbb F_4$, hence has cube one. All edge equations hold, although $K_4$ is not three-colourable. The vertex assigned zero violates its vertex equation. The formal [colour algebra][lean-colour-algebra] proves both implications with the vertex condition present.
-<!-- /passage:pcp-long-colour-equations -->
-
-<!-- passage:pcp-long-grid-constraints -->
-Choose a nonempty set $H\subseteq F$, of size $h$, and a dimension $d$ large enough to place the input graph's vertices in $H^d$. Unused grid points are isolated vertices. Extending a colouring arbitrarily to these points preserves three-colourability in both directions.
-
-Let $P$ be the coordinatewise interpolation of the colour assignment on $H^d$, and let $E$ be the interpolation of the graph's zero-one adjacency function on $H^d\times H^d$. Writing
-
-$$
-d_0=d(h-1),
-$$
-
-we have $\deg P\le d_0$ and $\deg E\le2d_0$. Form the difference and constraint polynomials
-
-$$
-\begin{aligned}
-Q_P(X,Y)&=P(X)-P(Y),\\
-A_P(X)&=P(X)^3-1,\\
-B_P(X,Y)&=E(X,Y)\bigl(Q_P(X,Y)^3-1\bigr).
-\end{aligned}
-$$
-
-Their total degrees are at most $d_0,3d_0,5d_0$, respectively. A proper colouring makes $A_P$ vanish on $H^d$ and $B_P$ vanish on $H^{2d}$. Conversely, these two vanishing conditions, together with $Q_P(X,Y)=P(X)-P(Y)$, recover a proper colouring by the preceding scalar argument. The factor $E$ is the public graph's actual adjacency extension: it equals one on edges and zero on nonedges at grid points. It is computed from the input, not supplied by the prover. The [grid construction][lean-colour-grid] implements this equivalence.
-
-The grid-vanishing theorem supplies certificates $M_A$ and $M_B$ for $A_P$ and $B_P$. In the notation of the preceding chapter, each certificate packages the coefficients in a representation by the coordinate vanishing polynomials. The sufficient degree bound $5d_0$ covers the colour polynomial and both certificate polynomials. The proper-colouring certificate has two blocks of $2d$ variables; the implementation flattens the first two vertex-coordinate blocks before passing them to the same certificate routines. This is a coordinate bijection and preserves evaluations, total degree and normalized distances.
-<!-- /passage:pcp-long-grid-constraints -->
-
-### The eight tables and seven checks
-
-<!-- passage:pcp-long-eight-tables -->
-The received proof contains four primary tables and four encoded line tables. An honest proof has the following mathematical contents:
-
-| Primary polynomial | Number of field coordinates | Primary binary encoding |
-| --- | ---: | --- |
-| $P$, the colour extension | $d$ | degree-three Hadamard encoding |
-| $M_A$, the vertex certificate | $2d$ | degree-one Hadamard encoding |
-| $Q_P$, the difference polynomial | $2d$ | degree-three Hadamard encoding |
-| $M_B$, the edge certificate | $4d$ | degree-one Hadamard encoding |
-
-Each primary table has one encoded line table. In the formal implementation every auxiliary line table uses degree-one labels. The paper's Section 7 lists degree-three labels for the colour and difference line tables; the formal construction uses the degree-one auxiliary encoding analysed in the preceding chapter. In particular, the line table used to test a certificate is the same physical table used to correct that certificate inside ZERO. There is no second certificate table whose consistency would have to be assumed. The [proof datatype and read function][lean-seven-checks] specify all eight tags and their address spaces.
-
-The verifier runs four encoded-line low-degree tests, one on each primary/line-table pair. It also runs ZERO on the vertex constraint, ZERO on the edge constraint, and a difference check. It accepts exactly when all seven accept. Each check receives an independent seed with the prescribed finite uniform distribution. This makes each branch's marginal distribution the one analysed in its soundness theorem. Since failure of a branch forces failure of the conjunction, each branch's rejection probability is at most the full rejection probability.
-<!-- /passage:pcp-long-eight-tables -->
-
-<!-- passage:pcp-long-derived-constraints -->
-The constraint polynomials are not extra proof tables. Suppose $p(x,\Lambda)$ is the received degree-three row intended to encode $P(x)$. To request a linear bit of $P(x)^3-1$, transform the desired linear label $L$ into the degree-three Boolean label $\Lambda_{Z^3-1,L}$ supplied by the encoding lemma. Draw a fresh uniform degree-three label $R$, read
-
-$$
-p(x,R+\Lambda_{Z^3-1,L})+p(x,R),
-$$
-
-and return their sum in $\mathbb F_2$. The corresponding edge query uses the difference table and the label for $Z\mapsto E(x,y)(Z^3-1)$. Thus each derived read costs two physical bits.
-
-For an exact Hadamard row, linearity in the **label** gives the requested bit exactly, even though $Z\mapsto Z^3-1$ is nonlinear in the field value. For a row close on average to the correct encoding, the two sampled labels are individually uniform, so the probability of an incorrect derived read is bounded by twice the row error. The formal verifier uses fresh masks as part of the actual test seed. Its soundness argument carries this replacement error through the ZERO inequality; it does not postulate a globally good fixed mask.
-
-The difference check selects independent uniform $x,y\in F^d$ and a homogeneous linear functional $L:F\to\mathbb F_2$. It compares the difference table's bit with the sum of the colour-table bits at $x$ and $y$. Homogeneity is essential to the displayed additive identity. The formal proof uses exactly the homogeneous-label distance guarantee proved by the earlier low-degree test, rather than a stronger assertion about arbitrary affine labels.
-<!-- /passage:pcp-long-derived-constraints -->
-
-<!-- passage:pcp-long-query-budget -->
-The seven physical query bounds, in the order colour, vertex certificate, difference, edge certificate, vertex ZERO, edge ZERO, and difference check, are
-
-$$
-2c+18,\quad2c+14,\quad2c+18,\quad2c+14,
-\quad6c+20,\quad6c+20,\quad3.
-$$
-
-Their sum is $20c+107$, independent of the graph size. Taking $c=4$ bounds one unamplified run by at most $26+22+26+22+44+44+3=187$ physical bit reads. This count includes the fresh derived reads. A separate congruence theorem says that two proof oracles agreeing on the listed addresses give the same verdict; the count therefore measures actual information read from the proof, rather than merely the number of named subroutines. The [query-list theorem][lean-query-budget] establishes both facts.
-<!-- /passage:pcp-long-query-budget -->
-
-### Perfect completeness
-
-<!-- passage:pcp-long-completeness -->
-Start with a proper colouring. Interpolate it to obtain $P$, put the exact difference polynomial $Q_P$ in the difference table, and choose grid-vanishing certificates $M_A,M_B$. Put the exact encodings and exact encoded restrictions to lines in their eight locations. Assume the honest degree capacity
-
-$$
-5d(h-1)<m^c,
-$$
-
-where $m$ is the base used by the degree-reducing inner encoding.
-
-Every outer low-degree test accepts because it sees an exact polynomial of degree below $m^c$ and its honest encoded line restrictions. The two-query derived read agrees exactly with the requested constraint encoding for every mask. Each ZERO check accepts because its polynomial has the supplied vanishing certificate. Finally,
-
-$$
-L(Q_P(x,y))=L(P(x))+L(P(y))
-$$
-
-for every homogeneous label $L$, so the difference check also accepts. The same eight tables satisfy all these statements simultaneously. Consequently every seven-component random seed accepts. This proves perfect completeness. The [honest-proof construction][lean-completeness] supplies the certificates and verifies each branch.
-<!-- /passage:pcp-long-completeness -->
-
-### Soundness of the seven-check verifier
-
-<!-- passage:pcp-long-decoding-contract -->
-Set $D=cm^c$. Suppose the field and grid satisfy
-
-$$
-Q\ge10^6D^3,\qquad Q\ge100Dh,
-\qquad d(h-1)\le D,
-$$
-
-with $c,m,h\ge1$, the prescribed generator nodes, a correction parameter satisfying `GoodNodes`, as in the inner corrector, and a primitive cube root of unity. Let $\kappa$ be the rejection probability of an arbitrary received proof. The argument will show that sufficiently small $\kappa$ forces the graph to be three-colourable.
-
-Write $E_c$ for the line-error constant and $S_c$ for the soundness constant of the encoded-line test, and $C_c$ for the binary local corrector's soundness constant. If
-
-$$
-E_c\kappa\le\frac1{4\,000\,000},
-$$
-
-the four outer tests supply four actual polynomials $P,Q_*,M_A,M_B$, each of total degree at most $D$. They give full degree-three label distance at most
-
-$$
-\varepsilon=S_c\kappa
-$$
-
-for $P,Q_*$, and homogeneous linear-label distance at most $\varepsilon$ for all four relevant primary tables. These polynomials are chosen once for the received proof; the later argument uses those same choices. No closeness assumption is imposed on the auxiliary line tables. Their actual test behaviour is already part of the decoding theorem. These are the decoded polynomials used in [the assembled soundness proof][lean-soundness].
-<!-- /passage:pcp-long-decoding-contract -->
-
-<!-- passage:pcp-long-difference-soundness -->
-First identify the decoded difference polynomial. Replace the three received bits in the difference test by their decoded homogeneous bits. The replacement can change the verdict only if one of these three bits differs, an event of probability at most $3\varepsilon$. Hence the ideal consistency check rejects with probability at most $\kappa+3\varepsilon$.
-
-For a nonzero field element $z$, exactly half of the homogeneous linear functionals satisfy $L(z)=1$. Therefore this ideal rejection rate is exactly half the relative distance between the field-valued functions $Q_*(x,y)$ and $P(x)-P(y)$. If these polynomials differed, their difference would be a nonzero polynomial of degree at most $D$, and the polynomial zero bound would give relative disagreement at least $1-D/Q$. It follows that
-
-$$
-\kappa+3\varepsilon<\frac{1-D/Q}{2}
-$$
-
-forces the polynomial identity $Q_*(X,Y)=P(X)-P(Y)$. This is an identity of polynomials, not merely agreement at most sampled points. The [difference-consistency theorem][lean-difference] makes the strict inequality explicit.
-<!-- /passage:pcp-long-difference-soundness -->
-
-<!-- passage:pcp-long-assembled-zero-soundness -->
-Now consider the decoded vertex constraint $A_P=P^3-1$. Its degree is at most $3D$. For the edge constraint, the public adjacency polynomial has degree at most $2D$; using the just-proved difference identity, the decoded edge constraint
-
-$$
-B_P=E\bigl((P(X)-P(Y))^3-1\bigr)
-$$
-
-has degree at most $5D$. Both certificates have degree at most $D$, so the common degree bound $5D$ is sufficient for the two ZERO arguments.
-
-The fresh-derived-read inequality from the previous chapter says that if either decoded constraint fails to vanish on its grid, then
-
-$$
-\frac{1-5Dh/Q}{2}
-\le
-(1+2C_c)(\kappa+2\varepsilon)
-+2\varepsilon+\frac{5D}{Q-1}.
-$$
-
-Here $2\varepsilon$ inside the parentheses is the replacement loss from the derived read. Multiplying it by $1+2C_c$ is necessary: it enters the same rejection term as the actual ZERO failure probability. The other $2\varepsilon$ comes from the two uses of the certificate's homogeneous proximity bound. The last term is the nonzero-parameter local-correction loss. These terms cannot be dropped by choosing a favourable random seed after the fact.
-
-Consequently, the strict reverse inequality forces $A_P$ to vanish on $H^d$ and $B_P$ to vanish on $H^{2d}$. The scalar colour equations then make $P|_{H^d}$ a proper colouring. The coordinate flattening in the edge branch is a bijection, so its normalized error and vanishing statements transport unchanged. The [decoded soundness theorem][lean-decoded] performs these two applications to the same decoded colour and difference polynomials.
-<!-- /passage:pcp-long-assembled-zero-soundness -->
-
-<!-- passage:pcp-long-gap -->
-An explicit positive gap makes all three inequalities hold at once. Define
-
-$$
-\begin{aligned}
-A_c&=1+2C_c,\\
-B_c&=1+3S_c,\\
-T_c&=A_c(1+2S_c)+2S_c,\\
-g_c&=\min\left\{
-\frac{1}{4\,000\,000(E_c+1)},
-\frac{1}{16B_c},
-\frac{1}{16(T_c+1)}\right\}.
-\end{aligned}
-$$
-
-At the chosen value $c=4$, the constants evaluate to
-
-| $K_4$ | $E_4$ | $S_4$ | $C_4$ | $T_4$ |
-| ---: | ---: | ---: | ---: | ---: |
-| $105408$ | $1054138$ | $1054166$ | $1054082$ | $4444715947277$ |
-
-All denominators are positive, so $g_c>0$. If $0\le\kappa<g_c$, then $E_c\kappa\le1/4\,000\,000$, $\kappa+3S_c\kappa<1/16$, and $A_c(\kappa+2S_c\kappa)+2S_c\kappa<1/16$. The field bound $Q\ge100Dh$, with $D,h\ge1$, gives
-
-$$
-\frac DQ\le\frac14,\qquad
-\frac{5Dh}{Q}\le\frac14,\qquad
-\frac{5D}{Q-1}\le\frac18.
-$$
-
-For the last inequality, $Q\ge100D$ implies $Q-1\ge40D$. The difference error is then below $1/16<3/8$, and the total ZERO error is below $1/16+1/8=3/16<3/8$. These bounds prove the required strict comparisons. Thus rejection below $g_c$ implies colourability. Taking the contrapositive, **every received proof of a non-three-colourable graph has rejection probability at least $g_c$**. The [budget lemmas][lean-budget] establish this explicit rejection gap.
-<!-- /passage:pcp-long-gap -->
-
-### Parameters for every finite graph
-
-<!-- passage:pcp-long-parameters -->
-The formalization chooses a concrete parameter family different from the paper's asymptotic display. For a graph with $N$ vertices, let $a$ be the least integer at least two with
-
-$$
-\lceil\log _2N\rceil\le a2^a.
-$$
-
-Use the natural ceiling-log convention at $N=0,1$; the definition still selects $a=2$. Put
-
-$$
-s=2^a,\quad d=m=h=s,\quad c=4,
-\quad t=12a+32,\quad Q=2^t=2^{32}s^{12}.
-$$
-
-The finite field is represented by binary coefficient arrays modulo a computed monic irreducible polynomial of degree $t$. The coordinate map $F\cong\mathbb F_2^t$ reads these stored coefficients. Since $t$ is divisible by four, $3\mid Q-1$; bounded searches in the field's numeric order supply a primitive cube root and a generator of $F^{\times}$. The grid $H$ is the first $s$ field elements in this numeric order. It need not be a subfield.
-
-The grid has $h^d=s^s=2^{a2^a}\ge N$ points. With $D=4s^4$, the soundness field requirement holds because
-
-$$
-10^6D^3=64\,000\,000s^{12}\le2^{32}s^{12}=Q.
-$$
-
-Also $100Dh=400s^5\le Q$. Since $s\ge4$,
-
-$$
-5s(s-1)<s^4=m^c,
-$$
-
-which supplies the honest-degree capacity. All hypotheses of completeness and soundness are therefore met for the same field, grid and roots. The [parameter family][lean-parameters] and [least-exponent argument][lean-choice] include small graph sizes explicitly.
-
-To obtain the logarithmic resource bounds, minimality matters. If $a>2$, then
-
-$$
-(a-1)2^{a-1}<\lceil\log _2N\rceil,
-\qquad
-a2^a\le4(a-1)2^{a-1}.
-$$
-
-If $a=2$, the volume $a2^a$ is eight. Both cases yield
-
-$$
-a2^a\le4\max\{8,\lceil\log _2N\rceil\}
-\le32(\lceil\log _2N\rceil+1).
-$$
-
-Thus a resource bounded by a fixed multiple of $a2^a$ is logarithmic in $N$; a resource bounded by $2^{O(a2^a)}$ is polynomial in $N$. Merely knowing that the grid can hold the graph would not give these upper bounds.
-<!-- /passage:pcp-long-parameters -->
-
-### From finite samples to fair random bits
-
-<!-- passage:pcp-long-fair-bits -->
-Some mathematical correctors use uniformly distributed nonzero field parameters. Sampling uniformly from $F^{\times}$ with a fixed fair-bit budget is inconvenient because $Q-1$ is not a power of two. The implemented verifier instead samples all four such parameters from the whole field. If any is zero, it accepts immediately and makes no queries. Otherwise it runs the seven-check verifier.
-
-Conditioned on all four being nonzero, the decoded seed has exactly the original product-uniform distribution. Every other coordinate is unchanged. Therefore
-
-$$
-\Pr[\text{new verifier rejects}]
-=\left(\frac{Q-1}{Q}\right)^4
-\Pr[\text{original verifier rejects}].
-$$
-
-Since $Q\ge2$, the factor is at least $1/16$. Perfect completeness survives, and non-colourable graphs have rejection at least $\delta=g_4/16$. This is an exact counting identity on the two finite seed spaces, as proved by [whole-field sampling][lean-sampling]; it does not use an approximation to a uniform distribution.
-
-Every remaining random coordinate is a field vector, a Boolean coefficient vector or a finite product of such objects. The chosen linear coordinates and explicit product codecs give a bijection between the entire seed space and a fixed-length bit string. Uniform bit strings therefore induce exactly the required distribution. Likewise, a tagged mixed-radix codec packs the eight physical tables into one finite binary word. Encoding and decoding are inverse, and the query list is translated through the same codec.
-<!-- /passage:pcp-long-fair-bits -->
-
-<!-- passage:pcp-long-resources -->
-Here is how polynomial proof length follows for the actual eight-table address space. A degree-$r$ Boolean label on $t$ coordinates has
-
-$$
-b_r(t)=\sum_{j=0}^{r}\binom tj
-$$
-
-binary coefficients, so there are $C_r=2^{b_r(t)}$ labels. The four primary-table lengths are
-
-$$
-Q^dC_3,\quad Q^{2d}C_1,\quad Q^{2d}C_3,\quad Q^{4d}C_1.
-$$
-
-A line table for a polynomial on $j$ coordinates indexes two field points specifying a line, the $cm$ coordinates of its reduced-degree encoding, and a linear Boolean label. Its length is $Q^{2j+cm}C_1$. Thus the four auxiliary lengths are
-
-$$
-Q^{2d+cm}C_1,\quad Q^{4d+cm}C_1,\quad
-Q^{4d+cm}C_1,\quad Q^{8d+cm}C_1.
-$$
-
-Since $b_1(t)\le b_3(t)\le(t+1)^3$, the sum of these eight lengths is at most
-
-$$
-2^{(8d+cm)t+(t+1)^3+3}.
-$$
-
-For $d=m=2^a$, $c=4$ and $t=12a+32$, the exponent is at most $132\,000a2^a$. One elementary estimate controls the cubic term: $a^2\le4\cdot2^a$ for every natural $a$, and $12a+33\le32a$ for $a\ge2$. Hence $(t+1)^3\le131\,072a2^a$; the remaining linear terms fit within the stated bound.
-
-The exact fair-bit seed length, counting every product coordinate even when a branch ignores it, is
-
-$$
-r=35td+32tcm+73t+50+8\binom t2+6\binom t3.
-$$
-
-This comes from summing the four outer-test seeds, two derived-ZERO seeds and the difference-check seed; replacing the four nonzero parameters contributes $4t$ of these bits. The same elementary estimates bound $r$ by $10^6a2^a$. Combining both estimates with $a2^a\le32(\lceil\log_2N\rceil+1)$, and using $2^{\lceil\log_2N\rceil}\le2\max\{1,N\}$, gives
-
-$$
-\begin{aligned}
-r(N)&\le32\,000\,000(\lceil\log _2N\rceil+1),\\
-\operatorname{proofLength}(N)&\le(4\max\{1,N\})^{4\,224\,000},\\
-\#\operatorname{queries}&\le187.
-\end{aligned}
-$$
-
-These are proved upper bounds, with very large constants. They establish the complexity class statement; they are not practical resource estimates. The proof-size estimate concerns the actual packed eight-table address space, and the query estimate concerns addresses in that space. [The exact seed count][lean-seed-size], [address-space estimates][lean-resources] and [binary-verifier guarantees][lean-binary] give these calculations together with perfect completeness and the rejection bound.
-
-For an encoded graph input $x$, its decoded vertex count is at most $n=|x|$. The verifier uses the canonical budget
-
-$$
-r_0(n)=32\,000\,000\lceil\log _2(n+2)\rceil+32\,000\,000.
-$$
-
-It ignores the surplus bits beyond those needed by the exact seed codec. Every shorter bit string has exactly the same number of extensions, so prefix sampling preserves the acceptance probability. The proof address bound becomes the natural-coefficient polynomial
-
-$$
-p_0(n)=\bigl(4(n+1)\bigr)^{4\,224\,000}.
-$$
-
-The nonadaptive list of at most 187 physical reads is compiled into a decision tree of that depth. Its evaluation equals the algebraic verdict for every oracle, and all syntactic addresses are below $p_0(n)$. The [canonical verifier][lean-canonical] proves these properties for every bit string, including malformed graph encodings according to its fixed decoder.
-<!-- /passage:pcp-long-resources -->
-
-### Repetition on one fixed proof
-
-<!-- passage:pcp-long-amplification -->
-With the constants from the preceding chapters, exact rational arithmetic gives
-
-$$
-g_4=\frac1{71\,115\,455\,156\,448},\qquad
-\delta=\frac1{1\,137\,847\,282\,503\,168}.
-$$
-
-Set $R=\lceil1/\delta\rceil$. Run the base verifier $R$ times with independent seeds on the **same** proof, and accept only if every run accepts. For a fixed proof with single-run acceptance $u$, independence gives acceptance $u^R$. In a no-instance, $u\le1-\delta$, so it remains to show $(1-\delta)^R\le1/2$.
-
-An elementary inequality proves this without logarithmic approximation:
-
-$$
-(1+k\delta)(1-\delta)^k\le1
-\quad(k\ge0, 0\le\delta\le1).
-$$
-
-The base case is equality. For the induction step,
-
-$$
-(1+(k+1)\delta)(1-\delta)
-=1+k\delta-(k+1)\delta^2\le1+k\delta;
-$$
-
-multiply by the nonnegative factor $(1-\delta)^k$. Since $R\delta\ge1$, division gives
-
-$$
-(1-\delta)^R\le\frac1{1+R\delta}\le\frac12.
-$$
-
-The same honest proof still accepts on every repeated seed. Repetition leaves the proof-length polynomial unchanged and multiplies the query and random-bit budgets by the fixed constant $R$. Here $R=1\,137\,847\,282\,503\,168$ and $187R=212\,777\,441\,828\,092\,416$. The [rational repetition bound][lean-repetition-bound] and [amplified verifier][lean-amplified] retain these fixed choices. A prover cannot supply a different proof after seeing each seed; the probability statement quantifies over one proof before the product distribution.
-<!-- /passage:pcp-long-amplification -->
-
-### The polynomial-time implementation
-
-<!-- passage:pcp-long-runtime -->
-The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this. The formal implementation computes the parameters, field arithmetic, seed codecs, query addresses and verdict in a fixed program language and compiles that language to Mathlib's finite multi-stack `FinTM2` machine model. A verifier step takes the input, random seed and answer history, then either halts with a verdict or requests the next proof address. The implementation relation states that executing these steps produces the specified bounded query tree, on both possible answers at every queried branch.
-
-The concrete operations can be bounded as follows. Parameter selection is a bounded search for the least admissible $a$. Field elements have $t=12a+32$ binary coefficients; arithmetic reduces polynomial representatives modulo the computed irreducible modulus, and inversion uses powering. The modulus, cube root and full generator are obtained by bounded finite searches, with candidate tests expressed in the same finite arithmetic. Their search ranges are polynomial in the field cardinality $Q$, and $Q=2^{32}s^{12}$ is polynomially bounded in the input length. For example, the charged modulus-construction cost is at most $7\,000\,000(Q+1)^7$; each root search costs at most $400\,000\,000(Q+4)^6$; the combined field-and-roots routine costs at most $10^9(Q+4)^7$. [These cost proofs][lean-field-cost] include candidate testing and storage. The runtime construction computes the parameters and arithmetic data from the input. For the underlying finite-field construction, see Shoup [Sections 20.2 and 21.1][shoup], especially the irreducible-polynomial existence result in Theorem 20.11. Shoup also analyses irreducibility testing and randomized construction. The deterministic bounded searches and charged cost estimates above are those of the formal implementation.
-
-The public edge extension is evaluated from the input adjacency matrix by finite interpolation sums. The grid and its pair space have polynomial size because $s^s=2^{a2^a}$ and the preceding volume bound is logarithmic. Lagrange weights, degree-reduction coordinates and label transformations use bounded arithmetic loops. The proof-address values are polynomially bounded by $p_0(n)$; the implementation proves bounds for the sizes of their stored representations as well as for the number of addresses.
-
-The base callback has two passes. A discovery pass constructs the exact list of physical queries. A replay pass evaluates the algebraic verdict using the answer history at those addresses. The invalid whole-field-seed case emits no queries and returns acceptance. [Callback correctness][lean-runtime-correct] proves that these outputs agree with the mathematical query list and verdict for arbitrary input, seed and answer words. This is stronger than correctness only on honest proof responses.
-
-For cost, the proof assigns polynomial bounds to the setup, generated-query storage and branch computations, then substitutes each bound into the routine that consumes it. Concretely, if query storage is bounded by $C_q(n+1)^{d_q}$ and a branch's cost has degree $d_b$ in the size of its input/history, the combined proof takes an exponent at least
-
-$$
-\max\{84,d_q,(d_q+1)d_b\}.
 $$
-
-Constants are enlarged to absorb the two passes, fixed seven-branch overhead and setup. The resulting theorem bounds the charged cost by $C(|x|+|r|+|u|+1)^e$ for every answer history $u$. The [polynomial-cost proof][lean-runtime-cost] retains the query-size premise until the separately proved storage bound supplies it.
-
-The repetition protocol slices the random string into $R$ blocks, invokes this same callback, and manages the answer history. Because $R$ is fixed, the protocol's loop and storage overhead are polynomial. Its compiler and public input/output codecs preserve the callback's semantics and translate the charged cost to a step bound on the finite machine. Thus [the runtime theorem][lean-runtime] concludes polynomial-time implementation of the actual amplified query algorithm. The low-level compiler, array arithmetic and finite-search proofs are supporting implementation lemmas; this account uses their stated semantic and cost guarantees and explains their composition, rather than reproducing their individual machine-state derivations.
-<!-- /passage:pcp-long-runtime -->
-
-### From every NP verifier to a graph
-
-<!-- passage:pcp-long-np-tableau -->
-Fix an NP language $L$, a Boolean witness relation $R(x,w)$, a natural-coefficient witness bound $q$, and its concrete polynomial-time checker. Then
-
-$$
-x\in L\iff\exists w\ (|w|\le q(|x|)\ \text{and}\ R(x,w)=1).
-$$
-
-Let $T_0$ be the checker's time polynomial. At input length $n$, one bound valid for all permitted witnesses is
-
-$$
-T(n)=T_0(n+q(n)+1).
-$$
-
-The $+1$ accounts for the delimiter in the fixed pair encoding. If the machine pushes at most $B$ cells per step, a sufficient stack-space bound is
-
-$$
-S(n)=n+q(n)+1+B T(n).
-$$
-
-Represent a computation by $T(n)+1$ rows of bounded configurations, with the witness length and bits included. The constraints enforce the initial row, every adjacent transition and the accepting final row. Halting is padded by the machine's bounded-evaluation convention. Every true computation gives such a tableau within the space bound. Conversely, determinism and the transition constraints force each successive row to be the actual machine configuration, so an accepting tableau gives a witness with $R(x,w)=1$. This proves the [finite tableau equivalence][lean-tableau] for all witness lengths from zero through $q(n)$.
-<!-- /passage:pcp-long-np-tableau -->
-
-<!-- passage:pcp-long-local-constraints -->
-To make the tableau a bounded-arity constraint system, use a finite alphabet fixed by the source machine. Each row has one control-and-prefix variable and one optional-symbol variable for each stack position below $S(n)$. Let $w_0$ be the machine's fixed window size. Link constraints identify the stored prefix with the first $w_0$ cells of every stack.
-
-The locality theorem for the machine states that a successor stack consists of the output produced from this prefix followed by the untouched old suffix starting at position $w_0$. The possible output-prefix lengths are bounded by a machine-fixed number $b_0$. Consequently the new symbol at position $j$ is either a symbol in that computed output prefix, or the old symbol at
-
-$$
-w_0+(j-\lambda),
-$$
-
-where $\lambda\le b_0$ is the actual output-prefix length. A cell constraint reads the old prefix, the new cell, and the $b_0+1$ candidate old cells corresponding to every possible $\lambda$. The finite transition table selects the correct candidate. This gives fixed arity without placing an entire, input-sized stack in one variable. Positions outside the space bound read a single distinguished blank variable. [The cell-step reconstruction][lean-tableau-cells] proves that a row representing a real configuration, with linked prefix and satisfying cell constraints, represents exactly its successor. The proved growth bound ensures that no actual successor cell is lost at the boundary.
-
-Initial constraints fix the input bits, delimiter and all other stacks. In the next $q(n)$ positions they permit guessed Boolean symbols or blanks; adjacent constraints require every blank to be followed by a blank. Thus those cells describe exactly a witness of some length from zero through $q(n)$, without requiring the checker to reject longer words. Final constraints fix the accepting halt configuration. Induction on the rows now reconstructs a real accepting computation from a satisfying assignment. Reading the rows of a real accepting computation supplies the converse.
-
-For $k$ stacks, the source gives the variable count
-
-$$
-v(n)=(T(n)+1)(1+kS(n))+1,
-$$
-
-including a blank variable. The constraint count is
-
-$$
-c(n)=1+(T(n)+1)kw_0+T(n)+T(n)kS(n)
-+2(1+kS(n))+q(n).
-$$
-
-Both are polynomials: the terms count the blank test, prefix links, control steps, cell steps, two boundaries and witness-adjacency tests respectively. The [cell-constraint construction][lean-cell-constraints] and [assembled reduction][lean-np-reduction] provide these directions and the explicit index codecs. There is also a machine-fixed degenerate case: if the proposed accepting output contains a symbol outside the machine's finite reachable support, the checker can never accept. The reduction then emits a fixed non-three-colourable graph. Thus the theorem needs no extra assumption that acceptance is possible.
-<!-- /passage:pcp-long-local-constraints -->
-
-<!-- passage:pcp-long-clause-reduction -->
-A constraint over an alphabet of size $A$ is converted to Boolean constraints by one-hot coding. Each source variable receives $A$ bits, exactly one of which is true; its true index is the encoded symbol. Validity constraints enforce this condition. A relation inspects the relevant one-hot blocks and accepts precisely the tuples accepted by the original finite relation. The alphabet size and local arity are constants fixed by the original machine. [The finite-domain encoding][lean-one-hot] proves that decoding a satisfying one-hot assignment and encoding a source assignment preserve all constraints.
-
-For completeness of the next step, consider any Boolean relation $R_e$ on $k_0$ input bits. For every pattern $p\in\{0,1\}^{k_0}$, introduce flags $z_0,\ldots,z_{k_0}$ with
-
-$$
-z_0=0,\qquad z_{i+1}=z_i\lor(x_i\mathbin{\mathrm{xor}}p_i),
-\qquad R_e(p)\lor z_{k_0}=1.
-$$
-
-An OR equation $z=x\lor y$ is enforced by the three clauses
-
-$$
-(z\lor\neg x),\qquad(z\lor\neg y),\qquad(\neg z\lor x\lor y),
-$$
-
-padding short clauses with false. The flags are forced to record whether the actual input differs from the prefix of $p$. Thus the final clause is automatic when $x\ne p$, and when $x=p$ it requires $R_e(x)=1$. This proves both directions of the reduction, with $2^{k_0}(3k_0+2)$ three-literal clauses per relation. It is polynomial because $k_0$ is fixed, not because an exponential in a varying arity would be harmless. These are the actual [Boolean clauses][lean-boolean-clauses] used by the implementation.
-<!-- /passage:pcp-long-clause-reduction -->
-
-<!-- passage:pcp-long-colouring-gadget -->
-A three-literal OR clause $a\lor b\lor c$ is equivalent to the existence of a fresh bit $z$ satisfying
-
-$$
-\operatorname{NAE}(a,b,z),\qquad
-\operatorname{NAE}(\neg z,c,0),
-$$
-
-where NAE means that the three values are not all equal. If $a=b=0$, the first clause forces $z=1$, and the second then forces $c=1$. If $a=b=1$, take $z=0$, which makes the second clause automatic. If $a\ne b$, take $z=0$, and both hold. These cases prove equivalence.
-
-To encode NAE by a graph, make a palette triangle with colours $0,1,2$. Each Boolean variable has two adjacent vertices, one for itself and one for its negation; both are joined to palette vertex 2. They must therefore receive complementary colours 0 and 1. Constant literals 0 and 1 use the corresponding palette vertices. For a NAE clause, make a new triangle and join its $i$-th vertex to the vertex for its $i$-th literal. If the three literal colours are equal, every vertex of the new triangle is forbidden that colour, so three distinct colours are impossible. If the literals are not all equal, the triangle can be coloured: for literal colours $(0,0,1)$, use triangle colours $(1,2,0)$; complementing or permuting yields the other cases. A colouring of the whole graph can first be relabelled so the palette has colours 0,1,2, after which it yields a satisfying Boolean assignment. The [NAE graph theorem][lean-nae] proves these two constructions.
-
-The graph has one palette triangle, two vertices per Boolean variable and three vertices per NAE clause. Encoding its adjacency matrix therefore has quadratic length in those counts. Composing with the one-hot and fixed-arity constructions gives a polynomial-length graph encoding $f(x)$, with
-
-$$
-G_{f(x)}\text{ is three-colourable}\iff x\in L.
+f(u)+\sum_{i=1}^3 f(u+\omega^i v)=0.
 $$
-<!-- /passage:pcp-long-colouring-gadget -->
 
-<!-- passage:pcp-long-reduction-runtime -->
-The reduction is executable. The program computes $T(n)$, $S(n)$ and the fixed source dimensions, enumerates the tableau variables and relations using arithmetic sum/product indices, emits the fixed-arity clauses and gadgets, and writes the graph's bitstring. The fixed finite alphabet and fixed relation arity make truth-table enumeration constant work per relation up to the machine-dependent factor $2^{k_0}$. Matrix emission is polynomial in the already bounded vertex count.
+The characteristic-two Frobenius identity $(a+b)^4=a^4+b^4$ gives, for every pair $u,v$,
 
-More explicitly, the [program-bearing reduction theorem][lean-np-runtime] returns $f,p,P,C,e$, all depending only on the NP certificate, such that on every input $x$, program $P$ emits exactly $f(x)$, its charged cost is at most $C(|x|+1)^e$, the output length is at most $p(|x|)$, and graph colourability is equivalent to $x\in L$. The source derives the program cost from fixed polynomial preprocessing plus a sixth-degree bound in the preprocessing size and the variable/constraint counts. Substitution of their polynomial bounds is again a polynomial. The compiler and fixed public symbol codecs give the corresponding finite-machine certificate. These retained data are what the final verifier uses to preprocess its input.
-<!-- /passage:pcp-long-reduction-runtime -->
-
-### Transporting the verifier through the reduction
-
-<!-- passage:pcp-long-seed-transport -->
-Let the amplified graph verifier use exactly $A\lceil\log _2(n+2)\rceil+B$ random bits, and let $|f(x)|\le p(|x|)$, where $p\in\mathbb N[X]$. Put $e=\deg p$, using the source's natural-degree convention for the zero polynomial. Since the coefficients are nonnegative,
-
-$$
-p(n)\le p(1)(n+2)^e,
-\qquad
-p(n)+2\le(p(1)+2)(n+2)^e.
-$$
-
-The first inequality follows term by term from $n^i\le(n+2)^e$ for every exponent with nonzero coefficient; the second also uses $(n+2)^e\ge1$. Therefore
-
-$$
-\lceil\log _2(p(n)+2)\rceil
-\le e\lceil\log _2(n+2)\rceil
-+\lceil\log _2(p(1)+2)\rceil.
 $$
-
-Choose source randomness
-
+f(u)+\sum_{i=1}^3 f(u+\omega^i v)
+=4u_1^4+v_1^4\sum_{i=1}^3\omega^{4i}=0.
 $$
-a=Ae,\qquad b=A\lceil\log _2(p(1)+2)\rceil+B.
-$$
-
-These formulas remain valid for constant and zero polynomials; the slope can be zero. On $x$, compute $f(x)$, use the initial portion of the random word needed by the graph verifier, and ignore the rest. Equal-size fibres of the prefix map preserve the exact acceptance probability. If the graph proof bound is $p_0$, the transported bound is $p_0\circ p$, by monotonicity of natural-coefficient polynomials. The query budget is unchanged. [The resource-transport proof][lean-transport] gives these formulas, while [final assembly][lean-assembly] composes the executable reduction with the actual query algorithm.
 
-This completes the forward theorem: membership in $L$ gives an honest proof for the reduced colourable graph; nonmembership gives a non-colourable graph and hence acceptance at most $1/2$ for every proof. Polynomial preprocessing composed with the polynomial-time graph protocol remains polynomial. All coefficients and degrees depend on the original NP verifier, never on the particular input or proof.
-<!-- /passage:pcp-long-seed-transport -->
+Here $4=0$, $\omega^4=\omega$, and $1+\omega+\omega^2=0$. Thus the test accepts with probability one. Nevertheless, for every polynomial $P$ of total degree at most two, fix the other $m-1$ coordinates. The polynomial
 
-### The reverse inclusion
-
-<!-- passage:pcp-long-converse -->
-Suppose a language has a verifier satisfying the target conditions. An NP witness can be the first $p(n)$ proof bits. The deterministic witness checker runs the verifier for every random seed and accepts exactly if all runs accept.
-
-There are polynomially many seeds. Indeed,
-
 $$
-2^{a\lceil\log _2(n+2)\rceil+b}
-\le2^b\bigl(2(n+2)\bigr)^a.
+X^4-P(X,x_2,\ldots,x_m)
 $$
-
-For each seed, at most $\ell$ answers are requested. Each address is below $p(n)$, and looking up a bit in the supplied finite witness takes polynomial time even using a linear scan. The implementation of each query step is polynomial in the input, random string and bounded answer history. Enumerating all seeds, simulating these runs and accumulating their conjunction therefore takes polynomial time. The [concrete finite-witness checker][lean-concrete-converse] supplies this closure in the same finite-machine model.
-
-If $x\in L$, perfect completeness gives a proof accepted on every seed. Truncating it to its first $p(n)$ bits preserves every run because no branch reads another address. Conversely, if a finite witness is accepted on every seed, extend it by zeros to an infinite oracle. The acceptance probability of this oracle is one. If $x\notin L$, soundness would make it at most $1/2$, a contradiction. Thus the finite witness relation characterizes $L$, proving the reverse inclusion.
 
-The remaining task is to identify this certificate class with the reference nondeterministic-machine definition of NP in the unchanged vendored Complexitylib. The [reference-NP equivalence][lean-reference-np] uses two concrete simulations.
+has degree exactly four and leading coefficient one. It has at most four roots, so averaging over the fixed coordinates proves $\Delta(f,P)\ge1-4/q$. In particular $f$ is not a degree-two polynomial function. The same argument excludes representations of individual degree at most two.
 
-For the direction from a polynomial-time nondeterministic machine to certificates, a witness records the bounded sequence of nondeterministic choices. A deterministic path checker follows the supplied choices and checks that the machine has accepted when the list ends; the time bound limits the admissible witness length. Its compiled program has polynomial cost, giving a certificate verifier in the concrete model used above.
+The fields in this family are unbounded. For any proposed absolute constant $C$, choose $k$ large enough that $q>Cc^3=8C$. Then choose $0<\delta<1/[2(c+2)^2]$ with $2\delta<1-4/q$. The word passes every old test but violates the claimed proximity conclusion of v1 Lemma 3.3 under its stated large-field condition. This identifies a failure of that scalar characterization and soundness lemma; it does not construct a cheating proof for every check of the final PCP verifier.
 
-For the converse, translate the concrete certificate checker into a reference decision machine. A bounded-guess construction computes and enforces the polynomial witness-length bound, guesses a witness within it, and runs the translated checker. An accepting branch exists exactly when an accepted certificate does. The translation and bounded-guess theorems supply the simulation and runtime guarantees; they are imported machine proofs, not additional premises left to the reader. Together these directions identify the certificate class in the PCP theorem with the intended reference NP class.
-<!-- /passage:pcp-long-converse -->
+In v2, Fact 2.7 and Lemma 3.3 use the full multiplicative generator and the weights (A6), for which the proof above applies. The v2 acknowledgments thank Troy Lee for pointing out the earlier mistake in Lemma 3.3. The calculation here is an ordinary derived explanation of the correction, not a claim that this particular example was Lee's, a novelty claim, or a separately Lean-checked counterexample. [Paper v1, Fact 2.7 and Lemma 3.3][paper-v1]; [corrected v2 and acknowledgments][paper].
 
-[paper-pcp]: https://arxiv.org/html/2608.17429v2#S7
-[lean-theorem]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L25
-[lean-colour-algebra]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAlgebra.lean#L94
-[lean-colour-grid]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorGrid.lean#L135
-[lean-seven-checks]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L37
-[lean-query-budget]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L362
-[lean-completeness]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierCompleteness.lean#L101
-[lean-soundness]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean#L58
-[lean-difference]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryDifferenceConsistency.lean#L297
-[lean-decoded]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorDecodedSoundness.lean#L86
-[lean-budget]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSoundnessBudget.lean#L142
-[lean-parameters]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameters.lean#L168
-[lean-choice]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameterChoice.lean#L89
-[lean-sampling]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFullFieldSampling.lean#L160
-[lean-binary]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorBinaryVerifier.lean#L250
-[lean-canonical]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorCanonicalVerifier.lean#L168
-[lean-repetition-bound]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RationalRepetitionBound.lean#L59
-[lean-amplified]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean#L72
-[lean-runtime-correct]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBaseCorrect.lean#L14
-[lean-runtime-cost]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBasePolynomial.lean#L55
-[lean-runtime]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorRuntime.lean#L11
-[lean-tableau]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPTableau.lean#L142
-[lean-cell-constraints]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPCellConstraints.lean#L227
-[lean-np-reduction]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColor.lean#L144
-[lean-boolean-clauses]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteBooleanConstraints.lean#L187
-[lean-nae]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NAEThreeColor.lean#L241
-[lean-np-runtime]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColorRuntime.lean#L257
-[lean-transport]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/ReductionResources.lean#L35
-[lean-assembly]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFinalAssembly.lean#L54
-[lean-concrete-converse]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean#L33
-[lean-reference-np]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L39
-[lean-seed-size]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSeedSize.lean#L170
-[lean-resources]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorResourceBounds.lean#L44
-[lean-field-cost]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorFieldSetupCost.lean#L45
-[lean-tableau-cells]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/TableauCells.lean#L155
-[lean-one-hot]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteDomainConstraints.lean#L119
+<!-- /passage:pcp-long-algebra-old-test-counterexample -->
 
 ## Source and verification account
 
@@ -1953,7 +1994,7 @@ The version notes identify the copies consulted. Theorem and section numbers ref
 
 **[Lee26]** Troy Lee. *tcs-formalizations: PCP development*. Lean source, 2026. [Revision a0ce13ed0fa264f051c1278e039596ce65557fa4](https://github.com/troyjlee/tcs-formalizations/tree/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP). This fixed revision is the formal source of the theorem statements, explicit constants, verifier implementation and concrete complexity-model results explained here. The chapter links identify individual files and declarations within it.
 
-**[Shoup05]** Victor Shoup. *A Computational Introduction to Number Theory and Algebra*. First edition. Cambridge University Press, 2005. Consulted version: [Version 1 of the author's electronic edition](https://shoup.net/ntb/ntb-v1.pdf), 15 January 2005. Chapters 20–21 provide the finite-field construction background cited in the primary paper's Fact 2.3. The detailed bounded-search algorithms and explicit cost bounds in the final chapter are those of Lee's formalization, not bounds attributed to this book.
+**[Shoup05]** Victor Shoup. *A Computational Introduction to Number Theory and Algebra*. First edition. Cambridge University Press, 2005. Consulted version: [Version 1 of the author's electronic edition](https://shoup.net/ntb/ntb-v1.pdf), 15 January 2005. Chapters 20–21 provide the finite-field construction background cited in the primary paper's Fact 2.3. The detailed bounded-search algorithms and explicit cost bounds in the implementation section are those of Lee's formalization, not bounds attributed to this book.
 <!-- /passage:pcp-long-references -->
 
 [friedl-sudan]: https://arxiv.org/abs/1307.3975v1

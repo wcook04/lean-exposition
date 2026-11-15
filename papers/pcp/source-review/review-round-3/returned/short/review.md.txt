@@ -1,0 +1,276 @@
+# Specialist PCP paper: second review and proposed revision
+
+**Reviewed edition:** lean-exposition `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6`; reader `f500810cd5de90b100940ea7d7d048f54f3bf7c7`; Lean source `a0ce13ed0fa264f051c1278e039596ce65557fa4`. **Date:** 15 November 2026. This is an AI-assisted mathematical, editorial and source-fidelity review. The proposed manuscript is a separate, unmerged edit candidate.
+
+## 1. Judgment: keep this paper, but let its actual contribution organize it
+
+The paper now succeeds at a substantial part of its intended job. In particular, its central correction proof is locally reconstructible. Section 5 accounts for the use of nonuniform certificate targets, the arbitrary auxiliary tables, the random homogeneous label, the root-bound loss, and the dependence on the corrector's actual rejection. Section 6 then chooses four decoded polynomials once and proves the colouring conditions for those same choices. Those are meaningful improvements over the preceding edition. I found no false central theorem, invalid central soundness implication, or incorrect displayed error coefficient in the regions checked against the source.
+
+The next revision should improve how the reader reaches that argument. The current paper gives several lower-level testing proofs substantial attention before presenting the received proof's complete table inventory. A reader encounters a weighted characterization, its robust form, the historical defective test, Hadamard evaluation structure, a restricted-label estimate, inner decoding, outer testing, and a point-line supplier before seeing the four primary tables together on PDF page 9. The paper has the right mathematics, but its order still makes the reader assemble the construction retrospectively.
+
+The defensible purpose is: **explain how low observed rejection of arbitrary binary tables yields a colouring through one fixed tuple of decoded polynomials, while keeping the implementation's distributions and resources accurate.** This is useful work beyond the theorem-and-definitions route in Lee's guide. A specialist who has not read this construction should leave able to explain why the two encodings occur in this order, what a physical bit query reads, why special certificate points require correction, and how the same witnesses survive all seven checks. The paper need not also teach every supplier proof in miniature.
+
+I recommend retaining the specialist format and revising its architecture. I do not recommend replacing it with a general PCP survey, a shorter publicity summary, or a second copy of the long account. The proposed manuscript in this return makes the governing inference explicit on the first page, moves the eight-table inventory immediately after the certificate construction, types the auxiliary row, distinguishes the three label domains in one place, and states the supplier boundaries more clearly. It preserves the detailed correction and common-decoding arguments. It is an actual edited source file with a diff, not an outline of work left to do.
+
+This judgment separates fidelity from usefulness. A formally defensible paragraph can still arrive too early, carry too many jobs, or leave the reader unsure which object a theorem concerns. Conversely, an unperformed paragraph split does not erase a successful mathematical repair. The audit below does not treat the number of green rows as a quality score.
+
+## 2. What the first reading established
+
+The first-reading account was saved before consulting the repair ledger, old paper or original review. It was not wholly unprimed: the active brief had already identified the audience, the desired central inference and the repair pressures. I am also a poor proxy for an unbriefed human learner: I can reconstruct coupling and polynomial-testing arguments more readily than many members of the stated audience. No human learning outcome was measured.
+
+On that first pass I could reconstruct the following route. The colour extension and its difference polynomial give vertex and edge residuals. Two certificates express their vanishing on grids. Degree reduction makes line restrictions compatible with constant-degree testing; binary labels make their observations into bit queries. Full-label error supports freshly masked nonlinear observations, while homogeneous-label error supports sums. Low rejection in four outer tests lets the soundness proof choose one set of primary witnesses. A corrector uses its own rejection to control observations at prescribed points, and ZERO uses that result twice. The final assembly needs all of those objects fixed together.
+
+The first point of substantial friction was section 4, rather than the now-repaired correction proof. I could follow its individual statements, but had to remember which table each one would serve before the table inventory appeared. Its long Hadamard paragraph alternates between defining a test, proving evaluation structure, changing label domains and quoting a source-specific count. Its point-line paragraph mixes the imported contract, historical attribution, a proof sketch and the departure into the long companion. Those are distinct reader tasks.
+
+After source inspection, the main questions about shared directions, fresh masks and the error multiplier were resolved in favour of the paper. That later success must not be substituted for an allegedly effortless first reading. The preserved account records what was and was not reconstructible before those checks.
+
+## 3. The mathematical core is now doing real explanatory work
+
+### 3.1 Honest encodings and decoded objects have different guarantees
+
+The digit map starts from a line polynomial of degree strictly below $b^c$. Its honest encoding is set-multilinear, has total degree at most $c$, and evaluates back to the original line under the substitution $\Phi$. Soundness is deliberately weaker: a received row can decode to any polynomial $U$ of total degree at most $c$. It need not have the honest monomial pattern. Nevertheless $U\circ\Phi$ has degree at most $D=cb^c$, and the later field-size and root bounds use that inflated degree.
+
+Current equations (3)–(5) make this distinction correctly. `SetMultilinearDecode.lean` supports the arbitrary-$U$ conclusion. Preserve it. Replacing this by “the row decodes to the line it encodes” would quietly assume the property that the test is supposed to establish.
+
+The certificate degree calculation is also now local. For a nonzero quotient, $\deg U_i\le\deg A-h$; multiplication by the separate variable $Y_i$ keeps its degree at most $\deg A$ because $h\ge1$. The converse does not require the proposed certificate to be linear in $Y$: on the grid, $Z_H(x)=0$, so its two second arguments coincide. This is a particularly efficient explanation and should survive unchanged. [Current paper, §§2–3; `GridVanishing.lean`; `SetMultilinearDecode.lean`.]
+
+### 3.2 Full, affine and homogeneous label domains are not interchangeable
+
+The repaired row argument supplies one decoded field value with both required distances. For a good row of rejection $\epsilon$, full-label error is at most $\epsilon$. Affine consistency contributes its own check failure plus the two-query correction loss, giving at most $3\epsilon$ on affine labels. Homogeneous labels occupy half that affine domain, so the same value has homogeneous error at most $6\epsilon$. Bad rows are absorbed into the common $28\epsilon$ bound using the threshold $1/28$.
+
+The important information is both the domain and the common witness. Full proximity cannot simply be restricted to the homogeneous subspace. In the finite diagnostic included here, with four binary coordinates and degree-three labels, there are $2^{15}=32,768$ full labels and only $16$ homogeneous labels. Flipping precisely those 16 positions gives
+
+$$
+\Delta_{\rm full}=\frac1{2048},\qquad
+\Delta_{\rm hom}=1.
+$$
+
+That diagnostic also appeared in the previous review; it has been rerun here, not claimed as a new discovery. It is a counterexample to an invalid inference about distances, not a cheating proof against the actual combined tester. The affine-consistency test sees the corruption at constant rate.
+
+The analogous inner-polynomial statement is unconditional and again gives one $U$ for both bounds. Each of the two coin-selected branches rejects with probability at most $2\kappa$. Row decoding, the weighted test and the binary-to-field factor give the printed constant
+
+$$
+K=4(c+2)^2\bigl(112(c+2)+60\bigr).
+$$
+
+The trivial distance bound handles the regime in which the weighted theorem's small-rejection hypothesis is unavailable. Do not turn this into a small-error-only decoding theorem; the local corrector needs to use it on arbitrary auxiliary rows. [Current §4; `HadamardSoundness.lean`; `HadamardRowDecoding.lean`; `BinaryLocalRowDecoding.lean`.]
+
+### 3.3 The three outer checks now share the right row
+
+The outer test is conjunctive. Its Hadamard check is on the primary row at $u$. Its inner test and comparison both concern the auxiliary row indexed by the same oriented line $(u,v)$. The comparison takes place at $u+zv$, with $u,v,z$ uniform over their full domains, including $z=0$.
+
+That distribution is sound because the starting point $u$ is itself uniform. The same statement will not be true when the starting point is a prescribed target; that difference is exactly why the corrector later uses $z\ne0$.
+
+After choosing the primary field function and decoding the auxiliary rows, the three discrepancy costs are $(c+1)K\kappa$, $\kappa$, and $28\kappa$. Averaging a homogeneous label halves field disagreement, so
+
+$$
+J=2\bigl((c+1)K+29\bigr)
+$$
+
+bounds the field point-line error by $J\kappa$. The point-line supplier gives field distance at most $2J\kappa$; encoding halves that contribution, and adding the primary error gives $S\kappa$ with $S=28+J$. Current equation (13) concerns one polynomial, on both domains, under its displayed smallness condition.
+
+The source permits arbitrary oriented line rows, including zero directions; it does not assume global agreement among different parametrizations. The implementation's whole-field sampling and explicit constants must not be silently replaced by the corresponding preprint variant. [Current §4; `EncodedLineLowDegreeTest.lean`; `EncodedLineLowDegreeSoundness.lean`; `PointLineSoundness.lean`.]
+
+### 3.4 The fixed-target corrector is the paper's strongest explanation
+
+Fix a spatial target $a$. The primary table is close to a polynomial $P$ on average, but that says nothing useful about its values on a specially chosen small subset. The corrector therefore samples a random direction, tests the associated auxiliary row, compares a corrected point on that line with a primary observation, and only then returns the corrected observation at the origin. Its output is one bit or rejection.
+
+Let $R_a$ be its actual rejection probability. Since failure of the inner test forces rejection, unconditional row decoding gives mean auxiliary decoding error at most $KR_a$. Set $e=(c+1)KR_a$. Each of the two corrected auxiliary observations can be replaced by the observation of the chosen line polynomial at cost at most $e$.
+
+The two corrections share their inner direction and homogeneous label. This does not invalidate the estimate: each has the necessary marginal error bound, and the proof uses a union bound. It does not multiply their error probabilities or assume that the two failures are independent.
+
+If the decoded line polynomial $T_v$ has the wrong value at zero, then $T_v(Y)-P(a+Yv)$ is a nonzero polynomial of degree at most $D$. It has at most $D$ roots among the $q-1$ permitted nonzero parameters. Averaging the homogeneous label gives the crucial inequality
+
+$$
+\Pr_{v,L}[L(T_v(0))\ne L(P(a))]
+\le
+\Pr_{v,z,L}[L(T_v(z))\ne L(P(a+zv))]
++\frac{D}{2(q-1)}.
+$$
+
+This is an averaged-label statement. It does not say that every fixed label detecting the error at the origin must also detect it at the sampled point.
+
+At the sampled point, replacement of the auxiliary observation costs $e$, the failed comparison costs $R_a$, and primary replacement costs $\delta$. The last term is justified because $a+zv$ is uniform for every nonzero $z$. At the origin there is a second replacement cost $e$. The failure event includes explicit rejection, adding another $R_a$. Hence
+
+$$
+\Pr[\text{reject or return a wrong bit at }a]
+\le
+\underbrace{[2+2(c+1)K]}_{C}R_a
++\delta+\frac{D}{2(q-1)}.
+$$
+
+Current section 5 exposes this mechanism. It is not merely asserting that some corrector exists. The arbitrary auxiliary table may cause frequent rejection; the result says that it cannot frequently return a wrong bit while seldom rejecting. Preserve the event, quantifiers and actual $R_a$. [Current equation (14); `BinaryLocalCorrection.lean`; `BinaryLocalCorrectionSoundness.lean`, including `correction_error_le` and `failure_le`; `LineTableLocalCorrection.lean`.]
+
+### 3.5 ZERO and the common witness complete the intended inference
+
+The ideal ZERO test checks the two residuals $M(x,0)$ and $M(x,Z_H(x))-A(x)$. If $A$ does not vanish on the grid, at least one residual is nonzero. Its degree is at most $Dh$, so a uniform point and homogeneous label detect it with probability at least $(1-Dh/q)/2$. One nonzero residual is sufficient. Independence of the two detections is unnecessary.
+
+The actual test uses the same $x,L$ for the primary bit and both certificate calls, with independent remaining call seeds. Each correction's rejection is contained in overall ZERO rejection. This bounds rejection averaged over the targets requested by ZERO; it is not a claim that every individual target has rejection at most $\kappa$. Current line 297 now states that distinction explicitly.
+
+Applying the corrector estimate twice gives
+
+$$
+\frac{1-Dh/q}{2}
+\le (1+2C)\kappa+\delta_A+2\delta_M+\frac{D}{q-1}.
+$$
+
+For a derived cubic observation, fresh masking changes the downstream rejection probability by at most twice the full-table error. Therefore the source's transfer proof uses
+
+$$
+\frac{1-Dh/q}{2}
+\le (1+2C)(\kappa+2\epsilon)+2\delta_M+\frac{D}{q-1}.
+$$
+
+The $2\epsilon$ belongs inside the existing rejection multiplier in this argument. Its placement is not cosmetic. The appropriate formal association is the derived ZERO theorem, and that association has now been added while preserving the base ZERO theorem for the preceding bound. This does not refute a different valid analysis in the source paper; it identifies what the implementation proof actually does. [Current equations (15)–(16); `BinaryZeroOnGridSoundness.lean`; `DerivedZeroOnGridSoundness.lean`, especially `rejection_transfer` and `rejectionRate_lower_bound`.]
+
+Finally, section 6 fixes $P,Q,M_A,M_B$ once. The received-bit difference test becomes an ideal comparison after three replacements, at cost $3\epsilon$. Its nonzero residual would have support at least $1-D/q$, so sufficiently small rejection forces the polynomial identity $Q=P(X)-P(Y)$. The two derived constraints have degrees at most $3D$ and $5D$. Applying ZERO with the same certificates forces both grid-vanishing conditions, recovering a colouring. The source assembly constructs and passes exactly these common witnesses together. This is the inference the paper promised, and it is now genuinely present. [Current equations (17)–(20); `ThreeColorVerifierSoundness.lean`; `ThreeColorDecodedSoundness.lean`.]
+
+## 4. The repair audit is not the author's action log
+
+Every one of the 49 original IDs has an independent disposition in `repair_audit.json`, including the keep findings and the optional reader proposal. The file records current evidence, the reader consequence and the next action. These verdicts concern the supplied frozen edition. An edit made in the proposed manuscript does not retroactively turn a current-edition failure into a fixed finding.
+
+| Verdict | Count |
+| --- | ---: |
+| `fixed` | 30 |
+| `retained_correctly` | 15 |
+| `partly_fixed` | 2 |
+| `not_fixed` | 1 |
+| `alternative_successful` | 1 |
+
+The clearest discrepancy is **ED09**. The point-line paragraph at current line 244 is byte-identical to its counterpart at old line 229. It still carries the theorem conclusion, attribution, bivariate/plurality/ruled-surface sketch and companion links together. The author action says those functions were separated. They were not. Its verdict is **not_fixed**. This is an editorial defect and an inaccurate repair disposition; it is not a false point-line theorem.
+
+**ED02 is partly_fixed.** The adjacency extension is now explicitly 0/1 on the grid, which is useful. The paragraph still jumps from the cubic colour equivalence directly to grid padding, interpolation and adjacency. The requested separation has not happened. A paragraph break after the equivalence is sufficient; this needs no additional background.
+
+**ED03 is partly_fixed.** The new table genuinely distinguishes arbitrary received bits from intended honest contents. But it arrives after those objects have already been used throughout the testing and correction discussion. The original certificate paragraph still appends the four-polynomial inventory to its degree calculation. The proposed draft moves the existing inventory earlier, removes the redundant sentence and gives the auxiliary row a type.
+
+The genuinely fixed matters include the fixed-centre prediction estimate and three weighted losses; the same-value affine/homogeneous bounds; the explicit outer and ZERO experiments; the corrector's shared choices and root inequality; arbitrary received tables; the received-bit difference equation; the certificate degree calculation; machine-model nomenclature; the at-most-187 wording; the distinct derived ZERO and reference-NP associations; the encoding credit; and the resource derivation. The previously good common-witness and fresh-randomness statements remain good.
+
+**ED15 is fixed.** The current 12-page PDF keeps the point-line application lead-in, equation (13), its proviso and the homogeneous-label qualification together on physical page 7. This was checked visually, not inferred from the author's report.
+
+The most useful process correction is modest: close a repair only after checking its intended reader effect in the artifact. A sentence added nearby or a new table elsewhere does not necessarily perform the requested separation. There is no need for another workflow system or a new review bureaucracy.
+
+## 5. New local findings outside the old ledger
+
+### N01. Say what the constant-bit procedure actually returns
+
+Current line 32 says correction recovers the line's value. That phrasing risks suggesting that the verifier reconstructs a whole field element from constantly many bits. Its operation recovers the required homogeneous binary observation of that value. The later formal description is correct, so this is an opening precision issue, not a failure of query complexity.
+
+The proposed draft changes it to “recovers the required homogeneous binary observation of its value at the digit-substitution point.” It also preserves the distinction between local verifier operations and global decodings selected only in the soundness proof.
+
+### N02. Make the row-to-table averaging step explicit
+
+Current line 307 states a bound for a row with full-label error $\epsilon$; section 6 spends the global table error supplied by outer decoding. The correct bridge is one sentence. Let $\epsilon_x$ be the row error at point $x$. Conditional on $x$, fresh masking has replacement loss at most $2\epsilon_x$, regardless of the requested label. Averaging the uniform $x$ gives $2\mathbb E_x\epsilon_x\le2\epsilon$, using the full-table bound.
+
+The source already proves this through `HadamardDerivedOracle.fullDistance` and the derived rejection-transfer theorem. The proposed paragraph supplies the missing explanation. It must not assume every row is individually $\epsilon$-close.
+
+### N03. Give the auxiliary row's domain before asking the reader to test it
+
+The current inventory lists the primary point domains but never states the auxiliary row's full type. For a primary point domain $F^k$, the whole auxiliary table has an oriented-line index $(u,v)\in F^k\times F^k$, and the row has type
+
+$$
+h_{u,v}:F^{cb}\times\mathcal B_1\longrightarrow\mathbb F_2.
+$$
+
+The first remaining coordinate is an inner point; the second is a label. This explains why $\Phi(z)$ is a legal requested inner point, why an affine-label row is involved, and what a homogeneous observation selects within that row. The proposed draft supplies this immediately after the early inventory. This is a more useful addition than another untyped list of operations.
+
+### N04. A narrow live-reader header collision remains
+
+At the observed 1363×936 live browser viewport, a long history-generated Back label can collide with the paper title after the proof pane is closed. The underlying navigation actions tested still worked. This is a minor layout issue in a particular live state, not a new mathematical or companion-route failure. The frozen static build was not browser-tested from this environment, so the same visual failure is not asserted for that freeze merely because related CSS exists there.
+
+The fix should let the navigation label truncate or wrap within its own column and preserve room for the title and controls. It does not justify a wholesale reader redesign. The exact observed journey and scope are in `coverage.md` and the validation record.
+
+## 6. What the source literature supports, and what it does not
+
+The corrected ABSSW introduction is the best comparison for the role of the two encodings. It first exposes the growing coefficient-vector cost, then explains why applying a low-degree binary code directly would produce a quasipolynomial proof, and then introduces the set-multilinear inverse-Kronecker variant. Current lines 28–32 now recover that motivation. The closing credit correctly distinguishes the authors' degree-reducing construction from established low-degree Hadamard coding. [Supplied v2 `intro.tex`, especially lines 24–54; current reference [1].]
+
+ABSSW also provides a useful example of dividing proof responsibility. Its introduction routes syntactic-test proofs and correction analyses to appendices. Its local-correction section states the task before the procedure and makes clear that the spatial point is fixed while the label may remain random. Its ZERO section begins with exact certificate identities and then identifies the biased targets that require correction. The specialist paper's distinctive value can be to explain the rejection-dependent correction proof locally, while importing the earlier testing results through precise contracts. It need not reproduce the source's entire order or bibliography.
+
+The Arora–Safra and ALMSS openings serve research papers about new characterizations and approximation consequences. Their useful lesson here is to state the purpose before accumulating machinery. Importing their historical discussion wholesale would make this companion less focused. Likewise, ALMSS's point-line and bivariate methods provide the proof route, but not automatic authority for every constant and distribution in Lee's implementation. The current qualifier identifying the explicit bounds as implementation-specific is correct.
+
+The citation repairs withstand precise checking. Friedl–Sudan's corrected Lemma 4 has the condition $q-q/p-1\ge d$, yielding the displayed characteristic-two comparison. Kaufman–Sudan's Theorem 2.9 uses the defined phrase “local formal characterization” and the two-ary independence hypothesis. BCHKS supplies the characteristic-two rejection-versus-distance estimate, while BLR retains credit for the test. The accessible Rubinfeld–Sudan prepublication has Theorem 5 where the later published numbering cited by ABSSW is Theorem 4.1. These are meaningful edition distinctions, not bibliographic ornament. [Exact primary PDF pages and consulted passages are listed in `coverage.md`.]
+
+Independent web retrieval confirmed the ECCC revision dated 22 October 2026 and its stated repair to Lemma 3.3; the revised PDF is available from the primary repository. Author-hosted Kaufman–Sudan and BCHKS PDFs were also retrieved. Exact arXiv v2 and pinned GitHub web opens failed in the research tool. Edition-specific mathematical judgments therefore use the complete supplied v2 TeX and pinned Lean snapshot, not a search snippet or a guessed current repository state.
+
+For a source owner, the remaining checking task should be concrete: verify that the new type declarations, probability spaces, source contracts and relocated passages still describe the pinned implementation. The account should not ask Lee to reconfirm an undifferentiated collection of narrative claims or imply that he has endorsed this review. The supplied correspondence establishes interest in the explanatory experiment; it does not establish his reaction to this edition.
+
+## 7. The proposed manuscript makes the revision concrete
+
+The file `proposed/papers/short/paper.md` is a complete edit candidate. `proposed-specialist.diff` compares it with the frozen primary manuscript. The original packet has not been modified.
+
+The new title, **From local bit tests to one colouring**, identifies the explanatory purpose. The abstract says that the paper explains how a rarely rejected collection of arbitrary tables yields a colouring, with the fixed-target correction proof as the central step. The first section states the shared-witness inference before the technical development. Its exact PCP theorem, quantifier order, fair-bit format and converse are retained.
+
+The four-polynomial/eight-table inventory now follows the certificate construction. Its auxiliary type is explicit. The label-domain table consolidates distinctions that previously appeared only in scattered reminders. The source-specific operator bounds remain exact. The revised section 4 states the supplier contracts, keeps the pointwise weighted estimate and same-value restricted-label deduction, and removes the long bivariate sketch and the detailed bilinear/unit proof from the main route in favour of exact companion destinations. The historical counterexample survives in Appendix A, with both moved references updated.
+
+Sections 5 and 6 retain their mathematical argument. The row-to-global averaging sentence is added where the derived read is used. No auxiliary-proximity premise, fixed-label guarantee or fresh polynomial witness is smuggled into the proof. The resource and machine-model sections remain largely unchanged because their repaired content is doing necessary work.
+
+A whitespace-token comparison gives about 5,259 tokens in the supplied Markdown and 5,239 in the proposal; these are not linguistic word counts or quality measures. The important change is allocation: section 4 falls from roughly 1,485 such tokens to 995, while the earlier inventory and label explanation gain space. The revision is not advertised as dramatically shorter. Its full PDF has not been generated or visually assessed, so no final page count or finished layout is claimed.
+
+| Material | Treatment in the proposal | Reason |
+| --- | --- | --- |
+| Exact theorem, fixed proof before seed | Retained | Defines the claim actually explained |
+| Colour/grid/certificate construction | Retained, paragraphs separated | Supplies the mathematical objects without mixing in late architecture |
+| Eight-table inventory and auxiliary type | Moved to section 2; type added | Reader can identify the table before a test refers to it |
+| Three label domains | Consolidated in a table | Distinguishes the operations and guarantees each supports |
+| Weighted and Hadamard supplier proofs | Exact main contracts; full proofs linked | Makes the paper's proof responsibility visible |
+| Point-line contract | Separated from provenance and omitted long sketch | Repairs ED09 and removes a competing proof story |
+| Nonuniform correction and ZERO | Retained locally; averaging clarified | This is the account's distinctive explanation |
+| Common four-polynomial assembly | Retained | Establishes one consistent colouring |
+| Historical old-test calculation | Moved to Appendix A | Preserves credit and a useful counterexample without interrupting decoding |
+| Parameters, 187 bound, fair sampling, runtime, NP transport | Retained | Keeps resource claims assessable |
+
+The proposal preserves existing passage IDs where their meaning remains appropriate and adds one inventory passage. Its reordered lines and changed textual ranges mean the reader associations must be regenerated before this draft is integrated into the reader. A passing audit of the supplied reader is not a claim that this proposed text has already been published, rendered or remapped.
+
+## 8. Executed checks and their practical meaning
+
+The packet validator passed all 1,604 listed payload hashes. Both supplied finite-example scripts passed. The PDF companion-destination checker passed, and the current primary PDF has 12 pages. All 12 pages were visually inspected. These checks support byte consistency, selected calculations and artifact usability; they do not prove the general PCP theorem or establish reader understanding.
+
+The additional `checks.py` uses exact rational arithmetic and finite enumeration. It verifies the full/homogeneous counterexample above and the two-query mask bound, with a nonlinear requested label attaining $2\epsilon$ in that construction. It also distinguishes the two spatial samplers. In a 16-element field, with a fixed target $a=0$, nonzero $z$ makes $zv$ uniform. Allowing all $z$ puts probability $31/256$ on the target and $15/256$ on every other point. Restoring an independent uniform starting point $u$ makes $u+zv$ uniform even when $z=0$. That is a concrete explanation of why the outer test and fixed-target corrector legitimately use different parameter domains.
+
+A second diagnostic checks the half-root penalty. For $T(Y)=Y+1$, $P=0$, $D=1$ over that field, origin disagreement under a random homogeneous label is $1/2$, sampled nonzero-parameter disagreement is $7/15$, and their difference is exactly $1/30=D/[2(q-1)]$. The example illustrates the inequality sharply. It is not a test of the large-field hypotheses for the complete PCP.
+
+The constants recompute to
+
+$$
+K=105408,\quad J=1054138,\quad S=1054166,\quad C=1054082,
+$$
+
+and the chosen fair-bit rejection gap is
+
+$$
+\frac{g_4}{16}=\frac1{1,137,847,282,503,168}.
+$$
+
+This matches the retained guide's stated implementation gap. The seven query budgets sum to 187 before amplification. That number is an upper bound for one unamplified run; some full-field zero-parameter seeds accept without making queries, and repetition changes the query constant.
+
+Actual browser tests used the supplied public live reader. The local frozen server was available to container tools but not reachable from the cloud browser, and the connected extension lacked its originating context. The live weighted-companion journey reached the intended heading and Back restored the source passage. The relevant NP bridge and derived ZERO routes were inspected, including definition/whole-file/Back behaviour. Those observations are distinct from the frozen build's static hashes and association data. No byte-for-byte equivalence of the live deployment with the freeze is claimed.
+
+There was no fresh Lean replay, complete dependency build or axiom audit. The supplied snapshot omits Mathlib/caches and unrelated project sources; source inspection and retained build evidence were not renamed as a new kernel check. The long account and worked exposition were supporting sources, not independently reviewed in full. The optional literature shelf was not read in its entirety. `coverage.md` records the actual scope and command outcomes.
+
+## 9. The next edition should be judged by what a reader can reconstruct
+
+The proposed revision should be integrated as one coordinated edit. First accept or adjust its early inventory, label types and supplier boundaries; then reconcile source associations and render the resulting paper. Splitting ED02, moving ED03's inventory, and genuinely separating ED09 are parts of the same change in organization. N01 and N02 are small precision edits that should be carried with it. The minor live header collision can be repaired separately.
+
+The following reconstruction tasks test the paper's actual purpose. They are useful for the author as well as for any later reader trial; they are not reported human-test results or a requirement to recruit an external approver.
+
+1. **Name a physical query.** Given an auxiliary row $h_{u,v}$, identify its line index, inner point, label and stored bit. Explain why the verifier does not globally decode the polynomial.
+2. **Explain both encoding costs.** Say why field symbols are not single proof bits, and why encoding the entire growing line-coefficient vector directly threatens proof length and randomness.
+3. **Use the right error domain.** Explain why a full-label bound cannot be restricted to homogeneous labels, and identify the check that repairs this problem for the same witness.
+4. **Recover the corrector bound.** Account for both $e$ terms, both $R_a$ terms, the primary $\delta$ and the half-root loss. Explain why shared inner randomness is allowed and why the guarantee averages the label.
+5. **Distinguish the spatial samplers.** Explain why the outer test can take $z=0$, why the fixed-target analysis uses $z\ne0$, and how whole-field early acceptance later produces fair bits.
+6. **Recover derived ZERO.** Start with the base bound, condition on a primary row, average its fresh-mask error and put that error inside the existing rejection multiplier.
+7. **Keep one tuple.** State exactly when $P,Q,M_A,M_B$ are chosen and why the later difference and vanishing conclusions hold for those choices together.
+8. **State the final resources accurately.** Distinguish the unamplified 187 bound, amplified constant queries, polynomial address bound, concrete machine runtime and the reference-NP bridge.
+
+A successful main paper lets the reader perform those tasks while treating the named low-degree suppliers as imported theorems. If the reader still needs the long companion to discover what the corrector returns or how (16) is obtained, the main paper has not yet met its chosen purpose. If the companion is needed to prove the bivariate agreement supplier from scratch, that is the declared division of labour working as intended.
+
+The revised section 5 is worth preserving because it already makes the hardest local inference inspectable. The next edit should make that explanation easier to find and easier to use, while keeping its exact mathematical commitments.
+
+## Primary web sources checked
+
+- ABSSW, ECCC TR26-134 and revision history: https://eccc.weizmann.ac.il/report/2026/134/
+- Corrected primary PDF: https://eccc.weizmann.ac.il/report/2026/134/revision/1/download
+- Kaufman–Sudan, author-hosted conference manuscript: https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf
+- BCHKS, author-hosted manuscript: https://www.csc.kth.se/tcs/projects/publications/bchks.pdf
+- Friedl–Sudan, corrected-manuscript record: https://arxiv.org/abs/1307.3975
+
+Mathematical citations to supplied files refer to the frozen packet, whose exact hashes and editions are recorded in `coverage.md` and its manifest. The review does not treat a later live page as authority for the frozen source.

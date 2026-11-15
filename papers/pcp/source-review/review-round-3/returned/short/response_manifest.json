@@ -1,0 +1,73 @@
+{
+  "packet": "pcp-review-round2-2-specialist-response",
+  "created_for": "pcp-review-round2-2-specialist",
+  "date": "2026-11-15",
+  "source_manifest_sha256": "94ecabdb1047d7b078c38b31aed337cd3189e247af87601ed817f7dde3929a32",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2871,
+      "sha256": "06a2bc75ca7a893e2c638977e1792fe420dd68110a35d9a2a86e19fa7c3d54fc"
+    },
+    {
+      "path": "checks-output.json",
+      "bytes": 1116,
+      "sha256": "2883e9402a48e95a18492c65d8ca2fb6c6bddbb968dec14dd72efa9f83fc6a37"
+    },
+    {
+      "path": "checks.py",
+      "bytes": 5199,
+      "sha256": "e6089326ad0f89b09a863d89c1ac14a83952be74f9911defa9fc4adb72f654c6"
+    },
+    {
+      "path": "coverage.md",
+      "bytes": 18289,
+      "sha256": "0479a23596e150ad1003c34a5f1aae732d993c215e19ad5149dfb4d8983360bd"
+    },
+    {
+      "path": "execution_results.json",
+      "bytes": 12967,
+      "sha256": "02089b704221bf453d5cd2d77a907ac85f1d6243771f0000ac75ea9bb22e40bb"
+    },
+    {
+      "path": "first_reading.md",
+      "bytes": 4560,
+      "sha256": "42dc1a2f50bfacc60407ee9bd6ab43d7b74797237b3cb1b70bd3f33281033b4e"
+    },
+    {
+      "path": "package_validation.json",
+      "bytes": 2469,
+      "sha256": "ca888111b5ee4e08cd6466e0c7e26c5a585ad18f01e6bac30a1a81315f2c31ad"
+    },
+    {
+      "path": "paragraph_decisions.json",
+      "bytes": 34765,
+      "sha256": "72f39c865c2f784f4048a82233ee4bf46623e067372a9e92113fd4a2ba825d59"
+    },
+    {
+      "path": "paragraph_map.md",
+      "bytes": 9280,
+      "sha256": "7dc91278d34355aac4c694e60604d6d8ba049df82bb4fe16791988f82c3af0ee"
+    },
+    {
+      "path": "proposed/papers/short/paper.md",
+      "bytes": 39276,
+      "sha256": "fffb18e9a830a7e2fc9375967dd6acfc3d8517b00ff173786ee2f614d16a49b0"
+    },
+    {
+      "path": "proposed-specialist.diff",
+      "bytes": 54657,
+      "sha256": "ac8496c5260e84f3797b2f44a502726f5f49f9f280156f260907e4fd546f4e95"
+    },
+    {
+      "path": "repair_audit.json",
+      "bytes": 43757,
+      "sha256": "adfe5dc68db4e67d964c9c46ec662e51fc7103126dbbb93cf8298608b52a35dc"
+    },
+    {
+      "path": "review.md",
+      "bytes": 35560,
+      "sha256": "02f543112d1054a6c9694a3d3a1941c98e36982af643810d53f4fd091a62c136"
+    }
+  ]
+}

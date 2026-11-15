@@ -1,0 +1,64 @@
+# Paragraph and passage roles
+
+This map covers every prose segment of the current specialist manuscript. Display-connected clauses are considered with their equations; they are not treated as sentence-fragment defects. Adjacent keep decisions are grouped. Tables and displays were read with their surrounding text.
+
+| Current lines | Job | Decision |
+| --- | --- | --- |
+| 8–8 | Abstract: result, two resource obstacles, common decoding, special-point problem | Keep the repaired content; optionally lead with low rejection ⇒ one colouring. |
+| 14–22 | Exact theorem and resource/proof quantifier order | Keep all hypotheses and the fixed-proof sentence. Display-connected fragments are parts of the theorem. |
+| 28–28 | Historical provenance and the symbol-to-bit cost | Keep concise; no further historical survey. |
+| 30–30 | Proof-length obstruction to direct coefficient encoding | Keep; this motivates the order of encodings. |
+| 32–32 | Mechanism overview and qualified no-composition description | Keep strict degree bound; connect to the coming table architecture. |
+| 34–34 | Scope and division of labour between companions | Update destinations if supplier detail moves; do not promise self-contained bivariate proof. |
+| 40–40 | Characteristic-two colour alphabet | Keep. |
+| 46–46 | Colour relation; padded grid; interpolated P and public E | Split after the cubic equivalence; retain explicit 0/1 adjacency and degrees. |
+| 48–48 | Lead-in to constraint definitions | Keep with display (1); not an autonomous fragment. |
+| 59–59 | Constraint meaning, converse, K4/F4 counterexample, degrees | Keep the counterexample; optionally separate degree bookkeeping after the explanatory sentence. |
+| 61–73 | Grid-vanishing certificate via division and packing | Keep all three display-linked sentences as one coherent calculation. |
+| 80–80 | Certificate degree, nonlinear converse, then oracle inventory | Keep the first two mechanisms; move the existing §6 inventory here and remove duplicated inventory prose. |
+| 86–95 | Digit map and honest recovery identity | Keep definitions and substitution proof. |
+| 103–110 | Arbitrary decoded U and inflated degree D | Keep explicit honest/decoded asymmetry; this must not be condensed away. |
+| 114–121 | Binary label space, row addresses, code size and half-distance | Keep; two paragraphs can separate representation from distance if typesetting permits. |
+| 128–128 | Domains of the distance averages | Keep immediately after (7). |
+| 130–130 | Nonlinear field computation by label substitution | Keep as the derived-read interface. |
+| 137–137 | Homogeneous labels for weighted sums and scalar permutations | Keep zero-constant-term reason and nonzero scalar condition. |
+| 139–146 | Fresh-mask two-query self-correction at biased label | Keep full argument locally; it directly justifies derived cubic reads. |
+| 152–160 | Weighted interpolation test, nodes and weights | Keep definition and identity in main route because the inner corrector uses them. |
+| 167–167 | Exact weighted characterization through line restrictions | Move detailed proof to supplier appendix/companion, retain exact q>2c/full-generator contract and Friedl–Sudan condition. |
+| 169–183 | Robust weighted theorem, plurality/grid estimate and three losses; attribution | Retain full proof in supplier appendix or companion. Main route needs the unconditional inner decoding contract; do not strand just an unexplained loss sum. |
+| 185–192 | Historical counterexample and corrected-version credit | Move intact to a version note/appendix if space needed; preserve its limited scope and unbounded-field family. |
+| 196–202 | Hadamard evaluation decoding, same-message full/affine/homogeneous errors | Keep the common-witness contract in main route; move detailed bilinear and unit proofs together to appendix, not just their hypotheses. |
+| 204–204 | Implementation/preprint query-count distinction | Keep near query budget or variant table; preserve ten versus eight. |
+| 206–213 | Inner tester, quantitative K, unconditional same-U guarantee | State precise supplier contract before use. Move expansion of K if reducing clutter; retain no-smallness premise and two distances for one U. |
+| 217–223 | Outer test experiment and shared auxiliary row | Keep three checks; explicitly type h_{u,v}: F^{cb}×B_1→F_2. Once sharing is explicit in the type/description, combine the repeated sentence at223. |
+| 225–225 | Inner correction at a prescribed point and uniform marginals | Keep; this is a load-bearing operational fact for §5. |
+| 227–236 | Three costs in the outer mismatch bound and half-distance factor | Keep as short derivation if main route has room; avoid repeating it after an imported contract. |
+| 238–244 | Point-line contract, provenance, and proof sketch | Separate contract from attribution/sketch. Current paragraph was not changed despite ED09 action label. |
+| 246–256 | One polynomial with both errors and exact smallness proviso | Promote this to a named contract before supplier details; retain homogeneous-domain qualifier and certificate affine special case. |
+| 262–262 | Why certificate targets need correction | Keep and foreshadow on first page; it is the central obstacle. |
+| 264–264 | Fixed-target correction experiment and shared random choices | Keep; optionally render as a compact algorithm without adding duplicate prose. Do not make every label fixed. |
+| 266–266 | Rejection-inclusive corrector guarantee and actual R_a | Keep definition and inequality locally; distinguish from conditional-on-acceptance error. |
+| 275–275 | Decoding auxiliary rows using actual rejection | Keep explicit e=(c+1)KR_a and arbitrary auxiliary rows. |
+| 277–277 | Wrong origin value gives a nonzero line difference | Keep root argument and the following averaged-label inequality. |
+| 285–285 | Error accounting at sample and origin | Keep; this completes the central proof rather than merely naming a result. |
+| 287–287 | Quantifier interpretation and arbitrary auxiliary-table scope | Keep concise; avoid repeating exactly the same claim in multiple summaries. |
+| 291–291 | Ideal ZERO residual support and half-distance | Keep; identify degree inflation Dh and use of one nonzero residual. |
+| 297–297 | Actual ZERO experiment, coupling and averaged rejection bound | Split at “Let its rejection…” to separate protocol from analysis; retain shared x,L and independent remaining seeds. |
+| 305–305 | Interpretation of the ZERO inequality | May merge with following application; sentence adds orientation but no new hypothesis. |
+| 307–315 | Fresh derived constraint read and multiplier in (16) | Keep complete local argument. The error inside the rejection multiplier is not expendable bookkeeping. |
+| 321–330 | Eight-table inventory and received-bit consistency test | Move table/inventory earlier; keep (17) in the common-decoding section and maintain received rather than already decoded bits. |
+| 337–337 | Conjunctive seven checks, branch seeds and rejection domination | Keep; necessary to pass common κ into every branch. |
+| 339–346 | Choose four polynomials once and force Q=P(X)−P(Y) | Keep “Fix these choices” and three-bit replacement; not separate existential decodings. |
+| 348–348 | Derived degrees 3D/5D and common ZERO budget | Keep before (19); exact degrees explain later field-size use. |
+| 356–370 | Positive gap and explicit sufficient constant choice | Keep positivity and contradiction argument; move explicit min/T_c expansion to appendix if the main route is rebuilt. |
+| 372–372 | Perfect completeness and common witness reminder | Keep completeness. Shared-witness reminder can be shortened if already stated prominently. |
+| 378–393 | Graph-size parameter choice, grid capacity, field size and honest degree | Keep symbolic derivation and small-N convention. Do not replace by unqualified sufficiently large parameters. |
+| 400–400 | Logarithmic seed/address volume and polynomial proof size | Keep including elementary a^2/2^a comparison. |
+| 402–402 | Exact fair-bit sampler with early acceptance and gap loss | Keep; changes probability space and physical query count. |
+| 404–413 | Labelled query budget, unamplified upper bound and repetition | Keep table and same-proof repetition. Numerical huge constants appropriately remain in companion. |
+| 417–417 | Concrete polynomial-time implementation | Keep machine-model name and reason finite searches have polynomial cost; do not substitute query complexity for runtime. |
+| 419–427 | NP reduction and logarithmic randomness transport | Keep concise contracts and three exact destinations; detailed compiler proof belongs in long account. |
+| 429–429 | Finite-prefix converse | Keep complete short proof. |
+| 435–435 | Formal correspondence, implementation variants and evidence limit | Keep compact; no audit-log expansion. |
+| 437–437 | Authorship and precise construction/formalization credits | Keep repaired attribution and absence of novelty claim. |
+| 442–450 | Bibliography and exact-version locators | Keep all nine items; preserve manuscript versus journal numbering and immutable source pin. |

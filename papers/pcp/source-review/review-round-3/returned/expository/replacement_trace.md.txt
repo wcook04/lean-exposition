@@ -1,0 +1,161 @@
+# Replacement sample: one colouring constraint reaching actual proof bits
+
+**Status.** This is proposed replacement teaching text, independently calculated for this review. It has not been inserted into the supplied paper. It follows the honest algebraic operations used by the construction, with deliberately small parameters. It is not an instance of the production verifier's large-field soundness theorem, an alternative protocol, or a change to its degree-three encoding. It expands the data reads for one vertex ZERO check, including the comparison and return parts of both corrector calls. The separate syntactic row tests are left at their perfect-completeness guarantee on these honest rows; this is not a trace of all 187 queries.
+
+## A single edge and its vertex certificate
+
+Take the graph with one edge, whose vertices are labelled by $H=\{0,1\}$. Work in $F=\mathbb F_4=\{0,1,\omega,\omega^2\}$, where $\omega^2=\omega+1$ and $\omega^3=1$. Colour vertex $0$ by $1$ and vertex $1$ by $\omega$. Its interpolating polynomial is
+
+$$
+\chi(X)=1+\omega^2X.
+$$
+
+Indeed, $\chi(0)=1$ and $\chi(1)=1+\omega^2=\omega$. The vertex residual factors as
+
+$$
+P(X)=\chi(X)^3-1
+=X^3+\omega X^2+\omega^2X
+=(X^2+X)(X+\omega^2).
+$$
+
+Thus the grid-vanishing polynomial $Z_H(X)=X^2+X$ gives the certificate
+
+$$
+M(X,U)=U(X+\omega^2).
+$$
+
+It satisfies the two identities $M(X,0)=0$ and $M(X,Z_H(X))=P(X)$.
+
+Choose the ambient point $x=\omega$. At this point,
+
+$$
+\chi(\omega)=0,\qquad Z_H(\omega)=1,\qquad P(\omega)=1,
+$$
+
+and
+
+$$
+M(\omega,0)=0,\qquad M(\omega,1)=1.
+$$
+
+There is no conflict with the colouring: $\omega$ is not a vertex label in $H$. The residual need only vanish on the vertex grid. The certificate identity holds on the whole field, including this point where the residual is nonzero.
+
+## What the bits are indexed by
+
+Write $u=a+b\omega$ and take $L(u)=a$ as one possible outcome of ZERO’s uniformly sampled homogeneous label. ZERO uses this same $L$ in the derived query and both certificate-correction calls. An honest colour row is
+
+$$
+\Pi_\chi(x,R)=R(\rho(\chi(x))),\qquad \rho(a+b\omega)=(a,b),
+$$
+
+where $R$ is a Boolean polynomial of degree at most three. An honest certificate row uses affine labels:
+
+$$
+\Pi_M((x,u),R)=R(\rho(M(x,u))).
+$$
+
+An auxiliary certificate address has an additional inner point:
+
+$$
+\Pi_M^{\mathrm{line}}((a,v),w,R).
+$$
+
+Here $a,v\in F^2$ specify the oriented line $a+Yv$ in the certificate's $(X,U)$-space, $w$ is a point in the digit-encoding space, and $R$ is an affine Boolean label asking a bit question about the field value at $w$. The weighted labels used below happen to be homogeneous. These are three different parts of the address. The returned object is one bit.
+
+The input called $p(x,L)$ in the generic ZERO test is **derived** from the colour row. The final verifier does not store another primary table of vertex residuals. It computes the label
+
+$$
+\Lambda=1+Z_1+Z_2+Z_1Z_2,
+$$
+
+which satisfies $\Lambda(\rho(u))=L(u^3-1)$. To protect a special requested label against corruption, the verifier reads at a random mask $R$ and at $R+\Lambda$. For the possible mask $R=Z_1$, our chosen point gives
+
+| Actual colour-table address | Returned bit |
+| --- | ---: |
+| $(\omega,Z_1)$ | $0$ |
+| $(\omega,1+Z_2+Z_1Z_2)$ | $1$ |
+
+Their sum modulo two is $1=L(P(\omega))$. In this honest calculation every mask gives that answer; uniform fresh masking supplies the separate error guarantee for received rows.
+
+## The two certificate lines
+
+ZERO wants the bits at the targets $A=(\omega,0)$ and $B=(\omega,1)$. It must not simply trust those two primary entries. Consider a possible run in which each corrector's independently sampled outer direction takes the value $v=(1,1)$ and its nonzero comparison parameter takes the value $z=1$. Conditional on the chosen $x,L$, all remaining seeds are sampled independently across the two calls. Equal displayed outcomes of independent draws do not change that sampling rule.
+
+Along the two lines, the honest restrictions are
+
+$$
+p_A(Y)=M(\omega+Y,Y)=Y^2+Y,
+\qquad
+p_B(Y)=M(\omega+Y,1+Y)=Y^2+1.
+$$
+
+At the comparison parameter $1$, both are zero. At the target parameter $0$, they are respectively zero and one. The primary comparison addresses are therefore
+
+| Call | Primary address at parameter $1$ | Returned bit |
+| --- | --- | ---: |
+| Target $A$ | $((\omega^2,1),L)$ | $0$ |
+| Target $B$ | $((\omega^2,0),L)$ | $0$ |
+
+These are comparisons away from the requested primary targets. In the soundness argument, randomising the direction makes each comparison point uniform in the ambient space.
+
+## Encoding these lines and asking weighted questions
+
+For this small honest calculation choose one base-$3$ digit, so $c=1$ and $b=3$. A line polynomial of degree below three becomes a degree-one polynomial in three variables:
+
+$$
+\widetilde p_A(W_0,W_1,W_2)=W_2+W_1,
+\qquad
+\widetilde p_B(W_0,W_1,W_2)=W_2+W_0.
+$$
+
+Name the substitution point explicitly:
+
+$$
+\Phi(z)=(1,z,z^2).
+$$
+
+Then $\widetilde p_A(\Phi(z))=p_A(z)$ and $\widetilde p_B(\Phi(z))=p_B(z)$. The generic version is $\Phi(z)=(z^{j b^i})_{0\le i<c,\,0\le j<b}$, with the $j=0$ entries equal to one.
+
+The generator $\omega$ gives two nonzero interpolation nodes $\omega,\omega^2$. Their weights for evaluation at zero are $\omega^2,\omega$. For any affine polynomial $T$ and any inner direction $e$,
+
+$$
+T(w)=\omega^2T(w+\omega e)+\omega T(w+\omega^2e).
+$$
+
+Consider the possible outcome $e_A=e_B=(0,1,0)$ of the two independently sampled inner directions. Within each call, that call’s own inner direction is reused for its comparison and return computations. It is not shared as a random variable across the calls. Because $L$ reads the first binary coordinate,
+
+$$
+L(\omega^2u)=a+b,\qquad L(\omega u)=b
+\quad\text{for }u=a+b\omega.
+$$
+
+The two field weights therefore become the homogeneous labels $Z_1+Z_2$ and $Z_2$. The checker XORs the two answers. It never reads the full field values shown for explanation in the next table.
+
+For brevity, an auxiliary address in the table is written $(a,w,R)$; its omitted outer-direction component is always $v=(1,1)$. Every row below is one actual bit read from $\Pi_M^{\mathrm{line}}$.
+
+| Call and purpose | Anchor $a$ | Inner point $w$ | Label $R$ | Honest field value, for explanation | Bit read |
+| --- | --- | --- | --- | --- | ---: |
+| $A$, compare at $z=1$ | $(\omega,0)$ | $(1,\omega^2,1)$ | $Z_1+Z_2$ | $\omega$ | $1$ |
+| $A$, compare at $z=1$ | $(\omega,0)$ | $(1,\omega,1)$ | $Z_2$ | $\omega^2$ | $1$ |
+| $A$, return at $z=0$ | $(\omega,0)$ | $(1,\omega,0)$ | $Z_1+Z_2$ | $\omega$ | $1$ |
+| $A$, return at $z=0$ | $(\omega,0)$ | $(1,\omega^2,0)$ | $Z_2$ | $\omega^2$ | $1$ |
+| $B$, compare at $z=1$ | $(\omega,1)$ | $(1,\omega^2,1)$ | $Z_1+Z_2$ | $0$ | $0$ |
+| $B$, compare at $z=1$ | $(\omega,1)$ | $(1,\omega,1)$ | $Z_2$ | $0$ | $0$ |
+| $B$, return at $z=0$ | $(\omega,1)$ | $(1,\omega,0)$ | $Z_1+Z_2$ | $1$ | $1$ |
+| $B$, return at $z=0$ | $(\omega,1)$ | $(1,\omega^2,0)$ | $Z_2$ | $1$ | $0$ |
+
+Both corrected comparison bits are zero, agreeing with the two primary comparison bits. The returned bits are
+
+$$
+b_0=1+1=0,\qquad b_Z=1+0=1.
+$$
+
+The honest syntactic row tests pass, so the two corrector calls return these bits. ZERO accepts because $b_0=0$ and $b_Z=p(\omega,L)=1$.
+
+This finishes one local chain: a colour assignment produced a residual; the residual produced a grid certificate; its prescribed-point queries became two line queries; each line value became a weighted sum; each weight selected a bit label; and the resulting bits satisfied the original certificate equations. The large-field testing theorems are needed to justify these operations on arbitrary received tables. They do not follow from this honest trace.
+
+**Transfer question.** Which inference would no longer follow from the global distance bound alone if all the line rows with anchor $A$ were corrupt, although only a very small fraction of the entire auxiliary table had changed? Why must the fixed-target corrector test the selected row again? A global statement about random anchors does not control this fixed anchor. This does not say that every such corruption changes the output; it says the earlier averaged guarantee cannot justify this selected row.
+
+## Reviewer verification
+
+`check_trace.py` was executed for this review. `trace_output.json` records the exact addresses and answers. The calculation checked the certificate identity at all four field elements; both restrictions and both substitution identities at all four parameters; the displayed interpolation identity for every affine function on $F^3$ and every target for the chosen inner direction; all sixteen masks on the two-coordinate label space; and the final bit equalities. It checks this finite illustration only. The original formal source and its verifier constants remain unchanged.

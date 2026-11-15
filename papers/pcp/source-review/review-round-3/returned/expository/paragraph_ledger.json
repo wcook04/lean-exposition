@@ -1,0 +1,1815 @@
+{
+  "scope": "All 181 prose/list blocks in the current main.md, split on blank lines with displayed mathematics and tables excluded; equation continuations may be separate blocks. This is a teaching-job map, not a count of faults. Every current paragraph was read before this map was assigned.",
+  "paragraphs": [
+    {
+      "number": 1,
+      "kind": "prose",
+      "line_start": 8,
+      "line_end": 14,
+      "paragraph_excerpt": "Suppose someone hands you a graph and claims that its vertices can be coloured with three colours, with different colours at the ends of every edge. A",
+      "job": "State the verification bargain and its resource being counted",
+      "decision": "keep",
+      "rationale": "Good opening contract. Keep the fixed encoded certificate, input-reading allowance and bit-versus-runtime distinction."
+    },
+    {
+      "number": 2,
+      "kind": "prose",
+      "line_start": 16,
+      "line_end": 20,
+      "paragraph_excerpt": "The same statement holds for every problem whose proposed solutions can be checked in polynomial time. A polynomial bound is at most $C(n+1)^k$ for fi",
+      "job": "State the verification bargain and its resource being counted",
+      "decision": "keep",
+      "rationale": "Good opening contract. Keep the fixed encoded certificate, input-reading allowance and bit-versus-runtime distinction."
+    },
+    {
+      "number": 3,
+      "kind": "prose",
+      "line_start": 22,
+      "line_end": 26,
+      "paragraph_excerpt": "The constant bounds the number of **certificate bits read**. The checker may read the input and perform a polynomial amount of computation. The certif",
+      "job": "State the verification bargain and its resource being counted",
+      "decision": "keep",
+      "rationale": "Good opening contract. Keep the fixed encoded certificate, input-reading allowance and bit-versus-runtime distinction."
+    },
+    {
+      "number": 4,
+      "kind": "prose",
+      "line_start": 28,
+      "line_end": 35,
+      "paragraph_excerpt": "These notes explain the algebraic construction of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard, and its formalisation in Lean by Troy Lee. The",
+      "job": "Credit construction and formalization, identify corrected edition",
+      "decision": "keep",
+      "rationale": "Preserve exact credit and edition; do not convert source differences into a second narrative in the opening."
+    },
+    {
+      "number": 5,
+      "kind": "prose",
+      "line_start": 37,
+      "line_end": 44,
+      "paragraph_excerpt": "The intended reader knows polynomial arithmetic, finite sums and elementary probability, but need not know complexity theory, coding theory or Lean. B",
+      "job": "Name reader and promised capability",
+      "decision": "rewrite",
+      "rationale": "Name a worked guide to the verifier and soundness architecture. Either supply a carried constraint-to-bit trace or narrow the promise; distinguish imported tests from locally proved steps."
+    },
+    {
+      "number": 6,
+      "kind": "prose",
+      "line_start": 50,
+      "line_end": 53,
+      "paragraph_excerpt": "A proper three-colouring of a graph assigns one of three colours to each vertex so that the ends of every edge have different colours. Finding the col",
+      "job": "Reintroduce ordinary colouring certificate",
+      "decision": "merge",
+      "rationale": "Compress the repeat of the first paragraph; the K4 example can perform the definition recap."
+    },
+    {
+      "number": 7,
+      "kind": "prose",
+      "line_start": 55,
+      "line_end": 60,
+      "paragraph_excerpt": "Consider the complete graph on four vertices, $K_4$. It has six edges and cannot be three-coloured: among four vertices, two must have the same colour",
+      "job": "Show why raw edge sampling fails and identify two proof obligations",
+      "decision": "keep",
+      "rationale": "The K4-plus-triangles family is an effective obstruction. Retain coherence versus constraint satisfaction as the organizing distinction."
+    },
+    {
+      "number": 8,
+      "kind": "prose",
+      "line_start": 62,
+      "line_end": 65,
+      "paragraph_excerpt": "Now add $t$ disjoint triangles, each properly coloured. The graph is still not three-colourable, because it still contains $K_4$, but the displayed as",
+      "job": "Show why raw edge sampling fails and identify two proof obligations",
+      "decision": "keep",
+      "rationale": "The K4-plus-triangles family is an effective obstruction. Retain coherence versus constraint satisfaction as the organizing distinction."
+    },
+    {
+      "number": 9,
+      "kind": "prose",
+      "line_start": 71,
+      "line_end": 73,
+      "paragraph_excerpt": "For example, three added triangles reduce this to $1/15$. A fixed number of samples becomes ineffective as $t$ grows: the one bad edge accounts for a ",
+      "job": "Show why raw edge sampling fails and identify two proof obligations",
+      "decision": "keep",
+      "rationale": "The K4-plus-triangles family is an effective obstruction. Retain coherence versus constraint satisfaction as the organizing distinction."
+    },
+    {
+      "number": 10,
+      "kind": "prose",
+      "line_start": 75,
+      "line_end": 78,
+      "paragraph_excerpt": "In the PCP construction, the prover supplies redundant tables related by algebraic identities. The checker tests only a few entries, but the soundness",
+      "job": "Show why raw edge sampling fails and identify two proof obligations",
+      "decision": "keep",
+      "rationale": "The K4-plus-triangles family is an effective obstruction. Retain coherence versus constraint satisfaction as the organizing distinction."
+    },
+    {
+      "number": 11,
+      "kind": "prose",
+      "line_start": 80,
+      "line_end": 84,
+      "paragraph_excerpt": "There are two obligations. First, the tables must describe coherent mathematical objects rather than arbitrary strings. Second, those objects must sat",
+      "job": "Show why raw edge sampling fails and identify two proof obligations",
+      "decision": "keep",
+      "rationale": "The K4-plus-triangles family is an effective obstruction. Retain coherence versus constraint satisfaction as the organizing distinction."
+    },
+    {
+      "number": 12,
+      "kind": "prose",
+      "line_start": 90,
+      "line_end": 93,
+      "paragraph_excerpt": "A decision problem is a set $L$ of finite bit strings; a string $x$ is a yes-instance when $x\\in L$. The class NP consists of problems for which membe",
+      "job": "Define NP and give fully quantified verifier contract",
+      "decision": "keep",
+      "rationale": "The fixed algorithm, quantifier order, certificate timing and resource domains are essential. This earns the stronger equality claim."
+    },
+    {
+      "number": 13,
+      "kind": "prose",
+      "line_start": 95,
+      "line_end": 96,
+      "paragraph_excerpt": "A verifier is one algorithm, fixed for the problem. The prover fixes its certificate before the verifier chooses its random bits.",
+      "job": "Define NP and give fully quantified verifier contract",
+      "decision": "keep",
+      "rationale": "The fixed algorithm, quantifier order, certificate timing and resource domains are essential. This earns the stronger equality claim."
+    },
+    {
+      "number": 14,
+      "kind": "prose",
+      "line_start": 98,
+      "line_end": 100,
+      "paragraph_excerpt": "**PCP theorem.** For every $L\\in\\mathrm{NP}$, there are a polynomial-time verifier $V$, natural-number constants $a,b,q$, and a polynomial $p$, such t",
+      "job": "Define NP and give fully quantified verifier contract",
+      "decision": "keep",
+      "rationale": "The fixed algorithm, quantifier order, certificate timing and resource domains are essential. This earns the stronger equality claim."
+    },
+    {
+      "number": 15,
+      "kind": "list",
+      "line_start": 102,
+      "line_end": 108,
+      "paragraph_excerpt": "* $V$ uses exactly $a\\lceil\\log_2(n+2)\\rceil+b$ independent fair random bits; * on every run it reads at most $q$ bits of a certificate, all at positi",
+      "job": "Define NP and give fully quantified verifier contract",
+      "decision": "keep",
+      "rationale": "The fixed algorithm, quantifier order, certificate timing and resource domains are essential. This earns the stronger equality claim."
+    },
+    {
+      "number": 16,
+      "kind": "prose",
+      "line_start": 110,
+      "line_end": 116,
+      "paragraph_excerpt": "The constants, polynomial and verifier are chosen once for $L$, before $x$. The certificate may depend on $x$, but it may not depend on the random bit",
+      "job": "Define NP and give fully quantified verifier contract",
+      "decision": "keep",
+      "rationale": "The fixed algorithm, quantifier order, certificate timing and resource domains are essential. This earns the stronger equality claim."
+    },
+    {
+      "number": 17,
+      "kind": "prose",
+      "line_start": 118,
+      "line_end": 121,
+      "paragraph_excerpt": "The formula for the random-bit budget is convenient for the formal proof. Extra random bits can be ignored, so requiring this exact form does not forc",
+      "job": "Explain exact randomness formula",
+      "decision": "move_to_note",
+      "rationale": "Keep the computability/padding point but put its formal-definition motivation in a note so the first theorem does not stall."
+    },
+    {
+      "number": 18,
+      "kind": "prose",
+      "line_start": 123,
+      "line_end": 125,
+      "paragraph_excerpt": "Conversely, suppose a problem has a verifier with these properties. Guess the first $p(n)$ certificate bits, and run the verifier on **all** its rando",
+      "job": "Prove reverse containment and introduce forward reduction",
+      "decision": "optional_move",
+      "rationale": "The proof is short and correct. A main route may defer it to the final resource section; keep a pointer so equality remains justified. Do not silently discard it."
+    },
+    {
+      "number": 19,
+      "kind": "prose",
+      "line_start": 132,
+      "line_end": 137,
+      "paragraph_excerpt": "such strings, a polynomial number because $a,b$ are fixed. Accept the guessed certificate if every run accepts. Perfect completeness supplies such a c",
+      "job": "Prove reverse containment and introduce forward reduction",
+      "decision": "optional_move",
+      "rationale": "The proof is short and correct. A main route may defer it to the final resource section; keep a pointer so equality remains justified. Do not silently discard it."
+    },
+    {
+      "number": 20,
+      "kind": "prose",
+      "line_start": 143,
+      "line_end": 145,
+      "paragraph_excerpt": "The hard direction is constructing the verifier. We first explain it for three-colouring. A polynomial-time reduction then transfers it to any problem",
+      "job": "Prove reverse containment and introduce forward reduction",
+      "decision": "optional_move",
+      "rationale": "The proof is short and correct. A main route may defer it to the final resource section; keep a pointer so equality remains justified. Do not silently discard it."
+    },
+    {
+      "number": 21,
+      "kind": "prose",
+      "line_start": 151,
+      "line_end": 154,
+      "paragraph_excerpt": "Work first with arithmetic modulo $5$, in the field $\\mathbb F_5=\\{0,1,2,3,4\\}$. Addition and multiplication are performed modulo $5$. In particular, ",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 22,
+      "kind": "prose",
+      "line_start": 156,
+      "line_end": 156,
+      "paragraph_excerpt": "The polynomial $Z(X)=X(X-1)$ has the following values:",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 23,
+      "kind": "prose",
+      "line_start": 162,
+      "line_end": 165,
+      "paragraph_excerpt": "It vanishes at two points and is nonzero at three. This reflects a general fact: a nonzero polynomial of degree at most $d$ over a field has at most $",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 24,
+      "kind": "prose",
+      "line_start": 167,
+      "line_end": 174,
+      "paragraph_excerpt": "Consequently, two different polynomials of degree at most $d$ disagree at at least a fraction $1-d/Q$ of the elements of a field with $Q$ elements. Ap",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 25,
+      "kind": "prose",
+      "line_start": 180,
+      "line_end": 183,
+      "paragraph_excerpt": "The probability is uniform over the whole ambient space. This is the polynomial distance estimate used throughout the proof; a proof by induction on t",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 26,
+      "kind": "prose",
+      "line_start": 185,
+      "line_end": 188,
+      "paragraph_excerpt": "If a claimed polynomial identity is false, its difference is a nonzero polynomial. A uniformly random point then finds a failure with high probability",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 27,
+      "kind": "prose",
+      "line_start": 190,
+      "line_end": 192,
+      "paragraph_excerpt": "An arbitrary table can agree with a polynomial everywhere except one entry. A received table therefore needs a separate low-degree test before we can ",
+      "job": "Teach polynomial distance and distinguish polynomial identities from arbitrary tables",
+      "decision": "keep",
+      "rationale": "The root count, uniform ambient distribution and received-table caveat each do necessary work."
+    },
+    {
+      "number": 28,
+      "kind": "prose",
+      "line_start": 198,
+      "line_end": 201,
+      "paragraph_excerpt": "Interpolation turns values on a small set into a polynomial on a larger space. A polynomial of degree at most two is determined by its values at three",
+      "job": "Derive interpolation weights and grid extension",
+      "decision": "keep_with_bridge",
+      "rationale": "Retain the worked weights and product basis. Add the actual interpolant chi=1+omega^2 X for the carried single-edge example rather than leaving the colouring extension schematic."
+    },
+    {
+      "number": 29,
+      "kind": "prose",
+      "line_start": 207,
+      "line_end": 210,
+      "paragraph_excerpt": "For $p(X)=X^2$, those three values are $0,1,4$, and the weighted sum is $0+2+12=4$ modulo $5$, just as $3^2=4$ modulo $5$. The coefficients are obtain",
+      "job": "Derive interpolation weights and grid extension",
+      "decision": "keep_with_bridge",
+      "rationale": "Retain the worked weights and product basis. Add the actual interpolant chi=1+omega^2 X for the carried single-edge example rather than leaving the colouring extension schematic."
+    },
+    {
+      "number": 30,
+      "kind": "prose",
+      "line_start": 217,
+      "line_end": 218,
+      "paragraph_excerpt": "These weights are part of the identity. Replacing them by three unit weights would give $0+1+4=0$, which is not $p(3)$.",
+      "job": "Derive interpolation weights and grid extension",
+      "decision": "keep_with_bridge",
+      "rationale": "Retain the worked weights and product basis. Add the actual interpolant chi=1+omega^2 X for the carried single-edge example rather than leaving the colouring extension schematic."
+    },
+    {
+      "number": 31,
+      "kind": "prose",
+      "line_start": 220,
+      "line_end": 222,
+      "paragraph_excerpt": "For a set $H$ of $h$ distinct field elements, let $L_s(X)$ be the degree-$(h-1)$ polynomial equal to one at $s\\in H$ and zero at the other points of $",
+      "job": "Derive interpolation weights and grid extension",
+      "decision": "keep_with_bridge",
+      "rationale": "Retain the worked weights and product basis. Add the actual interpolant chi=1+omega^2 X for the carried single-edge example rather than leaving the colouring extension schematic."
+    },
+    {
+      "number": 32,
+      "kind": "prose",
+      "line_start": 228,
+      "line_end": 233,
+      "paragraph_excerpt": "The grid $H^m$ consists of $m$-tuples of elements of $H$. For $H=\\{0,1\\}$, the one-variable basis polynomials are $L_0(X)=1-X$ and $L_1(X)=X$. On the ",
+      "job": "Derive interpolation weights and grid extension",
+      "decision": "keep_with_bridge",
+      "rationale": "Retain the worked weights and product basis. Add the actual interpolant chi=1+omega^2 X for the carried single-edge example rather than leaving the colouring extension schematic."
+    },
+    {
+      "number": 33,
+      "kind": "prose",
+      "line_start": 240,
+      "line_end": 245,
+      "paragraph_excerpt": "At a grid point, all the basis products are zero except the one indexed by that point. The extension therefore agrees with $f$ on $H^m$, has degree at",
+      "job": "Derive interpolation weights and grid extension",
+      "decision": "keep_with_bridge",
+      "rationale": "Retain the worked weights and product basis. Add the actual interpolant chi=1+omega^2 X for the carried single-edge example rather than leaving the colouring extension schematic."
+    },
+    {
+      "number": 34,
+      "kind": "prose",
+      "line_start": 251,
+      "line_end": 255,
+      "paragraph_excerpt": "For the colouring construction, use arithmetic with $1+1=0$. Begin with the four elements $0,1,\\omega,1+\\omega$, adding their binary coefficients modu",
+      "job": "Construct F4, encode colours, show necessity of vertex validity",
+      "decision": "keep",
+      "rationale": "The operations and all-four-elements K4 counterexample are strong. Preserve the valid-colour premise of the edge equivalence."
+    },
+    {
+      "number": 35,
+      "kind": "prose",
+      "line_start": 262,
+      "line_end": 264,
+      "paragraph_excerpt": "Every element has the form $a+b\\omega$ with $a,b\\in\\{0,1\\}$, so it has binary coordinates $(a,b)$. Addition is coordinatewise. Multiplication is also ",
+      "job": "Construct F4, encode colours, show necessity of vertex validity",
+      "decision": "keep",
+      "rationale": "The operations and all-four-elements K4 counterexample are strong. Preserve the valid-colour premise of the edge equivalence."
+    },
+    {
+      "number": 36,
+      "kind": "prose",
+      "line_start": 271,
+      "line_end": 273,
+      "paragraph_excerpt": "We will use these coordinates again when constructing a bit query. The full verifier works in a larger characteristic-two field containing this four-e",
+      "job": "Construct F4, encode colours, show necessity of vertex validity",
+      "decision": "keep",
+      "rationale": "The operations and all-four-elements K4 counterexample are strong. Preserve the valid-colour premise of the edge equivalence."
+    },
+    {
+      "number": 37,
+      "kind": "prose",
+      "line_start": 279,
+      "line_end": 281,
+      "paragraph_excerpt": "Use $1,\\omega,\\omega^2$ as the colours. A proposed value $u$ is one of these colours exactly when $u^3-1=0$. If $u,v$ are valid colours, they are diff",
+      "job": "Construct F4, encode colours, show necessity of vertex validity",
+      "decision": "keep",
+      "rationale": "The operations and all-four-elements K4 counterexample are strong. Preserve the valid-colour premise of the edge equivalence."
+    },
+    {
+      "number": 38,
+      "kind": "prose",
+      "line_start": 289,
+      "line_end": 297,
+      "paragraph_excerpt": "For example, the triangle coloured $(1,\\omega,\\omega^2)$ gives three zero edge residuals. The assignment $(1,1,\\omega^2)$ gives residuals $(1,0,0)$ on",
+      "job": "Construct F4, encode colours, show necessity of vertex validity",
+      "decision": "keep",
+      "rationale": "The operations and all-four-elements K4 counterexample are strong. Preserve the valid-colour premise of the edge equivalence."
+    },
+    {
+      "number": 39,
+      "kind": "prose",
+      "line_start": 299,
+      "line_end": 302,
+      "paragraph_excerpt": "Label the graph's vertices by a grid $H^m$, adding isolated vertices if needed. Let $\\chi$ be the low-degree extension of a colouring, and let $\\wideh",
+      "job": "Define global colouring residuals and distinguish grid from ambient vanishing",
+      "decision": "keep_with_bridge",
+      "rationale": "Introduce the carried vertex residual and its off-grid value alongside these definitions. Explain that chi-prime later names a separately supplied difference table."
+    },
+    {
+      "number": 40,
+      "kind": "prose",
+      "line_start": 312,
+      "line_end": 315,
+      "paragraph_excerpt": "Then $\\chi$ describes a proper colouring precisely when $\\operatorname{Val}$ vanishes on $H^m$ and $\\operatorname{Prop}$ vanishes on $H^{2m}$. The adj",
+      "job": "Define global colouring residuals and distinguish grid from ambient vanishing",
+      "decision": "keep_with_bridge",
+      "rationale": "Introduce the carried vertex residual and its off-grid value alongside these definitions. Explain that chi-prime later names a separately supplied difference table."
+    },
+    {
+      "number": 41,
+      "kind": "prose",
+      "line_start": 317,
+      "line_end": 322,
+      "paragraph_excerpt": "This translation has combined all the vertex requirements into one polynomial and all the edge requirements into another. It has not yet made them eas",
+      "job": "Define global colouring residuals and distinguish grid from ambient vanishing",
+      "decision": "keep_with_bridge",
+      "rationale": "Introduce the carried vertex residual and its off-grid value alongside these definitions. Explain that chi-prime later names a separately supplied difference table."
+    },
+    {
+      "number": 42,
+      "kind": "prose",
+      "line_start": 328,
+      "line_end": 329,
+      "paragraph_excerpt": "Return temporarily to $\\mathbb F_5$, with $H=\\{0,1\\}$ and $Z(X)=X(X-1)$. Consider",
+      "job": "Show a small grid-vanishing polynomial can be nonzero off grid",
+      "decision": "replace_or_sidebar",
+      "rationale": "Use the carried chi residual as the main example. Retain the two-variable F5 example in a sidebar if needed to illustrate multiple quotient terms."
+    },
+    {
+      "number": 43,
+      "kind": "prose",
+      "line_start": 335,
+      "line_end": 336,
+      "paragraph_excerpt": "It vanishes at all four points of $H^2$: at each of them both $Z(X)$ and $Z(Y)$ vanish. It is not the zero polynomial. For example,",
+      "job": "Show a small grid-vanishing polynomial can be nonzero off grid",
+      "decision": "replace_or_sidebar",
+      "rationale": "Use the carried chi residual as the main example. Retain the two-variable F5 example in a sidebar if needed to illustrate multiple quotient terms."
+    },
+    {
+      "number": 44,
+      "kind": "prose",
+      "line_start": 342,
+      "line_end": 345,
+      "paragraph_excerpt": "The displayed decomposition certifies the grid condition: each term contains a factor that vanishes on the grid. In more variables, the corresponding ",
+      "job": "Prove grid ideal representation and package all quotients",
+      "decision": "keep",
+      "rationale": "Do not remove the multivariate sum or degree bookkeeping when shortening the toy. A one-variable example alone cannot motivate avoiding m separate reads."
+    },
+    {
+      "number": 45,
+      "kind": "prose",
+      "line_start": 352,
+      "line_end": 359,
+      "paragraph_excerpt": "with suitable degree bounds on the $Q_j$. In our example the two quotients are visible: $Q_1=Y+1$ and $Q_2=X+2$. Polynomial division in each variable ",
+      "job": "Prove grid ideal representation and package all quotients",
+      "decision": "keep",
+      "rationale": "Do not remove the multivariate sum or degree bookkeeping when shortening the toy. A one-variable example alone cannot motivate avoiding m separate reads."
+    },
+    {
+      "number": 46,
+      "kind": "prose",
+      "line_start": 361,
+      "line_end": 363,
+      "paragraph_excerpt": "Reading all $m$ terms would require a number of queries that grows with the dimension. Following Corollary 2.10 of the [corrected paper][paper-v2], pa",
+      "job": "Prove grid ideal representation and package all quotients",
+      "decision": "keep",
+      "rationale": "Do not remove the multivariate sum or degree bookkeeping when shortening the toy. A one-variable example alone cannot motivate avoiding m separate reads."
+    },
+    {
+      "number": 47,
+      "kind": "prose",
+      "line_start": 369,
+      "line_end": 371,
+      "paragraph_excerpt": "Its degree is at most $\\deg P$, because multiplication by $U_j$ adds one to $\\deg Q_j$ and $h\\geq1$. This bound will let the honest certificate fit in",
+      "job": "Prove grid ideal representation and package all quotients",
+      "decision": "keep",
+      "rationale": "Do not remove the multivariate sum or degree bookkeeping when shortening the toy. A one-variable example alone cannot motivate avoiding m separate reads."
+    },
+    {
+      "number": 48,
+      "kind": "prose",
+      "line_start": 373,
+      "line_end": 373,
+      "paragraph_excerpt": "It satisfies two polynomial identities,",
+      "job": "Prove grid ideal representation and package all quotients",
+      "decision": "keep",
+      "rationale": "Do not remove the multivariate sum or degree bookkeeping when shortening the toy. A one-variable example alone cannot motivate avoiding m separate reads."
+    },
+    {
+      "number": 49,
+      "kind": "prose",
+      "line_start": 380,
+      "line_end": 382,
+      "paragraph_excerpt": "where $Z_H$ is applied to each coordinate. These identities also imply the desired grid condition: if $x\\in H^m$, then $Z_H(x)=0$, so both expressions",
+      "job": "Prove grid ideal representation and package all quotients",
+      "decision": "keep",
+      "rationale": "Do not remove the multivariate sum or degree bookkeeping when shortening the toy. A one-variable example alone cannot motivate avoiding m separate reads."
+    },
+    {
+      "number": 50,
+      "kind": "prose",
+      "line_start": 384,
+      "line_end": 384,
+      "paragraph_excerpt": "In the small example, the packaged certificate is",
+      "job": "Evaluate the F5 packaged certificate",
+      "decision": "move_to_sidebar",
+      "rationale": "These calculations are correct but can be replaced in the main thread by M(omega,0)=0 and M(omega,1)=1 for the actual colouring residual."
+    },
+    {
+      "number": 51,
+      "kind": "prose",
+      "line_start": 390,
+      "line_end": 393,
+      "paragraph_excerpt": "At $(X,Y)=(2,2)$ its two substitutions are $M(2,2,0,0)=0$ and $M(2,2,2,2)=4=P(2,2)$. The polynomial $P$ is allowed to be nonzero there. The identity b",
+      "job": "Evaluate the F5 packaged certificate",
+      "decision": "move_to_sidebar",
+      "rationale": "These calculations are correct but can be replaced in the main thread by M(omega,0)=0 and M(omega,1)=1 for the actual colouring residual."
+    },
+    {
+      "number": 52,
+      "kind": "prose",
+      "line_start": 395,
+      "line_end": 401,
+      "paragraph_excerpt": "Now suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere on the grid. At least one of the two identities must be false as a polynomial i",
+      "job": "Explain soundness of ideal identities and obstruction from concentrated errors",
+      "decision": "keep",
+      "rationale": "The missing-first-identity question and corrupt slice should survive. Put a clear handoff here: ideal polynomial algebra is settled; received tables still need testing and correction."
+    },
+    {
+      "number": 53,
+      "kind": "prose",
+      "line_start": 403,
+      "line_end": 405,
+      "paragraph_excerpt": "**Question 1.** Could the checker omit the first identity and test only $M(X,Z_H(X))=P(X)$? Test your answer with the nonvanishing polynomial $P=1$. A",
+      "job": "Explain soundness of ideal identities and obstruction from concentrated errors",
+      "decision": "keep",
+      "rationale": "The missing-first-identity question and corrupt slice should survive. Put a clear handoff here: ideal polynomial algebra is settled; received tables still need testing and correction."
+    },
+    {
+      "number": 54,
+      "kind": "prose",
+      "line_start": 407,
+      "line_end": 413,
+      "paragraph_excerpt": "The remaining problem is that a received table is only *close* to a polynomial, and the points $(x,0)$ and $(x,Z_H(x))$ are special points. All its er",
+      "job": "Explain soundness of ideal identities and obstruction from concentrated errors",
+      "decision": "keep",
+      "rationale": "The missing-first-identity question and corrupt slice should survive. Put a clear handoff here: ideal polynomial algebra is settled; received tables still need testing and correction."
+    },
+    {
+      "number": 55,
+      "kind": "prose",
+      "line_start": 419,
+      "line_end": 423,
+      "paragraph_excerpt": "A low-degree polynomial in many variables restricts to a low-degree univariate polynomial on each line $u+Yv$. The prover supplies a table whose row i",
+      "job": "State point-versus-line input and expose growing-coefficient query cost",
+      "decision": "keep",
+      "rationale": "Mark this as a supplied testing theorem. Give no impression that the displayed honest comparison proves its converse."
+    },
+    {
+      "number": 56,
+      "kind": "prose",
+      "line_start": 425,
+      "line_end": 433,
+      "paragraph_excerpt": "The point-versus-line theorem gives the converse needed for soundness. Suppose each supplied line polynomial has degree at most $d$, and sample $u,v$ ",
+      "job": "State point-versus-line input and expose growing-coefficient query cost",
+      "decision": "keep",
+      "rationale": "Mark this as a supplied testing theorem. Give no impression that the displayed honest comparison proves its converse."
+    },
+    {
+      "number": 57,
+      "kind": "prose",
+      "line_start": 435,
+      "line_end": 440,
+      "paragraph_excerpt": "This is the substantial testing theorem we take as an input. Its proof uses agreement between row and column polynomials to show that the local line p",
+      "job": "State point-versus-line input and expose growing-coefficient query cost",
+      "decision": "keep",
+      "rationale": "Mark this as a supplied testing theorem. Give no impression that the displayed honest comparison proves its converse."
+    },
+    {
+      "number": 58,
+      "kind": "prose",
+      "line_start": 442,
+      "line_end": 445,
+      "paragraph_excerpt": "A line polynomial of degree $d$ has $d+1$ coefficients. Reading all those coefficients is not a constant number of bit queries when $d$ grows. The con",
+      "job": "State point-versus-line input and expose growing-coefficient query cost",
+      "decision": "keep",
+      "rationale": "Mark this as a supplied testing theorem. Give no impression that the displayed honest comparison proves its converse."
+    },
+    {
+      "number": 59,
+      "kind": "prose",
+      "line_start": 447,
+      "line_end": 447,
+      "paragraph_excerpt": "Here is the operation with two base-$3$ digits. Over $\\mathbb F_5$, take",
+      "job": "Demonstrate set-multilinear degree reduction",
+      "decision": "keep",
+      "rationale": "The F5 degree-four example earns its extra variables. Name Phi explicitly at the substitution display and keep its role separate from the carried toy."
+    },
+    {
+      "number": 60,
+      "kind": "prose",
+      "line_start": 453,
+      "line_end": 454,
+      "paragraph_excerpt": "Since $4=1+1\\cdot3$, replace $Y^4$ by $X_{0,1}X_{1,1}$. Likewise, $1=1+0\\cdot3$ and $0=0+0\\cdot3$. The encoded polynomial is",
+      "job": "Demonstrate set-multilinear degree reduction",
+      "decision": "keep",
+      "rationale": "The F5 degree-four example earns its extra variables. Name Phi explicitly at the substitution display and keep its role separate from the carried toy."
+    },
+    {
+      "number": 61,
+      "kind": "prose",
+      "line_start": 461,
+      "line_end": 462,
+      "paragraph_excerpt": "It has degree two, although $p$ has degree four. There are more variables, one group for each digit position. To recover $p(\\lambda)$, substitute",
+      "job": "Demonstrate set-multilinear degree reduction",
+      "decision": "keep",
+      "rationale": "The F5 degree-four example earns its extra variables. Name Phi explicitly at the substitution display and keep its role separate from the carried toy."
+    },
+    {
+      "number": 62,
+      "kind": "prose",
+      "line_start": 470,
+      "line_end": 475,
+      "paragraph_excerpt": "At $\\lambda=2$, these two triples are $(1,2,4)$ and $(1,3,4)$. The encoded evaluation is $2\\cdot3+2\\cdot2+3=3$ modulo $5$, which agrees with $p(2)=2^4",
+      "job": "Demonstrate set-multilinear degree reduction",
+      "decision": "keep",
+      "rationale": "The F5 degree-four example earns its extra variables. Name Phi explicitly at the substitution display and keep its role separate from the carried toy."
+    },
+    {
+      "number": 63,
+      "kind": "prose",
+      "line_start": 477,
+      "line_end": 483,
+      "paragraph_excerpt": "In general, write an exponent $j<b^c$ with $c$ base-$b$ digits and replace $Y^j$ by the product of the corresponding $c$ variables. The resulting poly",
+      "job": "Demonstrate set-multilinear degree reduction",
+      "decision": "keep",
+      "rationale": "The F5 degree-four example earns its extra variables. Name Phi explicitly at the substitution display and keep its role separate from the carried toy."
+    },
+    {
+      "number": 64,
+      "kind": "prose",
+      "line_start": 485,
+      "line_end": 490,
+      "paragraph_excerpt": "The test need not enforce its exact special form. A received table may decode to an arbitrary polynomial of degree at most $c$ in these variables. Sub",
+      "job": "Allow arbitrary decoded inner polynomials and derive relaxed degree",
+      "decision": "keep_with_transfer",
+      "rationale": "This is load-bearing. Add an altered monomial that is degree c but not set-multilinear so a learner must use D instead of the honest degree."
+    },
+    {
+      "number": 65,
+      "kind": "prose",
+      "line_start": 492,
+      "line_end": 497,
+      "paragraph_excerpt": "We can calculate the larger bound. Each substituted variable is $Y^{j b^i}$, with $0\\leq j<b$ and $0\\leq i<c$, so its degree is at most $(b-1)b^{c-1}$",
+      "job": "Allow arbitrary decoded inner polynomials and derive relaxed degree",
+      "decision": "keep_with_transfer",
+      "rationale": "This is load-bearing. Add an altered monomial that is degree c but not set-multilinear so a learner must use D instead of the honest degree."
+    },
+    {
+      "number": 66,
+      "kind": "prose",
+      "line_start": 503,
+      "line_end": 509,
+      "paragraph_excerpt": "For degree at most $c$, interpolation needs $c+1$ values, a fixed number. The nonzero elements of a finite field form a cyclic multiplicative group: t",
+      "job": "State weighted fixed-degree test and its converse",
+      "decision": "keep",
+      "rationale": "Keep generator hypothesis, weights and threshold. State finite-field existence/binary-coordinate assumptions in one standing algebra note; do not reprove graduate algebra here."
+    },
+    {
+      "number": 67,
+      "kind": "prose",
+      "line_start": 515,
+      "line_end": 517,
+      "paragraph_excerpt": "at uniformly random $u,v$. An honest polynomial of total degree at most $c$ passes: along a line it is a univariate polynomial of degree at most $c$, ",
+      "job": "State weighted fixed-degree test and its converse",
+      "decision": "keep",
+      "rationale": "Keep generator hypothesis, weights and threshold. State finite-field existence/binary-coordinate assumptions in one standing algebra note; do not reprove graduate algebra here."
+    },
+    {
+      "number": 68,
+      "kind": "prose",
+      "line_start": 519,
+      "line_end": 526,
+      "paragraph_excerpt": "For the converse, use the stated generator nodes and $|F|>2c$. If the rejection rate is $\\delta<1/[2(c+2)^2]$, the function is within distance $2\\delt",
+      "job": "State weighted fixed-degree test and its converse",
+      "decision": "keep",
+      "rationale": "Keep generator hypothesis, weights and threshold. State finite-field existence/binary-coordinate assumptions in one standing algebra note; do not reprove graduate algebra here."
+    },
+    {
+      "number": 69,
+      "kind": "prose",
+      "line_start": 528,
+      "line_end": 536,
+      "paragraph_excerpt": "The same formula also corrects a value at a prescribed point. Suppose $f$ differs from a degree-$c$ polynomial $P$ on at most a fraction $\\varepsilon$",
+      "job": "Derive fixed-target inner correction by marginal uniformity",
+      "decision": "keep",
+      "rationale": "This is an excellent operation-to-probability explanation. A small mapping from the earlier F5 weights to actual generator nodes could be optional; preserve the non-independence point."
+    },
+    {
+      "number": 70,
+      "kind": "prose",
+      "line_start": 542,
+      "line_end": 546,
+      "paragraph_excerpt": "For the earlier example $p(X)=X^2$, a request at $3$ can be answered from the surrounding values at $0,1,2$ as $0+2\\cdot1+3\\cdot4=4$ modulo five. None",
+      "job": "Derive fixed-target inner correction by marginal uniformity",
+      "decision": "keep",
+      "rationale": "This is an excellent operation-to-probability explanation. A small mapping from the earlier F5 weights to actual generator nodes could be optional; preserve the non-independence point."
+    },
+    {
+      "number": 71,
+      "kind": "prose",
+      "line_start": 548,
+      "line_end": 550,
+      "paragraph_excerpt": "The sampled points need not be independent for this bound: they all lie on one line, but each individual error event has the required probability.",
+      "job": "Derive fixed-target inner correction by marginal uniformity",
+      "decision": "keep",
+      "rationale": "This is an excellent operation-to-probability explanation. A small mapping from the earlier F5 weights to actual generator nodes could be optional; preserve the non-independence point."
+    },
+    {
+      "number": 72,
+      "kind": "prose",
+      "line_start": 552,
+      "line_end": 555,
+      "paragraph_excerpt": "A fixed-degree encoding can therefore be checked with a fixed number of field queries, and a value at a special point can be recovered through random ",
+      "job": "Derive fixed-target inner correction by marginal uniformity",
+      "decision": "keep",
+      "rationale": "This is an excellent operation-to-probability explanation. A small mapping from the earlier F5 weights to actual generator nodes could be optional; preserve the non-independence point."
+    },
+    {
+      "number": 73,
+      "kind": "prose",
+      "line_start": 561,
+      "line_end": 562,
+      "paragraph_excerpt": "Start with a three-bit message $s=101$. For every three-bit vector $x$, store the parity",
+      "job": "Define homogeneous code and prove half distance",
+      "decision": "keep",
+      "rationale": "The explicit word, labels and equal-functional comparison are useful. Avoid adding a separate generic coding-theory introduction."
+    },
+    {
+      "number": 74,
+      "kind": "prose",
+      "line_start": 568,
+      "line_end": 569,
+      "paragraph_excerpt": "The positions of the word are themselves bit vectors. In order $000,001,010,011,100,101,110,111$, its contents are",
+      "job": "Define homogeneous code and prove half distance",
+      "decision": "keep",
+      "rationale": "The explicit word, labels and equal-functional comparison are useful. Avoid adding a separate generic coding-theory introduction."
+    },
+    {
+      "number": 75,
+      "kind": "prose",
+      "line_start": 575,
+      "line_end": 581,
+      "paragraph_excerpt": "These labels are **homogeneous linear**: each is a parity dot product, with no added constant. They form the homogeneous linear part of a Hadamard enc",
+      "job": "Define homogeneous code and prove half distance",
+      "decision": "keep",
+      "rationale": "The explicit word, labels and equal-functional comparison are useful. Avoid adding a separate generic coding-theory introduction."
+    },
+    {
+      "number": 76,
+      "kind": "prose",
+      "line_start": 583,
+      "line_end": 586,
+      "paragraph_excerpt": "Thus a uniformly random one-bit observation distinguishes two unequal messages with probability $1/2$. To compare values, the checker queries the same",
+      "job": "Define homogeneous code and prove half distance",
+      "decision": "keep",
+      "rationale": "The explicit word, labels and equal-functional comparison are useful. Avoid adding a separate generic coding-theory introduction."
+    },
+    {
+      "number": 77,
+      "kind": "prose",
+      "line_start": 588,
+      "line_end": 589,
+      "paragraph_excerpt": "Blum, Luby and Rubinfeld's [linearity test][blr] checks this kind of word. Choose independent uniform $a,b$ and check",
+      "job": "Explain BLR by enumeration and state sharp theorem with credit",
+      "decision": "keep_or_condense_count",
+      "rationale": "Keep the theorem and attribution. The 18/64 combinatorial count may become a worked margin example if space is needed; it is not the main soundness proof."
+    },
+    {
+      "number": 78,
+      "kind": "prose",
+      "line_start": 595,
+      "line_end": 603,
+      "paragraph_excerpt": "where all vector and bit additions are modulo two. An honest word always passes. Flip the entry at $001$ in our eight-bit word to obtain $g$. Of the $",
+      "job": "Explain BLR by enumeration and state sharp theorem with credit",
+      "decision": "keep_or_condense_count",
+      "rationale": "Keep the theorem and attribution. The 18/64 combinatorial count may become a worked margin example if space is needed; it is not the main soundness proof."
+    },
+    {
+      "number": 79,
+      "kind": "prose",
+      "line_start": 605,
+      "line_end": 612,
+      "paragraph_excerpt": "Bellare, Coppersmith, Håstad, Kiwi and Sudan proved the sharp bound ([Theorem 1.2][bchks]): a function which fails this test with probability $\\vareps",
+      "job": "Explain BLR by enumeration and state sharp theorem with credit",
+      "decision": "keep_or_condense_count",
+      "rationale": "Keep the theorem and attribution. The 18/64 combinatorial count may become a worked margin example if space is needed; it is not the main soundness proof."
+    },
+    {
+      "number": 80,
+      "kind": "prose",
+      "line_start": 618,
+      "line_end": 619,
+      "paragraph_excerpt": "Suppose we want $h_s(x)$ but distrust the entry at $x$. Choose a uniform $r$ and return",
+      "job": "Recover one chosen homogeneous answer",
+      "decision": "keep",
+      "rationale": "The arbitrary fixed target, uniform translates, union bound and x=0 exception are all needed. Arora-Barak supports this teaching pattern."
+    },
+    {
+      "number": 81,
+      "kind": "prose",
+      "line_start": 625,
+      "line_end": 628,
+      "paragraph_excerpt": "For the honest word this equals $h_s(x)$, because the two appearances of $h_s(r)$ cancel. If $g$ has error fraction $\\varepsilon$, a wrong answer requ",
+      "job": "Recover one chosen homogeneous answer",
+      "decision": "keep",
+      "rationale": "The arbitrary fixed target, uniform translates, union bound and x=0 exception are all needed. Arora-Barak supports this teaching pattern."
+    },
+    {
+      "number": 82,
+      "kind": "prose",
+      "line_start": 630,
+      "line_end": 634,
+      "paragraph_excerpt": "In our word with one corrupted position, $\\varepsilon=1/8$. For each nonzero $x$, exactly six of the eight choices of $r$ give the correct answer. At ",
+      "job": "Recover one chosen homogeneous answer",
+      "decision": "keep",
+      "rationale": "The arbitrary fixed target, uniform translates, union bound and x=0 exception are all needed. Arora-Barak supports this teaching pattern."
+    },
+    {
+      "number": 83,
+      "kind": "prose",
+      "line_start": 636,
+      "line_end": 638,
+      "paragraph_excerpt": "**Question 2.** Why would choosing $r=x$ deterministically fail to give the same guarantee against an arbitrary corrupt word? Which property of the ra",
+      "job": "Recover one chosen homogeneous answer",
+      "decision": "keep",
+      "rationale": "The arbitrary fixed target, uniform translates, union bound and x=0 exception are all needed. Arora-Barak supports this teaching pattern."
+    },
+    {
+      "number": 84,
+      "kind": "prose",
+      "line_start": 640,
+      "line_end": 643,
+      "paragraph_excerpt": "Random self-correction lets the verifier request a special algebraic observation using random query locations. The requested location itself need not ",
+      "job": "Recover one chosen homogeneous answer",
+      "decision": "keep",
+      "rationale": "The arbitrary fixed target, uniform translates, union bound and x=0 exception are all needed. Arora-Barak supports this teaching pattern."
+    },
+    {
+      "number": 85,
+      "kind": "prose",
+      "line_start": 649,
+      "line_end": 653,
+      "paragraph_excerpt": "In our four-element field, $u=a+b\\omega$ has coordinates $(a,b)$ in the basis $(1,\\omega)$. More generally, fixing a basis represents a field $F$ of s",
+      "job": "Lift binary questions to nonlinear field observations",
+      "decision": "keep",
+      "rationale": "Keep coordinate-level multiplication and actual label calculation; this is a useful bridge unavailable in a purely abstract account."
+    },
+    {
+      "number": 86,
+      "kind": "prose",
+      "line_start": 655,
+      "line_end": 656,
+      "paragraph_excerpt": "For this purpose, it stores a larger word whose positions are Boolean polynomials $R$ of degree at most three:",
+      "job": "Lift binary questions to nonlinear field observations",
+      "decision": "keep",
+      "rationale": "Keep coordinate-level multiplication and actual label calculation; this is a useful bridge unavailable in a purely abstract account."
+    },
+    {
+      "number": 87,
+      "kind": "prose",
+      "line_start": 662,
+      "line_end": 665,
+      "paragraph_excerpt": "The coefficients of $R$ specify the position; the stored answer is one bit. Boolean variables satisfy $Z_i^2=Z_i$ when evaluated, so squarefree monomi",
+      "job": "Lift binary questions to nonlinear field observations",
+      "decision": "keep",
+      "rationale": "Keep coordinate-level multiplication and actual label calculation; this is a useful bridge unavailable in a purely abstract account."
+    },
+    {
+      "number": 88,
+      "kind": "prose",
+      "line_start": 667,
+      "line_end": 672,
+      "paragraph_excerpt": "Multiplication in a finite field is bilinear in its binary coordinates. Consequently, a linear binary observation $L(u^3-1)$ is a polynomial of degree",
+      "job": "Lift binary questions to nonlinear field observations",
+      "decision": "keep",
+      "rationale": "Keep coordinate-level multiplication and actual label calculation; this is a useful bridge unavailable in a purely abstract account."
+    },
+    {
+      "number": 89,
+      "kind": "prose",
+      "line_start": 674,
+      "line_end": 675,
+      "paragraph_excerpt": "Here is the address calculation in our four-element field. The product formula in Section 4 gives $u^2=(a+b)+b\\omega$, then",
+      "job": "Lift binary questions to nonlinear field observations",
+      "decision": "keep",
+      "rationale": "Keep coordinate-level multiplication and actual label calculation; this is a useful bridge unavailable in a purely abstract account."
+    },
+    {
+      "number": 90,
+      "kind": "prose",
+      "line_start": 681,
+      "line_end": 681,
+      "paragraph_excerpt": "For the observation $L(a+b\\omega)=a$, the requested label is therefore",
+      "job": "Lift binary questions to nonlinear field observations",
+      "decision": "keep",
+      "rationale": "Keep coordinate-level multiplication and actual label calculation; this is a useful bridge unavailable in a purely abstract account."
+    },
+    {
+      "number": 91,
+      "kind": "prose",
+      "line_start": 687,
+      "line_end": 690,
+      "paragraph_excerpt": "For example, $u=\\omega$ has coordinates $(0,1)$, and this label returns $1+0+1+0=0$, as required by $\\omega^3-1=0$. The tiny field makes this particul",
+      "job": "Explain degree of the concrete cube label",
+      "decision": "correct",
+      "rationale": "Quadratic degree is not caused by F4 being tiny: squaring is F2-linear in every characteristic-two field. State degree three is a sufficient retained design bound."
+    },
+    {
+      "number": 92,
+      "kind": "prose",
+      "line_start": 692,
+      "line_end": 702,
+      "paragraph_excerpt": "Linearity in the labels alone is insufficient to establish that a received word represents a field element. For example, assign values one to the labe",
+      "job": "Show label-linearity does not characterize evaluation",
+      "decision": "keep",
+      "rationale": "The false product assignment is an effective counterexample. Do not demand a full proof of the imported generalized Hadamard theorem in this exposition."
+    },
+    {
+      "number": 93,
+      "kind": "prose",
+      "line_start": 704,
+      "line_end": 714,
+      "paragraph_excerpt": "The formal Hadamard test checks these properties using corrected answers. Its degree-three version makes ten bit queries. The current paper gives an e",
+      "job": "State formal/paper query-count difference and introduce masked nonlinear read",
+      "decision": "split_and_move_note",
+      "rationale": "Move eight-versus-ten audit detail into a source-variant note. Keep honest-to-received masking in the main argument without an interruption."
+    },
+    {
+      "number": 94,
+      "kind": "prose",
+      "line_start": 720,
+      "line_end": 725,
+      "paragraph_excerpt": "where $R$ is a fresh uniform label. For fixed $x,L$, both queried labels are individually uniform, so row error $\\varepsilon_x$ gives answer error at ",
+      "job": "Prove conditional-uniformity bound for masked derived query",
+      "decision": "keep",
+      "rationale": "The conditioning on x,L and averaging over x are central. Preserve distinction between row error and global average."
+    },
+    {
+      "number": 95,
+      "kind": "prose",
+      "line_start": 731,
+      "line_end": 732,
+      "paragraph_excerpt": "The prover supplies four primary tables and four auxiliary line tables. In an honest proof, their intended contents are:",
+      "job": "Inventory four primary/auxiliary pairs and describe combined tester",
+      "decision": "rewrite",
+      "rationale": "Give complete address types and name Phi. Introduce the seven checks once near this inventory; then show an actual honest branch before compressing to the imported combined theorem."
+    },
+    {
+      "number": 96,
+      "kind": "prose",
+      "line_start": 741,
+      "line_end": 743,
+      "paragraph_excerpt": "Each auxiliary table supplies the encoded restrictions of its primary polynomial to lines. A received proof can contain arbitrary bits; the tests must",
+      "job": "Inventory four primary/auxiliary pairs and describe combined tester",
+      "decision": "rewrite",
+      "rationale": "Give complete address types and name Phi. Introduce the seven checks once near this inventory; then show an actual honest branch before compressing to the imported combined theorem."
+    },
+    {
+      "number": 97,
+      "kind": "prose",
+      "line_start": 745,
+      "line_end": 753,
+      "paragraph_excerpt": "The construction now has two forms of redundancy. A line polynomial is encoded as a polynomial of fixed degree in more variables. Each field-valued en",
+      "job": "Inventory four primary/auxiliary pairs and describe combined tester",
+      "decision": "rewrite",
+      "rationale": "Give complete address types and name Phi. Introduce the seven checks once near this inventory; then show an actual honest branch before compressing to the imported combined theorem."
+    },
+    {
+      "number": 98,
+      "kind": "prose",
+      "line_start": 755,
+      "line_end": 755,
+      "paragraph_excerpt": "The two kinds of address are worth separating:",
+      "job": "Inventory four primary/auxiliary pairs and describe combined tester",
+      "decision": "rewrite",
+      "rationale": "Give complete address types and name Phi. Introduce the seven checks once near this inventory; then show an actual honest branch before compressing to the imported combined theorem."
+    },
+    {
+      "number": 99,
+      "kind": "prose",
+      "line_start": 762,
+      "line_end": 764,
+      "paragraph_excerpt": "For an honest auxiliary row, putting $w=\\Phi(z)$ recovers an observation of the original line value at $z$. Correction obtains that observation using ",
+      "job": "Inventory four primary/auxiliary pairs and describe combined tester",
+      "decision": "rewrite",
+      "rationale": "Give complete address types and name Phi. Introduce the seven checks once near this inventory; then show an actual honest branch before compressing to the imported combined theorem."
+    },
+    {
+      "number": 100,
+      "kind": "prose",
+      "line_start": 766,
+      "line_end": 768,
+      "paragraph_excerpt": "Field coefficients in the interpolation formula do not require reading a whole field element. For a homogeneous binary linear label $L$ and a field we",
+      "job": "Convert field weights into bit labels",
+      "decision": "keep_with_trace",
+      "rationale": "Retain multiplication-by-omega calculation; the carried trace shows the precise labels for both weights and the actual returned bits."
+    },
+    {
+      "number": 101,
+      "kind": "prose",
+      "line_start": 774,
+      "line_end": 781,
+      "paragraph_excerpt": "For example, multiplying $u=a+b\\omega$ by $\\omega$ gives $b+(a+b)\\omega$. If $L$ reads the first coordinate, then $L(\\omega u)=b$: the weighted observ",
+      "job": "Convert field weights into bit labels",
+      "decision": "keep_with_trace",
+      "rationale": "Retain multiplication-by-omega calculation; the carried trace shows the precise labels for both weights and the actual returned bits."
+    },
+    {
+      "number": 102,
+      "kind": "prose",
+      "line_start": 783,
+      "line_end": 790,
+      "paragraph_excerpt": "The combined low-degree theorem supplies **one** polynomial close to the primary oracle on the label sets used later. It is not enough to obtain one p",
+      "job": "Require one common polynomial and distinguish label domains",
+      "decision": "keep",
+      "rationale": "The 8/16/256 example genuinely discriminates full-domain error from homogeneous error. Keep; do not reduce it to a slogan."
+    },
+    {
+      "number": 103,
+      "kind": "prose",
+      "line_start": 792,
+      "line_end": 795,
+      "paragraph_excerpt": "There are three label domains. For $t$ coordinate bits, homogeneous linear labels are sums $\\sum_i a_iZ_i$; affine labels may also have a constant ter",
+      "job": "Require one common polynomial and distinguish label domains",
+      "decision": "keep",
+      "rationale": "The 8/16/256 example genuinely discriminates full-domain error from homogeneous error. Keep; do not reduce it to a slogan."
+    },
+    {
+      "number": 104,
+      "kind": "prose",
+      "line_start": 803,
+      "line_end": 808,
+      "paragraph_excerpt": "A small full-domain error can hide a large error on the first row of this table. Begin with the full evaluation word of the message $(1,0,1)$. On its ",
+      "job": "Require one common polynomial and distinguish label domains",
+      "decision": "keep",
+      "rationale": "The 8/16/256 example genuinely discriminates full-domain error from homogeneous error. Keep; do not reduce it to a slogan."
+    },
+    {
+      "number": 105,
+      "kind": "prose",
+      "line_start": 810,
+      "line_end": 817,
+      "paragraph_excerpt": "We need quantitative versions of these statements to know that the errors will leave a positive gap. Fix a positive inner degree $c$ and a positive di",
+      "job": "State quantitative combined low-degree guarantee",
+      "decision": "keep_as_contract",
+      "rationale": "Use a named input/output statement and distinguish facts assumed here from the accompanying explanation. Avoid additional proof detours."
+    },
+    {
+      "number": 106,
+      "kind": "prose",
+      "line_start": 824,
+      "line_end": 830,
+      "paragraph_excerpt": "there is one polynomial of degree at most $D$ whose encoding differs from the received primary table on at most a fraction $\\varepsilon=S\\kappa$ of fu",
+      "job": "State quantitative combined low-degree guarantee",
+      "decision": "keep_as_contract",
+      "rationale": "Use a named input/output statement and distinguish facts assumed here from the accompanying explanation. Avoid additional proof detours."
+    },
+    {
+      "number": 107,
+      "kind": "prose",
+      "line_start": 832,
+      "line_end": 833,
+      "paragraph_excerpt": "Now fix a target point $a$ whose bit we want to recover. The outer corrector performs the following experiment.",
+      "job": "Give outer prescribed-point corrector and rejection-aware guarantee",
+      "decision": "expand_one_obstruction",
+      "rationale": "Explain that all rows with a fixed anchor may be bad despite good global average, so the selected row must be retested. Preserve random L, arbitrary auxiliary data, and CR_a."
+    },
+    {
+      "number": 108,
+      "kind": "list",
+      "line_start": 835,
+      "line_end": 844,
+      "paragraph_excerpt": "1. Independently choose a uniform direction $v$ from the whole ambient    vector space, a uniform nonzero $z\\in F^\\times$, and a uniform homogeneous  ",
+      "job": "Give outer prescribed-point corrector and rejection-aware guarantee",
+      "decision": "expand_one_obstruction",
+      "rationale": "Explain that all rows with a fixed anchor may be bad despite good global average, so the selected row must be retested. Preserve random L, arbitrary auxiliary data, and CR_a."
+    },
+    {
+      "number": 109,
+      "kind": "prose",
+      "line_start": 846,
+      "line_end": 848,
+      "paragraph_excerpt": "Thus the output is either rejection or one bit. Suppose the primary table has homogeneous distance at most $\\delta$ from a degree-$D$ polynomial $P$, ",
+      "job": "Give outer prescribed-point corrector and rejection-aware guarantee",
+      "decision": "expand_one_obstruction",
+      "rationale": "Explain that all rows with a fixed anchor may be bad despite good global average, so the selected row must be retested. Preserve random L, arbitrary auxiliary data, and CR_a."
+    },
+    {
+      "number": 110,
+      "kind": "prose",
+      "line_start": 855,
+      "line_end": 865,
+      "paragraph_excerpt": "To understand the three terms, decode the tested auxiliary rows to candidate line polynomials. Poor auxiliary rows cause inner-test rejection, so thei",
+      "job": "Give outer prescribed-point corrector and rejection-aware guarantee",
+      "decision": "expand_one_obstruction",
+      "rationale": "Explain that all rows with a fixed anchor may be bad despite good global average, so the selected row must be retested. Preserve random L, arbitrary auxiliary data, and CR_a."
+    },
+    {
+      "number": 111,
+      "kind": "prose",
+      "line_start": 867,
+      "line_end": 872,
+      "paragraph_excerpt": "This probability includes a uniformly random homogeneous label; it is not a guarantee for every fixed label. It assumes no honesty of the auxiliary li",
+      "job": "Give outer prescribed-point corrector and rejection-aware guarantee",
+      "decision": "expand_one_obstruction",
+      "rationale": "Explain that all rows with a fixed anchor may be bad despite good global average, so the selected row must be retested. Preserve random L, arbitrary auxiliary data, and CR_a."
+    },
+    {
+      "number": 112,
+      "kind": "prose",
+      "line_start": 874,
+      "line_end": 874,
+      "paragraph_excerpt": "We can now return to the two identities for the vanishing certificate:",
+      "job": "Instantiate generic binary ZERO and completeness",
+      "decision": "clarify_types",
+      "rationale": "Define p as generic input oracle; state final p is a masked query derived from chi or chi-prime, not another stored table. Show the carried branch and both target calls."
+    },
+    {
+      "number": 113,
+      "kind": "prose",
+      "line_start": 881,
+      "line_end": 888,
+      "paragraph_excerpt": "The binary ZERO test chooses a uniform point $x$ and homogeneous label $L$, reads the primary bit $p(x,L)$, and calls the certificate corrector at $(x",
+      "job": "Instantiate generic binary ZERO and completeness",
+      "decision": "clarify_types",
+      "rationale": "Define p as generic input oracle; state final p is a masked query derived from chi or chi-prime, not another stored table. Show the carried branch and both target calls."
+    },
+    {
+      "number": 114,
+      "kind": "prose",
+      "line_start": 890,
+      "line_end": 894,
+      "paragraph_excerpt": "For an honest zero-on-grid polynomial, the prover supplies its exact primary encoding, an exact vanishing certificate and the honest encoded line data",
+      "job": "Instantiate generic binary ZERO and completeness",
+      "decision": "clarify_types",
+      "rationale": "Define p as generic input oracle; state final p is a masked query derived from chi or chi-prime, not another stored table. Show the carried branch and both target calls."
+    },
+    {
+      "number": 115,
+      "kind": "prose",
+      "line_start": 896,
+      "line_end": 904,
+      "paragraph_excerpt": "The soundness argument compares this received-data test with the ideal test on the decoded polynomials. If the two outcomes differ, one of the few ans",
+      "job": "Compare received and ideal tests and restate why direct queries fail",
+      "decision": "tighten",
+      "rationale": "Keep one roadmap to the coupling inequality. The final restatement can become a short end-of-section checkpoint once the actual trace exists."
+    },
+    {
+      "number": 116,
+      "kind": "prose",
+      "line_start": 906,
+      "line_end": 909,
+      "paragraph_excerpt": "Global closeness by itself would not justify either certificate read. At each requested point, the correction theorem bounds rejection or a wrong answ",
+      "job": "Compare received and ideal tests and restate why direct queries fail",
+      "decision": "tighten",
+      "rationale": "Keep one roadmap to the coupling inequality. The final restatement can become a short end-of-section checkpoint once the actual trace exists."
+    },
+    {
+      "number": 117,
+      "kind": "prose",
+      "line_start": 915,
+      "line_end": 918,
+      "paragraph_excerpt": "The eight received tables were listed in Section 8. The verifier runs four low-degree tests, one for each primary table and its line table; two ZERO t",
+      "job": "List seven checks and motivate difference table",
+      "decision": "move_earlier",
+      "rationale": "Put the inventory beside the eight tables, before technical simulation. Introduce the difference table when its nonlinear-observation role first appears."
+    },
+    {
+      "number": 118,
+      "kind": "prose",
+      "line_start": 920,
+      "line_end": 924,
+      "paragraph_excerpt": "The separate difference table lets the verifier obtain binary observations of the cube of a difference using the same local operations as for the colo",
+      "job": "List seven checks and motivate difference table",
+      "decision": "move_earlier",
+      "rationale": "Put the inventory beside the eight tables, before technical simulation. Introduce the difference table when its nonlinear-observation role first appears."
+    },
+    {
+      "number": 119,
+      "kind": "prose",
+      "line_start": 926,
+      "line_end": 932,
+      "paragraph_excerpt": "For perfect completeness, start with a proper colouring, interpolate it, form its difference polynomial, and construct the two vanishing certificates.",
+      "job": "Assemble honest completeness and decoded-colouring soundness",
+      "decision": "keep",
+      "rationale": "This is the central proof skeleton. Keep the same-witness discipline and exact difference identity; distinguish construction from hypothetical decoding."
+    },
+    {
+      "number": 120,
+      "kind": "prose",
+      "line_start": 934,
+      "line_end": 936,
+      "paragraph_excerpt": "For soundness, suppose an arbitrary proof string is accepted with probability very close to one. Each of the seven checks must then reject rarely, bec",
+      "job": "Assemble honest completeness and decoded-colouring soundness",
+      "decision": "keep",
+      "rationale": "This is the central proof skeleton. Keep the same-witness discipline and exact difference identity; distinguish construction from hypothetical decoding."
+    },
+    {
+      "number": 121,
+      "kind": "prose",
+      "line_start": 938,
+      "line_end": 945,
+      "paragraph_excerpt": "The four low-degree tests produce four decoded polynomials. The difference check and the binary distance identity show that the decoded $\\chi'$ is clo",
+      "job": "Assemble honest completeness and decoded-colouring soundness",
+      "decision": "keep",
+      "rationale": "This is the central proof skeleton. Keep the same-witness discipline and exact difference identity; distinguish construction from hypothetical decoding."
+    },
+    {
+      "number": 122,
+      "kind": "prose",
+      "line_start": 947,
+      "line_end": 956,
+      "paragraph_excerpt": "The two ZERO checks then force the constraint polynomials $\\operatorname{Val}_{\\chi}=\\chi^3-1$ and $\\operatorname{Prop}_{\\chi'}=\\widehat E((\\chi')^3-1",
+      "job": "Assemble honest completeness and decoded-colouring soundness",
+      "decision": "keep",
+      "rationale": "This is the central proof skeleton. Keep the same-witness discipline and exact difference identity; distinguish construction from hypothetical decoding."
+    },
+    {
+      "number": 123,
+      "kind": "prose",
+      "line_start": 958,
+      "line_end": 962,
+      "paragraph_excerpt": "Thus sufficiently high acceptance implies that the graph is three-colourable. Taking the contrapositive, every proof for a non-three-colourable graph ",
+      "job": "Assemble honest completeness and decoded-colouring soundness",
+      "decision": "keep",
+      "rationale": "This is the central proof skeleton. Keep the same-witness discipline and exact difference identity; distinguish construction from hypothetical decoding."
+    },
+    {
+      "number": 124,
+      "kind": "prose",
+      "line_start": 966,
+      "line_end": 974,
+      "paragraph_excerpt": "Let $\\kappa$ now be the rejection rate of the whole seven-check verifier, and suppose $E\\kappa\\leq1/(4\\cdot10^6)$. Each low-degree test rejects at mos",
+      "job": "Derive quantitative difference and ZERO inequalities",
+      "decision": "keep",
+      "rationale": "This is the most important general proof segment. Preserve coupled events, averaged rejection, union bound and degree losses. It should be the argumentative climax."
+    },
+    {
+      "number": 125,
+      "kind": "prose",
+      "line_start": 980,
+      "line_end": 980,
+      "paragraph_excerpt": "forces the exact difference identity.",
+      "job": "Derive quantitative difference and ZERO inequalities",
+      "decision": "keep",
+      "rationale": "This is the most important general proof segment. Preserve coupled events, averaged rejection, union bound and degree losses. It should be the argumentative climax."
+    },
+    {
+      "number": 126,
+      "kind": "prose",
+      "line_start": 982,
+      "line_end": 988,
+      "paragraph_excerpt": "Put $h=|H|$. The parameters also ensure $m(h-1)\\leq D$, so the public adjacency extension has degree at most $2D$. The decoded colour polynomial has d",
+      "job": "Derive quantitative difference and ZERO inequalities",
+      "decision": "keep",
+      "rationale": "This is the most important general proof segment. Preserve coupled events, averaged rejection, union bound and degree losses. It should be the argumentative climax."
+    },
+    {
+      "number": 127,
+      "kind": "prose",
+      "line_start": 996,
+      "line_end": 1002,
+      "paragraph_excerpt": "Here is the event comparison behind that inequality. Let $r$ be the rejection rate after replacing the derived cubic answer by its ideal bit, but keep",
+      "job": "Derive quantitative difference and ZERO inequalities",
+      "decision": "keep",
+      "rationale": "This is the most important general proof segment. Preserve coupled events, averaged rejection, union bound and degree losses. It should be the argumentative climax."
+    },
+    {
+      "number": 128,
+      "kind": "prose",
+      "line_start": 1004,
+      "line_end": 1006,
+      "paragraph_excerpt": "Couple the ideal and modified tests using the same random choices. If the ideal test rejects but the modified one accepts, a correction must have supp",
+      "job": "Derive quantitative difference and ZERO inequalities",
+      "decision": "keep",
+      "rationale": "This is the most important general proof segment. Preserve coupled events, averaged rejection, union bound and degree losses. It should be the argumentative climax."
+    },
+    {
+      "number": 129,
+      "kind": "prose",
+      "line_start": 1017,
+      "line_end": 1021,
+      "paragraph_excerpt": "A false grid condition makes one polynomial residual nonzero. Its degree is at most $5Dh$, so it is nonzero at at least a fraction $1-5Dh/Q$ of points",
+      "job": "Derive quantitative difference and ZERO inequalities",
+      "decision": "keep",
+      "rationale": "This is the most important general proof segment. Preserve coupled events, averaged rejection, union bound and degree losses. It should be the argumentative climax."
+    },
+    {
+      "number": 130,
+      "kind": "prose",
+      "line_start": 1023,
+      "line_end": 1023,
+      "paragraph_excerpt": "Choose the field large enough that",
+      "job": "Choose fixed margins and conclude the global gap",
+      "decision": "keep",
+      "rationale": "Retain one explicit positive-gap calculation. The common-witness question tests a real failure mode; do not substitute a vague no-error claim."
+    },
+    {
+      "number": 131,
+      "kind": "prose",
+      "line_start": 1031,
+      "line_end": 1033,
+      "paragraph_excerpt": "Both ideal lower bounds are then at least $3/8$. Since $E,S,C$ are fixed constants, we can choose a fixed positive $g$ so that $\\kappa<g$ implies the ",
+      "job": "Choose fixed margins and conclude the global gap",
+      "decision": "keep",
+      "rationale": "Retain one explicit positive-gap calculation. The common-witness question tests a real failure mode; do not substitute a vague no-error claim."
+    },
+    {
+      "number": 132,
+      "kind": "prose",
+      "line_start": 1040,
+      "line_end": 1046,
+      "paragraph_excerpt": "The difference identity follows because $1/16<3/8$. A false grid condition would make the ZERO inequality assert $3/8<1/16+1/8=3/16$, which is impossi",
+      "job": "Choose fixed margins and conclude the global gap",
+      "decision": "keep",
+      "rationale": "Retain one explicit positive-gap calculation. The common-witness question tests a real failure mode; do not substitute a vague no-error claim."
+    },
+    {
+      "number": 133,
+      "kind": "prose",
+      "line_start": 1048,
+      "line_end": 1051,
+      "paragraph_excerpt": "The decoded polynomials and the recovered colouring exist in the soundness argument. Their existence shows what a frequently accepted string would imp",
+      "job": "Choose fixed margins and conclude the global gap",
+      "decision": "keep",
+      "rationale": "Retain one explicit positive-gap calculation. The common-witness question tests a real failure mode; do not substitute a vague no-error claim."
+    },
+    {
+      "number": 134,
+      "kind": "prose",
+      "line_start": 1053,
+      "line_end": 1056,
+      "paragraph_excerpt": "**Question 3.** Suppose the low-degree tests decoded the main colouring table to one polynomial for cubic labels and a different polynomial for the ho",
+      "job": "Choose fixed margins and conclude the global gap",
+      "decision": "keep",
+      "rationale": "Retain one explicit positive-gap calculation. The common-witness question tests a real failure mode; do not substitute a vague no-error claim."
+    },
+    {
+      "number": 135,
+      "kind": "prose",
+      "line_start": 1062,
+      "line_end": 1064,
+      "paragraph_excerpt": "The table sizes and the randomness budget have to be controlled alongside the query count: the PCP theorem requires polynomial proof length and logari",
+      "job": "Reintroduce resource obligations",
+      "decision": "keep",
+      "rationale": "All three resources must be visible; constant queries alone are not the theorem."
+    },
+    {
+      "number": 136,
+      "kind": "prose",
+      "line_start": 1066,
+      "line_end": 1067,
+      "paragraph_excerpt": "For a graph with $N\\geq2$ vertices, choose the least integer $a\\geq2$ such that $\\lceil\\log_2 N\\rceil\\leq a2^a$. Put",
+      "job": "Give exact production parameter schedule and verify inequalities",
+      "decision": "move_to_optional_appendix",
+      "rationale": "Keep a short main-text existence-and-growth argument, with explicit link to exact parameters. The selected minimum, boundary cases and large constants are useful reference, not the best ending for first-pass teaching."
+    },
+    {
+      "number": 137,
+      "kind": "prose",
+      "line_start": 1074,
+      "line_end": 1079,
+      "paragraph_excerpt": "The grid $H^m$ contains $s^s=2^{a2^a}$ points, enough for the vertices. Minimality of $a$ gives $a2^a=O(\\log N)$: if $a>2$, the preceding value $(a-1)",
+      "job": "Give exact production parameter schedule and verify inequalities",
+      "decision": "move_to_optional_appendix",
+      "rationale": "Keep a short main-text existence-and-growth argument, with explicit link to exact parameters. The selected minimum, boundary cases and large constants are useful reference, not the best ending for first-pass teaching."
+    },
+    {
+      "number": 138,
+      "kind": "prose",
+      "line_start": 1081,
+      "line_end": 1084,
+      "paragraph_excerpt": "A point of $F^m$ takes $m\\log_2|F|=s(12a+32)=O(\\log N)$ bits to specify. The encoded line data uses $cs=4s$ extra field coordinates, so it fits the sa",
+      "job": "Give exact production parameter schedule and verify inequalities",
+      "decision": "move_to_optional_appendix",
+      "rationale": "Keep a short main-text existence-and-growth argument, with explicit link to exact parameters. The selected minimum, boundary cases and large constants are useful reference, not the best ending for first-pass teaching."
+    },
+    {
+      "number": 139,
+      "kind": "prose",
+      "line_start": 1086,
+      "line_end": 1094,
+      "paragraph_excerpt": "A label address has a different form: it specifies polynomial coefficients. There is one constant monomial, $t$ single variables, $\\binom t2$ products",
+      "job": "Give exact production parameter schedule and verify inequalities",
+      "decision": "move_to_optional_appendix",
+      "rationale": "Keep a short main-text existence-and-growth argument, with explicit link to exact parameters. The selected minimum, boundary cases and large constants are useful reference, not the best ending for first-pass teaching."
+    },
+    {
+      "number": 140,
+      "kind": "prose",
+      "line_start": 1096,
+      "line_end": 1099,
+      "paragraph_excerpt": "The digit encoding uses base $b=s$ and degree $c=4$, so the substitution estimate in Section 6 gives $D=cb^c=4s^4$. The honest colour and certificate ",
+      "job": "Give exact production parameter schedule and verify inequalities",
+      "decision": "move_to_optional_appendix",
+      "rationale": "Keep a short main-text existence-and-growth argument, with explicit link to exact parameters. The selected minimum, boundary cases and large constants are useful reference, not the best ending for first-pass teaching."
+    },
+    {
+      "number": 141,
+      "kind": "prose",
+      "line_start": 1105,
+      "line_end": 1113,
+      "paragraph_excerpt": "so all their line restrictions fit the honest encoding capacity. The field is large enough for all the testing bounds. For example, $10^6D^3=64\\,000\\,",
+      "job": "Give exact production parameter schedule and verify inequalities",
+      "decision": "move_to_optional_appendix",
+      "rationale": "Keep a short main-text existence-and-growth argument, with explicit link to exact parameters. The selected minimum, boundary cases and large constants are useful reference, not the best ending for first-pass teaching."
+    },
+    {
+      "number": 142,
+      "kind": "prose",
+      "line_start": 1115,
+      "line_end": 1123,
+      "paragraph_excerpt": "Fair random bits give uniform field elements directly, since $|F|$ is a power of two. Each of the two ZERO tests makes two certificate-correction call",
+      "job": "Explain fair-bit implementation and polynomial running time",
+      "decision": "keep_condensed",
+      "rationale": "These facts prevent an information-theoretic verifier from being mistaken for a concrete efficient algorithm. Detailed sampling normalization may live with exact parameters."
+    },
+    {
+      "number": 143,
+      "kind": "prose",
+      "line_start": 1125,
+      "line_end": 1131,
+      "paragraph_excerpt": "The running-time claim requires more than short addresses. The formal implementation computes the field, its arithmetic, the public adjacency extensio",
+      "job": "Explain fair-bit implementation and polynomial running time",
+      "decision": "keep_condensed",
+      "rationale": "These facts prevent an information-theoretic verifier from being mistaken for a concrete efficient algorithm. Detailed sampling normalization may live with exact parameters."
+    },
+    {
+      "number": 144,
+      "kind": "prose",
+      "line_start": 1133,
+      "line_end": 1135,
+      "paragraph_excerpt": "\"Constant\" does not mean small in this formal construction. One unamplified graph verifier reads at most $187$ bits, but its proved rejection gap is o",
+      "job": "Give actual query count and enormous gap",
+      "decision": "keep_brief",
+      "rationale": "One brief resource summary is honest and memorable. Avoid making unoptimized constants the main pedagogical achievement."
+    },
+    {
+      "number": 145,
+      "kind": "prose",
+      "line_start": 1141,
+      "line_end": 1144,
+      "paragraph_excerpt": "These bounds establish independence from the input size; they do not give a practical verification protocol. The formal construction repeats the verif",
+      "job": "Give actual query count and enormous gap",
+      "decision": "keep_brief",
+      "rationale": "One brief resource summary is honest and memorable. Avoid making unoptimized constants the main pedagogical achievement."
+    },
+    {
+      "number": 146,
+      "kind": "prose",
+      "line_start": 1146,
+      "line_end": 1149,
+      "paragraph_excerpt": "The elementary calculation is easier with a toy gap. Suppose one run accepts any fixed false proof with probability at most $3/4$. Three independent r",
+      "job": "Explain independent repetition with toy and actual bounds",
+      "decision": "keep",
+      "rationale": "The fixed proof string and independent seeds are essential. The elementary actual-gap bound can be optional after the toy example."
+    },
+    {
+      "number": 147,
+      "kind": "prose",
+      "line_start": 1155,
+      "line_end": 1159,
+      "paragraph_excerpt": "The proof string is fixed throughout. The random seeds are independent, so the acceptance events for that fixed string multiply. Reusing the same seed",
+      "job": "Explain independent repetition with toy and actual bounds",
+      "decision": "keep",
+      "rationale": "The fixed proof string and independent seeds are essential. The elementary actual-gap bound can be optional after the toy example."
+    },
+    {
+      "number": 148,
+      "kind": "prose",
+      "line_start": 1161,
+      "line_end": 1168,
+      "paragraph_excerpt": "For the actual gap, $(1-\\gamma)^R\\leq1/2$ follows from $R\\gamma\\geq1$. One algebraic proof uses $(1-\\gamma)^{-1}\\geq1+\\gamma$ and $(1+\\gamma)^R\\geq1+R",
+      "job": "Explain independent repetition with toy and actual bounds",
+      "decision": "keep",
+      "rationale": "The fixed proof string and independent seeds are essential. The elementary actual-gap bound can be optional after the toy example."
+    },
+    {
+      "number": 149,
+      "kind": "prose",
+      "line_start": 1172,
+      "line_end": 1183,
+      "paragraph_excerpt": "For any problem in NP, write a candidate accepting computation of its certificate checker as a table: one configuration per time step. Polynomial time",
+      "job": "Explain NP-to-graph reduction through computations and clauses",
+      "decision": "keep_summary",
+      "rationale": "One main-text paragraph plus exact companion pointer suffices for the stated mechanism. Do not silently assume NP-completeness; mark the reduction as a further theorem with a worked appendix."
+    },
+    {
+      "number": 150,
+      "kind": "prose",
+      "line_start": 1185,
+      "line_end": 1190,
+      "paragraph_excerpt": "An explicit polynomial-time reduction encodes these fixed-arity constraints as Boolean clauses of width at most three, and then as a graph. The [long ",
+      "job": "Explain NP-to-graph reduction through computations and clauses",
+      "decision": "keep_summary",
+      "rationale": "One main-text paragraph plus exact companion pointer suffices for the stated mechanism. Do not silently assume NP-completeness; mark the reduction as a further theorem with a worked appendix."
+    },
+    {
+      "number": 151,
+      "kind": "prose",
+      "line_start": 1192,
+      "line_end": 1196,
+      "paragraph_excerpt": "The final colouring gadget can be checked by hand. For Boolean values, write $\\operatorname{NAE}(a,b,c)$ when the three values are **not all equal**. ",
+      "job": "Work NAE and colouring gadgets",
+      "decision": "move_to_appendix",
+      "rationale": "Correct and useful but starts a different teaching project after soundness. Group with the finite-relation clause calculation; preserve equisatisfiability and polynomiality."
+    },
+    {
+      "number": 152,
+      "kind": "prose",
+      "line_start": 1203,
+      "line_end": 1206,
+      "paragraph_excerpt": "If $a=b=0$, the first relation forces $z=1$, and the second then forces $c=1$. If $a=b=1$, choose $z=0$; if $a\\ne b$, the same choice works regardless",
+      "job": "Work NAE and colouring gadgets",
+      "decision": "move_to_appendix",
+      "rationale": "Correct and useful but starts a different teaching project after soundness. Group with the finite-relation clause calculation; preserve equisatisfiability and polynomiality."
+    },
+    {
+      "number": 153,
+      "kind": "prose",
+      "line_start": 1208,
+      "line_end": 1213,
+      "paragraph_excerpt": "Now make a palette triangle whose colours we call $0,1,2$. A Boolean variable and its negation are adjacent vertices, each joined to palette vertex $2",
+      "job": "Work NAE and colouring gadgets",
+      "decision": "move_to_appendix",
+      "rationale": "Correct and useful but starts a different teaching project after soundness. Group with the finite-relation clause calculation; preserve equisatisfiability and polynomiality."
+    },
+    {
+      "number": 154,
+      "kind": "prose",
+      "line_start": 1219,
+      "line_end": 1226,
+      "paragraph_excerpt": "The first three edges form a triangle; the last three connect its vertices to the corresponding literals. If all literal colours are equal, the new tr",
+      "job": "Work NAE and colouring gadgets",
+      "decision": "move_to_appendix",
+      "rationale": "Correct and useful but starts a different teaching project after soundness. Group with the finite-relation clause calculation; preserve equisatisfiability and polynomiality."
+    },
+    {
+      "number": 155,
+      "kind": "prose",
+      "line_start": 1228,
+      "line_end": 1236,
+      "paragraph_excerpt": "The graph is therefore three-colourable exactly when the original input has an accepting certificate. The formal reduction also implements its constru",
+      "job": "Work NAE and colouring gadgets",
+      "decision": "move_to_appendix",
+      "rationale": "Correct and useful but starts a different teaching project after soundness. Group with the finite-relation clause calculation; preserve equisatisfiability and polynomiality."
+    },
+    {
+      "number": 156,
+      "kind": "prose",
+      "line_start": 1238,
+      "line_end": 1241,
+      "paragraph_excerpt": "**Question 4.** If the verifier were allowed to use $\\sqrt n$ random bits instead, would the exhaustive-seed argument still prove that its language is",
+      "job": "Test necessity of logarithmic randomness for converse",
+      "decision": "move_with_converse",
+      "rationale": "Good transfer task; place where exhaustive-seed reasoning is taught."
+    },
+    {
+      "number": 157,
+      "kind": "prose",
+      "line_start": 1243,
+      "line_end": 1251,
+      "paragraph_excerpt": "**Question 5.** Consider a smaller hypothetical error budget of the kind used in Section 9. A false grid condition makes an ideal test reject with pro",
+      "job": "Test a quantitative coupling budget and its boundary",
+      "decision": "keep",
+      "rationale": "This exercises strict versus non-strict inequality and should remain on the main route."
+    },
+    {
+      "number": 158,
+      "kind": "prose",
+      "line_start": 1257,
+      "line_end": 1268,
+      "paragraph_excerpt": "**Reconstruction task.** A received table is close to a low-degree polynomial $M$, but all its erroneous entries might lie among points $(x,0)$. Expla",
+      "job": "Ask integrated reconstruction before solutions",
+      "decision": "keep_add_changed_case",
+      "rationale": "Keep the task but pair it with a changed corrupt slice or anchor fiber, and require actual addresses plus random-label scope. This prevents merely repeating the displayed argument."
+    },
+    {
+      "number": 159,
+      "kind": "prose",
+      "line_start": 1270,
+      "line_end": 1270,
+      "paragraph_excerpt": "Try the task before reading the solutions below.",
+      "job": "Ask integrated reconstruction before solutions",
+      "decision": "keep_add_changed_case",
+      "rationale": "Keep the task but pair it with a changed corrupt slice or anchor fiber, and require actual addresses plus random-label scope. This prevents merely repeating the displayed argument."
+    },
+    {
+      "number": 160,
+      "kind": "prose",
+      "line_start": 1272,
+      "line_end": 1277,
+      "paragraph_excerpt": "**Answer 1.** The second identity alone is insufficient. Take $P=1$ and let $M(X,U)=1$ independently of $U$. Then $M(X,Z_H(X))=P(X)$ holds everywhere,",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 161,
+      "kind": "prose",
+      "line_start": 1279,
+      "line_end": 1287,
+      "paragraph_excerpt": "**Answer 2.** For nonzero $x$, with $r=x$ fixed, the answer uses only the entries at $x$ and zero. A corrupt word can put an error at one of precisely",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 162,
+      "kind": "prose",
+      "line_start": 1289,
+      "line_end": 1296,
+      "paragraph_excerpt": "**Answer 3.** The difference check would relate the linearly decoded values, while the ZERO checks for the cubic expressions could concern different v",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 163,
+      "kind": "prose",
+      "line_start": 1298,
+      "line_end": 1303,
+      "paragraph_excerpt": "**Answer 4.** The number of seeds would be $2^{\\sqrt n}$, which is not bounded by any fixed polynomial in $n$. The exhaustive verification could take ",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 164,
+      "kind": "prose",
+      "line_start": 1305,
+      "line_end": 1312,
+      "paragraph_excerpt": "**Answer 5.** Ideal rejection is at most actual rejection plus the probability that the verdict changes, hence at most $5\\kappa+1/16$. At $\\kappa\\leq1",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 165,
+      "kind": "prose",
+      "line_start": 1314,
+      "line_end": 1319,
+      "paragraph_excerpt": "**Reconstruction solution.** Fix the certificate polynomial $M$ chosen by the low-degree test. At a target $(x,0)$, direct table error is uncontrolled",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 166,
+      "kind": "prose",
+      "line_start": 1321,
+      "line_end": 1330,
+      "paragraph_excerpt": "ZERO rejects whenever either correction rejects. Averaging over the targets ZERO requests therefore bounds the correction rejection terms by its own r",
+      "job": "Supply exercise solutions including common witness and rejection",
+      "decision": "keep_separate",
+      "rationale": "The solutions are useful. Separate them visibly from tasks in the rendered edition to make an unassisted attempt possible. Do not report model success as measured learning."
+    },
+    {
+      "number": 167,
+      "kind": "prose",
+      "line_start": 1336,
+      "line_end": 1336,
+      "paragraph_excerpt": "The constants used in Sections 8–9 depend only on the fixed inner degree $c$:",
+      "job": "Record exact error coefficients",
+      "decision": "move_to_reference_appendix",
+      "rationale": "Keep the formulas linked at their first use; placing them among answers disrupts the teaching route."
+    },
+    {
+      "number": 168,
+      "kind": "prose",
+      "line_start": 1346,
+      "line_end": 1350,
+      "paragraph_excerpt": "Here $K$ bounds inner decoding error, $E$ the line discrepancy, $S$ the combined code distance and $C$ the rejection contribution to correction failur",
+      "job": "Record exact error coefficients",
+      "decision": "move_to_reference_appendix",
+      "rationale": "Keep the formulas linked at their first use; placing them among answers disrupts the teaching route."
+    },
+    {
+      "number": 169,
+      "kind": "prose",
+      "line_start": 1356,
+      "line_end": 1361,
+      "paragraph_excerpt": "The formal reduction represents each finite choice by a block of bits with exactly one bit equal to one, then converts the fixed-arity relations into ",
+      "job": "Derive finite relation to width-three clauses",
+      "decision": "move_with_np_appendix",
+      "rationale": "Keep optionality and fixed-arity size argument; group with NAE and graph gadget rather than between answers and old-test history."
+    },
+    {
+      "number": 170,
+      "kind": "prose",
+      "line_start": 1368,
+      "line_end": 1373,
+      "paragraph_excerpt": "The flags record whether the actual input has yet differed from $p$. The last condition imposes $R(p)$ only when the actual input equals $p$. Because ",
+      "job": "Derive finite relation to width-three clauses",
+      "decision": "move_with_np_appendix",
+      "rationale": "Keep optionality and fixed-arity size argument; group with NAE and graph gadget rather than between answers and old-test history."
+    },
+    {
+      "number": 171,
+      "kind": "prose",
+      "line_start": 1380,
+      "line_end": 1385,
+      "paragraph_excerpt": "The first two require $z=1$ if either input is one; the third requires an input to be one if $z=1$. Short clauses are padded with the constant false. ",
+      "job": "Derive finite relation to width-three clauses",
+      "decision": "move_with_np_appendix",
+      "rationale": "Keep optionality and fixed-arity size argument; group with NAE and graph gadget rather than between answers and old-test history."
+    },
+    {
+      "number": 172,
+      "kind": "prose",
+      "line_start": 1391,
+      "line_end": 1393,
+      "paragraph_excerpt": "The first version of the source paper used an element of order $c+1$ and unit weights. For $c=2$, let $\\zeta$ have order three in a field $F$ of chara",
+      "job": "Exhibit old-test failure for unbounded field family",
+      "decision": "keep_as_case_study",
+      "rationale": "This is substantive and source-relevant. Put a short motivation beside weighted testing, with the full family argument in a clearly marked appendix."
+    },
+    {
+      "number": 173,
+      "kind": "prose",
+      "line_start": 1399,
+      "line_end": 1402,
+      "paragraph_excerpt": "It holds for quadratic polynomials, but its converse fails. Take $f(X)=X^4$. In characteristic two, $(u+av)^4=u^4+a^4v^4$. Since $\\zeta^4=\\zeta$ and $",
+      "job": "Exhibit old-test failure for unbounded field family",
+      "decision": "keep_as_case_study",
+      "rationale": "This is substantive and source-relevant. Put a short motivation beside weighted testing, with the full family argument in a clearly marked appendix."
+    },
+    {
+      "number": 174,
+      "kind": "prose",
+      "line_start": 1408,
+      "line_end": 1413,
+      "paragraph_excerpt": "The test accepts every pair $(u,v)$, although $X^4$ cannot agree everywhere with a quadratic when $|F|>4$: their difference is a nonzero degree-four p",
+      "job": "Exhibit old-test failure for unbounded field family",
+      "decision": "keep_as_case_study",
+      "rationale": "This is substantive and source-relevant. Put a short motivation beside weighted testing, with the full family argument in a clearly marked appendix."
+    },
+    {
+      "number": 175,
+      "kind": "prose",
+      "line_start": 1415,
+      "line_end": 1420,
+      "paragraph_excerpt": "The failure persists in arbitrarily large fields. Fields $F=\\mathbb F_{2^{2k}}$, for $k\\geq2$, contain elements of order three and have unbounded size",
+      "job": "Exhibit old-test failure for unbounded field family",
+      "decision": "keep_as_case_study",
+      "rationale": "This is substantive and source-relevant. Put a short motivation beside weighted testing, with the full family argument in a clearly marked appendix."
+    },
+    {
+      "number": 176,
+      "kind": "prose",
+      "line_start": 1422,
+      "line_end": 1438,
+      "paragraph_excerpt": "For a concrete comparison, take $\\mathbb F_{16}=\\mathbb F_2[t]/(t^4+t+1)$. This notation means that elements are binary polynomials of degree below fo",
+      "job": "Give GF16 calculation and distinguish completeness from converse",
+      "decision": "move_to_case_study",
+      "rationale": "Useful reproducible example; optional GF16 arithmetic is a separate learning load. Preserve author credit and no-priority statement."
+    },
+    {
+      "number": 177,
+      "kind": "prose",
+      "line_start": 1440,
+      "line_end": 1448,
+      "paragraph_excerpt": "Completeness requires honest low-degree polynomials to pass; the interpolation identity proves that they do. Soundness must also rule out other functi",
+      "job": "Give GF16 calculation and distinguish completeness from converse",
+      "decision": "move_to_case_study",
+      "rationale": "Useful reproducible example; optional GF16 arithmetic is a separate learning load. Preserve author credit and no-priority statement."
+    },
+    {
+      "number": 178,
+      "kind": "prose",
+      "line_start": 1454,
+      "line_end": 1465,
+      "paragraph_excerpt": "The mathematical construction is from [Amireddy, Behera, Srinivasan, Sudan and Willumsgaard, version 2][paper-v2]. The formal development discussed he",
+      "job": "Credit sources and bound evidence claims",
+      "decision": "keep",
+      "rationale": "Retain precise edition, formal-development scope, AI authorship, finite-example limit and lack of human-learning evidence. Keep onward links scoped by reader purpose."
+    },
+    {
+      "number": 179,
+      "kind": "prose",
+      "line_start": 1467,
+      "line_end": 1478,
+      "paragraph_excerpt": "AI agents wrote this exposition under Will Cook's direction. The finite calculations were checked by the accompanying Python program. They illustrate ",
+      "job": "Credit sources and bound evidence claims",
+      "decision": "keep",
+      "rationale": "Retain precise edition, formal-development scope, AI authorship, finite-example limit and lack of human-learning evidence. Keep onward links scoped by reader purpose."
+    },
+    {
+      "number": 180,
+      "kind": "prose",
+      "line_start": 1480,
+      "line_end": 1480,
+      "paragraph_excerpt": "Further reading:",
+      "job": "Credit sources and bound evidence claims",
+      "decision": "keep",
+      "rationale": "Retain precise edition, formal-development scope, AI authorship, finite-example limit and lack of human-learning evidence. Keep onward links scoped by reader purpose."
+    },
+    {
+      "number": 181,
+      "kind": "list",
+      "line_start": 1482,
+      "line_end": 1500,
+      "paragraph_excerpt": "* [The full argument][long] develops the   low-degree tests, the binary correction   bounds and the final assembly in detail. * [The specialist paper]",
+      "job": "Credit sources and bound evidence claims",
+      "decision": "keep",
+      "rationale": "Retain precise edition, formal-development scope, AI authorship, finite-example limit and lack of human-learning evidence. Keep onward links scoped by reader purpose."
+    }
+  ]
+}

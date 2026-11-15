@@ -1,0 +1,165 @@
+{
+  "description": "Three independent changed-case checks for the revised worked PCP exposition",
+  "execution_kind": "Exact finite computation with ordinary mathematical derivations recorded separately",
+  "all_assertions_passed": true,
+  "cases": [
+    {
+      "name": "request_dependent_mask",
+      "label_space": "F_2^8: coefficient labels of squarefree degree-at-most-three polynomials in three bits",
+      "monomial_order": [
+        [],
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "message": [
+        1,
+        0,
+        1
+      ],
+      "evaluation_vector_bits": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "honest_additivity_pairs_checked": 65536,
+      "received_word": "Flip only label 0 in the honest evaluation word",
+      "labels": 256,
+      "corrupt_labels": 1,
+      "row_error_fraction": "1/256",
+      "coupled_request_and_mask": {
+        "experiment": "U uniform; Lambda=U; R=U; output g(R)+g(R+Lambda)",
+        "mask_marginal_uniform": true,
+        "request_marginal_uniform": true,
+        "second_query_always_zero": true,
+        "failures": 255,
+        "trials": 256,
+        "failure_fraction": "255/256"
+      },
+      "fixed_request_fresh_uniform_mask": {
+        "requests_checked": 256,
+        "masks_per_request": 256,
+        "total_pairs_checked": 65536,
+        "failures_for_request_zero": 0,
+        "failures_for_every_nonzero_request": 2,
+        "max_failure_fraction": "1/128",
+        "two_times_row_error": "1/128",
+        "all_requests_satisfy_bound": true
+      },
+      "ordinary_derivation": "For Lambda=R=U!=0, g(U)+g(0)=h(U)+1; for U=0 both errors cancel. With a fixed nonzero Lambda and fresh R, exactly R=0 or R=Lambda contributes one corruption.",
+      "lesson": "Marginal uniformity of R does not replace uniformity conditional on the request. The two actual reads need not be independent."
+    },
+    {
+      "name": "arbitrary_inner_polynomial",
+      "digit_base_b": 3,
+      "inner_degree_c": 2,
+      "inner_polynomial": "Q(W)=W_(1,2)^2",
+      "inner_total_degree": 2,
+      "honest_set_multilinear_form": false,
+      "power_point_coordinate": "Phi(Y)_(1,2)=Y^6",
+      "formal_substitution": "Q(Phi(Y))=Y^12",
+      "decoded_degree": 12,
+      "honest_capacity_requires_degree_strictly_below": 9,
+      "sharp_generic_substitution_bound": 12,
+      "relaxed_bound_D_equals_c_times_b_to_c": 18,
+      "finite_field": {
+        "size": 16,
+        "modulus": "T^4+T+1",
+        "modulus_bit_encoding": 19,
+        "remainders_for_all_monic_degree_1_or_2_divisors": {
+          "2": 1,
+          "3": 1,
+          "4": 3,
+          "5": 2,
+          "6": 1,
+          "7": 1
+        },
+        "irreducibility_check_passed": true,
+        "nonzero_elements_checked_for_a_to_15_equals_1": 15,
+        "evaluation_points_checked": 16,
+        "decoded_values_in_coefficient_bit_encoding": [
+          0,
+          1,
+          15,
+          8,
+          10,
+          12,
+          1,
+          1,
+          12,
+          8,
+          8,
+          10,
+          15,
+          12,
+          15,
+          10
+        ],
+        "substitution_values_agree_at_all_points": true
+      },
+      "ordinary_root_bound_deduction": {
+        "claim": "No polynomial of degree <9 has the same function as Y^12 on F_16",
+        "method": "For any such p, Y^12-p is nonzero of degree 12 and therefore has at most 12 roots; function equality would require 16 roots.",
+        "enumerated_all_candidate_polynomials": false
+      },
+      "lesson": "An inner degree-c guarantee does not imply the honest univariate capacity bound. The arbitrary decoded polynomial needs the enlarged substitution degree bound.",
+      "scope": "This is a degree/representation changed case, not a complete PCP parameter instance."
+    },
+    {
+      "name": "bad_auxiliary_anchor_fibre",
+      "field_size_Q": 4,
+      "ambient_dimension_k": 2,
+      "ambient_points": 16,
+      "prescribed_anchor": [
+        1,
+        2
+      ],
+      "oriented_row_index": "(anchor a, direction v), with both in F_Q^k; zero direction included",
+      "bad_rows": "Every row whose anchor is the prescribed a*, regardless of its direction",
+      "all_rows": 256,
+      "globally_bad_rows": 16,
+      "global_bad_row_fraction": "1/16",
+      "rows_sampled_conditional_on_target_a_star": 16,
+      "bad_rows_conditional_on_target_a_star": 16,
+      "conditional_bad_row_fraction": "1",
+      "all_other_anchor_fibres_have_zero_bad_rows": true,
+      "ordinary_derivation": "There are Q^(2k) pairs (a,v), and Q^k bad pairs with a=a*. Their fraction is Q^(-k). Conditioning on the fixed target a* leaves only those Q^k bad rows, so the bad fraction is 1.",
+      "lesson": "A global auxiliary-row average alone cannot control a prescribed target. The actual corrector rejection term is essential to the target-specific guarantee.",
+      "scope": "Exact row-index counting. No field arithmetic, inner-test rejection rate, or complete cheating PCP is asserted."
+    }
+  ],
+  "limitations": [
+    "No Lean elaboration, kernel replay, or axiom extraction was performed.",
+    "No small-field example is claimed to satisfy the full PCP parameter regime.",
+    "Successful model calculations are not measured human-learning outcomes.",
+    "The no-low-degree-representative conclusion uses the ordinary root bound, not exhaustive enumeration of polynomials."
+  ]
+}

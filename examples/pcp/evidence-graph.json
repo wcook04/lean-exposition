@@ -331,7 +331,7 @@
     {
       "id": "ordinary:example-script",
       "kind": "file",
-      "url": "urn:sha256:743563475ac1fb850d79537fb89291a03980a182d80115a94169988be30ee118",
+      "url": "urn:sha256:76c817554ddb306694892eed54bbacadde3111d2b6588ba920335911c6375ef2",
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
@@ -341,7 +341,7 @@
     {
       "id": "ordinary:example-output",
       "kind": "file",
-      "url": "urn:sha256:9fc951be4224ff73f209579dcf718edaf6a94895aff01429c2bf921fa5aa305d",
+      "url": "urn:sha256:439df9f119bdf5faaecb40c183a4d15119e450183f56c79da925c1bcb502d49e",
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
@@ -971,7 +971,7 @@
     {
       "id": "ordinary:exposition-script",
       "kind": "file",
-      "url": "urn:sha256:b1c375fa0c8ab21ed9f415cbe375ac449252bdeefc074094539925e6e8016cfe",
+      "url": "urn:sha256:207553be39243673afea1116a1d0233480b53570a25f6fb55b9e71258dcd95b4",
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
@@ -981,7 +981,7 @@
     {
       "id": "ordinary:exposition-output",
       "kind": "file",
-      "url": "urn:sha256:550aff6fe4c7ff5ad727b8ca24f351d38d97c92930a4965fbf9ec14bbf019969",
+      "url": "urn:sha256:c3fe0896fc6d4fc64a129834f1d57ecfafd96501a95e347ac8785d32ab7c6bfb",
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
@@ -1037,6 +1037,46 @@
       "redistribution": "reference_only",
       "sha256": "79668d3cdb3cb79557d8db8fc47a9ce228867332df39bd915768724092a931de",
       "path": "PCP/Algebraic/HadamardCorrection.lean"
+    },
+    {
+      "id": "ordinary:trace-script",
+      "kind": "file",
+      "url": "urn:sha256:ca8f1fd65d07d9ce837a218b861ec03b97749cb05249f6611b6ce441c262c591",
+      "revision": "working-tree-sha256",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "ca8f1fd65d07d9ce837a218b861ec03b97749cb05249f6611b6ce441c262c591",
+      "path": "papers/pcp/expository/check_trace.py"
+    },
+    {
+      "id": "ordinary:trace-output",
+      "kind": "file",
+      "url": "urn:sha256:1a158aedfe6a4e85a14008c85fa4b7e8100182988f4b2bc544dec20a39302a09",
+      "revision": "working-tree-sha256",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "1a158aedfe6a4e85a14008c85fa4b7e8100182988f4b2bc544dec20a39302a09",
+      "path": "papers/pcp/expository/trace-output.json"
+    },
+    {
+      "id": "ordinary:changed-cases-script",
+      "kind": "file",
+      "url": "urn:sha256:57937b404a3688800ce83a6e2d281be536f29e41e795c91b4a470414bd127e1b",
+      "revision": "working-tree-sha256",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "57937b404a3688800ce83a6e2d281be536f29e41e795c91b4a470414bd127e1b",
+      "path": "papers/pcp/expository/check_changed_cases.py"
+    },
+    {
+      "id": "ordinary:changed-cases-output",
+      "kind": "file",
+      "url": "urn:sha256:673d29c058793fa32fd2fb421e1db2e62814c426d9f5ed0a5c383c31505b5f23",
+      "revision": "working-tree-sha256",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "673d29c058793fa32fd2fb421e1db2e62814c426d9f5ed0a5c383c31505b5f23",
+      "path": "papers/pcp/expository/changed_cases-output.json"
     }
   ],
   "citations": [
@@ -6787,6 +6827,36 @@
       "evidence_ids": [],
       "citation_ids": [],
       "boundary": "Distinct binary messages differ on half of the homogeneous linear labels. The two messages' difference is a nonzero binary linear functional. The signature is transcribed from source and has no new Lean extraction."
+    },
+    {
+      "id": "ordinary:trace-example",
+      "kind": "claim",
+      "label": "One honest vertex ZERO example",
+      "status": "unverified",
+      "source_id": "ordinary:trace-script",
+      "locator": "papers/pcp/expository/check_trace.py",
+      "statement": "The exact F4 calculation checks the one-edge colouring residual, certificate identities, two line restrictions, digit substitution, eight weighted-interpolation reads, two primary comparison reads and two masked colour reads. Inner-test queries are not enumerated.",
+      "assumption_ids": [],
+      "evidence_ids": [
+        "trace:python-rerun"
+      ],
+      "citation_ids": [],
+      "boundary": "Finite exact calculation only. The small parameters do not instantiate the production soundness hypotheses. No general theorem or Lean replay is certified."
+    },
+    {
+      "id": "ordinary:changed-cases-example",
+      "kind": "claim",
+      "label": "Changed assumptions in finite examples",
+      "status": "unverified",
+      "source_id": "ordinary:changed-cases-script",
+      "locator": "papers/pcp/expository/check_changed_cases.py",
+      "statement": "Finite examples distinguish fresh conditional masking from marginal uniformity, show degree inflation after digit substitution, and count a corrupt fixed-anchor fibre.",
+      "assumption_ids": [],
+      "evidence_ids": [
+        "changed-cases:python-rerun"
+      ],
+      "citation_ids": [],
+      "boundary": "Finite exact calculation only. The small parameters do not instantiate the production soundness hypotheses. No general theorem or Lean replay is certified."
     }
   ],
   "edges": [
@@ -7037,6 +7107,42 @@
         "ordinary:exposition-examples"
       ],
       "details": "Executed 2026-11-15; stdout matched the recorded output byte-for-byte. This checks only the finite examples listed in the source, not the PCP theorem or the infinite-family argument."
+    },
+    {
+      "id": "trace:python-rerun",
+      "kind": "source_hash",
+      "status": "passed",
+      "command": [
+        "python3",
+        "papers/pcp/expository/check_trace.py"
+      ],
+      "tool": "python3",
+      "source_ids": [
+        "ordinary:trace-script",
+        "ordinary:trace-output"
+      ],
+      "subject_ids": [
+        "ordinary:trace-example"
+      ],
+      "details": "Executed 2026-11-15 with assertions enabled; exact stdout retained and hashed. Adapted unchanged from the supplied round2 exposition review after source inspection."
+    },
+    {
+      "id": "changed-cases:python-rerun",
+      "kind": "source_hash",
+      "status": "passed",
+      "command": [
+        "python3",
+        "papers/pcp/expository/check_changed_cases.py"
+      ],
+      "tool": "python3",
+      "source_ids": [
+        "ordinary:changed-cases-script",
+        "ordinary:changed-cases-output"
+      ],
+      "subject_ids": [
+        "ordinary:changed-cases-example"
+      ],
+      "details": "Executed 2026-11-15 with assertions enabled; exact stdout retained and hashed. Adapted unchanged from the supplied round2 exposition review after source inspection."
     }
   ],
   "scope": "Curated stage navigation and source-level declarations at pinned revision; not an extracted dependency graph.",
