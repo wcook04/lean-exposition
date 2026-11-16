@@ -1,0 +1,278 @@
+# Coverage and evidence boundaries
+
+## Packet identity and reading order
+
+Packet: `pcp-review-round3-3b-worked-exposition-written-like-the-literature.zip`.
+
+Manifest SHA-256:
+
+```text
+3818c45eacb00e440e0700ba7f62053170f44ca628f839cef2307b7d40b18828
+```
+
+Primary Markdown SHA-256:
+
+```text
+656438f0fb3c5cb516d368ba5b0f6a71d2f97278f3c18e2cb33635dba4a2c532
+```
+
+The current primary manuscript was read in full, including **all 296 blocks b0001–b0296**, before the settled-decision history. The brief, `START_HERE.md`, `request.md`, `RETURN_FORMAT.md`, baseline and source-reading route were read. The original 25-page PDF was rendered and inspected across seven contact sheets; selected pages were also inspected at full size in the independent passes. This visual check covered the existing edition, not a revised typeset PDF.
+
+The statement, terminology/credit and genre passes were performed independently and then reconciled by the lead review. Coverage below is the union of actual reads, with statement reading distinguished from proof replay. An inventory hit, a source filename, an association entry or a search result alone is not treated as reading a proof.
+
+`history/settled-decisions.json` was read after the current manuscript. Selected earlier dispositions concerning the cubic label space, BCHKS attribution and the running trace were consulted to preserve settled decisions. Earlier prompts were not used as instructions. No settled decision was reopened as a new mathematical defect.
+
+## Claim ledger
+
+`statement_comparison.json` contains **179 rows**, each with the nine requested fields. Every one of the **53 display-math blocks** has an individually anchored row. When a statement’s assumptions continue into the next block, its heading row covers that explicitly identified continuation. Transitions and nonclaim editorial blocks are not padded with artificial theorem entries.
+
+| Relation | Source | Lean |
+| --- | ---: | ---: |
+| same | 61 | 102 |
+| stronger | 5 | 1 |
+| weaker | 10 | 21 |
+| different | 19 | 1 |
+| not_found | 84 | 54 |
+
+Relations compare the exposition’s statement to the cited result. `same` includes an explicitly described specialisation or elementary assembly; it does not claim identical signature syntax. `different` is used for a changed sample space, rejection variable or testing procedure. `not_found` means the exact statement was not located in the indicated source, principally for worked finite identities, ordinary deductions and exact implementation constants. It does not mean a failed proof obligation. Relevant general machinery is described separately where appropriate.
+
+`declaration_audit.json` statically checks all 114 distinct explicitly qualified PCP declaration names appearing in the ledger, with 152 occurrences. Their declaration bases exist in the actual tree. This is a name-presence check, not a namespace elaboration or type-checking result. The mathematical comparison used actual declaration and definition slices, listed below, rather than relying on `current-associations.json` as certified correspondence.
+
+## Complete reads of the writing instructions
+
+The genre pass read the enclosed writing instructions in full, including recovered slices after truncated output. These instructions governed the prose after mathematical content was fixed. The task’s explicit exposition-only scope controlled over broader proof-campaign or publication workflows.
+
+### Enclosed files
+
+- `contract/humanizer/SKILL.md`, complete, 1,868 lines. Long output was read in chunks, with truncated ranges recovered.
+- `contract/formal-math-exposition/SKILL.md`, complete, 526 lines.
+- `contract/formal-math-exposition/references/mathematical-writing-mechanics.md`, complete, 804 lines.
+- `contract/formal-math-exposition/references/full-exposition-guide.md`, complete, 1,597 lines.
+- `contract/formal-math-exposition/references/the-deliverable.md`, complete, 137 lines.
+- `contract/formal-math-exposition/references/register-from-literature.md`, complete, 60 lines.
+
+The humanizer was bounded by mathematical truth, the target reader and ordinary mathematical register. General directions for a proof campaign, full-corpus re-verification, live publication or unavailable skills were not applied to this exposition-only assignment.
+
+
+## Literature and Lean statement inventory
+
+The following ranges are the actual statement-review reads. Paths are relative to the supplied packet.
+
+## Source readings
+
+All paths below are relative to the supplied packet. The listed ranges describe actual text or statement slices opened, not a claim to have read every line of every file.
+
+### Governing ABSSW v2 TeX
+
+Base directory: `literature/abssw-v2/tex/`.
+
+| File | Slices or sections inspected |
+| --- | --- |
+| `preliminaries.tex` | Lines 21–128 and 173–315: verifier definition, graph PCP theorem, notation, low-degree extension, polynomial distance, line tables, generator characterization statement, standard correction, grid certificate, 3-COLOR, Algorithms 1–2 and Theorems 2.12/2.14 |
+| `technical_tools.tex` | Lines 11–116, 132–220, 306–449: set-multilinear map and evaluation substitution, weighted generator test and correction, Hadamard definitions, derived labels, distance observations, degree-$r$ row test, soundness statement, and unnumbered two-query self-correction paragraph |
+| `low_degree_test.tex` | Lines 1–107 and 110–270: warmup Algorithm 4, expected encoded oracles, homogeneous observation requirements, complete Algorithm 5, Theorem 4.1, Remark 4.2 and the immediate proof overview |
+| `local_correction.tex` | Lines 1–153: fixed-anchor motivation, full Algorithm 6, Theorem 5.1, and proof overview |
+| `zero-on-variety_test.tex` | Lines 43–125: full Algorithm 7, seed sharing, and Theorem 6.1 |
+| `pcp-verifier.tex` | Lines 1–120, 115–208 and 208–258: stored oracle types, virtual derived queries, SC, Algorithm 8, parameters/completeness, Claim 7.3 and surrounding soundness reduction |
+| `appendix_-_hadamard_test.tex` | Lines 1–31: exact Boolean BLR soundness statement used for attribution/comparison |
+
+### Other supplied sources
+
+| Source | Slices inspected |
+| --- | --- |
+| `literature/originals/simple-algebraic-pcp-v2.pdf` | Targeted final locator check, PDF pages 19–23: HadTest is Algorithm 3 on PDF page 20 / printed page 18; Algorithm 4 is the field-alphabet warmup on PDF page 22 / printed page 20. |
+| `literature/abssw-v1/tex/main.tex` | Lines 478–485 and 716–742: historical arbitrary-node/order-$c+1$ characterization and old test statement |
+| `literature/originals/arora-barak-book.pdf` | PDF page 56 / printed p.2.2 (40), Definition 2.1; PDF pages 379–382 / printed pp.18.13–18.16, homogeneous Walsh–Hadamard convention, linearity theorem, and local decoding/self-correction discussion. Text was read from the original PDF and compared with the supplied extraction. |
+| `literature/originals/bchks.pdf` | PDF pages 4–7, especially §§1.1–1.4 and Theorem 1.2 on PDF page 7. Original PDF text confirmed the supplied extraction's $\operatorname{Rej}(x)\geq x$ statement, binary-domain restriction and historical attribution. |
+| `literature/text/arora-barak-book.txt` | Lines 2428–2468 and 18211–18380, navigation and readable comparison aid for the original PDF passages |
+| `literature/text/bchks.txt` | Lines 170–288, navigation and readable comparison aid |
+
+No external web source was needed for this child's statement check. The original source texts in the packet governed the comparison.
+
+## Lean readings
+
+Base directory: `formal/lean/PCP/`. “Statement signatures” means the relevant complete theorem/definition headers were opened, with the named follow-on ranges additionally read. It does not mean all intervening tactic proofs were independently checked.
+
+### Model and endpoint
+
+| File | Actual coverage |
+| --- | --- |
+| `Theorem.lean` | 25–45, public forward theorem and wrapper |
+| `ReverseConcrete.lean` | 33–39, concrete converse |
+| `Verifier/Definition.lean` | ProofOracle and query-tree evaluation interfaces; 85–104, 117–139, 145–173: verifier, acceptance, bounded addresses, completeness/soundness, canonical randomness and acceptance-one equivalence |
+| `Complexity/NP.lean` | 15–43, complete NP certificate interface |
+| `Complexity/ReferenceNPConverse.lean` | 34–41, reference-class equivalence |
+
+### Algebraic building blocks
+
+| File | Actual coverage |
+| --- | --- |
+| `Algebraic/PolynomialDistance.lean` | Statement signatures 29–120, including zero agreement and pairwise distance |
+| `Algebraic/GridInterpolation.lean` | Relevant statement signatures, basis 42–47, interpolation/evaluation/degree block 77–109, uniqueness 170–173 |
+| `Algebraic/GridVanishing.lean` | Statement signatures, especially decomposition 100–104 and equivalence 134–138 |
+| `Algebraic/VanishingCertificate.lean` | Statement signatures; IsCertificate 57–63, construction/evaluation 76–93, degree 99–102, equivalence 119–122, substitution degree 142–144 |
+| `Algebraic/ThreeColorAlgebra.lean` | Statement signatures 28–95: cube-root palette, edge predicate and colouring equivalence |
+| `Algebraic/ThreeColorGrid.lean` | Statement signatures 29–179: residuals, adjacency extension, degree bounds and certificate equivalence |
+| `Algebraic/SetMultilinear.lean` | Definition/signature search; 55–115 and 135–158: evaluation map, formal decode, exponent bound, recovery, homogeneous degree |
+| `Algebraic/SetMultilinearDecode.lean` | Complete relevant statement signatures 25–77 |
+| `Algebraic/StandardLocalCorrection.lean` | Relevant statement signatures 17–66 |
+| `Algebraic/GeneratorLowDegreeTest.lean` | 25–90, 134–161, 266–294: nodes, weights, predicate, query list, generator hypotheses, characterization and exact soundness |
+| `Algebraic/PointLineTest.lean` | 1–95, table and experiment definitions |
+| `Algebraic/PointLineSoundness.lean` | 45–69, exact theorem premises/conclusion |
+| `Algebraic/PointLineConstants.lean` | 1–48, exact fixed constants |
+
+### Binary code and correction interfaces
+
+| File | Actual coverage |
+| --- | --- |
+| `Algebraic/BLR.lean` | 15–53, 102–113, 315–333: explicit rejection experiment and sharp Boolean soundness; one additional Fourier-definition slice 185–207 |
+| `Algebraic/Hadamard.lean` | Relevant statement signatures 24–190; exact homogeneous encoding 137–145 |
+| `Algebraic/BinaryPolynomialSpace.lean` | Relevant definitions/signatures 25–245, including exact coefficient count 219–245 |
+| `Algebraic/HadamardTest.lean` | 44–94, every actual predicate and query-list bound |
+| `Algebraic/HadamardSoundness.lean` | 1–84, same-message full/affine theorem and prerequisites |
+| `Algebraic/HadamardCorrection.lean` | 1–65, self-correction definition and error bound |
+| `Algebraic/HadamardDerivedOracle.lean` | 1–47, 68–122 and 210–259: masked derived query, fixed/averaged error, cubic specialisations |
+| `Algebraic/HadamardComposition.lean` | Definition/signature search and 147–182, construction of one derived label and its evaluation identity |
+| `Algebraic/HadamardWeights.lean` | Declaration search and 85–100, exact scale-label definition and identity |
+| `Algebraic/BinaryLagrangeConstraint.lean` | Definition/signature search and 25–53, actual binary weighted residual and honest evaluation |
+| `Algebraic/BinaryStandardLocalCorrection.lean` | Definition/signature search and 17–58, correction reads, cardinality and honest result |
+| `Algebraic/BinaryLowDegreeTest.lean` | 20–82, fair-coin mixture and its properties |
+| `Algebraic/BinaryLocalRowDecoding.lean` | 18–58, exact $K$ and row-decoding interface |
+| `Algebraic/EncodedLineLowDegreeTest.lean` | 20–112, aliases, actual storage domains, three-part test, honest table |
+| `Algebraic/EncodedLineLowDegreeSoundness.lean` | 39–53 and 325–361, exact $E,S$ and simultaneous decoding theorem |
+| `Algebraic/BinaryLocalCorrection.lean` | 19–88, exact sample, shared within-call correction seed and read count |
+| `Algebraic/BinaryLocalCorrectionSoundness.lean` | 19–43, 222–245, 316–357, exact $C$, rejection-or-wrong theorem and distance variants; no independent replay of the full 222–315 proof |
+| `Algebraic/BinaryZeroOnGridCorrection.lean` | 19–112, independent call seeds conditional on common target/label and exact accept predicate |
+| `Algebraic/BinaryZeroOnGridSoundness.lean` | 98–133 and 249–349, two-corrector accounting and explicit lower bounds |
+| `Algebraic/DerivedZeroOnGridSoundness.lean` | Declaration search and 246–291, exact derived-oracle lower-bound interface |
+| `Algebraic/BinaryDifferenceConsistency.lean` | Declaration search and 280–318, strict threshold forcing polynomial equality |
+
+### Composition, resources, reduction
+
+| File | Actual coverage |
+| --- | --- |
+| `Algebraic/ThreeColorDecodedSoundness.lean` | 24–119, concrete decoded-polynomial soundness interfaces |
+| `Algebraic/ThreeColorVerifier.lean` | 37–45, 84–115, 308–370: stored proof, seven logical branches, exact caps |
+| `Algebraic/ThreeColorVerifierCompleteness.lean` | 20–107 |
+| `Algebraic/ThreeColorVerifierSoundness.lean` | 21–137 |
+| `Algebraic/ThreeColorSoundnessBudget.lean` | 22–154, entire relevant constant/gap budget and field ratios |
+| `Algebraic/ThreeColorParameters.lean` | Parameter-definition searches and statement signatures; 130–175, capacity and both field bounds |
+| `Algebraic/ThreeColorParameterChoice.lean` | 1–105 |
+| `Algebraic/ThreeColorResourceBounds.lean` | 19–105 |
+| `Algebraic/ThreeColorFullFieldSampling.lean` | 20–73, 109–117, 160–181 |
+| `Algebraic/ThreeColorBinaryVerifier.lean` | Relevant declaration/signature searches and 202–233, exact retained gap and rejection theorem |
+| `Algebraic/ThreeColorAmplifiedVerifier.lean` | 20–80 |
+| `Algebraic/RationalRepetitionBound.lean` | 1–80 |
+| `Reduction/NAEThreeColor.lean` | 22–72, 97–117, 241–249 |
+| `Reduction/NPThreeColor.lean` | 111–151, reduction endpoint |
+| `Reduction/NPThreeColorRuntime.lean` | 193–212, time/size endpoint |
+| `Reduction/FiniteBooleanConstraints.lean` | 39–121, actual clauses, OR gates and mismatch flags |
+| `Reduction/FiniteDomainConstraints.lean` | 20–122, one-hot relation, validity constraints and satisfiability interface |
+
+The pinned Lean reading guide was consulted for navigation and context. The statement comparison was checked against the actual files above; no claim of reading the full formalisation or all its foundational dependencies is made.
+
+## Additional attribution and notation reads
+
+These overlapping slices supply exact names, editions, algorithm numbers and contribution history. They do not enlarge the claim into a full-source proof audit.
+
+## ABSSW source passages actually opened
+
+All paths in this section are relative to `literature/abssw-v2/tex/` unless another version is stated. Line numbers refer to the enclosed source files, not a live upstream revision.
+
+| File / locator | Coverage and purpose |
+| --- | --- |
+| `preliminaries.tex:1–181,182–265` | Standard verifier; finite-field/label notation; relative Hamming distance; Facts 2.3–2.4; Theorem 2.5; lines-table Definition 2.6; generator/weight Fact 2.7; local correction; Lemma 2.9; Corollary 2.10; point-versus-line test and Theorem 2.12. Read in overlapping slices; do not treat the output truncation of one combined read as coverage of anything beyond these reopened intervals. |
+| `technical_tools.tex:1–180,245–275,308–348,389–440` | Set-multilinear Definition 3.1 and Claim 3.2; weighted Lemmas 3.3–3.4; degree-r Hadamard Definitions 3.5–3.6; the start of Claim 3.7; exact characterization Claim 3.9; Algorithm 3 and Lemma 3.10; two-query self-correction. |
+| `pcp-verifier.tex:1–100` | Setup, eight proof oracles, χ/χ′ and their degree-three auxiliary encodings, certificate pairs, derived observations and general pair description. These lines establish the affine-auxiliary source/Lean difference. |
+| `low_degree_test.tex:1–120,175–305` | Meaning of a line-table entry, source degree conventions, Algorithm 5's full degree-r auxiliary domain and its all-checks predicate, Theorem 4.1 and same-polynomial soundness. |
+| `local_correction.tex:1–131`, selected search output | Procedure name `NewLC`, the requested target and random homogeneous label, rationale for homogeneous rather than affine observations, Theorem 5.1 locator. This was targeted reading, not a full proof audit of the file. |
+| `zero-on-variety_test.tex:1–120`, selected search output | Section 6 zero-on-grid name, ZERO, Algorithm 7 and Theorem 6.1 locators. |
+| `macro.tex:51–75`, search output | Printed names for Hadamard, Ψ, LDE, standard/new tests and correctors. |
+| `main.tex:29–43,63–64`, `intro.tex` targeted searches | Title, authors, abstract/construction claim and Troy Lee acknowledgement identifying Lemma 3.3. |
+| `literature/abssw-v1/tex/main.tex:479–514,710–805` | Old order-(c+1) choice, unit weights, Lemma 3.3's tester and claimed converse, Lemma 3.4 and the higher-degree Hadamard definition. A preliminary broad search was truncated; the exact relevant intervals were subsequently opened. |
+
+The actual v2 PDF was also read at pages 1, 19–21, 43 and 49. Page 20 was rendered and visually viewed. The printed algorithm is unambiguously **Algorithm 3**, and the eight-query claim is in Lemma 3.10 on the same page. Page 49 contains Appendix B, Theorem B.1 and its BLR/BCHKS citations. The cover/acknowledgement dates and credit were checked against the PDF, not only extracted text. Other theorem-page locations were found by PDF text search; finding a location alone was not counted as reading a whole page.
+
+## Other primary and teaching sources actually read
+
+Paths are under `literature/originals/`.
+
+| Source | Actual pages / passages | Scope |
+| --- | --- | --- |
+| `arora-barak-book.pdf` | PDF 379–381 (§§18.4–18.4.1); 406–407 (§19.3.2); 61–65 (§§2.3.2–2.3.5). PDF380 rendered/viewed. | Walsh-Hadamard notation; agreement convention; two-query correction; Fourier teaching proof; standard Cook-Levin local-constraint/CNF construction. No claim to have read the full textbook. |
+| `blr-author.pdf` | PDF1,15,17, especially §4.2 and its displayed generic test | Group-based additivity/self-testing terminology and original credit. OCR is poor; no sharper numerical theorem was attributed to BLR from an unread passage. |
+| `bchks.pdf` | PDF1,4,5,6,7,12,13; Theorems 1.1–1.2, footnote3, Fourier proof and tightness discussion. PDF7 rendered/viewed. | Exact origin and scope of rejection ≥ distance; distinction from the finer piecewise curve. Page numbers were verified in this actual PDF. |
+| `shoup-2005.pdf` | PDF241 / printed225, Theorems 9.15–9.16; PDF241 rendered/viewed | Finite-field multiplicative cyclicity. Chapter20 was located through the source citation but its construction algorithms were not reviewed here. |
+| `arora-safra-jacm.pdf` | PDF1–2, title and abstract | Original sublogarithmic-query result and authorship; no full original proof audit. |
+| `almss-journal.pdf` | PDF1–2; PDF27 (Definition44, Poly-test, Theorem45, opening correction discussion) | Constant-query historical credit and precise all-field point-versus-line test with 2δ conclusion. Theorem45 was read in the actual PDF after locating it through `literature/text/almss-journal.txt:1470–1520`. |
+
+`literature/READING_ROUTE.md`, acquisition/source inventories and selected retained notes were used for navigation. They were never counted as primary-source reading. Original root-bound antecedents and the original Rubinfeld–Sudan / Kaufman–Sudan proofs were not independently audited. Their presence in the bundle does not imply they were read. Public-source corroboration was conducted separately by the lead review and is recorded below.
+
+
+## Additional genre, companion and lead-review reads
+
+- Arora–Barak, retained January 2007 original PDF: pages 379–383, printed 18.13–18.17, and pages 405–408, printed 19.5–19.8. The genre comparison read the code definition, direct-read obstruction, two-query correction, marginal-uniformity argument, quadratic-equation transition and Fourier proof context.
+- BLR original author PDF: pages 15–16 were rendered and visually read for §4.2, Definitions 4.1–4.2 and the generic correction/test setup. The terminology pass additionally read the displayed test on page 17. Poor OCR was not treated as authoritative over the pages.
+- ABSSW v2 `main.tex:1–85` and `intro.tex:1–54` were read in full for contributions, source structure and the honest-versus-decoded degree distinction. The genre pass also read `low_degree_test.tex:1–180` and `local_correction.tex:1–160` for teaching sequence.
+- Companions: `papers/short/paper.md:42–109,223–278`; `papers/long/reasoning-record.md:1400–1475,1721–1796`, plus targeted searches for symbols, constants and linked proof discussions. These supported the cross-paper notation table. The two full companions were not reread end to end.
+- The lead read `formal/lean/docs/pcp/reading-guide.md` in full and the formal README’s departures discussion at lines 151–287. The actual theorem statements remained the governing evidence.
+- Additional lead source reads included `PointLineSoundness.lean:1–80`, `EncodedLineLowDegreeTest.lean:1–115`, `ThreeColorVerifier.lean:1–125`, `HadamardTest.lean:1–100`, `Distance.lean:1–90`, `HadamardSoundness.lean:1–55`, `EncodedLineLowDegreeSoundness.lean:325–359`, `BinaryLocalCorrectionSoundness.lean:1–50`, `Complexity/NP.lean:25–45` and `GeneratorLowDegreeTest.lean:269–281`. Algebraic filenames here are under `formal/lean/PCP/Algebraic/`.
+
+## Public primary-source corroboration
+
+The packet’s frozen sources govern its version-specific comparison. Public browsing additionally checked:
+
+| Source | Read and use |
+| --- | --- |
+| [ECCC TR26-134 revision record](https://eccc.weizmann.ac.il/report/2026/134/) | Revision 1 dated 22 October 2026 and the stated repair to Lemma 3.3. |
+| [ECCC revision PDF](https://eccc.weizmann.ac.il/report/2026/134/revision/1/download) | Title, authors, abstract; Algorithm 1 / Theorem 2.12’s nonzero-parameter sampling and factor-four conclusion; acknowledgement of Troy Lee’s discovery of the earlier error. Its pagination differs from the packet’s retained build, so packet citations use the packet edition. |
+| [Author-hosted published BCHKS paper](https://cseweb.ucsd.edu/~mihir/papers/linearity.pdf) | IEEE Transactions on Information Theory 42(6), November 1996; Theorem 1.2 at journal p.1783 and its proof at p.1787. The journal layout differs from the retained author manuscript, whose theorem is on PDF page 7. |
+
+An additional search located the KTH-hosted BCHKS manuscript. It was not needed to override the enclosed original. Secondary search results were not used as mathematical authorities. Direct public fetches of the arXiv abstract and pinned GitHub tree returned `DisabledError`; the Princeton book URL returned HTTP 403. The supplied versioned TeX, original PDFs and Lean tree were used instead. These fetch failures did not create a missing statement in the packet.
+
+## Commands and checks actually run
+
+The following commands ran from the extracted packet root. All returned exit code 0 with empty stderr. `executed_checks.json` records the commands and final output excerpts.
+
+| Command | Observed result and scope |
+| --- | --- |
+| `python3 tools/check_packet.py` | Passed custody/target-presence verification: 1,581 listed files, 23 retained literature PDFs and 296 primary blocks. This is package integrity, not mathematical review. |
+| `python3 examples/check_examples.py` | Passed the supplied elementary algebraic and finite-field examples. |
+| `python3 examples/check_exposition_examples.py` | Passed the additional worked examples, finite relation/gadget cases, toy budgets and degree-four constant calculations. |
+| `python3 examples/check_trace.py` | Passed the worked addresses, eight auxiliary interpolation reads, two primary comparisons and final ZERO equalities. |
+| `python3 examples/check_changed_cases.py` | Passed the supplied regression cases and retained qualifications. |
+
+Exact Python rational arithmetic additionally expanded the read constants and confirmed K=105408, E=1054138, S=1054166, C=1054082 and the gap 1/1137847282503168. The receipt is `constant_arithmetic.json`. This was arithmetic on the definitions, not Lean evaluation.
+
+Read operations used `rg --files`, `rg -n`, `sed -n`, `cat`, Python `json`/`pathlib`, and PyMuPDF for original-PDF text and rendering. Rendered images were displayed with `view_image`. Text extraction aided navigation; original PDF/TeX statements governed. Where a combined output was truncated, relevant ranges were reopened before being counted as read.
+
+Representative exact read commands included:
+
+```bash
+sed -n '175,305p' literature/abssw-v2/tex/low_degree_test.tex
+sed -n '710,732p' literature/abssw-v1/tex/main.tex
+sed -n '330,446p' formal/lean/docs/pcp/reading-guide.md
+sed -n '45,80p' formal/lean/PCP/Algebraic/HadamardTest.lean
+sed -n '25,45p' formal/lean/PCP/Complexity/NP.lean
+sed -n '269,281p' formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean
+```
+
+The final merge and package checks ran from the review workspace:
+
+```bash
+python3 analysis/root/merge_review.py
+python3 analysis/root/assemble_documents.py
+python3 analysis/root/validate_response.py
+```
+
+The merge verified every original replacement block’s byte range, exact text and hash, applied replacements without offset drift, preserved all passage comments and left all display blocks untouched. The final validation checked schema, anchor coverage, the complete word count, forbidden punctuation in replacement prose, reference definitions and ZIP integrity. Its machine-readable result is `validation.json`.
+
+## What this review does not establish
+
+- No Lean build, Comparator run, axiom audit or independent replay of the proof dependency graph was performed. Earlier supplied build/comparator receipts were not represented as fresh executions.
+- The review compared source statements, definitions, algorithms and relevant proof explanations. It did not independently reconstruct the entire PCP proof or read all pages of all 23 literature PDFs.
+- The original texts of the unacquired DeMillo–Lipton, Ore and Schwartz bibliography items were not read. Their names were not promoted into checked citations. The available ABSSW polynomial-distance theorem supplies the local reference.
+- The small finite examples do not satisfy every asymptotic production parameter and are not general soundness proofs. The counterexample family in Appendix C is an ordinary mathematical deduction, outside the formalisation.
+- There was no independent human reader study, human mathematical endorsement or measured learning outcome. This is a model review with separately delegated passes.
+- No original manuscript, Lean source or live site was changed; nobody was contacted. No credentials, mailbox or private research service were accessed. The response is a review package with a candidate source copy.
+- No revised PDF was typeset, so new line breaks, figure placement and pagination were not assessed. The requested review files and paste-ready source replacements are complete.

@@ -1,0 +1,48 @@
+# Mathematical wording flags
+
+## Status
+
+No change to a central testing theorem, correction bound, parameter choice, query count or soundness budget is proposed. All 53 displayed mathematical blocks remain byte-for-byte unchanged. The original manuscript has not been edited.
+
+There is one hypothesis clarification for native adoption checking, M01 below. The source-sensitive clarifications that could otherwise be mistaken for mathematical changes are listed separately with their evidence. `main.proposed.md` is a review copy applying the candidate wording, not a declaration that a new natural-language theorem has been formally verified.
+
+## M01 — make the ordinary certificate condition explicit
+
+**Block:** b0006.
+
+**Current scope:** “every problem whose proposed solutions can be checked in polynomial time.” This leaves the ordinary witness-length bound and the equivalence between acceptance and membership implicit. The next sentence bounds the encoded PCP certificate, which is a different object.
+
+**Proposed scope:** every decision problem whose yes-instances are exactly those having a polynomial-length certificate accepted by a deterministic polynomial-time checker. The complete replacement is in `replacements.md`.
+
+**Evidence:**
+
+- `formal/lean/PCP/Complexity/NP.lean:31–43`, `NPCertificate`: `witnessBound` is a polynomial; `check_polyTime` supplies the algorithm condition; `spec` is the biconditional between membership and an accepted witness whose length is bounded by `witnessBound.eval x.length`.
+- `formal/lean/PCP/Theorem.lean:25–33`, `np_subset_pcp`, instantiates the concrete polynomial-time relation.
+- Arora–Barak, January 2007 draft, Definition 2.1, PDF page 56 / printed p.2.2 (40), gives the corresponding certificate formulation.
+- Current b0019 already states the intended NP condition. The precise theorem at b0021–b0022 is unaffected.
+
+**Effect:** explicitly supplies a mathematical hypothesis and characterisation already required by the cited native definition. It does not add a theorem or change the proved scope.
+
+**Native-check status:** the actual definition and theorem interface were opened and compared. No Lean source was modified or compiled. The native adoption check requested by the packet should confirm this wording against the existing definition; no proof amendment is proposed.
+
+## Clarifications with mathematical meaning preserved
+
+| Blocks | What changes in the wording | Evidence and unchanged content |
+| --- | --- | --- |
+| b0081 | Replace “Their equality” by an explicit statement that the two certificate identities hold. | The two displayed values are 0 and 1, so their equality is not intended. The calculation and both values remain unchanged. `VanishingCertificate.lean:57–63,76–93` and the supplied finite-example/trace checks support the two identities. |
+| b0091–b0093 | Introduce the field-valued preliminary test; type f and the ordered line index; explicitly compare Lee’s whole-field theorem with ABSSW’s nonzero-parameter version. | `PointLineTest.lean:39–64`, `PointLineSoundness.lean:58–69`, `PointLineConstants.lean:20–48`; ABSSW v2 Algorithm 1 / Theorem 2.12, `preliminaries.tex:227–266`; ALMSS Theorem 45, actual PDF page 27. Keep Q≥10⁶d³, δ≤1/(4·10⁶), distance≤2δ and the same independent whole-field sampling. The new source comparison does not identify its two rejection variables. |
+| b0111 | Identify the source of the stated field-size condition and add the exact source theorem locator. | `GeneratorLowDegreeTest.lean:274–279` has Q>2c for a generator and distance≤2δ when δ<1/[2(c+2)²]. ABSSW v2 Lemma 3.3, `technical_tools.tex:60–79`, uses characteristic two and an absolute-constant multiple of c³. The existing formal statement, nodes, weights and bounds stay intact. |
+| b0146 | Replace the undefined word H by the existing evaluation word H₃(u). | `Hadamard.lean:25–26` defines the evaluation encoding; ABSSW v2 Definition 3.5 and Claim 3.9 explain evaluation and its identities. H remains the grid alphabet throughout. The false linear functional and its product obstruction do not change. |
+| b0147 | Spell out the direct-affine versus corrected-full comparison and the range of factor-degree checks. | `HadamardTest.lean:59–67` compares H(L+R)−H(R) with the direct H(L), for affine L and full-label mask R. Its product checks use an affine factor and a factor of degree at most j for every 1≤j<r. `HadamardSoundness.lean:29–34` gives one message, full error≤δ and affine error≤3δ for δ<1/28. All are preserved. This is not a new test or a second corrected restriction. |
+| b0148, b0154–b0155 | Name the implemented query count, auxiliary label domain and fair-coin choice, with the differing source version beside them. | ABSSW v2 Algorithm 3 / Lemma 3.10, `technical_tools.tex:310–414`, has eight queries; Lee’s `HadamardTest.lean:79–92` has query-list length 2r+4, hence ten at r=3. `ThreeColorVerifier.lean:37–45` and `EncodedLineLowDegreeTest.lean:29–40` use affine auxiliary labels; source §7 uses degree-three labels for colour/difference auxiliaries. `BinaryLowDegreeTest.lean:24–53` is a fair-coin mixture; the source runs both components. No address type, random experiment or query budget is changed. |
+| b0159 | Say that a polynomial’s encoding is close to the bit table, and keep the same witness in the full and homogeneous guarantees. | `EncodedLineLowDegreeSoundness.lean:325–339`. This repairs a type-elision in prose. It does not replace the homogeneous-label guarantee by an affine-label guarantee. Certificate tables of label degree one still have the full affine guarantee. |
+| b0171 | Say “degree at most D” and state the root-count explanation explicitly. | `BinaryLocalCorrectionSoundness.lean:222–236` and the context’s degree bound. The correction event continues to include rejection, with bound C R_a+δ+D/[2(Q−1)], averaged over a uniform homogeneous label. No independence or fixed-target guarantee is added. |
+| b0256 | Rename only the generic address-count exponent from C to C_addr. | The asymptotic resource argument is unchanged; C retains its established local-correction meaning in b0163, b0170 and b0263. The address exponent occurs only in this local bound, so all uses of that object are renamed together. |
+
+The definition timing changes, standard code names, “line index” terminology, exact citations and source-note edits preserve the mathematical objects. Their full details appear in `terminology.md`, `notation.md` and `citations.md`.
+
+## Settled mathematics retained
+
+The cubic label space is retained even though some characteristic-two derived observations have degree at most two. The sharp BCHKS rejection-versus-distance inequality is retained. The fixed-anchor retest, rejection-inclusive corrector bound, fresh masks, independent remaining ZERO seeds conditional on the shared point and label, and all same-polynomial requirements remain. No earlier decision is reopened as a new proof failure.
+
+The old-test counterexample remains a finite illustration plus an ordinary root-bound argument over an unbounded family of fields. It is not relabelled as a theorem of the Lean development. The finite Python checks and exact rational arithmetic do not certify the general PCP theorem.

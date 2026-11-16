@@ -1,0 +1,107 @@
+# Mathematical-content and attribution flags
+
+These are proposed corrections to the frozen exposition, not changes to the Lean development. The packet requires a native check before adopting mathematical changes. The full replacement text is already incorporated in `revised.md` and keyed in `replacements.md`; the flags make that adoption boundary explicit. No new theorem, verifier, query count or parameter regime is proposed.
+
+The first two flags repair local procedure/scope descriptions. The last three are included conservatively because they sharpen a compressed mathematical or historical claim. Ordinary shortening, definition placement and restatement of an already displayed bound are not presented as new mathematics.
+
+## MF-1. Reconstruction requires small rejection, not just closeness
+
+**Blocks:** b0237, b0249. **Type:** missing hypothesis in a standalone exercise and its solution.
+
+**Original scope:** a received table is close to a low-degree polynomial $M$. The solution then concludes $M(X,0)=0$ through an unspecified budget.
+
+**Failure of the unrestricted reading:** let $P=M=1$ and use exact encodings and line data. Their distance from the polynomials is zero, but $M(X,0)=1$. The field-level ZERO check rejects everywhere. The binary ZERO check rejects with probability $1/2$, because its first condition fails exactly for homogeneous labels with $L(1)=1$. Thus even perfect proximity cannot imply vanishing. The missing premise is the small actual rejection guaranteed in the Section 9 contradiction, together with its field and degree conditions.
+
+**Replacement premise:**
+
+> Assume the parameter and rejection bounds of Section 9, and fix the decoded certificate polynomial $M$ from that argument.
+
+**Replacement inference:**
+
+> Under the bounds assumed from Section 9, a nonzero polynomial $M(X,0)$ would force ideal rejection above this error budget. Hence $M(X,0)=0$.
+
+The solution retains the same decoded polynomial, possible rejection by correction, averaging over ZERO's requested targets, and the second certificate identity for the same witnesses.
+
+**Evidence read:**
+
+- `formal/lean/PCP/Algebraic/ZeroOnGridCheck.lean`, `GridVanishing.isCertificate_of_acceptanceRate_gt`, lines 72–89: nonempty $H$, degree bounds for $p,M$, and the field-level acceptance threshold imply both identities.
+- `formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean`, `two_corrector_rejection_bound`, lines 97–112, and the later `rejectionRate_lower_bound`: actual rejection remains in the binary-to-ideal comparison.
+- `formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean`, `colorable_of_rejection_lt`, lines 58–112, together with `ThreeColorSoundnessBudget.lean`: the assembly supplies the small-rejection hypothesis used in Section 9.
+- `formal/lean/PCP/Algebraic/BinaryZeroOnGrid.lean`, `check_encode`, lines 65–72; `Hadamard.lean`, `relativeDistance_linearEncode`, lines 172–180: exact binary behaviour in the counterexample.
+- Current exposition b0203–b0216 already contains the required error budget. This flag restores that scope locally rather than changing the general argument.
+
+**Settled decisions:** preserves N1, N3 and N5. No earlier construction is reopened.
+
+## MF-2. The correction calls the auxiliary low-degree test
+
+**Blocks:** b0188, b0190. **Type:** procedural description that can otherwise identify the wrong test.
+
+**Before:** “Each call also runs the inner row test”; “The syntactic row tests pass”. A reader can take these to mean that the Hadamard row branch runs on every correction call.
+
+**After:** each call runs the **auxiliary low-degree test**, which chooses between row testing and weighted interpolation. On honest data either branch passes. Its queries are still omitted from the table of eight interpolation reads.
+
+**Evidence read:**
+
+- `formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean`, `run`, lines 45–59, calls `BinaryLowDegreeTest.test`.
+- `formal/lean/PCP/Algebraic/BinaryLowDegreeTest.lean`, `test`, lines 38–43, branches on a Boolean choice; `queries`, lines 45–51, follows only that chosen branch.
+- Current b0152 already describes this fair-coin choice correctly. The changed trace wording removes a local inconsistency with it.
+
+**Unchanged:** the verifier, test distribution, displayed data reads, shared inner direction, independent remaining seeds conditional on $x,L$, and the 187-query upper bound. This does not claim a complete enumeration of all test queries in the tiny trace.
+
+**Settled decisions:** preserves N1 and the table-wrap decision, including their explicit omission of inner-test reads.
+
+## MF-3. A false polynomial identity has the stated degree-dependent detection bound
+
+**Block:** b0038. **Type:** conservatively flagged removal of an overgeneral informal sentence.
+
+**Before:** a false identity is detected “with high probability”; it “cannot differ at just one arbitrarily chosen location while both sides retain low degree”. The meaningful condition is the degree relative to the field size. The adjective “low” alone does not specify it.
+
+**After:**
+
+> If the difference between two sides of a claimed polynomial identity is nonzero of total degree at most $d$, a uniform point detects failure with probability at least $1-d/Q$.
+
+**Evidence read:** the preceding b0035–b0036; ABSSW v2, `literature/abssw-v2/tex/preliminaries.tex`, Polynomial Distance Lemmas, lines 87–101, label `thm:odlsz` (Theorem 2.5). The finite-field root bound supplies exactly this estimate. No additional numerical theorem is inferred.
+
+The revised text remains valid when the lower bound is weak or nonpositive; it does not silently assume a high detection probability for every degree. The actual large-field conditions are still imposed in Sections 8–9 and Appendix A.
+
+## MF-4. The introductory NP shorthand includes certificate length
+
+**Block:** b0006. **Type:** explicit scope in the informal lead.
+
+**Before:** “every problem whose proposed solutions can be checked in polynomial time”. The input relative to which this time is polynomial and the admissible witness length are left implicit.
+
+**After:**
+
+> The same statement holds for every decision problem with polynomial-length certificates checkable in polynomial time.
+
+The next sentence still defines the polynomial bound in the input length, and the full theorem and NP definition in Section 2 remain intact.
+
+**Evidence read:** current b0019–b0023; `formal/lean/docs/pcp/reading-guide.md`, Section 3, Languages and NP; `formal/lean/PCP/Theorem.lean`, `PCP.np_subset_pcp`, lines 24–35, with its `InNP Machine.PolyTimeRel L` premise. This aligns the lead with the theorem already being explained. It is not an extension or narrowing of that theorem.
+
+## MF-5. Distinguish the historical constant-query theorem
+
+**Block:** b0008. **Type:** attribution precision; theorem unchanged.
+
+**Before:** the original proofs of “the theorem” are collectively attributed to Arora–Safra and ALMSS without distinguishing their conclusions.
+
+**After:**
+
+> The PCP theorem was originally proved by Arora, Lund, Motwani, Sudan and Szegedy in its constant-query form, building on Arora and Safra.
+
+Both citations remain.
+
+**Evidence read and visually inspected:**
+
+- `literature/originals/arora-safra-jacm.pdf`, PDF page 6, printed page 75, Theorem 1.2.2.1: $\mathrm{NP}=\mathrm{PCP}(\log n,\log n)$.
+- `literature/originals/almss-journal.pdf`, PDF/printed page 5, Section 1.2, Theorem 4: a fixed positive integer query bound $q$ and logarithmic randomness.
+- `papers/short/paper.md`, Section 1: the companion already distinguishes ALMSS's constant-query conclusion from the preceding work.
+
+This is a source-supported account of which result is being cited, not a new priority investigation or a claim about independent discovery.
+
+## Claim-preserving changes checked separately
+
+The following do not alter mathematical content: moving b0160–b0161; defining distance, characteristic two, binary basis and squarefree; replacing “their equality” with “both certificate identities”; defining $\kappa<g$ before the soundness outline; explaining the row-error bound and its averaging; making the label family explicit in Answer 3; and removing the second unrelated use of $C$.
+
+All 53 displayed blocks are retained. In particular the field-size thresholds, strict rejection thresholds, $K,E,S,C$, $\gamma$, $R$, seven query caps and their sum remain unchanged. The two shortened arguments still explicitly retain nonzero correction parameters, zero directions where allowed, fixed certificates, common decoded witnesses and target-averaged correction rejection.
+
+The checks are source readings plus the supplied finite calculations. No Lean source was changed and no Lean compilation, Comparator run or kernel replay was performed in this review.

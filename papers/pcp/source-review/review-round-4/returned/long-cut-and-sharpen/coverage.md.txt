@@ -1,0 +1,273 @@
+# Coverage and evidence record
+
+## Versions and custody
+
+This response concerns only the attached `pcp-review-round3-1a-full-argument-cut-and-sharpen` packet. The baseline files were not edited. The source versions and hashes identify the evidence reviewed; they are not inserted into the paper's prose.
+
+| Item | Exact identity |
+| --- | --- |
+| Packet manifest SHA-256 | `2bd3b59d155c5eed96fa5a68d7155dee989d72acf95099ed83338b797ab1f554` |
+| Primary Markdown SHA-256 | `389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110` |
+| Original long PDF SHA-256 | `481f51cdc0181946eae7c822460b23ef42830a36207c3674b73ad27ac2586f60` |
+| Lean exposition revision | `637867f0340b1554a529f7e2d668e58c782f1e45` |
+| Reader revision | `05d908ead9e700cfd2e7c8d057294fa8ad741e4e` |
+| Retained Lean source revision | `a0ce13ed0fa264f051c1278e039596ce65557fa4` |
+
+The supplied packet checker verified 1,582 manifest-listed files, 23 retained literature PDFs, and all 642 primary block records. This is a custody/content check, not a proof replay. The original PDF checker verified the three supplied papers' page counts and structural link targets.
+
+## Manuscript and contract coverage
+
+- **Primary Markdown:** every block b0001–b0642 was read in order. Three parallel reviewers then owned b0001–b0215, b0216–b0424 and b0425–b0642 respectively, after each had read the complete primary text. The editor reviewed every proposed replacement against its baseline and adjoining mathematical context, assembled the proposed complete manuscript, and reconciled terminology and marker-only cuts. No block is omitted from the disposition file.
+- **Primary PDF:** all 47 original pages were rendered into eight contact sheets and visually inspected at overview scale. The PDF was also text-extracted. This establishes whole-document visual coverage but is not a claim of a new full-resolution typesetting audit. No revised PDF was built.
+- **Specialist companion:** all 148 blocks were read by the editor and the first-chapter reviewer. Other reviewers inspected the ranges relevant to their proofs. It is unchanged in this return.
+- **Worked exposition:** overlapping constructions, examples and theorem interfaces were read, with exact ranges and individual blocks below. Whole-paper mathematical review of this companion is not claimed. A subsequent first-sentence inventory was used only to correct block locators in the redundancy map; it is not counted as reading those whole blocks.
+- **Instruction and evidence files:** `START_HERE.md`, `request.md`, `RETURN_FORMAT.md`, `BASELINE.md`, `BUILD_PROVENANCE.md`, `EVIDENCE_BOUNDARIES.md`, `RECIPIENT_CONTEXT.md`, `literature/READING_ROUTE.md`, and `history/settled-decisions.json` were read. The complete primary text was read before the settled decisions were consulted. Earlier findings are history, not new instructions or newly performed checks.
+- **Writing contracts:** the team applied the complete supplied `contract/humanizer/SKILL.md`, within `contract/formal-math-exposition/SKILL.md` and its `mathematical-writing-mechanics.md`, `the-deliverable.md` and `full-exposition-guide.md` references. Generic instructions about other repositories or future production work were outside this packet's scope.
+
+The settled assembly-first structure, full generator assertion at b0292, clean-rectangle purpose before the kernel, detailed seed/resource accounting and unbounded old-test family remain. No settled decision was reopened on the basis of taste alone. The cofactor flag identifies a local conventional omission in the current explanation; the source already proves the required fact.
+
+## Additional independent comparison of edits
+
+After drafting, the first-chapter reviewer independently read all 57 binary rewrites and the one binary cut against the complete neighbouring baseline context b0425–b0642. The review focused on changed quantifiers, probability spaces, error bounds, undefined objects and proof continuity. No blocking issue was found. It specifically checked the unit-test union bound, weighted-label map, two decoding cases, correction-node condition, both inner correction targets, two-call ZERO experiment and the uniform-point fresh-mask average. This was an additional model comparison of edits, not an outside human review or formal certification.
+
+## Editor's source reading
+
+In addition to the manuscript and contract files above, the editor opened:
+
+- The complete `formal/lean/docs/pcp/reading-guide.md`.
+- The complete `formal/lean/PCP/Algebraic/HadamardTest.lean`, checking exact query-list length and the separate bound on distinct addresses.
+- `formal/lean/PCP/Algebraic/PolynomialMatrixKernel.lean:1–227`, including the cofactor hypothesis and the maximal-minor proof over arbitrary row maps.
+- `formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean:25–43`, the auxiliary address type.
+- `formal/lean/PCP/Algebraic/Hadamard.lean:25–40`, including constant coefficients.
+- `formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean:86–175`, including both explicit 5D applications.
+- `formal/lean/PCP/Algebraic/StandardLocalCorrection.lean:20–55` and a declaration search for `GoodNodes`; the definition itself was also checked by the binary reviewer and independent edit reviewer.
+- The complete `evidence/formal/source-review.md` and `evidence/formal/comparator/receipt.json`.
+- Substantial portions of `literature/abssw-v2/tex/intro.tex` and `low_degree_test.tex`, including the encoded-line theorem and homogeneous/affine distinction. Some combined reads were truncated; whole-file reading is not claimed for these files. The detailed original-source ranges read by the reviewers are listed below.
+- The complete `examples/check_examples.py` and the first 100 lines of `examples/check_changed_cases.py` as source, without executing them.
+
+The editor reread the long-paper intervals initially omitted by truncated output. The same rule was applied by reviewers to their primary-text and writing-contract reads. A truncated search result is not treated as evidence that its complete containing file was read.
+
+## Public research
+
+Public search was used to corroborate the corrected paper's source history and attribution. No personal account, mailbox, correspondence, private research service or live site was inspected or modified.
+
+| Public source | What was actually checked |
+| --- | --- |
+| [ECCC TR26-134 revision record](https://eccc.weizmann.ac.il/report/2026/134/) | Revision 1 dated 22 October 2026; the stated correction to Lemma 3.3 and corresponding tests. |
+| [Corrected ECCC PDF](https://eccc.weizmann.ac.il/report/2026/134/revision/1/download) | The corrected generator-and-weight statement in Lemma 3.3, the following correction result, and acknowledgment of Troy Lee for identifying the earlier error. The acknowledgment is on PDF page 42, printed page 41. |
+| arXiv v2 and the pinned GitHub page | Direct public opens were unavailable through the research service. No claim is made of a successful live read; the complete retained packet originals and pinned source were used instead. |
+
+Searches used both available public search systems. The direct ECCC record and PDF supported the source-history conclusions. The corrected public PDF was not byte-compared with the retained arXiv copy, so no identity of those files or of a later proceedings edition is asserted.
+
+## Checks actually run
+
+These checks were performed in this review:
+
+1. A Python ZIP traversal check preceded extraction of the attachment.
+2. `python tools/check_packet.py` in the supplied packet: passed. It verified the manifest, retained originals, block custody and target presence.
+3. `python tools/check_pdfs.py papers` in the supplied packet: passed. Original page counts are 47, 13 and 25; the supplied PDF file/named-anchor checks passed.
+4. Python/PyMuPDF extracted text from the original long PDF and rendered all pages into eight contact sheets. The editor opened all eight images.
+5. `rg`, `rg --files`, `cat`, `sed -n`, selected `nl -ba` ranges and Python JSON reads located and displayed the source ranges recorded here. Duplicate-screening code used normalized block text and `difflib.SequenceMatcher`; candidate similarity was only a locator, never an editorial finding by itself.
+6. `python work/build_part_one.py`, `python work/build_algebra_review.py` and `python work/make_binary.py` created the three sets of proposed block records. Each reviewer checked ordered coverage and local preservation. Their intermediate local word counts used differing scopes and are superseded by the single full-paper rule in `measurements.md`.
+7. `python work/build_response.py` verified each baseline block's exact byte range and SHA-256, all 642 ordered IDs, permitted actions, nonempty reasons and literal replacement availability; it assembled the revised file without changing intervening bytes. It compared the ordered display mathematics, equation labels and passage markers, and computed full-paper counts with the packet regex.
+8. `python work/write_reports.py` and `python work/write_coverage.py` generated the synthesis from the accepted decisions and source logs. The editor reviewed those reports; the algebra reviewer also checked the three mathematical flags and the report's scope language.
+9. `python work/validate_package.py` checks required files, disposition schema, exact reconstruction from the baseline, unchanged reference definitions and HTTP(S) destinations, unchanged headings, balanced inline/display delimiters in changed blocks, resolving internal/relative links in the portable reading tree, and absence of new em dashes or contrast constructions in replacement prose. It creates and CRC-checks the response ZIP only after those checks pass. Its result is in `package_validation.json`.
+
+The custom scripts above are reviewer working files, not changes to the supplied repository. The final ZIP includes the required editorial records, the integration manuscript, additional machine-readable audit files, and a portable reading copy with unchanged companion Markdown and original figures. It does not redistribute the literature shelf or Lean source.
+
+## What was not assessed or run
+
+- No Lean compilation, theorem execution, proof modification, Comparator replay or exhaustive dependency audit was performed. The existing Comparator receipt accepted three pinned headline targets in its recorded environment; that earlier result does not validate this review or the prose changes.
+- No example suite was executed in this review. Reading its source is not reported as a passing test.
+- No complete audit of all 23 literature PDFs or all imported machine/linear-algebra modules was attempted. Exact opened ranges are recorded below; untouched bibliography entries were not reverified solely to add citations.
+- No revised native reader/PDF build, pagination measurement, new margin/type-size setting or full-resolution revised-layout inspection was performed. Word savings are measured; page savings are not inferred. The packet supplies the baseline renderer evidence, while this return provides Markdown for native integration.
+- No live site, repository branch, issue, publication or external message was changed. No person was contacted. The three isolated statement-scope proposals remain for the native adoption check specified in the request.
+- This is a model editorial and claim-precision review. It is neither human feedback nor a proof that every unchanged prose argument matches the kernel theorem.
+
+## Reviewer source logs
+
+The following source/range logs record the parallel readers' actual inspection. A file is not counted as read in full merely because a declaration search returned a hit. Paths beginning `PCP/` are beneath the packet's `formal/lean/` directory.
+
+
+### First chapter
+All paths are relative to the packet root unless stated otherwise. File ranges below identify what was inspected, not a claim that the complete containing Lean module was verified.
+
+#### Instructions and manuscript material
+
+- `START_HERE.md`, `request.md`, `RETURN_FORMAT.md`.
+- Entire `contract/humanizer/SKILL.md`.
+- Entire `contract/formal-math-exposition/SKILL.md` and its `mathematical-writing-mechanics.md`, `the-deliverable.md` and `full-exposition-guide.md` references.
+- Entire primary manuscript through all 642 entries of `evidence/blocks-long.json`, in order before history; owned blocks reread during replacement construction and then in adjacent groups.
+- `history/settled-decisions.json`, after that whole-paper read.
+- Entire `evidence/blocks-short.json` (148 blocks).
+- Selected `evidence/blocks-expository.json` sections: b0001–b0089 and b0211–b0290. The initial large output was truncated in the middle; b0070–b0090 and b0211–b0229 were separately reread to recover the relevant overlap. No claim is made to a whole expository-paper review in this subtask.
+- Entire `literature/READING_ROUTE.md`.
+- Entire `formal/lean/docs/pcp/reading-guide.md` (including a separate reread of lines 400–577 after an initial output truncation).
+- Entire `literature/abssw-v2/tex/pcp-verifier.tex` (lines 1–288, in two chunks).
+
+#### Lean source inspected
+
+- `PCP/Verifier/Definition.lean:1–180`.
+- `PCP/Complexity/CostModel.lean:1–121`.
+- `PCP/Algebraic/ThreeColorVerifier.lean:20–120,310–405`.
+- `PCP/Algebraic/ThreeColorSoundnessBudget.lean:1–154`.
+- `PCP/Algebraic/EncodedLineLowDegreeTest.lean:20–115`.
+- `PCP/Algebraic/HadamardDerivedOracle.lean:15–185`.
+- `PCP/Algebraic/ThreeColorVerifierSoundness.lean:20–132`.
+- `PCP/Reduction/FiniteBooleanConstraints.lean:70–213`.
+- `PCP/Reduction/NPThreeColorRuntime.lean:55–120,220–end`.
+- `PCP/Algebraic/Hadamard.lean:1–110,127–195`.
+- `PCP/Algebraic/ThreeColorDecodedSoundness.lean:65–180`.
+- Entire `PCP/Complexity/ReferenceNPConverse.lean` and `PCP/ReverseConcrete.lean`.
+- `PCP/Algebraic/SetMultilinear.lean:25–115,131–155`.
+- `rg` results in `PCP/Algebraic/BinaryPolynomialSpace.lean` and `SetMultilinearDecode.lean`; these were symbol searches, not full-file reads. The latter search located `natDegree_decode_le` at 65–78.
+
+No public browser search was performed by this subtask; the root reviewer handles public corroboration. No private service, correspondence, account search or site modification was used.
+
+### Commands and checks actually run
+
+The review used `tools.exec_command` through `functions.exec` for local reads and Python construction. The command families were:
+
+- `cat` for the brief files, `RETURN_FORMAT.md`, complete short Lean modules and contract/reference text where small enough.
+- `sed -n 'start,endp'` for the long contract files, literature source, reading guide and the Lean ranges above.
+- Python `json.loads` over the block inventories to read the primary in ordered chunks `[0:110]`, `[110:216]`, `[216:320]`, `[320:425]`, `[425:538]`, `[538:]`; to reread owned chunks `[0:77]`, `[77:145]`, `[145:215]`; and to inspect specific long/short/expository passages.
+- `rg -n` for `homogeneousIndex`, `linearEncode`, `encode_homogeneous`, degree/encode/decode declarations, `D_1` (no existing occurrence), and the theorem names used for the uniform program and class equivalence checks. A few long search results were bounded with `head -n`.
+- `python work/build_part_one.py` constructed `part_one.json` from the immutable block inventory and literal proposed replacements. This script also checks complete ordered coverage, allowed actions, and absence of em dashes in replacement strings.
+- Python wrote `work/part_one_preview.md` for adjacency review and checked equality and order of the 54 original passage markers, even `$` delimiters in replacements, and that all 56 `display_math` blocks remain unchanged.
+- Python `difflib.SequenceMatcher` measured per-block gross additions and removals with the tokenization stated above.
+
+The working script and preview are intermediate reviewer aids, not additional requested deliverables. There was no Lean invocation, repository mutation, native test run, reader build or HTML visual inspection in this subtask. The edits concern the primary prose; low-level machine simulations, compiler internals and complete imported formal modules were not independently re-proved or exhaustively audited.
+
+### Algebraic chapter
+#### Packet instructions and writing contracts
+
+Read completely: `START_HERE.md`, `request.md`, `RETURN_FORMAT.md`, `contract/humanizer/SKILL.md`, `contract/formal-math-exposition/SKILL.md`, and its references `the-deliverable.md`, `mathematical-writing-mechanics.md`, `full-exposition-guide.md`. Read `literature/READING_ROUTE.md`. Read the settled-decisions file only after the full primary Markdown. No earlier review was treated as a new instruction.
+
+#### Manuscripts
+
+- Primary: all b0001-b0642, read through `evidence/blocks-long.json`, including rereading the interval omitted by an initially truncated tool output. Owned range b0216-b0424 read again for all four passes and exact replacements.
+- Specialist: b0061-b0108, covering the generator test, point-line contract, correction and ZERO overlap.
+- Worked exposition: the retrieved overlapping blocks b0039, b0043, b0061, b0082, b0084, b0091-b0093, b0105, b0108, b0111-b0112, b0159, b0163, b0166, b0186, b0193, b0195, b0199-b0200, b0203, b0217-b0218, b0237, b0248, b0264, b0279, b0286-b0287, b0292.
+- This subagent did not independently inspect the primary PDF's pagination or page layout. Parent owns the final global PDF and manuscript coverage account.
+
+#### Original literature and TeX
+
+- `literature/abssw-v2/tex/preliminaries.tex`: lines 85-170, including active Fact 2.7; lines 227-266, the lines-table test and theorem. The commented earlier characterization was distinguished from the active text.
+- `literature/abssw-v2/tex/technical_tools.tex`: lines 50-115, including Lemma 3.3, the Rubinfeld–Sudan/Kaufman–Sudan attribution at line 83, and standard correction. These ranges were reread after an earlier oversized combined output was truncated.
+- `literature/originals/friedl-sudan.pdf`: PDF page 2, visually inspected, including Lemma 4 and its characteristic-dependent hypothesis.
+- `literature/originals/kaufman-sudan.pdf`: original-PDF text on PDF pages 4-5 read, including Definition 2.5 and Theorem 2.9; PDF page 3 also visually inspected. The provided text extraction was used to locate these passages, with the original PDF governing.
+- `literature/originals/almss-journal.pdf` and `literature/originals/arora-safra-jacm.pdf`: searched with PyMuPDF for theorem/lemma locations and some pages rendered. No claim is made here of independently checking their complete proofs. Existing ALMSS and Arora–Safra attributions are preserved; no new claim about their conclusions was introduced.
+- `literature/abssw-v2/tex/low_degree_test.tex`: locator searches only; no claim of full reading.
+
+#### Lean and formalization guide
+
+Read the relevant chapters of `formal/lean/docs/pcp/reading-guide.md` through sections 1-9, including rereading lines 300-560 after a truncated first output. No claim of reading beyond that range.
+
+Substantive source ranges read:
+
+| File under `formal/lean/PCP/Algebraic/` | Range and purpose |
+|---|---|
+| `PolynomialMatrixKernel.lean` | Full file, lines 1-277: cofactor construction and maximal-minor argument. |
+| `GeneratorLowDegreeTest.lean` | Lines 270-305; earlier node, weight and threshold declarations located with rg. `exists_close` is at 274. |
+| `WeightedConstraintSoundness.lean` | Lines 126-180; correction and prediction declarations located with rg. |
+| `BivariateAgreement.lean` | Full file, lines 1-167: exact rectangle count and arbitrary-approximant theorem. |
+| `BivariateCleanRectangle.lean` | Lines 140-245: certificate row equality, clean-row count and zero-column bound. |
+| `BivariateAgreementBoost.lean` | Full file, lines 1-119: row-distance and 4ε boost. |
+| `BivariateCrossingSoundness.lean` | Full file, lines 1-56: nearest crossing contract. |
+| `CandidateCrossing.lean` | Full file, lines 1-91: candidate-row variant. |
+| `PointLineCrossing.lean` | Lines 25-130: finite-index transverse distance and polynomial crossing ingredients. |
+| `PointLineEndpointConsistency.lean` | Lines 70-128: fixed u,t and random v endpoint bound. |
+| `RuledSurfaceRigidity.lean` | Full file, lines 1-113: fixed Q and quantitative five-error budget. |
+| `PointLineConstants.lean` | Full file, lines 1-74: all numerical constants and sufficient inequalities. |
+| `PointLineSoundness.lean` | Lines 25-87: complete all-dimension contract and degree-zero branch. |
+
+Also located declarations with rg in `PointLineParameterError.lean`, and used the guide's contract descriptions. No separate full-source-reading claim is made for this file.
+
+#### Commands and mechanical checks
+
+- `rg` and `rg --files` to locate source files, declarations, hypotheses and original PDFs.
+- `cat`, `sed -n` and selected `nl -ba` ranges to read the contracts, Markdown and exact Lean/TeX locations listed above.
+- Python `json` to read all primary block records and selected companion records; normalized comparisons using `difflib.SequenceMatcher` to screen the owned range for companion duplication.
+- Python/PyMuPDF to search original PDF text and render located pages. `view_image` used for the stated visual inspections.
+- `python /workspace/scratch/d8bd2677efc7/work/build_algebra_review.py` to generate `algebra.json`, the revised excerpt and word counts.
+- A Python validation checked all 209 consecutive IDs, exact preservation of HTML passage markers, unchanged display-math blocks, absence of em dashes in replacement text and absence of “not ... but” constructions.
+- `sha256sum papers/long/reasoning-record.md` confirmed the unchanged baseline hash `389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110`.
+
+No Lean build or replay was run. No proof was newly formalized. No human review, author endorsement or complete independent verification is claimed. No private account, external correspondence or publication action was used. Public web research, global coverage and persistence are the parent's responsibility; this subtask's source checks used the packet.
+
+### What must survive integration
+
+- All hypotheses, constants, probability domains and quantifiers in the theorem statements and all displayed formulae.
+- The complete b0292 assertion; the strict-to-closed threshold comparison; the generator and nonzero Lagrange-weight choice.
+- The distinction between listed queries and distinct queried locations in b0264.
+- The zero-dimensional and degree-zero cases, and the empty-grid qualification for bounded certificates.
+- b0322's explanation of why the clean rectangle is sought before introducing the locator matrix.
+- The proof that the locator is nonzero; coefficient-degree bounds; the exact row counts; the formal-row versus evaluation-distance distinction.
+- The all-field parameter distribution, arbitrary oriented line-table entries, arbitrary nearest-tie choices, candidate-row variant, five individual surface-error estimates and numerical budget.
+- The same previously chosen Q for every target parameter, and the all-row extension determinant argument in the cofactor proof.
+- All passage markers and all reference definitions in b0424.
+
+### Binary chapter
+Packet manifest SHA-256: **2bd3b59d155c5eed96fa5a68d7155dee989d72acf95099ed83338b797ab1f554**.
+
+#### Instructions and primary reading
+
+Read completely: START_HERE.md, request.md, RETURN_FORMAT.md; the complete primary papers/long/reasoning-record.md before history, followed by every owned block in evidence/blocks-long.json; contract/humanizer/SKILL.md; contract/formal-math-exposition/SKILL.md; its the-deliverable.md, mathematical-writing-mechanics.md and full-exposition-guide.md; literature/READING_ROUTE.md; history/settled-decisions.json. The first-round long findings were inspected for their specific findings and dispositions. An initially truncated humanizer portion was reread separately.
+
+The final owned excerpt was read consecutively after replacement assembly. Its one truncated middle portion, b0540–b0555, was then printed and read separately. The excerpt is an intermediate file, not an additional requested deliverable.
+
+#### Lean source actually opened
+
+All files below are under formal/lean/PCP/Algebraic/.
+
+| File | Coverage and purpose |
+| --- | --- |
+| SetMultilinearDecode.lean | Full file. Substitution degree bound for arbitrary Q. |
+| SetMultilinear.lean | Lines 25–155. Variables, encoding, evaluation map, formal recovery, injectivity and degree. |
+| StandardLocalCorrection.lean | Full file; lines 12–27 revisited. Exact node predicate and consequence of a generator. |
+| BinaryStandardLocalCorrection.lean | Full file; lines 85–101 revisited. Query count, exact correction, direction/label-averaged failure. |
+| HadamardDerivedOracle.lean | Lines 55–205. Encoded answer, fixed-row error, arbitrary labels, uniform-point average and downstream coupling. |
+| DerivedZeroOnGridSoundness.lean | Lines 178–277. Actual derived experiment, transfer and multiplied-loss inequality. |
+| BinaryLocalRowDecoding.lean | Full file, 1–178. Small/large rejection cases, same-Q witnesses and finite-family averaging. |
+| BinaryLowDegreeTest.lean | Lines 15–82. Product seed, fair-coin branch and interpolation decision used to clarify the sampling sentence. |
+| BinaryLagrangeConstraint.lean | Lines 15–100. Weighted binary check, encoded residual and query list. |
+| HadamardSoundness.lean | Full file, 1–84. Unit forcing, top-product use and same-message conclusions. |
+| HadamardWeights.lean | Lines 116–156,185–214 and declaration search. Nonzero scalar label permutation and zero-safe distance bound. |
+| HadamardRowDecoding.lean | Lines 28–60,90–139 and declaration search. Two row cases and simultaneous field-valued choice. |
+| HadamardTest.lean | Lines 59–99 and declaration search. Actual checks, exact list length and distinct-address bound. |
+| BinaryLocalCorrectionSoundness.lean | Lines 222–353 and declaration search. Failure proof and full-affine conversion. |
+| EncodedLineLowDegreeSoundness.lean | Lines 245–361 and declaration search. Decoded table and final two-metric result. |
+| BinaryZeroOnGridSoundness.lean | Lines 210–359 and declaration search. Fixed-target call bound, two-call averaging and actual lower bound. |
+
+The formal reading guide was opened but its full output was truncated. Treat that as partial inspection, not a complete source read.
+
+#### Original literature inspected
+
+These are retained original TeX under literature/abssw-v2/tex/, not annex summaries:
+
+- appendix_-_hadamard_test.tex: complete, lines 1–207. BLR result and unit/product/affine-consistency proof.
+- technical_tools.tex: lines 1–64,136–212,311–346,389–415. Set-multilinear definition/recovery, corrected-generator hypothesis, Hadamard definitions/composition, actual v2 test, eight-query count and soundness.
+- low_degree_test.tex: lines 219–251,826–867,941–977, plus full-file keyword/declaration search. Affine-label theorem, decoded-degree explanation, weighted uniformity and correction average.
+- local_correction.tex: lines 1–225. This includes all active prose, algorithm and theorem through line 131; later printed commented-out source was not used as the current theorem.
+- main.tex: acknowledgment at line 64 via targeted search.
+- Relevant passages in pcp-verifier.tex and intro.tex were located by targeted search. These files were not read in full, and no new claim depends only on those hits.
+
+No rereading of all bibliography PDFs is claimed. Unchanged bibliography metadata was not re-audited. The exact formal variants above and retained original v2 support the proposed wording.
+
+#### Companion reading
+
+Short: lines 112–340 and 448–469, plus heading/topic searches. Expository: lines 439–925 and 1550–1650, plus heading/topic searches. Their evidence JSON was queried for exact block IDs of overlaps.
+
+#### Commands and verification
+
+Used rg --files for inventory and rg -n for definitions, theorem names, topics and TeX; nl -ba with sed -n for bounded reads; Python JSON inspection for ordered blocks and literal text; sha256sum for the manifest. Edits were drafted with apply_patch, then generated by python work/make_binary.py. The script checks all 218 IDs in order, literal replacement availability and preservation of every HTML marker in rewritten blocks. A revised excerpt was assembled with Python for the consecutive read.
+
+A final comparison of the complete owned text confirms that all **54 display-math blocks**, **42 HTML passage markers**, and **44 explicit HTTP(S) URLs** are identical and in the same order before and after. All 218 disposition IDs are unique and in source order; the revised text contains no unexpected control characters.
+
+No Lean build, theorem execution, bibliography-wide verification, PDF rendering, browser journey, private connector search or publication was performed by this child. The review does not imply that the prose has been kernel checked.
+
+## Result identities
+
+Proposed primary Markdown SHA-256: `6abcc9e5d3b55b3b68bd1061d5a535495cd20071c9d2f2ebdb5a5007a6f72346`.
+
+Final counts: 23,276 → 21,671 words; 1,605 net words removed; 498 keep, 139 rewrite, 5 cut.

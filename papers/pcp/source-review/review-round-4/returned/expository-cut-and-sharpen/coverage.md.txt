@@ -1,0 +1,152 @@
+# Review coverage and evidence boundaries
+
+Review date: 16 November 2026. Assignment: `pcp-review-round3-3a-worked-exposition-cut-and-sharpen`, primary worked exposition, Lens A. This is a coordinated AI editorial and source review. It is not human feedback, author endorsement, a Lean replay, or a certification of all prose/formal correspondences.
+
+## Frozen input
+
+| Item | SHA-256 |
+| --- | --- |
+| Packet `manifest.json` | `2ce0e27db5bab16296008134d8f677d45b75e23262334ec537e28d366c087590` |
+| Active `request.md` | `52ca6e2ff60ce31cbac7b2efaa812a664a1a02307125667e1f98f04108a9fa05` |
+| Primary `papers/expository/main.md` | `656438f0fb3c5cb516d368ba5b0f6a71d2f97278f3c18e2cb33635dba4a2c532` |
+| Primary `papers/expository/main.pdf` | `003e914580bdc7577a42c498ac2b9b53c67423991c8bdd860bb769fd7362f499` |
+| Revised Markdown | `52bbb5c916100a86589a002806dfc48b6908f9c40e1dd3f1839391f095ef12af` |
+
+The manuscript source is the packet's `lean-exposition` revision `637867f0340b1554a529f7e2d668e58c782f1e45`. The Lean files are the enclosed source at `a0ce13ed0fa264f051c1278e039596ce65557fa4`. These were not replaced by a later upstream tree. The original packet files were not edited.
+
+`python tools/check_packet.py` passed: 1,581 manifest-listed files, 23 retained literature PDFs, 296 primary blocks, source hashes and referenced target presence. This establishes custody and target presence, not mathematical validity.
+
+## Manuscript and contract coverage
+
+- **Primary Markdown:** all blocks b0001–b0296 read end to end before opening settled decisions. Each received a disposition. The integrated revision was read end to end again, with separate checks of mathematical scope and editorial continuity. Local ambiguities introduced by shortening were repaired before delivery.
+- **Primary PDF:** its 25 pages were text-extracted and page structure inspected. Visual inspection was sampled, including pages 1, 5, 6, 16, 17, 24 and 25. The bit-address table and table/check figure were viewed at readable size. This is not a claim to have visually inspected every page or produced a new typeset edition.
+- **Companions:** the specialist manuscript was read for overlap and consistency. The long manuscript was sampled at the theorem, soundness/parameters, reductions, grid certificates, local correction and binary tests. A full-text normalised paragraph comparison was run on both companions. No complete end-to-end long-companion review is claimed.
+- **History:** the current `history/settled-decisions.json` was read after the primary text. The decisions on the continuous example, exact address typing, fixed-anchor failure, characteristic-two squaring, row theorem, optional appendices, palette distinction and table wrapping were preserved. Older review archives were not re-audited.
+- **Active brief and evidence:** `START_HERE.md`, `request.md`, `RETURN_FORMAT.md`, `RECIPIENT_CONTEXT.md`, `BASELINE.md`, `EVIDENCE_BOUNDARIES.md`, `BUILD_PROVENANCE.md`, the block list and current associations were read. The narrative `evidence/formal/source-review.md` was inspected; its pre-existing CI/Comparator claims were not rerun.
+- **Contracts read completely across the review:** `contract/humanizer/SKILL.md`; `contract/formal-math-exposition/SKILL.md`; `references/the-deliverable.md`; `references/mathematical-writing-mechanics.md`; `references/full-exposition-guide.md`. The current packet's restricted review scope takes precedence over unrelated corpus/proof-campaign workflows in the generic material.
+- **Source-owner guide:** relevant definitions, theorem, resource constants and testing comparisons in `formal/lean/docs/pcp/reading-guide.md` were read. This is recorded as selected guide coverage rather than a complete guide audit.
+
+## Governing literature actually read
+
+The supplied original PDF or TeX governed each check. Text extractions were used to locate passages; summaries and search snippets were not treated as proof evidence.
+
+| Source | Location inspected | Role in this review |
+| --- | --- | --- |
+| ABSSW v2, `preliminaries.tex` | Lines 1–134 and 170–216, including low-degree extension, Polynomial Distance Lemmas, weighted interpolation, Lemma 2.9 and Corollary 2.10 | Degree/distance language, grid certificate and label conventions |
+| ABSSW v2, `technical_tools.tex` | Lines 1–145 and 318–411 | Set-multilinear encoding, Claim 3.2 evaluation identity, weighted test/correction, binary basis/encoding, current Hadamard test and eight-query statement |
+| ABSSW v2, `appendix_-_hadamard_test.tex` | Lines 1–165 | The linearity input, corrected unit/affine/product checks, same-message bounds |
+| ABSSW v2, `pcp-verifier.tex` | Lines 8–90 | Honest proof tables and colouring constraints |
+| ABSSW v2, `intro.tex`, `main.tex` | Introduction and acknowledgment at main lines 63–64 | Modern construction's scope, formalisation and correction credit |
+| ABSSW v2, `low_degree_test.tex` | Opening encoding/correction explanation and searched relevant terms | Comparison of exposition with source operation; sampled, not a complete proof review |
+| Arora–Barak, retained January 2007 draft | §18.4.1, PDF pp. 379–381 / printed pp. 18.13–18.15; §19.3.2, PDF pp. 406–407 | Teaching order for fixed request, random masking and dependent uniform queries; theorem/proof boundary |
+| BLR author PDF | §4.2, PDF p. 15 | Self-correction operation and historical attribution |
+| BCHKS PDF | Theorems 1.1/1.2, especially PDF p. 7 | Sharp linearity rejection-to-distance bound |
+| Arora–Safra JACM PDF | PDF p. 6, printed p. 75, Theorem 1.2.2.1 | Logarithmic-query result in the historical chain |
+| ALMSS journal PDF | PDF/printed p. 5, §1.2, Theorem 4 | Constant-query theorem and relation to Arora–Safra |
+
+The remaining shelf was not read in full. No complete literature survey, priority determination, comparison of all PCP constructions, or validation of the unacquired DeMillo–Lipton, Ore or Schwartz sources is claimed. The old-test family argument was read in the current exposition and checked as an ordinary deduction; no new theorem was added.
+
+## Lean files actually opened
+
+These paths are relative to `formal/lean/`. Coverage is at definitions, statements, named proof passages and their immediate consumers; it is not a proof-term audit of each complete file.
+
+### Headline definitions and reduction
+
+- `PCP/Theorem.lean`, especially `np_subset_pcp`, lines 24–35.
+- `PCP/Verifier/Definition.lean`.
+- `PCP/Reduction/NAEThreeColor.lean`, lines 1–240, including `triangle_iff`, `or_iff_two_nae`, `Literal`, `literalVertex` and `direct`.
+- `PCP/Reduction/FiniteBooleanEncoding.lean`, lines 1–97.
+- `PCP/Reduction/FiniteBooleanConstraints.lean`, lines 1–145, especially `orGate_iff`, `Aux`, `clauses`, `pattern_spec`.
+
+### Algebraic sources
+
+All files below are under `PCP/Algebraic/`.
+
+| File | Inspected statement or passage |
+| --- | --- |
+| `GridVanishing.lean` | Grid-vanishing representation and degree context |
+| `VanishingCertificate.lean` | `IsCertificate`, its vanishing consequence, certificate packaging and degree bound, especially lines 56–115 |
+| `ZeroOnGridCheck.lean` | Definitions and `isCertificate_of_acceptanceRate_gt`, lines 20–108 |
+| `PointLineSoundness.lean` | `exists_close_of_small_rejection`, lines 58–69 |
+| `GeneratorLowDegreeTest.lean` | Nodes, weights and `exists_close`, lines 272–292 |
+| `HadamardTest.lean` | Randomness, `testAccepts`, branch properties, query list and length, lines 1–100 |
+| `HadamardSoundness.lean` | Same-message full/affine bounds, lines 29–36 |
+| `HadamardRobustBounds.lean` | Self-correction average, affine restriction and product estimates, lines 24–110 |
+| `Hadamard.lean` | Homogeneous half-distance, lines 136–183 |
+| `BinaryLowDegreeTest.lean` | Test choice and query list, lines 1–80 |
+| `EncodedLineLowDegreeTest.lean` | Combined primary/auxiliary test, lines 32–71 |
+| `EncodedLineLowDegreeSoundness.lean` | Constants and same-polynomial conclusion, lines 45–50 and 325–359 |
+| `BinaryLocalCorrection.lean` | Types, `run`, sample and query list, especially lines 35–84 |
+| `BinaryLocalRowDecoding.lean` | Constant and polynomial-distance conclusion, lines 28–30 and 107–119 |
+| `BinaryLocalCorrectionSoundness.lean` | Constant, failure bound and averaging, lines 26–28 and 219–312 |
+| `BinaryZeroOnGrid.lean` | Encoded check and exact residual condition, lines 20–130 |
+| `BinaryZeroOnGridCorrection.lean` | Two-corrector procedure, lines 1–125 |
+| `BinaryZeroOnGridSoundness.lean` | Coupling and lower bound, selected lines 70–146 and 180–330 |
+| `ThreeColorVerifier.lean` | Proof tables, branch tests and query caps, especially lines 37–45, 114–115 and 319–367 |
+| `ThreeColorVerifierSoundness.lean` | `colorable_of_rejection_lt`, component bounds and assembly, lines 58–112 |
+| `ThreeColorSoundnessBudget.lean` | Gap definition and sufficient inequalities |
+| `ThreeColorGap.lean` | Gap-related source definitions |
+| `ThreeColorParameters.lean` | Honest and decoded degree/field assumptions |
+| `ThreeColorParameterChoice.lean` | Least exponent, grid capacity, field cardinality and volume estimates |
+| `ThreeColorFullFieldSampling.lean` | Exact rejection retention, lines 26–39, 108–121 and 159–178 |
+| `ThreeColorBinaryVerifier.lean` | Proof length and final rejection guarantee, lines 96–104 and 203–243 |
+| `ThreeColorAmplifiedVerifier.lean` | Repetition choice and amplified guarantees, lines 26–39 |
+| `RationalRepetitionBound.lean` | Elementary amplification inequality, lines 26–73 |
+
+An initial attempt to read `ThreeColorVerifierQueryBound.lean` found no such path. The query bounds were then located in `ThreeColorVerifier.lean`; no claim relies on the nonexistent file.
+
+## Commands and computations actually performed
+
+### Input and source inspection
+
+The archive was listed, checked for path traversal and extracted into a separate work directory using Python's `zipfile`. Read-only commands included `rg`, `rg --files`, `cat`, `sed -n`, `nl -ba`, and bounded Python reads of JSON/Markdown. PyMuPDF extracted the primary PDF and rendered selected source pages. Some early combined output was truncated; relevant material was subsequently read in bounded portions, or is explicitly classified as sampled.
+
+The actual custody command was:
+
+```text
+python tools/check_packet.py
+```
+
+### Finite examples
+
+All four scripts were read before execution and run without Python's optimisation flag:
+
+```text
+python3 examples/check_examples.py
+python3 examples/check_exposition_examples.py
+python3 examples/check_trace.py
+python3 examples/check_changed_cases.py
+```
+
+All exited 0 with empty stderr. Their captured outputs **match the packet's retained outputs byte for byte**. They are included under `checks/`, with hashes and scope in `checks/finite_checks.json`.
+
+These runs cover finite field arithmetic, interpolation, the Hadamard example, label counts, conditional masking, fixed anchors, Boolean gadgets, exact resource arithmetic and the one-edge bit addresses. They do not prove the general PCP theorem, the general decoding results or complete correspondence of the prose with Lean.
+
+### Revision construction and validation
+
+Python constructed the integrated text from original block IDs and the explicit edit ledger, counted words using the required regex, generated the diff and full replacement blocks, compared preserved displays/tables, copied unchanged figures/companion reading sources, and recorded existing association quotations. The supplied `verify_response.py` performs the structural checks against the original packet. Its actual execution result is saved in `checks/response_validation.json`.
+
+All **24 manuscript passage-marker pairs** are retained. The reader's **27 association IDs** are a different set: some refer to selected quotations inside those passages. Twenty old quotations no longer match the revised wording exactly. `passage_changes.json` records those cases and preserves the existing target identities. No replacement quotation is falsely declared to be a verified semantic correspondence.
+
+The response also includes a native-layout reading copy at `papers/expository/main.md`, identical to `revised.md`, with the unchanged companion Markdown and figure files needed by its relative links. These companions are provided only for navigation; they are not edited deliverables.
+
+## Public web research actually used
+
+- Opened the authors' [ECCC TR26-134 record](https://eccc.weizmann.ac.il/report/2026/134/). Its revision section confirms acceptance on 22 October 2026 and the correction of Lemma 3.3 with changes to tests.
+- Opened the [author-hosted BCHKS PDF](https://www.csc.kth.se/tcs/projects/publications/bchks.pdf) for its stated linearity bound. The retained original was also visually inspected.
+- ArXiv v2 retrieval returned `DisabledError`; a direct GitHub file retrieval through web search also returned `DisabledError`. The public Princeton draft URL returned 403 in a subtask. The enclosed governing files remained available and supplied the evidence.
+- Search results from mirrors and secondary summaries were discovery leads only. They were not used to justify a mathematical claim. No live source replaced the frozen primary edition.
+
+No mailbox, communication history or private research service was queried. No person was contacted, no external repository was changed, and no live site was published or edited.
+
+## What was not assessed or produced
+
+- No Lean compilation, elaboration, kernel replay, Comparator invocation or independent check of every proof dependency.
+- No new verification of the pre-existing CI run or Comparator receipt. Those are retained input evidence with the packet's own stated limits.
+- No proof that every sentence in the revised exposition is equivalent to a Lean proposition; the inspected correspondences are identified above.
+- No full re-review of the long companion, all 23 source PDFs, older review archives, reader application code or the full 2.4 MB dependency report.
+- No new theorem, improved verifier, smaller query cap, changed constant, new field regime, or priority claim.
+- No newly compiled PDF, revised page count, live-reader regeneration or completed quotation rebinding. Those are native integration tasks after the editorial return is adopted.
+- No claim of human review, source-owner approval or measured reader understanding.
+
+The remaining limits are recorded to distinguish a completed editorial return from a published or newly machine-verified edition. They do not leave any requested response file or primary block undisposed.

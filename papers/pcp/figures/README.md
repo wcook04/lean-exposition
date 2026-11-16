@@ -2,7 +2,7 @@
 
 The [long account's proof map](../long/proof-map.svg) shows selected mathematical
 uses leading to the verifier and its resource bounds. Each arrow names what the
-source supplies: an error bound, fixed witnesses, completeness and soundness, or
+source supplies: an error bound, fixed nearby polynomials, completeness and soundness, or
 resource and reduction guarantees. These arrows are authored
 explanatory relations, not an extracted Lean dependency graph. Bounds (B15),
 (B16) and (B25) are the equation labels in that account. The reverse inclusion
@@ -13,7 +13,7 @@ The [exposition's table/check matrix](../expository/table-checks.svg) records wh
 of the eight physical tables each check may query. The entries follow
 `ThreeColorVerifier.branchTest` and `branchQueries` at the pinned Lean revision
 `a0ce13ed0fa264f051c1278e039596ce65557fa4`. A dot is not a query count. Column 5
-connects the worked example to vertex ZERO; that example omits the inner-test
+connects the worked example to the vertex zero-on-grid test; that example omits the inner-test
 reads and does not execute the complete verifier. Public adjacency is computed
 from the input graph.
 

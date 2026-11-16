@@ -51,8 +51,8 @@ def proof_map():
                       attrib={"aria-labelledby": "map-title map-desc"})
     element(root, "title", id="map-title").text = "From algebraic tests to the PCP theorem"
     element(root, "desc", id="map-desc").text = (
-        "Algebraic tests and binary encodings supply encoded-line soundness. "
-        "Its witnesses and the correction bounds feed the three-colouring verifier. "
+        "Low-degree tests and binary encodings supply soundness of the binary low-degree test. "
+        "Its four nearby polynomials and the local-correction and zero-on-grid bounds feed the three-colouring verifier. "
         "The verifier combines with machine and reduction contracts to give the PCP theorem. "
         "This is a selected mathematical-use map, not an extracted Lean graph.")
     defs = element(root, "defs")
@@ -71,10 +71,10 @@ def proof_map():
                 marker_end="url(#arrow)")
     # Each edge names the particular guarantee used at its destination.
     edge_labels = [
-        (150, 187, "point–line bound", "end"),
+        (150, 180, "point-versus-line", "end"), (150, 196, "bound", "end"),
         (412, 178, "binary error bounds", "middle"),
         (370, 230, "distance", "middle"), (370, 246, "bounds", "middle"),
-        (178, 323, "four fixed witnesses", "start"),
+        (178, 323, "four fixed nearby polynomials", "start"),
         (562, 323, "grid-constraint bounds", "end"),
         (446, 497, "completeness + soundness", "end"),
         (370, 538, "time, randomness", "middle"), (370, 554, "and NP reduction", "middle"),
@@ -82,11 +82,11 @@ def proof_map():
     for x, y, label, anchor in edge_labels:
         text(root, x, y, label, 13.5, text_anchor=anchor)
     cards = [
-        (20, 64, "ALGEBRAIC CHAPTER", "Algebraic testing", "Weighted test; point–line agreement"),
-        (432, 64, "BINARY CHAPTER", "Binary encodings", "Digit substitution; Hadamard tests"),
-        (20, 204, "BOUND (B15)", "Encoded-line soundness", "One polynomial; two distances"),
-        (432, 204, "BOUNDS (B16), (B25)", "Correction and ZERO", "Bounds at prescribed points"),
-        (228, 372, "ASSEMBLED VERIFIER", "Three-colouring", "Four witnesses; seven checks"),
+        (20, 64, "ALGEBRAIC CHAPTER", "Low-degree tests", "Standard; point-versus-line"),
+        (432, 64, "BINARY CHAPTER", "Binary encodings", "Set-multilinear encoding; Hadamard test"),
+        (20, 204, "SOUNDNESS BOUND (B15)", "Binary low-degree test", "One nearby polynomial; two distances"),
+        (432, 204, "BOUNDS (B16), (B25)", "Local correction", "and the zero-on-grid test"),
+        (228, 372, "ASSEMBLED VERIFIER", "Three-colouring", "Four nearby polynomials; seven checks"),
         (20, 512, "IMPLEMENTATION CONTRACTS", "Machines and reductions", "Fair bits; costs; reduction from NP"),
         (432, 512, "ENDPOINT", "The PCP theorem", "Log random bits; constant queries"),
     ]
@@ -108,12 +108,12 @@ def proof_map():
 def table_checks():
     # Adapt table_demo.py's cellText / rowLabels / colLabels table construction.
     # Here the cells record use, not a numeric series; remove its stacked bars.
-    columns = ["1\nColour\nLDT", "2\nVertex\nLDT", "3\nDifference\nLDT",
-               "4\nEdge\nLDT", "5\nVertex\nZERO", "6\nEdge\nZERO", "7\nDifference\ncheck"]
-    rows = [r"Colour $\chi$ · primary", r"Colour $\chi$ · lines",
-            r"Vertex $M_V$ · primary", r"Vertex $M_V$ · lines",
-            r"Difference $\chi'$ · primary", r"Difference $\chi'$ · lines",
-            r"Edge $M_E$ · primary", r"Edge $M_E$ · lines"]
+    columns = ["1\nColour\nLDT\n ", "2\nVertex\nLDT\n ", "3\nDifference\nLDT\n ",
+               "4\nEdge\nLDT\n ", "5\nVertex\nzero on\ngrid", "6\nEdge\nzero on\ngrid", "7\nDifference\ncheck\n "]
+    rows = [r"Colour $\chi$ · points", r"Colour $\chi$ · lines",
+            r"Vertex $M_V$ · points", r"Vertex $M_V$ · lines",
+            r"Difference $\chi'$ · points", r"Difference $\chi'$ · lines",
+            r"Edge $M_E$ · points", r"Edge $M_E$ · lines"]
     uses = [{0, 4, 6}, {0}, {1, 4}, {1, 4}, {2, 5, 6}, {2}, {3, 5}, {3, 5}]
     cell_text = [[label] + ["•" if c in u else "" for c in range(7)]
                  for label, u in zip(rows, uses)]
@@ -132,7 +132,7 @@ def table_checks():
         cell.set_linewidth(0.5)
         cell.set_text_props(color=INK)
         if r == 0:
-            cell.set_height(cell.get_height() * 1.7)
+            cell.set_height(cell.get_height() * 2.2)
             cell.set_text_props(fontsize=10.8)
             cell.set_facecolor("#e9eff2")
         elif c >= 0:
@@ -147,9 +147,9 @@ def table_checks():
             cell.PAD = 0.04
     ax.text(0.0, 0.97, "EIGHT TABLES, SEVEN CHECKS", transform=ax.transAxes,
             fontsize=14, color=INK, va="top")
-    ax.text(0.0, 0.895, "Each dot marks a table the check may query. LDT = low-degree test.",
+    ax.text(0.0, 0.895, "Each dot marks a table the check may query. LDT = binary low-degree test.",
             transform=ax.transAxes, fontsize=10, color=MUTED)
-    ax.text(0.0, 0.09, "Worked trace: check 5 follows the colour bit and two vertex-certificate corrections.",
+    ax.text(0.0, 0.09, "Worked trace: check 5 follows the colour bit and two local corrections of the vertex certificate.",
             transform=ax.transAxes, fontsize=10, color=INK)
     ax.text(0.0, 0.035, "All seven checks must pass. Public adjacency is computed from the input graph.",
             transform=ax.transAxes, fontsize=10, color=MUTED)
@@ -157,13 +157,13 @@ def table_checks():
     dest = FAMILY / "expository/table-checks"
     fig.savefig(dest.with_suffix(".png"), dpi=300)
     fig.savefig(dest.with_suffix(".svg"), metadata={"Title": "Eight tables and seven checks",
-                "Description": "Incidence matrix showing which stored tables each verifier check may query. The worked trace follows vertex ZERO, column five."})
+                "Description": "Incidence matrix showing which stored tables each verifier check may query. The worked trace follows the vertex zero-on-grid test, column five."})
     svg = dest.with_suffix(".svg")
     markup = svg.read_text()
     markup = markup.replace('<svg ', '<svg role="img" aria-labelledby="checks-title checks-desc" ', 1)
     description = ('<title id="checks-title">Eight tables and seven checks</title>'
                    '<desc id="checks-desc">Dots show which physical tables each check may query. '
-                   'Column five is vertex ZERO, the branch illustrated by the worked trace.</desc>')
+                   'Column five is the vertex zero-on-grid test, the branch illustrated by the worked trace.</desc>')
     markup = re.sub(r'(<svg[^>]*>)', lambda m: m.group(1) + description, markup, count=1)
     svg.write_text(markup)
     plt.close(fig)

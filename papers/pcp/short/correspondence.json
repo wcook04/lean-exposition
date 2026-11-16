@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "5190e5a5c2b30bcb07790d99b494213f03f8b71c0063623d24ff33bf8dfb7e25",
+  "content_sha256": "cdfb5593a93718fe05882713ddbd6560984fa1c3c2d70d39cf6448c3e1e53d98",
   "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
@@ -117,7 +117,7 @@
   "passages": [
     {
       "anchor": "pcp-short-abstract",
-      "text_sha256": "ba0f4d13758c088ae71b404fdbce5f55e17c348cb5a9d64571b1704d75d59807",
+      "text_sha256": "f494d21f6b1510c4b5afe28c58333da0dec3efeb3cfeaf80d7ba59a3bc57244f",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
@@ -162,7 +162,7 @@
     },
     {
       "anchor": "pcp-short-theorem",
-      "text_sha256": "47636a0f61566c1f165295b98ec7a0c5c70181187886b0968d4fc689749eaca3",
+      "text_sha256": "15aaa79e6f57cc2f789d48296d423803a154ad613ca3b78524e2ae5e4edac85f",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -209,7 +209,7 @@
     },
     {
       "anchor": "pcp-short-colour-constraints",
-      "text_sha256": "04b5af2b6ff5bb54b1e9789994076d40275de99804969f6d17e06a36eb0dd6cc",
+      "text_sha256": "5f777c84027b5e01a98137f9733b5b4d741fa19776bf6d41ff1b45dddf277850",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
       ],
@@ -220,18 +220,18 @@
     },
     {
       "anchor": "pcp-short-proof-inventory",
-      "text_sha256": "79ae73e2fb7677b99e66ecb1c4545bd0ee14d08f8e0c7409f0ec0d988cfd739c",
+      "text_sha256": "75763dde89335728c761617c6b5d113a7d9dd4468b2b1884f31245d34eb00c07",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.Proof"
       ],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Typed primary and auxiliary tables before the testing argument; arbitrary received functions are distinguished from honest encodings."
+      "rationale": "Typed points tables and lines tables, stored as Hadamard encodings, before the testing argument; arbitrary received tables are distinguished from honest encodings."
     },
     {
       "anchor": "pcp-short-digit-encoding",
-      "text_sha256": "2ba3588f352c79c58324dc572b489e09c27b2c6e18d5c4c96b533d218b7d31f4",
+      "text_sha256": "a3163d9085cc926ee03bd71096f27126d3aacc93d34032c2b9e2d1319dc29e33",
       "claim_ids": [
         "PCP.Algebraic.SetMultilinear.eval_encode"
       ],
@@ -244,7 +244,7 @@
     },
     {
       "anchor": "pcp-short-hadamard-encoding",
-      "text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
+      "text_sha256": "c8b5360095648db86759f9044e1de318ad5b382187bb39937f32c57114085606",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
         "PCP.Algebraic.HadamardComposition.encode_query",
@@ -257,7 +257,7 @@
     },
     {
       "anchor": "pcp-short-weighted-test",
-      "text_sha256": "6d1a2720b1a7f59b73e09bcb27bb3c3b97a636437d37fdcf953ff8c831676a07",
+      "text_sha256": "f29071d492aa31b9c24c5bfcf53be8cf50a2eb982f5ab02d158ed54bd695e686",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
       ],
@@ -270,7 +270,7 @@
     },
     {
       "anchor": "pcp-short-binary-decoding",
-      "text_sha256": "d2bd050feeebb29fb93780d44847b0d30c6b919c256dfeaa958a7359b9798403",
+      "text_sha256": "e434b4a7113c15879a6ce935ae60882c59e8cda3b6662014a0bf32a7e0edc929",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.test_soundness",
         "PCP.Algebraic.Hadamard.testQueries_length",
@@ -292,7 +292,7 @@
     },
     {
       "anchor": "pcp-short-outer-decoding",
-      "text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
+      "text_sha256": "30b799d6dc397fecb513db9e0c3da2860a14f256be6e8c2779bc485b8ff112f3",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
@@ -320,7 +320,7 @@
     },
     {
       "anchor": "pcp-short-outer-correction",
-      "text_sha256": "7cc21b19ca124519631255d45c0a3bf5db296fccadd42118c2ee105a7cb0dcf4",
+      "text_sha256": "708934698e1d1a0d30e250334bfd01d0fba325ec99281043a9ee22a40aa394d2",
       "claim_ids": [
         "PCP.Algebraic.BinaryLocalCorrection.failure_le"
       ],
@@ -330,11 +330,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Fixed target, label averaged; failure includes rejection; depends on rejection at that target and allows arbitrary auxiliary table. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+      "rationale": "Fixed target, label averaged; failure includes rejection; depends on rejection at that target and allows an arbitrary lines table. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
     },
     {
       "anchor": "pcp-short-zero",
-      "text_sha256": "9dd41d5e5df6e045310ae7abec55a9f78ff8a0728deed5d6ce61fc90aaa61cbf",
+      "text_sha256": "a9263bbedcb82a98dc8ef71622296d345a366312b55da1ed0c9eafd6c7e2b89d",
       "claim_ids": [
         "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
         "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
@@ -354,7 +354,7 @@
     },
     {
       "anchor": "pcp-short-assembly",
-      "text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
+      "text_sha256": "de3aa80d2353a6611032be7e39a8490a278a93a75ad94567be32dab08d66b306",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
         "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
@@ -391,7 +391,7 @@
     },
     {
       "anchor": "pcp-short-resources",
-      "text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
+      "text_sha256": "ae1212378c2e7ef1f77dfb0f7d662e4fc1729dc3492b4f184b03c427ee10a437",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one"
       ],
@@ -402,7 +402,7 @@
     },
     {
       "anchor": "pcp-short-complexity",
-      "text_sha256": "cf427e020fe6f9d4b76e2223807166d44075360862d4bf18f517df2d86ccb328",
+      "text_sha256": "de2472a735a73762b5faf9f426f0160fe36520a6d7395eb174fcf83ddb7a42f0",
       "claim_ids": [
         "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
       ],
@@ -415,7 +415,7 @@
     },
     {
       "anchor": "pcp-short-formal-correspondence",
-      "text_sha256": "c42f53b252a75264dfce1ca17020043cd4cd2936136d8398112d086152c63321",
+      "text_sha256": "d74db12015116edb9f73f6a4eca3decdae3646c179fa5d3255de963929379ce6",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -467,7 +467,7 @@
     },
     {
       "anchor": "pcp-short-old-test-counterexample",
-      "text_sha256": "af74104e07fac94b213ea19fcda70bccefc34ad72b3d56f2242610da14aa627e",
+      "text_sha256": "e4ddabb2db2a72991e6040700846e87447ad9f55dea0033f096ec4cab18e1a57",
       "claim_ids": [
         "ordinary:v1-old-test-counterexample"
       ],
@@ -491,7 +491,9 @@
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
     "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
     "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed.",
-    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits."
+    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits.",
+    "Third review round, 16 November 2026 (source-review/review-round-4): results numbered and named, terminology and notation aligned with the cited literature, redundant passages cut. Mathematically sensitive reviewer proposals were checked against the Lean source and the cited literature before adoption; passage-to-claim associations are unchanged.",
+    "Third review round, 16 November 2026 (source-review/review-round-4): results numbered and named, terminology and notation aligned with the cited literature, redundant passages cut. Mathematically sensitive reviewer proposals were checked against the Lean source and the cited literature before adoption; twelve passage-to-claim associations and two reading links were corrected after an association check of all 113 passages (source-review/review-round-4/passage-association-check.md)."
   ],
   "reading_links": []
 }

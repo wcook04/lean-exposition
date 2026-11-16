@@ -1,0 +1,101 @@
+# Specialist paper: cut-and-sharpen review
+
+## Diagnosis and delivered revision
+
+The specialist paper has a sound editorial centre: the rejection-dependent correction bound at a prescribed certificate point. Keep its proof architecture. The useful changes are concentrated around the mathematics: remove immediate restatements, name the objects and probability experiments hidden by compressed phrases, and consolidate credit without weakening attribution.
+
+The delivered revision is **5,961 words**, down from **6,310** under the packet's counting rule, a reduction of **349 words (5.53%)**. It assigns a disposition to all 148 original blocks: 86 keep, 60 rewrite and 2 cut. A rewrite can be as small as one corrected sentence. Every one of the 36 display-math blocks, all 32 passage markers and all six pinned Lean links remains unchanged. Section order, all three tables, bibliography entries and first-page AI disclosure remain.
+
+This is a proposed textual revision. Five groups of mathematical wording changes are isolated in math_flags.md for the native check required by the assignment. Several are clarifications of conventional shorthand; none is presented as a new failure of the PCP construction. The review found no new error in the displayed inequalities it checked against the enclosed Lean statements. Source inspection, a model review and file validation do not constitute a fresh Lean replay or human review.
+
+Use revised.md to read the result end to end. replacements.md contains every replacement in full. block_dispositions.json covers the baseline, in order. The optional edits.json adds baseline hashes and complete replacement strings, and validation.json records the mechanical preservation checks.
+
+## 1. The structural cause of the excess prose
+
+The paper interleaves three tasks: a short proof account, a guide to the full argument, and a record of differences between the implementation and its sources. All three belong here, but some passages perform the same task twice.
+
+The clearest instance is b0074. The paragraph preceding (11) already identifies one degree-at-most-c polynomial; (11) displays both distance bounds and K. The next sentence repeats that entire guarantee. Its useful information comes afterwards: the binary guarantee has no small-rejection premise, because large-error cases use the trivial distance bound. The replacement retains that information and the proof destination. This is a safe cut because it removes a second statement, not the exceptional case needed later at an arbitrary auxiliary row.
+
+The same pattern occurs in the second explanation of the same-row binding, b0077; the unquantified recap after (15), b0105; the final list of implementation differences, b0140; and the duplicate authorship/disclosure sentences in b0141. Their owners are respectively b0076, the quantified assembly in §6, the local statements of each implementation difference, and the first page.
+
+The introduction can be shorter because §3 supplies the actual encodings and §6 proves that the checks recover a colouring. It still needs both resource obstructions: the cost of reading a field symbol and the proof-length cost of encoding a whole coefficient vector. Removing either would obscure why two encodings are used. The revised b0012–b0015 therefore cuts generic transitions while keeping both obstructions and the fixed-witness plan.
+
+No section, subsection or table should be removed. The table of four primary polynomials answers what the received proof contains. The three-domain table distinguishes objects that the argument uses differently. The query table supports the advertised bit-query bound. Their lengths are dictated by the construction; they are not rhetorical lists.
+
+## 2. The precision repairs that matter
+
+### Exact counts and degree bounds
+
+In b0012, “its degree times as many” is inaccurate as an exact count. A degree-at-most-d polynomial is represented by d+1 field coefficients. The revision gives the fixed-width cost (d+1)t over a field of size 2^t. ABSSW v2 itself types the auxiliary line value as F_q^(d+1): intro.tex:27 and preliminaries.tex:225,233. This does not change the asymptotic obstruction.
+
+In b0014, “degree-c polynomial” should read “total degree at most c.” The Lean source proves that bound unconditionally and proves equality only for nonzero inputs: SetMultilinear.lean:149–155. The same upper-bound wording is used when the inner domain is introduced and when the correction theorem refers to P. No degree parameter, honest encoding capacity or decoded bound D is changed.
+
+### Full-label error and homogeneous error
+
+The unqualified sentence in b0060 is too strong. When r=1, the full label domain is affine, and homogeneous error is at most twice affine error. That is both the estimate used in b0070 and the statement of HadamardAffineQueries.homogeneousDistance_le_twice_affine:60–79.
+
+The difficulty for r>1 is lack of a constant comparison independent of t. The revision says exactly that and retains the need to obtain both guarantees for the same decoded value. This preserves the earlier settled distinction among full, affine and homogeneous labels. It does not reopen or replace the repaired row-decoding theorem.
+
+### Typed comparisons and honest-table scope
+
+Several short phrases omit the object actually being compared. A field polynomial U is not a binary table. Its binary encoding is the object close to the received row. Similarly, a corrector's error τ must be measured relative to the encoding of a specified degree-at-most-c polynomial, and a wrong returned bit must mean disagreement with L(U(a)) or L(P(a)).
+
+An affine label can return a parity plus a constant; “selects one bit of that field value” can suggest a coordinate lookup. The revision calls it an affine binary observation. The evaluation rule for stored bits is explicitly limited to an honest row, retaining the arbitrary-table premise for received proofs. These repairs concern b0035, b0037, b0044, b0078 and b0093. The relevant definitions and guarantees are listed in math_flags.md.
+
+### Probability bounds and notation scope
+
+In b0106, the replacement experiment's rejection probability is at most κ+2ε. “Becomes” can be read as equality. The new paragraph explicitly couples the received derived read to exact primary answers while retaining both certificate calls and the remaining randomness. Equation (16) is unchanged, including its coefficient (1+2C) on the derived-read loss. DerivedZeroOnGridSoundness.rejection_transfer:185–198 and rejectionRate_lower_bound:246–277 support this wording.
+
+The reverse-inclusion paragraph also needs a scope reset. By §7, a and b have been used for graph parameters and the digit base, while p has just denoted a reduction's output-length bound. The converse uses the fixed verifier and p,a,b from the opening theorem. Naming that reset avoids changing notation throughout the paper. The concluding witness relation is polynomial-time decidable; the language is the object thereby shown to belong to NP.
+
+## 3. Three distinct correction problems must remain distinct
+
+The word “correction” appears repeatedly because three different distributions are involved.
+
+| Location | Obstruction | Repair that must survive |
+| --- | --- | --- |
+| b0055–b0057 | A requested nonlinear label need not be uniform in the full label space. | Add a fresh full label R and query Q+R and R. Both positions are individually uniform, giving the 2ε bound for every fixed Q. |
+| b0078 | The inner target point is prescribed. | Sample a uniform inner direction and use nonzero interpolation weights; each queried point and weighted homogeneous label has the required uniform marginal. |
+| b0090–b0099 | A global test need not control auxiliary rows at one prescribed outer anchor. | Retest the selected row and charge its decoding error to the corrector's actual rejection probability. |
+
+These are different mechanisms. Combining their explanations into one generic “self-correction handles errors” paragraph would hide which distribution justifies each loss.
+
+For the outer bound, the target is arbitrary, but the homogeneous label is random. The guarantee is averaged over that label and the remaining seeds. It is not a separate guarantee for every fixed label. It also includes rejection as a failure, so a corrector cannot satisfy the guarantee merely by returning accurate answers on a tiny accepted subset.
+
+The root-count term D/[2(q−1)] uses nonzero outer parameters and the exact half-distance property. The two auxiliary-answer replacements and two rejection charges account for C=2+2(c+1)K. The revision leaves the calculation, root-count display and accounting paragraph intact. The average rejection bound in ZERO is charged after averaging over the requested targets; it is not asserted separately at each target.
+
+## 4. What should remain untouched
+
+The main theorem retains its quantifier order: verifier, implementation and resource bounds depend on the language, the proof may depend on the input, and the proof is fixed before the seed. “At most” remains essential for the number of reads on a run.
+
+The algebraic construction retains both grid constraints, the K4/F4 example, the monic-division certificate and its nonzero-quotient degree bound. The example is useful: it distinguishes an edge condition from a valid three-colouring and explains why the vertex constraint exists.
+
+The binary analysis retains the label spaces, the half-distance calculation, the same-value guarantee, the row losses ε, 3ε, 6ε and 28ε, the full multiplicative generator, the three weighted losses, the no-small-rejection case, and all values of K,J,S,C and g_c.
+
+The outer-test list retains the same auxiliary row in its inner test and correction. It keeps whole-field outer sampling, including zero, and independent tester seeds. The inner corrector makes no separate centre query; a zero direction can still cause its ordinary queried points to coincide with the centre.
+
+The assembly retains “Fix these choices” and the final same-witness explanation. These were explicitly retained in the earlier decisions and serve different points of use. The separate explanation of the factor two after (12) also remains. Their repetition is useful.
+
+The resource section retains the sufficient parameter family, the small-N convention, the 187-read bound for one unamplified run, the four-parameter sampling loss of at most a factor 16, repetition against one proof, effective computation and the complete converse argument. No displayed formula is shortened or replaced by a citation.
+
+## 5. Literature, attribution and the appendix
+
+The source comparison supports keeping the theorem-first opening and allocating most proof detail to correction. ALMSS's author-hosted manuscript states its constant-bit verifier guarantee in the abstract and gives an explicit point-versus-line interface before deferring its soundness proof to Appendix A (Theorem 45, PDF p.27). Arora–Safra's abstract and opening distinguish their resource guarantee and its consequences. The present paper is an explanatory reconstruction, so it should preserve that precision of statement without importing their broader research-introduction material.
+
+ABSSW v2's introduction, especially intro.tex:25–39, separates the large-symbol cost from the excessive length of a direct encoding. That is why both obstructions stay in §1. Its discussion of the low-degree line oracle and code concatenation also supports the qualification about recursive PCP composition. The revision does not replace this qualification by an unqualified “no composition” slogan.
+
+The exact primary sources also support the existing historical citations. Friedl–Sudan Lemma 4 supplies the line-to-total-degree implication under its field-size condition. The full-generator argument is a distinct preceding step that establishes the line restrictions. Kaufman–Sudan Theorem 2.9 retains its two-ary independent local formal characterisation hypothesis. BCHKS Theorem 1.2 supports the sharp characteristic-two linearity estimate. No citation is added merely for prestige, and no weaker source result is substituted for Lee's explicit variant.
+
+Appendix A earns its space. It exhibits an obstruction that survives arbitrarily large fields: the old unit-weight test accepts x_1^4 everywhere, while any degree-at-most-two polynomial agrees on at most a 4/q fraction. This separates a failure of the old test's characterisation from an insufficient field-size choice. The revised introduction to the example explicitly names target degree two.
+
+The author acknowledgement is independently visible in the corrected public source: ECCC's 22 October 2026 revision records the Lemma 3.3 correction, and the paper's acknowledgements credit Lee with identifying an earlier error. The explanatory calculation is not attributed to Lee as his particular example and is not represented as a separately formalised theorem. Its scope remains the scalar test; it is not an attack on the complete corrected verifier.
+
+Public source: https://eccc.weizmann.ac.il/report/2026/134/ and revision PDF https://eccc.weizmann.ac.il/report/2026/134/revision/1/download. The source text and exact inspected locations are itemised in coverage.md.
+
+## 6. Companion ownership and adoption order
+
+The full argument owns complete proofs, machine implementation and reductions. The worked exposition owns finite arithmetic, concrete addresses and diagnostic examples. The specialist paper owns a compact but independently readable theorem account and the correction derivation required to assess its soundness mechanism. Shared theorem statements and local definitions should remain in all three.
+
+The near-verbatim field/colour setup is necessary local notation. The same corrector algorithm must also be stated wherever its guarantee is used. No whole companion section is proposed for deletion. redundancy_map.md distinguishes those required repetitions from prose repeated within the specialist paper and records which companion spans were sampled.
+
+Adopt the changes in this order: first check the five mathematical wording groups against their native definitions; then apply the replacements and two deletions against the baseline block hashes; then read revised.md end to end; finally regenerate the owning PDF and reader through the normal publication pipeline. The current response performs the textual review and preservation checks. It does not publish, update the reader, or claim a re-rendered final page count.

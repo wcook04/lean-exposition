@@ -1,0 +1,189 @@
+# Scout: literature writing norms vs the three PCP papers
+
+Abbreviations. **L** = `papers/pcp/long/reasoning-record.md`; **S** = `.../short/paper.md`; **E** = `.../expository/main.md`. **ABSSW** = `packet/literature/abssw-v2/tex/<file>:<line>`. Extractions are in `.../literature/text/`: **ALMSS** = `almss-journal.txt`, **AS** = `arora-safra-jacm.txt`, **AB** = `arora-barak-book.txt`. Line numbers are in the current files. No file was edited. Counts are from grep over the supplied texts only; "no hit" means no hit in those texts.
+
+## 1. Standard genre structure
+
+**Research paper (this area).** ABSSW is the cleanest model, and its shape matches ALMSS/AS.
+
+1. Abstract, one paragraph, states the result and the novelty (`main.tex:42`).
+2. Introduction (`intro.tex:6`). It gives background and why a simple proof matters (`:6-11`), the ingredients of earlier proofs (`:13`, `:15`), "Our result and ideas" (`:19`), a plain-language problem statement for the one hard step (`:27`, low-degree test), the new object (`:31`), comparison with the nearest prior work (`:45`), and a single-paragraph "Organization of the paper" (`:53`).
+3. Preliminaries (`preliminaries.tex:1`). Notation, the standard verifier definition (`:21`), the **PCP Theorem stated once, set off, attributed** (`:46`, "[ALMSS]"), cited imported results as named theorems with locators (`:87` distance lemmas with four citations; `:250` "Low-Degree Test via Lines Table, [ALMSS, Theorem 45]"), and the definition of the lines table (`:103-117`).
+4. Technical sections titled by mathematical content: "Two Encodings" (`technical_tools.tex:1`), "Low-Degree Test over Binary Alphabet" (`low_degree_test.tex:1`), "Local Correction over Binary Alphabet" (`local_correction.tex:1`), "Zero-on-Grid Test over Binary Alphabet" (`zero-on-variety_test.tex:1`), "The PCP Verifier" (`pcp-verifier.tex:1`). Each one has the same internal rhythm. A one-paragraph motivation comes first (`local_correction.tex:8` "Why does the above local correction suffice?"; `technical_tools.tex:162` "Why degree-r?"). Then "Expected Oracles and Queries" (`low_degree_test.tex:28`), the algorithm, a numbered Theorem (`low_degree_test.tex:219`), and a "Proof Overview" (`:254`).
+5. Proofs of the long lemmas are moved to appendices (`main.tex:77-83`), which keeps the main text readable. A full verifier and honest prover are given once as pseudocode (`appendix-full-verifier.tex:1`).
+6. Acknowledgments and references (`main.tex:63-66`).
+
+ALMSS follows the same order: 1 Introduction, 1.2 "Our results" with numbered Theorem 4 (`almss-journal.txt:234-262`), 2 "Proof of the Main Theorem: Overview" (`:289`), 4 "Terminology" (`:765`), technical sections, "7.2 Lines representation of polynomials: Testing and correcting" (`:1410`) with "7.2.1 Low degree test" and "7.2.2 Correcting Polynomials" (`:1429`, `:1497`), and 8.1 "Future Directions" (`:2160`). AS: Introduction (`arora-safra-jacm.txt:53`), Overview (`:396`), technical sections, "5. Two Lemmas About Polynomials" (`:1905`), "6. Discussion" (`:2377`).
+
+**Textbook exposition.** AB ch. 18 states the definition and theorem first ("Definition 18.1 (r,q)-verifier" and "Theorem 18.2 (PCP Theorem [AS98, ALM+98])", `arora-barak-book.txt:17706-17722`), then motivates, then teaches each tool in a section headed "Tool: ..." (18.4.1 "Tool: Linearity Testing and the Walsh-Hadamard Code", `:18211`). A tool section runs: define the code and its distance, state the natural test, state a numbered theorem (18.23, `:18256`), and give a local decoder with a two-line analysis. It closes with "Chapter notes and history" and "Exercises" (TOC `:520-535`). The local decoder for Walsh–Hadamard (`:16899-16915`) is a short boxed procedure with a three-line analysis, not an inventory.
+
+## 2. What our papers do that the literature does not
+
+| # | Practice | Where in ours | Literature comparison |
+|---|---|---|---|
+| a | No numbered or named theorem/lemma/definition environments. L has 0 `**Theorem/Lemma/Definition/Claim**`; 6 bold run-in statements (L:738, 758, 776, 816, 1009, 1142); S has one (S:16); E has 0 formal ones. Cross-reference is by equation tags (L: A1-A30, B1-B25; S: 1-22; E: none) or "the decoding result below" (S:185). | whole of L, S, E | ABSSW numbers every statement and cites it by label (`preliminaries.tex:250`, `low_degree_test.tex:219`); ALMSS numbers Theorems 4, 45, 69 and the PCP text cites them by number. |
+| b | Tables where prose or a short formula is the norm: five tables in L (85, 166, 245, 318, 431), three in S (93, 180, 423), seven in E (161, 286, 425, 787, 827, 963, 1003). | see section 6 | ABSSW has no tables of parameters or counts; it gives one "Choice of Parameters" paragraph (`pcp-verifier.tex:167`). |
+| c | Exact constant-chasing in the main flow: K_c, E_c, S_c, C_c, T_c, g_c with numerals (L:234-239, 301-319); g_4 and delta to 15 digits (L:479-480); 187-query count with a per-check breakdown (L:192-199, S:422-429); seed length formula `35td+32tcm+73t+...` (L:428-446). | L ch. 1, S §4-§7 | ABSSW: soundness "O_c(gamma)" (`pcp-verifier.tex:195-200`); resources as `O(m log q + c m_1 log q + t^3) = O(log n)` and "O(1) calls", then stop (`:169`). |
+| d | Sections titled by process, provenance or reader instruction rather than mathematical content: L:47 "How the proof is organized", L:61 "Reading this account", L:79 "Implementation results used in the argument", L:1344 "Source correspondence and scope", L:1970 "Source and verification account"; S:448 "Formal correspondence and credits"; E:1293 "A reconstruction task and answers", E:1613 "Sources and verification". | as listed | ABSSW/ALMSS titles are noun phrases naming the object (see section 1); provenance goes in a citation or the acknowledgments (`main.tex:63`). |
+| e | Section titles that are sentences or questions: S:112 "Why two encodings are needed", S:188 "What the low-degree tests supply", S:280 "Correcting the nonuniform certificate queries", S:343 "One decoding for all seven checks"; E:50 "Why checking a few edges is not enough", E:151 "Why polynomial tables can reveal a hidden defect", E:1079 "Why the accumulated errors still leave a gap". | as listed | Question form occurs only as run-in paragraph heads inside a section (`local_correction.tex:8`, `technical_tools.tex:162`, `low_degree_test.tex:472`). |
+| f | Meta-commentary about the formalization, versions and AI authorship inside the mathematics. L has 103 occurrences of "formaliz*" and 63 Lean link definitions (67 inline uses); S:30, 221, 232, 277, 418, 433; E:33-35, 1018, 1628-1639. Examples: "the formal implementation uses degree-one labels" (L:172); "the formal proof uses exact ..." (L:188); "The v2 algorithm uses only the top-degree product check and has eight queries" (S:221); "No claim of independent human review ... is made" (E:1638). | throughout | ABSSW mentions Lean once in the introduction (`intro.tex:9`) and AI use once in the acknowledgments (`main.tex:63-64`). Differences between versions are a footnote or erratum, not running text. |
+| g | Repeated roadmaps. The same plan is given in the abstract (S:10), S:36-38, S:109, L:47-60, L:98, L:242-250, L:718-721, L:1386-1392, E:43-46, E:839-845. | as listed | One roadmap: ABSSW `intro.tex:53`; ALMSS section 2. |
+| h | Statements of the same theorem in three register-shifted forms. Chapter 1 of L proves global soundness before the tests it uses are stated (L:95-330 vs 718-1940), with forward tags "(B15)", "(B16)", "(B25)" at L:246-248. | L | ALMSS/ABSSW state ingredients first, assemble last (ABSSW `main.tex:54-61`). |
+| i | Notation re-bound between chapters and papers (table below). L:64 and L:1400 apologise for it in prose. | all | ABSSW keeps q, m, d, m_1, D fixed throughout (`pcp-verifier.tex:11-14`). |
+
+Notation conflicts (symbol meaning by paper; ABSSW in last column):
+
+| Quantity | L | S | E | ABSSW |
+|---|---|---|---|---|
+| field size | Q (L:98), q in later chapters (L:723, 1394) | q (S:16) | Q (E:170, 841) | q (`preliminaries.tex:46+`) |
+| grid dimension / digit base | d / m (L:98) then m / b (L:723, 1400) | m / b (S:52, 107) | m / b (E:509) | m / m_1 (`pcp-verifier.tex:11-14`) |
+| difference polynomial | Q_* (L:98), Q_P (L:143) | Q_P (S:58) | chi' (E:300+) | chi' (`pcp-verifier.tex`, completeness) |
+| colour extension / certificates | P, M_A, M_B | P, M_A, M_B | chi, M_V, M_E | chi, M_Val, M_Prop |
+| same letter, two meanings in one paper | Q (field size) and Q_* (difference polynomial) both at L:98; E_c constant (L:238) and E adjacency polynomial (L:137, 149) | b: theorem offset (S:19) and digit base (S:34, 107); h=\|H\| (S:52) and h_{u,v} (S:104); L: language (S:16) and label (S:166); R: label (S:171) and R_a (S:289); Q: difference (S:58) and requested label (S:171) | q: query bound (E:101) and Q: field size (E:170); "certificate" = PCP proof (E:13-16, 421) and grid certificate (E:341) | |
+
+## 3. What the literature does that our papers do not
+
+1. **A single notation/preliminaries section fixing symbols once.** ABSSW `preliminaries.tex:1-100` fixes q=2^t, F_q, P_d(m,F_q), delta, delta-close, oracle notation, F_2[Z]^{<=i}, omega. ALMSS section 4 "Terminology" (`almss-journal.txt:765`). Ours: S has none; L fixes notation separately per chapter (L:98, 723, 1394); E introduces symbols in prose as it goes.
+2. **Set-off, numbered theorem statements with citation of the imported source in the heading.** ABSSW `preliminaries.tex:87` (four attributions in the heading), `:250` (named theorem and number). S imports the point-versus-line contract in running text (S:257-265) and attributes it in a following paragraph.
+3. **A proof overview that sits between statement and proof**, in the main text, before the technical lemmas. ABSSW `low_degree_test.tex:254` ("Proof Overview: ... a simulation of TabLDT via encodings Psi and H_r"). Ours: the overview is the chapter intro (L:98) and S:36; neither says, per theorem, what the proof does.
+4. **Motivation of each new object by the task it solves, before its definition.** ABSSW `intro.tex:31` poses the encoding problem as a displayed task (`local_correction.tex:3-5` italic "task" box), then defines. S:30-36 states the obstacle but then defines objects (S:115, 143) under different names from the task.
+5. **A comparison-with-prior-work paragraph and a result-and-ideas paragraph.** ABSSW `intro.tex:19`, `:45`. L/S/E credit sources in a header line and in the closing section (S:453, L:1975) but never say what is novel in the formalization relative to the paper beyond "explicit constants".
+6. **Acknowledgments, references, and for textbooks "Chapter notes and history" and exercises** (AB TOC `:520-535`). Ours have credits and sources (S:448, E:1613) but E's exercises are inside the argument (E:1293).
+7. **Closing remarks / future directions** (ALMSS `:2160`, AS `:2377`). No hits for future, open problem, discussion in L/S/E.
+8. **Algorithm boxes for tests and the verifier** (ABSSW `low_degree_test.tex`, `local_correction.tex:27+`, `appendix-full-verifier.tex`). The seven checks are described only in prose (L:174, S:109, E:1023-1032).
+9. **Standard-name statements of what the test is**: "Syntactic Test" with a displayed task (`technical_tools.tex:242-246`), "Self-Correction" (`:417`). Ours rename these (section 4).
+
+## 4. Terminology: literature vs ours
+
+| Concept | Literature term (source) | Our term (locator) | Verdict |
+|---|---|---|---|
+| auxiliary oracle F_q^{2m}->F_q^{d+1} | "lines table", `defn:lines-table` (ABSSW `preliminaries.tex:103-117`, 21 uses); ALMSS "auxiliary oracle B" (`almss-journal.txt:1418, 1474`) | "auxiliary table", "line table", "encoded line table" (L:163, 172; S:99; E:421, 431) | Coined; "lines table" is the field's name |
+| the proof strings | "proof oracle(s)", "oracle" (ABSSW `intro.tex:27`, `pcp-verifier.tex:16`; ALMSS 3 hits); AB "proof pi" (`:17706`) | "primary table", "tables", "eight tables" (L:158-163; S:90; E:421) | Coined; "table" in ABSSW is only "lines table" |
+| line through x with direction h | "line passing through a with slope b", l_{a,b} (ABSSW `preliminaries.tex:103-104`); ALMSS Def. 43 "line through x with slope h" (`:1425-1430`) | "oriented line (u,v)" (L:172, 1271; S:101, 236; E:789, 865) | Coined; "oriented" has 0 hits |
+| base point of a line | "a" / "x" simply | "anchor" (S:285; E:861-866) | Coined; 0 hits in literature (ABSSW's 2 hits are TikZ) |
+| point/line low-degree test | "line-point test of Rubinfeld and Sudan" (ABSSW `intro.tex:27`); ALMSS "Lines representation... Low degree test" (`:1410-1429`) | "point-versus-line" (L:54, 731, 1131; S:30, 257) | Not found in the 9 supplied texts; use ABSSW's name |
+| low-degree test with weights | "Characterization of Low-Degree Polynomials" Fact (ABSSW `preliminaries.tex:122`); Friedl–Sudan Lemma 4 (`friedl-sudan.txt:120`) | "weighted test", "corrected short low-degree test" (L:836; S:190), "earlier scalar test" (L:1940), "old unit-weight test" (S:459) | "weighted" has 0 ABSSW hits; also scalar/unit-weight inconsistent between L and S |
+| Hadamard code of a field value | "degree-r Hadamard encoding... also known as degree-r long code" (ABSSW `technical_tools.tex:123, 132`); "low-degree long code" (`intro.tex:25`) | "Hadamard row", "row" (L:161, 186; S:101; E:412) | "row" is ALMSS's bivariate term (Def. 67, `:2620`); ours is a different use |
+| index into that code | polynomial R in F_2[Z]^{<=r}, "linear polynomial L" (ABSSW `technical_tools.tex:132-139`, `local_correction.tex:2`) | "label" (L:54, 161; S:92, 101; E:424, 433) | Coined (AB's 70 "label" hits are graph/PCP-reduction contexts, not this) |
+| the polynomials | "multilinear polynomials" (ABSSW `preliminaries.tex:70`) | "squarefree Boolean polynomial" (L:161, 1459; S:101; E:696) | Non-standard |
+| test that H is a code word | "Syntactic Test", "HadTest", BLR linearity test (ABSSW `technical_tools.tex:242`, `appendix_-_hadamard_test.tex:1`; AB `:18211`) | "Hadamard test", "binary row tester", "row test" (L:1510; S:217; E:781) | S/E avoid "syntactic" (E:1009 uses it once without definition) |
+| local correction | "local correction", "self-correction", "SC" (ABSSW `local_correction.tex:1`, `technical_tools.tex:88`); ALMSS "Correcting Polynomials" (`:1497`); AB "local decoding" (`:16507`) | "corrector", "decoded polynomial", "fixed-target correction" (S:10, 244; L:1698; E:862) | "decoded polynomial" has 0 hits in ABSSW; ours mixes decode/correct |
+| vanishing-on-grid check | "Zero-on-Grid Test" (ABSSW `zero-on-variety_test.tex:1, 89`; macro `\vvanish`=ZERO, `macro.tex:71`) | "ZERO" without introduction (L:172, 174; S:320; E:919) | Name is ABSSW's macro; the prose name "zero-on-grid" is not used |
+| grid certificate | "vanishing certificate polynomial M_P" (ABSSW `preliminaries.tex:199-200`) | "certificate" (L:155; S:86) | Match. E also uses "certificate" for the PCP proof (E:13-16) |
+| low-degree extension | "LDE", "low-degree extension" (ABSSW `pcp-verifier.tex:16`, 4 hits) | "colour extension", "grid extension" (L:167, 758; S:52) | Coined |
+| degree reduction | "set-multilinear encoding" Psi, "reverse degree reduction" Phi (ABSSW `technical_tools.tex:11`, `pcp-verifier.tex:11`) | "digit substitution", "digit expansion" (S:34; L:1390; E:438) | S and E also use ABSSW's name (S:115, E:504); three names total |
+| two-query self-correction of a Hadamard word | SC (ABSSW `technical_tools.tex:417`) | "mask", "derived read", "fresh mask" (L:186, 213; S:219, 332; E:929) | "mask": 0 hits in the literature |
+| distance identity | none named | "half-distance identity" (S:183, 223, 246, 300; L:1746) | Coined; (7) at S:153 is unnamed there |
+| verifier parameters | "(r(n),q(n))-verifier", PCP(log n, 1) (AB `:17706`); "(r,l)-standard verifier" (ABSSW `preliminaries.tex:21`) | exact bit count a⌈log2(n+2)⌉+b (L:29; S:19; E:104) | Formal convenience, not field practice; explained at E:120-123 only |
+| prover input | "proof" pi, "correct proof" (AB `:17706`) | "certificate" (E:13-28, 107-114) | E departs from AB; S/L use "proof" |
+
+## 5. Define-before-use
+
+Flag key: **F** = first use precedes definition by more than a paragraph or across a section; **N** = never defined in this paper; **ok** = defined at or before first use.
+
+**L (long)**
+
+| Term | First use | Definition | Flag |
+|---|---|---|---|
+| NP, verifier, seed, address | 19-32 | 19-45 | ok |
+| oracle pi | 44 | 44 | ok |
+| Delta | 64 | 64 | ok |
+| d,m,Q,c,D,Q_* letters | 98 | 98 | ok but Q_* before Q_P (143) and re-bound at 723, 1400 |
+| grid-vanishing certificate | 50 | 155 (theorem "proved in the algebraic chapter") | F |
+| four polynomials, difference check | 58 | 174, 188 | F |
+| label | 54 | 161 (informal), 1459 (formal) | F |
+| homogeneous/affine label | 161 | 161, 1465 | ok (compressed) |
+| Hadamard row | 161 | 161 | ok |
+| squarefree Boolean polynomial | 161 | 1459 | F |
+| primary table, line table | 163 | 163, 172 | ok |
+| oriented line | 172 | none; pair (u,v) only | N |
+| inner point w in F^{cm} | 172 | digit substitution Phi at 1435 | F |
+| ZERO | 172, 174 | 1858 ("the actual ZERO test"); ideal version 1845 | F, named only by use |
+| derived read | 184 | 184, 1900 | ok |
+| mask | 186 | 186 (with "fresh") | ok |
+| weighted test | 54, 232 | 836-856 | F |
+| decoded polynomial | 54, 98, 262 | 1692 | F |
+| GoodNodes | 232 (Lean identifier in prose) | 1698, 1721 | F |
+| K_c, E_c, S_c, C_c | 238 | 238-239 | ok |
+| (B15), (B16), (B25) | 246-248 | 1768, 1797, 1936 | F (forward tags) |
+| g_c, T_c | 308 | 308 | ok |
+| congruence theorem | 199 | none | N |
+| parameter family a, s | 335 | 335-345 | ok |
+| callback | 82 | 87, 517 | ok |
+| point-versus-line, ruled-surface | 54 | 1131-1149, 1259 | F |
+| bivariate agreement | 54 | 1004-1009 | F |
+| plurality correction | 870 | 870-885 | ok |
+| R_a | 247 | 247, 1787 | ok |
+
+**S (short)**
+
+| Term | First use | Definition | Flag |
+|---|---|---|---|
+| fixed-target correction | 10 (abstract) | none | N |
+| seven-check verifier | 10 | 109 | F |
+| difference check | 36 | 109, 346 | F |
+| certificates, witnesses | 10, 36 | 67-86 | F |
+| point-versus-line test | 30 | 257-263 (contract only) | F |
+| digit expansion | 34 | 115 | F |
+| primary table, auxiliary table | 92-99 | 99-101 | ok |
+| oriented line | 101 | pair (u,v) only | N |
+| label | 92 | 101, 143 | F by one paragraph |
+| squarefree Boolean polynomial | 101 | 143 | F |
+| Phi | 107 ("digit-transformed") | 120 | F |
+| inner point | 104-107 | 120 | F |
+| derived read | 175 | 168-175 | ok |
+| mask | 181 (table) | none, fresh label at 171 | F |
+| half-distance identity | 183 | (7) at 153, unnamed | N (name) |
+| weighted sum | 166 | 191-204 | F |
+| plurality correction | 206 | none; pointer to L | N |
+| row tester, inner tester | 217, 223 | descriptions 217-223 | ok |
+| anchor | 285 | none | N |
+| nonuniform | 280 | 283 | ok |
+| ZERO | 320 | 320 | ok |
+| K, J, C, S | 228, 251, 294, 273 | same lines | ok |
+| g_c | 372 | 377-381 | ok |
+| theorem constants a,b,q_0 vs b digit base | 19, 34 | 19, 107 | collision |
+
+**E (expository)**
+
+| Term | First use | Definition | Flag |
+|---|---|---|---|
+| certificate (= PCP proof) | 13 | 24-28 | ok but reused at 341, 419 for a different object |
+| table | 77 | 79-82 | ok |
+| ambient space | 182 | none | N |
+| total degree | 172 | 172-176 | ok |
+| label | 424 (technical) | 433, 608, 821-824 | F |
+| Hadamard encoding | 609 | 604-616 | ok |
+| full-label vs affine-label | 738 | 821-830 | F |
+| squarefree monomial | 696 | 823 | F |
+| primary, auxiliary table | 421 | 421-431 | ok |
+| oriented line | 789 | none | N |
+| anchor | 861 | none | N |
+| corrector | 862 | 870-880 | F |
+| decoded polynomial | 529, 815 | none | N |
+| set-multilinear encoding | 504 | "defined in Section 3.1 of the corrected paper": ABSSW section, collides with E's own Section 3 | F/outside |
+| E, S, C constants | 842 | appendix 1453 ("after the exercises", 844) | F |
+| ZERO | 919 | none | N |
+| mask | 929 | 959, 967 | F |
+| ideal test | 937 | 1089, 1112 | F |
+| syntactic row tests | 1009 | none | N |
+| seven checks | 1023 | 1025-1032 | ok |
+| q (query bound) vs Q (field size) | 101, 170 | 101, 841 | collision |
+
+## 6. Catalogue-like runs and the literature's treatment
+
+| Run | Content | How the comparable literature presents it |
+|---|---|---|
+| L:83-93, table of five "established source results" | five rows, each with 2-3 Lean links | ABSSW cites a theorem inline (`preliminaries.tex:87, 250`); there is no table of imports |
+| L:163-175, S:90-109, E:421-433 | eight tables in a 4-row table plus a seven-check paragraph, three separate times | ABSSW lists the eight oracles once as an `enumerate` of four with the expected form each (`pcp-verifier.tex:16-30`) |
+| L:192-199, S:422-429 | per-check query bounds 2c+18, 2c+14, 2c+18, 2c+14, 6c+20, 6c+20, 3 summing to 20c+107=187 | "O(1) calls to SC, ..., hence O(1) queries" (`pcp-verifier.tex:169`) |
+| L:234-248, 301-319 | constants and a three-row guarantee table, then numerical table K_4...T_4 | ABSSW states "O_c(gamma)" with a proved inequality chain (`pcp-verifier.tex:195-230`) |
+| L:332-379 | parameter family s=2^a, t=12a+32, divisibility, minimality, inequality chain | One "Choice of Parameters" paragraph (`pcp-verifier.tex:167`) |
+| L:401-454 | address-space lengths per table, seed bit exponents per check (table at 430-438), final constants 32,000,000 and 4,224,000 | `pcp-verifier.tex:169`: proof size and randomness as one sentence each |
+| L:473-505 | g_4 and delta to 15 digits, R=1,137,847,282,503,168 | "constant number of repetitions" |
+| L:1344-1384 | source map plus 36 Lean link definitions | footnote or one sentence |
+| S:177-183, E:826-830 | label-domain tables | ABSSW writes one sentence per domain in text (`technical_tools.tex:130-160`) |
+| E:1002-1007 | eight-read worked-example table | Appropriate for a worked example; AB gives Walsh–Hadamard decoding as a two-line computation (`:16899-16915`) |
+| E:1393-1472 | appendix parameter and error-constant calculation | ALMSS/AB place constants inside theorem statements |
+
+Not fully checked: I did not re-derive any mathematics; E sections 4-7 and 9-10 and L 1517-1940 were skimmed by heading and spot-read only.

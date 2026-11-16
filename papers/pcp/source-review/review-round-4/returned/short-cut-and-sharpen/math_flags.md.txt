@@ -1,0 +1,88 @@
+# Mathematical wording flags
+
+These are proposed changes for the native check specified in request.md. They are included in revised.md so the proposed paper can be read end to end. They are not new theorems, proof repairs or claims of a failed Lean development. All 36 display-math blocks are unchanged.
+
+Paths below are relative to the supplied packet. An unqualified Lean filename is under formal/lean/PCP/Algebraic/. ABSSW v2 TeX is under literature/abssw-v2/tex/. The exact full replacement for every affected block is in replacements.md and edits.json.
+
+## MF1 — Coefficient count (b0012)
+
+**Before:** “a line polynomial's coefficient vector takes its degree times as many.”
+
+**Proposed sentence:** “In a field of size $2^t$, a field value takes $t$ bits, and the coefficient vector of a line polynomial of degree at most $d$ takes $(d+1)t$ bits.”
+
+**Content affected:** the exact number of coefficients, d+1 rather than d. The asymptotic bit-cost obstruction is unchanged.
+
+**Evidence:** v2 intro.tex:27 gives the coefficient alphabet $F_q^{d+1}$; preliminaries.tex:225,233 identifies this representation of a degree-at-most-d univariate polynomial. The exact introductory sentence cannot use an asymptotic omission of the additive one as a literal count.
+
+**History:** LIT-02's retained distinction between bit cost and proof length stays in place. This corrects current wording without reopening that allocation.
+
+## MF2 — Upper bounds rather than exact degree (b0014, b0062, b0093)
+
+**Before:** “a degree-$c$ polynomial”; “The inner polynomial has constant degree $c$”; “a degree-$D$ polynomial $P$.”
+
+**After:** respectively “a polynomial of total degree at most $c$”; “The inner degree bound is the constant $c$”; and “Let $P$ have total degree at most $D\ge cb^c$.”
+
+**Content affected:** literal degree equality is removed. Mathematical prose sometimes uses “degree-d” to mean degree at most d; this is conservatively flagged so that convention is not doing hidden work.
+
+**Evidence:** SetMultilinear.lean:149–151, totalDegree_encode_le, is unconditional. Lines 153–155, totalDegree_encode, require P≠0 for equality. GeneratorLowDegreeTest.lean:274–292 concludes totalDegree≤c. BinaryLocalCorrectionSoundness.lean:222–236 has both hP:P.totalDegree≤D and hdecode:c*m^c≤D.
+
+**Native check:** confirm the same upper bounds and the strict honest bound below b^c; no bound is to be replaced by the other. The source's m in the inner encoding is the specialist paper's digit base b.
+
+**History:** the honest/decoded distinction retained under ALG-11 is preserved. The current b0042 already says “at most c”; the change makes the introductory shorthand agree with it.
+
+## MF3 — The missing restriction guarantee is uniform in t (b0060)
+
+**Before:** “Full-label proximity does not by itself control the homogeneous restriction.”
+
+**After:** “For $r>1$, full-label proximity alone gives no bound on homogeneous error by a constant multiple independent of $t$.”
+
+**Content affected:** the old absolute statement is narrowed. When r=1, homogeneous error is at most twice affine/full error. For any fixed finite domain, a restriction bound exists with the reciprocal of the subdomain's relative size.
+
+**Evidence:** HadamardAffineQueries.lean:60–79, homogeneousDistance_le_twice_affine. HadamardRowDecoding.lean:34–54 uses it for the same decoded value. The old paper's own b0070 already uses the factor-two deduction.
+
+**Ordinary diagnostic calculation:** let $d_r(t)=\sum_{j=0}^{\min(r,t)}\binom tj$. The full label space has $2^{d_r(t)}$ labels and its homogeneous subspace has $2^t$. Flip an evaluation word exactly on the homogeneous subspace. Its full error is $2^{t-d_r(t)}$ and its homogeneous error is one. For fixed r>1, the first tends to zero as t grows. This calculation only explains the qualified wording; it is not added to the manuscript as a new result.
+
+**History:** ALG-02's repaired domain distinction remains. The new evidence is the conflict between the current absolute sentence and the retained degree-one inequality; the earlier decoding result is not challenged.
+
+## MF4 — Coupled rejection is an upper bound (b0106)
+
+**Before:** “the rejection term becomes $\kappa+2\epsilon$.”
+
+**After:** “The coupled test has primary distance zero and rejection probability at most $\kappa+2\epsilon$. Applying (15) gives”.
+
+**Content affected:** an exact-sounding substitution is explicitly an inequality. The existing display (16) already used the correct inequality and is unchanged. This is a conservative wording flag, not a repair to (16).
+
+**Evidence:** DerivedZeroOnGridSoundness.lean:185–198, rejection_transfer, and 246–277, rejectionRate_lower_bound. In particular lines 261–264 retain $(1+2C)(\kappa+2\epsilon)$; lines 265–276 transport the bound with a nonnegative coefficient.
+
+**Native check:** preserve the actual fresh randomness and the conditional row error $2\epsilon_x$ before averaging over uniform x. Do not charge the error as merely an unmultiplied $2\epsilon$.
+
+**History:** the conditional averaging added under N02 and the fresh-mask multiplier retained under ALG-14 are preserved.
+
+## MF5 — Honest evaluation and correctly typed proximity (b0035, b0037, b0044, b0078; related b0093)
+
+These are grouped conservatively because the original sentences can be read as mathematical assertions about the wrong objects or with a missing comparator.
+
+| Block | Before | Replacement's precise content | Evidence |
+| --- | --- | --- | --- |
+| b0035 | The stored bit “is its evaluation” after introducing arbitrary received tables. | In an honest row, the stored bit is the label evaluated at the binary coordinates of the encoded field value. | v2 technical_tools.tex:132–151; EncodedLineLowDegreeTest.lean:108–134; b0032. |
+| b0037 | The label “selects one bit of that field value”. | The label specifies an affine binary observation, which can be a parity plus a constant. | Primary (6); the same encoding definitions. |
+| b0044 | A polynomial U is “close to the received row”. | The binary encoding of U is close to that binary row. | BinaryLocalRowDecoding.lean:108–119; SetMultilinearDecode.lean:49–78. |
+| b0078 | “A received row of homogeneous error τ” has no stated reference object. | Its distance is to the encoding of a degree-at-most-c polynomial U; the error event is disagreement with L(U(a)). | BinaryStandardLocalCorrection.lean:89–99, failure_le. |
+| b0093 | Homogeneous distance is described as distance to a field polynomial. | $\Delta_{\rm hom}(f,\mathcal H_1(P))\le\delta$, with failure measured against L(P(a)). | BinaryLocalCorrectionSoundness.lean:219–236. Also covered by MF2. |
+
+The intended definitions elsewhere in the original paper already support all these statements. If the native check classifies them as editorial rather than mathematical, no theorem change is required. They are listed here to make every scope-sensitive repair visible.
+
+## Other clarifications that do not change a proposition
+
+- b0021 names the grid-size condition $|H|^m\ge N$ already meant by “large enough”.
+- b0066 defines the previously named plurality g on the existing inner domain.
+- b0075 and b0092 make uniformity and the independently sampled seeds explicit; the two correction answers still share their inner direction and label.
+- b0079 cites (5), the arbitrary-U degree bound, rather than the honest construction (3).
+- b0100 names the two residuals already displayed in (2).
+- b0113 replaces “appropriate errors” by the full-label and homogeneous-label bounds from (13), for the same four fixed witnesses.
+- b0118/b0120 move the existing premise κ<g_c next to its use; (20) is unchanged.
+- b0129 spells out the existing fixed-parameter treatment of N=0,1.
+- b0135/b0138 explicitly scope p and restore the theorem's p,a,b for the converse; no notation is renamed globally.
+- b0143 identifies the already implicit target degree two; the field family and example are unchanged.
+
+No Lean compiler was run in this review. The native source inspection and ordinary calculations above are not a replay or certification of the complete prose proof.

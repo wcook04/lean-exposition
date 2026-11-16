@@ -1,0 +1,126 @@
+# Integration notes: specialist paper (S), third round
+
+Edited file: `papers/pcp/short/paper.md` (started from `start.md`, edited in place; no commit).
+
+## Word count and guard
+
+- `preserve_check.py base.md paper.md`: words 6,310 -> **6,148** (ceiling 6,150).
+- Markers 32/32, tags 22/22, reference definitions 6/6, URLs 16/16: nothing lost. Marker pairs balanced; no em dash.
+- LOST lines: 8 headings (all renamed, table below) and 8 display equations (all symbol renames, table below). No other loss.
+
+## Conflict blocks
+
+There was no `conflicts.md` and no `b.md` for S (lens B lost). Lens B was done by this editor against DECISIONS Parts 2 to 4, the ABSSW v2 text, Lean, and the 1b/3b citation and statement returns.
+
+## Ledger rows
+
+| Row | Applied |
+|---|---|
+| S-n (b0012) | Adopted: "(d+1)t bits" sentence kept verbatim in §1. |
+| S-o (b0014, b0062, b0093) | Adopted: "total degree at most c" (§1, §3, Lemma 4.1, Lemma 4.3); Theorem 5.1 "P have total degree at most D >= cb^c". b0062 (inner domain F^{cb}) precedes b0066 (plurality definition) as required. |
+| S-p (b0060) | Adopted with ledger wording, two term substitutions: "proximity" -> "a full-label distance bound" (DECISIONS retires "proximity"); "the decoding result below" -> "Lemmas 4.2 and 4.3 below" ("decoding" retired). Homogeneous/full error defined in the preceding sentence. Mathematics unchanged. |
+| S-q (b0106) | Adopted: coupled test has delta_A = 0 and rejection "at most kappa+2 epsilon"; (16) unchanged. |
+| S-r (b0035, b0037, b0044, b0078) | Adopted: honest table stores R at binary coordinates; "affine observation"; "binary encoding close to a received table"; Lemma 4.4 measures error against L(U(xi)). |
+| S-s (b0066) | Adopted: plurality correction g defined over v in F^{cb} in Lemma 4.1, after the inner domain is introduced. |
+| S-t (b0078) | Adopted in Lemma 4.4: no separate query at xi, direction may be zero, each queried point and relabelled label uniform. |
+| S-x | All adopted. b0118/b0120 together: premise kappa < g_c is now the first line of the proof of Theorem 6.1, after (20). |
+| Sampling b0052 | Fixed: "For A of degree at most r and an affine label L, reduction modulo Z_i^2 - Z_i gives ..." (L quantified). |
+| Sampling b0088 | Fixed with the ledger's corrected wording, now in the *Remark (formalization)* after Theorem 4.6 ("For its own tester, [ABSSW26, Theorem 4.1] bounds the distance on all affine labels; restricting such a bound to homogeneous labels can double it, and it is not needed here ..."). Same qualification as long b0555 (L-j). |
+| Sampling b0074 | Lemma 4.3 states q > 2c and uses (10) with the Lemma 4.1 nodes. |
+| Sampling b0140 | Inventory not restored; the differences are in Remark (formalization) paragraphs. |
+
+## Reviewer (2a) edits declined or modified
+
+- 2a review said keep all three tables. The label-domain table became prose (DECISIONS 10); the query-bound table became one sentence in §7; the proof-oracle table is kept (address lookup).
+- 2a b0140 deletion kept; b0141 duplicate credit removed (front matter + closing section carry it).
+- Dropped as non-load-bearing to meet the ceiling: the word-size formula 2^{sum binom} for H_r(u); "Constant query complexity alone would not establish this runtime bound"; the explicit list of formalization differences in the closing section (now a pointer to the remarks); KS08 hypothesis wording "two-ary independent local formal characterisation" (citation kept); the RS96 numbering note and ALMSS "Theorems 45 and 69" annotation in References; "zero-slice estimates" in the long-record pointer; "executable"/"encoded" in the reduction sentence. No hypothesis, quantifier, constant or proof step was dropped.
+
+## Terms changed (old -> new, source DECISIONS Part 2 unless noted)
+
+primary table -> points table; auxiliary table/row/line -> lines table, lines-table entry f'_{u,v}; oriented line -> line through u with slope v, index (u,v); anchor -> base point; centre -> inner point xi; squarefree Boolean polynomial -> multilinear polynomial (label); weighted test -> standard low-degree test; old/unit-weight/scalar test, v1/v2 nouns -> version-1 test, "version 1/2"; binary polynomial tester / inner binary polynomial test -> inner low-degree test; outer test -> binary low-degree test; binary row tester / row test / BLR additivity -> Hadamard test, BLR linearity test; mask / fresh mask / derived read -> self-correction, fresh random label, self-corrected read; inner correction / fixed-target correction -> standard local correction / local corrector; decode/decoded/decoding (for the analysis choice) -> nearby polynomial; colour extension -> low-degree extension; digit expansion / digit-transformed -> set-multilinear encoding (base-b digits kept as explanation); ZERO -> zero-on-grid test (ZERO no longer mentioned); grid certificate -> vanishing certificate; polynomial root bound -> Schwartz–Zippel lemma; proximity -> distance; difference check -> consistency check (source: ABSSW `pcp-verifier.tex:86`, "check that the oracles ... are consistent"; not in Part 2, flag for L and E); exact randomness formula defined in Theorem 1.1. "Walsh–Hadamard encoding" is not used in S (cut for length).
+
+## Symbol renames
+
+| Old | New | Scope |
+|---|---|---|
+| L (language) | \mathcal L | Theorem 1.1 |
+| a, b (randomness constants) | \alpha, \beta | Theorem 1.1 display, converse |
+| q_0 | \ell | Theorem 1.1 |
+| \ell (linear functional) | \varphi | Lemma 3.4 |
+| Q (requested label) | \Lambda | (9), Lemma 3.4 |
+| h_{u,v} | f'_{u,v} | proof paragraph display and all prose |
+| a (inner point) | \xi | Lemma 4.4 |
+| T_v | T_{a,v} | §5 proof incl. the unnumbered display |
+| R_a | \kappa_a | (14), Theorem 5.1 |
+| a (size parameter) | \nu | (21), (22), §7 prose |
+| p (reduction output bound) | p_f | §7 display and prose |
+| affine label \alpha+\lambda\cdot z | \lambda_0+\lambda\cdot Z | label table replaced by prose in Definition 3.2 |
+
+Word stays w (Part 4.1). Each renamed display differs from its base display only in the renamed letters (guard LOST/added pairs: a,b -> alpha,beta; h_{u,v} -> f'_{u,v}; (9) Q -> Lambda, trailing comma kept; (14) R_a -> kappa_a; T_v -> T_{a,v}; (21) and (22) a -> nu; reduction display p -> p_f). Clash not in Part 3: label variables Z_1..Z_t beside the grid polynomial Z_H (ABSSW use the same letters); left as is.
+
+## Definitions moved
+
+- Distance, delta-close, probability convention, line/index/base point, Schwartz–Zippel: new preliminaries paragraph at the start of §2 (were in §3 or undefined).
+- Proof oracles table and lines-table definition: moved from §2 to the end of §3, after labels, Phi and the inner point are defined (base used labels, Phi and "inner point" before definition).
+- Inner point xi: defined in the proof paragraph (§3) before Lemma 4.3/4.4.
+- Nearby polynomial: defined in §1.
+- Homogeneous/full-label "error": defined at the end of §3.
+- Standard low-degree test, inner low-degree test, Hadamard test, binary low-degree test, local corrector, zero-on-grid test: each defined in or immediately before its numbered statement.
+- Seven-check, difference-check names: removed from abstract; §1 no longer names them; the proof paragraph (§3) describes the seven checks with pointers.
+
+## Catalogue passages rewritten
+
+- Label-domain table (base S:177-183) -> Definition 3.2 plus the error paragraph closing §3.
+- Query-bound table (base S:420-429) -> one sentence in §7.
+- Inventory of implementation differences (base b0140, closing) -> Remark (formalization) paragraphs after Theorem 1.1, Lemma 4.1, Lemma 4.2, Theorem 4.5, Theorem 4.6, §7 (two).
+- Proof-oracle table kept (DECISIONS 10).
+
+## Structural changes
+
+- Front matter: italic byline, credit line, one disclosure sentence, labelled Abstract.
+- §1: Theorem 1.1 set off and numbered with credit; Remark (formalization); history; encoding problem; what-is-new paragraph; one roadmap paragraph.
+- Numbered results: Theorem 1.1; Lemmas 2.1, 2.2; Definitions 3.1, 3.2; Lemmas 3.3, 3.4; Lemmas 4.1-4.4; Theorems 4.5, 4.6; Theorem 5.1; Lemma 5.2; Theorem 6.1. Proofs marked *Proof.* / *Proof sketch.* with ∎.
+- (20) moved before Theorem 6.1 (display unchanged).
+- Citations: alphabetic keys with locators inside brackets; References in key order (ABSSW26, ABSSW26v1, ALMSS98, AS98, BCHKS96, BLR93, FS95/13, KS08, Lee26, RS96). ABSSW v1 split into its own entry. All 16 URLs and 6 Lean reference definitions kept; Lean links only in the closing section.
+- Formalization narration moved into Remark (formalization) paragraphs; the implementation paragraph of §7 is now a Remark.
+
+## Renamed headings
+
+| Old | New |
+|---|---|
+| ## 1. The theorem and the encoding problem | ## 1. Introduction |
+| ## 2. Four polynomials and seven checks | ## 2. Preliminaries |
+| ## 3. Why two encodings are needed | ## 3. Set-multilinear and Hadamard encodings |
+| ## 4. What the low-degree tests supply | ## 4. Low-degree tests over the binary alphabet |
+| ## 5. Correcting the nonuniform certificate queries | ## 5. Local correction and the zero-on-grid test |
+| ## 6. One decoding for all seven checks | ## 6. Soundness of the verifier |
+| ## Formal correspondence and credits | ## Formalization and sources |
+| ## Appendix A. Why the corrected weighted test matters | ## Appendix A. The version-1 low-degree test |
+
+Unchanged: Abstract; 7. Resources, implementation and the reverse inclusion; References.
+
+## Passage ids whose wrapped text changed
+
+All 16: pcp-short-abstract, -theorem, -colour-constraints, -proof-inventory (moved from §2 to end of §3), -digit-encoding, -hadamard-encoding, -weighted-test, -binary-decoding, -outer-decoding, -outer-correction, -zero, -assembly, -resources, -complexity (implementation paragraph now a Remark), -formal-correspondence, -old-test-counterexample. Passage order changed only for -proof-inventory. -theorem now also wraps the Remark, history, what-is-new and roadmap. -colour-constraints now also wraps the preliminaries paragraph and the ABSSW letter correspondence.
+
+## Statements and credit checked (lens B substitute)
+
+- Theorem 1.1 credited [AS98, ALMSS98], as long 1b b0005; constant-query credit to ALMSS building on AS (3b b0008).
+- Theorem 4.5 = [ALMSS98, Theorem 45] in Lee's whole-field 2theta form; remark notes [ABSSW26, Theorem 2.12] nonzero parameters and 4theta (1b b0360, 3b b0093). Hypotheses q >= 10^6 D^3 and theta <= 1/(4·10^6) checked against `PointLineSoundness.lean` doc and `PointLineConstants.lean`.
+- Lemma 4.1: [ABSSW26, Lemma 3.3] assumes q > C c^3 (checked, v2 text line 756); Lee q > 2c with generator (remark).
+- Theorem 5.1: `BinaryLocalCorrectionSoundness.failure_le` has hq : 2c < |F|, so q > 2c is stated.
+- Lemma 4.2: 28 from `HadamardRowDecoding.lean`; ten-query vs eight-query from `HadamardTest.lean` and ABSSW Lemma 3.10.
+- Schwartz–Zippel [ABSSW26, Thm 2.5]; low-degree extension [Fact 2.4]; Nullstellensatz [Lemma 2.9, Cor. 2.10]; Hadamard encoding [Def. 3.5–3.6]; half-distance [Obs. 3.8]; plurality [Def. 4.4]; inner test [Lemma 4.3]; standard local correction [Lemma 3.4]; zero-on-grid [Thm 6.1]; binary local correction [Thm 5.1, "cf." since Lee's statement differs]. Letters P, Q_P, A_P, B_P, E, M_A, M_B related to chi, chi', Val, Prop, Ê, M_Val, M_Prop once in §2.
+
+## For the other two papers
+
+- Citation key for Friedl–Sudan: S uses `[FS95/13]` to match L's current list; if L changes it, change S.
+- "Consistency check" for the check f_Q = f_P(x) + f_P(y) is not in DECISIONS Part 2; L and E should use the same name or the orchestrator should pick one.
+- S writes ABSSW's certificate letters as M_Val, M_Prop (ABSSW's own); DECISIONS Part 3 E column writes M_V, M_E.
+- S keeps lines-table labels affine in all four lines tables and states the ABSSW cubic-label difference in a remark; L and E should state the same difference.
+- Lean links from L and E to S headings must follow the renamed-heading table.
+
+## Not resolved
+
+- The ceiling forced removal of some explanatory sentences listed above; all mathematics, citations and links remain.
+- No render (PDF) or mapping-hash refresh was run; the mapping file's passage hashes are stale for all 16 passages.

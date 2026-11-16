@@ -1,0 +1,116 @@
+# Worked exposition: third review, cut and sharpen
+
+## Verdict
+
+The exposition has a strong organising example and a viable mathematical route. The right revision is to shorten the commentary surrounding that route, define the unfamiliar objects earlier, and make the probability statements say precisely what is sampled and what is bounded. A wholesale reorganisation would discard work that is already doing useful teaching.
+
+The integrated revision contains **10,877 words**, compared with **12,336** in the frozen source: **1,459 fewer words, an 11.8% reduction**, using the packet's counting rule. Every one of the **296 original blocks** has a disposition: **181 keep, 108 rewrite, 5 cut and 2 move**. All **53 displayed-mathematics blocks** and **7 tables** retain their contents. The label-domain table moves earlier. Every exercise, worked numerical calculation, and explicit soundness inequality remains.
+
+The most consequential repairs are the missing hypotheses in the reconstruction exercise and the incorrect or ambiguous name of the test omitted from the bit trace. Three further claim/attribution refinements are recorded conservatively with these in `math_flags.md`. None changes the verifier, the theorem, the formal source, or the query constants. The source checks did not reveal a new theorem-level defect in the portions inspected. They are source checks, not a Lean replay or a proof of complete prose-to-Lean equivalence.
+
+`revised.md` is the full replacement manuscript. `replacements.md` gives complete text keyed to original block IDs. The original packet has not been edited. The native claim check requested by the assignment remains the adoption step for the flagged changes; this response supplies the concrete text and evidence needed for that check.
+
+## 1. What the manuscript does well
+
+The continuous example is its principal explanatory contribution. A single vertex condition from a properly coloured edge is followed through:
+
+1. the colour extension $\chi(X)=1+\omega^2X$;
+2. the residual $P(X)=\chi(X)^3-1$;
+3. its factorisation by the grid-vanishing polynomial;
+4. the certificate $M(X,U)=U(X+\omega^2)$;
+5. the line restrictions at the two certificate targets;
+6. the digit encoding of those restrictions;
+7. the actual weighted bit addresses.
+
+The particular off-grid point is valuable. At $x=\omega$, the colouring extension is zero and the residual is one, while the colouring on the vertex grid remains valid. That prevents a reader from confusing a grid condition with an identity requiring the constraint polynomial to vanish everywhere. The two certificate identities then explain exactly how an ambient-space check can certify a condition on a smaller grid. Keep b0064–b0081 and b0180–b0191 as one connected example.
+
+The counterexamples also earn their space. The diluted $K_4$ shows why uniformly checking graph edges fails. The four-colour assignment to $K_4$ shows why the vertex-validity equation is necessary. The corruption of a zero slice shows why global distance does not control prescribed queries. The fixed-anchor example shows why randomising a line's direction does not justify using an average over all line indices. Question 6 shows why a uniform mask must remain uniform after the request is fixed. These are different failures of different inferences; combining them into a generic warning about corrupt tables would lose mathematical understanding.
+
+The elementary reverse inclusion, the full error-budget calculation, and the small Boolean-to-colouring gadget also belong. They let the reader see how local query operations become a complexity theorem. Appendix A keeps the quantitative existence argument available without forcing all its arithmetic into the main route. These choices preserve settled decisions N1–N7.
+
+## 2. The main structural problem: repeated explanation around established steps
+
+The manuscript's redundancies chiefly come from review additions accumulating around good mathematics. A qualification is introduced where needed, repeated in a transition, repeated beside the worked example, and then repeated again when the same step enters soundness. Each individual sentence is defensible; their accumulated effect is to make the reader restart an explanation already understood.
+
+### The opening
+
+b0005–b0009 establish the example, theorem, query model, source and route. b0011 then defines proper colouring and its ordinary certificate again. That entire paragraph is removed. Section 1 now begins with $K_4$, where it has something new to demonstrate. Likewise, b0020 and b0023 both fix the verifier and the certificate-before-randomness order. b0023 now owns that explanation. Neither deletion removes a hypothesis.
+
+The introductory roadmap now names the operation the reader will follow, rather than both promising an eventual ability and announcing the same example. The actual theorem remains fully stated in Section 2. The theorem's quantifiers are not delegated to a companion.
+
+### The passage from correction to soundness
+
+b0177–b0178 explain that corrected answers can be compared with ideal answers just before Section 9 repeats the whole soundness strategy. b0178 is deleted, and b0177 becomes one short bridge to the inequalities. The closing passage marker is transferred to b0177.
+
+Section 9 retains a concise qualitative account in b0198–b0201. Deleting that account would send this audience directly from seven operational checks to a collection of constants. Instead, the outline now introduces $\kappa<g$, names the four decoded polynomials, identifies the difference identity and the two grid conclusions, and then hands the calculation to b0203–b0216. The detailed inequalities retain ownership of the quantitative proof.
+
+b0195 previously retold much of the vertex trace and repeated that adjacency is public rather than a ninth table. It now records only the facts needed beside the diagram: the same auxiliary tables serve testing and correction, the vertex check is the one expanded earlier, and adjacency is computed from the input.
+
+### Resources and the closing material
+
+Section 10 owns the explanation that logarithmic address length implies polynomial proof length. Appendix A owns the actual parameter choice and the estimate $a^3=O(a2^a)$. The second abstract address-count calculation is removed from b0256. This also removes an accidental reuse of $C$: there it denoted an arbitrary address exponent, while elsewhere it denotes a specific correction constant.
+
+The small-example limitation remains beside the trace, and the exact repetition constant remains in Appendix A. The final source section no longer repeats the full small-parameter warning or discusses whether human review occurred. The AI-assistance disclosure remains on the first page. The ordinary-deduction status of the Appendix C family argument remains in the paper; review-process status belongs in this response's coverage record.
+
+## 3. Definitions must arrive before they are needed
+
+The manuscript assumes less background than several of its intermediate statements actually require. The solution is a few short definitions, funded by the cuts above.
+
+The original Section 7 row theorem refers to affine consistency and affine-label error, but the exact label-domain definitions occur in Section 8. b0088 also promises that Section 7 will define those spaces. The revision gives elementary descriptions before the table inventory, then moves b0160–b0161 immediately after b0139. The first row-testing theorem can now be read with the domains in view. Section 8's corruption example names homogeneous labels explicitly and refers back to the table.
+
+Distance is now defined in b0037, before the point-versus-line theorem. Random seed, the asymptotic notation, characteristic two, decoded polynomial, binary basis and squarefree monomial receive concise definitions. These are repeatedly used concepts, so their definitions reduce later explanation rather than create a glossary detour. In Appendix B, OR, negation, literal and the constant-false palette vertex are made explicit. The finite-pattern construction says that each pattern has a fresh flag sequence and defines xor as addition modulo two.
+
+The three label domains remain distinct. A bound on all degree-three labels does not automatically bound the restriction to homogeneous labels: the retained $4/256$ versus $4/8$ example demonstrates precisely that problem. The same-message and same-polynomial clauses stay beside their theorems and their uses. These are necessary hypotheses, not stylistic repetition.
+
+## 4. Precision repairs that matter
+
+### The exercise needs the rejection hypothesis
+
+b0237 supplies a table close to a polynomial; b0249 concludes that the polynomial vanishes on a slice. Closeness does not imply vanishing. For example, an exact encoding of $M=1$ has distance zero but satisfies $M(X,0)=1$. The revision explicitly assumes Section 9's parameter and rejection bounds and fixes the polynomial decoded in that argument.
+
+The source supports this repair. `GridVanishing.isCertificate_of_acceptanceRate_gt` requires the nonempty grid, degree bounds and an acceptance threshold before concluding both identities (`formal/lean/PCP/Algebraic/ZeroOnGridCheck.lean`, lines 72–89). The binary comparison retains actual rejection and correction-failure terms (`BinaryZeroOnGridSoundness.lean`, `two_corrector_rejection_bound`, lines 97–112). The exercise now reconstructs that conditional argument.
+
+### The omitted test is a mixed auxiliary test
+
+b0188 and b0190 call the omitted procedure an inner or syntactic row test. `BinaryLocalCorrection.run` calls `BinaryLowDegreeTest.test`, which chooses between Hadamard row testing and weighted interpolation. The revision uses “auxiliary low-degree test” and states the choice. The eight displayed interpolation reads remain the same, and the omitted queries remain omitted. The correction does not insert a new check or change 187.
+
+### Quantities and antecedents
+
+“Their equality” in b0081 follows the unequal values $M(\omega,0)=0$ and $M(\omega,1)=1$. It now refers to “both certificate identities”. “High probability” in b0038 becomes the available bound $1-d/Q$, with the degree of the nonzero difference stated. “Very close to one” and “rarely” in b0198 become $\kappa<g$ and rejection at most $\kappa$. “Poor auxiliary rows cause rejection” becomes the row-distance inequality followed by averaging at the fixed anchor. These changes identify the existing argument more exactly.
+
+The theorem's early NP description now includes polynomial-length certificates. The historical sentence distinguishes the constant-query theorem of ALMSS from the preceding Arora–Safra result; the specialist companion already uses this more precise relationship. Details and evidence for both changes are in `math_flags.md`.
+
+## 5. Humanizer findings
+
+The principal patterns here are repeated previews and recaps, announcements of the next calculation, vague antecedents, occasional implementation-history vocabulary, and compound descriptions that obscure the mathematical operation. There is little overt promotional language. A word blacklist would miss the real problem.
+
+The revision removes the closing sentence “The additional variables are doing real work” after the five-root obstruction. The obstruction already shows why the added variables matter. “The retained arithmetic gives” is replaced by the rejection lower bound itself. The heading “What the theorem promises” becomes “The PCP theorem”. Teaching-rubric remarks about what a successful reconstruction must demonstrate become direct mathematical questions and answers.
+
+The ordinary mathematical register survives. The revision does not add colloquialisms, a simulated personal voice, new metaphors, or stylistic variation for its own sake. No em dashes or rhetorical “not X, but Y” construction were introduced. `humanizer.md` records the actual located patterns and before/after text.
+
+## 6. Companion overlap and source use
+
+The overlap between the three papers is mainly mathematical and functional. A bounded normalised comparison found no shared complete prose paragraph over 80 characters except credit lines. This does not prove that every repeated idea is useful; it prevents treating shared subject matter as copied padding.
+
+The exposition owns the worked arithmetic and questions. The specialist paper owns a short mathematical account of the verifier and the formalisation's differences. The full account owns the detailed general testing arguments, source correspondences and implementation proof. Each still needs its own precise theorem, core certificate identities and soundness outline. The response therefore proposes no mechanical deletion from the companions and does not edit them. `redundancy_map.md` identifies the relevant sections and their different jobs.
+
+The teaching comparison is operational. Arora–Barak's January 2007 draft, §18.4.1, fixes the requested point before choosing a random mask and explains why the two dependent locations have uniform marginals. The exposition teaches the same operation and adds a useful failure case when request and mask are coupled. The actual PDF pages were inspected. BCHKS Theorem 1.2 supports the sharp linearity-distance attribution; BLR retains credit for the test and self-correction framework. The ABSSW governing TeX supports the grid certificate, digit encoding, correction and current Hadamard variant.
+
+Public research confirmed the corrected version through the authors' ECCC report: [TR26-134, revision of 22 October 2026](https://eccc.weizmann.ac.il/report/2026/134/). The report states that Lemma 3.3 and the tests were corrected. Mathematical checks used the enclosed governing TeX/PDFs and pinned Lean, rather than search snippets. This review makes no priority claim for the old-test counterexample.
+
+## 7. What this adds for a formalisation author
+
+The useful addition to the source author's reading guide is the connection between algebraic statements and the actual encoded observations: what is stored, which address is queried, why that observation is enough, and which error estimate licences substituting its ideal value. The trace and the conditional-sampling counterexamples provide that connection.
+
+The original manuscript would ask the source owner to resolve avoidable questions: does “row test” mean the whole auxiliary procedure; which label family is being averaged; are the two displayed certificate values being called equal; does the exercise quietly assume small rejection? The revision removes those questions or states their premises. It does not ask the source owner to validate a redesigned verifier, improved constant, new theorem or unannounced mathematical optimisation.
+
+That is the appropriate claim about the work's value. This review cannot predict Troy Lee's reaction, claim his endorsement, or establish measured comprehension by readers.
+
+## 8. Adoption order and remaining boundaries
+
+1. Check the five conservatively recorded claim/attribution flags against the cited sources. The two material local repairs concern the exercise premise and the auxiliary procedure's name.
+2. Apply the block replacements and the two specified moves together. The complete integrated source and a unified diff are supplied.
+3. Preserve the existing reader passage IDs. Rebind changed quotations through the native publication tooling; `passage_changes.json` identifies where old quotations no longer match. Existing Lean target identities and evidence status are not upgraded by this response.
+4. Render through the manuscript's normal build and inspect the moved table and page breaks. This return provides Markdown, not a newly typeset PDF; no new page count is claimed. The original PDF's table figure floats between portions of the soundness discussion, which is worth checking at the native rendering stage without changing margins or type size.
+
+The four supplied finite-check scripts passed. The input custody check passed for 1,581 manifest-listed files. The revised source is checked for complete dispositions, retained displays and tables, balanced passage anchors, intact question/answer pairs and the no-growth budget. These checks support this editorial return within the coverage stated in `coverage.md`; they do not certify every theorem dependency or the whole prose/formal correspondence.

@@ -1,0 +1,94 @@
+# Third review, Lens A: cut and sharpen
+
+## Result
+
+This return supplies a complete proposed revision of the primary paper, with a disposition for every baseline block and paste-ready replacements. The revision has **21,671 words**, down from **23,276**, a net reduction of **1,605 words (6.90%)** under the packet's counting rule. There is no net-growth exception. The 498 kept blocks remain byte-identical; 144 blocks have proposed changes. All 173 display-math blocks, 55 equation labels and 146 passage markers survive unchanged and in order.
+
+The main opportunity is to remove repeated explanation of the proof's organisation. The calculations and local hypotheses generally earn their space. The opening gives the route several times; later paragraphs often paraphrase a displayed estimate or defend a limitation that the preceding quantified statement already expresses. Cutting those sentences makes the proof easier to follow without turning the long record into another specialist summary.
+
+The proposed text includes three mathematically sensitive wording or scope repairs, isolated in `math_flags.md`: the affine line-table address label, the repeated-row case in the cofactor explanation, and the generic degree parameter used in the assembly contracts. They require the packet's native semantic check before adoption. They do not change a displayed formula or numerical constant, and this review identifies no new theorem-level defect in the inspected formal statements.
+
+## 1. Give the opening one route through the proof
+
+The original b0016–b0020, b0023, b0029 and opening of b0031 repeatedly describe the assembly-first organisation. The repetition has a structural cause: the introduction, proof map explanation, reading advice, implementation-contract preface and first chapter each try to establish the paper's scope. The reader reaches the construction only after several versions of the same route.
+
+Revised b0017 owns the chapter route. It retains the distinctive mathematical work: bivariate agreement, ruled surfaces, two distances for one decoded polynomial, and correction with the same auxiliary tables. The proof map remains at b0019. The second route paragraph b0018 and the paraphrase below the map b0020 lose their prose; b0031 starts with the chapter's notation. Reading advice at b0023 retains the companions' different purposes and the boundary around imported machine proofs.
+
+The reverse inclusion has the same problem on a smaller scale. Original b0012 gives almost the entire exhaustive-seed argument before b0207–b0211 proves it. The introduction now states the implication and links to the proof. The later proof retains the finite proof prefix, polynomial seed count, simulation, truncation/zero extension and soundness contradiction. The reader loses a duplicate proof, not a reason for the theorem.
+
+This preserves the assembly-first architecture settled in the earlier round. Moving all the algebra before the verifier would undo an established decision without new evidence and would not address this round's actual source of excess prose.
+
+## 2. Distinguish a useful contract from its immediate paraphrase
+
+The assembly's table b0078 repeats conclusions proved later in (B15), (B16) and (B25). That repetition is necessary. It lets a reader check the global proof without interrupting every inference to recover a later theorem. The same applies to degree hypotheses at applications, the actual query inventory, and the identities defining the grid constraints.
+
+The adjacent prose often repeats those contracts without adding an inference. Revised b0079 starts the application directly. Revised b0083 fixes the four witnesses once. Revised b0093 explains each error term and drops its trailing favourable-seed warning, because the distribution and replacement error are already explicit. In the binary chapter, the quantified two-distance displays remain while immediate same-witness recaps are shortened at b0510 and b0529.
+
+This distinction also governs the source correspondence sections. The source comparison at b0422 and the version boundary at b0627 remain. The repeated chapter recap at b0421 and the repeated proceedings-edition disclaimer at b0631 do not need separate occurrences. The appendix retains the attribution of the correction to the original authors and Lee's acknowledged role.
+
+## 3. Replace ambiguous objects with the object actually used
+
+The recurring imprecision is local rather than conceptual. A sentence names the right kind of thing but leaves its domain, degree or averaging implicit. The replacements resolve those omissions at the point of use.
+
+| Location | Original difficulty | Proposed resolution |
+| --- | --- | --- |
+| b0043 | A dimension is only said to be “large enough”. | State the grid-capacity inequality `|V(G)| <= h^d`. |
+| b0051 | “They preserve sums” can attach to affine labels or to zero-constant labels of arbitrary degree. | Name homogeneous degree-one labels and the linear coordinate map. |
+| b0056–b0059 | The prose says to read a displayed sum, then to return “their sum”; “close on average” does not identify the row metric. | Identify the two physical reads and the returned bit, then state the fixed-row normalized-distance bound. |
+| b0077–b0078, b0091 | The fixed decoded degree D is also used as a generic comparison degree. | Introduce a table-local D_1 and write the application D_1=5D. |
+| b0128 | “Linear” describes an address space that includes a constant coefficient. | Use “affine”; leave its size formula unchanged. |
+| b0196 | “NP certificate” can mean an input-specific witness. | Name the language-wide witness relation, length bound and checker. |
+| b0458 | Labels are defined on binary coordinates, then applied directly to field values. | State the identification by composition with the coordinate map rho. |
+| b0519 | An individual label is called a permutation. | Name the map on homogeneous labels and its nonzero-weight hypothesis. |
+| b0527 | The high-rejection case is described as a bad “row”. | Refer to failure of the displayed sufficient inequality for the inner table. |
+| b0567 | “At either z or zero” obscures which corrected answer is being replaced. | Name Phi(z), Phi(0), and their respective ideal values. |
+| b0607 | Fixing all other randomness can be misread as giving the global 2 epsilon bound pointwise. | State the coupling first, then average over the uniform outer point and independent fresh mask. |
+
+The full before/after passages and their evidence are in `vague_and_imprecise.md`. An ordinary “hence”, “this” or “it follows” with a clear mathematical antecedent has not been treated as a fault merely because it is a connective.
+
+## 4. Keep the calculations that carry the proof
+
+The following material is deliberately protected:
+
+- **One simultaneous decoding.** The same P, Q_*, M_A and M_B are retained through the difference and grid checks. Full-label and homogeneous-label bounds concern one decoded object. An arbitrary auxiliary table is never assumed honest or close in advance.
+- **Both degree regimes.** Honest outer polynomials have degree strictly below the digit threshold. An arbitrary decoded inner polynomial may produce the larger outer degree bound. The derived constraints require the common 5D bound in the assembly.
+- **The weighted test's complete hypotheses.** The full multiplicative generator, Lagrange weights, strict rejection threshold and field assumptions remain. The full statement near b0292 was required by an earlier review and is retained.
+- **The clean-rectangle and cofactor derivation.** The goal before the kernel construction, sampling estimates, nonzero minor, degree control, exact agreement and boosting calculations remain. These are proof steps, not repeated motivation.
+- **The ruled-surface argument.** Its independent samples, good/bad restrictions, fixed polynomial choices, dimension and degree boundary cases, and quantitative constants remain.
+- **Correction at nonuniform targets.** Both the dependence on actual rejection and averaging over the requested homogeneous label remain. No fixed-label reliability claim is substituted for an averaged one.
+- **The actual ZERO procedure.** It uses the same certificate tables, two correction calls sharing the outer point and label, and independent remaining seeds. The fresh-mask loss retains the multiplier 1+2C(c).
+- **The machine bridge.** The bounded callback semantics, all-answer-history correctness, explicit program and cost data, polynomial graph construction, resource transport and concrete/reference NP equivalence remain.
+- **Exact resources and small cases.** The least-parameter argument, eight-table address count, seven seed exponents, four whole-field draws, fixed repetition, strict inequalities and zero-degree cases remain.
+- **The unbounded-field counterexample.** The old scalar test's failure is established for arbitrarily large fields. Its scope remains the old scalar characterization and soundness lemma; it is not presented as a cheating proof against all seven checks.
+
+The query cap at c=4 remains **at most 187 physical reads per unamplified run**. The query list length for the inner Hadamard test remains exactly 2r+4, with repeated addresses distinguished from distinct locations. These are different assertions and the revision keeps the distinction.
+
+## 5. Give each companion a purpose without deleting necessary setup
+
+The long account owns complete derivations and the machine-model composition. The specialist paper owns the compressed path through the construction. The exposition owns worked calculations and pedagogical examples. Each needs its theorem, the relevant table inventory and enough definitions to be read independently.
+
+Consequently, the repeated field setup, certificate identities, query procedure and same-witness requirement are usually justified across papers. Deleting them from the long argument would make the proof depend on its companions. The redundancy map identifies these as deliberate keeps and gives their exact locations. Near-verbatim setup is not automatically unnecessary when it is the point at which each independent paper defines its objects.
+
+The long manuscript alone is changed in this return. No new production system, external review gate or live-site change is proposed.
+
+## 6. Apply the bounded humanizer to mathematical prose
+
+The principal patterns found are announcements, repeated scope notes, empty transitions, defensive contrasts and source narration. Examples include “Here is the precise version”, “We next relate”, “The remaining task”, and caveats repeated immediately after a quantified statement. Replacements begin with the definition, condition or inference that the reader needs.
+
+The pass does not replace technical vocabulary by less exact synonyms, add promotional adjectives, impose a voice on a theorem statement, or remove difficult reasoning to make the prose seem conversational. Bold emphasis on “same” and on the final rejection conclusion is unnecessary when the quantifiers and conclusion are already explicit. An internal node-condition name is replaced by the mathematical condition already defined. Visible revision hashes are removed from bibliography link labels while immutable source URLs remain intact.
+
+`humanizer.md` records the actual before/after passages. There is no detector score and no fabricated finding for a pattern absent from the text.
+
+## 7. Priority and adoption
+
+The proposed changes are already applied in `revised.md`. For native adoption, resolve the three isolated entries in `math_flags.md`, then apply the complete block replacements to this exact baseline. The highest-value changes are the single opening route, the sole full converse proof, and the sole callback definition. The next priority is explicit objects and probability spaces. Remaining local cuts remove recaps after the preceding equation already states the result.
+
+All passage markers and equation labels remain available for the existing correspondence machinery. The complete long manuscript is also supplied at `reading/papers/long/reasoning-record.md`, beside unchanged companion Markdown and the original figures, so that its relative companion links resolve. The root `revised.md` is the native integration copy and retains the baseline's relative paths.
+
+## Evidence and limits
+
+The review covers every primary block and the supplied PDF's 47 pages at contact-sheet scale, with targeted source and Lean inspection. It includes an independent comparison of the binary replacements with their adjacent mathematical context. `coverage.md` records the exact scope and commands. Packet checks and the original PDFs' structural/link checks passed. The revised display mathematics, equation labels, passage markers and block coverage were checked mechanically.
+
+Public corroboration was limited to the source history: the [ECCC revision record](https://eccc.weizmann.ac.il/report/2026/134/) reports the Lemma 3.3 correction, and the [corrected public PDF](https://eccc.weizmann.ac.il/report/2026/134/revision/1/download) contains the corrected weighted statement and acknowledgment of Lee. The locally retained TeX and pinned Lean source govern the editorial comparison; this review does not assert that every public edition is byte-identical.
+
+No Lean build, Comparator run, example-suite execution, native publication build or revised-PDF rendering was performed. The enclosed earlier formal receipts are evidence about their pinned theorem targets, not a check of this proposed prose. This is a model editorial and claim-precision review, not human feedback or a kernel verification of the written proof.

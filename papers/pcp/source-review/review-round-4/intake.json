@@ -1,0 +1,37 @@
+[
+  {
+    "review": "long-cut-and-sharpen",
+    "response_archive": "pcp-review-round3-1a-full-argument-cut-and-sharpen-response.zip",
+    "sha256": "d42095207428710bc78f4c6cd57624efa95cd267eebc7d81afcf6dfe8e9d13e6",
+    "bytes": 967929
+  },
+  {
+    "review": "long-written-like-the-literature",
+    "response_archive": "pcp-review-round3-1b-full-argument-written-like-the-literature-response.zip",
+    "sha256": "1bdfe3c32910e70f9300c344a0ec2fb23db7a1d248417189aaf3f5789f478131",
+    "bytes": 175421
+  },
+  {
+    "review": "short-cut-and-sharpen",
+    "response_archive": "pcp-review-round3-2a-specialist-cut-and-sharpen-response.zip",
+    "sha256": "77cc409c8b834fb631aaaebc990bdaba766e35e8c91eb28f9370853d58d17b8b",
+    "bytes": 103425
+  },
+  {
+    "review": "expository-cut-and-sharpen",
+    "response_archive": "pcp-review-round3-3a-worked-exposition-cut-and-sharpen-response.zip",
+    "sha256": "0dc21229d7e175ae5706185e9ad5b965d91d30e505c604756a4e2ffc469b0624",
+    "bytes": 941672
+  },
+  {
+    "review": "expository-written-like-the-literature",
+    "response_archive": "pcp-review-round3-3b-worked-exposition-written-like-the-literature-response.zip",
+    "sha256": "953ed23886cd6584c72281764723bb6a868764f81c893b3063a9b954d55f9376",
+    "bytes": 125163
+  },
+  {
+    "review": "short-written-like-the-literature",
+    "response_archive": null,
+    "note": "No response was received. The statement, credit and citation check of the specialist paper was done during integration and independently re-read; see short/independent-read.md.txt."
+  }
+]
