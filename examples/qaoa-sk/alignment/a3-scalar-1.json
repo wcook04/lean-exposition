@@ -670,24 +670,6 @@
      "role": "statement",
      "from": "The second formal statement has three clauses.",
      "to": "convergence of the gradient and the value identities."
-    },
-    {
-     "paper": "long",
-     "role": "mention",
-     "from": "These are the declarations `scalar_value_target` and",
-     "to": "for those objects before applying its fixed-strip helper."
-    },
-    {
-     "paper": "short",
-     "role": "mention",
-     "from": "A separate\n[formal state",
-     "to": "r those clauses,"
-    },
-    {
-     "paper": "expository",
-     "role": "mention",
-     "from": "A separate [formal state",
-     "to": "ot been checked."
     }
    ]
   },
@@ -717,27 +699,9 @@
    "statements": [
     {
      "paper": "long",
-     "role": "statement",
-     "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives eventual positivity",
-     "to": "`finite_gaussian_target`."
-    },
-    {
-     "paper": "long",
      "role": "explanation",
      "from": "The index match in the Gaussian statement is exact.",
      "to": "using exactly the displayed\nindex ranges."
-    },
-    {
-     "paper": "short",
-     "role": "mention",
-     "from": "A separate\n[formal state",
-     "to": "r those clauses,"
-    },
-    {
-     "paper": "expository",
-     "role": "mention",
-     "from": "A separate [formal state",
-     "to": "ot been checked."
     }
    ]
   },
@@ -795,24 +759,6 @@
      "role": "statement",
      "from": "The second formal statement has three clauses.",
      "to": "convergence of the gradient and the value identities."
-    },
-    {
-     "paper": "long",
-     "role": "mention",
-     "from": "These are the declarations `scalar_value_target` and",
-     "to": "for those objects before applying its fixed-strip helper."
-    },
-    {
-     "paper": "short",
-     "role": "mention",
-     "from": "A separate\n[formal state",
-     "to": "r those clauses,"
-    },
-    {
-     "paper": "expository",
-     "role": "mention",
-     "from": "A separate [formal state",
-     "to": "ot been checked."
     }
    ]
   },
@@ -835,27 +781,9 @@
    "statements": [
     {
      "paper": "long",
-     "role": "statement",
-     "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives eventual positivity",
-     "to": "`finite_gaussian_target`."
-    },
-    {
-     "paper": "long",
      "role": "explanation",
      "from": "The index match in the Gaussian statement is exact.",
      "to": "using exactly the displayed\nindex ranges."
-    },
-    {
-     "paper": "short",
-     "role": "mention",
-     "from": "A separate\n[formal state",
-     "to": "r those clauses,"
-    },
-    {
-     "paper": "expository",
-     "role": "mention",
-     "from": "A separate [formal state",
-     "to": "ot been checked."
     }
    ]
   },

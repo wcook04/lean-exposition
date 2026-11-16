@@ -4669,7 +4669,7 @@
       "paper": "expository",
       "role": "derivation",
       "from": "We first regard the valu",
-      "to": " below time one.",
+      "to": "|\\Phi_\\gamma(t,x)-\\Phi_\\gamma(t,y)|\\le |x-y|.\n$$",
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.value_lipschitz",
@@ -4680,16 +4680,6 @@
           ],
           "note": "The displayed bound, as 1-Lipschitz in the starting state, for every t up to one.",
           "file": "OAI/Probability/SKSupport/Control/ExpectedControlPayoff.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.value_convex",
-          "relation": "states",
-          "lines": [
-            31,
-            32
-          ],
-          "note": "Convex in the starting state, by this chord argument, for every t up to one.",
-          "file": "OAI/Probability/SKSupport/Control/ControlPayoffConvex.lean"
         }
       ]
     },
@@ -4747,29 +4737,8 @@
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
           "relation": "contains",
-          "lines": [
-            35,
-            36
-          ],
-          "note": "Full support and strict increase are clauses three and four. Time is [0,1), so support on all of Time is the relative statement.",
+          "note": "The theorem's support and strict-increase clauses. It also supplies witnesses and states both moment identities.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
-          "relation": "contains",
-          "note": "The same two clauses written out, for any Stieltjes measure of γ.",
-          "clause": "μ.support=univ ∧ StrictMonoOn (extend γ.val) (Ico (0:ℝ) 1)",
-          "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
-          "relation": "proof",
-          "note": "The abstract case analysis that exhausts the complement, given contact and curvature inputs.",
-          "lines": [
-            411,
-            426
-          ],
-          "file": "OAI/Probability/SKSupport/Support/Closure.lean"
         }
       ]
     },
@@ -4815,17 +4784,10 @@
       "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.full_support"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
-          "relation": "part",
-          "note": "Both identities for the constructed diffusion only.",
-          "clause": "∀ t ∈ Ico (0:ℝ) 1, squareMoment W γ (diffusion W γ) t=t ∧ curvatureMoment W γ t=1",
+          "name": "OAI.ZeroTemperatureSK.full_support",
+          "relation": "contains",
+          "note": "The last conjunct supplies both identities for all associated diffusions over the exact displayed interval.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
         }
       ]
     },
@@ -5436,10 +5398,10 @@
       "to": "[proof of the corresponding theorem][support-proof].",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.full_support"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion"
+          "name": "OAI.ZeroTemperatureSK.full_support",
+          "relation": "contains",
+          "note": "The two kinds of conclusion are part of the wider formal support package.",
+          "file": "OAI/Probability/SKSupport/Main.lean"
         }
       ]
     },
@@ -5477,22 +5439,9 @@
       "lean": [
         {
           "name": "OAI.SKValue.value_consequences",
-          "relation": "states",
-          "note": "The scalar model's statement: value identities and the finite Gaussian limit, for a minimiser.",
-          "lines": [
-            16,
-            23
-          ],
+          "relation": "contains",
+          "note": "The bundle also states the minimizer-only Parisi identity.",
           "file": "OAI/Probability/SKValue/Main.lean"
-        },
-        {
-          "name": "OAI.SKValue.IsMinimizer",
-          "relation": "defines",
-          "note": "Same form as the support model, with this model's own functional.",
-          "lines": [
-            80,
-            81
-          ]
         }
       ]
     },
@@ -5619,6 +5568,85 @@
             106,
             118
           ]
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "The value is also **convex**:",
+      "to": "taking the supremum preserves that upper bound.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_convex",
+          "relation": "states",
+          "lines": [
+            31,
+            32
+          ],
+          "note": "Convex in the starting state, by this chord argument, for every t up to one.",
+          "file": "OAI/Probability/SKSupport/Control/ControlPayoffConvex.lean"
+        }
+      ]
+    },
+    {
+      "record": "scalar.lean_scalar_target",
+      "paper": "expository",
+      "role": "mention",
+      "from": "value identity",
+      "to": "value identity",
+      "after": "[formal statement][value-interface] concerns",
+      "lean": [
+        {
+          "name": "OAI.SKValue.scalar_value_target",
+          "relation": "contains",
+          "note": "The exposition names the value identities; the declaration also gives spin-size convergence and martingale terminal limits."
+        }
+      ]
+    },
+    {
+      "record": "scalar.formal_scalar_clause",
+      "paper": "expository",
+      "role": "mention",
+      "from": "value identity",
+      "to": "value identity",
+      "after": "[formal statement][value-interface] concerns",
+      "lean": [
+        {
+          "name": "OAI.SKValue.scalar_value_target",
+          "relation": "contains",
+          "note": "The exposition names the value identities; the declaration also gives spin-size convergence and martingale terminal limits."
+        }
+      ]
+    },
+    {
+      "record": "scalar.lean_gaussian_target",
+      "paper": "expository",
+      "role": "mention",
+      "from": "finite Gaussian approximation",
+      "to": "finite Gaussian approximation",
+      "after": "[formal statement][value-interface] concerns",
+      "lean": [
+        {
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "relation": "contains",
+          "note": "The exposition names the approximation; the declaration gives the fixed-T conditions, positivity and both limits."
+        }
+      ]
+    },
+    {
+      "record": "scalar.formal_finite_gaussian_clause",
+      "paper": "expository",
+      "role": "mention",
+      "from": "finite Gaussian approximation",
+      "to": "finite Gaussian approximation",
+      "after": "[formal statement][value-interface] concerns",
+      "lean": [
+        {
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "relation": "contains",
+          "note": "The exposition names the approximation; the declaration gives the fixed-T conditions, positivity and both limits."
         }
       ]
     }

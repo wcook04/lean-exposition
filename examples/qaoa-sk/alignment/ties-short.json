@@ -4499,22 +4499,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
-          "file": "ComparatorChallenges/SKFullSupport.lean",
-          "lines": [
-            90,
-            92
-          ],
-          "note": "The retained statement, whose proof is sorry here; Main.lean proves the theorem of the same name.",
-          "relation": "states"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
-          "file": "ComparatorChallenges/SKFullSupport.lean",
-          "lines": [
-            81,
-            88
-          ],
-          "relation": "defines"
+          "relation": "contains",
+          "note": "The conditional support and moment statements belong to a wider conclusion with two existence clauses.",
+          "file": "OAI/Probability/SKSupport/Main.lean"
         }
       ]
     },
@@ -4898,24 +4885,8 @@
       "role": "explanation",
       "from": "Neither covers\nCorollary",
       "to": "ergence of QAOA.",
-      "lean": [
-        {
-          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
-          "file": "ComparatorChallenges/SKFullSupport.lean",
-          "lines": [
-            81,
-            88
-          ],
-          "relation": "defines",
-          "note": "The support statement: five clauses, none on density or circuits."
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "file": "ComparatorChallenges/SKValue.lean",
-          "relation": "states",
-          "note": "The scalar statement: three clauses, none on density or circuits."
-        }
-      ]
+      "lean": [],
+      "note": "The formal conclusions here omit both the density corollary and circuit convergence."
     },
     {
       "record": "scalar.parisi_formula",
@@ -4982,12 +4953,8 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.zero_gap_curvature",
-          "lines": [
-            63,
-            66
-          ],
-          "note": "The strict sign of q″.",
-          "relation": "part"
+          "relation": "part",
+          "note": "Gives the strict sign on a zero plateau ending below one. It does not state the displayed heat identity."
         },
         {
           "name": "OAI.ZeroTemperatureSK.stripSecond_eq_actual",
@@ -5167,18 +5134,17 @@
       "paper": "short",
       "role": "statement",
       "from": "**Lemma 2 (constant-interval curvature;",
-      "to": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$.",
+      "to": "\\quad\\text{if }c>0.                               \\tag{3}\n$$",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.stripThird_coercive"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.zero_gap_curvature",
+          "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
           "relation": "part",
-          "note": "The case c=0: positivity of q″ on the interval."
+          "note": "The quantitative bound for the positive-coefficient clause."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+          "relation": "part",
+          "note": "The strict sign on a positive plateau ending below one."
         }
       ]
     },
@@ -5313,24 +5279,8 @@
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
           "relation": "contains",
-          "note": "Takes a minimiser as the hypothesis hmin. Its conclusion also includes the moment identities.",
+          "note": "The support and strict-increase clauses. The declaration also supplies witnesses and both moment identities.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
-          "relation": "defines",
-          "clause": "(∀ μ : Measure Time, IsStieltjesMeasure γ μ → μ.support = Set.univ) ∧\n  (∀ a b : Time, a < b → γ.val a < γ.val b)",
-          "note": "These two clauses. Time is [0,1), so support on the whole of Time is the relative statement.",
-          "file": "OAI/Probability/SKSupport/Model.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap"
         }
       ]
     },
@@ -5343,12 +5293,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
-          "relation": "states",
-          "note": "Same conclusion. The Lean proof excludes terminal plateaus through the square-root defect, so it does not follow this chord route.",
+          "relation": "contains",
+          "note": "The theorem additionally supplies both witnesses and quantifies the moments over every associated diffusion.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
         }
       ]
     },
@@ -5382,13 +5329,10 @@
       "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.full_support"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
+          "name": "OAI.ZeroTemperatureSK.full_support",
+          "relation": "contains",
+          "note": "The last conjunct gives both identities for every associated diffusion. The displayed solution is one such diffusion.",
+          "file": "OAI/Probability/SKSupport/Main.lean"
         }
       ]
     },
@@ -5996,12 +5940,10 @@
       "to": "iated diffusion.",
       "lean": [
         {
-          "name": "full_support",
+          "name": "OAI.ZeroTemperatureSK.full_support",
+          "relation": "contains",
+          "note": "Includes the support and moment identities and diffusion construction, and also supplies a Stieltjes measure.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "FullSupportConclusion",
-          "file": "OAI/Probability/SKSupport/Model.lean"
         }
       ]
     },
@@ -6072,39 +6014,33 @@
       "record": "scalar.lean_gaussian_target",
       "paper": "short",
       "role": "mention",
-      "from": "A separate\n[formal state",
-      "to": "r those clauses,",
+      "from": "the finite Gaussian approximation",
+      "to": "the finite Gaussian approximation",
       "lean": [
         {
-          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
-          "name": "finite_gaussian_target",
-          "relation": "part",
-          "note": "Finite-Gaussian clause only: the implication from minimiser and diffusion, unfolded in FiniteGaussianConclusion."
-        },
-        {
-          "name": "FiniteGaussianConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "relation": "contains",
+          "note": "Gaussian approximation is named here; the declaration gives positivity and both limits under the fixed-T conditions.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
-      ]
+      ],
+      "after": "[formal statement of the scalar consequences][value-challenge]"
     },
     {
       "record": "scalar.lean_scalar_target",
       "paper": "short",
       "role": "mention",
-      "from": "A separate\n[formal state",
-      "to": "r those clauses,",
+      "from": "the value identity",
+      "to": "the value identity",
       "lean": [
         {
-          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
-          "name": "scalar_value_target",
-          "relation": "part",
-          "note": "Value clause only: the implication from minimiser and diffusion, unfolded in ScalarValueConclusion."
-        },
-        {
-          "name": "ScalarValueConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "name": "OAI.SKValue.scalar_value_target",
+          "relation": "contains",
+          "note": "This mentions the identities. The declaration also gives spin-size convergence and the stopped martingale with terminal limits.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
-      ]
+      ],
+      "after": "[formal statement of the scalar consequences][value-challenge]"
     },
     {
       "record": "assumptions.value_minimizer",
@@ -6137,16 +6073,10 @@
       "to": "sion internally.",
       "lean": [
         {
-          "name": "value_consequences",
+          "name": "OAI.SKValue.value_consequences",
+          "relation": "contains",
+          "note": "This summary names all three clauses. The declaration states their exact conclusions and quantifiers.",
           "file": "OAI/Probability/SKValue/Main.lean"
-        },
-        {
-          "name": "scalar_value_target",
-          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
-        },
-        {
-          "name": "ground_state_parisi_target",
-          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -6188,6 +6118,38 @@
       "to": "d to each other.",
       "lean": [],
       "note": "Not in the Lean: the support and scalar models define their objects separately, and no Lean theorem connects them."
+    },
+    {
+      "record": "scalar.formal_scalar_clause",
+      "paper": "short",
+      "role": "mention",
+      "from": "the value identity",
+      "to": "the value identity",
+      "lean": [
+        {
+          "name": "OAI.SKValue.scalar_value_target",
+          "relation": "contains",
+          "note": "This mentions the identities. The declaration also gives spin-size convergence and the stopped martingale with terminal limits.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
+        }
+      ],
+      "after": "[formal statement of the scalar consequences][value-challenge]"
+    },
+    {
+      "record": "scalar.formal_finite_gaussian_clause",
+      "paper": "short",
+      "role": "mention",
+      "from": "the finite Gaussian approximation",
+      "to": "the finite Gaussian approximation",
+      "lean": [
+        {
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "relation": "contains",
+          "note": "Gaussian approximation is named here; the declaration gives positivity and both limits under the fixed-T conditions.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
+        }
+      ],
+      "after": "[formal statement of the scalar consequences][value-challenge]"
     }
   ]
 }
