@@ -2,64 +2,68 @@
 
 ## An algebraic proof of the PCP theorem, through worked examples
 
-*Explanatory reconstruction prepared by Will Cook with AI assistance · 15 November 2026.*
+*Explanatory reconstruction prepared by Will Cook with AI assistance · 16 November 2026.*
 
 Algebraic construction: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee.
 
 <!-- passage:pcp-expository-opening -->
-Suppose someone hands you a graph and claims that its vertices can be coloured
-with three colours, with different colours at the ends of every edge. A
-colour for each vertex would let you check the claim by inspecting all the
-edges. By the PCP theorem, there is a more redundant certificate that a
-randomised checker can test by reading only a constant number of bits. If
-the graph is three-colourable, some certificate always passes. Otherwise,
-every certificate fails with probability at least one half.
+## Abstract
 
-The same statement holds for every problem whose proposed solutions can be
-checked in polynomial time. A polynomial bound is at most $C(n+1)^k$
-for fixed constants $C,k$, where $n$ is the input length. Both the checking
-time and the encoded certificate length have such bounds. PCP stands for
-*probabilistically checkable proof*.
+Every problem in NP has a randomised verifier that uses logarithmically
+many random bits, reads a constant number of proof bits, always accepts
+some proof of each true instance and rejects every proof of a false one
+with probability at least one half. We explain the algebraic proof of this
+PCP theorem by Amireddy, Behera, Srinivasan, Sudan and Willumsgaard, as
+formalized in Lean by Troy Lee, through worked examples that follow one
+colouring constraint down to the bits the verifier reads.
 
-The constant bounds the number of **certificate bits read**. The checker may
-read the input and perform a polynomial amount of computation. The certificate
-is specially encoded; it is not an ordinary written proof read at a few
-randomly selected places. The verifier checks relations among entries of
-the encoding.
+## Introduction
 
-These notes explain the algebraic construction of Amireddy, Behera,
-Srinivasan, Sudan and Willumsgaard, and its formalisation in Lean by Troy
-Lee. The construction combines polynomial identities with binary encodings;
-it does not use composition of PCP verifiers. We follow the corrected
-[October 2026 paper][paper-v2] and identify consequential differences in
-the pinned formal development. The theorem itself predates this construction:
-its original proofs are due to [Arora and Safra][arora-safra] and
-[Arora, Lund, Motwani, Sudan and Szegedy][almss].
+Suppose someone gives you a graph and claims that its vertices can be
+coloured with three colours, with different colours at the ends of every
+edge. By the PCP
+theorem, a more redundant **proof**, the bit string the verifier queries,
+can be checked by a randomised verifier reading only a constant number of
+its bits. If the graph is three-colourable, some proof always passes.
+Otherwise, every proof fails with probability at least one half.
 
-The intended reader knows polynomial arithmetic, finite sums and elementary
-probability, but need not know complexity theory, coding theory or Lean.
-By the end, you should be able to follow a colouring constraint from a
-field equation to the bits the verifier reads, and explain why frequent
-acceptance forces a proper colouring. We will carry one vertex condition from a two-vertex colouring through its
-certificate and line encoding to the actual bit queries. The difficult general testing theorems are
-stated at their uses; their proofs are in the [full argument][long].
-The [specialist paper][short] gives a shorter mathematical account.
+The same holds for every decision problem whose answer is yes exactly
+when some polynomial-length **witness** is accepted by a deterministic
+polynomial-time algorithm. A polynomial bound is at most $C(n+1)^k$ for
+fixed constants $C,k$, where $n$ is the input length; the verifier's
+running time and the proof length have such bounds, and only the number
+of proof bits read is constant. PCP stands for *probabilistically
+checkable proof*.
+
+The constant-query PCP theorem is due to Arora, Lund, Motwani, Sudan and
+Szegedy [ALMSS98], building on Arora and Safra [AS98]. The construction
+explained here, which combines polynomial identities with binary
+encodings and avoids composition of PCP verifiers, is that of Amireddy,
+Behera, Srinivasan, Sudan and Willumsgaard [ABSSW26, version 2]; the
+formal proof in the proof assistant Lean, with explicit constants and
+corrected test hypotheses, is Troy Lee's [Lee26]. These notes contribute
+an explanation through small worked examples.
+
+We assume polynomial arithmetic, finite sums and elementary probability,
+and no complexity theory, coding theory or Lean. After an example
+(Section 1) and the statement (Section 2), we develop polynomial
+distance, the colouring equations, vanishing certificates, low-degree
+tests and the Hadamard encoding in Sections 3 to 7. In Section 8 we combine the
+encodings and follow one vertex condition of a two-vertex colouring to
+the bits read; in Sections 9 and 10 we prove soundness and bound the
+resources. Exercises, solutions and three appendices follow. The testing theorems are proved in the
+[full argument][long]; the [specialist paper][short] is a shorter account.
 <!-- /passage:pcp-expository-opening -->
 
 <!-- passage:pcp-expository-colouring -->
-## 1. Why checking a few edges is not enough
-
-A proper three-colouring of a graph assigns one of three colours to each
-vertex so that the ends of every edge have different colours. Finding the
-colouring may be difficult, but checking a supplied colouring is easy:
-inspect every edge. The colouring is an ordinary certificate.
+## 1. Sampling the edges of a colouring
 
 Consider the complete graph on four vertices, $K_4$. It has six edges and
 cannot be three-coloured: among four vertices, two must have the same
 colour, and those two are joined by an edge. Give its vertices the colours
 $({\rm red},{\rm red},{\rm green},{\rm blue})$. Exactly one edge has equal
-colours at its ends. A checker that samples one edge uniformly catches this
-failure with probability $1/6$.
+colours at its ends, so sampling one edge uniformly catches this failure
+with probability $1/6$.
 
 Now add $t$ disjoint triangles, each properly coloured. The graph is still
 not three-colourable, because it still contains $K_4$, but the displayed
@@ -70,136 +74,126 @@ $$
 \frac{1}{6+3t}.
 $$
 
-For example, three added triangles reduce this to $1/15$. A fixed number
-of samples becomes ineffective as $t$ grows: the one bad edge accounts for
-a smaller fraction of the sampled edges.
+Three added triangles reduce this probability to $1/15$. For any fixed
+number of uniform edge samples, the probability of finding the bad edge
+tends to zero as $t$ grows.
 
-In the PCP construction, the prover supplies redundant tables related by
-algebraic identities. The checker tests only a few entries, but the soundness
-proof shows that tables passing very often would determine a proper colouring
-of the original graph. For $K_4$, that is impossible.
-
-There are two obligations. First, the tables must describe coherent
-mathematical objects rather than arbitrary strings. Second, those objects
-must satisfy the colouring conditions. Testing the second without the
-first would allow a dishonest prover to give unrelated answers to different
-questions.
+The PCP verifier instead reads redundant tables related by algebraic
+identities, and checks both that they encode low-degree polynomials and
+that those polynomials satisfy the colouring conditions; tables passing often
+enough will determine a proper colouring, which for $K_4$ is impossible.
 <!-- /passage:pcp-expository-colouring -->
 
 <!-- passage:pcp-expository-theorem -->
-## 2. What the theorem promises
+## 2. The PCP theorem
 
-A decision problem is a set $L$ of finite bit strings; a string $x$ is a
-yes-instance when $x\in L$. The class NP consists of problems for which
-membership has a polynomial-length certificate that a deterministic
-polynomial-time algorithm can check. Three-colouring is one such problem.
+A decision problem is a set $\mathcal L$ of finite bit strings; a string
+$x$ is a yes-instance when $x\in\mathcal L$. The class NP consists of
+problems for which membership has a polynomial-length witness that a
+deterministic polynomial-time algorithm can check [AB07, §2.1].
+Three-colouring is one such problem.
 
-A verifier is one algorithm, fixed for the problem. The prover fixes its
-certificate before the verifier chooses its random bits.
-
-**PCP theorem.** For every $L\in\mathrm{NP}$, there are a polynomial-time
-verifier $V$, natural-number constants $a,b,q$, and a polynomial $p$, such
+**Theorem 2.1 (PCP theorem; [ALMSS98], [AS98]).** For every
+$\mathcal L\in\mathrm{NP}$, there are a polynomial-time verifier $V$,
+natural-number constants $\alpha,\beta,\ell$, and a polynomial $p$, such
 that on every input $x$ of length $n$:
 
-* $V$ uses exactly $a\lceil\log_2(n+2)\rceil+b$ independent fair random bits;
-* on every run it reads at most $q$ bits of a certificate, all at positions
+* $V$ uses exactly $\alpha\lceil\log_2(n+2)\rceil+\beta$ independent fair random bits;
+* on every run it reads at most $\ell$ bits of a proof, all at positions
   below $p(n)$;
-* if $x\in L$, some certificate is accepted for every choice of the random
+* if $x\in\mathcal L$, some proof is accepted for every choice of the random
   bits;
-* if $x\notin L$, every certificate is accepted with probability at most
+* if $x\notin\mathcal L$, every proof is accepted with probability at most
   $1/2$.
 
-The constants, polynomial and verifier are chosen once for $L$, before
-$x$. The certificate may depend on $x$, but it may not depend on the random
-bits that will be used to check it. A yes-instance has **perfect
-completeness**; the upper bound $1/2$ on acceptance of false instances is
-the **soundness error**. These conditions are expressed in the formal
-[verifier definitions][verifier-definitions] and
-[main theorem][lean-theorem].
+The verifier is one algorithm, fixed for $\mathcal L$ together with the
+constants and polynomial. The proof may depend on $x$ and is fixed before
+the random bits are chosen. A choice of those bits is a **random seed**.
+Acceptance for every seed on a yes-instance is **perfect completeness**;
+the bound $1/2$ on acceptance of a no-instance is the **soundness error**.
 
-The formula for the random-bit budget is convenient for the formal proof.
-Extra random bits can be ignored, so requiring this exact form does not
-force the verifier to make use of each bit. It also makes the budget a
-specified computable function of the input length.
+*Remark (formalization).* The count $\alpha\lceil\log_2(n+2)\rceil+\beta$
+is the **exact randomness formula** of Lee's theorem; surplus bits may be
+ignored, and the usual statement asks only for $O(\log n)$ bits. The
+conditions above are those of the formal
+[verifier definitions][verifier-definitions] and [main theorem][lean-theorem].
 
 Conversely, suppose a problem has a verifier with these properties. Guess
-the first $p(n)$ certificate bits, and run the verifier on **all** its
+the first $p(n)$ proof bits, and run the verifier on **all** its
 random strings. There are
 
 $$
-2^{a\lceil\log_2(n+2)\rceil+b}
-\leq 2^{a+b}(n+2)^a
+2^{\alpha\lceil\log_2(n+2)\rceil+\beta}
+\leq 2^{\alpha+\beta}(n+2)^\alpha
 $$
 
-such strings, a polynomial number because $a,b$ are fixed. Accept the
-guessed certificate if every run accepts. Perfect completeness supplies
-such a certificate on yes-instances. On a no-instance no certificate can
-pass every run, since acceptance probability one would exceed $1/2$.
-The certificate and the exhaustive computation both have polynomial size.
-Thus the problem is in NP. This proves the equality usually written
+random strings, polynomially many because $\alpha,\beta$ are fixed.
+Accept the guessed bits if every run accepts. Perfect completeness
+supplies such bits on yes-instances and soundness excludes them on
+no-instances, all in polynomial time, so the problem is in NP. This
+proves the equality
 
 $$
 \mathrm{NP}=\mathrm{PCP}(O(\log n),O(1)).
 $$
 
-The hard direction is constructing the verifier. We first explain it for
-three-colouring. A polynomial-time reduction then transfers it to any
-problem in NP.
+The right-hand side is the class of problems with such a verifier, where
+$O(\log n)$ means a bound by a fixed multiple of $\log n$ for all
+sufficiently large $n$, and $O(1)$ a constant bound. We construct the
+verifier for three-colouring and in Section 10 transfer it to every
+problem in NP by a polynomial-time **reduction**, a translation of
+inputs into graphs that preserves the answer.
 <!-- /passage:pcp-expository-theorem -->
 
 <!-- passage:pcp-expository-polynomial-distance -->
-## 3. Why polynomial tables can reveal a hidden defect
+## 3. Polynomial distance and interpolation
 
-Work first with arithmetic modulo $5$, in the field
-$\mathbb F_5=\{0,1,2,3,4\}$. Addition and multiplication are performed
-modulo $5$. In particular, nonzero elements can be divided by:
-$2^{-1}=3$, since $2\cdot3=1$ modulo $5$.
+First work in the field $\mathbb F_5=\{0,1,2,3,4\}$, with addition and
+multiplication modulo $5$. Every nonzero element has a multiplicative
+inverse; for example, $2^{-1}=3$ because $2\cdot3=1$ modulo $5$.
 
 The polynomial $Z(X)=X(X-1)$ has the following values:
 
 | $x$ | $0$ | $1$ | $2$ | $3$ | $4$ |
-| --- | --- | --- | --- | --- | --- |
+| :-------------------------------- | :-------- | :-------- | :-------- | :-------- | :-------- |
 | $Z(x)$ | $0$ | $0$ | $2$ | $1$ | $2$ |
 
-It vanishes at two points and is nonzero at three. This reflects a general
-fact: a nonzero polynomial of degree at most $d$ over a field has at most
-$d$ roots. Each root permits a factor $(X-r)$ to be removed, and repeatedly
-removing distinct roots cannot reduce the degree below zero.
+It vanishes at two points and is nonzero at three, as it must: a nonzero
+polynomial of degree at most $d$ over a field has at most $d$ roots,
+since each root permits a factor $(X-r)$ to be removed. Let $F$ be a
+finite field with $q$ elements. By this root bound applied to their
+difference, two different polynomials of degree at most $d$ over
+$F$ disagree on at least a fraction $1-d/q$ of its elements. For
+multivariate polynomials the corresponding bound uses **total degree**,
+the largest sum of exponents in any nonzero monomial. For example, $X^2Y$
+has total degree three, degree two in $X$, and degree one in $Y$.
 
-Consequently, two different polynomials of degree at most $d$ disagree at
-at least a fraction $1-d/Q$ of the elements of a field with $Q$ elements.
-Apply the root bound to their difference. For multivariate polynomials,
-the corresponding bound uses **total degree**. For example, $X^2Y$ has
-total degree three, degree two in $X$, and degree one in $Y$. The total
-degree of a polynomial is the largest sum of exponents in any of its
-nonzero monomials. If $P$ is a nonzero
-polynomial of total degree at most $d$ in $m$ variables, then
+**Lemma 3.1 (Schwartz–Zippel lemma; [ABSSW26, Theorem 2.5]).** If $P$ is
+a nonzero polynomial over $F$ of total degree at most $d$ in $m$
+variables and $u$ is uniform on $F^m$, then
 
 $$
-\Pr_{u\in\mathbb F_Q^m}[P(u)=0]\leq\frac dQ.
+\Pr_{u\in F^m}[P(u)=0]\leq\frac dq.
 $$
 
-The probability is uniform over the whole ambient space. This is the
-polynomial distance estimate used throughout the proof; a proof by
-induction on the number of variables is given in the full account.
-It is informative when the field is large compared with the degree.
+A proof by induction on $m$ is in the [full argument][long]. Thus a
+uniform point detects a false polynomial identity, whose two sides differ
+by a nonzero polynomial of total degree at most $d$, with probability at
+least $1-d/q$.
 
-If a claimed polynomial identity is false, its difference is a nonzero
-polynomial. A uniformly random point then finds a failure with high
-probability. A false identity cannot differ at just one arbitrarily chosen
-location while both sides retain low degree.
-
-An arbitrary table can agree with a polynomial everywhere except one
-entry. A received table therefore needs a separate low-degree test before
-we can use the polynomial distance bound.
+The **relative Hamming distance**, or simply **distance**, between two
+tables on the same finite domain is the fraction of entries on which they
+disagree; a table is **$\delta$-close** to another when their distance is
+at most $\delta$. An arbitrary table may differ from a polynomial at just
+one entry, so a separate test is needed to establish closeness to a
+low-degree polynomial before the lemma can be applied.
 <!-- /passage:pcp-expository-polynomial-distance -->
 
 <!-- passage:pcp-expository-interpolation -->
-### Extending a short table
+### The low-degree extension
 
-Interpolation turns values on a small set into a polynomial on a larger
-space. A polynomial of degree at most two is determined by its values at
-three distinct points. Over $\mathbb F_5$, its value at $3$ can be recovered
+A polynomial of degree at most two is determined by its values at three
+distinct points. Over $\mathbb F_5$, its value at $3$ can be recovered
 from the values at $0,1,2$ by
 
 $$
@@ -216,45 +210,44 @@ $$
 \quad\text{in }\mathbb F_5.
 $$
 
-These weights are part of the identity. Replacing them by three unit
-weights would give $0+1+4=0$, which is not $p(3)$.
+Unit weights would give $0+1+4=0$, so the Lagrange weights are necessary
+for this interpolation identity.
 
-For a set $H$ of $h$ distinct field elements, let $L_s(X)$ be the
+For a set $H$ of $h$ distinct field elements, let $\psi_s(X)$ be the
 degree-$(h-1)$ polynomial equal to one at $s\in H$ and zero at the other
 points of $H$:
 
 $$
-L_s(X)=\prod_{t\in H,\ t\ne s}\frac{X-t}{s-t}.
+\psi_s(X)=\prod_{t\in H,\ t\ne s}\frac{X-t}{s-t}.
 $$
 
 The grid $H^m$ consists of $m$-tuples of elements of $H$. For $H=\{0,1\}$,
-the one-variable basis polynomials are $L_0(X)=1-X$ and $L_1(X)=X$.
+the one-variable basis polynomials are $\psi_0(X)=1-X$ and $\psi_1(X)=X$.
 On the four-point grid $H^2$, the product $X(1-Y)$ is one at $(1,0)$
 and zero at the other three points. Multiplying it by $f(1,0)$ contributes
 exactly the entry at that point. Summing one such term per grid point gives
-the general extension of a table $f:H^m\to\mathbb F_Q$:
+the general extension of a table $f:H^m\to F$:
 
 $$
 \widehat f(X_1,\ldots,X_m)
-=\sum_{s\in H^m}f(s)\prod_{j=1}^m L_{s_j}(X_j).
+=\sum_{s\in H^m}f(s)\prod_{j=1}^m \psi_{s_j}(X_j).
 $$
 
-At a grid point, all the basis products are zero except the one indexed
-by that point. The extension therefore agrees with $f$ on $H^m$, has
-degree at most $h-1$ in each coordinate, and has total degree at most
-$m(h-1)$. This gives us an honest polynomial table from an ordinary colouring
-table. The proof encodes its values throughout $\mathbb F_Q^m$, not just on
-the original grid.
+At each grid point, only its own basis product is nonzero. Thus
+$\widehat f$, the **low-degree extension** of $f$ [ABSSW26, Fact 2.4],
+agrees with $f$ on $H^m$, has degree at most $h-1$ in each coordinate,
+and has total degree at most $m(h-1)$. For a colouring, the proof stores
+this extension at every point of $F^m$.
 <!-- /passage:pcp-expository-interpolation -->
 
 <!-- passage:pcp-expository-colour-polynomials -->
-## 4. Turning three colours into polynomial equations
+## 4. Colourings as polynomial equations
 
-For the colouring construction, use arithmetic with $1+1=0$. Begin with
-the four elements $0,1,\omega,1+\omega$, adding their binary coefficients
-modulo two and multiplying with the rule $\omega^2=\omega+1$. These
-operations form the field $\mathbb F_4$. Subtraction equals addition.
-For example,
+For the colouring construction, use a field of **characteristic two**,
+meaning $1+1=0$. Begin with the four elements $0,1,\omega,1+\omega$,
+adding their binary coefficients modulo two and multiplying with the
+rule $\omega^2=\omega+1$. These operations form the field
+$\mathbb F_4$. Subtraction equals addition. For example,
 
 $$
 1-\omega=1+\omega=\omega^2,\qquad
@@ -270,9 +263,9 @@ $$
 =(ac+bd)+(ad+bc+bd)\omega.
 $$
 
-We will use these coordinates again when constructing a bit query.
-The full verifier works in a larger characteristic-two field containing
-this four-element field. Its three chosen nonzero elements obey
+From now on $F$ is a field of characteristic two containing
+$\mathbb F_4$; the full verifier works in such a field with $q$ much
+larger than four. The three nonzero elements of $\mathbb F_4$ satisfy
 
 $$
 1^3=\omega^3=(\omega^2)^3=1.
@@ -283,23 +276,20 @@ these colours exactly when $u^3-1=0$. If $u,v$ are valid colours,
 they are different exactly when $(u-v)^3-1=0$. The residual values are:
 
 | $(u-v)^3-1$ | $v=1$ | $v=\omega$ | $v=\omega^2$ |
-| --- | --- | --- | --- |
+| :-------------------------------- | :------------ | :------------ | :---------------- |
 | $u=1$ | $1$ | $0$ | $0$ |
 | $u=\omega$ | $0$ | $1$ | $0$ |
 | $u=\omega^2$ | $0$ | $0$ | $1$ |
 
-The colour-validity check remains necessary:
-the edge identity was interpreted under the assumption that its two
-arguments were allowed colours. To see what goes wrong without that
-assumption, give the four vertices of $K_4$ all four elements of
-$\mathbb F_4$, including zero. Every edge difference is nonzero and has
-cube one, so every edge equation passes. The vertex assigned zero fails
-$u^3-1=0$, as it must: this graph cannot be three-coloured.
+The vertex equation cannot be dropped. Assign all four elements of
+$\mathbb F_4$, including zero, to the vertices of $K_4$. Every edge
+difference is nonzero and has cube one, so every edge equation passes,
+while the vertex assigned zero fails $u^3-1=0$.
 
-Label the graph's vertices by a grid $H^m$, adding isolated vertices if
+Index the graph's vertices by a grid $H^m$, adding isolated vertices if
 needed. Let $\chi$ be the low-degree extension of a colouring, and let
-$\widehat E(x,y)$ extend the adjacency table, whose grid values are one
-for an edge and zero otherwise. Define
+$\widehat E(x,y)$ be the low-degree extension of the adjacency function,
+whose grid values are one for an edge and zero otherwise. Define
 
 $$
 \begin{aligned}
@@ -315,7 +305,7 @@ $\operatorname{Prop}$ vanishes on $H^{2m}$. The adjacency factor makes
 the second requirement automatic for nonedges.
 
 We will follow the vertex condition for a graph consisting of one edge.
-Label its ends by $H=\{0,1\}$ and give them colours $1,\omega$.
+Index its ends by $H=\{0,1\}$ and give them colours $1,\omega$.
 Their interpolating polynomial is
 
 $$
@@ -331,46 +321,41 @@ P(X)=\chi(X)^3-1
 =(X^2+X)(X+\omega^2).
 $$
 
-At the off-grid point $x=\omega$, we have $\chi(\omega)=0$ and
-$P(\omega)=1$. This is consistent with a proper colouring: only $0,1$
-label vertices. We need $P$ to vanish on the vertex grid, while the
-checker samples the larger ambient field.
+A proper colouring requires $P$ to vanish only on the grid $\{0,1\}$; at
+$x=\omega$, outside it, $\chi(\omega)=0$ and $P(\omega)=1$, yet the
+verifier samples the whole field.
 <!-- /passage:pcp-expository-colour-polynomials -->
 
 <!-- passage:pcp-expository-grid-certificate -->
-## 5. A certificate for vanishing on a grid
+## 5. Vanishing certificates
 
 In the one-edge example, $Z_H(X)=X^2+X$ vanishes precisely on
-$H=\{0,1\}$, and $P(X)=Z_H(X)(X+\omega^2)$. The factorisation
-certifies the vertex condition. More generally, Lemma 2.9 of the
-[corrected paper][paper-v2] says that every polynomial vanishing on $H^m$
-has a representation
+$H=\{0,1\}$, and $P(X)=Z_H(X)(X+\omega^2)$. More generally, by the
+Combinatorial Nullstellensatz in the form of [ABSSW26, Lemma 2.9], every
+polynomial vanishing on $H^m$ has a representation
 
 $$
 P(X)=\sum_{j=1}^m Z_H(X_j)Q_j(X),
 \qquad Z_H(T)=\prod_{h\in H}(T-h).
 $$
 
-Each summand vanishes on the grid because it contains one of its
-coordinate vanishing polynomials. Polynomial division in each
-variable proves this result. After removing all multiples of the
-$Z_H(X_j)$, the remainder has degree less than $|H|$ in every variable;
-if it is zero on the whole grid, repeated univariate interpolation makes
-the remainder zero. Write $h=|H|\geq1$. Division can choose each nonzero
-quotient with $\deg Q_j+h\leq\deg P$: removing a multiple of the monic
-degree-$h$ polynomial loses $h$ from its total degree.
+Each summand vanishes on the grid. Conversely, divide in each variable
+by $Z_H$. The remainder has degree less than $h=|H|\geq1$
+in every variable and is zero on $H^m$; repeated univariate interpolation
+therefore makes it zero. Division can choose each nonzero quotient with
+$\deg Q_j+h\leq\deg P$, since the divisor is monic of degree $h$.
 
-Reading all $m$ terms would require a number of queries that grows with
-the dimension. Following Corollary 2.10 of the [corrected paper][paper-v2],
-package the sum into a single polynomial of two groups of variables:
+Reading all $m$ terms would take a number of queries growing with $m$.
+Following [ABSSW26, Corollary 2.10], package the sum into
+a single polynomial of two groups of variables, the **vanishing
+certificate** of $P$:
 
 $$
 M(X,U)=\sum_{j=1}^m U_jQ_j(X).
 $$
 
 Its degree is at most $\deg P$, because multiplication by $U_j$ adds
-one to $\deg Q_j$ and $h\geq1$. This bound will let the honest
-certificate fit in the encoding used later.
+one to $\deg Q_j$ and $h\geq1$; this bound is used in Section 9.
 
 It satisfies two polynomial identities,
 
@@ -390,155 +375,123 @@ M(X,U)=U(X+\omega^2),\qquad Z_H(\omega)=1.
 $$
 
 At $x=\omega$, the two identities read $M(\omega,0)=0$ and
-$M(\omega,1)=1=P(\omega)$. We will follow these two certificate
-requests through the encoding. Their equality holds away from the
-vertex grid too, although the residual itself is nonzero there.
+$M(\omega,1)=1=P(\omega)$. The identities hold throughout the field,
+even though $P(\omega)\ne0$. Both requested values are followed through
+the binary encoding in Section 8.
 
-Now suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere
-on the grid. At least one of the two identities must be false as a
-polynomial identity. A random ambient point detects that failure by the
-polynomial distance bound. Substituting $Z_H(X_j)$ can multiply degree by $h=|H|$;
-the field must be large compared with this resulting degree. Section 9
-checks that requirement. Thus a large collection of grid conditions
-has become two random algebraic checks.
+If $P$ and $M$ have low degree and $P$ is nonzero somewhere on the grid,
+one identity fails as a polynomial identity. By Lemma 3.1 a uniform
+point then detects the failure, provided $q$ is large compared with the
+degree, which substituting $Z_H(X_j)$ can multiply by $h$ (Section 9).
 
-**Question 1.** Could the checker omit the first identity and test only
-$M(X,Z_H(X))=P(X)$? Test your answer with the nonvanishing polynomial
-$P=1$. Answers to the questions appear in Section 11.
-
-The remaining problem is that a received table is only *close* to a
-polynomial, and the points $(x,0)$ and $(x,Z_H(x))$ are special points.
-All its errors could lie there. For instance, in a table on $F^2$,
-corrupting the entire row $F\times\{0\}$ changes only a fraction
-$1/|F|$ of the entries but ruins every requested entry in that row.
-We need to recover a value at a prescribed point through random
-locations elsewhere in the table.
+A table close to a polynomial may still be wrong at prescribed points.
+Corrupting the row $F\times\{0\}$ in a table on $F^2$ changes only a
+fraction $1/|F|$ of its entries, yet can corrupt every request of the
+form $(x,0)$. The checks therefore need a procedure that recovers a
+prescribed value through random table locations.
 <!-- /passage:pcp-expository-grid-certificate -->
 
-<!-- passage:pcp-expository-proof-inventory -->
-### The stored proof
-
-The prover supplies four primary tables and four auxiliary line tables.
-In an honest proof, their intended contents are:
-
-| Primary polynomial | What it records | Binary labels |
-| --- | --- | --- |
-| $\chi(x)$ | Colour extension at every ambient point; its grid values give the colouring | Degree at most three |
-| $\chi'(x,y)$ | Difference $\chi(x)-\chi(y)$ | Degree at most three |
-| $M_V(x,u)$ | Certificate for the vertex condition | Affine linear |
-| $M_E(x,y,u,v)$ | Certificate for the edge condition | Affine linear |
-
-Each auxiliary table supplies the encoded restrictions of its primary
-polynomial to lines. A label is a bit-valued question about a field
-value; Section 7 defines the affine and degree-three label spaces. A received proof can contain arbitrary bits; the
-tests must establish proximity to polynomials with these roles.
-
-<!-- /passage:pcp-expository-proof-inventory -->
-
 <!-- passage:pcp-expository-digit-encoding -->
-## 6. Keeping the number of queries constant
+## 6. Low-degree tests and the set-multilinear encoding
 
-A low-degree polynomial in many variables restricts to a low-degree
-univariate polynomial on each line $u+Yv$. The prover supplies a table
-whose row indexed by $(u,v)$ proposes a univariate polynomial
-$T_{u,v}$. A parameter $\lambda$ selects the point $u+\lambda v$.
-The checker compares its point-table value with $T_{u,v}(\lambda)$.
+Let $f:F^m\to F$ be an arbitrary table of field values. For
+$u,v\in F^m$ the **line through $u$ with slope $v$** is $z\mapsto u+zv$;
+$v=0$ is allowed. The pair $(u,v)$ is the line's **index** and $u$ its
+**base point**. A polynomial of total degree at most $d$ restricts to a
+univariate polynomial of degree at most $d$ on each line. The proof supplies a
+polynomial $T_{u,v}$ for each index $(u,v)$, and the
+**point-versus-line test** (also called the line-point test) compares
+$f(u+zv)$ with $T_{u,v}(z)$.
 
-The point-versus-line theorem gives the converse needed for soundness.
-Suppose each supplied line polynomial has degree at most $d$, and sample
-$u,v$ and the line parameter $\lambda$ uniformly, with $\lambda$ allowed
-to be zero. Let $\delta$ be the fraction of comparisons
-$f(u+\lambda v)=T_{u,v}(\lambda)$ that fail. The formal theorem says
-that if $Q\geq10^6d^3$ and $\delta\leq1/(4\cdot10^6)$, then the point
-table is within distance $2\delta$ of one multivariate polynomial of
-total degree at most $d$. This conclusion requires no assumption that
-the supplied line polynomials agree with one another.
+**Theorem 6.1 (point-versus-line test; [ALMSS98, Theorem 45],
+cf. [ABSSW26, Theorem 2.12]).** Suppose every supplied line polynomial has
+degree at most $d$. Sample $u,v\in F^m$ and $z\in F$ independently and
+uniformly, including zero, and let $\delta$ be the rejection
+probability of the comparison $f(u+zv)=T_{u,v}(z)$. If $q\geq10^6d^3$
+and $\delta\leq1/(4\cdot10^6)$, then $f$ is $2\delta$-close to a
+polynomial of total degree at most $d$.
 
-This is the substantial testing theorem we take as an input. Its proof
-uses agreement between row and column polynomials to show that the local
-line predictions determine one polynomial. The full record supplies the
-[bivariate agreement construction](../long/reasoning-record.md#4-bivariate-agreement)
-and the [point-versus-line proof](../long/reasoning-record.md#5-point-versus-line-soundness).
-Our next task is to implement the comparison using a constant number of bits.
+No agreement between the supplied line polynomials is assumed. A
+polynomial of the stated degree whose encoding is within the stated
+distance of the received table is called a **nearby polynomial**; the
+analysis chooses it, and the verifier never computes it.
 
-A line polynomial of degree $d$ has $d+1$ coefficients. Reading all
-those coefficients is not a constant number of bit queries when $d$
-grows. The construction encodes the polynomial in a different set of
-variables so that its new degree is fixed.
+*Remark (formalization).* This is Lee's whole-field version;
+[ABSSW26, Theorem 2.12] samples $z\in F^\times$ and concludes distance
+$4\delta$ with unspecified absolute constants.
 
-Here is the operation with two base-$3$ digits. Over $\mathbb F_5$, take
+We use Theorem 6.1 without proof; it is derived in the full argument
+from agreement between row and column polynomials, through the [bivariate
+agreement construction](../long/reasoning-record.md#45-bivariate-agreement)
+and the [point-versus-line argument](../long/reasoning-record.md#46-the-point-versus-line-test). Reading the $d+1$ coefficients of a line polynomial is not
+a constant number of bit queries when $d$ grows, so the construction
+encodes the polynomial in more variables with a fixed degree.
+
+For an example with two base-$3$ digits over $\mathbb F_5$, take
 
 $$
 p(Y)=Y^4+2Y+3.
 $$
 
-Since $4=1+1\cdot3$, replace $Y^4$ by $X_{0,1}X_{1,1}$.
-Likewise, $1=1+0\cdot3$ and $0=0+0\cdot3$. The encoded polynomial is
+Since $4=1+1\cdot3$, $1=1+0\cdot3$ and $0=0+0\cdot3$, replace $Y^4$ by
+$X_{0,1}X_{1,1}$, $Y$ by $X_{0,1}X_{1,0}$ and $1$ by $X_{0,0}X_{1,0}$:
 
 $$
 \widetilde p(X)=X_{0,1}X_{1,1}
  +2X_{0,1}X_{1,0}+3X_{0,0}X_{1,0}.
 $$
 
-It has degree two, although $p$ has degree four. There are more variables,
-one group for each digit position. To recover $p(\lambda)$, substitute
+It has degree two, with one group of variables for each digit position.
+To recover $p(z)$, substitute
 
 $$
-(X_{0,0},X_{0,1},X_{0,2})=(1,\lambda,\lambda^2),
+(X_{0,0},X_{0,1},X_{0,2})=(1,z,z^2),
 \qquad
-(X_{1,0},X_{1,1},X_{1,2})=(1,\lambda^3,\lambda^6).
+(X_{1,0},X_{1,1},X_{1,2})=(1,z^3,z^6).
 $$
 
-At $\lambda=2$, these two triples are $(1,2,4)$ and $(1,3,4)$.
-The encoded evaluation is $2\cdot3+2\cdot2+3=3$ modulo $5$,
-which agrees with $p(2)=2^4+2\cdot2+3=3$ modulo $5$. No quadratic
-in the original variable can have these values at all five field elements:
-its difference from $p$ would be a nonzero degree-four polynomial with
-five roots. The additional variables are doing real work.
+At $z=2$, the triples are $(1,2,4)$ and $(1,3,4)$. The encoded
+evaluation is $2\cdot3+2\cdot2+3=3$ modulo $5$, equal to
+$p(2)=2^4+2\cdot2+3$. No quadratic in the original variable agrees
+with $p$ at all five field elements: their difference would be a nonzero
+polynomial of degree four with five roots.
 
-In general, write an exponent $j<b^c$ with $c$ base-$b$ digits and
-replace $Y^j$ by the product of the corresponding $c$ variables.
-The resulting polynomial has degree at most $c$, and the same
-substitution recovers every evaluation of the original polynomial.
-The construction fixes $c$, while allowing the number of variables
-to grow. This is the **set-multilinear encoding** defined in Section 3.1
-of the [corrected paper][paper-v2]; Claim 3.2 states its evaluation identity.
-Write the substitution as
+For $j<b^c$, write $j$ with $c$ base-$b$ digits and replace $Y^j$
+by the product of the corresponding $c$ variables. Each product uses
+one variable from each digit group, so the encoded polynomial is
+**set-multilinear** and has degree at most $c$; it is the
+**set-multilinear encoding** of [ABSSW26, Definition 3.1]. The
+construction fixes $c$ while allowing $b$ to grow. The evaluation identity
+[ABSSW26, Claim 3.2] uses the substitution
 
 $$
 \Phi:F\longrightarrow F^{cb},\qquad
 \Phi(z)_{i,j}=z^{jb^i}\quad(0\le i<c,\ 0\le j<b).
 $$
 
-Every coordinate with $j=0$ is one, including at $z=0$. For the
-one-digit case $c=1,b=3$ used in our continuing example,
-$\Phi(z)=(1,z,z^2)$.
+For every $z\in F$, including $z=0$ (where the coordinates with $j=0$
+equal one), $\widetilde p(\Phi(z))=p(z)$. In the one-digit case
+$c=1,b=3$ used later, $\Phi(z)=(1,z,z^2)$.
 
-The test need not enforce its exact special form. A received table
-may decode to an arbitrary polynomial of degree at most $c$ in these
-variables. Substituting the powers of $Y$ still gives a univariate
-polynomial, now with a somewhat larger degree bound. We use this larger
-bound in the soundness argument. A table which merely passes a low-degree
-test is not assumed to have the form of an honest encoding.
-
-We can calculate the larger bound. Each substituted variable is
-$Y^{j b^i}$, with $0\leq j<b$ and $0\leq i<c$, so its degree is at
-most $(b-1)b^{c-1}$. A monomial of a degree-$c$ polynomial contains
-at most $c$ variable occurrences. Its degree after substitution is
-therefore at most $c(b-1)b^{c-1}$, and the convenient upper bound
-$D=cb^c$ applies to the decoded univariate polynomial.
+A low-degree test checks only the degree bound $c$, so a table passing
+it may be close to any polynomial of degree at most $c$, without the
+set-multilinear form. Substitution still gives a univariate polynomial,
+with a larger degree bound: each substituted variable has degree at most
+$(b-1)b^{c-1}$, and a monomial of total degree at most $c$ has at most
+$c$ variable occurrences, so the degree is at most $c(b-1)b^{c-1}$. We
+use the upper bound $D=cb^c$.
 <!-- /passage:pcp-expository-digit-encoding -->
 
 <!-- passage:pcp-expository-weighted-test -->
-### Testing and correcting a polynomial of fixed degree
+### The standard low-degree test and local correction
 
-For degree at most $c$, interpolation needs $c+1$ values, a fixed number.
-The nonzero elements of a finite field form a cyclic multiplicative
-group: there is an element $\zeta$ whose successive powers run through
-every nonzero field element. We use this standard finite-field theorem
-as an algebraic input and call $\zeta$ a generator. The formal
-construction chooses $a_i=\zeta^{i+1}$ for $i=0,\ldots,c$, and the
-Lagrange weights $\eta_i$ for evaluation at zero. It tests
+A polynomial of degree at most $c$ is determined on a line by $c+1$
+values. The nonzero elements of a finite field form a cyclic
+multiplicative group [Shoup05, Theorem 9.16]: some element $\zeta$,
+called a **generator**, has powers running through all of them. The
+formal construction uses the nodes $a_i=\zeta^{i+1}$ for $i=0,\ldots,c$
+and the Lagrange weights $\eta_i$ for evaluation at zero. The
+**standard low-degree test** accepts when
 
 $$
 f(u)=\sum_{i=0}^c\eta_i f(u+a_i v)
@@ -548,47 +501,38 @@ at uniformly random $u,v$. An honest polynomial of total degree at
 most $c$ passes: along a line it is a univariate polynomial of degree
 at most $c$, so interpolation applies.
 
-For the converse, use the stated generator nodes and $|F|>2c$.
-If the rejection rate is $\delta<1/[2(c+2)^2]$, the function is within
-distance $2\delta$ of some polynomial of total degree at most $c$.
-Here distance means the fraction of table entries that differ.
-Passing the relation rarely or at a few selected lines would not give
-this conclusion. The [corrected paper][paper-v2], Section 3.2, develops
-this weighted test and its correction procedure; the bounds stated here
-are those of the formal development.
+**Theorem 6.2 (standard low-degree test; cf. [ABSSW26, Lemma 3.3]).** With
+these generator nodes and $q>2c$, if the test rejects with probability
+$\delta<1/[2(c+2)^2]$, then $f$ is $2\delta$-close to a polynomial of
+total degree at most $c$.
 
-The same formula also corrects a value at a prescribed point. Suppose
-$f$ differs from a degree-$c$ polynomial $P$ on at most a fraction
-$\varepsilon$ of the ambient space. Fix $u$, choose $v$ uniformly,
-and return the weighted sum of the $c+1$ surrounding values, without
-making a separate query at $u$ (a zero direction can still make a listed
-point equal to $u$). Each point $u+a_i v$ is uniform because $a_i\ne0$.
-The inverse map is $w\mapsto a_i^{-1}(w-u)$, so every point occurs
-with equal probability. If all those values are correct, interpolation returns $P(u)$.
-By the union bound, the probability of a wrong answer is at most
+*Remark (formalization).* The field-size condition $q>2c$ is Lee's.
+[ABSSW26, Lemma 3.3] assumes characteristic two and a field size greater
+than an unspecified absolute constant times $c^3$.
+
+The same formula gives **local correction**, the recovery of a value at a
+prescribed point, cf. [ABSSW26, Lemma 3.4], which also assumes $q>Cc^3$. Suppose $f$ differs from a
+degree-$c$ polynomial $P$ on at most a fraction $\varepsilon$ of $F^m$.
+Fix $u$, choose $v$ uniformly, and return the weighted sum of the $c+1$
+values at $u+a_i v$, with no query at $u$ itself unless $v=0$. Each point
+$u+a_i v$ is uniform:
+since $a_i\ne0$, the inverse map is $y\mapsto a_i^{-1}(y-u)$. If all
+sampled values are correct, interpolation returns $P(u)$. The points lie
+on one line and need not be independent, but each individual error event
+has probability at most $\varepsilon$, so the union bound gives error
+probability at most
 
 $$
 (c+1)\varepsilon.
 $$
 
-For the earlier example $p(X)=X^2$, a request at $3$ can be answered
-from the surrounding values at $0,1,2$ as $0+2\cdot1+3\cdot4=4$
-modulo five. None of those reads uses $p(3)$. This one choice illustrates
-the interpolation; randomising the direction gives the guarantee against
-corruption.
-
-The sampled points need not be independent for this bound: they all
-lie on one line, but each individual error event has the required
-probability.
-
-A fixed-degree encoding can therefore be checked with a fixed number
-of field queries, and a value at a special point can be recovered through
-random points. Each field query still returns several bits. To reach
-the promised bit-query bound, we need a binary encoding as well.
+Testing and correction now use a fixed number of
+field queries; since each field value occupies several bits, a binary
+encoding is needed to bound the number of bit queries.
 <!-- /passage:pcp-expository-weighted-test -->
 
 <!-- passage:pcp-expository-hadamard -->
-## 7. A field value represented by many one-bit questions
+## 7. The Hadamard encoding
 
 Start with a three-bit message $s=101$. For every three-bit vector
 $x$, store the parity
@@ -597,55 +541,49 @@ $$
 h_s(x)=s\cdot x\pmod2.
 $$
 
-The positions of the word are themselves bit vectors. In order
-$000,001,010,011,100,101,110,111$, its contents are
+Until labels are defined below, $s$ denotes a message, $h_s$, $h$ and
+$g$ words, and $r$ a vector. In the order
+$000,001,010,011,100,101,110,111$ of positions, the word is
 
 $$
 (0,1,0,1,1,0,1,0).
 $$
 
-These labels are **homogeneous linear**: each is a parity dot product,
-with no added constant. They form the homogeneous linear part of a
-Hadamard encoding. It stores
-eight answers about a message with only three bits. Any two different
-messages give words differing in exactly half their positions. Indeed,
-their difference is a nonzero linear functional. Choose a vector on
-which it is one; adding that vector pairs every zero value with a one value.
+These positions are **homogeneous linear** labels: parity dot products
+with no constant term. The eight answers form the **Walsh–Hadamard
+encoding** of the three-bit message [AB07, §18.4.1]. Encodings of
+distinct messages differ at exactly half the positions: their difference
+is a nonzero **linear functional**, a map $x\mapsto s'\cdot x$ with
+$s'\ne0$, and translation by a vector on which it
+is one pairs each zero with a one. Querying the same uniform homogeneous
+label on two encodings therefore detects unequal messages with
+probability $1/2$.
 
-Thus a uniformly random one-bit observation distinguishes two unequal
-messages with probability $1/2$. To compare values, the checker queries
-the same random linear functional on each and compares the resulting
-bits; it does not need to reconstruct either whole message.
-
-Blum, Luby and Rubinfeld's [linearity test][blr] checks this kind of
-word. Choose independent uniform $a,b$ and check
+The **BLR linearity test** of Blum, Luby and Rubinfeld [BLR93] checks
+whether an arbitrary **word**, a function from labels to bits, is such an
+encoding. Choose independent uniform $a,b$ and check
 
 $$
 h(a)+h(b)=h(a+b),
 $$
 
-where all vector and bit additions are modulo two. An honest word always
-passes. Flip the entry at $001$ in our eight-bit word to obtain $g$.
-Of the $64$ ordered pairs $(a,b)$, $46$ pass and $18$ fail. One way to
-see the rejection count is to track whether an odd number of
-$a,b,a+b$ equals $001$. The three relevant sets each have eight
-pairs; their pairwise intersections are the three distinct pairs
-$(001,001)$, $(001,000)$ and $(000,001)$. Those intersections
-contribute two errors, which cancel. The count is therefore
+with additions modulo two. An honest word always passes. Flip the entry
+at $001$ in our eight-bit word to obtain $g$.
+Of the $64$ ordered pairs $(a,b)$, $46$ pass and $18$ fail. To count the
+rejections, track whether an odd number of $a,b,a+b$ equals $001$. The
+three relevant sets each have eight pairs; their pairwise intersections
+are the three distinct pairs $(001,001)$, $(001,000)$ and $(000,001)$,
+in each of which two errors cancel. The count is therefore
 $3\cdot8-2\cdot3=18$.
 
-Bellare, Coppersmith, Håstad, Kiwi and Sudan proved the sharp bound
-([Theorem 1.2][bchks]): a function which fails this test with probability
-$\varepsilon$ is within distance $\varepsilon$ of a linear functional.
-Its proof, included in the formal development, uses Fourier analysis on
-a finite binary vector space. Appendix B, Theorem B.1 of the
-[corrected paper][paper-v2] states this bound and cites both works.
-The eight-point example demonstrates the test; the theorem applies to
-arbitrary received words.
+**Theorem 7.1 (BLR linearity test; [BCHKS96, Theorem 1.2],
+[ABSSW26, Theorem B.1]).** If the BLR linearity test rejects a word with
+probability $\varepsilon$, the word is $\varepsilon$-close to a linear
+functional.
 <!-- /passage:pcp-expository-hadamard -->
 
 <!-- passage:pcp-expository-hadamard-correction -->
-### Recovering a chosen answer
+### Self-correction
 
 Suppose we want $h_s(x)$ but distrust the entry at $x$. Choose a uniform
 $r$ and return
@@ -654,57 +592,51 @@ $$
 g(r)+g(r+x).
 $$
 
-For the honest word this equals $h_s(x)$, because the two appearances
-of $h_s(r)$ cancel. If $g$ has error fraction $\varepsilon$, a wrong
-answer requires an error at $r$ or at $r+x$. Each is uniform, so the
-error probability is at most $2\varepsilon$.
+This two-query read is **self-correction** [BLR93], [AB07, §18.4.1].
+For the honest word it equals $h_s(x)$, because the two appearances of
+$h_s(r)$ cancel. If $g$ has error fraction $\varepsilon$, a wrong answer
+requires an error at $r$ or at $r+x$. Each is uniform, so the error
+probability is at most $2\varepsilon$.
 
 In our word with one corrupted position, $\varepsilon=1/8$. For each
 nonzero $x$, exactly six of the eight choices of $r$ give the correct
-answer. At $x=0$ the same entry is queried twice, so it cancels even
-when corrupt; all eight choices are correct. The general upper bound
-$2\varepsilon=1/4$ is attained at every nonzero $x$ in this example.
-
-**Question 2.** Why would choosing $r=x$ deterministically fail to give
-the same guarantee against an arbitrary corrupt word? Which property
-of the random choice was used in the proof?
-
-Random self-correction lets the verifier request a special algebraic
-observation using random query locations. The requested location itself
-need not be typical. Arora and Barak explain the same two-query operation
-in Section 18.4.1 of their [January 2007 draft][arora-barak].
+answer, so the bound $2\varepsilon=1/4$ is attained.
 <!-- /passage:pcp-expository-hadamard-correction -->
 
 <!-- passage:pcp-expository-cubic-labels -->
-### Why the construction needs more than linear questions
+### Labels of degree three
 
-In our four-element field, $u=a+b\omega$ has coordinates $(a,b)$ in
-the basis $(1,\omega)$. More generally, fixing a basis represents a field
-$F$ of size $2^t$ by $t$ binary coordinates. Write $\rho(u)$ for that
-coordinate vector. To check the colouring identities, the
-verifier needs observations of expressions such as $u^3-1$.
+In a field $F$ of size $q=2^t$, a binary basis is a list of $t$
+elements expressing each field element uniquely as a sum with
+coefficients in $\{0,1\}$; in $\mathbb F_4$, $u=a+b\omega$ has
+coordinates $(a,b)$ in the basis $(1,\omega)$. Write $\rho(u)$ for the
+$t$ coordinates. The colouring identities need observations of
+expressions such as $u^3-1$.
 
-For this purpose, it stores a larger word whose positions are Boolean
-polynomials $R$ of degree at most three:
+Precisely, a **label** is a multilinear polynomial over $\mathbb F_2$ in $t$
+variables $Z_1,\ldots,Z_t$ of degree at most $r$; the **degree-$r$ Hadamard encoding** of
+$u$ [ABSSW26, Definition 3.5] stores $R(\rho(u))$ at label $R$. Since
+Boolean variables satisfy $Z_i^2=Z_i$ on evaluation, multilinear
+monomials, in which no variable is repeated, suffice. The verifier uses $r=3$:
 
 $$
-H_3(u)(R)=R(\rho(u)).
+\mathcal H_3(u)(R)=R(\rho(u)).
 $$
 
-The coefficients of $R$ specify the position; the stored answer is
-one bit. Boolean variables satisfy $Z_i^2=Z_i$ when evaluated, so
-squarefree monomials suffice. For fixed $u$, this word is linear in
-the label $R$, even though $R$ may be cubic in the message coordinates.
+For fixed $u$ the word is linear in the label $R$, although $R$ may be
+cubic in the coordinates. We write $R(u)$ for $R(\rho(u))$. **Affine** labels have
+degree at most one, constants included; **homogeneous** labels are those
+without constant term; all labels of degree at most $r$ are the **full**
+labels. For $t=3$ there are $8$ homogeneous linear labels, $16$ affine
+labels, used later for the certificates and line restrictions, and
+$2^8=256$ full labels of degree at most three, used for $\chi$ and $\chi'$.
 
-Multiplication in a finite field is bilinear in its binary coordinates.
-Consequently, a linear binary observation $L(u^3-1)$ is a polynomial
-of degree at most three in $\rho(u)$. The verifier can compute the
-corresponding label and query that one position of $H_3(u)$.
-It learns the required bit about $u^3-1$ without reading all $t$
-coordinates of $u$.
+Each binary coordinate of a field product is a sum of products of
+coordinates of its two factors. Thus a homogeneous observation
+$L(u^3-1)$ is a polynomial of degree at most three in $\rho(u)$, and the
+verifier obtains it by querying one position of $\mathcal H_3(u)$.
 
-Here is the address calculation in our four-element field. The product
-formula in Section 4 gives $u^2=(a+b)+b\omega$, then
+In our four-element field, the product formula of Section 4 gives $u^2=(a+b)+b\omega$, then
 
 $$
 u^3-1=(1+a+b+ab)+0\omega.
@@ -716,259 +648,259 @@ $$
 \Lambda=1+Z_1+Z_2+Z_1Z_2.
 $$
 
-For example, $u=\omega$ has coordinates $(0,1)$, and this label returns
-$1+0+1+0=0$, as required by $\omega^3-1=0$. Squaring is linear in binary coordinates in every characteristic-two
-field, so $L(u^3-1)$ has Boolean degree at most two in general.
-The degree-three label space used by the formal verifier contains these
-labels; its query counts refer to that unchanged verifier.
+For $u=\omega$, the coordinates $(0,1)$ give $1+0+1+0=0$, as required.
+Since squaring is binary-linear in characteristic two, $L(u^3-1)$ in fact
+has degree at most two; we keep Lee's degree-three labels and his query
+count.
 
-Linearity in the labels alone is insufficient to establish that a
-received word represents a field element. For example, assign values
-one to the labels $1$ and $Z_1Z_2$, and zero to $Z_1,Z_2$, then extend
-linearly to every label in their span. This is a linear function of
-labels, but no evaluation at a point has those values: $Z_1=Z_2=0$
-would force $Z_1Z_2=0$. Evaluation words satisfy $H(1)=1$ and, for example,
-$H(Z_1Z_2)=H(Z_1)H(Z_2)$. The displayed false word violates the latter
-equation. The general test checks products of labels of the permitted
-degrees, using corrected answers.
+Linearity in the labels does not show that a word encodes a field
+element. Assign one to $1$ and $Z_1Z_2$, zero to $Z_1,Z_2$, and extend
+linearly on their span. No point has these evaluations: $Z_1=Z_2=0$
+forces $Z_1Z_2=0$. Encodings satisfy $\mathcal H_3(u)(1)=1$ and
+$\mathcal H_3(u)(Z_1Z_2)=\mathcal H_3(u)(Z_1)\mathcal H_3(u)(Z_2)$,
+and the false word violates the product identity.
 
-**Row-testing theorem used here.** For a word on all squarefree Boolean
-labels of degree at most $r\ge1$ over $t$ binary coordinates, conjoin
-additivity, unit preservation, affine consistency and the implemented
-product checks. If rejection is $\delta<1/28$, one message has full-label
-error at most $\delta$ and affine-label error at most $3\delta$.
-The same message satisfies both bounds. This is an input from the
-[Hadamard soundness proof](../long/reasoning-record.md#testing-a-received-hadamard-word);
-the earlier BLR illustration proves neither the product condition nor
-this combined theorem.
+**Theorem 7.2 (Hadamard test; cf. [ABSSW26, Lemma 3.10]).** Consider a word
+on all full labels of degree at most $r\geq1$ in $t$ variables. The
+**Hadamard test** runs the BLR linearity test and, using self-corrected
+answers, checks preservation of one and products of an affine factor with
+a factor of degree at most $j$, for each $1\leq j<r$; it also compares
+the direct answer at a uniform affine label with its self-correction. If
+the test rejects with probability $\delta<1/28$, there is one message
+whose encoding is $\delta$-close to the word on full labels and
+$3\delta$-close on affine labels. The
+[Hadamard soundness proof](../long/reasoning-record.md#53-the-hadamard-test)
+for Lee's test is in the full argument.
 
-The formal Hadamard test checks these properties using corrected
-answers. Its degree-three version makes ten bit queries. The current
-paper gives an eight-query version which retains only the top-degree
-product check; the pinned Lean verifier also performs lower-degree
-checks. We use the formal version's count when discussing its
-resources. The linearity example above explains one component, not
-the whole degree-three test.
-The preceding address calculation concerned an honest row. For a received
-row $g_x$, its special requested label $\Lambda_{x,L}$ might always be
-corrupt, even when the row has small average error. Use the same correction
-as before, now on the full polynomial-label space:
+*Remark (formalization).* The threshold $1/28$ is Lee's; [ABSSW26,
+Lemma 3.10] assumes $\delta$ below an unspecified constant. Lee's
+degree-three Hadamard test reads ten bits; their test HadTest reads
+eight, retaining only the top-degree product check. We use Lee's count.
+
+When a field value is stored as a word at each point $x$, write $w_x$
+for the word received at $x$. Its requested label $\Lambda_{x,L}$ may be
+corrupt even when $w_x$ has small average error. Self-correction on the
+full labels returns the **self-corrected read**
 
 $$
-g_x(R)+g_x(R+\Lambda_{x,L}),
+w_x(R)+w_x(R+\Lambda_{x,L}),
 $$
 
-where $R$ is a fresh uniform label. For fixed $x,L$, both queried labels
-are individually uniform, so row error $\varepsilon_x$ gives answer error
-at most $2\varepsilon_x$. The reads need not be independent. Averaging
-over uniform $x$ gives the $2\varepsilon$ bound used in Section 9.
-Neither every row's error nor the distribution of the requested label
-has been assumed uniform.
+where the **fresh random label** $R$ is uniform and independent of the
+fixed $x,L$. Both queried labels are uniform, though the requested label
+need not be. If $w_x$ has error fraction $\varepsilon_x$, the union
+bound gives answer error at most $2\varepsilon_x$ without independence
+between the reads, and averaging over uniform $x$ gives $2\varepsilon$
+when the average error is $\varepsilon$.
 <!-- /passage:pcp-expository-cubic-labels -->
 
+<!-- passage:pcp-expository-proof-inventory -->
+## 8. The proof tables, binary tests and local correction
+
+### The stored proof
+
+The proof consists of eight **tables**, which [ABSSW26] call proof
+oracles: four **points tables** and four **lines tables**. The points
+table of a polynomial $P$ on $F^k$ stores at each point $x$ the Hadamard
+encoding of $P(x)$. Its **lines table** assigns to each index
+$(u,v)\in F^k\times F^k$ the restriction $z\mapsto P(u+zv)$, stored after
+the set-multilinear encoding and then the Hadamard encoding with affine
+labels. The four polynomials are:
+
+| Polynomial | What it records | Labels |
+| :------------ | :--------------------------------------- | :--------------------- |
+| $\chi(x)$ | Low-degree extension of the colouring | Degree at most three |
+| $\chi'(x,y)$ | Difference $\chi(x)-\chi(y)$ | Degree at most three |
+| $M_V(x,u)$ | Vanishing certificate of $\operatorname{Val}$ | Affine |
+| $M_E(x,y,u,v)$ | Vanishing certificate of $\operatorname{Prop}$ | Affine |
+
+An **honest proof** contains these tables for a proper colouring and its
+certificates; a received proof may contain arbitrary bits. Lee's
+formalization writes $P,Q_P,A_P,B_P,E,M_A,M_B$ for
+$\chi,\chi',\operatorname{Val},\operatorname{Prop},\widehat E,M_V,M_E$.
+
+<!-- /passage:pcp-expository-proof-inventory -->
+
 <!-- passage:pcp-expository-binary-tests -->
-## 8. Combining the encodings and returning to the grid
+The two kinds of table have the following addresses.
 
-The construction now has two forms of redundancy. A line polynomial
-is encoded as a polynomial of fixed degree in more variables. Each
-field-valued entry is in turn encoded by binary questions. The
-checker chooses $u,v$ uniformly from the ambient vector space and $z$
-uniformly from the whole field. Zero directions and parameters are included. It tests the
-primary row at $u$, tests the auxiliary row for that same $(u,v)$,
-and compares the primary bit at $(u+zv,L)$ with a corrected auxiliary
-answer at $(\Phi(z),L)$. Here $L$ is a uniform homogeneous label.
-All three checks must pass. Inside the auxiliary test, a fair coin chooses
-between a row test and a weighted interpolation check; it does not run
-both alternatives on every seed.
+| Table | Address | Stored bit |
+| :----------------- | :------------------------------------ | :--------------------------- |
+| Points table $f$ | Point $x\in F^k$, label $R$ | $R$ of the value at $x$ |
+| Lines table $f'$ | Index $(u,v)\in F^k\times F^k$, inner point $\xi\in F^{cb}$, affine label $R$ | $R$ of the encoded line restriction at $\xi$ |
 
-For a primary polynomial on $F^k$, the two kinds of address are:
+At a fixed point $x$ the points table holds the word $w_x$. At a fixed
+index $(u,v)$ the lines table holds the **encoded entry** $f'_{u,v}$,
+indexed by an **inner point** $\xi$, the argument of the set-multilinear
+encoding, and an affine label. In an honest entry, $\xi=\Phi(z)$ gives
+the labelled bit of the original line value at $z$.
 
-| Table | Address | Returned object |
-| --- | --- | --- |
-| Primary | Ambient point $x$ and label $R$ | One bit about the value at $x$ |
-| Auxiliary | Oriented line $(u,v)\in F^k\times F^k$, inner point $w\in F^{cb}$, and affine label $R$ | One bit about its digit-encoded line value at $w$ |
+*Remark (formalization).* Lee uses affine labels for all four lines
+tables. [ABSSW26, §7] uses degree-three labels for the colour and
+difference lines tables.
 
-For an honest auxiliary row, putting $w=\Phi(z)$ recovers an observation
-of the original line value at $z$. Correction obtains that observation
-using random addresses when the table is corrupt.
+The **inner low-degree test** acts on one encoded entry: a fair coin
+chooses between the Hadamard test at a uniform inner point and a one-bit
+observation of the standard low-degree test of Section 6. The
+**binary low-degree test** samples $u,v\in F^k$ and $z\in F$
+independently and uniformly, zero included. It runs the Hadamard test on
+the word $w_u$, runs the inner low-degree test on $f'_{u,v}$, and
+compares the points-table bit at $(u+zv,L)$ with a self-corrected
+lines-table answer at $(\Phi(z),L)$, for an independent uniform
+homogeneous label $L$. All three checks must pass.
 
-Field coefficients in the interpolation formula do not require
-reading a whole field element. For a homogeneous binary linear
-label $L$ and a field weight $\eta$,
+*Remark (formalization).* In [ABSSW26, Algorithm 5] the inner low-degree test runs
+both components; Lee's fair coin runs one.
+
+The field weights of the interpolation formula do not require reading a
+whole field element. For a homogeneous label $L$ and a field weight
+$\eta$,
 
 $$
 L(\eta u)=(L\circ(\eta\cdot))(u).
 $$
 
-For example, multiplying $u=a+b\omega$ by $\omega$ gives
-$b+(a+b)\omega$. If $L$ reads the first coordinate, then
-$L(\omega u)=b$: the weighted observation asks the second-coordinate
-label of the original value. The weight changes the queried label,
-not the stored bit after it has been read. Applying $L$ to a
-weighted field identity therefore produces an identity among a fixed
-number of bits. If the field identity is false, a uniform homogeneous
-label detects it with probability $1/2$.
+For example, $\omega(a+b\omega)=b+(a+b)\omega$. If $L$ reads the
+first coordinate, $L(\omega u)=b$, so the weighted query asks for the
+second coordinate of $u$: the weight is incorporated into the label.
+Applying $L$ to a weighted field identity gives an identity among a fixed
+number of bits, and a uniform homogeneous label detects a false field
+identity with probability $1/2$.
 
-The combined low-degree theorem supplies **one** polynomial close to
-the primary oracle on the label sets used later. It is not enough to
-obtain one polynomial for the cubic questions and an unrelated one for
-the linear questions: both checks must refer to the same decoded
-polynomial. In the formal version, the additional degree-one guarantee
-concerns homogeneous linear labels; this is the label family used for
-the final difference check. A certificate table whose entire label
-space has degree one also receives the full affine-label guarantee.
+The analysis needs **one** nearby polynomial whose encoding is close to
+the points table both on its full labels (affine labels, for the
+certificate tables) and on the homogeneous labels. A small error on the
+full labels can conceal a large homogeneous error: in the encoding of
+$(1,0,1)$ on the 256 full labels of Section 7, substitute the answers for
+$(1,0,0)$ at the eight homogeneous positions. Four answers change, so the
+full-label error is $4/256=1/64$ while the homogeneous-label error is
+$4/8=1/2$.
 
-There are three label domains. For $t$ coordinate bits, homogeneous
-linear labels are sums $\sum_i a_iZ_i$; affine labels may also have a
-constant term. Full degree-three labels may use every squarefree monomial
-of degree at most three.
+Fix positive integers $c,b$ and put $D=cb^c$. Constants $J,S,C$ depend
+only on $c$: $J$ bounds field-valued line error, $S$ converts rejection
+to encoding distance, and $C$ bounds the correction-failure contribution
+from rejection. Their [formulas](#the-error-constants) are in Appendix A.
 
-| Label domain | Number for $t=3$ | Later use |
-| --- | ---: | --- |
-| Homogeneous linear | $8$ | Weighted comparisons and the difference check |
-| Affine linear | $16$ | Full label domain of certificate rows |
-| Full degree-three | $256$ | Nonlinear derived queries from colour and difference rows |
-
-A small full-domain error can hide a large error on the first row of
-this table. Begin with the full evaluation word of the message $(1,0,1)$.
-On its eight homogeneous positions only, replace the answers by those
-for $(1,0,0)$. Four answers change. The full error is $4/256=1/64$,
-but the homogeneous error is $4/8=1/2$. This is why the testing theorem
-must supply both bounds for the same polynomial.
-
-We need quantitative versions of these statements to know that the
-errors will leave a positive gap. Fix a positive inner degree $c$ and
-a positive digit base $b$, put $D=cb^c$, and write $Q=|F|$. The analysis gives
-constants $E,S,C$ depending only on $c$. Their roles are: $E$ controls
-the field-valued line error, $S$ converts test rejection into code distance,
-and $C$ controls correction failure. Their [exact formulas](#the-error-constants)
-are collected after the exercises. With the prescribed interpolation nodes, if the complete
-encoded-line tester rejects with probability at most $\kappa$, and
+**Theorem 8.1 (binary low-degree test; cf. [ABSSW26, Theorem 4.1]).** With
+the generator nodes of Section 6, if the binary low-degree test
+rejects with probability at most $\kappa$ and
 
 $$
-Q\geq10^6D^3,
-\qquad E\kappa\leq\frac1{4\cdot10^6},
+q\geq10^6D^3,
+\qquad J\kappa\leq\frac1{4\cdot10^6},
 $$
 
-there is one polynomial of degree at most $D$ whose encoding differs from the
-received primary table on at most a fraction $\varepsilon=S\kappa$
-of full labels, and on at most that fraction of homogeneous labels.
-Both distances average over the ambient point as well as the indicated
-label. This is the precise combined testing result we use below; the
-[full account][long] derives the constants by summing the row-decoding,
-line-correction and comparison errors.
+then there is one polynomial of degree at most $D$ whose encoding is
+within $\varepsilon=S\kappa$ of the received points table on both
+full and homogeneous labels. Each distance averages over the point of
+$F^k$ and the specified label domain.
 
-The outer test averages over anchors $u$ and directions $v$. At a
-prescribed target $a\in F^k$, every row used by a corrector has anchor
-$a$. All those rows together occupy only a fraction $Q^{-k}$ of the
-auxiliary table and could all be corrupt. For $Q=4,k=2$, they are 16 of
-256 oriented lines, yet comprise every line this corrector can select.
-Randomising the direction does not randomise the anchor. The corrector
-therefore tests its selected row again and charges that test's rejection
-to its own rejection rate.
+*Remark (formalization).* Lee samples $z$ from all of $F$ and concludes
+closeness on homogeneous labels with explicit constants, derived in the
+[full argument][long]; the second guarantee of [ABSSW26, Theorem 4.1]
+concerns all affine labels.
 
-Now fix a target point $a$ whose bit we want to recover. The outer
-corrector performs the following experiment.
+The binary low-degree test averages over base points and slopes, but a
+local corrector requesting the value at $a\in F^k$ uses only entries with
+base point $a$. These form a fraction $q^{-k}$ of the lines table, yet
+they include every entry this corrector can select, and all of them
+could be corrupt (Exercise 7). Randomising the
+slope leaves the base point fixed, so the corrector tests its selected
+entry again, and the rejection rate of that test enters the bound.
 
-1. Independently choose a uniform direction $v$ from the whole ambient
-   vector space, a uniform nonzero $z\in F^\times$, and a uniform homogeneous
-   label $L$. Choose a separate uniform direction from the full inner digit
-   space and an independent seed for the inner test.
-2. Test the auxiliary row for the line $a+Yv$. Reject if it fails.
-3. Correct that row at $\Phi(z)$ and compare the bit with the primary
-   answer at $(a+zv,L)$. Reject if they differ.
+At a fixed target $a\in F^k$, the **local corrector** runs the following
+experiment.
+
+1. Independently choose a uniform slope $v\in F^k$, a uniform nonzero
+   $z\in F^\times$, a uniform homogeneous label $L$, a uniform inner
+   slope $e\in F^{cb}$ and an independent seed for the inner low-degree
+   test.
+2. Run the inner low-degree test on the entry for the line $a+Yv$.
+   Reject if it fails.
+3. Correct that entry at $\Phi(z)$ and compare the bit with the
+   points-table answer at $(a+zv,L)$. Reject if they differ.
 4. Otherwise return its correction at $\Phi(0)$, using the same inner
-   direction and label. Exact primary and auxiliary tables for $P$ of degree
-   strictly below $b^c$ return $L(P(a))$ for every seed.
+   slope and label.
 
-Thus the output is either rejection or one bit. Suppose the primary table
-has homogeneous distance at most $\delta$ from a degree-$D$ polynomial
-$P$, and this procedure rejects with probability $R_a$. Then
+The output is rejection or one bit; honest tables of a polynomial $P$ of
+degree strictly below $b^c$ return $L(P(a))$ for every seed.
+
+**Theorem 8.2 (local correction; cf. [ABSSW26, Theorem 5.1]).**
+Suppose the points table has homogeneous distance at most $\delta$ from
+a polynomial $P$ of degree at most $D$, and the local corrector at $a$
+rejects with probability $\kappa_a$. Then
 
 $$
 \Pr[\text{rejection or wrong returned bit}]
-\leq C R_a+\delta+\frac{D}{2(Q-1)}.
+\leq C \kappa_a+\delta+\frac{D}{2(q-1)}.
 $$
 
-To understand the three terms, decode the tested auxiliary rows to
-candidate line polynomials. Poor auxiliary rows cause inner-test rejection,
-so their correction errors are bounded by a constant times $R_a$.
-If a candidate line has the wrong value at zero, its difference from
-$P(a+Yv)$ is a nonzero degree-$D$ polynomial. It can hide that discrepancy
-at at most $D$ of the $Q-1$ nonzero comparison points. A random homogeneous
-observation distinguishes unequal field values with probability one half;
-this gives the displayed root loss. Finally, $a+zv$ is uniform for fixed
-nonzero $z$, so replacing its primary answer costs at most $\delta$.
-The full proof counts both auxiliary corrections and the rejection event
-in the coefficient $C$.
+*Remark (formalization).* Lee assumes closeness only on homogeneous
+labels and gives the explicit constant $C$; [ABSSW26, Theorem 5.1]
+assumes closeness on all affine labels and bounds the failure by an
+$O_c(\cdot)$ term.
 
-This probability includes a uniformly random homogeneous label; it is
-not a guarantee for every fixed label. It assumes no honesty of the
-auxiliary line table and no smallness of $R_a$. The term $C R_a$ is
-useful because a later test that rejects whenever correction rejects
-will bound $R_a$ by its own rejection rate, after averaging over its
-requested targets.
+The probability averages over a uniform homogeneous label; it is not a
+bound for each fixed label, and no assumption on the lines table or on
+$\kappa_a$ is needed. For the three terms, choose a nearby line
+polynomial for each tested entry. The inner low-degree test bounds each entry's
+encoding distance by a constant times its rejection rate, and averaging
+over slopes bounds the resulting correction errors by a constant times
+$\kappa_a$. If a chosen
+line polynomial has the wrong value at zero, its difference from
+$P(a+Yv)$ is a nonzero polynomial of degree at most $D$, with at most $D$
+roots among the $q-1$ nonzero comparison points. A uniform homogeneous
+label distinguishes unequal field values with probability $1/2$, giving
+the term $D/[2(q-1)]$. Finally, for nonzero $z$ the point $a+zv$ is
+uniform, so replacing its points-table answer costs at most $\delta$.
 
-We can now return to the two identities for the vanishing certificate:
+Return to the two identities for the vanishing certificate:
 
 $$
 M(x,0)=0,
 \qquad M(x,Z_H(x))=P(x).
 $$
 
-The generic binary ZERO test chooses a uniform point $x$ and homogeneous
-label $L$, obtains a constraint bit $p(x,L)$, and calls the certificate corrector
-at $(x,0)$ and $(x,Z_H(x))$. Both calls use this $L$ and independent
-remaining seeds. If they return $b_0,b_Z$, acceptance requires
-$b_0=0$ and $b_Z=p(x,L)$; either rejection makes ZERO reject.
-Consequently ZERO's rejection rate bounds each correction's rejection
-*averaged over its requested targets*. It does not give that bound for
-every fixed target separately.
+The **zero-on-grid test**, cf. [ABSSW26, Theorem 6.1], written ZERO there,
+chooses a uniform point $x$ and homogeneous label $L$, obtains a
+constraint bit $p(x,L)$, and calls the local corrector of the certificate
+tables at $(x,0)$ and $(x,Z_H(x))$ with this $L$ and independent
+remaining seeds. It accepts when the calls return $b_0=0$ and
+$b_Z=p(x,L)$, and rejects if either call rejects, so its rejection rate
+bounds each correction's rejection *averaged over its requested targets*,
+though not for every fixed target.
 
-In the colouring verifier, $p(x,L)$ is a derived answer, not an extra
-stored table. The vertex check obtains it from two masked colour-table
-reads; the edge check uses two difference-table reads, with the public
-adjacency value incorporated in the requested label. The stored proof
-still has four primary/auxiliary pairs. On honest encodings, exact
-certificates and their line data, all corrections and identities pass
-for every seed.
+*Remark (formalization).* In [ABSSW26, Algorithm 7] the two corrector
+calls share one seed; Lee's calls have independent seeds.
 
-The soundness argument compares this received-data test with the
-ideal test on the decoded polynomials. If the two outcomes differ,
-one of the few answers used in the comparison must be wrong.
-The correction bounds control that probability. If $P$ fails to
-vanish on the grid, the ideal test has a positive rejection rate
-by the polynomial distance estimate from Section 5. After deducting
-the controlled errors, a positive rejection rate remains for the
-actual test. Section 9 gives the exact inequality and the error
-budget making it positive; the full argument proves the estimates.
-
-Global closeness by itself would not justify either certificate
-read. At each requested point, the correction theorem bounds rejection
-or a wrong answer using both the global error fraction and the
-corrector's actual rejection rate.
+For colouring, the constraint bit $p(x,L)$ is a self-corrected read of
+the colour table (vertex check) or difference table (edge check), with
+the public adjacency value incorporated into the edge label. Honest
+encodings and their certificates pass for every seed. The **ideal test**
+reads the values of the nearby polynomials in place of the received
+answers; a failed grid condition forces it to reject through Lemma 3.1,
+and the cost of the replacement is bounded in Section 9.
 <!-- /passage:pcp-expository-binary-tests -->
 
-
 <!-- passage:pcp-expository-worked-zero -->
-### Following the one-edge certificate to bits
+### The one-edge vanishing certificate in bits
 
 Return to $P(X)=\chi(X)^3-1$, $M(X,U)=U(X+\omega^2)$ and $x=\omega$.
-Choose the possible homogeneous-label outcome $L(a+b\omega)=a$.
-The desired constraint bit is $L(P(\omega))=1$. Its Boolean label from
-Section 7 is $\Lambda=1+Z_1+Z_2+Z_1Z_2$. For the possible mask
-$R=Z_1$, the two colour-table reads are
+Take the homogeneous label $L$ with $L(a+b\omega)=a$. The desired bit is
+$L(P(\omega))=1$, obtained from
+$\Lambda=1+Z_1+Z_2+Z_1Z_2$. With fresh random label $R=Z_1$, the two
+colour-table reads are
 
-| Address | Bit on the honest row, where $\chi(\omega)=0$ |
-| --- | ---: |
+| Address | Bit of the honest word, where $\chi(\omega)=0$ |
+| :------------------- | -----------------------------------------------------: |
 | $(\omega,Z_1)$ | $0$ |
 | $(\omega,1+Z_2+Z_1Z_2)$ | $1$ |
 
-Their sum is the required bit. Every mask works on honest data;
-fresh uniform masking is what supplies the error bound on received data.
+Their sum is the required bit; on honest data every choice of $R$ gives
+it.
 
 The certificate targets are $A=(\omega,0)$ and $B=(\omega,1)$.
-Consider a run where both independently chosen outer directions equal
+Consider a run where both independently chosen slopes equal
 $v=(1,1)$ and both nonzero comparison parameters equal $z=1$.
 The honest line restrictions are
 
@@ -977,416 +909,341 @@ p_A(Y)=M(\omega+Y,Y)=Y^2+Y,\qquad
 p_B(Y)=M(\omega+Y,1+Y)=Y^2+1.
 $$
 
-Both have value zero at the comparison parameter $1$. Thus the primary
-comparison reads $((\omega^2,1),L)$ and $((\omega^2,0),L)$ both return zero.
+Both have value zero at the comparison parameter $1$. Thus the
+points-table comparison reads at $((\omega^2,1),L)$ and $((\omega^2,0),L)$ both return zero.
 At the target parameter $0$, the desired answers are zero and one.
 
-Choose $b=3,c=1$ for this honest illustration. The digit encodings are
+Take $b=3,c=1$. The set-multilinear encodings are
 $\widetilde p_A(W)=W_2+W_1$ and $\widetilde p_B(W)=W_2+W_0$.
 With $\Phi(z)=(1,z,z^2)$ they recover $p_A(z),p_B(z)$.
 The generator nodes $\omega,\omega^2$ have weights $\omega^2,\omega$,
 so an affine inner polynomial $T$ satisfies
 
 $$
-T(w)=\omega^2T(w+\omega e)+\omega T(w+\omega^2e).
+T(\xi)=\omega^2T(\xi+\omega e)+\omega T(\xi+\omega^2e).
 $$
 
-Take the possible inner direction $e=(0,1,0)$ in each call.
-The field weights become bit labels: $L(\omega^2u)=a+b$ and
-$L(\omega u)=b$. The following table lists the eight weighted-interpolation
-reads. Each call also runs the inner row test; those test reads are omitted
-here. Each displayed address includes its call's anchor $A$ or $B$ and the
-outer direction $v$; the two columns headed by labels specify the
-remaining inner-point/label pairs.
+Take the inner slope $e=(0,1,0)$ in each call. For $u=a+b\omega$ the
+weights become bit labels: $L(\omega^2u)=a+b$ and $L(\omega u)=b$. The
+table lists the eight correction reads. Each call also runs the inner
+low-degree test, which chooses by a fair coin between the Hadamard test
+and the standard low-degree test; those test reads are omitted. Each
+address includes its call's base point $A$ or $B$ and slope $v$; the
+labelled columns specify the inner point and label.
 
 | Call | Step | $z$ | Point for $Z_1+Z_2$ | Bit | Point for $Z_2$ | Bit | Sum |
-| ----- | ---------- | ---: | -------------------- | ---: | -------------------- | ---: | ---: |
+| :------ | :---------- | ---: | :---------------------- | ----: | :------------------ | ----: | ----: |
 | $A$ | Compare | $1$ | $(1,\omega^2,1)$ | $1$ | $(1,\omega,1)$ | $1$ | $0$ |
 | $A$ | Return | $0$ | $(1,\omega,0)$ | $1$ | $(1,\omega^2,0)$ | $1$ | $0$ |
 | $B$ | Compare | $1$ | $(1,\omega^2,1)$ | $0$ | $(1,\omega,1)$ | $0$ | $0$ |
 | $B$ | Return | $0$ | $(1,\omega,0)$ | $1$ | $(1,\omega^2,0)$ | $0$ | $1$ |
 
-The comparison bits agree with the two primary reads. The syntactic row
-tests pass on these honest encodings, and the calls return $b_0=0,b_Z=1$.
-ZERO accepts: $b_0=0$ and $b_Z=1=p(\omega,L)$.
+The comparison bits agree with the two points-table reads. The inner
+low-degree tests pass on honest data, and the calls return
+$b_0=0,b_Z=1$. The zero-on-grid test accepts because $b_0=0$ and
+$b_Z=1=p(\omega,L)$.
 
-Within each call, comparison and return reuse its inner direction.
-Across the two calls, the remaining seeds are independent conditional on
-$x,L$; displaying equal outcomes does not identify the random variables.
-This example expands the data reads of one honest vertex check. Its tiny
-field and $c=1$ do not instantiate the large-field soundness theorem or
-the complete $c=4$, 187-query verifier. The [finite checker][trace-checker]
-verifies the displayed identities and addresses.
+The two calls' remaining seeds are independent given $x,L$; the
+displayed run has equal outcomes. The small field and $c=1$ do not satisfy
+the parameter conditions of the $c=4$ verifier.
 <!-- /passage:pcp-expository-worked-zero -->
 
 <!-- passage:pcp-expository-assembly -->
-## 9. From the seven checks to a colouring
+## 9. Soundness of the seven-check verifier
 
-The eight received tables were listed after the grid certificate in Section 5. The verifier runs
-four low-degree tests, one for each primary table and its line table;
-two ZERO tests, one for each colouring condition; and one difference
-check connecting $\chi'$ to $\chi$. It accepts only if all seven pass.
+The verifier runs seven checks on the eight tables listed in Section 8:
+four binary low-degree tests, two zero-on-grid tests for the colouring
+conditions, and a difference check connecting $\chi'$ to $\chi$. It
+accepts only if all seven pass.
 
-![Which of the eight stored tables each of the seven checks may query. A dot marks table use, not the number of queries. The shaded vertex ZERO column is the branch illustrated in Section 8.](table-checks.png)
+![Which of the eight stored tables each of the seven checks may query. A dot marks table use. LDT denotes a binary low-degree test. The shaded column, the vertex zero-on-grid test, is the branch illustrated in Section 8.](table-checks.png)
 
-The line tables used for correction are the same ones used in the low-degree tests. In check 5, the colour table supplies a derived observation of $\chi(x)^3-1$, while the vertex-certificate tables supply corrected observations at $(x,0)$ and $(x,Z_H(x))$. This is the path followed by the one-edge example. Its displayed reads illustrate that branch; they omit the inner-test queries and do not run the complete seven-check verifier. Check 6 also uses the public adjacency polynomial, which is computed from the input graph and is not a ninth proof table.
+The local correctors use the lines tables of the low-degree tests. The
+edge zero-on-grid test also uses the adjacency polynomial, computed from
+the input graph and not stored in the proof.
 
+The separate difference table lets the verifier query cubic labels of a
+claimed difference value with the same operations as for the colour
+table. The difference check ties it to $\chi(x)-\chi(y)$: at independent
+uniform points and one uniform homogeneous label, it reads the stored
+bits of the three values and checks that the bit for $\chi'$ is the sum
+of the other two.
 
-The separate difference table lets the verifier obtain binary
-observations of the cube of a difference using the same local
-operations as for the colouring table. If the verifier accepts sufficiently often, the difference check forces
-its decoded polynomial to equal the difference of the decoded colouring
-values.
+For perfect completeness, interpolate a proper colouring, form its
+difference polynomial, construct both vanishing certificates, and supply
+their encodings and lines tables. All seven checks then pass for every
+seed, given the degree-capacity condition $5m(h-1)<b^c$ verified in
+Appendix A.
 
-For perfect completeness, start with a proper colouring, interpolate it,
-form its difference polynomial, and construct the two vanishing
-certificates. Supply their honest encodings and line tables.
-Interpolation identities, binary encoding identities and the two grid
-certificates then make every check accept for every seed, provided the
-honest degrees fit the encoding capacity. Appendix A checks the
-sufficient condition $5m(h-1)<b^c$ for the chosen parameters.
-
-For soundness, suppose an arbitrary proof string is accepted with
-probability very close to one. Each of the seven checks must then
-reject rarely, because failure of any one makes the whole verifier reject.
-
-The four low-degree tests produce four decoded polynomials.
-The difference check and the binary distance identity show that
-the decoded $\chi'$ is close to
-$\chi(x)-\chi(y)$ at uniform field points. These are both
-low-degree polynomials. If they were different, the polynomial
-distance estimate would force much greater disagreement.
-Hence they are identical. This converts an approximate statistical
-comparison into an exact algebraic relation.
-
-The two ZERO checks then force the constraint polynomials
+For soundness, fix an arbitrary proof and let $\kappa$ be the seven-check
+verifier's rejection rate, so that each check rejects with probability at
+most $\kappa$. We choose a positive constant $g$, independent of the
+graph size, such that $\kappa<g$ implies a proper colouring; every proof
+for a non-three-colourable graph is then rejected with probability at
+least $g$. The four binary low-degree tests give four nearby polynomials,
+and the difference check with Lemma 3.1 forces the nearby $\chi'$ to
+equal $\chi(x)-\chi(y)$. The zero-on-grid tests then force
 $\operatorname{Val}_{\chi}=\chi^3-1$ and
-$\operatorname{Prop}_{\chi'}=\widehat E((\chi')^3-1)$
-to vanish on their grids. Their primary values are
-obtained from the cubic encodings using freshly randomised
-self-correction. The error estimates refer to the same decoded
-$\chi$ and $\chi'$ chosen by the low-degree tests. The certificate
-arguments therefore imply that $\chi$ assigns a valid colour at
-every vertex and different colours at the ends of every edge.
-It is a proper colouring.
+$\operatorname{Prop}_{\chi'}=\widehat E((\chi')^3-1)$ to vanish on
+their grids, for the same nearby $\chi,\chi'$, so $\chi$ gives a valid
+colour at every vertex and distinct colours across each edge.
 
-Thus sufficiently high acceptance implies that the graph is
-three-colourable. Taking the contrapositive, every proof for a
-non-three-colourable graph is rejected with a fixed positive
-probability. The proof selects the field and degree parameters
-so that this probability does not shrink with the graph size.
+### The soundness gap
 
-### Why the accumulated errors still leave a gap
-
-Let $\kappa$ now be the rejection rate of the whole seven-check
-verifier, and suppose $E\kappa\leq1/(4\cdot10^6)$. Each low-degree
-test rejects at most this often, so the four decoded polynomials have
-the simultaneous code-distance bounds $\varepsilon=S\kappa$ from
-Section 8. Replacing the three bits of the difference check by their
-decoded values changes its decision on at most $3\varepsilon$ of
-seeds. If the decoded difference polynomial were wrong, polynomial
-distance and the half-distance binary encoding would instead force
-ideal rejection at least $(1-D/Q)/2$. Thus
+Suppose $J\kappa\leq1/(4\cdot10^6)$. Each low-degree test rejects with
+probability at most $\kappa$, so Theorem 8.1 gives the distance bounds
+$\varepsilon=S\kappa$. Replacing the three bits of the difference check
+by the values of the nearby polynomials changes its decision with
+probability at most $3\varepsilon$, while unequal difference polynomials
+would force ideal rejection at least $(1-D/q)/2$. Hence
 
 $$
-\kappa+3\varepsilon<\frac{1-D/Q}{2}
+\kappa+3\varepsilon<\frac{1-D/q}{2}
 $$
 
 forces the exact difference identity.
 
-Put $h=|H|$. The parameters also ensure $m(h-1)\leq D$, so the public adjacency
-extension has degree at most $2D$. The decoded colour polynomial has
-degree at most $D$. Consequently
-its vertex constraint has degree at most $3D$, and its edge constraint
-has degree at most $5D$, including the adjacency factor. The certificate
-polynomials also have degree at most $D$. If either constraint fails
-to vanish on its grid, the ZERO soundness estimate gives
+The parameters ensure $m(h-1)\leq D$, so the adjacency extension has
+degree at most $2D$. The nearby colour polynomial has degree at most $D$,
+so its vertex constraint has degree at most $3D$ and its edge constraint,
+including the adjacency factor, at most $5D$. The certificate polynomials
+also have degree at most $D$. If either constraint fails
+to vanish on its grid, the zero-on-grid soundness estimate gives
 
 $$
-\frac{1-5Dh/Q}{2}
+\frac{1-5Dh/q}{2}
 \leq (1+2C)(\kappa+2\varepsilon)
-       +2\varepsilon+\frac{5D}{Q-1}.
+       +2\varepsilon+\frac{5D}{q-1}.
 $$
 
-Here is the event comparison behind that inequality. Let $r$ be the
-rejection rate after replacing the derived cubic answer by its ideal bit,
-but keeping the two actual certificate corrections. Section 7's fresh-mask
-argument gives $r\le\kappa+2\varepsilon$. In this modified test, rejection
-of either correction still forces rejection, so each correction has
-average rejection at most $r$. Its failure probability is at most
-$Cr+\varepsilon+5D/[2(Q-1)]$.
+Replace the self-corrected constraint bit $p(x,L)$ by its ideal value, keep both actual
+certificate corrections, and let $r$ be the resulting rejection rate. Self-correction with a fresh random label gives
+$r\leq\kappa+2\varepsilon$. Rejection by either correction still
+rejects this modified test, so each correction's target-averaged
+rejection is at most $r$, and by Theorem 8.2 its failure probability is
+at most $Cr+\varepsilon+5D/[2(q-1)]$.
 
-Couple the ideal and modified tests using the same random choices. If the
-ideal test rejects but the modified one accepts, a correction must have
-supplied the wrong bit. Therefore
+Couple the ideal and modified tests through the same random choices; if
+the ideal test rejects but the modified one accepts, a correction
+supplied a wrong bit. Therefore
 
 $$
 \begin{aligned}
 \Pr[\text{ideal rejects}]
 &\le r+\Pr[\text{a correction fails}]\\
-&\le r+2\left(Cr+\varepsilon+\frac{5D}{2(Q-1)}\right)\\
-&\le(1+2C)(\kappa+2\varepsilon)+2\varepsilon+\frac{5D}{Q-1}.
+&\le r+2\left(Cr+\varepsilon+\frac{5D}{2(q-1)}\right)\\
+&\le(1+2C)(\kappa+2\varepsilon)+2\varepsilon+\frac{5D}{q-1}.
 \end{aligned}
 $$
 
-A false grid condition makes one polynomial residual nonzero. Its degree
-is at most $5Dh$, so it is nonzero at at least a fraction $1-5Dh/Q$ of
-points. One random homogeneous observation detects that residual with
-probability one half. This proves the lower bound on ideal rejection;
-no independence between the two residual detections is needed.
+A false grid condition makes one residual a nonzero polynomial of
+degree at most $5Dh$. It is nonzero on at least a fraction
+$1-5Dh/q$ of the points. A uniform homogeneous label detects
+each nonzero value with probability $1/2$, giving the ideal lower
+bound. No independence between the two residual checks is needed.
 
 Choose the field large enough that
 
 $$
-\frac DQ\leq\frac14,\qquad
-\frac{5Dh}{Q}\leq\frac14,\qquad
-\frac{5D}{Q-1}\leq\frac18.
+\frac Dq\leq\frac14,\qquad
+\frac{5Dh}{q}\leq\frac14,\qquad
+\frac{5D}{q-1}\leq\frac18.
 $$
 
-Both ideal lower bounds are then at least $3/8$. Since $E,S,C$ are
-fixed constants, we can choose a fixed positive $g$ so that $\kappa<g$
-implies the testing threshold and
+Both ideal lower bounds are then at least $3/8$. Since $J,S,C$ are
+constants, a fixed positive $g$ makes $\kappa<g$ imply the testing
+threshold and
 
 $$
 \kappa+3S\kappa<\frac1{16},\qquad
 (1+2C)(\kappa+2S\kappa)+2S\kappa<\frac1{16}.
 $$
 
-The difference identity follows because $1/16<3/8$. A false grid
-condition would make the ZERO inequality assert
-$3/8<1/16+1/8=3/16$, which is impossible. Thus both grid conditions
-hold. The parameter calculation in Appendix A supplies a common choice meeting these requirements.
-This calculation explains the fixed gap: the field controls the root
-terms, while sufficiently small overall rejection controls every
-remaining error term linearly.
-
-The decoded polynomials and the recovered colouring exist in
-the soundness argument. Their existence shows what a frequently
-accepted string would imply. The verifier performs the prescribed
-local queries and calculations without reconstructing these objects.
-
-**Question 3.** Suppose the low-degree tests decoded the main
-colouring table to one polynomial for cubic labels and a
-different polynomial for the homogeneous linear labels. Which
-step of the preceding soundness argument would need repair?
+The difference identity follows since $1/16<3/8$. A false grid
+condition would require
+$3/8\leq\Pr[\text{ideal rejects}]<1/16+1/8=3/16$, a contradiction.
+Thus both grid conditions hold; parameters meeting all the field-size
+conditions at once are given in Appendix A.
 <!-- /passage:pcp-expository-assembly -->
 
 <!-- passage:pcp-expository-resources -->
 ## 10. Randomness, proof length and repetition
 
-The table sizes and the randomness budget have to be controlled
-alongside the query count: the PCP theorem requires polynomial proof
-length and logarithmic randomness as well as constant queries.
+In the [parameter calculation](#parameter-calculation) we fix $c=4$ and
+choose the grid dimension and digit base $s$ and the number $t$ of
+binary coordinates so that the grid holds all $N$ vertices, the
+field-size bounds of Section 9 hold, and a point address ($O(st)$ bits)
+and a full label ($O(t^3)$ bits) both take $O(\log N)$ bits. So does
+every address and seed, and the $2^{O(\log N)}=N^{O(1)}$ possible
+addresses give polynomial proof length. Fair random bits give uniform
+field elements directly, since $|F|$ is a power of two; the exception is
+the nonzero comparison parameter needed by each of the four corrector
+calls in the two zero-on-grid tests.
 
-Choose a fixed inner degree $c=4$, a grid dimension and digit base $s$,
-and a characteristic-two field with $t$ binary coordinates. The
-[parameter calculation](#parameter-calculation) chooses these so that
-$st=O(\log N)$ and $t^3=O(\log N)$, while the grid holds all $N$ vertices
-and the field satisfies the degree and error bounds from Section 9.
+*Remark (formalization).* Lee's verifier samples each of these four
+parameters from the whole field and accepts if any is zero. Conditioned
+on all four being nonzero, the distribution is the original one, so the
+rejection probability is multiplied by $(1-1/|F|)^4\geq1/16$ and a
+positive gap survives. Lee also implements the field, arithmetic,
+adjacency extension, queries and acceptance predicate in polynomial time
+on a concrete machine model; this proof is in the [full argument][long].
 
-A point address uses $O(st)$ bits. A degree-three label is specified by
-the coefficients of $1+t+\binom t2+\binom t3$ monomials, using $O(t^3)$
-bits. Only a fixed number of field vectors and labels occur in each
-address or seed. Both therefore have $O(\log N)$ bits. There are
-$2^{O(\log N)}=N^{O(1)}$ addresses, giving polynomial proof length.
-The appendix treats $N=0,1$ separately and verifies the honest degree capacity.
-
-Fair random bits give uniform field elements directly,
-since $|F|$ is a power of two. Each of the two ZERO tests makes two certificate-correction calls.
-These four calls have one nonzero comparison parameter apiece. The
-implementation instead samples each from the whole field
-and accepts immediately if any of these four is zero.
-Conditioned on all four being nonzero, the distribution
-is exactly the original one. The rejection probability
-is multiplied by $(1-1/|F|)^4\geq1/16$, so a fixed
-positive gap survives.
-
-The running-time claim requires more than short addresses.
-The formal implementation computes the field, its arithmetic,
-the public adjacency extension, the queries and their
-acceptance condition in polynomial time, and compiles
-these operations to a concrete machine model. The [full
-argument][long] separates this implementation proof from
-the information-theoretic query and randomness bounds.
-
-The seven query caps at $c=4$ are $26,22,26,22,44,44,3$, in the order
-colour, vertex certificate, difference, edge certificate, vertex ZERO,
-edge ZERO and difference consistency. Their sum is 187, an upper bound
-for one unamplified run; some seeds read fewer bits. The proved gap is
-positive but very small. Repeating independently a fixed number of
-times reduces soundness error to one half; the exact constants are
-given with the [parameter calculation](#parameter-calculation).
-
-The elementary calculation is easier with a toy gap.
-Suppose one run accepts any fixed false proof with
-probability at most $3/4$. Three independent runs accept
-that same proof with probability at most
+One unamplified run reads at most 187 bits at $c=4$, but its proved
+rejection probability on a false proof is small, so the verifier runs
+a fixed number of times on the same proof with independent seeds. If
+each run accepts a fixed false proof with probability at most $3/4$,
+three runs all accept with probability at most
 
 $$
 (3/4)^3=27/64<1/2.
 $$
 
-The proof string is fixed throughout. The random seeds are
-independent, so the acceptance events for that fixed
-string multiply. Reusing the same seed would not justify
-the product: all three runs might repeat exactly the
-same decision.
-
-For any actual gap $0<\gamma<1$, $(1-\gamma)^R\leq1/2$ follows from
-$R\gamma\geq1$. One algebraic proof uses
+The probabilities multiply because the proof is fixed and the seeds are
+independent. In general, if each run rejects with probability at least
+$\gamma\in(0,1)$, then $R$ independent runs (here $R$ counts repetitions) all accept
+with probability at most $(1-\gamma)^R$, and $R\gamma\geq1$ implies
+$(1-\gamma)^R\leq1/2$: indeed,
 $(1-\gamma)^{-1}\geq1+\gamma$ and
-$(1+\gamma)^R\geq1+R\gamma$, giving
+$(1+\gamma)^R\geq1+R\gamma$, so
 $(1-\gamma)^R\leq1/(1+R\gamma)\leq1/2$.
-The value of $R$ is enormous but fixed, so repetition
-preserves constant query complexity and logarithmic
-randomness.
+Since $R$ is fixed, repetition preserves constant queries and
+logarithmic randomness. The count for each check, the proved gap and the
+repetition count are in [Appendix A](#parameter-calculation).
 
-### From an arbitrary certificate checker to a graph
+### Reduction from NP to three-colouring
 
-For any problem in NP, write a candidate accepting
-computation of its certificate checker as a table:
-one configuration per time step. Polynomial time gives
-polynomially many rows and cells. Constraints require
-the first row to contain the input and a permitted
-witness, each subsequent row to follow the machine's
-transition rule, and the last row to accept. The
-machine has a fixed finite alphabet and reads a fixed
-number of symbols per transition. Each constraint
-therefore involves a bounded number of finite choices.
-Their simultaneous satisfaction is equivalent to an
-accepting computation with some witness.
+The standard Cook–Levin construction expresses an accepting computation
+by local constraints [AB07, §2.3]. Write the computation of an NP
+witness checker as a table, with one row per time step holding the
+machine's state, head position and memory. Polynomial time gives polynomially many
+rows and cells. Constraints prescribe the input and a permitted witness,
+legal transitions, and final acceptance. The machine has a fixed finite
+alphabet and reads a fixed number of symbols per transition, so each
+constraint involves boundedly many finite choices. All constraints hold
+exactly when the table describes an accepting computation with some
+witness.
 
-An explicit polynomial-time reduction encodes these fixed-arity constraints
-as Boolean clauses of width at most three, and then as a graph. The
-[long record's clause construction](../long/reasoning-record.md#from-every-np-verifier-to-a-graph)
-proves the first conversion; the [optional clause calculation](#optional-calculation-converting-a-finite-relation-to-clauses)
-shows its finite-pattern method. Appendix B checks the final colouring gadget.
-The graph is three-colourable exactly when all the original constraints can be satisfied.
+An explicit polynomial-time reduction turns these fixed-arity constraints
+into **clauses**, ORs of at most three bits or negated bits, then into
+a graph. The first conversion is proved in the [full clause construction](../long/reasoning-record.md#310-the-reduction-from-np-to-three-colourability);
+its finite-pattern method is illustrated by the [calculation in Appendix B](#clauses-for-a-finite-relation),
+where the colouring gadget is also checked. The graph is three-colourable exactly when the
+constraints are simultaneously satisfiable, that is, exactly when the
+input has an accepted witness. Its polynomial output length converts the graph
+verifier's $O(\log N)$ randomness into $O(\log n)$ randomness.
+Composing the reduction with that verifier proves the forward inclusion
+in Section 2; exhaustive seed checking proved the reverse inclusion.
 
-The graph is therefore three-colourable exactly when
-the original input has an accepting certificate.
-The formal reduction also implements its construction
-in polynomial time. Its polynomial output length
-changes $O(\log N)$ random bits into $O(\log n)$,
-because the logarithm of a polynomial is logarithmic.
-Composing this reduction with the graph verifier
-proves the forward direction of Section 2; exhaustive
-seed checking proves the reverse direction.
+<!-- /passage:pcp-expository-resources -->
 
-**Question 4.** If the verifier were allowed to use
+<!-- passage:pcp-expository-answers -->
+## 11. Exercises
+
+**Exercise 1 (Section 5).** Could the verifier omit the first identity
+and test only $M(X,Z_H(X))=P(X)$? Test your answer with the nonvanishing
+polynomial $P=1$.
+
+**Exercise 2 (Section 7).** Why would choosing $r=x$ deterministically
+fail to give the same guarantee against an arbitrary corrupt word? Which
+property of the random choice was used in the proof?
+
+**Exercise 3 (Section 9).** Suppose the analysis of the low-degree tests
+supplied one nearby polynomial for the cubic labels of the colour table
+and a different one for its homogeneous linear labels. Which step of the
+soundness argument would need repair?
+
+**Exercise 4 (Section 2).** If the verifier were allowed to use
 $\sqrt n$ random bits instead, would the exhaustive-seed
 argument still prove that its language is in NP?
 Identify the step that changes.
 
-**Question 5.** Consider a smaller hypothetical error budget of the
-kind used in Section 9. A false grid condition makes an ideal test
-reject with probability at least $3/8$. The actual test rejects with
+**Exercise 5 (Section 9).** In a hypothetical estimate of the kind used
+in Section 9, a false grid condition makes an ideal test reject with
+probability at least $3/8$. The actual test rejects with
 probability at most $\kappa$, and replacing its answers by ideal answers
 changes the verdict with probability at most $4\kappa+1/16$. Does
 $\kappa\leq1/32$ rule out a false grid condition? Does
 $\kappa\leq1/16$ do so by the same estimates? Explain what follows
-at the boundary; these toy constants do not replace the construction's
-proved constants.
-<!-- /passage:pcp-expository-resources -->
+at the boundary.
 
-<!-- passage:pcp-expository-answers -->
-## 11. A reconstruction task and answers
+**Exercise 6 (Section 7).** Corrupt only the zero label in the encoding
+on the 256 full labels. Draw a uniform label $U$ and use it both as the
+requested label and as the fresh random label. Both are uniform
+individually. Does the $2/256$ correction bound still follow? Compare
+this with a fixed nonzero request and an independent fresh label.
 
-**Reconstruction task.** A received table is close to
-a low-degree polynomial $M$, but all its erroneous
-entries might lie among points $(x,0)$. Explain why
-reading those entries directly cannot establish the
-identity $M(x,0)=0$. Then reconstruct the repair,
-including the role of line data, the possibility of
-rejection, and the final use of a polynomial identity.
-The answer requires the connections between Sections
-5, 6, 8 and 9 rather than one numerical calculation.
-An account of the general proof is successful only
-if it explains why the same decoded polynomial is
-used at each of these steps.
+**Exercise 7 (Section 8).** Corrupt all lines-table entries with one
+fixed base point in $\mathbb F_4^2$. What are the global and conditional
+fractions of bad entries? Which step protects the local corrector at that
+base point?
 
-**Question 6.** Corrupt only the zero label in a 256-position evaluation
-word. Draw a uniform label $U$, use it as the request and also as the
-mask. Both are uniform individually. Does the $2/256$ correction bound
-still follow? Compare this with a fixed nonzero request and a fresh mask.
+**Exercise 8 (reconstruction).** Assume the parameter and rejection
+bounds of Section 9, and fix the nearby certificate polynomial $M$ from
+that argument. Its received table is close to $M$, but the erroneous
+entries may be concentrated at points $(x,0)$. Why can direct reads there
+not establish $M(x,0)=0$? Reconstruct the repair using line data,
+correction with possible rejection, and the final polynomial-identity
+argument. Explain why every step concerns the same $M$.
 
-**Question 7.** Corrupt all auxiliary rows with one fixed anchor in
-$\mathbb F_4^2$. What are the global and conditional fractions of bad
-rows? Which step protects the corrector at that anchor?
+## 12. Solutions
 
-Try these tasks before reading the solutions below.
+**Solution 1.** No. Take $P=1$ and $M(X,U)=1$: then $M(X,Z_H(X))=P(X)$
+holds everywhere although $P$ never vanishes. The first identity excludes
+this choice; with both, substituting a grid point forces
+$P(x)=M(x,0)=0$.
 
-**Answer 1.** The second identity alone is insufficient.
-Take $P=1$ and let $M(X,U)=1$ independently of $U$.
-Then $M(X,Z_H(X))=P(X)$ holds everywhere, although
-$P$ never vanishes. The first identity excludes this
-choice. With both identities, substituting a grid point
-forces $P(x)=M(x,0)=0$.
-
-**Answer 2.** For nonzero $x$, with $r=x$ fixed, the answer uses only the
-entries at $x$ and zero. A corrupt word can put an error
-at one of precisely those positions. A small global
-error fraction does not make either fixed position
-reliable. At $x=0$ the answer is always zero because
-the two reads cancel, as in the worked example.
-For arbitrary $x$, the random choice made both query locations
-uniform; the union bound then converted global error
+**Solution 2.** For nonzero $x$, with $r=x$ fixed, the answer uses only
+the entries at $x$ and zero, and a corrupt word can put an error at one
+of precisely those positions; a small global error fraction does not make
+either fixed position reliable. The random choice made both query
+locations uniform, and the union bound then converted global error
 fractions into a bound on this particular request.
 
-**Answer 3.** The difference check would relate the
-linearly decoded values, while the ZERO checks for the
-cubic expressions could concern different values.
-There would be no single colouring polynomial known
-to satisfy both the difference identity and the two
-grid conditions. The soundness proof needs simultaneous
-guarantees for one decoded object, not separate existence
-statements with unrelated witnesses.
+**Solution 3.** The difference check would constrain the polynomial
+chosen for the homogeneous labels and the zero-on-grid test a different
+one chosen for the degree-three labels, so no single colouring polynomial
+would be known to satisfy both the difference identity and the grid
+conditions.
 
-**Answer 4.** The number of seeds would be
-$2^{\sqrt n}$, which is not bounded by any fixed
-polynomial in $n$. The exhaustive verification could
-take more than polynomial time. This shows why that
-argument fails; it does not prove that the language
-is outside NP.
+**Solution 4.** The $2^{\sqrt n}$ seeds are not bounded by any fixed
+polynomial in $n$, so exhaustive verification could take more than
+polynomial time. The argument fails; this does not prove that the
+language is outside NP.
 
-**Answer 5.** Ideal rejection is at most actual rejection plus
-the probability that the verdict changes, hence at most
-$5\kappa+1/16$. At $\kappa\leq1/32$, this is at most
-$7/32<12/32=3/8$, which contradicts a false grid condition.
-At $\kappa\leq1/16$, the upper bound is $3/8$; equality
-gives no contradiction. These estimates then neither certify
-grid vanishing nor demonstrate its failure. The strict bound
-$\kappa<1/16$ would suffice for this hypothetical budget.
+**Solution 5.** Ideal rejection is at most actual rejection plus the
+probability that the verdict changes, hence at most $5\kappa+1/16$. At
+$\kappa\leq1/32$ this is at most $7/32<12/32=3/8$, contradicting a false
+grid condition. At $\kappa\leq1/16$ the upper bound is $3/8$, and
+equality gives no contradiction: the estimates neither certify grid
+vanishing nor demonstrate its failure. The strict bound $\kappa<1/16$
+would suffice.
 
-**Answer 6.** The translated query is always zero. Except when $U=0$,
-exactly one of the two reads is corrupt, giving error $255/256$.
-For a fixed nonzero request with a fresh uniform mask, exactly two masks
-cause error, giving $2/256$. Uniformity must hold after fixing the request.
+**Solution 6.** The translated query $U+U$ is always the zero label, so
+except when $U=0$ exactly one of the two reads is corrupt: the error is
+$255/256$. For a fixed nonzero request and an independent fresh label,
+exactly two choices cause error, giving $2/256$. Uniformity must hold
+after fixing the request.
 
-**Answer 7.** There are $16\cdot16=256$ oriented line indices; 16 have
-the chosen anchor. Their global fraction is $1/16$, but the fraction
-among the corrector's possible rows is one. Retesting the selected row
-and retaining actual rejection in the correction bound avoids this
-invalid inference from global error. It does not assert that every
-corruption changes the answer.
+**Solution 7.** Of $16\cdot16=256$ line indices, 16 have the chosen base
+point: the global fraction is $1/16$, but among entries the corrector can
+select it is one. Retesting the selected entry puts its rejection rate
+into Theorem 8.2, whose bound allows rejection or a wrong answer.
 
-**Reconstruction solution.** Fix the certificate polynomial $M$ chosen
-by the low-degree test. At a target $(x,0)$, direct table error is uncontrolled,
-so use a random line through that target and the encoded auxiliary row.
-Test the row, compare a corrected answer at a random nonzero point,
-and either reject or return the corrected origin bit. The correction
-theorem bounds rejection-or-wrong relative to this same $M$.
+**Solution 8.** Use the same polynomial $M$ throughout. At $(x,0)$, the
+local corrector tests the encoded entry of a random line through the
+target, compares a corrected answer at a random nonzero parameter with
+the points-table answer, and rejects or returns the corrected bit at the
+origin; Theorem 8.2 bounds rejection or a wrong bit relative to $M$.
 
-ZERO rejects whenever either correction rejects. Averaging over the targets
-ZERO requests therefore bounds the correction rejection terms by its own
-rejection rate. Coupling to the ideal checks on $M$ bounds ideal rejection
-by actual rejection plus the answer-replacement errors. If $M(X,0)$ were
-a nonzero polynomial, the root bound and a random homogeneous observation
-would force larger ideal rejection than this budget allows. Thus
-$M(X,0)=0$ as a polynomial identity. The second certificate identity
-must be established for the same $M$ and the same decoded constraint
-polynomial. A reconstruction missing the fixed witness, the rejection
-event, or the averaging over requested targets has omitted a necessary step.
+The zero-on-grid test rejects whenever either correction rejects, so each
+correction's target-averaged rejection is bounded by the test's rejection
+rate. The ideal checks on $M$ can reject only when the actual test
+rejects or an answer replacement fails. If $M(X,0)$ were a nonzero
+polynomial, the Schwartz–Zippel lemma and a uniform homogeneous label
+would force ideal rejection above the error budget assumed from
+Section 9. Hence $M(X,0)=0$ as a polynomial identity. The second identity
+must be established for the same $M$ and the same nearby constraint
+polynomial.
 <!-- /passage:pcp-expository-answers -->
 
 <!-- passage:pcp-expository-parameters -->
@@ -1394,37 +1251,30 @@ event, or the averaging over requested targets has omitted a necessary step.
 
 ### Parameter calculation
 
-For a graph with $N\geq2$ vertices, choose the least integer $a\geq2$
-such that $\lceil\log_2 N\rceil\leq a2^a$. Put
+For a graph with $N\geq2$ vertices, choose the least integer $\nu\geq2$
+such that $\lceil\log_2 N\rceil\leq \nu2^\nu$. Put
 
 $$
-s=2^a,\qquad |H|=m=s,\qquad c=4,\qquad
-|F|=2^{12a+32}=2^{32}s^{12}.
+s=2^\nu,\qquad |H|=m=s,\qquad c=4,\qquad
+|F|=2^{12\nu+32}=2^{32}s^{12}.
 $$
 
-The grid $H^m$ contains $s^s=2^{a2^a}$ points, enough for
-the vertices. Minimality of $a$ gives $a2^a=O(\log N)$:
-if $a>2$, the preceding value $(a-1)2^{a-1}$ was too small,
-and $a2^a\leq4(a-1)2^{a-1}$. The boundary value $a=2$
+The grid $H^m$ contains $s^s=2^{\nu2^\nu}$ points, enough for
+the vertices. Minimality of $\nu$ gives $\nu2^\nu=O(\log N)$:
+if $\nu>2$, the preceding value $(\nu-1)2^{\nu-1}$ was too small,
+and $\nu2^\nu\leq4(\nu-1)2^{\nu-1}$. The boundary value $\nu=2$
 adds only a constant. The formal definition also covers
-$N=0,1$ by taking $a=2$.
+$N=0,1$ by taking $\nu=2$.
 
-A point of $F^m$ takes $m\log_2|F|=s(12a+32)=O(\log N)$
-bits to specify. The encoded line data uses $cs=4s$ extra
-field coordinates, so it fits the same order of address
-length.
+A point of $F^m$ takes $m\log_2|F|=s(12\nu+32)=O(\log N)$ bits, and
+the encoded line data uses $cs=4s$ further field coordinates.
 
-A label address has a different form: it specifies polynomial coefficients.
-There is one constant monomial, $t$ single variables, $\binom t2$ products
-of two distinct variables, and $\binom t3$ products of three. Thus a
-degree-three label uses $1+t+\binom t2+\binom t3$ bits for $t=12a+32$.
-This is $O(a^3)$, which is also $O(a2^a)$ because
-$a^2=O(2^a)$. Thus an address or a random seed for any of
-the fixed number of tests has $O(\log N)$ bits. There
-are at most $2^{C\log_2(N+2)}=(N+2)^C$ addresses for a fixed constant $C$,
-hence polynomially many in total.
+A degree-three label specifies one bit per multilinear monomial, using
+$1+t+\binom t2+\binom t3$ bits for $t=12\nu+32$. This is $O(\nu^3)$,
+and $\nu^3=O(\nu2^\nu)$ since $\nu^2=O(2^\nu)$. Every address and seed
+therefore has $O(\log N)$ bits.
 
-The digit encoding uses base $b=s$ and degree $c=4$, so
+The set-multilinear encoding uses base $b=s$ and degree $c=4$, so
 the substitution estimate in Section 6 gives $D=cb^c=4s^4$.
 The honest colour and certificate polynomials have degree at
 most $5m(h-1)=5s(s-1)$. Since $s\geq4$,
@@ -1433,50 +1283,51 @@ $$
 5s(s-1)<s^4=b^c,
 $$
 
-so all their line restrictions fit the honest encoding capacity.
-The field is large enough for all the testing bounds. For example,
+so all their line restrictions fit the honest encoding capacity. The
+field is large enough for the testing bounds:
 $10^6D^3=64\,000\,000s^{12}\leq2^{32}s^{12}=|F|$.
-Also $100Dh=400s^5\leq|F|$. This bounds $D/Q$ by $1/100$
-and $5Dh/Q$ by $1/20$; it also gives $Q-1\geq40D$, hence
-$5D/(Q-1)\leq1/8$. All three field conditions in Section 9
+Also $100Dh=400s^5\leq|F|$. This bounds $D/q$ by $1/100$
+and $5Dh/q$ by $1/20$; it also gives $q-1\geq40D$, hence
+$5D/(q-1)\leq1/8$. All three field conditions in Section 9
 therefore hold for the same choice of parameters.
-Even the smallest field chosen here is much larger than those in
-our worked examples.
 
-For the implemented verifier the retained arithmetic gives
-$\gamma=1/1137847282503168$ after fair-bit sampling. The fixed repetition
-count $R=1137847282503168$ satisfies $R\gamma=1$. These are existence
-bounds, not practical estimates.
+At $c=4$ the seven checks read at most $26,22,26,22,44,44$ and $3$
+bits: the binary low-degree tests on the colour, vertex-certificate,
+difference and edge-certificate tables, the vertex and edge zero-on-grid
+tests, and the difference check. Their sum, 187, bounds one unamplified
+run; some seeds read fewer bits. For the implemented verifier, fair-bit
+sampling leaves rejection probability at least
+$\gamma=1/1137847282503168$ on every proof of a no-instance. The fixed
+repetition count $R=1137847282503168$ satisfies $R\gamma=1$. The
+repetition count is too large for practical verification; these bounds
+establish existence.
 <!-- /passage:pcp-expository-parameters -->
 
 <!-- passage:pcp-expository-error-constants -->
 ### The error constants
 
-The constants used in Sections 8–9 depend only on the fixed inner degree $c$:
+The constants used in Sections 8 and 9 depend only on the fixed inner
+degree $c$:
 
 $$
 \begin{aligned}
 K&=4(c+2)^2\bigl(112(c+2)+60\bigr),\\
-E&=2\bigl((c+1)K+29\bigr),\qquad S=28+E,\\
+J&=2\bigl((c+1)K+29\bigr),\qquad S=28+J,\\
 C&=2+2(c+1)K.
 \end{aligned}
 $$
 
-Here $K$ bounds inner decoding error, $E$ the line discrepancy, $S$ the
-combined code distance and $C$ the rejection contribution to correction
-failure. The [full correction argument](../long/reasoning-record.md#correcting-an-outer-value-at-a-prescribed-point)
-derives these coefficients. Their expansions are not additional choices of
-parameters; the same constants were used throughout the preceding proof.
+Here $K$ bounds the inner-test distance; $J,S,C$ have the roles given in
+Section 8. Their derivation is in the [full correction argument](../long/reasoning-record.md#56-local-correction-with-a-lines-table).
 <!-- /passage:pcp-expository-error-constants -->
 
 <!-- passage:pcp-expository-colouring-gadget -->
 ## Appendix B. The Boolean-to-colouring gadget
 
-The final colouring gadget can be checked by hand.
-For Boolean values, write $\operatorname{NAE}(a,b,c)$
-when the three values are **not all equal**. A clause
-$a\lor b\lor c$ is equivalent to the existence of
-a bit $z$ such that
+Boolean values are $0$ and $1$; $a\lor b$ is their OR, and $\neg a$
+is the opposite bit. Write $\operatorname{NAE}(a,b,c)$ when the three
+values are **not all equal**. The clause $a\lor b\lor c$ holds exactly
+when there is a bit $z$ satisfying
 
 $$
 \operatorname{NAE}(a,b,z),\qquad
@@ -1486,15 +1337,14 @@ $$
 If $a=b=0$, the first relation forces $z=1$, and the
 second then forces $c=1$. If $a=b=1$, choose $z=0$;
 if $a\ne b$, the same choice works regardless of $c$.
-These cases establish the equivalence.
 
-Now make a palette triangle whose colours we call
-$0,1,2$. These are palette names, represented by $1,\omega,\omega^2$
-in the earlier field encoding. A Boolean variable and its negation are
-adjacent vertices, each joined to palette vertex $2$.
-They must take opposite colours $0$ and $1$. For
-each NAE relation on literal vertices $a,b,c$, add vertices $A,B,C$
-and the six edges
+Make a palette triangle with colours named $0,1,2$, represented by
+$1,\omega,\omega^2$ in the field encoding. For each Boolean variable,
+add adjacent vertices for it and its negation, both joined to palette
+vertex $2$; they must receive opposite colours $0,1$. A literal uses
+its variable or negation vertex, and constant false uses palette vertex
+$0$. For each NAE relation on literal vertices $a,b,c$, add vertices
+$A,B,C$ and the six edges
 
 $$
 \{AB,BC,CA,Aa,Bb,Cc\}.
@@ -1512,26 +1362,22 @@ the literal colours covers every other NAE case.
 <!-- /passage:pcp-expository-colouring-gadget -->
 
 <!-- passage:pcp-expository-clause-calculation -->
-### Optional calculation: converting a finite relation to clauses
+### Clauses for a finite relation
 
-The formal reduction represents each finite choice by
-a block of bits with exactly one bit equal to one,
-then converts the fixed-arity relations into Boolean
-clauses of width at most three. Here is how that last
-step works. For a relation $R$ on $k$ bits, consider
-each possible input pattern $p$ and introduce flags
+The formal reduction represents a finite choice by a block of bits with
+exactly one bit equal to one. For a relation $R:\{0,1\}^k\to\{0,1\}$,
+where $k$ is fixed, introduce a fresh sequence of flags for each pattern
+$p\in\{0,1\}^k$. Here $\mathrm{xor}$ means addition modulo two:
 
 $$
 z_0=0,\qquad z_{i+1}=z_i\lor(x_i\mathbin{\mathrm{xor}}p_i),
 \qquad R(p)\lor z_k=1.
 $$
 
-The flags record whether the actual input has yet
-differed from $p$. The last condition imposes $R(p)$
-only when the actual input equals $p$. Because $p_i$
-is fixed, $x_i\mathbin{\mathrm{xor}}p_i$ is a literal,
-either $x_i$ or its negation. An OR equation $z=u\lor v$
-is enforced by three clauses:
+The flags record whether the input has differed from $p$. The final
+condition permits input $p$ only if $R(p)=1$. Since $p_i$ is fixed,
+$x_i\mathbin{\mathrm{xor}}p_i$ is either $x_i$ or its negation.
+An OR equation $z=u\lor v$ is enforced by three clauses:
 
 $$
 (z\lor\neg u),\qquad(z\lor\neg v),\qquad
@@ -1547,18 +1393,20 @@ output remains polynomial in size.
 <!-- /passage:pcp-expository-clause-calculation -->
 
 <!-- passage:pcp-expository-correction -->
-## Appendix C. Why the low-degree test needed correction
+## Appendix C. The version-1 test
 
-The first version of the source paper used an element of order $c+1$
-and unit weights. For $c=2$, let $\zeta$ have order three in a field
-$F$ of characteristic two. The old condition was
+Version 1 of [ABSSW26] used unit weights in the same identity, with an
+element of order $c+1$ as node [ABSSW26v1, Fact 2.7, Lemma 3.3]; Lee
+showed that this **version-1 test** accepts $X^4$. For $c=2$, let
+$\zeta$ have order three in a field $F$ of characteristic two. The
+version-1 condition is
 
 $$
 f(u)=f(u+\zeta v)+f(u+\zeta^2v)+f(u+v).
 $$
 
-It holds for quadratic polynomials, but its converse
-fails. Take $f(X)=X^4$. In characteristic two,
+It holds for quadratic polynomials, but the converse fails for
+$f(X)=X^4$. In characteristic two,
 $(u+av)^4=u^4+a^4v^4$. Since $\zeta^4=\zeta$
 and $1+\zeta+\zeta^2=0$, the right-hand side is
 
@@ -1566,99 +1414,98 @@ $$
 3u^4+(\zeta+\zeta^2+1)v^4=u^4.
 $$
 
-The test accepts every pair $(u,v)$, although
-$X^4$ cannot agree everywhere with a quadratic
-when $|F|>4$: their difference is a nonzero
-degree-four polynomial with at most four roots.
-In fact, their disagreement fraction is at least
-$1-4/|F|$.
-
-The failure persists in arbitrarily large fields.
-Fields $F=\mathbb F_{2^{2k}}$, for $k\geq2$, contain elements of order
-three and have unbounded size. The example therefore survives any fixed
-field-size threshold for this old degree-two test. It identifies a
-defect in the old test's characterisation, not in the PCP theorem or
-the corrected formal proof.
+The test accepts every pair $(u,v)$, although $X^4$ disagrees with every
+quadratic on at least a fraction $1-4/|F|$ of $F$, since their difference
+is a nonzero polynomial of degree four. The fields
+$F=\mathbb F_{2^{2k}}$ for $k\geq2$ contain elements of order three and
+have unbounded size, so no fixed field-size threshold repairs the
+version-1 test at degree two.
 
 For a concrete comparison, take
 $\mathbb F_{16}=\mathbb F_2[t]/(t^4+t+1)$.
-This notation means that elements are binary polynomials
-of degree below four. Add their coefficients modulo two;
-multiply them and reduce using $t^4=t+1$ until the degree
-is below four again. The modulus is irreducible: it has no binary root, and its remainder
+Here $t$ is a polynomial variable; the elements are binary polynomials
+in $t$ of degree below four, added coefficientwise modulo two and
+multiplied with the reduction $t^4=t+1$. The modulus is irreducible: it has no binary root, and its remainder
 modulo the only monic irreducible binary quadratic, $t^2+t+1$, is one.
 A reducible quartic without a linear factor would have a quadratic
 factor. Thus these 16 elements form a field.
-The old order-three nodes accept $X^4$ on all
-$256$ pairs $(u,v)$. The corrected test uses
-the generator $t$ and interpolation weights
-at $t,t^2,t^3$; it accepts only $16$ pairs.
-The accompanying [finite-field checker][example-checker] verifies that
-$t$ has order 15, enumerates these cases, and checks the interpolation
-identity. The enumeration illustrates the test; the preceding family
-argument establishes failure for unbounded field sizes.
-
-Completeness requires honest low-degree polynomials
-to pass; the interpolation identity proves that
-they do. Soundness must also rule out other
-functions that pass too often. The generator
-and its weights support that converse.
-The corrected paper acknowledges Troy Lee
-for finding an error in the earlier lemma;
-no priority claim for the example above is
-made here.
+The version-1 nodes of order three accept $X^4$ on all
+$256$ pairs $(u,v)$. The standard low-degree test, with the generator $t$
+of order 15 and interpolation weights at $t,t^2,t^3$, accepts only $16$
+pairs; its completeness follows from interpolation and its soundness from
+Theorem 6.2. Troy Lee found the error in [ABSSW26v1, Lemma 3.3], as
+acknowledged in [ABSSW26]; no priority claim for the example is made here.
 <!-- /passage:pcp-expository-correction -->
 
 <!-- passage:pcp-expository-evidence -->
-## Sources and verification
+## Formalization and sources
 
-The mathematical construction is from
-[Amireddy, Behera, Srinivasan, Sudan and
-Willumsgaard, version 2][paper-v2]. The
-formal development discussed here is
-[Troy Lee's pinned PCP development][lean-project]. It includes the
-concrete complexity argument as well as
-the algebraic verifier. The full account
-records exact statements, proof correspondences
-and verification evidence; a Lean source
-link by itself does not certify that every
-sentence of this exposition says the same
-thing as the formal statement.
+The construction is due to Amireddy, Behera, Srinivasan, Sudan and
+Willumsgaard [ABSSW26]. [Troy Lee's formal development][lean-project]
+[Lee26] contains the algebraic verifier and the concrete complexity
+proof. Its endpoints are the [forward theorem][lean-theorem], stated
+with the formal [verifier definitions][verifier-definitions], the
+[reverse inclusion][lean-reverse] for a concrete machine model, and the
+[agreement of its NP class with a reference definition][lean-reference-np].
+Lee's variants of statements in [ABSSW26], each noted in a remark, are:
+the exact randomness formula (Theorem 2.1); whole-field sampling
+(Theorems 6.1 and 8.1, Section 10); the hypothesis $q>2c$
+(Theorem 6.2); ten Hadamard-test queries (Theorem 7.2); affine labels on
+every lines table, a fair coin in the inner low-degree test and independent
+corrector seeds in the zero-on-grid test (Section 8); the
+homogeneous conclusion of Theorem 8.1 and hypothesis of Theorem 8.2; and explicit constants
+(Appendix A). The
+formalization also contains the Fourier-analytic proof of Theorem 7.1.
+Lee identified the error in the version-1 test, as acknowledged in
+[ABSSW26]. Lee's
+[reading guide][troy-guide] introduces the main Lean statement, and
+[AB07, Chapter 18] is a textbook account.
 
-AI agents wrote this exposition under Will
-Cook's direction. The finite calculations
-were checked by the accompanying Python
-program. They illustrate individual
-operations, and their small parameters do
-not instantiate the large-field parameter
-regime of the complete PCP construction.
-The family argument about the earlier test
-is an ordinary mathematical deduction,
-not a Lean-checked theorem in this project.
-No claim of independent human review or
-measured reader understanding is made.
+Statements, source correspondences and proofs of the testing theorems
+are in the [full argument][long].
+A Lean theorem establishes its own formal statement; agreement with this
+exposition is a separate comparison. The finite calculations were
+checked by computer: the order 15 of $t$ in $\mathbb F_{16}$, the cases
+of Appendix C and the interpolation identity with the
+[finite-field checker][example-checker], and the identities and
+addresses of the one-edge example with the [trace checker][trace-checker].
+The unbounded-family argument in Appendix C is an ordinary mathematical
+deduction and is not formalized.
 
-Further reading:
+## References
 
-* [The full argument][long] develops the
-  low-degree tests, the binary correction
-  bounds and the final assembly in detail.
-* [The specialist paper][short] gives the
-  construction and formalisation differences
-  in a shorter account.
-* [Troy Lee's original reading guide][troy-guide]
-  explains how to read the main Lean statement
-  and its definitions.
-* Arora and Barak, [*Computational Complexity:
-  A Modern Approach*][arora-barak], provides
-  textbook background. The publicly retained
-  January 2007 draft numbers its PCP definition
-  differently from the published edition.
-* The original [BLR paper][blr] develops
-  self-testing and self-correction. The
-  [corrected PCP paper][paper-v2] gives
-  the precise versions used in this
-  construction.
+**[AB07]** S. Arora and B. Barak. *Computational Complexity: A Modern
+Approach*. [Draft of January 2007][arora-barak]; section numbers refer to
+this draft, which numbers its PCP definition differently from the
+published edition.
+
+**[ABSSW26]** P. Amireddy, A. R. Behera, S. Srinivasan, M. Sudan and
+S. V. Willumsgaard. *A Simple Algebraic Proof of the PCP Theorem*.
+[arXiv:2608.17429v2][paper-v2], October 2026.
+
+**[ABSSW26v1]** The same, [version 1][paper-v1].
+
+**[ALMSS98]** S. Arora, C. Lund, R. Motwani, M. Sudan and M. Szegedy.
+Proof verification and the hardness of approximation problems. *J. ACM*
+**45**(3), 1998. [Manuscript][almss].
+
+**[AS98]** S. Arora and S. Safra. Probabilistic checking of proofs: a new
+characterization of NP. *J. ACM* **45**(1), 70–122, 1998.
+[Journal text][arora-safra].
+
+**[BCHKS96]** M. Bellare, D. Coppersmith, J. Håstad, M. Kiwi and
+M. Sudan. Linearity testing in characteristic two. *IEEE Trans. Inform.
+Theory* **42**(6), 1781–1795, 1996. [Manuscript][bchks].
+
+**[BLR93]** M. Blum, M. Luby and R. Rubinfeld. Self-testing/correcting
+with applications to numerical problems. *J. Comput. System Sci.*
+**47**(3), 549–595, 1993. [DOI][blr].
+
+**[Lee26]** T. Lee. *tcs-formalizations: PCP development*. Lean source,
+2026. [Pinned revision][lean-project].
+
+**[Shoup05]** V. Shoup. *A Computational Introduction to Number Theory
+and Algebra*. Cambridge University Press, 2005. [Version 1][shoup].
 <!-- /passage:pcp-expository-evidence -->
 
 [paper-v2]: https://arxiv.org/abs/2608.17429v2
@@ -1672,6 +1519,10 @@ Further reading:
 [troy-guide]: https://wcook04.github.io/proof-reader/#/pcp-reading-guide
 [long]: ../long/reasoning-record.md
 [short]: ../short/paper.md
+[paper-v1]: https://arxiv.org/abs/2608.17429v1
+[shoup]: https://shoup.net/ntb/ntb-v1.pdf
+[lean-reverse]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean#L33-L39
+[lean-reference-np]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L39-L41
 
 [bchks]: https://www.csc.kth.se/tcs/projects/publications/bchks.pdf
 

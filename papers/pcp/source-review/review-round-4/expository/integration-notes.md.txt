@@ -1,0 +1,194 @@
+# Integration notes: worked exposition (E), third round
+
+File: `papers/pcp/expository/main.md` (not committed).
+
+## Word count and checks
+
+- `preserve_check.py` count: 12,336 (base) -> 11,283 (new); ceiling 11,300. start.md was 10,905.
+- Guard: markers 48/48, lost 0; tags 0/0; refs lost 0 (added `paper-v1`, `shoup` from start.md, and new `lean-reverse`, `lean-reference-np`); URLs lost 0 (4 added). RESULT FAIL 36 consists only of renamed headings (20 lost / 24 added, listed below) and 16 display equations changed by Part 3/4 renames (justified below).
+- Display check: every one of the 53 base displays equals a display of the new edition under the rename map in `## Symbol renames` (checked by script; two matches needed the `\frac dQ -> \frac dq` case that the regex missed and were confirmed by eye).
+- `check_examples.py`, `check_exposition_examples.py`, `check_trace.py`, `check_changed_cases.py`: all rc=0, "All checks passed". No repository file other than main.md was modified.
+
+## Conflict blocks (45)
+
+| Block | Choice |
+|---|---|
+| b0006 | Lens B (ledger E-x): "answer is yes exactly when some polynomial-length witness is accepted…", "is at most $C(n+1)^k$"; certificate -> witness/proof. |
+| b0007 | Merged into the b0006 paragraph: query constant only bounds proof bits read (A/B content, shortened). |
+| b0008 | Merge: B's attribution ("constant-query PCP theorem is due to [ALMSS98], building on [AS98]", ledger E-z5), B's "proof assistant Lean", A's lean construction sentence; plus DECISIONS 1.12 "what is new" sentence. |
+| b0009 | B (keeps reader statement), merged into the single roadmap paragraph (DECISIONS 1.5). |
+| b0037 | A: distance defined in Section 3 (the one definition, now "relative Hamming distance, or simply distance", plus "δ-close"); B's Theorem 2.5 locator moved into Lemma 3.1's head. |
+| b0050 | B's name "low-degree extension" + Fact 2.4 locator, A's wording. |
+| b0056 | B's "field F of characteristic two", A's resolution "nonzero elements of $\mathbb F_4$"; field size $q$ already named in Section 3. |
+| b0081 | B (ledger E-y prefers it) + A's pointer to Section 8. |
+| b0084 | A (motivation for correction; distance already defined in §3). |
+| b0086 | Merge: tables/proof-oracle sentence (Part 2), B's informal label sentence, pointer to Section 7 for the precise definition; honest proof (A) moved to after the lines-table definition. |
+| b0088 | Merge: A's lines-table sentence rewritten with the Part 2 binding definition; B's honest/received distinction. |
+| b0092 | A's text restated as Theorem 6.1 + B's last two sentences as *Remark (formalization)* (ledger E-z1). "decoded polynomial" -> "nearby polynomial" with the Part 2 definition. |
+| b0093 | A, with B's ALMSS credit moved into the Theorem 6.1 head; merged with b0094 ("$d+1$ coefficients"). |
+| b0101 | A, restoring "nonzero" in the root-count sentence. |
+| b0102 | A + B's Definition 3.1 / Claim 3.2 locators. |
+| b0105 | Merge: B's "the test checks only the degree bound $c$" + A's compact form; merged with b0106 degree computation. |
+| b0108 | B (Shoup Theorem 9.16 verified at `literature/text/shoup-2005.txt:9929`) with A's lean wording; "generator" bold. |
+| b0111 | B (ledger E-z2) as Theorem 6.2 + *Remark (formalization)* on $|F|>2c$ vs $Cc^3$; distance definition not repeated. |
+| b0122 | Merge: B's "Walsh–Hadamard encoding" (Part 2 name for the homogeneous restriction), A's lean half-distance proof. |
+| b0146 | B ($\mathcal H_3(u)$ for the evaluation word, ledger E-x2; removes the clash of $H$ with the grid). |
+| b0147 | B's check list (ledger E-z3) as Theorem 7.2 (Hadamard test; [ABSSW26, Lemma 3.10]). |
+| b0148 | B's Lemma 3.10 locator and received-word definition; the 10-vs-8 query count is now a *Remark (formalization)*. |
+| b0152 + b0155 | Both from lens B (ledger E-z4, task): objects and address table first, then the test, with B's two formalization differences as remarks. |
+| b0158 | A. |
+| b0159 | Merge: B's "one polynomial whose encoding is close to the points table", A's per-domain naming; merged with the b0160 counterexample. |
+| b0161 | Table removed; counts given in prose in Section 7 using B's "certificate and lines tables". |
+| b0163 | A (Appendix A link; $E\to J$; "combined test" -> binary low-degree test), restated as Theorem 8.1 with a remark. |
+| b0166 | A, with anchor -> base point, direction -> slope. |
+| b0167 | Merge: "At a fixed target … the local corrector runs the following experiment." |
+| b0171 | Merge: A's averaging step, B's explicit term $D/[2(q-1)]$ and "degree at most $D$". |
+| b0178 | Cut (both lenses); closing marker already on b0177 in start.md. |
+| b0188 | B's name "inner low-degree test" + A's clause on the fair-coin choice (ledger E-v). |
+| b0190 | B's name. |
+| b0195 | B's content (shared tables, adjacency computed from the graph, not stored), shortened; check-5 data path now stated in Section 8. |
+| b0201 | A, merged into the Section 9 orientation paragraph. |
+| b0237 | A (ledger E-u(3a)), now Exercise 8. |
+| b0247 | A, now Solution 7. |
+| b0249 | A plus the mechanism sentence lens A cut, using the ledger's wording (now Solution 8), with Part 2 terms substituted: "root bound" -> "Schwartz–Zippel lemma", "decoded" -> "nearby", "ZERO" -> "the zero-on-grid test". |
+| b0256 | A (no address display, so no $C_{\rm addr}$ needed). |
+| b0260 | A (quantified over every proof of a no-instance). |
+| b0285 | A. |
+| b0287 | Merge: A's completeness/soundness sentence, B's locator [ABSSW26v1, Lemma 3.3]; priority disclaimer kept. |
+| b0289 | Merged into "Formalization and sources" (A's evidence boundary; B's construction/formalization split). |
+| b0290 | A's content (checker scope, Appendix C not formalized); B's "AI agents wrote…" dropped because DECISIONS 1.6 puts the AI disclosure in the front matter. |
+
+## Ledger rows
+
+- E-u(3a): adopted (b0237 A; b0249 A plus the ledger's mechanism text). E-u(3b): rejected.
+- E-v: one name, "inner low-degree test", in b0152/b0155/b0188/b0190 and everywhere else; 3a's choice clause kept.
+- E-w: adopted (Lemma 3.1 and "detects the failure with probability at least $1-d/q$").
+- E-x: lens B wording, "is at most".
+- E-y: lens B sentence.
+- E-z1: A's b0092 + B's two sentences (as the remark after Theorem 6.1).
+- E-z2: B's b0111.
+- E-z3: B's b0147 and b0148.
+- E-z4: B's b0152 and b0155 together.
+- E-z5: either; B's sentence used.
+- E-x2: b0146 B, b0159 merged (A naming + B "encoding is close"), b0161 now prose, b0171 merged, b0256 A.
+- Sampling findings: b0225 link restored ("The [parameter calculation](#parameter-calculation) fixes $c=4$…" in Section 10); b0203 with b0196 (κ defined in Section 9's orientation paragraph); b0172 optional clause adopted ("it is not a bound for each fixed label"); one distance definition (Section 3).
+
+## Reviewer edits declined
+
+- 3b b0237/b0249 (ledger reject).
+- 3b b0008/b0290 "AI agents wrote this exposition…": front-matter disclosure instead (DECISIONS 1.6).
+- 3b b0084 distance definition (duplicate of A's b0037).
+- 3b b0256 $C_{\rm addr}$ display (A's text has no address display).
+- 3b "Section 3.1 of the corrected paper" phrasings replaced by the key style.
+
+## Terms changed (old -> new; source DECISIONS Part 2)
+
+certificate (PCP proof) -> proof; NP certificate / certificate checker -> witness / witness checker; primary table -> points table; auxiliary (line) table / row -> lines table / encoded entry $f'_{u,v}$; primary row / received row $g_x$ -> word $w_x$; oriented line / line index -> line through $u$ with slope $v$, index $(u,v)$; anchor -> base point (ours, defined in §5); direction (of $v$) -> slope; inner direction -> inner slope $e$; decoded polynomial -> nearby polynomial (defined after Theorem 6.1); inner decoding -> inner low-degree test distance; auxiliary/inner test, row testing -> inner low-degree test; combined/outer test -> binary low-degree test; weighted interpolation check / weighted test -> standard low-degree test; outer/certificate corrector -> local corrector; mask / fresh mask / masked read -> self-correction, fresh random label $R$, self-corrected read; evaluation word -> encoding / word; squarefree (Boolean) monomial -> multilinear monomial; Boolean polynomial label -> label (Part 2 definition in §7); additivity -> BLR linearity test; row-testing theorem -> Hadamard test (Theorem 7.2; HadTest named once); ZERO -> zero-on-grid test (ZERO mentioned once, and in the figure caption because the figure image is labelled ZERO); grid certificate -> vanishing certificate; grid-vanishing representation -> Combinatorial Nullstellensatz; polynomial distance bound / root bound -> Schwartz–Zippel lemma (Lemma 3.1), "root bound" kept only for the univariate fact; proximity -> closeness / $\delta$-close; colour extension -> low-degree extension; digit encoding -> set-multilinear encoding; old/earlier test -> version-1 test (defined in Appendix C); ambient point/space -> point of $F^m$; "Label the vertices" -> "Index the vertices" (label is reserved).
+
+Scout's undefined terms: oriented line, anchor, ZERO, decoded polynomial, ambient space, syntactic: all removed or defined (anchor -> base point, defined; ZERO named once as ABSSW's name for the zero-on-grid test; others removed).
+
+## Definitions placed or moved
+
+- proof, witness: introduction (first use). Exact randomness formula: remark after Theorem 2.1.
+- field $F$ with $q$ elements: Section 3 (before Lemma 3.1). Distance, δ-close: Section 3 (once).
+- low-degree extension: Section 3 subsection. Vanishing certificate: Section 5.
+- tables / proof oracles, points table, lines table, line through $u$ with slope $v$, index, base point, honest proof: Section 5 subsection; label informally there, precisely in Section 7 ("Precisely, a label is…").
+- point-versus-line test (alias line-point test), nearby polynomial: Section 6. Generator, standard low-degree test, local correction: Section 6 subsection.
+- Walsh–Hadamard encoding, BLR linearity test, word: Section 7. Self-correction: §7 subsection. Label, degree-$r$ Hadamard encoding, affine/homogeneous/full labels, self-corrected read, fresh random label: §7 last subsection.
+- encoded entry, inner point $\xi$, inner low-degree test, binary low-degree test, local corrector, zero-on-grid test, ideal test: Section 8 (ideal test was previously used in §9 without definition).
+- Correspondence with Lee's letters ($P,Q_P,A_P,B_P,E,M_A,M_B$): end of "The stored proof" (Part 4 item 6; placed after $\chi'$ is introduced).
+
+## Catalogue passages rewritten
+
+- Label-domain table (base E:826–830; start 672–676) -> one prose sentence in §7 "Labels of degree three".
+- Base E:787–830 cluster (address table, row conventions, tester, label domains) -> objects first (address table kept: look-up data), then test definitions and remarks in argued prose (§8 opening).
+- Query caps run ($26,22,\ldots$, base Section 10) -> moved to Appendix A in one sentence (DECISIONS 1.9); Section 10 keeps the total 187 and a pointer.
+- "Further reading" bullet list (base Sources) -> folded into "Formalization and sources" prose and the References list.
+- Tables kept: $Z(x)$ values, colour residuals, the four points tables, the address table, honest colour-table reads, the eight-read trace (look-up data or numerical traces). Table removed: label domains.
+
+## Structural changes
+
+- Front matter: disclosure sentence, `## Abstract`, `## Introduction` (unnumbered; numbering 1–10 unchanged).
+- Numbered results: Theorem 2.1, Lemma 3.1, Theorems 6.1, 6.2, 7.1, 7.2, 8.1, 8.2; seven `*Remark (formalization).*` paragraphs (after 2.1, 6.1, 6.2, 7.2, the lines-table addresses, the inner test, 8.1; plus one in Section 10).
+- Lean links moved: `[verifier-definitions]`, `[lean-theorem]` now in the Theorem 2.1 remark and the closing section only. Python checker links moved to the closing section.
+- All questions (formerly in §§5, 7, 9, 10, 11) moved to `## 11. Exercises` (Exercises 1–8; reconstruction task is Exercise 8); answers to `## 12. Solutions`, both inside passage `pcp-expository-answers`. Inline pointers "Exercise 1 asks…", "Exercise 2 asks…" left at §5 and §7.
+- Closing section "Formalization and sources" (endpoints, variants collected, credits, checks) and `## References` in key style ([AB07], [ABSSW26], [ABSSW26v1], [ALMSS98], [AS98], [BCHKS96], [BLR93], [Lee26], [Shoup05]); keys follow L's existing list. Arora–Barak keyed [AB07], not DECISIONS' example [AB09], because E cites the January 2007 draft's numbering (§2.1, §2.3, §18.4.1, Chapter 18; verified in `literature/text/arora-barak-book.txt`). Orchestrator may want one AB key across papers.
+- New Lean reference definitions (same pinned commit, URLs as in S): `lean-reverse` (ReverseConcrete.lean#L33-L39, `pcp_subset_np_concrete`), `lean-reference-np` (ReferenceNPConverse.lean#L39-L41, `mem_iff_inNP`). Endpoints named in prose by readable link text.
+
+## Renamed headings
+
+| Old | New |
+|---|---|
+| ## 1. Why checking a few edges is not enough | ## 1. Sampling the edges of a colouring |
+| ## 2. What the theorem promises (start.md: ## 2. The PCP theorem) | ## 2. The PCP theorem |
+| ## 3. Why polynomial tables can reveal a hidden defect | ## 3. Polynomial distance and interpolation |
+| ### Extending a short table | ### The low-degree extension |
+| ## 4. Turning three colours into polynomial equations | ## 4. Colourings as polynomial equations |
+| ## 5. A certificate for vanishing on a grid | ## 5. Vanishing certificates |
+| ## 6. Keeping the number of queries constant | ## 6. Low-degree tests and the set-multilinear encoding |
+| ### Testing and correcting a polynomial of fixed degree | ### The standard low-degree test and local correction |
+| ## 7. A field value represented by many one-bit questions | ## 7. The Hadamard encoding |
+| ### Recovering a chosen answer | ### Self-correction |
+| ### Why the construction needs more than linear questions | ### Labels of degree three |
+| ## 8. Combining the encodings and returning to the grid | ## 8. The binary low-degree test and local correction |
+| ### Following the one-edge certificate to bits | ### The one-edge vanishing certificate in bits |
+| ## 9. From the seven checks to a colouring | ## 9. Soundness of the seven-check verifier |
+| ### Why the accumulated errors still leave a gap | ### The soundness gap |
+| ### From an arbitrary certificate checker to a graph | ### Reduction from NP to three-colouring |
+| ## 11. A reconstruction task and answers | ## 11. Exercises and ## 12. Solutions |
+| ### Optional calculation: converting a finite relation to clauses | ### Clauses for a finite relation (internal link in §10 updated) |
+| ## Appendix C. Why the low-degree test needed correction | ## Appendix C. The version-1 test |
+| ## Sources and verification (start.md: ## Sources) | ## Formalization and sources (+ new ## References) |
+| (new) | ## Abstract, ## Introduction |
+
+Unchanged: ### The stored proof, ## 10. Randomness, proof length and repetition, ## Appendix A…, ### Parameter calculation, ### The error constants (both internal anchors still resolve), ## Appendix B….
+
+## Symbol renames
+
+| Old | New | Scope |
+|---|---|---|
+| $L$ (language) | $\mathcal L$ | Section 2 |
+| $a,b$ (randomness constants) | $\alpha,\beta$ | Section 2 theorem, remark, converse display |
+| $q$ (query bound) | $\ell$ | Theorem 2.1 (applied before the next row) |
+| $Q$ (field size), $\mathbb F_Q$ | $q$, $F$ | whole paper (§3, 6, 8, 9, App. A); $Q_j$ quotients unchanged |
+| $L_s, L_0, L_1, L_{s_j}$ (Lagrange basis) | $\psi_s,\psi_0,\psi_1,\psi_{s_j}$ | §3 |
+| $\lambda$ (line parameter) | $z$ | §6 |
+| $H_3$ | $\mathcal H_3$ | §7 (also replaces the bare $H$ of b0146 via lens B) |
+| $w$ (inner point) | $\xi$ | §8 address table and worked-example display $T(\xi)$ |
+| $g_x$ | $w_x$ | §7 (after the previous row) |
+| $E$ (line-error constant) | $J$ | §8, §9, App. A constants display |
+| $R_a$ | $\kappa_a$ | §8 Theorem 8.2 display and text (DECISIONS Part 3 rejection row, E column "same"); frees $R$ for labels |
+| $a$ (size parameter) | $\nu$ ($s=2^\nu$) | App. A |
+| $y\mapsto a_i^{-1}(y-u)$ | (inline bound variable was $w$) | §6 local correction, to avoid clash with the word $w$ |
+
+Not applied: $C\to C_{\rm addr}$ (no address display remains).
+
+## Local clashes kept with a local declaration (Part 4 item 5, reported)
+
+- §7 example: $s$ (message; global $s=2^\nu$), $h,h_s$ (words; global $h=|H|$), $g$ (word; global gap $g$), $r$ (vector; Hadamard degree $r$): one declaring sentence at the start of §7.
+- §1 $t$ (number of triangles; global $t$ = binary coordinates); App. C $t$ (polynomial variable, declared); §9 $r$ (rejection rate of the modified test, declared); intro $C,k$ (polynomial bound; global $C$); App. A/§10 $R$ (repetition count; label $R$), declared at use; §3 display $\prod_{t\in H}$ and §5 display $\prod_{h\in H}$ (bound variables inside base displays, not changed); §4 display $(a+b\omega)(c+d\omega)$ ($c$ local inside a base display).
+
+## Passages whose wrapped text changed (all 24)
+
+pcp-expository-opening, -colouring, -theorem, -polynomial-distance, -interpolation, -colour-polynomials, -grid-certificate, -proof-inventory, -digit-encoding, -weighted-test, -hadamard, -hadamard-correction, -cubic-labels, -binary-tests, -worked-zero, -assembly, -resources, -answers, -parameters, -error-constants, -colouring-gadget (lens A change from start.md only), -clause-calculation (heading), -correction, -evidence.
+
+Moved content: question texts moved from -grid-certificate (Q1), -hadamard-correction (Q2), -assembly (Q3), -resources (Q4, Q5) into -answers; query-cap breakdown moved from -resources into -parameters; the Fourier-analytic proof mention moved from -hadamard into -evidence; the abstract was added inside -opening.
+
+## Guard "LOST" lines justified
+
+- 20 headings: renamed per DECISIONS 1.4/1.8 (table above).
+- 16 displays: Part 3/4 renames only ($a,b\to\alpha,\beta$; $\mathbb F_Q,Q\to F,q$; $L_s\to\psi_s$; $\lambda\to z$; $H_3\to\mathcal H_3$; $g_x\to w_x$; $E\to J$; $R_a\to\kappa_a$; $w\to\xi$; $a\to\nu$). No other character in any display changed.
+
+## Consistency items for the other papers
+
+- L and S should use the same keys; E uses L's [ABSSW26v1] and [Shoup05], and [AB07] for the Arora–Barak draft.
+- E names "base point" (ours) for $u$ in a line index, as Part 2 says; S uses "anchor" (S:285) per the scout.
+- E uses $\kappa_a$ for the corrector's rejection at target $a$ (Part 3); S/L rename $R_a\to\kappa_a$ too.
+- Links into L used by E (unchanged): `#4-bivariate-agreement`, `#5-point-versus-line-soundness`, `#testing-a-received-hadamard-word`, `#correcting-an-outer-value-at-a-prescribed-point`, `#from-every-np-verifier-to-a-graph`; if L renames these headings the orchestrator must update E.
+- Incoming links to E headings must be rewritten from the Renamed headings table.
+
+## Not resolved / for the orchestrator
+
+- DECISIONS Part 2 binding sentence for the version-1 test says Lee showed it accepts $x_1^4$; E's example is univariate $f(X)=X^4$, so the sentence reads "accepts $X^4$".
+- [ABSSW26, Theorem 5.1] (local correction) and [ABSSW26, §7] / [Algorithm 5] locators come from the ledger and Part 2 rows; not re-read in the TeX.
+- No rendered PDF was produced or inspected in this pass.

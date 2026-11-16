@@ -1,0 +1,100 @@
+# Worked exposition: literature and claim-precision review
+
+## Verdict
+
+The exposition has a sound teaching architecture and a substantial explanatory purpose. Its strongest feature is the sustained passage from a colouring equation, through a grid-vanishing certificate and a line encoding, to individual binary queries. That passage adds something useful to the source paper and to Lee's guide to reading Lean statements. The present revision should make the mathematical objects and the chosen formal variants easier to identify. A wholesale reorganisation would disturb material that is already working.
+
+The principal remaining weakness is a mismatch between the care taken over the mathematics and the care taken over its naming. A reader can follow several difficult calculations and still be unsure what a “row” contains, whether a “row test” is a Hadamard test or the whole inner low-degree test, and which version of a source theorem supplies the displayed constants. Some conventional names arrive late or never appear. Those are consequential obstacles for a tutorial: they interrupt the connection between the worked example, the general construction and the cited literature.
+
+The supplied replacement set addresses these obstacles, keeps the existing proof order, and preserves the worked calculations. The comparison ledger records source and Lean relationships separately. In particular, a correct account of Lee's implementation need not be the identical statement or algorithm printed in Amireddy et al. The revised prose identifies the differences that affect what the reader is being taught.
+
+No new failure of the central testing, correction or final soundness estimates was found in the statements inspected. There is one explicit hypothesis clarification in the opening: polynomial certificate length must accompany polynomial-time checking. This is recorded separately in `math_flags.md`. It does not change the precisely stated PCP theorem in Section 2.
+
+## Priorities and decisions
+
+### 1. Identify the actual version of each imported test
+
+At b0092, the stated point-versus-line result is Lee's whole-field version. It samples the line parameter from all of F and concludes distance at most twice rejection, with explicit field and rejection thresholds. Amireddy et al., Algorithm 1 and Theorem 2.12, sample the parameter from the nonzero elements and state a factor-four conclusion with existential constants. These are different experiments. The replacement identifies both versions without suggesting that the factor two alone establishes an improvement over the source theorem.
+
+At b0111, the weighted generator test has the same rejection threshold and distance conclusion as the source's Lemma 3.3, but the formal theorem uses the weaker field-size hypothesis Q > 2c. A reader should learn that the displayed sufficient hypothesis belongs to Lee's formalisation. The generator nodes and Lagrange weights remain unchanged.
+
+There are further differences at the level of the actual verifier. All four auxiliary tables in Lee's implementation use affine labels; the colour and difference auxiliary tables in the source paper use degree-three labels. The inner binary tester chooses one of its two components by a fair coin, while the source runs both. Lee's full degree-three Hadamard tester retains the lower-degree product checks and has ten queries, whereas the revised source's tester has eight. These facts belong beside the relevant operations, rather than being left for the reader to discover by comparing code.
+
+The existing full-label versus homogeneous-label distinction at b0159–b0165 is correct and essential. The source's second guarantee concerns all affine labels. The formal combined theorem's second guarantee concerns homogeneous labels, while its first guarantee supplies the full affine domain for a certificate table of label degree one. Keep this distinction explicit and retain the fact that one polynomial satisfies the relevant bounds simultaneously.
+
+Evidence: ABSSW v2, `preliminaries.tex`, Algorithm 1 and Theorem 2.12; `technical_tools.tex`, Lemma 3.3 and HadTest; `pcp-verifier.tex`, expected proof and Algorithm 8; Lean `PointLineSoundness.lean`, `GeneratorLowDegreeTest.lean`, `HadamardTest.lean`, `EncodedLineLowDegreeTest.lean` and `EncodedLineLowDegreeSoundness.lean`. Exact locators are in the statement and citation ledgers.
+
+### 2. Define the objects at the point where readers first need them
+
+The inventory after Section 5 is well placed. Retain it there. Introduce a label as a binary-valued question about a field element before the inventory uses “affine” and “degree three”; the fuller polynomial definition can remain in Section 7.
+
+Define relative Hamming distance when the received table is first said to be close to a polynomial. It is the fraction of entries on which two tables differ, under the specified uniform domain. This makes the distance conclusion in b0092 readable when encountered. Later uses over ambient points and labels must continue to name both coordinates of the average.
+
+Distinguish a primary bit row, obtained by fixing an ambient point and varying a label, from an auxiliary line table, obtained by fixing an anchor and a direction and varying an inner point and a label. The latter contains many bit rows. The existing address table can establish this distinction before the combined tester is described.
+
+Use “Hadamard test” for the component that recognises an encoded field value, and “inner low-degree test” for the combined routine that acts on an auxiliary line table. In particular, b0188 and b0190 refer to the latter. Replacing “syntactic row tests” there prevents the reader from assigning the wrong operation to the worked trace.
+
+These revisions repair prerequisites and referents; they do not introduce another layer of notation or another proof mechanism.
+
+### 3. Use the literature's names without discarding the accessible explanations
+
+Name the low-degree extension and the degree-three Hadamard encoding where their operations are defined. Give ZERO its ordinary name, the zero-on-grid test, at first use. The source's alternative name “degree-r long code” belongs in the terminology crosswalk; using both names repeatedly in the tutorial would add unnecessary vocabulary.
+
+The ordinary two-query Hadamard operation can be called self-correction or local correction here. Arora–Barak explicitly calls the same operation local decoding as well as self-correction. It would be historically and mathematically misleading to declare their terminology wrong. What matters is to say which value is being recovered: a requested coordinate of a nearby codeword. The outer binary corrector in Section 8 additionally returns rejection, and its stated event includes that outcome. Preserve that more specific contract.
+
+The terms “proximity,” “agreement” and “distance” should retain their ordinary coding-theoretic meanings. In this exposition the numerical bounds are disagreement fractions. Arora–Barak's January 2007 Definition 18.22 uses a closeness parameter measuring agreement, so importing its numerical convention without translation would reverse the meaning of the parameter. Keep the exposition's distance convention.
+
+### 4. Repair two actual notation collisions
+
+At b0146, H denotes an evaluation word without being introduced, although H already denotes the grid alphabet. Write the two evaluation identities using the already defined H_3(u). The false linear-functional example remains intact.
+
+At b0256, C is used for an address-length exponent after it has acquired the specific meaning of the local-correction coefficient. Give the address exponent a separate subscript. Retain C in the correction bound and the error-constant formulas.
+
+Other changes of symbols between companion papers are largely defensible. The worked exposition's field-size Q avoids confusing field size with the PCP query cap q. Its E for the line-error constant corresponds to J in the specialist paper; its colouring notation also differs from the specialist's compact notation. The notation table supplies those correspondences. Renaming the entire exposition to reproduce another paper's symbols would impose a large cost with little benefit.
+
+### 5. Tighten credit and citation where they govern a mathematical claim
+
+The four contributions should remain distinct: the original PCP and testing results; the construction of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard; Lee's formalisation and its implementation choices; and this exposition's presentation and worked examples. The existing opening already makes that separation broadly clear.
+
+One historical sentence can be more precise. Arora–Safra's abstract states a sublogarithmic-query result; ALMSS states the constant-query theorem and explicitly describes its improvement over Arora–Safra. Credit the constant-query conclusion to ALMSS, building on Arora–Safra, rather than describing both cited papers as independent proofs of exactly the same bound. This is a refinement of conventional joint attribution, not a finding of missing credit.
+
+Add exact locations for the standard algebraic inputs where they help a learner find the argument: the polynomial-distance theorem, the low-degree extension, the finite-field generator theorem, and the construction's named encodings. Preserve the existing BLR/BCHKS distinction. BCHKS Theorem 1.2 supports the distance-at-most-rejection bound; the earlier BLR work supplies the test and the self-testing/self-correction framework. No correction to the numerical BLR bound is warranted.
+
+Do not cite DeMillo–Lipton, Ore or Schwartz as independently read. Their full texts are absent from this packet. The retained source paper's polynomial-distance theorem is available and can be cited directly.
+
+### 6. Remove editorial scaffolding once its job is done
+
+The opening should retain the graph question, the scope of the theorem, the attribution and the route through the example. It does not need a second abstract covering the same ground. The audience sentence is useful. The promise that a reader will be able to reconstruct the mechanism is better expressed as the concrete route the notes take.
+
+The final source note should state authorship and the scope of the examples. Statements about the review process or measured reader understanding do not belong in the mathematical exposition. Their removal does not create a claim of human endorsement or a claim that the examples constitute a general proof. Those evidence boundaries are preserved in this review's coverage report.
+
+The proposed cuts pay for definitions and source distinctions. They avoid removing arithmetic, weakening a hypothesis or compressing a difficult argument into a label. See `measurements.md` for the exact count under the packet's prescribed rule.
+
+## What must survive
+
+- The K_4 plus disjoint-triangles example, which explains why ordinary edge sampling fails.
+- The distinction between total degree and degree in one coordinate, including the interpolation weights and the low-degree extension calculation.
+- The four-element-field arithmetic, the need for the colour-validity equation, and the nonzero off-grid residual of an honestly coloured graph.
+- Both certificate identities, the generic division argument and the quotient-degree bound. Neither identity can be dropped.
+- The honest encoding capacity strictly below b^c, distinguished from the received polynomial's bound D = cb^c.
+- The eight-bit Hadamard word, the 18 failing BLR pairs, the two-query correction counts and the explanation that individual uniformity suffices.
+- The false linear functional on polynomial labels, and the eight/16/256 distinction between homogeneous, affine and degree-three label domains.
+- The fixed-anchor counterexample, the fresh-mask counterexample and the requirement that the same decoded polynomial be used throughout soundness.
+- The correction event “rejection or wrong returned bit,” the uniformly random homogeneous label, and averaging over the targets requested by ZERO.
+- The worked one-edge trace, including which test queries are omitted and why its small parameters are an illustration rather than the complete production parameter choice.
+- The seven-check assembly, the explicit coupled ZERO inequality, the strict soundness comparison, the four-zero-parameter sampling loss, and fixed-proof independent repetition.
+- The parameter appendix, the Boolean-to-colouring and finite-relation calculations, and the unbounded-field family showing why the old degree-two test failed.
+
+## Comparison with the teaching literature
+
+Arora–Barak's January 2007 draft, Section 18.4.1, first defines a codeword, gives its distance, explains why direct access to a prescribed position can fail, gives the two random queries, and proves their guarantee from marginal uniformity. The present exposition follows that useful teaching pattern. Its additional numerical examples are appropriate for its stated audience. Section 19.3.2 separates the Fourier analysis from the reader's first encounter with the testing procedure. That supports the decision to state the substantial testing inputs here and keep their full proofs in the long companion.
+
+BLR Section 4.2 likewise separates a correction procedure from the probabilistic condition under which it works. The lesson for this exposition is to keep its inner and outer correction contracts distinguishable, especially the outer corrector's possible rejection. ABSSW Sections 3–7 provide the matching construction and terminology; they assume more context and serve a different expository purpose. Matching their vocabulary is useful. Matching their compression everywhere would make this tutorial less usable.
+
+The revised account should therefore remain a worked exposition. Its added value lies in the explicit operations and in showing why the tempting shortcuts fail. The source owner should be able to locate each formal variant and each explanatory choice without having to reconstruct that distinction from the entire development.
+
+## Evidence and adoption
+
+All 296 primary blocks were read. The 25-page PDF was rendered and inspected, and the four supplied finite-example scripts passed. The packet custody check verified 1,581 listed files and all 23 retained literature PDFs. Source comparisons used the frozen TeX, original PDFs and actual Lean declarations; the public ECCC revision record and author-hosted BCHKS journal paper supplied additional corroboration.
+
+This is a model review, with independent review passes reconciled into one response. No Lean compilation, Comparator execution, human review or live-site update was performed. Read `coverage.md` for the precise boundaries. The original packet and manuscript remain unchanged. `replacements.md` is the paste-ready change set, and the additional proposed source makes its combined effect and word count reviewable.

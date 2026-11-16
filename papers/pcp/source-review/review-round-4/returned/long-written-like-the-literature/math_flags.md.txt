@@ -1,0 +1,105 @@
+# Mathematical flags for native adoption
+
+The packet requires a native check before adopting changes that alter mathematical content. The proposed manuscript is supplied for review, not as evidence that those checks have run. No Lean source is changed, and no new theorem is proposed. The final PCP statement and all displayed numerical bounds are retained.
+
+## M1. Linear coordinates and the additive label class
+
+**Blocks:** b0051; later correct definitions at b0430–b0431 and b0456–b0457.  
+**Class:** local missing hypothesis and ambiguous domain.  
+**Confidence:** high; direct source and formal declarations, with an elementary counterexample to the overbroad reading.
+
+The original first-use paragraph specifies only a coordinate map and describes homogeneous labels through their zero constant term. Sum preservation needs an $\mathbb F_2$-linear coordinate map and homogeneous **linear** labels. For example, $R(z_1,z_2)=z_1z_2$ has zero constant term and is homogeneous of degree two, but
+
+$$
+R((1,0)+(0,1))=1\ne0=R(1,0)+R(0,1).
+$$
+
+The intended degree-one subfamily is defined correctly later. The replacement makes that intended restriction explicit at first use and calls $\rho$ an $\mathbb F_2$-linear isomorphism.
+
+**Evidence:** ABSSW v2, `technical_tools.tex` 119–143, §3.3, before Definition 3.5; `preliminaries.tex` 68–70; `formal/lean/PCP/Algebraic/Hadamard.lean` 137–188, `linearEncode`, `homogeneousIndex`, `polynomial_homogeneousIndex`, `relativeDistance_linearEncode`; `BinaryDifferenceConsistency.check_encode`.
+
+**Adoption check:** the chosen binary coordinates must be the same linear isomorphism later used by the weighted relabelling and difference tests. Every sum-preserving observation must be in the homogeneous degree-one subfamily. No encoding, distance constant or query count changes.
+
+## M2. State completeness hypotheses before the proof
+
+**Blocks:** b0065–b0070.  
+**Class:** locally overstrong statement through omitted hypotheses.  
+**Confidence:** high; exact formal theorem statement.
+
+Before the replacement, the subsection lists the honest degree capacity and then asserts acceptance for every seed. The positive digit radix and test/correction node conditions are supplied only in the following soundness subsection. The native completeness theorem explicitly requires them.
+
+The replacement states a positive radix, $c+1$ distinct interpolation nodes for the inner tests, and $c+1$ distinct nonzero powers of the correction parameter. It retains the capacity $5d(h-1)<b^c$ after coordinated radix renaming.
+
+**Evidence:** `formal/lean/PCP/Algebraic/ThreeColorVerifierCompleteness.lean` 101–126, `ThreeColorVerifier.exists_proof_test_eq_true`, includes `[NeZero m]`, injectivity of the test nodes and `StandardLocalCorrection.GoodNodes c ζ`; `StandardLocalCorrection.lean` 17–22 defines the latter. `ThreeColorParameters` supplies these conditions for the chosen family.
+
+**Adoption check:** confirm that the stated test nodes use the Lagrange weights of the defined tester, the correction nodes are the specified powers, and the concrete family still instantiates the required hypotheses. The field, grid and cube-root assumptions from the common construction remain in scope. This repairs the independently readable subsection; it does not change completeness of the concrete verifier.
+
+## M3. Correct the counted auxiliary label space
+
+**Block:** b0128.  
+**Class:** correction of the described mathematical object.  
+**Confidence:** high; exact datatype and cardinality.
+
+The table length $Q^{2j+cb}C_1$ uses all affine degree-one labels, including a constant coefficient. The original “linear Boolean label” is liable to denote homogeneous linear labels, which form a space half that size. The replacement says “affine Boolean label”.
+
+**Evidence:** `ThreeColorVerifier.Proof` uses `BinaryPolynomialSpace.Coefficients t 1` for all auxiliary tables; `ThreeColorSeedSize.coefficientBits` and `card_coefficients` give $1+t$ coefficients and $C_1=2^{t+1}$ labels. `ThreeColorResourceBounds.card_query_le` counts those tables. ABSSW Definition 3.5 uses all degree-at-most-one labels for this affine space.
+
+**Adoption check:** retain $C_1=2^{t+1}$, every auxiliary address type and every seed exponent. This is not a proposal to shrink the domain to $2^t$ labels.
+
+## M4. Positive radius in the fixed-parameter estimate
+
+**Blocks:** b0370–b0371.  
+**Class:** omitted hypothesis required by division and Markov's inequality.  
+**Confidence:** high; exact formal hypothesis and elementary probability argument.
+
+The original only requires $2r\le1-d/q$. This permits $r=0$ and negative $r$, whereas the exceptional-line bound $\delta'/r$ requires $r>0$. The replacement starts: “Its mean is $\delta'$. Fix $r>0$ with $2r\le1-d/q$.”
+
+**Evidence:** `formal/lean/PCP/Algebraic/PointLineParameterError.lean` 99–140, `rejectionAt_le_add_div`, explicitly assumes `hr : 0 < r`.
+
+**Adoption check:** preserve the strict good-line condition $e(u,v)<r$, the closed radius bound $2r\le1-d/q$, the resulting $\delta'+\delta'/r$ estimate, and the subsequent $r=1/3$ application. The latter already satisfies the missing premise, so (A25) and the main theorem are unchanged.
+
+## M5. Compare distances on their actual domains
+
+**Block:** b0555.  
+**Class:** precision correction to a source-strength comparison; neither theorem is disproved.  
+**Confidence:** high; direct probability identity and source statements.
+
+The original calls the source's affine-label conclusion “stronger” without qualifying constants or testers. Let $e_0$ and $e_1$ be error rates on homogeneous labels and their constant-one translates. Then
+
+$$
+e_{\rm aff}=(e_0+e_1)/2,\qquad e_0\le2e_{\rm aff}.
+$$
+
+The same numerical bound is not ordered by domain inclusion. For $t=r=3$, there are 256 full labels, 16 affine labels and eight homogeneous labels. Flipping precisely the eight constant-one affine labels of an exact codeword gives full/affine/homogeneous errors $(1/32,1/2,0)$. Flipping one homogeneous label gives $(1/256,1/16,1/8)$. These examples concern distances only; they do not assign a rejection rate or contradict a tester theorem.
+
+ABSSW uses $O_c(\delta)$, which absorbs the factor two. Its affine conclusion does asymptotically control the homogeneous restriction and additional labels. The replacement names the two domains and the valid factor-two relation rather than making an unqualified numerical comparison.
+
+**Evidence:** ABSSW v2 Theorem 4.1, `low_degree_test.tex` 219–247; `EncodedLineLowDegreeSoundness.lean` 325–339, `EncodedLineLowDegreeTest.exists_close`; `HadamardAffineQueries.lean` and the homogeneous restriction definitions.
+
+**Adoption check:** preserve both simultaneous conclusions for the same decoded polynomial, the exact $S(c)$ bound in (B15), and the certificate's full affine-domain guarantee. No numerical constant in the verifier changes.
+
+## M6. Expose averaging already required by the correct statements
+
+**Blocks:** b0592, b0607–b0609.  
+**Class:** probability-scope clarification, not a changed inequality.  
+**Confidence:** high; fixed-target and joint-distribution declarations.
+
+At b0592, apply (B16) at each requested target using its own rejection probability $R_a$, then average over the sampled $x$. A correction-call rejection implies ZERO rejection in that joint experiment, so the average is at most $\kappa$. There is no assertion that $R_a\le\kappa$ separately at every target.
+
+At b0607, the two downstream tests share the same uniform point, requested label and other randomness. Their decisions differ only when the masked derived bit differs from its ideal value. Conditional on the point and label, the error is bounded by twice that row's error; averaging gives $2\epsilon$. The fresh mask stays in the joint random seed throughout.
+
+**Evidence:** `BinaryLocalCorrectionSoundness.lean` 222–236; `BinaryZeroOnGridSoundness.lean` 210–267; `HadamardDerivedOracle.lean` 68–118 and 149–178; `DerivedZeroOnGridSoundness.lean` 187–194.
+
+**Adoption check:** retain uniformity of the outer point and freshness of the mask, all dependencies of requested labels, (B24), and the factor $1+2C(c)$ multiplying the replacement loss in (B25). The source text already has the correct displayed bounds; the replacement makes the averaging order harder to misread.
+
+## Changes that preserve mathematical content
+
+- **Radix $m\to b$:** coordinated alpha-renaming in 17 blocks; the exact affected list is in `notation.md`. It does not alter the chosen family or the local dimension $m$ in the algebra chapter.
+- **b0010:** distinguishes the adaptive ambient model from the nonadaptive construction. The construction's property is already stated at b0144 and follows from the fixed query list; no stronger endpoint is newly claimed.
+- **b0310 and b0360:** source comparisons are added around unchanged correct theorems.
+- **b0378:** the exact more general supporting Lean lemma is linked. No nearestness hypothesis is added or deleted, and no proof step is removed.
+- **b0540:** the auxiliary table type is made explicit; it is the existing degree-one domain. “Parametrised line” retains the same ordered-pair indices and zero directions.
+- **`GoodNodes` replacements:** distinct nonzero powers state the existing predicate mathematically. The tester's generator and correction parameter may still differ.
+- **b0005–b0008, b0476, b0505, b0627–b0640:** theorem labelling, attribution, emphasis and source-apparatus changes. The abstract summarises claims already established later.
+
+No displayed equation is deleted. The only modifications inside existing displays are the coordinated radix renaming. Native adoption should check the four local premise/object repairs first, then render the revised document with its existing build.

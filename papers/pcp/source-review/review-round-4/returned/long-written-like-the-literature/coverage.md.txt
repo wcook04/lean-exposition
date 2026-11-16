@@ -1,0 +1,112 @@
+# Coverage and evidence record
+
+## Frozen target and custody
+
+| Item | Identity |
+| --- | --- |
+| Packet | `pcp-review-round3-1b-full-argument-written-like-the-literature` |
+| Manifest SHA-256 | `3840e625307a7920bf1b84f4b670709faeb6a48e2eef42f74c2ee4ba52090e5a` |
+| Primary Markdown SHA-256 | `389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110` |
+| Manuscript source revision | `637867f0340b1554a529f7e2d668e58c782f1e45` |
+| Reader revision | `05d908ead9e700cfd2e7c8d057294fa8ad741e4e` |
+| Lean revision | `a0ce13ed0fa264f051c1278e039596ce65557fa4` |
+| Baseline | 47 PDF pages; 23,276 source words; 642 blocks |
+| Detailed statement inventory | 274 rows; 515 explicitly covered mathematical/setup/proof blocks; all 173 display-math blocks covered |
+
+The packet was extracted into a separate working directory. `python tools/check_packet.py` reported **1,582 files verified**, 23 literature PDFs and 642 primary blocks, with custody and target presence passed. The original packet files were not edited. The final proposed text is reconstructed from the original byte ranges and individually checked block hashes.
+
+## Reading order and responsibility
+
+The primary reviewer and all three delegated mathematical reviewers read the full current primary manuscript, b0001–b0642, before consulting `history/settled-decisions.json`. Truncated initial outputs were reread in smaller ranges. Detailed comparisons were divided into theorem/model/assembly (b0001–b0215), algebra (b0216–b0424), and binary/source history (b0425–b0642). The primary reviewer integrated the findings, checked source variants and notation, inspected the PDF and companion passages, and read the complete replacement set. A separate integration pass checked the merged hypotheses, crossing proof, averaging order and radix change.
+
+The three exact delegated reading ledgers are included in `coverage-details/`. They distinguish whole-file reads, declaration/context reads, extraction searches and successfully viewed PDF pages. Those ledgers are part of this coverage record; they are not claims that every reviewer independently reread every file.
+
+The 127 blocks outside the statement inventory were also read. They consist of structural or reader-guidance material, bibliographic/source prose, passage markers, headings and link definitions. Bibliographic and attribution claims are assessed in `citations.md`. Grouping in the JSON is explicit: `covered_blocks` identifies adjacent setup and proof displays, and independent claims within tables have separate rows.
+
+## Packet instructions and writing contracts
+
+Read `START_HERE.md`, `request.md`, `RETURN_FORMAT.md`, `BASELINE.md`, `EVIDENCE_BOUNDARIES.md`, `BUILD_PROVENANCE.md`, `RECIPIENT_CONTEXT.md` and `literature/READING_ROUTE.md`.
+
+The primary reviewer read the complete `contract/formal-math-exposition/SKILL.md`, complete `contract/humanizer/SKILL.md`, and complete `mathematical-writing-mechanics.md`; also read `the-deliverable.md` and `register-from-literature.md`. The algebra reviewer read the complete `full-exposition-guide.md`, lines 1–1597. The mathematical preservation rules, evidence classes, reader contract and register requirements were applied. Broader proof campaigns, publication routines and external-review gates are outside this packet's assignment.
+
+Read the current manuscript before the settled history. The generator-test statement, proof assembly order, imported contracts, clean-rectangle motivation, seed-exponent accounting and unbounded counterexample remain. No settled architectural decision is reversed. The new findings are grounded in the current wording and exact source declarations.
+
+## Manuscript and companion inspection
+
+- All 642 primary Markdown blocks were read.
+- The original 47-page PDF was rendered with Poppler and inspected in eight six-page contact sheets (the last contains five pages). Pages 1 and 47 were additionally inspected individually. This is a complete layout overview, not a claim of word-by-word visual reading at contact-sheet scale; mathematical wording was read in the Markdown and governing sources.
+- The specialist paper was sampled at the encoding, auxiliary-label, distance, outer-test, local-correction, source-credit and appendix passages. The expository paper was sampled at corresponding encoding, label-space, testing and worked-example passages. These samples establish radix consistency and shared terminology concerns; neither companion received a full independent review or edit.
+- The register's measurement output was consulted as a pointer to passages. Its statistical profile was not used as a writing target. The baseline word count is the packet's source-token count, not the smaller register prose-only count.
+
+## Governing literature opened
+
+The following table summarises combined coverage. Exact per-reviewer ranges and methods are in the detailed ledgers. A theorem locator in the JSON is not, by itself, a claim that the whole source paper was read.
+
+| Source | Actual relevant reading | Purpose |
+| --- | --- | --- |
+| ABSSW v2 | `intro.tex` selected/full opening excerpts; `preliminaries.tex` through the algebra, verifier and line-test statements; `technical_tools.tex` 1–459; `pcp-verifier.tex` entire file; `low_degree_test.tex` 1–300 and 270–420, plus primary-reviewer reads 420–500 and 735–825; local-correction and zero-test statements and appendices; Hadamard appendix; macro and bibliography excerpts | The construction, terminology, variants, exact statement/algorithm comparison and attribution. Commented-out TeX was not treated as a current theorem. |
+| ABSSW v1 | Governing PDF pp. 10, 11 and 15; `tex/main.tex` excerpts around 478–516 and 716–770, with nearby context | Exact old scalar characterisation and unit-weight test, plus its large-field soundness premise. This was an edition check, not a fresh review of the whole v1 proof. |
+| Arora–Safra | §5.2, governing PDF pp. 39–44 (printed pp. 108–113), including Lemmas 5.2.2, 5.2.5, 5.2.7 and Corollary 5.2.3 | Locator, polynomial matrix, bounded kernel, clean rectangle and agreement proof. |
+| ALMSS | Governing PDF pp. 20–21, 26–27 and 47–53; Proposition 34, Theorem 45 and Appendix A sequence | Quadratic-test antecedent, whole-field point-versus-line theorem, bivariate agreement and crossing. Primary reviewer additionally read PDF pp. 20–21 directly after the delegated extraction. |
+| BLR | §4.2, governing PDF p. 15 and matching extraction; page visually inspected | Attribution and definition of the linear self-test. |
+| BCHKS | Theorem 1.2 and Fourier §2, extraction and governing PDF pp. 6–7 and 10–12; successful visual inspection of pp. 6, 9, 10, 11 and 12 | Constant-one characteristic-two bound and Fourier argument. |
+| Friedl–Sudan | Corrected 2013 reissue, governing PDF p. 2, Lemma 4 and adjacent statements; opening correction notice | Exact-line characterisation and edition distinction. |
+| Rubinfeld–Sudan | Governing PDF pp. 10–12 rendered and visually read, §4, Theorem 5 and Lemmas 6–8 | Weighted robustness antecedent and exact retained numbering. Corrupt extracted text was not used to settle theorem content. |
+| Kaufman–Sudan | Governing PDF pp. 4–5, Definitions 2.3, 2.5, 2.8 and Theorem 2.9 | Formal characterisation, the precise independence condition and denominator. |
+| Arora–Barak draft | Governing PDF pp. 56, 348, 369–370 and 475; NP Definition 2.1, Walsh–Hadamard §17.5.1, PCP Definition 18.1/Theorem 18.2 and polynomial zero-bound Lemma A.25 | Model, notation, genre, classical credit and coding conventions. This is the retained 2007 draft, not an asserted identical final edition. |
+| Shoup first edition | Governing PDF pp. 1–5, 469, 479–480; Theorems 20.11, 21.1 and 21.2; public author book page | Field existence, construction background and exact electronic-edition date. The book is not credited with Lee's explicit implementation costs. |
+
+The optional shelf was not independently reviewed: `amireddy-ideals-2026.pdf`, `barak-et-al-2015.pdf`, `ben-sasson-et-al-2006.pdf`, `ben-sasson-sudan-2008.pdf`, `bfl-1991.pdf`, `dinur-2007.pdf`, `dinur-et-al-2011.pdf`, `dinur-reingold-2006.pdf`, `goldreich-2025.pdf`, `goldreich-revision.pdf`, `harsha-et-al.pdf`, and `zippel-1979.pdf`. Their presence is not counted as substantive reading. The unacquired DeMillo–Lipton, Ore and Schwartz originals were not read or quoted.
+
+## Public research
+
+Public primary-source searches supplemented the packet. The primary reviewer opened the [ECCC report page](https://eccc.weizmann.ac.il/report/2026/134/) for the broad construction description, the [Friedl–Sudan corrected arXiv record](https://arxiv.org/abs/1307.3975v1) for the 2013 reissue, and [Shoup's author page](https://shoup.net/ntb/) for the electronic Version 1 date and first-edition correspondence. The latter explicitly gives 15 January 2005. The retained PDF's creation metadata agrees, but the author page supplies the bibliographic authority.
+
+Direct attempts to retrieve the exact ABSSW arXiv v2 abstract/HTML returned a tool-level disabled response. The enclosed corrected PDF and TeX therefore govern exact v2 claims. The ECCC abstract was not substituted for them. Delegated public metadata searches for the BLR/ALMSS/AS and Friedl–Sudan entries are separately recorded in the binary ledger; retained primary sources remain the basis for mathematical claims.
+
+No private account material was consulted as evidence. No credentials were requested, no author was contacted, and no live site or public repository was changed.
+
+## Lean source inspection
+
+`formal/lean/docs/pcp/reading-guide.md` was read in full. The full lists of opened Lean files, declarations and intervals are in:
+
+- `coverage-details/theorem-model.md`: endpoint, query model, seven-check assembly, explicit resources, runtime, graph reduction, reverse inclusion and reference-NP bridge.
+- `coverage-details/algebra.md`: distance, interpolation, grid ideals, generator test, correction, bivariate agreement, arbitrary-tie and ruled-surface arguments.
+- `coverage-details/binary.md`: encodings, BLR/Hadamard, row decoding, encoded-line testing, local correction, ZERO and derived-answer coupling.
+
+Additional primary-reviewer reads included `ThreeColorVerifierCompleteness.lean` 40–145; `PointLineParameterError.lean` 88–170; `Hadamard.lean` 1–end; `Verifier/Definition.lean` 80–116; relevant definitions in `ThreeColorParameters`, `VanishingCertificate`, `EncodedLineLowDegreeSoundness` and `BinaryLocalCorrectionSoundness`; and declaration searches in `SetMultilinear`, `BinaryStandardLocalCorrection`, `BinaryLocalRowDecoding` and `ThreeColorSeedSize`.
+
+This review inspected source statements and relevant proof bodies. It did not compile Lean, replay the three headline theorems, rerun Comparator, or independently redo the complete dependency/axiom audit. The packet's baseline build and Comparator receipts remain supplied provenance, not new results of this review.
+
+## Executed computations and mechanical checks
+
+Commands and tool operations actually used include:
+
+```text
+python tools/check_packet.py
+python examples/check_examples.py
+rg --files; rg -n; sed -n; cat
+Python json / pathlib / hashlib / re
+Python fractions.Fraction and itertools.product
+PyMuPDF PDF text extraction and selected-page rasterisation
+pdftoppm -r 65 -png (original primary PDF)
+tools.view_image (rendered contact sheets, selected manuscript/source pages)
+python audit_parts/theorem_model/arithmetic-checks.py
+python audit_parts/root/prepare_root.py
+python audit_parts/root/assemble.py
+python apply_replacements.py <frozen baseline> <separate check output>
+```
+
+The supplied finite-example script passed its GF(16) interpolation and old/corrected-test checks, Hadamard/BLR calculation, grid-vanishing example, GF(4) colour and coordinate identities, and toy repetition check. These finite examples support those illustrations only; they are not a substitute for the general proofs.
+
+Independent integer/rational arithmetic reproduced $K_4,E_4,S_4,C_4,T_4$, all three gap denominators, the exact gap and repetition values, the seven seed-exponent sum and seven query bounds. The theorem/model calculation script and result are included under `coverage-details/`. The algebra calculation reproduced $B=0.00480425$ and $B/0.01+\gamma=0.482025$. The stated general resource inequalities were checked against source proofs; finite spot checks were not treated as universal proofs.
+
+Integration checks verified the frozen source hash and all changed block hashes; applied replacements by UTF-8 byte range; preserved all passage markers, equation tags, headings and reference definitions; checked required JSON fields and allowed relation values; enumerated all display blocks; and recomputed exact before/after word counts. A separate reviewer checked merged mathematical passages for dropped conditions and quantifier changes. The response archive is checked for required files and ZIP integrity before delivery.
+
+## Limits and unresolved work
+
+- No revised PDF was compiled; 47 is the baseline page count only. Native rendering should check the new abstract, paragraph reflow and final bibliography.
+- No fresh kernel or Comparator execution is claimed. Mathematical adoption checks are in `math_flags.md`.
+- No claim is made to have read every page of the 23 retained literature PDFs, every Lean proof body, or the complete companion manuscripts.
+- No human reader study, author endorsement or prediction of a named reader's response is supplied.
+- This is a review of the frozen packet. Later upstream changes, a separate proceedings edition, and live-site routing are outside the assessed target.

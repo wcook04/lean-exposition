@@ -1,0 +1,105 @@
+# Review of the full argument: written like the literature
+
+## Verdict
+
+The current paper already works as a substantial mathematical exposition. Its algebraic chapters contain the arguments a complexity theorist needs to reconstruct the proof, and its first chapter explains the extra work required to obtain a concrete machine-model theorem. The useful next edit is a precise local revision. Reorganising the proof again, removing intermediate estimates, or replacing the implementation argument by an informal appeal to the PCP theorem would damage the paper.
+
+I found no failure of the headline PCP statement or of the displayed explicit resource bounds. There are four local premise or object-description corrections: the linear-coordinate and homogeneous-linear assumptions at b0051; the local completeness hypotheses at b0065; the affine label space at b0128; and the positive radius at b0370. The proposed changes leave the final theorem, all numerical constants and all proof steps intact. Several further edits make source comparisons and probability scopes explicit. They are distinguished from failed mathematical statements in `math_flags.md`.
+
+The response contains 274 statement-comparison rows, with explicit coverage arrays. All 173 display-math blocks have a comparison row. The 50 replacement blocks reduce the primary source from 23,276 to 23,244 words under the packet's counting rule. Seventeen of the changed blocks participate in a single coordinated radix rename. The complete proposed manuscript is included for inspection, together with hash-bound replacements and a reproducible application script.
+
+This is a model-assisted review of source text, not human feedback or a new Lean replay. The source-reading and computation limits are recorded in `coverage.md`.
+
+## 1. What already reads like a paper in this field
+
+The proof has a recognisable mathematical dependency structure: algebraic constraints encode three-colourability; the two encodings permit constant-query binary tests; soundness supplies fixed polynomial witnesses; the difference and grid tests turn those witnesses into one proper colouring. The long account then proves the algebraic and binary statements used in that assembly. This is a useful adaptation of the presentation in ABSSW v2, §§3–7, to a reader who also wants the implementation and complexity-model bridge.
+
+The proof of bivariate agreement is particularly valuable. It explains the purpose of the clean rectangle, constructs the error locator and numerator, proves the polynomial-matrix kernel bound, obtains the coarse approximation, and improves it to the required distance. That material corresponds to Arora–Safra §5.2 and ALMSS Appendix A, with the explicit hypotheses and constants of the formal development. It should remain a proof, including its difficult steps.
+
+The source distinctions are often already handled well. Examples include formal polynomials versus polynomial functions; individual degree versus total degree; arbitrary received line tables versus honest line restrictions; received-row proximity versus the existence of a single decoded polynomial; and fixed-target correction versus a bound averaged over labels. The explicit statement that row decoding is an existence argument, rather than an efficient decoding algorithm, is accurate and useful.
+
+The implementation section is longer than in a conventional proof of the PCP theorem because it has a different explanatory obligation. A bounded number of oracle queries does not by itself give polynomial running time. The imported callback, cost, compiler, reduction and finite-witness contracts make that obligation visible. The contracts table and the all-input resource discussion are appropriate for this paper's stated audience.
+
+The original PDF has a conventional, readable mathematical layout. All 47 pages were inspected in rendered overviews, with the opening and final bibliography page also inspected individually. I recommend no changes to font size, margins or spacing. A new PDF must be rendered after native adoption; no revised page count is claimed here.
+
+## 2. Changes to adopt first
+
+| Priority | Blocks | Finding and evidence | Action |
+| --- | --- | --- | --- |
+| 1 | b0051 | A zero constant term does not make a higher-degree Boolean label additive. ABSSW §3.3 fixes a linear coordinate isomorphism; Lean's `Hadamard.linearEncode` and `homogeneousIndex` use homogeneous linear forms. | State both conditions at first use. |
+| 1 | b0065–b0070 | The standalone completeness paragraph omits the positive radix and the test/correction node hypotheses present in `ThreeColorVerifier.exists_proof_test_eq_true`. They first appear later in the soundness subsection. | Put the hypotheses before the completeness argument. The concrete parameter family already satisfies them. |
+| 1 | b0128 | The label count is correctly $C_1=2^{t+1}$, but “linear Boolean label” can denote the smaller homogeneous space. | Write “affine Boolean label”; preserve the count. |
+| 1 | b0370–b0371 | The generic estimate divides by $r$ and invokes Markov, while only stating $2r\le1-d/q$. Lean explicitly requires $r>0$. | Add $r>0$. The later choice $r=1/3$ remains valid. |
+| 2 | b0310, b0360, b0378, b0422 | Three source relationships need more precise locators, and ALMSS item 72 is a corollary. | Name the exact variants, link the appropriate general crossing lemma, and correct the item type. |
+| 2 | b0505, b0555 | Higher-degree Hadamard testing has a quadratic antecedent in ALMSS; affine and homogeneous distances have different normalising domains. | Add the antecedent and replace the unqualified “stronger” comparison by the actual domain relation. |
+| 2 | b0592, b0607, b0609 | A fixed-target correction estimate becomes a ZERO rejection estimate only after averaging over the sampled point. The fresh-mask comparison is under the whole joint sampling distribution. | State that averaging explicitly, keeping all inequalities unchanged. |
+| 3 | b0031–b0136, b0054, b0396, b0532–b0592 | The radix changes name across chapters; “oriented line” is nonstandard here; `GoodNodes` exposes an implementation name where the mathematical condition is short. | Use radix $b$ consistently for the encodings, “parametrised line”, and distinct nonzero correction nodes. |
+| 3 | b0005–b0010, b0627–b0640 | The implicit abstract omits the construction's central mechanism, and the source note repeats verification and edition commentary. | Supply a labelled abstract and theorem, distinguish model adaptivity from construction nonadaptivity, and compress the source note. |
+
+The first four findings have high-confidence mathematical evidence. The citation corrections and exact source comparisons also have high confidence. The abstract, terminology and compression choices are editorial judgements supported by the comparison sources; they are not mathematical necessities.
+
+## 3. Source variants that must remain variants
+
+### Weighted low-degree testing
+
+The complete generator-test statement at b0292–b0297 is correct. ABSSW v2 Lemma 3.3 uses a power-of-two field and a sufficiently large cubic field-size condition. The formalised scalar test is proved under $q>2c$ over an arbitrary finite field, with the same strict $1/[2(c+2)^2]$ threshold in this exposition. Its weighted constraint and full multiplicative generator matter. The manuscript's direct argument is a valid strengthening under weaker field assumptions; it should not be rewritten to imitate the source's stronger premises.
+
+The comparison with Rubinfeld–Sudan and Kaufman–Sudan is also substantive. The retained Rubinfeld–Sudan manuscript uses Theorem 5 and Lemmas 6–8; the published numbering quoted by ABSSW is different. Kaufman–Sudan's 2-ary independence condition concerns the first form and each other form. The manuscript verifies the condition actually required. The retained PDF, rather than its corrupt text extraction, was used to check the Rubinfeld–Sudan passages.
+
+### Accepted wrong answers in line-table correction
+
+The estimate
+
+$$
+\Pr[\text{accept and output a wrong value}]\le \eta+\frac d{q-1}
+$$
+
+in (A14) is supported by `LineTableLocalCorrection.accepted_wrong_le` and by the paper's two-event proof. ABSSW Theorem 2.14 states $2\sqrt\eta+d/(q-1)$ with additional assumptions. The manuscript's sharper estimate is valid. The replacement identifies that relation without weakening the inequality or claiming frequent acceptance for an arbitrary auxiliary table.
+
+### Point-versus-line testing and crossing consistency
+
+The whole-field parameter distribution and factor-two proximity conclusion already occur in ALMSS Theorem 45. ABSSW Theorem 2.12 uses nonzero parameters and a factor-four conclusion. Lee's formal development supplies explicit sufficient constants and includes the degree-zero and dimension-zero cases. Credit should reflect those separate facts.
+
+The crossing statement at b0376–b0378 needs nearest approximants only on the selected row and column. The currently linked combined convenience theorem is narrower, but the manuscript's statement is supported by `BivariateAgreement.exists_polynomial_of_row_column_agreement` followed by `PointLineCrossing.crossing_eq_of_nearby_polynomial`. The correct response is to link that composition, preserving the general statement. Adding global nearestness would unnecessarily weaken the exposition.
+
+### Affine and homogeneous label distances
+
+For an arbitrary received table,
+
+$$
+\Delta_{\rm aff}
+=\tfrac12\Delta_{\rm hom}+\tfrac12\Delta_{\rm const=1},
+\qquad
+\Delta_{\rm hom}\le2\Delta_{\rm aff}.
+$$
+
+Thus an affine-label bound controls the homogeneous restriction with at most a factor-two loss. That factor is absorbed by ABSSW's $O_c(\delta)$ notation, but a bound with the same numerical constant is not monotone under restriction. The two testers also differ. The b0555 replacement states the actual comparison without alleging a failure of either theorem. For a certificate whose full domain is already $\mathcal B_1$, the full-domain conclusion supplies the affine distance exactly as the manuscript needs.
+
+## 4. Terminology, notation and genre
+
+The useful changes are small and coordinated. “Low-degree extension” and “Combinatorial Nullstellensatz” connect the elementary algebra to ABSSW Fact 2.4 and Lemma 2.9. “Set-multilinear encoding” should be the first construction-level name for the digit encoding. An ordered centre and direction specify a parametrised line; finite-field orientation plays no role. The zero-on-grid test is glossed at the first occurrence of ZERO.
+
+The radix is $m$ in the first construction chapter and $b$ in the binary chapter and both companions. This inconsistency offers no mathematical benefit. The proposed edit uses $b$ throughout the encodings and updates every associated capacity, degree, table-length and seed-count formula. The algebra chapter's local dimension $m$ is retained. The theorem's randomness intercept $b$ is also retained as a separately scoped parameter; b0031 now limits the radix convention to the polynomial encodings.
+
+Other local overloads are conventional and explicitly introduced: $d$ as a grid dimension in the assembly and a degree in the algebra lemmas; $Q$ as field cardinality in the assembly and a polynomial in a later local statement; $r$ as a local radius, encoding degree or randomness function. Replacing all of them would create a large, unhelpful notation migration. `notation.md` gives one dictionary and the precise scope of each choice, including $K_c=K(c)$ and the analogous constants.
+
+The new abstract names the classical theorem, the ABSSW construction, Lee's formalisation and this account's explanatory role. It then identifies the two encodings and the explicit resource argument. The opening result receives a theorem label without changing its quantifiers or budgets. The proof organisation, imported-contract table, headings and passage anchors are preserved. The final source note retains edition and authorship information while removing repeated review-oriented commentary and the visible commit hash.
+
+The register's numerical profiles are not editing targets. In particular, increasing sentence length or reducing the number of displayed intermediate steps would not make this proof more faithful to the literature. The proposed compression is paid for by removing repeated apparatus and tightening prose around unchanged arguments.
+
+## 5. Material that must survive adoption
+
+- Both the vertex and edge colour equations, including the $K_4$ illustration explaining why the edge equations alone are insufficient.
+- The same four decoded polynomial witnesses through the difference check and both grid checks; the certificate line tables are physically shared.
+- The full-generator weighted test, its complete threshold statement, and the appendix's unbounded family against the earlier unit-weight test.
+- Every distinction between total and individual degree, and every step that upgrades equality of evaluations to equality of formal polynomials.
+- The locator/cofactor/clean-rectangle proof; the arbitrary-tie fixed-parameter estimate; the fifth candidate-row error; and the one fixed polynomial witness in the ruled-surface argument.
+- The full, affine and homogeneous label domains; arbitrary auxiliary tables; correction averaged over labels; and the distinction between accepted-wrong probability and rejection-or-wrong probability.
+- Fresh-mask joint sampling and the factor $1+2C(c)$ multiplying the derived-read replacement error.
+- Least-admissible parameters and their small-input cases; four-draw conditioning; all seven seed-exponent rows; exact seed padding; repetition on one fixed proof; and the finite-address and machine-runtime conditions in both inclusions.
+
+## 6. History and adoption
+
+The current manuscript was read before the history. No settled architectural decision is reversed. The complete generator theorem, proof-first assembly, imported-contract table, clean-rectangle motivation, detailed seed accounting and unbounded counterexample remain. The new premise repairs arise from the present first-use wording and the exact opened Lean declarations. The general crossing statement remains unchanged after checking its stronger supporting declaration.
+
+`proposed-reasoning-record.md` is a proposed integrated text. It is not a published edition or a claim that the packet's native adoption checks have run. `math_flags.md` identifies what must be checked before adoption. The provided application script verifies the original source and block hashes and writes a separate output. After native adoption, render the manuscript with its existing build and inspect equation breaks, the first page and bibliography. No new theorem campaign is required by these findings.

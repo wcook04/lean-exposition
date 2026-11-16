@@ -1,0 +1,96 @@
+# Independent read: specialist paper (S), third round
+
+File read and edited: `papers/pcp/short/paper.md` (no commit). Pre-edit copy: `scratch`.
+
+Lean paths are relative to `stage/pcp-review-round3-1a-full-argument-cut-and-sharpen/formal/lean/PCP/`; ABSSW locators are v2 (`literature/text/simple-algebraic-pcp-v2.txt` line numbers, or `abssw-v2/tex/`). Lean was read, not compiled.
+
+Guard after edits: `words: 6310 -> 6150 (-160)`; markers 32/32, tags 22/22, refs 6/6, URLs 16/16; `RESULT FAIL 16`. The 16 failures are the same 8 renamed headings and 8 renamed displays reported by the editor before this read; the guard body (everything after the word line) is byte-identical before and after my edits. No display, tag, marker, reference definition, URL, Lean link or heading was changed.
+
+## 1. Statement fidelity
+
+Relation codes: **same** / **stronger** / **weaker** / **different** (paper statement against the Lean declaration, then against the cited source).
+
+| Result | Lean declaration | Source locator checked | Relation to Lean | Relation to source | Verdict |
+|---|---|---|---|---|---|
+| Thm 1.1 PCP theorem [AS98, ALMSS98] | `Theorem.lean:24-35 np_subset_pcp` (`V.queries = q` is a depth bound of `QueryTree`, so "at most ℓ"; `CanonicalRandomness` = exact formula); converse `ReverseConcrete.lean:33-39` | ALMSS98 / ABSSW Thm 2.2 (v2:2264, O(log n), 3-COLOR, gap γ) | same | different (exact randomness formula and polynomial address bound are Lee's form; remark says so) | OK |
+| Lemma 2.1 colouring constraints (no locator) | `ThreeColorAlgebra` (by name) | ABSSW §7 observations obs:zero-valid-coloring / obs:zero-proper-coloring (`pcp-verifier.tex:21-60`) | same | same (degrees d0, 3d0, 5d0 rechecked) | OK; locator optional, §7 cited in the sentence before |
+| Lemma 2.2 Combinatorial Nullstellensatz [Lemma 2.9, Cor 2.10] | `GridVanishing` (by name) | v2:524-555 | same | same (deg U_i ≤ deg A − h; M of degree ≤ deg A, M(X,0)=0) | OK |
+| Def 3.1 set-multilinear [Def 3.1, Claim 3.2] | `SetMultilinear.lean:149-155` | v2:689-736 | same | same (radix m1 → b) | OK |
+| Def 3.2 labels, Hadamard encoding [Defs 3.5-3.6] | `BinaryPolynomialSpace.Coefficients`, `Hadamard.encode` | v2:844-870 | same | same | OK |
+| Lemma 3.3 half-distance [Obs 3.8] | `LineTableLocalCorrection.homogeneous_distance_eq_half`; `HadamardAffineQueries.lean:61-64` | v2:935-955 | same | same (full and homogeneous-linear label domains) | OK |
+| Lemma 3.4 self-correction [BLR93] | `HadamardDerivedOracle.lean:68-72` | BLR Def 2.5 (`blr-author.txt:307`); ABSSW §3.4 Self-Correction (v2:1070-1090) | same | same (2ε) | OK |
+| Lemma 4.1 standard LDT [Fact 2.7, Lemma 3.3] | `GeneratorLowDegreeTest.lean:252-279` (`exists_close`: q>2c, δ<1/(2(c+2)^2), 2δ); `WeightedConstraintSoundness.lean:130-134 prediction_error_le` (pointwise 2(c+1)·rej, nonzero nodes only) | v2:472-497 (Fact 2.7, q>2c), v2:756-788 (Lemma 3.3, q > Cc^3) | same | weaker field hypothesis than Lemma 3.3 needs (q>2c); remark records it | **Fixed locator**: plurality correction was cited to [ABSSW26, Definition 4.4], which is "Correction for f" (the Hadamard-closest value, v2:1446-1452) and has nothing to do with plurality. The plurality correction and the pointwise bound 2(k−1)ε are [KS08, Lemma 3.1] (`kaufman-sudan.txt:391-402`), with k−1 = c+1 |
+| Lemma 4.2 Hadamard test [Lemma 3.10] | `HadamardRowDecoding.lean:30-55` (28·rej for full and homogeneous, no threshold); `HadamardTest.lean:89-90` (2r+4) | v2:1045-1066 (δ<δ0: full δ, affine 3δ; 8 queries) | same | different: ABSSW give full δ and affine 3δ below a threshold; the factor 28 with no threshold and the homogeneous form are Lee's | **Fixed remark**: "We use Lee's bound" (ambiguous) → "The factor 28 is Lee's." |
+| Lemma 4.3 inner LDT [Lemma 4.3] | `BinaryLowDegreeTest.lean` (`test`: fair coin `s.1`); `BinaryLocalRowDecoding.lean:108-119 exists_polynomial_distance_le` (q>2c, generator nodes, K·rej both distances) | v2:1365-1380: a *local-correction* statement (for every u, corrected value equals Had(P)(u,L) w.p. 1−O_c(δ1)) under two rejection hypotheses, both tests run; closeness appears inside its proof (Claim 4.8, v2:1678) | same | different (closeness form, fair coin and explicit K are Lee's) | **Fixed**: "cf. [ABSSW26, Lemma 4.3]"; coin difference added to the closing section |
+| Lemma 4.4 standard local correction [Lemma 3.4] | `BinaryStandardLocalCorrection.lean:89-97 failure_le` (GoodNodes, deg ≤ c, (c+1)·hom distance) | v2:791-826: F_q-alphabet corrector, q > Cc^3, δ<1/2(c+2)^2 | same | different (binary analogue with homogeneous labels; no field or δ hypothesis needed) | **Fixed**: "cf. [ABSSW26, Lemma 3.4]" |
+| Thm 4.5 point-versus-line [ALMSS98, Thm 45] | `PointLineConstants.lean:19-22` (10^6, 1/(4·10^6)); `PointLineTest.exists_close_of_small_rejection` | ALMSS `almss-journal.txt:1484-1494` (x,h ∈ F^m, t ∈ F incl. 0, ∆ ≤ 2δ, |F| ≥ α(d+1)^3); ABSSW Thm 2.12 v2:589 (λ ∈ F^×, 4δ) | same | same as ALMSS in sampling and 2θ; constants explicit (Lee's); ALMSS needs d ≥ 1, Lee covers D = 0 | OK (remark accurate) |
+| Thm 4.6 binary LDT [Thm 4.1] | `EncodedLineLowDegreeSoundness.lean:325-339 exists_close` (J = `lineErrorConstant`, S = `soundnessConstant`, hom labels, whole-field z) | v2:1294-1318 (NewLDT samples λ ∈ F^×, lines tables with degree-r labels, affine conclusion, degree d' = 4cd, O_c(δ)) | same | different (homogeneous conclusion, D = cb^c, explicit constants, z ∈ F) | OK after the closing-section fix (z ∈ F was recorded nowhere) |
+| Thm 5.1 local correction (cf. Thm 5.1) | `BinaryLocalCorrectionSoundness.lean:222-236 failure_le` (q>2c, deg P ≤ D, cm^c ≤ D, hom distance δ; bound C·rej + δ + D/(2(q−1))) | v2:1915-1940 (NewLC, λ ∈ F^×, affine δ-close, O_c(d'/q+η+δ)) | same | different (explicit, homogeneous); "cf." already present | OK |
+| Lemma 5.2 zero-on-grid [Thm 6.1] | `BinaryZeroOnGridSoundness.lean:~250-270` (displayed (15)); independent call seeds `BinaryZeroOnGridCorrection.lean:58` | v2:1995-2040 (ZERO uses the **same** seed (β,u,v,λ) for both NewLC calls; bound Ω_c(1) − 2d'|H|/q − δ) | same | different (independent seeds, explicit contrapositive form) | **Fixed**: "cf. [ABSSW26, Theorem 6.1]"; independent seeds added to the closing section |
+| Thm 6.1 soundness | `ThreeColorVerifierSoundness.lean:58-70 colorable_of_rejection_lt` (hc: 1 ≤ c; field 10^6(cm^c)^3, 100·D·h, (h−1)n ≤ D); gap = `ThreeColorSoundnessBudget.lean:37` | ABSSW §7 soundness (`pcp-verifier.tex:195-260`) | same ((20) equals `gap`; c ≥ 1 implicit in Def 3.1 "positive integers") | different (explicit gap) | OK; arithmetic 3/8 vs 3/16 rechecked |
+
+| Remark (formalization) | Lean | Source | Verdict |
+|---|---|---|---|
+| after Thm 1.1 | `Verifier/Definition.lean:144-155` (CanonicalRandomness; doc: "a verifier that wants fewer bits can ignore the surplus") | ABSSW Thm 2.2 states O(log n) | accurate |
+| after Lemma 4.1 | `GeneratorLowDegreeTest.lean:15-21` doc ("stronger than the paper's Lemma 3.3 ... q > C c^3") | v2:756 | accurate |
+| after Lemma 4.2 | `HadamardTest.lean:9-20, 89-90` | v2:1046-1066 (8 queries, top-degree product check) | accurate; last sentence clarified |
+| after Thm 4.5 | `PointLineConstants.lean` | v2:589-605 | accurate |
+| after Thm 4.6 | `EncodedLineLowDegreeSoundness.lean:19-25` doc; `EncodedLineLowDegreeTest.lean:32` (degree-one labels on lines tables) | v2:1294-1318; `pcp-verifier.tex:21-50` (cubic labels on lines tables of χ, χ') | accurate (ledger b0088 wording) |
+| §7 fair-bit sampling | `ThreeColorFullFieldSampling.lean:111, 160-168` | — | accurate |
+| §7 implementation | `Theorem.lean` doc; `ReverseConcrete.lean:25-30` (Turing.FinTM2); `FiniteGeneratorSearch`, `BinaryIrreduciblePolynomial` by name | ABSSW Fact 2.3 | accurate as far as read |
+
+Citation locators checked: [ABSSW26, Thm 2.2, Thm 2.5, Fact 2.4, Lemma 2.9, Cor 2.10, §7, §1, Def 3.1, Claim 3.2, Defs 3.5-3.6, Obs 3.8, Fact 2.7, Lemma 3.3, Lemma 3.4, Lemma 3.10, Thm B.1, Lemma 4.3, Thm 4.1, Thm 2.12, Thm 5.1, Thm 6.1] all exist with the stated content except Def 4.4 (fixed). [ABSSW26v1, Fact 2.7 and Lemma 3.3]: v1:444-470 unit weights with ζ of order c+1, Appendix A computation rechecked. [ALMSS98, Thm 45] and [ALMSS98, Appendix A] exist (almss:1484, 2475). [AS98, §5.2] exists (AS:2033). [BCHKS96, Thm 1.2] exists (bchks:284). [FS95/13, Lemma 4]: q − q/p − 1 ≥ d, so q/2 − 1 ≥ c in characteristic two. [RS96, §4], [KS08, Thm 2.9]: as cited by ABSSW (v2:788). [BLR93] self-correction: Def 2.5. No [AB07] citation occurs in S.
+
+Credit: ALMSS (theorem) / AS (bivariate method) / ABSSW (construction, set-multilinear encoding) / Lee (formalization, constants, q > 2c, version-1 error, credited by ABSSW v2 `main.tex:64`, which thanks Lee for the mistake in Lemma 3.3) / this paper (explanation) are kept distinct. "[Lee26]" was cited only in a sentence I removed; it now sits in the credit sentence of §1.
+
+**Name of the check (17).** ABSSW give it no name. It is "the check in Line 8" of their verifier (Algorithm "PCP Verifier", `pcp-verifier.tex:143`), analysed in Claim 7.3 (`clm:chi-chi`, `pcp-verifier.tex:212-226`). `pcp-verifier.tex:86` is descriptive prose ("$\mathcal V$ has to check that the oracles ... are consistent"); a `\cons` / CONS "consistency test" macro exists only commented out (`macro.tex:73`, `main.tex:59`). Lee's file is titled "Binary consistency of a difference table" (`BinaryDifferenceConsistency.lean`). "Consistency check" is therefore a fair descriptive name, but it is ours, not ABSSW's; L and E should use the same words and cite Line 8 / Claim 7.3 if they want a locator.
+
+## 2. Preservation against base.md
+
+Every stating or proving paragraph has a counterpart; renames match the editor's table. Judgements on the cuts the editor named:
+
+- H_r word-size formula: not restored. Section 7's O(t^3) label-vector bound follows from dim B_3 ≤ Σ_{j≤3} C(t,j), which a reader computes from Definition 3.2.
+- "Constant query complexity alone would not establish this runtime statement": not restored; the remark still states the polynomial cost bound, and no step relies on the sentence.
+- Closing list of differences: **restored in substance** (one sentence), because three of Lee's differences from ABSSW (fair coin in the inner test, z ∈ F in the binary low-degree test, independent corrector seeds in each zero-on-grid test) were recorded nowhere, while the closing section claimed the remarks recorded all differences.
+
+Other base material dropped without harm: "taking the underlying low-degree testing theorems as stated inputs" (abstract; the new paper sketches them), "They establish existence, not a practical verifier", the explicit list of computed objects in the implementation paragraph. The fixed-target and averaged-rejection quantifiers of base §5 survive in Theorem 5.1 and the proof of Lemma 5.2.
+
+## 3. Front-to-back read
+
+- Z_1..Z_t beside Z_H: no declaration added. Z_H always carries the subscript H and an argument; the label variables are declared in Definition 3.2, and ABSSW use the same letters. Low risk.
+- Left, inherited from base: P is the global colouring extension (§2) and also the generic polynomial in the lines-table definition (§3), Theorem 4.6 and Theorem 5.1. Section 6 applies 4.6 with P equal to the nearby colouring polynomial, so the reuse is consistent; a rename would touch displays (13), (14) and is out of scope.
+- Left: T_c (constant in (20)) beside T_U, T_{u,v}, T_{a,v} (line polynomials). Different subscripts; inherited from base.
+- Left: J and S are defined in displays (12), (13) inside the proof of Theorem 4.6 but named in its statement ("with J, S as in (12) and (13)"). Moving the displays is not allowed by the fixing rules.
+- Line 181 fixed: "an honest table stores R at the binary coordinates of the encoded value" read as storing the label; now "stores R(ρ(u)) for the encoded value u", matching (6).
+
+## 4. Writing
+
+- No em dashes, no "not X, but Y", no review statements inside the mathematics.
+- Fixed actor sentences: "This account claims no new PCP theorem" → "No new PCP theorem is claimed"; "Appendix A shows that unit weights fail" → "Unit weights fail (Appendix A)". The proof-of-Lemma-4.1 sentence now says what is derived (g satisfies (10) exactly) instead of listing three loss constants with "that force exact satisfaction".
+- Left: link sentences such as "The [full argument] proves the testing results", "The [source and verification account] records ...", "Sections 2 to 7 give ...". They are the one roadmap and link pointers; rewriting all of them costs words the ceiling does not have.
+- Terminology against DECISIONS Part 2: no retired term remains in prose ("direction" now names only the inner corrector's direction, distinct from the slope).
+
+## Fixes made (line numbers in the edited file)
+
+| Line | Before | After | Reason |
+|---|---|---|---|
+| 34 | "... [AS98]. We explain the algebraic proof of [ABSSW26] as formalized by Lee [Lee26]. In a field ..." | "... [AS98]. In a field ..." | Duplicates the abstract and the contribution sentence; words for the restored differences |
+| 36 | "Lee added explicit constants ..." | "Lee [Lee26] formalized them, added explicit constants ..." | Keeps the only in-text [Lee26] citation |
+| 181 | "stores $R$ at the binary coordinates of the encoded value" | "stores $R(\rho(u))$ for the encoded value $u$" | Said the label is stored |
+| 210 | "plurality correction $g$ [ABSSW26, Definition 4.4]" | "plurality correction $g$ [KS08, Lemma 3.1]" | Wrong locator (Def 4.4 is Corr_f) |
+| 217 | "derives the pointwise estimate and the losses $2(c+1)\delta$, $(c+1)\delta$ and $2(c+1)^2\delta$ that force exact satisfaction" | "derives the pointwise estimate and shows that $g$ satisfies (10) exactly" | States the conclusion used in the next sentence; frees words |
+| 217 | "Appendix A shows that unit weights fail." | "Unit weights fail (Appendix A)." | Section as actor |
+| 227 | "We use Lee's bound." | "The factor 28 is Lee's." | ABSSW Lemma 3.10 gives δ and affine 3δ below a threshold; 28 is Lee's |
+| 229 | "[ABSSW26, Lemma 4.3]" | "cf. [ABSSW26, Lemma 4.3]" | ABSSW's Lemma 4.3 is a correction statement with both tests run |
+| 242 | "[ABSSW26, Lemma 3.4]" | "cf. [ABSSW26, Lemma 3.4]" | ABSSW's lemma is over F_q with q > Cc^3 |
+| 322 | "[ABSSW26, Theorem 6.1]" | "cf. [ABSSW26, Theorem 6.1]" | ABSSW share one corrector seed; bound form differs |
+| 452 | "The formalization remarks record its differences from [ABSSW26]." | "Besides the formalization remarks, Lee's verifier differs from [ABSSW26, §7] as follows: the inner low-degree test flips a fair coin, the binary low-degree test samples $z$ from all of $F$, and the two corrector calls in each zero-on-grid test use independent seeds." | The old sentence was false: three differences were in no remark (DECISIONS 1.7-1.8) |
+| 454 | "...version-1 error; earlier results are credited where stated. This account claims no new PCP theorem; its prose proofs ..." | "...version-1 error. No new PCP theorem is claimed; the prose proofs ..." | Words; account as actor |
+| 467 | "cannot repair the version-1 test, whose error Lee identified." | "cannot repair the version-1 test." | Credit already in §1 and the closing section; words |
+
+## What remains and why
+
+- **For L and E (and DECISIONS Part 2):** the row "plurality correction | ABSSW Def. 4.4" is wrong. ABSSW v2 never uses "plurality"; Def. 4.4 is Corr_f, the Hadamard-closest field value. Cite [KS08, Lemma 3.1] (or Friedl–Sudan's Corr_f(x) = plurality, `friedl-sudan.txt:341`). Check whether L and E carry the same locator.
+- "Consistency check" is not ABSSW's name (see §1 above); orchestrator to fix one name for all three papers.
+- No mathematical statement was left uncertain. Not done: Lean not compiled; `ThreeColorAlgebra`, `GridVanishing`, `ThreeColorRuntime`, `BinaryIrreduciblePolynomial` checked by name only; ALMSS Theorem 45's d = 0 case is Lee's coverage, not ALMSS's.
+- Word count is exactly at the ceiling (6,150); any further addition needs a matching cut.

@@ -1,0 +1,216 @@
+# Integration notes: full argument (L), third round
+
+File edited: `papers/pcp/long/reasoning-record.md` in `lean-exposition-pcp-r3` (only this file; no commit). Started from `start.md`; edited in place by targeted replacements.
+
+## Word count against the ceiling
+
+- Guard count: **23,944** (base 23,276; start.md 21,739; ceiling 22,300). **The ceiling is not met, by 1,644.**
+- Breakdown of the guard count (it counts every alphanumeric token, including mathematics, URLs and markers):
+
+| Category | base | start.md | final |
+| --- | ---: | ---: | ---: |
+| reference definitions (fixed) | 954 | 954 | 954 |
+| display equations (fixed up to renames) | 2,609 | 2,609 | 2,648 |
+| inline mathematics | 3,262 | 3,396 | about 4,520 |
+| inline URLs (fixed) | 353 | 365 | 365 |
+| passage markers (fixed) | 292 | 292 | 292 |
+| prose, including Lean lines and link labels | about 15,800 | about 14,120 | about 15,160 |
+
+- Cause: the Part 1 structure (numbered statements of every result the assembly uses, a preliminaries section, the "what is new" paragraph, the closing section, formalization remarks, Part 5 remarks) and the Part 3 renames (`\mathcal L`, `p_{\rm w}`, `|\mathcal B_r|`, `\widetilde T_{u,v}`, ...) add about 1,100 inline-mathematics tokens and about 1,000 prose tokens to lens A's text. I cut about 900 tokens of prose beyond lens A (reference annotations, roadmap, runtime narration, examples, remarks). Reaching 22,300 would need a further 1,650 tokens, which I could find only by deleting proof steps, statements required by Part 1 item 2, or credited source comparisons.
+- Cuts the orchestrator could still authorise, with sizes: the Kaufman–Sudan correspondence paragraph in Section 4.2 (about 140); the per-check seed-count table and its derivation in Section 3.7 (about 250); the reference-class remark in Section 3.12 (about 90); remaining annotations in the reference list (about 150); unlinking repeated `[[ABSSW26, ...]][paper]` citations (about 45); Lemma 2.1 and 2.2 statements in Section 2.1 if forward references are accepted (about 95).
+
+## Guard result
+
+`preserve_check.py base.md reasoning-record.md`: markers, tags, reference definitions and URLs all preserved (one URL added: `PointLineCrossing.lean#L246`, ledger L-i). Raw result FAIL 112: 33 headings and 79 display equations, all deliberate. With `long/allow.json` (written by me; it lists exactly those 33 headings and 79 displays) the result is **PASS 0**.
+
+- 79 display equations: each equals a base equation under the rename map below and nothing else (checked pairwise by script; list in the session, reproducible by diffing normalised displays). Two punctuation changes made in passing were reverted.
+- 33 headings: see `## Renamed headings`.
+- The paper renders with `papers/pcp/render.py --stage long` (run to a scratch directory; PDF not copied into the repository).
+
+## Symbol renames
+
+| Old | New | Scope |
+| --- | --- | --- |
+| $a,b$ (randomness constants) | $\alpha,\beta$ | Theorem 1.1, Sections 3.11, 3.12 |
+| $b_r(t)$, $C_r$ | $\dim\mathcal B_r$, $\lvert\mathcal B_r\rvert$ | Section 3.7 |
+| $m$ (radix) | $b$ | Section 3 |
+| $d$ (grid dimension) | $m$ | Section 3 (not $d_0$, $d_q$, $d_b$) |
+| $Q$ (field size) | $q$ | Section 3 |
+| $q$ (witness bound), $p_0$ (witness bound) | $p_{\rm w}$ | Sections 1, 3.10 |
+| $p_0$ (graph-verifier address bound) | $p_G$ | Sections 3.7, 3.9, 3.11 |
+| $p$ (reduction size) | $p_f$ | Sections 3.10, 3.11 |
+| $L$ (language), $R(x,w)$ | $\mathcal L$, $\mathcal R(x,w)$ | Sections 1, 3.10 to 3.12 |
+| $a$ (size parameter) | $\nu$ | Sections 3.6 to 3.9 |
+| $E_c$; $K(c),E(c),S(c),C(c)$ | $J_c$; $K_c,J_c,S_c,C_c$ | Section 3; Section 5 |
+| $R_a$ | $\kappa_a$ | Section 5.6 |
+| $Q_i$ (quotients) | $U_i$ | Section 4.1 |
+| $T_b(\lambda)$, slope $b$, parameter $\lambda$ | $T_v(z)$, $v$, $z$ | Lemma 4.6 |
+| local $\alpha$ | $\gamma_1$ | Section 4.5 Step 5, (A20) |
+| $L_{u,v}$ (nearest line polynomial) | $\widetilde T_{u,v}$ | Section 4.6 |
+| local $\ell=4\delta'$ | $\mu$ | Section 4.6 |
+| Enc, Dec$(Q)$ | $\Psi$, $U\circ\Phi$ | Sections 5.1, 5.5, 5.6 |
+| inner polynomials $Q$, $Q_{u,v}$, $Q_v$ | $U$, $U_{u,v}$, $U_v$ | Sections 5.1, 5.4 to 5.6 |
+| word $h$ | $w$ | Sections 5.3, 5.4, 5.8 |
+| functional $\ell$ | $\varphi$ | Section 5.3 |
+| requested label $Q$ in $\operatorname{SC}$ | $\Lambda$ | Section 5.3 |
+| local $\beta$ | $\gamma_2$ | (B9) |
+| inner point $w$ | $\xi$ | Section 3.2 |
+
+Kept with a local declaration (Part 4 items 2, 3, 5): Berlekamp–Welch $E,N,K$; bivariate $Q(x,y)$ in Lemma 4.1; nearest $Q(y)$ and slope $h$ in Section 4.6 Step 5; $M(y,z)$ in Steps 4 and 5; $D(x;y,z,b)$ in Lemma 4.3; label $P$ in the proof of Theorem 5.2; $\rho=\Delta(f,P)$ in Section 4.5 Step 5; $h=f-P$ in Lemma 4.2; $R$ = number of repetitions in Sections 3.8, 3.9; $D$ = any degree bound at least $cb^c$ in Sections 5.6 to 5.8; Lagrange basis $\ell_a,\ell_i$.
+
+Clashes Part 3 missed, kept as they are and reported: (i) with the word now $w$, the display $L_w(z)=\sum w_iz_i$, $w\in\mathbb F_2^t$ (Section 2.2) and the NP witness $w$ and the slopes $v,w$ of Section 4.6 share the letter; (ii) Section 4 uses $t,s$ as line parameters (declared at the head of Section 4) while $t=\log_2q$ elsewhere; (iii) $\zeta$ is the generator in Section 4.2, display (A6), and the correction parameter in Sections 3 and 5 ($\theta$ is the generator there); (iv) (B1) uses $h$ for a second function; (v) $A,B$ in Section 3.11 and $A_c,B_c$ in Section 3.5.
+
+## Conflict blocks (both lenses)
+
+| Block | Choice |
+| --- | --- |
+| b0006 | Lens A (no transition sentence); statement renumbered Theorem 1.1. |
+| b0010 | Lens A's quantifier sentence, with lens B's nonadaptive remark moved to the formalization remark (ledger L-n2). |
+| b0031 | Lens A shape, radix $b$ (lens B); rewritten as section opener. |
+| b0051 | Lens B wording (isomorphism, homogeneous labels), now in Section 2.2. |
+| b0054 | Rewritten from both: lens B terms (set-multilinear encoding, shared lines table, affine labels), lens A length; "oriented/parametrised line" replaced by "index". |
+| b0074 | Lens A, radix $b$; node conditions moved to Section 3.3. |
+| b0128 | Lens B (affine label, $cb$). |
+| b0293, b0295 | Lens A, with "Lemma 4.3" and "Lemma 4.2" for the named results. |
+| b0360 | Lens B (ALMSS Theorem 45 credit, ABSSW Theorem 2.12), as a formalization remark. |
+| b0396 | Lens A. |
+| b0422 | Lens B item types (Lemma 71, Corollary 72, Lemma 73), lens A cut of the last sentence. |
+| b0476 | Lens B ("sharp" removed), lens A cut of the announcement. |
+| b0532 | Lens A, as Lemma 5.5. |
+| b0540 | Merged: lens B's typed entry, written $f'_{u,v}$; lens A's order. |
+| b0555 | Lens B (ledger L-j), shortened, as a formalization remark. |
+| b0563 | Lens A. |
+| b0592 | Lens B (ledger L-k1). |
+| b0607, b0609 | Lens A b0607 plus lens B's one-sentence b0609 (ledger L-k2). |
+| b0627 | Rewritten as Section 6 from both. |
+| b0631 | Identical in both. |
+| b0640 | Lens A label ("Pinned PCP development"). |
+
+## Ledger rows
+
+L-a adopt (affine label, Section 3.7). L-b adopt_modified (ledger sentence, Section 4.5 Step 2). L-c adopt ($D_1\ge D$ in Lemma 3.6; the (B16) row is now Proposition 5.6 with its own $D\ge cb^c$). L-d adopt, lens B wording (Section 2.2). L-e adopt_modified (ledger first sentence; Proposition 3.7 and Section 3.3). L-f adopt ($r>0$, Step 2 of Section 4.6). L-g adopt (remark after Lemma 4.6). L-h adopt (remark after Theorem 4.8). L-i adopt_modified (nearestness sentence restored in the proof of Lemma 4.9; three Lean links, not presented as one theorem). L-j(1b) adopt; L-j(1a) rejected. L-k1 adopt, lens B. L-k2 adopt, recommended pair. L-l adopt. L-m adopt_modified: radix renamed; the near-clash is removed because $b_r(t)$ became $\dim\mathcal B_r$. L-n1 adopt (no `GoodNodes`). L-n2 adopt, as a remark. L-n3 adopt (all seven). L-n4 **needs_more resolved, adopted**: `PCP/Reduction/NPThreeColorRuntime.lean` lines 244 to 252, `of_certificate_program (cert : NPCertificate PolyTimeRel L) : ∃ f p P C d, ∀ x, P.run … = f x ∧ P.cost … ≤ C * (x.length + 1) ^ d ∧ (graph (f x)).Colorable 3 ↔ L x ∧ (f x).length ≤ p.eval x.length`; so $f,p_f$, the program and $C,e$ are quantified after the certificate and before $x$, with the stated cost and output bounds. Wording is Proposition 3.13. L-n5 adopt_modified (ledger sentence, after Theorem 5.2). L-n6 adopt.
+
+Sampled silent changes: b0119 fixed with the ledger text (Section 3.7, phrased through the four line parameters). b0571 fixed ("homogeneous-label form of (B1)"). b0523 fixed ($q>2c$ and generator nodes named at the point of use). b0079: the same-tables remark is carried by item 2 of the verifier description in Section 3.2. b0012: pointer kept (Theorem 1.2, proof in Section 3.12). b0421: recap not restored.
+
+## Part 5 (coordinator corrections)
+
+Applied. (1) Plurality correction now cites [KS08, Lemma 3.1] beside Rubinfeld–Sudan and ALMSS Lemma 66; no citation of ABSSW Definition 4.4. I did not open Kaufman–Sudan Lemma 3.1 myself. (2) "Difference check" throughout, with one sentence saying what it checks (Section 3.2); not attributed to ABSSW. (3) Keys [FS95/13], [KS08] in use; L does not cite Arora–Barak. (4) "cf." on Theorem 4.4, Lemmas 4.5, 4.6, 5.5, 3.5, 3.6, Theorem 5.2, Propositions 5.4, 5.6, with the difference stated in a formalization remark for each known case.
+
+## Reviewer edits declined
+
+- 1b "parametrised line" and 1a "oriented line": Part 2 fixes "line through $u$ with slope $v$" and "index".
+- Part 2's suggested sentence "Lee showed it accepts $x_1^4$": not used. The current edition and 1b's citations note both say the example is not attributed to Lee; Section 4.3 keeps that and credits Lee as the v2 acknowledgments do.
+- 1b word $h_{u,v}$ for the encoded entry: $f'_{u,v}$ per Part 3.
+
+## Terms changed
+
+primary/auxiliary table, line table, auxiliary row → points table, lines table, lines-table entry (ABSSW Def. 2.6; Harsha et al.). oriented line, centre, direction → line through $u$ with slope $v$, index, base point, slope. weighted/short low-degree test → standard low-degree test (ABSSW Lemma 3.3). v1, old test, unit-weight test → version 1, version-1 test. inner test/tester → inner low-degree test. encoded-line test, outer test → binary low-degree test. Hadamard row, evaluation word → Hadamard encoding, word. squarefree Boolean polynomial → multilinear polynomial; label. mask, derived read → fresh random label, self-corrected read. outer correction → local correction; inner/weighted correction → standard local correction. decoded polynomial, witnesses → nearby polynomial. colour extension, interpolation → low-degree extension. digit substitution/expansion → set-multilinear encoding. ZERO → zero-on-grid test (ZERO mentioned once). grid certificate, grid-vanishing theorem → vanishing certificate, Combinatorial Nullstellensatz. polynomial distance/zero/root bound → Schwartz–Zippel lemma; univariate root counting stated once at the head of Section 4. proximity → distance, close. oracle → proof, table. callback → verifier step. certificate (NP) → witness, witness checker. "decoding" removed except "codec".
+
+## Definitions moved
+
+- Labels, Hadamard encoding, homogeneous labels and the half-distance identity (B1): from the binary chapter to Section 2.2 (whole passage `pcp-long-hadamard-labels` moved).
+- Field, $\rho$, distance, lines, grids: Section 2.1.
+- Node conditions for the tests: Section 3.3 (from the soundness subsection and the completeness subsection).
+- Nearby polynomials: defined in the proof of Theorem 3.8.
+- Lee/ABSSW letter correspondence: Section 2.1 as Part 4 item 6 orders. ABSSW's certificate letters are $\mathcal M_{\mathsf{Val}},\mathcal M_{\mathsf{Prop}}$ (`pcp-verifier.tex` lines 41 to 42), not $M_V,M_E$ as DECISIONS writes; L prints ABSSW's actual letters. I think a forward reference in the preliminaries is weaker than giving the correspondence in Section 3.1, but followed the decision.
+
+## Catalogue passages rewritten
+
+- Table of five "established source results" (old "Implementation results used in the argument") → prose in Section 2.3 with one Lean line.
+- Three-row guarantee table in the soundness subsection → Lemmas 3.5 and 3.6 (Section 3.3) and Proposition 5.6.
+- Bulleted three discrepancies in the encoded-line soundness proof → one paragraph (Section 5.5).
+- Two roadmaps and the "Reading this account" section → one organisation paragraph in Section 1.
+- Numerical table $K_4,\ldots,T_4$, $g_4$, $\delta$, $R$, $187R$ and the 187 breakdown → one "Explicit constants" paragraph in Section 3.8.
+- Kept as tables: the four polynomials and their points tables (Section 3.2), the per-check seed counts (Section 3.7), the five error bounds (Section 4.6 Step 5), the constants at $c=4$.
+- Bivariate agreement and point-versus-line proofs are now "Step 1 … Step 6" with a Lean line per step. This departs from "one Lean line per numbered result" so that each passage keeps its own links.
+
+## Structural changes
+
+1. New Sections 1 (Introduction) and 2 (Preliminaries: notation; labels and Hadamard encoding; machine model). Top-level sections and subsections numbered; results numbered within sections (Theorems 1.1, 1.2; Lemmas 2.1 to 2.3; 3.1 to 3.13; 4.1 to 4.9; 5.1 to 5.7).
+2. Assembly-first order kept. Every later result used in Section 3 is stated there or in Section 2 with a pointer to its proof: Lemmas 2.1, 2.2, 2.3, 3.2, 3.3, 3.4, 3.5, 3.6. Sections 4 and 5 prove them under those numbers ("Proof of Lemma 3.2", ...).
+3. New subsection 3.3 "Guarantees of the tests" before completeness; the paragraph applying the binary low-degree test to the four tables moved from `pcp-long-decoding-contract` to the start of `pcp-long-difference-soundness` (proof of Theorem 3.8).
+4. The local-correction bound (B16) is not restated in Section 3 (the assembly uses only (B15) and (B25)); it is Proposition 5.6.
+5. The appendix on the version-1 test is now Section 4.3.
+6. "Source correspondence and scope" became a remark closing Section 4.6.
+7. Closing section "6. Formalization and sources" (what Lean proves; differences; credits; what was checked).
+8. The (B7) display moved up into the statement of Corollary 5.3; the $g_4,\delta$ display and the $c=4$ table moved to the "Explicit constants" paragraph (the table from `pcp-long-gap` to `pcp-long-amplification`); the display $\nu2^\nu\le\ldots$ moved into the statement of Lemma 3.9.
+
+## Renamed headings
+
+| Old | New |
+| --- | --- |
+| (none) | ## 1. Introduction |
+| ## How the proof is organized | removed (roadmap paragraph in Section 1) |
+| ## Reading this account | ## 2. Preliminaries / ### 2.1 Notation and conventions |
+| ### Binary labels for field elements | ### 2.2 Labels and the Hadamard encoding |
+| ### Implementation results used in the argument | ### 2.3 The machine model |
+| ## From the algebraic tests to the PCP theorem | ## 3. The three-colourability verifier and the proof of the PCP theorem |
+| ### Three colours as polynomial equations | ### 3.1 Three-colourability as polynomial equations |
+| ### The eight tables and seven checks | ### 3.2 The proof tables and the verifier |
+| (none) | ### 3.3 Guarantees of the tests |
+| ### Perfect completeness | ### 3.4 Perfect completeness |
+| ### Soundness of the seven-check verifier | ### 3.5 Soundness |
+| ### Parameters for every finite graph | ### 3.6 Parameters |
+| ### From finite samples to fair random bits | ### 3.7 Fair random bits and proof length |
+| ### Repetition on one fixed proof | ### 3.8 Amplification and explicit constants |
+| ### The polynomial-time implementation | ### 3.9 The polynomial-time implementation |
+| ### From every NP verifier to a graph | ### 3.10 The reduction from NP to three-colourability |
+| ### Transporting the verifier through the reduction | ### 3.11 Transport through the reduction |
+| ### The reverse inclusion | ### 3.12 The reverse inclusion |
+| ## Algebraic tests and correction | ## 4. Algebraic tests and local correction |
+| ### 1. Polynomial distance, interpolation, and grid certificates | ### 4.1 The Schwartz–Zippel lemma, low-degree extension and vanishing certificates |
+| ### 2. The corrected short low-degree test | ### 4.2 The standard low-degree test |
+| ## Appendix. Failure of the earlier scalar test | ### 4.3 The version-1 test |
+| ### 3. Recovering a specified value | ### 4.4 Local correction |
+| ### 4. Bivariate agreement | ### 4.5 Bivariate agreement |
+| ### 5. Point-versus-line soundness | ### 4.6 The point-versus-line test |
+| ### Source correspondence and scope | removed (remark at the end of Section 4.6) |
+| ## From polynomial values to a constant number of bits | ## 5. Binary encodings and constant-query tests |
+| ### A high-degree univariate polynomial as a low-degree multivariate polynomial | ### 5.1 The set-multilinear encoding |
+| (none) | ### 5.2 Label composition |
+| ### Testing a received Hadamard word | ### 5.3 The Hadamard test |
+| ### A binary version of the weighted low-degree test | ### 5.4 The inner low-degree test |
+| ### Testing a high-degree outer polynomial | ### 5.5 The binary low-degree test |
+| ### Correcting an outer value at a prescribed point | ### 5.6 Local correction with a lines table |
+| ### Checking that a polynomial vanishes on a grid | ### 5.7 The zero-on-grid test |
+| ### Derived polynomial oracles and fresh correction randomness | ### 5.8 Self-corrected reads of derived polynomials |
+| ## Source and verification account | ## 6. Formalization and sources |
+| ## References | unchanged |
+
+The title heading is unchanged. Internal anchors used in L: `#23-the-machine-model` only.
+
+## Passages whose wrapped text changed
+
+All 73 passages changed (terminology, numbering, Lean lines). Passages whose position or claim content moved, for rebinding:
+
+- `pcp-long-hadamard-labels`: moved to Section 2.2; now states Lemma 2.3.
+- `pcp-long-algebra-old-test-counterexample`: moved to Section 4.3.
+- `pcp-long-decoding-contract`: moved before `pcp-long-completeness`; now holds node conditions, constants, Lemmas 3.5 and 3.6 only; the `lean-soundness` link left it.
+- `pcp-long-difference-soundness`: now opens with Theorem 3.8 and the choice of the four nearby polynomials.
+- `pcp-long-gap`: carries the Lean line of Theorem 3.8 (`lean-soundness`, `lean-difference`, `lean-decoded`, `lean-budget`); the $c=4$ table left it.
+- `pcp-long-amplification`: Lemma 3.11 plus the explicit-constants paragraph.
+- `pcp-long-resources`: ends with Proposition 3.10.
+- `pcp-long-reduction-runtime`: ends with Proposition 3.13.
+- `pcp-long-intro-theorem`: abstract, Section 1 heading, Theorems 1.1 and 1.2, remark, Lean line.
+- `pcp-long-intro-readers`: Section 2.1 including Lemmas 2.1 and 2.2.
+- `pcp-long-algebra-generator-test`: no Lean link now (`lean-generator` is used once, after Theorem 4.4).
+- `pcp-long-algebra-crossing`: carries the added `PointLineCrossing.lean#L246` link.
+- `pcp-long-outer-correction-soundness`: now states Proposition 5.6.
+- `pcp-long-intro-source-editions`: Section 6.
+
+No Lean link, citation or reference definition was removed; every reference definition is used at least once.
+
+## For the other two papers and the orchestrator
+
+- `proof-map.png`/`.svg` still carry retired terms ("Algebraic chapter", "Weighted test", "Digit substitution", "Encoded-line soundness", "Correction and ZERO", "four fixed witnesses", "Implementation contracts"). The figure was not mine to edit.
+- Links from S and E into L must be retargeted with the heading table above.
+- S and E should use $\mathcal M_{\mathsf{Val}},\mathcal M_{\mathsf{Prop}}$ if they quote ABSSW's certificate letters.
+- L names: "test nodes" and "correction nodes" for the two node lists; "line parameters" for the four nonzero-field draws; "base verifier" and "amplified verifier"; "nearby polynomials". L states the version-1 history without attributing the $x_1^4$ example to Lee.
+- The byline date is unchanged (15 November 2026).
+- Mapping JSON, PDFs and the other papers were not touched.
+
+## Not resolved
+
+- Word ceiling (above).
+- [KS08, Lemma 3.1] cited on the coordinator's instruction, not opened by me.
+- The letter clashes listed under `## Symbol renames` remain, as Part 4 item 5 requires.

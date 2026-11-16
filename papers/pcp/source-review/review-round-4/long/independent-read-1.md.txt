@@ -1,0 +1,93 @@
+# Independent read 1: full argument (L), front matter, Sections 1, 2, 3, 6 and References
+
+File: `papers/pcp/long/reasoning-record.md` (no commit). All changes were made with targeted Edit replacements; nothing in Sections 4 or 5 was touched. Guard after the edits: `preserve_check.py base.md reasoning-record.md --allow long/allow.json` gives **RESULT PASS 0** (markers 146/146, tags 55/55, reference definitions 80/80, no URL lost, no display equation lost beyond the allow list).
+
+## Coordinator's typesetting decisions (applied)
+
+1. Front matter: byline is now `*Explanatory reconstruction prepared by Will Cook with AI assistance · 16 November 2026.*`, followed by the credit line. The separate disclosure sentence was removed from the first page. YAML keys unchanged. What was and was not checked is said once, in Section 6.
+2. `∎` replaced by `$\square$` at all nine occurrences in my sections (proofs of Lemma 2.3, Lemma 3.1, Proposition 3.7, Theorem 3.8, Lemma 3.9, Lemma 3.11, Proposition 3.12, Theorems 1.1 and 1.2). The occurrences in Sections 4 and 5 belong to the other reader.
+
+## Numbered results in my sections
+
+Lean paths are under `PCP/` at the pinned revision; "checked" means I opened the declaration in the staged copy.
+
+| Result | Lean declaration | Source | Relation | Verdict |
+| --- | --- | --- | --- | --- |
+| Theorem 1.1 (PCP theorem) | `Theorem.lean`, `np_subset_pcp` (checked) | [AS98], [ALMSS98]; ABSSW Thm 2.2 | Lee's statement is stronger in form: exact randomness formula, address bound, one verifier per language | Matches Lean. |
+| Theorem 1.2 (reverse inclusion) | `ReverseConcrete.lean`, `pcp_subset_np_concrete` (checked) | standard | Same | **Fixed.** The statement had lost the hypothesis that the verifier has a polynomial-time implementation (`halg`, `himpl` in Lean; "effectiveness" in base.md). Without it the statement is false. |
+| Lemma 2.1 (Schwartz–Zippel) | `lean-distance` at the proof in 4.1 | ABSSW Thm 2.5 | Same | Statement agrees with (A1). |
+| Lemma 2.2 (low-degree extension) | `lean-interpolation` at 4.1 | ABSSW Fact 2.4 | Same | Agrees with the proof (existence, uniqueness, total degree $k(h-1)$). |
+| Lemma 2.3 (half-distance identity, (B1)) | Section 5 link set, statement in 2.2 | ABSSW Obs. 3.8 | Same, plus the homogeneous-label form | Correct; proof given in place. |
+| Lemma 3.1 (colour equations) | `ThreeColorAlgebra.lean` | ABSSW Section 7 observations | Same | Correct; preserved from base. |
+| Lemma 3.2 (vanishing certificate) | `ThreeColorGrid.lean`; proof links at 4.1 | ABSSW Lemma 2.9, Cor. 2.10 | Same | Agrees with (A3) to (A5); needs $H$ nonempty, which Section 2.1 fixes. |
+| Lemma 3.3 (set-multilinear encoding) | `SetMultilinear.lean`, `SetMultilinearDecode.lean` at 5.1 | ABSSW Def. 3.1, Claim 3.2 | Same | **Clarified.** $U\circ\Phi$ was used as a univariate polynomial with $\Phi$ defined only on field elements; the statement now says which substitution is meant and gives the index ranges. |
+| Lemma 3.4 (label composition) | `HadamardComposition.lean` at 5.2 | ABSSW Claim 3.7 | Same | Agrees with (B2). |
+| Lemma 3.5 (binary low-degree test) | `EncodedLineLowDegreeSoundness.lean`; used through `exists_close_of_rejection_le` in `ThreeColorVerifierSoundness.lean` (checked) | cf. ABSSW Thm 4.1 | Differs: $z$ from all of $F$, homogeneous bound, explicit constants | Hypotheses complete against the proof in 5.5 ($q\ge10^6D^3$, $J_c\kappa\le1/4\,000\,000$, $q>2c$ and generator nodes from the preamble of 3.3). Query count $2r+2c+12$ agrees. |
+| Lemma 3.6 (zero-on-grid test) | `DerivedZeroOnGridSoundness.lean` at 5.8 | cf. ABSSW Thm 6.1 | Differs: independent corrector seeds, explicit constant | Hypotheses complete against 5.7 and 5.8 ($A$ a polynomial of degree at most $D_1\ge D$, $M$ of degree at most $D_1$, $q>2c$, node conditions). Bound agrees with (B25); $6c+20$ agrees with $6c+19+1$. |
+| Proposition 3.7 (perfect completeness) | `ThreeColorVerifierCompleteness.lean`, `exists_proof_test_eq_true` (checked) | ABSSW Section 7 | Same | Matches Lean (`Function.Injective nodes`, `GoodNodes`, $5(h-1)m<b^c$). |
+| Theorem 3.8 (soundness) | `ThreeColorVerifierSoundness.lean`, `colorable_of_rejection_lt` (checked) | ABSSW Section 7, Claim 7.3 | Lee's has the explicit $g_c$ | Matches Lean hypothesis for hypothesis ($1\le c$, field bound, generator nodes, `GoodNodes`, cube root, $H$ nonempty, $100Dh\le q$, $(h-1)m\le D$). |
+| Lemma 3.9 (parameter choice) | `ThreeColorParameters.lean`, `ThreeColorParameterChoice.lean` | Lee | Lee's | Recomputed for $\nu=2,\ldots,39$ and $N<3000$; all inequalities hold. |
+| Proposition 3.10 (base verifier) | `ThreeColorCanonicalVerifier.lean`, `verification_guarantees` (checked) | Lee | Lee's | Matches: 187 queries, `CanonicalRandomness 32000000 32000000`, bound $(4(X+1))^{4224000}$. |
+| Lemma 3.11 (amplification) | `RationalRepetitionBound.lean`, `ThreeColorAmplifiedVerifier.lean` | standard | Same | Correct. |
+| Proposition 3.12 (polynomial-time implementation) | `ThreeColorRuntime.lean` and cost files | Lee; [Shoup05] for field background | Lee's | Preserved from base; cost figures unchanged. |
+| Proposition 3.13 (reduction) | `NPThreeColorRuntime.lean`, `of_certificate_program` (ledger L-n4) | Lee | Lee's | Quantifier order as in the ledger. |
+
+Formalization remarks in my sections, checked against ABSSW v2 source: Definition 2.1 is nonadaptive (`preliminaries.tex`, the query set depends only on $x$ and $R$); Section 7 gives degree-three labels to the lines tables of $\chi$ and $\chi'$ (`pcp-verifier.tex`); ABSSW's certificate letters are $\mathcal M_{\mathsf{Val}},\mathcal M_{\mathsf{Prop}}$. All three remarks are correct.
+
+## Numerical recomputation
+
+$K_4=105408$, $J_4=1054138$, $S_4=1054166$, $C_4=1054082$, $T_4=4444715947277$, $g_4=1/71\,115\,455\,156\,448$ (the third term of the minimum), $\delta=g_4/16=1/1\,137\,847\,282\,503\,168$, $187R=212\,777\,441\,828\,092\,416$: all agree with the paper and with base.md. The three implications of $\kappa<g_c$ hold at $c=4$. Query bounds $26+22+26+22+44+44+3=187=20c+107$. The seven rows of the seed table sum to $35tm+32tcb+69t+50+8u+6v$, and $+4t$ gives the displayed $r$; I also rederived four rows from the test descriptions in Sections 5.3 to 5.7 and they agree. $r\le10^6\nu2^\nu$, exponent $\le132\,000\nu2^\nu$ and $(t+1)^3\le131\,072\nu2^\nu$ hold for $\nu=2,\ldots,39$; $132\,000\cdot32=4\,224\,000$.
+
+## Citation check (DECISIONS Part 5)
+
+- **[KS08, Lemma 3.1] confirmed** in `literature/text/kaufman-sudan.txt`: the plurality function $g$ is defined in the text of Section 3 just before it, and Lemma 3.1 is the pointwise bound $\Pr_y[g(x)\ne \mathrm{Sc}_f(x,y)]\le2(k-1)\epsilon(f)$, which is $2(c+1)\delta$ at $k=c+2$. Closeness of $f$ to $g$ is their Lemma 3.2. The reference entry now names Lemma 3.1 beside Theorem 2.9.
+- Keys [FS95/13], [KS08] in use; L does not cite Arora–Barak, so [AB07] does not arise. "Difference check" is used throughout my sections and is not attributed to ABSSW. No "consistency check".
+
+## What I fixed
+
+Line numbers are those of the file after the edits.
+
+| Line | Before | After | Reason |
+| --- | --- | --- | --- |
+| 10–14 | date 15 November; disclosure sentence | date 16 November; sentence removed | coordinator |
+| 15, 2174 | "formalisation" | "formalization" | one spelling |
+| 42 | "has a verifier with properties 1 to 4" | "has a verifier with a polynomial-time implementation and properties 1 to 4" | lost hypothesis (Lean `halg`, `himpl`; base.md "effectiveness") |
+| 44 | "Section 3.12 gives the proof." | "The proof is in Section 3.12." | section as actor |
+| 58 | roadmap: "from three testing lemmas ... proves the three testing lemmas" | "from Lemmas 3.2 to 3.6 ... prove Lemmas 3.3 to 3.6", with "we" as subject | Section 3 states two testing lemmas, not three; sections as actors |
+| 137 | "uses four of their conclusions" | "five" | five are listed |
+| 146 | "This section follows ... and then proves the composition with ..." | "The verifier is that of [ABSSW26, Section 7] ...; Sections 3.6 to 3.11 add ..." | "proves the composition" named nothing |
+| 209 | "Section 4.1 proves the lemma. It turns vanishing ..." | "the lemma is proved in Section 4.1. Vanishing on $H^k$ thereby becomes two identities ..." | actor; "identities" made definite |
+| 219, 228, 232, 293 | generic polynomial $G$ | $W$ | $G$ is the graph in the same section; no display involved; $W$ was unused |
+| 230 | $U\circ\Phi$ undefined as a polynomial; no index ranges | substitution and ranges stated | definition before use |
+| 232, 252, 293, 295 | "Section 5.x proves the lemma" | "The lemma is proved in Section 5.x" | actor |
+| 242 | "Each check draws its seed from its own ... distribution, so its rejection probability is at most that of the verifier." | adds "and the verifier rejects whenever a check does" | the stated reason did not give the conclusion (base.md had the right reason) |
+| 303 | "a positive digit base $b$" | "a radix $b\ge1$" | Section 3 calls $b$ the radix |
+| 379 | "Lemma 3.1 then makes ..." | "By Lemma 3.1, ... is then ..." | actor |
+| 467 | "Sampling $F^\times$ uniformly with a fixed number of fair bits is inconvenient" | "No fixed number of fair bits samples $F^\times$ uniformly when $q>2$" | exact statement in place of a vague word |
+| 512 | "$u,v$ in the following table only" | "until the display of $r$" | they are used after the table |
+| 603 | "Section 3.7 displays ..." | "... are displayed in Section 3.7." | actor |
+| 635 | "This subsection constructs ..." | "We construct ..." | actor |
+| 661 | "The locality theorem for the machine states that" | "By the locality theorem for the machine," | actor |
+| 776 | proof of Theorem 1.2: hypothesis | polynomial-time implementation added | as line 42 |
+| 2170 | three final statements, unnamed | `np_subset_pcp`, `pcp_subset_np_concrete`, `inNP_iff_mem` named | says plainly what the Lean proves |
+| 2172 | "has not been established identical"; "the four line parameters ... sample all of $F$"; four known differences absent | plain wording; added the binary low-degree test's whole-field parameter, standard local correction (Lemma 4.5), the Hadamard factor 28 with no threshold, independent corrector seeds | Part 1 item 8 and Part 5 item 4: differences collected once |
+| 2176 | "explanatory reconstructions without a separate kernel check" | adds "no independent expert has accepted this account" | the first-page disclosure now lives here, once |
+| References | annotations repeating the text | removed from [ABSSW26], [BCHKS96], [BLR93], [RS96], [Lee26], [Shoup05] and the preamble; every locator, key and URL kept | repetition |
+
+## Words
+
+Additions about 113 tokens (Lemma 3.3 clarification, the two hypothesis repairs, the reason in Section 3.2, Section 6). Cuts about 115 (first-page disclosure 16, Section 3 opener 8, reference annotations and preamble about 91). Net for my sections: about zero. My sections now hold 10,977 guard tokens; whole file 23,996 by the guard while the other reader is still editing.
+
+Optional cuts in the editor's list that I refused: the per-check seed table in Section 3.7 (it is the derivation of the seed-length formula); the reference-class remark in Section 3.12 (it is the only proof sketch of the third endpoint); the statements of Lemmas 2.1 and 2.2 (Section 3 uses them). Applied: the reference annotations. The other two listed cuts lie in Section 4.
+
+## What remains
+
+1. **Letter clashes left, each locally declared or inside a display I may not change:** $L_w(z)=\sum w_iz_i$ in Section 2.2 ($w$ and $z$ are declared in the display; the Hadamard word $w$ does not occur in my sections); $h$ as a second function in (B1); $u,v$ for binomials in Section 3.7; $r$ for seed length, seed and Hadamard degree; $R$ for the number of repetitions and for a label; $A,B$ in Section 3.11 beside $A_c,B_c$; $e$ in Section 3.11 beside the cost exponent of Proposition 3.13; $c(n)$, $v(n)$ and the clause $a\lor b\lor c$ in Section 3.10; $p$ for the address polynomial, a points table, a univariate polynomial and a bit pattern. $\zeta$ has one meaning in my sections (correction parameter); the generator $\zeta$ of (A6) is in Section 4.
+2. Lemmas 3.3 to 3.6 carry their `Lean:` lines at their proofs in Section 5, not at their statements in Section 3.
+3. Lemmas 3.5 and 3.6 speak of "the test" before Sections 5.5 and 5.7 define it; the verifier list in Section 3.2 names the tests and points forward. Acceptable in an assembly-first order, but a reader entering at Lemma 3.5 must turn to Section 5.5 for the procedure.
+4. The first paragraph of Section 2.1 (links to the two companion papers) sits under "Notation and conventions"; it belongs with the roadmap in Section 1 but is bound to the passage marker.
+5. Section 3.9 keeps base.md's "the combined bound has exponent at least $\max\{84,d_q,(d_q+1)d_b\}$"; "at least" reads oddly for an upper bound but I did not open the cost file, so I left it.
+6. `proof-map.png` still carries retired terms (editor's note); not a text edit.
+7. Theorem 1.1 lists the polynomial-time implementation in its opening sentence, outside the numbered properties. Theorem 1.2 now names it explicitly, so the pair is consistent.
+
+Nothing mathematical is left open in my sections.

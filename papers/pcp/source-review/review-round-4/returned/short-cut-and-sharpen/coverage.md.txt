@@ -1,0 +1,224 @@
+# Coverage, evidence and actual execution
+
+## Binding and task boundary
+
+- Packet: pcp-review-round3-2a-specialist-cut-and-sharpen.
+- manifest.json SHA-256: 8e68bf73bf303f4f7814ca865f562a5e058b3d9b8fe4d87ef539208555c52cfd.
+- Baseline papers/short/paper.md SHA-256: 5190e5a5c2b30bcb07790d99b494213f03f8b71c0063623d24ff33bf8dfb7e25.
+- evidence/blocks-short.json SHA-256: b32fe9b1364fa0607d154c191b2ac7b4a5b21973075f42afa08ca96d365f73f0.
+- Proposed revised.md SHA-256: 8f4550ff7bbfa8ff1fe6c90333684607806f566a55b30c36db799e1816736a6a.
+- All 148 primary blocks, b0001–b0148, were read and assigned an ordered disposition. The current primary was read before history.
+
+The review followed request.md and RETURN_FORMAT.md. It produced one proposed revision and accompanying reports. The archive's original manuscripts, Lean sources, reader and evidence files were not edited. No live site, repository, mailbox or external person was contacted or changed.
+
+The supplied formal-exposition and humanizer instructions were applied within the request's mathematical boundary. Their broader research, private-corpus, publication and reviewer-gate workflows were outside this assignment. No missing private skill was retrieved. No external permission request was needed for this review.
+
+## What was read and checked by the integrator
+
+- START_HERE.md, request.md, RETURN_FORMAT.md, BASELINE.md, EVIDENCE_BOUNDARIES.md, RECIPIENT_CONTEXT.md and BUILD_PROVENANCE.md.
+- Primary papers/short/paper.md, all blocks and the corresponding 13-page PDF. The PDF was rendered at 80 dpi with pdftoppm; all 13 pages were viewed in four contact sheets. This checked appearance and correspondence of visible material, not a new typesetting build.
+- history/settled-decisions.json after the primary. The editorial pass additionally opened the located prior repair rows to distinguish deliberate repetitions from removable ones.
+- literature/READING_ROUTE.md and v2 intro.tex, especially lines 1–54. The latter was used for the two cost obstructions, code-concatenation qualification and register.
+- Author reading-guide.md: selected definitions and theorem sections, especially §§3–9, rather than claiming an uninterrupted full reading.
+- Exact Lean excerpts: SetMultilinear.lean:140–160; HadamardAffineQueries.lean:50–81; BinaryLocalCorrectionSoundness.lean:213–252; DerivedZeroOnGridSoundness.lean:246–278; ThreeColorSoundnessBudget.lean:13–63; PCP/Theorem.lean:19–44. Wider source coverage by the two mathematical reading passes is listed below.
+- Arora–Safra original PDF pp.1–2 (abstract and opening); ALMSS original PDF pp.1–2 (abstract and opening), Theorem 45 at PDF p.27, and search-returned portions around its uses and proof allocation at pp.36,38,46–47. Theorem 45's page was rendered at 1.5x and visually inspected. A combined extraction output omitted a few characters in the unrelated p.2 introductory paragraph; no exact claim depends on those characters.
+- The full argument's b0616–b0624 and worked exposition's b0279–b0287 for cross-paper counterexample scope, after the editorial companion sampling listed below.
+- All independent findings and their source logs; the integrated revision was then read end to end by the editorial regression pass, and each changed half was compared with its original by a mathematical wording pass.
+
+## Public research actually performed
+
+Public web research used both search engines and primary-source retrieval. The exact arXiv v2 and pinned GitHub guide opens returned DisabledError in the integrator's calls. This did not establish absence of those materials; the enclosed TeX and Lean snapshot were used.
+
+The ECCC primary report was opened successfully:
+
+- https://eccc.weizmann.ac.il/report/2026/134/
+- https://eccc.weizmann.ac.il/report/2026/134/revision/1/download
+
+The report identifies the 22 October 2026 revision and correction of Lemma 3.3. The PDF was opened and searched for Fact 2.7, Lemma 3.3 and Troy Lee. Its acknowledgement on PDF p.43 credits Lee with identifying an earlier mistake. This independently supports the historical/source-edition statements, not a replay of the formalization.
+
+The early mathematical pass also opened these primary sources and visually inspected their enclosed original PDF pages:
+
+- Friedl–Sudan, https://arxiv.org/pdf/1307.3975v1, PDF p.2, Lemma 4.
+- Kaufman–Sudan, https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf, PDF p.5, definitions and Theorem 2.9.
+- BCHKS, https://www.csc.kth.se/tcs/projects/publications/bchks.pdf, PDF p.7 (printed p.6), Theorem 1.2.
+
+Search results from secondary mirrors were not used as mathematical warrants. Public source retrieval and local PDFs/TeX were kept distinct.
+
+## Commands actually run by the integrator
+
+1. Listed the uploaded ZIP, validated every member path against absolute paths and parent traversal, and extracted it with Python ZipFile.
+2. Used Python/Path/json reads, numbered-range prints and rg/file discovery for packet material and sources. Long combined tool outputs that were truncated were recovered by narrower reads where needed; no complete-file coverage is inferred from a truncated output.
+3. Read tools/check_packet.py and tools/check_pdfs.py. Ran python tools/check_packet.py from the packet root. It verified **1,583 files, 23 retained literature PDFs and 148 primary blocks** against the manifest and link-target presence. Its own “review not yet performed” wording is a custody check label, not this review's status.
+4. Did **not** run tools/check_pdfs.py. Used pypdf to confirm the 13-page primary and dependency discovery, then pdftoppm for its actual rendering. Used PIL only to assemble the temporary inspection sheets. Used PyMuPDF for primary-literature extraction and the ALMSS theorem-page rendering.
+5. Applied patch files to create the scratch response builder and reports builder. Ran python review-work/build_response.py after each substantive integration correction. It applies edits to original byte ranges only after matching each block hash.
+6. The response builder checked the required 6,310-word baseline, ordered coverage of all 148 ids, no net growth, equality of all 36 display blocks, all 32 passage markers and all six pinned Lean link definitions, and absence of the prohibited em dash/contrast pattern in the revised manuscript.
+7. Ran the reports builder to create the remaining required reports using the final edits and counts. Final packaging checks and ZIP creation are recorded in validation.json.
+
+One tool-orchestration call had a JavaScript string-delimiter error before executing its patch; it was corrected and rerun. It did not run a mathematical check or mutate the packet.
+
+## Limits
+
+No Lean compiler, lake build, Comparator replay, independent kernel or finite example script was run. The existing CI, dependency report and Comparator receipt in the packet were not promoted to new validation. No whole-source dependency audit was undertaken.
+
+The original PDF was inspected; a revised PDF and reader build were not generated. The response does not claim a new page count, typesetting approval, a working updated live reader, or adoption of the flagged mathematical wording.
+
+Companions were read selectively for overlap, notation and consistency, not independently reviewed end to end. Not all 23 literature PDFs were read. Unread or merely located spans remain labelled in the companion map and detailed logs. No missing source prevented the supplied corrections; the packet itself records that DeMillo–Lipton, Ore and Schwartz are not enclosed.
+
+The reviewers were models. No human reviewed or approved this response, and no reaction or endorsement is attributed to Troy Lee or the source authors.
+
+## Detailed source-reading logs
+
+The following logs state which files and ranges were actually opened by each parallel pass. Their historical proposed wording may differ from the final integrated revision; replacements.md and revised.md govern the returned text.
+
+### Early mathematical pass
+
+
+
+- Read START_HERE and request, then the primary Markdown end to end before opening settled history; sections in truncated combined output were reopened in smaller block ranges.
+- Read all current early blocks b0001–b0088, with complete block text from `blocks-short.json` for b0038–b0087; later primary material was read for context, not independently audited in depth here.
+- Read `history/settled-decisions.json` as parsed rows, then selected prior repair rows ALG-02, ALG-03, ALG-11, LIT-01, LIT-02, LIT-03 and ED03. I did not treat earlier requests as current instructions.
+- Opened `evidence/current-associations.json`; treated the entries as navigation, not verified correspondence.
+- Read the author reading guide's headline definitions and selected statements; the long guide output was partially truncated, so I do not claim a complete fresh read of every line in the guide.
+- Opened source TeX: `intro.tex:1–54` (through the organisation paragraph); `technical_tools.tex:1–155,159–459` (several earlier combined outputs were truncated, so claims above use the explicitly retained ranges); `preliminaries.tex:145–250`.
+- Opened Lean files and relevant ranges: Theorem.lean:1–74; GeneratorLowDegreeTest.lean:1–110,230–332; WeightedConstraintSoundness.lean:1–179; SetMultilinear.lean:1–220; SetMultilinearDecode.lean:1–82; HadamardAffineQueries.lean:1–81; HadamardTest.lean:1–163; HadamardSoundness.lean:1–84; HadamardRowDecoding.lean:1–85; BinaryLowDegreeBranchBounds.lean:1–39; BinaryLocalRowDecoding.lean:1–170; BinaryStandardLocalCorrection.lean:1–101; EncodedLineLowDegreeTest.lean:1–140; EncodedLineLowDegreeSoundness.lean:280–359; PointLineSoundness.lean:1–45.
+- Commands run were Python/Path/json reads and line-range printing; `rg -n` searches for full/homogeneous/row-soundness and history identifiers; Python subprocess calls to `pdftoppm -f N -l N -singlefile -scale-to 1800 -png` for the three original source pages; local image viewing; web searches, opens, finds and PDF screenshot requests. The local page renders were actually viewed.
+- One guessed path `HadamardTestSoundness.lean` was absent; the actual file `HadamardSoundness.lean` was then located and opened. This is not a missing packet dependency.
+- No Lean compiler or build, no finite example script, no browser interaction, no mailbox or account, no external write or contact, no live-site change. Mathematical correspondence was checked by reading statements and selected proof steps.
+
+
+
+### Late mathematical pass
+
+
+
+Primary Markdown read end to end with `cat`, then `sed -n '105,280p'` to recover a truncated middle. `request.md` read. `evidence/blocks-short.json` parsed and all later blocks printed with their ids and line ranges. `history/settled-decisions.json` read after the primary; its repeated generic dispositions were then printed as compact per-id rows to avoid output truncation.
+
+Source reads used `rg` to locate declarations and Python scripts printing numbered spans. I opened these Lean files (paths relative to `formal/lean/`):
+
+- `PCP/Algebraic/BinaryLocalCorrection.lean`: 1–91, 124–155.
+- `PCP/Algebraic/BinaryLocalCorrectionSoundness.lean`: 1–47, 137–236, 288–313; declaration search elsewhere.
+- `PCP/Algebraic/ThreeColorVerifierSoundness.lean`: 1–132, complete.
+- `PCP/Algebraic/ThreeColorVerifier.lean`: 84–123, 318–355; declaration search elsewhere.
+- `PCP/Algebraic/BinaryZeroOnGrid.lean`: 1–125.
+- `PCP/Algebraic/BinaryZeroOnGridSoundness.lean`: 1–78, 226–345.
+- `PCP/Algebraic/DerivedZeroOnGridSoundness.lean`: 1–99, 180–280.
+- `PCP/Algebraic/ThreeColorSoundnessBudget.lean`: complete, 1–154.
+- `PCP/Algebraic/ThreeColorParameters.lean`: 10–103, 127–176.
+- `PCP/Algebraic/ThreeColorSeedNormalization.lean`: complete, 1–47.
+- `PCP/Algebraic/ThreeColorAmplifiedVerifier.lean`: complete, 1–80.
+- `PCP/Algebraic/ThreeColorBinaryVerifier.lean`: complete, 1–262.
+- `PCP/Algebraic/ThreeColorParameterChoice.lean`: complete, 1–96.
+- `PCP/Algebraic/ThreeColorFullFieldSampling.lean`: 1–79, 130–209.
+- `PCP/Algebraic/ThreeColorFullFieldSeeds.lean`: matching lines from declaration searches, including valid-iff and cardinality identity; not full-file reading.
+- `PCP/Algebraic/ThreeColorSeedSize.lean`: matching lines from search only.
+- `PCP/Verifier/ReductionResources.lean`: theorem/definition and proof lines returned by `rg` around 35–85; not full-file reading.
+- `PCP/Theorem.lean`: 1–43.
+- `PCP/ReverseConcrete.lean`: complete, 1–45.
+- `PCP/Complexity/ReferenceNPConverse.lean`: complete, 1–43.
+- `docs/pcp/reading-guide.md`: opened; §§3–6 read for definitions, theorem, reference-class equivalence and explicit constants. The long output was truncated in §7, so do not record a complete §7–8 source check from this read.
+
+Literature source reads:
+
+- `literature/abssw-v1/tex/main.tex`: 450–511 and 660–706; `rg` matches for finite-field construction, graph constraints and resources. The governing v1 unit-weight assertion is 478–485.
+- `literature/abssw-v2/tex/preliminaries.tex`: 120–178; search results for grid certificate and field construction.
+- `literature/abssw-v2/tex/technical_tools.tex`: 57–86; search matches elsewhere.
+- `literature/abssw-v2/tex/main.tex`: 58–66.
+- `literature/abssw-v2/tex/intro.tex`: `rg` matches only for composition and encoding cost.
+
+A discovery `rg` named nonexistent `PCP/Algebraic/ThreeColorInputSize.lean` and returned exit 2. The relevant actual file is `ThreeColorParameterChoice.lean`, subsequently opened. This is a filename-search miss, not a missing proof source.
+
+No PDF rendering was done in this subtask; the parent handles primary-PDF inspection. No web source, external account, code build, live-site mutation, or communication to an external person was used. No claimed result here rests on the packet's previous model-review verdict alone.
+
+
+### Editorial pass
+
+# Editorial subreview coverage and execution log
+
+## Version and scope
+
+- `manifest.json`: SHA-256 `8e68bf73bf303f4f7814ca865f562a5e058b3d9b8fe4d87ef539208555c52cfd`.
+- `papers/short/paper.md`: SHA-256 `5190e5a5c2b30bcb07790d99b494213f03f8b71c0063623d24ff33bf8dfb7e25`.
+- `evidence/blocks-short.json`: SHA-256 `b32fe9b1364fa0607d154c191b2ac7b4a5b21973075f42afa08ca96d365f73f0`.
+- `contract/humanizer/SKILL.md`: SHA-256 `debfe059fdd174774147450d58715aff17e3ae1fbfbbd06dd5d206b4501012da`.
+- `contract/formal-math-exposition/SKILL.md`: SHA-256 `b661cf21d6648c287b272284efe640f0989412d10c1a78939576a9618b37729d`.
+- `contract/formal-math-exposition/references/mathematical-writing-mechanics.md`: SHA-256 `2527ee0d0ec1b7927b953e22fff9437c8593f352e727e8a869694f98925b539d`.
+- `contract/formal-math-exposition/references/full-exposition-guide.md`: SHA-256 `153459602e211b17007026a19ca30116a91b8f60b7a3dcaa01017eac2ed97e30`.
+- `contract/formal-math-exposition/references/the-deliverable.md`: SHA-256 `5b234d4446bf4b7ac79c38586147730dc41370581daa38661326875d5b50951c`.
+
+The current primary Markdown was read end to end before history. The numbered-block corpus was then read; b0075–b0093 were printed separately after a combined result was truncated. Thus all b0001–b0148 were assessed in this editorial subreview. The PDF was not opened by this subreview; root owns rendered inspection.
+
+## Guidance read completely
+
+- `request.md`.
+- `contract/humanizer/SKILL.md`, lines 1–1868, in four contiguous ranges.
+- `contract/formal-math-exposition/SKILL.md`, all 526 lines.
+- `contract/formal-math-exposition/references/mathematical-writing-mechanics.md`, lines 1–804, in two contiguous ranges.
+- `contract/formal-math-exposition/references/the-deliverable.md`, complete.
+- `contract/formal-math-exposition/references/full-exposition-guide.md`, lines 1–1597, in four contiguous ranges.
+
+The packet request governs conflicts. The no-proof-campaign boundary excludes the guides' research, new-theorem, private-corpus, propagation, publication and additional-reviewer gates. The exact response-file request also governs the older deep guide's general preference for advisory programmes instead of paste-ready text. No missing private skill was retrieved and no approval or contact was requested.
+
+The humanizer's supplementary public reference was opened through public web retrieval:
+
+- `https://raw.githubusercontent.com/conorbronsdon/avoid-ai-writing/main/SKILL.md`: all 268 lines returned; public reference id `turn11view0`. Version 3.38.0 as returned.
+- Its `references/patterns.md` URL was attempted but retrieval returned DisabledError (`turn12view0`). No claim is made to have read that file or run its detector, marks normalizer or preservation validator. The complete enclosed humanizer supplied the operative pattern catalogue. Main-task preservation is model review, not certified by those unavailable external scripts.
+
+## Primary literature actually opened
+
+`literature/abssw-v2/tex/intro.tex`, complete. Used for register, source role and motivation of the two encodings. No mathematical guarantee was verified solely by matching wording to this introduction. No Lean file was opened by this editorial subreview; precision reviewers own that source inspection.
+
+## History actually opened, after the primary paper
+
+- `history/settled-decisions.json`, complete.
+- `history/second-round-returns-and-author-response/returned/short/repair_audit.json`: initial portion through FA04, then every LIT, ED and RD row printed independently. Used to identify content that must survive; old findings were not re-audited.
+
+Key consequences: retain three weighted losses (ALG01), the three label domains (ALG02), exact outer-test list/binding (ALG03), full correction quantifiers (ALG04–06), arbitrary proof tables (ALG07), received-vs-decoded distinction (ALG08), nonzero quotient bound (ALG09), existential decoding explanation (ALG10), honest/decoded degree distinction (ALG11), unconditional inner decoding (ALG12), rejection-inclusive correction (ALG13), fresh-mask multiplier (ALG14), and both fixed-choice/final same-witness explanations (ALG15). ED08 preserves factor-two explanation; ED14 preserves three distinct implementation/reduction/transport links; ED16 preserves formal links and ordinary calculation status. These are deliberate non-changes.
+
+## Companions actually opened
+
+Full argument block ranges:
+
+- b0001–b0016;
+- b0031–b0063;
+- b0072–b0117;
+- b0433–b0471;
+- b0538–b0599;
+- b0615–b0628.
+
+Worked exposition block ranges:
+
+- b0017–b0025;
+- b0037–b0065;
+- b0095–b0150;
+- b0151–b0173;
+- b0174–b0201;
+- b0218–b0229;
+- b0251–b0277.
+
+All companion blocks were tokenised for an overlap candidate search, but tokenising is not a full reading. Unopened ranges are labelled in the redundancy map. This subreview does not claim complete companion-paper review or full literature/Lean coverage.
+
+## Commands and computations actually run
+
+1. Python read of `request.md` and `papers/short/paper.md`; `sed -n '145,278p' papers/short/paper.md` recovered the truncated middle.
+2. `wc -l`/Python character-line counts of the contract references.
+3. `sed -n '1,460p'`, `sed -n '461,920p'`, `sed -n '921,1380p'`, `sed -n '1381,1868p'` on humanizer SKILL.md.
+4. `cat` of formal-math-exposition SKILL.md; `sed` ranges 1–405/406–804 on mechanics; `cat` of the-deliverable; `sed` ranges 1–400/401–800/801–1200/1201–1597 on full-exposition-guide.
+5. Python JSON parsing/printing of all primary blocks and a second print of b0075–b0093; Python read of settled decisions and selected repair-audit rows.
+6. Python `difflib.SequenceMatcher` comparison of word-token sequences after removing passage comments and Markdown link destinations. Printed companion headings and best paragraph matches with ratio >0.43. This found candidate repetitions; it does not certify semantic identity.
+7. Python block-range printing for the companion ranges above; a heading scan identified section locators for unopened ranges.
+8. `rg --files literature/abssw-v2/tex` and `cat literature/abssw-v2/tex/intro.tex`.
+9. Ran `python /workspace/scratch/986ca2199c19/review-work/build_editorial_audit.py` to assemble the provisional 29 suggestions and count words with the packet's `[A-Za-z0-9][A-Za-z0-9'’-]*` regex; reran after a preservation repair to the abstract (restoring polynomial size and comparison with the source paper).
+10. Python reading/printing of proposal word deltas and b0078, then SHA-256 binding of the files listed above.
+
+No Lean build, example script, numerical theorem check, PDF rendering, live-site modification, publication, private service access or contact was performed by this subreview. Interim findings only were written in scratch. The original packet was left unchanged.
+
+## Humanizer outcomes and intentional non-edits
+
+The repeated pattern is metadiscourse and restatement around exact mathematics. No significant promotional or prestige vocabulary, hedge stack, invented introspection or generic positive conclusion was found. Actual technical lists have their mathematical lengths; they are not rhetorical triads. “Honest” identifies prover behaviour, “robust” is established testing terminology, “full” names a domain, and “constant” is a resource assertion. Those words must not be removed by generic anti-slop rules.
+
+The broad theorem/proof hierarchy remains intact. Scope-sensitive sentences were preserved even where they repeat: the full/homogeneous distinction, fixed-label versus averaged-label guarantee, same auxiliary rows, same four decoded polynomials, no small-rejection premise, corrected-test scope and unamplified query bound. The editorial proposals are optional integration inputs, not a certificate that any revised paper is correct or accepted.
+
+
+### Integrated regression pass
+
+The early pass compared every changed block through b0088; the late pass compared every changed block from b0089 onward. The editorial pass read revised.md end to end, all replacement text and the updated focal blocks. This caught and repaired four possible regressions before delivery: tying the colouring to the same P; keeping the generator argument distinct from Friedl–Sudan; preserving “a separate” in the centre-query sentence when a zero direction is allowed; and concluding that the witness relation is polynomial-time decidable so the language lies in NP. No additional theorem checking or Lean execution occurred in this pass.

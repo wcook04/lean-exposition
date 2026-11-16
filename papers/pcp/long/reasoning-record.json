@@ -3,7 +3,7 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110",
+  "content_sha256": "a703894c605a72e35f4888523bc0b0f64ce7d3fd3861a634ac1e0cd073328882",
   "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
@@ -326,7 +326,7 @@
   "passages": [
     {
       "anchor": "pcp-long-intro-theorem",
-      "text_sha256": "1e4e1cbab736e2283b28b0941dcd175a258b2f7ba485189af1d7c15cfa6a62d2",
+      "text_sha256": "f4e8b0cf627a7d782652e51b9e205e4cb3c26bc9917376e324cbefeec2259b42",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -373,7 +373,7 @@
     },
     {
       "anchor": "pcp-long-intro-roadmap",
-      "text_sha256": "9c2531fff0e125d8d42e97a61f9a5157a7fded6b6394c0ca1383a79937adf98c",
+      "text_sha256": "b096b4d41c66412af0ea86bef36ed8c4de8f912e5138003eb49b844ac36745d2",
       "claim_ids": [
         "PCP.Algebraic.BinaryLocalCorrection.failure_le",
         "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
@@ -424,16 +424,19 @@
     },
     {
       "anchor": "pcp-long-intro-readers",
-      "text_sha256": "2421668c9020ca6116a07f071ef9a338f1677bc7aa7f24a13cc357527061ecf5",
-      "claim_ids": [],
+      "text_sha256": "d6d925425ad978c1a2d603dfac78e03d2e8871cb9ad4a1825ae453689dd64842",
+      "claim_ids": [
+        "PCP.Algebraic.GridInterpolation.existsUnique_extension",
+        "PCP.Algebraic.eval_zero_agreement_le"
+      ],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "context",
-      "rationale": "Context or intermediate argument with no exact direct graph node; consult the explicit primary-source links in the manuscript. A direct correspondence remains to be added if needed."
+      "rationale": "States the notation and two standard facts used throughout: Lemma 2.1 (Schwartz–Zippel zero bound) and Lemma 2.2 (unique low-degree extension on a grid); both are proved in Section 4.1. Direct correspondence to the source-level declarations; this does not assert a Lean build or semantic certification."
     },
     {
       "anchor": "pcp-long-implementation-contracts",
-      "text_sha256": "8f7046ae185542b09cfed7ea31f994d2722bb0a0c0aa7328e763fd3bcfb1e134",
+      "text_sha256": "e348241a39c4a8e3a87ed7088166920293ac2af7d6d5978c97f146c2511f6de3",
       "claim_ids": [
         "PCP.Lang.ThreeColorBaseBranches.correct",
         "PCP.Lang.ThreeColorBaseBranches.program_polynomial_cost",
@@ -454,7 +457,7 @@
     },
     {
       "anchor": "pcp-long-final-target",
-      "text_sha256": "65e9171e964fcaf5648b5590a01a04bf56220f17b8e8f02b924903aa8d0c9c89",
+      "text_sha256": "f89ac3b89c7e364b2bd37714853acf7ba6164c7d36d5523ae56bb5d26636cc71",
       "claim_ids": [
         "PCP.np_subset_pcp"
       ],
@@ -497,7 +500,7 @@
     },
     {
       "anchor": "pcp-long-colour-equations",
-      "text_sha256": "b101af41e6b754b383dc5ac211edd799b07e7c04fa6da8ca70009ada43ef5c7e",
+      "text_sha256": "89397d4352b23f7c3511ee7da08eca728cb7d44cbac4939b1f97b2d4009eb65b",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorAlgebra.colorable_iff_exists_satisfies",
         "PCP.Algebraic.ThreeColorAlgebra.cube_eq_one_iff",
@@ -512,7 +515,7 @@
     },
     {
       "anchor": "pcp-long-grid-constraints",
-      "text_sha256": "b698e091d247b12fef581efda5ed2396bd4965ecca4a39964c4110e61040feae",
+      "text_sha256": "ac186f808da9c19c5e11f7b75b322dffa344819c21a970cb0fddd08f808476f1",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
       ],
@@ -523,7 +526,7 @@
     },
     {
       "anchor": "pcp-long-eight-tables",
-      "text_sha256": "3b40e701cc1c3df709561b0b287f83dd5d5c1e541b3d698c46fe844e6c852467",
+      "text_sha256": "af538c968f111bb792baebae98f5e83168b578db951f34ddf803f3682a631ce4",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.Proof"
       ],
@@ -534,7 +537,7 @@
     },
     {
       "anchor": "pcp-long-derived-constraints",
-      "text_sha256": "d444656c70ee7743cbfe112e602a53822c009976c4199fa6005f99161258dbaa",
+      "text_sha256": "8b0c2f8cce6c4994485c966993fe0a4d9b7ab38223c3d6b74c24e896fa4a43ea",
       "claim_ids": [
         "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
         "PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le"
@@ -546,7 +549,7 @@
     },
     {
       "anchor": "pcp-long-query-budget",
-      "text_sha256": "6736e17e0bd4064fff0a22df922f5f071f773841ec00f2bb7fd0f2cc525b4f67",
+      "text_sha256": "36f06fbc4485e8266bd68d2bb6cf46b33d64310807a0530ca13458d84ab31644",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.branchQueryBound",
         "PCP.Algebraic.ThreeColorVerifier.queries_length_le",
@@ -559,7 +562,7 @@
     },
     {
       "anchor": "pcp-long-completeness",
-      "text_sha256": "219ea2a1c8a130209ba7724a76a4effb60fc5a190b3bdcf3d3a407a5c650606f",
+      "text_sha256": "5743850901fde62c053a09328df84f4fd395dba1cc78dba6f8869b3a263bc4bd",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
       ],
@@ -570,17 +573,17 @@
     },
     {
       "anchor": "pcp-long-decoding-contract",
-      "text_sha256": "289a58720c3a521b0beafe146ba4f9c728838ed4a6636f15489d35d4301eef77",
+      "text_sha256": "511e61faf2aec1590bbdd8a3b8c2adb44e7bc564648fcd92a9effe6184938681",
       "claim_ids": [
-        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
-        "PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt",
-        "PCP.Algebraic.ThreeColorVerifier.exists_close_of_rejection_le"
+        "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close"
       ],
       "citation_ids": [
         "almss:45",
         "almss:69",
         "blr:4",
         "citation:bchks",
+        "paper:10",
         "paper:11",
         "paper:12",
         "paper:13",
@@ -588,8 +591,13 @@
         "paper:15",
         "paper:16",
         "paper:17",
+        "paper:9",
         "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
         "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
         "safra:52"
       ],
       "assumption_ids": [],
@@ -598,18 +606,45 @@
     },
     {
       "anchor": "pcp-long-difference-soundness",
-      "text_sha256": "f79cf03303fba3af6a08f78d6a9cb2ce4cd88905a5179f667686b171018ef6ff",
+      "text_sha256": "189581288ffe701613f096daa2d6c44981fc3510f03d08af66145975f0702691",
       "claim_ids": [
-        "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors"
+        "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+        "PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt",
+        "PCP.Algebraic.ThreeColorVerifier.exists_close_of_rejection_le",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable"
       ],
-      "citation_ids": [],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:7",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
       "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
     },
     {
       "anchor": "pcp-long-assembled-zero-soundness",
-      "text_sha256": "2838db79dd692afe26ce00d8f86c8009dd48752dc1696d61b61580102b2b2453",
+      "text_sha256": "5192995097f920bb222f46e54c1a5efec010d2eee03b25b516e5d0b546e9a5df",
       "claim_ids": [
         "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
       ],
@@ -628,7 +663,7 @@
     },
     {
       "anchor": "pcp-long-gap",
-      "text_sha256": "267285c5ce38ad5d20e4959ecd1e69513f88dcd7bf6f1c2449ee1e8811768ea5",
+      "text_sha256": "11b9fcdbf26d48b3ac75b49b00e11cc750541f97bb1adcbb6a93dfd448866448",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorSoundnessBudget.field_ratio_bounds",
         "PCP.Algebraic.ThreeColorSoundnessBudget.gap",
@@ -666,7 +701,7 @@
     },
     {
       "anchor": "pcp-long-parameters",
-      "text_sha256": "4eb76bbf188c9e75d76815fe4131ccac62b9ff9ed0d4f77226bf10265a29e340",
+      "text_sha256": "2de6827be284abe486869771f03332092895792dbe0f08227e8bf5364d75e11d",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
         "PCP.Algebraic.ThreeColorParameterChoice.volume_le"
@@ -678,7 +713,7 @@
     },
     {
       "anchor": "pcp-long-fair-bits",
-      "text_sha256": "ad960d81ac4e1693739c76463e5acbf79d5af03482d11f304d8531f1bb2864d3",
+      "text_sha256": "8eeca2dfa6cae51c20c31e7395099b615a121cb43c6b8a5da4ae18e4928c614a",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq"
       ],
@@ -689,7 +724,7 @@
     },
     {
       "anchor": "pcp-long-resources",
-      "text_sha256": "c9349e0404a578a4f1bd440bebfff702a7ca89a1359743fb7e31f1c9a393bac8",
+      "text_sha256": "88ab3e2a088627a08ebcc78791498e239c163314ad99d77c9d6caf372aaf4b4d",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorBinaryVerifier.verification_guarantees",
         "PCP.Algebraic.ThreeColorSeedSize.originalBits_eq_sum"
@@ -701,7 +736,7 @@
     },
     {
       "anchor": "pcp-long-amplification",
-      "text_sha256": "1adc8fdbca753584720be809441dcf0d0d8c5f1065371ceeab95ac100b9afcd3",
+      "text_sha256": "fac01bccdf4c84b778a3f49e4d8ea846738a49b66a3017782250f11480e26705",
       "claim_ids": [
         "PCP.Algebraic.RationalRepetitionBound.acceptance_pow_le_half",
         "PCP.Algebraic.RationalRepetitionBound.linear_mul_pow_le_one",
@@ -742,7 +777,7 @@
     },
     {
       "anchor": "pcp-long-runtime",
-      "text_sha256": "6b0cfb87eb5a821813b977729195c8cbc99e207c8f55018c349e050d0f7844db",
+      "text_sha256": "dd3aea6f52ab9eaf4f5c661817b79534fd6ecceae11baa2a231c037a9df50119",
       "claim_ids": [
         "PCP.Lang.ThreeColorBaseBranches.correct",
         "PCP.Lang.ThreeColorBaseBranches.program_polynomial_cost",
@@ -759,7 +794,7 @@
     },
     {
       "anchor": "pcp-long-np-tableau",
-      "text_sha256": "1d3073fd4257fe5500f268e1340829bb639e8f967aa6d98674ab6a484da1891b",
+      "text_sha256": "8b8156fd4cf077c1f40dc1b918aee24d8610c4730c5bd9b43e5ddd3fe580e7ed",
       "claim_ids": [
         "PCP.Machine.NPTableau.exists_accepts_iff"
       ],
@@ -770,7 +805,7 @@
     },
     {
       "anchor": "pcp-long-local-constraints",
-      "text_sha256": "c07cb507c079a569b4a4f36dacf090ec7048b6b21080b2c05032bacf8e86fda8",
+      "text_sha256": "36ea8bdddcaa074e16a042a1466e9667020966d798e6e33be5a9ef3559f7225a",
       "claim_ids": [
         "PCP.Machine.TableauCells.step_represents"
       ],
@@ -781,7 +816,7 @@
     },
     {
       "anchor": "pcp-long-clause-reduction",
-      "text_sha256": "a560c14225aafb06e337b1adb7eb88b0ee797c59984c55a89aa295f29a14f8a2",
+      "text_sha256": "a25645584e5c9fc96cdcc75a4842f47f620001c3ecc52ec3620034568a52d4e7",
       "claim_ids": [
         "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff"
       ],
@@ -792,7 +827,7 @@
     },
     {
       "anchor": "pcp-long-colouring-gadget",
-      "text_sha256": "b1f10e99d7176a3fd1faa3fcb7d7cf982082e12fd25f68b73740d64812382d2e",
+      "text_sha256": "e5b0240623214d174db353131f971bfb1e27a80945ad94e3eeda408c5f705615",
       "claim_ids": [
         "PCP.Reduction.NAEThreeColor.colorable_iff"
       ],
@@ -803,7 +838,7 @@
     },
     {
       "anchor": "pcp-long-reduction-runtime",
-      "text_sha256": "1be832018084e01eb77b51a1eb326a50bbe9191e02357b1889ad33a846a25a6c",
+      "text_sha256": "f4eab2fb76536a1f4a20b7c06dfd1de0fe1dc5bf7a18bf524d25df934a819c90",
       "claim_ids": [
         "PCP.Reduction.NPThreeColorRuntime.costPoly",
         "PCP.Reduction.NPThreeColorRuntime.exists_program",
@@ -818,7 +853,7 @@
     },
     {
       "anchor": "pcp-long-seed-transport",
-      "text_sha256": "459a05770021b4024e1875be280688dcc49bf42db715d5a5ed46bcf6016a8213",
+      "text_sha256": "b004fa83049374c1f6aac4ad6578618918dada1131bebe17c380a302c85cd382",
       "claim_ids": [
         "PCP.Verifier.Reduction.clog_eval_add_two_le"
       ],
@@ -829,7 +864,7 @@
     },
     {
       "anchor": "pcp-long-converse",
-      "text_sha256": "f434104093321150b1bd4440030c7ef1faaef0777d6d2969e8a46c4768beb136",
+      "text_sha256": "1a01833f4d392eed54ab98500984bd77880d6773a7aa1b29bc3c267ec04922fe",
       "claim_ids": [
         "PCP.ReferenceNP.inNP_iff_mem",
         "PCP.pcp_subset_np",
@@ -845,7 +880,7 @@
     },
     {
       "anchor": "pcp-long-algebra-scope",
-      "text_sha256": "04fb6cb17c6aef4d4d83e3a44cf93ba85cda4858d34d4b887885083205e2f5fc",
+      "text_sha256": "cb7a257f91e2b6f94de4d03a5dea6ae4030fa9d9bf5b4b2ff2f45f4de60edcb8",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
@@ -854,7 +889,7 @@
     },
     {
       "anchor": "pcp-long-algebra-polynomial-distance",
-      "text_sha256": "fd7f30747fd41cce1df14149f1b56706e821a3afb769562f7440673f5d31571e",
+      "text_sha256": "aa6af67a1514fe4c5fb466dda058c2d8d41ae820131760c590d020cf2059213b",
       "claim_ids": [
         "PCP.Algebraic.eval_distance_ge",
         "PCP.Algebraic.eval_zero_agreement_le",
@@ -868,7 +903,7 @@
     },
     {
       "anchor": "pcp-long-algebra-grid-interpolation",
-      "text_sha256": "14b4b6d1ecddd88514faec669e7d1024fce7235875ba3098912804b716ac5b3a",
+      "text_sha256": "2589101ef3f881777a06dc3c54c2a9bb1c4e317ec004218be2788510a91b7f65",
       "claim_ids": [
         "PCP.Algebraic.GridInterpolation.existsUnique_extension"
       ],
@@ -879,7 +914,7 @@
     },
     {
       "anchor": "pcp-long-algebra-grid-vanishing",
-      "text_sha256": "9816641e8bfd5d2b5c00603c9347f0d994e5d7b2147133b251f5ff3573398779",
+      "text_sha256": "955fb184f1c3104aadccc5ee8c396a559528d91012d85a669f19d6f4ee2ffd48",
       "claim_ids": [
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
@@ -895,7 +930,7 @@
     },
     {
       "anchor": "pcp-long-algebra-line-characterization",
-      "text_sha256": "14d77c038cb17be18595ac6001c2f989d798a5f2f043bc0757c4c273eb25a9fb",
+      "text_sha256": "9e3a6d6f974ba4151c7a1a09920d8b3b861c83d0b0b2d36771755b4634ec1581",
       "claim_ids": [
         "PCP.Algebraic.PolynomialLine.exists_polynomial_of_hasLowDegreeLines"
       ],
@@ -908,7 +943,7 @@
     },
     {
       "anchor": "pcp-long-algebra-generator-test",
-      "text_sha256": "7b6732a9a08b32c1636e2fda88cf58bcd9c03ed940f2c49a8f5f1e83a28030fa",
+      "text_sha256": "5caaf7490ddfd41c9d070c4c9b1aacea369e81c29b40f212d06d5160bf1ed6bc",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.check_eq_interpolation",
         "PCP.Algebraic.GeneratorLowDegreeTest.nodes_injective",
@@ -922,7 +957,7 @@
     },
     {
       "anchor": "pcp-long-algebra-weighted-plurality",
-      "text_sha256": "8abd2f05c7ca433ebc264dd8d3942286577a75e66da7caec73c3fb065d4e8e4b",
+      "text_sha256": "14ee2044c98f7578fff827610f68083692fa58272376dac90b19d636e3ce1079",
       "claim_ids": [
         "PCP.Algebraic.WeightedConstraint.distance_correction_le",
         "PCP.Algebraic.WeightedConstraint.prediction_error_le",
@@ -938,7 +973,7 @@
     },
     {
       "anchor": "pcp-long-algebra-generator-soundness",
-      "text_sha256": "1a2e67d4b6f63448490cef8456312915339c70eead3623f512f2e28960b14173",
+      "text_sha256": "d6cc8a589958e67a5bb7cbe33cf68a5d33ef5f3769c5cf8a1f8a0daef7a1a6b3",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
       ],
@@ -951,7 +986,7 @@
     },
     {
       "anchor": "pcp-long-algebra-standard-correction",
-      "text_sha256": "82c8d5f55e32b74e990a605377df45b23fd886536579ff567601e5b4609b27eb",
+      "text_sha256": "b0c111fe08e7b5acb982493a690032035b4ff410ff02f3358f8e4e7e6e01223c",
       "claim_ids": [
         "PCP.Algebraic.StandardLocalCorrection.failure_le"
       ],
@@ -962,7 +997,7 @@
     },
     {
       "anchor": "pcp-long-algebra-line-table-correction",
-      "text_sha256": "e4d79c484727f987e57cb48679134808e6a20cf59dfcaa6a49d3acdef0ffffe8",
+      "text_sha256": "fe5c814a78ef6db782f662759fecfd5f89e061afb780f33e35bc6ee36b240243",
       "claim_ids": [
         "PCP.Algebraic.LineTableLocalCorrection.correct_wrong_le"
       ],
@@ -973,7 +1008,7 @@
     },
     {
       "anchor": "pcp-long-algebra-bivariate-statement",
-      "text_sha256": "8764fcbdddffc34826abac248c9df4df321c8a7940ea86f38558f462d24ac25f",
+      "text_sha256": "c39a44d03f4947d0b1fdce1a6f3ee6147d69839631b4f0471c0d1ac05f296006",
       "claim_ids": [
         "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement"
       ],
@@ -988,7 +1023,7 @@
     },
     {
       "anchor": "pcp-long-algebra-column-selection",
-      "text_sha256": "6818fcbd535de671a5a055fee6ce7108203596825f716207e095b456ced97938",
+      "text_sha256": "bce0090df06c7760ee922201157e281be5c8e8d700f94084e9217381593a4d86",
       "claim_ids": [
         "PCP.Algebraic.BivariateColumnSelection.mean_column_error_le",
         "PCP.Algebraic.BivariateColumnSelection.exists_good_columns"
@@ -1000,7 +1035,7 @@
     },
     {
       "anchor": "pcp-long-algebra-error-locator",
-      "text_sha256": "66d2fe9a2b816f32b89e9e6b374b4d7221eec236ed1316f28e7c90da6f6c69b1",
+      "text_sha256": "8a6866445b6bb4f32c1360181f6d04c7ffcc937e140b0975b74013312775eb6b",
       "claim_ids": [
         "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations"
       ],
@@ -1011,7 +1046,7 @@
     },
     {
       "anchor": "pcp-long-algebra-clean-rectangle",
-      "text_sha256": "daeb495c69a0d6c7bc9fa2c9c6afc542cb934d198ed102abc8ac72777329b66b",
+      "text_sha256": "9789787b2e650689d2fe2a82d1f98804ff754387ce13732c58025088a58bdcb4",
       "claim_ids": [
         "PCP.Algebraic.BivariateCleanRectangle.certificate_row_eq",
         "PCP.Algebraic.BivariateCleanRectangle.fraction_clean_rows_ge",
@@ -1024,7 +1059,7 @@
     },
     {
       "anchor": "pcp-long-algebra-coarse-agreement",
-      "text_sha256": "3015251763560211b28a53de3085438a9b1344c5b484017cbbf65289c5c4083b",
+      "text_sha256": "e6185d041a2d3c66cc0728eb21196014956418de20428784ebb963625b9772db",
       "claim_ids": [
         "PCP.Algebraic.BivariateAgreementFromRectangle.exists_nearby_polynomial"
       ],
@@ -1035,7 +1070,7 @@
     },
     {
       "anchor": "pcp-long-algebra-agreement-boost",
-      "text_sha256": "4742f473e63558375e92e611645f565063eded1f78a65fe07e199edb0bb15c13",
+      "text_sha256": "89a9bc1dd85af0f8cd9b5a7f834a20c8cc6216a08e43b5502cb6271ea880e287",
       "claim_ids": [
         "PCP.Algebraic.BivariateAgreementBoost.transverse_error_le",
         "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul"
@@ -1047,7 +1082,7 @@
     },
     {
       "anchor": "pcp-long-algebra-point-line-statement",
-      "text_sha256": "bf630885b04c4f6a2e823e16a1ebf440122984d947039d69a5883ef72c2ae1c0",
+      "text_sha256": "388dfce5d9fca8b44a4b8c3d0365c07721652933893333d6d5577e2ea67094ef",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection"
       ],
@@ -1064,7 +1099,7 @@
     },
     {
       "anchor": "pcp-long-algebra-nearest-lines",
-      "text_sha256": "aa22230cdd8c7c5df970fb9d1ac158ae1cec2f0702bd213def6e19715a593496",
+      "text_sha256": "1bbe7351cfaf5daa442760cc505100aaae0c41e77f3e6e621ca99689db0d1293",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.distance_decoded_correction_le",
         "PCP.Algebraic.Plurality.distance_le_twice_prediction_error"
@@ -1076,7 +1111,7 @@
     },
     {
       "anchor": "pcp-long-algebra-fixed-parameter",
-      "text_sha256": "c10820edcb07858d675c1244c1fb5db62e9bb894510149ef4f5e087cf4b72ad4",
+      "text_sha256": "d30c127b34dd6abe217d0cb82a803a0568c6947535f5a70ef7e028cdcb66c649",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul"
       ],
@@ -1087,7 +1122,7 @@
     },
     {
       "anchor": "pcp-long-algebra-crossing",
-      "text_sha256": "9165f76168875437954f98abe8731b81d7f8b8e94a11986d47b2da153e231ad0",
+      "text_sha256": "b9f036bf99257e25453ad8c1bb7f4a3ec24eacc0d0893f79c38d7c1a03b5057d",
       "claim_ids": [
         "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq"
       ],
@@ -1098,7 +1133,7 @@
     },
     {
       "anchor": "pcp-long-algebra-mixed-plane",
-      "text_sha256": "1bb230b2089e27cea95388ec358feb9d1e88b816b2bc89958b255736390d7eaa",
+      "text_sha256": "7d388ee68d524b818b15daacf24b83947caae4e48b17942db0ab8ee65cb6246d",
       "claim_ids": [
         "PCP.Algebraic.PointLineEndpointConsistency.endpoint_error_le",
         "PCP.Algebraic.MixedPlaneSampling.expect_mixedRowError_le",
@@ -1111,7 +1146,7 @@
     },
     {
       "anchor": "pcp-long-algebra-ruled-surface",
-      "text_sha256": "1f9a4a2c6cc52977e07df9bd444846bcc44e583764f8214934d9454e108cfaa6",
+      "text_sha256": "7a8a07fecf3e3d8e2a3c97bf89b4fc8afb16e865b120f765104ba2670c8b5dde",
       "claim_ids": [
         "PCP.Algebraic.RuledSurface.endpoint_error_le",
         "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds"
@@ -1123,7 +1158,7 @@
     },
     {
       "anchor": "pcp-long-algebra-point-line-constants",
-      "text_sha256": "c20cbe32b8f3aa39215e89f3b206c524ceee43b7faf1059003160d2c3d37e803",
+      "text_sha256": "1917216284a436699f1a01b55f06e0a8dadca70a9b5c94d411e081059cdf449f",
       "claim_ids": [
         "PCP.Algebraic.PointLineConstants.field_bounds",
         "PCP.Algebraic.PointLineConstants.rigidity_budget"
@@ -1135,7 +1170,7 @@
     },
     {
       "anchor": "pcp-long-algebra-degree-zero",
-      "text_sha256": "1902312408606de7a6b87d75a143f5e958c55c3ee3896ff32cc97886b61ad6c7",
+      "text_sha256": "0d83f191d42eaf60103dab5114508df2b9502954ed91ee64ce30fa713d61eb0b",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.pairDisagreement_le_twice_rejectionRate_degree_zero",
         "PCP.Algebraic.PointLineTest.exists_close_degree_zero"
@@ -1147,7 +1182,7 @@
     },
     {
       "anchor": "pcp-long-algebra-source-boundary",
-      "text_sha256": "57f6b906af5104885031b1d9e7a14a2ef617ebcee6263dd424219831649ad1bd",
+      "text_sha256": "394c9371150ab1c8a874ef2eb7a48de6b3f881282eb984a829e9795db0c597f7",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
@@ -1156,7 +1191,7 @@
     },
     {
       "anchor": "pcp-long-binary-purpose",
-      "text_sha256": "cc1b60f31f34a9c5b516ce99df46559a74abf86ea8edc89547d51b44a8549d9a",
+      "text_sha256": "7decc655dc74b14f4103bfc9ebd735848cd171de5e54bd27b9522bc00dca772b",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
@@ -1165,7 +1200,7 @@
     },
     {
       "anchor": "pcp-long-set-multilinear",
-      "text_sha256": "0aeeeb5d0597df7b0b910365d67dc3a8b1bc9e08a20b00fd86885107af050980",
+      "text_sha256": "edaf2b8aadcd1991557c899dde68c725b3cbb6143e6516ed3e77fe9af25a06c3",
       "claim_ids": [
         "PCP.Algebraic.SetMultilinear.decode_encode",
         "PCP.Algebraic.SetMultilinear.eval_encode",
@@ -1182,7 +1217,7 @@
     },
     {
       "anchor": "pcp-long-hadamard-labels",
-      "text_sha256": "954a924b590b7d261dfb3ef0a3737063e7c6171a66f22d2f34721bf2906706ac",
+      "text_sha256": "8fae98bc55762684b4e8e8bd085064e6fa5527d0bb3529b2a6ada6d770f25ab7",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
         "PCP.Algebraic.Hadamard.relativeDistance_homogeneous_queries"
@@ -1194,7 +1229,7 @@
     },
     {
       "anchor": "pcp-long-hadamard-composition",
-      "text_sha256": "27971e929d8ce3f5d5b36eb81bb138c70acb8c8e5acaa9705b34a0b1848d2b38",
+      "text_sha256": "e75ca99cb0a8ee30848fed7b3be8515cb9a4220576b3099a855376eb3f25db1d",
       "claim_ids": [
         "PCP.Algebraic.HadamardComposition.encode_query",
         "PCP.Algebraic.HadamardWeights.scaleLabelEquiv",
@@ -1207,7 +1242,7 @@
     },
     {
       "anchor": "pcp-long-blr-proof",
-      "text_sha256": "4d99fab729d5e90c72bc039bc3442aa2ff90df7b1c98039c2ee24cb3c44cf629",
+      "text_sha256": "699ad0f717b65cf6f954af6a53b20c64b36b7c8bfef21425ef3f030a045053b0",
       "claim_ids": [
         "PCP.Algebraic.BLR.cubic_identity",
         "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le"
@@ -1223,22 +1258,24 @@
     },
     {
       "anchor": "pcp-long-hadamard-self-correction",
-      "text_sha256": "c943cf5486da1600c7e9b796e83974c25f154d3415322049f202c3e8bc34f229",
+      "text_sha256": "cbcb611889fbe182086cb909dc71d87d3f2a906c655472738b5f97fbe4987935",
       "claim_ids": [
-        "PCP.Algebraic.Hadamard.selfCorrect_failure_le"
+        "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+        "PCP.Algebraic.Hadamard.testQueries_length"
       ],
-      "citation_ids": [],
+      "citation_ids": [
+        "paper:additional:3"
+      ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
       "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
     },
     {
       "anchor": "pcp-long-hadamard-soundness",
-      "text_sha256": "fc5ee38566d480296dfd5b032a7a96d40068e803702ebc06bfa837c9e9934000",
+      "text_sha256": "0aa4dc66a872cc0fb3c1d5b15fd87e3a2efc5468069ed40fa9ee0cecee9cba2c",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.eq_encode_of_unit_of_mixedProduct",
         "PCP.Algebraic.Hadamard.map_mixedProduct_of_relativeDistance_lt",
-        "PCP.Algebraic.Hadamard.testQueries_length",
         "PCP.Algebraic.Hadamard.test_soundness"
       ],
       "citation_ids": [
@@ -1254,7 +1291,7 @@
     },
     {
       "anchor": "pcp-long-hadamard-row-decoding",
-      "text_sha256": "1d492ff4d1633fb820830c1e406c612b9649f7e0e01462e43c157a9a6aec40a3",
+      "text_sha256": "00b4676edda2e02021b5e6f82559f558197844d66006113ac7c6544f6ad582b4",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.exists_field_function_of_average_rejectionRate"
       ],
@@ -1265,7 +1302,7 @@
     },
     {
       "anchor": "pcp-long-binary-weighted-test",
-      "text_sha256": "2f9d66f373404d9bb37c5487a9dd6481842108dd3de19b781eaf21af92f70fc9",
+      "text_sha256": "21c6bd31bb048e61c0906c695c7cee50c5b9d56ade7a911c34f98b4106d5d2a2",
       "claim_ids": [
         "PCP.Algebraic.BinaryLagrangeConstraint.field_rejectionRate_le",
         "PCP.Algebraic.BinaryLocalRowDecoding.exists_close_of_small_rejection",
@@ -1287,7 +1324,7 @@
     },
     {
       "anchor": "pcp-long-binary-inner-correction",
-      "text_sha256": "801b4b34d04a4f793fa2f0dc3d9a6b376c48767547e8db6d1f4f94adf704fd54",
+      "text_sha256": "2d9e02789f1b944a0f94825986091e4b6d31c30a18c174304afec7f8569bdf0b",
       "claim_ids": [
         "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le"
       ],
@@ -1298,7 +1335,7 @@
     },
     {
       "anchor": "pcp-long-encoded-line-test",
-      "text_sha256": "ebf83475afb1ae8a1e889f1758ae0bd355b47f9b530072f21baf1913379a86ee",
+      "text_sha256": "1484e992036ad519b6715938ea73a03d10036781afda16af1986865e5c2bf4ce",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.queries_length_le"
       ],
@@ -1309,7 +1346,7 @@
     },
     {
       "anchor": "pcp-long-encoded-line-soundness",
-      "text_sha256": "5d3530c6b023d231cd1580fccd60668db536300e64dd7684a539609bbf90d07f",
+      "text_sha256": "958018d9dd3d1cecf2a3adc2e35cdf3199d624791c536a1dd1ed18657d115281",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_decoded_table",
@@ -1338,24 +1375,20 @@
     },
     {
       "anchor": "pcp-long-outer-local-corrector",
-      "text_sha256": "7dbfb3826e161b17954e1dc070ef8f155b0526e42068e09fbda0758cd4c1d3e8",
+      "text_sha256": "3ebc4d149df981d593923367d174ab2862deef181be1a6341a8a19c01929d902",
       "claim_ids": [
-        "PCP.Algebraic.BinaryLocalCorrection.failure_le",
         "PCP.Algebraic.BinaryLocalCorrection.queries_length_le",
         "PCP.Algebraic.BinaryLocalCorrection.run",
         "PCP.Algebraic.BinaryLocalCorrection.run_eval"
       ],
-      "citation_ids": [
-        "paper:10",
-        "paper:12"
-      ],
+      "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "source_argument",
       "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
     },
     {
       "anchor": "pcp-long-outer-correction-soundness",
-      "text_sha256": "7cb69d8517d41aa2147e9091e646cbfd7d2fc3bf7745fa875d7df397f4934ba5",
+      "text_sha256": "b9652dc99e95bdfd61b1d3c9d613d1d1536aa9f275a41bc04b2d190a5d99c904",
       "claim_ids": [
         "PCP.Algebraic.BinaryLocalCorrection.failure_le",
         "PCP.Algebraic.BinaryLocalCorrection.failure_le_full_distance",
@@ -1371,7 +1404,7 @@
     },
     {
       "anchor": "pcp-long-zero-certificate",
-      "text_sha256": "95f85c2aa9d3200b94bcd4d88a2fc98f6f38c3760a3cf85fb509dad5267c6eea",
+      "text_sha256": "c52a1ec44f0627959ce58335a5e74c4361ef8da08b8bd99ec350c43880cec6f8",
       "claim_ids": [
         "PCP.Algebraic.GridVanishing.acceptanceRate_le_of_not_vanishesOn",
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
@@ -1386,7 +1419,7 @@
     },
     {
       "anchor": "pcp-long-zero-actual-test",
-      "text_sha256": "5d07c616365b384713220e3e52ea750cac362fb014c8a7fbef4b5d7cb4a80ea4",
+      "text_sha256": "3e0572ab245a727bb45c4ac6d1917466c905fe8e5291d18d713fc4bf9da338ad",
       "claim_ids": [
         "PCP.Algebraic.BinaryZeroOnGridCorrection.queries_length_le"
       ],
@@ -1397,7 +1430,7 @@
     },
     {
       "anchor": "pcp-long-zero-soundness",
-      "text_sha256": "bafc34ee624b601515bcf6233d21570eddc191b48855b2701af5b38995b15242",
+      "text_sha256": "f81457a50ee673948e441c8d0f3af4226c0fc8b504958fbc91f8c7457f78f53f",
       "claim_ids": [
         "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
         "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
@@ -1416,7 +1449,7 @@
     },
     {
       "anchor": "pcp-long-derived-oracle-transfer",
-      "text_sha256": "8072418805a451c526e6466e052964519ab617fe6fd935539aa255d045274148",
+      "text_sha256": "660361d06aa8600929a861e7d5a08c25dc6f750f5bcdb77f16c8fa1c54f0f8b1",
       "claim_ids": [
         "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
         "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
@@ -1439,7 +1472,7 @@
     },
     {
       "anchor": "pcp-long-algebra-old-test-counterexample",
-      "text_sha256": "b15e545632bf176b728267f606ff8b89a1c6886095174010b3a84153b2a581d7",
+      "text_sha256": "5315914583da417c5a9f0c85b82a9c8008ee0f499bc7bbca938713bd88477ebc",
       "claim_ids": [
         "ordinary:v1-old-test-counterexample"
       ],
@@ -1452,7 +1485,7 @@
     },
     {
       "anchor": "pcp-long-intro-source-editions",
-      "text_sha256": "4715993db2d51279d6adf5aa13880de1a2261548224fb6786e882b7c0a7ae26a",
+      "text_sha256": "f15c7a40b7c98d56dd786e0341d285eba603b57d138a21114e6ce33a96ca8fdb",
       "claim_ids": [
         "PCP.np_subset_pcp"
       ],
@@ -1495,7 +1528,7 @@
     },
     {
       "anchor": "pcp-long-references",
-      "text_sha256": "1a4621466cfb10f394f4f655770635b6718d658bfd25e2f78d6852cf5fcc5acf",
+      "text_sha256": "491b2a6410450610682a4500f1e6aaf04c2ac216a1e4b21cdf0feb8b2efcb4a3",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
@@ -1516,204 +1549,206 @@
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
     "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
     "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed.",
-    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits."
+    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits.",
+    "Third review round, 16 November 2026 (source-review/review-round-4): results numbered and named, terminology and notation aligned with the cited literature, redundant passages cut. Mathematically sensitive reviewer proposals were checked against the Lean source and the cited literature before adoption; passage-to-claim associations are unchanged.",
+    "Third review round, 16 November 2026 (source-review/review-round-4): results numbered and named, terminology and notation aligned with the cited literature, redundant passages cut. Mathematically sensitive reviewer proposals were checked against the Lean source and the cited literature before adoption; twelve passage-to-claim associations and two reading links were corrected after an association check of all 113 passages (source-review/review-round-4/passage-association-check.md)."
   ],
   "reading_links": [
     {
       "from_anchor": "pcp-long-intro-theorem",
-      "from_text_sha256": "1e4e1cbab736e2283b28b0941dcd175a258b2f7ba485189af1d7c15cfa6a62d2",
+      "from_text_sha256": "f4e8b0cf627a7d782652e51b9e205e4cb3c26bc9917376e324cbefeec2259b42",
       "to_stage": "short",
       "to_anchor": "pcp-short-theorem",
-      "to_text_sha256": "47636a0f61566c1f165295b98ec7a0c5c70181187886b0968d4fc689749eaca3",
+      "to_text_sha256": "15aaa79e6f57cc2f789d48296d423803a154ad613ca3b78524e2ae5e4edac85f",
       "kind": "expands",
       "rationale": "Gives the exact endpoint and source-model context."
     },
     {
       "from_anchor": "pcp-long-algebra-grid-vanishing",
-      "from_text_sha256": "9816641e8bfd5d2b5c00603c9347f0d994e5d7b2147133b251f5ff3573398779",
+      "from_text_sha256": "955fb184f1c3104aadccc5ee8c396a559528d91012d85a669f19d6f4ee2ffd48",
       "to_stage": "short",
       "to_anchor": "pcp-short-colour-constraints",
-      "to_text_sha256": "04b5af2b6ff5bb54b1e9789994076d40275de99804969f6d17e06a36eb0dd6cc",
+      "to_text_sha256": "5f777c84027b5e01a98137f9733b5b4d741fa19776bf6d41ff1b45dddf277850",
       "kind": "expands",
       "rationale": "Expands the grid certificate and its degree proof."
     },
     {
       "from_anchor": "pcp-long-set-multilinear",
-      "from_text_sha256": "0aeeeb5d0597df7b0b910365d67dc3a8b1bc9e08a20b00fd86885107af050980",
+      "from_text_sha256": "edaf2b8aadcd1991557c899dde68c725b3cbb6143e6516ed3e77fe9af25a06c3",
       "to_stage": "short",
       "to_anchor": "pcp-short-digit-encoding",
-      "to_text_sha256": "2ba3588f352c79c58324dc572b489e09c27b2c6e18d5c4c96b533d218b7d31f4",
+      "to_text_sha256": "a3163d9085cc926ee03bd71096f27126d3aacc93d34032c2b9e2d1319dc29e33",
       "kind": "expands",
       "rationale": "Proves formal recovery, injectivity and degree control."
     },
     {
       "from_anchor": "pcp-long-hadamard-composition",
-      "from_text_sha256": "27971e929d8ce3f5d5b36eb81bb138c70acb8c8e5acaa9705b34a0b1848d2b38",
+      "from_text_sha256": "e75ca99cb0a8ee30848fed7b3be8515cb9a4220576b3099a855376eb3f25db1d",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
+      "to_text_sha256": "c8b5360095648db86759f9044e1de318ad5b382187bb39937f32c57114085606",
       "kind": "expands",
       "rationale": "Derives the binary composition of a field polynomial."
     },
     {
       "from_anchor": "pcp-long-hadamard-self-correction",
-      "from_text_sha256": "c943cf5486da1600c7e9b796e83974c25f154d3415322049f202c3e8bc34f229",
+      "from_text_sha256": "cbcb611889fbe182086cb909dc71d87d3f2a906c655472738b5f97fbe4987935",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
+      "to_text_sha256": "c8b5360095648db86759f9044e1de318ad5b382187bb39937f32c57114085606",
       "kind": "expands",
       "rationale": "Proves the two-read correction bound."
     },
     {
       "from_anchor": "pcp-long-algebra-weighted-plurality",
-      "from_text_sha256": "8abd2f05c7ca433ebc264dd8d3942286577a75e66da7caec73c3fb065d4e8e4b",
+      "from_text_sha256": "14ee2044c98f7578fff827610f68083692fa58272376dac90b19d636e3ce1079",
       "to_stage": "short",
       "to_anchor": "pcp-short-weighted-test",
-      "to_text_sha256": "6d1a2720b1a7f59b73e09bcb27bb3c3b97a636437d37fdcf953ff8c831676a07",
+      "to_text_sha256": "f29071d492aa31b9c24c5bfcf53be8cf50a2eb982f5ab02d158ed54bd695e686",
       "kind": "expands",
       "rationale": "Proves the fixed-center estimate and weighted-grid comparison."
     },
     {
       "from_anchor": "pcp-long-hadamard-row-decoding",
-      "from_text_sha256": "1d492ff4d1633fb820830c1e406c612b9649f7e0e01462e43c157a9a6aec40a3",
+      "from_text_sha256": "00b4676edda2e02021b5e6f82559f558197844d66006113ac7c6544f6ad582b4",
       "to_stage": "short",
       "to_anchor": "pcp-short-binary-decoding",
-      "to_text_sha256": "d2bd050feeebb29fb93780d44847b0d30c6b919c256dfeaa958a7359b9798403",
+      "to_text_sha256": "e434b4a7113c15879a6ce935ae60882c59e8cda3b6662014a0bf32a7e0edc929",
       "kind": "expands",
       "rationale": "Derives simultaneous label-distance bounds for one witness."
     },
     {
       "from_anchor": "pcp-long-algebra-bivariate-statement",
-      "from_text_sha256": "8764fcbdddffc34826abac248c9df4df321c8a7940ea86f38558f462d24ac25f",
+      "from_text_sha256": "c39a44d03f4947d0b1fdce1a6f3ee6147d69839631b4f0471c0d1ac05f296006",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
+      "to_text_sha256": "30b799d6dc397fecb513db9e0c3da2860a14f256be6e8c2779bc485b8ff112f3",
       "kind": "expands",
       "rationale": "States and proves the bivariate input used in line testing."
     },
     {
       "from_anchor": "pcp-long-algebra-mixed-plane",
-      "from_text_sha256": "1bb230b2089e27cea95388ec358feb9d1e88b816b2bc89958b255736390d7eaa",
+      "from_text_sha256": "7d388ee68d524b818b15daacf24b83947caae4e48b17942db0ab8ee65cb6246d",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
+      "to_text_sha256": "30b799d6dc397fecb513db9e0c3da2860a14f256be6e8c2779bc485b8ff112f3",
       "kind": "expands",
       "rationale": "Defines the crossing discrepancies and proves the sampled endpoint bound."
     },
     {
       "from_anchor": "pcp-long-algebra-ruled-surface",
-      "from_text_sha256": "1f9a4a2c6cc52977e07df9bd444846bcc44e583764f8214934d9454e108cfaa6",
+      "from_text_sha256": "7a8a07fecf3e3d8e2a3c97bf89b4fc8afb16e865b120f765104ba2670c8b5dde",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
+      "to_text_sha256": "30b799d6dc397fecb513db9e0c3da2860a14f256be6e8c2779bc485b8ff112f3",
       "kind": "expands",
       "rationale": "Shows why one fixed polynomial agrees on a whole target line."
     },
     {
       "from_anchor": "pcp-long-encoded-line-soundness",
-      "from_text_sha256": "5d3530c6b023d231cd1580fccd60668db536300e64dd7684a539609bbf90d07f",
+      "from_text_sha256": "958018d9dd3d1cecf2a3adc2e35cdf3199d624791c536a1dd1ed18657d115281",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
+      "to_text_sha256": "30b799d6dc397fecb513db9e0c3da2860a14f256be6e8c2779bc485b8ff112f3",
       "kind": "expands",
       "rationale": "Derives the quantitative combined decoding theorem."
     },
     {
       "from_anchor": "pcp-long-outer-correction-soundness",
-      "from_text_sha256": "7cb69d8517d41aa2147e9091e646cbfd7d2fc3bf7745fa875d7df397f4934ba5",
+      "from_text_sha256": "b9652dc99e95bdfd61b1d3c9d613d1d1536aa9f275a41bc04b2d190a5d99c904",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-correction",
-      "to_text_sha256": "7cc21b19ca124519631255d45c0a3bf5db296fccadd42118c2ee105a7cb0dcf4",
+      "to_text_sha256": "708934698e1d1a0d30e250334bfd01d0fba325ec99281043a9ee22a40aa394d2",
       "kind": "expands",
       "rationale": "Derives the rejection-inclusive fixed-target correction bound."
     },
     {
       "from_anchor": "pcp-long-zero-soundness",
-      "from_text_sha256": "bafc34ee624b601515bcf6233d21570eddc191b48855b2701af5b38995b15242",
+      "from_text_sha256": "f81457a50ee673948e441c8d0f3af4226c0fc8b504958fbc91f8c7457f78f53f",
       "to_stage": "short",
       "to_anchor": "pcp-short-zero",
-      "to_text_sha256": "9dd41d5e5df6e045310ae7abec55a9f78ff8a0728deed5d6ce61fc90aaa61cbf",
+      "to_text_sha256": "a9263bbedcb82a98dc8ef71622296d345a366312b55da1ed0c9eafd6c7e2b89d",
       "kind": "expands",
-      "rationale": "Proves the base ZERO rejection comparison."
+      "rationale": "Proves the base zero-on-grid rejection comparison."
     },
     {
       "from_anchor": "pcp-long-derived-oracle-transfer",
-      "from_text_sha256": "8072418805a451c526e6466e052964519ab617fe6fd935539aa255d045274148",
+      "from_text_sha256": "660361d06aa8600929a861e7d5a08c25dc6f750f5bcdb77f16c8fa1c54f0f8b1",
       "to_stage": "short",
       "to_anchor": "pcp-short-zero",
-      "to_text_sha256": "9dd41d5e5df6e045310ae7abec55a9f78ff8a0728deed5d6ce61fc90aaa61cbf",
+      "to_text_sha256": "a9263bbedcb82a98dc8ef71622296d345a366312b55da1ed0c9eafd6c7e2b89d",
       "kind": "expands",
-      "rationale": "Proves the fresh-mask transfer to the derived ZERO test."
+      "rationale": "Proves the fresh-mask transfer to the derived zero-on-grid test."
     },
     {
-      "from_anchor": "pcp-long-decoding-contract",
-      "from_text_sha256": "289a58720c3a521b0beafe146ba4f9c728838ed4a6636f15489d35d4301eef77",
+      "from_anchor": "pcp-long-difference-soundness",
+      "from_text_sha256": "189581288ffe701613f096daa2d6c44981fc3510f03d08af66145975f0702691",
       "to_stage": "short",
       "to_anchor": "pcp-short-assembly",
-      "to_text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
+      "to_text_sha256": "de3aa80d2353a6611032be7e39a8490a278a93a75ad94567be32dab08d66b306",
       "kind": "expands",
       "rationale": "Fixes the four decoded primary polynomials used by all subsequent checks."
     },
     {
       "from_anchor": "pcp-long-assembled-zero-soundness",
-      "from_text_sha256": "2838db79dd692afe26ce00d8f86c8009dd48752dc1696d61b61580102b2b2453",
+      "from_text_sha256": "5192995097f920bb222f46e54c1a5efec010d2eee03b25b516e5d0b546e9a5df",
       "to_stage": "short",
       "to_anchor": "pcp-short-assembly",
-      "to_text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
+      "to_text_sha256": "de3aa80d2353a6611032be7e39a8490a278a93a75ad94567be32dab08d66b306",
       "kind": "expands",
       "rationale": "Proves both grid consequences for the same decoded objects."
     },
     {
       "from_anchor": "pcp-long-parameters",
-      "from_text_sha256": "4eb76bbf188c9e75d76815fe4131ccac62b9ff9ed0d4f77226bf10265a29e340",
+      "from_text_sha256": "2de6827be284abe486869771f03332092895792dbe0f08227e8bf5364d75e11d",
       "to_stage": "short",
       "to_anchor": "pcp-short-resources",
-      "to_text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
+      "to_text_sha256": "ae1212378c2e7ef1f77dfb0f7d662e4fc1729dc3492b4f184b03c427ee10a437",
       "kind": "expands",
       "rationale": "Checks all parameter inequalities for the concrete choice."
     },
     {
       "from_anchor": "pcp-long-amplification",
-      "from_text_sha256": "1adc8fdbca753584720be809441dcf0d0d8c5f1065371ceeab95ac100b9afcd3",
+      "from_text_sha256": "fac01bccdf4c84b778a3f49e4d8ea846738a49b66a3017782250f11480e26705",
       "to_stage": "short",
       "to_anchor": "pcp-short-resources",
-      "to_text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
+      "to_text_sha256": "ae1212378c2e7ef1f77dfb0f7d662e4fc1729dc3492b4f184b03c427ee10a437",
       "kind": "expands",
       "rationale": "Proves repetition for one fixed proof with independent seeds."
     },
     {
       "from_anchor": "pcp-long-runtime",
-      "from_text_sha256": "6b0cfb87eb5a821813b977729195c8cbc99e207c8f55018c349e050d0f7844db",
+      "from_text_sha256": "dd3aea6f52ab9eaf4f5c661817b79534fd6ecceae11baa2a231c037a9df50119",
       "to_stage": "short",
       "to_anchor": "pcp-short-complexity",
-      "to_text_sha256": "cf427e020fe6f9d4b76e2223807166d44075360862d4bf18f517df2d86ccb328",
+      "to_text_sha256": "de2472a735a73762b5faf9f426f0160fe36520a6d7395eb174fcf83ddb7a42f0",
       "kind": "expands",
       "rationale": "Explains callback correctness and cost composition."
     },
     {
       "from_anchor": "pcp-long-clause-reduction",
-      "from_text_sha256": "a560c14225aafb06e337b1adb7eb88b0ee797c59984c55a89aa295f29a14f8a2",
+      "from_text_sha256": "a25645584e5c9fc96cdcc75a4842f47f620001c3ecc52ec3620034568a52d4e7",
       "to_stage": "short",
       "to_anchor": "pcp-short-complexity",
-      "to_text_sha256": "cf427e020fe6f9d4b76e2223807166d44075360862d4bf18f517df2d86ccb328",
+      "to_text_sha256": "de2472a735a73762b5faf9f426f0160fe36520a6d7395eb174fcf83ddb7a42f0",
       "kind": "expands",
       "rationale": "Gives the Boolean clause construction in the NP reduction."
     },
     {
       "from_anchor": "pcp-long-seed-transport",
-      "from_text_sha256": "459a05770021b4024e1875be280688dcc49bf42db715d5a5ed46bcf6016a8213",
+      "from_text_sha256": "b004fa83049374c1f6aac4ad6578618918dada1131bebe17c380a302c85cd382",
       "to_stage": "short",
       "to_anchor": "pcp-short-complexity",
-      "to_text_sha256": "cf427e020fe6f9d4b76e2223807166d44075360862d4bf18f517df2d86ccb328",
+      "to_text_sha256": "de2472a735a73762b5faf9f426f0160fe36520a6d7395eb174fcf83ddb7a42f0",
       "kind": "expands",
       "rationale": "Derives the randomness transport through a polynomial-size reduction."
     },
     {
       "from_anchor": "pcp-long-converse",
-      "from_text_sha256": "f434104093321150b1bd4440030c7ef1faaef0777d6d2969e8a46c4768beb136",
+      "from_text_sha256": "1a01833f4d392eed54ab98500984bd77880d6773a7aa1b29bc3c267ec04922fe",
       "to_stage": "short",
       "to_anchor": "pcp-short-complexity",
-      "to_text_sha256": "cf427e020fe6f9d4b76e2223807166d44075360862d4bf18f517df2d86ccb328",
+      "to_text_sha256": "de2472a735a73762b5faf9f426f0160fe36520a6d7395eb174fcf83ddb7a42f0",
       "kind": "expands",
       "rationale": "Gives the finite witness checker and the two reference-machine simulations."
     }

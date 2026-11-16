@@ -26,7 +26,7 @@ Read the same accounts beside the linked Lean in Proof Reader:
 [worked exposition](https://wcook04.github.io/proof-reader/#/pcp-exposition).
 The [previous release checks](source-review/release-checks.json) retain the earlier
 clean-clone installation and deployment evidence. The current edition has its
-own [revision receipt](source-review/review-round-3/validation.json).
+own [revision receipt](source-review/review-round-4/validation.json).
 
 ## Exact sources and scope
 
@@ -53,19 +53,18 @@ expression dependencies.
 
 ## Checks and review state
 
-The [latest revision](source-review/review-round-3/README.md) preserves the 133
-prior repair verdicts and records the further changes. The full argument now
-starts with the assembled verifier; the specialist paper introduces its tables
-before the tests; the exposition carries one colouring example through to bit
-reads. The final PDFs have 46, 13 and 24 pages, including references and optional
-appendices. The [PDF check](source-review/review-round-3/pdf-checks.json) verifies
-named destinations for the companion links.
+The [latest revision](source-review/review-round-4/README.md) refines the writing:
+results are numbered and stated before they are used, terms and notation follow
+the cited literature, and repeated passages are cut. The final PDFs have 47, 12
+and 23 pages, including references and appendices. The
+[previous revision](source-review/review-round-3/README.md) preserves the 133
+earlier repair verdicts.
 
 The canonical bundle includes 38 authored reading relations between passages.
 These editorial relations are separate from proof dependencies. Source cards
 retain their source-reading or compilation evidence, and new procedure links
 are distinguished from directly matching theorem claims. The
-[validation receipt](source-review/review-round-3/validation.json) records exact
+[validation receipt](source-review/review-round-4/validation.json) records exact
 hashes and check outcomes. Earlier reports retain their own edition's evidence.
 No fresh full-library Lean build or human expert acceptance is claimed.
 

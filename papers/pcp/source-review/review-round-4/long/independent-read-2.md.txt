@@ -1,0 +1,129 @@
+# Independent read 2: Sections 4 and 5 of the full argument (L)
+
+File: `lean-exposition-pcp-r3/papers/pcp/long/reasoning-record.md`. Edits confined to Sections 4 and 5, each made with a targeted replacement. No commit.
+
+Guard after edits: `preserve_check.py base.md reasoning-record.md --allow allow.json` gives **RESULT PASS 0** (markers 146/146, tags 55/55, reference definitions 80/80, URLs 117 kept plus the one ledger L-i link, no display equation changed by me). Guard word count 23,946 at the time of the run; the other reader was editing the same file concurrently, so this figure is not attributable to one reader.
+
+## Method
+
+1. Read Sections 4 and 5 of the current text in full, then a sentence-level diff of every passage against `base.md` (41 passages, paired by marker).
+2. Rechecked the arithmetic of each proof by hand (constants listed below).
+3. Compared each statement proved here with its earlier statement in Sections 2 and 3.
+4. Opened the Lean files for the declarations behind each numbered result, and the source texts or PDFs for each locator.
+5. Read the equation diff and each renamed display in its surrounding text.
+
+## Passages checked
+
+Verdict "preserved" means: no hypothesis, quantifier, constant, probability space, case or step lost or changed against base, other than ledger rows and recorded renames; inline mathematics carries the same renames as the displays.
+
+| Passage | Verdict |
+| --- | --- |
+| algebra-scope | preserved; declaration "$s,t,y,z$ denote line parameters" was wrong for $y,z$ (fixed, see F1) |
+| algebra-polynomial-distance (proof of Lemma 2.1) | preserved |
+| algebra-grid-interpolation (proof of Lemma 2.2) | preserved |
+| algebra-grid-vanishing (proof of Lemma 3.2) | preserved; $Q_i\to U_i$ applied in displays and prose alike |
+| algebra-line-characterization (Lemma 4.1) | preserved |
+| algebra-generator-test (Lemma 4.2) | preserved; had lost its Lean line (fixed, F2) |
+| algebra-weighted-plurality (Lemma 4.3) | preserved; conclusion "g satisfies every constraint under (A10)" now in the statement |
+| algebra-generator-soundness (Theorem 4.4) | preserved |
+| algebra-old-test-counterexample (Section 4.3) | preserved; version-1 test checked against the version-1 text |
+| algebra-standard-correction (Lemma 4.5) | preserved; statement sharpened (F4) |
+| algebra-line-table-correction (Lemma 4.6) | preserved; $T_b(\lambda)\to T_v(z)$ consistent; ledger L-g present |
+| algebra-bivariate-statement (Theorem 4.7) | preserved; local letters $E,N,K$ declared |
+| algebra-column-selection, error-locator, clean-rectangle, coarse-agreement, agreement-boost (Steps 1 to 5) | preserved; ledger L-b sentence present; $\alpha\to\gamma_1$ consistent; $\rho$ declared local |
+| algebra-point-line-statement (Theorem 4.8) | preserved; ledger L-h present |
+| algebra-nearest-lines, fixed-parameter (Steps 1, 2) | preserved; ledger L-f ($r>0$) present; $L_{u,v}\to\widetilde T_{u,v}$ in every display and sentence |
+| algebra-crossing (Lemma 4.9) | preserved; ledger L-i nearestness sentence present; three Lean links |
+| algebra-mixed-plane, ruled-surface, point-line-constants (Steps 4 to 6) | preserved; $\ell\to\mu$ consistent; local $M$, $h$, $Q$ declared; table of five bounds and (A30) rechecked |
+| algebra-degree-zero | preserved |
+| algebra-source-boundary | preserved as a remark; ledger L-l item types present; the b0421 recap stays deleted (editorial, no statement lost) |
+| binary-purpose | preserved |
+| set-multilinear (proof of Lemma 3.3) | preserved; Enc, Dec $\to\Psi$, $U\circ\Phi$ consistent |
+| hadamard-composition (proof of Lemma 3.4) | preserved |
+| blr-proof (Theorem 5.1) | preserved; $h\to w$, $\ell\to\varphi$ consistent, $h=\lvert H\rvert$ untouched |
+| hadamard-self-correction | preserved; $Q\to\Lambda$ consistent |
+| hadamard-soundness (Theorem 5.2) | preserved; ledger L-n5 sentence present |
+| hadamard-row-decoding (Corollary 5.3) | preserved |
+| binary-weighted-test (Proposition 5.4) | preserved; b0523 repaired ("Since $q>2c$ and the nodes are powers of a generator") |
+| binary-inner-correction (Lemma 5.5) | preserved; no `GoodNodes` |
+| encoded-line-test, encoded-line-soundness (Lemma 3.5) | preserved; b0555 repaired (no unqualified "stronger") |
+| outer-local-corrector, outer-correction-soundness (Proposition 5.6) | preserved; b0571 repaired ("homogeneous-label form of (B1)"); proof had no `*Proof.*` head (fixed, F6) |
+| zero-certificate, zero-actual-test, zero-soundness (Proposition 5.7) | preserved; ledger L-k1 present (per-target bound then average) |
+| derived-oracle-transfer (proof of Lemma 3.6) | preserved; b0607/b0609 repaired as the recommended pair |
+
+Sampled silent changes: b0571, b0523, b0555, b0607/b0609 confirmed repaired in the current text. b0421 lies in Section 4.6 (recap not restored; nothing mathematical lost). b0119, b0079 and b0012 lie in Sections 1 and 3 and belong to the other reader.
+
+Arithmetic rechecked: (A10) at $n=c+1$ against (A11); (A13); (A14); Step 1 to 5 counts of Theorem 4.7 ($20\varepsilon\le1/5$, $(5d+2)d<q/2$, $(d+1)K\le q/10$, $2/3$ lower bound); (A26) uses in Lemma 4.9 ($12\varepsilon+2d/q$, $7\varepsilon+d/q$); (A28); the five-row table and (A30); Step 6 numbers ($\gamma\le0.0016$, $B\le0.00480425$, $0.482025$); query counts $2r+4$, $c+2$, $2r+2c+12$, $3c+9$, $6c+19$, $6c+20$; (B5) to (B7); (B9) to (B11); (B14), (B15); (B16) to (B18); (B20) to (B25). All correct.
+
+## Equation renames
+
+Every changed display in Sections 4 and 5 was read in place. $h\to w$ touched only the Hadamard word; $Dh/q$ in (B20), (B21), (B25) and $h=\lvert H\rvert$ in Section 4.1 are intact. $L\to\widetilde T$ touched only the nearest line polynomial; labels $L$ are intact. $Q\to U$ and $Q\to\Lambda$ left the local $Q(x,y)$ of Lemma 4.1 and $Q(y)$ of Step 5. $\ell\to\varphi,\mu$ left $\ell_a,\ell_i$. $E(c)\to J_c$ left the locator $E$ of (A17), (A18). $R_a\to\kappa_a$ left the fresh label $R$. No wrong rename found.
+
+## Numbered results
+
+| Result | Lean (file under `PCP/Algebraic/`) | Source and locator | Relation | Verdict |
+| --- | --- | --- | --- | --- |
+| Lemma 2.1 (proof) | `PolynomialDistance` | [ABSSW26, Theorem 2.5] | same | agrees with Section 2.1 statement ($m$ for $k$) |
+| Lemma 2.2 (proof) | `GridInterpolation` | [ABSSW26, Fact 2.4] | same | agrees |
+| Lemma 3.2 (proof) | `GridVanishing`, `VanishingCertificate` | [ABSSW26, Lemma 2.9, Corollary 2.10] | same | agrees; statement calls the polynomial $A$, proof $P$ |
+| Lemma 4.1 | `PolynomialLineCharacterization.exists_polynomial_of_hasLowDegreeLines_finite` (`2 * d < card F`) | [FS95/13, Lemma 4] ($q-q/p-1\ge d$, read) | stronger hypothesis | "cf." added |
+| Lemma 4.2 | `GeneratorLowDegreeTest.exists_polynomial`, `check_eq_zero_iff_exists_polynomial` | [ABSSW26, Fact 2.7] (cited before the lemma) | same | Lean line added |
+| Lemma 4.3 | `WeightedConstraintSoundness.distance_correction_le`, `prediction_error_le`, `correction_satisfies` | [RS96, Section 4, Theorem 5, Lemmas 6 to 8] (PDF pages 11, 12 read); [KS08, Lemma 3.1] (read: $2(k-1)\epsilon(f)$ pointwise) | follows the argument | correct; [KS08, Lemma 3.1] is the pointwise bound (A9), and the sentence now says so |
+| Theorem 4.4 | `GeneratorLowDegreeTest.exists_close` ($\delta<1/(2(c+2)^2)$, $2\delta$) | cf. [ABSSW26, Lemma 3.3] | weaker field hypothesis | correct |
+| Section 4.3 | none (stated) | [ABSSW26v1, Fact 2.7 "Furthermore", Lemma 3.3] (read: order $c+1$, unit weights) | counterexample | correct |
+| Lemma 4.5 | `StandardLocalCorrection.failure_le` (`GoodNodes c ζ`) | cf. [ABSSW26, Fact 2.8, Lemma 3.4] | no field or error hypothesis | correct after F4 |
+| Lemma 4.6 | `LineTableLocalCorrection.accepted_wrong_le` | cf. [ABSSW26, Theorem 2.14] | sharper | correct |
+| Theorem 4.7 | `BivariateAgreement.exists_polynomial_of_row_column_agreement` | [ALMSS98, Theorem 69] (read: nearest row and column polynomials, unnamed constants); [AS98, §5.2] (lemma numbers confirmed) | arbitrary approximants, explicit constants | "cf." added |
+| Theorem 4.8 | `PointLineSoundness.exists_close_of_small_rejection` | [ALMSS98, Theorem 45] (read: $\lvert F\rvert\ge\alpha(d+1)^3$, positive $d$) | explicit constants, $d=0$ included | "cf." added |
+| Lemma 4.9 | `PointLineCrossing.crossing_eq_of_nearby_polynomial`, `BivariateCrossingSoundness`, `CandidateCrossing` | [ALMSS98, Corollary 70] (read) | adds the variant | "cf." added |
+| Lemma 3.3 (proof) | `SetMultilinear`, `SetMultilinearDecode` | [ABSSW26, Definition 3.1, Claim 3.2] | same | agrees with Section 3 statement |
+| Lemma 3.4 (proof) | `HadamardComposition`, `HadamardWeights` | [ABSSW26, Claim 3.7] | same | agrees |
+| Theorem 5.1 | `BLR` | [BLR93, Section 4.2]; [BCHKS96, Theorem 1.2]; [ABSSW26, Theorem B.1] | same | locators exist; correct |
+| Theorem 5.2 | `HadamardSoundness.test_soundness` ($\delta<1/28$; $\delta$, $3\delta$) | cf. [ABSSW26, Lemma 3.10] | ten queries, extra product checks | correct |
+| Corollary 5.3 | `HadamardRowDecoding.exists_field_function_of_average_rejectionRate` (28, both distances) | none | Lee's | correct |
+| Proposition 5.4 | `BinaryLocalRowDecoding.exists_polynomial_distance_le` | cf. [ABSSW26, Lemma 4.3] | fair coin | correct |
+| Lemma 5.5 | `BinaryStandardLocalCorrection.failure_le` | cf. [ABSSW26, Lemma 3.4] | bits, averaged over the label | correct |
+| Lemma 3.5 (proof) | `EncodedLineLowDegreeTest.queries_length_le` ($2r+2c+12$), `EncodedLineLowDegreeSoundness.exists_close` | cf. [ABSSW26, Theorem 4.1] | whole-field $z$, homogeneous second bound | agrees with Section 3.3 statement (polynomial named $G$ there, $P$ here) |
+| Proposition 5.6 | `BinaryLocalCorrection.queries_length_le` ($3c+9$), `BinaryLocalCorrectionSoundness.failure_le` | cf. [ABSSW26, Theorem 5.1] | explicit, no smallness | correct |
+| Proposition 5.7 | `BinaryZeroOnGridCorrection.queries_length_le` ($6c+19$), `BinaryZeroOnGridSoundness` | [ABSSW26, Theorem 6.1] | independent seeds, explicit constant | correct |
+| Lemma 3.6 (proof) | `DerivedZeroOnGridSoundness.queries_length_le` ($6c+20$), `rejection_transfer`; `HadamardDerivedOracle` | cf. [ABSSW26, Theorem 6.1] | self-corrected reads | agrees with Section 3.3 statement (table named $p$ there, $w$ in Section 5.8; now said in the proof) |
+
+Locators confirmed in the source texts: ALMSS Theorem 45, Lemma 66, Theorem 69, Corollary 70, Lemma 71, Corollary 72, Lemma 73, Proposition 34; Friedl–Sudan Lemma 4; Arora–Safra Lemmas 5.2.2, 5.2.5, 5.2.7 and Corollary 5.2.3; Kaufman–Sudan Lemma 3.1 and Theorem 2.9 with threshold $1/((2k+1)(k-1))$; Rubinfeld–Sudan Section 4 (from the PDF, since its text extraction is unreadable); BLR Definition 2.5 and Section 4.2; BCHKS Theorem 1.2; every ABSSW version-2 item cited in these sections; the version-2 acknowledgment of Troy Lee.
+
+## Fixes made
+
+| # | Place | Before | After | Reason |
+| --- | --- | --- | --- | --- |
+| F1 | Section 4 opening | "$s,t,y,z$ denote line parameters" | "$s,t$ denote line parameters" | $y,z$ are points of $V$ in Lemma 4.3, grid points in (A2), coordinates in Section 4.5; the blanket declaration was false. Each use of $y,z$ as a parameter is bound where it occurs. |
+| F2 | End of Lemma 4.2 | no Lean line | "Lean: [exact characterization][lean-generator]." | Each numbered result ends with a Lean line; the declaration is in that file. |
+| F3 | After Lemma 4.3 | "Plurality correction with its pointwise bound is also [KS08, Lemma 3.1]." followed by three sentences instantiating [KS08, Theorem 2.9] | "The pointwise bound (A9) is also [KS08, Lemma 3.1]." and one clause giving the forms and the threshold $1/[(2k+1)(k-1)]=1/(2c^2+7c+5)$ | Lemma 3.1 there is exactly the pointwise bound; the instantiation was commentary. All citations kept. |
+| F4 | Lemma 4.5 statement | "the nodes in (A6) are distinct and nonzero" | "$\zeta\in F$ is any element for which the nodes in (A6) are distinct and nonzero" | (A6) was introduced with $\zeta$ a generator, which makes the hypothesis vacuous; Lee's lemma and Section 5 use an arbitrary such $\zeta$. |
+| F5 | Remark after Theorem 4.4 | second sentence on the threshold $1/[4(c+2)^2]$ | removed | Stated again at its point of use in Section 5.4; not a formalization difference. |
+| F6 | Proposition 5.6 | proof began without a head | "*Proof.*" inserted | The statement and its proof ran together. |
+| F7 | After Proposition 5.6 | "The bound does not bound $\kappa_a$ itself." | "The proposition gives no bound on $\kappa_a$ itself." | Wording. |
+| F8 | After Proposition 5.7 | formalization remark ran on in the same paragraph | own paragraph | Convention for remarks. |
+| F9 | Proof of Lemma 3.6 | "The test of Lemma 3.6 is the zero-on-grid test with the read $p(x,L)$ replaced by (B23)" | adds "whose points table $p$ is the table $w$ here" and "of Section 5.7 with its read" | $p$ names two different tables in Lemma 3.6 and in Section 5.7. |
+| F10 | Step 2 of Section 4.6 | "No convention for choosing among tied nearest polynomials is required." | removed | Repeated in the closing remark on sources. |
+| F11 | Section 5.3 after (B3) | "The two events need not be independent." | removed | Union bound; commentary. |
+| F12 | End of proof of Lemma 3.6 | "The error $2\epsilon$ is multiplied by $1+2C_c$ because ..." | removed | Restates (B25). |
+| F13 | Lemma 4.1, Theorems 4.7, 4.8, Lemma 4.9 headers | plain citation | "cf." | Hypotheses or constants differ from the cited statement; the difference is already stated beside each. |
+| F14 | All 24 proofs in Sections 4 and 5 | "∎" | `$\square$` | Coordinator's typesetting decision: the character is missing from the PDF font. Section 2.2 already used `$\square$`. |
+
+## Words
+
+Removed about 95 words of prose (F3 about 45, F5 17, F10 10, F11 7, F12 17). Added about 30 (F2, F4, F6, F9, F13). Net about 65 fewer prose words in Sections 4 and 5. F14 adds 24 guard tokens.
+
+Optional cuts from the editor's list that fall in these sections: the Kaufman–Sudan paragraph (partly applied in F3: the credit and the threshold comparison stay). "Unlinking repeated [ABSSW26] citations" refused: it removes links.
+
+## Left as it is
+
+- Statement and proof letters differ for three results: Lemma 3.2 ($A$ against $P$), Lemma 3.5 ($G$ against $P$), Lemma 3.6 ($A$, $p$ against $P$, $w$). The proofs name the correspondence for Lemma 3.6. Displays (A3) to (A5), (B15), (B19) fix the proof letters, so the change would have to be made in Section 3.
+- Dimension is $m$ in Section 4 and $k$ in Sections 2, 3 and 5. Declared at the head of Section 4.
+- Letter clashes with a local declaration that reads correctly: $w_i$ weights in (A6); $h=f-P$ in Lemma 4.2; $b\in H$ in the Lagrange product; set $B$ in Section 4.5 and number $B$ in (A30); $\zeta$ generator in (A6) and correction parameter in Lemma 5.5 (declared there, with $\theta$ the generator); $\eta_i$ weights and $\eta$ distance; $\tau$ in Section 4.5 and Section 5.4; $e$ in Sections 4.5, 4.6, 5.3, 5.6; $g$ throughout.
+- The formalization remark on the Hadamard test stands before Theorem 5.2 because it concerns the test's definition.
+- Sentences of the form "Theorem 4.7 supplies $P$" and "This section proves" are ordinary mathematical usage and were not changed.
+- Step lines of the two long proofs each carry a Lean line, as the editor reports.
+
+## Mathematical points open
+
+None. No error of statement or proof was found in Sections 4 and 5.

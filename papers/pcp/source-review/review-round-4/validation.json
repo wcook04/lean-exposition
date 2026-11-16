@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-16",
+  "scope": "Third review round: writing refinement of the three PCP accounts. No new full-library Lean build, Comparator run or human expert review is claimed for this revision.",
+  "manuscripts": {
+    "long": {
+      "markdown": "papers/pcp/long/reasoning-record.md",
+      "markdown_sha256": "a703894c605a72e35f4888523bc0b0f64ce7d3fd3861a634ac1e0cd073328882",
+      "pdf": "papers/pcp/long/reasoning-record.pdf",
+      "pdf_sha256": "f88b28769f157ee3bd25cb84cb0cc09de99618a91edd2323acb94295002d090d",
+      "pages_before": 47,
+      "pages": 47,
+      "prose_words_before": 15048,
+      "prose_words": 13868,
+      "all_tokens_before": 23276,
+      "all_tokens": 23943,
+      "display_equations": 173,
+      "passages": 73,
+      "mapping_sha256": "515b9d0cc54f0b315cd40e36122764523b873ec89183c92a232ee483d8d7b16f"
+    },
+    "short": {
+      "markdown": "papers/pcp/short/paper.md",
+      "markdown_sha256": "cdfb5593a93718fe05882713ddbd6560984fa1c3c2d70d39cf6448c3e1e53d98",
+      "pdf": "papers/pcp/short/paper.pdf",
+      "pdf_sha256": "01282af2144308bb9efc87f71151447078192957831f620d4e279d00b653e483",
+      "pages_before": 13,
+      "pages": 12,
+      "prose_words_before": 4333,
+      "prose_words": 3722,
+      "all_tokens_before": 6310,
+      "all_tokens": 6186,
+      "display_equations": 36,
+      "passages": 16,
+      "mapping_sha256": "b8e71df601c570192aadfbffb01a3233d964c700c8728fb55690219514ae076c"
+    },
+    "expository": {
+      "markdown": "papers/pcp/expository/main.md",
+      "markdown_sha256": "355ba9e48e53043f8e08a5e32030c779f50b37989c4e6b79ef90f2dbc432f2af",
+      "pdf": "papers/pcp/expository/main.pdf",
+      "pdf_sha256": "cf9ec0d23e7a82ce6455dbd5d9f5b406b5e1f7ad337bd7f0633743c3f1b2afc5",
+      "pages_before": 25,
+      "pages": 23,
+      "prose_words_before": 9162,
+      "prose_words": 7712,
+      "all_tokens_before": 12336,
+      "all_tokens": 11284,
+      "display_equations": 53,
+      "passages": 24,
+      "mapping_sha256": "96dbf3f1632a1f23c63e20ac1fadfc446f844d9511b3cb5d50d20857baa0008c"
+    }
+  },
+  "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
+  "checks": {
+    "edit_guard": "every passage marker, equation tag, reference definition and URL of the previous edition is present; removed headings are the recorded renames",
+    "displayed_equations": "each displayed equation of the previous edition equals one of this edition under the recorded symbol renames; no other change inside any display",
+    "companion_links": "all internal and companion links resolve against current headings (0 broken)",
+    "mappings": "text and content hashes refreshed; lean-exposition validate, assemble and check-bundle pass",
+    "pdf": "rendered with papers/pcp/render.py; papers/pcp/check_pdfs.py passes; every table and sampled pages inspected",
+    "finite_examples": "check_examples.py, check_exposition_examples.py, check_trace.py and check_changed_cases.py exit 0",
+    "repository": "scripts/check_layout.py and scripts/check_links.py pass; 712 unit tests pass (2 skipped)",
+    "passage_associations": "all 113 passage-to-Lean associations re-read against the revised text; 12 corrected, 2 reading links retargeted"
+  },
+  "evidence_limits": "The reviews, the mathematical check of their proposals and the independent reads were all done by AI models. Lean declarations were read, not compiled, in this round. Troy Lee has not reviewed these papers."
+}

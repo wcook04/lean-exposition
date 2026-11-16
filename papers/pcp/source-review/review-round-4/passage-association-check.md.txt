@@ -1,0 +1,286 @@
+# Passage-association check after the round-3 revision
+
+Read-only check of all 113 mapped passages: 73 in long/reasoning-record.json, 16 in short/correspondence.json and 24 in expository/correspondence.json. Each passage's current text was compared with base.md, its claim_ids and the graph or Lean statements, and its rationale.
+
+No repository files were edited. Line numbers refer to the current .md files.
+
+## Counts (primary verdict)
+
+- claim_moved: 7
+- ok: 101
+- rationale_stale: 4
+- topic_changed: 1
+
+Twelve rows are non-ok. Four of them were already mis-bound in base: long hadamard-soundness, long outer-local-corrector, expository hadamard-correction and expository colouring-gadget. They are included because the reader site shows them now. The other eight were caused by the revision: long intro-readers, decoding-contract and difference-soundness; short proof-inventory and outer-correction; expository proof-inventory, assembly and resources. Two reading links also need fixing (see the end).
+
+Across the three papers, no numbered result sits outside a passage while its old passage lost it. The unwrapped regions hold only headings, blank lines, link definitions and the long paper's attribution paragraph at L55.
+
+## All passages
+
+| paper | anchor | cur lines | verdict | note |
+|---|---|---|---|---|
+| long | pcp-long-intro-theorem | 14–53 | ok | Thm 1.1 (np_subset_pcp), Thm 1.2 statement (pcp_subset_np_concrete) and the ComplexityLib equivalence remark (inNP_iff_mem) are all present. The reverse-inclusion sketch moved to Section 3.12 (converse passage), which already binds the same ids. |
+| long | pcp-long-intro-roadmap | 57–62 | ok | The text is now a section roadmap. The eight lemma-level claims are served through the unchanged proof-map figure and the references to "Theorems 1.1 and 1.2 from Lemmas 3.2 to 3.6" and "local correction". The rationale (figure arrows) still holds. Weakest ok in the batch: the prose no longer explains any of these claims. |
+| long | pcp-long-intro-readers | 68–82 | topic_changed, rationale_stale | It was a reading guide; it is now notation plus Lemma 2.1 (Schwartz–Zippel) and Lemma 2.2 (low-degree extension), with claim_ids []. |
+| long | pcp-long-implementation-contracts | 134–140 | ok | Table turned into prose. All six results are still described (step correctness, cost, compilation, NP reduction, finite-witness checker, reference machines). |
+| long | pcp-long-final-target | 145–147 | ok | A section-opening and notation passage, as in the base. It names the verifier and the added sampler, machine and NP reduction; it states no theorem, as before. |
+| long | pcp-long-colour-equations | 151–184 | ok | Lemma 3.1 with proof; "exactly the roots of Z^3-1"; K_4 example kept. |
+| long | pcp-long-grid-constraints | 186–214 | ok | Constraint construction and equivalence kept. Lemma 3.2 (vanishing certificate) is now numbered here; optionally add `PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate`. |
+| long | pcp-long-eight-tables | 218–245 | ok | Eight tables and seven checks match the Proof datatype. The Hadamard-row definition moved to pcp-long-hadamard-labels (not a bound claim). Lemma 3.3 is newly stated here. |
+| long | pcp-long-derived-constraints | 247–263 | ok | Lemma 3.4, the self-corrected read, exactness for an exact encoding (answer_encode) and the twice-distance error (averaged_failure_le) are present. |
+| long | pcp-long-query-budget | 265–276 | ok | Seven bounds and sum 20c+107 (branchQueryBound, queries_length_le). "Two proofs agreeing on the listed addresses give the same verdict" (test_congr). The c=4 → 187 arithmetic moved to Section 3.8 (not a bound claim). |
+| long | pcp-long-completeness | 302–320 | ok | Proposition 3.7 with proof. |
+| long | pcp-long-decoding-contract | 280–298 | claim_moved | The application that produces P,Q_*,M_A,M_B, and the claim that "small κ forces colourability", moved to the Theorem 3.8 statement and proof in pcp-long-difference-soundness. This passage now states Lemmas 3.5 and 3.6. |
+| long | pcp-long-difference-soundness | 324–357 | claim_moved | It now opens with the Theorem 3.8 statement and the decoding step (received from decoding-contract), followed by the difference identity. Its claim_ids lack these. |
+| long | pcp-long-assembled-zero-soundness | 359–380 | ok | Applies Lemma 3.6 with D_1=5D; the inequality matches rejectionRate_lower_bound. |
+| long | pcp-long-gap | 382–408 | ok | g_c definition, the three bounds and the closing "rejection below g_c implies colourability" are present. The K_4…T_4 table moved to amplification (the gap id still holds, since g_c is defined here). |
+| long | pcp-long-parameters | 412–462 | ok | Lemma 3.9 states and proves the volume bound (volume_le, volume_le_log_add_one). |
+| long | pcp-long-fair-bits | 466–482 | ok | The (q−1/q)^4 identity (rejectionRate_eq) is present. |
+| long | pcp-long-resources | 484–557 | ok | Seven-row exponent table and exact r (originalBits_eq_sum); proof-length, query and rejection guarantees; Prop 3.10. The rationale's "seven branch seed exponents and their exact sum" holds at L514–527. |
+| long | pcp-long-amplification | 561–604 | ok | Lemma 3.11 with the induction inequality, and the amplified verifier with R and 187R. The constants table now lives here. |
+| long | pcp-long-runtime | 608–630 | ok | Prop 3.12 covers the field-setup cost 10^9(q+4)^7 (roots_cost), the two-pass correctness, the query-storage premise, the exponent formula and compilation. |
+| long | pcp-long-np-tableau | 634–656 | ok | Tableau equivalence; only symbols renamed. |
+| long | pcp-long-local-constraints | 658–687 | ok | Cell-step reconstruction kept verbatim in substance. |
+| long | pcp-long-clause-reduction | 689–708 | ok | One-hot encoding and the 2^{k_0}(3k_0+2) clauses (satisfiable_iff). |
+| long | pcp-long-colouring-gadget | 710–729 | ok | NAE gadget and the colourability equivalence (colorable_iff). |
+| long | pcp-long-reduction-runtime | 731-739 | ok | Program cost (sixth-degree bound, costPoly) and Proposition 3.13 (program-bearing reduction, of_inNP_program / exists_program) both present; the base "More explicitly…" content is now restated as Prop 3.13. |
+| long | pcp-long-seed-transport | 743-771 | ok | The clog bound $\lceil\log_2(p_f(n)+2)\rceil\le e\lceil\log_2(n+2)\rceil+\lceil\log_2(p_f(1)+2)\rceil$ is still derived; the passage now also carries the proof of Theorem 1.1 (base had the same concluding paragraph). |
+| long | pcp-long-converse | 775-798 | ok | Proof of Theorem 1.2 (pcp_subset_np[_concrete]) plus the formalization remark on the two simulations (inNP_iff_mem) both present. |
+| long | pcp-long-algebra-scope | 840-851 | ok | No claims; context only. Base paragraph on the pinned primary paper and test choices was cut, but nothing was bound to it. Rationale ("consult the explicit primary-source links") still true: [ABSSW26][paper] link present. |
+| long | pcp-long-algebra-polynomial-distance | 855-877 | ok | Lemma 2.1 (A1), distance $\ge1-d/q$, injectivity for $d<q$ and uniqueness-within-radius all present. |
+| long | pcp-long-algebra-grid-interpolation | 879-897 | ok | Lemma 2.2: Lagrange extension (A2) with existence and uniqueness. |
+| long | pcp-long-algebra-grid-vanishing | 899-941 | ok | Lemma 3.2: decomposition (A3)/(A4), certificate (A5), and the $hD$ substitution bound all present. |
+| long | pcp-long-algebra-line-characterization | 943-966 | ok | Lemma 4.1 states and proves exists_polynomial_of_hasLowDegreeLines. |
+| long | pcp-long-algebra-generator-test | 970-1004 | ok | Nodes distinct (nodes_injective), weights nonzero, interpolation check, polynomial acceptance (polynomial_predict), plus Lemma 4.2. |
+| long | pcp-long-algebra-weighted-plurality | 1006-1079 | ok | Lemma 4.3: (A7), (A9) and the exact constraint under (A10). |
+| long | pcp-long-algebra-generator-soundness | 1081-1104 | ok | Theorem 4.4 = exists_close. |
+| long | pcp-long-algebra-standard-correction | 1139-1156 | ok | Lemma 4.5, bound (A13) = failure_le. |
+| long | pcp-long-algebra-line-table-correction | 1158-1187 | ok | Lemma 4.6, bound (A14) = correct_wrong_le. |
+| long | pcp-long-algebra-bivariate-statement | 1191-1209 | ok | Theorem 4.7 = exists_polynomial_of_row_column_agreement. |
+| long | pcp-long-algebra-column-selection | 1211-1223 | ok | Step 1: mean discrepancy $\le2\varepsilon$, good columns (A16), set $S$. |
+| long | pcp-long-algebra-error-locator | 1225-1259 | ok | Step 2: certificate (A17)/(A18), $E\ne0$. |
+| long | pcp-long-algebra-clean-rectangle | 1261-1278 | ok | Step 3: nonzero columns, row equation, $/B/\ge2q/5$. |
+| long | pcp-long-algebra-coarse-agreement | 1280-1299 | ok | Step 4: interpolated $P$, (A19). |
+| long | pcp-long-algebra-agreement-boost | 1301-1326 | ok | Step 5: transverse estimate (A20) and $\Delta(f,P)\le4\varepsilon$. |
+| long | pcp-long-algebra-point-line-statement | 1330-1352 | ok | Theorem 4.8 = exists_close_of_small_rejection; test definition (A21). |
+| long | pcp-long-algebra-nearest-lines | 1354-1374 | ok | Nearest-line correction (A23) and plurality bound (A24). |
+| long | pcp-long-algebra-fixed-parameter | 1376-1399 | ok | Fixed-parameter bound (A25) = rejectionAt_le_four_mul. |
+| long | pcp-long-algebra-crossing | 1401-1419 | ok | Lemma 4.9 (all-nearest case) = crossing_bestApproximation_eq; variant also present. |
+| long | pcp-long-algebra-mixed-plane | 1421-1466 | ok | Four mixed-plane error means and endpoint bound (A28). |
+| long | pcp-long-algebra-ruled-surface | 1468-1523 | ok | Five-error table (endpoint_error_le) and line-degree conclusion (hasLowDegreeLines_of_endpoint_bounds). |
+| long | pcp-long-algebra-point-line-constants | 1525-1544 | ok | Field bounds and the budget $B/\varepsilon+\gamma\le0.482025<1$. |
+| long | pcp-long-algebra-degree-zero | 1546-1557 | ok | Pair-disagreement $\le2\delta$ and constant approximation. |
+| long | pcp-long-algebra-source-boundary | 1560–1564 | ok | Claims []. Now a short *Remark (sources)* on the ALMSS Appendix A sequence. The base's first paragraph (keeping the short test apart from point-versus-line) was cut, but it carried no claim. The generic rationale still holds. |
+| long | pcp-long-binary-purpose | 1601–1615 | ok | Claims []. Same introductory topic and setup (ρ, b, c, r, c=4). |
+| long | pcp-long-set-multilinear | 1619–1666 | ok | Covers all five claims: Ψ∘Φ=p (decode_encode), injectivity, evaluation, total degree ≤ c, deg(U∘Φ) ≤ cb^c. Enc/Dec were renamed to Ψ/Φ. |
+| long | pcp-long-hadamard-labels | 86–122 | ok | Moved to §2.2. Lemma 2.3 and (B1) on all labels and on homogeneous labels still serve both relativeDistance claims. |
+| long | pcp-long-hadamard-composition | 1671–1686 | ok | (B2) covers encode_query. The scalar relabelling covers scaleLabelEquiv. The zero coefficient "summand is zero and needs no query" plus relabelling covers weightedRead_encode. |
+| long | pcp-long-blr-proof | 1690–1729 | ok | Theorem 5.1 plus the Fourier proof (cubic identity) serve both claims. |
+| long | pcp-long-hadamard-self-correction | 1731–1766 | ok (see note on hadamard-soundness) | (B3) serves selfCorrect_failure_le. This passage also states the 2r+4 query count, which is bound elsewhere. |
+| long | pcp-long-hadamard-soundness | 1768–1808 | claim_moved | testQueries_length (the 2r+4 query count) is not discussed here. The count sits in hadamard-self-correction (L1762), as it already did in base. The other three claims are served. |
+| long | pcp-long-hadamard-row-decoding | 1810–1825 | ok | Corollary 5.3 and (B7) serve exists_field_function_of_average_rejectionRate. |
+| long | pcp-long-binary-weighted-test | 1829–1898 | ok | (B9) gives field_rejectionRate_le, "each alternative ≤2κ" gives branch_rejectionRates_le_twice, and (B10)/(B11) with Prop 5.4 give the row-decoding claims. |
+| long | pcp-long-binary-inner-correction | 1900–1923 | ok | Lemma 5.5 and (B13) serve failure_le. |
+| long | pcp-long-encoded-line-test | 1927–1939 | ok | "at most 2r+2c+12 queries" serves queries_length_le. |
+| long | pcp-long-encoded-line-soundness | 1941–1984 | ok | (B14)/(B15) serve exists_close and exists_decoded_table. The constants q≥10^6D^3 and 1/(4·10^6) serve fieldFactor and smallError. |
+| long | pcp-long-outer-local-corrector | 1988–1996 | claim_moved | BinaryLocalCorrection.failure_le (the soundness bound, BinaryLocalCorrectionSoundness.lean:222) is not discussed here. It is proved in outer-correction-soundness (B16), which is also bound to it. Same in base. |
+| long | pcp-long-outer-correction-soundness | 1998–2037 | ok | Prop 5.6 / (B16) is failure_le. "replace δ by 2δ" is failure_le_full_distance. (B18) is binary_origin_error_le_binary_comparison. |
+| long | pcp-long-zero-certificate | 2041–2071 | ok | It still states the vanishing-certificate equivalence, now citing Lemma 3.2 instead of proving the reverse direction, and the field test rejects with probability at least 1−Dh/q. |
+| long | pcp-long-zero-actual-test | 2073–2083 | ok | 1+2(3c+9)=6c+19 serves queries_length_le. |
+| long | pcp-long-zero-soundness | 2085–2119 | ok | (B21) is rejectionRate_ge, (B22) is rejectionRate_lower_bound, and "use 2δ_P+4δ_M" is the full-distance variant. |
+| long | pcp-long-derived-oracle-transfer | 2123–2165 | ok | (B23)/(B24) serve the HadamardDerivedOracle claims. (B24)/(B25) serve the DerivedZeroOnGrid claims. The base's closing pointer to the seven-check argument was cut; it carried no claim. |
+| long | pcp-long-algebra-old-test-counterexample | 1109–1135 | ok | Moved to §4.3. Same counterexample (f=x_1^4, ω of order 3). |
+| long | pcp-long-intro-source-editions | 2169–2177 | ok | Now under §6 and broader (adds what Lean proves and the differences list), but it still covers the source editions and credits. It now names `np_subset_pcp` explicitly. |
+| long | pcp-long-references | 2181–2205 | ok | Bibliography. Rationale holds. |
+| short | pcp-short-abstract | 9–11 | ok | Shorter; still states the theorem, the four nearby polynomials and the rejection-dependent correction bound. |
+| short | pcp-short-theorem | 15–37 | ok | Theorem 1.1 (np_subset_pcp), "Conversely, every language with such a verifier lies in NP" (pcp_subset_np_concrete), formalization remark on the concrete machine model (inNP_iff_mem). Now also wraps history, contribution and roadmap. |
+| short | pcp-short-colour-constraints | 41–91 | ok | Lemma 2.1 is colorable_iff_exists_constraints. Now also wraps preliminaries and Lemma 2.2 (Combinatorial Nullstellensatz / certificate); optional add `PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate`. |
+| short | pcp-short-proof-inventory | 169–186 | rationale_stale | Still the Proof structure (eight tables, seven checks); moved to end of §3. Rationale's "primary and auxiliary tables" is now "points tables" / "lines tables". |
+| short | pcp-short-digit-encoding | 95–121 | ok | Definition 3.1, (4) = eval_encode; rationale's degree points all still present (L113–120). |
+| short | pcp-short-hadamard-encoding | 123–167 | ok | Lemma 3.3 (relativeDistance_encodeFunction_map), (8) (encode_query), Lemma 3.4 (selfCorrect_failure_le). Base's label-domain table removed; rationale is generic. |
+| short | pcp-short-weighted-test | 190–218 | ok | Lemma 4.1 = GeneratorLowDegreeTest.exists_close; q>2c, strict threshold, KS08/FS95/RS96 citations and Appendix A pointer present. |
+| short | pcp-short-binary-decoding | 220–237 | ok | Lemma 4.2 (test_soundness), Remark "2r+4 queries, ten for cubic … eight" (testQueries_length), Lemma 4.3 (row/polynomial decoding). |
+| short | pcp-short-outer-decoding | 239–286 | ok | Theorem 4.5 (point-versus-line), Theorem 4.6 (EncodedLineLowDegreeTest.exists_close), bivariate link. Lemma 4.4 (standard local correction) is numbered here; optional add `PCP.Algebraic.BinaryStandardLocalCorrection.failure_le`. |
+| short | pcp-short-outer-correction | 290–317 | rationale_stale (minor) | Theorem 5.1 = BinaryLocalCorrection.failure_le, served. Rationale's "arbitrary auxiliary table" — passage now says "let $f'$ be arbitrary" / "lines table". |
+| short | pcp-short-zero | 319–347 | ok | Lemma 5.2 with (15) and the derived bound (16). |
+| short | pcp-short-assembly | 351–395 | ok | Theorem 6.1 (rejectionRate_ge_of_not_colorable) and the completeness paragraph L394 (exists_proof_rejectionRate_eq_zero). |
+| short | pcp-short-resources | 399–427 | ok | (22) ν2^ν ≤ 32(⌈log₂N⌉+1) = volume_le_log_add_one (a renamed ν). |
+| short | pcp-short-complexity | 429–443 | ok | Remark (formalization) on polynomial-time implementation in Mathlib's machine model = polyTimeAlg. |
+| short | pcp-short-formal-correspondence | 447–453 | ok | All bound results named with their theorem numbers; Appendix A noted as not Lean-checked. |
+| short | pcp-short-old-test-counterexample | 457–466 | ok | Same counterexample; it is in "## Appendix A. The version-1 low-degree test" (L455), so "moved to Appendix A" holds. |
+| expository | pcp-expository-opening | 9-56 | ok | The abstract and introduction state the NP-in-PCP theorem informally (L12-15, L22-28). The new Abstract heading and the citation reshuffle are editorial only. |
+| expository | pcp-expository-colouring | 58-85 | ok | Keeps the K4 example and the 1/(6+3t) and 1/15 calculations. It drops only the "two obligations" prose, which no claim binds. |
+| expository | pcp-expository-theorem | 87-146 | ok | Theorem 2.1 (np_subset_pcp), the NP definition by witness (inNP_iff_mem) and the converse by exhaustive seeds (pcp_subset_np_concrete) are all present. |
+| expository | pcp-expository-polynomial-distance | 148-190 | ok | The F5 table of Z(X), the root bound and Lemma 3.1 (Schwartz–Zippel) are present. The examples binding still fits. |
+| expository | pcp-expository-interpolation | 192-241 | ok | Same worked p(3) example and the same low-degree extension; L_s is renamed ψ_s. |
+| expository | pcp-expository-colour-polynomials | 243-327 | ok | The residual table (sub_cube_eq_one_iff_ne), Val and Prop (constraints_iff_satisfies), and the K4 and one-edge examples are present. |
+| expository | pcp-expository-grid-certificate | 329-392 | ok | The Nullstellensatz representation, M(X,U) with its two identities, and the one-edge trace M(ω,0), M(ω,1) are present. Question 1 was cut; no claim binds it. |
+| expository | pcp-expository-digit-encoding | 394-483 | ok | Theorem 6.1 (point-versus-line), the p(Y)=Y^4+2Y+3 example and Φ with p̃(Φ(z))=p(z) (eval_encode) are present. |
+| expository | pcp-expository-weighted-test | 485-532 | ok | Theorem 6.2 (standard low-degree test) states GeneratorLowDegreeTest.exists_close. |
+| expository | pcp-expository-hadamard | 534-583 | ok | The word for 101, the exactly-half distance, the 46/18 BLR count and Theorem 7.1 (BLR) are present. |
+| expository | pcp-expository-hadamard-correction | 585-604 | claim_moved | The passage covers self-correction only. The BLR distance theorem in its claim_ids is stated in pcp-expository-hadamard (L579-582), and the base passage did not state it here either. |
+| expository | pcp-expository-cubic-labels | 606-695 | ok | Present: the degree-r encoding and the Λ label calculation (encode_query), the ten-bit count (testQueries_length, L677-678), and the self-corrected read with 2ε_x and averaged 2ε (answer_failure_le, averaged_failure_le). |
+| expository | pcp-expository-proof-inventory | 697-722 | rationale_stale (minor) | The content is still the Proof structure: eight tables, four points and four lines. The rationale's "primary"/"auxiliary" vocabulary no longer appears in the passage. The passage now also carries the "## 8." heading. |
+| expository | pcp-expository-binary-tests | 724-883 | ok | Theorems 8.1 and 8.2, the 4/256 versus 4/8 example and the ZERO test with the ideal-test sketch are present. rejectionRate_ge gets only a qualitative explanation here, as in base; its inequality is in assembly L1010-1016. |
+| expository | pcp-expository-worked-zero | 885–949 | ok | Full F4 trace kept: colour reads, two line restrictions, encodings, eight correction reads, comparison reads, inner-test reads omitted (L929–930), field/c caveat (L947–948). The "ZERO" in the rationale is now called the "zero-on-grid test", which is only a rename. The trace-checker link moved to evidence (L1471). |
+| expository | pcp-expository-assembly | 951–1067 | rationale_stale | Proof inventory, completeness (L972–976) and soundness (L978–1066) still serve all three claims. The rationale's "worked trace … omits inner-test queries" and "not query counts" are no longer in the passage. |
+| expository | pcp-expository-resources | 1069–1137 | claim_moved, rationale_stale | Base Question 5 (toy soundness budgets, an exposition-examples case) moved to Exercise/Solution 5 in answers (L1160–1167, L1213–1219). The (3/4)^3 toy left here is checked by ordinary:finite-examples, which is not bound. |
+| expository | pcp-expository-answers | 1139–1247 | ok | Exercises 6–7 and Solutions 6–7 still serve changed-cases-example. Exercise/Solution 5 (toy budgets) now serves exposition-examples more directly than base did. |
+| expository | pcp-expository-parameters | 1249–1304 | ok | Same calculation with ν in place of a. Gained the 26,22,26,22,44,44,3 / 187 query caps from resources (L1294–1298), which exposition-examples also checks. choice_spec/volume bounds are served by L1254–1275. |
+| expository | pcp-expository-error-constants | 1306–1322 | ok | K, J (formerly E), S, C are defined. Their roles are now referred to Section 8 (L1320–1321) rather than stated, but the passage still defines the constants used by the three bound theorems. |
+| expository | pcp-expository-colouring-gadget | 1324–1362 | claim_moved (binding mismatch, inherited from base) | The passage covers NAE splitting and the triangle/palette 3-colouring gadget. All three bound Lean claims (orGate_iff, pattern_spec, satisfiable_iff of FiniteBooleanConstraints) are about the clause construction, which is in clause-calculation L1364–1393. |
+| expository | pcp-expository-clause-calculation | 1364–1393 | ok | The pattern flags, OR-gate clauses and polynomial size are all here. Optional: add the pattern_spec id (see details). |
+| expository | pcp-expository-correction | 1395–1438 | ok | v1 unit-weight test, the X^4 family over F_{2^{2k}}, and the F16 comparison 256 vs 16 are all present. |
+| expository | pcp-expository-evidence | 1440–1509 | ok | Still names the forward theorem (L1446) and the formal endpoints. It was rewritten as "Formalization and sources" plus References. The rationale is generic but not false. |
+
+# Non-ok details and fixes
+
+## long: result_long_1.md
+
+
+### pcp-long-intro-readers (L68–82): topic_changed, rationale_stale
+- Evidence, current: "**Lemma 2.1 (Schwartz–Zippel lemma** … vanishes at no more than a fraction $d/q$" (L77); "**Lemma 2.2 (low-degree extension** … exactly one polynomial of degree at most $h-1$ in each variable" (L79).
+- Evidence, base: "The mathematical prerequisites are finite fields, polynomials in several variables … The [specialist paper] presents the theorem…" It was a reading guide with no results.
+- The rationale says "no exact direct graph node", but two numbered lemmas with graph nodes now sit in the passage.
+- Fix: claim_ids should become `['PCP.Algebraic.eval_zero_agreement_le', 'PCP.Algebraic.GridInterpolation.existsUnique_extension']`. Rationale should read: "States the notation and two standard facts used throughout: Lemma 2.1 (Schwartz–Zippel zero bound) and Lemma 2.2 (unique low-degree extension on a grid); both are proved in Section 4.1. Direct correspondence to the source-level declarations; this does not assert a Lean build or semantic certification." (Both ids exist in the graph; they are already bound in pcp-long-algebra-polynomial-distance and pcp-long-algebra-grid-interpolation.)
+
+### pcp-long-decoding-contract (L280–298): claim_moved
+- Evidence, current: the passage ends with Lemmas 3.5/3.6 and "In Section 3.5 the hypothesis that $A$ is a polynomial holds because…" (L297). It never applies the tests to get four polynomials and never concludes colourability.
+- Evidence, base: "the four outer tests supply four actual polynomials $P,Q_*,M_A,M_B$" and "sufficiently small $\kappa$ forces the graph to be three-colourable."
+- Where they went:
+  - `exists_close_of_rejection_le` is now at L334–346 ("Apply Lemma 3.5 to the four received pairs … there are four polynomials $P,Q_*,M_A,M_B$").
+  - `colorable_of_rejection_lt` is now at L325–334 ("we show that $\kappa<g_c$ forces three-colourability"), with its conclusion at L405.
+  - All of these lines sit in pcp-long-difference-soundness and pcp-long-gap.
+- The current Lemma 3.6 is the derived zero-on-grid bound (B25), whose id is not bound here.
+- Fix: claim_ids should become `['PCP.Algebraic.EncodedLineLowDegreeTest.exists_close', 'PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound']`.
+
+### pcp-long-difference-soundness (L324–357): claim_moved (receives claims)
+- Evidence, current: "**Theorem 3.8 (soundness of the seven-check verifier).** … rejected with probability at least $g_c$" (L325–332); "Apply Lemma 3.5 to the four received pairs" (L334).
+- Evidence, base: it opened directly with "First identify the decoded difference polynomial", with no theorem statement and no decoding step.
+- The difference identity (rejectionRate_le_add_errors) is still served at L348–356.
+- Fix: claim_ids should become `['PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors', 'PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable', 'PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt', 'PCP.Algebraic.ThreeColorVerifier.exists_close_of_rejection_le']`.
+- Keep `rejectionRate_ge_of_not_colorable` in pcp-long-gap as well: the proof's conclusion is there.
+
+## long: result_long_2.md
+
+
+None. All 27 passages still state, prove or explain every bound claim. The changes are renamings (e.g. $L_{u,v}\to\widetilde T_{u,v}$, $\ell\to\mu$, $Q_i\to U_i$, $a,b\to\alpha,\beta$, $p\to p_f$), added result numbering and proof headers, "Lean:" lines, and cuts of material that had no claims bound to it.
+
+## Unwrapped-region check
+
+Gaps between passages in L731-1557 contain only headings, blank lines and link definitions (L799-839 is the link-reference block followed by "## 4. Algebraic tests and local correction"). No numbered result sits outside a passage. L1105-1138 holds the new `pcp-long-algebra-old-test-counterexample` passage (L1109-1135), which is outside this batch. No rationale refers to a section title, table, figure or symbol that is now missing.
+
+## long: result_long_3.md
+
+
+### pcp-long-hadamard-soundness (L1768–1808) — claim_moved
+
+- Evidence (current, this passage): "Each of the checks in (B4) rejects with probability at most $\epsilon$". No query count appears in L1768–1808.
+- Evidence (current, hadamard-self-correction L1762): "Answers are reused, so the test makes $2r+4$ queries, ten at $r=3$."
+- Evidence (base): the count was also in self-correction: "the query list has length $2r+4$". This is a binding that was already wrong in base.
+- Lean: `testQueries_length` (HadamardTest.lean:89) states `(testQueries hr s).length = 2 * r + 4`.
+- Fix:
+  - claim_ids for pcp-long-hadamard-soundness should become `['PCP.Algebraic.Hadamard.eq_encode_of_unit_of_mixedProduct', 'PCP.Algebraic.Hadamard.map_mixedProduct_of_relativeDistance_lt', 'PCP.Algebraic.Hadamard.test_soundness']`.
+  - claim_ids for pcp-long-hadamard-self-correction should become `['PCP.Algebraic.Hadamard.selfCorrect_failure_le', 'PCP.Algebraic.Hadamard.testQueries_length']`.
+
+### pcp-long-outer-local-corrector (L1988–1996) — claim_moved
+
+- Evidence (current): "The corrector makes at most $3c+9$ queries. On the honest tables of a polynomial $P$ ... it returns $L(P(a))$ on every seed." Nothing here bounds failure probability.
+- Evidence (base): "The procedure uses at most $3c+9$ queries ... returns $L(P(a))$ for every random seed." The binding was already wrong in base.
+- Where the claim is served: pcp-long-outer-correction-soundness L2000–2009, Proposition 5.6 / (B16). That passage already lists `BinaryLocalCorrection.failure_le`, and the declaration lives in BinaryLocalCorrectionSoundness.lean:222.
+- Fix: claim_ids for pcp-long-outer-local-corrector should become `['PCP.Algebraic.BinaryLocalCorrection.queries_length_le', 'PCP.Algebraic.BinaryLocalCorrection.run', 'PCP.Algebraic.BinaryLocalCorrection.run_eval']`.
+
+## short: result_short.md
+
+
+### pcp-short-proof-inventory (L169–186): rationale_stale
+- Rationale: "Typed primary and auxiliary tables before the testing argument; arbitrary received functions are distinguished from honest encodings."
+- Current: "Four are points tables, honestly the degree-$r$ Hadamard encodings of polynomials" (L170); "it gives each points table $f$ on $F^k$ a lines table $f'$" (L179). Base: "| Primary table | Intended polynomial |" and "Each primary table has an auxiliary table encoding its restrictions to lines."
+- Also no longer "before the testing argument" in the sense of §2: the passage now ends §3 (still before §4 testing, so that part holds).
+- Fix: rationale should read "Typed points tables and lines tables, stored as Hadamard encodings, before the testing argument; arbitrary received tables are distinguished from honest encodings."
+
+### pcp-short-outer-correction (L290–317): rationale_stale (minor)
+- Rationale: "… depends on rejection at that target and allows arbitrary auxiliary table."
+- Current: "let $P$ have total degree at most $D\ge cb^c$ … and let $f'$ be arbitrary" (L295). Base: "This statement allows an arbitrary auxiliary table."
+- Fix: rationale should read "Fixed target, label averaged; failure includes rejection; depends on rejection at that target and allows an arbitrary lines table. The mapped declaration is source-level, not fresh formal validation; prerequisite citations are recorded navigation."
+
+## expository: result_expository_1.md
+
+
+### pcp-expository-hadamard-correction (claim_moved)
+- Claim at issue: `PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le` (BLR test rejection ε implies distance at most ε from a linear map).
+- Current passage text: "This two-query read is **self-correction** [BLR93] ... If $g$ has error fraction $\varepsilon$ ... at most $2\varepsilon$". The BLR test and its distance theorem do not appear.
+- Base passage text: "For the honest word this equals $h_s(x)$ ... error probability is at most $2\varepsilon$". The base did not state the BLR theorem either, so this binding was already loose and the revision did not cause it.
+- Where the claim lives: Theorem 7.1 in pcp-expository-hadamard, L579-582, which already binds this id.
+- Fix: claim_ids should become `['ordinary:finite-examples', 'PCP.Algebraic.Hadamard.selfCorrect_failure_le']`.
+
+### pcp-expository-proof-inventory (rationale_stale, minor)
+- Current rationale: "Ambient primary domains and the affine-label auxiliary domain; inventory, not a soundness assumption."
+- Current text: "four **points tables** and four **lines tables** ... stored after the set-multilinear encoding and then the Hadamard encoding with affine labels". The words "primary" and "auxiliary" are no longer in the passage.
+- Base text: "The prover supplies four primary tables and four auxiliary line tables."
+- Fix: the rationale should read: "Inventory of the stored proof: four points tables on the ambient domains and four lines tables with affine labels, matching the fields of the Proof structure; inventory, not a soundness assumption."
+
+### Advisory notes (no change required)
+- **pcp-expository-binary-tests:** `PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge` is explained here only qualitatively (L876-882: "a failed grid condition forces it to reject through Lemma 3.1, and the cost of the replacement is bounded in Section 9"). Its quantitative form is in the unbound-to-it pcp-expository-assembly at L1010-1016, which states "the zero-on-grid soundness estimate gives ...". The base passage had the same split, so this binding can stay. Optionally, add this id to the assembly passage's claim_ids.
+- **Boilerplate rationales:** the rationales on pcp-expository-opening and pcp-expository-theorem mention "the examples are finite illustrations", but neither passage contains an example. That wording was already in the base and is generic, so I did not flag it.
+
+## expository: result_expository_2.md
+
+
+### pcp-expository-assembly (rationale_stale)
+
+- **Evidence.**
+  - Rationale: "The worked trace covers vertex ZERO and omits inner-test queries."
+  - Current text has only the caption "The shaded column, the vertex zero-on-grid test, is the branch illustrated in Section 8" (L959). Base said "they omit the inner-test queries and do not run the complete seven-check verifier". That sentence is gone here; the omission is now stated only in worked-zero L929–930.
+  - The caption now says "A dot marks table use." Base said "A dot marks table use, not the number of queries." The rationale's "not query counts" therefore paraphrases text that has been removed.
+  - All three claim_ids are still served:
+    - Proof: eight tables, lines tables, difference table (L954–970).
+    - exists_proof_rejectionRate_eq_zero: L972–976.
+    - rejectionRate_ge_of_not_colorable: L978–1066.
+- **Fix.** The rationale should read: "Proof inventory (seven checks over the eight stored tables, the shared lines tables, the separate difference table) with the completeness and soundness assembly and the soundness-gap calculation. Figure incidence was checked against the pinned branchTest definition; a dot marks potential table use. The shaded vertex zero-on-grid column refers to the Section 8 trace. No claim to a full verifier execution or new Lean build."
+
+### pcp-expository-resources (claim_moved, rationale_stale)
+
+- **Evidence.**
+  - Base Question 5 ("Consider a smaller hypothetical error budget … Does κ≤1/32 rule out a false grid condition?") is gone from this passage. It is now answers L1160 "Exercise 5 (Section 9). In a hypothetical estimate of the kind used in Section 9…", with its solution at L1213–1219. That toy budget is one of the cases ordinary:exposition-examples checks (check_exposition_examples.py L224–229).
+  - Base Question 4 moved to answers L1155–1158.
+  - The 26,22,…,3 per-check caps moved to parameters L1294–1298.
+  - What remains here:
+    - "(3/4)^3=27/64<1/2" (L1098). This is checked by check_examples.py L98, i.e. ordinary:finite-examples, which is not bound.
+    - "reads at most 187 bits" (L1091), which exposition-examples also checks.
+  - The rationale's "finite checker verifies the illustrative cases named in this passage" is therefore only true if finite-examples is bound.
+  - The Lean claims are still served:
+    - Canonical/amplified verification_guarantees: L1091–1111.
+    - of_inNP_program: L1113–1135.
+- **Fix.**
+  - claim_ids should become `["PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees", "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees", "PCP.Reduction.NPThreeColorRuntime.of_inNP_program", "ordinary:exposition-examples", "ordinary:finite-examples"]`. Optionally also add `PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq` for the whole-field sampling remark at L1083–1087.
+  - The rationale should read: "The finite checkers verify the toy repetition bound (3/4)^3<1/2 and the 187-query count named here. The examples do not establish the general theorem or its parameter conditions. The other records map the verifier guarantees and the NP-to-three-colouring reduction."
+
+### pcp-expository-colouring-gadget (claim_moved; binding mismatch already present in base)
+
+- **Evidence.**
+  - Current text: "The clause a∨b∨c holds exactly when there is a bit z satisfying NAE(a,b,z), NAE(¬z,c,0)" (L1329–1335), then the palette, triangles and six edges (L1341–1360).
+  - Bound claims:
+    - FiniteBooleanConstraints.orGate_iff is the three-clause OR gate, located at clause-calculation L1380–1385.
+    - pattern_spec is the private pattern-flag lemma, located at clause-calculation L1367–1379.
+    - satisfiable_iff is the equivalence between constraints and clauses, located at clause-calculation.
+  - None of these three is stated in this passage.
+  - The graph has the matching declarations:
+    - NAEThreeColor.or_iff_two_nae (Lean NAEThreeColor.lean:66) is exactly L1329–1339.
+    - triangle_iff (:50) is the triangle argument at L1353–1360.
+    - colorable_iff (:241) is the gadget equivalence.
+- **Fix.** claim_ids should become `["PCP.Reduction.NAEThreeColor.or_iff_two_nae", "PCP.Reduction.NAEThreeColor.triangle_iff", "PCP.Reduction.NAEThreeColor.colorable_iff", "ordinary:exposition-examples"]`.
+- **Optional follow-on (clause-calculation, verdict ok).** Moving pattern_spec into pcp-expository-clause-calculation fits its text, the "fresh sequence of flags for each pattern p" at L1369–1379. In that case its claim_ids should become `["PCP.Reduction.FiniteBooleanConstraints.orGate_iff", "PCP.Reduction.FiniteBooleanConstraints.pattern_spec", "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff", "ordinary:exposition-examples"]`. pattern_spec is a private theorem but exists as a graph node.
+
+
+# Reading links (40: 22 long→short, 0 short, 18 expository)
+
+Each link was checked by comparing the result that both current passages hold. All other links join passages that still hold the same result. They are listed in the mapping files and not repeated here.
+
+| from | to | verdict | fix |
+|---|---|---|---|
+| long pcp-long-decoding-contract | short pcp-short-assembly | stale end (from) | The four nearby polynomials P,Q_*,M_A,M_B are now chosen in pcp-long-difference-soundness (L334–346, within Theorem 3.8). decoding-contract now holds only Lemmas 3.5/3.6. **from_anchor should become `pcp-long-difference-soundness`**. Keep the rationale, or change it to "Fixes the four nearby polynomials used by all subsequent checks." |
+| expository pcp-expository-answers | expository pcp-expository-resources | stale end (to) | The rationale reads "seed enumeration and the strict toy error threshold". The two questions are now Exercise 4 (Section 2) and Exercise 5 (Section 9), and §10 resources no longer poses or works either of them. The exhaustive seed argument is in pcp-expository-theorem (L118–133) and the toy budget concerns §9 assembly. **to_anchor should become `pcp-expository-theorem`, with rationale "Checks the exhaustive seed enumeration behind the reverse inclusion (Exercise 4)."** Also, **the answers→assembly rationale should read "Explains why separate nearby polynomials cannot support the colouring deduction, and checks the strict toy error threshold (Exercises 3 and 5)."** |
+| long pcp-long-zero-soundness / pcp-long-derived-oracle-transfer | short pcp-short-zero | ok (wording only) | The rationales say "base ZERO" and "derived ZERO test". The term "ZERO" is gone from the short paper, which says "zero-on-grid test". The same result sits at both ends. Optional rationale wording: "Proves the zero-on-grid rejection comparison" / "Proves the fresh-mask transfer to the derived zero-on-grid test." |
+| expository pcp-expository-worked-zero | short pcp-short-zero | ok (wording only) | The rationale says "ZERO acceptance". Optional wording: "zero-on-grid acceptance". |
+| expository answers → grid-certificate, → hadamard-correction | — | ok, note | The answered material (Exercises 1 and 2) still concerns these passages. The INTEGRATION_NOTES claim that inline pointers "Exercise 1 asks…" and "Exercise 2 asks…" were left at §5 and §7 is wrong: grep finds no "Exercise" before L1140 apart from "(Exercise 7)" at L807. The target passages therefore no longer point back to their exercise. This is a prose matter, not a binding fix. |

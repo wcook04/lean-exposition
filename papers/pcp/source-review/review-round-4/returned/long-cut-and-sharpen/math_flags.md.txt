@@ -1,0 +1,88 @@
+# Mathematical and statement-scope flags
+
+Three proposed changes are isolated for the packet's **native semantic check before adoption**. The proposed `revised.md` includes them so that their complete context is reviewable. None changes a displayed equation, a numerical constant, a theorem endpoint or the proof order. These are not findings of failed Lean declarations, and no new theorem or counterexample to the current formal construction is claimed.
+
+## MF-01: Line-table address labels are affine
+
+**Location:** b0128.
+
+**Issue:** “a linear Boolean label” may denote the homogeneous degree-one subspace, which has 2^t labels. The stated address count uses all degree-at-most-one squarefree polynomials, including the constant coefficient, and hence C_1=2^(t+1). Elsewhere b0054 already calls these labels affine.
+
+**Source evidence:** `formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean:32–40`, especially `Query`, uses `Coefficients t 1` for the auxiliary address. `Hadamard.lean:33–35` includes `encode_constant`. The coefficient count in baseline b0125–b0126 includes the empty monomial. This is a terminology correction to the address space already counted, not an enlargement of that space.
+
+**Proposed full block:**
+
+```markdown
+A line table for a polynomial on $j$ coordinates indexes two field points specifying a line, the $cm$ coordinates of its reduced-degree encoding, and an affine Boolean label. Its length is $Q^{2j+cm}C_1$. Thus the four auxiliary lengths are
+```
+
+**Native check:** confirm the ordinary-paper term “affine” against the existing coefficient type and retain the unchanged length formula.
+
+## MF-02: Complete the cofactor determinant explanation
+
+**Location:** b0329.
+
+**Issue:** The sentence “This is a (k+1)-minor and vanishes by maximality” is applied to every original row. If the appended row is already among the selected k rows, the determinant vanishes because it has repeated rows. If it is a new row, maximality of the chosen nonzero minor applies directly. The current prose leaves the first case implicit under the ordinary convention that a minor selects distinct rows.
+
+**Source evidence:** `formal/lean/PCP/Algebraic/PolynomialMatrixKernel.lean:118–125`, `exists_bounded_kernel_of_minor`, requires the appended determinant to vanish for every row. Its construction is proved at lines 126–170. `exists_bounded_kernel_of_maximal_minors`, lines 180–227, obtains that universal condition. The formal predicate P quantifies over arbitrary row maps; maximality there already covers repeated-row maps. The proposed prose spells out the elementary case split for readers using the usual distinct-row meaning of “minor”. It does not repair a missing Lean proof.
+
+**Proposed full block:**
+
+```markdown
+The following cofactor construction supplies a nonzero polynomial kernel with a degree bound. Choose a largest nonzero $k$-by-$k$ minor. The empty minor has determinant one, so such a $k$ exists, and $k\le n-1$. Append one column outside its columns. Form a vector supported on these $k+1$ columns whose coordinates are the alternating $k$-by-$k$ cofactors. Its coordinate at the appended column is the chosen nonzero determinant. For any row of the original matrix, the row's product with this vector is the determinant obtained by adjoining that row to the chosen $k$ rows. If a row repeats, this determinant is zero. Otherwise it is a $(k+1)$-minor and vanishes by maximality. Hence the vector is a nonzero kernel vector. Every coordinate is a determinant with $k$ factors of degree at most $d$, so has degree at most $kd\le(n-1)d$.
+```
+
+**Native check:** confirm the row/column order and cofactor sign convention in the prose. Nonzeroness, the kernel identity and the degree bound remain the same.
+
+## MF-03: Separate the assembly's decoded degree from the generic bound
+
+**Locations:** b0077–b0078 and b0091.
+
+**Issue:** The assembly fixes D=cm^c. Its table then uses D as the generic degree parameter in the correction and derived-ZERO contracts. The derived vertex/edge constraints can have degree up to 5D, as b0090 explicitly states. The application and its displayed inequality already use 5D correctly, but the table's reuse of the symbol hides that substitution.
+
+**Source evidence:** Baseline b0563 and b0592 allow a general comparison degree at least cb^c. `formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean:86–124` separates the four decoded degree bounds from the 5D grid comparison. Its two applications of `vanishesOn_of_rejection_bound`, lines 126–169, explicitly use `(D := 5 * D)`.
+
+**Proposal:** use D_1 >= D only in the last two rows of the local summary table, then explicitly substitute D_1=5D. The later generic theorem statements retain their existing locally bound D. No global renaming is intended, and the displayed inequality at b0092 is unchanged.
+
+**Proposed full blocks:**
+
+### b0077
+
+```markdown
+The following statements are proved in the binary chapter. In the last two rows, $D_1\ge D$ is a common degree bound for the polynomials being compared.
+```
+
+### b0078
+
+```markdown
+| Statement | Guarantee used in the assembly |
+| --- | --- |
+| Encoded-line soundness (B15) | Under the field bound and $E_c\kappa\le1/4\,000\,000$, one polynomial of degree at most $D$ has both full-label and homogeneous-label distance at most $S_c\kappa$ from the primary table. Auxiliary rows are arbitrary. |
+| Outer correction (B16) | At each fixed target $a$, homogeneous primary error $\delta$ gives failure probability at most $C_cR_a+\delta+D_1/[2(Q-1)]$. Failure means rejection or a wrong bit; $R_a$ is actual rejection, and the label is uniform homogeneous. |
+| Derived ZERO (B25) | Suppose the point-dependent derived values equal one fixed polynomial, and this polynomial and its certificate have degree at most $D_1$. If the polynomial fails to vanish on the grid, its ideal rejection lower bound is at most $(1+2C_c)(\kappa+2\varepsilon)+2\delta_M+D_1/(Q-1)$. Here $\varepsilon$ is full primary error and $\delta_M$ is homogeneous certificate error. |
+```
+
+### b0091
+
+```markdown
+Apply the derived-ZERO inequality (B25) with $D_1=5D$. If either decoded constraint fails to vanish on its grid, then
+```
+
+**Native check:** confirm the local scope of D_1 and the unchanged instantiation in both grid applications. This is a notation and application-scope clarification, not a new degree estimate.
+
+## Checked precision clarifications that do not change mathematical content
+
+The following are recorded separately to distinguish an explicit referent from a changed claim:
+
+- **b0051:** homogeneous degree-one labels are the additive class; the coordinate map is linear. The same class is already used in the difference check. See `Hadamard.lean:135–179` and `HadamardDerivedOracle.lean:32–35`.
+- **b0059 and b0607:** the fixed-request fresh-mask error is a row-wise bound; the global bound follows after averaging over the uniform outer point. See `HadamardDerivedOracle.lean:58–178`. The replacement retains the existing distribution and coefficient.
+- **b0196:** the language-wide `NPCertificate` data consist of the relation, witness bound and checker. See `NPThreeColorRuntime.lean:244–265`. No input-specific choice of program is introduced.
+- **b0458:** composing a Boolean label with rho makes its existing use on field values explicit. The formal coordinates have type `F ≃ₗ[ZMod 2] (Fin t → ZMod 2)`; the short paper also states this identification.
+- **b0492:** the exact list length 2r+4 is retained. At r=3 it is ten entries, potentially with repeated addresses. `HadamardTest.lean` separately proves `testQueries_length` and `testQueries_card_le`.
+- **b0519:** the permutation is the map on homogeneous labels, not an individual weighted label. `HadamardWeights.lean` supplies this relabelling. Nonzero Lagrange weights are already part of the construction.
+- **b0527:** the threshold case split concerns the inner table's rejection parameter. The zero-polynomial case and its numerical bound are unchanged.
+- **b0532, b0540, b0563 and b0592:** “distinct nonzero correction nodes” expands the internal condition already defined by the powers of zeta. `StandardLocalCorrection.lean:17–22` defines `GoodNodes` as injectivity of those nodes together with nonzero zeta.
+- **b0567:** Phi(z) and Phi(0) are the actual inner targets; L(T_v(z)) and L(T_v(0)) are their respective ideal replacements. Both costs remain e.
+- **b0576:** subseteq makes the existing permission H=F unambiguous; the certificate statement and proof do not require a proper subset.
+
+The old-test counterexample in the appendix is preserved as an existing explanatory derivation. It has not been newly formalised or independently compiled in this review. Its limited target, v1's scalar test, remains explicit.
