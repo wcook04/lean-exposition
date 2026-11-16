@@ -6101,46 +6101,7 @@
       ]
     },
     {
-      "record": "scalar.formal_scalar_clause",
-      "paper": "long",
-      "role": "explanation",
-      "from": "The index match in the Gaussian statement is exact. For",
-      "to": "using exactly the displayed\nindex ranges.",
-      "lean": [
-        {
-          "name": "OAI.SKValue.euler",
-          "file": "OAI/Probability/SKValue/Model.lean",
-          "lines": [
-            27,
-            31
-          ],
-          "note": "Uses coordinates 0 to N−1.",
-          "relation": "defines"
-        },
-        {
-          "name": "OAI.SKValue.shiftedCoefficientSum",
-          "file": "OAI/Probability/SKValue/Model.lean",
-          "lines": [
-            151,
-            153
-          ],
-          "note": "The range up to N.",
-          "relation": "defines"
-        },
-        {
-          "name": "OAI.SKValue.roundedSign",
-          "file": "OAI/Probability/SKValue/Model.lean",
-          "lines": [
-            136,
-            139
-          ],
-          "note": "Uses coordinate N.",
-          "relation": "defines"
-        }
-      ]
-    },
-    {
-      "record": "scalar.formal_scalar_clause",
+      "record": "scalar.formal_finite_gaussian_clause",
       "paper": "long",
       "role": "explanation",
       "from": "Total definitions at $N=0$ make no extra mathematical",
@@ -6179,7 +6140,7 @@
       ]
     },
     {
-      "record": "scalar.formal_scalar_clause",
+      "record": "scalar.formal_finite_gaussian_clause",
       "paper": "long",
       "role": "explanation",
       "from": "The positivity quantifiers",
@@ -6252,21 +6213,13 @@
       "to": "[ContactAssembly][scalar-contact-assembly].",
       "lean": [
         {
-          "name": "OAI.SKValue.scalar_value_target",
-          "lines": [
-            13,
-            15
-          ],
-          "note": "First of the three, line 13.",
-          "relation": "part"
-        },
-        {
           "name": "OAI.SKValue.ground_state_parisi_target",
+          "relation": "proof",
           "lines": [
             25,
             27
           ],
-          "note": "Last of the three, ending line 27."
+          "note": "The equality proof uses its own diffusion. The three signatures are linked in the text."
         }
       ]
     },
@@ -7983,14 +7936,12 @@
         {
           "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
           "relation": "part",
-          "note": "Case c>0: the actual inequality, multiplied through by c², at a continuity point. stripThird is q''' on the interval.",
-          "clause": "(1/1000:ℝ)*(γ.val t)^4*(∫ ξ, (actualJet W γ t 2 ξ)^4 ∂W.law) ≤\n      (γ.val t)^2 * stripThird W γ T (γ.val t) t"
+          "note": "The quantitative input for the associated strip; the statement also derives strictness and convexity."
         },
         {
-          "name": "OAI.ZeroTemperatureSK.stripThird_pos"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature"
+          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+          "relation": "part",
+          "note": "The strict derivative sign on positive constant intervals ending below one."
         }
       ]
     },
@@ -8072,18 +8023,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
-          "relation": "states",
-          "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion.",
+          "relation": "contains",
+          "note": "The relative-support and strict-increase clauses. The Lean theorem additionally supplies both witnesses and the universal moment identities.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap"
         }
       ]
     },
@@ -8096,15 +8038,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
-          "relation": "states",
-          "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion.",
+          "relation": "contains",
+          "note": "The support, strict-increase and universal moment clauses. Lean additionally supplies both witnesses.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
         }
       ]
     },
@@ -8289,14 +8225,9 @@
       "to": "with the right derivative at zero.",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.full_support",
-          "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
+          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+          "relation": "proof",
+          "note": "Derives full contact and the two moments for the constructed diffusion after excluding all gaps."
         }
       ]
     },
@@ -8409,18 +8340,8 @@
         {
           "name": "OAI.SKValue.finite_gaussian_target",
           "relation": "states",
-          "note": "Scalar model. All three clauses: positive normalisers, the mesh limit at fixed T, then the limit to the ground-state value.",
-          "lines": [
-            17,
-            19
-          ]
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip"
-        },
-        {
-          "name": "OAI.SKValue.shiftedCoefficientSum",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "note": "Both ordered limits and eventual positivity. Lean assumes an associated diffusion and the SKValue model.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -8434,17 +8355,8 @@
         {
           "name": "OAI.SKValue.finite_gaussian_target",
           "relation": "states",
-          "note": "Scalar model. All three clauses: positive normalisers, the mesh limit at fixed T, then the limit to the ground-state value.",
-          "lines": [
-            17,
-            19
-          ]
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip"
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.finite_gaussian_of_contact"
+          "note": "Both ordered limits and eventual positivity. Lean assumes an associated diffusion and the SKValue model.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -8458,21 +8370,8 @@
         {
           "name": "OAI.SKValue.finite_gaussian_target",
           "relation": "states",
-          "note": "Scalar model. All three clauses: positive normalisers, the mesh limit at fixed T, then the limit to the ground-state value.",
-          "lines": [
-            17,
-            19
-          ]
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "relation": "contains",
-          "note": "Its second conjunct is this proposition.",
-          "file": "OAI/Probability/SKValue/Main.lean"
-        },
-        {
-          "name": "OAI.SKValue.FiniteGaussianConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "note": "Both ordered limits and eventual positivity. Lean assumes an associated diffusion and the SKValue model.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -8675,13 +8574,14 @@
       "to": "giving strict increase of $q'$.",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.zero_gap_curvature"
+          "name": "OAI.ZeroTemperatureSK.zero_gap_curvature",
+          "relation": "part",
+          "note": "The strict sign on zero plateaus with right endpoint below one. The displayed heat identity is a separate step."
         },
         {
-          "name": "OAI.ZeroTemperatureSK.curvatureMoment_hasDerivAt_on_constant"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.stripSecond_eq_actual"
+          "name": "OAI.ZeroTemperatureSK.stripSecond_eq_actual",
+          "relation": "proof",
+          "note": "Identifies the strip expression used by the heat identity."
         }
       ]
     },
@@ -8901,11 +8801,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
+          "relation": "states",
+          "note": "The complete conditional support package, with both witnesses and moments for every associated diffusion.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
-          "file": "OAI/Probability/SKSupport/Model.lean"
         }
       ]
     },
@@ -8918,10 +8816,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
+          "relation": "contains",
+          "note": "The last conjunct gives both identities for every associated diffusion, including time zero.",
           "file": "OAI/Probability/SKSupport/Main.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
         }
       ]
     },
@@ -8935,21 +8832,8 @@
         {
           "name": "OAI.ZeroTemperatureSK.IsDiffusion",
           "relation": "defines",
-          "note": "One ∀ᵐ ω covers every t in [0,1]: the equation holds through time one outside one null set.",
+          "note": "The equation and continuity hold simultaneously through time one on a single full-measure set.",
           "file": "OAI/Probability/SKSupport/Model.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
-          "relation": "defines",
-          "note": "The moment clause: every diffusion, each t in Time, which is [0,1).",
-          "lines": [
-            86,
-            88
-          ],
-          "file": "OAI/Probability/SKSupport/Model.lean"
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
         }
       ]
     },
@@ -8963,10 +8847,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
           "relation": "part",
-          "note": "Limit along sampled chord steps towards another order parameter. The bridge to the ordinary right derivative is not in the Lean."
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.minimizer_variational_inequality"
+          "note": "Only the sampled slopes are stated here. Convexity gives the full right derivative in the paper."
         }
       ]
     },
@@ -9014,13 +8895,9 @@
       "to": "Gaussian normalizers and convergence of the finite coefficient sum.",
       "lean": [
         {
-          "name": "OAI.SKValue.value_consequences",
-          "relation": "states",
-          "note": "Three clauses. The first two take a minimiser and a diffusion, the second also 0<T<1; the third takes only the minimiser.",
-          "file": "OAI/Probability/SKValue/Main.lean"
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion"
+          "name": "OAI.SKValue.IsDiffusion",
+          "relation": "defines",
+          "note": "The caller supplies a diffusion for the scalar and Gaussian clauses."
         }
       ]
     },
@@ -9033,13 +8910,9 @@
       "lean": [
         {
           "name": "OAI.SKValue.value_consequences",
+          "relation": "contains",
+          "note": "Packages the scalar identities, finite Gaussian approximation and minimizer-only equality. This selection discusses the first two.",
           "file": "OAI/Probability/SKValue/Main.lean"
-        },
-        {
-          "name": "OAI.SKValue.scalar_value_target"
-        },
-        {
-          "name": "OAI.SKValue.ground_state_parisi_target"
         }
       ]
     },
@@ -9051,15 +8924,10 @@
       "to": "convergence of the gradient and the value identities.",
       "lean": [
         {
-          "name": "OAI.SKValue.scalar_value_target"
-        },
-        {
-          "name": "OAI.SKValue.ScalarValueConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "file": "OAI/Probability/SKValue/Main.lean"
+          "name": "OAI.SKValue.scalar_value_target",
+          "relation": "contains",
+          "note": "The full clause also specifies the stopped martingale, almost-sure and L² limits, and value integrability.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9071,11 +8939,10 @@
       "to": "convergence of the gradient and the value identities.",
       "lean": [
         {
-          "name": "OAI.SKValue.scalar_value_target"
-        },
-        {
-          "name": "OAI.SKValue.ScalarValueConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "name": "OAI.SKValue.scalar_value_target",
+          "relation": "contains",
+          "note": "The full clause also specifies the stopped martingale, almost-sure and L² limits, and value integrability.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9084,20 +8951,13 @@
       "paper": "long",
       "role": "statement",
       "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives eventual positivity",
-      "to": "`finite_gaussian_target`.",
+      "to": "Gaussian normalizers and convergence of the finite coefficient sum.",
       "lean": [
         {
           "name": "OAI.SKValue.finite_gaussian_target",
           "relation": "contains",
-          "note": "Also gives the limit to the ground-state value as S rises to one, a third clause."
-        },
-        {
-          "name": "OAI.SKValue.FiniteGaussianConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "file": "OAI/Probability/SKValue/Main.lean"
+          "note": "In addition to the fixed-T positivity and mesh limit, the declaration includes the separate terminal limit.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9106,16 +8966,13 @@
       "paper": "long",
       "role": "statement",
       "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives eventual positivity",
-      "to": "`finite_gaussian_target`.",
+      "to": "Gaussian normalizers and convergence of the finite coefficient sum.",
       "lean": [
         {
           "name": "OAI.SKValue.finite_gaussian_target",
           "relation": "contains",
-          "note": "Also gives the limit to the ground-state value as S rises to one, a third clause."
-        },
-        {
-          "name": "OAI.SKValue.FiniteGaussianConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "note": "In addition to the fixed-T positivity and mesh limit, the declaration includes the separate terminal limit.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9127,13 +8984,10 @@
       "to": "inputs are not additional hypotheses of the exported clauses.",
       "lean": [
         {
-          "name": "OAI.SKValue.finite_gaussian_target"
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip"
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.finite_gaussian_of_contact"
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "relation": "proof",
+          "note": "The exported clause applies the fixed-strip helper with its internal inputs supplied.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9142,43 +8996,13 @@
       "paper": "long",
       "role": "mention",
       "from": "These are the declarations `scalar_value_target` and",
-      "to": "for those objects before applying its fixed-strip helper.",
+      "to": "`scalar_value_target`",
       "lean": [
         {
           "name": "OAI.SKValue.scalar_value_target",
-          "lines": [
-            13,
-            14
-          ],
-          "relation": "states",
-          "note": "The first named declaration: this implication, with the conclusion unfolded in ScalarValueConclusion."
-        },
-        {
-          "name": "OAI.SKValue.finite_gaussian_target",
-          "lines": [
-            17,
-            19
-          ],
-          "relation": "states",
-          "note": "The second named declaration, for the same minimiser and supplied diffusion, with 0<T<1."
-        },
-        {
-          "name": "OAI.SKValue.sourceStripRegularity",
-          "relation": "proof",
-          "note": "The compact-strip bounds the implementation derives, for any order parameter."
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.curvature_unit_moment_of_contact",
-          "relation": "proof",
-          "note": "The unit curvature moment, from contact."
-        },
-        {
-          "name": "OAI.SKValue.ScalarValueConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "file": "OAI/Probability/SKValue/Main.lean"
+          "relation": "contains",
+          "note": "The full clause also specifies the stopped martingale, almost-sure and L² limits, and value integrability.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9187,39 +9011,13 @@
       "paper": "long",
       "role": "mention",
       "from": "These are the declarations `scalar_value_target` and",
-      "to": "for those objects before applying its fixed-strip helper.",
+      "to": "`scalar_value_target`",
       "lean": [
         {
           "name": "OAI.SKValue.scalar_value_target",
-          "lines": [
-            13,
-            14
-          ],
-          "relation": "states",
-          "note": "The first named declaration: this implication, with the conclusion unfolded in ScalarValueConclusion."
-        },
-        {
-          "name": "OAI.SKValue.finite_gaussian_target",
-          "lines": [
-            17,
-            19
-          ],
-          "relation": "states",
-          "note": "The second named declaration, for the same minimiser and supplied diffusion, with 0<T<1."
-        },
-        {
-          "name": "OAI.SKValue.sourceStripRegularity",
-          "relation": "proof",
-          "note": "The compact-strip bounds the implementation derives, for any order parameter."
-        },
-        {
-          "name": "OAI.SKValue.IsDiffusion.curvature_unit_moment_of_contact",
-          "relation": "proof",
-          "note": "The unit curvature moment, from contact."
-        },
-        {
-          "name": "OAI.SKValue.ScalarValueConclusion",
-          "file": "OAI/Probability/SKValue/Model.lean"
+          "relation": "contains",
+          "note": "The full clause also specifies the stopped martingale, almost-sure and L² limits, and value integrability.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9435,17 +9233,8 @@
         {
           "name": "OAI.SKValue.ground_state_parisi_target",
           "relation": "states",
-          "note": "Exactly this implication. Its proof supplies diffusionProcess itself."
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "relation": "contains",
-          "note": "Its third clause.",
-          "lines": [
-            22,
-            23
-          ],
-          "file": "OAI/Probability/SKValue/Main.lean"
+          "note": "The third clause is exactly the equality given a minimizer. Its proof constructs the diffusion.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9457,11 +9246,10 @@
       "to": "clauses constructs a minimizer.",
       "lean": [
         {
-          "name": "OAI.SKValue.ground_state_parisi_target"
-        },
-        {
-          "name": "OAI.SKValue.value_consequences",
-          "file": "OAI/Probability/SKValue/Main.lean"
+          "name": "OAI.SKValue.ground_state_parisi_target",
+          "relation": "states",
+          "note": "The third clause is exactly the equality given a minimizer. Its proof constructs the diffusion.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9473,7 +9261,10 @@
       "to": "clauses constructs a minimizer.",
       "lean": [
         {
-          "name": "OAI.SKValue.ground_state_parisi_target"
+          "name": "OAI.SKValue.ground_state_parisi_target",
+          "relation": "states",
+          "note": "The third clause is exactly the equality given a minimizer. Its proof constructs the diffusion.",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean"
         }
       ]
     },
@@ -9485,15 +9276,14 @@
       "to": "clauses constructs a minimizer.",
       "lean": [
         {
+          "name": "OAI.SKValue.diffusionProcess_isDiffusion",
+          "relation": "proof",
+          "note": "Certifies the diffusion constructed internally in the minimizer-only proof."
+        },
+        {
           "name": "OAI.SKValue.ground_state_parisi_target",
-          "relation": "states",
-          "note": "Exactly this implication. Its proof supplies diffusionProcess itself."
-        },
-        {
-          "name": "OAI.SKValue.diffusionProcess_isDiffusion"
-        },
-        {
-          "name": "OAI.SKValue.exists_diffusion"
+          "relation": "proof",
+          "note": "Uses the constructed diffusion to prove the equality."
         }
       ]
     },
@@ -9505,12 +9295,9 @@
       "to": "clauses constructs a minimizer.",
       "lean": [
         {
-          "name": "OAI.SKValue.ground_state_parisi_target",
-          "relation": "states",
-          "note": "Hypothesis hmin only, with no diffusion argument. No clause produces a minimiser."
-        },
-        {
-          "name": "OAI.SKValue.IsMinimizer"
+          "name": "OAI.SKValue.IsMinimizer",
+          "relation": "defines",
+          "note": "Minimality is the only mathematical premise in the equality on the given Brownian space."
         }
       ]
     },
@@ -9552,6 +9339,20 @@
       "to": "available without it.",
       "lean": [],
       "note": "Not in the Lean: no theorem transports a minimiser or diffusion between the support and scalar models."
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "long",
+      "role": "statement",
+      "from": "Their Stieltjes measures satisfy",
+      "to": "$\\mu_\\gamma(\\{0\\})=\\gamma(0)$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parameterMeasure_isStieltjes",
+          "relation": "states",
+          "note": "The canonical measure's cumulative identity on the subtype [0,1), including the atom at zero."
+        }
+      ]
     }
   ]
 }
