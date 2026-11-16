@@ -259,7 +259,7 @@ The binary low-degree test on $f$ and its lines table $f'$ samples uniform $u,v\
 2. the inner low-degree test accepts $f'_{u,v}$;
 3. $f(u+zv,L)$ equals the standard local correction of the same entry $f'_{u,v}$ at $\Phi(z)$ with label $L$.
 
-**Theorem 4.6 (binary low-degree test; [ABSSW26, Theorem 4.1]).** Let $D=cb^c$ and $q\ge10^6D^3$, and with $K$ as in Lemma 4.4 put $J=2((c+1)K+29)$ and $S=28+J$. If this test rejects $(f,f')$ with probability $\kappa$ and $J\kappa\le1/(4\cdot10^6)$, then some polynomial $P$ of total degree at most $D$ has $\Delta_{\rm full}(f,\mathcal H_r(P))\le S\kappa$ and $\Delta_{\rm hom}(f,\mathcal H_r(P))\le S\kappa$.
+**Theorem 4.6 (binary low-degree test; [ABSSW26, Theorem 4.1]).** Let $D=cb^c$ and $q\ge10^6D^3$, and with $K$ as in (11) put $J=2((c+1)K+29)$ and $S=28+J$. If this test rejects $(f,f')$ with probability $\kappa$ and $J\kappa\le1/(4\cdot10^6)$, then some polynomial $P$ of total degree at most $D$ has $\Delta_{\rm full}(f,\mathcal H_r(P))\le S\kappa$ and $\Delta_{\rm hom}(f,\mathcal H_r(P))\le S\kappa$.
 
 *Proof.* Lemma 4.2 on each word $f(x,\cdot)$ gives a function $g$ whose encoding has full-label and homogeneous error at most $28\kappa$. Lemma 4.3 and (5) give each entry $f'_{u,v}$ a line polynomial $T_{u,v}$ of degree at most $D$. Replacing the corrected answer in check 3 by $L(T_{u,v}(z))$ costs at most $(c+1)K\kappa$ by Lemma 4.4, the comparison fails with probability at most $\kappa$, and replacing $f(u+zv,L)$ by $L(g(u+zv))$ costs at most $28\kappa$. Hence
 

@@ -15,13 +15,13 @@
       "all_tokens": 23943,
       "display_equations": 173,
       "passages": 73,
-      "mapping_sha256": "515b9d0cc54f0b315cd40e36122764523b873ec89183c92a232ee483d8d7b16f"
+      "mapping_sha256": "88f33965e78bd0bf20f7ec49a1a9aea2d43ee7c238f4cfef0ad65a95022c443f"
     },
     "short": {
       "markdown": "papers/pcp/short/paper.md",
-      "markdown_sha256": "cdfb5593a93718fe05882713ddbd6560984fa1c3c2d70d39cf6448c3e1e53d98",
+      "markdown_sha256": "c02d8524d0b5c355ab6432c518af335a1a55a57e0d6f75ffd481811f5d3575f2",
       "pdf": "papers/pcp/short/paper.pdf",
-      "pdf_sha256": "01282af2144308bb9efc87f71151447078192957831f620d4e279d00b653e483",
+      "pdf_sha256": "71dd4dea4f402253c96e5e4958c3f6d634dd29e6fb571aae3b1e0acfbd401ecf",
       "pages_before": 13,
       "pages": 12,
       "prose_words_before": 4333,
@@ -30,7 +30,7 @@
       "all_tokens": 6186,
       "display_equations": 36,
       "passages": 16,
-      "mapping_sha256": "b8e71df601c570192aadfbffb01a3233d964c700c8728fb55690219514ae076c"
+      "mapping_sha256": "aa8c2c51b0a7fda037f78fa0da5c23ea2a354c368c227236932e3c6a6d78538e"
     },
     "expository": {
       "markdown": "papers/pcp/expository/main.md",

@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "cdfb5593a93718fe05882713ddbd6560984fa1c3c2d70d39cf6448c3e1e53d98",
+  "content_sha256": "c02d8524d0b5c355ab6432c518af335a1a55a57e0d6f75ffd481811f5d3575f2",
   "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
@@ -292,7 +292,7 @@
     },
     {
       "anchor": "pcp-short-outer-decoding",
-      "text_sha256": "30b799d6dc397fecb513db9e0c3da2860a14f256be6e8c2779bc485b8ff112f3",
+      "text_sha256": "f5a2f273070b13b04bd6eb44bb3d54985df9f6872c354fe0cc7c3d32aee838be",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
