@@ -12,8 +12,8 @@ export const PAPER_NAMES: Record<Stage, { short: string; job: string; reader: st
   },
   short: {
     short: "Short paper",
-    job: "The result, how it relates to earlier work and its proof, which cites the curvature estimate it depends on.",
-    reader: "Written for readers who know Itô calculus and martingale convergence.",
+    job: "The result, how its proof compares with the earlier crossing proof, and the proof, with the polynomial identity behind the curvature estimate printed in full.",
+    reader: "Written for readers who know the Parisi variational theory and Itô calculus.",
   },
   long: {
     short: "Long record",
