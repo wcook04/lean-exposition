@@ -10,13 +10,16 @@ language models produced and revised this manuscript.
 zero temperature, the Stieltjes measure of the minimiser of the
 Parisi functional has full support on $[0,1)$ and a smooth
 density that is strictly positive on $(0,1)$. Full support and
-smoothness are due to H.-B. Chen; strict positivity is due to OpenAI,
-whose proof we present. It rests on one coercive inequality for spatial
-moments of the Parisi solution along its diffusion, valid for every
-order parameter. We print the rational identity behind the inequality in
-full, evaluate it in an explicitly solvable case, where the best
-constant is $2/5$ against the general $1/1000$, and relate its
-hypotheses to the inequalities of Lopatto and Chen.
+smoothness are due to H.-B. Chen. Strict positivity, which they do not
+imply, is due to OpenAI. We give an account of OpenAI's proof, in which
+one coercive inequality between spatial moments of the Parisi solution
+is used twice: on a constant interval it excludes gaps, and at the
+minimiser it bounds the density from below. The inequality requires no
+minimality, which is what the second use needs. We compare it with the
+crossing argument of Chen's proof, print the rational identity behind
+it in full, and work out the simplest finite-step case, in which the
+inequality holds with constant $2/5$ and no better. The shape
+inequalities and the regularity theory are cited.
 <!-- /passage:abstract -->
 
 <a id="model-and-result"></a>
@@ -24,6 +27,18 @@ hypotheses to the inequalities of Lopatto and Chen.
 ## 1. The model and the result
 
 <!-- passage:model -->
+Three statements about the zero-temperature Parisi minimiser have to be
+kept apart. Its support is infinite
+([Auffinger, Chen and Zeng (2020), Theorem 1][ACZ]). Its support is the
+whole interval, and its measure has a smooth density
+([H.-B. Chen (2026), Theorem 1.3][Chen]). Its density is strictly
+positive in the interior ([OpenAI (2026a), Corollary 6.4][FS]). None
+implies the next: the measure $\sum_{k\geq1}2^{-k}\delta_{1-2^{-k}}$
+has infinitely many atoms and many gaps, and a smooth density of full
+support can vanish at a point. This paper explains the proof of the
+third statement and its relation to the proof of the second. We fix the
+notation first.
+
 For independent standard Gaussian couplings $J_{ij}$, the pure,
 zero-field [Sherrington–Kirkpatrick (SK) Hamiltonian][SK] is
 $$
@@ -39,8 +54,8 @@ The overlap of two configurations is
 $R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$, and it determines the
 energy covariance, $\mathbb E[H_n(\sigma)H_n(\tau)]=nR^2/2-1/2$.
 We use the covariance convention $\xi(t)=t^2/2$, so $\xi''=1$.
-Adding one independent centred Gaussian of variance $1/2$ to every
-configuration's energy gives covariance $n\xi(R)$ and leaves the
+Adding to every energy the same independent centred Gaussian of
+variance $1/2$ gives covariance $n\xi(R)$ and leaves the
 expected maximum unchanged, which is the normalisation of the
 ground-state Parisi formula of [Auffinger and Chen (2017), Theorem 1][AC].
 The model has no higher-order interactions and no external field.
@@ -91,15 +106,14 @@ compact time intervals ending before one.
 <!-- /passage:model -->
 
 <!-- passage:main-result -->
-The support of the minimiser is infinite by
-[Auffinger, Chen and Zeng (2020), Theorem 1][ACZ]. Infinite support
-still allows gaps: the measure $\sum_{k\geq1}2^{-k}\delta_{1-2^{-k}}$
-has infinitely many atoms and many gaps. At positive temperature,
+At positive temperature,
 [Lopatto (2026), Theorem 1.1][Lopatto] proved full replica symmetry
 breaking throughout the low-temperature phase: the Parisi measure has
 support $[0,q_\beta]$. At zero temperature, full support and a smooth
 nonnegative density were proved in
-[H.-B. Chen (2026), Theorem 1.3][Chen].
+[H.-B. Chen (2026), Theorem 1.3][Chen], together with the endpoint
+estimate $\beta^{-2}<1-q_\beta<2\beta^{-2}$
+([Chen (2026), Theorem 1.2][Chen]).
 
 **Theorem 1 (full support;
 [H.-B. Chen (2026), Theorem 1.3][Chen];
@@ -113,6 +127,16 @@ For the solution of the displayed SDE and every $0\leq t<1$,
 $$
 q(t)=t,\qquad \mathbb E[a(t,X_t)^2]=1.
 $$
+
+Full support has the following interpretation for near-ground states.
+For each fixed $\rho\in[0,1)$ and $\delta,\eta>0$, with probability
+tending to one there are configurations $\sigma,\tau$ with
+$|R(\sigma,\tau)-\rho|<\delta$ whose energies are both at least
+$n(P_*-\eta)$. This follows from
+[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ]
+in the Gaussian normalisation above. Strict increase of $\gamma$ is also
+the no-overlap-gap assumption under which the algorithm of El Alaoui,
+Montanari and Sellke finds near-ground states (§5.2).
 
 **Corollary 2 (smooth positive density;
 [OpenAI (2026a), Corollary 6.4][FS]).** Under the hypotheses of
@@ -131,36 +155,28 @@ Zero field gives
 $u(0,0)=0$, and the curvature calculation uses $\xi''=1$, so both
 statements concern only the pure SK covariance at zero field.
 
-Full support has the following interpretation for near-ground states.
-For each fixed $\rho\in[0,1)$ and $\delta,\eta>0$, with probability
-tending to one there are configurations $\sigma,\tau$ with
-$|R(\sigma,\tau)-\rho|<\delta$ whose energies are both at least
-$n(P_*-\eta)$. This follows from
-[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ]
-in the Gaussian normalisation above. Strict increase of $\gamma$ is also
-the no-overlap-gap assumption under which the algorithm of El Alaoui,
-Montanari and Sellke finds near-ground states (§5.2).
-
 **The two proofs.** Both proofs start from the first variation of
 $\mathcal P$. At the minimiser it gives $q(s)=s$ and $q'(s)\leq1$ at
 every point $s$ of the support, the consistency and stability
 conditions. On an interior gap the order parameter is a positive
 constant $c$, and a contradiction with these endpoint conditions must
-come from the behaviour of $q$ inside the gap. There
+come from the behaviour of $q$ inside the gap. Let $v,w,z$ be the
+second, third and fourth spatial derivatives of $c\Phi$ along the
+diffusion. Then
 $$
 c^2q''=\mathbb E[w^2-2v^3],\qquad
-c^2q'''=\mathbb E[z^2-12vw^2+6v^4],
+c^2q'''=\mathbb E[z^2-12vw^2+6v^4].
 $$
-where $v,w,z$ are the second, third and fourth spatial derivatives of
-$c\Phi$ along the diffusion.
 
 Chen's proof establishes the crossing property
 $q''(t)=0\Rightarrow q'''(t)>0$ on the gap
 ([Chen (2026), Proposition 4.2][Chen]), in parallel with the
 positive-temperature argument of
 [Lopatto (2026), v3, Proposition 9.1][Lopatto]. Hence $q''$ changes sign at most
-once, from negative to positive, and this is incompatible with the
-endpoint conditions.
+once, from negative to positive. The endpoint conditions make a
+weighted integral of $q''$ over the gap vanish, which fixes this sign
+pattern, and a second integration then contradicts stability at the
+left endpoint (§2).
 
 OpenAI's proof establishes the unconditional bound
 $$
@@ -452,9 +468,11 @@ to $K(\infty)=-\tfrac12\int_0^\infty x^2F\,dx>0$, so $K>0$ on
 $(0,\infty)$. Two integrations by parts give
 $\int_0^\infty F(x)e^{-x^2/(2t)}\,dx
 =t^{-2}\int_0^\infty K(x)\,x\,e^{-x^2/(2t)}\,dx>0$.
-For these data the best constant
-in the integrated inequality, (6) of §3.3, is therefore $2/5$, not
-attained, against the $1/1000$ of the general proof. Numerically
+For a single step of height $c=M$ the ratio at time $t$ is
+$\rho(c^2t)$. Over this family, with $0<t<1$, the best constant in the
+integrated inequality, (6) of §3.3, is therefore $2/5$, not attained,
+against the $1/1000$ of the general proof. This concerns the auxiliary
+inequality and not the density of the minimiser. Numerically
 $\rho(1/2)=2.39$, and this value is decomposed term by term in §3.3.
 
 The same pointwise obstruction occurs for the terminal value $|x|$.
@@ -514,7 +532,7 @@ $$
 Thus $j$ is unchanged at jumps of the coefficient.
 The quotients $w/r$ and $s/r$ extend smoothly through zero because
 $r,s,w$ are odd and $r_x(0)>0$. The ratio inequality is the one that
-has no counterpart in the crossing arguments (§3.5). It also follows
+does not appear in the crossing arguments (§3.5). It also follows
 from [Zhou (2026), Appendix E.3, (E.37) and (E.41)][zhou-gardner], after
 rescaling the smoothed finite-step problem
 (<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">[companion, §4.3](../long/reasoning-record.md#shape-comparisons)</span>).
@@ -683,13 +701,13 @@ The crossing arguments record the shape of $\Phi$ on a constant
 interval $\gamma=m$ in the slope coordinate $\Phi_x$
 ([Lopatto (2026), v2, Proposition 3.6][Lopatto-v2];
 [Chen (2026), Propositions 3.10 and 3.11][Chen]). With
-$\mathsf c=\Phi_{xx}$ regarded as a function of the slope,
-$\mathsf z=-\tfrac12\partial_{\Phi_x}\mathsf c$,
+$\Phi_{xx}$ regarded as a function of the slope,
+$\mathsf z=-\tfrac12\partial_{\Phi_x}\Phi_{xx}$,
 $\mathsf K=\mathsf z/\Phi_x-m$ and
 $\mathsf J=\partial_{\Phi_x}(\Phi_x\mathsf K)$, they prove
 $\mathsf K,\partial_{\Phi_x}\mathsf K,\mathsf J,
 \partial_{\Phi_x}\mathsf J\geq0$ and
-$\mathsf c\,\partial_{\Phi_x}\mathsf J\leq3\mathsf z\mathsf J$ for
+$\Phi_{xx}\,\partial_{\Phi_x}\mathsf J\leq3\mathsf z\mathsf J$ for
 nonnegative slopes. Since
 $\partial_{\Phi_x}=\Phi_{xx}^{-1}\partial_x$, a direct calculation with
 $c=m$ gives, for $x>0$,
@@ -715,8 +733,9 @@ $|x|$, follow from $s\geq0$,
 $s_x>0$ and $s_{xx}\leq0$, because
 $\partial_x(s^2-s_x)=2ss_x-s_{xx}$. The inequalities for
 $\partial_{\Phi_x}\mathsf J$ involve the fifth derivative of $\Phi$ and
-have no counterpart in (5), and the ratio inequality $j\geq0$ has none
-in the slope-coordinate family. The inequalities for $\mathsf K$ and
+do not appear in (5), and the ratio inequality $j\geq0$ does not appear
+in the slope-coordinate family. Whether either family implies the other
+is not addressed here. The inequalities for $\mathsf K$ and
 $\mathsf J$ originate in
 [Lopatto (2026), v2, Proposition 3.6][Lopatto-v2], and the transformed
 density appears in [Lopatto (2026), v3, Proposition 7.1][Lopatto]. The
@@ -737,7 +756,8 @@ $$
 $$
 with the spatial factors evaluated at $(t,X_t)$. On an interval where
 $\gamma=c$ this is $q'''(t)$, by (4). The definition involves no time
-derivative of $\gamma$.
+derivative of $\gamma$. At a jump, $\gamma(t)$ is the right-continuous
+value, and the spatial derivatives of $\Phi$ are continuous in $t$.
 
 **Proposition 5 (coercive inequality at a fixed time).** Let
 $\gamma\in\mathcal U$ and $0<t<1$,
@@ -897,14 +917,9 @@ qualitative crossing for arbitrary positive-temperature probability
 measures. [Lopatto's external-field paper, Theorem 2.3 and §8][Lopatto-field]
 uses a spatial inequality at a fixed time for support and positive
 density at positive temperature, and its Appendix B gives the strict
-positivity of the density at zero field. In unit-noise coordinates the
-positive-temperature coefficient is $\beta\alpha_\nu$, where
-$\alpha_\nu(t)=\nu([0,t])$, and the terminal value is
-$\beta^{-1}\log\cosh(\beta x)$. Every bounded $\gamma\in\mathcal U$ has
-this form, so the estimates differ only in the terminal value and the
-explicit constant. Proposition 5 treats the terminal value $|x|$ with an
-explicit lower bound. The rescaling and
-the comparison of hypotheses are in the companion,
+positivity of the density at zero field. Proposition 5 treats the
+terminal value $|x|$ with an explicit lower bound. The rescaling between
+the two settings is in the companion,
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-temperature-dictionary">[§2.3](../long/reasoning-record.md#finite-temperature-dictionary)</span>.
 <!-- /passage:density-consequence -->
 

@@ -1,5 +1,5 @@
 {
- "manifest_sha256": "fd9d5f68cb0dcdf36546a8c0b722b0d4c8f8d6490ad3fd1733236cb59e1792c0",
+ "manifest_sha256": "7167750b3a118de840ac89e31f9e31647fd464c0236d87589022fd4dc5503dd1",
  "selected_goals": [
   "full_support"
  ],
@@ -10266,5 +10266,5 @@
   "empty_result_meaning": "No recorded relation in this view; not a proof of independence.",
   "query_truncated": false
  },
- "records_href": "/api/v1/records?manifest=fd9d5f68cb0dcdf36546a8c0b722b0d4c8f8d6490ad3fd1733236cb59e1792c0"
+ "records_href": "/api/v1/records?manifest=7167750b3a118de840ac89e31f9e31647fd464c0236d87589022fd4dc5503dd1"
 }
