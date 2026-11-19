@@ -26,8 +26,8 @@
       "record": "support.fixed_time_spatial_coercivity",
       "paper": "short",
       "role": "explanation",
-      "from": "It rests on one coercive inequality for spatial",
-      "to": "valid for every\norder parameter.",
+      "from": "one coercive inequality between spatial moments of the Parisi solution",
+      "to": "The inequality requires no\nminimality, which is what the second use needs.",
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.stripThird_coercive",

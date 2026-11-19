@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "e110aecea95892169115ed442e2aad0a80e13f869cdf5ff175bdc481e4d4e717",
+  "content_sha256": "4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba",
   "graph_sha256": "f22708f3180068944c06829213f78f6ecfb65ef34f6c8decded774b95a041d92",
   "selected_goal_ids": [
     "full_support",
@@ -298,7 +298,7 @@
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "7c197820a4a4766461f23d86369ef03a12e02d0e25be199fff2edfc75c655dbe",
+      "text_sha256": "fc37b12595445724915d2d4bfcd3153f4d869abd5058782874bb7cd443e04bdd",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
@@ -360,7 +360,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "8883f91e34307f153d75914553a60180c5d048c99cbeec1942396bf4bf6c4792",
+      "text_sha256": "9d874de488dfcabf3696016cc311b8e2153878083b33a5a0a519dd34f1438c32",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -390,7 +390,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "ab8f520909eb0d31969c30854af5f02b3eaf831c32ea72b1d211bc6c7549160a",
+      "text_sha256": "ddf1ea786463b95244906d0cf2606b11363ccd353570c1b22805e0051cd9563a",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
@@ -592,7 +592,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "805f9a2a551c1a1fd1f15a4a1c8e41813bcb45216672d9c96f5f7a2f2a94cb86",
+      "text_sha256": "16e75621185c448c056c98832b45ef2c06a9f5d5f4ef757dee4add8d9a6c4ae9",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -638,7 +638,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "871afd048dfbc7bcb7127cdaabfb91c67f293aaafff16280d8f1b6f5d7432cad",
+      "text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
@@ -1038,7 +1038,7 @@
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "871afd048dfbc7bcb7127cdaabfb91c67f293aaafff16280d8f1b6f5d7432cad",
+      "from_text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
       "to_text_sha256": "87c9b6cea47401a6f3c12a714632d406da5eca158f0024795e74b50e8105519a",
