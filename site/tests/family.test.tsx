@@ -205,7 +205,8 @@ describe("the header's lockup", () => {
     expect(home.getAttribute("href")).toBe("https://wcook04.github.io/");
     expect(home.getAttribute("rel")).toBe("author");
     const plait = home.querySelector("img")!;
-    expect(plait.getAttribute("alt")).toBe("Will Cook: all websites and videos");
+    expect(plait.getAttribute("alt")).toBe("");
+    expect(home.querySelector(".fam-lockup__owner")!.textContent).toBe("Will Cook");
     expect(plait.getAttribute("src")).toMatch(/^\/(lean-exposition-site\/)?plectis\.svg$/);
     expect(lockup.querySelector(".fam-lockup__rule")!.getAttribute("aria-hidden")).toBe("true");
     const own = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__site")!;
