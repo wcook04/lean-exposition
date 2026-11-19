@@ -3039,7 +3039,7 @@
       "from_text_sha256": "61bc6937a975e4ef541096bc0d174710ff8777efd1660c82ac954f400a4825fd",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "b00317bfc497ecebdd71292e0851d4fdba392eaf38553cb5f4729d69b06b7aa7",
+      "to_text_sha256": "805f9a2a551c1a1fd1f15a4a1c8e41813bcb45216672d9c96f5f7a2f2a94cb86",
       "kind": "expands",
       "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately."
     },
@@ -3057,7 +3057,7 @@
       "from_text_sha256": "7284cee4321d7cd96f17911285d5ffebcf7d05f0a96869845eaf1a0c7e5ef14f",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "22f672290fcb4a80ce80c948da7a39143fe1ddccde3f0b7121892fa92b1fe7cf",
+      "to_text_sha256": "871afd048dfbc7bcb7127cdaabfb91c67f293aaafff16280d8f1b6f5d7432cad",
       "kind": "expands",
       "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
     },
@@ -3066,7 +3066,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "22f672290fcb4a80ce80c948da7a39143fe1ddccde3f0b7121892fa92b1fe7cf",
+      "to_text_sha256": "871afd048dfbc7bcb7127cdaabfb91c67f293aaafff16280d8f1b6f5d7432cad",
       "kind": "expands",
       "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps."
     },
@@ -3102,7 +3102,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "b00317bfc497ecebdd71292e0851d4fdba392eaf38553cb5f4729d69b06b7aa7",
+      "to_text_sha256": "805f9a2a551c1a1fd1f15a4a1c8e41813bcb45216672d9c96f5f7a2f2a94cb86",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     },
