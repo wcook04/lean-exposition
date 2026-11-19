@@ -14,36 +14,29 @@ The [source guide](../../../examples/qaoa-sk/README.md#read-the-source-and-the-s
 identifies the two OpenAI manuscripts and distinguishes them from this repository's
 writing and the separate Prove2Me metadata example.
 
-The paper opens with the pure, zero-field SK Hamiltonian and the exact
-covariance convention, then defines the increment measure and the diffusion
-moment used in the first variation. Its focus is two uses of OpenAI's
-quantitative estimate for an admissible integrable zero-temperature SK minimiser.
-Variational contact at the endpoints of a support gap conflicts with strict
-curvature inside it. Finite-chord arguments also exclude empty support and a
-terminal gap, with the stronger quantitative boundary estimate retained in
-the long record. Once full support fixes the diffusion moments, a local
-constant replacement transfers the same estimate to prove strictly positive
-density. This second passage transfers spatial moments, not time derivatives.
+The paper states the full-support theorem (H.-B. Chen, July 2026; OpenAI,
+September 2026) and OpenAI's strict positivity of the density, and gives an
+account of OpenAI's quantitative proof for readers who know the earlier
+crossing argument. Its introduction compares the two proofs: the crossing
+property is conditional on a zero of the second derivative of the consistency
+function, while the quantitative bound holds on every positive constant
+interval of every order parameter and passes to a limit of shrinking intervals.
 
-The short paper states the common fixed-time spatial-moment estimate,
-derives the decisive moment identities, and explains the coupled heat
-equations and signed polynomial decomposition behind the imported estimate.
-It retains the local constant replacement and its uniform strip bounds.
-The scalar value identity distinguishes the moment that normalises increment
-variances from the covariance that gives the value. For the QAOA application,
-the paper defines the circuit and its expected energy, then identifies the
-exact finite rooted energy as a sum of adjacent Gaussian correlations.
-The imported finite-observable approximation states the consequence before
-explaining its rooted representation and required exclusions. The separate
-synthesis theorems and the additional concentration input for
-a sampled near-optimal configuration have explicit proof destinations in
-the long record.
+Section 3 carries the main estimate. It evaluates an explicitly solvable case
+(one step with terminal value `log(2 cosh x)`), where the integrand is negative
+on a set of probability 0.56 at `t = 1/2` and the best constant is 2/5; states
+the shape inequalities; prints the rational identity of OpenAI's Lemma 4.1 with
+all 22 coefficients of its remainder; and relates the inequalities to the
+slope-coordinate inequalities of Lopatto and Chen. Section 4 states the
+coercive inequality at a fixed time as a separate proposition and proves strict
+positivity. Section 5 states the value identity, the classical algorithm and
+the QAOA consequence, and routes the circuit construction to the long record.
 
-The intended reader knows elementary stochastic calculus and variational
-arguments. The analytic sign propagation, rational polynomial certificate and
-compact-strip approximation remain explicitly cited inputs. The document is a
-draft explanation of existing public results, with the original authors and
-antecedents credited. It is not a new theorem or a fresh Lean/Comparator check.
+The intended reader knows the Parisi variational theory at zero temperature.
+The shape inequalities and the compact-strip approximation are cited inputs.
+The document is a draft explanation of existing public results, with the
+original authors and antecedents credited. It is not a new theorem or a fresh
+Lean/Comparator check.
 
 ## Files and evidence
 
@@ -52,7 +45,9 @@ artifact schema, binds the exact Markdown and source-graph bytes, and names
 `papers/short.md` as its location in an assembled bundle. Its state remains
 `draft`; its review notes describe bounded source checks and remaining review.
 `references.bib` retains the cited primary-source entries. `paper.pdf` is
-the rendered edition of the Markdown.
+the rendered edition of the Markdown. `check_solvable_case.py` re-expands the
+identity exactly as printed, recomputes the numbers of Section 3.1 and checks
+the change of variables of Section 3.5 (SymPy and mpmath; about half a minute).
 
 The selected formal declarations are
 `OAI.ZeroTemperatureSK.full_support` and
@@ -62,22 +57,24 @@ are recorded in the [source example](../../../examples/qaoa-sk/README.md).
 A source-bound local build of the Support implementation completed on
 26 October 2026, and dependency extraction recorded its conditional
 full-support root; dependencies outside the selected extraction scope remain
-boundaries. Comparator acceptance and the scalar-target results remain
-pending. The paper's "Formal verification" paragraph states only which
-results the formal statements cover; these checking outcomes, which the
-register pass of 3 November 2026 moved out of the reading copy, stay here
-and in the long record's §13.
+boundaries. Our own Comparator run and scalar-target build did not complete.
+Two outside reruns report that Comparator accepts both proofs (MathVet,
+8 October 2026; C. Toledo, 10 October 2026), and the paper's "Formal
+verification" section cites them. The history of the local builds is in the
+long record's §13.
 The [long record](../long/reasoning-record.md) retains the broader recovery route.
 
 | Short-paper argument | Companion section in the long record |
 | --- | --- |
-| Fixed-time spatial estimate and plateau curvature | [§4.5: Coercivity at a fixed time and on plateaus](../long/reasoning-record.md#fixed-time-coercivity) |
-| The three kinds of support gap | [§5: Excluding terminal, interior and initial gaps](../long/reasoning-record.md#gap-elimination) |
+| Pointwise obstruction for the terminal value `|x|` | [§4.1](../long/reasoning-record.md#pointwise-curvature-obstruction) |
+| Shape inequalities | [§4.3](../long/reasoning-record.md#shape-comparisons) |
+| Passage to integrable order parameters | [§4.5](../long/reasoning-record.md#plateau-limit) |
+| Terminal gap and the boundary estimate | [§5](../long/reasoning-record.md#terminal-gap) |
 | Smooth positive density | [§§9.1–9.2](../long/reasoning-record.md#smooth-density-consequence) |
-| Scalar value identity | [§6: Recovering the value from a martingale](../long/reasoning-record.md#scalar-value-identities) |
-| Finite Gaussian approximation | [§7: A finite Gaussian spin and its adjacent correlations](../long/reasoning-record.md#finite-gaussian-approximation) |
-| Rooted energy and further circuit construction | [§§8.1–8.6: From the scalar formula to one ordinary QAOA word](../long/reasoning-record.md#qaoa-construction) |
-| Sampled finite-instance consequence | [§11.2: What is averaged, and a fixed-word probability consequence](../long/reasoning-record.md#fixed-word-probability) |
+| Scalar value identity | [§6](../long/reasoning-record.md#scalar-value-identities) |
+| Finite Gaussian approximation | [§7](../long/reasoning-record.md#finite-gaussian-approximation) |
+| Circuit construction | [§§8.1–8.6](../long/reasoning-record.md#qaoa-construction) |
+| Formal statements and checks | [§12](../long/reasoning-record.md#formal-interfaces), [§13](../long/reasoning-record.md#verification) |
 
 The paper uses companion section names and immutable public manuscript URLs
 so those references remain meaningful in the eight-file bundle. This README
@@ -88,7 +85,7 @@ provides the clickable checkout routes.
 The PDF uses Pandoc's installed LaTeX article template and Tectonic, with the
 11-point Latin Modern mathematics and one-inch margins of the exact upstream
 full-support manuscript. The title and section content come from this Markdown.
-No diagram or new illustration is introduced.
+The paper has one table and no figure.
 
 From the repository root, with Pandoc and Tectonic installed:
 

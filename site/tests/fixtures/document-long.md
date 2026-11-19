@@ -2,7 +2,7 @@
 
 ## A long reasoning record
 
-3 November 2026. Mathematical sources: OpenAI's full-support
+19 November 2026. Mathematical sources: OpenAI's full-support
 manuscript of 27 September 2026 and QAOA manuscript of 25 September 2026,
 at the [pinned public revision](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a).
 
@@ -5576,8 +5576,15 @@ internal-consistency checks are not authenticated execution provenance.
 The curated paper graph records the build and documentary extraction
 observation separately, and it is distinct from the extracted declaration
 graph.
-Comparator acceptance, standalone kernel replay and the scalar-target
-results remain pending. The earlier failed and interrupted invocations
+We have not completed a Comparator run or a standalone kernel replay
+ourselves, and our scalar-target build did not finish. Two independent
+reruns report that Comparator accepts OpenAI's proofs of both formal
+statements: [MathVet](https://github.com/mathvet/mathvet/blob/14c7f918cd336d0da03a02aae5a0eed4a429d4db/reviews/openai-math/challenge-status.csv),
+on 8 October 2026, in a sandboxed run, and
+[C. Toledo](https://github.com/carlostoledo1891/cert-machine/blob/9814e4c06281e34a113ce853d7d99ccce160b750/certs/openai-math-kernel.json),
+on 10 October 2026, with a second kernel as well. Both reports note that
+the statements take a minimiser as hypothesis and do not mention QAOA.
+The earlier failed and interrupted invocations of our own
 remain dated history, rather than evidence of a later rejection or
 acceptance. Permitted axioms and checker settings describe the requested
 comparison and cannot supply its missing result.

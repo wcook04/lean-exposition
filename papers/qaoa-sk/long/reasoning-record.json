@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "fa472c25832b36a2061f212196277009f716c230a658520bb4b4f2ed8173d74b",
-  "graph_sha256": "47eb5f9cd8936c095f37a279430757722203f6e0f60993eeefcb2953ffb994dd",
+  "content_sha256": "4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b",
+  "graph_sha256": "f22708f3180068944c06829213f78f6ecfb65ef34f6c8decded774b95a041d92",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -2878,7 +2878,7 @@
     },
     {
       "anchor": "verification",
-      "text_sha256": "1b4dbf9ef3222b5710849cbeb7b253ef657ff7dcd3f916aa43cb60ef211c02fa",
+      "text_sha256": "aeb857c9c25cb503cde2abdac8fa1328e6c4450ab6bd076d8dd4e04fcf40c2e9",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -3021,7 +3021,8 @@
     "26 October 2026 R10 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 e779c0a6f282d578aeb254a1aca53517e44065244459972a3d930a9d94197176). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 independent Terra audit: Applied local skills/graph-to-long/SKILL.md (SHA256 dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87). Checked the joint Gaussian law for fixed child-space directions against the source, retained neutral chronology and corrected the prior-review locator. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained.",
     "26 October 2026 R11 source-assisted refinement: The drafting transition used local skills/graph-to-long/SKILL.md (SHA256 dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87). Reconstructed the moving-input seed-removal invariant and weighted substitution input, split the one-pair calibration from its rooted return, and supplied the ordinary progressive-version construction while retaining the remaining formal transport obligations. Final correspondence and source binding used skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136). The final bounded review also applied the refined skills/graph-to-long/SKILL.md (SHA256 819bf48c70b0840272b81a331a9de63a346491382d6b588805de4ef469032959); its moving-input rule does not replace the original proof source. The dated Support build and v2-report binding observations are separate from curated extraction and formal-result eligibility; earlier outcomes remain visible. Source-assisted review, finite checks and strict structural validation do not establish independent analytic acceptance, a new native replay, Comparator acceptance or human reader understanding. Draft and needs_revision are retained.",
-    "3 November 2026 register pass (skills/register/SKILL.md, rules.json, RG-21 for the long record): front matter, overview, section openings and the sections routed from the companions were line-edited in full, and later proof paragraphs had semicolons, contrast frames and overlong paragraphs repaired; several subsection titles now name their mathematics, with numbers and anchors unchanged. Every display and inline formula, passage marker, anchor, link target, equation tag and theorem label is byte-identical, and the formal-statement apparatus stays in sections 12 and 13. This prose edit is not a new mathematical review."
+    "3 November 2026 register pass (skills/register/SKILL.md, rules.json, RG-21 for the long record): front matter, overview, section openings and the sections routed from the companions were line-edited in full, and later proof paragraphs had semicolons, contrast frames and overlong paragraphs repaired; several subsection titles now name their mathematics, with numbers and anchors unchanged. Every display and inline formula, passage marker, anchor, link target, equation tag and theorem label is byte-identical, and the formal-statement apparatus stays in sections 12 and 13. This prose edit is not a new mathematical review.",
+    "19 November 2026: the verification passage now records two outside Comparator reruns reported on 8 and 10 October 2026 beside the unchanged history of the local builds. No mathematical passage changed."
   ],
   "reading_links": [
     {
@@ -3038,7 +3039,7 @@
       "from_text_sha256": "61bc6937a975e4ef541096bc0d174710ff8777efd1660c82ac954f400a4825fd",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "a23c009c1b45d88b51bb7210392f199cfaafcabf9543bcc4fcaa0206cacdec68",
+      "to_text_sha256": "b00317bfc497ecebdd71292e0851d4fdba392eaf38553cb5f4729d69b06b7aa7",
       "kind": "expands",
       "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately."
     },
@@ -3056,7 +3057,7 @@
       "from_text_sha256": "7284cee4321d7cd96f17911285d5ffebcf7d05f0a96869845eaf1a0c7e5ef14f",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "d0060f70f5740df6adf2a4671a4832ba4eed55c52b7be5336eb244070e884857",
+      "to_text_sha256": "22f672290fcb4a80ce80c948da7a39143fe1ddccde3f0b7121892fa92b1fe7cf",
       "kind": "expands",
       "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
     },
@@ -3065,7 +3066,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "d0060f70f5740df6adf2a4671a4832ba4eed55c52b7be5336eb244070e884857",
+      "to_text_sha256": "22f672290fcb4a80ce80c948da7a39143fe1ddccde3f0b7121892fa92b1fe7cf",
       "kind": "expands",
       "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps."
     },
@@ -3083,7 +3084,7 @@
       "from_text_sha256": "af9fb8ac343000708a6adc9eca7fafbe02bea9cdad8f714627b181182632f6ee",
       "to_stage": "short",
       "to_anchor": "scalar-value",
-      "to_text_sha256": "ea6e9a48fcd2913d3472579a05ff3879e072436b88c695944e916d5afddc3c95",
+      "to_text_sha256": "e5a6b140e43a57c6d5b91876f9d2b017705db658ca9a9f1eef7b1435de8f301c",
       "kind": "expands",
       "rationale": "Develops the terminal value identity described in the short paper; finite Gaussian approximation remains a separate part of the construction."
     },
@@ -3092,7 +3093,7 @@
       "from_text_sha256": "01143554e67578f628c82b32c9a36ec0ec92660aaf9f548a62386ccb7da88f3a",
       "to_stage": "short",
       "to_anchor": "qaoa-boundary",
-      "to_text_sha256": "538ede0336f886b56583f7c4a1a1d5f4b7973e1df5f17b6c0c2bd7b4cf59e718",
+      "to_text_sha256": "5f1f8254a507af180943d6299d7e399dba9b680c96fde3c45c78e8f65a36588e",
       "kind": "expands",
       "rationale": "Expands the final error allocation and order of choices after the separate synthesis and seed-removal inputs; it does not replace those inputs by the scalar statement."
     },
@@ -3101,7 +3102,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "a23c009c1b45d88b51bb7210392f199cfaafcabf9543bcc4fcaa0206cacdec68",
+      "to_text_sha256": "b00317bfc497ecebdd71292e0851d4fdba392eaf38553cb5f4729d69b06b7aa7",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     },

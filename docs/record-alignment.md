@@ -159,8 +159,8 @@ to records already aligned in a batch file. Here is a working `ties-short.json`:
       "record": "support.moment_saturation",
       "paper": "short",
       "role": "derivation",
-      "from": "contact gives $q(t)=t$, and differentiation",
-      "to": "including the right-hand value at zero.",
+      "from": "the conditions (2) give $q(t)=t$, and",
+      "to": "including the right-hand value\nat zero.",
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
