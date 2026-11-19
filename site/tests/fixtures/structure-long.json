@@ -1294,7 +1294,7 @@
      "start_line": 12
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/overview",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/overview",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/59",
     "selected": true
    },
@@ -1337,7 +1337,7 @@
      "start_line": 64
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/model",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/model",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/3207",
     "selected": true
    },
@@ -1440,7 +1440,7 @@
      "start_line": 113
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/targets",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/targets",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/3207",
     "selected": true
    },
@@ -1516,7 +1516,7 @@
      "start_line": 153
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/dependencies",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/dependencies",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/7137",
     "selected": true
    },
@@ -1550,7 +1550,7 @@
      "start_line": 454
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/strip-recovery",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/strip-recovery",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/24730",
     "selected": true
    },
@@ -1623,7 +1623,7 @@
      "start_line": 552
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/approximation-choices",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/approximation-choices",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/7137",
     "selected": true
    },
@@ -1674,7 +1674,7 @@
      "start_line": 599
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/contact",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/contact",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/31529",
     "selected": true,
     "treatments": [
@@ -1745,7 +1745,7 @@
      "start_line": 883
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/curvature",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/curvature",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/43690",
     "selected": true,
     "treatments": [
@@ -1819,7 +1819,7 @@
      "start_line": 1422
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/fixed-time-coercivity",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/fixed-time-coercivity",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/43690",
     "selected": true,
     "treatments": [
@@ -1924,7 +1924,7 @@
      "start_line": 1598
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaps",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaps",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/70986",
     "selected": true
    },
@@ -1998,7 +1998,7 @@
      "start_line": 1902
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/value",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/value",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/83395",
     "selected": true,
     "treatments": [
@@ -2078,7 +2078,7 @@
      "start_line": 1991
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/coefficient-budget",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/coefficient-budget",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/83395",
     "selected": true
    },
@@ -2164,7 +2164,7 @@
      "start_line": 2122
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/92435",
     "selected": true
    },
@@ -2240,7 +2240,7 @@
      "start_line": 2290
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-error-budget",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-error-budget",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/92435",
     "selected": true
    },
@@ -2349,7 +2349,7 @@
      "start_line": 2430
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2377,7 +2377,7 @@
      "start_line": 2547
     },
     "evidence_class": "example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-depth-one-pauli",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-depth-one-pauli",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2450,7 +2450,7 @@
      "start_line": 2604
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-rooted",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-rooted",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2480,7 +2480,7 @@
      "start_line": 2795
     },
     "evidence_class": "example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-depth-one",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-depth-one",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/113001",
     "selected": true
    },
@@ -2573,7 +2573,7 @@
      "start_line": 2832
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-regularization",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-regularization",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2610,7 +2610,7 @@
      "start_line": 3038
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-synthesis",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-synthesis",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2652,7 +2652,7 @@
      "start_line": 3237
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-seed",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-seed",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2685,7 +2685,7 @@
      "start_line": 3514
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-transfer",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-transfer",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true
    },
@@ -2795,7 +2795,7 @@
      "start_line": 3572
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-assembly",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-assembly",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/104548",
     "selected": true,
     "treatments": [
@@ -2869,7 +2869,7 @@
      "start_line": 3684
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/density",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/density",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/165299",
     "selected": true,
     "treatments": [
@@ -2942,7 +2942,7 @@
      "start_line": 3747
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/density-positive",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/density-positive",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/165299",
     "selected": true,
     "treatments": [
@@ -3017,7 +3017,7 @@
      "start_line": 3798
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/overlap-pairs",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/overlap-pairs",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/171759",
     "selected": true
    },
@@ -3082,7 +3082,7 @@
      "start_line": 3879
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/algorithm",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/algorithm",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/165299",
     "selected": true
    },
@@ -3116,7 +3116,7 @@
      "start_line": 3932
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-contact",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-contact",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/179977",
     "selected": true
    },
@@ -3149,7 +3149,7 @@
      "start_line": 3999
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-lower-overview",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-lower-overview",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/179977",
     "selected": true
    },
@@ -3175,7 +3175,7 @@
      "start_line": 4037
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-column-split",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-column-split",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/183461",
     "selected": true
    },
@@ -3202,7 +3202,7 @@
      "start_line": 4081
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-adaptive-lower",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-adaptive-lower",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/183461",
     "selected": true
    },
@@ -3228,7 +3228,7 @@
      "start_line": 4146
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-empirical-limit",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-empirical-limit",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/183461",
     "selected": true
    },
@@ -3277,7 +3277,7 @@
      "start_line": 4184
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-expectation-limit",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-expectation-limit",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/183461",
     "selected": true
    },
@@ -3315,7 +3315,7 @@
      "start_line": 4238
     },
     "evidence_class": "example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-sanity-check",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-sanity-check",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/179977",
     "selected": true
    },
@@ -3346,7 +3346,7 @@
      "start_line": 4299
     },
     "evidence_class": "example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-one-step-example",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-one-step-example",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/179977",
     "selected": true
    },
@@ -3377,7 +3377,7 @@
      "start_line": 4347
     },
     "evidence_class": "example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-all-mesh-example",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-all-mesh-example",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/196370",
     "selected": true
    },
@@ -3407,7 +3407,7 @@
      "start_line": 4398
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/heat-lower-bound",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/heat-lower-bound",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/198059",
     "selected": true
    },
@@ -3448,7 +3448,7 @@
      "start_line": 4430
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/alternative",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/alternative",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201277",
     "selected": true
    },
@@ -3480,7 +3480,7 @@
      "start_line": 4597
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/weighted-tree",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/weighted-tree",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201401",
     "selected": true
    },
@@ -3540,7 +3540,7 @@
      "start_line": 4816
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/alternative-assembly",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/alternative-assembly",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201277",
     "selected": true
    },
@@ -3572,7 +3572,7 @@
      "start_line": 4869
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gibbs-comparison",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gibbs-comparison",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201277",
     "selected": true
    },
@@ -3676,7 +3676,7 @@
      "start_line": 4913
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-quantifiers",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-quantifiers",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201277",
     "selected": true
    },
@@ -3781,7 +3781,7 @@
      "start_line": 4997
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/sampled-finite-instance",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/sampled-finite-instance",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/223245",
     "selected": true
    },
@@ -3889,7 +3889,7 @@
      "start_line": 5034
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-depth",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-depth",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201277",
     "selected": true
    },
@@ -3919,7 +3919,7 @@
      "start_line": 5203
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-finite-size",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-finite-size",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/201277",
     "selected": true
    },
@@ -3990,7 +3990,7 @@
      "start_line": 5282
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/239612",
     "selected": true
    },
@@ -4047,7 +4047,7 @@
      "start_line": 5342
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-scalar",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-scalar",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/239612",
     "selected": true
    },
@@ -4093,7 +4093,7 @@
      "start_line": 5390
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-parisi-clause",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-parisi-clause",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/243141",
     "selected": true
    },
@@ -4120,7 +4120,7 @@
      "start_line": 5405
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-transport",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-transport",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/239612",
     "selected": true
    },
@@ -4259,7 +4259,7 @@
      "start_line": 5480
     },
     "evidence_class": "open_question",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/obligations",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/obligations",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/250324",
     "selected": true
    },
@@ -4399,7 +4399,7 @@
      "start_line": 5510
     },
     "evidence_class": "context",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/verification",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/verification",
     "section_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sections/251807",
     "selected": true
    }
@@ -4407,7 +4407,7 @@
   "document_parts": [
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/0",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/0",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/0",
     "span": {
      "end_byte": 463,
@@ -4418,8 +4418,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/overview",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/463",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/overview",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/463",
     "span": {
      "end_byte": 2038,
      "end_line": 38,
@@ -4429,7 +4429,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/2038",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/2038",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/2038",
     "span": {
      "end_byte": 3262,
@@ -4440,8 +4440,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/model",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/3262",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/model",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/3262",
     "span": {
      "end_byte": 5311,
      "end_line": 111,
@@ -4451,7 +4451,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/5311",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/5311",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/5311",
     "span": {
      "end_byte": 5313,
@@ -4462,8 +4462,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/targets",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/5313",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/targets",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/5313",
     "span": {
      "end_byte": 7108,
      "end_line": 147,
@@ -4473,7 +4473,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/7108",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/7108",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/7108",
     "span": {
      "end_byte": 7182,
@@ -4484,8 +4484,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/dependencies",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/7182",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/dependencies",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/7182",
     "span": {
      "end_byte": 24698,
      "end_line": 448,
@@ -4495,7 +4495,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/24698",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/24698",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/24698",
     "span": {
      "end_byte": 24778,
@@ -4506,8 +4506,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/strip-recovery",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/24778",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/strip-recovery",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/24778",
     "span": {
      "end_byte": 29436,
      "end_line": 550,
@@ -4517,7 +4517,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/29436",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/29436",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/29436",
     "span": {
      "end_byte": 29438,
@@ -4528,8 +4528,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/approximation-choices",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/29438",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/approximation-choices",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/29438",
     "span": {
      "end_byte": 31495,
      "end_line": 593,
@@ -4539,7 +4539,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/31495",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/31495",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/31495",
     "span": {
      "end_byte": 31563,
@@ -4550,8 +4550,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/contact",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/31563",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/contact",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/31563",
     "span": {
      "end_byte": 43644,
      "end_line": 877,
@@ -4561,7 +4561,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/43644",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/43644",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/43644",
     "span": {
      "end_byte": 43737,
@@ -4572,8 +4572,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/curvature",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/43737",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/curvature",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/43737",
     "span": {
      "end_byte": 63655,
      "end_line": 1420,
@@ -4583,7 +4583,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/63655",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/63655",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/63655",
     "span": {
      "end_byte": 63657,
@@ -4594,8 +4594,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/fixed-time-coercivity",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/63657",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/fixed-time-coercivity",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/63657",
     "span": {
      "end_byte": 70954,
      "end_line": 1592,
@@ -4605,7 +4605,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/70954",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/70954",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/70954",
     "span": {
      "end_byte": 71039,
@@ -4616,8 +4616,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaps",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/71039",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaps",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/71039",
     "span": {
      "end_byte": 83326,
      "end_line": 1894,
@@ -4627,7 +4627,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/83326",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/83326",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/83326",
     "span": {
      "end_byte": 83441,
@@ -4638,8 +4638,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/value",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/83441",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/value",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/83441",
     "span": {
      "end_byte": 87314,
      "end_line": 1989,
@@ -4649,7 +4649,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/87314",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/87314",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/87314",
     "span": {
      "end_byte": 87316,
@@ -4660,8 +4660,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/coefficient-budget",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/87316",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/coefficient-budget",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/87316",
     "span": {
      "end_byte": 92346,
      "end_line": 2114,
@@ -4671,7 +4671,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/92346",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/92346",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/92346",
     "span": {
      "end_byte": 92495,
@@ -4682,8 +4682,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/92495",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/92495",
     "span": {
      "end_byte": 99257,
      "end_line": 2288,
@@ -4693,7 +4693,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/99257",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/99257",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/99257",
     "span": {
      "end_byte": 99259,
@@ -4704,8 +4704,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-error-budget",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/99259",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-error-budget",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/99259",
     "span": {
      "end_byte": 104514,
      "end_line": 2424,
@@ -4715,7 +4715,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/104514",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/104514",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/104514",
     "span": {
      "end_byte": 104605,
@@ -4726,8 +4726,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/104605",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/104605",
     "span": {
      "end_byte": 110699,
      "end_line": 2545,
@@ -4737,7 +4737,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/110699",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/110699",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/110699",
     "span": {
      "end_byte": 110701,
@@ -4748,8 +4748,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-depth-one-pauli",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/110701",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-depth-one-pauli",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/110701",
     "span": {
      "end_byte": 112941,
      "end_line": 2602,
@@ -4759,7 +4759,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/112941",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/112941",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/112941",
     "span": {
      "end_byte": 112943,
@@ -4770,8 +4770,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-rooted",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/112943",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-rooted",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/112943",
     "span": {
      "end_byte": 122183,
      "end_line": 2793,
@@ -4781,7 +4781,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/122183",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/122183",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/122183",
     "span": {
      "end_byte": 122185,
@@ -4792,8 +4792,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-depth-one",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/122185",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-depth-one",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/122185",
     "span": {
      "end_byte": 123823,
      "end_line": 2830,
@@ -4803,7 +4803,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/123823",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/123823",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/123823",
     "span": {
      "end_byte": 123825,
@@ -4814,8 +4814,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-regularization",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/123825",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-regularization",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/123825",
     "span": {
      "end_byte": 134747,
      "end_line": 3036,
@@ -4825,7 +4825,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/134747",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/134747",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/134747",
     "span": {
      "end_byte": 134749,
@@ -4836,8 +4836,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-synthesis",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/134749",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-synthesis",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/134749",
     "span": {
      "end_byte": 144355,
      "end_line": 3235,
@@ -4847,7 +4847,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/144355",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/144355",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/144355",
     "span": {
      "end_byte": 144357,
@@ -4858,8 +4858,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-seed",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/144357",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-seed",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/144357",
     "span": {
      "end_byte": 157793,
      "end_line": 3512,
@@ -4869,7 +4869,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/157793",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/157793",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/157793",
     "span": {
      "end_byte": 157795,
@@ -4880,8 +4880,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-transfer",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/157795",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-transfer",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/157795",
     "span": {
      "end_byte": 160262,
      "end_line": 3570,
@@ -4891,7 +4891,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/160262",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/160262",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/160262",
     "span": {
      "end_byte": 160264,
@@ -4902,8 +4902,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-assembly",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/160264",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-assembly",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/160264",
     "span": {
      "end_byte": 165254,
      "end_line": 3678,
@@ -4913,7 +4913,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/165254",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/165254",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/165254",
     "span": {
      "end_byte": 165347,
@@ -4924,8 +4924,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/density",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/165347",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/density",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/165347",
     "span": {
      "end_byte": 169294,
      "end_line": 3745,
@@ -4935,7 +4935,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/169294",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/169294",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/169294",
     "span": {
      "end_byte": 169296,
@@ -4946,8 +4946,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/density-positive",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/169296",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/density-positive",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/169296",
     "span": {
      "end_byte": 171722,
      "end_line": 3792,
@@ -4957,7 +4957,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/171722",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/171722",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/171722",
     "span": {
      "end_byte": 171819,
@@ -4968,8 +4968,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/overlap-pairs",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/171819",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/overlap-pairs",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/171819",
     "span": {
      "end_byte": 176129,
      "end_line": 3877,
@@ -4979,7 +4979,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/176129",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/176129",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/176129",
     "span": {
      "end_byte": 176131,
@@ -4990,8 +4990,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/algorithm",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/176131",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/algorithm",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/176131",
     "span": {
      "end_byte": 179931,
      "end_line": 3926,
@@ -5001,7 +5001,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/179931",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/179931",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/179931",
     "span": {
      "end_byte": 180018,
@@ -5012,8 +5012,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-contact",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/180018",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-contact",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/180018",
     "span": {
      "end_byte": 183375,
      "end_line": 3997,
@@ -5023,7 +5023,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/183375",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/183375",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/183375",
     "span": {
      "end_byte": 183377,
@@ -5034,8 +5034,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-lower-overview",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/183377",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-lower-overview",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/183377",
     "span": {
      "end_byte": 185330,
      "end_line": 4035,
@@ -5045,7 +5045,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/185330",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/185330",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/185330",
     "span": {
      "end_byte": 185332,
@@ -5056,8 +5056,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-column-split",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/185332",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-column-split",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/185332",
     "span": {
      "end_byte": 186990,
      "end_line": 4079,
@@ -5067,7 +5067,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/186990",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/186990",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/186990",
     "span": {
      "end_byte": 186992,
@@ -5078,8 +5078,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-adaptive-lower",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/186992",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-adaptive-lower",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/186992",
     "span": {
      "end_byte": 189986,
      "end_line": 4144,
@@ -5089,7 +5089,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/189986",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/189986",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/189986",
     "span": {
      "end_byte": 189988,
@@ -5100,8 +5100,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-empirical-limit",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/189988",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-empirical-limit",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/189988",
     "span": {
      "end_byte": 191585,
      "end_line": 4182,
@@ -5111,7 +5111,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/191585",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/191585",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/191585",
     "span": {
      "end_byte": 191587,
@@ -5122,8 +5122,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-expectation-limit",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/191587",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-expectation-limit",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/191587",
     "span": {
      "end_byte": 194067,
      "end_line": 4236,
@@ -5133,7 +5133,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/194067",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/194067",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/194067",
     "span": {
      "end_byte": 194069,
@@ -5144,8 +5144,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-sanity-check",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/194069",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-sanity-check",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/194069",
     "span": {
      "end_byte": 196293,
      "end_line": 4297,
@@ -5155,7 +5155,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/196293",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/196293",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/196293",
     "span": {
      "end_byte": 196295,
@@ -5166,8 +5166,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-one-step-example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/196295",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-one-step-example",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/196295",
     "span": {
      "end_byte": 197986,
      "end_line": 4345,
@@ -5177,7 +5177,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/197986",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/197986",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/197986",
     "span": {
      "end_byte": 197988,
@@ -5188,8 +5188,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gaussian-all-mesh-example",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/197988",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gaussian-all-mesh-example",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/197988",
     "span": {
      "end_byte": 200041,
      "end_line": 4396,
@@ -5199,7 +5199,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/200041",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/200041",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/200041",
     "span": {
      "end_byte": 200043,
@@ -5210,8 +5210,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/heat-lower-bound",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/200043",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/heat-lower-bound",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/200043",
     "span": {
      "end_byte": 201233,
      "end_line": 4424,
@@ -5221,7 +5221,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/201233",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/201233",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/201233",
     "span": {
      "end_byte": 201330,
@@ -5232,8 +5232,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/alternative",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/201330",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/alternative",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/201330",
     "span": {
      "end_byte": 208611,
      "end_line": 4595,
@@ -5243,7 +5243,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/208611",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/208611",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/208611",
     "span": {
      "end_byte": 208613,
@@ -5254,8 +5254,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/weighted-tree",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/208613",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/weighted-tree",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/208613",
     "span": {
      "end_byte": 218601,
      "end_line": 4814,
@@ -5265,7 +5265,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/218601",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/218601",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/218601",
     "span": {
      "end_byte": 218603,
@@ -5276,8 +5276,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/alternative-assembly",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/218603",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/alternative-assembly",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/218603",
     "span": {
      "end_byte": 221189,
      "end_line": 4867,
@@ -5287,7 +5287,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/221189",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/221189",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/221189",
     "span": {
      "end_byte": 221191,
@@ -5298,8 +5298,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/gibbs-comparison",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/221191",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/gibbs-comparison",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/221191",
     "span": {
      "end_byte": 223171,
      "end_line": 4911,
@@ -5309,7 +5309,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/223171",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/223171",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/223171",
     "span": {
      "end_byte": 223173,
@@ -5320,8 +5320,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-quantifiers",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/223173",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-quantifiers",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/223173",
     "span": {
      "end_byte": 226338,
      "end_line": 4995,
@@ -5331,7 +5331,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/226338",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/226338",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/226338",
     "span": {
      "end_byte": 226340,
@@ -5342,8 +5342,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/sampled-finite-instance",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/226340",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/sampled-finite-instance",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/226340",
     "span": {
      "end_byte": 227971,
      "end_line": 5032,
@@ -5353,7 +5353,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/227971",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/227971",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/227971",
     "span": {
      "end_byte": 227973,
@@ -5364,8 +5364,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-depth",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/227973",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-depth",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/227973",
     "span": {
      "end_byte": 236408,
      "end_line": 5201,
@@ -5375,7 +5375,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/236408",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/236408",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/236408",
     "span": {
      "end_byte": 236410,
@@ -5386,8 +5386,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/qaoa-finite-size",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/236410",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/qaoa-finite-size",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/236410",
     "span": {
      "end_byte": 239578,
      "end_line": 5276,
@@ -5397,7 +5397,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/239578",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/239578",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/239578",
     "span": {
      "end_byte": 239658,
@@ -5408,8 +5408,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/239658",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/239658",
     "span": {
      "end_byte": 243070,
      "end_line": 5340,
@@ -5419,7 +5419,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/243070",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/243070",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/243070",
     "span": {
      "end_byte": 243072,
@@ -5430,8 +5430,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-scalar",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/243072",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-scalar",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/243072",
     "span": {
      "end_byte": 245701,
      "end_line": 5388,
@@ -5441,7 +5441,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/245701",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/245701",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/245701",
     "span": {
      "end_byte": 245703,
@@ -5452,8 +5452,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-parisi-clause",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/245703",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-parisi-clause",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/245703",
     "span": {
      "end_byte": 246522,
      "end_line": 5403,
@@ -5463,7 +5463,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/246522",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/246522",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/246522",
     "span": {
      "end_byte": 246524,
@@ -5474,8 +5474,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/formal-transport",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/246524",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/formal-transport",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/246524",
     "span": {
      "end_byte": 250296,
      "end_line": 5474,
@@ -5485,7 +5485,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/250296",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/250296",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/250296",
     "span": {
      "end_byte": 250365,
@@ -5496,8 +5496,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/obligations",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/250365",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/obligations",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/250365",
     "span": {
      "end_byte": 251778,
      "end_line": 5504,
@@ -5507,7 +5507,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/251778",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/251778",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/251778",
     "span": {
      "end_byte": 251852,
@@ -5518,8 +5518,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/passages/verification",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/251852",
+    "passage_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/passages/verification",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/251852",
     "span": {
      "end_byte": 258100,
      "end_line": 5599,
@@ -5529,7 +5529,7 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:1197ef489fa4b81b6170cd18c9ad07619ff01cff808caaa8df113602e3158c01/papers/long.json/parts/258100",
+    "ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/sha256:288beb8b83387dcb73ed34cd4f54b3e6996ed027b7f9de41b8006cd23c092938/papers/long.json/parts/258100",
     "segment_ref": "sha256:4c6350e9b4de8b6fa8cb1160f0ada57e4a2b797aebd0c518c88b1ace1b27878b/papers/long.md/unmapped/258100",
     "span": {
      "end_byte": 281482,
@@ -5557,7 +5557,7 @@
    "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately.",
    "to_anchor": "curvature",
    "to_stage": "short",
-   "to_text_sha256": "b00317bfc497ecebdd71292e0851d4fdba392eaf38553cb5f4729d69b06b7aa7"
+   "to_text_sha256": "805f9a2a551c1a1fd1f15a4a1c8e41813bcb45216672d9c96f5f7a2f2a94cb86"
   },
   {
    "from_anchor": "curvature",
@@ -5575,7 +5575,7 @@
    "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage.",
    "to_anchor": "density-consequence",
    "to_stage": "short",
-   "to_text_sha256": "22f672290fcb4a80ce80c948da7a39143fe1ddccde3f0b7121892fa92b1fe7cf"
+   "to_text_sha256": "871afd048dfbc7bcb7127cdaabfb91c67f293aaafff16280d8f1b6f5d7432cad"
   },
   {
    "from_anchor": "fixed-time-coercivity",
@@ -5584,7 +5584,7 @@
    "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps.",
    "to_anchor": "density-consequence",
    "to_stage": "short",
-   "to_text_sha256": "22f672290fcb4a80ce80c948da7a39143fe1ddccde3f0b7121892fa92b1fe7cf"
+   "to_text_sha256": "871afd048dfbc7bcb7127cdaabfb91c67f293aaafff16280d8f1b6f5d7432cad"
   },
   {
    "from_anchor": "density-positive",
@@ -5620,7 +5620,7 @@
    "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient.",
    "to_anchor": "curvature",
    "to_stage": "short",
-   "to_text_sha256": "b00317bfc497ecebdd71292e0851d4fdba392eaf38553cb5f4729d69b06b7aa7"
+   "to_text_sha256": "805f9a2a551c1a1fd1f15a4a1c8e41813bcb45216672d9c96f5f7a2f2a94cb86"
   },
   {
    "from_anchor": "fixed-time-coercivity",

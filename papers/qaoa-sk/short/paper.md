@@ -433,13 +433,29 @@ $$
 =\frac{\pi/8}{5\pi/16}=\frac25 .
 $$
 The first holds because $X_0=0$, and the second by dominated
-convergence, since $\sqrt{2\pi t}\,e^{t/2}f(t,x)\to\cosh x$. Numerical
-quadrature shows $\rho$ decreasing between these limits, with
-$\rho(1/2)=2.39$ and $\rho(1)=1.41$. For these data the best constant
-in the integrated inequality, (6) of §3.3, is therefore $2/5$,
-approached as $c^2t\to\infty$, against the $1/1000$ that the general
-proof provides. The value at $t=1/2$ is decomposed term by term in
-§3.3, after Table 1.
+convergence, since $\sqrt{2\pi t}\,e^{t/2}f(t,x)\to\cosh x$.
+
+Moreover $\rho(t)>2/5$ for every $t>0$. Put
+$$
+F(x)=16\operatorname{sech}^3x-96\operatorname{sech}^5x
+     +\tfrac{448}5\operatorname{sech}^7x
+    =\tfrac15\cosh x\,(1-\theta)^2\,(448\theta^2-416\theta+48),
+$$
+so that $\rho(t)-2/5$ is a positive multiple of
+$\int_0^\infty F(x)e^{-x^2/(2t)}\,dx$. The quadratic has two roots in
+$(0,1)$, so $F$ is positive, then negative, then positive on
+$(0,\infty)$, and the integrals of powers of $\operatorname{sech}$ give
+$\int_0^\infty F\,dx=0$ and $\int_0^\infty x^2F\,dx=-52\pi/225$.
+Hence $G(x)=\int_0^xF$ is positive and then negative, with
+$G(\infty)=0$, and $K(x)=\int_0^xyG(y)\,dy$ increases and then decreases
+to $K(\infty)=-\tfrac12\int_0^\infty x^2F\,dx>0$, so $K>0$ on
+$(0,\infty)$. Two integrations by parts give
+$\int_0^\infty F(x)e^{-x^2/(2t)}\,dx
+=t^{-2}\int_0^\infty K(x)\,x\,e^{-x^2/(2t)}\,dx>0$.
+For these data the best constant
+in the integrated inequality, (6) of §3.3, is therefore $2/5$, not
+attained, against the $1/1000$ of the general proof. Numerically
+$\rho(1/2)=2.39$, and this value is decomposed term by term in §3.3.
 
 The same pointwise obstruction occurs for the terminal value $|x|$.
 For $\gamma\equiv c$ and $\tau=1-t$, an expansion at small $c$ gives
@@ -872,8 +888,8 @@ $\gamma(t)^2\,\mathbb E a^4/1000>0$.
 
 (ii) *The constant.* Integrating $\gamma'\geq\gamma^2/2000$ gives
 $\gamma(s)^{-1}-\gamma(t)^{-1}\geq(t-s)/2000$ for $0<s<t<1$. The
-constant $1/2000$ is not sharp. For the data of §3.1 the best constant
-in the underlying inequality (6) is $2/5$.
+constant is not sharp: for the data of §3.1 the best constant in (6)
+is $2/5$.
 
 (iii) *Related arguments at a fixed time.*
 [Lopatto's v4, Proposition 5.1 and Corollary 5.6][Lopatto-v4] give

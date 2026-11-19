@@ -108,6 +108,17 @@ def solvable_case() -> dict:
         raise ValueError("rho is not decreasing on the grid")
     sech = lambda n: mp.quad(lambda x: mp.sech(x)**n, [-mp.inf, 0, mp.inf])
     limit = (16 * sech(3) - 96 * sech(5) + 90 * sech(7)) / sech(7)
+    # rho(t) > 2/5 for all t: F changes sign twice, has zero integral and negative second moment
+    F = lambda x: 16 * mp.sech(x)**3 - 96 * mp.sech(x)**5 + mp.mpf(448) / 5 * mp.sech(x)**7
+    zeroth = mp.quad(F, [0, 1, 3, mp.inf])
+    second = mp.quad(lambda x: x * x * F(x), [0, 1, 3, mp.inf])
+    if abs(zeroth) > mp.mpf(10)**-20 or abs(second + 52 * mp.pi / 225) > mp.mpf(10)**-20:
+        raise ValueError("moments of F")
+    signs = [mp.sign(mp.quad(F, [0, mp.mpf(k) / 20])) for k in range(1, 200)]
+    if signs[0] != 1 or sum(a != b for a, b in zip(signs, signs[1:])) != 1:
+        raise ValueError("G should be positive and then negative")
+    if any(v <= mp.mpf(2) / 5 for v in values):
+        raise ValueError("rho fell to 2/5 on the grid")
     pieces = [_expect(lambda x, s, i=i: _pieces(x, s)[i], half) for i in range(5)]
     total = _expect(_curvature, half)
     if abs(sum(pieces) - total) > mp.mpf(10)**-20:
