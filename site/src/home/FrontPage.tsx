@@ -128,8 +128,12 @@ export function FrontPage() {
                 full-support tree without an error, and a program run inside Lean lists {SITE_FACTS.extraction.axioms.length} axioms for the theorem and no <code>sorry</code>.{" "}
               </>
             )}
-            Comparator tests a proof against a separately written statement; it has accepted neither statement, and the second
-            statement has no successful build on record. The failed and interrupted runs are listed on the same page as the others.
+            Comparator tests a proof against a separately written statement. The Comparator runs recorded on this site did not
+            finish for either statement, and the second statement has no successful build here. Two outside groups report that
+            Comparator accepts OpenAI’s proofs of both:{" "}
+            <a href="https://github.com/mathvet/mathvet/blob/14c7f918cd336d0da03a02aae5a0eed4a429d4db/reviews/openai-math/challenge-status.csv">MathVet</a>, on 8 October 2026, and{" "}
+            <a href="https://github.com/carlostoledo1891/cert-machine/blob/9814e4c06281e34a113ce853d7d99ccce160b750/certs/openai-math-kernel.json">Carlos Toledo</a>, on 10 October 2026.
+            The failed and interrupted runs are listed on the same page as the others.
           </p>
           <p className="front__text">
             An exact calculation in rational arithmetic confirmed the 22 positive coefficients of the polynomial identity behind
@@ -246,8 +250,9 @@ function TechnicalExplanation() {
           </p>
           <p>
             The estimate is the hard step. OpenAI proves it from sign properties of a backward equation and a forward
-            probability density, combined with an explicit polynomial identity with rational coefficients. The short paper and
-            the exposition cite it; the long record reconstructs its components.
+            probability density, combined with an explicit polynomial identity with rational coefficients. The short paper prints
+            that identity in full and cites the sign properties; the exposition cites the estimate; the long record reconstructs
+            its components.
           </p>
         </div>
         <figure className="front__fig">
