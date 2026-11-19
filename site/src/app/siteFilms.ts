@@ -1,5 +1,6 @@
-// The videos this site puts in front of a reader, in the order it shows them: the short
-// video of this website first and largest, then the two about the mathematics. Titles,
+// The videos this site puts in front of a reader, in the order it shows them; each instance
+// names its own (SK: the short video of this website first and largest, then the two about
+// the mathematics; Erdős #257: none). Titles,
 // addresses, lengths and stills come from the family registry (family.json); only the
 // few words above each title are this site's. The front page's first screen (heroMarkup.ts,
 // which also runs in vite.config.ts) and the bar's Videos menu both read this list, so the
@@ -23,12 +24,6 @@ export interface SiteFilm {
   srcSet: string;
 }
 
-const SHOWN: { id: string; kicker: string }[] = [
-  { id: "short-sk-website", kicker: "This website in use" },
-  { id: "sk-no-gap", kicker: "The result explained" },
-  { id: "short-sk-no-gap", kicker: "The result in brief" },
-];
-
 const unit = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 function clock(seconds: number): string {
@@ -42,9 +37,9 @@ function spoken(seconds: number): string {
   return [m && unit(m, "minute"), s && unit(s, "second")].filter(Boolean).join(" ");
 }
 
-/** The site's videos, lead first. `base` is the site's base path, ending in a slash. */
-export function siteFilms(base: string): SiteFilm[] {
-  return SHOWN.map(({ id, kicker }) => {
+/** The site's videos, lead first. `base` is the site's base path, ending in a slash; `shown` is the instance's list. */
+export function siteFilms(base: string, shown: readonly { id: string; kicker: string }[]): SiteFilm[] {
+  return shown.map(({ id, kicker }) => {
     const film = registry.films.find((f) => f.id === id);
     if (!film || !film.youtube || !film.duration_seconds || !film.still) throw new Error(`family.json has no released film "${id}"`);
     const name = film.still.split("/").pop();

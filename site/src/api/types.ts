@@ -149,6 +149,7 @@ export interface MapLink {
   semantic_class: string;
   from: string;
   to: string;
+  /** Absent from a corpus view whose graph records no application (model/graph.ts reads the id from `from`/`to`). */
   from_node_id: string;
   to_node_id: string;
   derived: boolean;

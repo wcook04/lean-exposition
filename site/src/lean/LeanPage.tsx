@@ -12,11 +12,10 @@ import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { useBarLine } from "./barLine";
 import { navigate, routeHref, type Route } from "../app/router";
 import { arrivedBy, namePlace, useEntryState } from "../app/trail";
-import { useCheckedWords } from "./checked";
 import { LazyStatementSlice } from "../compare/lazy";
 import { useFullAlignment } from "../compare/useAlignment";
 import { statementHref } from "../reader/links";
-import { CHALLENGE_FILE, declIn, sourceLines, kindWord, LINK_CAVEAT, MAIN_THEOREM, MINIMIZER, quotedStatements, RELATION_WORDS, sectionPlace, useLeanModule, useLeanShell, VALUE_CHALLENGE_FILE, VALUE_THEOREM, type LeanShell, type LinkedRecord, type PaperStatement } from "./data";
+import { declIn, sourceLines, kindWord, LINK_CAVEAT, MAIN_THEOREM, quotedStatements, RELATION_WORDS, sectionPlace, useLeanModule, useLeanShell, type LeanShell, type LinkedRecord, type PaperStatement } from "./data";
 import { rankNames } from "./find";
 import { folderLabel, FOLDER_WORDS } from "./folders";
 import { CopyName, DeclView, LeanBlock, SourceLink, usesOf } from "./LeanBlock";
@@ -27,8 +26,9 @@ import { buildCode, CodeView, type BuiltCode } from "./CodeView";
 import { collectLocals, findDecl, makeScope, type DeclRow, type NameTarget } from "./resolve";
 import { tokenize } from "./tokenize";
 import { SITE_NAME } from "../app/siteName";
+import { LeanLanding } from "@instance/LeanLanding";
 
-const count = (n: number) => n.toLocaleString("en-GB");
+export const count = (n: number) => n.toLocaleString("en-GB");
 
 function useMedia(query: string): boolean {
   const [on, setOn] = useState(() => (typeof window.matchMedia === "function" ? window.matchMedia(query).matches : true));
@@ -43,8 +43,8 @@ function useMedia(query: string): boolean {
   return on;
 }
 
-const declHref = (row: Pick<DeclRow, "name" | "module">) => routeHref({ view: "lean", module: row.module, decl: row.name });
-const lastPart = (dotted: string) => dotted.slice(dotted.lastIndexOf(".") + 1);
+export const declHref = (row: Pick<DeclRow, "name" | "module">) => routeHref({ view: "lean", module: row.module, decl: row.name });
+export const lastPart = (dotted: string) => dotted.slice(dotted.lastIndexOf(".") + 1);
 
 const READING = [
   ["theorem name (inputs) : claim", "Given these inputs, the claim holds."],
@@ -55,7 +55,7 @@ const READING = [
   ["by", "Starts a proof written as steps. Lean rejects a step that does not follow."],
 ] as const;
 
-function HowToRead() {
+export function HowToRead() {
   return (
     <section className="lean-how" aria-labelledby="lean-how">
       <h2 id="lean-how">How to read Lean</h2>
@@ -73,7 +73,7 @@ function HowToRead() {
   );
 }
 
-function Folders({ shell }: { shell: LeanShell }) {
+export function Folders({ shell }: { shell: LeanShell }) {
   return (
     <section className="lean-folders" aria-labelledby="lean-folders">
       <h2 id="lean-folders">What each folder holds</h2>
@@ -98,7 +98,7 @@ interface Tree {
   declarations: number;
 }
 
-function treeOf(shell: LeanShell, prefix: string): Tree {
+export function treeOf(shell: LeanShell, prefix: string): Tree {
   const folders = shell.modules.folders.filter((folder) => folder.path === prefix || folder.path.startsWith(`${prefix}/`));
   return {
     path: prefix,
@@ -108,9 +108,9 @@ function treeOf(shell: LeanShell, prefix: string): Tree {
 }
 
 /** The record a theorem states, by the paper's name for it. */
-const stated = (shell: LeanShell, name: string) => (shell.linked.get(name) ?? []).find((row) => row.relation === "states" && !row.id.startsWith("lean."))?.title ?? shell.plain.get(name) ?? lastPart(name);
+export const stated = (shell: LeanShell, name: string) => (shell.linked.get(name) ?? []).find((row) => row.relation === "states" && !row.id.startsWith("lean."))?.title ?? shell.plain.get(name) ?? lastPart(name);
 
-function Start({ href, name, title, children }: { href: string; name?: string; title: string; children: ReactNode }) {
+export function Start({ href, name, title, children }: { href: string; name?: string; title: string; children: ReactNode }) {
   return (
     <li>
       <a href={href}>
@@ -119,85 +119,6 @@ function Start({ href, name, title, children }: { href: string; name?: string; t
       </a>
       <p>{children}</p>
     </li>
-  );
-}
-
-function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }) {
-  const { modules } = shell;
-  const main = findDecl(shell.index, MAIN_THEOREM);
-  const value = findDecl(shell.index, VALUE_THEOREM);
-  const minimizer = findDecl(shell.index, MINIMIZER);
-  const support = treeOf(shell, "OAI/Probability/SKSupport");
-  const scalar = treeOf(shell, "OAI/Probability/SKValue");
-  const revisionUrl = modules.base_url.replace(/\/blob\//, "/tree/");
-  const checked = useCheckedWords();
-  const resting = shell.linked.size;
-  return (
-    <>
-      <header className="lean-intro">
-        <h1>Lean index</h1>
-        <p>
-          The index at the back of the book, for anyone who wants the files and declarations themselves. In this Lean the order parameter γ is called the coefficient. To read the mathematics,{" "}
-          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
-        </p>
-        <p>
-          OpenAI's proof of a theorem about the Sherrington–Kirkpatrick (SK) spin glass is written in Lean, a programming language whose compiler rejects a proof with a wrong step. This is that Lean at commit{" "}
-          <a href={revisionUrl} target="_blank" rel="noreferrer">
-            <code>{modules.revision.slice(0, 7)}</code>
-          </a>{" "}
-          on <code>{modules.toolchain.split(":").pop()}</code>: {count(modules.counts.modules)} modules and {count(modules.counts.declarations)} declarations. It has two proof trees,{" "}
-          <a href={routeHref({ view: "lean", folder: support.path })}>
-            <code>SKSupport</code>
-          </a>{" "}
-          with {count(support.modules)} modules, whose last theorem is <code>full_support</code>, and{" "}
-          <a href={routeHref({ view: "lean", folder: scalar.path })}>
-            <code>SKValue</code>
-          </a>{" "}
-          with {count(scalar.modules)}, whose last theorem is <code>value_consequences</code>, and two challenge files for Comparator, a program that compares a Lean proof with a separately written statement.
-        </p>
-        <p className="lean-intro__checked">
-          {checked}{" "}
-          <a href={routeHref({ view: "checks" })}>Every recorded run</a>
-        </p>
-      </header>
-      <div className="lean-landing">
-        <section className="lean-start" aria-labelledby="lean-start">
-          <h2 id="lean-start">Start here</h2>
-          <ul>
-            {main && (
-              <Start href={declHref(main)} name={main.short} title="The main theorem">
-                {stated(shell, main.name)}, in <code>SKSupport/Main.lean</code>.
-              </Start>
-            )}
-            {minimizer && (
-              <Start href={declHref(minimizer)} name={minimizer.short} title="Its hypothesis">
-                {shell.terms.get(minimizer.name) ? <Prose text={shell.terms.get(minimizer.name)!.words} /> : "What it assumes of the order parameter."}
-              </Start>
-            )}
-            {value && (
-              <Start href={declHref(value)} name={value.short} title="The value theorem">
-                {stated(shell, value.name)}, in <code>SKValue/Main.lean</code>.
-              </Start>
-            )}
-            <Start href={routeHref({ view: "lean", module: CHALLENGE_FILE })} name="SKFullSupport.lean" title="The Comparator challenge file">
-              {FOLDER_WORDS.ComparatorChallenges} The other is{" "}
-              <a href={routeHref({ view: "lean", module: VALUE_CHALLENGE_FILE })}>
-                <code>SKValue.lean</code>
-              </a>
-              .
-            </Start>
-            <Start href={routeHref({ view: "lean", index: "papers" })} title={`The ${count(resting)} declarations linked to the papers`}>
-              Each with the step that links it and where the papers state it.
-            </Start>
-          </ul>
-        </section>
-        <section className="lean-landing__main" aria-label="The main theorem">
-          {main && <LeanBlock name={main.name} module={main.module} noDependencies noPapers noTerms previewSlot={slot} />}
-        </section>
-      </div>
-      <HowToRead />
-      <Folders shell={shell} />
-    </>
   );
 }
 
@@ -856,7 +777,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
   let main: ReactNode;
   if (route.index) main = <PapersIndex shell={shell} />;
   else if (knownFolder && !knownModule) main = <FolderView shell={shell} path={knownFolder} />;
-  else if (landing) main = <Landing shell={shell} slot={slot} />;
+  else if (landing) main = <LeanLanding shell={shell} slot={slot} />;
   else if (route.file && module && knownModule) main = <FileView module={module} shell={shell} slot={slot} file={route.file} scroller={scroller} />;
   else if (decl && module) main = <DeclPage decl={decl} module={module} shell={shell} slot={slot} />;
   else if (module) main = <ModuleView module={module} shell={shell} slot={slot} scroller={scroller} />;

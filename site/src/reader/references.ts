@@ -17,6 +17,7 @@
 // `wrapTies` runs after this, and its runs pass through inline elements, so a reference can
 // sit inside a tied statement and both work.
 
+import site from "@instance/site";
 import type { Stage } from "../api/types";
 import { readerHref } from "./links";
 
@@ -306,7 +307,11 @@ export const opensInPlace = (row: RefRow) => row.kind !== "section" && row.kind 
 
 /** The module of a commit-pinned GitHub link into the Lean tree, for the site's own Lean page. */
 export function leanModuleOf(href: string): string | null {
-  const m = /\/lean\/(OAI|ComparatorChallenges)\/(.+)\.lean(?:#|$)/.exec(href);
+  const roots = site.lean.roots ? `(${site.lean.roots.join("|")})` : "([A-Z][\\w]*)";
+  // With named roots, a link may also name the root folder directly (the #257 papers link
+  // blob/<commit>/Erdos249257/… as well as blob/<commit>/lean/Erdos249257/…).
+  const prefix = site.lean.roots ? "(?:/lean)?" : "/lean";
+  const m = new RegExp(`${prefix}/${roots}/(.+)\\.lean(?:#|$)`).exec(href);
   return m ? `${m[1]}.${m[2].replace(/\//g, ".")}` : null;
 }
 

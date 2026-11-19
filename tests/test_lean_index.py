@@ -424,6 +424,56 @@ class Extraction(unittest.TestCase):
             lean_index.apply_extraction({"modules": []}, {"declarations": []})
 
 
+class Roots(unittest.TestCase):
+    """Trees other than OpenAI's: roots from the lock, or every top-level Lean directory."""
+
+    def tree(self, directory, files):
+        tree = Path(directory) / "upstream/lean"
+        for relative, source in files.items():
+            (tree / relative).parent.mkdir(parents=True, exist_ok=True)
+            (tree / relative).write_text(source, encoding="utf-8")
+        return tree
+
+    def test_default_roots_ignore_other_directories(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tree = self.tree(directory, {"OAI/M.lean": "def a := 1\n", "Other/N.lean": "def b := 2\n"})
+            names = [m["name"] for m in lean_index.build_index(tree)["modules"]]
+        self.assertEqual(names, ["OAI.M"])
+
+    def test_every_top_level_lean_directory_without_default_roots(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tree = self.tree(directory, {"B/M.lean": "def a := 1\n", "A/X/N.lean": "def b := A.c\n",
+                                         "A/C.lean": "def A.c := 3\n", ".hidden/H.lean": "def h := 0\n",
+                                         "docs/readme.md": "no Lean here\n", "Top.lean": "def t := 0\n"})
+            index = lean_index.build_index(tree)
+        self.assertEqual([m["name"] for m in index["modules"]], ["A.C", "A.X.N", "B.M"])
+
+    def test_lock_names_the_roots_and_a_parent_toolchain(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tree = self.tree(directory, {"B/M.lean": "def a := 1\n", "A/N.lean": "def b := 2\n"})
+            (tree.parent / "lean-toolchain").write_text("leanprover/lean4:v4.29.1\n")
+            (tree.parents[1] / "source-lock.json").write_text(json.dumps({
+                "repository": "https://github.com/example/r", "revision": "0" * 40,
+                "lean_roots": ["B"], "files": [{"upstream_path": "lean/B/M.lean"}]}))
+            index = lean_index.build_index(tree)
+        self.assertEqual([m["name"] for m in index["modules"]], ["B.M"])
+        self.assertEqual(index["toolchain"], "leanprover/lean4:v4.29.1")
+        self.assertEqual(index["base_url"], "https://github.com/example/r/blob/" + "0" * 40 + "/lean/")
+
+    def test_rejects_malformed_lock_roots(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tree = self.tree(directory, {"B/M.lean": "def a := 1\n"})
+            for bad in ([], ["B", "B"], ["../B"], "B"):
+                with self.subTest(bad=bad), self.assertRaises(ContractError):
+                    lean_index.lean_roots(tree, {"lean_roots": bad})
+
+    def test_tree_with_no_lean_directory_is_refused(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tree = self.tree(directory, {"docs/a.md": "x\n"})
+            with self.assertRaises(ContractError):
+                lean_index.build_index(tree)
+
+
 class Command(unittest.TestCase):
     def test_cli_writes_one_file_or_split_views_and_refuses_to_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:

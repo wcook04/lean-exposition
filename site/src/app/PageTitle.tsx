@@ -3,10 +3,11 @@ import { useLayoutEffect } from "react";
 import { useEdition } from "./data";
 import { PAPER_NAMES } from "./papers";
 import type { Route } from "./router";
+import site from "@instance/site";
 import { SITE_NAME } from "./siteName";
 
 /** The edition's title, as the front page and index.html give it. */
-export const EDITION_TITLE = "Why the Sherrington–Kirkpatrick order parameter has no gaps";
+export const EDITION_TITLE = site.editionTitle;
 
 export function PageTitle({ route }: { route: Route }) {
   const { graph } = useEdition();

@@ -1,7 +1,8 @@
-// Who linked a paper to the Lean, said one way everywhere. No Lean code and no browser API:
-// the first screen's markup and the build use this file too.
+// Who linked a paper to the Lean, said one way everywhere, and the step recording a known gap
+// in the Lean where the instance has one. Both are the selected instance's (src/instances/).
+import site from "@instance/site";
 
-/** The step recording that no Lean theorem connects OpenAI's two models. */
-export const MODELS_STEP = "scalar.formal_model_transport_open";
+/** The step recording that no Lean theorem connects two Lean models (SK); empty where there is none. */
+export const MODELS_STEP = site.modelsStep ?? "";
 
-export const LINK_CAVEAT = "An AI agent read each statement and its Lean and linked them. No independent mathematician has reviewed these links, and no program tests whether the two say the same thing.";
+export const LINK_CAVEAT = site.linkCaveat;

@@ -2,6 +2,7 @@
 // counterpart, one line about its recorded checks, and where to read it.
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import site from "@instance/site";
 import type { Stage } from "../api/types";
 import { useEdition, useRecord, type Edition } from "../app/data";
 import { routeHref } from "../app/router";
@@ -14,6 +15,7 @@ import { formatLeanSignature, tokenizeLean } from "../panels/leanTokens";
 
 /** The result every account selects: the site's main theorem. */
 export function mainGoal(edition: Edition): string {
+  if (site.mainGoal && edition.graph.nodes.has(site.mainGoal)) return site.mainGoal;
   const sets = edition.overview.papers.map((p) => new Set(p.paper_scope.selected_goal_ids));
   const common = [...(sets[0] ?? [])].filter((g) => sets.every((s) => s.has(g)));
   return common[0] ?? edition.graph.regions[0]?.goal ?? edition.graph.goals[0];
@@ -22,7 +24,8 @@ export function mainGoal(edition: Edition): string {
 /** The goals a reader can start from, most foundational first, with the accounts that select each. */
 export function startingGoals(edition: Edition): { id: string; title: string; stages: Stage[] }[] {
   const long = edition.overview.papers.find((p) => p.stage === "long");
-  const ids = long?.paper_scope.selected_goal_ids ?? [mainGoal(edition)];
+  // The edition's goals: the graph's selected goals and any further goal the long record names.
+  const ids = edition.graph.goals.length ? edition.graph.goals : long?.paper_scope.selected_goal_ids ?? [mainGoal(edition)];
   const titles = new Map(edition.graph.regions.map((r) => [r.goal, r.title]));
   return ids
     .filter((id) => edition.graph.nodes.has(id))

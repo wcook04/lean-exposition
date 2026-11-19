@@ -4,6 +4,7 @@
 // exposition uses records the short paper does not, so nothing here or on the
 // page may say one level contains another.
 
+import site from "@instance/site";
 import type { PaperStructure, Stage } from "../api/types";
 import type { ArgGraph, ArgNode } from "../model/graph";
 import { ACCOUNT_IN_PROSE } from "../app/papers";
@@ -44,9 +45,9 @@ export function levelCounts(graph: ArgGraph, argument: ReadonlySet<string>): Lev
 
 /** The one line under the header. */
 export function lensSentence(counts: LevelCounts, lens: Stage | undefined): string {
-  if (!lens) return `This argument has ${counts.all} of the ${counts.total} steps on this site.`;
+  if (!lens) return `This argument has ${counts.all} of the ${counts.total} ${site.recordKind ? "records" : "steps"} on this site.`;
   const name = ACCOUNT_IN_PROSE[lens];
-  return `${name.charAt(0).toUpperCase()}${name.slice(1)} discusses ${counts[lens]} of the ${counts.all} steps in this argument.`;
+  return `${name.charAt(0).toUpperCase()}${name.slice(1)} discusses ${counts[lens]} of the ${counts.all} ${site.recordKind ? "records" : "steps"} in this argument.`;
 }
 
 /** How many distinct declarations this argument links, and how many of them each level's records link. */

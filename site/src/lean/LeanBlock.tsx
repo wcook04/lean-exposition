@@ -1,6 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import site from "@instance/site";
 import "katex/dist/katex.min.css";
-import { leanSourceUrl, type LeanDeclaration, type LeanModule, type LeanRelation } from "../api/lean";
+import { leanSourceUrl, type FidelityFields, type LeanDeclaration, type LeanModule, type LeanRelation } from "../api/lean";
+import { FidelityLine } from "../compare/Fidelity";
 import { routeHref } from "../app/router";
 import { useEntryState } from "../app/trail";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
@@ -34,8 +36,8 @@ export type LineRange = readonly [first: number, last: number];
 
 type LineRanges = LineRange | readonly LineRange[];
 
-/** Modules of the second model. Its objects are defined apart from the full-support model's. */
-const VALUE_MODEL = "OAI.Probability.SKValue";
+/** Modules of the instance's second model, if it has one (SK: the value model, defined apart from the full-support model's). */
+const VALUE_MODEL = site.lean.valueModel;
 
 export interface LeanBlockProps {
   /** Full declaration name. */
@@ -44,6 +46,8 @@ export interface LeanBlockProps {
   module?: string;
   relation?: LeanRelation;
   note?: string;
+  /** What the statement says against the paper, where compared (same, stronger, weaker), with its note and who compared. */
+  fidelity?: FidelityFields;
   /** Start with the proof open. */
   proofOpen?: boolean;
   /** Tighter header and type for side panels and the map pane. */
@@ -417,6 +421,7 @@ export interface DeclViewProps {
   shell: LeanShell;
   relation?: LeanRelation;
   note?: string;
+  fidelity?: FidelityFields;
   proofOpen?: boolean;
   compact?: boolean;
   depth?: number;
@@ -437,7 +442,7 @@ export interface DeclViewProps {
   noHead?: boolean;
 }
 
-export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
+export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, fidelity, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
   // Open or folded belongs to the history entry, so Back finds the proof as it was left.
   const [proofChosen, setShowProof] = useEntryState<boolean | null>(`lean-proof:${module.module}:${decl.name}`, null);
   const store = useMemo(readingStore, []);
@@ -505,13 +510,19 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
             {RELATION_WORDS[relation]}.{note ? " " : ""}
             {note ? <Prose text={note} /> : null}
           </p>
+          <FidelityLine row={fidelity} />
           {!bare && <p className="lean-block__caveat">{LINK_CAVEAT}</p>}
         </div>
       )}
+      {!relation && fidelity?.fidelity && (
+        <div className="lean-block__link">
+          <FidelityLine row={fidelity} />
+        </div>
+      )}
       {decl.doc && !compact && <p className="lean-block__doc">{decl.doc}</p>}
-      {!row && module.module.startsWith(VALUE_MODEL) && (
+      {!row && VALUE_MODEL && module.module.startsWith(VALUE_MODEL) && (
         <p className="lean-block__model">
-          This is OpenAI’s value model. <a href={routeHref({ view: "map", node: MODELS_STEP })}>No Lean theorem connects it to the full-support model.</a>
+          {site.words.valueModelNote} <a href={routeHref({ view: "map", node: MODELS_STEP })}>{site.words.valueModelLink}</a>
         </p>
       )}
 
@@ -606,7 +617,7 @@ function useMemoStable<A extends unknown[]>(fn: (...args: A) => void): (...args:
 }
 
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
-export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
+export function LeanBlock({ name, module: moduleName, relation, note, fidelity, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
@@ -617,5 +628,5 @@ export function LeanBlock({ name, module: moduleName, relation, note, proofOpen,
   if (!shell || loaded.status !== "ready") return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return <p className="lean-note">No declaration named <code>{name}</code> in {loaded.module.module}.</p>;
-  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
+  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} fidelity={fidelity} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
 }

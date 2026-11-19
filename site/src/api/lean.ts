@@ -77,10 +77,24 @@ export interface LeanModule {
 /** How a Lean declaration relates to a record. docs/record-alignment.md defines each. */
 export type LeanRelation = "states" | "contains" | "part" | "proof" | "defines";
 
+export type { Fidelity, FidelitySource, TieOrigin } from "../compare/fidelityWords";
+
+/**
+ * What a Lean statement says against the paper's, where it has been compared: the same, more
+ * (stronger) or less (weaker), with a note, and who compared them: "recorded" (taken from the
+ * source repository's own evidence record) or "ai" (an AI agent, for this site). Optional:
+ * an edition without them reads as before.
+ */
+export interface FidelityFields {
+  fidelity?: import("../compare/fidelityWords").Fidelity;
+  fidelity_note?: string;
+  fidelity_source?: import("../compare/fidelityWords").FidelitySource;
+}
+
 /** First and last line, both inclusive and counted from 1. */
 export type LineRange = [first: number, last: number];
 
-export interface AlignedLean {
+export interface AlignedLean extends FidelityFields {
   name: string;
   module: string;
   line: number;
@@ -125,6 +139,11 @@ export interface AlignedStatement {
   section: string;
   heading_id: string | null;
   note?: string;
+  /**
+   * Who tied the slice to its Lean: "evidence_record" (copied from the papers' published
+   * evidence mapping) or "ai" (an AI agent read both and linked them for this site).
+   */
+  origin?: import("../compare/fidelityWords").TieOrigin;
 }
 
 export interface RecordAlignment {
@@ -194,6 +213,12 @@ export interface Tie {
   lines: LineRange | null;
   anchor: string | null;
   at: string;
+  /** Who made the tie (see AlignedStatement.origin); absent in editions that do not say. */
+  origin?: import("../compare/fidelityWords").TieOrigin;
+  /** What the first Lean row says against the statement (see FidelityFields). */
+  fidelity?: import("../compare/fidelityWords").Fidelity;
+  fidelity_note?: string;
+  fidelity_source?: import("../compare/fidelityWords").FidelitySource;
 }
 
 /** UTF-8 byte range and indices into `ties`, Lean first and then the narrowest slice. */

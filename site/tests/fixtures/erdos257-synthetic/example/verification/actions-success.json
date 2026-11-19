@@ -1,0 +1,16 @@
+{
+  "record_type": "github_actions_run",
+  "repository": "example-owner/example-lean",
+  "branch": "main",
+  "event": "workflow_dispatch",
+  "workflow": "Build the Lean",
+  "run_id": 1001,
+  "run_attempt": 1,
+  "url": "https://github.com/example-owner/example-lean/actions/runs/1001",
+  "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "started_at": "2026-11-01T10:00:00Z",
+  "completed_at": "2026-11-01T10:40:00Z",
+  "conclusion": "success",
+  "shows": "The Lean project compiles at this commit.",
+  "does_not_show": "That any statement means what a paper says."
+}

@@ -6,6 +6,7 @@
 // stills into public/films/.
 
 import registry from "./family.json";
+import site from "@instance/site";
 import { SITE_NAME } from "./siteName";
 
 export interface FamilyLink {
@@ -49,7 +50,7 @@ export interface Family {
 export const FAMILY: Family = registry;
 
 /** This website's entry in the registry. */
-export const THIS_SITE_ID = "lean-exposition";
+export const THIS_SITE_ID = site.familyId ?? "";
 
 export function familySite(id: string): FamilySite {
   const site = FAMILY.sites.find((s) => s.id === id);

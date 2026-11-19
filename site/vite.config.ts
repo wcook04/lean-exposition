@@ -5,34 +5,93 @@ import { copyFileSync, createReadStream, existsSync, mkdirSync, readdirSync, rea
 import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
-import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
+import { frameHtml } from "./src/home/heroMarkup.ts";
 import { readerFirstScreenHtml, readerSkeletonHtml } from "./src/reader/skeleton.ts";
 import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
-import { SITE_NAME } from "./src/app/siteName.ts";
+import { copyTodos, selectInstance } from "./src/instances/registry.ts";
+import { buildRunLedger, type EvidenceInput, type RunLedger } from "./src/checks/runLedger.ts";
 
-// The three accounts and architectural companion, as the repository renders them.
+// The example this build is for: LX_INSTANCE, default qaoa-sk (src/instances/registry.ts).
+// Every path, title and published text below comes from it.
+export const INSTANCE = selectInstance(process.env.LX_INSTANCE);
+const REPO = "..";
+const EXAMPLE = `${REPO}/${INSTANCE.example}`;
+const PAPERS_DIR = `${REPO}/${INSTANCE.papers}`;
+/** True while vitest runs: an absent input then gives an empty value, where a build stops. */
+const TESTING = Boolean(process.env.VITEST);
+
+// The accounts (and for SK the architectural companion), as the repository renders them.
 // Download links use page counts read from the same files at build time.
-export const PAPER_PDFS: Record<string, { file: string; name: string; alias?: string }> = {
-  long: { file: "../papers/qaoa-sk/long/reasoning-record.pdf", name: "long-record.pdf", alias: "long/reasoning-record.pdf" },
-  short: { file: "../papers/qaoa-sk/short/paper.pdf", name: "short-paper.pdf", alias: "short/paper.pdf" },
-  expository: { file: "../papers/qaoa-sk/expository/main.pdf", name: "exposition.pdf", alias: "expository/main.pdf" },
-  architecture: { file: "../papers/architecture/paper.pdf", name: "architecture.pdf" },
-};
+export const PAPER_PDFS: Record<string, { file: string; name: string; alias?: string }> = Object.fromEntries(
+  Object.entries(INSTANCE.pdfs).map(([stage, pdf]) => [stage, { ...pdf, file: `${REPO}/${pdf.file}` }]),
+);
 
-// One intentionally published observation. Keep this an explicit file list;
-// verification directories also contain artifacts that the website does not use.
-const PUBLIC_OBSERVATIONS = [{
-  file: "../examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json",
-  name: "full-support-build-extraction-observation-20261026.json",
-}];
+/** An input the site needs, or a clear stop naming it (a warning only while tests run). */
+function missingInput(path: string, what: string): string {
+  return `${INSTANCE.id}: ${what} is missing: ${resolve(path)}. The ${INSTANCE.id} data (${INSTANCE.example}/ and ${INSTANCE.papers}/) must be in place before the site builds.`;
+}
 
-function publicObservations(build = false): Plugin {
+// Intentionally published observations. Keep this an explicit file list; verification
+// directories also contain artifacts that the website does not use. An instance that
+// publishes its receipts adds every file an evidence record names (runLedgerModule).
+const PUBLIC_OBSERVATIONS = INSTANCE.publicObservations.map((item) => ({ ...item, file: `${REPO}/${item.file}` }));
+
+/** The graph's evidence records, for the run table; empty when the graph is absent. */
+function graphEvidence(): EvidenceInput[] {
+  const path = resolve(EXAMPLE, "evidence-graph.json");
+  if (!existsSync(path)) return [];
+  return (JSON.parse(readFileSync(path, "utf8")).evidence ?? []) as EvidenceInput[];
+}
+
+/** Receipt paths are relative to the example folder; they are published under verification/ with the same path below it. */
+const receiptPublished = (path: string) => `verification/${path.replace(/^verification\//, "")}`;
+
+function readReceipt(path: string): unknown {
+  const file = resolve(EXAMPLE, path);
+  if (!/^[\w./-]+$/.test(path) || path.includes("..") || !existsSync(file)) return null;
+  try {
+    return JSON.parse(readFileSync(file, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+export function runLedger(): RunLedger {
+  if (!INSTANCE.publishReceipts) return { groups: [], missing: [] };
+  return buildRunLedger(graphEvidence(), readReceipt, receiptPublished);
+}
+
+/** Every receipt the ledger publishes: its source file and its path under dist/. */
+function ledgerFiles(ledger: RunLedger): { file: string; name: string }[] {
+  const seen = new Map<string, string>();
+  for (const group of ledger.groups) {
+    for (const row of group.rows) {
+      if (!row.receipt) continue;
+      const rel = row.receipt.replace(/^verification\//, "");
+      const source = existsSync(resolve(EXAMPLE, rel)) ? resolve(EXAMPLE, rel) : resolve(EXAMPLE, "verification", rel);
+      seen.set(rel, source);
+    }
+  }
+  return [...seen].map(([name, file]) => ({ file, name }));
+}
+
+function runLedgerModule(ledger: RunLedger): Plugin {
+  const id = "virtual:run-ledger";
+  return {
+    name: "run-ledger",
+    resolveId: (source) => (source === id ? `\0${id}` : null),
+    load: (resolved) => (resolved === `\0${id}` ? `export const RUN_LEDGER = ${JSON.stringify(ledger)};` : null),
+  };
+}
+
+function publicObservations(build = false, extra: { file: string; name: string }[] = []): Plugin {
+  const files = [...PUBLIC_OBSERVATIONS, ...extra];
   return {
     name: "public-observations",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const name = req.url?.match(/\/verification\/([^/?]+\.json)(?:\?.*)?$/)?.[1];
-        const observation = PUBLIC_OBSERVATIONS.find((item) => item.name === name);
+        const name = req.url?.match(/\/verification\/([^?]+\.json)(?:\?.*)?$/)?.[1];
+        const observation = files.find((item) => item.name === name);
         if (!observation) return next();
         res.setHeader("Content-Type", "application/json");
         createReadStream(resolve(observation.file)).pipe(res);
@@ -42,7 +101,10 @@ function publicObservations(build = false): Plugin {
       if (!build) return;
       const out = resolve("dist", "verification");
       mkdirSync(out, { recursive: true });
-      for (const item of PUBLIC_OBSERVATIONS) copyFileSync(resolve(item.file), resolve(out, item.name));
+      for (const item of files) {
+        mkdirSync(dirname(resolve(out, item.name)), { recursive: true });
+        copyFileSync(resolve(item.file), resolve(out, item.name));
+      }
     },
   };
 }
@@ -79,10 +141,12 @@ interface FirstPage {
  * The first-page picture of a PDF, while it still matches the PDF's bytes; null when
  * the PDF has changed since the picture was rendered, so the shelf never shows a stale page.
  */
-export function firstPage(stage: string, pdf: Buffer): FirstPage | null {
+export function firstPage(stage: string, pdf: Buffer, instance = INSTANCE.id): FirstPage | null {
   const manifestPath = resolve(PAPER_PAGES, "manifest.json");
   if (!existsSync(manifestPath)) return null;
-  const row = JSON.parse(readFileSync(manifestPath, "utf8"))[stage] as
+  // An instance's own rows ("erdos257/long") come first; the SK site's rows are keyed by stage alone.
+  const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+  const row = (manifest[`${instance}/${stage}`] ?? manifest[stage]) as
     | { pdf_sha256: string; files: Record<string, string>; width: number; height: number }
     | undefined;
   const digest = `sha256:${createHash("sha256").update(pdf).digest("hex")}`;
@@ -106,6 +170,10 @@ function paperPdfs(build = false): Plugin {
     load(resolved) {
       if (resolved !== `\0${id}`) return null;
       const entries = Object.entries(PAPER_PDFS).map(([stage, p]) => {
+        if (!existsSync(resolve(p.file))) {
+          if (!TESTING) this.error(missingInput(p.file, `the ${stage} PDF`));
+          return [stage, { path: `pdf/${p.name}`, pages: 0 }];
+        }
         const buf = readFileSync(resolve(p.file));
         const page = firstPage(stage, buf);
         if (!page) this.warn(`${p.file} has no current first-page picture; run python site/scripts/render-paper-pages.py`);
@@ -142,7 +210,7 @@ function paperPdfs(build = false): Plugin {
 // The authored alignment (docs/record-alignment.md), read once at build time. The page
 // needs only a line per record to title its tiles and mark its levels, so that line ships
 // in the bundle and the full alignment stays an on-demand file.
-const ALIGNMENT = "../examples/qaoa-sk/alignment";
+const ALIGNMENT = `${EXAMPLE}/alignment`;
 const ROLE_STRENGTH = ["mention", "example", "explanation", "derivation", "definition", "statement"];
 
 interface AuthoredRecord {
@@ -200,7 +268,12 @@ function siteFactsModule(facts: SiteFacts): Plugin {
 
 /** The fields of the reviewed reference tables a reader's page uses. */
 export function referenceModule(stage: string): string {
-  const table = JSON.parse(readFileSync(resolve(ALIGNMENT, `references-${stage}.json`), "utf8"));
+  const path = resolve(ALIGNMENT, `references-${stage}.json`);
+  if (!existsSync(path)) {
+    if (TESTING) return `export default ${JSON.stringify({ paper: stage, targets: {}, sources: {}, references: [] })};`;
+    throw new Error(missingInput(path, `the ${stage} paper's reference table`));
+  }
+  const table = JSON.parse(readFileSync(path, "utf8"));
   const references = (table.references as Record<string, unknown>[])
     .filter((row) => row.kind !== "plain")
     .map(({ before: _before, cited_as: _cited, ...row }) => row);
@@ -317,6 +390,7 @@ async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record
     appType: "custom",
     server: { middlewareMode: true, hmr: false, ws: false },
     optimizeDeps: { noDiscovery: true },
+    resolve: { alias: [{ find: /^@instance\//, replacement: `${resolve("src/instances", INSTANCE.id)}/` }] },
     plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts)],
   });
   try {
@@ -344,8 +418,8 @@ const typeset = (source: string) => katex.renderToString(source, { throwOnError:
  */
 function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
   const id = "virtual:front-hero";
-  const hero = heroHtml(heroLinks(base, facts.theorem1, facts.ties), typeset);
-  const frame = frameHtml(base);
+  const hero = INSTANCE.hero(base, facts, typeset);
+  const frame = frameHtml(base, INSTANCE.siteName);
   const shell = (main: string) => `<div class="app">${frame}<main id="main" class="app__main">${main}</main></div>`;
   return {
     name: "first-screen",
@@ -388,118 +462,77 @@ function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
   };
 }
 
-// The public repository that receives the static build has no other README.
-const SITE_README = `# ${SITE_NAME} website
-
-Read a mathematical paper with the exact Lean statement beside the paragraph
-that describes it. Lean is a language for writing statements and proofs that a
-computer can check. The papers and their links to the Lean are drafts awaiting
-mathematical review.
-
-**[Open Theorem 1 with its Lean](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)** · [Website](https://wcook04.github.io/lean-exposition-site/) · [Source and tools](https://github.com/wcook04/lean-exposition) · [Will Cook's projects](https://wcook04.github.io/)
-
-[![The short paper with Theorem 1 highlighted beside its Lean statement.](stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)
-
-The website contains three explanations of a theorem about interacting spins
-in the Sherrington–Kirkpatrick model. Start with the exposition for a two-spin
-example, or the short paper for the specialist statement and proof.
-The mathematics comes from
-[OpenAI's mathematics release, example 281](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md).
-These are drafts explaining existing results; mathematical and reader review
-remain open. The [source repository](https://github.com/wcook04/lean-exposition#the-worked-example)
-gives the exact scope of the Lean and the recorded checks.
-
-## Read and explore
-
-| Start with | What you can inspect |
-| --- | --- |
-| [Exposition](https://wcook04.github.io/lean-exposition-site/read/expository/) | An explanation beginning with a calculation for two spins |
-| [Short paper](https://wcook04.github.io/lean-exposition-site/read/short/) | The precise mathematical statement and its proof |
-| [Long reasoning record](https://wcook04.github.io/lean-exposition-site/read/long/) | Detailed calculations, source references and remaining steps for OpenAI's separate claim about the limiting energies of quantum circuits |
-| [Argument map](https://wcook04.github.io/lean-exposition-site/map/) · [Compare](https://wcook04.github.io/lean-exposition-site/compare/) | The recorded proof steps and their passages in each paper |
-| [Lean index](https://wcook04.github.io/lean-exposition-site/lean/) · [What ran](https://wcook04.github.io/lean-exposition-site/checks/) | The named statements in the Lean code and recorded check results |
-| [About](https://wcook04.github.io/lean-exposition-site/about/) | A paper explaining how the website connects the papers to the proof steps |
-
-A statement with a dark tick opens its Lean beside the paper.
-The three explanations and the paper under About are also available in [PDF](pdf/).
-[Plectis Atlas](https://wcook04.github.io/plectis-atlas/families/281.html)
-lists the same OpenAI manuscripts and Lean files.
-
-## Videos
-
-[How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw)
-starts with four magnets and explains the mathematical question.
-[Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng)
-walks through this website.
-
-## Source and generated files
-
-This repository contains the built website, not the tools that produce it.
-Make changes in [lean-exposition](https://github.com/wcook04/lean-exposition).
-Its [main-branch build workflow](https://github.com/wcook04/lean-exposition/blob/main/.github/workflows/pages.yml)
-replaces this repository's files with the built website. Installation,
-local development and contribution instructions live in that source repository.
-
-| Generated path | Contents |
-| --- | --- |
-| [read/](read/) | The three paper readers |
-| [edition/](edition/) | Copies of the papers, proof-step data and check results used by the site |
-| [pdf/](pdf/) | The three explanations and the paper about the website, as PDFs |
-| [assets/](assets/) · [stills/](stills/) | Built application files and website screenshots |
-
-Will Cook directs this project. His other projects and videos are linked below.
-[Projects](https://wcook04.github.io/) · [Videos](https://www.youtube.com/@willcook2004)
-`;
-
-const SITE_URL = "https://wcook04.github.io/lean-exposition-site/";
-const SITE_PAGES = ["", "read/short", "read/expository", "read/long", "map", "compare", "checks", "about", "lean", "lean?list=papers"];
-
+// The published README, llms.txt, sitemap and route titles are the instance's own.
+const SITE_URL = process.env.LX_SITE_URL ?? INSTANCE.defaultSiteUrl ?? "";
+const SITE_PAGES = INSTANCE.sitePages;
 /** What a browser tab says before the page's script takes over, the same words as PageTitle. */
-const ROUTE_TITLES: Record<string, string> = {
-  map: "Argument map",
-  compare: "Compare side by side",
-  lean: "Lean index",
-  checks: "What ran",
-  about: "About",
-  search: "Search",
-  "read/long": "Long record",
-  "read/short": "Short paper",
-  "read/expository": "Exposition",
-};
-const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · ${SITE_NAME}</title>`);
+const ROUTE_TITLES = INSTANCE.routeTitles;
+const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · ${INSTANCE.siteName}</title>`);
 
-// For readers that fetch text rather than run the page. It describes the same files the
-// browser reads, and no page loads it.
-const llmsTxt = (facts: SiteFacts) => `# Why the Sherrington–Kirkpatrick order parameter has no gaps
+/** index.html's head and noscript, from the instance: the SK values are the page's words before instances. */
+function instanceHtml(): Plugin {
+  const escape = (text: string) => text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  return {
+    name: "instance-html",
+    transformIndexHtml: {
+      order: "pre",
+      handler(html) {
+        const og = SITE_URL
+          ? `<meta property="og:url" content="${SITE_URL}" />${INSTANCE.html.ogImage ? `\n    <meta property="og:image" content="${SITE_URL}og.png" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />` : ""}`
+          : "";
+        return html
+          .replace("%LX_TITLE%", escape(INSTANCE.editionTitle))
+          .replace("%LX_DESCRIPTION%", escape(INSTANCE.html.description))
+          .replace("%LX_OG_TITLE%", escape(INSTANCE.html.ogTitle))
+          .replace("%LX_OG_DESCRIPTION%", escape(INSTANCE.html.ogDescription))
+          .replace("%LX_OG_URL%", og)
+          .replace("%LX_NOSCRIPT%", INSTANCE.html.noscript);
+      },
+    },
+  };
+}
 
-> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} steps joins them. The data calls a step a record.
+/** Before a build: the inputs the site cannot do without, each named if absent. */
+function requireInputs(): void {
+  const needed: [string, string][] = [
+    [`${EXAMPLE}/evidence-graph.json`, "the evidence graph"],
+    [ALIGNMENT, "the alignment folder"],
+    ...["long", "short", "expository"].map((stage): [string, string] => [`${ALIGNMENT}/references-${stage}.json`, `the ${stage} paper's reference table`]),
+    ...Object.entries(PAPER_PDFS).map(([stage, pdf]): [string, string] => [pdf.file, `the ${stage} PDF`]),
+  ];
+  const absent = needed.filter(([path]) => !existsSync(resolve(path)));
+  if (absent.length) throw new Error(absent.map(([path, what]) => missingInput(path, what)).join("\n"));
+}
 
-Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are pointers written by AI agents after reading both sides. No independent mathematician has reviewed them, and a program confirms only that both ends of each one still exist.
-${facts.build && facts.extraction ? `
-Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator, a program that compares a Lean proof with a separately written statement, has accepted neither main statement, and the scalar value result has no successful build on record.
-` : ""}
-## Read
+/** The paper figures shipped as image files (papers/<name>/<stage>/figures/), served and copied under paper-figures/<stage>/. */
+function paperFigures(build = false): Plugin {
+  const stages = ["long", "short", "expository"].filter((stage) => existsSync(resolve(PAPERS_DIR, stage, "figures")));
+  const types: Record<string, string> = { svg: "image/svg+xml", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" };
+  return {
+    name: "paper-figures",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const m = req.url?.split("?", 1)[0].match(/\/paper-figures\/(long|short|expository)\/([\w.-]+\.(svg|png|jpe?g|webp))$/);
+        const file = m && resolve(PAPERS_DIR, m[1], "figures", m[2]);
+        if (!m || !file || !existsSync(file)) return next();
+        res.setHeader("Content-Type", types[m[3]]);
+        createReadStream(file).pipe(res);
+      });
+    },
+    closeBundle() {
+      if (!build) return;
+      for (const stage of stages) {
+        const from = resolve(PAPERS_DIR, stage, "figures");
+        const out = resolve("dist", "paper-figures", stage);
+        mkdirSync(out, { recursive: true });
+        for (const name of readdirSync(from)) if (/\.(svg|png|jpe?g|webp)$/.test(name)) copyFileSync(resolve(from, name), resolve(out, name));
+      }
+    },
+  };
+}
 
-- [Exposition](${SITE_URL}pdf/exposition.pdf): objects and ideas, from a calculation with two spins
-- [Short paper](${SITE_URL}pdf/short-paper.pdf): the result and proof for specialists
-- [Long record](${SITE_URL}pdf/long-record.pdf): each step with its source, continuing to the QAOA circuits
-- [Architectural companion](${SITE_URL}pdf/architecture.pdf): why the papers share one graph
-
-## Data
-
-All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: it maps API routes to files, and \`route_maps\` holds further maps for per-module and per-record routes.
-
-- The route "/alignment": for each record, its short title, Lean declarations with relation and exact \`lines\`, and exact statement slices in each paper, each slice with the Lean it means; a dictionary from Lean names to the papers' notation; \`names\`, plain titles for ${facts.plainTitles ?? "many"} declarations
-- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer. No program tests whether the two texts mean the same thing.
-- The reference tables behind the papers' links to theorems, equations, sections, figures and citations${facts.references ? ` (${facts.references} links)` : ""}, in examples/qaoa-sk/alignment/references-*.json in the repository
-- The routes "/lean/modules", "/lean/names" and "/lean/module": the Lean index${facts.lean ? ` (${facts.lean.modules} modules, ${facts.lean.declarations.toLocaleString("en-GB")} declarations at ${facts.lean.toolchain.split(":").pop()})` : ""}, one file per module with source, declarations and name references. ${facts.lean?.dependencySource === "elaborated" ? "Dependencies come from Lean's compiled declarations." : "Dependencies come from the source text and are not elaborated."}
-- The route "/graph" in edition/index.json: the whole recorded graph, with typed edges running from consumer to prerequisite
-
-## Source
-
-- [Repository](https://github.com/wcook04/lean-exposition): papers, records, tools and this website
-- [Web API](https://github.com/wcook04/lean-exposition/blob/main/docs/web-api.md): routes and field meanings
-`;
+/** The test files that read the SK edition, its fixtures or its source: they run for the SK instance only. */
+export const SK_ONLY_TESTS: string[] = JSON.parse(readFileSync(resolve("tests/sk-only.json"), "utf8")).tests;
 
 // The site reads one captured edition from the read-only web API.
 // During development and preview, /api is proxied to a local
@@ -509,11 +542,19 @@ export default defineConfig(({ mode, command }) => {
   const api = env.LEAN_EXPOSITION_API ?? "http://127.0.0.1:8000";
   const proxy = { "/api": { target: api, changeOrigin: false } };
   const base = env.VITE_BASE_PATH ?? "/";
-  const facts = siteFacts();
+  const facts = siteFacts(REPO, "public/edition", INSTANCE);
   const build = command === "build";
+  const todos = copyTodos(INSTANCE.copySlots);
+  if (todos.length && !TESTING) console.warn(`\n${INSTANCE.id}: ${todos.length} copy slot(s) still hold TODO(copy) (src/instances/${INSTANCE.id}/copy.ts):\n${todos.map((slot) => `  - ${slot}`).join("\n")}\n`);
+  if (!SITE_URL && !TESTING) console.warn(`${INSTANCE.id}: LX_SITE_URL is unset, so llms.txt and the README use relative links and no sitemap.xml is written.`);
+  if (build) requireInputs();
+  const ledger = runLedger();
+  if (ledger.missing.length && !TESTING) console.warn(`${INSTANCE.id}: receipts named by evidence records are missing:\n${ledger.missing.map((path) => `  - ${INSTANCE.example}/${path}`).join("\n")}`);
+  const instanceDir = resolve("src/instances", INSTANCE.id);
   return {
     base,
-    plugins: [react(), paperPdfs(build), publicObservations(build), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts, build), ...(build && env.VITE_STATIC_EDITION === "true" ? [{
+    resolve: { alias: [{ find: /^@instance\//, replacement: `${instanceDir}/` }] },
+    plugins: [react(), instanceHtml(), paperPdfs(build), publicObservations(build, ledgerFiles(ledger)), paperFigures(build), runLedgerModule(ledger), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts, build), ...(build && env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       async closeBundle() {
         const out = resolve("dist");
@@ -534,13 +575,14 @@ export default defineConfig(({ mode, command }) => {
         copyFileSync(resolve("../LICENSE"), resolve(out, "LICENSE.txt"));
         copyFileSync(resolve("../NOTICE"), resolve(out, "NOTICE.txt"));
         copyFileSync(resolve("THIRD_PARTY_NOTICES.md"), resolve(out, "THIRD_PARTY_NOTICES.md"));
-        writeFileSync(resolve(out, "README.md"), SITE_README);
+        writeFileSync(resolve(out, "README.md"), INSTANCE.readme(SITE_URL, facts));
         writeFileSync(resolve(out, ".nojekyll"), "");
-        writeFileSync(resolve(out, "llms.txt"), llmsTxt(facts));
-        writeFileSync(
-          resolve(out, "sitemap.xml"),
-          `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${SITE_PAGES.map((page) => `  <url><loc>${SITE_URL}${page}</loc></url>`).join("\n")}\n</urlset>\n`,
-        );
+        writeFileSync(resolve(out, "llms.txt"), INSTANCE.llms(SITE_URL, facts));
+        if (SITE_URL)
+          writeFileSync(
+            resolve(out, "sitemap.xml"),
+            `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${SITE_PAGES.map((page) => `  <url><loc>${SITE_URL}${page}</loc></url>`).join("\n")}\n</urlset>\n`,
+          );
       },
     }] : [])],
     server: { port: 5173, strictPort: true, proxy },
@@ -551,6 +593,8 @@ export default defineConfig(({ mode, command }) => {
     test: {
       environment: "jsdom",
       include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+      // The SK suites read the SK edition, its fixtures and its source; another instance runs the rest.
+      exclude: INSTANCE.id === "qaoa-sk" ? [] : SK_ONLY_TESTS.map((name) => `tests/${name}`),
       // Several tests render all three papers and parse every part into a DOM;
       // on a shared CI runner that can take longer than Vitest's 5 s default.
       testTimeout: 30000,

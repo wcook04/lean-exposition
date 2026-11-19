@@ -1,0 +1,16 @@
+% Standalone wrapper for paper/257/figures/cycle-mean.tex (plectis-erdos 3368d1e).
+% Fonts and colours follow paper/paper-house-style.sty; the picture is \input unchanged.
+\documentclass[border=2pt]{standalone}
+\usepackage{amsmath}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{texgyrepagella}[Extension=.otf,UprightFont=*-regular,
+  BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmathfont{texgyrepagella-math.otf}
+\usepackage{xcolor}
+\definecolor{paperresultrule}{HTML}{315B72}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,decorations.pathreplacing}
+\begin{document}
+\input{257/figures/cycle-mean.tex}
+\end{document}

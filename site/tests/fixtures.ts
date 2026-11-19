@@ -5,7 +5,10 @@ import path from "node:path";
 import type { EdgeRecord, EvidenceRecord, GraphMap, NodeRecord, PaperStructure, SourceRecord, Stage, SummaryCard } from "../src/api/types";
 import { buildGraph, type ArgGraph } from "../src/model/graph";
 
-const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "fixtures");
+// The SK fixtures stay where the SK suites have always read them, tests/fixtures/; another
+// instance's captured edition goes in tests/fixtures/<instance>/ (capture-fixtures.mjs --out).
+const instance = process.env.LX_INSTANCE || "qaoa-sk";
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "fixtures", ...(instance === "qaoa-sk" ? [] : [instance]));
 
 export function fixture<T>(name: string): T {
   return JSON.parse(readFileSync(path.join(root, name), "utf8")) as T;

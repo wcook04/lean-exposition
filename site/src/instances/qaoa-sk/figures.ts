@@ -1,13 +1,13 @@
-// Maps a figure slot from the rendering engine to its redrawn component.
+// The SK site's figures: maps a figure slot from the rendering engine to its redrawn component.
 // Slots are keyed by the figure's \label when it has one, else by a hash of
 // its source. Hashes change between editions, so we match by label first and
 // then by a distinctive phrase of the paper's caption.
 import type { ComponentType } from "react";
-import { AccountsFigure } from "./AccountsFigure";
-import { AreaFigure } from "./AreaFigure";
-import { GapFigure } from "./GapFigure";
-import { GapIngredientsFigure } from "./GapIngredientsFigure";
-import { ReadingJourneyFigure } from "./ReadingJourneyFigure";
+import { AccountsFigure } from "../../figures/AccountsFigure";
+import { AreaFigure } from "../../figures/AreaFigure";
+import { GapFigure } from "../../figures/GapFigure";
+import { GapIngredientsFigure } from "../../figures/GapIngredientsFigure";
+import { ReadingJourneyFigure } from "../../figures/ReadingJourneyFigure";
 
 const BY_LABEL: Record<string, ComponentType> = {
   "fig:support-increments": GapFigure,

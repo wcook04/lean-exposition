@@ -3,6 +3,7 @@
 // leaves out and how the map is drawn. The samples reuse the connector classes the map
 // draws with.
 
+import site from "@instance/site";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { routeHref } from "../app/router";
@@ -50,7 +51,7 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
         <div className="map-keypop__panel" role="dialog" aria-label="Key to the argument map">
           <p className="map-keypop__h">Records</p>
           <ul className="map-keypop__channels">
-            <li>This is the argument for a theorem about the Sherrington–Kirkpatrick (SK) spin glass. Each box is one step: a claim, an assumption or a declaration in Lean, the language of OpenAI’s proof. Select one to read it in Lean and in each paper.</li>
+            <li>{site.words.mapKeyIntro}</li>
             <li>
               <span className="keyrow__tag" aria-hidden="true" /> An assumption is a tag on each result that assumes it.
             </li>
@@ -59,7 +60,7 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
           <p className="map-keypop__h">Lean</p>
           <ul className="map-keypop__channels">
             <li>
-              <LeanGlyph fill="whole" /> Green: an AI agent linked this step to Lean that states and proves it, or defines it. Lean proves the linked declaration, and the link is the agent’s reading. A proof here is a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
+              <LeanGlyph fill="whole" /> Green: an AI agent linked this step to Lean that states and proves it, or defines it. Lean proves the linked declaration, and the link is the agent’s reading. A proof here is a theorem or lemma in {site.lean.ownerSource} with no <code>sorry</code> in its text.
             </li>
             <li>
               <LeanGlyph fill="part" /> Pale green: the linked Lean has some of it, or a Lean proof has the step in a different form.

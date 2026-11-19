@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.2",
+  "id": "erdos257-synthetic",
+  "title": "Synthetic fixture",
+  "selected_goals": [
+    "goal.main"
+  ],
+  "sources": [],
+  "citations": [],
+  "nodes": [
+    {
+      "id": "goal.main",
+      "kind": "goal",
+      "label": "Main result (synthetic)",
+      "status": "unverified",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": []
+    },
+    {
+      "id": "lean.main",
+      "kind": "declaration",
+      "label": "Synthetic.main",
+      "status": "unverified",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "declaration": "Synthetic.main"
+    }
+  ],
+  "edges": [
+    {
+      "from": "goal.main",
+      "to": "lean.main",
+      "kind": "formalizes",
+      "evidence_ids": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "actions_build_passed",
+      "kind": "lean_build",
+      "status": "passed",
+      "command": [
+        "lake",
+        "build"
+      ],
+      "tool": "GitHub Actions",
+      "source_ids": [],
+      "subject_ids": [
+        "lean.main"
+      ],
+      "details": "Synthetic.",
+      "receipt_path": "verification/actions-success.json",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": "actions_build_failed",
+      "kind": "lean_build",
+      "status": "failed",
+      "command": [
+        "lake",
+        "build"
+      ],
+      "tool": "GitHub Actions",
+      "source_ids": [],
+      "subject_ids": [
+        "lean.main"
+      ],
+      "details": "Synthetic.",
+      "receipt_path": "verification/actions-failure.json",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": "actions_build_cancelled",
+      "kind": "lean_build",
+      "status": "unavailable",
+      "command": [
+        "lake",
+        "build"
+      ],
+      "tool": "GitHub Actions",
+      "source_ids": [],
+      "subject_ids": [
+        "lean.main"
+      ],
+      "details": "Synthetic.",
+      "receipt_path": "verification/actions-cancelled.json",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": "comparator_replay",
+      "kind": "comparator",
+      "status": "failed",
+      "command": [
+        "comparator"
+      ],
+      "tool": "Comparator replay",
+      "source_ids": [],
+      "subject_ids": [
+        "lean.main"
+      ],
+      "details": "Synthetic replay of ten entries.",
+      "receipt_path": "verification/comparator/index.json",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": "comparator_single",
+      "kind": "comparator",
+      "status": "passed",
+      "command": [
+        "comparator"
+      ],
+      "tool": "Comparator",
+      "source_ids": [],
+      "subject_ids": [
+        "lean.main"
+      ],
+      "details": "Synthetic.",
+      "receipt_path": "verification/comparator-generic.json",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": "extraction_planned",
+      "kind": "extraction",
+      "status": "not_run",
+      "command": [],
+      "tool": "lean-exposition extract",
+      "source_ids": [],
+      "subject_ids": [],
+      "details": "Planned on 2026-11-20; not run."
+    },
+    {
+      "id": "receipt_missing",
+      "kind": "lean_build",
+      "status": "unavailable",
+      "command": [],
+      "tool": "GitHub Actions",
+      "source_ids": [],
+      "subject_ids": [],
+      "details": "Synthetic.",
+      "receipt_path": "verification/not-there.json",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": "review_written",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored",
+      "source_ids": [],
+      "subject_ids": [
+        "goal.main"
+      ],
+      "details": "Not a run: left out of the table of runs."
+    }
+  ],
+  "scope": "Synthetic.",
+  "extraction_status": "not_run",
+  "notes": []
+}

@@ -24,6 +24,25 @@ RELATIONS = {"states", "contains", "part", "proof", "defines"}
 ROLES = {"statement", "definition", "explanation", "derivation", "example", "mention"}
 MAX_SLICE_CHARACTERS = 1800
 MAX_NOTE_WORDS = 25
+# Optional comparison fields. `fidelity` says whether a Lean row states the same,
+# a stronger or a weaker statement than the paper; `fidelity_source` says whether
+# that judgement is the recorded evidence mapping's or an AI author's; `origin`
+# says where a statement slice came from. Absent fields mean "not recorded".
+FIDELITY = {"same", "stronger", "weaker"}
+FIDELITY_SOURCES = {"recorded", "ai"}
+ORIGINS = {"evidence_record", "ai"}
+FIDELITY_KEYS = {"fidelity", "fidelity_note", "fidelity_source"}
+
+
+def _comparison(item, keys, at, errors):
+    """The optional comparison fields of one row, checked; unknown values are errors."""
+    found = {key: item[key] for key in keys if key in item}
+    for key, allowed in (("fidelity", FIDELITY), ("fidelity_source", FIDELITY_SOURCES), ("origin", ORIGINS)):
+        if key in found and found[key] not in allowed:
+            errors.append(f"{at}: unknown {key} {found[key]!r}")
+    if "fidelity_note" in found and (not isinstance(found["fidelity_note"], str) or not found["fidelity_note"].strip()):
+        errors.append(f"{at}: fidelity_note must be nonempty text")
+    return found
 # A theorem's type is its statement and the rest is proof. A definition's body is
 # part of what it says, so it has no proof lines.
 PROOF_KINDS = {"theorem", "lemma"}
@@ -313,9 +332,11 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                 errors.append(f"{at}.lean: must be a list; [] says this statement has no Lean of its own")
             for n, row in enumerate(item["lean"] if type(item["lean"]) is list else ()):
                 where = f"{at}.lean[{n}]"
-                if _check_keys(row, {"name"}, {"file", "lines", "clause", "note", "relation"}, where, errors):
+                if _check_keys(row, {"name"}, {"file", "lines", "clause", "note", "relation", *FIDELITY_KEYS},
+                               where, errors):
                     try:
-                        narrowed.append(_narrowed(row, lean, names, sources))
+                        narrowed.append({**_narrowed(row, lean, names, sources),
+                                         **_comparison(row, FIDELITY_KEYS, where, errors)})
                     except ValueError as exc:
                         errors.append(f"{where}: {exc}")
         # An empty list is a claim of its own; only a list left out, or one that failed, falls back.
@@ -323,7 +344,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
         try:
             return {"paper": item["paper"], "role": item["role"], **prepared[item["paper"]].locate(item),
                     "lean": narrowed if own else lean, "lean_source": "statement" if own else "record",
-                    **({"note": item["note"]} if "note" in item else {})}
+                    **({"note": item["note"]} if "note" in item else {}),
+                    **_comparison(item, {"origin"}, at, errors)}
         except ValueError as exc:
             errors.append(f"{at}: {exc}")
             return None
@@ -358,7 +380,7 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
             for n, item in enumerate(row["lean"]):
                 at = f"{where}.lean[{n}]"
                 if not _check_keys(item, {"file", "name", "relation"},
-                                   {"note", "clause", "clause_file", "clause_name"}, at, errors):
+                                   {"note", "clause", "clause_file", "clause_name", *FIDELITY_KEYS}, at, errors):
                     continue
                 note = item.get("note", "")
                 if item["relation"] not in RELATIONS:
@@ -372,7 +394,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                     continue
                 resolved = {"name": target["name"], "module": module, "line": target["line"],
                             "end_line": target["end_line"], "relation": item["relation"], "note": note,
-                            "lines": _statement_lines(target), **_proof_lines(target)}
+                            "lines": _statement_lines(target), **_proof_lines(target),
+                            **_comparison(item, FIDELITY_KEYS, at, errors)}
                 try:
                     resolved.update(_clause(modules, sources, item, module, target))
                 except ValueError as exc:
@@ -380,7 +403,7 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                 lean.append(resolved)
             for n, item in enumerate(row["statements"]):
                 at = f"{where}.statements[{n}]"
-                if _check_keys(item, {"paper", "role", "from", "to"}, {"after", "lean", "note"}, at, errors):
+                if _check_keys(item, {"paper", "role", "from", "to"}, {"after", "lean", "note", "origin"}, at, errors):
                     resolved = statement(item, lean, at)
                     if resolved is not None:
                         statements.append(resolved)
@@ -418,7 +441,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
             continue
         for n, item in enumerate(data["statements"]):
             at = f"{path.name}:statements[{n}]"
-            if not _check_keys(item, {"record", "paper", "role", "from", "to"}, {"after", "lean", "note"}, at, errors):
+            if not _check_keys(item, {"record", "paper", "role", "from", "to"}, {"after", "lean", "note", "origin"},
+                               at, errors):
                 continue
             if item["record"] not in records:
                 errors.append(f"{at}: {item['record']} is not an aligned record")
@@ -582,7 +606,11 @@ def _tie(record_id, row, names=()):
             "name": name, **({"plain": names[name]} if name in names else {}),
             "module": None if lean is None else lean["clause_module"] if exact else lean["module"],
             "lines": None if lean is None else lean["clause_lines"] if exact else lean["lines"],
-            "anchor": row["anchor"], "at": row["at"]}
+            "anchor": row["anchor"], "at": row["at"],
+            # Optional comparison fields; absent in examples that do not record them.
+            **({"origin": row["origin"]} if "origin" in row else {}),
+            **({key: lean[key] for key in ("fidelity", "fidelity_note", "fidelity_source") if key in lean}
+               if lean is not None else {})}
 
 
 def tie_index(content, records, stage, passages=(), names=()):

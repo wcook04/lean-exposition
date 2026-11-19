@@ -14,7 +14,12 @@
 // reached through notation or tactics is missing, and the split between statement and proof
 // is whether the name's text sits in the statement's lines. leanGraphSource says which.
 
+import site from "@instance/site";
 import type { ArgEdge, ArgGraph, ArgNode, LinkKind, Origin } from "./graph";
+
+/** The instance's two models, by a word of their module names (SK: SKValue and SKSupport); none elsewhere. */
+const VALUE_MODEL = site.lean.valueModel?.split(".").pop() ?? null;
+const MAIN_MODEL = site.lean.mainTree?.replace(/^\./, "") ?? null;
 
 export interface LeanFacts {
   name: string;
@@ -204,7 +209,7 @@ export function buildLeanGraph(input: LeanInput): LeanGraph {
   // Two models can each define the same object: the shelf says which.
   for (const item of shelf) {
     if (shelf.filter((other) => other.title === item.title).length < 2) continue;
-    item.model = /SKValue/.test(item.module) ? "value model" : /SKSupport/.test(item.module) ? "support model" : undefined;
+    item.model = VALUE_MODEL && item.module.includes(VALUE_MODEL) ? "value model" : MAIN_MODEL && item.module.includes(MAIN_MODEL) ? "support model" : undefined;
   }
   const ids = [...results.keys()];
   const all = leanUses({ linked: results, facts });

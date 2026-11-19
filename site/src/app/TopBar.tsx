@@ -12,7 +12,7 @@ import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
 import { PAPER_NAMES, STAGE_ORDER } from "./papers";
 import { useMaybeEdition } from "./data";
 import { FAMILY } from "./family";
-import { VideoRows, VideosMenu } from "./VideosMenu";
+import { HAS_FILMS, VideoRows, VideosMenu } from "./VideosMenu";
 import { SITE_NAME } from "./siteName";
 
 interface Props {
@@ -355,12 +355,14 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
                 About
               </a>
             </li>
-            <li>
-              <span className="phonemenu__job phonemenu__job--head" id={`${id}-videos`}>
-                Videos
-              </span>
-              <VideoRows labelledBy={`${id}-videos`} />
-            </li>
+            {HAS_FILMS && (
+              <li>
+                <span className="phonemenu__job phonemenu__job--head" id={`${id}-videos`}>
+                  Videos
+                </span>
+                <VideoRows labelledBy={`${id}-videos`} />
+              </li>
+            )}
           </ul>
         </nav>
         <SchemeToggle scheme={scheme} className="phonemenu__scheme" labelled />

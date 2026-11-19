@@ -5,6 +5,9 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { selectInstance } from "../instances/registry.ts";
+import type { SiteInstance } from "../instances/types.ts";
+import { countKinds, type KindCounts } from "./recordKinds.ts";
 
 const STAGES = ["short", "long", "expository"] as const;
 type Stage = (typeof STAGES)[number];
@@ -15,8 +18,15 @@ export interface SiteFacts {
    * stepper counts it. A tie joins a statement to one step, so one statement can have several.
    */
   ties: { total: number; statements: number; withLean: number; papers: Record<Stage, { statements: number; withLean: number }> } | null;
+  /**
+   * Who made the ties, where the edition says: copied from the papers' published evidence
+   * mapping, or made by an AI agent for this site. Null when no tie carries an origin.
+   */
+  origins: { evidenceRecord: number; ai: number; unmarked: number } | null;
   /** All the steps on the site. */
   steps: number | null;
+  /** The records in the papers' terms, for an instance that sorts them (recordKind); else null. */
+  kinds: KindCounts | null;
   /** Links from a step to a Lean declaration, and the distinct declarations they reach. */
   leanLinks: { links: number; declarations: number } | null;
   /** The latest audit of the ties, from its summary file. */
@@ -26,7 +36,9 @@ export interface SiteFacts {
   /** Declarations with a plain title. */
   plainTitles: number | null;
   lean: { modules: number; declarations: number; revision: string; toolchain: string; dependencySource: string; dependencyNote: string } | null;
-  /** Theorem 1 of the short paper, as the alignment places it. */
+  /** The main theorem's record: the instance's, else the graph's first selected goal. */
+  mainRecord: string | null;
+  /** Theorem 1 of the short paper (the main theorem's statement), as the alignment places it. */
   theorem1: { at: string; anchor: string | null } | null;
   build: { module: string; command: string; returncode: number; finalLine: string; date: string; toolchain: string; revision: string } | null;
   extraction: { root: string; axioms: string[]; hasSorry: boolean; declarations: number; externalDependencies: number; date: string; status: string } | null;
@@ -41,7 +53,7 @@ const dateWords = (iso: string) => {
   return `${d} ${MONTHS[m - 1]} ${y}`;
 };
 
-type TieRows = { segments: [number, number, number[]][]; ties: { lean: boolean }[] };
+type TieRows = { segments: [number, number, number[]][]; ties: { lean: boolean; origin?: string }[] };
 
 /** The reader's stops (tieModel in reader/ties.ts): one statement for each place a statement starts. */
 export function tieStops(index: TieRows): { statements: number; withLean: number } {
@@ -68,7 +80,11 @@ function editionFacts(dir: string) {
     const body = json(resolve(dir, file));
     return body.data ?? body;
   };
-  return { read };
+  const nodes = () => {
+    const file = (json(index).summaries_by_table ?? {}).nodes as string | undefined;
+    return file ? (json(resolve(dir, file)) as { id: string; kind: string; status: string }[]) : null;
+  };
+  return { read, nodes };
 }
 
 /** Lean source with its comments taken out, so a word in a comment is not counted. */
@@ -98,8 +114,18 @@ function scanLean(root: string): SiteFacts["scan"] {
   return { sorry: sorry.sort((a, b) => a.file.localeCompare(b.file)), axiomDeclarations, files: files.length };
 }
 
-export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
-  const alignmentDir = resolve(root, "examples/qaoa-sk/alignment");
+/** What siteFacts needs of an instance. */
+export type FactSource = Pick<SiteInstance, "example" | "theorem" | "observation" | "tieAudit"> & Partial<Pick<SiteInstance, "recordKind">>;
+
+/** The graph's first selected goal, for an instance that names no main record. */
+function firstGoal(root: string, example: string): string | null {
+  const path = resolve(root, example, "evidence-graph.json");
+  if (!existsSync(path)) return null;
+  return (json(path).selected_goals as string[] | undefined)?.[0] ?? null;
+}
+
+export function siteFacts(root = "..", edition = "public/edition", site: FactSource = selectInstance()): SiteFacts {
+  const alignmentDir = resolve(root, site.example, "alignment");
   const served = editionFacts(resolve(edition));
   const alignment = served?.read("/alignment") as { records?: Record<string, { lean?: { name: string }[]; statements: { paper: string; role: string; markdown: string; at?: string; start_byte: number; end_byte: number; anchor: string | null }[] }>; names?: Record<string, string> } | null | undefined;
 
@@ -114,12 +140,19 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
       }
     : null;
 
+  const origins: SiteFacts["origins"] = (() => {
+    const all = perPaper.flatMap(([, index]) => index?.ties ?? []);
+    if (!all.some((tie) => tie.origin)) return null;
+    const count = (origin: string | undefined) => all.filter((tie) => tie.origin === origin).length;
+    return { evidenceRecord: count("evidence_record"), ai: count("ai"), unmarked: all.filter((tie) => tie.origin !== "evidence_record" && tie.origin !== "ai").length };
+  })();
+
   const overview = served?.read("/overview") as { record_counts?: { nodes?: number } } | null | undefined;
   const rows = alignment?.records ? Object.values(alignment.records).flatMap((record) => record.lean ?? []) : null;
   const leanLinks = rows ? { links: rows.length, declarations: new Set(rows.map((row) => row.name)).size } : null;
 
-  const auditPath = resolve(root, "examples/qaoa-sk/verification/tie-audit.json");
-  const audit = existsSync(auditPath) ? json(auditPath) : null;
+  const auditPath = site.tieAudit ? resolve(root, site.example, site.tieAudit) : null;
+  const audit = auditPath && existsSync(auditPath) ? json(auditPath) : null;
 
   const tables = existsSync(alignmentDir) ? readdirSync(alignmentDir).filter((name) => /^references-.*\.json$/.test(name)) : [];
   const references = tables.length ? tables.reduce((n, name) => n + (json(resolve(alignmentDir, name)).references?.length ?? 0), 0) : null;
@@ -130,13 +163,17 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
     : null;
 
   // Found by its own words, so a change in the order of the alignment's rows cannot move the link.
-  const statement = alignment?.records?.full_support?.statements.find((s) => s.paper === "short" && /^\*\*Theorem 1\b/.test(s.markdown));
+  const mainRecord = site.theorem.record ?? firstGoal(root, site.example);
+  const pattern = site.theorem.pattern ? new RegExp(site.theorem.pattern) : null;
+  const statement = mainRecord
+    ? alignment?.records?.[mainRecord]?.statements.find((s) => s.paper === site.theorem.paper && (pattern ? pattern.test(s.markdown) : s.role === "statement"))
+    : undefined;
   const theorem1 = statement ? { at: statement.at ?? `b${statement.start_byte}-${statement.end_byte}`, anchor: statement.anchor } : null;
 
-  const observationPath = resolve(root, "examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json");
+  const observationPath = site.observation ? resolve(root, site.example, site.observation) : null;
   let build: SiteFacts["build"] = null;
   let extraction: SiteFacts["extraction"] = null;
-  if (existsSync(observationPath)) {
+  if (observationPath && existsSync(observationPath)) {
     const seen = json(observationPath);
     const native = seen.native_build;
     build = {
@@ -162,7 +199,13 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
 
   return {
     ties,
+    origins,
+    mainRecord: mainRecord ?? null,
     steps: overview?.record_counts?.nodes ?? null,
+    kinds: (() => {
+      const nodes = site.recordKind ? served?.nodes() : null;
+      return nodes && site.recordKind ? countKinds(nodes, site.recordKind) : null;
+    })(),
     leanLinks,
     audit: audit ? {
       date: dateWords(audit.date), read: audit.read, changed: audit.changed, absencesChecked: audit.absences_checked, absencesChanged: audit.absences_changed,
@@ -174,6 +217,6 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
     theorem1,
     build,
     extraction,
-    scan: scanLean(resolve(root, "examples/qaoa-sk/upstream/lean")),
+    scan: scanLean(resolve(root, site.example, "upstream/lean")),
   };
 }

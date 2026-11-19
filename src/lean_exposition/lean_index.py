@@ -18,6 +18,8 @@ from pathlib import Path
 from .contracts import ContractError, digest, read_json
 
 INDEX_SCHEMA_VERSION = "1.0"
+# Default roots, kept for trees that have them. A source lock can name its own
+# roots in `lean_roots`; otherwise every top-level directory holding Lean files is one.
 ROOTS = ("OAI", "ComparatorChallenges")
 DECLARATION_KEYWORDS = {"theorem", "lemma", "def", "abbrev", "structure", "class", "instance",
                         "inductive", "opaque", "axiom", "example", "irreducible_def"}
@@ -724,8 +726,27 @@ def _lock(tree, explicit=None):
     return None
 
 
+def lean_roots(tree, lock=None):
+    """The top-level directories whose Lean files form the indexed modules."""
+    tree = Path(tree)
+    named = (lock or {}).get("lean_roots")
+    if named is not None:
+        if (not isinstance(named, list) or not named
+                or not all(isinstance(value, str) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*", value)
+                           for value in named) or len(set(named)) != len(named)):
+            raise ContractError("lean_roots must be a nonempty list of distinct directory names")
+        return tuple(named)
+    if any((tree / root).is_dir() for root in ROOTS):
+        return ROOTS
+    return tuple(sorted(path.name for path in tree.iterdir()
+                        if path.is_dir() and not path.name.startswith(".")
+                        and any(path.rglob("*.lean"))))
+
+
 def _source_details(tree, lock):
     toolchain = tree / "lean-toolchain"
+    if not toolchain.is_file() and (tree.parent / "lean-toolchain").is_file():
+        toolchain = tree.parent / "lean-toolchain"  # a package whose sources sit in lean/
     details = {"revision": None, "base_url": None,
                "toolchain": toolchain.read_text().strip() if toolchain.is_file() else None}
     if lock:
@@ -742,7 +763,9 @@ def build_index(tree, *, lock=None, extraction=()):
     if not tree.is_dir():
         raise ContractError(f"Lean tree is not a directory: {tree}")
     modules = []
-    for root in ROOTS:
+    source_lock = _lock(tree, lock)
+    roots = lean_roots(tree, source_lock)
+    for root in roots:
         for file in sorted((tree / root).rglob("*.lean")):
             relative = file.relative_to(tree)
             raw = file.read_bytes()
@@ -751,7 +774,7 @@ def build_index(tree, *, lock=None, extraction=()):
                           lines=raw.count(b"\n") + (not raw.endswith(b"\n") and bool(raw)))
             modules.append(module)
     if not modules:
-        raise ContractError(f"Lean tree has no modules under {' or '.join(ROOTS)}: {tree}")
+        raise ContractError(f"Lean tree has no modules under {' or '.join(roots) or 'any directory'}: {tree}")
     resolver = _Resolver(modules)
     edges, reverse = 0, {}
     for module in modules:
@@ -771,7 +794,7 @@ def build_index(tree, *, lock=None, extraction=()):
             for key in [key for key in row if key.startswith("_")]:
                 del row[key]
     index = {"schema_version": INDEX_SCHEMA_VERSION, "dependency_source": "source_text",
-             **_source_details(tree, _lock(tree, lock)),
+             **_source_details(tree, source_lock),
              "dependency_note": ("Read from source text, not elaborated. Names reached through "
                                  "notation, tactics or elaboration are absent, and a shadowed "
                                  "name can appear as a dependency."),

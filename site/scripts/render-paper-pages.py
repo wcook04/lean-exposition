@@ -39,6 +39,10 @@ PAPERS = {
     "short": ("papers/qaoa-sk/short/paper.pdf", "short-paper"),
     "expository": ("papers/qaoa-sk/expository/main.pdf", "exposition"),
     "architecture": ("papers/architecture/paper.pdf", "architecture"),
+    # The Erdős #257 instance (LX_INSTANCE=erdos257); the build looks for "<instance>/<stage>" first.
+    "erdos257/long": ("papers/erdos257/long/reasoning-record.pdf", "erdos257-long-record"),
+    "erdos257/short": ("papers/erdos257/short/paper.pdf", "erdos257-short-paper"),
+    "erdos257/expository": ("papers/erdos257/expository/main.pdf", "erdos257-exposition"),
 }
 WIDTHS = (176, 352)
 

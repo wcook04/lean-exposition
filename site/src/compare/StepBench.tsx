@@ -3,6 +3,7 @@
 // the exposition each do with the chosen record, with what it uses and is used by,
 // so the reader can walk the argument in either direction.
 
+import site from "@instance/site";
 import { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { AlignedStatement, RecordAlignment } from "../api/lean";
 import type { Stage } from "../api/types";
@@ -201,7 +202,7 @@ export function StepBench({ route }: { route: CompareRoute }) {
 }
 
 function GoalMenu({ goals, goal, onPick }: { goals: { id: string; title: string; stages: Stage[] }[]; goal: string; onPick(id: string): void }) {
-  return <PickMenu label="In the Sherrington–Kirkpatrick (SK) model, argument for" showLabel variant="goal" options={goals.map((g) => ({ id: g.id, title: g.title, where: g.stages.length ? statedIn(g.stages) : undefined }))} value={goal} onPick={onPick} />;
+  return <PickMenu label={site.words.argumentFor} showLabel variant="goal" options={goals.map((g) => ({ id: g.id, title: g.title, where: g.stages.length ? statedIn(g.stages) : undefined }))} value={goal} onPick={onPick} />;
 }
 
 /** The whole argument or one paper's part of it, each with how many steps that is. */

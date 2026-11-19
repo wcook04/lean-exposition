@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { tieModel } from "../src/reader/ties";
-import { heroHtml, heroLinks } from "../src/home/heroMarkup";
+import { heroHtml, heroLinks } from "../src/instances/qaoa-sk/hero";
 import { siteFacts, tieStops, withoutComments } from "../src/home/siteFacts";
 
 describe("what the site states about itself", () => {

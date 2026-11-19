@@ -4,6 +4,7 @@
 // compares the record across its levels. Only a recorded failure is coloured (DESIGN.md).
 
 import { useMemo } from "react";
+import site from "@instance/site";
 import { useEdition } from "../app/data";
 import { routeHref } from "../app/router";
 import { shortTitle } from "../compare/useAlignment";
@@ -82,7 +83,7 @@ export function RecordList() {
     <section className="checks__band rlist" aria-labelledby="rlist-title">
       <h2 id="rlist-title">Each step and what ran on it</h2>
       <p className="checks__intro">
-        All {graph.order.length} steps, by what ran on their statement or proof. File hash comparisons are left out, because they compare bytes only. Open a step to compare it across the Lean and the papers.
+        All {graph.order.length} {site.recordKind ? "records" : "steps"}, by what ran on their statement or proof. File hash comparisons are left out, because they compare bytes only. Open a step to compare it across the Lean and the papers.
       </p>
       {groups.map((group) => (
         <div key={group.standing} className={`rlist__group${group.tiles.length < 10 && group.standing !== "none" ? " is-few" : ""}${group.standing === "failed" ? " is-failed" : ""}`}>

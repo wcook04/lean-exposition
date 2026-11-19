@@ -5,10 +5,10 @@
 
 import type { ReactNode } from "react";
 import { SITE_FACTS } from "virtual:site-facts";
-import { routeHref } from "../app/router";
-import { MODELS_STEP } from "../app/caveat";
-import { MAIN_THEOREM, VALUE_THEOREM } from "../lean/data";
-import { countsInWords, type KindGroup } from "./summary";
+import { routeHref } from "../../app/router";
+import { MODELS_STEP } from "../../app/caveat";
+import { MAIN_THEOREM, VALUE_THEOREM } from "../../lean/data";
+import { countsInWords, type KindGroup } from "../../checks/summary";
 
 const observation = `${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`;
 const base = "https://github.com/openai/math/tree/";

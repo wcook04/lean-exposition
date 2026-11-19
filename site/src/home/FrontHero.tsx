@@ -2,6 +2,7 @@
 // (heroMarkup.ts), so taking over from that HTML changes nothing on the screen.
 import { useLayoutEffect, useRef } from "react";
 import { HERO_HTML } from "virtual:front-hero";
+import { HERO_BREAK } from "./heroMarkup";
 
 // The pictures in the first screen are radio buttons that work before any script runs. A
 // reader may choose one while the scripts are still loading, and React then draws the markup
@@ -31,8 +32,13 @@ export function FrontHero() {
   return <div ref={ref} className="front" dangerouslySetInnerHTML={{ __html: HERO_HTML }} />;
 }
 
-/** The same markup inside the page's own container. */
-export function FrontHeroBody() {
+/**
+ * The same markup inside the page's own container. An instance whose markup divides at
+ * HERO_BREAK may draw the two parts separately, with a band between them in reading order.
+ */
+export function FrontHeroBody({ part }: { part?: "first" | "rest" } = {}) {
   const ref = useChosenShot();
-  return <div ref={ref} className="front__herowrap" dangerouslySetInnerHTML={{ __html: HERO_HTML }} />;
+  const [first, rest = ""] = HERO_HTML.split(HERO_BREAK);
+  const html = part === "first" ? first : part === "rest" ? rest : HERO_HTML;
+  return <div ref={ref} className="front__herowrap" dangerouslySetInnerHTML={{ __html: html }} />;
 }

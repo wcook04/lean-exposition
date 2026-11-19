@@ -8,6 +8,7 @@
 // is pointed at, or, between statements, what the passage discusses. The line at its head says
 // which, and an opened statement has a quiet way back to following.
 
+import { OriginLine } from "../../compare/Fidelity";
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Alignment, RecordAlignment, StatementLean } from "../../api/lean";
 import type { Stage } from "../../api/types";
@@ -303,16 +304,31 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                 module={row?.module ?? open.declModule}
                 relation={row?.relation ?? undefined}
                 note={row?.note}
+                fidelity={row ?? undefined}
                 clause={row?.clause}
                 lines={row?.lines}
                 compact
                 onName={onName}
                 noPapers
                 previewSlot={barLine && barShown ? barLine : foot}
-                below={open.tie !== null ? <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} /> : undefined}
+                below={
+                  open.tie !== null ? (
+                    ties.index.ties[open.tie]?.origin ? (
+                      <>
+                        <OriginLine origin={ties.index.ties[open.tie].origin} />
+                        <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+                      </>
+                    ) : (
+                      <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+                    )
+                  ) : undefined
+                }
               />
             ) : alignment ? (
-              <p className="lean-page__plain">{open.tie !== null ? leanTruth(ties, open.tie, alignment).words : "No Lean linked."}</p>
+              <>
+                <p className="lean-page__plain">{open.tie !== null ? leanTruth(ties, open.tie, alignment).words : "No Lean linked."}</p>
+                {open.tie !== null && <OriginLine origin={ties.index.ties[open.tie]?.origin} />}
+              </>
             ) : null}
           </div>
         </div>

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "names": {
+    "Erdos249257.erdosSupportSeries": "Lambert subseries",
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Reciprocal-summable supports are irrational",
+    "Erdos249257.reciprocalSupportTerm": "Reciprocal support term",
+    "ErdosProblems.Erdos257.PaperCompleteR7.DivisibilityWeightedClaim": "Weighted criterion statement",
+    "ErdosProblems.Erdos257.PaperCompleteR7.FinitePrimeWeighted": "Finite-prime weighted support",
+    "ErdosProblems.Erdos257.PaperCompleteR7.HasStrengthenedPositiveCover": "Support with a summable cover",
+    "ErdosProblems.Erdos257.PaperCompleteR7.MixedSupportClaim": "Mixed criterion statement",
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "Divisor cover",
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.StrengthenedCostSummable": "Summable cover cost (V)",
+    "ErdosProblems.Erdos257.PaperCompleteR7.StrengthenedPositiveCoverClaim": "Cover criterion statement",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement": "Displacement of the series",
+    "ErdosProblems.Erdos257.PaperCompleteR8.LogBudgetCover": "Weighted divisor cover",
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "Weighted criterion",
+    "ErdosProblems.Erdos257.PaperCompleteR8.mixedSupportClaim": "Mixed criterion",
+    "ErdosProblems.Erdos257.PaperCompleteR8.strengthenedPositiveCoverClaim": "Cover criterion"
+  }
+}
