@@ -2,7 +2,7 @@
  "stage": "short",
  "paper": {
   "path": "papers/short.md",
-  "byte_length": 60449,
+  "byte_length": 60166,
   "sections": [
    {
     "heading_span": {
@@ -13,10 +13,10 @@
     },
     "level": 1,
     "parent_ref": null,
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
     "span": {
-     "end_byte": 60449,
-     "end_line": 1278,
+     "end_byte": 60166,
+     "end_line": 1273,
      "start_byte": 0,
      "start_line": 1
     },
@@ -30,11 +30,11 @@
      "start_line": 27
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/1308",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/1308",
     "span": {
-     "end_byte": 10636,
-     "end_line": 229,
+     "end_byte": 10131,
+     "end_line": 220,
      "start_byte": 1308,
      "start_line": 27
     },
@@ -42,253 +42,253 @@
    },
    {
     "heading_span": {
-     "end_byte": 10695,
-     "end_line": 230,
-     "start_byte": 10636,
-     "start_line": 230
+     "end_byte": 10190,
+     "end_line": 221,
+     "start_byte": 10131,
+     "start_line": 221
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/10636",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/10131",
     "span": {
-     "end_byte": 17877,
-     "end_line": 389,
-     "start_byte": 10636,
-     "start_line": 230
+     "end_byte": 17103,
+     "end_line": 377,
+     "start_byte": 10131,
+     "start_line": 221
     },
     "title": "2. The variational conditions and the exclusion of gaps"
    },
    {
     "heading_span": {
-     "end_byte": 17930,
-     "end_line": 390,
-     "start_byte": 17877,
-     "start_line": 390
+     "end_byte": 17156,
+     "end_line": 378,
+     "start_byte": 17103,
+     "start_line": 378
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
     "span": {
-     "end_byte": 34166,
-     "end_line": 747,
-     "start_byte": 17877,
-     "start_line": 390
+     "end_byte": 33815,
+     "end_line": 741,
+     "start_byte": 17103,
+     "start_line": 378
     },
     "title": "3. The coercive inequality on a constant interval"
    },
    {
     "heading_span": {
-     "end_byte": 19043,
-     "end_line": 415,
-     "start_byte": 19007,
-     "start_line": 415
+     "end_byte": 18269,
+     "end_line": 403,
+     "start_byte": 18233,
+     "start_line": 403
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/19007",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/18233",
     "span": {
-     "end_byte": 22199,
-     "end_line": 483,
-     "start_byte": 19007,
-     "start_line": 415
+     "end_byte": 21425,
+     "end_line": 471,
+     "start_byte": 18233,
+     "start_line": 403
     },
     "title": "3.1 An explicitly solvable case"
    },
    {
     "heading_span": {
-     "end_byte": 22257,
-     "end_line": 484,
-     "start_byte": 22199,
-     "start_line": 484
+     "end_byte": 21483,
+     "end_line": 472,
+     "start_byte": 21425,
+     "start_line": 472
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/22199",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/21425",
     "span": {
-     "end_byte": 24958,
-     "end_line": 544,
-     "start_byte": 22199,
-     "start_line": 484
+     "end_byte": 24607,
+     "end_line": 538,
+     "start_byte": 21425,
+     "start_line": 472
     },
     "title": "3.2 The two heat equations and the shape inequalities"
    },
    {
     "heading_span": {
-     "end_byte": 24988,
-     "end_line": 545,
-     "start_byte": 24958,
-     "start_line": 545
+     "end_byte": 24637,
+     "end_line": 539,
+     "start_byte": 24607,
+     "start_line": 539
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/24958",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/24607",
     "span": {
-     "end_byte": 30684,
-     "end_line": 673,
-     "start_byte": 24958,
-     "start_line": 545
+     "end_byte": 30333,
+     "end_line": 667,
+     "start_byte": 24607,
+     "start_line": 539
     },
     "title": "3.3 The rational identity"
    },
    {
     "heading_span": {
-     "end_byte": 30720,
-     "end_line": 674,
-     "start_byte": 30684,
-     "start_line": 674
+     "end_byte": 30369,
+     "end_line": 668,
+     "start_byte": 30333,
+     "start_line": 668
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/30684",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/30333",
     "span": {
-     "end_byte": 31932,
-     "end_line": 697,
-     "start_byte": 30684,
-     "start_line": 674
+     "end_byte": 31581,
+     "end_line": 691,
+     "start_byte": 30333,
+     "start_line": 668
     },
     "title": "3.4 Integrable order parameters"
    },
    {
     "heading_span": {
-     "end_byte": 31982,
-     "end_line": 698,
-     "start_byte": 31932,
-     "start_line": 698
+     "end_byte": 31631,
+     "end_line": 692,
+     "start_byte": 31581,
+     "start_line": 692
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/31932",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/31581",
     "span": {
-     "end_byte": 34166,
-     "end_line": 747,
-     "start_byte": 31932,
-     "start_line": 698
+     "end_byte": 33815,
+     "end_line": 741,
+     "start_byte": 31581,
+     "start_line": 692
     },
     "title": "3.5 The slope coordinates of Lopatto and Chen"
    },
    {
     "heading_span": {
-     "end_byte": 34242,
-     "end_line": 748,
-     "start_byte": 34166,
-     "start_line": 748
+     "end_byte": 33891,
+     "end_line": 742,
+     "start_byte": 33815,
+     "start_line": 742
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/34166",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/33815",
     "span": {
-     "end_byte": 41883,
-     "end_line": 927,
-     "start_byte": 34166,
-     "start_line": 748
+     "end_byte": 41435,
+     "end_line": 919,
+     "start_byte": 33815,
+     "start_line": 742
     },
     "title": "4. The coercive inequality at a fixed time and positivity of the density"
    },
    {
     "heading_span": {
-     "end_byte": 41919,
-     "end_line": 928,
-     "start_byte": 41883,
-     "start_line": 928
+     "end_byte": 41471,
+     "end_line": 920,
+     "start_byte": 41435,
+     "start_line": 920
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/41883",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/41435",
     "span": {
-     "end_byte": 50521,
-     "end_line": 1122,
-     "start_byte": 41883,
-     "start_line": 928
+     "end_byte": 50286,
+     "end_line": 1118,
+     "start_byte": 41435,
+     "start_line": 920
     },
     "title": "5. Consequences for optimisation"
    },
    {
     "heading_span": {
-     "end_byte": 42104,
-     "end_line": 934,
-     "start_byte": 42047,
-     "start_line": 934
+     "end_byte": 42217,
+     "end_line": 936,
+     "start_byte": 42160,
+     "start_line": 936
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/41883",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/42047",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/41435",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/42160",
     "span": {
-     "end_byte": 44085,
-     "end_line": 977,
-     "start_byte": 42047,
-     "start_line": 934
+     "end_byte": 44002,
+     "end_line": 976,
+     "start_byte": 42160,
+     "start_line": 936
     },
     "title": "5.1 A martingale formula for the ground-state energy"
    },
    {
     "heading_span": {
-     "end_byte": 44117,
-     "end_line": 978,
-     "start_byte": 44085,
-     "start_line": 978
+     "end_byte": 44034,
+     "end_line": 977,
+     "start_byte": 44002,
+     "start_line": 977
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/41883",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/44085",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/41435",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/44002",
     "span": {
-     "end_byte": 45405,
-     "end_line": 998,
-     "start_byte": 44085,
-     "start_line": 978
+     "end_byte": 45322,
+     "end_line": 997,
+     "start_byte": 44002,
+     "start_line": 977
     },
     "title": "5.2 The classical algorithm"
    },
    {
     "heading_span": {
-     "end_byte": 45465,
-     "end_line": 999,
-     "start_byte": 45405,
-     "start_line": 999
+     "end_byte": 45382,
+     "end_line": 998,
+     "start_byte": 45322,
+     "start_line": 998
     },
     "level": 3,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/41883",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/45405",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/41435",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/45322",
     "span": {
-     "end_byte": 50521,
-     "end_line": 1122,
-     "start_byte": 45405,
-     "start_line": 999
+     "end_byte": 50286,
+     "end_line": 1118,
+     "start_byte": 45322,
+     "start_line": 998
     },
     "title": "5.3 A fixed QAOA circuit before the thermodynamic limit"
    },
    {
     "heading_span": {
-     "end_byte": 50544,
-     "end_line": 1123,
-     "start_byte": 50521,
-     "start_line": 1123
+     "end_byte": 50309,
+     "end_line": 1119,
+     "start_byte": 50286,
+     "start_line": 1119
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/50521",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/50286",
     "span": {
-     "end_byte": 52811,
-     "end_line": 1165,
-     "start_byte": 50521,
-     "start_line": 1123
+     "end_byte": 52576,
+     "end_line": 1161,
+     "start_byte": 50286,
+     "start_line": 1119
     },
     "title": "Formal verification"
    },
    {
     "heading_span": {
-     "end_byte": 52825,
-     "end_line": 1166,
-     "start_byte": 52811,
-     "start_line": 1166
+     "end_byte": 52590,
+     "end_line": 1162,
+     "start_byte": 52576,
+     "start_line": 1162
     },
     "level": 2,
-    "parent_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/52811",
+    "parent_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/52576",
     "span": {
-     "end_byte": 60449,
-     "end_line": 1278,
-     "start_byte": 52811,
-     "start_line": 1166
+     "end_byte": 60166,
+     "end_line": 1273,
+     "start_byte": 52576,
+     "start_line": 1162
     },
     "title": "References"
    }
@@ -365,8 +365,8 @@
      "start_line": 8
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/abstract",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/abstract",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/0",
     "selected": true
    },
    {
@@ -408,8 +408,8 @@
      "start_line": 29
     },
     "evidence_class": "context",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/model",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/1308",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/model",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/1308",
     "selected": true
    },
    {
@@ -420,8 +420,8 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 10612,
-     "end_line": 226,
+     "end_byte": 10107,
+     "end_line": 217,
      "start_byte": 4950,
      "start_line": 108
     },
@@ -485,14 +485,14 @@
      "support.near_ground_pairs"
     ],
     "content_span": {
-     "end_byte": 10583,
-     "end_line": 225,
+     "end_byte": 10078,
+     "end_line": 216,
      "start_byte": 4978,
      "start_line": 108
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/main-result",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/1308",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/main-result",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/1308",
     "selected": true
    },
    {
@@ -502,10 +502,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 13514,
-     "end_line": 294,
-     "start_byte": 10696,
-     "start_line": 232
+     "end_byte": 13009,
+     "end_line": 285,
+     "start_byte": 10191,
+     "start_line": 223
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -534,14 +534,14 @@
      "support.contact_derivatives"
     ],
     "content_span": {
-     "end_byte": 13489,
-     "end_line": 293,
-     "start_byte": 10720,
-     "start_line": 232
+     "end_byte": 12984,
+     "end_line": 284,
+     "start_byte": 10215,
+     "start_line": 223
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/contact",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/10636",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/contact",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/10131",
     "selected": true,
     "treatments": [
      {
@@ -567,10 +567,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 17851,
-     "end_line": 386,
-     "start_byte": 13546,
-     "start_line": 298
+     "end_byte": 17077,
+     "end_line": 374,
+     "start_byte": 13041,
+     "start_line": 289
     },
     "citation_ids": [
      "acz2020_infinite_support",
@@ -626,14 +626,14 @@
      "support.empty_support_chord_obstruction"
     ],
     "content_span": {
-     "end_byte": 17824,
-     "end_line": 385,
-     "start_byte": 13572,
-     "start_line": 298
+     "end_byte": 17050,
+     "end_line": 373,
+     "start_byte": 13067,
+     "start_line": 289
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/gap-proof",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/10636",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/gap-proof",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/10131",
     "selected": true,
     "treatments": [
      {
@@ -657,10 +657,10 @@
     "anchor": "curvature",
     "assumption_ids": [],
     "block_span": {
-     "end_byte": 34133,
-     "end_line": 744,
-     "start_byte": 17931,
-     "start_line": 392
+     "end_byte": 33782,
+     "end_line": 738,
+     "start_byte": 17157,
+     "start_line": 380
     },
     "citation_ids": [
      "chen2026_full_support",
@@ -702,14 +702,14 @@
      "support.fixed_time_spatial_coercivity"
     ],
     "content_span": {
-     "end_byte": 34106,
-     "end_line": 743,
-     "start_byte": 17957,
-     "start_line": 392
+     "end_byte": 33755,
+     "end_line": 737,
+     "start_byte": 17183,
+     "start_line": 380
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/curvature",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/17877",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/curvature",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/17103",
     "selected": true
    },
    {
@@ -719,10 +719,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 41852,
-     "end_line": 924,
-     "start_byte": 34243,
-     "start_line": 750
+     "end_byte": 41404,
+     "end_line": 916,
+     "start_byte": 33892,
+     "start_line": 744
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -770,14 +770,14 @@
      "support.fixed_time_spatial_coercivity"
     ],
     "content_span": {
-     "end_byte": 41815,
-     "end_line": 923,
-     "start_byte": 34279,
-     "start_line": 750
+     "end_byte": 41367,
+     "end_line": 915,
+     "start_byte": 33928,
+     "start_line": 744
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/density-consequence",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/34166",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/density-consequence",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/33815",
     "selected": true,
     "treatments": [
      {
@@ -804,10 +804,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 45372,
-     "end_line": 996,
-     "start_byte": 41920,
-     "start_line": 930
+     "end_byte": 45289,
+     "end_line": 995,
+     "start_byte": 41472,
+     "start_line": 922
     },
     "citation_ids": [
      "ac2017_ground_state",
@@ -872,14 +872,14 @@
      "scalar.separate_classical_algorithm"
     ],
     "content_span": {
-     "end_byte": 45342,
-     "end_line": 995,
-     "start_byte": 41949,
-     "start_line": 930
+     "end_byte": 45259,
+     "end_line": 994,
+     "start_byte": 41501,
+     "start_line": 922
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/scalar-value",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/41883",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/scalar-value",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/41435",
     "selected": true,
     "treatments": [
      {
@@ -900,10 +900,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 50490,
-     "end_line": 1119,
-     "start_byte": 45374,
-     "start_line": 998
+     "end_byte": 50255,
+     "end_line": 1115,
+     "start_byte": 45291,
+     "start_line": 997
     },
     "citation_ids": [
      "authored_r8_circuit_sampled_finite_instance_optimum",
@@ -1005,14 +1005,14 @@
      "circuit.finite_formula_word_approximation"
     ],
     "content_span": {
-     "end_byte": 50459,
-     "end_line": 1118,
-     "start_byte": 45404,
-     "start_line": 998
+     "end_byte": 50224,
+     "end_line": 1114,
+     "start_byte": 45321,
+     "start_line": 997
     },
     "evidence_class": "context",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/qaoa-boundary",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/41883",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/qaoa-boundary",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/41435",
     "selected": true,
     "treatments": [
      {
@@ -1050,10 +1050,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 52809,
-     "end_line": 1164,
-     "start_byte": 50545,
-     "start_line": 1125
+     "end_byte": 52574,
+     "end_line": 1160,
+     "start_byte": 50310,
+     "start_line": 1121
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -1132,22 +1132,22 @@
      "scalar.formal_model_transport_open"
     ],
     "content_span": {
-     "end_byte": 52777,
-     "end_line": 1163,
-     "start_byte": 50576,
-     "start_line": 1125
+     "end_byte": 52542,
+     "end_line": 1159,
+     "start_byte": 50341,
+     "start_line": 1121
     },
     "evidence_class": "context",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/evidence-scope",
-    "section_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sections/50521",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/evidence-scope",
+    "section_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sections/50286",
     "selected": true
    }
   ],
   "document_parts": [
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/0",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/0",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/0",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/0",
     "span": {
      "end_byte": 289,
      "end_line": 7,
@@ -1157,8 +1157,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/abstract",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/289",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/abstract",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/289",
     "span": {
      "end_byte": 1275,
      "end_line": 23,
@@ -1168,8 +1168,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/1275",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/1275",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/1275",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/1275",
     "span": {
      "end_byte": 1340,
      "end_line": 28,
@@ -1179,8 +1179,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/model",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/1340",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/model",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/1340",
     "span": {
      "end_byte": 4948,
      "end_line": 106,
@@ -1190,8 +1190,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/4948",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/4948",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/4948",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/4948",
     "span": {
      "end_byte": 4950,
      "end_line": 107,
@@ -1201,178 +1201,178 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/main-result",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/4950",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/main-result",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/4950",
     "span": {
-     "end_byte": 10612,
-     "end_line": 226,
+     "end_byte": 10107,
+     "end_line": 217,
      "start_byte": 4950,
      "start_line": 108
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/10612",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/10612",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/10107",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/10107",
     "span": {
-     "end_byte": 10696,
-     "end_line": 231,
-     "start_byte": 10612,
-     "start_line": 226
+     "end_byte": 10191,
+     "end_line": 222,
+     "start_byte": 10107,
+     "start_line": 217
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/contact",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/10696",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/contact",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/10191",
     "span": {
-     "end_byte": 13514,
-     "end_line": 294,
-     "start_byte": 10696,
-     "start_line": 232
+     "end_byte": 13009,
+     "end_line": 285,
+     "start_byte": 10191,
+     "start_line": 223
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/13514",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/13514",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/13009",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/13009",
     "span": {
-     "end_byte": 13546,
-     "end_line": 297,
-     "start_byte": 13514,
-     "start_line": 294
+     "end_byte": 13041,
+     "end_line": 288,
+     "start_byte": 13009,
+     "start_line": 285
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/gap-proof",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/13546",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/gap-proof",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/13041",
     "span": {
-     "end_byte": 17851,
-     "end_line": 386,
-     "start_byte": 13546,
-     "start_line": 298
+     "end_byte": 17077,
+     "end_line": 374,
+     "start_byte": 13041,
+     "start_line": 289
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/17851",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/17851",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/17077",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/17077",
     "span": {
-     "end_byte": 17931,
-     "end_line": 391,
-     "start_byte": 17851,
-     "start_line": 386
+     "end_byte": 17157,
+     "end_line": 379,
+     "start_byte": 17077,
+     "start_line": 374
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/curvature",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/17931",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/curvature",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/17157",
     "span": {
-     "end_byte": 34133,
-     "end_line": 744,
-     "start_byte": 17931,
-     "start_line": 392
+     "end_byte": 33782,
+     "end_line": 738,
+     "start_byte": 17157,
+     "start_line": 380
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/34133",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/34133",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/33782",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/33782",
     "span": {
-     "end_byte": 34243,
-     "end_line": 749,
-     "start_byte": 34133,
+     "end_byte": 33892,
+     "end_line": 743,
+     "start_byte": 33782,
+     "start_line": 738
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/density-consequence",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/33892",
+    "span": {
+     "end_byte": 41404,
+     "end_line": 916,
+     "start_byte": 33892,
      "start_line": 744
     }
    },
    {
-    "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/density-consequence",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/34243",
+    "kind": "unmapped_text",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/41404",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/41404",
     "span": {
-     "end_byte": 41852,
-     "end_line": 924,
-     "start_byte": 34243,
-     "start_line": 750
+     "end_byte": 41472,
+     "end_line": 921,
+     "start_byte": 41404,
+     "start_line": 916
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/scalar-value",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/41472",
+    "span": {
+     "end_byte": 45289,
+     "end_line": 995,
+     "start_byte": 41472,
+     "start_line": 922
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/41852",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/41852",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/45289",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/45289",
     "span": {
-     "end_byte": 41920,
-     "end_line": 929,
-     "start_byte": 41852,
-     "start_line": 924
-    }
-   },
-   {
-    "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/scalar-value",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/41920",
-    "span": {
-     "end_byte": 45372,
+     "end_byte": 45291,
      "end_line": 996,
-     "start_byte": 41920,
-     "start_line": 930
-    }
-   },
-   {
-    "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/45372",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/45372",
-    "span": {
-     "end_byte": 45374,
-     "end_line": 997,
-     "start_byte": 45372,
-     "start_line": 996
+     "start_byte": 45289,
+     "start_line": 995
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/qaoa-boundary",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/45374",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/qaoa-boundary",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/45291",
     "span": {
-     "end_byte": 50490,
-     "end_line": 1119,
-     "start_byte": 45374,
-     "start_line": 998
+     "end_byte": 50255,
+     "end_line": 1115,
+     "start_byte": 45291,
+     "start_line": 997
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/50490",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/50490",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/50255",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/50255",
     "span": {
-     "end_byte": 50545,
-     "end_line": 1124,
-     "start_byte": 50490,
-     "start_line": 1119
+     "end_byte": 50310,
+     "end_line": 1120,
+     "start_byte": 50255,
+     "start_line": 1115
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/passages/evidence-scope",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/50545",
+    "passage_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/passages/evidence-scope",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/50310",
     "span": {
-     "end_byte": 52809,
-     "end_line": 1164,
-     "start_byte": 50545,
-     "start_line": 1125
+     "end_byte": 52574,
+     "end_line": 1160,
+     "start_byte": 50310,
+     "start_line": 1121
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/sha256:d30b33d50f8226f37505542845cbe842b05e383a4fb0715b52d336bbd75d8c7a/papers/short.json/parts/52809",
-    "segment_ref": "sha256:4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba/papers/short.md/unmapped/52809",
+    "ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/sha256:2ffc265585cd63413034841fe74b99bdfd311b903d8e1690214debca0c3a94c0/papers/short.json/parts/52574",
+    "segment_ref": "sha256:0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b/papers/short.md/unmapped/52574",
     "span": {
-     "end_byte": 60449,
-     "end_line": 1278,
-     "start_byte": 52809,
-     "start_line": 1164
+     "end_byte": 60166,
+     "end_line": 1273,
+     "start_byte": 52574,
+     "start_line": 1160
     }
    }
   ]
@@ -1380,7 +1380,7 @@
  "reading_links": [
   {
    "from_anchor": "density-consequence",
-   "from_text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
+   "from_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
    "kind": "expands",
    "rationale": "Develops the smoothness and fixed-time local-replacement arguments that the exposition names as further reading. Both treatments retain interior-only strict positivity and separate this ordinary argument from formal-check status.",
    "to_anchor": "density-and-approximation",
@@ -1389,7 +1389,7 @@
   },
   {
    "from_anchor": "scalar-value",
-   "from_text_sha256": "e5a6b140e43a57c6d5b91876f9d2b017705db658ca9a9f1eef7b1435de8f301c",
+   "from_text_sha256": "b7aae1e91bf98d742037d944fe8c93f164e3fb0d586795a2de6420b9a0bf914a",
    "kind": "expands",
    "rationale": "Expands the terminal-gradient and scalar-value pointer with the martingale limit, integral cancellation and source destinations. The short passage also has further topics; this link concerns its scalar-value treatment, not equivalence of the whole passages.",
    "to_anchor": "scalar-identities",
@@ -1398,7 +1398,7 @@
   },
   {
    "from_anchor": "qaoa-boundary",
-   "from_text_sha256": "5f1f8254a507af180943d6299d7e399dba9b680c96fde3c45c78e8f65a36588e",
+   "from_text_sha256": "9f808b7ada0b2bba89d66f2c06324490342830bf98f4cdf8de7dccf83e3ff253",
    "kind": "expands",
    "rationale": "Adds the theorem quantifiers, order of limits and circuit-stage outline to the exposition reference. It remains an outlook with a destination for the full construction, rather than a complete circuit proof.",
    "to_anchor": "qaoa-boundary",

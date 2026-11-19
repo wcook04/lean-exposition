@@ -3039,7 +3039,7 @@
       "from_text_sha256": "61bc6937a975e4ef541096bc0d174710ff8777efd1660c82ac954f400a4825fd",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "16e75621185c448c056c98832b45ef2c06a9f5d5f4ef757dee4add8d9a6c4ae9",
+      "to_text_sha256": "9bed0ebf4526dc3dbd6afbe5da8c2325825d77d2f162e20e0dd016c33fbf41ee",
       "kind": "expands",
       "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately."
     },
@@ -3057,7 +3057,7 @@
       "from_text_sha256": "7284cee4321d7cd96f17911285d5ffebcf7d05f0a96869845eaf1a0c7e5ef14f",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
+      "to_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
       "kind": "expands",
       "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
     },
@@ -3066,7 +3066,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
+      "to_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
       "kind": "expands",
       "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps."
     },
@@ -3084,7 +3084,7 @@
       "from_text_sha256": "af9fb8ac343000708a6adc9eca7fafbe02bea9cdad8f714627b181182632f6ee",
       "to_stage": "short",
       "to_anchor": "scalar-value",
-      "to_text_sha256": "e5a6b140e43a57c6d5b91876f9d2b017705db658ca9a9f1eef7b1435de8f301c",
+      "to_text_sha256": "b7aae1e91bf98d742037d944fe8c93f164e3fb0d586795a2de6420b9a0bf914a",
       "kind": "expands",
       "rationale": "Develops the terminal value identity described in the short paper; finite Gaussian approximation remains a separate part of the construction."
     },
@@ -3093,7 +3093,7 @@
       "from_text_sha256": "01143554e67578f628c82b32c9a36ec0ec92660aaf9f548a62386ccb7da88f3a",
       "to_stage": "short",
       "to_anchor": "qaoa-boundary",
-      "to_text_sha256": "5f1f8254a507af180943d6299d7e399dba9b680c96fde3c45c78e8f65a36588e",
+      "to_text_sha256": "9f808b7ada0b2bba89d66f2c06324490342830bf98f4cdf8de7dccf83e3ff253",
       "kind": "expands",
       "rationale": "Expands the final error allocation and order of choices after the separate synthesis and seed-removal inputs; it does not replace those inputs by the scalar statement."
     },
@@ -3102,7 +3102,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "16e75621185c448c056c98832b45ef2c06a9f5d5f4ef757dee4add8d9a6c4ae9",
+      "to_text_sha256": "9bed0ebf4526dc3dbd6afbe5da8c2325825d77d2f162e20e0dd016c33fbf41ee",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     },

@@ -2102,29 +2102,6 @@
       ]
     },
     {
-      "record": "support.no_terminal_gap",
-      "paper": "short",
-      "role": "explanation",
-      "from": "The argument above\nuses only the curvature",
-      "to": "needed for the other gaps.",
-      "lean": [
-        {
-          "name": "OAI.SKValue.IsMinimizer.contactPotential_zero",
-          "relation": "proof",
-          "note": "Scalar model: slope convexity and q≤1 exclude a positive hump of G, even reaching one. Closest to the sentence's argument."
-        },
-        {
-          "name": "OAI.ZeroTemperatureSK.terminal_plateau_second_moment_defect",
-          "lines": [
-            124,
-            129
-          ],
-          "note": "The support model's proof uses this stronger estimate rather than the curvature alone.",
-          "relation": "proof"
-        }
-      ]
-    },
-    {
       "record": "support.terminal_defect",
       "paper": "short",
       "role": "mention",
