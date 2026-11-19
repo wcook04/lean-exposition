@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "4ca358f22c25aeefdcb651a0131402dcf5a055a7a39004876615b0d49736fdba",
+  "content_sha256": "0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b",
   "graph_sha256": "f22708f3180068944c06829213f78f6ecfb65ef34f6c8decded774b95a041d92",
   "selected_goal_ids": [
     "full_support",
@@ -390,7 +390,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "ddf1ea786463b95244906d0cf2606b11363ccd353570c1b22805e0051cd9563a",
+      "text_sha256": "f0172e9798afee718da18fc93df4be312057a37ef758ea8c24209c49c53c4a7a",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
@@ -512,7 +512,7 @@
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "01c8ea25e3a5dd6e2e7af4978c82a357eff85549f47b41b95ddb443d6b48e3c1",
+      "text_sha256": "808ac3e56fcd936ead9611bb0abdbdeded0d8036e49255e31c7ca82b5dc82965",
       "claim_ids": [
         "support.positive_curvature",
         "support.zero_curvature",
@@ -592,7 +592,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "16e75621185c448c056c98832b45ef2c06a9f5d5f4ef757dee4add8d9a6c4ae9",
+      "text_sha256": "9bed0ebf4526dc3dbd6afbe5da8c2325825d77d2f162e20e0dd016c33fbf41ee",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -638,7 +638,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
+      "text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
@@ -710,7 +710,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "e5a6b140e43a57c6d5b91876f9d2b017705db658ca9a9f1eef7b1435de8f301c",
+      "text_sha256": "b7aae1e91bf98d742037d944fe8c93f164e3fb0d586795a2de6420b9a0bf914a",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -792,7 +792,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "5f1f8254a507af180943d6299d7e399dba9b680c96fde3c45c78e8f65a36588e",
+      "text_sha256": "9f808b7ada0b2bba89d66f2c06324490342830bf98f4cdf8de7dccf83e3ff253",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.bounded_trigonometric",
@@ -1038,7 +1038,7 @@
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "278c4a18c45b01a08c989e3d88e3abebc2cf167c7b5825c4245a2748dafafc95",
+      "from_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
       "to_text_sha256": "87c9b6cea47401a6f3c12a714632d406da5eca158f0024795e74b50e8105519a",
@@ -1047,7 +1047,7 @@
     },
     {
       "from_anchor": "scalar-value",
-      "from_text_sha256": "e5a6b140e43a57c6d5b91876f9d2b017705db658ca9a9f1eef7b1435de8f301c",
+      "from_text_sha256": "b7aae1e91bf98d742037d944fe8c93f164e3fb0d586795a2de6420b9a0bf914a",
       "to_stage": "expository",
       "to_anchor": "scalar-identities",
       "to_text_sha256": "4d5fdfa1f38316eefdc0f251c63ff870ef4bcc980ad62ebd8293c1c8f841a1ae",
@@ -1056,7 +1056,7 @@
     },
     {
       "from_anchor": "qaoa-boundary",
-      "from_text_sha256": "5f1f8254a507af180943d6299d7e399dba9b680c96fde3c45c78e8f65a36588e",
+      "from_text_sha256": "9f808b7ada0b2bba89d66f2c06324490342830bf98f4cdf8de7dccf83e3ff253",
       "to_stage": "expository",
       "to_anchor": "qaoa-boundary",
       "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53",

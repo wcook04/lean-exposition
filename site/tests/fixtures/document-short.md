@@ -108,8 +108,9 @@ compact time intervals ending before one.
 <!-- passage:main-result -->
 At positive temperature,
 [Lopatto (2026), Theorem 1.1][Lopatto] proved full replica symmetry
-breaking throughout the low-temperature phase: the Parisi measure has
-support $[0,q_\beta]$. At zero temperature, full support and a smooth
+breaking throughout the low-temperature phase: at each inverse
+temperature $\beta>1$ the Parisi measure has support $[0,q_\beta]$,
+with $q_\beta<1$. At zero temperature, full support and a smooth
 nonnegative density were proved in
 [H.-B. Chen (2026), Theorem 1.3][Chen], together with the endpoint
 estimate $\beta^{-2}<1-q_\beta<2\beta^{-2}$
@@ -127,16 +128,6 @@ For the solution of the displayed SDE and every $0\leq t<1$,
 $$
 q(t)=t,\qquad \mathbb E[a(t,X_t)^2]=1.
 $$
-
-Full support has the following interpretation for near-ground states.
-For each fixed $\rho\in[0,1)$ and $\delta,\eta>0$, with probability
-tending to one there are configurations $\sigma,\tau$ with
-$|R(\sigma,\tau)-\rho|<\delta$ whose energies are both at least
-$n(P_*-\eta)$. This follows from
-[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ]
-in the Gaussian normalisation above. Strict increase of $\gamma$ is also
-the no-overlap-gap assumption under which the algorithm of El Alaoui,
-Montanari and Sellke finds near-ground states (§5.2).
 
 **Corollary 2 (smooth positive density;
 [OpenAI (2026a), Corollary 6.4][FS]).** Under the hypotheses of
@@ -356,15 +347,12 @@ at zero. Moreover,
 $\gamma(t_2)-\gamma(t_1)=\mu_\gamma((t_1,t_2])>0$. $\qquad\square$
 
 **Remarks on the endpoints.** The exclusion of a terminal gap was noted
-in [Auffinger, Chen and Zeng (2020), Remark 7][ACZ]. The argument above
-uses only the curvature needed for the other gaps. The proof of
+in [Auffinger, Chen and Zeng (2020), Remark 7][ACZ]. The proof of
 [OpenAI (2026a), Lemma 6.3][FS] gives the stronger boundary
 estimate $1-q(t)\geq C\sqrt{1-t}$ for any order parameter constant
 near one, and
 [Chen (2026), Proposition 4.5, equations (4.27)–(4.38)][Chen]
-gives the square-root asymptotic under the terminal-gap hypothesis. Both
-are discussed in the companion,
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="terminal-gap">[§5](../long/reasoning-record.md#terminal-gap)</span>.
+gives the square-root asymptotic under the terminal-gap hypothesis.
 At the left endpoint, Chen takes $0\in S$ from
 [Chen, Handschy and Lerman (2018)][CHL]
 (see [Chen (2026), Proposition 3.2 and Remark 4.4][Chen]). The proof
@@ -522,7 +510,13 @@ $H\leq0$ says that the gradient $\Phi_x(t,x)$ at a fixed $x>0$ is
 nondecreasing in $t$ within a step.
 
 Each sign is propagated within a step by a parabolic comparison and
-checked at the jumps. For the ratio, concavity of $r$ gives $j\geq0$ on
+checked at the jumps. For example, in backward time $\tau$ the function
+$w$ solves the linear equation $w_\tau=\tfrac12w_{xx}+rw_x+3vw$. It
+vanishes at $x=0$ and is nonpositive at the terminal time, so the
+maximum principle on $x>0$ gives $w\leq0$. The equation for $H$ has the
+first-order coefficient $v/r+r=x^{-1}+O(x)$, and it becomes a regular
+equation for the radial function $H(|y|)$ on $\mathbb R^3$, to which
+the same principle applies. For the ratio, concavity of $r$ gives $j\geq0$ on
 the first step, where $s=x/t$. At a forward jump with
 $k=c_+/c_-\geq1$, continuity of $\Phi$ and $f$ gives
 $$
@@ -906,10 +900,8 @@ $\mathcal C_\gamma(t)\geq0$ as $\delta\to0$. Proposition 5 needs neither
 hypothesis, and its right side converges to
 $\gamma(t)^2\,\mathbb E a^4/1000>0$.
 
-(ii) *The constant.* Integrating $\gamma'\geq\gamma^2/2000$ gives
-$\gamma(s)^{-1}-\gamma(t)^{-1}\geq(t-s)/2000$ for $0<s<t<1$. The
-constant is not sharp: for the data of §3.1 the best constant in (6)
-is $2/5$.
+(ii) *The constant.* The constant $1/2000$ is not sharp: for the data
+of §3.1 the best constant in (6) is $2/5$.
 
 (iii) *Related arguments at a fixed time.*
 [Lopatto's v4, Proposition 5.1 and Corollary 5.6][Lopatto-v4] give
@@ -930,6 +922,16 @@ the two settings is in the companion,
 <!-- passage:scalar-value -->
 The results of this section use Theorem 1 only. Strict positivity of
 the density is not needed.
+
+Full support has the following interpretation for near-ground states.
+For each fixed $\rho\in[0,1)$ and $\delta,\eta>0$, with probability
+tending to one there are configurations $\sigma,\tau$ with
+$|R(\sigma,\tau)-\rho|<\delta$ whose energies are both at least
+$n(P_*-\eta)$. This follows from
+[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ]
+in the Gaussian normalisation above. Strict increase of $\gamma$ is also
+the no-overlap-gap assumption under which the algorithm of El Alaoui,
+Montanari and Sellke finds near-ground states (§5.2).
 
 ### 5.1 A martingale formula for the ground-state energy
 
@@ -967,13 +969,10 @@ $$
 $$
 
 The gradient-martingale and value methods have antecedents in
-[Montanari, preprint v2, Lemmas 3.2–3.4][Montanari], under its
-positive-temperature support assumption, and in the zero-temperature
-calculations of [El Alaoui, Montanari and Sellke, preprint v1,
-Lemmas 6.5 and 6.13][EAMS]. [Sellke, preprint v4,
-Proposition 3.10 and Lemma 3.11, p. 17][Sellke] gives the closely
-related finite-cutoff cancellation by applying Itô's formula to $\Phi$
-and $x\Phi_x$.
+[Montanari, preprint v2, Lemmas 3.2–3.4][Montanari],
+[El Alaoui, Montanari and Sellke, preprint v1,
+Lemmas 6.5 and 6.13][EAMS] and [Sellke, preprint v4,
+Proposition 3.10 and Lemma 3.11, p. 17][Sellke].
 
 ### 5.2 The classical algorithm
 
@@ -1024,10 +1023,7 @@ every $\varepsilon>0$ there is one finite $W$ with
 $v(W)\geq P_*-\varepsilon$, whose depth and angles depend on
 $\varepsilon$ but not on $n$ or $J$. This was conjectured in
 [Basso, Farhi, Marwaha, Villalonga and
-Zhou (2022), §7, equation (7.2)][BFMVZ]. The order of limits differs
-from the fixed-instance depth limit in
-[Farhi, Goldstone and Gutmann, §VI][FGG], which permits
-instance-dependent choices.
+Zhou (2022), §7, equation (7.2)][BFMVZ].
 
 The proof uses Theorem 1 only through the following finite quantity. Fix
 the minimiser and its diffusion,
@@ -1196,8 +1192,7 @@ reproduced by two short scripts,
   [arXiv:2001.00904v1][EAMS]: Theorem 2, p. 6; Remark 2.1 and Theorem 3, p. 7;
   Assumption 2 and Corollary 2.2, p. 8; §§5–6.
 - Farhi, E., Goldstone, J. and Gutmann, S. (2014). *A Quantum Approximate
-  Optimization Algorithm*. [Preprint v1][FGG]. Algorithm definition;
-  §VI concerns the fixed-instance depth limit.
+  Optimization Algorithm*. [Preprint v1][FGG]. Algorithm definition.
 - Farhi, E., Goldstone, J., Gutmann, S. and Zhou, L. (2022). “The Quantum
   Approximate Optimization Algorithm and the Sherrington–Kirkpatrick
   Model at Infinite Size.” *Quantum* **6**, 759. [arXiv:1910.08187v4][FGGZ].
