@@ -212,7 +212,7 @@ describe("the anchors", () => {
   it("names each labelled block and proof", () => {
     const short = prepare("short");
     const box = dom(short);
-    for (const id of ["thm-1", "lem-2", "prop-3", "cor-4", "prop-5", "cor-6", "proof-thm-1", "proof-cor-4", "proof-cor-6"]) expect(box.querySelector(`p[id="${id}"]`), id).not.toBeNull();
+    for (const id of ["thm-1", "cor-2", "lem-3", "lem-4", "prop-5", "prop-6", "cor-7", "proof-thm-1", "proof-prop-5", "proof-cor-2", "proof-cor-7"]) expect(box.querySelector(`p[id="${id}"]`), id).not.toBeNull();
     const long = dom(prepare("long"));
     for (const id of ["prop-2.1", "thm-5.1", "cor-10.2", "proof-prop-4.1", "proof-prop-6.2"]) expect(long.querySelector(`p[id="${id}"]`), id).not.toBeNull();
     expect(long.querySelector('[id="eq-4.1"]')).not.toBeNull();
@@ -278,10 +278,10 @@ describe("what a reference shows", () => {
   };
 
   it("types a label's whole statement and offers a jump", () => {
-    const { at, row } = find("short", "Lemma 2", 1);
+    const { at, row } = find("short", "Lemma 3", 1);
     const view = refView(at, row);
-    expect(view.title).toBe("Lemma 2");
-    expect(view.go).toBe("lem-2");
+    expect(view.title).toBe("Lemma 3");
+    expect(view.go).toBe("lem-3");
     expect(view.body).toContain("\\tag{3}");
     expect(view.body).toContain("If $c=0$");
   });
@@ -332,9 +332,10 @@ describe("what a reference shows", () => {
   it("jumps for a section and opens the other paper beside this one", () => {
     const at = index("short");
     expect(opensInPlace(at.rows.find((r) => r.kind === "section")!)).toBe(false);
-    const other = at.rows.find((r) => r.kind === "other_paper" && r.target === "rooted-energy")!;
-    expect(other.target).toBe("rooted-energy");
-    expect(refView(at, other).note).toContain("§8.1");
+    const beside = index("expository");
+    const other = beside.rows.find((r) => r.kind === "other_paper" && r.target === "shape-comparisons")!;
+    expect(other.target).toBe("shape-comparisons");
+    expect(refView(beside, other).note).toContain("§4.3");
   });
 
   it("finds a statement's record by its slice", () => {

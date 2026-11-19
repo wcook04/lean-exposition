@@ -40,13 +40,13 @@
      "paper": "short",
      "role": "definition",
      "from": "Let $\\mathcal U$ consist",
-     "to": "(t)\\,dt<\\infty$,"
+     "to": "is an order\nparameter,"
     },
     {
      "paper": "short",
      "role": "definition",
-     "from": "The Parisi functional $\\",
-     "to": "gamma(t)\\,dt.\n$$"
+     "from": "For $\\gamma\\in\\mathcal U$ the Parisi functional is defined through the",
+     "to": "t\\gamma(t)\\,dt.\n$$"
     },
     {
      "paper": "expository",
@@ -145,8 +145,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The Parisi formula expresses $P_*$ as a minimum over nondecreasing",
-     "to": "functions."
+     "from": "The Parisi formula at zero",
+     "to": "the proof of Lemma 3][AC]),"
     },
     {
      "paper": "short",
@@ -181,8 +181,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The existence of a minim",
-     "to": "of Lemma 3][AC]."
+     "from": "states that $P_*=\\min",
+     "to": "Lemma 3][AC])"
     },
     {
      "paper": "expository",
@@ -232,14 +232,14 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "[OpenAI (2026a), Lemma 4.1][FS] supplies an explicit polynomial $F_2$",
-     "to": "\\kappa=\\frac{1661507}{1521000000}>\\frac1{1000}.\n$$"
+     "from": "**Lemma 4 (rational identity;",
+     "to": "positive coefficients of Table 1."
     },
     {
      "paper": "short",
      "role": "statement",
-     "from": "Integration removes $\\mathcal W(F_2)$ and keeps the fourth-moment",
-     "to": "\\tag{5}\n$$"
+     "from": "Integration against $f$ removes",
+     "to": "\\tag{6}\n$$"
     },
     {
      "paper": "expository",
@@ -290,7 +290,7 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma 2 (constant-interval curvature;",
+     "from": "**Lemma 3 (curvature on a constant interval;",
      "to": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$."
     },
     {
@@ -326,14 +326,14 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Corollary 4 (smooth positive density;",
-     "to": "Only nonnegativity of the density at zero is asserted."
+     "from": "**Corollary 2 (smooth positive density;",
+     "to": "\\qquad(0<t<1).\n$$"
     },
     {
      "paper": "short",
      "role": "derivation",
-     "from": "In particular, Cauchy–Schwarz gives",
-     "to": "$\\gamma'(t)\\geq\\gamma(t)^2/2000$ for $0<t<1$."
+     "from": "Cauchy–Schwarz and $\\mathbb E a^4\\geq",
+     "to": "\\gamma(t)^2/2000$ for $0<t<1$."
     },
     {
      "paper": "expository",
@@ -402,14 +402,14 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The support identities give a scalar representation of $P_*$.",
-     "to": "\\tag{10}\n$$"
+     "from": "Set $M_t=u(t,X_t)$, the bounded gradient martingale",
+     "to": "\\tag{11}\n$$"
     },
     {
      "paper": "short",
      "role": "derivation",
-     "from": "Boundedness gives $|U|\\l",
-     "to": "then gives (10)."
+     "from": "Boundedness gives $|U|\\leq1$",
+     "to": "then gives (11)."
     },
     {
      "paper": "expository",
@@ -456,8 +456,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**The finite Gaussian in",
-     "to": "ndent Gaussians."
+     "from": "Fix\nthe minimiser and its diffusion,",
+     "to": "centred\nand orthonormal in $L^2$."
     }
    ]
   },
@@ -500,8 +500,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "With $\\Phi_{\\rm G}$ the standard normal distribution function, set",
-     "to": "with a function of the preceding coordinates."
+     "from": "and the randomly rounded spin",
+     "to": "=u(T,Y_N)$."
     }
    ]
   },
@@ -542,12 +542,6 @@
      "role": "derivation",
      "from": "The fixed-$T$ Euler argument gives $e_N\\to0$.",
      "to": "$|A_NB_{N+1}|\\le e_N+\\sqrt\\Delta/c_N$."
-    },
-    {
-     "paper": "short",
-     "role": "explanation",
-     "from": "Bessel's inequality, app",
-     "to": "inate, vanishes."
     }
    ]
   },
@@ -598,14 +592,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The circuit construction\nnee",
-     "to": "     \\tag{11}\n$$"
-    },
-    {
-     "paper": "short",
-     "role": "explanation",
-     "from": "The same proposition pro",
-     "to": "ow1$ give\n$P_*$."
+     "from": "[OpenAI (2026a), Proposition 7.2][FS] proves that the denominators",
+     "to": "\\tag{12}\n$$"
     }
    ]
   },
@@ -728,12 +716,6 @@
      "role": "statement",
      "from": "The third declaration, `ground_state_parisi_target`, assumes a minimizer",
      "to": "clauses constructs a minimizer."
-    },
-    {
-     "paper": "short",
-     "role": "mention",
-     "from": "and its third\nclause ide",
-     "to": "sion internally."
     }
    ]
   },
@@ -803,12 +785,6 @@
      "role": "statement",
      "from": "The third declaration, `ground_state_parisi_target`, assumes a minimizer",
      "to": "clauses constructs a minimizer."
-    },
-    {
-     "paper": "short",
-     "role": "mention",
-     "from": "and its third\nclause ide",
-     "to": "sion internally."
     }
    ]
   },

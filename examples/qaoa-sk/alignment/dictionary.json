@@ -8,7 +8,7 @@
       "words": "The overlap interval from zero up to, and excluding, one, used as the time domain.",
       "paper": "short",
       "from": "Support statements refer",
-      "to": "logy of $[0,1)$."
+      "to": "relative topology of\n$[0,1)$."
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -23,7 +23,7 @@
       "words": "The admissible class: nonnegative, nondecreasing, right-continuous, integrable functions on [0,1), bundled with these proofs.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -33,7 +33,7 @@
       "words": "The function itself, from [0,1) to the reals.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -43,7 +43,7 @@
       "words": "The function takes nonnegative values.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -53,7 +53,7 @@
       "words": "The function is nondecreasing.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -63,7 +63,7 @@
       "words": "The function is right-continuous at every point of [0,1).",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -73,7 +73,7 @@
       "words": "The function is Lebesgue integrable on [0,1); it may still grow near one.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -183,8 +183,8 @@
       "tex": "u(t,x)",
       "words": "The spatial derivative of the value function, with u equal to the first x-derivative of Phi.",
       "paper": "short",
-      "from": "Write $u=\\Phi_x$ for the spatial gradient",
-      "to": "for its spatial derivative."
+      "from": "Write $u=\\Phi_x$ and $a=\\Phi_{xx}$.",
+      "to": "$a=\\Phi_{xx}$."
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -192,8 +192,8 @@
       "tex": "a(t,x)",
       "words": "The second spatial derivative of the value function, written as the derivative of the gradient.",
       "paper": "short",
-      "from": "Write $u=\\Phi_x$ for the spatial gradient",
-      "to": "for its spatial derivative."
+      "from": "Write $u=\\Phi_x$ and $a=\\Phi_{xx}$.",
+      "to": "$a=\\Phi_{xx}$."
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -201,8 +201,8 @@
       "tex": "\\mathcal P(\\gamma)",
       "words": "The Parisi functional, which Lean computes from the value function on the chosen Brownian system W.",
       "paper": "short",
-      "from": "The Parisi functional $\\",
-      "to": "gamma(t)\\,dt.\n$$"
+      "from": "For $\\gamma\\in\\mathcal U$ the Parisi functional is defined through the",
+      "to": "t\\gamma(t)\\,dt.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -219,8 +219,8 @@
       "tex": "\\mu_\\gamma",
       "words": "A measure on [0,1) giving each interval [0,t] mass gamma(t); Lean states this as a property of a measure.",
       "paper": "short",
-      "from": "and define the locally f",
-      "to": "ad 0\\leq t<1.\n$$"
+      "from": "and its locally finite Stieltjes measure is defined by",
+      "to": "0\\leq t<1.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -246,8 +246,8 @@
       "tex": null,
       "words": "The whole conclusion of Theorem 1, plus existence of the measure and of a diffusion.",
       "paper": "short",
-      "from": "**Theorem 1 (full support; quantitative proof following",
-      "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+      "from": "**Theorem 1 (full support;\n",
+      "to": "\\qquad \\mathbb E[a(t,X_t)^2]=1.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Moments/StripSquareMoment.lean",
@@ -255,8 +255,8 @@
       "tex": "\\mathbb E[a(t,X_t)^2]",
       "words": "The second moment of the curvature along the constructed diffusion.",
       "paper": "short",
-      "from": "We fix a minimiser. Itô'",
-      "to": "[a(t,X_t)^2].\n$$"
+      "from": "We fix the minimiser. Itô's formula",
+      "to": "q'(t)=\\mathbb E[a(t,X_t)^2].\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Diffusion/CompactDrift.lean",
@@ -273,8 +273,8 @@
       "tex": "\\mu_\\gamma",
       "words": "The Stieltjes measure Lean constructs from the coefficient, with an atom of mass gamma(0) at zero.",
       "paper": "short",
-      "from": "and define the locally f",
-      "to": "ad 0\\leq t<1.\n$$"
+      "from": "and its locally finite Stieltjes measure is defined by",
+      "to": "0\\leq t<1.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Main.lean",
@@ -282,8 +282,8 @@
       "tex": null,
       "words": "Theorem 1 for a given Stieltjes measure and the constructed diffusion, stated before transfer to every diffusion.",
       "paper": "short",
-      "from": "**Theorem 1 (full support; quantitative proof following",
-      "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+      "from": "**Theorem 1 (full support;\n",
+      "to": "\\qquad \\mathbb E[a(t,X_t)^2]=1.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Main.lean",
@@ -291,8 +291,8 @@
       "tex": null,
       "words": "The main theorem: a minimiser on W satisfies the full-support conclusion.",
       "paper": "short",
-      "from": "**Theorem 1 (full support; quantitative proof following",
-      "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+      "from": "**Theorem 1 (full support;\n",
+      "to": "\\qquad \\mathbb E[a(t,X_t)^2]=1.\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -346,7 +346,7 @@
       "words": "The Euler recursion for the discretised diffusion, written for arbitrary coefficient and drift function.",
       "paper": "short",
       "from": "From independent standard normals",
-      "to": "\\quad(1\\leq j\\leq N).\n\\end{aligned}\n$$"
+      "to": "\\quad(1\\leq j\\leq N),\n\\end{aligned}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -355,7 +355,7 @@
       "words": "The admissible class, using a function on all reals whose constraints apply only on [0,1).",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -365,7 +365,7 @@
       "words": "The coefficient, a function on all reals; its values outside [0,1) are unconstrained.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -375,7 +375,7 @@
       "words": "The coefficient is nonnegative on [0,1).",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -385,7 +385,7 @@
       "words": "The coefficient is nondecreasing on [0,1).",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -395,7 +395,7 @@
       "words": "The coefficient is right-continuous at every point of [0,1).",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -405,7 +405,7 @@
       "words": "The coefficient is integrable on the interval from zero to one.",
       "paper": "short",
       "from": "Let $\\mathcal U$ consist",
-      "to": "(t)\\,dt<\\infty$,"
+      "to": "is an order\nparameter,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -491,8 +491,8 @@
       "tex": "u(t,x)",
       "words": "The spatial derivative of the value function.",
       "paper": "short",
-      "from": "Write $u=\\Phi_x$ for the spatial gradient",
-      "to": "for its spatial derivative."
+      "from": "Write $u=\\Phi_x$ and $a=\\Phi_{xx}$.",
+      "to": "$a=\\Phi_{xx}$."
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -500,8 +500,8 @@
       "tex": "a(t,x)",
       "words": "The second spatial derivative of the value function, written as the derivative of the gradient.",
       "paper": "short",
-      "from": "Write $u=\\Phi_x$ for the spatial gradient",
-      "to": "for its spatial derivative."
+      "from": "Write $u=\\Phi_x$ and $a=\\Phi_{xx}$.",
+      "to": "$a=\\Phi_{xx}$."
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -509,8 +509,8 @@
       "tex": "\\mathcal P(\\gamma)",
       "words": "The Parisi functional in this separate model, computed on the chosen Brownian space W.",
       "paper": "short",
-      "from": "The Parisi functional $\\",
-      "to": "gamma(t)\\,dt.\n$$"
+      "from": "For $\\gamma\\in\\mathcal U$ the Parisi functional is defined through the",
+      "to": "t\\gamma(t)\\,dt.\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -582,7 +582,7 @@
       "words": "Existence of the ground-state limit, the martingale with terminal spin U, and the value identities for the given minimiser and diffusion.",
       "paper": "short",
       "from": "Let $U$ be the almost-sure and",
-      "to": "\\,dt.                \\tag{10}\n$$"
+      "to": "\\tag{11}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -591,7 +591,7 @@
       "words": "The Euler path built from this model's coefficient and gradient.",
       "paper": "short",
       "from": "From independent standard normals",
-      "to": "\\quad(1\\leq j\\leq N).\n\\end{aligned}\n$$"
+      "to": "\\quad(1\\leq j\\leq N),\n\\end{aligned}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -600,7 +600,7 @@
       "words": "The curvature along the Euler path at mesh point j, before normalisation.",
       "paper": "short",
       "from": "From independent standard normals",
-      "to": "\\quad(1\\leq j\\leq N).\n\\end{aligned}\n$$"
+      "to": "\\quad(1\\leq j\\leq N),\n\\end{aligned}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -618,7 +618,7 @@
       "words": "The normalised coefficient times the next Gaussian coordinate; Lean index j is the paper's index j+1.",
       "paper": "short",
       "from": "From independent standard normals",
-      "to": "\\quad(1\\leq j\\leq N).\n\\end{aligned}\n$$"
+      "to": "\\quad(1\\leq j\\leq N),\n\\end{aligned}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -626,8 +626,8 @@
       "tex": "F_N",
       "words": "The finite spin: the sign of the terminal gradient plus uniform rounding noise from the last Gaussian coordinate.",
       "paper": "short",
-      "from": "With $\\Phi_{\\rm G}$ the standard normal",
-      "to": "&=u(T,Y_N).\n\\end{aligned}\n$$"
+      "from": "and the randomly rounded spin",
+      "to": "=u(T,Y_N)$."
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -653,8 +653,8 @@
       "tex": "S_{T,N}",
       "words": "The adjacent pairing, summing A at j times B at j+1 for j from zero to N.",
       "paper": "short",
-      "from": "The circuit construction\nnee",
-      "to": "     \\tag{11}\n$$"
+      "from": "[OpenAI (2026a), Proposition 7.2][FS] proves that the denominators",
+      "to": "\\tag{12}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -662,8 +662,8 @@
       "tex": null,
       "words": "Normalisers are eventually positive, the pairing tends to the cutoff integral, and that integral tends to the ground-state value.",
       "paper": "short",
-      "from": "The circuit construction\nnee",
-      "to": "     \\tag{11}\n$$"
+      "from": "[OpenAI (2026a), Proposition 7.2][FS] proves that the denominators",
+      "to": "\\tag{12}\n$$"
     },
     {
       "file": "ComparatorChallenges/SKValue.lean",
@@ -671,8 +671,8 @@
       "tex": null,
       "words": "The scalar statement: three clauses giving value identities, finite Gaussian convergence, and equality of ground-state and Parisi values.",
       "paper": "short",
-      "from": "A separate\n[formal state",
-      "to": "sion internally."
+      "from": "A separate\n[formal statement of the scalar consequences][value-challenge] covers",
+      "to": "has its own [proof][value-lean]."
     },
     {
       "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",

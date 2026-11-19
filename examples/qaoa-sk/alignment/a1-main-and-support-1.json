@@ -27,7 +27,7 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "**Theorem 1 (full support; quantitative proof following",
+          "from": "**Theorem 1 (full support;\n",
           "to": "\\qquad \\mathbb E[a(t,X_t)^2]=1.\n$$"
         },
         {
@@ -114,13 +114,13 @@
           "paper": "short",
           "role": "statement",
           "from": "Let $U$ be the almost-sure and",
-          "to": "\\tag{10}\n$$"
+          "to": "\\tag{11}\n$$"
         },
         {
           "paper": "short",
           "role": "statement",
-          "from": "circuit construction\nnee",
-          "to": "     \\tag{11}\n$$"
+          "from": "[OpenAI (2026a), Proposition 7.2][FS] proves that the denominators",
+          "to": "\\tag{12}\n$$"
         },
         {
           "paper": "expository",
@@ -170,8 +170,8 @@
         {
           "paper": "short",
           "role": "explanation",
-          "from": "[formal statement of the",
-          "to": "sion internally."
+          "from": "[formal statement of the scalar consequences][value-challenge] covers",
+          "to": "has its own [proof][value-lean]."
         },
         {
           "paper": "expository",
@@ -195,7 +195,7 @@
           "paper": "short",
           "role": "statement",
           "from": "[OpenAI (2026b), Theorem 1.1][Q] proves that for",
-          "to": "$C_{n,J}$."
+          "to": "$\\varepsilon$ but not on $n$ or $J$."
         },
         {
           "paper": "short",
@@ -250,7 +250,7 @@
           "paper": "short",
           "role": "definition",
           "from": "Let $\\mathcal U$ consist",
-          "to": "(t)\\,dt<\\infty$,"
+          "to": "is an order\nparameter,"
         },
         {
           "paper": "short",
@@ -316,8 +316,8 @@
         {
           "paper": "short",
           "role": "mention",
-          "from": "[formal statement of the",
-          "to": "r those clauses,"
+          "from": "[formal statement of the scalar consequences][value-challenge] covers",
+          "to": "a minimiser as hypothesis,"
         },
         {
           "paper": "expository",
@@ -367,12 +367,6 @@
           "role": "definition",
           "from": "Brownian\nmotion, and def",
           "to": "[u(t,X_t)^2].\n$$"
-        },
-        {
-          "paper": "short",
-          "role": "explanation",
-          "from": "and its third\nclause ide",
-          "to": "sion internally."
         },
         {
           "paper": "expository",
@@ -488,7 +482,7 @@
           "paper": "short",
           "role": "definition",
           "from": "Let $\\mathcal U$ consist",
-          "to": "logy of $[0,1)$."
+          "to": "relative topology of\n$[0,1)$."
         },
         {
           "paper": "expository",
@@ -533,8 +527,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "For an admissible coeffi",
-          "to": " has jumps. This"
+          "from": "For $\\gamma\\in\\mathcal U$, the solution $\\Phi$ is even",
+          "to": "below even when $\\gamma$ has jumps."
         },
         {
           "paper": "expository",
@@ -648,8 +642,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "We fix a minimiser. Itô'",
-          "to": "the coefficient."
+          "from": "We fix the minimiser. Itô's formula cancels",
+          "to": "continuous across jumps of the coefficient."
         },
         {
           "paper": "expository",
@@ -704,8 +698,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "Minimality means that ev",
-          "to": "Lemma 6.1][FS])."
+          "from": "When $\\gamma$ is replaced by $\\gamma+\\varepsilon\\eta$ and",
+          "to": "earlier zero-temperature form)."
         },
         {
           "paper": "expository",
@@ -760,8 +754,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "first-order cost is half",
-          "to": "-t)\\,dt\\geq0.\n$$"
+          "from": "Minimality\nmakes the corresponding tail integral nonnegative:",
+          "to": "(q(t)-t)\\,dt\\geq0.\n$$"
         },
         {
           "paper": "short",
@@ -885,8 +879,8 @@
         {
           "paper": "short",
           "role": "explanation",
-          "from": "We begin with a positive",
-          "to": " $g_t=g_{xx}/2$."
+          "from": "We now take a positive nondecreasing finite-step coefficient",
+          "to": "yields $g_t=g_{xx}/2$."
         }
       ]
     },
@@ -936,8 +930,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "For $s=-\\partial_x\\log g$,",
-          "to": "$H:=w/(2r)+v\\leq0$ is nondecreasing."
+          "from": "The functions $r$ and $s$ are odd and positive on $x>0$.",
+          "to": "two scores is nondecreasing."
         },
         {
           "paper": "short",
@@ -992,8 +986,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "For $s=-\\partial_x\\log g",
-          "to": "ficient as well."
+          "from": "The functions $r$ and $s$ are odd and positive on $x>0$.",
+          "to": "Thus $j$ is unchanged at jumps of the coefficient."
         }
       ]
     },
@@ -1050,8 +1044,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "The factorisation of the density gives $f_x/f=r-s$.",
-          "to": "against $f(x)\\,dx$."
+          "from": "For such a polynomial $F$ put",
+          "to": "against $f(x)\\,dx$ ([OpenAI (2026a), Lemma 3.4][FS])."
         },
         {
           "paper": "expository",
@@ -1114,8 +1108,61 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "[OpenAI (2026a), Lemma 4.1][FS] supplies an explicit polynomial $F_2$",
-          "to": "\\kappa=\\frac{1661507}{1521000000}>\\frac1{1000}.\n$$"
+          "from": "**Lemma 4 (rational identity;",
+          "to": "positive coefficients of Table 1."
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "Choose\n$$\n\\begin{aligned}\nQ&=",
+          "to": "\\tfrac{87}{2500}j\\bigr),\n\\end{aligned}\n$$",
+          "lean": [
+            {
+              "name": "OAI.ZeroTemperatureSK.Certificate.T",
+              "lines": [
+                22,
+                22
+              ],
+              "note": "T, the bracket g₀Rv+hjv."
+            },
+            {
+              "name": "OAI.ZeroTemperatureSK.Certificate.rational_identity",
+              "clause": "(z+Q R K v b)^2",
+              "note": "Q enters the identity through the square (z+Q)²."
+            }
+          ]
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "and let $F_2$ satisfy $\\partial_bF_2=2Q+T$:",
+          "to": "-\\tfrac{1073}{500}Rv^2 .\n\\end{aligned}\n$$",
+          "lean": [
+            {
+              "name": "OAI.ZeroTemperatureSK.Certificate.F₂",
+              "lines": [
+                25,
+                25
+              ],
+              "relation": "defines"
+            }
+          ]
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "| Monomial | Coefficient | Monomial | Coefficient |",
+          "to": "([OpenAI (2026a), Table 1][certificate]).*",
+          "lean": [
+            {
+              "name": "OAI.ZeroTemperatureSK.Certificate.remainder_lower_bound",
+              "note": "Only the v⁴ coefficient of the remainder enters this bound."
+            },
+            {
+              "name": "OAI.ZeroTemperatureSK.Certificate.coercivity_constant",
+              "note": "That v⁴ coefficient exceeds 1/1000."
+            }
+          ]
         },
         {
           "paper": "expository",
