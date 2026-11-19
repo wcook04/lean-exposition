@@ -88,7 +88,7 @@
       "status": "The site lists each Lean build and the statements it covers. Comparator gave no verdict on either theorem.",
       "capture": "assets/sites/lean-exposition",
       "capture_caption": "The short paper at Theorem 1, beside the graph of its argument.",
-      "credit": "The theorem and Lean proof are OpenAI’s. I made the explanations and links with AI; no mathematician has reviewed them.",
+      "credit": "The proof and its Lean are OpenAI’s; Hong-Bin Chen first proved full support in July 2026. I made the explanations and links with AI; no mathematician has reviewed them.",
       "aka": [
         "Lean Exposition"
       ],
