@@ -220,11 +220,11 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
   ).join("\n");
   return `<section class="front__hero" aria-labelledby="front-title">
 <div class="front__intro">
-<p class="front__what">Three papers on a theorem of OpenAI’s, read beside its Lean proof and a graph of the argument</p>
+<p class="front__what">Three papers on OpenAI’s proof of a spin-glass theorem, read beside its Lean proof and a graph of the argument</p>
 <h1 id="front-title" class="front__title">Why the Sherrington–Kirkpatrick order parameter has no gaps</h1>
 <p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A gap is an interval on which an order parameter stays flat. A minimising order parameter has none: it increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
-<p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The theorem and the Lean proof are OpenAI’s. Lean is a programming language whose compiler rejects a proof with a wrong step.</p>
+<p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The proof and its Lean are OpenAI’s. Hong-Bin Chen first proved that a minimising order parameter has no gaps, in a <a href="https://arxiv.org/abs/2607.18032">July 2026 paper</a>; OpenAI’s proof is quantitative and also gives a positive derivative. Lean is a programming language whose compiler rejects a proof with a wrong step.</p>
 </div>
 ${shotsHtml(links)}
 ${

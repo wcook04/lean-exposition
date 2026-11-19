@@ -365,7 +365,8 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <h2 id="made-by-title">Who made this site</h2>
         <p>
           {AUTHOR} made this site with AI agents, which wrote its code, its steps and its ties under his direction. The
-          theorem and the Lean proof are OpenAI’s, and the earlier results are credited in the papers. The site belongs to{" "}
+          proof and its Lean are OpenAI’s. Hong-Bin Chen first proved full support in a July 2026 paper, and the earlier
+          results are credited in the papers. The site belongs to{" "}
           <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help people
           follow what AI produces. His own research is on Erdős problems, questions posed by the mathematician Paul Erdős.
         </p>
