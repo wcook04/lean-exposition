@@ -18,7 +18,7 @@ from urllib.parse import parse_qs, unquote, urlencode, urlsplit
 from wsgiref.simple_server import make_server
 
 from .bundle import BUNDLE_FILES, STAGES, BundleCapture, load_bundle
-from .alignment import lean_steps, resolve_alignment, tie_index
+from .alignment import lean_steps, phrase_notes, resolve_alignment, tie_index
 from .consumer import ConsumerSession
 from .contracts import ContractError, digest
 from .lean_index import canonical, load_index, module_view, modules_view, names_view
@@ -124,6 +124,8 @@ ROUTES = {
     "/lean/module": ("One Lean module with its source and declarations", ("name",)),
     "/alignment": ("Where each record is stated, in Lean and in each paper", ()),
     **{f"/ties/{stage}": (f"The marked statements of the {stage} paper, compact enough for first paint", ())
+       for stage in STAGES},
+    **{f"/phrases/{stage}": (f"Titles and reading notes of the declarations the {stage} paper's phrases tie", ())
        for stage in STAGES},
 }
 
@@ -237,7 +239,7 @@ class WebApplication:
         self._lean = (None if lean_index is None else
                       lean_index if isinstance(lean_index, dict) else load_index(lean_index))
         self._lean_modules = {row["name"] for row in self._lean["modules"]} if self._lean else set()
-        self._alignment, self._ties, self.alignment_errors = None, None, []
+        self._alignment, self._ties, self._phrases, self.alignment_errors = None, None, {}, []
         if alignment is not None:
             papers = {stage: self._files[f"papers/{stage}.md"] for stage in STAGES}
             ids = {row["record"]["id"] for row in self._corpus["records"]["nodes"]}
@@ -245,11 +247,14 @@ class WebApplication:
                 alignment, self._lean, papers, ids, strict=False)
             edges = [row["record"] for row in self._corpus["records"]["edges"]]
             self._alignment["steps"] = lean_steps(self._alignment, self._lean, edges)
+            phrases = self._alignment.pop("phrases", {})
             self._ties = {stage: tie_index(papers[stage], self._alignment["records"], stage, [
                 (row["content_span"]["start_byte"], row["content_span"]["end_byte"],
                  [*row["claim_ids"], *row["assumption_ids"]], row["anchor"])
                 for row in self._papers[stage]["paper"]["passages"]],
-                self._alignment["names"]) for stage in STAGES}
+                self._alignment["names"], phrases.get(stage)) for stage in STAGES}
+            # The phrase ties travel in `/ties/<paper>`; their titles and notes load with the Lean pane.
+            self._phrases = {stage: phrase_notes(layer) for stage, layer in phrases.items()}
         self._sidecars = {
             "lean_index": ({"available": False} if self._lean is None else {
                 "available": True, "sha256": digest(canonical(self._lean)),
@@ -545,6 +550,10 @@ class WebApplication:
             if self._ties is None:
                 raise APIError(404, "alignment_unavailable", "This edition is served without a record alignment.")
             return self._ties[route.removeprefix("/ties/")]
+        if route.startswith("/phrases/"):
+            if self._ties is None or route.removeprefix("/phrases/") not in self._phrases:
+                raise APIError(404, "phrases_unavailable", "This paper is served without phrase ties.")
+            return self._phrases[route.removeprefix("/phrases/")]
         if route == "/overview":
             return {"graph": self._corpus["graph"], "coverage": self._corpus["coverage"],
                     "record_counts": self._corpus["coverage"]["record_counts"],

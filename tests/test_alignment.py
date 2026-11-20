@@ -630,3 +630,107 @@ class LeanStepTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def phrase_file(ties, titles=None, notes=None, topics=None, paper="long"):
+    """A phrase file for the fixture papers: one part, every title and note given unless overridden."""
+    note = "A reading note " + "word " * 40 + "with $x=1$."
+    return json.dumps({"schema": "phrase-ties/1", "paper": paper, "parts": [{
+        "name": "", "lines": [1, 99], "topics": topics or [{"id": "t", "name": "Topic", "description": ""},
+                                                          {"id": "u", "name": "Other", "description": ""}],
+        "titles": {"N.thing": "The thing itself", "N.Box": "A box of sizes"} if titles is None else titles,
+        "notes": {"N.thing": note, "N.Box": note} if notes is None else notes}], "ties": ties})
+
+
+PHRASE = {"id": "p1", "from": "Théorème one", "to": "one", "role": "statement", "topic": "t", "status": "new",
+          "lean": [{"name": "N.thing", "file": "OAI/M.lean", "relation": "states", "fidelity": "same"}]}
+
+
+class Phrases(unittest.TestCase):
+    def resolve(self, ties, strict=True, **options):
+        return resolve({"r": row()}, extra={"phrases-long.json": phrase_file(ties, **options)}, strict=strict)
+
+    def fails(self, pattern, ties, **options):
+        with self.assertRaisesRegex(ContractError, pattern):
+            self.resolve(ties, **options)
+
+    def test_fidelity_different_is_accepted_and_unknown_values_are_not(self):
+        lean = {**LEAN, "fidelity": "different", "fidelity_note": "Neither statement implies the other."}
+        out = resolve({"r": row(lean=[lean])})[0]["records"]["r"]["lean"][0]
+        self.assertEqual(out["fidelity"], "different")
+        with self.assertRaisesRegex(ContractError, "unknown fidelity"):
+            resolve({"r": row(lean=[{**LEAN, "fidelity": "similar"}])})
+        tie = self.resolve([{**PHRASE, "lean": [{**PHRASE["lean"][0], "fidelity": "different",
+                                                 "fidelity_note": "It quantifies over every base."}]}])
+        self.assertEqual(tie[0]["phrases"]["long"]["ties"][0]["lean"][0]["fidelity"], "different")
+        self.fails("needs a fidelity_note", [{**PHRASE, "lean": [{**PHRASE["lean"][0], "fidelity": "weaker"}]}])
+
+    def test_a_phrase_lands_with_its_record_lines_title_and_note(self):
+        resolved = self.resolve([{**PHRASE, "id": "r#1", "lean": [{**PHRASE["lean"][0], "lines": [4, 4],
+                                                                   "link_note": "The second conjunct."}]}])[0]
+        layer = resolved["phrases"]["long"]
+        tie = layer["ties"][0]
+        self.assertEqual(LONG[tie["start_byte"]:tie["end_byte"]].decode(), "Théorème one")
+        self.assertEqual((tie["record"], tie["anchor"], tie["lean"][0]["lines"]), ("r", "first", [4, 4]))
+        self.assertEqual(tie["lean"][0]["note"], "The second conjunct.")
+        self.assertEqual(layer["parts"][0]["titles"], {"N.thing": "The thing itself"})
+        self.assertEqual(list(layer["parts"][0]["notes"]), ["N.thing"])
+
+    def test_rejects_each_broken_phrase(self):
+        self.fails("from not found", [{**PHRASE, "from": "Absent"}])
+        self.fails("more than once in its paragraph", [{**PHRASE, "from": "Repeated", "to": "here."}])
+        self.fails("cuts the formula", [{**PHRASE, "from": "x=1", "to": "1$."}])
+        self.fails("crosses a paragraph", [{**PHRASE, "from": "Before.", "to": "Repeated words here. Repeated"}])
+        self.fails("overlap", [PHRASE, {**PHRASE, "id": "p2", "from": "one states", "to": "$x=1$."}])
+        self.fails("not a topic", [{**PHRASE, "topic": "absent"}])
+        self.fails("needs a trimmed title", [PHRASE], titles={})
+        self.fails("needs a reading note", [PHRASE], notes={})
+        self.fails("lie outside", [{**PHRASE, "lean": [{**PHRASE["lean"][0], "lines": [6, 7]}]}])
+        self.fails("needs at least one Lean row", [{**PHRASE, "lean": []}])
+        self.fails("id is repeated", [PHRASE, {**PHRASE, "from": "Unique end", "to": "tail."}])
+
+    def test_after_selects_the_paragraph_of_a_repeated_phrase(self):
+        tie = self.resolve([{**PHRASE, "from": "Repeated words", "to": "here.",
+                             "after": "### Part\n\nRepeated words here. "}])[0]["phrases"]["long"]["ties"][0]
+        self.assertEqual(tie["start_byte"], LONG.rindex(b"Repeated"))
+
+    def test_the_phrase_layer_replaces_the_record_slices_in_the_tie_index(self):
+        resolved = self.resolve([PHRASE, {**PHRASE, "id": "p2", "from": "Unique end", "to": "tail.",
+                                          "lean": [{"name": "N.Box", "file": "OAI/M.lean", "relation": "defines",
+                                                    "fidelity": "stronger", "fidelity_note": "It has a depth."}]},
+                                 {**PHRASE, "id": "p3", "from": "Repeated words", "to": "here.",
+                                  "after": "### Part\n\nRepeated words here. ", "lean": PHRASE["lean"]}])[0]
+        index = alignment.tie_index(LONG, resolved["records"], "long", phrases=resolved["phrases"]["long"])
+        self.assertEqual(index["layer"], "phrases")
+        self.assertEqual([tie["phrase"] for tie in index["ties"]], ["p1", "p3", "p2"])
+        # One tie per segment; the phrase around a display runs text, display, text.
+        self.assertEqual([members for _, _, members in index["segments"]], [[0], [1], [2], [2], [2]])
+        # Neighbouring ties of one topic take its two shades in turn.
+        self.assertEqual([tie["tone"] for tie in index["ties"]], [0, 1, 0])
+        self.assertEqual(index["ties"][2]["rows"][0]["fidelity"], "stronger")
+        self.assertEqual([topic["name"] for topic in index["topics"]], ["Topic", "Other"])
+        notes = alignment.phrase_notes(resolved["phrases"]["long"])
+        self.assertEqual(sorted(notes["parts"][0]["titles"]), ["N.Box", "N.thing"])
+
+    def test_the_real_phrase_layers_land_and_stay_compact(self):
+        for example in ("qaoa-sk", "erdos257"):
+            directory = ROOT / f"examples/{example}/alignment"
+            if not any(directory.glob("phrases-*.json")):
+                continue
+            out = Path(tempfile.mkdtemp()) / "resolved.json"
+            self.addCleanup(shutil.rmtree, out.parent)
+            alignment.check_alignment(directory, out=out)
+            resolved = json.loads(out.read_text())
+            for stage, path in alignment.default_papers(directory).items():
+                with self.subTest(example=example, stage=stage):
+                    content = path.read_bytes()
+                    layer = resolved["phrases"][stage]
+                    index = alignment.tie_index(content, resolved["records"], stage, phrases=layer)
+                    self.assertEqual(len(index["ties"]), len(layer["ties"]))
+                    previous = 0
+                    for start, end, members in index["segments"]:
+                        self.assertLessEqual(previous, start)
+                        self.assertEqual(len(members), 1)
+                        previous = end
+                    encoded = json.dumps(index, ensure_ascii=False, separators=(",", ":")).encode()
+                    self.assertLess(len(gzip.compress(encoded)), 200_000)

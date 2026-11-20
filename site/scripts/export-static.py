@@ -214,6 +214,8 @@ def export(bundle, out, *, lean_tree=None, alignment=None, oracle=Path("build/ed
         for stage in STAGES:
             index["responses"][f"/alignment/{stage}"] = named(f"alignment/{stage}.json", alignment_paper(whole, stage))
             index["responses"][f"/ties/{stage}"] = named(f"ties/{stage}.json", data(f"/ties/{stage}"))
+            if stage in app._phrases:
+                index["responses"][f"/phrases/{stage}"] = named(f"phrases/{stage}.json", data(f"/phrases/{stage}"))
         # One record whole, for the panel that opens on it.
         for id_, row in whole["records"].items():
             record(key_of("/alignment/record", id=id_), write(row))
