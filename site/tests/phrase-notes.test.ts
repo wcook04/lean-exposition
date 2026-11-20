@@ -1,0 +1,83 @@
+// Every reading note and fidelity note of the phrase layer typesets without a KaTeX error, and
+// the reader's words for a comparison name all four outcomes, "different" included.
+import { readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
+import { isFidelity, phraseVerdict } from "../src/compare/fidelityWords";
+import { noteHtml } from "../src/reader/page/PhraseCard";
+import { tieModel, phraseHint, isPhraseRecord, partAt } from "../src/reader/ties";
+import type { TieIndex } from "../src/api/lean";
+
+const EXAMPLES = resolve(__dirname, "../../examples");
+
+function phraseFiles(): { path: string; data: { parts: { notes: Record<string, string> }[]; ties: { lean: { fidelity: string; fidelity_note?: string }[] }[] } }[] {
+  const out = [];
+  for (const example of readdirSync(EXAMPLES)) {
+    let names: string[] = [];
+    try {
+      names = readdirSync(resolve(EXAMPLES, example, "alignment"));
+    } catch {
+      continue;
+    }
+    for (const name of names.filter((n) => /^phrases-.*\.json$/.test(n))) {
+      const path = resolve(EXAMPLES, example, "alignment", name);
+      out.push({ path, data: JSON.parse(readFileSync(path, "utf8")) });
+    }
+  }
+  return out;
+}
+
+describe("phrase notes", () => {
+  it("sets mathematics with KaTeX, names as code, and escapes the rest", () => {
+    const { html, errors } = noteHtml("If $x<1$, then `foo` holds; a \\$ sign <b>.");
+    expect(errors).toEqual([]);
+    expect(html).toContain("katex");
+    expect(html).toContain("<code>foo</code>");
+    expect(html).toContain("&lt;b&gt;");
+    expect(html).toContain("$ sign");
+    expect(noteHtml("$\\frac{1$").errors).toHaveLength(1);
+  });
+
+  it("typesets every note of every phrase file", () => {
+    const files = phraseFiles();
+    expect(files.length).toBeGreaterThan(0);
+    for (const { path, data } of files) {
+      for (const part of data.parts) {
+        for (const [name, note] of Object.entries(part.notes)) {
+          const { errors } = noteHtml(note);
+          expect(errors, `${path}: ${name}`).toEqual([]);
+        }
+      }
+      for (const tie of data.ties) {
+        for (const row of tie.lean) {
+          expect(isFidelity(row.fidelity), path).toBe(true);
+          if (row.fidelity_note) expect(noteHtml(row.fidelity_note).errors).toEqual([]);
+        }
+      }
+    }
+  });
+
+  it("says each comparison in words", () => {
+    expect(phraseVerdict("weaker")).toBe("Lean states less");
+    expect(phraseVerdict("stronger")).toBe("Lean states more");
+    expect(phraseVerdict("different")).toBe("Lean states something different");
+    expect(phraseVerdict("same")).toBe("Lean states the same as this phrase");
+  });
+
+  it("gives a phrase with no step on the map a record of its own, and says its topic", () => {
+    const index: TieIndex = {
+      layer: "phrases",
+      topics: [{ id: "t", name: "Topic one", description: "", part: 0, colour: 0 }],
+      parts: [{ name: "", start_byte: 0, end_byte: 100 }, { name: "Part two", start_byte: 100, end_byte: 200 }],
+      segments: [[0, 5, [0]]],
+      ties: [{ record: null as unknown as string, phrase: "p", topic: "t", tone: 0, role: "statement", lean: true, name: "A.b", module: "A", lines: [1, 1], anchor: null, at: "b0-5",
+        rows: [{ name: "A.b", module: "A", line: 1, end_line: 1, lines: [1, 1], relation: "states", note: "", plain: "The b" }] }],
+      passages: [],
+      meaning: "",
+    };
+    const model = tieModel(index);
+    expect(isPhraseRecord(model.index.ties[0].record)).toBe(true);
+    expect(phraseHint(model, 0)).toBe("Topic: Topic one. Lean: The b. Click to open it.");
+    expect(partAt(model, 150)).toBe(1);
+  });
+});

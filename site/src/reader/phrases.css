@@ -1,0 +1,273 @@
+/* Phrase ties, after Proof Reader's Physlib Gauge theory map (web/src/api/physlib-map.css).
+   Each phrase that a Lean declaration states is underlined in its topic's colour. A topic has
+   one hue and two shades, 2t and 2t+1, taken in turn by its phrases in reading order, so two
+   neighbouring phrases of one topic differ. The nine hues keep clear of what already means
+   something on this page: amber (attention), the Lean green of the map's cards, the recorded
+   failure red, and the three source-slot colours. A colour never says how the Lean compares
+   with the phrase; the card says that in words. */
+
+:root {
+  --tone-0: oklch(0.50 0.15 260);
+  --tone-1: oklch(0.61 0.13 260);
+  --tone-2: oklch(0.52 0.17 10);
+  --tone-3: oklch(0.63 0.14 10);
+  --tone-4: oklch(0.52 0.10 188);
+  --tone-5: oklch(0.63 0.09 188);
+  --tone-6: oklch(0.50 0.17 305);
+  --tone-7: oklch(0.61 0.14 305);
+  --tone-8: oklch(0.56 0.12 115);
+  --tone-9: oklch(0.67 0.10 115);
+  --tone-10: oklch(0.66 0.11 228);
+  --tone-11: oklch(0.77 0.09 228);
+  --tone-12: oklch(0.66 0.15 335);
+  --tone-13: oklch(0.77 0.13 335);
+  --tone-14: oklch(0.43 0.10 150);
+  --tone-15: oklch(0.54 0.09 150);
+  --tone-16: oklch(0.36 0.12 280);
+  --tone-17: oklch(0.47 0.10 280);
+}
+
+:root[data-theme="dark"] {
+  --tone-0: oklch(0.76 0.12 260);
+  --tone-1: oklch(0.66 0.10 260);
+  --tone-2: oklch(0.74 0.14 10);
+  --tone-3: oklch(0.64 0.12 10);
+  --tone-4: oklch(0.78 0.10 188);
+  --tone-5: oklch(0.68 0.09 188);
+  --tone-6: oklch(0.76 0.13 305);
+  --tone-7: oklch(0.66 0.11 305);
+  --tone-8: oklch(0.82 0.12 115);
+  --tone-9: oklch(0.72 0.10 115);
+  --tone-10: oklch(0.86 0.08 228);
+  --tone-11: oklch(0.76 0.07 228);
+  --tone-12: oklch(0.84 0.10 335);
+  --tone-13: oklch(0.74 0.09 335);
+  --tone-14: oklch(0.68 0.11 150);
+  --tone-15: oklch(0.58 0.09 150);
+  --tone-16: oklch(0.62 0.13 280);
+  --tone-17: oklch(0.52 0.11 280);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tone-0: oklch(0.76 0.12 260);
+    --tone-1: oklch(0.66 0.10 260);
+    --tone-2: oklch(0.74 0.14 10);
+    --tone-3: oklch(0.64 0.12 10);
+    --tone-4: oklch(0.78 0.10 188);
+    --tone-5: oklch(0.68 0.09 188);
+    --tone-6: oklch(0.76 0.13 305);
+    --tone-7: oklch(0.66 0.11 305);
+    --tone-8: oklch(0.82 0.12 115);
+    --tone-9: oklch(0.72 0.10 115);
+    --tone-10: oklch(0.86 0.08 228);
+    --tone-11: oklch(0.76 0.07 228);
+    --tone-12: oklch(0.84 0.10 335);
+    --tone-13: oklch(0.74 0.09 335);
+    --tone-14: oklch(0.68 0.11 150);
+    --tone-15: oklch(0.58 0.09 150);
+    --tone-16: oklch(0.62 0.13 280);
+    --tone-17: oklch(0.52 0.11 280);
+  }
+}
+
+[data-tone="0"] { --tone: var(--tone-0); }
+[data-tone="1"] { --tone: var(--tone-1); }
+[data-tone="2"] { --tone: var(--tone-2); }
+[data-tone="3"] { --tone: var(--tone-3); }
+[data-tone="4"] { --tone: var(--tone-4); }
+[data-tone="5"] { --tone: var(--tone-5); }
+[data-tone="6"] { --tone: var(--tone-6); }
+[data-tone="7"] { --tone: var(--tone-7); }
+[data-tone="8"] { --tone: var(--tone-8); }
+[data-tone="9"] { --tone: var(--tone-9); }
+[data-tone="10"] { --tone: var(--tone-10); }
+[data-tone="11"] { --tone: var(--tone-11); }
+[data-tone="12"] { --tone: var(--tone-12); }
+[data-tone="13"] { --tone: var(--tone-13); }
+[data-tone="14"] { --tone: var(--tone-14); }
+[data-tone="15"] { --tone: var(--tone-15); }
+[data-tone="16"] { --tone: var(--tone-16); }
+[data-tone="17"] { --tone: var(--tone-17); }
+
+/* The phrase at rest: an underline in its topic's colour, drawn under each of its lines. */
+.paper .tie[data-tone] {
+  background-image: linear-gradient(color-mix(in oklab, var(--tone) 80%, transparent), color-mix(in oklab, var(--tone) 80%, transparent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  padding-bottom: 1px;
+}
+
+/* A display is underlined by a rule beside it. */
+.paper .math-display.tie[data-tone] {
+  background-image: none;
+  box-shadow: inset 3px 0 0 color-mix(in oklab, var(--tone) 80%, transparent);
+}
+
+.paper .tie[data-tone][data-point],
+.paper .tie[data-tone]:hover {
+  background-color: color-mix(in oklab, var(--tone) 14%, transparent);
+  background-size: 100% 3px;
+}
+
+/* The phrases of a declaration pointed at in the Lean pane. */
+.paper .tie[data-tone][data-decl] {
+  background-color: color-mix(in oklab, var(--tone) 24%, transparent);
+  background-size: 100% 3px;
+}
+
+/* Pinned stays amber: what you are attending to. */
+.paper .tie[data-tone][data-pin] {
+  background-color: var(--highlighter);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper .tie[data-tone] {
+    transition: none;
+  }
+}
+
+/* ---- The declaration card's phrase block --------------------------------------------------- */
+
+.phrase-card {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--tone, var(--rule-strong));
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: color-mix(in oklab, var(--tone, var(--ink)) 6%, var(--surface));
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.phrase-card p {
+  margin: 0;
+}
+
+.phrase-card > * + * {
+  margin-top: var(--space-2);
+}
+
+.phrase-card__topic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.phrase-card__swatch,
+.phrase-key__swatch {
+  flex: none;
+  width: 18px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--tone);
+}
+
+.phrase-card__fidelity strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.phrase-card__who,
+.phrase-card__label span {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.phrase-card__who {
+  white-space: nowrap;
+}
+
+.phrase-card__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.phrase-card__text {
+  color: var(--ink);
+}
+
+.phrase-card__text .nowrap {
+  white-space: nowrap;
+}
+
+.phrase-card__text code {
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+}
+
+/* ---- The colour key in the contents list ---------------------------------------------------- */
+
+.phrase-key {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) 0 var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+.phrase-key__head {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.phrase-key__head span {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.phrase-key ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phrase-key li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--ink);
+}
+
+.phrase-key li .phrase-key__swatch {
+  transform: translateY(-1px);
+}
+
+.phrase-key__note {
+  margin: 6px 0 0;
+  color: var(--ink-3);
+}
+
+/* Beside a section in the contents: the topics its phrases belong to. */
+.phrase-bars {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.phrase-bars > span {
+  display: block;
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--tone);
+}
+
+/* A wide window reads the card larger, as it reads the paper larger. */
+@media (min-width: 1921px) {
+  .phrase-card {
+    font-size: calc(var(--fs-ui) * 1.1);
+  }
+}

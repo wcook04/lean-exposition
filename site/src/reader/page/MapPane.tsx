@@ -23,7 +23,7 @@ import { useKeptCamera } from "../../map/scene";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
-import { leanTruth, passageTopics, statementFor, type TieModel } from "../ties";
+import { isPhraseLayer, leanTruth, passageTopics, phraseTitle, statementFor, topicOf, type TieModel } from "../ties";
 import { passageOf, passageRecords, trailAt, trailWords, type OutlineEntry, type PaperTrail, type Structures } from "./model";
 import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, recordOfDecl, saveDockShare, type LeanOpen } from "./RecordDock";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
@@ -617,6 +617,11 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const has = (words: string) => (invite ? `${words}: ${invite}.` : `${words}.`);
       if (t === null) return { name: named(id), rest: recordLine(id)?.lean ? has("Has Lean") : "No Lean linked." };
       const truth = leanTruth(ties, t, alignment);
+      // A phrase is named by its declaration, and says its topic.
+      if (isPhraseLayer(ties)) {
+        const topic = topicOf(ties, t);
+        return { name: phraseTitle(ties, t), rest: `${topic ? `Topic: ${topic.name}. ` : ""}${truth.lean ? has("Has Lean") : "No Lean linked."}` };
+      }
       if (truth.lean) return { name: named(id), rest: has(truth.words) };
       return truth.note ? { rest: truth.note } : { name: named(id), rest: "No Lean linked." };
     };
