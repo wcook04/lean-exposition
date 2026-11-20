@@ -1,73 +1,75 @@
 /* Phrase ties, after Proof Reader's Physlib Gauge theory map (web/src/api/physlib-map.css).
    Each phrase that a Lean declaration states is underlined in its topic's colour. A topic has
-   one hue and two shades, 2t and 2t+1, taken in turn by its phrases in reading order, so two
-   neighbouring phrases of one topic differ. The nine hues keep clear of what already means
-   something on this page: amber (attention), the Lean green of the map's cards, the recorded
-   failure red, and the three source-slot colours. A colour never says how the Lean compares
-   with the phrase; the card says that in words. */
+   one colour and two shades, 2t and 2t+1, taken in turn by its phrases in reading order, so two
+   neighbouring phrases of one topic differ. The nine colours vary in lightness as well as hue:
+   drawn as an underline (80% over the page), any two topics differ by a CIEDE2000 distance of
+   at least 15 in both themes, shade against shade (tests/phrase-colours.test.ts checks it). They
+   keep clear of amber and orange (attention), the recorded failure red, the map's Lean green and
+   the three source-slot colours. A colour never says how the Lean compares with the phrase; the
+   card says that in words. */
 
 :root {
-  --tone-0: oklch(0.50 0.15 260);
-  --tone-1: oklch(0.61 0.13 260);
-  --tone-2: oklch(0.52 0.17 10);
-  --tone-3: oklch(0.63 0.14 10);
-  --tone-4: oklch(0.52 0.10 188);
-  --tone-5: oklch(0.63 0.09 188);
-  --tone-6: oklch(0.50 0.17 305);
-  --tone-7: oklch(0.61 0.14 305);
-  --tone-8: oklch(0.56 0.12 115);
-  --tone-9: oklch(0.67 0.10 115);
-  --tone-10: oklch(0.66 0.11 228);
-  --tone-11: oklch(0.77 0.09 228);
-  --tone-12: oklch(0.66 0.15 335);
-  --tone-13: oklch(0.77 0.13 335);
-  --tone-14: oklch(0.43 0.10 150);
-  --tone-15: oklch(0.54 0.09 150);
-  --tone-16: oklch(0.36 0.12 280);
-  --tone-17: oklch(0.47 0.10 280);
+  --tone-0: oklch(0.360 0.09 246);
+  --tone-1: oklch(0.410 0.09 246);
+  --tone-2: oklch(0.630 0.12 168);
+  --tone-3: oklch(0.580 0.115 168);
+  --tone-4: oklch(0.390 0.18 318);
+  --tone-5: oklch(0.440 0.18 318);
+  --tone-6: oklch(0.570 0.12 108);
+  --tone-7: oklch(0.620 0.12 108);
+  --tone-8: oklch(0.720 0.15 234);
+  --tone-9: oklch(0.670 0.140 234);
+  --tone-10: oklch(0.360 0.09 18);
+  --tone-11: oklch(0.410 0.09 18);
+  --tone-12: oklch(0.720 0.15 288);
+  --tone-13: oklch(0.670 0.15 288);
+  --tone-14: oklch(0.390 0.06 150);
+  --tone-15: oklch(0.440 0.06 150);
+  --tone-16: oklch(0.570 0.06 342);
+  --tone-17: oklch(0.620 0.06 342);
 }
 
 :root[data-theme="dark"] {
-  --tone-0: oklch(0.76 0.12 260);
-  --tone-1: oklch(0.66 0.10 260);
-  --tone-2: oklch(0.74 0.14 10);
-  --tone-3: oklch(0.64 0.12 10);
-  --tone-4: oklch(0.78 0.10 188);
-  --tone-5: oklch(0.68 0.09 188);
-  --tone-6: oklch(0.76 0.13 305);
-  --tone-7: oklch(0.66 0.11 305);
-  --tone-8: oklch(0.82 0.12 115);
-  --tone-9: oklch(0.72 0.10 115);
-  --tone-10: oklch(0.86 0.08 228);
-  --tone-11: oklch(0.76 0.07 228);
-  --tone-12: oklch(0.84 0.10 335);
-  --tone-13: oklch(0.74 0.09 335);
-  --tone-14: oklch(0.68 0.11 150);
-  --tone-15: oklch(0.58 0.09 150);
-  --tone-16: oklch(0.62 0.13 280);
-  --tone-17: oklch(0.52 0.11 280);
+  --tone-0: oklch(0.745 0.15 234);
+  --tone-1: oklch(0.795 0.120 234);
+  --tone-2: oklch(0.620 0.12 102);
+  --tone-3: oklch(0.670 0.12 102);
+  --tone-4: oklch(0.670 0.15 300);
+  --tone-5: oklch(0.720 0.15 300);
+  --tone-6: oklch(0.795 0.15 144);
+  --tone-7: oklch(0.745 0.15 144);
+  --tone-8: oklch(0.620 0.06 18);
+  --tone-9: oklch(0.670 0.06 18);
+  --tone-10: oklch(0.920 0.12 192);
+  --tone-11: oklch(0.870 0.12 192);
+  --tone-12: oklch(0.920 0.06 330);
+  --tone-13: oklch(0.870 0.06 330);
+  --tone-14: oklch(0.620 0.09 180);
+  --tone-15: oklch(0.670 0.09 180);
+  --tone-16: oklch(0.895 0.18 102);
+  --tone-17: oklch(0.845 0.175 102);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --tone-0: oklch(0.76 0.12 260);
-    --tone-1: oklch(0.66 0.10 260);
-    --tone-2: oklch(0.74 0.14 10);
-    --tone-3: oklch(0.64 0.12 10);
-    --tone-4: oklch(0.78 0.10 188);
-    --tone-5: oklch(0.68 0.09 188);
-    --tone-6: oklch(0.76 0.13 305);
-    --tone-7: oklch(0.66 0.11 305);
-    --tone-8: oklch(0.82 0.12 115);
-    --tone-9: oklch(0.72 0.10 115);
-    --tone-10: oklch(0.86 0.08 228);
-    --tone-11: oklch(0.76 0.07 228);
-    --tone-12: oklch(0.84 0.10 335);
-    --tone-13: oklch(0.74 0.09 335);
-    --tone-14: oklch(0.68 0.11 150);
-    --tone-15: oklch(0.58 0.09 150);
-    --tone-16: oklch(0.62 0.13 280);
-    --tone-17: oklch(0.52 0.11 280);
+    --tone-0: oklch(0.745 0.15 234);
+    --tone-1: oklch(0.795 0.120 234);
+    --tone-2: oklch(0.620 0.12 102);
+    --tone-3: oklch(0.670 0.12 102);
+    --tone-4: oklch(0.670 0.15 300);
+    --tone-5: oklch(0.720 0.15 300);
+    --tone-6: oklch(0.795 0.15 144);
+    --tone-7: oklch(0.745 0.15 144);
+    --tone-8: oklch(0.620 0.06 18);
+    --tone-9: oklch(0.670 0.06 18);
+    --tone-10: oklch(0.920 0.12 192);
+    --tone-11: oklch(0.870 0.12 192);
+    --tone-12: oklch(0.920 0.06 330);
+    --tone-13: oklch(0.870 0.06 330);
+    --tone-14: oklch(0.620 0.09 180);
+    --tone-15: oklch(0.670 0.09 180);
+    --tone-16: oklch(0.895 0.18 102);
+    --tone-17: oklch(0.845 0.175 102);
   }
 }
 
