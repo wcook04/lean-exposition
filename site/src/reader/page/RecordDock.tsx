@@ -9,7 +9,7 @@
 // which, and an opened statement has a quiet way back to following.
 
 import { OriginLine } from "../../compare/Fidelity";
-import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Alignment, PhraseLean, RecordAlignment, StatementLean } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
@@ -208,6 +208,19 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
         : "";
   // The paper's phrases of a declaration light while its card is pointed at, and go out with it.
   useLayoutEffect(() => () => declLight.set(null), []);
+  // The phrase's own words, as the paper sets them, for the head of its card.
+  const [quote, setQuote] = useState<string | null>(null);
+  const segments = phrase && open.tie !== null ? ties.segmentsOf[open.tie] : undefined;
+  useEffect(() => {
+    if (!segments?.length) return setQuote(null);
+    const read = () => {
+      const marks = segments.flatMap((segment) => [...document.querySelectorAll<HTMLElement>(`.paper [data-t="${segment}"]`)]);
+      if (marks.length) setQuote(marks.map((mark) => mark.innerHTML).join(" "));
+    };
+    read();
+    const later = window.setTimeout(read, 400);
+    return () => window.clearTimeout(later);
+  }, [segments]);
 
   useLayoutEffect(() => {
     const el = page.current;
@@ -237,6 +250,23 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   useLayoutEffect(() => {
     if (scroller.current) scroller.current.scrollTop = 0;
   }, [showing]);
+  // A phrase's card stays at the top; the tied lines are brought into view below it, as the Lean arrives.
+  useEffect(() => {
+    if (!phrase) return;
+    const bring = () => {
+      const box = scroller.current;
+      const lit = box?.querySelector<HTMLElement>(".lean-line.is-lit");
+      if (!box || !lit) return false;
+      // As far as the lines need, never past the head of the phrase's card.
+      const card = box.querySelector<HTMLElement>(".phrase-card");
+      const over = lit.getBoundingClientRect().bottom - box.getBoundingClientRect().bottom + 24;
+      const most = card ? card.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 8 : Infinity;
+      if (over > 0) box.scrollTo({ top: Math.min(box.scrollTop + over, Math.max(0, most)), behavior: "instant" as ScrollBehavior });
+      return true;
+    };
+    const timers = [60, 250, 600, 1200].map((ms) => window.setTimeout(bring, ms));
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [showing, phrase]);
 
   const empty = !record && !name;
   return (
@@ -328,6 +358,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                   row={row as unknown as PhraseLean}
                   topic={open.tie !== null ? topicOf(ties, open.tie) : null}
                   note={part?.notes[row.name]}
+                  quote={quote}
                 />
               )}
               <LazyLeanBlock

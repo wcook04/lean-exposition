@@ -33,6 +33,8 @@ import "./map-pane.css";
 
 /** From this page width the Lean stands beside the graph, next to the paper. */
 const SIDE_BY_SIDE = 860;
+/** The phrase split, until a reader draws its handle: the graph above, the card below. */
+const splitShare = { current: 0.55 };
 /** From this share up the Lean has the pane, and no graph shows. */
 const WHOLE_PANE = 0.97;
 /** How much of the page a preview under the pointer takes. */
@@ -112,7 +114,9 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const pinLean = !!pin && (pin.tie !== null ? ties.index.ties[pin.tie].lean : !!recordLine(pin.record)?.lean);
   // The Lean closed, what is said under the graph lasts as long as the pin does.
   // A statement pinned while the graph was chosen stays on the graph, with its card lit.
-  const expanded = (pinLean && mode === "lean") || !!decl || !!slot;
+  // A phrase opened on the Graph tab splits the pane: the graph above, its card and Lean below.
+  const split = mode === "graph" && !!pin && pin.tie !== null && !decl && !slot && isPhraseLayer(ties) && ties.index.ties[pin.tie].lean;
+  const expanded = (pinLean && mode === "lean") || !!decl || !!slot || split;
   /** A reference under the pointer: it comes and goes, so it takes a modest part of the page. */
   const previewOnly = !!preview && !pinLean && !decl && !leanSlot;
   /** Lean mode with nothing opened: the Lean follows the text. */
@@ -157,6 +161,23 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const [goal, setGoal] = useState(() => goalFor(passage));
   const [fadeTo, setFadeTo] = useState<string | null>(null);
   const title = candidates.find((c) => c.id === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
+  // In the split, the graph centres the phrase's own step, or, where the map does not draw
+  // it, the nearest phrase's step in reading order.
+  const ownDrawn = split && !!pin && reachOf(goal).has(pin.record);
+  const splitStep = useMemo(() => {
+    if (!split || !pin || pin.tie === null) return null;
+    if (ownDrawn) return pin.record;
+    const at = ties.order.indexOf(pin.tie);
+    for (let d = 1; d < ties.order.length; d++) {
+      for (const k of [at - d, at + d]) {
+        const id = ties.index.ties[ties.order[k]]?.record;
+        if (id && reachOf(goal).has(id)) return id;
+      }
+    }
+    return null;
+  }, [split, pin, ownDrawn, ties, reachOf, goal]);
+  /** The card the open Lean rises from, and that the graph keeps in view beside it. */
+  const cardRecord = split ? splitStep : openRecord;
 
   // ---- Following ---------------------------------------------------------------------
 
@@ -175,7 +196,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const litIds = useMemo(() => (drawable.length ? new Set(drawable) : null), [drawable]);
   const passedIds = passed.passed;
   // The tree's own selection moves its camera. A pin must not, so it is only ever lit here.
-  const pinned = openRecord;
+  const pinned = split ? (ownDrawn ? openRecord : null) : openRecord;
   // Scrolling must stay smooth, so while it runs the trail is written straight onto the
   // tiles (one attribute each, no render), and the map draws the lit lines when it stops.
   const [settledLit, setSettledLit] = useState(litIds);
@@ -216,21 +237,23 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   // How far the Lean rises, remembered. It is a layer over the graph: the canvas beneath keeps
   // its size and its camera. Only a transform carries the card into the part left showing, and
   // that goes when the Lean closes, so the graph is exactly as it was.
-  const isSide = () => (rootRef.current?.clientWidth ?? 0) >= SIDE_BY_SIDE;
+  // The split stands one above the other at every width, at its own share of the pane.
+  const isSide = () => !split && (rootRef.current?.clientWidth ?? 0) >= SIDE_BY_SIDE;
+  const shareOf = (side: boolean) => (split ? splitShare.current : readDockShare(side));
   const keptOnly = keep;
   const applyShare = useCallback(
     (value?: number) => {
       const root = rootRef.current;
       if (!root) return;
-      const side = root.clientWidth >= SIDE_BY_SIDE;
-      root.style.setProperty("--lean-share", String(value ?? (previewOnly && !keep ? PREVIEW_SHARE : leanShown ? readDockShare(side) : 0)));
+      const side = isSide();
+      root.style.setProperty("--lean-share", String(value ?? (previewOnly && !keep ? PREVIEW_SHARE : leanShown ? shareOf(side) : 0)));
     },
     [keep, leanShown, previewOnly],
   );
   const measureKept = useCallback(() => {
     const pages = rootRef.current?.querySelector<HTMLElement>(".map-pane__pages");
-    const side = !!pages && pages.clientWidth >= SIDE_BY_SIDE;
-    const share = readDockShare(side);
+    const side = !split && !!pages && pages.clientWidth >= SIDE_BY_SIDE;
+    const share = shareOf(side);
     // Only a Lean drawn down beside the graph leaves a graph to frame.
     if (!keep || !pages || share >= WHOLE_PANE) return setKept({ bottom: 0, left: 0 });
     // The graph's line and head are not part of the canvas: only what lies over the canvas counts.
@@ -238,18 +261,19 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const box = pages.getBoundingClientRect();
     const cover = side ? box.width * share : Math.max(0, (body?.bottom ?? box.bottom) - (box.bottom - box.height * share));
     setKept(side ? { bottom: 0, left: Math.round(cover) } : { bottom: Math.round(cover), left: 0 });
-  }, [keep]);
+  }, [keep, split]);
   useLayoutEffect(measureKept, [measureKept]);
   const place = useCallback(() => {
     const canvas = canvasRef.current;
     const body = bodyRef.current;
     const lean = rootRef.current?.querySelector(".lean-page");
     if (!canvas || !body) return;
-    const card = openRecord ? body.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(openRecord)}"]`) : null;
+    const card = cardRecord ? body.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(cardRecord)}"]`) : null;
     // No card to show (a declaration of no step, a step not drawn here): no band of blank graph.
-    rootRef.current?.classList.toggle("map-pane--fold", expanded && !card && !slot);
+    // The split keeps its graph: the line above it says what is not drawn.
+    rootRef.current?.classList.toggle("map-pane--fold", expanded && !card && !slot && !split);
     // Under the whole pane there is no band to lift it into.
-    if (!card || !lean || !expanded || readDockShare(isSide()) >= WHOLE_PANE) {
+    if (!card || !lean || !expanded || shareOf(isSide()) >= WHOLE_PANE) {
       canvas.style.transform = "";
       return;
     }
@@ -264,12 +288,12 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const left = l.right + 8;
       canvas.style.transform = `translateX(${Math.round((left + b.right) / 2 - (c.left + c.right) / 2)}px)`;
     } else {
-      // The head gives way while the Lean is open, so the band is all graph.
-      const top = body.closest(".map-pane__pages")!.getBoundingClientRect().top;
+      // The head gives way while the Lean is open, so the band is all graph; the split keeps its head.
+      const top = split ? b.top : body.closest(".map-pane__pages")!.getBoundingClientRect().top;
       const bottom = l.top - 11;
       canvas.style.transform = `translate(${Math.round((b.left + b.right) / 2 - (c.left + c.right) / 2)}px, ${Math.round((top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
     }
-  }, [openRecord, expanded, slot]);
+  }, [cardRecord, expanded, slot, split]);
 
   useLayoutEffect(() => {
     applyShare();
@@ -281,12 +305,12 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       framedFrom.current = null;
       return;
     }
-    const card = openRecord ? (bodyRef.current?.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(openRecord)}"]`) ?? null) : null;
-    setFrom(card);
-    if (card && !inViewRef.current([openRecord!])) {
+    const card = cardRecord ? (bodyRef.current?.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(cardRecord)}"]`) ?? null) : null;
+    setFrom(split ? null : card);
+    if (card && (split || !inViewRef.current([cardRecord!]))) {
       // Off the view: frame it first, and only then lift it clear of the Lean.
       framedFrom.current ??= treeRef.current?.getScene() ?? null;
-      treeRef.current?.focusIds([openRecord!]);
+      treeRef.current?.focusIds([cardRecord!]);
       const t = window.setTimeout(place, 380);
       return () => window.clearTimeout(t);
     }
@@ -297,7 +321,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       cancelAnimationFrame(frame);
       later.forEach((t) => window.clearTimeout(t));
     };
-  }, [expanded, openRecord, applyShare, place]);
+  }, [expanded, cardRecord, applyShare, place, split]);
 
   // The drag writes one custom property; the card moves back into view when it ends.
   const onHandleDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -310,7 +334,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const side = isSide();
     // At rest the handle lies at the foot of the graph: drawing it up keeps the Lean open.
     const rest = !keep && !expanded;
-    let value = rest ? 0 : readDockShare(side);
+    let value = rest ? 0 : shareOf(side);
     let raised = false;
     const startY = event.clientY;
     const startX = event.clientX;
@@ -338,7 +362,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
         return;
       }
       value = clampDock(value);
-      saveDockShare(value, side);
+      if (split) splitShare.current = value;
+      else saveDockShare(value, side);
       if (rest) onMode("lean");
       else {
         applyShare(value);
@@ -360,8 +385,9 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       if (step > 0) onMode("lean");
       return;
     }
-    const next = clampDock(readDockShare(side) + step);
-    saveDockShare(next, side);
+    const next = clampDock(shareOf(side) + step);
+    if (split) splitShare.current = next;
+    else saveDockShare(next, side);
     applyShare(next);
     measureKept();
     place();
@@ -408,7 +434,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     }
     // With the Lean open the graph is left alone, so it is as it was when the Lean closes. The
     // run that closes it is left out too: the canvas is still gliding back, and every card reads off.
-    const away = expanded || (keep && readDockShare(isSide()) >= WHOLE_PANE);
+    const away = expanded || (keep && shareOf(isSide()) >= WHOLE_PANE);
     const closing = wasOpen.current && !away;
     wasOpen.current = away;
     if (!away && !closing && drawable.length && !inView(drawable)) treeRef.current?.focusIds(drawable);
@@ -492,7 +518,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const line = lineFor();
 
   return (
-    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}${split ? " map-pane--split" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
         <ModeToggle mode={mode} onMode={onMode} />
         <span className="map-pane__goal" title={title}>
@@ -545,7 +571,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
                 )}
                 <span className="map-pane__rest">{line.rest}</span>
               </p>
-              {pin && !expanded ? (
+              {pin && (!expanded || split) ? (
                 <button type="button" className="map-pane__keep" onClick={onRelease}>
                   Close this statement
                 </button>
@@ -579,7 +605,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             aria-label="Draw the Lean up over the graph, or size it"
             aria-valuemin={0}
             aria-valuemax={Math.round(DOCK_MAX * 100)}
-            aria-valuenow={leanShown ? Math.round(readDockShare() * 100) : 0}
+            aria-valuenow={leanShown ? Math.round((split ? splitShare.current : readDockShare()) * 100) : 0}
             tabIndex={0}
             onPointerDown={onHandleDown}
             onKeyDown={onHandleKey}
@@ -597,7 +623,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
               slot={slot}
               from={from}
               onRelease={onRelease}
-              onFollowText={onFollowText}
+              onFollowText={split ? undefined : onFollowText}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}
               onName={onName}
@@ -631,6 +657,12 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const said = says(id, t, invite);
       return { via, lead, name: said.name, rest: `${said.rest}${drawn(id)}` };
     };
+    // The split's head names the phrase's step on the map; the card below names its Lean.
+    if (pin && split) {
+      const topic = pin.tie !== null ? topicOf(ties, pin.tie) : null;
+      if (ownDrawn) return { via: "pin", lead: "Step on the map", name: named(pin.record), rest: topic ? `Topic: ${topic.name}.` : "" };
+      return { via: "pin", lead: "Step on the map", rest: `This phrase's Lean is not in the argument drawn here.${splitStep ? ` Nearest step: ${named(splitStep)}.` : ""}` };
+    }
     if (pin && !expanded) return about("pin", "Open", pin.record, pin.tie, "");
     if (pointed) return about("point", "Pointing at", pointed.record, pointed.tie, "click to open it");
     if (caption) {

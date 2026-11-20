@@ -76,7 +76,7 @@ export function noteHtml(text: string): { html: string; errors: string[] } {
   return { html, errors };
 }
 
-export function PhraseCard({ row, topic, note }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined }) {
+export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null }) {
   const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
   return (
     <section className="phrase-card" data-tone={topic ? topic.colour * 2 : undefined} aria-label="About this phrase and its Lean">
@@ -85,6 +85,9 @@ export function PhraseCard({ row, topic, note }: { row: PhraseLean; topic: Phras
           <span className="phrase-card__swatch" aria-hidden="true" />
           Topic: {topic.name}
         </p>
+      )}
+      {quote && (
+        <blockquote className="phrase-card__quote" aria-label="The phrase in the paper" dangerouslySetInnerHTML={{ __html: quote }} />
       )}
       {verdict && (
         <p className="phrase-card__fidelity" data-fidelity={row.fidelity}>

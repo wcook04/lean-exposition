@@ -200,7 +200,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
           >
             <span className="outline__name">
               {sectionLabel(entry.title)}
-              {!!counts?.get(entry.id)?.topics?.length && entry.level < 4 && (
+              {!!counts?.get(entry.id)?.topics?.length && (
                 <span className="phrase-bars" title={`Topics here: ${counts.get(entry.id)!.topics!.map((id) => byId.get(id)?.name ?? id).join(", ")}`}>
                   {counts.get(entry.id)!.topics!.slice(0, 6).map((id) => (
                     <span key={id} data-tone={(byId.get(id)?.colour ?? 0) * 2} />

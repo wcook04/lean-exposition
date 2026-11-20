@@ -1076,3 +1076,78 @@ html[data-right-sheet] .reader__paper {
     transition: none;
   }
 }
+
+/* A phrase opened on the Graph tab: the graph keeps the top of the pane, with its head naming
+   the phrase, and the phrase's card and Lean take the bottom, one above the other at any width. */
+.map-pane--split .map-pane__head {
+  visibility: visible;
+}
+
+@container right-page (min-width: 860px) {
+  .map-pane--split .lean-page {
+    top: auto;
+    right: 0;
+    width: auto;
+    height: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
+    box-shadow: 0 -1px 0 var(--rule-strong);
+  }
+  .map-pane--split .map-pane__handle {
+    top: auto;
+    right: 0;
+    bottom: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
+    left: 0;
+    width: auto;
+    height: 11px;
+    border-top: 1px solid var(--rule);
+    border-left: 0;
+    border-right: 0;
+    cursor: ns-resize;
+  }
+}
+
+/* The graph moved to centre the phrase's step stays inside its own half, under the head. */
+.map-pane--split .map-pane__body {
+  position: relative;
+  z-index: auto;
+  overflow: hidden;
+}
+
+/* A phone's sheet has no room for half a graph: the split keeps the graph's head as a strip
+   naming the phrase's step (or saying it is not on the map), with the card and Lean below. */
+.right-sheet--phone .map-pane--split .map-pane__graph {
+  visibility: visible;
+}
+
+.right-sheet--phone .map-pane--split .map-pane__body,
+.right-sheet--phone .map-pane--split .map-pane__foot {
+  visibility: hidden;
+}
+
+.right-sheet--phone .map-pane--split .lean-page {
+  height: calc(100% - var(--split-strip, 96px));
+  box-shadow: 0 -1px 0 var(--rule-strong);
+}
+
+.right-sheet--phone .map-pane--split {
+  --split-strip: 78px;
+}
+
+.right-sheet--phone .map-pane--split .map-pane__head .map-pane__progress,
+.right-sheet--phone .map-pane--split .map-pane__head .map-pane__meter {
+  display: none;
+}
+
+.right-sheet--phone .map-pane--split .map-pane__head .map-pane__name {
+  display: block;
+  overflow: hidden;
+  font-size: var(--fs-card);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* On the strip: the step's name alone (the card says the topic), or the one line that says the
+   phrase is not on the map; the sheet's own close button closes the card. */
+.right-sheet--phone .map-pane--split .map-pane__now[data-named] .map-pane__rest,
+.right-sheet--phone .map-pane--split .map-pane__keep {
+  display: none;
+}
