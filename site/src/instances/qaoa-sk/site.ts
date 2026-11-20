@@ -39,7 +39,7 @@ gives the exact scope of the Lean and the recorded checks.
 | [Lean index](https://wcook04.github.io/lean-exposition-site/lean/) · [What ran](https://wcook04.github.io/lean-exposition-site/checks/) | The named statements in the Lean code and recorded check results |
 | [About](https://wcook04.github.io/lean-exposition-site/about/) | A paper explaining how the website connects the papers to the proof steps |
 
-A statement with a dark tick opens its Lean beside the paper.
+Each phrase that a Lean declaration states is underlined in the colour of its topic and opens that Lean beside the paper, with a plain title, a comparison with the phrase and an AI-drafted reading note.
 The three explanations and the paper under About are also available in [PDF](pdf/).
 [Plectis Atlas](https://wcook04.github.io/plectis-atlas/families/281.html)
 lists the same OpenAI manuscripts and Lean files.
@@ -157,10 +157,10 @@ const site = {
   editionTitle: EDITION_TITLE,
   html: {
     description:
-      "Why a minimising Parisi order parameter of the zero-temperature Sherrington–Kirkpatrick spin glass has no gaps. Read three papers on the proof: a statement with a dark tick opens OpenAI's Lean beside the text, and a graph of the proof moves to the statement you are reading.",
+      "Why a minimising Parisi order parameter of the zero-temperature Sherrington–Kirkpatrick spin glass has no gaps. Read three papers on the proof: an underlined phrase opens the OpenAI Lean that states it beside the text, and a graph of the proof moves to the statement you are reading.",
     ogTitle: EDITION_TITLE,
     ogDescription:
-      "Read a paper on this theorem as you would any paper: a statement with a dark tick opens OpenAI's Lean beside the text, and a graph of the proof moves to the statement you are reading.",
+      "Read a paper on this theorem as you would any paper: an underlined phrase opens the OpenAI Lean that states it beside the text, and a graph of the proof moves to the statement you are reading.",
     // The line break and indent keep the built index.html byte for byte as it was.
     noscript: "The\n        papers are also available as Markdown and PDF in the repository under <code>papers/qaoa-sk/</code>.",
     ogImage: true,

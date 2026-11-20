@@ -27,7 +27,7 @@ export function LeanLanding({ shell, slot }: { shell: LeanShell; slot: HTMLEleme
         <h1>Lean index</h1>
         <p>
           The index at the back of the book, for anyone who wants the files and declarations themselves. In this Lean the order parameter γ is called the coefficient. To read the mathematics,{" "}
-          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
+          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: click an underlined phrase there and the Lean that states it opens beside the text, with a plain title, a comparison and an AI-drafted reading note.
         </p>
         <p>
           OpenAI's proof of a theorem about the Sherrington–Kirkpatrick (SK) spin glass is written in Lean, a programming language whose compiler rejects a proof with a wrong step. This is that Lean at commit{" "}

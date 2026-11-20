@@ -34,7 +34,7 @@ export function LeanLanding({ shell, slot }: { shell: LeanShell; slot: HTMLEleme
         <h1>Lean index</h1>
         <p>
           The index at the back of the book, for anyone who wants the files and declarations themselves. To read the mathematics,{" "}
-          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
+          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: click an underlined phrase there and the Lean that states it opens beside the text, with a plain title, a comparison and an AI-drafted reading note.
         </p>
         <p>
           This is the Lean

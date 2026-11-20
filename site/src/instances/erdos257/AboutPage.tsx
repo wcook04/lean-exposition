@@ -38,7 +38,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <ol className="about__routes">
           <li>
             <a href={routeHref({ view: "read", stage: "short" })}>The papers</a>
-            <span>Start here. A statement with a dark tick opens its Lean beside the text, and a graph of the proof beside the paper moves to the statement you are reading.</span>
+            <span>Start here. An underlined phrase opens the Lean that states it beside the text, with a plain title, a comparison and an AI-drafted reading note, and a graph of the proof beside the paper moves to the statement you are reading.</span>
           </li>
           <li>
             <a href={routeHref({ view: "compare" })}>Compare</a>
