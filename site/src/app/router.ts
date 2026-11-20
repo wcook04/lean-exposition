@@ -31,6 +31,8 @@ export type Route =
       at?: string;
       /** The right pane is in Lean mode. */
       lean?: boolean;
+      /** The reader chose the graph: a statement opened here stays on the graph. */
+      graph?: boolean;
       node?: string;
       beside?: { stage: Stage; anchor: string };
       /** The Lean declaration open beside the paper, with its module where a name is declared twice. */
@@ -145,6 +147,7 @@ export function parseRoute(url: URL): Route {
       anchor: hash,
       at: AT_PARAM.test(q.get("l") ?? "") ? q.get("l")! : undefined,
       lean: q.get("v") === "lean" || undefined,
+      graph: q.get("v") === "graph" || undefined,
       node: q.get("n") ?? undefined,
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
       decl: q.get("d") ?? undefined,
@@ -214,6 +217,7 @@ export function routeHref(route: Route): string {
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.lean) q.set("v", "lean");
+      else if (route.graph && route.node) q.set("v", "graph");
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);

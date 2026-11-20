@@ -695,7 +695,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
   const noLeanRef = useRef(pinWithoutLean);
   noLeanRef.current = pinWithoutLean;
-  const mode: PaneMode = route.lean || route.decl || (pin && !pinWithoutLean) ? "lean" : "graph";
+  // A statement opened while the graph was chosen stays on the graph; otherwise it opens its Lean.
+  const mode: PaneMode = route.graph && !route.lean && !route.decl ? "graph" : route.lean || route.decl || (pin && !pinWithoutLean) ? "lean" : "graph";
   const modeRef = useRef(mode);
   modeRef.current = mode;
   useEffect(() => {
@@ -742,7 +743,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const releaseInPlace = useCallback(() => {
     const here = hereRef.current;
     writeEntry(OPENED, undefined);
-    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined }, { replace: true });
+    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined, graph: undefined }, { replace: true });
   }, []);
 
   /**
@@ -934,7 +935,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- Links -------------------------------------------------------------------------
 
   const here: ReadRoute = useMemo(
-    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, lean: route.lean, node: route.node, beside: route.beside, decl: route.decl, declModule: route.declModule }),
+    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, lean: route.lean, graph: route.graph, node: route.node, beside: route.beside, decl: route.decl, declModule: route.declModule }),
     [stage, route.anchor, route.at, route.lean, route.node, route.beside, route.decl, route.declModule],
   );
   const links: Links = useMemo(
@@ -1019,7 +1020,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const tie = ties.index.ties[t];
       selfAt.current = tie.at;
       const opened = nextOpened();
-      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
+      // The pane keeps the mode it is in: on the graph the statement's card is pinned there.
+      const onGraph = modeRef.current === "graph";
+      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined, graph: onGraph || undefined });
       writeEntry(OPENED, opened);
       // A phone's sheet rises from the foot: the statement goes above it.
       const box = phoneRef.current ? statements.first(t)?.getBoundingClientRect() : null;
@@ -1097,12 +1100,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const here = hereRef.current;
       const open = !!here.decl || (!!pinRef.current && !noLeanRef.current);
       if (mode === "lean") {
+        // A statement pinned on the graph: its Lean opens in place.
+        if (here.graph && here.node) return navigate({ ...here, graph: undefined }, { replace: true });
         if (here.lean || open) return;
         const push = !here.node;
         navigate({ ...here, lean: true }, { replace: !push });
         if (push) writeEntry(WENT_TO_LEAN, true);
         return;
       }
+      if (here.graph) return;
+      // A statement opened from the paper stays pinned; the pane shows it on the graph.
+      if (here.node && !here.decl) return navigate({ ...here, graph: true, lean: undefined }, { replace: true });
       const opened = readEntry<Opened>(OPENED);
       if (opened?.fromGraph) return window.history.go(-opened.steps);
       if (here.node || here.decl || here.lean) {
