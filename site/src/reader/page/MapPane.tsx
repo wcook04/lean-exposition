@@ -111,7 +111,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   // A step with no Lean does not open: the line under the graph says so.
   const pinLean = !!pin && (pin.tie !== null ? ties.index.ties[pin.tie].lean : !!recordLine(pin.record)?.lean);
   // The Lean closed, what is said under the graph lasts as long as the pin does.
-  const expanded = pinLean || !!decl || !!slot;
+  // A statement pinned while the graph was chosen stays on the graph, with its card lit.
+  const expanded = (pinLean && mode === "lean") || !!decl || !!slot;
   /** A reference under the pointer: it comes and goes, so it takes a modest part of the page. */
   const previewOnly = !!preview && !pinLean && !decl && !leanSlot;
   /** Lean mode with nothing opened: the Lean follows the text. */
