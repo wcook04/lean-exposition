@@ -936,7 +936,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const here: ReadRoute = useMemo(
     () => ({ view: "read", stage, anchor: route.anchor, at: route.at, lean: route.lean, graph: route.graph, node: route.node, beside: route.beside, decl: route.decl, declModule: route.declModule }),
-    [stage, route.anchor, route.at, route.lean, route.node, route.beside, route.decl, route.declModule],
+    [stage, route.anchor, route.at, route.lean, route.graph, route.node, route.beside, route.decl, route.declModule],
   );
   const links: Links = useMemo(
     () => ({
@@ -1016,13 +1016,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   /** A statement in the paper: one history entry, and the paper does not move. */
   const openStatement = useCallback(
-    (t: number) => {
+    (t: number, want?: PaneMode) => {
       const tie = ties.index.ties[t];
       selfAt.current = tie.at;
       const opened = nextOpened();
-      // The pane keeps the mode it is in: on the graph the statement's card is pinned there.
-      const onGraph = modeRef.current === "graph";
-      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined, graph: onGraph || undefined });
+      // A click changes the statement, not the mode: the pane stays on the mode it is in, and
+      // the address says which, so a statement with no Lean keeps a chosen Lean. A command that
+      // names its mode ("See its Lean") chooses that mode too.
+      const mode = want ?? modeRef.current;
+      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined });
       writeEntry(OPENED, opened);
       // A phone's sheet rises from the foot: the statement goes above it.
       const box = phoneRef.current ? statements.first(t)?.getBoundingClientRect() : null;
@@ -1035,7 +1037,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const openReferenceLean = useCallback(
     (record: string, at: string | undefined) => {
       const t = statementFor(ties, record, at);
-      if (t !== null) openStatement(t);
+      if (t !== null) openStatement(t, "lean");
     },
     [ties, openStatement],
   );
@@ -1101,7 +1103,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const open = !!here.decl || (!!pinRef.current && !noLeanRef.current);
       if (mode === "lean") {
         // A statement pinned on the graph: its Lean opens in place.
-        if (here.graph && here.node) return navigate({ ...here, graph: undefined }, { replace: true });
+        if (here.graph && here.node) return navigate({ ...here, graph: undefined, lean: true }, { replace: true });
         if (here.lean || open) return;
         const push = !here.node;
         navigate({ ...here, lean: true }, { replace: !push });
@@ -1150,7 +1152,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     if (!paneRoom) return;
     if (!seeded.current) {
       seeded.current = true;
-      if (!route.lean && readKeepLean() && arrivedBy() !== "pop") {
+      // A saved Lean is a default only: an address that names the graph keeps it.
+      if (!route.lean && !route.graph && readKeepLean() && arrivedBy() !== "pop") {
         navigate({ ...hereRef.current, lean: true }, { replace: true });
         return;
       }
