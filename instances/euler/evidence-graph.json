@@ -7,6 +7,166 @@
  ],
  "sources": [
   {
+   "id": "lean:TorusEuler/AuxiliaryTerminalSmoothness.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/AuxiliaryTerminalSmoothness.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "b2d57c2f5b3a661b28ef0d3a7f8c2add27812c59b012aa33a4a4100f23484364",
+   "path": "upstream/lean/TorusEuler/AuxiliaryTerminalSmoothness.lean"
+  },
+  {
+   "id": "lean:TorusEuler/HierarchyPhysicalApproximation.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/HierarchyPhysicalApproximation.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "3954bd0997affeeaf0d22b769bca940f8bcdd6785f691e30120b72671152d8c1",
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalApproximation.lean"
+  },
+  {
+   "id": "lean:TorusEuler/MainTheorem.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/MainTheorem.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "918464eed5f4ae22ff8e026ff70979eae56ac9a98005272d92e290870ff34546",
+   "path": "upstream/lean/TorusEuler/MainTheorem.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/Auxiliary/Statements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Auxiliary/Statements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "d72312a48c7271021d8eb27f90af3eb5c73cbdffcf073e04a94d5bc4492b302c",
+   "path": "upstream/lean/TorusEuler/Paper/Auxiliary/Statements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "dd68618aceecd73e4687dc0d73c5548896df206115f15ce78599e908552b9325",
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/Rem12/Remark12.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "291cb235ff470c452271c81b625bb86ab038bb66e52f55aa502e9d0d816ae4d2",
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Lemma26.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "56020e496c02b18c6b8a33c6f13123f01a9debae853aa14cb266abe2ec848a3b",
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Near519.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "0e2ae8eec40e2d9cd42eb50ae7ed939d72d956729768ffe34ba96336adfa0994",
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Lemma13.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S2/Statements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "c2fc239cbbc7a25ec6f8bb05a1540957a818b795e1fac040880b5adada29442e",
+   "path": "upstream/lean/TorusEuler/Paper/S2/Statements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S2/Vocabulary.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S2/Vocabulary.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "114056e700afe4be6567f23bf22e788c5bc62c9d9f6f62a19fa95e31d407ae0e",
+   "path": "upstream/lean/TorusEuler/Paper/S2/Vocabulary.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S34A/Statements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "15a94609773807d9dbff850990c26c7ae45cfb813cea69be7fcd80bc2fcf2b0f",
+   "path": "upstream/lean/TorusEuler/Paper/S34A/Statements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S34A/Vocabulary.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S34A/Vocabulary.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "1d79ffed7fcac54fa90a54fccbd57762b42ae86c178467dc56ec07c92bf5a298",
+   "path": "upstream/lean/TorusEuler/Paper/S34A/Vocabulary.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "4fc24a785164bd4cbb01f4bc201b1e6aedb1031edfd162d859796cd2de605172",
+   "path": "upstream/lean/TorusEuler/Paper/S5/Statements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "7d055f865f5ebd69fc4fae7c5e1d2dfe1d1a7eb4cccf8d56685639397a50c821",
+   "path": "upstream/lean/TorusEuler/Paper/S678/Statements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Vocabulary.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "4e7c67188a2d479454f9a17fc42b90e8bb630bd202a072092bf7ae8f4c668661",
+   "path": "upstream/lean/TorusEuler/Paper/S678/Vocabulary.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Paper/SBD/Statements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/SBD/Statements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "6f73a7d4719a525eb062ecfedf647657dc5832343895bac56582d83a46b3cacf",
+   "path": "upstream/lean/TorusEuler/Paper/SBD/Statements.lean"
+  },
+  {
    "id": "lean:TorusEuler/Paper/Spine.lean",
    "kind": "file",
    "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean",
@@ -15,6 +175,216 @@
    "redistribution": "vendored",
    "sha256": "ee06fa27bb265f17719d25999f4a5a727403a6a49c48b2d6ff5e1d5b8f070d4b",
    "path": "upstream/lean/TorusEuler/Paper/Spine.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAffineStatements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "4b790212ba20a9e184cf8cb64cf63bf9f9997fddc974f3c6c240c9b05b94a5ca",
+   "path": "upstream/lean/TorusEuler/PaperAffineStatements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperAppendixD.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixD.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "2c0daa2b656523b17089fc1b7871982b8789113190c7e9163182ab1aa1664b0f",
+   "path": "upstream/lean/TorusEuler/PaperAppendixD.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperAppendixDFields.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixDFields.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "cd4eba05323835350d0b8a3dc15a512570372751f204ae9063b68d131a71b52e",
+   "path": "upstream/lean/TorusEuler/PaperAppendixDFields.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperAppendixDMultiIndex.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixDMultiIndex.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "a764f8924bf7ceb643842f7a42d9b2a4dd644cf3c2080481866cc3b58121840c",
+   "path": "upstream/lean/TorusEuler/PaperAppendixDMultiIndex.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperApproximateSolution.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperApproximateSolution.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "34733980644c210b20e65fa918a4c2247e4b360ac80c3f64f588f28b2792d702",
+   "path": "upstream/lean/TorusEuler/PaperApproximateSolution.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperFlowBounds.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperFlowBounds.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "1188e753092be1a4d6050c21fe72d8fae4f6efaf32b01d78714c0835b878ae1f",
+   "path": "upstream/lean/TorusEuler/PaperFlowBounds.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperGenericPhysicalPressure.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperGenericPhysicalPressure.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "4cdefae3f4ca16b4b1e38aeb354b741e7e45ceb391502261dc4198f87407fe1a",
+   "path": "upstream/lean/TorusEuler/PaperGenericPhysicalPressure.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperGenericWaveSwitchDepth.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperGenericWaveSwitchDepth.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "12fb527f7dbafe9b407d9ea55e3a3719599599a9d5c5ae2486f1a24c9ba9dd7b",
+   "path": "upstream/lean/TorusEuler/PaperGenericWaveSwitchDepth.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperGraphReadout.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperGraphReadout.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "e9767be2c9ee461cae341b4dbffcc7fdaa90672b9df21e513dc1b41a6cfde3e6",
+   "path": "upstream/lean/TorusEuler/PaperGraphReadout.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperHierarchyDepthGeneral.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperHierarchyDepthGeneral.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "ed4b71f0d02b61b3af4532fa69364f8f62bd4a2ebc725d9c555ed0d4a90f2deb",
+   "path": "upstream/lean/TorusEuler/PaperHierarchyDepthGeneral.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperHierarchyIdentity.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperHierarchyIdentity.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "6a8429351a504c9066eb8d22b2192f92ed2dcbd5b00308852168344ab29bbe89",
+   "path": "upstream/lean/TorusEuler/PaperHierarchyIdentity.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperHierarchyInverse.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperHierarchyInverse.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "5404b02073132ace4675bb67b2c180913db5db1bffbfaa7849bacc78455e0147",
+   "path": "upstream/lean/TorusEuler/PaperHierarchyInverse.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "d98a5765ee03baeabcf006e5dfd08ce4e71516a3dd0214b451ccf3025f4abf22",
+   "path": "upstream/lean/TorusEuler/PaperParameterAndLaunchStatements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperParentCoefficientStatements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperParentCoefficientStatements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "e0ff90ee7d2fb934bd17a0accbf28c2ffed34a5b9a5da5af6ccca09c82837814",
+   "path": "upstream/lean/TorusEuler/PaperParentCoefficientStatements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperPhysicalLaterStep.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperPhysicalLaterStep.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "351d6f7ac43e182a891b078f4e1806f179441d454072a8f421de61d61093d971",
+   "path": "upstream/lean/TorusEuler/PaperPhysicalLaterStep.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperPhysicalMeanStatements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperPhysicalMeanStatements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "034f2ad1d5f66299334fa051e0d8da4bad25a3ef3dbebb30e26db275067410c5",
+   "path": "upstream/lean/TorusEuler/PaperPhysicalMeanStatements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperSequenceStatements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperSequenceStatements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "bf572f3f6cc38b4394a57b42ccac46c84d42c4304f3dd75fe346265460833743",
+   "path": "upstream/lean/TorusEuler/PaperSequenceStatements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "1162062463072ed111de64e3092cffe88657515a284a97ad5e1c5c84d0673d3e",
+   "path": "upstream/lean/TorusEuler/PaperTerminalStatements.lean"
+  },
+  {
+   "id": "lean:TorusEuler/Statement.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Statement.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "fff72620940fd1d4b7924d808954fe55fe3ca4d9c97c4970c40e26858e77c34a",
+   "path": "upstream/lean/TorusEuler/Statement.lean"
+  },
+  {
+   "id": "lean:TorusEuler/TerminalAuxiliaryAssembly.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/TerminalAuxiliaryAssembly.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "a73e9ef375dfb8f0168eba392c96f2cd34d55585b0a66d2e2e1a27fc169a603e",
+   "path": "upstream/lean/TorusEuler/TerminalAuxiliaryAssembly.lean"
+  },
+  {
+   "id": "lean:TorusEuler/TerminalSeeleyExtension.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/TerminalSeeleyExtension.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "621bdcac41dc937b5aace7f92336b4b3b4d873952c9d20566a18abcbc4886660",
+   "path": "upstream/lean/TorusEuler/TerminalSeeleyExtension.lean"
   },
   {
    "id": "paper",
@@ -303,6 +673,342 @@
    "locator": "Theorem A.1, Section A"
   },
   {
+   "id": "cite.lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "title": "TorusEuler.AuxiliaryTerminalSmoothness",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/TerminalAuxiliaryAssembly.lean#L18",
+   "source_id": "lean:TorusEuler/TerminalAuxiliaryAssembly.lean",
+   "locator": "TorusEuler/TerminalAuxiliaryAssembly.lean, line 18"
+  },
+  {
+   "id": "cite.lean.TorusEuler.EulerSingularityWitness",
+   "title": "TorusEuler.EulerSingularityWitness",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Statement.lean#L108",
+   "source_id": "lean:TorusEuler/Statement.lean",
+   "locator": "TorusEuler/Statement.lean, line 108"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HasOffOriginLimits",
+   "title": "TorusEuler.HasOffOriginLimits",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Statement.lean#L100",
+   "source_id": "lean:TorusEuler/Statement.lean",
+   "locator": "TorusEuler/Statement.lean, line 100"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HasSmoothOffOriginExtension",
+   "title": "TorusEuler.HasSmoothOffOriginExtension",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/TerminalSeeleyExtension.lean#L132",
+   "source_id": "lean:TorusEuler/TerminalSeeleyExtension.lean",
+   "locator": "TorusEuler/TerminalSeeleyExtension.lean, line 132"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "title": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperFlowBounds.lean#L30",
+   "source_id": "lean:TorusEuler/PaperFlowBounds.lean",
+   "locator": "TorusEuler/PaperFlowBounds.lean, line 30"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "title": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperApproximateSolution.lean#L206",
+   "source_id": "lean:TorusEuler/PaperApproximateSolution.lean",
+   "locator": "TorusEuler/PaperApproximateSolution.lean, line 206"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "title": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperHierarchyIdentity.lean#L21",
+   "source_id": "lean:TorusEuler/PaperHierarchyIdentity.lean",
+   "locator": "TorusEuler/PaperHierarchyIdentity.lean, line 21"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "title": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/HierarchyPhysicalApproximation.lean#L107",
+   "source_id": "lean:TorusEuler/HierarchyPhysicalApproximation.lean",
+   "locator": "TorusEuler/HierarchyPhysicalApproximation.lean, line 107"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "title": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperHierarchyDepthGeneral.lean#L22",
+   "source_id": "lean:TorusEuler/PaperHierarchyDepthGeneral.lean",
+   "locator": "TorusEuler/PaperHierarchyDepthGeneral.lean, line 22"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "title": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperGenericWaveSwitchDepth.lean#L19",
+   "source_id": "lean:TorusEuler/PaperGenericWaveSwitchDepth.lean",
+   "locator": "TorusEuler/PaperGenericWaveSwitchDepth.lean, line 19"
+  },
+  {
+   "id": "cite.lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "title": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperPhysicalLaterStep.lean#L25",
+   "source_id": "lean:TorusEuler/PaperPhysicalLaterStep.lean",
+   "locator": "TorusEuler/PaperPhysicalLaterStep.lean, line 25"
+  },
+  {
+   "id": "cite.lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "title": "TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean#L61",
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 61"
+  },
+  {
+   "id": "cite.lean.TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+   "title": "TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperHierarchyInverse.lean#L220",
+   "source_id": "lean:TorusEuler/PaperHierarchyInverse.lean",
+   "locator": "TorusEuler/PaperHierarchyInverse.lean, line 220"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Corollary83Conclusions",
+   "title": "TorusEuler.Paper.Corollary83Conclusions",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Vocabulary.lean#L294",
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 294"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.FiniteSmallness",
+   "title": "TorusEuler.Paper.FiniteSmallness",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S2/Vocabulary.lean#L144",
+   "source_id": "lean:TorusEuler/Paper/S2/Vocabulary.lean",
+   "locator": "TorusEuler/Paper/S2/Vocabulary.lean, line 144"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "title": "TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/S5a/Library/Near519.lean#L24",
+   "source_id": "lean:TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
+   "locator": "TorusEuler/Paper/Proofs/S5a/Library/Near519.lean, line 24"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.ProfileFamily",
+   "title": "TorusEuler.Paper.ProfileFamily",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S34A/Vocabulary.lean#L44",
+   "source_id": "lean:TorusEuler/Paper/S34A/Vocabulary.lean",
+   "locator": "TorusEuler/Paper/S34A/Vocabulary.lean, line 44"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Proof.lemma_1_3",
+   "title": "TorusEuler.Paper.Proof.lemma_1_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/S678b/Lemma13.lean#L20",
+   "source_id": "lean:TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
+   "locator": "TorusEuler/Paper/Proofs/S678b/Lemma13.lean, line 20"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "title": "TorusEuler.Paper.Proof.lemma_2_6_of",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/S2b/Lemma26.lean#L79",
+   "source_id": "lean:TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
+   "locator": "TorusEuler/Paper/Proofs/S2b/Lemma26.lean, line 79"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Proof.remark_1_2",
+   "title": "TorusEuler.Paper.Proof.remark_1_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Proofs/Rem12/Remark12.lean#L59",
+   "source_id": "lean:TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+   "locator": "TorusEuler/Paper/Proofs/Rem12/Remark12.lean, line 59"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Proposition81Conclusions",
+   "title": "TorusEuler.Paper.Proposition81Conclusions",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Vocabulary.lean#L251",
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 251"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Proposition82Conclusions",
+   "title": "TorusEuler.Paper.Proposition82Conclusions",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Vocabulary.lean#L276",
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 276"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Proposition84Conclusions",
+   "title": "TorusEuler.Paper.Proposition84Conclusions",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Vocabulary.lean#L306",
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 306"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "title": "TorusEuler.Paper.Statement.corollary_8_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L202",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 202"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "title": "TorusEuler.Paper.Statement.lemma_1_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L55",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 55"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_2_1",
+   "title": "TorusEuler.Paper.Statement.lemma_2_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S2/Statements.lean#L57",
+   "source_id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "locator": "TorusEuler/Paper/S2/Statements.lean, line 57"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "title": "TorusEuler.Paper.Statement.lemma_2_4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S2/Statements.lean#L181",
+   "source_id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "locator": "TorusEuler/Paper/S2/Statements.lean, line 181"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "title": "TorusEuler.Paper.Statement.lemma_2_6",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S2/Statements.lean#L256",
+   "source_id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "locator": "TorusEuler/Paper/S2/Statements.lean, line 256"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "title": "TorusEuler.Paper.Statement.lemma_3_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S34A/Statements.lean#L39",
+   "source_id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "locator": "TorusEuler/Paper/S34A/Statements.lean, line 39"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_5_10",
+   "title": "TorusEuler.Paper.Statement.lemma_5_10",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L535",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 535"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "title": "TorusEuler.Paper.Statement.lemma_5_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L146",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 146"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_5_5",
+   "title": "TorusEuler.Paper.Statement.lemma_5_5",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L287",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 287"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_5_7",
+   "title": "TorusEuler.Paper.Statement.lemma_5_7",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L402",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 402"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_5_9",
+   "title": "TorusEuler.Paper.Statement.lemma_5_9",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L499",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 499"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "title": "TorusEuler.Paper.Statement.lemma_A_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S34A/Statements.lean#L241",
+   "source_id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "locator": "TorusEuler/Paper/S34A/Statements.lean, line 241"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "title": "TorusEuler.Paper.Statement.lemma_D_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/SBD/Statements.lean#L239",
+   "source_id": "lean:TorusEuler/Paper/SBD/Statements.lean",
+   "locator": "TorusEuler/Paper/SBD/Statements.lean, line 239"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "title": "TorusEuler.Paper.Statement.lemma_D_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/SBD/Statements.lean#L315",
+   "source_id": "lean:TorusEuler/Paper/SBD/Statements.lean",
+   "locator": "TorusEuler/Paper/SBD/Statements.lean, line 315"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "title": "TorusEuler.Paper.Statement.proposition_5_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L55",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 55"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.proposition_5_2",
+   "title": "TorusEuler.Paper.Statement.proposition_5_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L112",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 112"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "title": "TorusEuler.Paper.Statement.proposition_5_4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L211",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 211"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "title": "TorusEuler.Paper.Statement.proposition_8_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L169",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 169"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "title": "TorusEuler.Paper.Statement.proposition_8_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L185",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 185"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "title": "TorusEuler.Paper.Statement.proposition_8_4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L217",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 217"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.remark_1_2",
+   "title": "TorusEuler.Paper.Statement.remark_1_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Auxiliary/Statements.lean#L185",
+   "source_id": "lean:TorusEuler/Paper/Auxiliary/Statements.lean",
+   "locator": "TorusEuler/Paper/Auxiliary/Statements.lean, line 185"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.theorem_1_1",
+   "title": "TorusEuler.Paper.Statement.theorem_1_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L36",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 36"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "title": "TorusEuler.Paper.Statement.theorem_5_6",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S5/Statements.lean#L341",
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 341"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.theorem_7_1",
+   "title": "TorusEuler.Paper.Statement.theorem_7_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S678/Statements.lean#L137",
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 137"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.Statement.theorem_A_1",
+   "title": "TorusEuler.Paper.Statement.theorem_A_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/S34A/Statements.lean#L195",
+   "source_id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "locator": "TorusEuler/Paper/S34A/Statements.lean, line 195"
+  },
+  {
    "id": "cite.lean.TorusEuler.Paper.corollary_8_3",
    "title": "TorusEuler.Paper.corollary_8_3",
    "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L38",
@@ -560,6 +1266,167 @@
    "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L70",
    "source_id": "lean:TorusEuler/Paper/Spine.lean",
    "locator": "TorusEuler/Paper/Spine.lean, line 70"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperAffine.additiveComparison",
+   "title": "TorusEuler.PaperAffine.additiveComparison",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAffineStatements.lean#L108",
+   "source_id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "locator": "TorusEuler/PaperAffineStatements.lean, line 108"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperAffine.exactWave",
+   "title": "TorusEuler.PaperAffine.exactWave",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAffineStatements.lean#L27",
+   "source_id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "locator": "TorusEuler/PaperAffineStatements.lean, line 27"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperAffine.finiteComparison",
+   "title": "TorusEuler.PaperAffine.finiteComparison",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAffineStatements.lean#L322",
+   "source_id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "locator": "TorusEuler/PaperAffineStatements.lean, line 322"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperLimitAgreement",
+   "title": "TorusEuler.PaperLimitAgreement",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean#L14",
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 14"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "title": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperPhysicalMeanStatements.lean#L553",
+   "source_id": "lean:TorusEuler/PaperPhysicalMeanStatements.lean",
+   "locator": "TorusEuler/PaperPhysicalMeanStatements.lean, line 553"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperTerminalOffOrigin",
+   "title": "TorusEuler.PaperTerminalOffOrigin",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean#L43",
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 43"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperTerminalTime",
+   "title": "TorusEuler.PaperTerminalTime",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean#L37",
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 37"
+  },
+  {
+   "id": "cite.lean.TorusEuler.PaperTerminalVelocityCurl",
+   "title": "TorusEuler.PaperTerminalVelocityCurl",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean#L31",
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 31"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Theorem11",
+   "title": "TorusEuler.Theorem11",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Statement.lean#L121",
+   "source_id": "lean:TorusEuler/Statement.lean",
+   "locator": "TorusEuler/Statement.lean, line 121"
+  },
+  {
+   "id": "cite.lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "title": "TorusEuler.auxiliaryTerminalSmoothness",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/AuxiliaryTerminalSmoothness.lean#L16",
+   "source_id": "lean:TorusEuler/AuxiliaryTerminalSmoothness.lean",
+   "locator": "TorusEuler/AuxiliaryTerminalSmoothness.lean, line 16"
+  },
+  {
+   "id": "cite.lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+   "title": "TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperGenericPhysicalPressure.lean#L179",
+   "source_id": "lean:TorusEuler/PaperGenericPhysicalPressure.lean",
+   "locator": "TorusEuler/PaperGenericPhysicalPressure.lean, line 179"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemma13_slowOrders",
+   "title": "TorusEuler.paperLemma13_slowOrders",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperParameterAndLaunchStatements.lean#L14",
+   "source_id": "lean:TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "locator": "TorusEuler/PaperParameterAndLaunchStatements.lean, line 14"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemma31_waveProfile",
+   "title": "TorusEuler.paperLemma31_waveProfile",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperParameterAndLaunchStatements.lean#L38",
+   "source_id": "lean:TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "locator": "TorusEuler/PaperParameterAndLaunchStatements.lean, line 38"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemma57_periodicGraphFromCell",
+   "title": "TorusEuler.paperLemma57_periodicGraphFromCell",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperGraphReadout.lean#L180",
+   "source_id": "lean:TorusEuler/PaperGraphReadout.lean",
+   "locator": "TorusEuler/PaperGraphReadout.lean, line 180"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemmaD1_derivatives",
+   "title": "TorusEuler.paperLemmaD1_derivatives",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixDFields.lean#L88",
+   "source_id": "lean:TorusEuler/PaperAppendixDFields.lean",
+   "locator": "TorusEuler/PaperAppendixDFields.lean, line 88"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemmaD1_product",
+   "title": "TorusEuler.paperLemmaD1_product",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixDFields.lean#L124",
+   "source_id": "lean:TorusEuler/PaperAppendixDFields.lean",
+   "locator": "TorusEuler/PaperAppendixDFields.lean, line 124"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemmaD2_mul",
+   "title": "TorusEuler.paperLemmaD2_mul",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixD.lean#L43",
+   "source_id": "lean:TorusEuler/PaperAppendixD.lean",
+   "locator": "TorusEuler/PaperAppendixD.lean, line 43"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperLemmaD2_mul_multiIndex",
+   "title": "TorusEuler.paperLemmaD2_mul_multiIndex",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperAppendixDMultiIndex.lean#L112",
+   "source_id": "lean:TorusEuler/PaperAppendixDMultiIndex.lean",
+   "locator": "TorusEuler/PaperAppendixDMultiIndex.lean, line 112"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperProposition51_parentCoefficients",
+   "title": "TorusEuler.paperProposition51_parentCoefficients",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperParentCoefficientStatements.lean#L33",
+   "source_id": "lean:TorusEuler/PaperParentCoefficientStatements.lean",
+   "locator": "TorusEuler/PaperParentCoefficientStatements.lean, line 33"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paperTheorem71",
+   "title": "TorusEuler.paperTheorem71",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperSequenceStatements.lean#L148",
+   "source_id": "lean:TorusEuler/PaperSequenceStatements.lean",
+   "locator": "TorusEuler/PaperSequenceStatements.lean, line 148"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paper_mean_columns",
+   "title": "TorusEuler.paper_mean_columns",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperPhysicalMeanStatements.lean#L575",
+   "source_id": "lean:TorusEuler/PaperPhysicalMeanStatements.lean",
+   "locator": "TorusEuler/PaperPhysicalMeanStatements.lean, line 575"
+  },
+  {
+   "id": "cite.lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "title": "TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/PaperTerminalStatements.lean#L106",
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 106"
+  },
+  {
+   "id": "cite.lean.TorusEuler.theorem11",
+   "title": "TorusEuler.theorem11",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/MainTheorem.lean#L13",
+   "source_id": "lean:TorusEuler/MainTheorem.lean",
+   "locator": "TorusEuler/MainTheorem.lean, line 13"
   }
  ],
  "nodes": [
@@ -1193,6 +2060,774 @@
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
+   "id": "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "kind": "declaration",
+   "label": "TorusEuler.AuxiliaryTerminalSmoothness",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.AuxiliaryTerminalSmoothness"
+   ],
+   "source_id": "lean:TorusEuler/TerminalAuxiliaryAssembly.lean",
+   "declaration": "TorusEuler.AuxiliaryTerminalSmoothness",
+   "statement": "A construction with terminal smoothness",
+   "locator": "TorusEuler/TerminalAuxiliaryAssembly.lean, line 18",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "declaration",
+   "label": "TorusEuler.EulerSingularityWitness",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.EulerSingularityWitness"
+   ],
+   "source_id": "lean:TorusEuler/Statement.lean",
+   "declaration": "TorusEuler.EulerSingularityWitness",
+   "statement": "The properties of the singular flow",
+   "locator": "TorusEuler/Statement.lean, line 108",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "declaration",
+   "label": "TorusEuler.HasOffOriginLimits",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HasOffOriginLimits"
+   ],
+   "source_id": "lean:TorusEuler/Statement.lean",
+   "declaration": "TorusEuler.HasOffOriginLimits",
+   "statement": "Spatial limits away from the origin",
+   "locator": "TorusEuler/Statement.lean, line 100",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HasSmoothOffOriginExtension",
+   "kind": "declaration",
+   "label": "TorusEuler.HasSmoothOffOriginExtension",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HasSmoothOffOriginExtension"
+   ],
+   "source_id": "lean:TorusEuler/TerminalSeeleyExtension.lean",
+   "declaration": "TorusEuler.HasSmoothOffOriginExtension",
+   "statement": "Smooth extension away from the origin",
+   "locator": "TorusEuler/TerminalSeeleyExtension.lean, line 132",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds"
+   ],
+   "source_id": "lean:TorusEuler/PaperFlowBounds.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "statement": "Polynomial bounds for the new flow",
+   "locator": "TorusEuler/PaperFlowBounds.lean, line 30",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter"
+   ],
+   "source_id": "lean:TorusEuler/PaperApproximateSolution.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "statement": "Pressure and the central gradient",
+   "locator": "TorusEuler/PaperApproximateSolution.lean, line 206",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity"
+   ],
+   "source_id": "lean:TorusEuler/PaperHierarchyIdentity.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "statement": "The complete finite expansion identity",
+   "locator": "TorusEuler/PaperHierarchyIdentity.lean, line 21",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles"
+   ],
+   "source_id": "lean:TorusEuler/HierarchyPhysicalApproximation.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "statement": "The recursively constructed profiles",
+   "locator": "TorusEuler/HierarchyPhysicalApproximation.lean, line 107",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth"
+   ],
+   "source_id": "lean:TorusEuler/PaperHierarchyDepthGeneral.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "statement": "Bounds for a prescribed hierarchy",
+   "locator": "TorusEuler/PaperHierarchyDepthGeneral.lean, line 22",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff"
+   ],
+   "source_id": "lean:TorusEuler/PaperGenericWaveSwitchDepth.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "statement": "One seed for every finite depth",
+   "locator": "TorusEuler/PaperGenericWaveSwitchDepth.lean, line 19",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "kind": "declaration",
+   "label": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep"
+   ],
+   "source_id": "lean:TorusEuler/PaperPhysicalLaterStep.lean",
+   "declaration": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "statement": "One expansion with all physical bounds",
+   "locator": "TorusEuler/PaperPhysicalLaterStep.lean, line 25",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "kind": "declaration",
+   "label": "TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1"
+   ],
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "declaration": "TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "statement": "Stages converge to an Euler flow",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 61",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+   "kind": "declaration",
+   "label": "TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed"
+   ],
+   "source_id": "lean:TorusEuler/PaperHierarchyInverse.lean",
+   "declaration": "TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+   "statement": "The seed near the origin",
+   "locator": "TorusEuler/PaperHierarchyInverse.lean, line 220",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Corollary83Conclusions",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Corollary83Conclusions",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Corollary83Conclusions"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "declaration": "TorusEuler.Paper.Corollary83Conclusions",
+   "statement": "Maximal time and divergent integrals",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 294",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.FiniteSmallness",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.FiniteSmallness"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S2/Vocabulary.lean",
+   "declaration": "TorusEuler.Paper.FiniteSmallness",
+   "statement": "Smallness during amplification",
+   "locator": "TorusEuler/Paper/S2/Vocabulary.lean, line 144",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
+   "declaration": "TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "statement": "Seed comparison from parent bounds",
+   "locator": "TorusEuler/Paper/Proofs/S5a/Library/Near519.lean, line 24",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.ProfileFamily",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.ProfileFamily",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.ProfileFamily"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S34A/Vocabulary.lean",
+   "declaration": "TorusEuler.Paper.ProfileFamily",
+   "statement": "The required profile estimates",
+   "locator": "TorusEuler/Paper/S34A/Vocabulary.lean, line 44",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Proof.lemma_1_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Proof.lemma_1_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Proof.lemma_1_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
+   "declaration": "TorusEuler.Paper.Proof.lemma_1_3",
+   "statement": "Why the retained orders grow slowly",
+   "locator": "TorusEuler/Paper/Proofs/S678b/Lemma13.lean, line 20",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Proof.lemma_2_6_of",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Proof.lemma_2_6_of"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
+   "declaration": "TorusEuler.Paper.Proof.lemma_2_6_of",
+   "statement": "Proof of amplitude comparison",
+   "locator": "TorusEuler/Paper/Proofs/S2b/Lemma26.lean, line 79",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Proof.remark_1_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Proof.remark_1_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Proof.remark_1_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+   "declaration": "TorusEuler.Paper.Proof.remark_1_2",
+   "statement": "How the terminal extension is obtained",
+   "locator": "TorusEuler/Paper/Proofs/Rem12/Remark12.lean, line 59",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Proposition81Conclusions",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Proposition81Conclusions"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "declaration": "TorusEuler.Paper.Proposition81Conclusions",
+   "statement": "The smooth limit before accumulation",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 251",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Proposition82Conclusions",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Proposition82Conclusions"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "declaration": "TorusEuler.Paper.Proposition82Conclusions",
+   "statement": "Bounded velocity and growing curl",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 276",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Proposition84Conclusions",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Proposition84Conclusions",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Proposition84Conclusions"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Vocabulary.lean",
+   "declaration": "TorusEuler.Paper.Proposition84Conclusions",
+   "statement": "Two terminal limits off the origin",
+   "locator": "TorusEuler/Paper/S678/Vocabulary.lean, line 306",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.corollary_8_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.corollary_8_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.corollary_8_3",
+   "statement": "The terminal time is maximal",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 202",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_1_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_1_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_1_3",
+   "statement": "The order and gain bounds",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 55",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_2_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_2_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_2_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_2_1",
+   "statement": "The affine-wave statement",
+   "locator": "TorusEuler/Paper/S2/Statements.lean, line 57",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_2_4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_2_4"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_2_4",
+   "statement": "The wave-comparison statement",
+   "locator": "TorusEuler/Paper/S2/Statements.lean, line 181",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_2_6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_2_6"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S2/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_2_6",
+   "statement": "The wave follows reference growth",
+   "locator": "TorusEuler/Paper/S2/Statements.lean, line 256",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_3_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_3_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_3_1",
+   "statement": "The explicit profile statement",
+   "locator": "TorusEuler/Paper/S34A/Statements.lean, line 39",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_5_10",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_5_10",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_5_10"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_5_10",
+   "statement": "The perturbed flow estimate",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 535",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_5_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_5_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_5_3",
+   "statement": "The transverse bounds of Lemma 5.3",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 146",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_5_5",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_5_5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_5_5"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_5_5",
+   "statement": "The statement of the correction bounds",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 287",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_5_7",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_5_7",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_5_7"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_5_7",
+   "statement": "The statement of the graph estimates",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 402",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_5_9",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_5_9",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_5_9"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_5_9",
+   "statement": "The pressure and central statement",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 499",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_A_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_A_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_A_2",
+   "statement": "The two spatial freezing inverses",
+   "locator": "TorusEuler/Paper/S34A/Statements.lean, line 241",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_D_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_D_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/SBD/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_D_1",
+   "statement": "The finite-norm estimates",
+   "locator": "TorusEuler/Paper/SBD/Statements.lean, line 239",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.lemma_D_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.lemma_D_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/SBD/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.lemma_D_2",
+   "statement": "Closure of coefficient bounds",
+   "locator": "TorusEuler/Paper/SBD/Statements.lean, line 315",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.proposition_5_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.proposition_5_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.proposition_5_1",
+   "statement": "The six parent coefficient bounds",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 55",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.proposition_5_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.proposition_5_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.proposition_5_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.proposition_5_2",
+   "statement": "The finite-order mean estimate",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 112",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.proposition_5_4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.proposition_5_4"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.proposition_5_4",
+   "statement": "The finite expansion statement",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 211",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.proposition_8_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.proposition_8_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.proposition_8_1",
+   "statement": "Convergence to a smooth Euler limit",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 169",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.proposition_8_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.proposition_8_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.proposition_8_2",
+   "statement": "Terminal velocity and vorticity bounds",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 185",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.proposition_8_4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.proposition_8_4"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.proposition_8_4",
+   "statement": "Terminal limits away from the origin",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 217",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.remark_1_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.remark_1_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.remark_1_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Auxiliary/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.remark_1_2",
+   "statement": "The terminal extension in Remark 1.2",
+   "locator": "TorusEuler/Paper/Auxiliary/Statements.lean, line 185",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.theorem_1_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.theorem_1_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.theorem_1_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.theorem_1_1",
+   "statement": "The statement of the blow-up theorem",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 36",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.theorem_5_6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.theorem_5_6"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S5/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.theorem_5_6",
+   "statement": "The hierarchy estimate statement",
+   "locator": "TorusEuler/Paper/S5/Statements.lean, line 341",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.theorem_7_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.theorem_7_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.theorem_7_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S678/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.theorem_7_1",
+   "statement": "One sequence for all derivative orders",
+   "locator": "TorusEuler/Paper/S678/Statements.lean, line 137",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.Statement.theorem_A_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.Statement.theorem_A_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.Statement.theorem_A_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/S34A/Statements.lean",
+   "declaration": "TorusEuler.Paper.Statement.theorem_A_1",
+   "statement": "The Hölder endpoint inverse",
+   "locator": "TorusEuler/Paper/S34A/Statements.lean, line 195",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
    "id": "lean.TorusEuler.Paper.corollary_8_3",
    "kind": "declaration",
    "label": "TorusEuler.Paper.corollary_8_3",
@@ -1783,15 +3418,431 @@
    "statement": "The Hölder endpoint theorem",
    "locator": "TorusEuler/Paper/Spine.lean, line 70",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperAffine.additiveComparison",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperAffine.additiveComparison",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperAffine.additiveComparison"
+   ],
+   "source_id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "declaration": "TorusEuler.PaperAffine.additiveComparison",
+   "statement": "A common additive amplitude error",
+   "locator": "TorusEuler/PaperAffineStatements.lean, line 108",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperAffine.exactWave",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperAffine.exactWave",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperAffine.exactWave"
+   ],
+   "source_id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "declaration": "TorusEuler.PaperAffine.exactWave",
+   "statement": "The exact wave and its persistence",
+   "locator": "TorusEuler/PaperAffineStatements.lean, line 27",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperAffine.finiteComparison",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperAffine.finiteComparison",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperAffine.finiteComparison"
+   ],
+   "source_id": "lean:TorusEuler/PaperAffineStatements.lean",
+   "declaration": "TorusEuler.PaperAffine.finiteComparison",
+   "statement": "Amplitude and couplings together",
+   "locator": "TorusEuler/PaperAffineStatements.lean, line 322",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperLimitAgreement",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperLimitAgreement",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperLimitAgreement"
+   ],
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "declaration": "TorusEuler.PaperLimitAgreement",
+   "statement": "The smooth limit of the stages",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 14",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints"
+   ],
+   "source_id": "lean:TorusEuler/PaperPhysicalMeanStatements.lean",
+   "declaration": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "statement": "The endpoints determine the mean",
+   "locator": "TorusEuler/PaperPhysicalMeanStatements.lean, line 553",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperTerminalOffOrigin",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperTerminalOffOrigin",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperTerminalOffOrigin"
+   ],
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "declaration": "TorusEuler.PaperTerminalOffOrigin",
+   "statement": "Local terminal limits",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 43",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperTerminalTime",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperTerminalTime",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperTerminalTime"
+   ],
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "declaration": "TorusEuler.PaperTerminalTime",
+   "statement": "The terminal lifespan and integrals",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 37",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.PaperTerminalVelocityCurl",
+   "kind": "declaration",
+   "label": "TorusEuler.PaperTerminalVelocityCurl",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.PaperTerminalVelocityCurl"
+   ],
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "declaration": "TorusEuler.PaperTerminalVelocityCurl",
+   "statement": "The terminal velocity and curl",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 31",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Theorem11",
+   "kind": "declaration",
+   "label": "TorusEuler.Theorem11",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Theorem11"
+   ],
+   "source_id": "lean:TorusEuler/Statement.lean",
+   "declaration": "TorusEuler.Theorem11",
+   "statement": "Existence of the singular solution",
+   "locator": "TorusEuler/Statement.lean, line 121",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "kind": "declaration",
+   "label": "TorusEuler.auxiliaryTerminalSmoothness",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.auxiliaryTerminalSmoothness"
+   ],
+   "source_id": "lean:TorusEuler/AuxiliaryTerminalSmoothness.lean",
+   "declaration": "TorusEuler.auxiliaryTerminalSmoothness",
+   "statement": "The auxiliary terminal construction",
+   "locator": "TorusEuler/AuxiliaryTerminalSmoothness.lean, line 16",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+   "kind": "declaration",
+   "label": "TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound"
+   ],
+   "source_id": "lean:TorusEuler/PaperGenericPhysicalPressure.lean",
+   "declaration": "TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+   "statement": "The leading pressure for any cutoff",
+   "locator": "TorusEuler/PaperGenericPhysicalPressure.lean, line 179",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemma13_slowOrders",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemma13_slowOrders",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemma13_slowOrders"
+   ],
+   "source_id": "lean:TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "declaration": "TorusEuler.paperLemma13_slowOrders",
+   "statement": "The schedule yields Lemma 1.3",
+   "locator": "TorusEuler/PaperParameterAndLaunchStatements.lean, line 14",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemma31_waveProfile",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemma31_waveProfile",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemma31_waveProfile"
+   ],
+   "source_id": "lean:TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "declaration": "TorusEuler.paperLemma31_waveProfile",
+   "statement": "Existence of the required profiles",
+   "locator": "TorusEuler/PaperParameterAndLaunchStatements.lean, line 38",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemma57_periodicGraphFromCell",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemma57_periodicGraphFromCell",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemma57_periodicGraphFromCell"
+   ],
+   "source_id": "lean:TorusEuler/PaperGraphReadout.lean",
+   "declaration": "TorusEuler.paperLemma57_periodicGraphFromCell",
+   "statement": "Smooth continuation across cell faces",
+   "locator": "TorusEuler/PaperGraphReadout.lean, line 180",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemmaD1_derivatives",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemmaD1_derivatives",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemmaD1_derivatives"
+   ],
+   "source_id": "lean:TorusEuler/PaperAppendixDFields.lean",
+   "declaration": "TorusEuler.paperLemmaD1_derivatives",
+   "statement": "Cost of label and phase derivatives",
+   "locator": "TorusEuler/PaperAppendixDFields.lean, line 88",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemmaD1_product",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemmaD1_product",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemmaD1_product"
+   ],
+   "source_id": "lean:TorusEuler/PaperAppendixDFields.lean",
+   "declaration": "TorusEuler.paperLemmaD1_product",
+   "statement": "Bilinear products in the finite norm",
+   "locator": "TorusEuler/PaperAppendixDFields.lean, line 124",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemmaD2_mul",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemmaD2_mul",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemmaD2_mul"
+   ],
+   "source_id": "lean:TorusEuler/PaperAppendixD.lean",
+   "declaration": "TorusEuler.paperLemmaD2_mul",
+   "statement": "Polynomial bounds for a product",
+   "locator": "TorusEuler/PaperAppendixD.lean, line 43",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperLemmaD2_mul_multiIndex",
+   "kind": "declaration",
+   "label": "TorusEuler.paperLemmaD2_mul_multiIndex",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperLemmaD2_mul_multiIndex"
+   ],
+   "source_id": "lean:TorusEuler/PaperAppendixDMultiIndex.lean",
+   "declaration": "TorusEuler.paperLemmaD2_mul_multiIndex",
+   "statement": "Product bounds in coordinate norms",
+   "locator": "TorusEuler/PaperAppendixDMultiIndex.lean, line 112",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperProposition51_parentCoefficients",
+   "kind": "declaration",
+   "label": "TorusEuler.paperProposition51_parentCoefficients",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperProposition51_parentCoefficients"
+   ],
+   "source_id": "lean:TorusEuler/PaperParentCoefficientStatements.lean",
+   "declaration": "TorusEuler.paperProposition51_parentCoefficients",
+   "statement": "A common power for the coefficients",
+   "locator": "TorusEuler/PaperParentCoefficientStatements.lean, line 33",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paperTheorem71",
+   "kind": "declaration",
+   "label": "TorusEuler.paperTheorem71",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paperTheorem71"
+   ],
+   "source_id": "lean:TorusEuler/PaperSequenceStatements.lean",
+   "declaration": "TorusEuler.paperTheorem71",
+   "statement": "One sequence works at every order",
+   "locator": "TorusEuler/PaperSequenceStatements.lean, line 148",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paper_mean_columns",
+   "kind": "declaration",
+   "label": "TorusEuler.paper_mean_columns",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paper_mean_columns"
+   ],
+   "source_id": "lean:TorusEuler/PaperPhysicalMeanStatements.lean",
+   "declaration": "TorusEuler.paper_mean_columns",
+   "statement": "Mean estimate with fixed radius",
+   "locator": "TorusEuler/PaperPhysicalMeanStatements.lean, line 575",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "kind": "declaration",
+   "label": "TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.paper_section_8_of_inductiveEulerStages"
+   ],
+   "source_id": "lean:TorusEuler/PaperTerminalStatements.lean",
+   "declaration": "TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "statement": "One limit has all terminal properties",
+   "locator": "TorusEuler/PaperTerminalStatements.lean, line 106",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.theorem11",
+   "kind": "declaration",
+   "label": "TorusEuler.theorem11",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.theorem11"
+   ],
+   "source_id": "lean:TorusEuler/MainTheorem.lean",
+   "declaration": "TorusEuler.theorem11",
+   "statement": "The headline existence conclusion",
+   "locator": "TorusEuler/MainTheorem.lean, line 13",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   }
  ],
  "edges": [
+  {
+   "from": "euler.corollary-8.3",
+   "to": "lean.TorusEuler.Paper.Corollary83Conclusions",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.corollary-8.3"
+   ]
+  },
+  {
+   "from": "euler.corollary-8.3",
+   "to": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.corollary-8.3"
+   ]
+  },
   {
    "from": "euler.corollary-8.3",
    "to": "lean.TorusEuler.Paper.corollary_8_3",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.corollary-8.3"
+   ]
+  },
+  {
+   "from": "euler.corollary-8.3",
+   "to": "lean.TorusEuler.PaperTerminalTime",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.corollary-8.3"
+   ]
+  },
+  {
+   "from": "euler.corollary-8.3",
+   "to": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.corollary-8.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-1.3",
+   "to": "lean.TorusEuler.Paper.Proof.lemma_1_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-1.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-1.3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-1.3"
    ]
   },
   {
@@ -1803,8 +3854,32 @@
    ]
   },
   {
+   "from": "euler.lemma-1.3",
+   "to": "lean.TorusEuler.paperLemma13_slowOrders",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-1.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.1"
+   ]
+  },
+  {
    "from": "euler.lemma-2.1",
    "to": "lean.TorusEuler.Paper.lemma_2_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.1",
+   "to": "lean.TorusEuler.PaperAffine.exactWave",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-2.1"
@@ -1828,7 +3903,23 @@
   },
   {
    "from": "euler.lemma-2.4",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.4"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.4",
    "to": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.4"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.4",
+   "to": "lean.TorusEuler.PaperAffine.additiveComparison",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-2.4"
@@ -1844,7 +3935,39 @@
   },
   {
    "from": "euler.lemma-2.6",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.6"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.6",
+   "to": "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.6"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.6",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.6"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.6",
    "to": "lean.TorusEuler.Paper.lemma_2_6",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.6"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.6",
+   "to": "lean.TorusEuler.PaperAffine.finiteComparison",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-2.6"
@@ -1860,7 +3983,31 @@
   },
   {
    "from": "euler.lemma-3.1",
+   "to": "lean.TorusEuler.Paper.ProfileFamily",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-3.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-3.1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-3.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-3.1",
    "to": "lean.TorusEuler.Paper.lemma_3_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-3.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-3.1",
+   "to": "lean.TorusEuler.paperLemma31_waveProfile",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-3.1"
@@ -1876,10 +4023,50 @@
   },
   {
    "from": "euler.lemma-5.10",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.10"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.10",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_10",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.10"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.10",
    "to": "lean.TorusEuler.Paper.lemma_5_10",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-5.10"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.3",
+   "to": "lean.TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.3",
+   "to": "lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.3"
    ]
   },
   {
@@ -1892,6 +4079,14 @@
   },
   {
    "from": "euler.lemma-5.5",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_5",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.5"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.5",
    "to": "lean.TorusEuler.Paper.lemma_5_5",
    "kind": "formalizes",
    "evidence_ids": [
@@ -1900,7 +4095,23 @@
   },
   {
    "from": "euler.lemma-5.7",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_7",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.7"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.7",
    "to": "lean.TorusEuler.Paper.lemma_5_7",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.7"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.7",
+   "to": "lean.TorusEuler.paperLemma57_periodicGraphFromCell",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-5.7"
@@ -1916,7 +4127,39 @@
   },
   {
    "from": "euler.lemma-5.9",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.9"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.9",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.9"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.9",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_9",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.9"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.9",
    "to": "lean.TorusEuler.Paper.lemma_5_9",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.9"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.9",
+   "to": "lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-5.9"
@@ -1928,6 +4171,22 @@
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-6.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-a.2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-a.2"
+   ]
+  },
+  {
+   "from": "euler.lemma-a.2",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_A_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-a.2"
    ]
   },
   {
@@ -1948,6 +4207,14 @@
   },
   {
    "from": "euler.lemma-d.1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.1",
    "to": "lean.TorusEuler.Paper.lemma_D_1",
    "kind": "formalizes",
    "evidence_ids": [
@@ -1955,8 +4222,48 @@
    ]
   },
   {
+   "from": "euler.lemma-d.1",
+   "to": "lean.TorusEuler.paperLemmaD1_derivatives",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.1",
+   "to": "lean.TorusEuler.paperLemmaD1_product",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.2"
+   ]
+  },
+  {
    "from": "euler.lemma-d.2",
    "to": "lean.TorusEuler.Paper.lemma_D_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.2"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.2",
+   "to": "lean.TorusEuler.paperLemmaD2_mul",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.2"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.2",
+   "to": "lean.TorusEuler.paperLemmaD2_mul_multiIndex",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.lemma-d.2"
@@ -1980,7 +4287,23 @@
   },
   {
    "from": "euler.proposition-5.1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.1",
    "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.1",
+   "to": "lean.TorusEuler.paperProposition51_parentCoefficients",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.proposition-5.1"
@@ -1996,10 +4319,58 @@
   },
   {
    "from": "euler.proposition-5.2",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.2",
    "to": "lean.TorusEuler.Paper.proposition_5_2",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.proposition-5.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.2",
+   "to": "lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.2",
+   "to": "lean.TorusEuler.paper_mean_columns",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.4",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.4",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.4",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.4"
    ]
   },
   {
@@ -2012,10 +4383,58 @@
   },
   {
    "from": "euler.proposition-8.1",
+   "to": "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.1",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.1",
    "to": "lean.TorusEuler.Paper.proposition_8_1",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.proposition-8.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.1",
+   "to": "lean.TorusEuler.PaperLimitAgreement",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.2",
+   "to": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.2",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.2"
    ]
   },
   {
@@ -2027,11 +4446,99 @@
    ]
   },
   {
+   "from": "euler.proposition-8.2",
+   "to": "lean.TorusEuler.PaperTerminalVelocityCurl",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.2",
+   "to": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.4",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.4",
+   "to": "lean.TorusEuler.Paper.Proposition84Conclusions",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.4",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ]
+  },
+  {
    "from": "euler.proposition-8.4",
    "to": "lean.TorusEuler.Paper.proposition_8_4",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.proposition-8.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.4",
+   "to": "lean.TorusEuler.PaperTerminalOffOrigin",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.4",
+   "to": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ]
+  },
+  {
+   "from": "euler.remark-1.2",
+   "to": "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.remark-1.2"
+   ]
+  },
+  {
+   "from": "euler.remark-1.2",
+   "to": "lean.TorusEuler.HasSmoothOffOriginExtension",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.remark-1.2"
+   ]
+  },
+  {
+   "from": "euler.remark-1.2",
+   "to": "lean.TorusEuler.Paper.Proof.remark_1_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.remark-1.2"
+   ]
+  },
+  {
+   "from": "euler.remark-1.2",
+   "to": "lean.TorusEuler.Paper.Statement.remark_1_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.remark-1.2"
    ]
   },
   {
@@ -2043,8 +4550,48 @@
    ]
   },
   {
+   "from": "euler.remark-1.2",
+   "to": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.remark-1.2"
+   ]
+  },
+  {
+   "from": "euler.theorem-1.1",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-1.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-1.1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_1_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-1.1"
+   ]
+  },
+  {
    "from": "euler.theorem-1.1",
    "to": "lean.TorusEuler.Paper.theorem_1_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-1.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-1.1",
+   "to": "lean.TorusEuler.Theorem11",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-1.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-1.1",
+   "to": "lean.TorusEuler.theorem11",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.theorem-1.1"
@@ -2060,10 +4607,42 @@
   },
   {
    "from": "euler.theorem-5.6",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-5.6"
+   ]
+  },
+  {
+   "from": "euler.theorem-5.6",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-5.6"
+   ]
+  },
+  {
+   "from": "euler.theorem-5.6",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-5.6"
+   ]
+  },
+  {
+   "from": "euler.theorem-5.6",
    "to": "lean.TorusEuler.Paper.theorem_5_6",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.theorem-5.6"
+   ]
+  },
+  {
+   "from": "euler.theorem-7.1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_7_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-7.1"
    ]
   },
   {
@@ -2075,15 +4654,2169 @@
    ]
   },
   {
+   "from": "euler.theorem-7.1",
+   "to": "lean.TorusEuler.paperTheorem71",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-7.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-a.1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-a.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-a.1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_A_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-a.1"
+   ]
+  },
+  {
    "from": "euler.theorem-a.1",
    "to": "lean.TorusEuler.Paper.theorem_A_1",
    "kind": "formalizes",
    "evidence_ids": [
     "link.euler.theorem-a.1"
    ]
+  },
+  {
+   "from": "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.HasSmoothOffOriginExtension",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.EulerSingularityWitness",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+   "to": "lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "to": "lean.TorusEuler.PaperLimitAgreement",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.lemma_1_3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.lemma_1_3",
+   "to": "lean.TorusEuler.paperLemma13_slowOrders",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.remark_1_2",
+   "to": "lean.TorusEuler.HasSmoothOffOriginExtension",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.remark_1_2",
+   "to": "lean.TorusEuler.Paper.Statement.remark_1_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proof.remark_1_2",
+   "to": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Proposition84Conclusions",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.Corollary83Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "to": "lean.TorusEuler.Paper.ProfileFamily",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.Proposition84Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.remark_1_2",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.theorem_1_1",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.Statement.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_1_3",
+   "to": "lean.TorusEuler.Paper.Proof.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_1_3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_3",
+   "to": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_4",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_4",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_4",
+   "to": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_6",
+   "to": "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_6",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_6",
+   "to": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_6",
+   "to": "lean.TorusEuler.Paper.lemma_2_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_7",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_7",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_7",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_7",
+   "to": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_7",
+   "to": "lean.TorusEuler.Paper.lemma_2_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_2_7",
+   "to": "lean.TorusEuler.Paper.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_3_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_10",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_10",
+   "to": "lean.TorusEuler.Paper.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.lemma_3_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.lemma_D_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_3",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_5",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_5",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_5",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_5",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_5",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_7",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_7",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_7",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_7",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_7",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.lemma_5_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.lemma_5_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_8",
+   "to": "lean.TorusEuler.Paper.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_3_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_9",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.lemma_3_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.lemma_5_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.theorem_4_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_5_9",
+   "to": "lean.TorusEuler.Paper.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_6_1",
+   "to": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_A_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_D_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_D_1",
+   "to": "lean.TorusEuler.paperLemmaD1_derivatives",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_D_1",
+   "to": "lean.TorusEuler.paperLemmaD1_product",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.lemma_D_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.lemma_2_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_2_8",
+   "to": "lean.TorusEuler.Paper.lemma_2_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_1",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_1",
+   "to": "lean.TorusEuler.Paper.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_11",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_9",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_11",
+   "to": "lean.TorusEuler.Paper.lemma_5_8",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_11",
+   "to": "lean.TorusEuler.Paper.lemma_5_9",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_11",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.lemma_D_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.lemma_D_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_2",
+   "to": "lean.TorusEuler.Paper.theorem_4_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_4",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_5_4",
+   "to": "lean.TorusEuler.Paper.theorem_4_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_2",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.remark_1_2",
+   "to": "lean.TorusEuler.Paper.Proof.remark_1_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.remark_1_2",
+   "to": "lean.TorusEuler.Paper.Statement.remark_1_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Corollary83Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Proposition82Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Proposition84Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Statement.corollary_8_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_8_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_1_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_7_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.corollary_8_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.proposition_8_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.proposition_8_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.proposition_8_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.theorem_7_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_4_2",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_4_2",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_A_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_4_2",
+   "to": "lean.TorusEuler.Paper.lemma_4_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_4_2",
+   "to": "lean.TorusEuler.Paper.lemma_A_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_4_2",
+   "to": "lean.TorusEuler.Paper.theorem_A_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_5_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.lemma_5_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.lemma_5_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.proposition_5_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_5_6",
+   "to": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.FiniteSmallness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_10",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_5_9",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.Statement.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_7_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_1_3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_2_5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_2_6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_2_7",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_5_10",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_5_8",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_5_9",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_6_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.proposition_2_8",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.proposition_5_11",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_7_1",
+   "to": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_A_1",
+   "to": "lean.TorusEuler.Paper.Statement.lemma_A_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_A_1",
+   "to": "lean.TorusEuler.Paper.Statement.theorem_A_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_A_1",
+   "to": "lean.TorusEuler.Paper.lemma_A_2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.PaperTerminalOffOrigin",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Theorem11",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.HasSmoothOffOriginExtension",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.auxiliaryTerminalSmoothness",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paperLemmaD2_mul_multiIndex",
+   "to": "lean.TorusEuler.paperLemmaD2_mul",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paperTheorem71",
+   "to": "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_mean_columns",
+   "to": "lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.EulerSingularityWitness",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.HasOffOriginLimits",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.PaperLimitAgreement",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.PaperTerminalOffOrigin",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.PaperTerminalTime",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+   "to": "lean.TorusEuler.PaperTerminalVelocityCurl",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.theorem11",
+   "to": "lean.TorusEuler.Paper.theorem_1_1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.theorem11",
+   "to": "lean.TorusEuler.Theorem11",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
   }
  ],
  "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+    "lean.TorusEuler.EulerSingularityWitness",
+    "lean.TorusEuler.HasOffOriginLimits",
+    "lean.TorusEuler.HasSmoothOffOriginExtension",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+    "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+    "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+    "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+    "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+    "lean.TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+    "lean.TorusEuler.Paper.Corollary83Conclusions",
+    "lean.TorusEuler.Paper.FiniteSmallness",
+    "lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+    "lean.TorusEuler.Paper.ProfileFamily",
+    "lean.TorusEuler.Paper.Proof.lemma_1_3",
+    "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+    "lean.TorusEuler.Paper.Proof.remark_1_2",
+    "lean.TorusEuler.Paper.Proposition81Conclusions",
+    "lean.TorusEuler.Paper.Proposition82Conclusions",
+    "lean.TorusEuler.Paper.Proposition84Conclusions",
+    "lean.TorusEuler.Paper.Statement.corollary_8_3",
+    "lean.TorusEuler.Paper.Statement.lemma_1_3",
+    "lean.TorusEuler.Paper.Statement.lemma_2_1",
+    "lean.TorusEuler.Paper.Statement.lemma_2_4",
+    "lean.TorusEuler.Paper.Statement.lemma_2_6",
+    "lean.TorusEuler.Paper.Statement.lemma_3_1",
+    "lean.TorusEuler.Paper.Statement.lemma_5_10",
+    "lean.TorusEuler.Paper.Statement.lemma_5_3",
+    "lean.TorusEuler.Paper.Statement.lemma_5_5",
+    "lean.TorusEuler.Paper.Statement.lemma_5_7",
+    "lean.TorusEuler.Paper.Statement.lemma_5_9",
+    "lean.TorusEuler.Paper.Statement.lemma_A_2",
+    "lean.TorusEuler.Paper.Statement.lemma_D_1",
+    "lean.TorusEuler.Paper.Statement.lemma_D_2",
+    "lean.TorusEuler.Paper.Statement.proposition_5_1",
+    "lean.TorusEuler.Paper.Statement.proposition_5_2",
+    "lean.TorusEuler.Paper.Statement.proposition_5_4",
+    "lean.TorusEuler.Paper.Statement.proposition_8_1",
+    "lean.TorusEuler.Paper.Statement.proposition_8_2",
+    "lean.TorusEuler.Paper.Statement.proposition_8_4",
+    "lean.TorusEuler.Paper.Statement.remark_1_2",
+    "lean.TorusEuler.Paper.Statement.theorem_1_1",
+    "lean.TorusEuler.Paper.Statement.theorem_5_6",
+    "lean.TorusEuler.Paper.Statement.theorem_7_1",
+    "lean.TorusEuler.Paper.Statement.theorem_A_1",
+    "lean.TorusEuler.Paper.corollary_8_3",
+    "lean.TorusEuler.Paper.lemma_1_3",
+    "lean.TorusEuler.Paper.lemma_2_1",
+    "lean.TorusEuler.Paper.lemma_2_2",
+    "lean.TorusEuler.Paper.lemma_2_3",
+    "lean.TorusEuler.Paper.lemma_2_4",
+    "lean.TorusEuler.Paper.lemma_2_5",
+    "lean.TorusEuler.Paper.lemma_2_6",
+    "lean.TorusEuler.Paper.lemma_2_7",
+    "lean.TorusEuler.Paper.lemma_3_1",
+    "lean.TorusEuler.Paper.lemma_4_1",
+    "lean.TorusEuler.Paper.lemma_5_10",
+    "lean.TorusEuler.Paper.lemma_5_3",
+    "lean.TorusEuler.Paper.lemma_5_5",
+    "lean.TorusEuler.Paper.lemma_5_7",
+    "lean.TorusEuler.Paper.lemma_5_8",
+    "lean.TorusEuler.Paper.lemma_5_9",
+    "lean.TorusEuler.Paper.lemma_6_1",
+    "lean.TorusEuler.Paper.lemma_A_2",
+    "lean.TorusEuler.Paper.lemma_B_1",
+    "lean.TorusEuler.Paper.lemma_D_1",
+    "lean.TorusEuler.Paper.lemma_D_2",
+    "lean.TorusEuler.Paper.lemma_D_3",
+    "lean.TorusEuler.Paper.proposition_2_8",
+    "lean.TorusEuler.Paper.proposition_5_1",
+    "lean.TorusEuler.Paper.proposition_5_11",
+    "lean.TorusEuler.Paper.proposition_5_2",
+    "lean.TorusEuler.Paper.proposition_5_4",
+    "lean.TorusEuler.Paper.proposition_8_1",
+    "lean.TorusEuler.Paper.proposition_8_2",
+    "lean.TorusEuler.Paper.proposition_8_4",
+    "lean.TorusEuler.Paper.remark_1_2",
+    "lean.TorusEuler.Paper.theorem_1_1",
+    "lean.TorusEuler.Paper.theorem_4_2",
+    "lean.TorusEuler.Paper.theorem_5_6",
+    "lean.TorusEuler.Paper.theorem_7_1",
+    "lean.TorusEuler.Paper.theorem_A_1",
+    "lean.TorusEuler.PaperAffine.additiveComparison",
+    "lean.TorusEuler.PaperAffine.exactWave",
+    "lean.TorusEuler.PaperAffine.finiteComparison",
+    "lean.TorusEuler.PaperLimitAgreement",
+    "lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+    "lean.TorusEuler.PaperTerminalOffOrigin",
+    "lean.TorusEuler.PaperTerminalTime",
+    "lean.TorusEuler.PaperTerminalVelocityCurl",
+    "lean.TorusEuler.Theorem11",
+    "lean.TorusEuler.auxiliaryTerminalSmoothness",
+    "lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+    "lean.TorusEuler.paperLemma13_slowOrders",
+    "lean.TorusEuler.paperLemma31_waveProfile",
+    "lean.TorusEuler.paperLemma57_periodicGraphFromCell",
+    "lean.TorusEuler.paperLemmaD1_derivatives",
+    "lean.TorusEuler.paperLemmaD1_product",
+    "lean.TorusEuler.paperLemmaD2_mul",
+    "lean.TorusEuler.paperLemmaD2_mul_multiIndex",
+    "lean.TorusEuler.paperProposition51_parentCoefficients",
+    "lean.TorusEuler.paperTheorem71",
+    "lean.TorusEuler.paper_mean_columns",
+    "lean.TorusEuler.paper_section_8_of_inductiveEulerStages",
+    "lean.TorusEuler.theorem11"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
   {
    "id": "link.euler.corollary-8.3",
    "kind": "semantic_review",
@@ -2095,7 +6828,11 @@
    ],
    "subject_ids": [
     "euler.corollary-8.3",
-    "lean.TorusEuler.Paper.corollary_8_3"
+    "lean.TorusEuler.Paper.Corollary83Conclusions",
+    "lean.TorusEuler.Paper.Statement.corollary_8_3",
+    "lean.TorusEuler.Paper.corollary_8_3",
+    "lean.TorusEuler.PaperTerminalTime",
+    "lean.TorusEuler.paper_section_8_of_inductiveEulerStages"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Corollary 8.3. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2110,7 +6847,10 @@
    ],
    "subject_ids": [
     "euler.lemma-1.3",
-    "lean.TorusEuler.Paper.lemma_1_3"
+    "lean.TorusEuler.Paper.Proof.lemma_1_3",
+    "lean.TorusEuler.Paper.Statement.lemma_1_3",
+    "lean.TorusEuler.Paper.lemma_1_3",
+    "lean.TorusEuler.paperLemma13_slowOrders"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 1.3. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2125,7 +6865,9 @@
    ],
    "subject_ids": [
     "euler.lemma-2.1",
-    "lean.TorusEuler.Paper.lemma_2_1"
+    "lean.TorusEuler.Paper.Statement.lemma_2_1",
+    "lean.TorusEuler.Paper.lemma_2_1",
+    "lean.TorusEuler.PaperAffine.exactWave"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2170,7 +6912,9 @@
    ],
    "subject_ids": [
     "euler.lemma-2.4",
-    "lean.TorusEuler.Paper.lemma_2_4"
+    "lean.TorusEuler.Paper.Statement.lemma_2_4",
+    "lean.TorusEuler.Paper.lemma_2_4",
+    "lean.TorusEuler.PaperAffine.additiveComparison"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.4. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2200,7 +6944,11 @@
    ],
    "subject_ids": [
     "euler.lemma-2.6",
-    "lean.TorusEuler.Paper.lemma_2_6"
+    "lean.TorusEuler.Paper.FiniteSmallness",
+    "lean.TorusEuler.Paper.Proof.lemma_2_6_of",
+    "lean.TorusEuler.Paper.Statement.lemma_2_6",
+    "lean.TorusEuler.Paper.lemma_2_6",
+    "lean.TorusEuler.PaperAffine.finiteComparison"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.6. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2230,7 +6978,10 @@
    ],
    "subject_ids": [
     "euler.lemma-3.1",
-    "lean.TorusEuler.Paper.lemma_3_1"
+    "lean.TorusEuler.Paper.ProfileFamily",
+    "lean.TorusEuler.Paper.Statement.lemma_3_1",
+    "lean.TorusEuler.Paper.lemma_3_1",
+    "lean.TorusEuler.paperLemma31_waveProfile"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 3.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2260,6 +7011,8 @@
    ],
    "subject_ids": [
     "euler.lemma-5.10",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+    "lean.TorusEuler.Paper.Statement.lemma_5_10",
     "lean.TorusEuler.Paper.lemma_5_10"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.10. The links were made with AI and have not been reviewed by the authors."
@@ -2275,6 +7028,9 @@
    ],
    "subject_ids": [
     "euler.lemma-5.3",
+    "lean.TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+    "lean.TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+    "lean.TorusEuler.Paper.Statement.lemma_5_3",
     "lean.TorusEuler.Paper.lemma_5_3"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.3. The links were made with AI and have not been reviewed by the authors."
@@ -2290,6 +7046,7 @@
    ],
    "subject_ids": [
     "euler.lemma-5.5",
+    "lean.TorusEuler.Paper.Statement.lemma_5_5",
     "lean.TorusEuler.Paper.lemma_5_5"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.5. The links were made with AI and have not been reviewed by the authors."
@@ -2305,7 +7062,9 @@
    ],
    "subject_ids": [
     "euler.lemma-5.7",
-    "lean.TorusEuler.Paper.lemma_5_7"
+    "lean.TorusEuler.Paper.Statement.lemma_5_7",
+    "lean.TorusEuler.Paper.lemma_5_7",
+    "lean.TorusEuler.paperLemma57_periodicGraphFromCell"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.7. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2335,7 +7094,11 @@
    ],
    "subject_ids": [
     "euler.lemma-5.9",
-    "lean.TorusEuler.Paper.lemma_5_9"
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+    "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+    "lean.TorusEuler.Paper.Statement.lemma_5_9",
+    "lean.TorusEuler.Paper.lemma_5_9",
+    "lean.TorusEuler.exists_parent_genericLeading_pressure_hessian_bound"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.9. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2365,6 +7128,8 @@
    ],
    "subject_ids": [
     "euler.lemma-a.2",
+    "lean.TorusEuler.Paper.Statement.lemma_A_2",
+    "lean.TorusEuler.Paper.Statement.theorem_A_1",
     "lean.TorusEuler.Paper.lemma_A_2"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma A.2. The links were made with AI and have not been reviewed by the authors."
@@ -2395,7 +7160,10 @@
    ],
    "subject_ids": [
     "euler.lemma-d.1",
-    "lean.TorusEuler.Paper.lemma_D_1"
+    "lean.TorusEuler.Paper.Statement.lemma_D_1",
+    "lean.TorusEuler.Paper.lemma_D_1",
+    "lean.TorusEuler.paperLemmaD1_derivatives",
+    "lean.TorusEuler.paperLemmaD1_product"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma D.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2410,7 +7178,10 @@
    ],
    "subject_ids": [
     "euler.lemma-d.2",
-    "lean.TorusEuler.Paper.lemma_D_2"
+    "lean.TorusEuler.Paper.Statement.lemma_D_2",
+    "lean.TorusEuler.Paper.lemma_D_2",
+    "lean.TorusEuler.paperLemmaD2_mul",
+    "lean.TorusEuler.paperLemmaD2_mul_multiIndex"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma D.2. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2455,7 +7226,9 @@
    ],
    "subject_ids": [
     "euler.proposition-5.1",
-    "lean.TorusEuler.Paper.proposition_5_1"
+    "lean.TorusEuler.Paper.Statement.proposition_5_1",
+    "lean.TorusEuler.Paper.proposition_5_1",
+    "lean.TorusEuler.paperProposition51_parentCoefficients"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2485,7 +7258,10 @@
    ],
    "subject_ids": [
     "euler.proposition-5.2",
-    "lean.TorusEuler.Paper.proposition_5_2"
+    "lean.TorusEuler.Paper.Statement.proposition_5_2",
+    "lean.TorusEuler.Paper.proposition_5_2",
+    "lean.TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+    "lean.TorusEuler.paper_mean_columns"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.2. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2500,6 +7276,9 @@
    ],
    "subject_ids": [
     "euler.proposition-5.4",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+    "lean.TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+    "lean.TorusEuler.Paper.Statement.proposition_5_4",
     "lean.TorusEuler.Paper.proposition_5_4"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.4. The links were made with AI and have not been reviewed by the authors."
@@ -2515,7 +7294,11 @@
    ],
    "subject_ids": [
     "euler.proposition-8.1",
-    "lean.TorusEuler.Paper.proposition_8_1"
+    "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+    "lean.TorusEuler.Paper.Proposition81Conclusions",
+    "lean.TorusEuler.Paper.Statement.proposition_8_1",
+    "lean.TorusEuler.Paper.proposition_8_1",
+    "lean.TorusEuler.PaperLimitAgreement"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 8.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2530,7 +7313,11 @@
    ],
    "subject_ids": [
     "euler.proposition-8.2",
-    "lean.TorusEuler.Paper.proposition_8_2"
+    "lean.TorusEuler.Paper.Proposition82Conclusions",
+    "lean.TorusEuler.Paper.Statement.proposition_8_2",
+    "lean.TorusEuler.Paper.proposition_8_2",
+    "lean.TorusEuler.PaperTerminalVelocityCurl",
+    "lean.TorusEuler.paper_section_8_of_inductiveEulerStages"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 8.2. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2545,7 +7332,12 @@
    ],
    "subject_ids": [
     "euler.proposition-8.4",
-    "lean.TorusEuler.Paper.proposition_8_4"
+    "lean.TorusEuler.HasOffOriginLimits",
+    "lean.TorusEuler.Paper.Proposition84Conclusions",
+    "lean.TorusEuler.Paper.Statement.proposition_8_4",
+    "lean.TorusEuler.Paper.proposition_8_4",
+    "lean.TorusEuler.PaperTerminalOffOrigin",
+    "lean.TorusEuler.paper_section_8_of_inductiveEulerStages"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 8.4. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2560,7 +7352,12 @@
    ],
    "subject_ids": [
     "euler.remark-1.2",
-    "lean.TorusEuler.Paper.remark_1_2"
+    "lean.TorusEuler.AuxiliaryTerminalSmoothness",
+    "lean.TorusEuler.HasSmoothOffOriginExtension",
+    "lean.TorusEuler.Paper.Proof.remark_1_2",
+    "lean.TorusEuler.Paper.Statement.remark_1_2",
+    "lean.TorusEuler.Paper.remark_1_2",
+    "lean.TorusEuler.auxiliaryTerminalSmoothness"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Remark 1.2. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2575,7 +7372,11 @@
    ],
    "subject_ids": [
     "euler.theorem-1.1",
-    "lean.TorusEuler.Paper.theorem_1_1"
+    "lean.TorusEuler.EulerSingularityWitness",
+    "lean.TorusEuler.Paper.Statement.theorem_1_1",
+    "lean.TorusEuler.Paper.theorem_1_1",
+    "lean.TorusEuler.Theorem11",
+    "lean.TorusEuler.theorem11"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 1.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2605,6 +7406,9 @@
    ],
    "subject_ids": [
     "euler.theorem-5.6",
+    "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+    "lean.TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+    "lean.TorusEuler.Paper.Statement.theorem_5_6",
     "lean.TorusEuler.Paper.theorem_5_6"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 5.6. The links were made with AI and have not been reviewed by the authors."
@@ -2620,7 +7424,9 @@
    ],
    "subject_ids": [
     "euler.theorem-7.1",
-    "lean.TorusEuler.Paper.theorem_7_1"
+    "lean.TorusEuler.Paper.Statement.theorem_7_1",
+    "lean.TorusEuler.Paper.theorem_7_1",
+    "lean.TorusEuler.paperTheorem71"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 7.1. The links were made with AI and have not been reviewed by the authors."
   },
@@ -2635,6 +7441,8 @@
    ],
    "subject_ids": [
     "euler.theorem-a.1",
+    "lean.TorusEuler.Paper.Statement.lemma_A_2",
+    "lean.TorusEuler.Paper.Statement.theorem_A_1",
     "lean.TorusEuler.Paper.theorem_A_1"
    ],
    "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem A.1. The links were made with AI and have not been reviewed by the authors."

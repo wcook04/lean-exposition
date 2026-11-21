@@ -176,5 +176,6 @@
   "supporting-estimates",
   "auxiliary-smoothness"
  ],
- "goal": "euler.theorem-1.1"
+ "goal": "euler.theorem-1.1",
+ "main_lean": "TorusEuler.theorem11"
 }

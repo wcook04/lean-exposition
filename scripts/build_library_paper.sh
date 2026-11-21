@@ -15,7 +15,14 @@ node site/scripts/topic-colours.ts
 "$LX" check-alignment "$I/alignment" --lean-tree "$I/upstream/lean" --graph "$I/evidence-graph.json" \
   --paper long $(pair long | cut -d' ' -f1) --paper short $(pair short | cut -d' ' -f1) --paper expository $(pair expository | cut -d' ' -f1) > "build/$paper-alignment.json"
 "$LX" assemble "$I/evidence-graph.json" --long $(pair long) --short $(pair short) --expository $(pair expository) --out "build/$paper-edition" > /dev/null
-"$PY" site/scripts/export-static.py "build/$paper-edition" --lean-tree "$I/upstream/lean" --alignment "$I/alignment"
+# The Lean index the reader shows: the text scan with Lean's own dependencies, where the paper has them.
+LEAN_TREE="$I/upstream/lean"
+if [ -f "$I/generated/lean-facts.json" ]; then
+  "$PY" scripts/enrich_lean_index.py "$I/upstream/lean" "$I/generated/lean-facts.json" "build/$paper-lean-index.json"
+  LEAN_TREE="build/$paper-lean-index.json"
+fi
+"$PY" scripts/check_instance.py "$paper" "$LEAN_TREE"
+"$PY" site/scripts/export-static.py "build/$paper-edition" --lean-tree "$LEAN_TREE" --alignment "$I/alignment"
 # The phrases placed on the authors' PDF, for the reader's PDF view (needs poppler's pdftotext).
 rm -rf site/public/pdf-marks
 for slot in long short expository; do

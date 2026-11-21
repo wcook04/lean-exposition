@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+"""Check a library paper's Lean dependencies and its map before it is built.
+
+    check_instance.py PAPER LEAN_INDEX
+
+LEAN_INDEX is the index the reader will show (a JSON file from enrich_lean_index.py, or the
+Lean tree). Fails, naming each problem, when:
+  * the main result's Lean has no statement uses;
+  * a numbered result of the paper is not joined to the main result on the map;
+  * a declaration a phrase names shows no uses, unless its own source names none either
+    (the text scan finds nothing outside its own name).
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+from lean_exposition.lean_index import load_index
+
+
+def main() -> int:
+    paper, index_path = sys.argv[1], Path(sys.argv[2])
+    root = Path("instances") / paper
+    index = load_index(index_path)
+    rows = {d["name"]: d for m in index["modules"] for d in m["declarations"]}
+    graph = json.loads((root / "evidence-graph.json").read_text())
+    instance = json.loads((root / "instance.json").read_text())
+    problems = []
+    goal = instance["goal"]
+    goal_lean = [e["to"][len("lean."):] for e in graph["edges"] if e["from"] == goal and e["kind"] == "formalizes"]
+    if not goal_lean:
+        problems.append(f"the main result {goal} has no Lean on the map")
+    for name in goal_lean:
+        d = rows.get(name, {})
+        uses = d.get("statement_uses", d.get("uses", []))
+        if not uses:
+            problems.append(f"the main result's Lean {name} has no statement uses")
+    # Every numbered result joined to the main result, following edges either way.
+    near = {}
+    for e in graph["edges"]:
+        near.setdefault(e["from"], set()).add(e["to"])
+        near.setdefault(e["to"], set()).add(e["from"])
+    seen, frontier = {goal}, [goal]
+    while frontier:
+        for n in near.get(frontier.pop(), ()):
+            if n not in seen:
+                seen.add(n)
+                frontier.append(n)
+    results = [n["id"] for n in graph["nodes"] if n["kind"] in ("claim", "goal") and n["id"].startswith(f"{paper}.")]
+    # A result may be known to stand apart, with the reason recorded in authored/check.json.
+    allowed = {}
+    if (root / "authored/check.json").is_file():
+        allowed = json.loads((root / "authored/check.json").read_text()).get("not_joined", {})
+    apart = [r for r in results if r not in seen and r not in allowed]
+    if apart:
+        problems.append(f"{len(apart)} numbered result(s) not joined to the main result: {', '.join(apart[:8])}")
+    # No phrase's declaration shows zero uses unless its source names nothing.
+    named = set()
+    for path in sorted((root / "alignment").glob("phrases-*.json")):
+        named |= {row["name"] for t in json.loads(path.read_text())["ties"] for row in t["lean"]}
+    empty = [n for n in sorted(named) if n in rows and not rows[n].get("uses") and rows[n].get("dependency_source") != "lean_report"
+             and rows[n]["kind"] not in ("axiom", "inductive", "structure", "class")]
+    if empty:
+        problems.append(f"{len(empty)} declaration(s) a phrase names show no uses and carry no Lean report: {', '.join(empty[:6])}")
+    for p in problems:
+        print(f"instance {paper}: {p}", file=sys.stderr)
+    if not problems:
+        print(f"instance {paper}: the main result has statement uses; {len(results)} numbered results joined to it; "
+              f"{len(named)} named declarations carry their uses")
+    return 1 if problems else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

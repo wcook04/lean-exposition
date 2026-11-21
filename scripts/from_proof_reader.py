@@ -278,6 +278,8 @@ def main() -> None:
     ap.add_argument("--reimport", action="store_true",
                     help="replace the ties, comparisons and notes of an existing instance, keeping every old tie id as an address")
     ap.add_argument("--guide", type=Path, help="a Markdown guide to how the Lean encodes the paper's objects, read as a page of its own")
+    ap.add_argument("--hold-comparisons", action="store_true",
+                    help="keep the page's comparisons hidden: every comparison is replaced by the page's held text (fidelity_held)")
     ap.add_argument("--lean-exposition", default="lean-exposition", help="the lean-exposition command")
     args = ap.parse_args()
     page, out, slot = args.page, args.out, args.slot
@@ -325,6 +327,27 @@ def main() -> None:
                    stdout=subprocess.DEVNULL)
     lean = Lean(json.loads(index_path.read_text()))
     index_path.unlink()  # the site builds its own index from upstream/lean
+    # Lean's own dependencies, from Proof Reader's report of the compiled modules: what each
+    # declaration's type uses, what its value uses (recorded for definitions) and its axioms.
+    facts = {}
+    for report_name in ("generated/lean.json.gz", "generated/lean.json"):
+        report_path = page / report_name
+        if report_path.is_file():
+            raw = gzip.open(report_path).read() if report_name.endswith(".gz") else report_path.read_bytes()
+            for row in json.loads(raw)["declarations"]:
+                found = lean.resolve(row["name"])
+                if not found:
+                    continue
+                keep = lambda names: sorted({r[0] for n in names if (r := lean.resolve(n))})
+                facts[found[0]] = {"s": keep(row.get("type_dependencies", [])), "v": keep(row.get("value_dependencies", [])),
+                                   "axioms": row.get("axioms")}
+            break
+    write(out / "generated/lean-facts.json", json.dumps({"schema": 1, "source": f"wcook04/proof-reader {args.source_commit[:12]} papers/{page.name}",
+                                                        "facts": dict(sorted(facts.items()))}, ensure_ascii=False, separators=(",", ":")))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from enrich_lean_index import enrich
+    enriched = enrich(lean_out, facts)
+    uses_of = {d["name"]: d["uses"] for m in enriched["modules"] for d in m["declarations"]}
 
     # ---- the reading copy
     text, sections, section_anchors = reading_copy(md, links["passages"])
@@ -341,6 +364,13 @@ def main() -> None:
         pdf = {"file": "paper.pdf", "sha256": sha(data), "bytes": len(data), "url": toml["paper"].get("url", "")}
 
     # ---- phrase ties, titles and notes
+    held = None
+    if args.hold_comparisons:
+        held = links.get("fidelity_held") if isinstance(links.get("fidelity_held"), str) else None
+        held = held or "The comparisons for this paper are held until the authors have seen them."
+        for p in links["passages"]:
+            p["comparisons"] = [{"lean": n, "fidelity": "held", "note": held} for n in p["lean"]]
+        links["fidelity"] = {}
     ties, aliases = phrase_rows(text, links["passages"], lean, links, report)
     if args.reimport:
         aliases = keep_addresses(old_order, old_aliases, aliases, [t["id"] for t in ties], report)
@@ -434,6 +464,13 @@ def main() -> None:
             elif row["fidelity"] != "same":
                 row["fidelity_note"] = "The source records this verdict without a note."
             rows.append(row)
+        # The Lean its own phrase states belongs to the result too (Theorem 1.1's phrase names theorem11).
+        listed = {row["name"] for row in rows}
+        for row in tie["lean"]:
+            if row["relation"] == "states" and row["name"] not in listed:
+                listed.add(row["name"])
+                rows.append({"file": row["file"], "name": row["name"], "relation": "states", "fidelity": row["fidelity"],
+                             "fidelity_source": "ai", **({"fidelity_note": row["fidelity_note"]} if row.get("fidelity_note") else {})})
         batch[f"{args.paper}.{address}"] = {slot: c["title"], "lean": rows,
                                              "statements": [{"paper": slot, "role": "statement", "from": first, "to": last,
                                                              "origin": "ai"}]}
@@ -503,6 +540,68 @@ def main() -> None:
             nodes[nid]["evidence_ids"].append(eid)
             for d in dict.fromkeys(decls):
                 edges.append({"from": nid, "to": d, "kind": "formalizes", "evidence_ids": [eid]})
+    # The Lean of the main result's own phrase belongs to it too (Theorem 1.1's tie names theorem11).
+    # Then join the declarations on the map by Lean's dependencies: A to B when A uses B directly or
+    # through declarations that are not on the map.
+    def add_decl(target, path, d):
+        did = "lean." + target
+        if did in nodes:
+            return did
+        lp, sid = f"upstream/lean/{path}", "lean:" + path
+        sources[sid] = {"id": sid, "kind": "file", "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}", "revision": upstream_rev,
+                        "license": "NOASSERTION", "redistribution": "vendored", "sha256": locked_by_path[lp]["sha256"], "path": lp}
+        dcid = f"cite.{did}"
+        citations[dcid] = {"id": dcid, "title": target, "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}#L{d['line']}",
+                           "source_id": sid, "locator": f"{path}, line {d['line']}"}
+        node(did, "declaration", target, "unverified", source_id=sid, declaration=target, statement=titles.get(target, target),
+             locator=f"{path}, line {d['line']}", citation_ids=[dcid],
+             boundary="Status unverified in this edition: no build or extraction receipt of this tool binds it.")
+        return did
+    for address, c in claims:
+        nid = f"{args.paper}.{address}"
+        tie = next((t for t in ties if t["id"] == tie_of.get(c.get("passage"))), None)
+        extra = [row["name"] for row in (tie["lean"] if tie else []) if row["relation"] == "states"]
+        for target in extra:
+            found = lean.resolve(target)
+            if not found:
+                continue
+            did = add_decl(*found)
+            if not any(e["from"] == nid and e["to"] == did for e in edges):
+                eid = f"link.{nid}"
+                if eid not in evidence:
+                    evidence[eid] = {"id": eid, "kind": "semantic_review", "status": "not_run", "command": [],
+                                     "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+                                     "source_ids": ["proof_reader"], "subject_ids": [nid],
+                                     "details": f"Proof Reader's phrase for {c['title']} names this Lean. Made with AI; not reviewed by the authors."}
+                    nodes[nid]["evidence_ids"].append(eid)
+                evidence[eid]["subject_ids"] = sorted(set(evidence[eid]["subject_ids"]) | {nid, did})
+                edges.append({"from": nid, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
+    on_map = {n[len("lean."):] for n in nodes if n.startswith("lean.")}
+    if facts and on_map:
+        evidence["lean_dependencies"] = {
+            # The graph contract reserves lean_*_dependency edges for this tool's own extraction receipts;
+            # these come from another repository's run, so they are recorded as supports edges with
+            # their source named, and no assurance is claimed for them here.
+            "id": "lean_dependencies", "kind": "semantic_review", "status": "not_run", "command": [],
+            "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+            "source_ids": ["proof_reader", "upstream"], "subject_ids": sorted("lean." + n for n in on_map),
+            "details": ("Each edge joins two declarations on the map when the first uses the second directly or through "
+                        "declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report "
+                        "where recorded and otherwise from the proof's text.")}
+        for start in sorted(on_map):
+            seen, frontier, reach = {start}, list(uses_of.get(start, [])), set()
+            while frontier:
+                name = frontier.pop()
+                if name in seen:
+                    continue
+                seen.add(name)
+                if name in on_map:
+                    reach.add(name)
+                    continue
+                frontier.extend(uses_of.get(name, []))
+            for target in sorted(reach):
+                edges.append({"from": "lean." + start, "to": "lean." + target, "kind": "supports",
+                              "evidence_ids": ["lean_dependencies"]})
     if goal not in nodes:
         raise SystemExit(f"the goal {args.goal} is not a numbered result of this page")
     graph = {
@@ -641,11 +740,15 @@ def main() -> None:
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
                        "main": True, **({"pdf": pdf} if pdf else {})}] + ([guide] if guide else []),
         **({"comparator": comparator} if comparator else {}),
+        **({"comparisons_hidden": True, "comparisons_held_text": held} if held else {}),
         "families": links.get("families", []),
         "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""), "family": t.get("family")}
                    for t in links["topics"]],
         "topic_order": topic_order,
         "goal": goal,
+        # The main result's Lean: the first theorem its own phrase names (the graph's root for the reader).
+        "main_lean": next((row["name"] for t in ties if t["id"] == tie_of.get(next((c.get("passage") for a, c in claims if f"{args.paper}.{a}" == goal), None))
+                           for row in t["lean"] if (lean.resolve(row["name"]) or (None, None, {}))[2].get("kind") == "theorem"), None),
     }
     write(out / "instance.json", dumps(instance))
     summary = {k: (len(v) if isinstance(v, list) else v) for k, v in report.items()}
