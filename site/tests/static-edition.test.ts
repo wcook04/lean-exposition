@@ -263,10 +263,16 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
         const file = readFileSync(resolve(out, `ties/${stage}.json`));
         if (ties.layer === "phrases") {
           expect(gzipSync(file).length).toBeLessThan(400 * ties.ties.length + 8_000);
-          expect(Object.keys(ties).sort().filter((key) => key !== "families")).toEqual(["layer", "meaning", "parts", "passages", "segments", "ties", "topics"]);
+          expect(Object.keys(ties).sort().filter((key) => key !== "families" && key !== "canonical")).toEqual(["layer", "meaning", "parts", "passages", "segments", "ties", "topics"]);
         } else {
           expect(file.length).toBeLessThan(limit);
-          expect(Object.keys(ties).sort()).toEqual(["meaning", "passages", "segments", "ties"]);
+          expect(Object.keys(ties).sort().filter((key) => key !== "canonical")).toEqual(["meaning", "passages", "segments", "ties"]);
+        }
+        // Each record's canonical target, where it has one, is a tie of that record inside its statement block.
+        for (const [record, [t, start, end]] of Object.entries((ties.canonical ?? {}) as Record<string, [number | null, number, number]>)) {
+          expect(end).toBeGreaterThan(start);
+          if (t === null) continue;
+          expect(ties.ties[t].record).toBe(record);
         }
         let previous = 0;
         for (const [start, end, members] of ties.segments) {
