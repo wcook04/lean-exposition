@@ -110,6 +110,7 @@ The base is lean-exposition `site/src`, which is about 40k lines today. These ar
 | `search/` | One instance | **Per paper.** Each paper emits `search.json` (statements, plain titles, Lean names, topics). **Across papers.** `/search/` and the index box fetch the shards lazily. |
 | `library/` (new) | none | The index page, `catalog.json` reader and cross-paper links (below). |
 | `reader/view/` (new) | none | **PDF or typeset toggle.** It appears on every document that has both the authors' PDF and a typeset reading copy (Euler, Navier–Stokes once its checked copy lands, quartic, SMT-LIB with a transcription). Each tie id maps to PDF rectangles and named destinations, and to its place in the text. A switch keeps the same statement or paragraph in view and keeps the selected phrase and the pane mode. Phrase links are clickable in both views with the same topic colours: underlines in text, marks on the PDF. The address carries `view=pdf\|text` next to `page`, and Copy link includes it. A document with only one form shows no toggle. |
+| `reader/view/` Open PDF (new) | Download links only | **Open PDF.** Every document with a PDF gets an "Open PDF" link in the header beside the toggle, and again in About. It opens the authors' original file, byte for byte and credited, at `<paper>/<doc>/paper.pdf` in a new tab (`target="_blank" rel="noopener"`). It has no `download` attribute, so the browser's own viewer zooms, prints and downloads. With a page selected, the link adds `#page=N`. |
 | `app/settings` (new) | Theme toggle only | **Settings menu.** One small menu, remembered per viewer in localStorage behind try/catch. It holds light or dark, plain titles or Lean names first on cards, topic colours on or off, and text size. A setting is added only where it changes what a reader can do. |
 | `apimap/` (new) | none | Proof Reader `PhyslibMap.tsx` and `DependencyMap.tsx`, as the `api-map` document kind. |
 | `instances/` | Per-instance code | **Deleted.** `registry.ts` becomes the `instance.json` loader. |
@@ -281,7 +282,8 @@ library/
 10. Topic colours show.
 11. The Graph view draws.
 12. For each old-site table, five sample redirects land on their deep matches.
-13. Each toggle and setting has a test. One test switches between PDF and text with a phrase selected and checks that the selection and the reading position are kept.
+13. The Open PDF link exists, points at the PDF path, opens a new tab, and the file returns 200 with `application/pdf`.
+14. Each toggle and setting has a test. One test switches between PDF and text with a phrase selected and checks that the selection and the reading position are kept.
 
 **Local publish scripts.** `scripts/publish_library.sh <paper…>` runs the same steps as the matrix and deploy jobs. It is for use when Actions is unavailable.
 
