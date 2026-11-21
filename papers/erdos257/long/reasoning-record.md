@@ -816,7 +816,7 @@ $$
 
 <a id="prop:collapse"></a>
 
-**Proposition 2.5 (A cofinal carry bound).** *If $|\operatorname{ihc}(A,N)|\le C\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\delta=0$. For the particular greedy support $A=G$ of $1/2$, a one-sided upper bound $\operatorname{ihc}(G,N)\le C\sqrt{N+1}+C'$ already suffices.*
+**Proposition 2.5 (A cofinal carry bound).** *Let $A \subseteq \mathbb{N}$ with $1 \notin A$. If $|\operatorname{ihc}(A,N)|\le C\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\delta=0$. For the particular greedy support $A=G$ of $1/2$, a one-sided upper bound $\operatorname{ihc}(G,N)\le C\sqrt{N+1}+C'$ already suffices.*
 
 *Proof.* Lemma [2.4](#lem:collapse-mech) gives
 $$
@@ -3163,7 +3163,7 @@ Table [2](#tab:scale-ladder) records both the exact parameter ranges and the re
 | Closed-form Möbius–Lambert value $\sum_{d\ge1}\mu(d)/(2^d-1)=1/2$ (classical identity, cited). [`tsum_moebius_div_two_pow_sub_one_eq_half`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/Erdos249257/MersenneLambertLadder.lean#L587) | none (closed-form value) |
 | The one natural negative-Möbius candidate support overshoots: $1/2 < \sum_{d\in N}1/(2^d-1)$ for $N=\{d\ge2:\mu(d)=-1\}$. [`half_lt_tsum_negativeMobius`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/Erdos249257/MobiusSignSupportNoGo.lean#L164) | one fixed candidate support $N$ |
 |  |  |
-| From an exact row, either repeated doubling is available or an exact row is obtained at some $2c-2$ with $c\le n$; these alternatives need not be disjoint. [`exactLocalMersenneHalfRow_double_or_recycle`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/Erdos249257/BooleanMobiusExactRowDichotomy.lean#L26) | $\forall n\ge6$, given a row at $n$: $(\ldots)\lor\exists c\le n(\ldots)$ |
+| From an exact row, either an exact row is obtained at $2n-1$ or one is obtained at some $2c-2$ with $4\le c\le n$; these alternatives need not be disjoint. [`exactLocalMersenneHalfRow_double_or_recycle`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/Erdos249257/BooleanMobiusExactRowDichotomy.lean#L26) | $\forall n\ge6$, given a row at $n$: $(\ldots)\lor\exists c\le n(\ldots)$ |
 | Every above-half bounded support recycles into a genuine exact row at some $2c-2$ with $c\le n$. [`exists_skippedCoreExactRow_of_value_above`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/Erdos249257/BooleanMobiusExactRowCrossing.lean#L155) | $E\subseteq[2,n]$, $X_E(2)>1/2$: $\exists c\le n$ |
 | (A cross-check for Problem #249.) $\sum\varphi(n)/2^n$ matches no rational whose denominator divides $2^{14}(2^h-1)$, for some $1\le h\le16$ (exact computation). [`totient_series_ne_rat_of_den_dvd_upto_sixteen`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/Erdos249257/CarrySurvivorExtinction.lean#L587) | $1\le h\le16$ (explicit bound) |
 | Truncation-rung ladder: $\mathrm{HalfRung}(J)$ proved for every $3\le J\le22$ via the finite decision procedure (§[8](#sec:four-coordinates), Theorem [8.9](#thm:tr-finite-decision)); ordinary argument with exact computation ([working note](https://github.com/wcook04/plectis-erdos/blob/f757115e03bebe5c04431a147da559015c680a37/research/experiments/erdos257/notes/truncation-rung-ladder-2026-07-24.md), [program](https://github.com/wcook04/plectis-erdos/blob/f757115e03bebe5c04431a147da559015c680a37/research/experiments/erdos257/check_truncation_rung_ladder.py)). | $3\le J\le22$ (finite table, exhaustive) |
@@ -4355,7 +4355,7 @@ where $\mathrm{Cert}(A)\Rightarrow \mathrm{Irrational}(X_{A}(2))$ is already pro
 $$
 \mathrm{O1'}\ :=\ \forall A,\ A\text{ infinite}\Longrightarrow \mathrm{Cert}(A).
 $$
-It would imply $\mathrm{U257}$, but the reduction loses information, and in fact $\mathrm{O1'}$ is false. For $A=\{n\ge2:n\text{ squarefree}\}$ the incidence is $2^{\omega(n)}-1$, which is odd for every $n\ge2$, so the digitwise certificate schema has no instance at any even base ([`ErdosProblems.Erdos257.not_exists_digitwise_certificates_squarefreeSupport`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/ErdosProblems/Erdos257/SquarefreeSupportIncidence.lean#L292)). The obstruction lies in the method, since Duverney–Tachiya prove the squarefree value irrational at every power-of-two base. Similarly, the divergence of $\sum_p1/p$ places the primes outside the pairwise-coprime theorem, while Tao–Teräväinen prove the base-$2$ prime-support value irrational. The universal target is therefore $\mathrm{U257}$ itself, and $\mathrm{O1'}$ is a rejected sufficient strengthening that gives no open normal form equivalent to it.
+It would imply $\mathrm{U257}$, but the reduction loses information, and in fact $\mathrm{O1'}$ is false. For $A=\{n\ge2:n\text{ squarefree}\}$ the incidence is $2^{\omega(n)}-1$, which is odd for every $n\ge2$, so at each even base the digitwise certificate schema cannot supply certificates for every $q>0$ ([`ErdosProblems.Erdos257.not_exists_digitwise_certificates_squarefreeSupport`](https://github.com/wcook04/plectis-erdos/blob/99f4bf47422abbd8757cbb22b50ba079d764d3a7/ErdosProblems/Erdos257/SquarefreeSupportIncidence.lean#L292)). The obstruction lies in the method, since Duverney–Tachiya prove the squarefree value irrational at every power-of-two base. Similarly, the divergence of $\sum_p1/p$ places the primes outside the pairwise-coprime theorem, while Tao–Teräväinen prove the base-$2$ prime-support value irrational. The universal target is therefore $\mathrm{U257}$ itself, and $\mathrm{O1'}$ is a rejected sufficient strengthening that gives no open normal form equivalent to it.
 
 <a id="whether-one-half-is-represented"></a>
 
@@ -4548,7 +4548,7 @@ The table is read from left to right. There $\Rightarrow$ records an implication
 | Infinitely many greedy skips (Proposition [12.3](#prop:cpgs-equiv)) | $\Leftrightarrow$ half-membership | open, equivalent condition |
 | Terminal-only strip (Prop. [12.4](#prop:strip-equiv)) | $\Leftrightarrow$ half-membership | open, equivalent condition |
 | The centred square-root bound for $G$ | $\Leftrightarrow$ half-membership | open, equivalent condition |
-| Exact finite sums at unbounded depths | $\Leftrightarrow$ half-membership (Prop. [2.7](#prop:collapsed-list)(c)); Lean proves $\Rightarrow$ | open, equivalent condition |
+| Exact finite sums at unbounded depths | $\Leftrightarrow$ half-membership (Prop. [2.7](#prop:collapsed-list)(c)); Lean proves $\Leftrightarrow$ | open, equivalent condition |
 | Linear-width capacity band | $\Rightarrow$ exact sums at unbounded depths (Lean, given a lemma) | open |
 | The quotient condition on skipped greedy prefixes | $\Rightarrow$ exact sums at unbounded depths (Lean) | open; no strict comparison asserted |
 | Reset square-root bound | $\Rightarrow$ half-membership (Lean); no run-length equivalence asserted | open |
@@ -4820,7 +4820,7 @@ The following fixed-revision links locate the supplementary formal statements us
 ### Verification and reproducibility
 
 <!-- passage:verification-and-reproducibility -->
-The verification concordance lists the formal proofs by statement. *Lean* links to the supporting declarations; a dagger identifies a proof that assumes a named input. *Comparator* links to a recorded kernel check against a separately written statement; *pending* means that this comparison has not been recorded. The [verification record](https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface.md) gives the precise correspondence, dependencies and reproducible checks. A row with only a record link has no complete formal proof recorded.
+The verification concordance lists the formal proofs by statement. *Lean* links to the supporting declarations; a dagger identifies a proof that assumes a named input. *Comparator* links to a recorded kernel check against a separately written statement; *pending* means that this comparison has not been recorded. The [verification record](https://github.com/wcook04/plectis-erdos/blob/f9e7a10b2925316d287aa4375136d0df6d71984a/evidence/erdos257-mersenne-reasoning-surface.md) gives the precise correspondence, dependencies and reproducible checks. A row with only a record link has no complete formal proof recorded.
 
 Each link marked <span class="smallcaps">Lean source</span> identifies the declaration associated with a statement or proof step. The integer-quotient proof for $1/21$ and the other arguments without a formal link are ordinary proofs, and this document claims no new formal or independent human verification. The linked records identify the propositions checked and their source revisions.
 <!-- /passage:verification-and-reproducibility -->

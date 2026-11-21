@@ -13,10 +13,11 @@ Problem #257 asks whether $X_A(2)=\sum_{a\in A}1/(2^a-1)$ is irrational for ever
 | What | Repository | Commit |
 | --- | --- | --- |
 | Papers, evidence mapping, vendored Lean | [wcook04/plectis-erdos](https://github.com/wcook04/plectis-erdos) | `3368d1e69467aec111eb3244843ad3542171ff96` (16 November 2026) |
+| Long record source, PDF and reader copy (four statements corrected) | same | `a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3` (21 November 2026, pull request 432) |
 | Lean pin cited by the evidence mapping | same | `436f55ebdafa67e4af0fff79f621c13f2ded12bf` |
 | Comparator corpus and replay run 35935225572 | [wcook04/plectis-erdos-lean](https://github.com/wcook04/plectis-erdos-lean) | `cc7e541cf2081c6fef5a5e377d52e365e33b01eb` |
 
-The Git tree hashes of `lean/ErdosProblems/Erdos257`, `lean/ErdosProblems/Erdos249` and `lean/Erdos249257` are the same at `436f55e` and `3368d1e` (checked with the GitHub contents API), so the vendored bytes are the Lean the evidence mapping cites. Toolchain `leanprover/lean4:v4.29.1`, Mathlib `5e932f97dd25535344f80f9dd8da3aab83df0fe6`.
+At `a5e7700` the long record's Proposition 2.5 states $1\notin A$, and three other sentences say what their Lean proves; the graph's `paper.long.pdf` and `paper.long.tex` and the statement of `long.prop-collapse` follow that commit, and every other record, the evidence mapping and the vendored Lean are unchanged from `3368d1e`, whose Lean trees `a5e7700` keeps. The Git tree hashes of `lean/ErdosProblems/Erdos257`, `lean/ErdosProblems/Erdos249` and `lean/Erdos249257` are the same at `436f55e` and `3368d1e` (checked with the GitHub contents API), so the vendored bytes are the Lean the evidence mapping cites. Toolchain `leanprover/lean4:v4.29.1`, Mathlib `5e932f97dd25535344f80f9dd8da3aab83df0fe6`.
 
 ## Files
 
