@@ -19,7 +19,7 @@ import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
-import { isPhraseRecord, leanTruth, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
+import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
 import { declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
@@ -44,7 +44,8 @@ interface Props {
   alignment: Alignment | null;
   /** Stands in for the Lean: a theorem or citation preview, or the passage inspector. */
   slot?: ReactNode;
-  onRelease(): void;
+  /** Kept for callers of the earlier dock; the subject band now holds these acts. */
+  onRelease?(): void;
   onFollowText?(): void;
   onPick(id: string): void;
   onPoint(tie: number | null, record?: string): void;
@@ -56,6 +57,10 @@ interface Props {
   noClose?: boolean;
   /** Under the graph: show the same declaration in the Lean view. */
   onOpenLean?(): void;
+  /** In the Lean view: show what this uses, and what uses it, in the graph. */
+  onOpenGraph?(): void;
+  /** Stands where "No Lean is linked to this paragraph" would: where to start, before the paper's first link. */
+  emptySlot?: ReactNode;
 }
 
 /** The Lean a statement means, or the record's own rows where it names none, without repeats. */
@@ -166,7 +171,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref, noClose, onOpenLean }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -222,10 +227,12 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   useEffect(() => {
     if (!segments?.length) return setQuote(null);
     const read = () => {
-      const marks = segments.flatMap((segment) => [...document.querySelectorAll<HTMLElement>(`.paper [data-t="${segment}"]`)]);
-      if (marks.length) setQuote(marks.map((mark) => mark.innerHTML).join(" "));
+      const found = open.tie !== null ? quoteOf(ties, open.tie) : null;
+      if (found) setQuote(found);
+      return found;
     };
-    read();
+    // New words never stand under an old quotation: clear it if these are not on the page yet.
+    if (!read()) setQuote(null);
     const later = window.setTimeout(read, 400);
     return () => window.clearTimeout(later);
   }, [segments]);
@@ -277,37 +284,54 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   }, [showing, phrase]);
 
   const empty = !record && !name;
+  // Where each paper states this step. Under a phrase's card it follows the comparison and the note.
+  const crumbs = record && !isPhraseRecord(record) && (
+    <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
+      {open.via === "pin" && graph.nodes.has(record) && (
+        <button type="button" aria-pressed={full} onClick={() => setFull(!full)}>
+          {full ? "Back to the Lean" : "Everything on this step"}
+        </button>
+      )}
+    </PaperCrumbs>
+  );
+  const topic = phrase && open.tie !== null ? topicOf(ties, open.tie) : null;
+  const names = useMemo(() => rows.map((item) => item.name), [rows]);
   return (
     <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
       {!slot && (
         <header className="lean-page__head">
-          {open.via !== "pin" && (
-            <p className="lean-page__state" role="status">
-              {open.via === "point" ? "Pointing at" : "Changes as you scroll"}
-            </p>
-          )}
           <div className="lean-page__names">
+            {open.via === "point" && (
+              <p className="lean-page__preview" role="status">
+                Preview, not selected
+              </p>
+            )}
             {plain && (
               <h3 className="lean-page__title" tabIndex={-1}>
                 {plain}
               </h3>
             )}
-            {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
-          {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
+            {(tie || name || topic) && (
+              <p className="lean-page__meta">
+                {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
+                {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
+                {topic && (
+                  <span className="lean-page__topic" data-tone={topic.tone} title={topic.description || undefined}>
+                    <span className="phrase-card__swatch" aria-hidden="true" />
+                    {topic.name}
+                  </span>
+                )}
+              </p>
+            )}
           </div>
           {onOpenLean && !empty && (
             <button type="button" className="lean-page__quiet" onClick={onOpenLean}>
               Open its Lean
             </button>
           )}
-          {open.via === "pin" && onFollowText && !slot && (
-            <button type="button" className="lean-page__quiet" onClick={onFollowText}>
-              Follow the text
-            </button>
-          )}
-          {!(noClose && open.via !== "pin") && (
-            <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
-              Close
+          {onOpenGraph && !empty && (
+            <button type="button" className="lean-page__quiet" onClick={onOpenGraph}>
+              See what this uses in the graph
             </button>
           )}
         </header>
@@ -318,15 +342,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
         </div>
       ) : (
         <div ref={scroller} className="lean-page__scroll" data-keep>
-          {record && !isPhraseRecord(record) && (
-            <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
-              {open.via === "pin" && graph.nodes.has(record) && (
-                <button type="button" aria-pressed={full} onClick={() => setFull(!full)}>
-                  {full ? "Back to the Lean" : "Everything on this step"}
-                </button>
-              )}
-            </PaperCrumbs>
-          )}
+          {!(phrase && row && !full) && crumbs}
           {!open.decl && rows.length > 1 && !full && (
             <ul className="lean-page__rows" aria-label="Lean declarations of this step">
               {rows.map((item, i) => (
@@ -361,9 +377,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
             ) : empty ? (
               open.topics?.length ? (
                 <Passage records={open.topics} ties={ties} alignment={alignment} onPick={onPick} onPoint={onPoint} />
+              ) : emptySlot ? (
+                emptySlot
               ) : (
                 <p className="lean-page__plain">
-                  No Lean is linked to this paragraph, and its passage names no step of the map. Scroll on, or press <kbd>j</kbd> for the next underlined phrase.
+                  No Lean is linked to this paragraph. Scroll on, or press <kbd>j</kbd> for the next linked passage.
                 </p>
               )
             ) : name ? (
@@ -371,11 +389,13 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
               {phrase && row && (
                 <PhraseCard
                   row={row as unknown as PhraseLean}
-                  topic={open.tie !== null ? topicOf(ties, open.tie) : null}
                   note={part?.notes[row.name]}
                   quote={quote}
+                  phrase={tie?.phrase}
+                  names={names}
                 />
               )}
+              {phrase && row && crumbs}
               <LazyLeanBlock
                 key={`${row?.module ?? open.declModule ?? ""}:${name}`}
                 name={name}
@@ -416,6 +436,49 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
       )}
       {!slot && <div ref={setFoot} className="lean-slot lean-slot--compact lean-page__foot" />}
     </div>
+  );
+}
+
+/** The words of one link as the paper sets them: every fragment of it that is on the page, in order. */
+export function quoteOf(ties: TieModel, t: number): string | null {
+  const segments = ties.segmentsOf[t];
+  if (!segments?.length) return null;
+  const marks = segments.flatMap((segment) => [...document.querySelectorAll<HTMLElement>(`.paper [data-t="${segment}"]`)]);
+  return marks.length ? marks.map((mark) => mark.innerHTML).join(" ") : null;
+}
+
+/**
+ * A selected paragraph: every link in it, in the order of the text. Each row gives the linked
+ * words whole, the plain title of what they are linked to and how many Lean declarations that is;
+ * choosing a row selects those words.
+ */
+export function ParagraphLinks({ ties, list, onOpen, onPoint }: { ties: TieModel; list: readonly number[]; onOpen(t: number): void; onPoint(tie: number | null, record?: string): void }) {
+  const [quotes, setQuotes] = useState<(string | null)[]>([]);
+  useEffect(() => setQuotes(list.map((t) => quoteOf(ties, t))), [ties, list]);
+  return (
+    <section className="para-links" aria-label="Links in the selected paragraph">
+      <h3 className="lean-page__title" tabIndex={-1}>
+        {list.length === 1 ? "One link in this paragraph" : `${list.length} links in this paragraph`}
+      </h3>
+      <p className="para-links__lead">Each is a passage of the paragraph with the Lean it is linked to. Choose one to read its comparison and its Lean.</p>
+      <ol className="para-links__list">
+        {list.map((t, i) => {
+          const tie = ties.index.ties[t];
+          const count = tie.rows?.length ?? (tie.lean ? 1 : 0);
+          return (
+            <li key={t}>
+              <button type="button" onClick={() => onOpen(t)} onPointerEnter={() => onPoint(t, tie.record)} onPointerLeave={() => onPoint(null)} onFocus={() => onPoint(t, tie.record)} onBlur={() => onPoint(null)}>
+                <span className="para-links__quote" dangerouslySetInnerHTML={{ __html: quotes[i] ?? "" }} />
+                <span className="para-links__to">
+                  {phraseTitle(ties, t) || "No Lean linked"}
+                  {count > 1 && <span className="para-links__count">, and {count - 1} more Lean {count === 2 ? "declaration" : "declarations"}</span>}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
   );
 }
 

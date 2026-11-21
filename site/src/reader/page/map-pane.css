@@ -13,6 +13,17 @@
   padding-right: 0;
 }
 
+/* From 1024 to 1279px the two columns stand closer, so that both fit: the paper is never covered. */
+@media (max-width: 1279px) {
+  .reader.reader--follow {
+    column-gap: 24px;
+  }
+
+  .reader.reader--follow .reader__map {
+    margin-left: 0;
+  }
+}
+
 .reader.reader--follow.reader--outlined {
   grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
 }
@@ -538,12 +549,16 @@
   text-decoration-color: currentColor;
 }
 
-/* ---- The right page as a sheet ----------------------------------------------------- */
+/* ---- The right page on a narrow window --------------------------------------------- */
 
+/* Below 1024px the inspector opens over the whole screen under the top bar (RightSheet.tsx). It
+   has its final box from the first frame and only fades in; the paper behind it does not move. */
 .right-sheet {
   position: fixed;
   z-index: 40;
+  inset: 0;
   display: flex;
+  flex-direction: column;
   background: var(--ground);
   animation: map-pane-in var(--t-reveal) var(--ease-out) backwards;
 }
@@ -552,57 +567,45 @@
   outline: none;
 }
 
-.right-sheet--side {
-  top: var(--topbar-h);
-  right: 0;
-  bottom: 0;
-  width: min(680px, 64vw);
-  border-left: 1px solid var(--rule-strong);
-  box-shadow: var(--shadow-sheet);
-}
-
-.right-sheet--phone {
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 60dvh;
-  border-top: 1px solid var(--rule-strong);
-  box-shadow: var(--shadow-sheet);
-}
-
 .right-sheet .map-pane {
   border-left: 0;
 }
 
-.right-sheet .lean-page__action[aria-keyshortcuts] {
-  display: none;
-}
-
-.right-sheet__close {
-  position: absolute;
-  z-index: 6;
-  top: 4px;
-  right: var(--space-2);
-  display: inline-grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  padding: 0;
+.right-sheet__back {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  align-self: flex-start;
+  min-height: var(--target);
+  padding: 0 var(--space-4);
   border: 0;
-  border-radius: var(--radius-s);
-  background: var(--surface);
-  color: var(--ink-2);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  font-weight: 600;
   cursor: pointer;
 }
 
-.right-sheet .map-pane__bar,
-.right-sheet .lean-page__head {
-  padding-right: 44px;
+.right-sheet__back:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -3px;
 }
 
-/* A phone has the toggle in the paper's one row. */
-.right-sheet--phone .map-pane__bar .mode-toggle {
-  display: none;
+.right-sheet .map-pane__bar {
+  flex-wrap: wrap;
+  row-gap: 4px;
+  padding-block: 6px;
+}
+
+.right-sheet .mode-toggle button {
+  min-height: 36px;
+  min-width: 64px;
+}
+
+.right-sheet .map-pane__whole {
+  min-height: 36px;
 }
 
 .right-sheet__wait {
@@ -612,9 +615,9 @@
   color: var(--ink-3);
 }
 
-/* The last line of the paper can still scroll clear of the sheet. */
-html[data-right-sheet] .reader__paper {
-  padding-bottom: 62dvh;
+/* The paper behind the open inspector does not scroll with it. */
+html[data-right-sheet] {
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -641,7 +644,7 @@ html[data-right-sheet] .reader__paper {
 
 /* Graph: the drawing, a handle, and the dock under it (15% to 70% of the height, 30% at first). */
 .map-pane__graphview {
-  --dock-share: 0.3;
+  --dock-share: 0.4;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -666,11 +669,13 @@ html[data-right-sheet] .reader__paper {
   flex: 1;
 }
 
+/* The dock keeps at least 240px while the drawing keeps 260px, so neither becomes a sliver. */
 .map-pane__dock {
   display: flex;
-  flex: 0 0 calc(var(--dock-share) * 100%);
+  flex: 0 0 clamp(min(240px, 100% - 260px), calc(var(--dock-share) * 100%), max(240px, 100% - 260px));
   flex-direction: column;
   min-height: 0;
+  border-top: 1px solid var(--rule);
 }
 
 .map-pane__dock > .lean-page {
@@ -795,4 +800,451 @@ html[data-right-sheet] .reader__paper {
 
 .map-pane .fg__title .katex {
   font-size: 1.05em;
+}
+
+/* ==== The reader's design (docs/reader-design.md) =========================================
+   The subject band, the inspector's order and type, the paragraph list and the two guides.
+   These rules come last in the pane's stylesheet and restate what the design changes. */
+
+.map-pane__bar {
+  gap: var(--space-2);
+  padding-left: var(--space-4);
+}
+
+.map-pane__bar .map-pane__open {
+  margin-left: auto;
+}
+
+.map-pane__bar .map-pane__hide {
+  margin-left: auto;
+}
+
+.map-pane__bar .map-pane__open + .map-pane__hide {
+  margin-left: 0;
+}
+
+.mode-toggle button {
+  min-width: 60px;
+  min-height: 30px;
+  font-size: var(--fs-ui);
+  transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.mode-toggle button:focus-visible,
+.map-pane__whole:focus-visible,
+.map-pane__hide:focus-visible,
+.lean-page__quiet:focus-visible,
+.lean-page__action:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---- The subject band ---------------------------------------------------------------- */
+
+.subject-band {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-4);
+  min-height: var(--band-h);
+  padding: 6px var(--space-3) 6px var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+  font-family: var(--font-sans);
+}
+
+/* Selected: the same amber rule the selected words carry in the paper's margin. */
+.subject-band[data-state="words"],
+.subject-band[data-state="paragraph"],
+.subject-band[data-state="declaration"],
+.subject-band[data-state="step"] {
+  box-shadow: inset var(--sel-rail) 0 0 var(--sel-ink);
+}
+
+.subject-band__state {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.subject-band__words {
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.subject-band__place {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.subject-band__place:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+.subject-band__acts {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.subject-band__act {
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.subject-band__act:hover {
+  border-color: var(--ink-2);
+  background: var(--sunk);
+}
+
+.subject-band__place:focus-visible,
+.subject-band__act:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+@media (pointer: coarse) {
+  .subject-band__act {
+    min-height: var(--target);
+  }
+}
+
+/* ---- The inspector: title and identity ----------------------------------------------- */
+
+.lean-page__head {
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-1) var(--space-4);
+}
+
+.lean-page__names {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.lean-page__title {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.lean-page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.lean-page__role {
+  color: var(--ink-2);
+}
+
+.lean-page__raw {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+.lean-page__topic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:root[data-tones="off"] .lean-page__topic .phrase-card__swatch {
+  display: none;
+}
+
+.lean-page__preview {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.lean-page__quiet {
+  min-height: 30px;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  text-decoration-color: var(--rule-control);
+}
+
+.lean-page__body {
+  padding: 0 var(--space-4) var(--space-5);
+}
+
+.lean-page__plain {
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  max-width: var(--evidence-measure);
+}
+
+/* ---- A selected paragraph's links ---------------------------------------------------- */
+
+.para-links {
+  padding: var(--space-3) 0 var(--space-4);
+}
+
+.para-links__lead {
+  max-width: var(--evidence-measure);
+  margin: var(--space-1) 0 var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.para-links__list {
+  display: grid;
+  gap: var(--space-2);
+  max-width: var(--evidence-measure);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.para-links__list button {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.para-links__list button:hover {
+  border-color: var(--ink-3);
+  background: var(--raised);
+}
+
+.para-links__list button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.para-links__quote {
+  font-family: var(--font-serif);
+  font-size: var(--quote-fs);
+  line-height: 1.5;
+}
+
+.para-links__quote .katex-display,
+.para-links__quote .math-display {
+  margin: 0.2em 0;
+}
+
+.para-links__to {
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.para-links__to::before {
+  content: "Linked to: ";
+  color: var(--ink-3);
+}
+
+/* ---- Start here, and How to read the Lean -------------------------------------------- */
+
+.map-pane__guide[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--ink-3);
+  background: var(--sunk);
+}
+
+.guide-panel {
+  padding: var(--space-3) 0 var(--space-5);
+  font-family: var(--font-sans);
+}
+
+.guide-panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.guide-panel__head h3 {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.guide-panel__lead {
+  max-width: var(--evidence-measure);
+  margin: 0 0 var(--space-2);
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.guide-panel__who {
+  max-width: var(--evidence-measure);
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.guide-panel__cards {
+  display: grid;
+  gap: var(--space-2);
+  max-width: var(--evidence-measure);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-panel__cards button {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 2px var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.guide-panel__cards button:hover {
+  border-color: var(--ink-3);
+  background: var(--raised);
+}
+
+.guide-panel__cards button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.guide-panel__n {
+  grid-row: 1 / span 2;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+.guide-panel__title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  line-height: 1.35;
+}
+
+.guide-panel__why {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.guide-panel__text {
+  max-width: var(--evidence-measure);
+  font-family: var(--font-sans);
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  color: var(--ink);
+}
+
+.guide-panel__text h1 {
+  display: none;
+}
+
+.guide-panel__text h2 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.guide-panel__text p {
+  margin: 0 0 var(--space-3);
+}
+
+.guide-panel .phrase-card__legend {
+  max-width: var(--evidence-measure);
+  margin: var(--space-4) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-toggle button,
+  .subject-band__act,
+  .para-links__list button,
+  .guide-panel__cards button {
+    transition: none;
+  }
+}
+
+/* The Lean lines a phrase is tied to: a pale wash and a narrow amber rule, quieter than the words they answer to. */
+.lean-page .lean-line.is-lit {
+  --lit-row: color-mix(in oklab, var(--lit-line) 13%, transparent);
+  background: var(--lit-row);
+  box-shadow: -4px 0 0 var(--lit-row), 4px 0 0 var(--lit-row), -6px 0 0 var(--sel-ink);
+}
+
+.lean-page .lean-crumbs {
+  padding-inline: 0;
+  margin-bottom: var(--space-2);
+}
+
+.guide-panel__about {
+  max-width: var(--evidence-measure);
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--rule-control);
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
 }

@@ -116,6 +116,11 @@ export interface SiteInstance {
   paperStatus?: string;
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
+  /**
+   * What the formal development does in each section of a paper, by paper slot and then by section
+   * number ("5.6") or heading. The reader sets one under each section head as a reader annotation.
+   */
+  sectionAids?: Partial<Record<string, Record<string, string>>>;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
   library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;

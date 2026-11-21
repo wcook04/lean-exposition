@@ -108,6 +108,7 @@ const site = {
   stages: PAPER.documents.map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
+  sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
   library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
   recordKind,
   levelGoals: null,

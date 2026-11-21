@@ -89,6 +89,70 @@ export interface PrepareInput {
   referenceTable?: ReferenceTable | null;
   /** The paper's tied segments, by byte range; their spans come out in the rendered HTML. */
   ties?: readonly TieSegment[];
+  /**
+   * What the formal development does in each section, by section number ("5.6") or heading. One is
+   * set under its section's head as a reader annotation; the authors' text is not changed.
+   */
+  sectionAids?: Readonly<Record<string, string>> | null;
+}
+
+// ------------------------------------------------------------- section aids
+
+const escapeText = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** An aid's words as HTML: `$…$` typeset, the rest as text. */
+function aidHtml(text: string): string {
+  return text
+    .split(/(\$[^$]+\$)/)
+    .map((piece) => (piece.length > 2 && piece.startsWith("$") && piece.endsWith("$") ? renderTex(piece.slice(1, -1), false).html : escapeText(piece)))
+    .join("");
+}
+
+/** Where an aid's first sentence ends: a full stop before a capital, outside any formula. */
+function firstSentenceEnd(text: string): number {
+  let math = false;
+  for (let i = 0; i < text.length - 2; i++) {
+    if (text[i] === "$") math = !math;
+    else if (!math && text[i] === "." && text[i + 1] === " " && /[A-Z$]/.test(text[i + 2]) && i > 40) return i + 1;
+  }
+  return text.length;
+}
+
+/** The aid for a heading: by its number, by its whole title, or by its title without its number. */
+export function sectionAidFor(aids: Readonly<Record<string, string>>, title: string): string | null {
+  const plain = stripMarks(title).replace(/\s+/g, " ").trim();
+  const number = plain.match(/^((?:\d+|[A-Z])(?:\.\d+)*)\.?(?:\s|$)/)?.[1];
+  return aids[plain] ?? (number ? aids[number] : undefined) ?? aids[plain.replace(/^((?:\d+|[A-Z])(?:\.\d+)*)\.?\s+/, "")] ?? null;
+}
+
+/**
+ * The annotation set under a section's head. Its first sentence shows; the rest opens in place.
+ * A `<details>`, so it needs no script and nothing moves unless the reader opens it.
+ */
+export function sectionAidHtml(text: string): string {
+  const cut = firstSentenceEnd(text);
+  const lead = `<span class="section-aid__label">Formal development in this section.</span> ${aidHtml(text.slice(0, cut))}`;
+  const who = `<span class="section-aid__who">Reader annotation, AI-drafted.</span>`;
+  if (cut >= text.length) return `<p class="section-aid" data-aid>${lead} ${who}</p>`;
+  return `<details class="section-aid" data-aid><summary>${lead} <span class="section-aid__more" aria-hidden="true"></span></summary><p>${aidHtml(text.slice(cut).trim())} ${who}</p></details>`;
+}
+
+/** A rendered part with each of its section heads followed by that section's aid. */
+function withSectionAids(html: string, headings: readonly { id: string; level: number; title: string }[], aids: Readonly<Record<string, string>>): string {
+  let out = html;
+  for (const heading of headings) {
+    // The paper's title is followed by its authors, not by a note; its aid opens the reader's "Start here".
+    if (heading.level < 2) continue;
+    const aid = sectionAidFor(aids, heading.title);
+    if (!aid) continue;
+    const at = out.indexOf(`id="${heading.id}"`);
+    if (at < 0) continue;
+    const close = out.slice(at).match(/<\/h[1-6]>/);
+    if (!close || close.index === undefined) continue;
+    const end = at + close.index + close[0].length;
+    out = out.slice(0, end) + sectionAidHtml(aid) + out.slice(end);
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------- markdown-it
@@ -899,7 +963,9 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       documentPaths: input.documentPaths,
       linkClose: [],
     };
-    st.rendered = { index, ...renderTokens(st, env, typesetSpan, { index: refs }) };
+    const made = renderTokens(st, env, typesetSpan, { index: refs });
+    const headings = parts[index]?.headings ?? [];
+    st.rendered = { index, ...made, html: input.sectionAids && headings.length ? withSectionAids(made.html, headings, input.sectionAids) : made.html };
     return st.rendered;
   };
 

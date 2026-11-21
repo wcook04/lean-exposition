@@ -25,6 +25,8 @@ export interface LibraryInstance {
   goal: string;
   main_lean?: string | null;
   comparisons_hidden?: boolean;
+  /** What the formal development does in each section, by section number or title (generated/section-aids.json). */
+  section_aids?: Record<string, string>;
   comparisons_held_text?: string;
 }
 

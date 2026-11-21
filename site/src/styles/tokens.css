@@ -88,6 +88,23 @@
   --reader-outline: 208px;
   --reader-inspector: 336px;
   --reader-gap: 32px;
+  /* The reader's marks, each with one job (docs/reader-design.md). Aliases of the family's
+     colours: a linked phrase's underline, the selection, the followed passage, and the
+     inspector's type, which does not grow with the window. */
+  --tie-rule: 2px;
+  --tie-rule-strong: 3px;
+  --tie-end-gap: 3px;
+  --sel-ink: var(--lit);
+  --sel-wash: var(--lit-wash);
+  --sel-rail: 3px;
+  --follow-ink: var(--ink-2);
+  --evidence-fs: 1rem;
+  --evidence-lh: 1.5;
+  --evidence-measure: 38rem;
+  --quote-fs: 1.0625rem;
+  --code-fs: 0.875rem;
+  --band-h: 56px;
+  --held-bar-h: 56px;
 
   /* Day: the family's warm paper and violet ink. */
   --ground: #f8f0e2;

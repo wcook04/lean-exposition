@@ -14,6 +14,7 @@ import type { Alignment } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
+import { PAPER_NAMES } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { FocusGraph, type FGCard } from "../../map/FocusGraph";
 import { mainGoal, startingGoals } from "../../map/TheoremPlate";
@@ -22,10 +23,14 @@ import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
 import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
-import { passageTopics, statementFor, type TieModel } from "../ties";
+import { passageTopics, phraseTitle, statementFor, type TieModel } from "../ties";
 import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
 import { passageOf, passageRecords, type Structures } from "./model";
-import { LeanDock, recordOfDecl, type LeanOpen } from "./RecordDock";
+import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
+import { SubjectBand, type SubjectState } from "./SubjectBand";
+import { GuidePanel, StartHere } from "./Guides";
+import { useAids } from "../aids";
+import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
@@ -49,6 +54,10 @@ export interface HeldParagraph {
   records: string[];
   /** Where no step is tied to it: the first declaration its phrases are tied to. */
   decl?: string;
+  /** Every link in the paragraph, in the order of the text. */
+  ties?: number[];
+  /** The paragraph on the page. */
+  block?: HTMLElement;
 }
 
 interface Props {
@@ -77,8 +86,14 @@ interface Props {
   onRecord?(id: string): void;
   /** A declaration was chosen: it becomes the subject. */
   onDecl?(name: string, module?: string): void;
-  /** Let go of what was clicked and follow the paper again. */
+  /** "Resume here": let go of what was selected and follow the paper from where the reader is. The paper does not move. */
   onRelease(): void;
+  /** "Return to selected words": the paper goes back to the selection, which stays. */
+  onReturn?(): void;
+  /** Where a passage is in the paper, in words: "§5.6", a heading. */
+  placeOf?(anchor: string | undefined): string;
+  /** Linked words were chosen in the pane (a paragraph's list, a showcase card): select them; `land` also brings the paper to them. */
+  onOpenTie?(tie: number, land?: boolean): void;
   /** From an opened statement to the Lean following the text. */
   onFollowText?(): void;
   mode: PaneMode;
@@ -100,7 +115,7 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onFollowText, mode, onMode, onPoint, onName, onPassage, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, onMode, onPoint, onName, onPassage, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -404,11 +419,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- The line over the drawing ----------------------------------------------------------
 
   const subjectTitle = focus?.subjects.length === 1 ? (focus.cards.get(focus.subjects[0])?.title ?? "") : "";
-  const again = (
-    <button type="button" onClick={onRelease}>
-      Follow the paper again
-    </button>
-  );
+  // Letting go is in the subject band ("Resume here"); the line over the drawing only says what is drawn.
+  const again = null;
   const label = ((): ReactNode => {
     if (!current) return null;
     const why = current.why;
@@ -460,7 +472,71 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     return { uses: uses.size, usedBy: usedBy.size };
   }, [focus]);
   const folded = narrow && !unfolded && !whole;
-  const fill = !!leanSlot;
+
+  // ---- The subject band, and the two guides that can stand in the pane ----------------------
+
+  const aids = useAids();
+  const guideStage = site.library && stage === site.library.main ? Object.values(site.library.pages ?? {})[0] : undefined;
+  const [aside, setAside] = useState<"start" | "guide" | null>(null);
+  // A guide is read with nothing else in mind: a new selection takes its place.
+  useEffect(() => setAside(null), [pin?.record, pin?.tie, decl, held]);
+  const holding = !!pin || !!decl || !!held;
+  const bandState: SubjectState = decl
+    ? "declaration"
+    : pin
+      ? pin.tie !== null
+        ? "words"
+        : "step"
+      : held
+        ? "paragraph"
+        : preview || (mode === "lean" && pointed)
+          ? "preview"
+          : "following";
+  const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
+  const bandTitle = pin?.tie != null ? phraseTitle(ties, pin.tie) : decl ? plainName(alignment, decl) : subjectTitle;
+  const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
+  /** A showcase card names linked words, a numbered result or a declaration: open whichever it is. */
+  const openCard = useCallback(
+    (card: string) => {
+      const at = card.indexOf(":");
+      const [kind, id] = [card.slice(0, at), card.slice(at + 1)];
+      setAside(null);
+      if (kind === "tie") {
+        const t = ties.order.find((n) => ties.index.ties[n].phrase === id);
+        if (t !== undefined) onOpenTie?.(t, true);
+        return;
+      }
+      // A result opens at the words that state it, where the paper has them; else as a declaration.
+      const stated = kind === "result" ? ties.order.find((n) => ties.index.ties[n].role === "statement" && ties.index.ties[n].rows?.some((row) => row.name === id)) : undefined;
+      if (stated !== undefined) onOpenTie?.(stated, true);
+      else onDecl?.(id, tools.rowOf(id)?.module);
+    },
+    [ties, onOpenTie, onDecl, tools],
+  );
+  const cardTitle = useCallback(
+    (card: string) => {
+      const at = card.indexOf(":");
+      const [kind, id] = [card.slice(0, at), card.slice(at + 1)];
+      if (kind === "tie") {
+        const t = ties.order.find((n) => ties.index.ties[n].phrase === id);
+        return t !== undefined ? phraseTitle(ties, t) : id;
+      }
+      return plainName(alignment, id);
+    },
+    [ties, alignment],
+  );
+  const about = site.sectionAids?.[stage]?.[PAPER_NAMES[stage].short];
+  // Before the paper's first link (its title and authors) there is nothing to follow: the pane offers where to start.
+  const firstLink = ties.order.length ? startOf(ties.index.ties[ties.order[0]].at) : null;
+  const atFront = !holding && follow.tie === null && (readAt === null || readAt === undefined || firstLink === null || readAt < firstLink);
+  const frontSlot = atFront && aids.showcase.length > 0 ? <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} /> : undefined;
+  const asideSlot =
+    aside === "start" ? (
+      <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
+    ) : aside === "guide" && guideStage ? (
+      <GuidePanel stage={guideStage} onClose={() => setAside(null)} />
+    ) : null;
+  const fill = !!leanSlot || !!asideSlot;
   const mapHref = routeHref({ view: "map", goal, node: subjectRecords[0] });
 
   const drawing = whole ? (
@@ -518,6 +594,16 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
         <ModeToggle mode={mode} onMode={onMode} />
+        {aids.showcase.length > 0 && (
+          <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
+            Start here
+          </button>
+        )}
+        {guideStage && (
+          <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "guide"} onClick={() => setAside(aside === "guide" ? null : "guide")}>
+            How to read the Lean
+          </button>
+        )}
         {mode === "graph" && !fill && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}
@@ -533,7 +619,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             This passage
           </button>
         )}
-        <a
+        {mode === "graph" && !fill && <a
           className="map-pane__open"
           href={mapHref}
           onClick={(event) => {
@@ -543,7 +629,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           }}
         >
           Open the full map
-        </a>
+        </a>}
         {!inModal && (
           <button type="button" className="map-pane__hide" aria-label="Hide the pane" onClick={onHide}>
             <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
@@ -552,9 +638,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           </button>
         )}
       </div>
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onReturn={(pin?.tie != null || held?.block) && onReturn ? onReturn : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
-          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
+          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? asideSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" ? (
         <div className="map-pane__lean">
@@ -563,10 +650,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             ties={ties}
             stage={stage}
             alignment={alignment}
-            slot={preview}
-            onRelease={onRelease}
-            onFollowText={onFollowText}
-            noClose={!pin && !decl && !held}
+            slot={preview ?? heldList}
+            emptySlot={frontSlot}
+            onOpenGraph={() => onMode("graph")}
             onPick={(id) => onRecord?.(id)}
             onPoint={onPoint}
             onName={onName}
@@ -598,9 +684,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               ties={ties}
               stage={stage}
               alignment={alignment}
-              slot={preview}
-              onRelease={onRelease}
-              noClose={!pin && !decl && !held}
+              slot={preview ?? (previewCard ? null : heldList)}
               onOpenLean={() => onMode("lean")}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}

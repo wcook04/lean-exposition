@@ -7,36 +7,70 @@
    two. A colour never says how the Lean compares with the phrase; the card says that in words.
    tests/topic-colours.test.ts checks the floors, the contrast and that the stored colours are current. */
 
-/* The phrase at rest: an underline in its topic's colour, drawn under each of its lines. */
+/* The phrase at rest: an underline in its topic's colour, drawn under each of its lines. With
+   "Colour underlines by topic" off (data-tones on the root) every underline is one neutral ink. */
 .paper .tie[data-tone] {
-  background-image: linear-gradient(color-mix(in oklab, var(--tone) 80%, transparent), color-mix(in oklab, var(--tone) 80%, transparent));
+  --tie-ink: color-mix(in oklab, var(--tone) 80%, transparent);
+  background-image: linear-gradient(var(--tie-ink), var(--tie-ink));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: calc(100% - 3px) 2px;
+  background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule);
   padding-bottom: 1px;
+}
+
+:root[data-tones="off"] .paper .tie[data-tone] {
+  --tie-ink: var(--ink-3);
 }
 
 /* A display is underlined by a rule beside it. */
 .paper .math-display.tie[data-tone] {
   background-image: none;
-  box-shadow: inset 3px 0 0 color-mix(in oklab, var(--tone) 80%, transparent);
+  box-shadow: inset var(--tie-rule-strong) 0 0 var(--tie-ink);
 }
 
 .paper .tie[data-tone][data-point],
 .paper .tie[data-tone]:hover {
-  background-color: color-mix(in oklab, var(--tone) 14%, transparent);
-  background-size: calc(100% - 3px) 3px;
+  background-color: color-mix(in oklab, var(--tie-ink) 14%, transparent);
+  background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule-strong);
 }
 
 /* The phrases of a declaration pointed at in the Lean pane. */
 .paper .tie[data-tone][data-decl] {
-  background-color: color-mix(in oklab, var(--tone) 24%, transparent);
-  background-size: calc(100% - 3px) 3px;
+  background-color: color-mix(in oklab, var(--tie-ink) 24%, transparent);
+  background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule-strong);
 }
 
-/* Pinned stays amber: what you are attending to. */
-.paper .tie[data-tone][data-pin] {
-  background-color: var(--highlighter);
+/* Selected: amber, and only this. A thick amber underline on every line of the exact words, a pale
+   wash under them, and the amber rule in the margin (the tick). The topic's colour steps back while
+   the words are selected, so that amber has one meaning on the paper. */
+.paper .tie[data-tone][data-pin],
+.paper .tie[data-tone][data-pin]:hover {
+  --tie-ink: var(--sel-ink);
+  background-color: var(--sel-wash);
+  background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule-strong);
+}
+
+.paper .math-display.tie[data-tone][data-pin] {
+  box-shadow: inset var(--sel-rail) 0 0 var(--sel-ink);
+}
+
+/* Where colours are forced the underline is a real text decoration and the selection the system's highlight. */
+@media (forced-colors: active) {
+  .paper .tie[data-tone] {
+    background-image: none;
+    text-decoration: underline 2px LinkText;
+    text-underline-offset: 0.18em;
+  }
+
+  .paper .math-display.tie[data-tone] {
+    box-shadow: none;
+    border-left: 3px solid LinkText;
+  }
+
+  .paper .tie[data-tone][data-pin] {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -45,18 +79,18 @@
   }
 }
 
-/* ---- The declaration card's phrase block --------------------------------------------------- */
+/* ---- The inspector's card for selected words ------------------------------------------------
+   In the order a reader asks (docs/reader-design.md): the exact words, how the Lean compares with
+   them and every qualification of that, the reading note, the conventions used. One calm surface,
+   no colour by topic: the amber rule beside the quotation is the mark the words carry in the paper.
+   Its type does not grow with the window. */
 
 .phrase-card {
-  margin: 0 0 var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  border-left: 3px solid var(--tone, var(--rule-strong));
-  border-radius: 0 var(--radius-s) var(--radius-s) 0;
-  background: color-mix(in oklab, var(--tone, var(--ink)) 6%, var(--surface));
+  margin: var(--space-2) 0 var(--space-4);
   font-family: var(--font-sans);
-  font-size: var(--fs-ui);
-  line-height: var(--lh-ui);
-  color: var(--ink-2);
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  color: var(--ink);
 }
 
 .phrase-card p {
@@ -64,15 +98,28 @@
 }
 
 .phrase-card > * + * {
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
-.phrase-card__topic {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.phrase-card__quote {
+  max-width: var(--evidence-measure);
+  margin: 0;
+  padding: 2px 0 2px var(--space-3);
+  border-left: var(--sel-rail) solid var(--follow-ink);
+  font-family: var(--font-serif);
+  font-size: var(--quote-fs);
+  line-height: 1.5;
   color: var(--ink);
-  font-weight: 500;
+}
+
+/* Selected words carry amber, in the paper and here; words only followed or previewed do not. */
+.lean-page[data-via="pin"] .phrase-card__quote {
+  border-left-color: var(--sel-ink);
+}
+
+.phrase-card__quote .math-display,
+.phrase-card__quote .katex-display {
+  margin: 0.2em 0;
 }
 
 .phrase-card__swatch,
@@ -84,39 +131,126 @@
   background: var(--tone);
 }
 
-.phrase-card__fidelity strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.phrase-card__who,
-.phrase-card__label span {
-  color: var(--ink-3);
-  font-weight: 400;
-}
-
-.phrase-card__who {
-  white-space: nowrap;
-}
-
+/* A small heading for each part of the card, with who made it beside it. */
 .phrase-card__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin-bottom: var(--space-1);
   font-size: var(--fs-sm);
   font-weight: 600;
+  line-height: 1.5;
   color: var(--ink);
-  letter-spacing: 0.01em;
 }
 
-.phrase-card__text {
-  color: var(--ink);
+.phrase-card__label span,
+.phrase-card__who {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.phrase-card__compare,
+.phrase-card__note,
+.phrase-card__conventions {
+  max-width: var(--evidence-measure);
+}
+
+.phrase-card__fidelity strong {
+  font-weight: 600;
+}
+
+.phrase-card__fidelity[data-fidelity="none"],
+.phrase-card__fidelity[data-fidelity="held"] {
+  color: var(--ink-2);
 }
 
 .phrase-card__text .nowrap {
   white-space: nowrap;
 }
 
-.phrase-card__text code {
-  font-size: 0.92em;
+.phrase-card code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
   overflow-wrap: anywhere;
+}
+
+/* The legend and each convention: closed until asked for. */
+.phrase-card__legend,
+.phrase-card__conventions details {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.phrase-card__legend {
+  margin-top: var(--space-2);
+}
+
+.phrase-card__legend summary,
+.phrase-card__conventions summary {
+  width: fit-content;
+  min-height: 24px;
+  cursor: pointer;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+}
+
+.phrase-card__legend summary:hover,
+.phrase-card__conventions summary:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+.phrase-card__legend summary:focus-visible,
+.phrase-card__conventions summary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.phrase-card__legend dl {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0;
+}
+
+.phrase-card__legend dl > div {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.phrase-card__legend dt {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.phrase-card__legend dd {
+  margin: 0;
+}
+
+.phrase-card__conventions ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phrase-card__conventions summary {
+  color: var(--ink);
+}
+
+.phrase-card__conventions details p {
+  margin: var(--space-1) 0 var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--rule-strong);
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  color: var(--ink);
 }
 
 /* ---- The colour key in the contents list ---------------------------------------------------- */
@@ -194,31 +328,6 @@
   height: 4px;
   border-radius: 2px;
   background: var(--tone);
-}
-
-/* A wide window reads the card larger, as it reads the paper larger. */
-@media (min-width: 1921px) {
-  .phrase-card {
-    font-size: calc(var(--fs-ui) * 1.1);
-  }
-}
-
-/* The phrase itself, as the paper sets it, at the head of its card. */
-.phrase-card__quote {
-  margin: 0;
-  padding: 2px 0 2px var(--space-2);
-  border-left: 2px solid color-mix(in oklab, var(--tone, var(--ink)) 60%, transparent);
-  font-family: var(--font-serif);
-  font-size: 1.05em;
-  line-height: 1.45;
-  color: var(--ink);
-  max-height: 9.5em;
-  overflow: auto;
-}
-
-.phrase-card__quote .math-display,
-.phrase-card__quote .katex-display {
-  margin: 0.2em 0;
 }
 
 /* Each section's topic dashes sit after its title and wrap with it, at one size for every level. */

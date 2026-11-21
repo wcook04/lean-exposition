@@ -9,6 +9,7 @@ import { prepareDocument, type PreparedDocument } from "./engine";
 import type { TieIndex } from "../api/lean";
 import { loadReferenceTable, type ReferenceTable } from "./references";
 import { loadTies, tieModel, type TieModel } from "./ties";
+import site from "@instance/site";
 
 export interface LoadedDocument {
   paper: PaperData;
@@ -40,7 +41,7 @@ export function preparePaper(paper: PaperData, index: TieIndex | null, reference
     span: { start_byte: part.span.start_byte, end_byte: part.span.end_byte },
     passageAnchor: part.passage_ref ? part.passage_ref.slice(part.passage_ref.lastIndexOf("/") + 1) : undefined,
   }));
-  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable });
+  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable, sectionAids: site.sectionAids?.[stage] ?? null });
 }
 
 export function loadDocument(stage: Stage): Promise<LoadedDocument> {
