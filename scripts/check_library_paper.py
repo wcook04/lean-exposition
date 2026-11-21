@@ -87,6 +87,12 @@ def main() -> int:
             bad = page.evaluate(MATHS)
             check(f"{tag} display maths fit without scrolling", not bad, "; ".join(bad[:3]))
             check(f"{tag} AI notice shown", args.notice in page.evaluate(NOTICE), f"no front-matter line containing {args.notice!r}")
+            # The front matter says each sentence once, and says once that the links were made with AI.
+            line = page.evaluate("() => document.querySelector('.account-line')?.textContent ?? ''")
+            said = [t.strip() for t in re.split(r"(?<=[.!?])\s+(?=[A-Z])", line.replace("Open PDF", ". Open PDF")) if t.strip()]
+            repeated = sorted({t for t in said if said.count(t) > 1})
+            ai = [t for t in said if re.search(r"\bwith AI\b", t)]
+            check(f"{tag} front matter says each sentence once", not repeated and len(ai) <= 1, f"repeated {repeated[:2]}, AI sentences {len(ai)}")
             tones = page.eval_on_selector_all(".paper .tie[data-tone]", "els => new Set(els.map(e => e.dataset.tone)).size")
             check(f"{tag} topic colours", tones >= 3, f"{tones} distinct tones")
             if args.shots:
