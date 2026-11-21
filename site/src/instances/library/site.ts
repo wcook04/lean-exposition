@@ -16,12 +16,29 @@ const paperNames = { long: empty, short: empty, expository: empty } as SiteInsta
 // The account line reads as sentences: "<title>, by <authors>." then the status sentence. A
 // sentence ending in a formula or abbreviation keeps its own stop.
 const sentence = (text: string) => (/[.!?]$/.test(text.trim()) ? text.trim() : `${text.trim()}.`);
+/**
+ * The credit lines without what the review sentence already says. A paper's credit line often carries
+ * its own "made with AI" sentence, and the account line then adds the review; each sentence about AI
+ * and review is said once, in the review, followed by "No mathematician has reviewed them.".
+ */
+export function creditWithoutReview(credit: readonly string[], review: string): string {
+  const sentences = (text: string) => text.split(/(?<=[.!?])\s+(?=[A-Z])/).map((t) => t.trim()).filter(Boolean);
+  const said = new Set(sentences(review ?? "").map((t) => t.replace(/[.!?]$/, "")));
+  const aboutAi = /\bwith AI\b|\bAI-(?:drafted|assessed)\b/i;
+  const reviewSaysAi = aboutAi.test(review ?? "");
+  return credit
+    .flatMap((line) => sentences(sentence(line)))
+    .filter((t) => !said.has(t.replace(/[.!?]$/, "")) && !(reviewSaysAi && aboutAi.test(t)))
+    .map(sentence)
+    .join(" ");
+}
+const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
 for (const doc of BUILT)
   paperNames[doc.slot] = doc.main
-    ? { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: PAPER.credit_lines.map(sentence).join(" ") }
+    ? { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: CREDIT }
     : {
         short: doc.title,
         job: sentence(`${doc.title}: ${/^[aeiou]/i.test(doc.noun) ? "an" : "a"} ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
@@ -32,7 +49,7 @@ function readme(siteUrl: string, facts: SiteFacts): string {
   const at = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);
   return `# ${plain(PAPER.title)}
 
-By ${BY}. ${PAPER.credit_lines.join(" ")}
+By ${BY}. ${CREDIT}
 
 **[Read it](${at("")})** · [The library](${LIBRARY_ROOT}) · [Source and tools](https://github.com/wcook04/lean-exposition)
 
@@ -44,7 +61,7 @@ function llms(siteUrl: string, facts: SiteFacts): string {
   const at = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);
   return `# ${plain(PAPER.title)}
 
-> ${plain(PAPER.title)}, by ${BY}, read beside its Lean. ${PAPER.credit_lines.join(" ")}
+> ${plain(PAPER.title)}, by ${BY}, read beside its Lean. ${CREDIT}
 
 ${PAPER.review}
 

@@ -7,19 +7,29 @@
    "key": "18934a8261a3f4a3",
    "shared_by": 1,
    "lightness": {
-    "light": 0.465,
-    "dark": 0.685
+    "light": 0.52,
+    "dark": 0.66
    },
    "chroma": {
-    "light": 0.065,
-    "dark": 0.102
+    "light": [
+     0.117,
+     0.201
+    ],
+    "dark": [
+     0.143,
+     0.213
+    ]
    },
    "families": [
     {
      "id": "solution",
      "name": "The singular solution",
      "named": true,
-     "hue": 23,
+     "hue": 9.5,
+     "chroma": {
+      "light": 0.195,
+      "dark": 0.213
+     },
      "topics": [
       "auxiliary-smoothness",
       "terminal",
@@ -30,7 +40,11 @@
      "id": "induction",
      "name": "The inductive sequence",
      "named": true,
-     "hue": 66.43,
+     "hue": 51.43,
+     "chroma": {
+      "light": 0.141,
+      "dark": 0.177
+     },
      "topics": [
       "induction"
      ]
@@ -39,7 +53,11 @@
      "id": "waves",
      "name": "Waves and their amplification",
      "named": true,
-     "hue": 117.86,
+     "hue": 114.86,
+     "chroma": {
+      "light": 0.145,
+      "dark": 0.167
+     },
      "topics": [
       "amplification",
       "affine-wave",
@@ -50,7 +68,11 @@
      "id": "endpoint",
      "name": "The endpoint problem",
      "named": true,
-     "hue": 180.79,
+     "hue": 165.79,
+     "chroma": {
+      "light": 0.129,
+      "dark": 0.158
+     },
      "topics": [
       "endpoint-inverse"
      ]
@@ -59,7 +81,11 @@
      "id": "approximate",
      "name": "The approximate solution",
      "named": true,
-     "hue": 232.21,
+     "hue": 217.71,
+     "chroma": {
+      "light": 0.117,
+      "dark": 0.143
+     },
      "topics": [
       "pressure-flow",
       "approximate",
@@ -70,7 +96,11 @@
      "id": "expansion",
      "name": "The finite expansion and the mean",
      "named": true,
-     "hue": 273.14,
+     "hue": 269.14,
+     "chroma": {
+      "light": 0.201,
+      "dark": 0.184
+     },
      "topics": [
       "hierarchy",
       "mean-estimates"
@@ -80,7 +110,11 @@
      "id": "supporting",
      "name": "Cutoff and finite norms",
      "named": true,
-     "hue": 333.07,
+     "hue": 315.57,
+     "chroma": {
+      "light": 0.19,
+      "dark": 0.19
+     },
      "topics": [
       "supporting-estimates"
      ]
@@ -90,86 +124,86 @@
     "auxiliary-smoothness": {
      "index": 0,
      "family": "solution",
-     "light": "oklch(0.385 0.073 16.8)",
-     "dark": "oklch(0.605 0.114 16.8)"
+     "light": "oklch(0.485 0.195 3.3)",
+     "dark": "oklch(0.625 0.213 3.3)"
     },
     "terminal": {
      "index": 1,
      "family": "solution",
-     "light": "oklch(0.470 0.065 23.0)",
-     "dark": "oklch(0.690 0.102 23.0)"
+     "light": "oklch(0.570 0.190 9.5)",
+     "dark": "oklch(0.710 0.188 9.5)"
     },
     "singularity": {
      "index": 2,
      "family": "solution",
-     "light": "oklch(0.555 0.057 29.2)",
-     "dark": "oklch(0.775 0.090 29.2)"
+     "light": "oklch(0.655 0.167 15.7)",
+     "dark": "oklch(0.795 0.118 15.7)"
     },
     "induction": {
      "index": 3,
      "family": "induction",
-     "light": "oklch(0.390 0.065 66.4)",
-     "dark": "oklch(0.610 0.102 66.4)"
+     "light": "oklch(0.545 0.141 51.4)",
+     "dark": "oklch(0.685 0.177 51.4)"
     },
     "amplification": {
      "index": 4,
      "family": "waves",
-     "light": "oklch(0.350 0.073 111.7)",
-     "dark": "oklch(0.570 0.114 111.7)"
+     "light": "oklch(0.435 0.094 108.7)",
+     "dark": "oklch(0.575 0.124 108.7)"
     },
     "affine-wave": {
      "index": 5,
      "family": "waves",
-     "light": "oklch(0.435 0.065 117.9)",
-     "dark": "oklch(0.655 0.102 117.9)"
+     "light": "oklch(0.520 0.117 114.9)",
+     "dark": "oklch(0.660 0.149 114.9)"
     },
     "localized-wave": {
      "index": 6,
      "family": "waves",
-     "light": "oklch(0.520 0.057 124.0)",
-     "dark": "oklch(0.740 0.090 124.0)"
+     "light": "oklch(0.605 0.145 121.0)",
+     "dark": "oklch(0.745 0.167 121.0)"
     },
     "endpoint-inverse": {
      "index": 7,
      "family": "endpoint",
-     "light": "oklch(0.465 0.065 180.8)",
-     "dark": "oklch(0.685 0.102 180.8)"
+     "light": "oklch(0.620 0.129 165.8)",
+     "dark": "oklch(0.760 0.158 165.8)"
     },
     "pressure-flow": {
      "index": 8,
      "family": "approximate",
-     "light": "oklch(0.380 0.073 226.0)",
-     "dark": "oklch(0.600 0.114 226.0)"
+     "light": "oklch(0.455 0.079 211.5)",
+     "dark": "oklch(0.595 0.103 211.5)"
     },
     "approximate": {
      "index": 9,
      "family": "approximate",
-     "light": "oklch(0.465 0.065 232.2)",
-     "dark": "oklch(0.685 0.102 232.2)"
+     "light": "oklch(0.540 0.096 217.7)",
+     "dark": "oklch(0.680 0.122 217.7)"
     },
     "parent-step": {
      "index": 10,
      "family": "approximate",
-     "light": "oklch(0.550 0.057 238.4)",
-     "dark": "oklch(0.770 0.090 238.4)"
+     "light": "oklch(0.625 0.117 223.9)",
+     "dark": "oklch(0.765 0.143 223.9)"
     },
     "hierarchy": {
      "index": 11,
      "family": "expansion",
-     "light": "oklch(0.423 0.069 270.1)",
-     "dark": "oklch(0.643 0.108 270.1)"
+     "light": "oklch(0.513 0.201 266.1)",
+     "dark": "oklch(0.653 0.184 266.1)"
     },
     "mean-estimates": {
      "index": 12,
      "family": "expansion",
-     "light": "oklch(0.508 0.061 276.2)",
-     "dark": "oklch(0.728 0.096 276.2)"
+     "light": "oklch(0.598 0.179 272.2)",
+     "dark": "oklch(0.737 0.135 272.2)"
     },
     "supporting-estimates": {
      "index": 13,
      "family": "supporting",
-     "light": "oklch(0.465 0.065 333.1)",
-     "dark": "oklch(0.685 0.102 333.1)"
+     "light": "oklch(0.420 0.190 315.6)",
+     "dark": "oklch(0.560 0.190 315.6)"
     }
    }
   }

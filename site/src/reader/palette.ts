@@ -6,19 +6,24 @@
 //    (circular seriation, by brute force: at most 7! orders).
 // 2. Their hues are evenly spaced, then nudged (each by at most an eighth of the spacing) to raise
 //    the least CIEDE2000 distance between any two colours of different families.
-// 3. Each theme has one OKLCH lightness and one chroma for every family: a lightness that keeps
-//    every shade at 3:1 against the page as an underline draws it, and the largest chroma at which
-//    every shade of every family lies in sRGB, searched together with the hues.
-// 4. A family's shades step evenly in lightness (one step either side of the family's lightness),
-//    with a smaller step in chroma and a hue offset that stays inside the family's arc.
+// 3. Each theme has one OKLCH lightness, searched together with the hues, that keeps every shade at
+//    3:1 against the page as an underline draws it (at full strength).
+// 4. A family's shades step evenly in lightness (one step either side of the family's lightness)
+//    and by a hue offset that stays inside the family's arc. Each shade takes the largest chroma
+//    its own lightness and hue allow in sRGB, up to CHROMA_CAP (less a step for lighter shades).
+//    One chroma shared by every colour held every family to the weakest hue and shade (dark cyan,
+//    dark yellow), and the colours read as muted browns and mauves at reading size.
 //
 // 5. Each family may move its own lightness by at most MAX_LIFT off its theme's, and the search
 //    weighs distances under deuteranopia and protanopia simulation (Machado, Oliveira and Fernandes
 //    2009, severity 1) as well as normal vision: at one shared lightness two families whose hues
-//    mirror across the blue–yellow axis look the same to a dichromat.
+//    mirror across the blue–yellow axis look the same to a dichromat. The search also counts each
+//    colour's own chroma as one more distance, so the hues the gamut starves inside the 3:1 band
+//    fall to small families where it can.
 //
 // Two floors are checked for every list, in both themes and in every vision: FAMILY_FLOOR between
-// any two colours of different families, SHADE_FLOOR between any two shades of one family.
+// any two colours of different families, SHADE_FLOOR between any two shades of one family. The
+// search pays far more for falling short of a floor than chroma or distance can earn back.
 // Everything here is deterministic: the same topics, families and counts give the same colours.
 
 export type Vec = [number, number, number];
@@ -27,26 +32,29 @@ const RAD = Math.PI / 180;
 
 export const MAX_FAMILIES = 8;
 export const MAX_SHADES = 3;
-/** The opacity at which an underline draws the topic colour over the page (phrases.css: 80%). */
-export const UNDERLINE = 0.8;
+/** The opacity at which an underline draws the topic colour over the page (phrases.css: full). */
+export const UNDERLINE = 1;
+/** The most chroma a family's middle shade takes (a darker shade a step more, a lighter a step less): past it the strongest hues (red, blue, magenta) shout over the rest. */
+export const CHROMA_CAP = 0.19;
 /** WCAG contrast of every drawn colour against its page. */
 export const MIN_CONTRAST = 3;
 /**
  * CIEDE2000 between any two colours of different families, in both themes: with normal vision, and
  * under full deuteranopia or protanopia simulation. A dichromat sees only lightness and one hue
  * axis, and the 3:1 band leaves little lightness, so the dichromat floor is the one that holds for
- * the largest lists in use (14 and 16 topics in 7 families), not a large one.
+ * the largest lists in use (14 and 16 topics in 7 families), not a large one. Raised from 10 and 2.5
+ * with the full-strength colours (21 November 2026); every list in use clears them.
  */
-export const FAMILY_FLOOR = { normal: 10, dichromat: 2.5 };
+export const FAMILY_FLOOR = { normal: 15, dichromat: 3.5 };
 /** CIEDE2000 between any two shades of one family, in both themes and every vision. */
-export const SHADE_FLOOR = 6;
+export const SHADE_FLOOR = 6.7;
 
 /** The two pages a colour is drawn on (styles/tokens.css `--ground`). */
 export const GROUNDS = { light: "#f8f0e2", dark: "#1c1526" } as const;
 export type ThemeName = keyof typeof GROUNDS;
 export const THEMES: ThemeName[] = ["light", "dark"];
 
-/** A shade's step either side of its family, in OKLCH lightness, as a share of chroma, and in hue (share of the spacing). */
+/** A shade's step either side of its family, in OKLCH lightness, as a share of the chroma cap, and in hue (share of the spacing). */
 export const SHADE_STEP = { lightness: 0.085, chroma: 0.12, hue: 0.12 };
 
 // ---- Colour arithmetic ------------------------------------------------------------------------
@@ -136,8 +144,8 @@ const decode = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) 
 const GROUND_LINEAR = { light: hexToLinear(GROUNDS.light), dark: hexToLinear(GROUNDS.dark) };
 
 /**
- * A colour as an underline draws it. `color-mix(in oklab, tone 80%, transparent)` is the tone at
- * 80% opacity, and the browser composites that over the page in gamma-encoded sRGB.
+ * A colour as an underline draws it: the tone at UNDERLINE opacity (phrases.css draws it at full
+ * strength), composited over the page in gamma-encoded sRGB as the browser does.
  */
 export function drawnLinear(tone: Vec, theme: ThemeName): Vec {
   const t = clip(oklabToLinear(tone));
@@ -300,21 +308,60 @@ export const shadeSteps = (k: number): number[] => (k <= 1 ? [0] : k === 2 ? [-0
 /** How far a family's own lightness may move off its theme's lightness, so that colour-blind readers can tell families apart. */
 export const MAX_LIFT = 0.1;
 /** The weights that trade the three distances against each other in the search. */
-const WEIGHT = { dichromat: 3, shade: 1.6 };
+const WEIGHT = { dichromat: 3, shade: 1.6, vivid: 1 };
 
 interface Layout {
   hues: number[]; // per family position
   lift: number[]; // per family position, added to the theme's lightness
   L: Record<ThemeName, number>;
-  C: Record<ThemeName, number>;
+}
+
+/** Whether a colour lies in sRGB, also as published (css() rounds lightness, chroma and hue). */
+const publishedInGamut = (c: Vec) => inGamut(oklabToLinear(c)) && inGamut(oklabToLinear(parseOklch(css(c))));
+
+const chromaMemo = new Map<string, number>();
+/** Largest chroma, to 0.001 and at most `cap`, at which the colour (L, ·, h) lies in sRGB (bisection). */
+function gamutChroma(L: number, h: number, cap: number): number {
+  const key = `${L}|${h}|${cap}`;
+  const known = chromaMemo.get(key);
+  if (known !== undefined) return known;
+  let lo = 0;
+  let hi = cap;
+  if (publishedInGamut(oklch(L, hi, h))) lo = hi;
+  else
+    for (let it = 0; it < 18; it++) {
+      const mid = (lo + hi) / 2;
+      if (publishedInGamut(oklch(L, mid, h))) lo = mid;
+      else hi = mid;
+    }
+  const C = Math.floor(lo * 1000) / 1000;
+  chromaMemo.set(key, C);
+  return C;
+}
+
+/**
+ * One family's shades at lightness L (lift included). Each shade takes the largest chroma its own
+ * lightness and hue allow in sRGB, up to CHROMA_CAP less a step per shade: a darker shade of cyan
+ * or yellow has far less room than a lighter one, and a chroma shared by the shades would hold the
+ * whole family to its darkest.
+ */
+function shadesOf(hue: number, k: number, spacing: number, L: number): Vec[] {
+  return shadeSteps(k).map((t) => {
+    const Ls = round3(L + t * SHADE_STEP.lightness);
+    const hs = Math.round((hue + t * SHADE_STEP.hue * spacing) * 100) / 100;
+    return oklch(Ls, gamutChroma(Ls, hs, round3(CHROMA_CAP * (1 - t * SHADE_STEP.chroma))), hs);
+  });
+}
+
+/** Each family's chroma in one theme (its strongest shade's), per family position. */
+function chromas(hues: number[], lift: number[], sizes: number[], L: number): number[] {
+  return colours(hues, lift, sizes, L).map((fam) => Math.max(...fam.map((c) => round3(Math.hypot(c[1], c[2])))));
 }
 
 /** Every colour of a layout in one theme: per family position, per shade step. */
-function colours(hues: number[], lift: number[], sizes: number[], L: number, C: number): Vec[][] {
+function colours(hues: number[], lift: number[], sizes: number[], L: number): Vec[][] {
   const spacing = 360 / sizes.length;
-  return sizes.map((k, f) =>
-    shadeSteps(k).map((t) => oklch(L + lift[f] + t * SHADE_STEP.lightness, C * (1 - t * SHADE_STEP.chroma), hues[f] + t * SHADE_STEP.hue * spacing)),
-  );
+  return sizes.map((k, f) => shadesOf(hues[f], k, spacing, round3(L + lift[f])));
 }
 
 /** Least ΔE2000 between different families and between shades of one family, in one theme and vision. */
@@ -331,20 +378,18 @@ function floors(all: Vec[][], theme: ThemeName, vision: Vision): { family: numbe
   return { family, shade };
 }
 
-/** Largest chroma at which every colour of the theme lies in sRGB (bisection), to 0.001. */
-function maxChroma(hues: number[], lift: number[], sizes: number[], L: number): number {
-  let lo = 0;
-  let hi = 0.4;
-  for (let it = 0; it < 20; it++) {
-    const mid = (lo + hi) / 2;
-    if (colours(hues, lift, sizes, L, mid).flat().every((c) => inGamut(oklabToLinear(c)))) lo = mid;
-    else hi = mid;
-  }
-  return Math.floor(lo * 1000) / 1000;
-}
-
 /** Whether every colour of the theme keeps MIN_CONTRAST against its page. */
 const contrastHolds = (all: Vec[][], theme: ThemeName) => all.flat().every((c) => groundContrast(c, theme) >= MIN_CONTRAST);
+
+/** How far the theme's colours fall short of the two floors, summed over visions; zero when they keep them. */
+const shortfall = (all: Vec[][], theme: ThemeName) =>
+  VISION_NAMES.reduce((sum, vision) => {
+    const r = floors(all, theme, vision);
+    const fam = vision === "normal" ? FAMILY_FLOOR.normal : FAMILY_FLOOR.dichromat;
+    return sum + Math.max(0, fam - r.family) + (Number.isFinite(r.shade) ? Math.max(0, SHADE_FLOOR - r.shade) : 0);
+  }, 0);
+/** What one unit of shortfall costs the score: far more than any gain in distance or chroma, so a floor is never traded away. */
+const SHORTFALL_COST = 1000;
 
 /**
  * The search's score of one theme's colours: a soft minimum (temperature SOFT) of every weighted
@@ -363,34 +408,40 @@ function themeScore(all: Vec[][], theme: ThemeName): number {
         for (let g = f + 1; g < s.length; g++) for (const other of s[g]) sum += Math.exp(-(w * deltaE2000(s[f][i], other)) / SOFT);
       }
   }
+  // Every colour's own chroma (in hundredths) counts as one more distance, so that the hues the sRGB
+  // gamut starves inside the 3:1 band (cyan, yellow) fall to small families, not to three shades.
+  for (const c of all.flat()) sum += Math.exp(-(WEIGHT.vivid * 100 * Math.hypot(c[1], c[2])) / SOFT);
   return sum ? -SOFT * Math.log(sum) : 0;
 }
 
 /**
- * The theme's lightness and chroma: of the lightnesses in the range at which every shade keeps 3:1,
- * the one whose largest common in-gamut chroma scores best.
+ * The theme's lightness: of the lightnesses in the range at which every shade keeps 3:1, with each
+ * family at its own largest in-gamut chroma, the one that scores best.
  */
-function fitTheme(hues: number[], lift: number[], sizes: number[], theme: ThemeName, range: [number, number]): { L: number; C: number; score: number } | null {
-  let best: { L: number; C: number; score: number } | null = null;
+function fitTheme(hues: number[], lift: number[], sizes: number[], theme: ThemeName, range: [number, number]): { L: number; score: number } | null {
+  let best: { L: number; score: number } | null = null;
   for (let k = Math.round(range[0] * 200); k <= Math.round(range[1] * 200); k++) {
     const L = k / 200;
-    const C = maxChroma(hues, lift, sizes, L);
-    const all = colours(hues, lift, sizes, L, C);
+    const all = colours(hues, lift, sizes, L);
     if (!contrastHolds(all, theme)) continue;
-    const score = themeScore(all, theme);
-    if (!best || score > best.score + 1e-9) best = { L, C, score };
+    const score = themeScore(all, theme) - SHORTFALL_COST * shortfall(all, theme);
+    if (!best || score > best.score + 1e-9) best = { L, score };
   }
   return best;
 }
 
-const FULL: [number, number] = [0.3, 0.9];
+/**
+ * The lightnesses each theme searches. On the dark page a colour just past 3:1 reads as a dim stain
+ * at reading size, so the dark theme keeps its families at 0.66 and above, where they read as light.
+ */
+const FULL: Record<ThemeName, [number, number]> = { light: [0.3, 0.9], dark: [0.66, 0.9] };
 
 function evaluate(hues: number[], lift: number[], sizes: number[], near?: Layout): { layout: Layout; score: number } | null {
-  const range = (t: ThemeName): [number, number] => (near ? [near.L[t] - 0.02, near.L[t] + 0.02] : FULL);
+  const range = (t: ThemeName): [number, number] => (near ? [Math.max(FULL[t][0], near.L[t] - 0.02), near.L[t] + 0.02] : FULL[t]);
   const light = fitTheme(hues, lift, sizes, "light", range("light"));
   const dark = fitTheme(hues, lift, sizes, "dark", range("dark"));
   if (!light || !dark) return null;
-  return { layout: { hues, lift, L: { light: light.L, dark: dark.L }, C: { light: light.C, dark: dark.C } }, score: Math.min(light.score, dark.score) };
+  return { layout: { hues, lift, L: { light: light.L, dark: dark.L } }, score: Math.min(light.score, dark.score) };
 }
 
 const norm = (h: number) => Math.round((((h % 360) + 360) % 360) * 100) / 100;
@@ -455,6 +506,8 @@ export interface PaletteFamily {
   /** False when the family was derived from relatedness rather than named by the authors. */
   named: boolean;
   hue: number;
+  /** The family's chroma in each theme (its strongest shade's): the most its hue allows in sRGB, at most CHROMA_CAP. */
+  chroma: Record<ThemeName, number>;
   topics: string[];
 }
 
@@ -479,7 +532,8 @@ export interface Palette {
   families: PaletteFamily[];
   topics: PaletteTopic[];
   lightness: Record<ThemeName, number>;
-  chroma: Record<ThemeName, number>;
+  /** The least and the greatest family chroma in each theme. */
+  chroma: Record<ThemeName, [number, number]>;
   floors: FloorRow[];
 }
 
@@ -512,7 +566,7 @@ export function checkFloors(groups: string[][][]): FloorRow[] {
 export function palette(input: PaletteIn): Palette {
   const ids = input.topics.map((t) => t.id);
   const n = ids.length;
-  if (!n) return { families: [], topics: [], lightness: { light: 0, dark: 0 }, chroma: { light: 0, dark: 0 }, floors: [] };
+  if (!n) return { families: [], topics: [], lightness: { light: 0, dark: 0 }, chroma: { light: [0, 0], dark: [0, 0] }, floors: [] };
   // Families: as named, or derived.
   let groups: number[][];
   let named: boolean;
@@ -544,8 +598,11 @@ export function palette(input: PaletteIn): Palette {
   const familiesOut: PaletteFamily[] = [];
   const topicsOut: PaletteTopic[] = [];
   const pairs: string[][][] = [];
-  const lightAll = colours(layout.hues, layout.lift, sizes, layout.L.light, layout.C.light);
-  const darkAll = colours(layout.hues, layout.lift, sizes, layout.L.dark, layout.C.dark);
+  const lightAll = colours(layout.hues, layout.lift, sizes, layout.L.light);
+  const darkAll = colours(layout.hues, layout.lift, sizes, layout.L.dark);
+  const lightC = chromas(layout.hues, layout.lift, sizes, layout.L.light);
+  const darkC = chromas(layout.hues, layout.lift, sizes, layout.L.dark);
+  const span = (c: number[]): [number, number] => [Math.min(...c), Math.max(...c)];
   let index = 0;
   for (const [pos, g] of ordered.entries()) {
     const prev = ordered[(pos + ordered.length - 1) % ordered.length];
@@ -553,7 +610,7 @@ export function palette(input: PaletteIn): Palette {
     const lean = (i: number) => next.reduce((s, j) => s + input.related[i][j], 0) - prev.reduce((s, j) => s + input.related[i][j], 0);
     const inFamily = [...g].sort((a, b) => lean(a) - lean(b) || a - b);
     const meta = famMeta[order[pos]];
-    familiesOut.push({ id: meta.id, name: meta.name, named, hue: layout.hues[pos], topics: inFamily.map((i) => ids[i]) });
+    familiesOut.push({ id: meta.id, name: meta.name, named, hue: layout.hues[pos], chroma: { light: lightC[pos], dark: darkC[pos] }, topics: inFamily.map((i) => ids[i]) });
     const famPairs: string[][] = [];
     inFamily.forEach((i, s) => {
       const light = css(lightAll[pos][s]);
@@ -563,5 +620,5 @@ export function palette(input: PaletteIn): Palette {
     });
     pairs.push(famPairs);
   }
-  return { families: familiesOut, topics: topicsOut, lightness: layout.L, chroma: layout.C, floors: checkFloors(pairs) };
+  return { families: familiesOut, topics: topicsOut, lightness: layout.L, chroma: { light: span(lightC), dark: span(darkC) }, floors: checkFloors(pairs) };
 }
