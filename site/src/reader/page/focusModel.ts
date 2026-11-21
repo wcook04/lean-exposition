@@ -353,7 +353,9 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
         if (user !== id && put(user)) edges.push({ from: user, to: id });
       }
     }
-    const stated = tools.statedBy(subject.name)[0];
+    // The main theorem's own Lean (site.lean.mainTheorem) is stated by the main result, even where
+    // no statement of the alignment names it.
+    const stated = tools.statedBy(subject.name)[0] ?? (subject.name === site.lean.mainTheorem && site.mainGoal ? site.mainGoal : undefined);
     const chain = stated ? tools.routeFrom(stated) : null;
     if (stated && chain) {
       route = [stated, ...chain];

@@ -1,0 +1,11 @@
+{
+ "what": "The paper's own statements of how its results join, as supports edges sourced to the paper (read by from_proof_reader.py --paper-logic once that option is on this branch). Transcribed with AI.",
+ "edges": [
+  {
+   "from": "lemma-2.4",
+   "to": "lemma-2.3",
+   "why": "After the equations (2.10) in Section 2: \"In the model case these are the equations of Lemma 2.3.\"",
+   "tie": "r2a1.wave.first-vector-equation"
+  }
+ ]
+}

@@ -43,7 +43,7 @@ import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
 import { declLight } from "./page/PhraseCard";
-import { isPhraseLayer, isPhraseRecord, leanTruth, phraseTitle, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
+import { isPhraseLayer, isPhraseRecord, leanTruth, PHRASE_RECORD, phraseTitle, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
   companionAnchor,
@@ -82,9 +82,11 @@ import {
   type ReadingPosition,
   type VisitOrigin,
 } from "./page/position";
+import { PdfView, atOnPage, loadPdfMarks, pageAtByte, type PdfMarks } from "./pdf/PdfView";
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
+import { useTopicColours } from "./topicColours";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
 import "./page/map-pane.css";
 
@@ -233,6 +235,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const edition = snapshot.cache_key;
   const { doc, paper, ties } = loaded;
   useFirstScreenDone();
+  useTopicColours(ties.index.topics);
   const stage = route.stage;
   const structure = paper.structure;
   const wide = useMedia("(min-width: 1360px)");
@@ -1507,13 +1510,42 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const names = PAPER_NAMES[stage];
   const status = statusWords(structure.state, structure.review_state);
-  const pdf = { href: `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`, pages: PAPER_PDFS[stage].pages };
+  const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
+  const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
+  const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages } : undefined;
+  // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
+  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
+  useEffect(() => {
+    let live = true;
+    void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
+    return () => {
+      live = false;
+    };
+  }, [stage]);
+  const pdfOn = !!route.pdf && !!pdfMarks;
+  const pdfPage = useRef<number | null>(null);
+  const onPdfPage = useCallback((page: number) => {
+    pdfPage.current = page;
+  }, []);
+  /** Switch between the text and the PDF, keeping the place: the selected phrase, else what is in view. */
+  const showPdf = (on: boolean) => {
+    if (!pdfMarks || on === pdfOn) return;
+    if (on) {
+      const seen = Array.from(document.querySelectorAll<HTMLElement>(".reader__paper [data-t]")).find((el) => el.getBoundingClientRect().top >= 0);
+      const segment = seen ? ties.index.segments[Number(seen.dataset.t)] : undefined;
+      const byte = route.at?.startsWith("b") ? Number(route.at.slice(1).split("-")[0]) : (segment?.[0] ?? 0);
+      navigate({ ...route, pdf: true, page: pageAtByte(pdfMarks, byte) ?? 1 }, { replace: true });
+    } else {
+      const at = route.at ?? (pdfPage.current ? (atOnPage(pdfMarks, pdfPage.current) ?? undefined) : undefined);
+      navigate({ ...route, pdf: undefined, page: undefined, at }, { replace: true });
+    }
+  };
   const head = { name: names.short, job: names.job, reader: names.reader, status, pdf };
   const inspecting = !!inspect;
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
   const outlineColumn = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
-  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine, topics: ties.index.topics, parts: ties.index.parts };
+  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine, topics: ties.index.topics, families: ties.index.families, parts: ties.index.parts };
   const visitOriginPassage = route.beside
     ? visit && visit.stage === stage
       ? (visit.anchor ?? null)
@@ -1642,6 +1674,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0} phrases={isPhraseLayer(ties)} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          {pdfMarks && (
+            <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
+              <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
+              <button type="button" aria-pressed={pdfOn} onClick={() => showPdf(true)}>PDF</button>
+            </span>
+          )}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
           {mid && (
             <button
@@ -1678,7 +1716,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           <p className="account-line">
             {!phone && <>{names.job} </>}
             {names.reader}
-            {status && <> {status}</>} <PdfLink pdf={pdf} />
+            {status && <> {status}</>} {pdf && <PdfLink pdf={pdf} />}
           </p>
         )}
         {notice && (
@@ -1686,6 +1724,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {notice}
           </p>
         )}
+        {pdfOn && pdfMarks && (
+          <PdfView
+            url={pdfFile}
+            marks={pdfMarks}
+            at={route.at}
+            page={route.page}
+            onPage={onPdfPage}
+            onPick={(id, mark, page) =>
+              navigate({ ...route, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined })
+            }
+          />
+        )}
+        <div hidden={pdfOn}>
         <PaperBody
           ref={bodyRef}
           stage={stage}
@@ -1698,6 +1749,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           statements={statements}
           onReferenceLean={openReferenceLean}
         />
+        </div>
         {action && (
           <button
             type="button"

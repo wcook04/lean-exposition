@@ -4,6 +4,7 @@ import { useMemo, useRef } from "react";
 import { addressProblem } from "./address";
 import { useEdition, usePaper } from "./data";
 import type { Route } from "./router";
+import { PHRASE_RECORD } from "../reader/ties";
 import { useEntryKey } from "./trail";
 
 export function AddressNotice({ route }: { route: Route }) {
@@ -21,7 +22,7 @@ export function AddressNotice({ route }: { route: Route }) {
     const { bytes } = paper.value;
     return { bytes: bytes.length, lines: bytes.reduce((n, byte) => (byte === 10 ? n + 1 : n), 1) };
   }, [paper, wantsPaper]);
-  const words = addressProblem(asked, (id) => graph.nodes.has(id), size);
+  const words = addressProblem(asked, (id) => graph.nodes.has(id) || (asked.view === "read" && id.startsWith(PHRASE_RECORD)), size);
   return words ? (
     <p className="address-notice" role="status">
       {words}

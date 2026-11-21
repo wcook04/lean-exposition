@@ -258,7 +258,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
 
 // ------------------------------------------------------------------- phones
 
-/** Below 56.25em (900px at the default text size): a disclosure holding the same four jobs, the accounts and About. */
+/** Below 68.75em (1100px at the default text size): a disclosure holding the same four jobs, the accounts and About. */
 function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; drafts: Partial<Record<Stage, string>>; scheme: Scheme }) {
   const id = useId();
   const [open, setOpen] = useState(false);

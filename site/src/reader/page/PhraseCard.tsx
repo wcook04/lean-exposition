@@ -8,6 +8,7 @@ import { loadPhraseNotes, type PhraseLean, type PhraseNotes, type PhraseTopic } 
 import type { Stage } from "../../api/types";
 import { isFidelity, phraseVerdict } from "../../compare/fidelityWords";
 import { renderTex } from "../math";
+import site from "@instance/site";
 import { Signal } from "./signal";
 
 const cache = new Map<Stage, Promise<PhraseNotes | null>>();
@@ -82,7 +83,7 @@ export function noteHtml(text: string): { html: string; errors: string[] } {
 export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null }) {
   const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
   return (
-    <section className="phrase-card" data-tone={topic ? topic.colour * 2 : undefined} aria-label="About this phrase and its Lean">
+    <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
       {topic && (
         <p className="phrase-card__topic" title={topic.description || undefined}>
           <span className="phrase-card__swatch" aria-hidden="true" />
@@ -105,6 +106,7 @@ export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic
           <span className="phrase-card__who">AI-assessed</span>
         </p>
       )}
+      {(row.fidelity as string) === "held" && site.comparisonsHeld && <p className="phrase-card__fidelity">{site.comparisonsHeld}</p>}
       {note && (
         <div className="phrase-card__note">
           <p className="phrase-card__label">

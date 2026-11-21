@@ -1,0 +1,14 @@
+# Private sources that must never reach a public repository or site.
+# One rule per line: `re:` is a case-insensitive Python regular expression searched in every text
+# file; `sha256:` is the hash of a private file, compared with every file and every member of a ZIP.
+# Name no private file here and quote none of its text. scripts/private_guard.py reads this file.
+re:cowgill|lennon[-–\s]?pittel|management science
+# private draft, do not publish
+sha256:e660090f78f7d869bae508f95cd330e5e9468fa2ee9069fd6942a7d4feed2861
+sha256:2b27dedf1808430d6eaf85490e8d63591e14df041a697e122677d4d15c510430
+# private draft, do not publish
+sha256:0f1e6faaef6d517fdf4c32a9e09b1a1bd47eeffa952f63bc600a71b792b52629
+sha256:e4e7147e32a16fc35d992a5ac9a398b43df343139475fc844916d2c9c1de0e2d
+sha256:c8ba227a99f519f06d954da83e2e7ae0f54c3a90c9ba5357fc4b23dd6a2db678
+# private transcription source, do not publish
+sha256:5c32301575a434425cf3baba208063a57d2f598993fda60a11ddbf7d5c3f3231

@@ -6,7 +6,7 @@ import type { Stage } from "../api/types";
 
 export const PAPER_NAMES: Record<Stage, { short: string; job: string; reader: string }> = site.paperNames;
 
-export const STAGE_ORDER: Stage[] = ["expository", "short", "long"];
+export const STAGE_ORDER: Stage[] = site.stages ?? ["expository", "short", "long"];
 
 /** Each account as a sentence names it: "the short paper". */
 export const ACCOUNT_IN_PROSE: Record<Stage, string> = {

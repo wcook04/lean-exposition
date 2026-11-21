@@ -26,12 +26,17 @@ RELATIONS = {"states", "contains", "part", "proof", "defines"}
 ROLES = {"statement", "definition", "explanation", "derivation", "example", "mention"}
 MAX_SLICE_CHARACTERS = 1800
 MAX_NOTE_WORDS = 25
+# Topic colours are computed by site/scripts/topic-colours.ts (one hue per family, one shade per
+# topic) and stored beside each phrases file as colours-<paper>.json.
+COLOURS_SCHEMA = "topic-colours/1"
+COLOURS_HINT = "run node site/scripts/topic-colours.ts"
 # Optional comparison fields. `fidelity` says whether a Lean row states the same,
 # a stronger, a weaker or a different statement from the paper (different: neither
 # implies the other as written); `fidelity_source` says whether
 # that judgement is the recorded evidence mapping's or an AI author's; `origin`
 # says where a statement slice came from. Absent fields mean "not recorded".
-FIDELITY = {"same", "stronger", "weaker", "different"}
+# "held": a comparison exists but is not shown; the reader shows the paper's held text in its place.
+FIDELITY = {"same", "stronger", "weaker", "different", "held"}
 FIDELITY_SOURCES = {"recorded", "ai"}
 ORIGINS = {"evidence_record", "ai"}
 FIDELITY_KEYS = {"fidelity", "fidelity_note", "fidelity_source"}
@@ -443,7 +448,8 @@ def resolve_phrases(directory, prepared, names, records, errors):
                     ids.append(topic["id"])
             parts.append({"name": part["name"], "lines": [first, last],
                           "start_byte": bytes_at[begin], "end_byte": bytes_at[end],
-                          "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", "")}
+                          "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""),
+                                      **({"family": t["family"]} if t.get("family") else {})}
                                      for t in part["topics"] if t.get("id") in ids],
                           "titles": {}, "notes": {}, "_titles": part["titles"], "_notes": part["notes"],
                           **{key: part[key] for key in ("packet", "source_commit") if key in part}})
@@ -520,7 +526,62 @@ def resolve_phrases(directory, prepared, names, records, errors):
             del part["_titles"], part["_notes"]
         ties.sort(key=lambda tie: tie["start_byte"])
         out[stage] = {"parts": parts, "ties": ties}
+        colours = _stored_colours(path.with_name(f"colours-{stage}.json"), parts, errors)
+        if colours is not None:
+            out[stage]["colours"] = colours
     return out
+
+
+def _stored_colours(path, parts, errors):
+    """The stored colours of a paper's topic lists, when present and current for its topics."""
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_bytes())
+    except ValueError as exc:
+        errors.append(f"{path.name}: not valid JSON: {exc}")
+        return None
+    if data.get("schema") != COLOURS_SCHEMA or len(data.get("parts") or ()) != len(parts):
+        errors.append(f"{path.name}: expected {COLOURS_SCHEMA} with one entry per part; {COLOURS_HINT}")
+        return None
+    for number, (part, stored) in enumerate(zip(parts, data["parts"])):
+        if {topic["id"] for topic in part["topics"]} != set(stored["topics"]) or any(
+                topic.get("family", stored["topics"][topic["id"]]["family"]) != stored["topics"][topic["id"]]["family"]
+                for topic in part["topics"]):
+            errors.append(f"{path.name}: part {number} is stale for its topics; {COLOURS_HINT}")
+            return None
+    return data["parts"]
+
+
+def _topic_tones(phrases):
+    """Each topic's place in colour order across the paper's parts, and the topics in that order.
+
+    With stored colours, topics follow their families round the hue circle and carry their two
+    theme colours; without them (a paper not yet coloured), authored order and no colours.
+    """
+    colours = phrases.get("colours")
+    rows, families = [], []
+    for number, part in enumerate(phrases["parts"]):
+        by_id = {topic["id"]: topic for topic in part["topics"]}
+        stored = colours[number] if colours else None
+        if stored:
+            order = sorted(by_id, key=lambda tid: stored["topics"][tid]["index"])
+            for family in stored["families"]:
+                families.append({"id": family["id"], "name": family["name"], "named": family["named"],
+                                 "part": number, "topics": family["topics"]})
+        else:
+            order = list(by_id)
+        for tid in order:
+            topic = by_id[tid]
+            row = {"id": tid, "name": topic["name"], "description": topic["description"], "part": number,
+                   "tone": len(rows)}
+            if stored:
+                got = stored["topics"][tid]
+                row |= {"family": got["family"], "light": got["light"], "dark": got["dark"]}
+            elif topic.get("family"):
+                row["family"] = topic["family"]
+            rows.append(row)
+    return rows, families
 
 
 def _check_keys(row, required, optional, where, errors):
@@ -891,17 +952,13 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
         ties = [_tie(key[2], rows[key], names) for key in keys]
     else:
         # The phrase layer replaces the record statements as what the paper marks: one tie per
-        # phrase, none overlapping. A topic's ties alternate between its colour's two shades.
-        colour = {topic["id"]: n for part in phrases["parts"] for n, topic in enumerate(part["topics"])}
+        # phrase, none overlapping, each in its topic's one colour.
+        topic_rows, families = _topic_tones(phrases)
+        tone = {topic["id"]: topic["tone"] for topic in topic_rows}
         rows = {(row["start_byte"], row["end_byte"], row["id"]): row for row in phrases["ties"]}
         keys = sorted(rows)
-        seen, ties = {}, []
-        for key in keys:
-            row = rows[key]
-            shade = seen.get(row["topic"], 0)
-            seen[row["topic"]] = shade + 1
-            ties.append(_phrase_tie(row, row["part"], 2 * colour[row["topic"]] + shade % 2,
-                                    phrases["parts"][row["part"]]["titles"]))
+        ties = [_phrase_tie(rows[key], rows[key]["part"], tone[rows[key]["topic"]],
+                            phrases["parts"][rows[key]["part"]]["titles"]) for key in keys]
     pieces, inline = _pieces(text)
     starts = [left for left, _ in inline]
     piece_starts = [piece[0] for piece in pieces]
@@ -934,9 +991,9 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
              "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading."}
     if phrases is not None:
         index["layer"] = "phrases"
-        index["topics"] = [{"id": topic["id"], "name": topic["name"], "description": topic["description"],
-                            "part": number, "colour": n}
-                           for number, part in enumerate(phrases["parts"]) for n, topic in enumerate(part["topics"])]
+        index["topics"] = topic_rows
+        if families:
+            index["families"] = families
         index["parts"] = [{"name": part["name"], "start_byte": part["start_byte"], "end_byte": part["end_byte"]}
                           for part in phrases["parts"]]
     return index

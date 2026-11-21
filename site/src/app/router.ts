@@ -4,6 +4,7 @@
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
 import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
+import { libraryHref, parseLibraryPath, pdfParams } from "./libraryAddress";
 
 export type Trace = "rests" | "uses";
 
@@ -38,6 +39,9 @@ export type Route =
       /** The Lean declaration open beside the paper, with its module where a name is declared twice. */
       decl?: string;
       declModule?: string;
+      /** The authors' PDF in place of the typeset text (`view=pdf`), opened at this page. */
+      pdf?: boolean;
+      page?: number;
     }
   | { view: "checks"; node?: string }
   | {
@@ -120,6 +124,8 @@ export function parseRoute(url: URL): Route {
   // The front page lives at "/". The map moved to "/map"; a link to "/" that
   // carries any map parameter was made when the map lived there, so it still
   // opens the map.
+  const library = parseLibraryPath(path, q, hash);
+  if (library) return library;
   const MAP_PARAMS = ["g", "n", "t", "lens", "e"];
   if (path === "/" && !MAP_PARAMS.some((name) => q.has(name))) return hash ? { view: "home", anchor: hash } : { view: "home" };
   if (path === "/" || path === "/map") {
@@ -152,6 +158,7 @@ export function parseRoute(url: URL): Route {
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
       decl: q.get("d") ?? undefined,
       declModule: q.get("dm") ?? undefined,
+      ...pdfParams(q),
     };
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
@@ -214,6 +221,8 @@ export function routeHref(route: Route): string {
       return `${BASE}/map/${s ? `?${s}` : ""}`;
     }
     case "read": {
+      const library = libraryHref(route, BASE);
+      if (library) return library;
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.lean) q.set("v", "lean");
@@ -221,6 +230,8 @@ export function routeHref(route: Route): string {
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);
+      if (route.pdf) q.set("view", "pdf");
+      if (route.pdf && route.page) q.set("page", String(route.page));
       const s = q.toString();
       return `${BASE}/read/${route.stage}/${s ? `?${s}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     }

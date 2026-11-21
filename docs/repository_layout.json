@@ -28,7 +28,8 @@
     "skills": "Optional authoring instructions independent of runtime",
     "src": "Installable Python runtime and packaged resources",
     "tests": "Executable regression tests",
-    "site": "Reading website for one captured bundle: the argument map, paper reader and recorded checks, with web API and generated GitHub Pages transports"
+    "site": "Reading website for one captured bundle: the argument map, paper reader and recorded checks, with web API and generated GitHub Pages transports",
+    "instances": "Library papers as data: one folder per paper (reading copy, phrase ties, graph, vendored Lean), built by scripts/build_library_paper.sh"
   },
   "required_paths": [
     "AGENTS.md",

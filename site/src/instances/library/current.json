@@ -1,0 +1,18 @@
+{
+ "schema": "library-instance/1",
+ "id": "none",
+ "title": "No library paper selected",
+ "short_title": "Library",
+ "authors": ["No one"],
+ "venue": "",
+ "credit_lines": [],
+ "companion_credit": "",
+ "host": "This placeholder is replaced by scripts/library-instance.mjs <paper> before a library build.",
+ "review": "",
+ "source": {"upstream": {"repository": "", "commit": ""}},
+ "documents": [{"id": "paper", "slot": "short", "slug": "", "title": "No library paper selected", "noun": "paper", "main": true}],
+ "families": [],
+ "topics": [],
+ "topic_order": [],
+ "goal": "none"
+}

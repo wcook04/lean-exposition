@@ -11,10 +11,29 @@ import { compiled, declIn, docLine, fetchModule, kindWord, moduleIfLoaded, signa
 import type { DeclRow, NameTarget } from "./resolve";
 import type { DictionaryTerm } from "../api/lean";
 
-/** Prose with the `backticked` names of the source notes set as code. */
+/** Prose with the `backticked` names of the source notes set as code and $inline$ formulas typeset. */
 export function Prose({ text }: { text: string }) {
-  if (!text.includes("`")) return <>{text}</>;
-  return <>{text.split("`").map((part, k) => (k % 2 ? <code key={k}>{part}</code> : part))}</>;
+  if (!text.includes("`") && !text.includes("$")) return <>{text}</>;
+  return <>{text.split("`").map((part, k) => (k % 2 ? <code key={k}>{part}</code> : <Maths key={k} text={part} />))}</>;
+}
+
+/** Text with $inline$ formulas typeset by KaTeX; a formula KaTeX cannot read stays as its source. */
+function Maths({ text }: { text: string }) {
+  if (!text.includes("$")) return <>{text}</>;
+  const parts = text.split(/(?<!\\)\$/);
+  if (parts.length % 2 === 0) return <>{text}</>;
+  return (
+    <>
+      {parts.map((part, k) => {
+        if (k % 2 === 0) return part.replace(/\\\$/g, "$");
+        try {
+          return <span key={k} className="tex" dangerouslySetInnerHTML={{ __html: texHtml(part) }} />;
+        } catch {
+          return `$${part}$`;
+        }
+      })}
+    </>
+  );
 }
 
 /** A source path that may break only after a slash. */

@@ -1,0 +1,84 @@
+{
+ "files": {
+  "checks/ClosedSlabSetting.lean": "ac07f3ffe56b626290590d65b49634f754d8fc9560457c94f7bf8467657a04ae",
+  "checks/TransverseUnique.lean": "3ad2186f6a4caa0eca677a5979dcb524bd9833be4c15d67b72c4f3d1224f911f"
+ },
+ "checks": [
+  {
+   "name": "ReviewF7.closedSlabLimit_of_theorem71",
+   "keyword": "theorem",
+   "line": 32,
+   "end_line": 47,
+   "code": "/-- Every construction admitted by Section 8 has the continuous uniform\nvelocity limit asserted by the opening paragraph, including the terminal time.\nThe statement also records agreement with the smooth Euler solution before it. -/\ntheorem closedSlabLimit_of_theorem71\n    {P : InductiveEulerParameters} {c : InductiveEulerConstruction P} {C T : ℝ}\n    (h71 : Theorem71Conclusions c C T) :\n    ∃ (u : Velocity) (p : Pressure) (w : Velocity),\n      Proposition81Conclusions c T u p ∧\n      ContinuousOn (Function.uncurry w) (Icc 0 T ×ˢ (univ : Set Vec3)) ∧\n      TendstoUniformlyOn (fun n => Function.uncurry (c.stages.velocity n))\n        (Function.uncurry w) atTop (Icc 0 T ×ˢ (univ : Set Vec3)) ∧\n      ∀ t ∈ Ico 0 T, u t = w t := by\n  obtain ⟨u, p, h81⟩ := TorusEuler.Paper.proposition_8_1 P c C T h71\n  obtain ⟨w, hw, hU, hagree⟩ :=\n    TorusEuler.Paper.Lib.S678b.closedSlab_velocity_limit h71 h81\n  exact ⟨u, p, w, h81, hw, hU, hagree⟩",
+   "doc": "Every construction admitted by Section 8 has the continuous uniform velocity limit asserted by the opening paragraph, including the terminal time. The statement also records agreement with the smooth Euler solution before it.",
+   "file": "checks/ClosedSlabSetting.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "ReviewF7.closedSlabSetting_of",
+   "keyword": "theorem",
+   "line": 59,
+   "end_line": 62,
+   "code": "theorem closedSlabSetting_of (h : Statement.Text.section8_setting) : ClosedSlabSetting := by\n  obtain ⟨P, c, C, T, h71⟩ := h\n  obtain ⟨_, _, w, _, hw, hU, _⟩ := closedSlabLimit_of_theorem71 h71\n  exact ⟨P, c, C, T, w, h71, hw, hU⟩",
+   "doc": "",
+   "file": "checks/ClosedSlabSetting.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "ReviewF7.closedSlabSetting",
+   "keyword": "theorem",
+   "line": 64,
+   "end_line": 67,
+   "code": "theorem closedSlabSetting : ClosedSlabSetting :=\n  closedSlabSetting_of TorusEuler.Paper.Text.section8_setting\n\nend ReviewF7",
+   "doc": "",
+   "file": "checks/ClosedSlabSetting.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "TorusEuler.Paper.Fidelity.transverseSolution_existsUnique",
+   "keyword": "theorem",
+   "line": 25,
+   "end_line": 36,
+   "code": "/-- Each zero-phase-mean source has exactly one normalized transverse solution. -/\ntheorem transverseSolution_existsUnique\n    {T : ℝ} (hT : 0 < T) {U : Velocity} {X : ℝ → Velocity} {k : Vec3}\n    (d : ParentGeometry hT U X k) (f : HierarchyTwistedProfile T k Vec3)\n    (hf : (S5.ops d).average f = 0) :\n    ∃! z : HierarchyTwistedProfile T k Vec3 × HierarchyTwistedProfile T k ℝ,\n      S5.TransverseSolution d f z.1 z.2 := by\n  obtain ⟨V, q, hsol⟩ := Bridge.transverseSolvable d f hf\n  refine ⟨(V, q), hsol, ?_⟩\n  rintro ⟨V', q'⟩ hsol'\n  obtain ⟨hV, hq⟩ := Bridge.TransverseSolution.unique d hsol' hsol\n  exact Prod.ext hV hq",
+   "doc": "Each zero-phase-mean source has exactly one normalized transverse solution.",
+   "file": "checks/TransverseUnique.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "TorusEuler.Paper.Fidelity.lemma_5_3_with_unique_transverse_solution",
+   "keyword": "theorem",
+   "line": 38,
+   "end_line": 52,
+   "code": "/-- Lemma 5.3, accompanied by explicit existence and uniqueness for its\ntransverse solves. All estimates and their quantifier order remain those of\nthe authors' statement. -/\ntheorem lemma_5_3_with_unique_transverse_solution :\n    Statement.lemma_5_3 ∧\n      ∀ {T : ℝ} (hT : 0 < T) {U : Velocity} {X : ℝ → Velocity} {k : Vec3}\n        (d : ParentGeometry hT U X k) (f : HierarchyTwistedProfile T k Vec3),\n        (S5.ops d).average f = 0 →\n          ∃! z : HierarchyTwistedProfile T k Vec3 × HierarchyTwistedProfile T k ℝ,\n            S5.TransverseSolution d f z.1 z.2 := by\n  refine ⟨TorusEuler.Paper.lemma_5_3, ?_⟩\n  intro T hT U X k d f hf\n  exact transverseSolution_existsUnique hT d f hf\n\nend TorusEuler.Paper.Fidelity",
+   "doc": "Lemma 5.3, accompanied by explicit existence and uniqueness for its transverse solves. All estimates and their quantifier order remain those of the authors' statement.",
+   "file": "checks/TransverseUnique.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  }
+ ],
+ "compiled_by": "https://github.com/wcook04/proof-reader/actions/runs/44887791276"
+}

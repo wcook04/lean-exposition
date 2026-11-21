@@ -1,0 +1,3690 @@
+{
+ "schema_version": "1.0",
+ "id": "euler",
+ "repository": "https://github.com/mcoiculescu/EulerBlowupPublic",
+ "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+ "via": "wcook04/proof-reader ac78b5c0b71bacd3d8411ba8071d0fc97f6f35a3, papers/euler/lean",
+ "license": "NOASSERTION",
+ "files": [
+  {
+   "path": "upstream/lean/TorusEuler/ActivationPrimaryJetBounds.lean",
+   "sha256": "656fbe4a310fd37c283c8fc2adec15601e5b2602a80ff4292af4e1aa1d517362",
+   "bytes": 37708
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ActivationProfiles.lean",
+   "sha256": "9092af3661742c83ba0a530db2e7b205268dc4521d3fd19754905268d1f03686",
+   "bytes": 6711
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ActivationTimes.lean",
+   "sha256": "14b4869479c45430cf242c4c43c654ce8025d4b5773079fd240ef549df314816",
+   "bytes": 5089
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AffineExistence.lean",
+   "sha256": "242efdf83aa852a0cb7089a083938e92432f9af9059f2980666db35693b8fc48",
+   "bytes": 2208
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AffineIdentities.lean",
+   "sha256": "328c9b393855130a7aeaaea0bb8ba7216438a9c5296e419f8ad2f85a40625a77",
+   "bytes": 3764
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AffinePropagation.lean",
+   "sha256": "79cd1641574cb3c16fc22cab442e8957d76207ba15ac7c2f7337f119b0306dd9",
+   "bytes": 3454
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AffineWave.lean",
+   "sha256": "1e91a8dee4833052bf6df96aa0ce5495b5799cfb24cb16f32f6d301b9824f039",
+   "bytes": 932
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplificationAssembly.lean",
+   "sha256": "3728701bb2924d41656342338bf330a9018d5d10488a990d92b559efd8b55ad8",
+   "bytes": 13262
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplificationCouplings.lean",
+   "sha256": "795637d53b49b11a602007e74724d035fb0678955f8ece4cc27fb8c164ab0793",
+   "bytes": 19914
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplificationCrossing.lean",
+   "sha256": "ea1106ee099f2693cb989936ba40a07973b5787889b9c11a238eb4797255c2ae",
+   "bytes": 5790
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplificationPhysicalBounds.lean",
+   "sha256": "4807c7786e3ef623684ca94b951e794287ed6c54b97ac3696a6603ca10600f3f",
+   "bytes": 8860
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplificationTimeRescaling.lean",
+   "sha256": "515af06591b8d80d416aa89558ec91868924dc3eebe0a94bcc2058d0d184db8c",
+   "bytes": 5127
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplitudeDenominatorBounds.lean",
+   "sha256": "b235b2d36f09a1e8195a26a6cbd4e42ff21080dc92f95112ec00e02c17677981",
+   "bytes": 11729
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplitudePolynomialBounds.lean",
+   "sha256": "7149b082031d2ef33beb92fcc8e7d24535cdfbf3da7399c4a10aab66d48bf758",
+   "bytes": 12351
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplitudeReferenceRows.lean",
+   "sha256": "e84523c9d93d988de65df22df93e99d192e8b0189136e8d056f5916867a1c67a",
+   "bytes": 5031
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplitudeScaledStrainBounds.lean",
+   "sha256": "e88f1678322e6d9d1f9b3cdf4d59685b072ae334051a4926d5c8afa94c3d5f1b",
+   "bytes": 6264
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AmplitudeStrainError.lean",
+   "sha256": "fc85ff703429919e690f2d6f0247005ea8a7dd36fa5a7dfbf6f8805f882e6625",
+   "bytes": 8211
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AngularLeraySymbol.lean",
+   "sha256": "c4a148c2a0a14f92e4ac74188930dff741589ef3f1373064209740b22f4356bc",
+   "bytes": 20337
+  },
+  {
+   "path": "upstream/lean/TorusEuler/AuxiliaryTerminalSmoothness.lean",
+   "sha256": "b2d57c2f5b3a661b28ef0d3a7f8c2add27812c59b012aa33a4a4100f23484364",
+   "bytes": 5252
+  },
+  {
+   "path": "upstream/lean/TorusEuler/BaseParentData.lean",
+   "sha256": "473779317a38cd2a09366ee6fe84399774ad3e0d3ef7fc2397cbd462f140d007",
+   "bytes": 17902
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ChildFlowDeformation.lean",
+   "sha256": "1407bc54d752c5efa153a2b1215cb754db57bab0d010692c071e9bd2bd9935d7",
+   "bytes": 93651
+  },
+  {
+   "path": "upstream/lean/TorusEuler/CoframeDerivativeBounds.lean",
+   "sha256": "87c285417dd18bc17857945c702ec05aa853aae9dc6cbbb5c0315e349cb2c006",
+   "bytes": 16825
+  },
+  {
+   "path": "upstream/lean/TorusEuler/CurlProjection.lean",
+   "sha256": "9a57410be81376931abd160d9eb64f7b95f651eaae137fe6f37ec216ae116480",
+   "bytes": 5060
+  },
+  {
+   "path": "upstream/lean/TorusEuler/CutoffResidual.lean",
+   "sha256": "f71042ca50a96e9f76aa41d3fe2ac3cfeac413d032dd7b590012d073b2830b19",
+   "bytes": 4149
+  },
+  {
+   "path": "upstream/lean/TorusEuler/DyadicHolder.lean",
+   "sha256": "2891b7654a0354ea5afbcce220996a1351662452be30cfbb1791e99e05e89331",
+   "bytes": 8822
+  },
+  {
+   "path": "upstream/lean/TorusEuler/DyadicMultiplierKernel.lean",
+   "sha256": "56b995660e722350304549270e0e701eabd2b95528cbe48ef09dca27038a4e18",
+   "bytes": 20714
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointCoefficientCompatibility.lean",
+   "sha256": "90d7f744982176ef803613a9948003ce0ee925a38caffed2443bacda1e8b4674",
+   "bytes": 13926
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointCoercivity.lean",
+   "sha256": "4905cb4b91f2a90ecdee598de356e6ab8215f866017edad6896887f9daf8580d",
+   "bytes": 6033
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointComplexification.lean",
+   "sha256": "37398ff50061a216811192690e92879674d5ccb9333444ea526d1e2fc7a4d00c",
+   "bytes": 23170
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointConcreteInverses.lean",
+   "sha256": "b1ec09b69f5ac2db0ecd2c7993bbe7c7a4ccb0871bf8a303d44059d0ec77f4d5",
+   "bytes": 9063
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointConcreteProjection.lean",
+   "sha256": "78321e63c9cd8039ac96dd7ffc18ffce956107f47e327ba6c8fe906ec27ed58e",
+   "bytes": 16220
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointConcreteSpatialBootstrap.lean",
+   "sha256": "1f8e6696e40a09c99fea73b52ba18935f36264636e6f6e56445d737295d347cc",
+   "bytes": 15321
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointDensity.lean",
+   "sha256": "238e44c72288ce393ee167b8ffc8224ba3a454ec98817403b34e6390a1f125d0",
+   "bytes": 7955
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointEnergy.lean",
+   "sha256": "5609d33ed4635471f0372aaf1846a99976d5149fb567de8eb394c2da2dbafc4a",
+   "bytes": 5828
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointInstantaneousInverse.lean",
+   "sha256": "8ac2bf83b8ff75e1bded16ebcd7079f59c0f3e6c4b966f36545cede31b808ac7",
+   "bytes": 5375
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointJointHaarRegularity.lean",
+   "sha256": "67dbdb218a1f7bb38de60f7702a99f6d9409c59b0df1bbd26fce802082fb033a",
+   "bytes": 42520
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointJointTimeProjection.lean",
+   "sha256": "7401d35e364418dbf54722caf7240f60613d76d8a2465825bd88204f9b86f371",
+   "bytes": 17516
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointJointWordRegularity.lean",
+   "sha256": "1d5b35ef04146e7d8b08c272269e21ad42f7143106fa6e1c5dd52227cca82e33",
+   "bytes": 19012
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointKinetic.lean",
+   "sha256": "fd772d834a07276112019f33eb7de92897be1263370a7b0fc8364182335db9f5",
+   "bytes": 5455
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointL2Coercivity.lean",
+   "sha256": "80650ec7bfc1734cca389e0531702e285072712a990d27f68a3e4d879b2dad71",
+   "bytes": 7102
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointL2Inverse.lean",
+   "sha256": "d5d9b2856828a26ba9b1216a1f899fa68051e0c6f25d6280c2988d68649bc0d9",
+   "bytes": 3067
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointL2Multiplier.lean",
+   "sha256": "c28e145d5ad409f9892fd13db3870156db6fed6341b81bc252118b97c73671ed",
+   "bytes": 2791
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMeanFubini.lean",
+   "sha256": "a2187b0f5eed42eff73d588de8c78da56cdc2201ccec95cb1d9f99bb3a3b86b6",
+   "bytes": 8294
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedConcreteOperator.lean",
+   "sha256": "c076baf19ea1bc438805a542bb0aff6251cd4c056283f1280bd24f7cb4ab1b13",
+   "bytes": 25649
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedEmbedding.lean",
+   "sha256": "8bf1104656bdae11bd0d257484def57f96bf1e111b95e0011cdc3c2eac0f0605",
+   "bytes": 13969
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedOperators.lean",
+   "sha256": "760bde8c206e482b0dad84423ce9f26faea75dd500bf281b7e3981e4df4d7ae2",
+   "bytes": 8960
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedProjection.lean",
+   "sha256": "2fdae9a03910f3d98add1eac8f0443183c293bd50514f0796639a6f739326bab",
+   "bytes": 30846
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedProjectionUniform.lean",
+   "sha256": "41f4acce055bdbb3e05316c0efa7a7b790dfaa91472d35edf294baf88f1b285f",
+   "bytes": 3487
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedSource.lean",
+   "sha256": "3ae02631a7b67297b324e360a452633a211e75dde96f5bd6300d599780c32521",
+   "bytes": 6013
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMixedTimeRecovery.lean",
+   "sha256": "647f8c76ccf43bd979e6b37f0f7d0fe5e4dd3f3df249c1b0445c136f119fc802",
+   "bytes": 9464
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointMomentum.lean",
+   "sha256": "8114668dae8126ab3fcc98b70af495add3a56723a888d72dc8aa6cc1c17840ee",
+   "bytes": 4284
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointNorm.lean",
+   "sha256": "4897efe2da616dce9392bac61edbf65efbfb6e3214601f12637f53250f2ec356",
+   "bytes": 5793
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalInverseCaps.lean",
+   "sha256": "972d6fe14ca21571ccaea172d0a4b62ad56f552e7eced4e8b9c9cacdb1e17f85",
+   "bytes": 14859
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalJetData.lean",
+   "sha256": "5d4bb15b3aae1c6e467fe2a7a5d7f958a1f2c5efcb334313152f49b3781c5210",
+   "bytes": 33760
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalJetEstimates.lean",
+   "sha256": "25a810e74b5e7f9ce8da8a970bb48ec847bd227c24a26b3168d709682c21a3ed",
+   "bytes": 62201
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalMeanEstimate.lean",
+   "sha256": "2438fcf3d21ea329b8ec92dbb1f6b9d6831d8b870baa37ec2a810f396c5a49df",
+   "bytes": 42809
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalMeanParity.lean",
+   "sha256": "9283a5375f90c1cd9c53abf359f89c7f3c3ee6db43b2ccf629ee80cf45ae5f4e",
+   "bytes": 22383
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalMeanSolve.lean",
+   "sha256": "bf221ca763d7ed517e22740ca3ca591ba2b3cac9f2a222cc54a1f93049ff8046",
+   "bytes": 55545
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalMixedSolve.lean",
+   "sha256": "717b79a1bde798456952575821d2be8ead07e289a09c616454188399ba4f3266",
+   "bytes": 10159
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPhysicalTimeSolve.lean",
+   "sha256": "e9cf8d606f73f039342ca6120216561ce2c78905ed578bd4b07cd31ca62cad15",
+   "bytes": 20066
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPressureRecovery.lean",
+   "sha256": "fda4b00daac3d090a76d29f6aa30dec05cc6ea164acf2b39606881dc01bfc2fb",
+   "bytes": 28768
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPrimitive.lean",
+   "sha256": "ffba69c39034a6d87659288c40da2e72f3ee0fa83aff53d7cdf518ed7ae7aefc",
+   "bytes": 18162
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointPrimitiveAdjoint.lean",
+   "sha256": "11f2f3b63d834896d220dde9648dc181546dff0fcc28b8f0174cdc219130f8d1",
+   "bytes": 3664
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointRealFourierTransfer.lean",
+   "sha256": "e71602e669efd1e043d6c1d407b2dcbaeaa61a35c314b3201628cf53ddbfc129",
+   "bytes": 5713
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointRecoverTime.lean",
+   "sha256": "dbce379d7e555ba0d10baace274a4441e8027b31c7cb5552ad142c2c65aaa978",
+   "bytes": 17037
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointRecoveryAssembly.lean",
+   "sha256": "b13d8c9a27ae0f5f6c0bc2f76b2fe49c749d5e74de9e8ab88bacde62e542d2f2",
+   "bytes": 7507
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointSmoothSlices.lean",
+   "sha256": "0e0113a4aa461b57cfaf3a16df003f6d8a374329c28299d5c635ff1c4c51bc24",
+   "bytes": 12174
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointSpace.lean",
+   "sha256": "aed7871ba685ce99cc95a33805089295d94fa79a77ce72c1c7fba268fb054ae2",
+   "bytes": 13057
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointSpaceCompatibility.lean",
+   "sha256": "00956bb9f92072505bfb6fea6f23774304dc12d4a646310317edcb6e38a128dd",
+   "bytes": 8671
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointSpaceOperator.lean",
+   "sha256": "70d9f75051111e346c92f3239aab4a806447a5ff15a3fda932b2f6a8e0e3a899",
+   "bytes": 18723
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointSpatialDerivativeHierarchy.lean",
+   "sha256": "6156fda77dfe84e9dc959dc90977fd364141c31fee958f5b0f14d023aa49aed9",
+   "bytes": 14812
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointSpatialRegularity.lean",
+   "sha256": "2ca5d5b91b43f5adc702107b457732440e2c0c5e1593da6ecb03ad46a247935f",
+   "bytes": 60091
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointStrongWeakAgreement.lean",
+   "sha256": "c887d4df768b9bb7c2d823c2e6c99172fa3c2ab778b0ccf9255d97c15fba50d2",
+   "bytes": 9905
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointTimeRegularity.lean",
+   "sha256": "63db44778acd273f8503a9b1b8d13db5c554974cea9566b6f593ca5333bfb31b",
+   "bytes": 22154
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointTorusCoercivity.lean",
+   "sha256": "6233b6f13f72cf37ef10ec6ab6da66f8500f22335dc038e40144741027d2dc03",
+   "bytes": 6900
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EndpointWeakInstantaneous.lean",
+   "sha256": "7ffabf4a3a4c646251133f377e16293892775fe69736e1700bcf7bdb496e2f0f",
+   "bytes": 15130
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EulerAdvectionBounds.lean",
+   "sha256": "32b31a57e2e56578d5acaf0164afd916034d4cbc3a8fafc13a8fb90efca85adb",
+   "bytes": 11198
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EulerJointRegularity.lean",
+   "sha256": "e0d2347bf5124683bb134e7ede7dfc7522ef3d1fa1c94d76bc9a69416ded4757",
+   "bytes": 22945
+  },
+  {
+   "path": "upstream/lean/TorusEuler/EulerLimitClosure.lean",
+   "sha256": "20a1bca4338f3bce3e168b8edcf369c1e2a5a4716eafbd631cd3f6012b73d545",
+   "bytes": 27007
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ExactAffineEuler.lean",
+   "sha256": "0090a97ca1d386d0f664c57ef152024f701edf4e72f57b83409454f911054283",
+   "bytes": 7722
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FiniteHierarchyConstruction.lean",
+   "sha256": "30fb58a0524b1fc626413d87b7465c8b5e4317c81ed4090e6dc92cd0f0f6d0ba",
+   "bytes": 27207
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FirstPhysicalLeadingInput.lean",
+   "sha256": "25b67e8cbe845a68ca14c7696380ba6da31fd551c91e92c009171741f8f7de01",
+   "bytes": 6396
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FirstWaveDerivativeBudgets.lean",
+   "sha256": "5fef3dd96cf40f143f5ee587f31273ef70011e901e1408a79e62af3190e035c2",
+   "bytes": 43299
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FirstWaveHierarchyInput.lean",
+   "sha256": "0880b959d49e63976393f6f0b49d55698684fb4c8d8c29c5f103665da3c5e299",
+   "bytes": 46204
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FirstWaveInitialization.lean",
+   "sha256": "5fc06b439fe233d2ac1c7f61ecb39f76eac994578ea54ac497f1b522e2f32034",
+   "bytes": 27462
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FirstWaveLocalized.lean",
+   "sha256": "3fba825379b072cdef1bb6ab29306fe3959e38ebfcac5a3cdc59d16eb98e65b8",
+   "bytes": 39675
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FirstWavePrimaryPressureBound.lean",
+   "sha256": "e18f5387a5f325c42b22a1afd5fcaa698792047b2ef3a374433d2c98303d3c13",
+   "bytes": 29357
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FlowDeterminant.lean",
+   "sha256": "1f3460e3a729129203360d87e754f3b1efeac626837314c91d393d7e16b0ca02",
+   "bytes": 3595
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FlowHigherVariations.lean",
+   "sha256": "14c1a5c2b4d0d4b8cd1a9609242aabd8d243d130004c13662805779ee7862400",
+   "bytes": 50014
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FlowSecondVariation.lean",
+   "sha256": "6e15323134b7ad29d060d6268721323093c94dba1ac736535d99b107e34a198c",
+   "bytes": 15992
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FourierConvolution.lean",
+   "sha256": "5018214be6d4caa458bf916d599c434a0ef97787ee4199a9cf35e373374eb8cc",
+   "bytes": 12534
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FourierCutoffBounds.lean",
+   "sha256": "2f5b1cd2e8349889d0730566699e0fc1f2ac541735860eed1f121d2899e470bf",
+   "bytes": 26046
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FourierHolderTail.lean",
+   "sha256": "ab6106f572edd181286e900b8577de237ae69021106bde34b6eb39e84b973ea4",
+   "bytes": 17886
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FourierKernelMoments.lean",
+   "sha256": "0bf4161dfbb03cbb657220f797ffe1ce9c7d29740f5dc871c4877e1ea25aff9f",
+   "bytes": 16800
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FrameCouplingVariation.lean",
+   "sha256": "167a4427af2a2099445cf67d010a624b676a5f1ae13754a0f4ea2388f72894a0",
+   "bytes": 9700
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingConcreteMultipliers.lean",
+   "sha256": "25f4648f4f70c776231671603ac5208fe8d556d5771c0a32887c317f0cf92d48",
+   "bytes": 39306
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingConcreteSolvability.lean",
+   "sha256": "66995cb226258da5078a3d3f92032b548a16f41cb0f583821ffda1443a87d59b",
+   "bytes": 15709
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingContinuation.lean",
+   "sha256": "1f4a18be95c4479f2976a8ed451d227d6f313f55f70dda0a582136b6a541898e",
+   "bytes": 9172
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingInterpolation.lean",
+   "sha256": "d06b9404bb6d50d58c7c93dd66cae8c40dd80b03f2b6fe48593473aa1403d1bc",
+   "bytes": 8101
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingLocalization.lean",
+   "sha256": "5520c478be869cb283c6a14208c2890624b4b684b1da778b542fa92bb101977e",
+   "bytes": 18685
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingOperatorBounds.lean",
+   "sha256": "07aefe156d30c3bcb39c1de097c378e1bbb30171bb19dd9aad61083244fad762",
+   "bytes": 13267
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingSolvability.lean",
+   "sha256": "fd8cf84e9ded022e4a50514f4d0243bcfc89ddeb99f5b4ecdbbc99489e267754",
+   "bytes": 20744
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FreezingSymbol.lean",
+   "sha256": "f5d1062b7c1c0d5031583d94788d4c5dcb7c53b5bdd9d7090043176ec698ae61",
+   "bytes": 9153
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FrequencyLattice.lean",
+   "sha256": "b07fdbf1e173f45ffae7dc9dc125e208f05c66b528278f4c91fa7f11e6e74527",
+   "bytes": 6353
+  },
+  {
+   "path": "upstream/lean/TorusEuler/FrequencySchedule.lean",
+   "sha256": "c3ec585086462f2e07caf2fc11a162381a1a29a31316a3adbb6a99df685b47c4",
+   "bytes": 6492
+  },
+  {
+   "path": "upstream/lean/TorusEuler/GrowingAmplitudeBudget.lean",
+   "sha256": "c1e7ec85f75497c28bfe3474c9ba816308c4272b66692b7a0841683b397e6555",
+   "bytes": 7161
+  },
+  {
+   "path": "upstream/lean/TorusEuler/GrowingAmplitudeNorm.lean",
+   "sha256": "320089adc55501da3b21145d6db2c73036d8e4870b31cb4bb3aadb51ef0c13fb",
+   "bytes": 5920
+  },
+  {
+   "path": "upstream/lean/TorusEuler/GrowingAmplitudePeak.lean",
+   "sha256": "c264006ff4179f0b22dea8129ff1679b7b3ea312d522bbb131f051d40d78dbb5",
+   "bytes": 11782
+  },
+  {
+   "path": "upstream/lean/TorusEuler/GrowingAmplitudePropagator.lean",
+   "sha256": "9b7cc61e272768a106e95818268496bc4db792750a6ecea4f053562373421bef",
+   "bytes": 17958
+  },
+  {
+   "path": "upstream/lean/TorusEuler/GrowingCouplingBounds.lean",
+   "sha256": "a37d2026a3e690f470313327f133fcf62c0aaaf40792280c73c8cc99bf7dbb16",
+   "bytes": 11331
+  },
+  {
+   "path": "upstream/lean/TorusEuler/GrowingCouplingComparison.lean",
+   "sha256": "d3bf88389a3ac9bcc51b0a2847dfc8f7515a741c35dc9004fb3ad94ccc3c2941",
+   "bytes": 36253
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HalfHolderFourierMultiplier.lean",
+   "sha256": "08f743efd4093cdbe716ad36741411435e8601b5be568b54037b48075268784f",
+   "bytes": 54362
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HalfHolderMultiplierUniform.lean",
+   "sha256": "edce3714cef8b6491028eddd494f2ec88732b3176236eaed93124d25b26973aa",
+   "bytes": 7362
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HalfHolderSpace.lean",
+   "sha256": "51da4f6ae7dc97ca7eca285ea6419522521baf34b68e31a63cd5ed51309cc39c",
+   "bytes": 9018
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyActualNorms.lean",
+   "sha256": "294ccf762521a73ec5abd3e6d8b0e669f6e4591110f12e44275deee397059841",
+   "bytes": 44346
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyCancellation.lean",
+   "sha256": "0fa8d3c90810e88464fcea1594855a35ea1c57826b9420bfa477f307a5f23489",
+   "bytes": 14132
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyCenterWeight.lean",
+   "sha256": "7937c449adcc2e428ae65ae7a5e922b66134a24c55ab90cfaa139a826da9a0f6",
+   "bytes": 1803
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyCentralRemainder.lean",
+   "sha256": "37ae89c652914bcb5d9062df759e5263610c765f48b5387ad40d045dd642b64b",
+   "bytes": 5239
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyConcreteCompletion.lean",
+   "sha256": "6ae25de99e18292bbdfaa42df94773c677b09203e56d9a24b58c4f59e1d77250",
+   "bytes": 26279
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyConcreteMean.lean",
+   "sha256": "294b917aac7d08381c216c757f1e2f66105806c02db3c4dea7fd45e04fa55d64",
+   "bytes": 7448
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyConcreteOperators.lean",
+   "sha256": "b9bef9e9890e3593e56f686b413d97e13474aa562306e109ca5c8d260d323b7d",
+   "bytes": 6875
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyConcreteRecurrence.lean",
+   "sha256": "227f6237ce536253b1534ebd3540027b8414a278964e68ffca1b5f045210706a",
+   "bytes": 14953
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyConcreteTransverse.lean",
+   "sha256": "9ff58677c7f5966c2465fed8dc96815d91038f74d422c2439f97d0f0c343a5f0",
+   "bytes": 7855
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyDepthAssembly.lean",
+   "sha256": "1d7e72fb69737a6ae351fcd67d9aeb4c47edf2dbbabef3f937ad26704ce33933",
+   "bytes": 7810
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyDepthTail.lean",
+   "sha256": "8f9cd8d3d8b768c3de423c54614dc1fa8099bc90eb5b452e45bee3cfd7268ff3",
+   "bytes": 7040
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyExponents.lean",
+   "sha256": "89cafa5cb06891cbad50e2e9ff45f072425649f7c1bd2832bf58ba46e5dd0cec",
+   "bytes": 11860
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyFiniteOrderBudget.lean",
+   "sha256": "ceef8f7d65c3c00ea3eb0dc21df6842cd6ac3e210a9b96b679405ad2ff9d5323",
+   "bytes": 2526
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyGraphNorms.lean",
+   "sha256": "cff80ac07f893ddb3b0ebae65e38ffeffa5b8eefcc72829175445fb8749aae68",
+   "bytes": 6292
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyGraphReadoutBounds.lean",
+   "sha256": "723d69a908f53a29ef52b83d45177ee5dc3fe0eaf763a432a6b3e7b6f5a15beb",
+   "bytes": 3784
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyHigherPressure.lean",
+   "sha256": "c90143794469914cc892a8ff17af62057cae83ea35f51579f134cf54f0f18e3f",
+   "bytes": 36018
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyInductiveTransverseBudget.lean",
+   "sha256": "b4afbdf86fe5b7697aa0195745c7435148fa09488597cd345f50a441160b1999",
+   "bytes": 9205
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyLevelBounds.lean",
+   "sha256": "e26240b4184130438845588e4086cf55068a6634a0e773317b51d9f9af07b4ee",
+   "bytes": 31472
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyLinearRelayBounds.lean",
+   "sha256": "bb20be412b9656537f08774a5bcb3a55bafae16aaf65b960884c86d8b417c134",
+   "bytes": 65522
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyNormalizedTransverseBudget.lean",
+   "sha256": "e852465707191839b95fa027e0a16079261d14cc235c3ac42454d3a19ab293a1",
+   "bytes": 6675
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyParentGeometry.lean",
+   "sha256": "cc73afe03fec7eb5f100027f8eb31e67a9acd764517cd7442b05f01351fb9120",
+   "bytes": 23258
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyParentResidualNorm.lean",
+   "sha256": "899fcfb1623d5e6c761c9d5873ed6dc3725b90f8f0efc6ea6188cbf7f44ee6b8",
+   "bytes": 4790
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyParityPropagation.lean",
+   "sha256": "f1b4109d35be2f1d9261ef40c2196d1898aade681ac7dac24a7b8e3117f4bdc5",
+   "bytes": 18723
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPeriodicProfiles.lean",
+   "sha256": "da8f03c58fe67ad31cdb3f9fc7d73a74639d85bccdf8ce5d5ce4bc3cbdfa4b5f",
+   "bytes": 23048
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPeriodicSolves.lean",
+   "sha256": "35adbd8da2279c7e8f300d9fc345b9370f0f863fd8253d4310f88c0169e8e02a",
+   "bytes": 3984
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhaseIndependentNorm.lean",
+   "sha256": "a53a4d45789365430f94d45098498134fc7fb8bd85104c014eaad79e0c77080a",
+   "bytes": 8947
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalApproximation.lean",
+   "sha256": "3954bd0997affeeaf0d22b769bca940f8bcdd6785f691e30120b72671152d8c1",
+   "bytes": 31112
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalGraph.lean",
+   "sha256": "e7f1557f58fcc43fbe4618488013cd7cc64f18ef98598ad294782eb3e093bcb3",
+   "bytes": 38591
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalInitialSlice.lean",
+   "sha256": "9332d543b667e10dcccf1f6624c19fffe30a91239176acf8d80548b022543c3a",
+   "bytes": 5680
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalMeanBounds.lean",
+   "sha256": "086edfed370259e159d06b34096bd21e86b4638cc2b396905ee589afa2e06b1d",
+   "bytes": 2949
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalPiola.lean",
+   "sha256": "9fd3416c45d1537a672394f776ee89b43689c768d78571fe195a2f95ec84af8b",
+   "bytes": 4136
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalPressureBounds.lean",
+   "sha256": "2e150a1e66ddc972c61c8e26b1cb7a4e05288647ed152ef08052c14427a1dd8a",
+   "bytes": 48404
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalSolvers.lean",
+   "sha256": "669b5e1b65e222d023436990e851e315ab9a2d31524add805ee20a1ce7b07fb3",
+   "bytes": 15601
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalSourceTerms.lean",
+   "sha256": "a34f8476f9e3e58823eb0d287d046f316b646134deee02b13245e5031301d135",
+   "bytes": 6594
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalSupport.lean",
+   "sha256": "44b70fa050b901adee7835dbca657208816a7e21fe60b40a01b6fb8fcf50e0e7",
+   "bytes": 4971
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPhysicalVelocityBounds.lean",
+   "sha256": "ee99a509859170e04ba89328a97609e390d65df8659e096777145cdd1cb16a55",
+   "bytes": 54327
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyPrimaryPressureCenter.lean",
+   "sha256": "bb4b8e5347081cfb6a20c6ecc5eca7fe5ff5288e8b16edfd7d9c579bf70c076b",
+   "bytes": 37372
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyProductEstimates.lean",
+   "sha256": "d5685307486242537439435554317cec9dc1fcc14ab3e4ff4660cecfb4a054b1",
+   "bytes": 24432
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyRelayCoframeCoefficientBounds.lean",
+   "sha256": "142553174d42f66e04a1a49358c8188ebb8073cb71e2a39dd1b2c1e8a78b4833",
+   "bytes": 11341
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyRelayPotentialCoefficientBounds.lean",
+   "sha256": "c1f72e32ce21430eb38f914ba1f6fe3690e49aee2e57e750d794d3a0eb0a1d61",
+   "bytes": 14934
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySelectedDepthTail.lean",
+   "sha256": "cf94c081271a56dc746d7a4e17ba86db7b0c2d81195303d4ef5138ba19ff9066",
+   "bytes": 21149
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySelectedLinearEstimates.lean",
+   "sha256": "398fcfcb6fc6ffafaf27a41b8d7f697eabf42246fb8a99abf25970834e41aaa2",
+   "bytes": 5396
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySelectedRecurrence.lean",
+   "sha256": "f8ad18cc820b1d0db76bde2e518965875cc7704045294e736fc7939a2d2d8792",
+   "bytes": 5535
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySelectedSourceIdentities.lean",
+   "sha256": "8a7f59ee5d04abeb483bbe1d41bc3ece539c10a7abba710e3d7ba7e460446769",
+   "bytes": 5223
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySlowInteractionEstimates.lean",
+   "sha256": "fac3f85c3ae65ca4bc1d12c1e792b3dde253808a0beb6d8827338290bad15053",
+   "bytes": 16433
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySmoothProfiles.lean",
+   "sha256": "885bc2e66ded77277e30ddc250cb60a4def1e0752aa808b9c5a5d088e3acde26",
+   "bytes": 8994
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySourceAssembly.lean",
+   "sha256": "6404b65afe6542ffcf7634ff3f10d24b041e4990417382f915b54cae42237ec4",
+   "bytes": 21555
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySourceBounds.lean",
+   "sha256": "d6b601f9bcd0257d2053ca99722ff4b3e51eb3482269c2f484cd3e1529d99131",
+   "bytes": 27257
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyStageCoefficientCaps.lean",
+   "sha256": "b6b37518e9eef74401ac2455763154d7e955dc24fb94bdd9ff1bddb0bc66761b",
+   "bytes": 15643
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchySupportPropagation.lean",
+   "sha256": "40d7aefa69506bcf91a77b96a451d3e1265db56aa073fe21a95a299ea783ab7d",
+   "bytes": 27232
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTransverseBudgets.lean",
+   "sha256": "acc758156dbbd830eca46df073ac71c888591c7272257a23dcfdde0d72bdea6a",
+   "bytes": 40139
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTransverseNorms.lean",
+   "sha256": "2197fe370323db7bfe1118e26da8482aa307442523e634103d3094ed23b7284e",
+   "bytes": 22744
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedCoefficientNorms.lean",
+   "sha256": "a4b459c1758ac439785762ce7d48ffcff9571dee286a3eb82cb759bfee46ec55",
+   "bytes": 7440
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedCompletion.lean",
+   "sha256": "5ac4731f9cc22a87a5fb87eb6d7cd4c08eafb15028f781b0150b4e8a445bd9d9",
+   "bytes": 15849
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedFastSourceBounds.lean",
+   "sha256": "eb89299cf3117fd0633f470dc15d205f64eb02f5cc82af888a0bd82015d835dd",
+   "bytes": 17708
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedLeadingSwitch.lean",
+   "sha256": "87116a0b7cf3eb19f4aad06697b20fe38224f0d5c082b14bfcf0d33eedb1da1a",
+   "bytes": 7210
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedProfiles.lean",
+   "sha256": "a19264591ca36e791f6a8e717022c28ec31317b87860377945ec2ec114695635",
+   "bytes": 38955
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedRelayBounds.lean",
+   "sha256": "c57629bdb3d02fba0799d4f701a1f503adaa056db9529c3c652248d6b6b4fb86",
+   "bytes": 54554
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedRelayCoefficientBudget.lean",
+   "sha256": "7d1599b290822736d01e28e4818bbb09f6a1815f20f4dcef0697f23abe74f803",
+   "bytes": 14379
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedSelectedRelay.lean",
+   "sha256": "7d17d6c7730fbb67a4ca930efb0b4c1b3e4f5ddbe69f6e6fe405adfac384dac6",
+   "bytes": 8916
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedSlowSourceBounds.lean",
+   "sha256": "849afd79ecb16f8290fce51372f62e27500d34dfaa43808e2052392f0b449860",
+   "bytes": 23723
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedSolves.lean",
+   "sha256": "f9704a96a8455e40f0291e40a77014e6f6283d6e331bc195e97221d00a36ce8b",
+   "bytes": 13272
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HierarchyTwistedSourceCancellation.lean",
+   "sha256": "001e015bc37779a6de50243754433aec89270db671345a689009628382aa4bc5",
+   "bytes": 37584
+  },
+  {
+   "path": "upstream/lean/TorusEuler/HigherFlowBounds.lean",
+   "sha256": "5a7559f0d0eb6d11be1b969aaba6943283edb33c92989baf54f35060f1f13b69",
+   "bytes": 6608
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductionAmplificationSmallness.lean",
+   "sha256": "c23cf5f0e6fa54938a2ccc10141850ab9fdfbe3431aa9885351f7e047ee970bd",
+   "bytes": 15267
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductionBudget.lean",
+   "sha256": "d899cc53ade0c2ababcbf60857f01c825a9c7954d29f8a3153aea6b82c8332ff",
+   "bytes": 11413
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductionChildEstimates.lean",
+   "sha256": "68518ecf43e025da9a166dc15a7a137c2f4913dba36506680fd7d86245e66477",
+   "bytes": 32431
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductionCumulativeCouplings.lean",
+   "sha256": "ca8332178f3f04e5e999cd918bcd2bb96f49f66354417e402a2f5456d688f7f2",
+   "bytes": 9174
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductionPressure.lean",
+   "sha256": "d2b039108374d595e40cc1c332f6fff2b4f56fc3af1c5b44b331f792bb8be688",
+   "bytes": 3254
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductionScales.lean",
+   "sha256": "564d8c58643df32cca73d0708e4f88b859917d7ca6577e8d79569d83b785f4cd",
+   "bytes": 8293
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveActivationClock.lean",
+   "sha256": "1839e7399c0c847bf979b467c716c655b440e67ec07bc1fbb210f0a63f5dbb1a",
+   "bytes": 10601
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveCutoffBudget.lean",
+   "sha256": "1a0a517302340cc1c2978b1820e9b1b2ce610d44c9ba2efd97081632d79ea905",
+   "bytes": 5279
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveFirstStageAssembly.lean",
+   "sha256": "3e137788a56f85595f4e2a7f5362ed02d69c35cb81642a755f52db2b035334ca",
+   "bytes": 9097
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveFirstWaveSelection.lean",
+   "sha256": "d6610803ddc254fad4b29125ab4df0c35a67c8850019a46c2f622df8a70bf15f",
+   "bytes": 13224
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveLaterActivationJetBounds.lean",
+   "sha256": "aed75127acbd19160892c0b51c0179f923aee705cc585b1501666b4a9f826b59",
+   "bytes": 3524
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveLaterStageAssembly.lean",
+   "sha256": "94539d33df1c5f1e3d66c192a5ad80399a7976d0a69e0d76b61baf6aa542d9aa",
+   "bytes": 11694
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveLaterWaveSelection.lean",
+   "sha256": "0f40c6c4b890d2d2a874b65d777e553f1d649a93fef20b2cecb69100549fd8a3",
+   "bytes": 22636
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveLimitAssembly.lean",
+   "sha256": "aba51476a79f51f4b54a8d6a957467b50f0969fe65155707134303d86608e0eb",
+   "bytes": 18880
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveMeasuredStageReadout.lean",
+   "sha256": "d3a7dd1e3350dc1e02d07ab2eb802d3df96539bb35f168118644820d7acd242b",
+   "bytes": 5724
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveParameterSelection.lean",
+   "sha256": "25ce846ecdc2bc608440f89702c7b35072aded78981bb9d90fa334bfe8fe77a4",
+   "bytes": 2205
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveParentGeometry.lean",
+   "sha256": "1e76fdba1b25e68f84a5c7fd43d20a2c16ce0de02f24702db72b05d218e44444",
+   "bytes": 10731
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductivePhysicalApproximation.lean",
+   "sha256": "ebb58ad196a3dd1ffed34649b9a806d2082f6eee9f2730f61a693ec81772d15c",
+   "bytes": 4340
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveProfileBounds.lean",
+   "sha256": "28acfc93734a5466f299e7033d81655a5b4a333083a2cf2b28a002c6d1248217",
+   "bytes": 14560
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveScheduledConstruction.lean",
+   "sha256": "40727165515697b3af7befbeb2b53e5597074c52a9986edb16cdd9ecf7abba93",
+   "bytes": 10476
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveScheduledReadout.lean",
+   "sha256": "398a4f16ad2c394433f32b9bd661bbd7f6c105dbd7329e215f65432a4be23635",
+   "bytes": 4942
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStageConstruction.lean",
+   "sha256": "fae3f8361e26eedf8c105ca9a02c5ea8b27e2ff6cfe3176d2912b437a1bd9d33",
+   "bytes": 52162
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStageMeanBounds.lean",
+   "sha256": "252b06d09acbc28bf4768023c4666ce9fd4c164fb6ffde2de9f77505f2e89dcf",
+   "bytes": 3670
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStagePressureBounds.lean",
+   "sha256": "50402f2f2b20aefee55a189ec63460947c8f7171cece474a5017d6e710febdb7",
+   "bytes": 26860
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStageProfileFlowBounds.lean",
+   "sha256": "b1761f8ec4517997a9589bd635dec8d7e5391885be3733eee278a8f4562ac7c2",
+   "bytes": 22689
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStageResidualBounds.lean",
+   "sha256": "079f63e89229cd2ba964faaf00ba62d5a3ceeb672815bdc3526bb96a443eb508",
+   "bytes": 10974
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStageVelocityBounds.lean",
+   "sha256": "5e5fe661fdb303efe3807c175174616c4af0d5ff72e10f0a39da0f9f0bcc45fe",
+   "bytes": 18018
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStageVelocityJetBounds.lean",
+   "sha256": "bfff50a7f9e9cbe30dc797b9622a4a8888eae30a8bb76f42eda345efe98e6f64",
+   "bytes": 4042
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveStepNumericalBudgets.lean",
+   "sha256": "6e7898a92175ae3a254950208727df81c55e1f01a5af146d703cc2fa27e32b3b",
+   "bytes": 13570
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveTerminalLeadingTime.lean",
+   "sha256": "453161979253b23f87e4d2f8a107231917d4f23f284c40a2e6bc61c29d9b5c2b",
+   "bytes": 13424
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveTerminalSwitchTime.lean",
+   "sha256": "d6afb58fa6b639aef77c6848b2e6f189ffb0490d5d5c7ec609c13b332bccf9e9",
+   "bytes": 4725
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveUniformStageEstimates.lean",
+   "sha256": "762262842dbe589814803635519a35962706df83aeae94434cc0a002acf07128",
+   "bytes": 14333
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveVorticityBounds.lean",
+   "sha256": "05a753a65fc6f1c1f1246e57305d1323194e509b2c96a02896419b6380b32e90",
+   "bytes": 19576
+  },
+  {
+   "path": "upstream/lean/TorusEuler/InductiveWaveSwitchBound.lean",
+   "sha256": "95942b5619f870e371a87e8bf20f743ca9cb31b25e09b8860a1ffca8066c5426",
+   "bytes": 9563
+  },
+  {
+   "path": "upstream/lean/TorusEuler/IntegratedLimit.lean",
+   "sha256": "f5e7d0e0d5aed1bc4fe956cf634b468c8f0d0721e427603f100f1fa2b06578b3",
+   "bytes": 3783
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LabelFlowGeometry.lean",
+   "sha256": "b7ea7b8cb03a56ab9060bbdb8f864432cc06617c4c1f3c49b0e14407861eb8bc",
+   "bytes": 15642
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LabelVariational.lean",
+   "sha256": "2f1e492a9023b71cd6945ef2560db67480e31dc8b177632a0009baa8ef01ebfc",
+   "bytes": 21313
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LaterPhysicalAmplification.lean",
+   "sha256": "88bb205c39d6303052ab5bd61e270398cd6da1d0eef7207a0f141d4508a18fd7",
+   "bytes": 61472
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LaterPhysicalLeadingInput.lean",
+   "sha256": "328cf2c5a023905636f3797c0e44264f63380d71c467d925e0d0a294fd267388",
+   "bytes": 3698
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LaterWaveDerivativeBudgets.lean",
+   "sha256": "7aad7aed3512833f1798e012238612e3a19e9a0f91b6415ba71d6b88721d2d57",
+   "bytes": 4535
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LaterWaveHierarchyInput.lean",
+   "sha256": "cb529d62374e11d7cc14c38fc08e2149c7a9184948c73dc66f70dad20ec95cba",
+   "bytes": 49940
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LaterWavePrimaryPressureBound.lean",
+   "sha256": "aad2975aac911784d8bc3169663698d6010b6dd0b4db736c9854913a9c3556cb",
+   "bytes": 10375
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LimitDerivatives.lean",
+   "sha256": "d047e36a8aa850882e8232033d1e6e6f960663d37a3edeaff2e447ef25e40c2b",
+   "bytes": 4655
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LinearFlow.lean",
+   "sha256": "1c5f9008d73b4724692fc06f2d7d94e7361377ebc1a06983251fa98f2d1f97ff",
+   "bytes": 6350
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LinearFlowExistence.lean",
+   "sha256": "a1777faa1320129dbcf1204f2912bf913432256d8fb0363a31d0cc7b7fac31a3",
+   "bytes": 9366
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LinearODEHigherParameter.lean",
+   "sha256": "de1f9ce8a2d7479ca0a19384f84fa199b08b2c90ddde23539908c78a7122d1a8",
+   "bytes": 16887
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LinearODEParameterDependence.lean",
+   "sha256": "3785f39a697237205b13bc65b93e71d4062a612c7a9d2776bfcd58943466fd35",
+   "bytes": 6730
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LocalizedAmplitudeComparison.lean",
+   "sha256": "63da4244d2851a72ef42ba7f4541587cf16f5c11fbf44882913bd90c31961d7f",
+   "bytes": 91677
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LocalizedPhaseBounds.lean",
+   "sha256": "0feb52f0e4c1340da0e533d97355bf2857e96aaa3e60f3e96fb1d206218e4776",
+   "bytes": 5720
+  },
+  {
+   "path": "upstream/lean/TorusEuler/LocalizedSeedRegularity.lean",
+   "sha256": "4762905a16066f460ae0ff2686f33fb71096916401129c8cc8d33f7181e1f612",
+   "bytes": 56102
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MainTheorem.lean",
+   "sha256": "918464eed5f4ae22ff8e026ff70979eae56ac9a98005272d92e290870ff34546",
+   "bytes": 603
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Maximality.lean",
+   "sha256": "e63cdb9e6d73a17642984f067662d2111897660e40f767d3028e35a687ab9d09",
+   "bytes": 2133
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MeanCoefficientBudgets.lean",
+   "sha256": "4257108bef3e5af4b577b57ceff11374f50fbe91e81c4374abcfa416103b532b",
+   "bytes": 36534
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MeanDerivativeLifting.lean",
+   "sha256": "37b4e998c17a93117ffa66bcc6fb75b748d937578dc9af777307a88e6d15b1ca",
+   "bytes": 6143
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MeanPressureHessian.lean",
+   "sha256": "0910f70a301347f2dcb0dd1e473caf5c6adb4c4acd0e2245e029c5e57e35e03d",
+   "bytes": 27051
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MovingAmplitudeCoefficients.lean",
+   "sha256": "577180688cafaf6055ad33f7493dc30c1196f71511acca63ac7fd8387e3ff783",
+   "bytes": 16264
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MovingCoordinateWaveVector.lean",
+   "sha256": "b3609efd7958ef5fa8567c5d82361c4587267ae6e6e53f52598592c84668315a",
+   "bytes": 28417
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MovingFrame.lean",
+   "sha256": "ddcfdcaa41dab9c716ee1d982d6363a1409213a86f2526e990ae145baad53c71",
+   "bytes": 12690
+  },
+  {
+   "path": "upstream/lean/TorusEuler/MultiplierOffSupport.lean",
+   "sha256": "2d8f6e2abbb3f95078e837be2ab0fc73c3dbcabd5bb66aceec5ca2c0ac71d005",
+   "bytes": 26778
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OffOriginLimits.lean",
+   "sha256": "84ef30ba9734e384f5d51dc2083d40a588c3fb77a65ab4f17abda3fdacfdb1e0",
+   "bytes": 6359
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OffOriginMomentumLimits.lean",
+   "sha256": "88336c0451105680fc9d24da9ff7ac9423c2b3d25dea141eb1b3bf5f45c80838",
+   "bytes": 14010
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OffOriginMultiplierKernel.lean",
+   "sha256": "5986ca0d46a7b51c8a4c3c49a202ca41a98a0449654ac2bc8da1b2af7ec25cb0",
+   "bytes": 71692
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OffOriginNearPressure.lean",
+   "sha256": "656159f5b231ff678ddf264c2b86bd1ab34980b00fde87c14717d49468c2234c",
+   "bytes": 12005
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OffOriginPressure.lean",
+   "sha256": "79be5fe1adddf4e8d382c7c180957b020d8cb4ccaf4daeed5cab99ad0df028a6",
+   "bytes": 14928
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OffOriginPressureAssembly.lean",
+   "sha256": "45c8898f9f2518fcf774c469a0f0d0de0a998c9ce2d5550b50de6bd25cc9b777",
+   "bytes": 62624
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OscillatoryDerivativeEstimates.lean",
+   "sha256": "6dc26f291b74f2bcb6ba1aa4aedd0c4863143a26747c2b7092788dfbf889bbc1",
+   "bytes": 49791
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OscillatoryHierarchySolve.lean",
+   "sha256": "2c83111f3ccecef68586e8877bd7f4bd2872e46d2e4c905e9349b73f802edda4",
+   "bytes": 23032
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OscillatoryJointRegularity.lean",
+   "sha256": "6b386c03392834536bb726f88f5a29bbf928f10fee21f99937ea431087613f3b",
+   "bytes": 40872
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OscillatoryLabelRegularity.lean",
+   "sha256": "748fedc6d1ea8119e0dcf14452a67697a60cfa6630bec00e44d2a8496838c98a",
+   "bytes": 20216
+  },
+  {
+   "path": "upstream/lean/TorusEuler/OscillatorySolveSymmetries.lean",
+   "sha256": "a10eb0778cc0335e110db165db61602b08a882466f5d53686552520f88e3754e",
+   "bytes": 15276
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/All.lean",
+   "sha256": "0acc96544c9b646e634bb3512629c0d48c1d3460796e47936f8057dad834b065",
+   "bytes": 888
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Auxiliary/Statements.lean",
+   "sha256": "d72312a48c7271021d8eb27f90af3eb5c73cbdffcf073e04a94d5bc4492b302c",
+   "bytes": 13470
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Auxiliary/Vocabulary.lean",
+   "sha256": "e19dd74588b3f5e7c9521fd0006f23880859104b71f682fe94982d70b3bb754f",
+   "bytes": 8389
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/Auxiliary.lean",
+   "sha256": "c730db0e59dfb838b655dc35d85b95ed1feda65625655c0f518e4c59f1f18fbc",
+   "bytes": 219
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsAux.lean",
+   "sha256": "1efb240d753d75f9221322c9355b26c3e46e9827a7939835a583c8fb8b601b33",
+   "bytes": 630
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsRem12.lean",
+   "sha256": "84ef6a29684b5d398e5a75a5fcb4cb7bfb6c01843bf653f8d7721ca58ac19929",
+   "bytes": 157
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS2a.lean",
+   "sha256": "1ac10d20df9fe509247bdaa83e54060f65b4f30ebb8e27cde3873a32ce52096e",
+   "bytes": 463
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS2b.lean",
+   "sha256": "59782a0bc3b3127ad2908c74a638191576cb58927440ddb88b1ffec8469bf2ea",
+   "bytes": 789
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS34A.lean",
+   "sha256": "75c9629f60ab27770ebc9a127b7b11ba19ee220fe0d4f53836db0cacf750eeb7",
+   "bytes": 412
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS53.lean",
+   "sha256": "fc645c98cd94de7041b9e954f58656b53ff9df21c576aec1c2b0409ccff5c440",
+   "bytes": 1390
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS5Bridge.lean",
+   "sha256": "e1e046930ffcd514f76645d99efa41b152379bac2e4e8661d04438c304e52dbe",
+   "bytes": 633
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS5a.lean",
+   "sha256": "1016300574afa87bda882fe8c98eb0694ba3b70176323f0302c9192ff37279f9",
+   "bytes": 1959
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS5b.lean",
+   "sha256": "44c4da57b8db8b22d4af4d765660b6ad7f10d06aaf64fdfa5bb1f44ed3291d7f",
+   "bytes": 1535
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS5c.lean",
+   "sha256": "1df84d511faf9734e8178f3a07755eafbdb544fceb1b4f88173388e82c4f2bfa",
+   "bytes": 1324
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS678a.lean",
+   "sha256": "6aa1ad05c38a3cfe5209ae4db46ac0f539d0aa557a3847ac08ca4cc47a358d3f",
+   "bytes": 1802
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsS678b.lean",
+   "sha256": "27a6b6fe52b2dadbd2578567e3170ceebda8b95a1e7d5ae0a25d24cfc5c0384e",
+   "bytes": 584
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/ProofsSBD.lean",
+   "sha256": "09ec829e03da36e2a79893c6b034edbab56859e61ddaea0ded4ae6925864ffe6",
+   "bytes": 608
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/S2.lean",
+   "sha256": "9ddb6e1d40c6f7800bb843f951277e034e5a3575adb1b3f49796b6c8f8a0391f",
+   "bytes": 198
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/S34A.lean",
+   "sha256": "6784a524b6fb8ac7c8731907b93735ee66f4fa95b31234b04abfcd0a3d18589e",
+   "bytes": 204
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/S5.lean",
+   "sha256": "a4fdd96d02f30f9f0aa6a4e98e20a3f2ed8c2c3911132ef3d0f9dee8554f05e0",
+   "bytes": 240
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/S678.lean",
+   "sha256": "0c2efccb4cf132866969dad0ab11299f30250b712ffefcd1499b09decb1a5889",
+   "bytes": 242
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Index/SBD.lean",
+   "sha256": "0a89dfcdfc70926dbd6af2b238a4b2f965637ede4c882fd888be53f47cac322c",
+   "bytes": 243
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/Auxiliary/Library/OffOrigin.lean",
+   "sha256": "7fe9cd53831b1d98e2d07a189c2e1b6e8aaff12456a969ead279be057937b567",
+   "bytes": 11757
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/Auxiliary/Library/TimeSteps.lean",
+   "sha256": "8a303ceec11387155876391eb19277a3e9e2a991624376a01b89f2c7c92f95a0",
+   "bytes": 14517
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/Auxiliary/Remark12.lean",
+   "sha256": "801e2eae4ed20cf7ef7aa924dbbe7d99253d1b74bec7c84350a59d8ae2254e26",
+   "bytes": 1245
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/Auxiliary/Theorem11.lean",
+   "sha256": "c322ebc8edb889fe979b2a4e403c6317423746a1205fd60de773d6e68c630e61",
+   "bytes": 12053
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+   "sha256": "dd68618aceecd73e4687dc0d73c5548896df206115f15ce78599e908552b9325",
+   "bytes": 3548
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2a/Lemma21.lean",
+   "sha256": "8ff2fd55b1e05e138f09f7ce38b1ea2c2fbb50e5b748aec706ba83f8fe743d54",
+   "bytes": 2180
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2a/Lemma22.lean",
+   "sha256": "feb191f731f3ee920a1aa8b31b0e19ebe79ef71d3fb1c3d025b80eaeaba0c5c6",
+   "bytes": 1734
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2a/Lemma23.lean",
+   "sha256": "8604a2c7a3cec739be8321092e59b387d6d5aeddcd2ac4b5f5cc731a18e47014",
+   "bytes": 22327
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2a/Lemma25.lean",
+   "sha256": "77720c11f505fe9bc5e0d78ca16cdfcf7b3d463726ac2a563a2756da4eb86ef3",
+   "bytes": 4122
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2a/Library/Angle.lean",
+   "sha256": "3df413a8042310d770d2dc20059f47f968023661dcd3d7e21ee03de502cd8282",
+   "bytes": 2262
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2a/Library/StrongShear.lean",
+   "sha256": "5d947febc1e17ad087258382aef8cc95a655681b6a02e8994495cea0a134ed46",
+   "bytes": 19294
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Lemma24.lean",
+   "sha256": "c183260cb32a870342417d1f25e790532163298fc2f0b387215deb2d28722c62",
+   "bytes": 13118
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
+   "sha256": "291cb235ff470c452271c81b625bb86ab038bb66e52f55aa502e9d0d816ae4d2",
+   "bytes": 19297
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Lemma27.lean",
+   "sha256": "68f12f3cfe2c3b0a84a30552a77957a934b29e78526e496f3a420a0f3676430a",
+   "bytes": 8773
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Comparison.lean",
+   "sha256": "eecf2e637db69c970e6c9d7d8441bd9b691d2d83782601a0ab3d9da12dafd537",
+   "bytes": 4955
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Couplings.lean",
+   "sha256": "3afc4aad5eca54ce9a057744e78e63689a944d06730fa7697666d1441a4ff531",
+   "bytes": 11916
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Crossing.lean",
+   "sha256": "12ce1793b379013779d234f39a2bc93381281773ef4835f091e334a0b2c33775",
+   "bytes": 22116
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Glue.lean",
+   "sha256": "34d1fef71a99fe6fa2cb40e89b2a3a59bc6af6061c61438b0cdd6330fc38e99f",
+   "bytes": 22419
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Lemma24Copies.lean",
+   "sha256": "233cd5eea8cde3b5afe66a577ede7f2ebf9afa865e6225377e54834481e26b5c",
+   "bytes": 12623
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Normalized.lean",
+   "sha256": "0fa90cdb609e68b9770354a74bf8054681a6fe6e2a5a789ac7f25e4c94de4f48",
+   "bytes": 8854
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Propagator.lean",
+   "sha256": "147f940ff7a1dff9db3bcbe1fc369380fd3d676d07400672885e8f233c9eb02d",
+   "bytes": 14981
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Library/Restrict.lean",
+   "sha256": "87aa0eba3e2b6a0153b4f528288a0f02079df4916f63d4d9fd56a1e93201057b",
+   "bytes": 7615
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S2b/Proposition28.lean",
+   "sha256": "374d774b8985745a8fd454f5f0efd57d866c32e9ddcb19bcfd53ea52e9c6191e",
+   "bytes": 8073
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Lemma31.lean",
+   "sha256": "8d61507ae748f52d1f31c037f02a6467efb03e9eaba4016366abf6ad660dc632",
+   "bytes": 1019
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Lemma41.lean",
+   "sha256": "b0fccf03f1045564a2be1181ee6fb4f583a36e0b93d7831615f117f5b4cbd741",
+   "bytes": 2230
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/LemmaA2.lean",
+   "sha256": "102cb6cc9eb6f6dcc7cba82a8d29e09d950e5017ef72dcaf8ab3d9805c58b947",
+   "bytes": 3219
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/A1Base.lean",
+   "sha256": "6934e71d308c296b78c33902a822443d296c2482c59467a38112430ff1380c83",
+   "bytes": 20334
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/A1Inverses.lean",
+   "sha256": "fe4f591c0a20346a670fda29c1c0f5e16bbd46ed53435cfaab42835f7fd5c274",
+   "bytes": 14542
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/A1Jets.lean",
+   "sha256": "b2731d8c49802f90f527636470388f5b37093ff0efb973ebb0e0065e9ae19706",
+   "bytes": 11160
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/A1Smooth.lean",
+   "sha256": "61fa10da4ebc30885cc8bc09b1b3db69a6186dcb419554ad4bfba0ddebead477",
+   "bytes": 21086
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/A1Words.lean",
+   "sha256": "9ec3dd8d9c10ad099f3d8acf9c5f13a5d1b0fe45492678980b70b2744e3add50",
+   "bytes": 9815
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/FreezingHigher.lean",
+   "sha256": "885e079e4764a7ab08245d8c48a2552d4b38b63933ca542f5c0b7c42c62ff5af",
+   "bytes": 4796
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/R42Coercive.lean",
+   "sha256": "ea99a987bd0db2390ccc35c99b2bf588bea1520a51719958a00bc5073647b22d",
+   "bytes": 5194
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/R42Equivalence.lean",
+   "sha256": "fd2cf5cadfaad43fb3e495812bb246fb0465d72f9bb2f02a1b9a62d738ae1317",
+   "bytes": 5013
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/R42Parent.lean",
+   "sha256": "be912b9fd3825558fbf72864a78501983b9e43c531bfdf71685769858a62b735",
+   "bytes": 8182
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/R42Scale.lean",
+   "sha256": "d9b11c36b1a74026770e9b825049a02dda78af3637f88b131066add6b1e1262d",
+   "bytes": 6064
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Library/R42Smooth.lean",
+   "sha256": "178b895d4e59eeda63f35439fca7369844ee3862d924632f10cc1431c25793f6",
+   "bytes": 6782
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/Theorem42.lean",
+   "sha256": "f5d1378031eca09d7504d2879ddde4864addb70ed28856666762bc0868f1f5db",
+   "bytes": 42306
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S34A/TheoremA1.lean",
+   "sha256": "cac189920e68fec8e293a437053a3eae22c1a5a94bcebec95d5359ea77838a6f",
+   "bytes": 13490
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Lemma53.lean",
+   "sha256": "775d1d3464dbcf2977207dcd5a47cf4286add76f48ccf8febcd7d26b16963304",
+   "bytes": 8262
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyConstHTB.lean",
+   "sha256": "06d342d082f0e4f1ece7498810cf37b7e6c672629687f182a9621c5b46064fbb",
+   "bytes": 3801
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyConstHTN.lean",
+   "sha256": "f2e3e59ad8af380f329649e2bcabcb37d7029dacb5cc50c897b74502c4ab647f",
+   "bytes": 2183
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyConstPHI.lean",
+   "sha256": "425c4518e97be7ca239529b7262be0c8cc657fa071694c90593209c9b8a380f4",
+   "bytes": 2206
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyHTB.lean",
+   "sha256": "b49b3d63695408baf29296a09c11491fe22e966f310749d90ced0c8dedb550d1",
+   "bytes": 25243
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyHTN.lean",
+   "sha256": "7d2717381bdf6fd27542541ebea9e7112bf9fa0df8c7f7d01deb057e7415b9f0",
+   "bytes": 12242
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyLAC.lean",
+   "sha256": "160c192c8d7dd83c749013bdd7953ec0de9fde00ffd55d94be2822143f569274",
+   "bytes": 15930
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyLACaux.lean",
+   "sha256": "fed673572048a05aed8297be4b4c228cd6437e8f8f2fbbe04bb6fd41bffe8847",
+   "bytes": 5169
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyODE.lean",
+   "sha256": "ebfcac9986c6e62b7b8f43c889c2a58d5ff3dfed414151410dc6ac91c90e3be7",
+   "bytes": 21538
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyODEaux.lean",
+   "sha256": "494807fb759290cb53cada5ff9942c2e2a17f8469535e6f7caf543758d96fde4",
+   "bytes": 6361
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyPHI.lean",
+   "sha256": "65dae39cf1e8e3e48220cde381f8013021fe9397fc946ceb8c704a4765f13b32",
+   "bytes": 19576
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopyPSJ.lean",
+   "sha256": "d0d5682f04a6b21f0b8500a1adb4bcbf2b842b8beafbaf9a965c71731434c15a",
+   "bytes": 16122
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/CopySDB.lean",
+   "sha256": "91af8e7600356a63297e27189b362fa958afef5ad8b96df5a99840c1e08159f8",
+   "bytes": 49284
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/D2Bridge.lean",
+   "sha256": "85ee4c1113bbf75461d28b1c51f21278c3e85070d4397acf4660d074aa9cccbb",
+   "bytes": 14198
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/D2Coframe.lean",
+   "sha256": "f98d1c3e382e562983b7a4c7873ddf0fa5dc1aa31efeca6c2c39f693eaf0014a",
+   "bytes": 19025
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/Leaf51.lean",
+   "sha256": "942b97e7afe052dda49939c6e1b9bb65a0cfe1e57523c1da1e5e07547f1fbf0a",
+   "bytes": 570
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/Leaves.lean",
+   "sha256": "e8cc4d965d54926cc2336d887e27b1e4c81d270d87012d8c812bb1d9545a142a",
+   "bytes": 7491
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeD3.lean",
+   "sha256": "7cff11a1ce636aea8593516cf314befe50b7cd5593865a73a0dc26ff148f4d36",
+   "bytes": 1669
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeFinal.lean",
+   "sha256": "9e62902b16d6520ab0a2ac5f4b8a436b648022f0aeed34e8623bb8e8769d7e7e",
+   "bytes": 5354
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeIdx.lean",
+   "sha256": "8158b10a00af36029b09ccd5a77fd8302368ba302263942995982ae6d45d73e8",
+   "bytes": 7702
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeJets.lean",
+   "sha256": "1b9c9e06ecb1eb1a99dd0d8dd03b57ddf5dbe71db979d9026ad8fe87075914f3",
+   "bytes": 4647
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeJets2.lean",
+   "sha256": "5cbc38834792493f0fc268b779c46eed81a9cb02c477be09ac56dfab14c0b225",
+   "bytes": 5457
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeSpaces.lean",
+   "sha256": "8365ed5a8433159d03a2e3ec354a00d87e2501f7ce1c112ff6c5541048ae3e1e",
+   "bytes": 4636
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeSpaces2.lean",
+   "sha256": "7e5d5f47fa4e91d129a137c07eb89b3948c1bbba602c20676aec8df10f309b6e",
+   "bytes": 4040
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeSpaces3.lean",
+   "sha256": "c318fc0ba9c0134c035f1d897176dda0aa85fe2987309fc4fcb4920e204b9c05",
+   "bytes": 5560
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeSpaces4.lean",
+   "sha256": "1bd0708a6aa4c77ab882f6212b3742141abe6db000da72408e42d64b5894325c",
+   "bytes": 5818
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeSpaces5.lean",
+   "sha256": "b11b00e291c3071cb652574d82eddfe0cc8f303d163a08422840720fbdb8fa2c",
+   "bytes": 11942
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeTime.lean",
+   "sha256": "22fa24d2eb02aa99bf4ea384f2c1bfc34858f1896a79631d4953a332e272d484",
+   "bytes": 3623
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Library/OdeZero.lean",
+   "sha256": "7c7fbe5f9d3ebbbcbf03952174fc63883bae8f4f1e237d6cebf38216298ff083",
+   "bytes": 4875
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S53/Proof53.lean",
+   "sha256": "52ae456f8e039e97aac3d0b6e8b6318d8298ead51d7f1f118afaae4d472b5e19",
+   "bytes": 4310
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Children.lean",
+   "sha256": "336c6359109479cf97181e510782f499a88e446121d780667ee3ac8afec953c6",
+   "bytes": 5650
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Construction.lean",
+   "sha256": "275306708df2220df658f6913e9edc19291c2f3bbce734002bfcaf4e67bc5269",
+   "bytes": 4073
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Hierarchy.lean",
+   "sha256": "b73f2bb4a4e7205b1d28ade46ffc8404b144207b87ff2230bfcc1e20825dfb30",
+   "bytes": 21782
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Leading.lean",
+   "sha256": "0d70c84e7a7eeb180d2c8828a8c8640e5126b923388b70047da64de48ce5d559",
+   "bytes": 17610
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Library/Wrap.lean",
+   "sha256": "69644b606bbd5af649080bf38315245a7a5af412fc7ce8c1c70fb7b7828f5e2d",
+   "bytes": 11540
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Norms.lean",
+   "sha256": "8f6b1558c8398a61f5776f2573368a8865e60092a6c86f780c03ffa01802778c",
+   "bytes": 16174
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Operators.lean",
+   "sha256": "483373c7a0b003dff5a376c0d0727150a3722a324b4f236c0063392eee6a882d",
+   "bytes": 15254
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Parent.lean",
+   "sha256": "75afa8c8c6c287008a4119a2c45318c4a062b2adb766d5a7e365e061d9c730a9",
+   "bytes": 15916
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5Bridge/Seed.lean",
+   "sha256": "e15005ed23b5642aba4708298da93a49b6450e5fd20a2016ac5b2490c22e7ebb",
+   "bytes": 12996
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Lemma55.lean",
+   "sha256": "32b18cba73657e817fbccf1f527b5fb86d5515b20cb6ba1bf441b9a3de167225",
+   "bytes": 8291
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Lemma55Main.lean",
+   "sha256": "42f3ba3f519f26c02f323f13cfb1c7224ba50c8acbae78589d8da861a45a11db",
+   "bytes": 16717
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Budget.lean",
+   "sha256": "59948dbe5e14766676cc8520adb016ff1a0dde34ffa0dcd60bc2dd971270f5e3",
+   "bytes": 15675
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Identity.lean",
+   "sha256": "28546d39fa83d153c7776fa5f776b1e9589086df6487b921149272a861b8744a",
+   "bytes": 29520
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Inactive.lean",
+   "sha256": "76b687305adb74ddcbf3982e47699b09319ee4da854e65537225ef71d259a77e",
+   "bytes": 19009
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Jets.lean",
+   "sha256": "68d42c303d9e7b6fd6ccbaadb8c6cd39da58db703426b989915455fe8b381750",
+   "bytes": 14382
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/KOmegaPower.lean",
+   "sha256": "c9b706c36be43b8bef9dd67b27584a80cd8e72be03453270b0bf47672725bca3",
+   "bytes": 6733
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Launch.lean",
+   "sha256": "7e651b3248088b39b90769dc5ae54f26f6dd1be28633f925a88cb09fc2bcbefb",
+   "bytes": 1835
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Leading.lean",
+   "sha256": "1dc845ad9137f73fc1b07779d6e25e1d347c1fe30ebe289c648ce41cd7243dfc",
+   "bytes": 14965
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/MeanIntegrate.lean",
+   "sha256": "c1cec5e004570a2bcf8ff7a4f5212c945ddf7a7ee0cddda2698cf57373aa4d40",
+   "bytes": 14829
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/MeanSetting.lean",
+   "sha256": "f398bf04cb8d22adc887f502c8f75bdbc62bd7769ac7bc6ac5f75bd61ef5a4cb",
+   "bytes": 2828
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/MeanSolve.lean",
+   "sha256": "87b2970638fadf1c4a9fa171e1bd8e1542637b0c61b9cddeab9349edf5254cbd",
+   "bytes": 25238
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/MeanUnique.lean",
+   "sha256": "ff7f08889a8ed9b7079e00b40c5b21928567ae6d456c7eb8b03f7f31de31f0f4",
+   "bytes": 21433
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Mono53.lean",
+   "sha256": "e1c2df4168c16537a5423fcacd4119f858623ea0f950ffebed031d0314a88d66",
+   "bytes": 4784
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
+   "sha256": "56020e496c02b18c6b8a33c6f13123f01a9debae853aa14cb266abe2ec848a3b",
+   "bytes": 2543
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Norm52.lean",
+   "sha256": "b3ac70d4ca590e6b44653a10450138e40d6c3e267f5a36250fdd54f67768883a",
+   "bytes": 4250
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Relay.lean",
+   "sha256": "ac8c21eb5d68975eb26434b461d040e286439b2e542a7f277b339e4826711342",
+   "bytes": 32628
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/RelayBudget.lean",
+   "sha256": "ce3d7a0310f2297de8ea070fa42e485525c49830e3798f4af4042489be306d04",
+   "bytes": 10485
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Seed.lean",
+   "sha256": "da91a6658f1ba48f1cf2ce1d10b877b918b9bcfb7ecad01898f8fc58cdf33ca7",
+   "bytes": 7410
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Seed519.lean",
+   "sha256": "d7ba69fe52a39d15f6a12cf807137a7fbd2834444f4fc58783e019a1446b94a0",
+   "bytes": 22334
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Switch.lean",
+   "sha256": "f6ab6a96b112bb2d13c87f684d63be8326410fa96593d02ac21c42416984b9f5",
+   "bytes": 5604
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/Tower.lean",
+   "sha256": "a44c91b44bc674a71c42fe35405529fe713ef270993e47bf1eeffb751d7db934",
+   "bytes": 5939
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerD3.lean",
+   "sha256": "e653af5c88278af9220259c82ae9008314bd9bf6778b91fcec34ecc2abe6cacf",
+   "bytes": 8593
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerDer.lean",
+   "sha256": "40a9462ac272166cf686c544de886ff1665973207536011d83ebb2fa6cbd565e",
+   "bytes": 6361
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerJets.lean",
+   "sha256": "77d3e4bdf09317bc80efb5bfac890a7fa796742f82180473e7ffd511bf681e91",
+   "bytes": 3625
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerLift.lean",
+   "sha256": "423c51414499ad360d7e907f8e5361cea6a82b48285cfb2c8110ee4ca1e69340",
+   "bytes": 13359
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerMain.lean",
+   "sha256": "3e820977774a7e8083e2137345578cd01e9d2c40162ca37062700283ac6dc111",
+   "bytes": 11915
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerOps.lean",
+   "sha256": "f02f9e0b5d67ccb50d5b47ccb2ca0986e79d6df754b8fce1b81353118fea926c",
+   "bytes": 12163
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerVel.lean",
+   "sha256": "c4a4e8d6a91184ba7c63bed5a312b4c579ef45d6ad2ef7867718e883d816f9aa",
+   "bytes": 6805
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Library/TowerZero.lean",
+   "sha256": "3c804f1a80d9efa620f821217061e4e790fa33f27724eb058ba742abc86e1bed",
+   "bytes": 6338
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Proposition51.lean",
+   "sha256": "421eb17fae2f82086efa914e77d1a6224c22ce772a846e2bd7d19133c20ba967",
+   "bytes": 32263
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Proposition52.lean",
+   "sha256": "f3beff64f90b2c60fc18f8d90e9febf308e6c4845fc6c9c4910841214828ad45",
+   "bytes": 15251
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Proposition54.lean",
+   "sha256": "dffccdb116bc640d06127532a562e0ca2aeeae31f36f13e249eaf739a31d8265",
+   "bytes": 3026
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Text513.lean",
+   "sha256": "5cef2984dcb4a1951db941a2a8d4b5bc1c86f46ceba723b5c5df7edc6c256d21",
+   "bytes": 11375
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5a/Text514.lean",
+   "sha256": "8538849c002b53bcf429ce6c5dca12cabda24d12ba1382deebe98fe47a940118",
+   "bytes": 27021
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma57.lean",
+   "sha256": "93d67fc7881d1a56545a748666981d0259007e7127f59900d5d7ef4143a8bcec",
+   "bytes": 22190
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58.lean",
+   "sha256": "e3f77fbd6b00e5886c66f6f8b5396ae6d50f3c681f4ef4b5e8e0545dc3ee2b54",
+   "bytes": 5050
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58A.lean",
+   "sha256": "ae0ddaad67eb247d5448ee9a85a32a0ac65d1afb1bfca94aa6b66f522a91e688",
+   "bytes": 8175
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58B.lean",
+   "sha256": "03be9cbe50688f83e26fb7a3df6da7604a001375e4b3c97a1d711199b27603fe",
+   "bytes": 5996
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58C.lean",
+   "sha256": "feb273bed9a892d96119fd3fcba4fa79b14bfed15382c82a7532f694b0b5edab",
+   "bytes": 9230
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58C2.lean",
+   "sha256": "6e79153e9ad4751cd77c7f56da9bd1e3e47286c68026a3d3410881a804fcc5af",
+   "bytes": 9412
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58C3.lean",
+   "sha256": "e99ec8ae05e6c2d9cb6961efbd9f18770e944db5f4a4ea4f6384c92eb4540545",
+   "bytes": 12489
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58C4.lean",
+   "sha256": "bd71687c749c7d671718b665f444c00d95493fae3b140ddb3a8c25d82cf9feb1",
+   "bytes": 5890
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58Core.lean",
+   "sha256": "4faae044b566f3031f6083104e6cc866af480c6238140a08656b19c8f90dbb7a",
+   "bytes": 20509
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58D.lean",
+   "sha256": "b4fede73d3ef3d5839ec01158fdf0b0e10ba8d695ddb6fc2f1c63632f01e178a",
+   "bytes": 5885
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58OddA.lean",
+   "sha256": "20a63ddb187319c9bcce0cd2a4f14577fb2ae39a19cedcce2cdb2112c55f493e",
+   "bytes": 17120
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Lemma58OddB.lean",
+   "sha256": "8e77e3f0dc74e46fc7069c66a5d01243bee9331c494c648cedb3d970b118a9f0",
+   "bytes": 19910
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Library/Fields.lean",
+   "sha256": "90dff43a33930db5cdf8675dfa35b017373e6283eab31df3e124bcecaf14e4d8",
+   "bytes": 22492
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Library/Jets.lean",
+   "sha256": "b7ed0e3fa01e365b61a8f90b9b5afe1e64d936858ef1ef76efc79d66ad8a034c",
+   "bytes": 14436
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Library/Tilde.lean",
+   "sha256": "245ad9c94be6578c51d592ad477d5d611a29acc0d522a8ee2e288f3de96a0991",
+   "bytes": 16794
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/Library/Words57.lean",
+   "sha256": "c92e9c63e2f7ee3e8e04a0b49195511185c9c9535c90e6bbcaeb1d9def92850a",
+   "bytes": 11627
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Bounds.lean",
+   "sha256": "f19c6be71b6074bfa14c7066a66b08075f04b9d0c8ee5e457f15fdf6f9ca5716",
+   "bytes": 10233
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Coef.lean",
+   "sha256": "f4ec93d98d5402089612e0ede63438792033775d0988fa4dfdf18175fd89fe50",
+   "bytes": 6466
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Conv.lean",
+   "sha256": "8d1df469cd10e428a020b36c6296b12e9e5fa4b7736b5e55bbd41a4be3e5d515",
+   "bytes": 1893
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Exact.lean",
+   "sha256": "d371fa1edad9d622b016c6156d5c02eb4c34802b88288ef24050746fea2918a3",
+   "bytes": 7928
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Facts.lean",
+   "sha256": "fe6aca931fb53df27880f60cf6bd79d3249d7ab60e2cd6df3201e85440136a2c",
+   "bytes": 9966
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Final.lean",
+   "sha256": "eb539aae5c76a10a2d48985d8050f423af1fb93c78e25b1cc33f64edc2e9c5b8",
+   "bytes": 19728
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Level1.lean",
+   "sha256": "e2f46d8b06994ad89205f32cbf2b642f8e7d9dd7bbdf6ecb30bb3579af200e61",
+   "bytes": 17769
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Master.lean",
+   "sha256": "1b990015f66e96bc16f5400f054329a7e203e4030910cf34163129f32c8003e8",
+   "bytes": 47598
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Ops.lean",
+   "sha256": "6fc994db6bf657ec895f98d6d91d9ed0172e24cd63a2db4c8b6ff0057d3fc03a",
+   "bytes": 13822
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Prod.lean",
+   "sha256": "c7e9f9ef5f483d369746c58fd9914dde71a77f5edf159bd35358611bd3079d1b",
+   "bytes": 22058
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Rec.lean",
+   "sha256": "ffba453652b61bcb58f6be5e28e97f4122142ea6aa3051458edf76ed51baf377",
+   "bytes": 12790
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Resid.lean",
+   "sha256": "c1206ccd34bd7c048baa4f1633ad908f9e99954f239b6040c7dc80600fc64472",
+   "bytes": 8300
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Terms.lean",
+   "sha256": "3ba47e1f3b7fc869f8d4b7b9b61b7471383ef35f6dc13fb987f45fa6779e87dd",
+   "bytes": 14387
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5b/T56Twist.lean",
+   "sha256": "581886858faa68238cfbc592f8fdb74d46dc8a952de219e5291ddfebd7586126",
+   "bytes": 10685
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Eq559.lean",
+   "sha256": "97b2c98fd78f5edaf72945fc6f90ab936da495912ed0e81bdc61b8e1630a193e",
+   "bytes": 1397
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Lemma510.lean",
+   "sha256": "a3e7614bd25d39b35e93446a6750121cc69b15a97e5fa214517ba6ea7f85eddc",
+   "bytes": 25297
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Lemma59.lean",
+   "sha256": "733ec18c656011a7c08edf7baf55e0d89ab5696cba2739bf89c88e6937b0b476",
+   "bytes": 3398
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/Assembly59.lean",
+   "sha256": "5d51ffe42915c266c7247c1a547454e21d533f87c2d8ad6f55658c6ab1f87939",
+   "bytes": 12177
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/Center.lean",
+   "sha256": "922d25ce6a2215244ca413638a894f73b2e68fe58faee0acab0f3623ddf20f83",
+   "bytes": 14521
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/CenterBound.lean",
+   "sha256": "0f96723b38ccd01ee29276c1e98962cc0171ac31c0ea1b4a3d8f808b51a1a9fd",
+   "bytes": 16074
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/CoefNorms.lean",
+   "sha256": "9398e32d80d2ae4d67c7e01909e070fe2dceb57c721e39abbf44aee8ad00d974",
+   "bytes": 10706
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/CutoffBounds.lean",
+   "sha256": "7580f27753eb674842d4942248305db2a91f33d83c28a4d5e47ed9dbbcce590e",
+   "bytes": 33671
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/CutoffStage.lean",
+   "sha256": "478abc58f1048cd32d508a878a9e56d1ae8e3a295cd228ccf34f7861801a561f",
+   "bytes": 28532
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/FlowGeom.lean",
+   "sha256": "45bc8aff7b685a88f651b73ae9d5f83d9a46c6efa09b068ea17029753fe1114e",
+   "bytes": 5529
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/FlowJets.lean",
+   "sha256": "f75a28262acb77b9f577153780dfd7b9448f765772aa2195702f840ef46e9b90",
+   "bytes": 13348
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/HessCalc.lean",
+   "sha256": "a054c38830edfa221089ef4445a2127bdbf02923ef9475ea0c2dea9e3b3f9d81",
+   "bytes": 3820
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/HigherClaim.lean",
+   "sha256": "44a9de3a3b1aeb22988f70afc42028f761b8776e09185e50fb1f900c378a3942",
+   "bytes": 24976
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/HigherFields.lean",
+   "sha256": "af1b73e7cd674834586dccc976f4167bc3aa9cdcc62b08685bc9fb18cb0c0233",
+   "bytes": 7828
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/HigherGrad.lean",
+   "sha256": "1bfd42cecf3bd5e280f294e5cb3fe4548abacc3e76f6edf25d04a6a043bbd8bf",
+   "bytes": 6576
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/HigherNorms.lean",
+   "sha256": "dbb9c76b82148cd6435484a542fc1702539c7c5c603117d22306d80ea995f528",
+   "bytes": 12408
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/Inactive.lean",
+   "sha256": "112d9353270770ba7a0241a4aa8886386c6a1a7f7639ebdadb6049cba25a6323",
+   "bytes": 7734
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/LeadingClaim.lean",
+   "sha256": "477d888256f634278f2a1c2bb404ff6780d0c9f3d18b4d8abbf4ce3b5713c94a",
+   "bytes": 26761
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/LeadingHess.lean",
+   "sha256": "2d1ab1ddc3515fcf470b2bcc8c83fe38a2d2b1172622242fc7bdca39822e6cae",
+   "bytes": 13605
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/MeanClaim.lean",
+   "sha256": "44ed7bc54c64588b1ca539eb80689317b372256e9b0dde1f520fd39747e877b7",
+   "bytes": 10507
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/MeanEuler.lean",
+   "sha256": "d7df791d289a94acd33149ab3c9b327be333908e8171614b48657628f5775c08",
+   "bytes": 17540
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/MeanGlue.lean",
+   "sha256": "94d61377d640828cc4183fb48e418eb80a26a2044f07af2480fb1d3d55cc51e4",
+   "bytes": 10434
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Library/Support54.lean",
+   "sha256": "a92b0bf0a729089e4edc8efe5a591c85c9baa62a6fb3e718c02942411f6ec976",
+   "bytes": 9388
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S5c/Prop511.lean",
+   "sha256": "6eb37283552b45d3ea1e10f50c7c36f07be7bd8854c05939352855b517df1f8b",
+   "bytes": 13999
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Base.lean",
+   "sha256": "0b6d5741acff6c6cc94355a0e204eb85814acd19a541c754c7bb8b43b30436a7",
+   "bytes": 19652
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Bernstein.lean",
+   "sha256": "b98031991664c1426e25cb71932ee45cf180ac4b1349da32b9887ddfb442022d",
+   "bytes": 5127
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Budget.lean",
+   "sha256": "402ce47a64a174ecb57b0dff54898d2280cde907b04788dd1613714620b6b1d3",
+   "bytes": 10275
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/CenterWave.lean",
+   "sha256": "76b401d763a1ecff5b13ae0f7356a3c64d98895d38ec64e9a31ccdf85067a5a4",
+   "bytes": 8230
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/ChildBounds.lean",
+   "sha256": "39d368f07d7ea7083650378e196e8a3c1e5aebc0b533b014856cef3daa17afaf",
+   "bytes": 14028
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Common.lean",
+   "sha256": "fc164853814ffb034246f8f7cf09b8e39f248f15da322e66536a4b8f0e39b5b8",
+   "bytes": 4367
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Conclusions.lean",
+   "sha256": "4751a721c4b96a46560b94195d27babcc95b0aec8d0e0607f55f6dc14d932dd0",
+   "bytes": 7316
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Constants.lean",
+   "sha256": "23c4e560a8fc51f1b6a4cae0fe7cb9936b48cd38cba7fd669331f947671e5637",
+   "bytes": 1300
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/CutoffChild.lean",
+   "sha256": "098050de1c5d03e7f6679d79d7d352353b93e5623a0abefb9a2d17a5c09fc4c6",
+   "bytes": 7826
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/GrowingCrossing.lean",
+   "sha256": "00a55eab220ba011e675456dc08492301f34bf7e144052cfd041c9c5d9341dee",
+   "bytes": 19446
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Jets.lean",
+   "sha256": "f87d70607b2fd8d451a9b1eee686827872c55bca62690e9ade628a512e17c074",
+   "bytes": 6611
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/LaterWaveTip.lean",
+   "sha256": "61de79f8e417c455293180577bea899cf85a6ad53088fbe3b83dc613ab30c08d",
+   "bytes": 6356
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/LaterWindow.lean",
+   "sha256": "db45c1420448fc9d1f60c140b379682dacbdf7a3cfe92da341516b29b0083735",
+   "bytes": 9102
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/Lifetime.lean",
+   "sha256": "eeab9006558837821772e2d66781c5ec3a3523fa30019ae3df30153fcad291bc",
+   "bytes": 6155
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/LocalStep.lean",
+   "sha256": "670a67489f669c10d150f995eba2408914883abc46001121168fdedb10ccb829",
+   "bytes": 5176
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/ParentBridge.lean",
+   "sha256": "c0369d7927bbb3b0dd29dab4b322cfb49ebd06b06a69e0c0c8f1da9604dc0c6b",
+   "bytes": 8636
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StageParent.lean",
+   "sha256": "42b8f60698813d5e9cb11d8c84958528ab83224285a3d156f1af985161500275",
+   "bytes": 9330
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepApprox.lean",
+   "sha256": "7a051de6e0e8654ffcb851c544078dccee6cc02423f46781afa244b58b2cc7fe",
+   "bytes": 10254
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepBuild.lean",
+   "sha256": "18837638946988326971f1706c38eda8f6433a80bdd0c2d56e24a6b4a40dcdab",
+   "bytes": 12405
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepBundle.lean",
+   "sha256": "e22eba8699f689df152c31c8ca2a8929c5a56afeb536346b17558e9cae605135",
+   "bytes": 2208
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepChild.lean",
+   "sha256": "d8348228f97d7411f509719a45bb8e019b95709b7c7ff7768e0aa5d5107859d1",
+   "bytes": 13577
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepCutoff.lean",
+   "sha256": "be80320476604c27244b2013432f64de5ccb88dba9fd7b8446385d405e4b54d6",
+   "bytes": 3728
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepInput.lean",
+   "sha256": "a382ab8d32b1e0784b4a192fc14f34b76d3f217b84fd88093c3b7da8810c2b89",
+   "bytes": 17629
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepLemmas.lean",
+   "sha256": "102d93905224e6f72791d8a8304c9254ff4a040f38da12772792e4b215867964",
+   "bytes": 14206
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepNumbers.lean",
+   "sha256": "6f2e13d36910524bed93de1284d5154bac45685460a4358714396469745110b9",
+   "bytes": 5554
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepObjects.lean",
+   "sha256": "e98e9fc834c1bdcc62edf3d9445bed3724f9ed420aab52bb014661066662ea94",
+   "bytes": 24496
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/StepOsc.lean",
+   "sha256": "8e9601c6fc47127b332902846eaf2349fe161080a94ccd0be9c9652a6b8bee21",
+   "bytes": 8508
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/TipThresholds.lean",
+   "sha256": "59a6c6822561dfc08cd12beec2e45d34a078e84cf1f0e7ee80f3fe90e7ed747d",
+   "bytes": 9438
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Library/WaveSelection.lean",
+   "sha256": "d23add1b2ed4ec8cc63a37d9c690873d2c1e08b59fcb5df3d07dbd6459809627",
+   "bytes": 7797
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Section8Setting.lean",
+   "sha256": "dc3ad67b382f746fb28499a41ce33723f0b8270ca6121f67139a01d64b444bfa",
+   "bytes": 2584
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678a/Theorem71.lean",
+   "sha256": "7e7be98e2037f940a08f503109b776860b6a4ad275f74344cd82bc87e25ef9d8",
+   "bytes": 10996
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Corollary83.lean",
+   "sha256": "f171d80d6a30c163edfe5605ba439bc576e51a72c5e7473c331be7b60471d6e5",
+   "bytes": 4895
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
+   "sha256": "0e2ae8eec40e2d9cd42eb50ae7ed939d72d956729768ffe34ba96336adfa0994",
+   "bytes": 1767
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Lemma61.lean",
+   "sha256": "0ac6cc16fa1b1aa9b068943e5b2b41f2fc33fe1f41bcfd3da36bae98e1a69ff3",
+   "bytes": 3050
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/Common.lean",
+   "sha256": "273701ea2a8e9d4071502cc2c24a32e19ffc6e3f43843fd86e0afea43e79b585",
+   "bytes": 4331
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/Comparison.lean",
+   "sha256": "d078c97e6428925c584cfc23da5a85a243c1d46ed493d7062fbdd7508db48639",
+   "bytes": 42870
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/CurlBound.lean",
+   "sha256": "267ce9a32acda2b06b12ea04723dc53c7ce73793d9cf683f453c163e90e957e5",
+   "bytes": 14322
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/CurlLower.lean",
+   "sha256": "e83ea289c6fa83eed17bb32d701b5323874466c923c8f441d2336e8a1e97da05",
+   "bytes": 16700
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/EulerLimit.lean",
+   "sha256": "7b8cef5b72d1e5f5fc1814287c742de4b0445e402e4a4fdbcb736674d2465b2a",
+   "bytes": 62823
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/FirstWaveCoupling.lean",
+   "sha256": "af42afd43e8355606e367a837d78a4e842d9bb2d5add8b04d8e607f58d56c99b",
+   "bytes": 8054
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/FirstWaveExistence.lean",
+   "sha256": "9928841b9f850889267cd172552450d81309be4f3927c47ff13af689887bf88f",
+   "bytes": 8871
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/Limit.lean",
+   "sha256": "b5ba15e6eeb70f9943933465b3f27825bfddaf314275a0681eddc18630b53730",
+   "bytes": 7017
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Library/Proposition82.lean",
+   "sha256": "b93e57389cb1bcb58763c82131534e75eebed834e58e08855d104e8db44085b3",
+   "bytes": 6627
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Proposition81.lean",
+   "sha256": "e9feb673868d727330211690d10e596766758f6ae580ed2b41bc6b0e5a3ee341",
+   "bytes": 4175
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Proposition82.lean",
+   "sha256": "dd0d4bc25249f83641de8b4d7ce02187d56e0e93ed5df19b7b62fe2e303f24b8",
+   "bytes": 2860
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Proposition84.lean",
+   "sha256": "352312d7f9f654792dad5ebebaa77a03de767ef023aa68b9ab4f36ebfe6e6f9b",
+   "bytes": 3243
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/S678b/Theorem11.lean",
+   "sha256": "ea2da49306965473b1c7cbcc15b5ca0439908e23e5c0935d7a40b6c191990f39",
+   "bytes": 2300
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/EqD2.lean",
+   "sha256": "8e47588b322a595486540de483f6d127d2b5c8980b3b858acf3a9c8d237efa53",
+   "bytes": 10778
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/LemmaB1.lean",
+   "sha256": "4c97944fc3ed7701303512b08eaf264f256558ad7f7073e1284899c3870514b8",
+   "bytes": 10153
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/LemmaD1.lean",
+   "sha256": "3c7f8e80431e9e3041eca20cbb350143a913c6b35120415e2acc4ec010470014",
+   "bytes": 9738
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/LemmaD2.lean",
+   "sha256": "5bb6aa6237278d7c8ef541c8467cf805fc0513552f93d2f3bcb5a315d010822e",
+   "bytes": 10461
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/LemmaD3.lean",
+   "sha256": "41cd9058886080bb74b28f343f2ba65fbe3d08bb3752ee39b9820000e019f34a",
+   "bytes": 3287
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/Library/Coordinate.lean",
+   "sha256": "ef416ca1ec980f84344a679f390ae030132dc92409886cd17c5403d74547f9cc",
+   "bytes": 7147
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/Library/Fields.lean",
+   "sha256": "77a0f5a015324f9f7991f5d2f6376b0e69cbe44eba3c2e3a6e1054d77d5ec038",
+   "bytes": 14828
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/Library/Holder.lean",
+   "sha256": "ba42adf4b2050f19f5414e5514a828053513d4485ae127dead7aa6e0dd5668b2",
+   "bytes": 3348
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Proofs/SBD/Library/HolderWords.lean",
+   "sha256": "247894333f233042c2ef195560010a5a1adcd9171509e9fd56a411e1d3fc934d",
+   "bytes": 9146
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S2/Statements.lean",
+   "sha256": "c2fc239cbbc7a25ec6f8bb05a1540957a818b795e1fac040880b5adada29442e",
+   "bytes": 22212
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S2/Vocabulary.lean",
+   "sha256": "114056e700afe4be6567f23bf22e788c5bc62c9d9f6f62a19fa95e31d407ae0e",
+   "bytes": 10026
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S34A/Statements.lean",
+   "sha256": "15a94609773807d9dbff850990c26c7ae45cfb813cea69be7fcd80bc2fcf2b0f",
+   "bytes": 16941
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S34A/Vocabulary.lean",
+   "sha256": "1d79ffed7fcac54fa90a54fccbd57762b42ae86c178467dc56ec07c92bf5a298",
+   "bytes": 9520
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S5/Statements.lean",
+   "sha256": "4fc24a785164bd4cbb01f4bc201b1e6aedb1031edfd162d859796cd2de605172",
+   "bytes": 41921
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S5/TextStatements.lean",
+   "sha256": "339e8a7c62cb28ad050a589ef923a85ddfeb65178be50dc51c5ceae9a1dc1acc",
+   "bytes": 5571
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S5/Vocabulary.lean",
+   "sha256": "24fd1bbd1f14f04ba53f575de74020806443ceb41fa2a924289d666aa3f3626d",
+   "bytes": 22302
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S678/Statements.lean",
+   "sha256": "7d055f865f5ebd69fc4fae7c5e1d2dfe1d1a7eb4cccf8d56685639397a50c821",
+   "bytes": 14449
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S678/StepData.lean",
+   "sha256": "74c845cb4202610ca334d10a2287f97681de4b8d27c0105804f996d698da6565",
+   "bytes": 13925
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/S678/Vocabulary.lean",
+   "sha256": "4e7c67188a2d479454f9a17fc42b90e8bb630bd202a072092bf7ae8f4c668661",
+   "bytes": 20465
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/SBD/Library/Words.lean",
+   "sha256": "50ed321c4d37194c43013ea74b5340969f7f14ace19c717f66dd2720c3f77d30",
+   "bytes": 3427
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/SBD/Statements.lean",
+   "sha256": "6f73a7d4719a525eb062ecfedf647657dc5832343895bac56582d83a46b3cacf",
+   "bytes": 26373
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/SBD/Vocabulary.lean",
+   "sha256": "7359b3234b0f48f79e63b2c0820ff431226b99ed0b695728a52ec12c02ea7359",
+   "bytes": 19721
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Paper/Spine.lean",
+   "sha256": "ee06fa27bb265f17719d25999f4a5a727403a6a49c48b2d6ff5e1d5b8f070d4b",
+   "bytes": 11624
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAffineStatements.lean",
+   "sha256": "4b790212ba20a9e184cf8cb64cf63bf9f9997fddc974f3c6c240c9b05b94a5ca",
+   "bytes": 26203
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixAFreezing.lean",
+   "sha256": "fa6231393f416e6fe5607bcf12eca892b4cf04a86c07e42afa2d174248b027fb",
+   "bytes": 8593
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixAFreezingBounded.lean",
+   "sha256": "a0f72cfe79fb717557d8ff2ec18b6e41f972befe3e5235e22d4a042a8e9a5914",
+   "bytes": 11472
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixAFreezingHolder.lean",
+   "sha256": "d0a198cf0dc7c46ff7beec8d35642b7eedf24d3bc949e93c81d60990ef491f05",
+   "bytes": 24121
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixAFreezingWordBounds.lean",
+   "sha256": "717921de8a4744c2ea6a320b4b7e8544b5c47b9e679791420a1b49c6ae4b8929",
+   "bytes": 4232
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixAInverse.lean",
+   "sha256": "ffec4df13b77df4f930db21ec63083ac7eaa9d6704f1a3f37220ecbdcf95ad01",
+   "bytes": 20775
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixARecovery.lean",
+   "sha256": "e5493c2f5897f9671b3f4ff52b3ad429828c234f01d40a9a6920c5545131060e",
+   "bytes": 3423
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixB.lean",
+   "sha256": "1258d9115cd05667ec907e196a932bb5f55e284b66b00a6abe37fe8393f2cdd2",
+   "bytes": 12062
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixBBernsteinReal.lean",
+   "sha256": "b1cdb96dda47ba3fb41a4b0123f07a380a044a78252a4012ceb07e31d0116471",
+   "bytes": 11438
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixBLInfinity.lean",
+   "sha256": "a9ecaaa7767c4e8806cdac43582f80e9abfeb6ef5e0e468990ab5344433c8343",
+   "bytes": 8884
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixBLInfinityReal.lean",
+   "sha256": "66b7ce06d3ff27be3f094c2dcb69471b458f6546b2d0ad624fa2c175e0c7a1f2",
+   "bytes": 12537
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixD.lean",
+   "sha256": "2c0daa2b656523b17089fc1b7871982b8789113190c7e9163182ab1aa1664b0f",
+   "bytes": 8564
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixDCoordinate.lean",
+   "sha256": "94bb149b2445751f8c7851695e1f7c2b3ca3d5cef4cb5bed9d5073bbd609422b",
+   "bytes": 6845
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixDFields.lean",
+   "sha256": "cd4eba05323835350d0b8a3dc15a512570372751f204ae9063b68d131a71b52e",
+   "bytes": 13091
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixDLifting.lean",
+   "sha256": "e9406dc357d210159d92ddddee48faeaef9f43c569f33fda71af506154669be3",
+   "bytes": 14457
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAppendixDMultiIndex.lean",
+   "sha256": "a764f8924bf7ceb643842f7a42d9b2a4dd644cf3c2080481866cc3b58121840c",
+   "bytes": 8200
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperApproximateSolution.lean",
+   "sha256": "34733980644c210b20e65fa918a4c2247e4b360ac80c3f64f588f28b2792d702",
+   "bytes": 17987
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperAuxiliaryStatements.lean",
+   "sha256": "971c21d249d48b5c85be53cfe6e561a055c3966b5715b2dd459bc6c87f6089b8",
+   "bytes": 3654
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperFlowBounds.lean",
+   "sha256": "1188e753092be1a4d6050c21fe72d8fae4f6efaf32b01d78714c0835b878ae1f",
+   "bytes": 9740
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericPhysicalPressure.lean",
+   "sha256": "4cdefae3f4ca16b4b1e38aeb354b741e7e45ceb391502261dc4198f87407fe1a",
+   "bytes": 11672
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericPhysicalResidual.lean",
+   "sha256": "119b00639549fedaf5d3ffd7d18f3836bec643abaeea219b5f36a9f889539100",
+   "bytes": 7483
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericSwitchCompletion.lean",
+   "sha256": "81c6f32a032e4b4966fb2cb743460b28573e122b9ace8cbf0806d28e52a42af7",
+   "bytes": 7135
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericSwitchWeighted.lean",
+   "sha256": "c3eff6f718e166e4ae9cab07290d0eb85194f154f9834035f3ee7d89227562ab",
+   "bytes": 7490
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericWaveSwitch.lean",
+   "sha256": "6a1cb6dab705b5ffbf403b949cf9bb14b52cc926369e7f3f7c326ad8d8c35fc8",
+   "bytes": 37816
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericWaveSwitchDepth.lean",
+   "sha256": "12fb527f7dbafe9b407d9ea55e3a3719599599a9d5c5ae2486f1a24c9ba9dd7b",
+   "bytes": 8165
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGenericWaveSwitchIdentities.lean",
+   "sha256": "3244b324e18a2bfd869447a3d7e7acbac33cd8572f11a2d2144d4f8fb11f4658",
+   "bytes": 5098
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperGraphReadout.lean",
+   "sha256": "e9767be2c9ee461cae341b4dbffcc7fdaa90672b9df21e513dc1b41a6cfde3e6",
+   "bytes": 13166
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyActiveInverse.lean",
+   "sha256": "b1a04ca85d4288abd4e88e594c1f51602758bd01c0d0d0632567085ea961b257",
+   "bytes": 11199
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyActiveNormBounds.lean",
+   "sha256": "6aeb6f2ff56986279851d4b862c27b7207347ccebd7cddc35e4825d4e579519c",
+   "bytes": 4533
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyConstruction.lean",
+   "sha256": "b7476e395e3f488ff14c42917d70160c3bf0b03953a11047e04ca963bc2079d0",
+   "bytes": 4954
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyDepth.lean",
+   "sha256": "f974f7f4eb7992029198d691cdcc431a1d4fdcea1d8131100daa6d9b86c7e72c",
+   "bytes": 10026
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyDepthGeneral.lean",
+   "sha256": "ed4b71f0d02b61b3af4532fa69364f8f62bd4a2ebc725d9c555ed0d4a90f2deb",
+   "bytes": 13674
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyIdentity.lean",
+   "sha256": "6a8429351a504c9066eb8d22b2192f92ed2dcbd5b00308852168344ab29bbe89",
+   "bytes": 8891
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyInverse.lean",
+   "sha256": "5404b02073132ace4675bb67b2c180913db5db1bffbfaa7849bacc78455e0147",
+   "bytes": 20333
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyLeadingEquation.lean",
+   "sha256": "f8d3062e050afb5809a8ce58a86fba27b1efd88c11c75ab46cc6181ff71603e2",
+   "bytes": 3548
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyRelay.lean",
+   "sha256": "53f5d87007aecd77ca59b70ff43612a79af3cd56379f9ab182ea040dc2222386",
+   "bytes": 7171
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperHierarchyUnswitchedRelay.lean",
+   "sha256": "a065e5bd8c3d0e1b61589933bdd195b0e39537676e500e39b8958e881c6be406",
+   "bytes": 20869
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperMeanFlowAdapter.lean",
+   "sha256": "7756b41a2fefbbf173b47ccc1206856bd9593f725dd5a9b30895826429680fe7",
+   "bytes": 10021
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperMeanPressureCompatibility.lean",
+   "sha256": "64bbd08484481fdac930124b81637ed95881b3c84ebd762bdad2c67a92ca7680",
+   "bytes": 12742
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperMeanStatements.lean",
+   "sha256": "35bb987ea9afdc2afcd364bbb21e1ef812d02b18aef6c3bf990f74815be0f5e8",
+   "bytes": 31789
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperParameterAndLaunchStatements.lean",
+   "sha256": "d98a5765ee03baeabcf006e5dfd08ce4e71516a3dd0214b451ccf3025f4abf22",
+   "bytes": 5201
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperParentCoefficientStatements.lean",
+   "sha256": "e0ff90ee7d2fb934bd17a0accbf28c2ffed34a5b9a5da5af6ccca09c82837814",
+   "bytes": 7755
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperParentGraphReadout.lean",
+   "sha256": "3ad4f6ec9e564027d20896645e3e770999b6adbc14868906d7f310da7d52bf16",
+   "bytes": 3262
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalApproximationBounds.lean",
+   "sha256": "90f738f01eed9c018b2da2203321f8f531a9d731d74403b70d6903548907a0a1",
+   "bytes": 6619
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalCutoff.lean",
+   "sha256": "7b893abf2cf080143a43a324d5222c8d3925117be6a42cc13a6fb2d9148e869c",
+   "bytes": 11440
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalLaterStep.lean",
+   "sha256": "351d6f7ac43e182a891b078f4e1806f179441d454072a8f421de61d61093d971",
+   "bytes": 12101
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalMeanStatements.lean",
+   "sha256": "034f2ad1d5f66299334fa051e0d8da4bad25a3ef3dbebb30e26db275067410c5",
+   "bytes": 43903
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalParentInputs.lean",
+   "sha256": "79dbedcfd6771678cdccf13b24041676851d5dec56cd05409549c72c4519e9ff",
+   "bytes": 12359
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalStepBudget.lean",
+   "sha256": "7d041b34646e0aa6f2ab8303494376ca2460b4a9e923c043945dd7d717e205c9",
+   "bytes": 8235
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperPhysicalStepStatements.lean",
+   "sha256": "9f3f23a50fa2d98edbaf919bc4f8dd72dd68d3610f7f799cb7a9492230590fe0",
+   "bytes": 1832
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperSequenceStatements.lean",
+   "sha256": "bf572f3f6cc38b4394a57b42ccac46c84d42c4304f3dd75fe346265460833743",
+   "bytes": 9775
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperTerminalStatements.lean",
+   "sha256": "1162062463072ed111de64e3092cffe88657515a284a97ad5e1c5c84d0673d3e",
+   "bytes": 7720
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperTruncatedHierarchyBounds.lean",
+   "sha256": "fa10b1cb47e522d285e34e93f13c7a63b56174904995a10fa5835a0e8f76ebac",
+   "bytes": 23020
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PaperTruncatedHierarchySeed.lean",
+   "sha256": "033b02aec2f92774c213827bd7a5ac8a024c909de4c279d0e46dfc38b9384bf0",
+   "bytes": 4763
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ParentCoframeEstimates.lean",
+   "sha256": "fe49983754ef3a031395a6308421ce493fa404b2b76e3e3380b88e5fbd5641d9",
+   "bytes": 17082
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ParentPressureParity.lean",
+   "sha256": "15b39a58cfe0625418ae2545e2eb66fc0da27e6178a4cdf6eb1ca61a02fc49c7",
+   "bytes": 3600
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ParentResidualEstimates.lean",
+   "sha256": "0b0aa945fc8ef4d4e4364bfe5833f10d3d9558215163426b24ddfdc83394629a",
+   "bytes": 15120
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ParentSeedJetBudgets.lean",
+   "sha256": "86115dd0d9ae647c455021d47f3abb664a0b6d947170498a6c1acdc07ae65bde",
+   "bytes": 18823
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ParentVelocityEstimates.lean",
+   "sha256": "b47d23200f3b1f160171de5b69226560766fb35ca9344a785b02293e90602761",
+   "bytes": 36953
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicEnergyCancellation.lean",
+   "sha256": "6f7d33e497ac37364ebe2d86404bbe2d33cf18a3a0881b43198f666988f6191c",
+   "bytes": 3310
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicEulerLimit.lean",
+   "sha256": "1f5482d98405c53a30826ff881fb7dca22627648f040215e76a1fd62bf9591f6",
+   "bytes": 42180
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicEulerMomentumJets.lean",
+   "sha256": "134331a52c3ce225cb0deb97ea6364f565617d7a351ab445d6186cf7e23171f9",
+   "bytes": 35560
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicEulerPressurePoisson.lean",
+   "sha256": "96a30a7a77d52045045dc5c52769c7b1c3b403476bbda551c4617c81bade59a2",
+   "bytes": 11419
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicEulerUniqueness.lean",
+   "sha256": "1557d205200f33a6fbb50c86740290bf6580b332ba17202c5ea91baa0b6ec329",
+   "bytes": 10693
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicLerayHigherJets.lean",
+   "sha256": "bcb3d44eb90673eb4f3d0d0c696f36b96942929e51f3b85878a2bfb412d22b18",
+   "bytes": 15297
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicLerayHolderLift.lean",
+   "sha256": "bf90b54b7d1acde78245059cc43211e793b5014b9a3f1e30c564c557ca70ea51",
+   "bytes": 27848
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicLerayL2.lean",
+   "sha256": "7bf3c3d61fe9ed19d1be4641ad8aeade2abb97a13f0fc6b94c6c04ca580b26c4",
+   "bytes": 14334
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicLerayReal.lean",
+   "sha256": "e4da3e7a8e81d08cd1fc49260bd55bf56d820911fd051a71b0fa2e7e1fe817c0",
+   "bytes": 17403
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicLift.lean",
+   "sha256": "3c0aabf12489cee14942b274cdaa6a24ba517976c3c4e13dc2a24281ad2ceaaf",
+   "bytes": 1696
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PeriodicMultiplierBounds.lean",
+   "sha256": "0dd825317c446e7b6556de0e7a6d0f30e07133ace57d5c3da188f54cd67ca53f",
+   "bytes": 6873
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhaseCalculus.lean",
+   "sha256": "a3e85e947ab2e349d55f23b6ce5b67962255f045364319a96c9dd31e8f224167",
+   "bytes": 7170
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhaseJetBounds.lean",
+   "sha256": "8f8e12d65d29cdc5d48004a225932182bafa7653684c716f56490d4721188fea",
+   "bytes": 27458
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhaseProfileEstimates.lean",
+   "sha256": "fbfe2305bc7fbbfc8f117c76ba22502f706aca232edc871e859e6058ba0ff616",
+   "bytes": 18547
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhaseSource.lean",
+   "sha256": "50f10b5bccc0ebe99bb476f9af4fe80f1e461cd64f962c8e38ea724edc96a518",
+   "bytes": 1660
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalAmplification.lean",
+   "sha256": "cb6ddda04e8c4b7d25a8ecc9e009b65e2008e9e04fd3a3a3a8dd866a3248dd73",
+   "bytes": 7936
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalAmplificationCrossing.lean",
+   "sha256": "ead7843d25d1e06e348cc7ab2ee80ba49141c25f0cd9272ee39da39faebb20a9",
+   "bytes": 23761
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalCutoffEstimates.lean",
+   "sha256": "f0d8f9955fc0be67cb0b35c15df24e85ac779a4ecd0684bd5b6e844b2941b080",
+   "bytes": 23390
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalGrowthPropagator.lean",
+   "sha256": "ea23d9e397b77118b4c183469c413450cff5091998d365b4415244d4f757a5f3",
+   "bytes": 29228
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalHierarchyProfileBounds.lean",
+   "sha256": "a7356c582ce0e65d9fb72c01e3a40482b9213aeeff62aa94384c3df607e2deb2",
+   "bytes": 31048
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalHierarchyResidual.lean",
+   "sha256": "0a6ed3b3bfb2af96d8ddf1757dec038bc1d1330e37fbb9ab8b2805905e8c8f2c",
+   "bytes": 5665
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalWaveEnvelopeSupport.lean",
+   "sha256": "19641bc505c521ff4395f9bbf4780c09de5751dad502a5669b41ce637d558366",
+   "bytes": 5365
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PhysicalWaveStageClosure.lean",
+   "sha256": "f1cffce14f9ef4b047058ba87f940fe04f1b73d5dbc24baaa27f10d8ba44d943",
+   "bytes": 65354
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Piola.lean",
+   "sha256": "6496d49f8359fd51d9bb023192aa3300c090c8edd60eef5efe12bba80ad33ce8",
+   "bytes": 4824
+  },
+  {
+   "path": "upstream/lean/TorusEuler/PressureHessianMultiplier.lean",
+   "sha256": "b86ccf4ac04d9daa43c7558f3c1f3f75a6ec387a3e1ab3cff9ed48d8ef42b9ab",
+   "bytes": 45458
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ProjectedHilbertInverse.lean",
+   "sha256": "3b0627e1757d15c372db7459f6c1bdad71a58f56762918373594dcdb29a89f65",
+   "bytes": 5315
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferenceAmplitude.lean",
+   "sha256": "e5e0d43e4df4e2e1b1f971856db7f86f1134c8f721aac7bcea0d687d66d0acae",
+   "bytes": 32127
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferenceComparison.lean",
+   "sha256": "f5167799c53b854644cccea775a3e7d3c5c8a856dee42fe8182cdd33610b15fe",
+   "bytes": 27497
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferenceCouplings.lean",
+   "sha256": "9fc68bb03614e667d43eb61747801c253428a2c0bd27c159b594c46f94c56dba",
+   "bytes": 1673
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferenceLateBounds.lean",
+   "sha256": "fe827b986730c7ace8ec5b82acb51b74d7f66268abd830e102c6aebebda0c358",
+   "bytes": 19379
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferencePropagator.lean",
+   "sha256": "90cbd30c2a2dbc505c11f6f385bee34567ec51ca4f91ae02018862dede310bf9",
+   "bytes": 12307
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferenceRatio.lean",
+   "sha256": "045835683f5749557e3586dbbf38bf9fb335608771b02d4adc701ffd4600489a",
+   "bytes": 14590
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ReferenceRiccati.lean",
+   "sha256": "c1448623412df110f88e3d46d7cd2dfe8b2ebf9fa75f709d8df1f9585dd76b93",
+   "bytes": 27024
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ResidualGradient.lean",
+   "sha256": "469917ce365c5cebbcfb40396e768f576b72725bdba35ecc8300ffe4f948d055",
+   "bytes": 6523
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ScalarBarriers.lean",
+   "sha256": "7d4f67171f7c5fed492dd79523ad06ab305ad67d5e90c0059756d93f523b7493",
+   "bytes": 9235
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ScheduleExistence.lean",
+   "sha256": "e614d8891e62aadef39421da41085659204dbaba9dfde4a34cf01fa4bc69a776",
+   "bytes": 2709
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ScheduleGrowth.lean",
+   "sha256": "f79907d0d468fa1466b6c8b46f71875c1acb5880f1a778672251aebff196a85b",
+   "bytes": 4678
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ScheduledPhysicalStage.lean",
+   "sha256": "e25ce5f610114e187563d7171a35c141cb17e12cfdcb8b422addba9fc08e1cc5",
+   "bytes": 2475
+  },
+  {
+   "path": "upstream/lean/TorusEuler/SeedDerivativeBudgets.lean",
+   "sha256": "41ce2f50c323f773aa01bfb330afa909dd233fccbd2e9a241ba7c4494ae16eba",
+   "bytes": 67578
+  },
+  {
+   "path": "upstream/lean/TorusEuler/SelectedPhysicalStageSeed.lean",
+   "sha256": "10cf6710a1906f711a5840ac948848549924d7d8667a6a8e11fb6fb569a0f018",
+   "bytes": 3684
+  },
+  {
+   "path": "upstream/lean/TorusEuler/SmoothPeriodicHolder.lean",
+   "sha256": "3bf05c3345489e5d34fedc301d068346dbe00b8663616002db2fdb1fe5c0d53b",
+   "bytes": 6967
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Statement.lean",
+   "sha256": "fff72620940fd1d4b7924d808954fe55fe3ca4d9c97c4970c40e26858e77c34a",
+   "bytes": 5824
+  },
+  {
+   "path": "upstream/lean/TorusEuler/StationaryShear.lean",
+   "sha256": "833ff5835153f1554d35879dda55e1210e3fbaa9923ae81b3510e4577aa9a0a4",
+   "bytes": 8565
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalAuxiliaryAssembly.lean",
+   "sha256": "a73e9ef375dfb8f0168eba392c96f2cd34d55585b0a66d2e2e1a27fc169a603e",
+   "bytes": 4566
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalBorelCutoff.lean",
+   "sha256": "d0989de2ae23f746d088ac14031f393da85c1a6bd5701e15bc0638d3450996e6",
+   "bytes": 6235
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalBorelSeries.lean",
+   "sha256": "c4bcbddf3638340669628d33eeb8312532e141ca1d7cc0354c99da235ab80eaa",
+   "bytes": 8827
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalBoundaryJetGlue.lean",
+   "sha256": "604ab4e711acce886f874bbc25afb2bf52402e718e4da7a44c0c13e30f14fe53",
+   "bytes": 15979
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalBoundaryLocalization.lean",
+   "sha256": "3717b793ef2fb0edbfbbe397349b83a19a3046112d0f45ab4758663b05200314",
+   "bytes": 3817
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalCoefficientTimeBase.lean",
+   "sha256": "f95f1bf20e6aad4e73f7b7f8792468454d43dda23ea7fbb20c9136a1218565e5",
+   "bytes": 6661
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalCoefficientTimeEvolution.lean",
+   "sha256": "b0fc7093aa3930f1f97a8da0dd22cd9e66bc8fd387e7e3eaed5fd5944ed7d57c",
+   "bytes": 5925
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalCoefficientTimeNorms.lean",
+   "sha256": "d6edc0b4ee7a56504bf24c51dbd5cf5d4fc1d56eac2b1b73e184dce0f15167f3",
+   "bytes": 10052
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalCoefficientTimeProduct.lean",
+   "sha256": "aea73f54c61e51a1eb0b1d1d5ef8c25109aaebfb84bf26a7aadcf91a02e8a593",
+   "bytes": 6841
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalCurlIntegral.lean",
+   "sha256": "885573ce8a7905591d5ac587751a7b51cd69dbec2f0897c83e819fc0ba349fad",
+   "bytes": 8634
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalExtensionPartition.lean",
+   "sha256": "0772907d3988a63f49871764dd697100f42c475c96d704ffed5940e15abd2d1d",
+   "bytes": 2481
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalFlowTimeCoefficients.lean",
+   "sha256": "bafc67e944afeec245404a465b521568a05c88ab6700ca5db469c69b2f8a9b3c",
+   "bytes": 8794
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalGraphAbsorption.lean",
+   "sha256": "6979ac06d81ca75628ae454c5b8ce11e5c7db269547b7ced49fcc91b05cd4e7f",
+   "bytes": 4434
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalGraphSchedule.lean",
+   "sha256": "45c3a7c76ac5111c583791ba18d4dd93b48a795523db5ada1391b79ca13cb62b",
+   "bytes": 4416
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHalfHolderTimeProduct.lean",
+   "sha256": "ea5ea4dcb75d5423dce3a9eb94aeeb7e1a53f29188bcb13a5486727d3cd9bd51",
+   "bytes": 3951
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyLinearTime.lean",
+   "sha256": "d9c2ec56ae4f5eefb8590ea5cd3b14bf544fa14441d9bbd1657d2fd79f682b54",
+   "bytes": 10004
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyNonlinearTime.lean",
+   "sha256": "e599e5215670aa797ee0d0e0db0f2bef0655aae45de56c115c272ed154b665bf",
+   "bytes": 28985
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyPhaseTime.lean",
+   "sha256": "512ccd1fe7311e432902527f8a252992bade4c9e7cba1ad76eecf712a090b8d2",
+   "bytes": 12074
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyRelayAssembly.lean",
+   "sha256": "e622eb93761866f0798240ef4178742cc4425602569a754f7dce45412aa0fb0f",
+   "bytes": 5153
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyRelayReadout.lean",
+   "sha256": "a65b66cdd4ef2c0ddd482791f6a43b09332b55b044543b3071037855a7fc96f9",
+   "bytes": 19966
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyRelayTime.lean",
+   "sha256": "592d30fde3f63c2ee2778dce0702aee936cd140fbf54b2542cb59dd925aa35e1",
+   "bytes": 6848
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchySourceTime.lean",
+   "sha256": "7a7b67f51875476b5843129f17cb3e2a48cde46cc2bd9594a3e93836e73f7408",
+   "bytes": 13174
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalHierarchyTime.lean",
+   "sha256": "6701ad758c19e8f8f08e7232af484fb2eb7639cb751af41557a399c746715cef",
+   "bytes": 14383
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalInductiveTransverseTime.lean",
+   "sha256": "7efa670598722b4861b4d6e1399d94fc36051e7c535467e802644889dc7e09f5",
+   "bytes": 5023
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalIntegrals.lean",
+   "sha256": "c07ee3eb674442d111f0b8f157f79d385031c348e252783d3f6975918aaece0b",
+   "bytes": 4581
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalLeadingTime.lean",
+   "sha256": "0d35d8cfece1c2768e377fd731eb00ea3eea1b1e041ce7ed8726367b69d6d39e",
+   "bytes": 37062
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalLeraySup.lean",
+   "sha256": "79de5ff0f7deb13c027119815ffa502f08ffa66490c698778f066cf9d0bc70ff",
+   "bytes": 3747
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMaterialCoefficientBounds.lean",
+   "sha256": "f9d73f8e94f8ef94e32de3befa804080c9c1be66f342d74e3fd994d0c40dcc90",
+   "bytes": 6844
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMaterialDerivative.lean",
+   "sha256": "6afbb34e2cca953b1e9a5bb592929db5063ef52d3c1a0b7f27016ef50b04c63a",
+   "bytes": 5032
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMaterialGraphBounds.lean",
+   "sha256": "9cf48bff5a37f0159cfea13426b10ff473447461631a00168f51f5df3120246f",
+   "bytes": 5649
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanFlowCoefficientBounds.lean",
+   "sha256": "396f6dde8a69123f226b6728565fee5ef916c06eab0c74ebc9c8d52dbeef0efa",
+   "bytes": 4337
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanGain.lean",
+   "sha256": "4a26175e852c8dc24fbe17bd26fc8f413b5d7f997462edaffe6bf8ef2b95180b",
+   "bytes": 10716
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanGainCosts.lean",
+   "sha256": "b9ed5a081463245f55de4916df322536548ed11fb65c210eea3b4ec6f169a984",
+   "bytes": 1881
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanHolderJetBridge.lean",
+   "sha256": "23b38e1c2f0f43155b6b13c1a0f211381358f23ea10cc0e497b6005596b105f0",
+   "bytes": 13996
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanParentInverseCaps.lean",
+   "sha256": "99cef78662ce930b4d658d5450cd9a4e401dabe17e446569c74bc0b0c29a7827",
+   "bytes": 12562
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanSpatialInverse.lean",
+   "sha256": "383b879dc91c918257b756e18d0883187f883a6c4f5e6929b04bfba863eafd18",
+   "bytes": 11482
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanSpatialTimeCommutation.lean",
+   "sha256": "3919f0459f12eaacfb65cd4f293f19a9f7c6a5d5b832c61746d45667637f0a11",
+   "bytes": 6096
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanSpatialWordProduct.lean",
+   "sha256": "85437325512b5c50275d1aee3580d4b161109dcee842c772335d8cc0e57ea833",
+   "bytes": 8582
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanTime.lean",
+   "sha256": "93fdf84e9916fd7fdd6f14dd72beaa29af806a1e9b1ad01e7b4d155d93c2cf97",
+   "bytes": 5919
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanTimeBounds.lean",
+   "sha256": "115bf8e1b3eea8728a42668d221dbd847aaae38a83f0ffded8059317b7eb965b",
+   "bytes": 24260
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanTimeCalculus.lean",
+   "sha256": "10fc961ba433972aa4ef0dfde831190a4b04286301689d28703f500d11901ee8",
+   "bytes": 8622
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMeanTimeReadout.lean",
+   "sha256": "99d85bbbd1528fabd9fa6271b4d7a0662dad3c0cd2420cd3115ec21aa0ca9319",
+   "bytes": 6211
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMixedDerivatives.lean",
+   "sha256": "e0b1d1105d5e199c322195270865ee7dc7bb95e0d6248af9c04cecb0951a5041",
+   "bytes": 5711
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMixedJetBridge.lean",
+   "sha256": "a09d11fcf25d3b61809ec4a00ac3e0ac83b9d5b0ae0f511bd2a2b28d9a0483e9",
+   "bytes": 12575
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMixedLimits.lean",
+   "sha256": "2098a0e9081e6773806c0f0de41bc279209d8d6f7c447814bd23a2f9bf3a9dbd",
+   "bytes": 11589
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalMixedStageLimits.lean",
+   "sha256": "6ad6d072c41850b6a14a916c495b72f6a1241b5df529b1903e2ae12122cb1aea",
+   "bytes": 4460
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalParentTime.lean",
+   "sha256": "46d67c586d218cbaa178c1d4554e98f9ed0175027797c622744f61f5473bd703",
+   "bytes": 13446
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalParentTimeBand.lean",
+   "sha256": "f937e4f515ce2e7b16cef3892e613ba3084f99ff55b5babfb9f82524505d386b",
+   "bytes": 7435
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalPeriodicExtension.lean",
+   "sha256": "e94481b1fa5fbbabfa3d47814a03528131d896bc5ffe5cff7b60f8dc5cbc3530",
+   "bytes": 7163
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalPhaseTime.lean",
+   "sha256": "7b3b8cf3359e865b58535dc7f886604f1ab649cdb69a85b1f7b2e38091b173c4",
+   "bytes": 6779
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalPhysicalTimeReadout.lean",
+   "sha256": "01ba9812660d6da78afcbde06d33c94b5782d2b18592832b2e130505de9189da",
+   "bytes": 24247
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalPoincare.lean",
+   "sha256": "926b5c2427ffcfb57fa8fa71f564d84991fc190bd5d3bbe04dc7f4fc412f90af",
+   "bytes": 4819
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalProfileTimeDerivatives.lean",
+   "sha256": "5b291cd872a2527049b127ddaeaf0c67beed2a2e1f5662a1708bbb5285967852",
+   "bytes": 6124
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalReciprocalTimeBounds.lean",
+   "sha256": "16e35972ee3883aaea0bcfca30437025cdf762d7bac1034281a75c4c20177c28",
+   "bytes": 6423
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalRelayCoefficientProfiles.lean",
+   "sha256": "10c7121c68e0bcc199e75c2c4dd4fca1b7c763bf612489255157163e1a30b21c",
+   "bytes": 14244
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduleCosts.lean",
+   "sha256": "5a503283b9e4b353cb79d8dbc48f4748e1d8ebcbbdd9e9c0a0633c904b08f08f",
+   "bytes": 11350
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledGraphFromProfiles.lean",
+   "sha256": "1a119c06fbeb9c4e59fea07066fa8d45cbdfe53ab3dfe064c6cb0194b9480e63",
+   "bytes": 6054
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledGraphReadout.lean",
+   "sha256": "36c2fd438658ac15e9673577b1a81c8760949c97532730c22a7490215cf8db64",
+   "bytes": 12741
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledGraphScalars.lean",
+   "sha256": "ef9b5e7df7c892d8b4da44a6a83100a3b3cf146279b0accc16cc4d9e2f553b4b",
+   "bytes": 8887
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledMeanBounds.lean",
+   "sha256": "9d846c4f3299dbce398213d61fb58357a4979d4ea10ac4ae93a81df70a91d784",
+   "bytes": 20720
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledNormContinuity.lean",
+   "sha256": "4a62a687aab199306081d03ec23b51245089545ac8bb84b03d5d8a2ea1b3e262",
+   "bytes": 7369
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledParentCoefficients.lean",
+   "sha256": "6b7d24a0a31059a5d0a6b3b411c23b158aa8a18da5c20f3577aef1a4a0ee0b91",
+   "bytes": 11329
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledParentJets.lean",
+   "sha256": "00f8c399f4334388fb88ce65ea9741705dd7912e62327062617edd2116e1580b",
+   "bytes": 2454
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledProfileBounds.lean",
+   "sha256": "63187829db504eac00cdcc5d6d4b04863e11fd8bd6156123d54f702894231bbf",
+   "bytes": 19932
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledRelayCoefficients.lean",
+   "sha256": "7d63a89c817b6f8864152430bde8869c5c266d1a83f05db7dc799e38fd23bd8a",
+   "bytes": 4429
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledSourceCoefficients.lean",
+   "sha256": "f4632d25a2e3fdece2313f54cb6ada47347f32241b976047d46934b6d367e5f1",
+   "bytes": 6915
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledStages.lean",
+   "sha256": "d8ea6d6895b84b1128af4e4e6b053c8369fa07d1f984bc6bcde381d2d1adc38c",
+   "bytes": 4602
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalScheduledTransverseTime.lean",
+   "sha256": "ebdeb4e829dc20f92980c61f5fa7a1f4ac31efc9d00c00c2e397d681c212de90",
+   "bytes": 6268
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalSeeleyExtension.lean",
+   "sha256": "621bdcac41dc937b5aace7f92336b4b3b4d873952c9d20566a18abcbc4886660",
+   "bytes": 8064
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalSelectedHierarchyTime.lean",
+   "sha256": "2e2be83aacf609a9c69a11813ba410b80e5869f7f0fbd77ba6eee23bec87af79",
+   "bytes": 9586
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalSelectedRelayTime.lean",
+   "sha256": "05a1493465fd368c86d82f6324e6b07c1d80dabd11b566236811b6c6eef8317c",
+   "bytes": 13739
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalSelectedTransverseTime.lean",
+   "sha256": "82d38ff478a4af266dc83b4dfbfaeb832fc4346399143a308f317923b80e8645",
+   "bytes": 7724
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalSlabScales.lean",
+   "sha256": "14f8fe90998e135c30f8a46a0f3967288351df7e132a8902f82f2896a5dfae87",
+   "bytes": 2492
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalStageCoefficientBounds.lean",
+   "sha256": "de7292cc7685a679b2e2a7bd7add5c00b3c932f55856098f6d979d92580d5ff7",
+   "bytes": 8731
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalStageFromGraph.lean",
+   "sha256": "1ae321d8371fdb802bbd552f2385a944050e67707cf6bbcc6f4d202210f85a35",
+   "bytes": 8589
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalStageTimeBounds.lean",
+   "sha256": "9d6b6528481e526e92a3cf9b8251d3bf272da1d6dbb37ca8004831b23a66e081",
+   "bytes": 4001
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalSwitchTime.lean",
+   "sha256": "8f77624157d4f6ead11f16841bcfd6dc9bc2ef978d2aeb84b7195fb225e0d3df",
+   "bytes": 5805
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeAdvection.lean",
+   "sha256": "4c7627a906724666cafd27fe677cf7924126326d71eef57886ab7457e05303bd",
+   "bytes": 7278
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeCutoffBounds.lean",
+   "sha256": "b9de0b50aa8a406e45c06e72aabdc76fd76e2f03161c95d48eb73b27128e2c50",
+   "bytes": 14179
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeCutoffCommutation.lean",
+   "sha256": "0995127c112eb3ae72ce7685ab9fa78baaef364ec8178599576b993171a6b4e7",
+   "bytes": 5354
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeCutoffRates.lean",
+   "sha256": "3bd9ad8247f67ed0669958dcf381529d2e3d5f61ac12c9a4037197c177231aa2",
+   "bytes": 7836
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeCutoffResidual.lean",
+   "sha256": "1101af20b328a19661c6441b5b24ddd447e018fe8f7b29824ab0a7d36da33c34",
+   "bytes": 15422
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeCutoffSpatial.lean",
+   "sha256": "93d7777c5753fdb3ce9a03875beefbe25566ae314363c02978ece5da02833d9c",
+   "bytes": 10172
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeGraphBounds.lean",
+   "sha256": "339d8fc10ef58391675f2503ff6f4416591ac4e3625ad50d97b64cd0db6921b0",
+   "bytes": 15174
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeGraphCalculus.lean",
+   "sha256": "2e2fbdd787415368c516fa92d4b772f4e87346bd888eab27eb37d8716fa371ba",
+   "bytes": 6561
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeJet.lean",
+   "sha256": "1b7ef2390f3c253dc18bba435c9dc500311f0dab453881fa2fc8aa5d4eeba73a",
+   "bytes": 4102
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeJetNorms.lean",
+   "sha256": "3af8eebfba1004e70c6f1ad1849e59503e319f71ea2bd031f5ee3ee5b739cfd4",
+   "bytes": 8775
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeLeibniz.lean",
+   "sha256": "8797e752feedbcd6a4525e00b4ce129ff18cb84b818750707d417407f633a4bc",
+   "bytes": 10660
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeMixedWord.lean",
+   "sha256": "7c8b25b70b6206b01165b3c7950bb6f373f8bdd1dd832eb7f896b1b4c9d96ba9",
+   "bytes": 2406
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTimeVelocityCutoff.lean",
+   "sha256": "d3b157f6066474b355105cb645f118896df304f961441b227fd5fa55925f9186",
+   "bytes": 7091
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTransverseCoefficientBounds.lean",
+   "sha256": "c34a8d40ce8271d2567b7b6551f74514e0663f98f5baf7b4f7fc44b9499a0a88",
+   "bytes": 14866
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTransverseCoefficients.lean",
+   "sha256": "bbd39ef577c51db05eb8293721be018a37b6bacdd36af467aa64296e9c690fb0",
+   "bytes": 9659
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalTransverseTime.lean",
+   "sha256": "be2dd0a8585840f94c36aa8e654cded246144e866f7b7a6f6f4da78ec3bcd6fc",
+   "bytes": 14080
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalVorticityTransfer.lean",
+   "sha256": "61688634833a636a3e89ebf42bfc54db0e09270a231796ef8eb3658804e3271b",
+   "bytes": 5109
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalWaveRelayTimeCoefficients.lean",
+   "sha256": "74cf795eae8764aaeee7f701e1b9c89682047f0febba8b7cf79eeae0380a80f9",
+   "bytes": 10745
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TerminalWaveRelayTimeGeometry.lean",
+   "sha256": "a420bc3a25ae76ae5f8ef2db531f1f5360cecd494dc0018bd43942b247eb8cc7",
+   "bytes": 8420
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Theorem11.lean",
+   "sha256": "5eee884479a8b26b222f3c59c565caf83f7bb18a0bc95f7a7e7a8eabd19bec51",
+   "bytes": 1438
+  },
+  {
+   "path": "upstream/lean/TorusEuler/Theorem11FromInductiveStages.lean",
+   "sha256": "5d43219d104f97270376bdaa4f6876dbc26b476330df1fe6f316b7892d7d2ac4",
+   "bytes": 40445
+  },
+  {
+   "path": "upstream/lean/TorusEuler/ThresholdSelection.lean",
+   "sha256": "f34ef1b8fcef6748ea27b36b16323ce10549acdd1682388771d084089229428a",
+   "bytes": 10887
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TorusFourier.lean",
+   "sha256": "382239ba5256aad4b9c1c14938e734420a88659a46226858fe4e35bd6f96671e",
+   "bytes": 18300
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TorusLabelFlow.lean",
+   "sha256": "6b1a0b4d11e040346c5a45f31d289c160278d05f4016bb43e79eedb586dab5c9",
+   "bytes": 9841
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TorusLerayModes.lean",
+   "sha256": "b479007bac43dfa7060aecb44f4de9fb831d08915b9f132188f97e9bddd3a3e5",
+   "bytes": 14598
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TransportedPhase.lean",
+   "sha256": "012bb66c799409cc5c5a49d2164bfdb6df52175b63ec5852069fec83ae5e7bc6",
+   "bytes": 8883
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TransverseCoframeRegularity.lean",
+   "sha256": "9ecdb3cbe18e73c5e7651d0788e1e99245c494921013aa8cade18c9d1468af9f",
+   "bytes": 2076
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TransversePressure.lean",
+   "sha256": "fbbd326e64d446f1617128022ad64285bab7776f5b3245f7c70bc80c3affb6a7",
+   "bytes": 940
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncatedChildInductiveStage.lean",
+   "sha256": "e0cb89e2c62a5da0ae8939531671d0c975cba9bb5bd9ba924ecb7400ca35453e",
+   "bytes": 3640
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncatedChildStage.lean",
+   "sha256": "be5e55cd8520f6f048af11f15c9ee925ec320214b92a4b9fd250eb92d7c5b6a0",
+   "bytes": 58825
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncatedParentAdmissibility.lean",
+   "sha256": "11915b7b4faa34a71dcf7bd7a04514e01469221b4f0a0b0b91444d6d9152801e",
+   "bytes": 25509
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncatedParentPoissonPressure.lean",
+   "sha256": "c1cfe2e90a0fa66564ae328c514630691a83ada8f7949cde53eb3c4a447d79a9",
+   "bytes": 22304
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncatedParentProjectedMomentum.lean",
+   "sha256": "1d1e99c25d52ea9c017018469090c1cc1e62ed096969535e40c9e96efe0c60df",
+   "bytes": 26391
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncatedParentResidual.lean",
+   "sha256": "ebb94548c98c1e3677c8db24ee70354f1ef7e9cd5a8810b7e36a4f5da915b0f9",
+   "bytes": 46089
+  },
+  {
+   "path": "upstream/lean/TorusEuler/TruncationFourierCommutation.lean",
+   "sha256": "9b73aa8952971df3f4435b825de4a76cd2753f33caf3453cbadd12524e37e4cb",
+   "bytes": 21412
+  },
+  {
+   "path": "upstream/lean/TorusEuler/UniformSeries.lean",
+   "sha256": "a0b74df46eec2bc6adba4a273f49bcdce76204e10a5a2bca1e14571a06bba54d",
+   "bytes": 3907
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WaveCompletion.lean",
+   "sha256": "0ab2789658f35340ca5abc9d7ea5996b7b14db89d2b9cb62ff37f866843139c2",
+   "bytes": 5189
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WaveCompletionBounds.lean",
+   "sha256": "82241c119ad34a14609665e43676d65ab46eea5056f8beca64037cf82337d200",
+   "bytes": 6341
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WaveCompletionRelay.lean",
+   "sha256": "9d237551f1dfcd018582b22f64baa06ee311bab9490de34109562cbc755ed5dd",
+   "bytes": 10949
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WaveCurl.lean",
+   "sha256": "d75962d6ef64878b050266056be9aa5d52296eab8f91dfb90334327e11be95cc",
+   "bytes": 907
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WaveDivergence.lean",
+   "sha256": "0dd5c04513620c5b10e62976e066fbf47565b095db56c71eeb7e58a2885b31b6",
+   "bytes": 19748
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WavePressureCenter.lean",
+   "sha256": "6a7c27c089a6fb1f0fb112450cdd32a3f3de4f96dca46b92846f5658e4e72f36",
+   "bytes": 22174
+  },
+  {
+   "path": "upstream/lean/TorusEuler/WaveProfile.lean",
+   "sha256": "1e95cb02c560994cf43829565e4f9558986086ec46e29a85757ddbc24940acd5",
+   "bytes": 19338
+  },
+  {
+   "path": "upstream/lean/TorusEuler.lean",
+   "sha256": "4885c44da8526f1534e0240e5f0242a8039c1e06a3ef160faad9e71f42dad53e",
+   "bytes": 19971
+  },
+  {
+   "path": "upstream/lean/Verify.lean",
+   "sha256": "0ab330053fbe8dbe223d920222ad2014f46134fdb528e671599eebdacdf83eb3",
+   "bytes": 6925
+  },
+  {
+   "path": "upstream/lean/VerifyPaper.lean",
+   "sha256": "aa9a188f86edae7d7465b547bf5c12582460a571e11954f38e05583d263b0da0",
+   "bytes": 8485
+  },
+  {
+   "path": "upstream/lean/VerifySpine.lean",
+   "sha256": "56ade9312c62ab9b04014ef53f43b3eb1a10060395c908512576101228b1bc4f",
+   "bytes": 32604
+  },
+  {
+   "path": "upstream/lean/lake-manifest.json",
+   "sha256": "43b11f03c3196ad835f79c71af55ff043482b53573eb4cfa15dc4fffd5756576",
+   "bytes": 3568
+  },
+  {
+   "path": "upstream/lean/lakefile.toml",
+   "sha256": "3ec8e3cd65783529893c1ce67028facaca214f39b926664d04ec5dd59bce0ada",
+   "bytes": 343
+  },
+  {
+   "path": "upstream/lean/lean-toolchain",
+   "sha256": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
+   "bytes": 29
+  }
+ ]
+}

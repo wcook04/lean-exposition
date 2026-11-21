@@ -38,7 +38,9 @@ export function readerSkeletonHtml(words = "Loading the paper…"): string {
 }
 
 /** The line under the strip, in the words and with the link the page gives it. */
-export function accountLineHtml(words: string, pdf: string, pages: number): string {
+export function accountLineHtml(words: string, pdf: string | null, pages: number): string {
+  // A document with no PDF of its own (a library paper's guide) has no Open PDF link.
+  if (!pdf) return `<p class="account-line">${words}</p>`;
   return `<p class="account-line">${words} <a class="pdf-link" href="${pdf}" target="_blank" rel="noopener">Open PDF, ${pages} ${pages === 1 ? "page" : "pages"}</a></p>`;
 }
 

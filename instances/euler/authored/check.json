@@ -1,0 +1,7 @@
+{
+ "not_joined": {
+  "euler.remark-1.2": "Remark 1.2 extends Theorem 1.1 (the solution continues smoothly away from the origin past the singular time, proved in the auxiliary note); Theorem 1.1 does not use it.",
+  "euler.lemma-2.1": "Lean's full proof dependencies (proof-reader run 44931162441, theorem values recorded) show that the authors' Lean proof of Theorem 1.1 does not use the declarations that state Lemma 2.1 (Paper.lemma_2_1 and its Statement); it proves what it needs through other library lemmas. The map draws routes from the Lean only, so Lemma 2.1 has none.",
+  "euler.lemma-2.3": "Lean's full proof dependencies (proof-reader run 44931162441, theorem values recorded) show that the authors' Lean proof of Theorem 1.1 does not use the declarations that state Lemma 2.3 (Paper.lemma_2_3 and its Statement); it proves what it needs through other library lemmas. The map draws routes from the Lean only, so Lemma 2.3 has none."
+ }
+}

@@ -1,0 +1,131 @@
+name: Library
+# Builds and publishes the reading library (https://wcook04.github.io/library/), one paper at a
+# time: a change under instances/<paper>/ rebuilds and redeploys that paper only; a change to the
+# reader or its tools rebuilds every paper. Each paper is checked in a browser before deploy, and
+# the deploy replaces only the changed papers' folders in wcook04/library.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      papers:
+        description: "Papers to rebuild (space-separated); empty means every paper"
+        required: false
+permissions:
+  contents: read
+concurrency:
+  group: library-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      papers: ${{ steps.plan.outputs.papers }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - id: plan
+        env:
+          BEFORE: ${{ github.event.before || github.event.pull_request.base.sha }}
+          ASKED: ${{ github.event.inputs.papers }}
+        run: |
+          all=$(ls instances | tr '\n' ' ')
+          if [ -n "${ASKED:-}" ]; then papers="$ASKED"
+          elif [ -z "${BEFORE:-}" ] || ! git cat-file -e "$BEFORE" 2>/dev/null || [ "${{ github.event_name }}" = workflow_dispatch ]; then papers="$all"
+          else
+            changed=$(git diff --name-only "$BEFORE" HEAD)
+            if echo "$changed" | grep -qE '^(site/|src/|scripts/(build_library|from_proof_reader|private_|check_library|serve_library|publish_library)|pyproject.toml)'; then papers="$all"
+            else papers=$(echo "$changed" | sed -n 's#^instances/\([^/]*\)/.*#\1#p' | sort -u | tr '\n' ' '); fi
+          fi
+          json=$(printf '%s\n' $papers | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+          echo "papers=$json" >> "$GITHUB_OUTPUT"
+          echo "papers: $json"
+  paper:
+    needs: plan
+    if: needs.plan.outputs.papers != '[]'
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        paper: ${{ fromJson(needs.plan.outputs.papers) }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '26.7.0'
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: sudo apt-get update && sudo apt-get install --yes poppler-utils
+      - run: python -m pip install . playwright && python -m playwright install --with-deps chromium
+      - run: python scripts/private_guard.py --self-test
+      - run: npm ci
+        working-directory: site
+      - name: Build ${{ matrix.paper }}
+        run: scripts/build_library_paper.sh ${{ matrix.paper }}
+      - name: Test the library addresses
+        run: npx vitest run tests/library-address.test.ts
+        working-directory: site
+      - name: Guard the published files
+        run: python scripts/private_guard.py site/dist instances/${{ matrix.paper }}
+      - name: Check ${{ matrix.paper }} in a browser at 1440x900 and 2560x1440
+        run: |
+          mkdir -p serve/library && cp -R site/dist serve/library/${{ matrix.paper }}
+          python scripts/build_library_index.py serve/library ${{ matrix.paper }}
+          python scripts/serve_library.py serve 47311 &
+          sleep 2
+          python scripts/check_library_paper.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --shots shots --budget 10 $(cat instances/${{ matrix.paper }}/check.args 2>/dev/null || true)
+      - name: Check ${{ matrix.paper }} is still while left alone, graph open and closed, 1100 to 2600 pixels wide
+        run: |
+          curl -sf -o /dev/null http://127.0.0.1:47311/library/${{ matrix.paper }}/ || { python scripts/serve_library.py serve 47311 & sleep 2; }
+          python site/scripts/check-idle.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --sweep 1100 2600 300 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: library-${{ matrix.paper }}
+          path: |
+            site/dist
+            shots
+          retention-days: 3
+  deploy:
+    needs: [plan, paper]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: library-deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/download-artifact@v4
+        with:
+          path: built
+          pattern: library-*
+      - name: Publish the changed papers and the index
+        env:
+          LIBRARY_DEPLOY_KEY: ${{ secrets.LIBRARY_DEPLOY_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          install -d -m 700 "$HOME/.ssh"
+          key=$(mktemp); trap 'rm -f "$key"' EXIT
+          printf '%s\n' "$LIBRARY_DEPLOY_KEY" > "$key"; chmod 600 "$key"
+          curl --fail --silent --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/meta | python3 -c 'import json,sys; print("\n".join("github.com " + k for k in json.load(sys.stdin)["ssh_keys"]))' >> "$HOME/.ssh/known_hosts"
+          export GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes"
+          git clone --depth 1 git@github.com:wcook04/library.git pub
+          for dir in built/library-*; do
+            paper=${dir#built/library-}
+            rm -rf "pub/$paper" && cp -R "$dir/site/dist" "pub/$paper"
+          done
+          python3 scripts/build_library_index.py pub $(cd pub && ls -d */ | tr -d /)
+          python3 scripts/private_guard.py pub
+          if grep -rIlE '(ghp_[A-Za-z0-9]{30,}|github_pat_|sk-[A-Za-z0-9]{32,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY)' pub --exclude-dir=.git; then echo "secret-shaped string; not publishing"; exit 1; fi
+          cd pub
+          git config user.name 'Library deployment'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --all
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish ${{ join(fromJson(needs.plan.outputs.papers), ', ') }} from lean-exposition ${GITHUB_SHA}"
+            git push origin main
+          fi

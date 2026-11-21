@@ -8,6 +8,7 @@ import type { PreparedDocument, PreparedPart } from "../engine";
 import { readerHref } from "../links";
 import { tieCounts, type TieCount, type TieModel } from "../ties";
 import { AUTHOR } from "../../app/author";
+import site from "@instance/site";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -66,6 +67,7 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
 
 /** "Draft. No independent mathematician has accepted it yet." from the structure's state and review state. */
 export function statusWords(state: string | undefined, review: string | undefined): string {
+  if (site.paperStatus) return site.paperStatus;
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
   if (state) parts.push(state === "draft" ? `Draft by ${AUTHOR}, made using AI.` : `${words(state).replace(/^./, (c) => c.toUpperCase())}.`);

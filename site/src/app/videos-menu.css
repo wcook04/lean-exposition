@@ -139,7 +139,7 @@
 }
 
 /* Phones: the button gives way to the group in the phone menu. */
-@media (max-width: 56.25em) {
+@media (max-width: 68.75em) {
   .videos {
     display: none;
   }

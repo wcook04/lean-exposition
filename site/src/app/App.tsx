@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { PageGuard } from "./PageGuard";
 import { ReaderSkeleton } from "../reader/skeletonView";
 import { lazyCode } from "./code";
 import { describeError, EditionProvider, useEdition, useEditionChanged, useEditionRetry } from "./data";
@@ -79,7 +80,9 @@ export function App() {
         <AddressNotice route={route} />
         <main id="main" className="app__main" tabIndex={-1}>
           <Suspense fallback={route.view === "home" ? <FrontHero /> : <Skeleton view={route.view} />}>
-            <Page route={route} onSearch={() => setSearching(true)} />
+            <PageGuard view={route.view}>
+              <Page route={route} onSearch={() => setSearching(true)} />
+            </PageGuard>
           </Suspense>
         </main>
         {searching && (
