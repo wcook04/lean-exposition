@@ -4,7 +4,7 @@
  "state": "draft",
  "path": "papers/long.md",
  "content_sha256": "761f6ddb59438bce22d8c0063db00185d45ad5d50b306f96eb11ae69375a8178",
- "graph_sha256": "0a0fa435eb6a2a640dcb4597b61efce89ef11d337a223bc854d99507d6270add",
+ "graph_sha256": "11f3daf1ee0ec4c4fdcd8e72b216220162038c7c05fce256ddd22724d589af23",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],

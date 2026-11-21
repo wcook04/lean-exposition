@@ -9752,31 +9752,7 @@
   },
   {
    "from": "navier-stokes.lemma-3.4",
-   "to": "navier-stokes.lemma-4.2",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-3.4",
-   "to": "navier-stokes.lemma-4.6",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-3.4",
    "to": "navier-stokes.lemma-4.7",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-3.4",
-   "to": "navier-stokes.proposition-4.3",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -9968,14 +9944,6 @@
   },
   {
    "from": "navier-stokes.lemma-4.2",
-   "to": "navier-stokes.lemma-4.6",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-4.2",
    "to": "navier-stokes.lemma-4.7",
    "kind": "supports",
    "evidence_ids": [
@@ -10041,14 +10009,6 @@
   {
    "from": "navier-stokes.lemma-4.4",
    "to": "navier-stokes.lemma-4.2",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-4.4",
-   "to": "navier-stokes.lemma-4.6",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -10529,14 +10489,6 @@
   {
    "from": "navier-stokes.lemma-7.4",
    "to": "navier-stokes.lemma-5.1",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-7.4",
-   "to": "navier-stokes.proposition-7.5",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -11368,23 +11320,7 @@
   },
   {
    "from": "navier-stokes.proposition-4.3",
-   "to": "navier-stokes.lemma-4.4",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.proposition-4.3",
    "to": "navier-stokes.lemma-4.5",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.proposition-4.3",
-   "to": "navier-stokes.lemma-4.6",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -12315,14 +12251,6 @@
   },
   {
    "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.lemma-7.4",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
    "to": "navier-stokes.lemma-7.6",
    "kind": "supports",
    "evidence_ids": [
@@ -12331,47 +12259,7 @@
   },
   {
    "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.lemma-7.7",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.proposition-7.10",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
    "to": "navier-stokes.proposition-7.11",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.proposition-7.5",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.proposition-7.8",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.proposition-7.9",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
