@@ -93,6 +93,8 @@ const PAD_Y = 14;
 const ITEM_GAP = 6;
 /** A group with more members than this, from several files or sections, opens into those first. */
 const DIVIDE_ABOVE = 18;
+/** A kind's words inside a sentence: "Definitions" becomes "definitions"; "Lean helper lemmas" keeps its capital. */
+const inSentence = (words: string) => (words.startsWith("Lean ") ? words : words.charAt(0).toLowerCase() + words.slice(1));
 const MINI_W = 150;
 const MINI_H = 58;
 const MINI_MIN_W = 64;
@@ -170,7 +172,7 @@ export function FocusGraph(props: FocusGraphProps) {
   const H = (size.h || 420) / zoom;
   const both = model.left.length > 0 && model.right.length > 0;
   const gap = Math.round(Math.max(30, Math.min(96, W * 0.07)));
-  const subjectW = Math.round(Math.max(168, Math.min(280, W * (both ? 0.27 : 0.3))));
+  const subjectW = Math.round(Math.max(190, Math.min(280, W * (both ? 0.27 : 0.3))));
   /** The width of the note that stands where a side has nothing. */
   const NOTE_W = 132;
   // Too narrow for three columns (a phone): the sides stand over and under the subject, at the pane's width.
@@ -198,10 +200,10 @@ export function FocusGraph(props: FocusGraphProps) {
     // The pieces a part divides into, largest first: by topic, and a part that is one topic by file or section.
     const pieces = (p: Part): Part[] | null => {
       for (const depth of [1, 2]) {
-        if (p.depth >= depth) continue;
+        if (p.depth >= depth || (depth === 2 && p.list.length < 8)) continue;
         const found = by(p.list, (c) => (depth === 1 ? c.topic : c.section) ?? "").sort((x, y) => y[1].length - x[1].length);
         if (found.length < 2) continue;
-        return found.map(([k, list]) => ({ key: `${p.key}/${depth}:${k}`, list, depth, name: k ? (depth === 2 && p.depth === 1 ? `${p.name} · ${k}` : k) : `Other ${p.name.charAt(0).toLowerCase()}${p.name.slice(1)}` }));
+        return found.map(([k, list]) => ({ key: `${p.key}/${depth}:${k}`, list, depth, name: k ? (depth === 2 && p.depth === 1 ? `${p.name} · ${k}` : k) : `Other ${inSentence(p.name)}` }));
       }
       return null;
     };
@@ -216,7 +218,7 @@ export function FocusGraph(props: FocusGraphProps) {
         for (let take = all.length; take >= 1 && !done; take--) {
           const rest = all.slice(take).flatMap((x) => x.list);
           if (take < all.length && rest.length === 0) continue;
-          const kept: Part[] = take === all.length ? all : [...all.slice(0, take), { key: `${parts[i].key}/rest`, name: parts[i].name.startsWith("Other ") ? parts[i].name : `Other ${parts[i].name.charAt(0).toLowerCase()}${parts[i].name.slice(1)}`, list: rest, depth: parts[i].depth }];
+          const kept: Part[] = take === all.length ? all : [...all.slice(0, take), { key: `${parts[i].key}/rest`, name: parts[i].name.startsWith("Other ") ? parts[i].name : `Other ${inSentence(parts[i].name)}`, list: rest, depth: parts[i].depth }];
           // Pieces of one name (the cards with no topic, and what was left over) stand as one group.
           const merged: Part[] = [];
           for (const k of kept) { const same = merged.find((m) => m.name === k.name); if (same) same.list = [...same.list, ...k.list]; else merged.push({ ...k }); }
@@ -266,7 +268,7 @@ export function FocusGraph(props: FocusGraphProps) {
     // Two groups of one name (one topic among the definitions and again among the lemmas) each say their kind.
     const names = new Map<string, number>();
     for (const it of items) if (it.type === "group") names.set(it.name, (names.get(it.name) ?? 0) + 1);
-    for (const it of items) if (it.type === "group" && it.role && (names.get(it.name) ?? 0) > 1) { const w = words(it.role).many; it.said = w.charAt(0).toLowerCase() + w.slice(1); }
+    for (const it of items) if (it.type === "group" && it.role && (names.get(it.name) ?? 0) > 1) it.said = inSentence(words(it.role).many);
     return items;
   }, [card, opened, words]);
 
@@ -392,7 +394,8 @@ export function FocusGraph(props: FocusGraphProps) {
     if (!el || !w || !frame) return;
     const o = w.getBoundingClientRect(), r = frame.getBoundingClientRect();
     const cx = r.left - o.left + r.width / 2, cy = r.top - o.top + r.height / 2;
-    const y = r.height > el.clientHeight - 24 ? r.top - o.top - 12 : cy - el.clientHeight / 2;
+    // Stacked on a phone the drawing reads from its top: what uses the subject, the subject, what it uses.
+    const y = w.classList.contains("fg__world--narrow") ? 0 : r.height > el.clientHeight - 24 ? r.top - o.top - 12 : cy - el.clientHeight / 2;
     el.scrollTo({ left: Math.max(0, cx - el.clientWidth / 2), top: Math.max(0, y) });
     moved.current = false;
   }, []);
