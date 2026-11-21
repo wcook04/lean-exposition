@@ -21,7 +21,7 @@ import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
-import { declLight, PhraseCard, usePhraseNotes } from "./PhraseCard";
+import { declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
 
@@ -53,6 +53,8 @@ interface Props {
   /** Where the opening rises from. */
   from?: HTMLElement | null;
   passageHref(stage: Stage, anchor: string): string;
+  /** Under the graph on the Graph tab, following the paper: there is nothing to close. */
+  noClose?: boolean;
 }
 
 /** The Lean a statement means, or the record's own rows where it names none, without repeats. */
@@ -141,7 +143,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   const shown = records.filter((id) => graph.nodes.has(id));
   return (
     <>
-      <p className="lean-page__plain">No Lean is linked to the sentence you are reading. Steps in this passage:</p>
+      <p className="lean-page__plain">No Lean is linked to this paragraph. Steps of the map in its passage:</p>
       <ul className="lean-page__topics">
         {shown.map((id) => (
           <li key={id}>
@@ -163,7 +165,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref, noClose }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -198,6 +200,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   }
   const row = open.decl ? null : (rows[Math.min(chosen, rows.length - 1)] ?? null);
   const name = open.decl ?? row?.name ?? null;
+  // The graph above a phrase's card follows the declaration its card shows.
+  useEffect(() => {
+    dockDecl.set(phrase && row ? { name: row.name, module: row.module } : null);
+  }, [phrase, row]);
+  useEffect(() => () => dockDecl.set(null), []);
   const titleOf = (decl: string) => part?.titles[decl] ?? plainName(alignment, decl);
   const plain = phrase && name
     ? titleOf(name)
@@ -292,9 +299,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
               Follow the text
             </button>
           )}
-          <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
-            Close
-          </button>
+          {!(noClose && open.via !== "pin") && (
+            <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
+              Close
+            </button>
+          )}
         </header>
       )}
       {slot ? (
@@ -348,7 +357,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                 <Passage records={open.topics} ties={ties} alignment={alignment} onPick={onPick} onPoint={onPoint} />
               ) : (
                 <p className="lean-page__plain">
-                  Nothing in this stretch of the paper is tied to the Lean. Scroll on, or press <kbd>j</kbd> for the next tied statement.
+                  No Lean is linked to this paragraph, and its passage names no step of the map. Scroll on, or press <kbd>j</kbd> for the next underlined phrase.
                 </p>
               )
             ) : name ? (

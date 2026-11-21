@@ -31,6 +31,9 @@ export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | nul
   return notes;
 }
 
+/** The declaration a phrase's card shows (its selected tab), for the graph above it. */
+export const dockDecl = new Signal<{ name: string; module: string } | null>(null, (a, b) => a?.name === b?.name && a?.module === b?.module);
+
 /** A declaration pointed at in the Lean pane; the paper lights the phrases it states. */
 export const declLight = new Signal<string | null>(null);
 

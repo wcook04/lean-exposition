@@ -1000,7 +1000,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (!id) return release();
       const statement = statementFor(ties, id);
       selfAt.current = statement !== null ? ties.index.ties[statement].at : undefined;
-      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined });
+      // A card opens its step on the tab the pane is on; the tab never changes by itself.
+      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
     },
     [ties, release],
   );
@@ -1361,6 +1362,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         }, 210);
       return;
     }
+    // A phrase whose words are all one link opens its Lean like any phrase; the link stays a
+    // modified click away (a new tab or window).
+    const linked = a.closest<HTMLElement>("[data-t]") ?? a.querySelector<HTMLElement>("[data-t]");
+    if (linked && !(event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) && linked.textContent?.trim() === a.textContent?.trim()) {
+      const t = statementOf(ties, Number(linked.dataset.t));
+      if (t !== null && ties.index.ties[t].phrase) {
+        event.preventDefault();
+        openStatement(t);
+        return;
+      }
+    }
     const href = a.getAttribute("href") ?? "";
     const from = a.closest<HTMLElement>("[data-passage]")?.dataset.passage ?? doc.parts[signals.part.get()]?.anchor;
     if (a.dataset.companion !== undefined && a.closest(".part__text")) {
@@ -1395,7 +1407,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (id: string) => {
       const statement = statementFor(ties, id);
       const tie = statement !== null ? ties.index.ties[statement] : null;
-      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined };
+      // The step opens on the tab the pane is on: on the Graph tab, under the graph.
+      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined };
       if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
       const opened = nextOpened();
       go(to);
