@@ -1,0 +1,88 @@
+{
+ "schema": 1,
+ "what": "Comparator judged the authors' proofs of Theorem 1.1, in its existence form and with uniqueness of the maximal solution, against a challenge file holding only the authors' definitions.",
+ "run": "https://github.com/wcook04/proof-reader/actions/runs/44925234532",
+ "date": "2026-11-21",
+ "commit": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+ "lake": "Lake version 5.0.0-src+611c117 (Lean version 4.36.0)",
+ "toolchain": "leanprover/lean4:v4.34.0-rc2 (authors' package and exports); Comparator on Lean v4.36.0",
+ "sandbox": "bubblewrap 0.9.0",
+ "mode": "Lean's default kernel and four external kernels (Lean paranoid kernel, con-leche kernel, con-ron kernel, nanoda kernel); sandboxed with bubblewrap; --paranoid was not completed",
+ "kernels": [
+  "Lean default kernel",
+  "Lean paranoid kernel",
+  "con-leche kernel",
+  "con-ron kernel",
+  "nanoda kernel"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ],
+ "accepted": {
+  "config": "comparator.json",
+  "theorem_names": [
+   "TorusEuler.theorem11",
+   "TorusEuler.Paper.theorem_1_1"
+  ],
+  "exit": 0,
+  "output": [
+   "Running Lean paranoid kernel on solution",
+   "Lean paranoid kernel accepts the solution",
+   "Running con-leche kernel on solution",
+   "con-leche kernel accepts the solution",
+   "Running con-ron kernel on solution",
+   "con-ron kernel accepts the solution",
+   "Running nanoda kernel on solution",
+   "nanoda kernel accepts the solution",
+   "Running Lean default kernel on solution",
+   "Lean default kernel accepts the solution",
+   "Your solution is okay!"
+  ]
+ },
+ "rejected_control": {
+  "config": "negative/comparator.json",
+  "change": "TorusEuler.theorem11 negated",
+  "exit": 1,
+  "output": [
+   "error: Challenge and solution theorem statement do not match: 'TorusEuler.theorem11'"
+  ]
+ },
+ "other_rejected_controls": {
+  "definition": {
+   "config": "definition/comparator.json",
+   "change": "the time-derivative limit HasOffOriginLimits T (timeDerivative T u) removed from EulerSingularityWitness",
+   "exit": 1,
+   "output": [
+    "error: Const does not match between challenge and target 'TorusEuler.EulerSingularityWitness'"
+   ]
+  },
+  "uniqueness": {
+   "config": "uniqueness/comparator.json",
+   "change": "the equal lifespan T' = T removed from the uniqueness clause of Statement.theorem_1_1",
+   "exit": 1,
+   "output": [
+    "error: Const does not match between challenge and target 'TorusEuler.Paper.Statement.theorem_1_1'"
+   ]
+  }
+ },
+ "sha256": {
+  "Challenge.lean": "b1cf1cde05ca266849258445ed01b342942a6648efd70fd955e917133371aebb",
+  "Solution.lean": "af3133758856687a41660021db74e0de11dbb46847b18c629306ff0d177dd563",
+  "comparator.json": "075429391248ef6d119c29333696d6eb7587e2bb0d03e0f5dc34719c6748c472",
+  "negative/Challenge.lean": "1d50df07f797d905ccf174e49d7c01a20bedd4f0f0f7c088eff1d5aafb545cf0",
+  "negative/comparator.json": "c33af42cade57d8959f7ffe9f6d7dbc1ee6babc65746f404744d9fe8e84708d6",
+  "definition/Challenge.lean": "ff5dada30920bda1c4789b06f3baa33bfaf46329cc930c9598968921f319f193",
+  "definition/comparator.json": "c600e6982681b25f504cf97b5b4e529899d1b8b268625a5369408e2026df99d4",
+  "uniqueness/Challenge.lean": "be0db6f8c7a917a6dd27f96c75b9d63af4f5ad8152d1a03caaf8d2414e6469d0",
+  "uniqueness/comparator.json": "3be3a8513163ccc38230cf40cd6c387e53c753427726250fbbb412f907a3f872"
+ },
+ "authors_files_sha256": {
+  "lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
+  "lake-manifest.json": "43b11f03c3196ad835f79c71af55ff043482b53573eb4cfa15dc4fffd5756576",
+  "TorusEuler/Statement.lean": "fff72620940fd1d4b7924d808954fe55fe3ca4d9c97c4970c40e26858e77c34a"
+ },
+ "limits": "Comparator establishes that the authors' compiled proofs prove exactly these two statements, using only the permitted axioms, against definitions copied unchanged from their Statement.lean and their statement of Theorem 1.1. It does not say that the definitions mean what the paper means; the comparisons on the page address that.",
+ "imports": "Challenge.lean imports Mathlib only: the authors' Statement.lean followed by their definition of Statement.theorem_1_1."
+}
