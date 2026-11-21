@@ -509,3 +509,30 @@
 .paper .section-aid .katex {
   font-size: 1em;
 }
+
+/* The authors, as the paper sets them: one line under the title, joined with "and". The reading
+   copy carries them as a list (ul.authors); its words are not changed. */
+.paper.prose ul.authors {
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  list-style: none;
+  font-size: 1.0625em;
+}
+
+.paper.prose ul.authors > li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.paper.prose ul.authors > li::before {
+  content: none;
+}
+
+.paper.prose ul.authors > li + li::before {
+  content: ", ";
+}
+
+.paper.prose ul.authors > li + li:last-child::before {
+  content: " and ";
+}

@@ -457,10 +457,67 @@ def reduced_motion(browser: Browser, base: str) -> None:
     page.context.close()
 
 
+GRAPH_STATE = """() => {
+  const count = document.querySelector('.map-pane .mode-toggle__count');
+  const tab = document.querySelector('.map-pane .mode-toggle button[aria-label="Graph"]');
+  const few = document.querySelector('.map-pane__few');
+  const pane = document.querySelector('.map-pane')?.getBoundingClientRect();
+  const drawing = document.querySelector('.map-pane__graphview .map-pane__drawing')?.getBoundingClientRect();
+  return {
+    count: count ? Number(count.textContent.replace(/[^0-9]/g, '')) : null,
+    dimmed: !!tab && tab.hasAttribute('data-empty'),
+    few: few ? Number(few.dataset.neighbours) : null,
+    line: document.querySelector('.map-pane__fewline')?.innerText ?? '',
+    names: document.querySelectorAll('.map-pane__fewline button').length,
+    canvas: document.querySelectorAll('.map-pane__graphview .fg[data-cards]').length,
+    share: pane && drawing ? drawing.height / pane.height : 0,
+    brief: !!document.querySelector('.map-pane__dock .lean-page__brief'),
+    title: document.querySelector('.lean-page__title')?.innerText ?? '',
+  };
+}"""
+
+
+def graph_earns_its_space(browser: Browser, base: str, none: str | None, few: str | None, many: str | None) -> None:
+    """The Graph view by how many neighbours a declaration has: none, one to three, four or more."""
+    for case, name in (("none", none), ("few", few), ("many", many)):
+        if not name:
+            continue
+        page = open_page(browser, base + f"lean/{name}?v=graph", 1440, 900)
+        page.wait_for_selector(".map-pane .mode-toggle__count", timeout=30000)
+        page.wait_for_timeout(2500)
+        got = page.evaluate(GRAPH_STATE)
+        tag = f"12 graph, {case} ({name.rsplit('.', 1)[-1]}, {got['count']} neighbours)"
+        if case == "none":
+            check(got["count"] == 0 and got["dimmed"], f"{tag}: the tab says 0 and is dimmed", str(got))
+            check(got["few"] == 0 and got["canvas"] == 0, f"{tag}: no canvas is drawn", str(got))
+            check("Nothing in the recorded graph uses this or is used by it" in got["line"], f"{tag}: one line says so", got["line"][:120])
+            check(bool(got["title"]), f"{tag}: the inspector stands under it", str(got))
+        elif case == "few":
+            check(got["count"] is not None and 1 <= got["count"] <= 3 and not got["dimmed"], f"{tag}: the tab carries the count", str(got))
+            check(got["few"] == got["count"] and got["canvas"] == 0, f"{tag}: no canvas is drawn", str(got))
+            check(got["names"] == got["count"], f"{tag}: each neighbour is named once", f"{got['names']} names: {got['line'][:160]}")
+            before = got["title"]
+            centre_click(page, ".map-pane__fewline button")
+            page.wait_for_timeout(1500)
+            check(page.evaluate(GRAPH_STATE)["title"] != before, f"{tag}: a name opens that declaration", before)
+        else:
+            check(got["count"] is not None and got["count"] >= 4, f"{tag}: the tab carries the count", str(got))
+            check(got["canvas"] == 1 and got["few"] is None, f"{tag}: the canvas is drawn", str(got))
+            check(got["share"] >= 0.55, f"{tag}: the drawing has most of the pane", f"{got['share']:.2f} of the pane's height")
+            check(got["brief"], f"{tag}: the dock under it is the short card", str(got))
+            centre_click(page, ".map-pane__dock .lean-page__brief button")
+            page.wait_for_timeout(600)
+            check(page.locator(".map-pane__dock .lean-page__scroll").count() == 1, f"{tag}: the short card opens to the whole card")
+        page.context.close()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("base", help="a served library paper, such as http://127.0.0.1:47342/library/euler/")
     parser.add_argument("--headed", action="store_true", help="show the browser")
+    parser.add_argument("--graph-none", help="a Lean declaration with no neighbour in the recorded graph")
+    parser.add_argument("--graph-few", help="a Lean declaration with one to three neighbours")
+    parser.add_argument("--graph-many", help="a Lean declaration with four or more neighbours")
     args = parser.parse_args()
     base = args.base if args.base.endswith("/") else args.base + "/"
     with sync_playwright() as p:
@@ -470,6 +527,10 @@ def main() -> int:
                 step(browser, base)
             except Exception as error:  # a step that cannot run is a failure, and the others still run
                 check(False, f"{step.__name__} ran", repr(error)[:300])
+        try:
+            graph_earns_its_space(browser, base, args.graph_none, args.graph_few, args.graph_many)
+        except Exception as error:
+            check(False, "graph_earns_its_space ran", repr(error)[:300])
         browser.close()
     if FAILURES:
         print(f"\n{len(FAILURES)} check(s) failed")

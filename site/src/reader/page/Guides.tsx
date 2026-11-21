@@ -36,9 +36,9 @@ export function StartHere({ cards, about, titleOf, onOpen, onClose }: { cards: r
       )}
       {about && <p className="guide-panel__about" dangerouslySetInnerHTML={{ __html: noteHtml(about).html }} />}
       <p className="guide-panel__lead">
-        {cards.length === 1 ? "One place" : `${cards.length} places`} where the formal statement can be read against the paper’s own words, chosen as worked examples of how the formalisation matches the paper. Each opens its words in the paper with the comparison and the Lean beside them.
+        {cards.length === 1 ? "One place" : `${cards.length} places`} to start from. Each opens its words in the paper, with the comparison and the Lean beside them.
       </p>
-      <p className="guide-panel__who">Chosen and described with AI; no mathematician has reviewed the choice.</p>
+      <p className="guide-panel__who">Chosen and described with AI. No mathematician has reviewed the choice or the descriptions.</p>
       <ol className="guide-panel__cards">
         {cards.map((item, i) => (
           <li key={item.card}>

@@ -20,7 +20,7 @@ import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
-import { declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
+import { assessmentsOf, declLight, dockDecl, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
 
@@ -61,6 +61,9 @@ interface Props {
   onOpenGraph?(): void;
   /** Stands where "No Lean is linked to this paragraph" would: where to start, before the paper's first link. */
   emptySlot?: ReactNode;
+  /** Under the drawing: a short card (title, the comparison's verdict, Open its Lean) until the reader opens it. */
+  brief?: boolean;
+  onBrief?(whole: boolean): void;
 }
 
 /** The Lean a statement means, or the record's own rows where it names none, without repeats. */
@@ -171,7 +174,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot, brief, onBrief }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -331,11 +334,19 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
           )}
         </header>
       )}
+      {!slot && onBrief && !empty && (
+        <div className="lean-page__brief">
+          {brief && phrase && row && assessmentsOf(row as unknown as PhraseLean, tie?.merged).slice(0, 1).map(({ assessment }, i) => <Verdict key={i} assessment={assessment} />)}
+          <button type="button" className="lean-page__quiet" aria-expanded={!brief} onClick={() => onBrief(!!brief)}>
+            {brief ? "Show the whole card" : "Show less, and give the graph the room"}
+          </button>
+        </div>
+      )}
       {slot ? (
         <div className="lean-page__body lean-page__body--read" data-keep>
           {slot}
         </div>
-      ) : (
+      ) : brief && !empty ? null : (
         <div ref={scroller} className="lean-page__scroll" data-keep>
           {!(phrase && row && !full) && crumbs}
           {!open.decl && rows.length > 1 && !full && (

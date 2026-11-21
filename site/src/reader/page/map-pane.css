@@ -825,10 +825,14 @@ html[data-right-sheet] {
   margin-left: 0;
 }
 
-.mode-toggle button {
+/* In the pane the tabs are a little larger; the phone's strip keeps its own, where room is short. */
+.map-pane .mode-toggle button {
   min-width: 60px;
   min-height: 30px;
   font-size: var(--fs-ui);
+}
+
+.mode-toggle button {
   transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
 }
 
@@ -1331,4 +1335,139 @@ html[data-right-sheet] {
 }
 .graph-boundary p {
   margin: 0 0 8px;
+}
+
+/* ---- The pane's bar: two tabs change the view; everything else on it is a quiet link -------- */
+
+.map-pane__bar .map-pane__guides {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-4);
+  margin-left: auto;
+}
+
+.map-pane__bar .map-pane__guides ~ .map-pane__open,
+.map-pane__bar .map-pane__guides ~ .map-pane__hide {
+  margin-left: 0;
+}
+
+.map-pane__guide {
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.map-pane__guide:hover,
+.map-pane__guide[aria-expanded="true"] {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+.map-pane__guide:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+/* The Graph tab carries its count; with nothing recorded it is dimmed, and still opens. */
+.mode-toggle__count {
+  font-variant-numeric: tabular-nums;
+}
+
+.mode-toggle button[data-empty]:not([aria-pressed="true"]) {
+  color: var(--ink-3);
+}
+
+/* ---- The Graph view with too few neighbours to draw ----------------------------------------- */
+
+.map-pane__fewline {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-4);
+  margin: 0;
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.map-pane__fewword {
+  margin-right: var(--space-2);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.map-pane__fewline button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.map-pane__fewline button:hover {
+  text-decoration-color: currentColor;
+}
+
+.map-pane__fewline button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.map-pane__fewnote {
+  flex: 1 1 100%;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+/* ---- Under the drawing: a short card, so the drawing has most of the pane ------------------- */
+
+.map-pane__graphview.is-brief .map-pane__dock {
+  flex: 0 0 auto;
+  max-height: 32%;
+  overflow: hidden;
+}
+
+.lean-page__brief {
+  flex: none;
+  display: grid;
+  gap: var(--space-1);
+  padding: 0 var(--space-3) var(--space-3) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.lean-page__brief p {
+  max-width: var(--evidence-measure);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.lean-page__brief .lean-page__quiet {
+  justify-self: start;
 }

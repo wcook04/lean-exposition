@@ -132,8 +132,8 @@ const MIN_READ = 0.85;
 /** The scales the reader can reach with the buttons, wheel, pinch and keys. */
 const K_MIN = 0.2;
 const K_MAX = 2.5;
-/** A fitted drawing is never set larger than its own size, and never below this when grouping cannot help. */
-const FIT_MAX = 1;
+/** A fitted drawing grows to fill its area up to 1.3 times its own size (a small neighbourhood in a large pane is not left small), and is never set below this when grouping cannot help. */
+const FIT_MAX = 1.3;
 const FIT_FLOOR = 0.45;
 /** Room kept around a fitted drawing, and how much of it a pan always leaves in view. */
 const FIT_MARGIN = 18;

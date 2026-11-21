@@ -215,8 +215,8 @@ system's highlight.
   and how it compares." It is part of the page, so it wraps and scrolls away with the title, and
   it is in the first screen's own HTML, so nothing shifts when the page starts.
 - Where the paper supplies them:
-  - **Start here**: a short list of worked examples chosen to show how the formalisation
-    matches the paper, each with one line on why it is worth reading, under one paragraph on
+  - **Start here**: the paper's short list of places to start, each with the one line the
+    paper's data gives for it (the reader adds no judgement of its own), under one paragraph on
     what the paper's main formal statement asserts. It stands in the pane before the paper's
     first link (beside the title and authors, where there is nothing yet to follow) and is one
     button away afterwards. Choosing an example selects its words and brings the paper to them.
@@ -233,6 +233,15 @@ system's highlight.
 
 The drawing is as specified in [the graph pane](graph-pane.md), with these changes.
 
+- **The graph earns its space.** The Graph tab carries the number of neighbours the subject has
+  in the recorded graph ("Graph · 19"). With four or more, the drawing takes about two thirds of
+  the pane, fitted to that area and enlarged up to 1.3 times where the neighbourhood is small,
+  and the dock under it is a short card: the title, the comparison's verdict and "Open its
+  Lean", with "Show the whole card" to open the full inspector there. With one to three
+  neighbours no canvas is drawn: one line names them ("Uses A, B. Used by C."), each name
+  opening that declaration, and the inspector takes the rest of the pane. With none, the tab is
+  dimmed but still opens, and one line says that nothing in the recorded graph uses this or is
+  used by it.
 - **The subject is named outside the canvas.** The subject band stays in place while the
   drawing pans and zooms, so a reader who has dragged the subject out of view still reads what
   the lines are about.
@@ -345,8 +354,10 @@ right, nothing over the text. Widths are CSS pixels of the window.
 
 - The pane is sticky under the top bar and has one vertical scroller per view. Its gutter is
   stable, so content arriving never changes a width.
-- Under the drawing, the dock takes 40% of the Graph view by default, never less than 240px
-  while the drawing keeps 260px; where both cannot fit, the drawing folds to one line.
+- Under the drawing, the dock is a short card and the drawing has the rest, about two thirds
+  of the pane or more. Opened with "Show the whole card", the dock takes 40% of the Graph view,
+  never less than 240px while the drawing keeps 260px, and its height can be drawn with the
+  handle; where both cannot fit, the drawing folds to one line.
 - From 1024 to 1279 the paper's measure narrows so that both columns fit. Before this design
   the pane covered the paper there, which hid the words being checked.
 - "Hide pane" leaves the paper alone at its measure and lets any selection go, since nothing
@@ -451,7 +462,7 @@ loops. Left alone, the page makes no change at all, and `check-idle.py` holds it
 | Fit | The engine and its check: Fit also folds opened groups. 03: camera only. | Camera only. Recovering the view must not cost the reader what they found. The check changes with it. |
 | Focus colour in the graph | 03: a blue ring. Others: the site's amber ring. | Amber, one focus colour across the site. |
 | A second graph projection | 03: tabs for "Paper argument" and "Lean references". | Not in this pass. Relation types are named in the key and on each line. Tabs wait until a paper's data carries both projections whole. |
-| The dock's height | The engine: 30%. 02: 40% with floors. | 40%, with floors of 240px for the dock and 260px for the drawing. |
+| The dock's height | The engine: 30%. 02: 40% with floors. Review of the built page: the drawing was left too small. | A short card under a drawing that has about two thirds of the pane; 40% with floors of 240px and 260px once the reader opens the whole card. |
 | The words for a selection | 01: "Selected words". 02: "Selected statement". 03: "Pinned to". | "Selected words" for words of the paper, "Selected declaration" for a card or a name. The reader selected words; the statement is what the pane then shows. |
 | The library index | The engine: a strip of topic colours in proportion. 04, 05: remove it. | Removed. Counts stand in words, each with what it counts ("999 linked passages", "1,012 Lean declarations"), and none is a share of another. |
 

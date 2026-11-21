@@ -40,6 +40,8 @@ import { dockDecl, noteHtml } from "./PhraseCard";
 import "../../map/focus-graph.css";
 import "./map-pane.css";
 
+/** The fewest neighbours worth a drawing: below this a line of names says the same. */
+const DRAW_FROM = 4;
 /** Under this width the graph folds to one line, and the dock keeps the rest. */
 const FOLD_WIDTH = 600;
 /** Narrow tiles, so that the whole argument fits the pane when it is opened there. */
@@ -466,7 +468,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- Layout ----------------------------------------------------------------------------
 
   const counts = useMemo(() => {
-    if (!focus) return { uses: 0, usedBy: 0, usesHow: "", usedByHow: "" };
+    if (!focus) return { uses: 0, usedBy: 0, usesHow: "", usedByHow: "", usesIds: [] as string[], usedByIds: [] as string[] };
     const here = new Set(focus.subjects);
     // Each side counted as FocusGraph counts it: unique neighbours, a card used by the subject and
     // using it counted among its users, and each relation counted apart.
@@ -485,8 +487,15 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       for (const kinds of side.values()) for (const k of kinds) n.set(k, (n.get(k) ?? 0) + 1);
       return relationCounts(n);
     };
-    return { uses: usesKinds.size, usedBy: usedByKinds.size, usesHow: tally(usesKinds), usedByHow: tally(usedByKinds) };
+    return { uses: usesKinds.size, usedBy: usedByKinds.size, usesHow: tally(usesKinds), usedByHow: tally(usedByKinds), usesIds: [...usesKinds.keys()], usedByIds: [...usedByKinds.keys()] };
   }, [focus]);
+  // The graph has to earn its space. With no neighbour there is nothing to draw, and with one to
+  // three a line of names says it all: the drawing is kept for four or more (docs/reader-design.md).
+  const neighbours = counts.uses + counts.usedBy;
+  const drawn = !!focus && neighbours >= DRAW_FROM;
+  const few = mode === "graph" && !whole && !drawn;
+  // Under the drawing the dock is a short card until the reader opens it.
+  const [dockWide, setDockWide] = useState(false);
   const folded = narrow && !unfolded && !whole;
 
   // ---- The subject band, and the two guides that can stand in the pane ----------------------
@@ -613,22 +622,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   return (
     <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
-        <ModeToggle mode={mode} onMode={onMode} />
-        {aids.showcase.length > 0 && (
-          <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
-            Start here
-          </button>
-        )}
-        {aids.route && (
-          <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "route"} onClick={() => setAside(aside === "route" ? null : "route")}>
-            Follow the proof
-          </button>
-        )}
-        {guideStage && (
-          <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "guide"} onClick={() => setAside(aside === "guide" ? null : "guide")}>
-            How to read the Lean
-          </button>
-        )}
+        <ModeToggle mode={mode} onMode={onMode} graphCount={focus ? neighbours : null} />
         {mode === "graph" && !fill && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}
@@ -644,6 +638,23 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             This passage
           </button>
         )}
+        <span className="map-pane__guides">
+          {aids.showcase.length > 0 && (
+            <button type="button" className="map-pane__guide" aria-expanded={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
+              Start here
+            </button>
+          )}
+          {aids.route && (
+            <button type="button" className="map-pane__guide" aria-expanded={aside === "route"} onClick={() => setAside(aside === "route" ? null : "route")}>
+              Follow the proof
+            </button>
+          )}
+          {guideStage && (
+            <button type="button" className="map-pane__guide" aria-expanded={aside === "guide"} onClick={() => setAside(aside === "guide" ? null : "guide")}>
+              How to read the Lean
+            </button>
+          )}
+        </span>
         {mode === "graph" && !fill && <a
           className="map-pane__open"
           href={mapHref}
@@ -697,12 +708,50 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
           />
         </div>
+      ) : few ? (
+        <div className="map-pane__lean map-pane__few" data-neighbours={neighbours}>
+          {neighbours === 0 ? (
+            <p className="map-pane__fewline">Nothing in the recorded graph uses this or is used by it: no link the paper states and no use in the Lean is recorded at either end.</p>
+          ) : (
+            <p className="map-pane__fewline">
+              {(["uses", "usedBy"] as const).map((side) => {
+                const ids = side === "uses" ? counts.usesIds : counts.usedByIds;
+                if (!ids.length) return null;
+                return (
+                  <span key={side} className="map-pane__fewside">
+                    <span className="map-pane__fewword">{side === "uses" ? "Uses" : "Used by"}</span>
+                    {ids.map((id, i) => (
+                      <span key={id}>
+                        {i > 0 && ", "}
+                        <button type="button" onClick={() => onSubject(id)} title={side === "uses" ? counts.usesHow : counts.usedByHow}>
+                          {cardOf(id) ? renderTitle(cardOf(id)!) : id}
+                        </button>
+                      </span>
+                    ))}
+                  </span>
+                );
+              })}
+              <span className="map-pane__fewnote">Too few to draw: {neighbours === 1 ? "this is the one recorded neighbour" : `these are all ${neighbours} recorded neighbours`}.</span>
+            </p>
+          )}
+          <LeanDock
+            open={dockOpen}
+            ties={ties}
+            stage={stage}
+            alignment={alignment}
+            slot={preview ?? heldList}
+            onPick={(id) => onRecord?.(id)}
+            onPoint={onPoint}
+            onName={onName}
+            passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
+          />
+        </div>
       ) : (
-        <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}`}>
+        <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}${dockWide ? "" : " is-brief"}`}>
           <div className="map-pane__drawing">
             <GraphBoundary scope={whole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
           </div>
-          {!folded && (
+          {!folded && dockWide && (
             <div
               className="map-pane__handle"
               role="separator"
@@ -725,6 +774,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               stage={stage}
               alignment={alignment}
               slot={preview ?? (previewCard ? null : heldList)}
+              brief={!dockWide && !folded}
+              onBrief={setDockWide}
               onOpenLean={() => onMode("lean")}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}
