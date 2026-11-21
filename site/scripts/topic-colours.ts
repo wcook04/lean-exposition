@@ -170,7 +170,7 @@ export function compute(): Computed {
 export function report(c: Computed): string {
   const lines: string[] = [];
   for (const { key, uses, topics, palette: p } of c.palettes) {
-    lines.push(`${uses[0]}${uses.length > 1 ? ` (+${uses.length - 1} sharing)` : ""} [${key}] ${topics} topics in ${p.families.length} families ${p.families.map((f) => f.topics.length).join("+")}; L ${p.lightness.light}/${p.lightness.dark}, C ${p.chroma.light}/${p.chroma.dark}`);
+    lines.push(`${uses[0]}${uses.length > 1 ? ` (+${uses.length - 1} sharing)` : ""} [${key}] ${topics} topics in ${p.families.length} families ${p.families.map((f) => f.topics.length).join("+")}; L ${p.lightness.light}/${p.lightness.dark}, C ${p.chroma.light.join('–')}/${p.chroma.dark.join('–')}`);
     for (const r of p.floors) lines.push(`  ${r.theme.padEnd(5)} ${r.vision.padEnd(12)} families ΔE ≥ ${r.family.toFixed(1).padStart(5)}   shades ΔE ≥ ${Number.isFinite(r.shade) ? r.shade.toFixed(1).padStart(5) : "    —"}   contrast ≥ ${r.contrast.toFixed(2)}`);
   }
   return lines.join("\n");
