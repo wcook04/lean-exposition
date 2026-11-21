@@ -7,12 +7,12 @@
    "key": "0740139f71c4ab95",
    "shared_by": 1,
    "lightness": {
-    "light": 0.46,
-    "dark": 0.68
+    "light": 0.45,
+    "dark": 0.67
    },
    "chroma": {
-    "light": 0.073,
-    "dark": 0.115
+    "light": 0.072,
+    "dark": 0.114
    },
    "families": [
     {
@@ -37,7 +37,7 @@
      "id": "family-full-support",
      "name": "Full support and moment identities · Curvature and gap contradictions · Ground-state value and consequences",
      "named": false,
-     "hue": 171,
+     "hue": 172,
      "topics": [
       "spin-consequences",
       "curvature",
@@ -48,7 +48,7 @@
      "id": "family-control-value",
      "name": "Control value and Parisi functional · Feedback and moment curves",
      "named": false,
-     "hue": 261,
+     "hue": 250,
      "topics": [
       "control-value",
       "response-process"
@@ -69,56 +69,56 @@
     "spins": {
      "index": 0,
      "family": "family-spins",
-     "light": "oklch(0.560 0.073 45.0)",
-     "dark": "oklch(0.780 0.115 45.0)"
+     "light": "oklch(0.550 0.072 45.0)",
+     "dark": "oklch(0.770 0.114 45.0)"
     },
     "order-parameter": {
      "index": 1,
      "family": "family-order-parameter",
-     "light": "oklch(0.360 0.073 99.0)",
-     "dark": "oklch(0.580 0.115 99.0)"
+     "light": "oklch(0.350 0.072 99.0)",
+     "dark": "oklch(0.570 0.114 99.0)"
     },
     "spin-consequences": {
      "index": 2,
      "family": "family-full-support",
-     "light": "oklch(0.375 0.082 162.4)",
-     "dark": "oklch(0.595 0.129 162.4)"
+     "light": "oklch(0.375 0.081 163.4)",
+     "dark": "oklch(0.595 0.128 163.4)"
     },
     "curvature": {
      "index": 3,
      "family": "family-full-support",
-     "light": "oklch(0.460 0.073 171.0)",
-     "dark": "oklch(0.680 0.115 171.0)"
+     "light": "oklch(0.460 0.072 172.0)",
+     "dark": "oklch(0.680 0.114 172.0)"
     },
     "full-support": {
      "index": 4,
      "family": "family-full-support",
-     "light": "oklch(0.545 0.064 179.6)",
-     "dark": "oklch(0.765 0.101 179.6)"
+     "light": "oklch(0.545 0.063 180.6)",
+     "dark": "oklch(0.765 0.100 180.6)"
     },
     "control-value": {
      "index": 5,
      "family": "family-control-value",
-     "light": "oklch(0.433 0.077 256.7)",
-     "dark": "oklch(0.653 0.122 256.7)"
+     "light": "oklch(0.428 0.076 245.7)",
+     "dark": "oklch(0.648 0.121 245.7)"
     },
     "response-process": {
      "index": 6,
      "family": "family-control-value",
-     "light": "oklch(0.518 0.069 265.3)",
-     "dark": "oklch(0.738 0.108 265.3)"
+     "light": "oklch(0.513 0.068 254.3)",
+     "dark": "oklch(0.733 0.107 254.3)"
     },
     "first-variation": {
      "index": 7,
      "family": "family-first-variation",
-     "light": "oklch(0.418 0.077 328.7)",
-     "dark": "oklch(0.638 0.122 328.7)"
+     "light": "oklch(0.408 0.076 328.7)",
+     "dark": "oklch(0.628 0.121 328.7)"
     },
     "contact": {
      "index": 8,
      "family": "family-first-variation",
-     "light": "oklch(0.503 0.069 337.3)",
-     "dark": "oklch(0.723 0.108 337.3)"
+     "light": "oklch(0.492 0.068 337.3)",
+     "dark": "oklch(0.713 0.107 337.3)"
     }
    }
   }
