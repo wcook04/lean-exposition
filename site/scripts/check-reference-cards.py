@@ -6,7 +6,8 @@ Serve a build first, or point it at a dev server. Needs Playwright for Python an
 round points at the first reference in view that opens in place, at the place a tester's eye picks
 (ten pixels into its box, half way down), and that card must open under its sentence with its cue
 and no new tab, then close on Escape on the same pixel. A wrapped link is the case that matters:
-the middle of its box is the leading between its two lines.
+the middle of its box is the leading between its two lines. A link whose words are all one
+coloured phrase is left out: a click there opens the phrase, as on every phrase.
 """
 
 import argparse
@@ -19,6 +20,9 @@ SPOT = """() => {
   for (const a of document.querySelectorAll('.part__text a[data-ref]')) {
     const href = a.getAttribute('href') ?? '';
     if (a.classList.contains('companion') || (href.startsWith('#') && !/^#(thm|lem|prop|cor|eq|fig|question)-/.test(href))) continue;
+    // A link whose words are all one coloured phrase opens that phrase, as every phrase does.
+    const tie = a.closest('[data-t]') ?? a.querySelector('[data-t]');
+    if (tie && tie.textContent.trim() === a.textContent.trim()) continue;
     const r = a.getBoundingClientRect();
     if (r.top > 170 && r.bottom < 640) return {x: r.left + 10, y: r.top + r.height / 2, words: a.textContent.slice(0, 44), lines: a.getClientRects().length};
   }
