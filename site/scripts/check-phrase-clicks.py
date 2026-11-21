@@ -113,23 +113,6 @@ def main() -> int:
                     if node == expected:
                         break
                     found = page.evaluate(locate, segment) or found
-                # Under 1280px the pane is a sheet over the paper: close it, as a reader would, before the next phrase.
-                if args.width < 1280:
-                    page.keyboard.press("Escape")
-                    page.wait_for_timeout(250)
-                if node != expected:
-                    # Once more from a fresh page at the phrase, as a reader arriving there would.
-                    page.goto(f"{base}/read/{paper}/?v=lean&l={tie['at']}", wait_until="networkidle")
-                    page.wait_for_timeout(1200)
-                    again = page.evaluate(locate, segment)
-                    if again:
-                        page.mouse.click(again["x"], again["y"])
-                        page.wait_for_timeout(700)
-                        node = parse_qs(urlsplit(page.url).query).get("n", [""])[0]
-                        found = again
-                        if args.width < 1280:
-                            page.keyboard.press("Escape")
-                            page.wait_for_timeout(250)
                 if node != expected:
                     el = page.locator(f'.paper [data-t="{segment}"]').first
                     where = el.evaluate(PLACE)

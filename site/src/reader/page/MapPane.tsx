@@ -31,15 +31,13 @@ import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
 import { dockDecl } from "./PhraseCard";
-import { declarationNeighbourhood, stepNeighbourhood } from "./leanNeighbours";
+import { declarationNeighbourhood } from "./leanNeighbours";
 import { LeanNeighbourView } from "./LeanNeighbourView";
 import { useLeanModule, useLeanShell } from "../../lean/data";
 import "./map-pane.css";
 
 /** From this page width the Lean stands beside the graph, next to the paper. */
 const SIDE_BY_SIDE = 860;
-/** Under this height the Graph tab's graph folds to a strip above the card and Lean. */
-const SHORT_PANE = 760;
 /** The phrase split, until a reader draws its handle: the graph above, the card below. */
 const splitShare = { current: readSplitShare() };
 /** From this share up the Lean has the pane, and no graph shows. */
@@ -208,10 +206,10 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     if (!decl) return null;
     const { shell } = shellState;
     const lines = moduleState.module.source.split("\n");
-    const titleOf = (name: string) => shell.plain.get(name) ?? alignment?.names?.[name] ?? null;
+    const titleOf = (name: string) => shell.plain.get(name) ?? alignment?.names?.[name] ?? name.slice(name.lastIndexOf(".") + 1).replace(/_/g, " ");
     return declarationNeighbourhood({
       name: decl.name,
-      title: (pin && pin.tie !== null && ties.index.ties[pin.tie].rows?.find((row) => row.name === decl.name)?.plain) || titleOf(decl.name) || decl.name.slice(decl.name.lastIndexOf(".") + 1),
+      title: (pin && pin.tie !== null && ties.index.ties[pin.tie].rows?.find((row) => row.name === decl.name)?.plain) || titleOf(decl.name),
       kind: decl.kind,
       statement: lines.slice(decl.line - 1, decl.signature_end_line).join("\n"),
       uses: decl.uses,
@@ -276,8 +274,6 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   }, [structures, stage]);
   // Kept open, the Lean holds part of the page for good, so the map frames what is left.
   const [kept, setKept] = useState({ bottom: 0, left: 0 });
-  const keptRef = useRef(kept);
-  keptRef.current = kept;
   const insets: Insets = useMemo(() => ({ top: 12, left: 16 + kept.left, bottom: 24 + kept.bottom, right: 16 }), [kept]);
   const canvasRef = useRef<HTMLDivElement>(null);
   const wasOpen = useRef(false);
@@ -551,54 +547,10 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     if (split && pin) return cardRecord ? { key: `split:${cardRecord}`, ids: around(cardRecord), core: cardRecord, nearest: around(cardRecord, 2) } : null;
     if (pin && !expanded && reachOf(goal).has(pin.record)) return { key: `pin:${pin.record}`, ids: around(pin.record), core: pin.record, nearest: around(pin.record, 2) };
     if (expanded && !split) return null;
-    // Following the paper: the step being read with its direct neighbours, and the rest of the passage's steps.
-    return drawable.length ? { key: `read:${drawable.join("|")}`, ids: [...new Set([...around(drawable[0]), ...drawable])], core: drawable[0], nearest: around(drawable[0], 2) } : null;
+    return drawable.length ? { key: `read:${drawable.join("|")}`, ids: drawable, core: drawable[0], nearest: [drawable[0]] } : null;
   }, [neighbours, target, split, cardRecord, around, pin, expanded, reachOf, goal, drawable]);
-  // Where the map drawn whole cannot hold a step with its neighbours at a readable size, the top
-  // part shows that step with its neighbours in rows instead, until the reader asks for the map.
-  const [localStep, setLocalStep] = useState<string | null>(null);
-  const [wholeMap, setWholeMap] = useState(false);
-  useEffect(() => {
-    setLocalStep(null);
-    setWholeMap(false);
-  }, [subject?.key]);
-  const stepHood = useMemo(
-    () => (localStep && !wholeMap && split ? stepNeighbourhood(graph, localStep, reachOf(goal), (id) => shortTitle(id, graph.nodes.get(id)?.label ?? id)) : null),
-    [localStep, wholeMap, split, graph, reachOf, goal],
-  );
-  // No card is drawn in part: one the visible graph cannot hold whole is hidden until it can.
-  const markCut = useCallback(() => {
-    const body = bodyRef.current;
-    if (!body) return;
-    const b = body.getBoundingClientRect();
-    const area = { top: b.top, bottom: b.bottom - keptRef.current.bottom, left: b.left + keptRef.current.left, right: b.right };
-    for (const card of body.querySelectorAll<HTMLElement>(".map-pane__canvas .card[data-record]")) {
-      const r = card.getBoundingClientRect();
-      const meets = r.bottom > area.top && r.top < area.bottom && r.right > area.left && r.left < area.right;
-      const whole = r.top >= area.top - 0.5 && r.bottom <= area.bottom + 0.5 && r.left >= area.left - 0.5 && r.right <= area.right + 0.5;
-      card.toggleAttribute("data-cut", meets && !whole);
-    }
-  }, []);
-  // The camera glides and readers pan: keep the rule while the map is shown.
-  useEffect(() => {
-    const timer = window.setInterval(markCut, 250);
-    return () => window.clearInterval(timer);
-  }, [markCut]);
   const subjectRef = useRef(subject);
   subjectRef.current = subject;
-  // A pane too short to give the graph a useful half folds it to a strip, as on a phone.
-  const [short, setShort] = useState(false);
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    const measure = () => setShort(root.clientHeight > 0 && root.clientHeight < SHORT_PANE);
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-  const strip = split && short;
-  const splitRef = useRef(split);
-  splitRef.current = split;
   const reducedRef = useRef(reduced);
   reducedRef.current = reduced;
   /** The selected card and the two cards drawn nearest it among its neighbours, else the given ones. */
@@ -621,7 +573,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       .map((row) => row.id);
     return [core, ...near];
   };
-  const fitSubject = useCallback((retries = 0) => {
+  const fitSubject = useCallback(() => {
     const now = subjectRef.current;
     const tree = treeRef.current;
     // What is framed, for checks: the cards that must stand inside the visible graph.
@@ -630,12 +582,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const ids = now.ids;
     mark(ids);
     // A declaration's Lean neighbours lay themselves out to fit; only the map has a camera.
-    if (now.key.startsWith("lean:")) return;
-    // The map is coming back from the rows view: frame it once it is drawn.
-    if (!tree) {
-      if (retries < 10) window.setTimeout(() => subjectRef.current?.key === now.key && fitSubjectRef.current(retries + 1), 90);
-      return;
-    }
+    if (!tree || now.key.startsWith("lean:")) return;
     const animate = !reducedRef.current;
     tree.focusIds(ids);
     window.setTimeout(() => {
@@ -646,27 +593,14 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       // Then, if those still cannot fit at a readable size, the selected card alone, centred.
       let framed: readonly string[] = ids;
       const fallBack = () => {
-        if (subjectRef.current?.key !== now.key) return;
-        // Nothing laid out (a page without layout) cannot be judged.
-        if (!bodyRef.current?.getBoundingClientRect().width) return;
-        if (inViewRef.current(framed)) return markCut();
-        // On the Graph tab's top part: the step and its neighbours in rows, whole.
-        if (splitRef.current && !now.key.startsWith("lean:") && graph.nodes.has(now.core)) {
-          mark([now.core]);
-          setLocalStep(now.core);
-          return;
-        }
+        if (subjectRef.current?.key !== now.key || inViewRef.current(framed)) return;
         framed = framed === ids ? nearestDrawn(now.core, now.nearest) : [now.core];
         mark(framed);
         treeRef.current?.fitNodes(framed, animate, 250);
       };
-      [360, 760, 1160].forEach((ms) => window.setTimeout(fallBack, ms));
-      window.setTimeout(markCut, 1500);
+      [320, 700, 1100, 1500].forEach((ms) => window.setTimeout(fallBack, ms));
     }, 60);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graph, markCut]);
-  const fitSubjectRef = useRef<(retries?: number) => void>(fitSubject);
-  fitSubjectRef.current = fitSubject;
+  }, []);
   useEffect(() => {
     if (!subject) return void fitSubject();
     if (fadeTo) return;
@@ -730,17 +664,16 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
         onHover={onCard}
         onTrace={onTrace}
         onUserMove={onUserMove}
-        onSceneSettled={markCut}
       />
     ),
-    [goal, graph, insets, settledLit, hovered, coverage, onSelect, onCard, onTrace, onUserMove, markCut],
+    [goal, graph, insets, settledLit, hovered, coverage, onSelect, onCard, onTrace, onUserMove],
   );
 
   const mapHref = routeHref({ view: "map", goal, node: drawable[0] });
   const line = lineFor();
 
   return (
-    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}${split ? " map-pane--split" : ""}${strip ? " map-pane--strip" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}${split ? " map-pane--split" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
         <ModeToggle mode={mode} onMode={onMode} />
         <span className="map-pane__goal" title={title}>
@@ -793,11 +726,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
                 )}
                 <span className="map-pane__rest">{line.rest}</span>
               </p>
-              {stepHood ? (
-                <button type="button" className="map-pane__keep" onClick={() => setWholeMap(true)}>
-                  Show the whole map
-                </button>
-              ) : split && !ownDrawn && (neighbours || showArgument) ? (
+              {split && !ownDrawn && (neighbours || showArgument) ? (
                 <button type="button" className="map-pane__keep" onClick={() => setShowArgument(!showArgument)}>
                   {showArgument ? "Show its Lean neighbours" : "Show the argument map"}
                 </button>
@@ -815,11 +744,9 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
               )}
             </div>
           </header>
-          <div className="map-pane__body" ref={bodyRef} style={{ "--kept-bottom": `${kept.bottom}px` } as React.CSSProperties}>
+          <div className="map-pane__body" ref={bodyRef}>
             {neighbours && target ? (
               <LeanNeighbourView hood={neighbours} name={target.name} />
-            ) : stepHood && localStep ? (
-              <LeanNeighbourView hood={stepHood} name={localStep} kicker="This step" usesWord="It uses" usersWord="Used by" kind="step" onPick={(id) => onRecord?.(id)} />
             ) : (
               <div ref={canvasRef} className={`map-pane__canvas${fadeTo ? " is-fading" : ""}`}>
                 {tree}
@@ -895,9 +822,6 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       return { via, lead, name: said.name, rest: `${said.rest}${drawn(id)}` };
     };
     // The split's head names the phrase's step on the map; the card below names its Lean.
-    if (stepHood && localStep) {
-      return { via: pin ? "pin" : "follow", lead: "Step on the map", name: named(localStep), rest: "This step with the steps it uses and those that use it; the map drawn whole cannot show them all at a readable size here." };
-    }
     if (pin && split && neighbours) {
       return { via: "pin", lead: "Lean neighbours", name: neighbours.graph.nodes.get(target!.name)?.label, rest: "This declaration and its Lean neighbours; it is not a step in the argument drawn here." };
     }

@@ -31,7 +31,7 @@ describe("a declaration's Lean neighbourhood", () => {
       ["A.p1", "supports"],
       ["A.p2", "supports"],
     ]);
-    expect(n.users).toEqual([{ name: "A.u1", title: "Title of A.u1", plain: true }]);
+    expect(n.users).toEqual([{ name: "A.u1", title: "Title of A.u1" }]);
     expect(n.moreUsers).toBe(0);
   });
 
