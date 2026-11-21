@@ -125,6 +125,26 @@ def main() -> int:
                 check(f"{tag} toggle to text", back and page.locator(".phrase-card").count() > 0, page.url)
             check(f"{tag} no page errors", not errors, "; ".join(errors[:3]))
             context.close()
+        # Narrow windows and a phone: the header's visible parts never overlap, nothing scrolls
+        # sideways, and the paper's phrases are there to tap.
+        for width, height in ((800, 700), (1000, 800), (390, 844)):
+            tag = f"{width}x{height}"
+            context = browser.new_context(viewport={"width": width, "height": height}, is_mobile=width < 500, has_touch=width < 500)
+            page = context.new_page()
+            page.goto(base)
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            boxes = page.evaluate("""() => [...document.querySelector('.topbar').querySelectorAll('a, button')]
+                .filter(e => e.offsetParent && getComputedStyle(e).visibility !== 'hidden')
+                .map(e => { const r = e.getBoundingClientRect(); return [e.textContent.trim().slice(0, 24), r.left, r.right, r.top, r.bottom]; })
+                .filter(b => b[2] - b[1] > 1)""")
+            clash = [(a[0], b[0]) for i, a in enumerate(boxes) for b in boxes[i + 1:]
+                     if a[1] < b[2] - 1 and b[1] < a[2] - 1 and a[3] < b[4] - 1 and b[3] < a[4] - 1]
+            check(f"{tag} header", not clash, f"overlapping: {clash[:3]}")
+            wide = page.evaluate("document.documentElement.scrollWidth - innerWidth")
+            check(f"{tag} no sideways scroll", wide <= 1, f"{wide}px wider than the window")
+            if args.shots:
+                page.screenshot(path=str(args.shots / f"top-{tag}.png"))
+            context.close()
         browser.close()
     print(json.dumps(report, indent=1))
     if failures:
