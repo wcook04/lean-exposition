@@ -11,8 +11,19 @@ const paper = process.argv[2] ?? process.env.LX_PAPER;
 if (!paper || !/^[a-z0-9-]+$/.test(paper)) throw new Error("Name the library paper: library-instance.mjs <paper>");
 const from = resolve(import.meta.dirname, "../../instances", paper, "instance.json");
 if (!existsSync(from)) throw new Error(`No library paper ${paper}: ${from} is missing.`);
-copyFileSync(from, resolve(import.meta.dirname, "../src/instances/library/current.json"));
 const instance = JSON.parse(readFileSync(from, "utf8"));
+// The supports links whose only evidence is the Lean's dependencies (the converter's
+// "lean_dependencies" record), so the reader calls them derived from the Lean and never the
+// paper's own argument. Links the paper states carry other evidence.
+const graphPath = resolve(import.meta.dirname, "../../instances", paper, "evidence-graph.json");
+if (existsSync(graphPath)) {
+  const graph = JSON.parse(readFileSync(graphPath, "utf8"));
+  instance.lean_derived_supports = (graph.edges ?? [])
+    .filter((e) => e.kind === "supports" && e.evidence_ids?.length && e.evidence_ids.every((id) => id === "lean_dependencies"))
+    .map((e) => `${e.from}→${e.to}`)
+    .sort();
+}
+writeFileSync(resolve(import.meta.dirname, "../src/instances/library/current.json"), JSON.stringify(instance, null, 1) + "\n");
 const phrases = {};
 // Each numbered result's canonical target in the main document: the place of the tie at its
 // statement block (the tie index's `canonical`), so /theorem-1.1/ lands on the theorem itself.

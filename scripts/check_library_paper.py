@@ -145,6 +145,30 @@ def main() -> int:
                 whole.first.click()
                 page.wait_for_timeout(3000)
                 check(f"{tag} whole proof map", len(errors) == before and not page.locator(".page-guard").count(), "; ".join(errors[before:][:2]))
+                # An edge the layered map cannot route is drawn and counted, never dropped: every
+                # dashed unroutable line has its count in the map's notes, and the counts agree.
+                drawn = page.locator(".map-pane .link--unroutable").count()
+                noted = page.eval_on_selector_all(".map-pane [data-unroutable-count]", "els => els.reduce((n, e) => n + Number(e.dataset.unroutableCount), 0)")
+                check(f"{tag} unroutable edges counted", drawn == noted, f"{drawn} drawn, {noted} counted")
+            # The graph's words state what the data records: no "not a step of the argument" for a
+            # missing route, each side's count names its relations, and the key names every
+            # relation a line on the drawing shows.
+            page.goto(base + f"@{args.phrase}?v=graph")
+            page.wait_for_selector(".fg", timeout=60000)
+            page.wait_for_timeout(1500)
+            words = page.evaluate("""() => {
+                const fg = document.querySelector('.fg');
+                const sides = [...fg.querySelectorAll('.fg__side')].map(s => [s.dataset.band, Number(s.dataset.total), (s.querySelector('.fg__sidekinds')?.textContent ?? '').trim()]);
+                const lines = new Set([...fg.querySelectorAll('.fg__edge')].map(e => [...e.classList].find(c => c.startsWith('fg__edge--') && c !== 'fg__edge--group')?.slice(10)).filter(Boolean));
+                const keyed = new Set([...fg.querySelectorAll('[data-key-kind]')].map(e => e.dataset.keyKind));
+                return { text: document.querySelector('.map-pane')?.innerText ?? '', sides, lines: [...lines], keyed: [...keyed] };
+            }""")
+            claim = re.search(r"not a step of the paper", words["text"], re.I)
+            check(f"{tag} graph says missing data, not a claim", not claim, "found 'Not a step of the paper'" if claim else "")
+            unnamed = [band for band, total, how in words["sides"] if total and not re.match(r"\d+ (by|in) ", how)]
+            check(f"{tag} graph counts name their relations", words["sides"] and not unnamed, f"sides {words['sides']}")
+            unkeyed = [k for k in words["lines"] if k not in words["keyed"]]
+            check(f"{tag} graph key names every line's relation", not unkeyed, f"lines {words['lines']}, key {words['keyed']}")
             # Cards render their mathematics: no raw $ or backslash command left in the text a reader sees.
             raw = []
             for name in [args.decl, *args.raw_check]:
@@ -159,6 +183,21 @@ def main() -> int:
             check(f"{tag} cards typeset", not raw, "; ".join(raw[:3]))
             check(f"{tag} no page errors", not errors, "; ".join(errors[:3]))
             context.close()
+        # A failure in the pane beside the paper stays in the pane: its code is made to throw, and the
+        # paper, its phrases and the page itself must still be there, with the pane's own notice.
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        context.route(re.compile(r".*/assets/MapPane-[^/]*\.js$"), lambda route: route.fulfill(status=200, content_type="text/javascript", body="throw new Error('injected map pane failure');"))
+        page = context.new_page()
+        page.goto(base + f"@{args.phrase}?v=graph")
+        page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+        try:
+            page.wait_for_selector(".graph-boundary", timeout=15000)
+            contained = True
+        except Exception:
+            contained = False
+        kept = page.locator(".paper .tie").count() > 0 and not page.locator(".page-guard").count()
+        check("pane failure contained", contained and kept, f"pane notice {contained}, paper kept {kept}")
+        context.close()
         # Narrow windows and a phone: the header's visible parts never overlap, nothing scrolls
         # sideways, and the paper's phrases are there to tap.
         for width, height in ((800, 700), (1000, 800), (390, 844)):

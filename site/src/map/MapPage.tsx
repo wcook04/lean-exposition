@@ -14,6 +14,7 @@ import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { navigate, type Route } from "../app/router";
 import { PAPER_NAMES, statedIn } from "../app/papers";
+import { GraphBoundary } from "./GraphBoundary";
 import { ArgumentTree, type Insets, type MapViewHandle } from "./ArgumentTree";
 import { ArgumentOutline } from "./ArgumentOutline";
 import { lensArgument, pathFromGoal, reach, scopedGraph, usesOf } from "./treeModel";
@@ -594,6 +595,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             {leanGraph.status === "failed" ? "The Lean index could not be loaded." : "Reading the Lean modules this argument uses…"}
           </p>
         ) : display === "map" && leanReady ? (
+          <GraphBoundary scope={`Lean map of ${goal}`}>
           <ArgumentTree
             key={`lean:${route.lens ?? ""}`}
             ref={treeRef}
@@ -616,7 +618,9 @@ export function MapPage({ route }: { route: MapRoute }) {
             worldText
             onSceneSettled={onSceneSettled}
           />
+          </GraphBoundary>
         ) : display === "map" ? (
+          <GraphBoundary scope={`argument map of ${goal}`}>
           <ArgumentTree
             key="argument"
             ref={treeRef}
@@ -650,6 +654,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             statusOf={recordMark}
             tileWidth={laptop ? LAPTOP_TILE_W : undefined}
           />
+          </GraphBoundary>
         ) : (
           <ArgumentOutline
             graph={argument}
