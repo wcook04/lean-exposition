@@ -20,10 +20,32 @@ ALIGNMENT_SCHEMA_VERSION = "1.0"
 TIES_SCHEMA = 1
 NAMES_SCHEMA = 1
 NAMES_FILE = "names.json"
+PHRASES_SCHEMA = "phrase-ties/1"
+PHRASE_STATUS = {"kept", "revised", "new"}
 RELATIONS = {"states", "contains", "part", "proof", "defines"}
 ROLES = {"statement", "definition", "explanation", "derivation", "example", "mention"}
 MAX_SLICE_CHARACTERS = 1800
 MAX_NOTE_WORDS = 25
+# Optional comparison fields. `fidelity` says whether a Lean row states the same,
+# a stronger, a weaker or a different statement from the paper (different: neither
+# implies the other as written); `fidelity_source` says whether
+# that judgement is the recorded evidence mapping's or an AI author's; `origin`
+# says where a statement slice came from. Absent fields mean "not recorded".
+FIDELITY = {"same", "stronger", "weaker", "different"}
+FIDELITY_SOURCES = {"recorded", "ai"}
+ORIGINS = {"evidence_record", "ai"}
+FIDELITY_KEYS = {"fidelity", "fidelity_note", "fidelity_source"}
+
+
+def _comparison(item, keys, at, errors):
+    """The optional comparison fields of one row, checked; unknown values are errors."""
+    found = {key: item[key] for key in keys if key in item}
+    for key, allowed in (("fidelity", FIDELITY), ("fidelity_source", FIDELITY_SOURCES), ("origin", ORIGINS)):
+        if key in found and found[key] not in allowed:
+            errors.append(f"{at}: unknown {key} {found[key]!r}")
+    if "fidelity_note" in found and (not isinstance(found["fidelity_note"], str) or not found["fidelity_note"].strip()):
+        errors.append(f"{at}: fidelity_note must be nonempty text")
+    return found
 # A theorem's type is its statement and the rest is proof. A definition's body is
 # part of what it says, so it has no proof lines.
 PROOF_KINDS = {"theorem", "lemma"}
@@ -98,14 +120,17 @@ class _Paper:
             raise ValueError("slice has unbalanced mathematics")
         start_byte = len(text[:start].encode("utf-8"))
         end_byte = start_byte + len(markdown.encode("utf-8"))
+        return {"markdown": markdown, "start_byte": start_byte, "end_byte": end_byte,
+                "at": f"b{start_byte}-{end_byte}", **self.place(start_byte, end_byte)}
+
+    def place(self, start_byte, end_byte):
+        """The passage and the innermost section that hold these bytes."""
         anchor = next((name for left, right, name in self.passages
                        if left <= start_byte and end_byte <= right), None)
         enclosing = [s for s in self.sections if s["span"]["start_byte"] <= start_byte
                      and end_byte <= s["span"]["end_byte"]]
         section = enclosing[-1] if enclosing else None
-        return {"markdown": markdown, "start_byte": start_byte, "end_byte": end_byte,
-                "at": f"b{start_byte}-{end_byte}", "anchor": anchor,
-                "section": section["title"] if section else "",
+        return {"anchor": anchor, "section": section["title"] if section else "",
                 "heading_id": section["heading_id"] if section else None}
 
 
@@ -268,6 +293,236 @@ def _plain_names(path, known, errors):
     return dict(sorted(plain.items()))
 
 
+def _phrase_span(text, row):
+    """Where a phrase tie lies, by the rules the phrase returns were checked with.
+
+    `after`, when given, occurs once in the paper and the phrase starts after it; the
+    phrase's first words occur once in their paragraph from there, and its last words are
+    the first match after them. A phrase stays in one paragraph or one display.
+    """
+    begin = 0
+    after = row.get("after")
+    if after is not None:
+        if type(after) is not str or not after:
+            raise ValueError("after must be nonempty text")
+        found = text.find(after)
+        if found < 0:
+            raise ValueError(f"after not found: {after[:70]!r}")
+        if text.find(after, found + 1) >= 0:
+            raise ValueError(f"after occurs more than once: {after[:70]!r}")
+        begin = found + len(after)
+    first, last = row.get("from"), row.get("to")
+    if type(first) is not str or not first or type(last) is not str or not last:
+        raise ValueError("from and to must be nonempty text")
+    start = text.find(first, begin)
+    if start < 0:
+        raise ValueError(f"from not found: {first[:70]!r}")
+    block_start = text.rfind("\n\n", 0, start)
+    block_start = 0 if block_start < 0 else block_start + 2
+    block_end = text.find("\n\n", start)
+    block_end = len(text) if block_end < 0 else block_end
+    if text.count(first, max(block_start, begin), block_end) > 1:
+        raise ValueError(f"from occurs more than once in its paragraph, add after: {first[:70]!r}")
+    stop = text.find(last, start)
+    if stop < 0:
+        raise ValueError(f"to not found after from: {last[:70]!r}")
+    stop += len(last)
+    body = text[start:stop]
+    if len(body) > MAX_SLICE_CHARACTERS:
+        raise ValueError(f"phrase is {len(body)} characters")
+    if "\n\n" in body and not body.lstrip().startswith("$$"):
+        raise ValueError("phrase crosses a paragraph break")
+    return start, stop
+
+
+def _phrase_record(row, names, start_byte, end_byte, records, stage, by_name):
+    """The record a phrase belongs to on the argument map, or None.
+
+    A seed id (`<record>#<n>`) the phrase kept or replaced names it; otherwise the
+    narrowest earlier statement of this paper around the phrase whose Lean shares a
+    declaration with it; otherwise a record whose own Lean names one of its declarations.
+    """
+    for seed in (row.get("id", ""), *row.get("replaces", ())):
+        record = seed.rpartition("#")[0]
+        if record in records:
+            return record
+    around = []
+    for record_id, record in records.items():
+        for statement in record["statements"]:
+            if (statement["paper"] == stage and statement["start_byte"] <= start_byte
+                    and end_byte <= statement["end_byte"]
+                    and names & {lean["name"] for lean in (statement["lean"] or record["lean"])}):
+                around.append((statement["end_byte"] - statement["start_byte"], record_id))
+    if around:
+        return min(around)[1]
+    held = sorted(record for name in names for record in by_name.get(name, ()))
+    return held[0] if held else None
+
+
+def _phrase_lean(item, names, where, errors):
+    """One Lean row of a phrase tie, resolved to what the reader receives, or None."""
+    if not _check_keys(item, {"name", "file", "relation", "fidelity"},
+                       {"lines", "fidelity_note", "link_note"}, where, errors):
+        return None
+    if item["relation"] not in RELATIONS:
+        errors.append(f"{where}: unknown relation {item['relation']!r}")
+    if item["fidelity"] not in FIDELITY:
+        errors.append(f"{where}: unknown fidelity {item['fidelity']!r}")
+    note = item.get("fidelity_note")
+    if item["fidelity"] != "same" and (type(note) is not str or not note.strip()):
+        errors.append(f"{where}: a fidelity other than same needs a fidelity_note")
+    link = item.get("link_note", "")
+    if type(link) is not str or len(link.split()) > MAX_NOTE_WORDS:
+        errors.append(f"{where}: link_note must be text of at most {MAX_NOTE_WORDS} words")
+        link = ""
+    try:
+        module, target = _named(names, item, [])
+        lines = _authored_lines(item, target)
+    except ValueError as exc:
+        errors.append(f"{where}: {exc}")
+        return None
+    return {"name": target["name"], "module": module["name"], "line": target["line"],
+            "end_line": target["end_line"], "lines": lines or _statement_lines(target),
+            "exact_lines": lines is not None, **_proof_lines(target), "relation": item["relation"],
+            "note": link, "fidelity": item["fidelity"],
+            **({"fidelity_note": note} if note else {}), "fidelity_source": "ai"}
+
+
+def resolve_phrases(directory, prepared, names, records, errors):
+    """Each paper's phrase ties (`phrases-<paper>.json`), checked against its bytes and the Lean.
+
+    A phrase is found once, keeps its formulas whole, overlaps no other phrase, and every
+    declaration it names has a title, a reading note and, through the tie, a topic. The
+    result per paper holds its parts (topics, titles and notes, each part in the register of
+    the return that wrote it) and its ties in paper order. A pass means each pointer lands;
+    whether a phrase and its Lean say the same is the comparison an AI agent recorded.
+    """
+    by_name = {}
+    for record_id, record in records.items():
+        for lean in record["lean"]:
+            by_name.setdefault(lean["name"], set()).add(record_id)
+    out = {}
+    for path in sorted(Path(directory).glob("phrases-*.json")):
+        stage = path.stem.removeprefix("phrases-")
+        where = path.name
+        try:
+            data = json.loads(path.read_bytes())
+        except ValueError as exc:
+            errors.append(f"{where}: not valid JSON: {exc}")
+            continue
+        if stage not in prepared:
+            errors.append(f"{where}: {stage} is not a paper")
+            continue
+        if not isinstance(data, dict) or data.get("schema") != PHRASES_SCHEMA or data.get("paper") != stage:
+            errors.append(f"{where}: expected schema {PHRASES_SCHEMA} for paper {stage}")
+            continue
+        paper = prepared[stage]
+        text = paper.text
+        bytes_at = [0, *accumulate(len(c.encode("utf-8")) for c in text)]
+        line_starts = [0] + [m.end() for m in re.finditer("\n", text)]
+        formulas = [(a, b) for a, b, _ in _math_spans(text)]
+        formula_starts = [a for a, _ in formulas]
+        parts, topics = [], {}
+        for n, part in enumerate(data.get("parts") or ()):
+            at = f"{where}:parts[{n}]"
+            if not _check_keys(part, {"name", "lines", "topics", "titles", "notes"},
+                               {"packet", "source_commit"}, at, errors):
+                continue
+            first, last = part["lines"]
+            begin = line_starts[first - 1] if 0 < first <= len(line_starts) else 0
+            end = line_starts[last] if last < len(line_starts) else len(text)
+            ids = []
+            for topic in part["topics"]:
+                if (not isinstance(topic, dict) or not str(topic.get("id", "")).strip()
+                        or not str(topic.get("name", "")).strip()):
+                    errors.append(f"{at}: every topic needs an id and a name")
+                elif topic["id"] in topics:
+                    errors.append(f"{at}: topic {topic['id']} is repeated")
+                else:
+                    topics[topic["id"]] = (len(parts), len(ids))
+                    ids.append(topic["id"])
+            parts.append({"name": part["name"], "lines": [first, last],
+                          "start_byte": bytes_at[begin], "end_byte": bytes_at[end],
+                          "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", "")}
+                                     for t in part["topics"] if t.get("id") in ids],
+                          "titles": {}, "notes": {}, "_titles": part["titles"], "_notes": part["notes"],
+                          **{key: part[key] for key in ("packet", "source_commit") if key in part}})
+        if not parts:
+            errors.append(f"{where}: no parts")
+            continue
+        ties, taken, seen = [], [], set()
+        for n, row in enumerate(data.get("ties") or ()):
+            at = f"{where}:ties[{n}]"
+            if not _check_keys(row, {"id", "from", "to", "role", "topic", "status", "lean"},
+                               {"after", "replaces", "reason"}, at, errors):
+                continue
+            at = f"{where}:{row['id']}"
+            if row["id"] in seen:
+                errors.append(f"{at}: id is repeated")
+            seen.add(row["id"])
+            if row["role"] not in ROLES:
+                errors.append(f"{at}: unknown role {row['role']!r}")
+            if row["status"] not in PHRASE_STATUS:
+                errors.append(f"{at}: unknown status {row['status']!r}")
+            if row["topic"] not in topics:
+                errors.append(f"{at}: topic {row['topic']!r} is not a topic of this paper")
+                continue
+            try:
+                start, stop = _phrase_span(text, row)
+            except ValueError as exc:
+                errors.append(f"{at}: {exc}")
+                continue
+            for edge in (start, stop):
+                k = bisect_left(formula_starts, edge) - 1
+                if k >= 0 and formulas[k][0] < edge < formulas[k][1]:
+                    a, b = formulas[k]
+                    errors.append(f"{at}: phrase cuts the formula {text[a:b][:60]!r}")
+                    break
+            part = topics[row["topic"]][0]
+            if not parts[part]["start_byte"] <= bytes_at[start] < parts[part]["end_byte"]:
+                errors.append(f"{at}: topic {row['topic']} belongs to another part of the paper")
+            pairs = [(item, resolved) for k, item in enumerate(row["lean"] if type(row["lean"]) is list else ())
+                     if (resolved := _phrase_lean(item, names, f"{at}.lean[{k}]", errors)) is not None]
+            lean = [resolved for _, resolved in pairs]
+            if row["role"] in {"statement", "definition"} and not lean:
+                errors.append(f"{at}: a {row['role']} phrase needs at least one Lean row")
+            for item, resolved in pairs:
+                for key, kind in (("_titles", "titles"), ("_notes", "notes")):
+                    found = parts[part][key].get(item["name"], parts[part][key].get(resolved["name"]))
+                    if found is not None:
+                        parts[part][kind][resolved["name"]] = found
+            start_byte, end_byte = bytes_at[start], bytes_at[stop]
+            taken.append((start, stop, row["id"]))
+            located = paper.place(start_byte, end_byte)
+            ties.append({"id": row["id"], "role": row["role"], "topic": row["topic"], "part": part,
+                         "status": row["status"], "start_byte": start_byte, "end_byte": end_byte,
+                         "at": f"b{start_byte}-{end_byte}", **located,
+                         "record": _phrase_record(row, {item["name"] for item in lean}, start_byte, end_byte,
+                                                  records, stage, by_name),
+                         "lean": lean})
+        taken.sort()
+        for (a, b, one), (c, d, other) in zip(taken, taken[1:]):
+            if c < b:
+                errors.append(f"{where}: phrases {one} and {other} overlap")
+        for number, part in enumerate(parts):
+            named = {item["name"] for tie in ties if tie["part"] == number for item in tie["lean"]}
+            for name in sorted(named):
+                title, note = part["titles"].get(name), part["notes"].get(name)
+                words = len(title.split()) if type(title) is str else 0
+                if not 2 <= words <= 6 or title != title.strip():
+                    errors.append(f"{where}: {name} needs a trimmed title of two to six words in {part['name'] or 'its part'}")
+                if type(note) is not str or not note.strip():
+                    errors.append(f"{where}: {name} needs a reading note in {part['name'] or 'its part'}")
+                elif note.replace("\\$", "").count("$") % 2:
+                    errors.append(f"{where}: {name} has unbalanced mathematics in its reading note")
+            part["titles"] = dict(sorted(part["titles"].items()))
+            part["notes"] = dict(sorted(part["notes"].items()))
+            del part["_titles"], part["_notes"]
+        ties.sort(key=lambda tie: tie["start_byte"])
+        out[stage] = {"parts": parts, "ties": ties}
+    return out
+
+
 def _check_keys(row, required, optional, where, errors):
     if not isinstance(row, dict):
         errors.append(f"{where}: must be an object")
@@ -313,9 +568,11 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                 errors.append(f"{at}.lean: must be a list; [] says this statement has no Lean of its own")
             for n, row in enumerate(item["lean"] if type(item["lean"]) is list else ()):
                 where = f"{at}.lean[{n}]"
-                if _check_keys(row, {"name"}, {"file", "lines", "clause", "note", "relation"}, where, errors):
+                if _check_keys(row, {"name"}, {"file", "lines", "clause", "note", "relation", *FIDELITY_KEYS},
+                               where, errors):
                     try:
-                        narrowed.append(_narrowed(row, lean, names, sources))
+                        narrowed.append({**_narrowed(row, lean, names, sources),
+                                         **_comparison(row, FIDELITY_KEYS, where, errors)})
                     except ValueError as exc:
                         errors.append(f"{where}: {exc}")
         # An empty list is a claim of its own; only a list left out, or one that failed, falls back.
@@ -323,7 +580,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
         try:
             return {"paper": item["paper"], "role": item["role"], **prepared[item["paper"]].locate(item),
                     "lean": narrowed if own else lean, "lean_source": "statement" if own else "record",
-                    **({"note": item["note"]} if "note" in item else {})}
+                    **({"note": item["note"]} if "note" in item else {}),
+                    **_comparison(item, {"origin"}, at, errors)}
         except ValueError as exc:
             errors.append(f"{at}: {exc}")
             return None
@@ -358,7 +616,7 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
             for n, item in enumerate(row["lean"]):
                 at = f"{where}.lean[{n}]"
                 if not _check_keys(item, {"file", "name", "relation"},
-                                   {"note", "clause", "clause_file", "clause_name"}, at, errors):
+                                   {"note", "clause", "clause_file", "clause_name", *FIDELITY_KEYS}, at, errors):
                     continue
                 note = item.get("note", "")
                 if item["relation"] not in RELATIONS:
@@ -372,7 +630,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                     continue
                 resolved = {"name": target["name"], "module": module, "line": target["line"],
                             "end_line": target["end_line"], "relation": item["relation"], "note": note,
-                            "lines": _statement_lines(target), **_proof_lines(target)}
+                            "lines": _statement_lines(target), **_proof_lines(target),
+                            **_comparison(item, FIDELITY_KEYS, at, errors)}
                 try:
                     resolved.update(_clause(modules, sources, item, module, target))
                 except ValueError as exc:
@@ -380,7 +639,7 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                 lean.append(resolved)
             for n, item in enumerate(row["statements"]):
                 at = f"{where}.statements[{n}]"
-                if _check_keys(item, {"paper", "role", "from", "to"}, {"after", "lean", "note"}, at, errors):
+                if _check_keys(item, {"paper", "role", "from", "to"}, {"after", "lean", "note", "origin"}, at, errors):
                     resolved = statement(item, lean, at)
                     if resolved is not None:
                         statements.append(resolved)
@@ -418,7 +677,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
             continue
         for n, item in enumerate(data["statements"]):
             at = f"{path.name}:statements[{n}]"
-            if not _check_keys(item, {"record", "paper", "role", "from", "to"}, {"after", "lean", "note"}, at, errors):
+            if not _check_keys(item, {"record", "paper", "role", "from", "to"}, {"after", "lean", "note", "origin"},
+                               at, errors):
                 continue
             if item["record"] not in records:
                 errors.append(f"{at}: {item['record']} is not an aligned record")
@@ -446,9 +706,16 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
         for row in (*record["lean"], *(line for item in record["statements"] for line in item["lean"])):
             if row["name"] in plain:
                 row["plain"] = plain[row["name"]]
+    phrases = resolve_phrases(directory, prepared, names, records, errors)
+    for layer in phrases.values():
+        for tie in layer["ties"]:
+            for row in tie["lean"]:
+                if row["name"] in plain:
+                    row["plain"] = plain[row["name"]]
     if errors and strict:
         raise ContractError(f"{len(errors)} alignment error(s):\n" + "\n".join(errors))
-    return {"records": dict(sorted(records.items())), "dictionary": dictionary, "names": plain}, errors
+    return {"records": dict(sorted(records.items())), "dictionary": dictionary, "names": plain,
+            **({"phrases": phrases} if phrases else {})}, errors
 
 
 def _math_close(text, start, display):
@@ -582,10 +849,31 @@ def _tie(record_id, row, names=()):
             "name": name, **({"plain": names[name]} if name in names else {}),
             "module": None if lean is None else lean["clause_module"] if exact else lean["module"],
             "lines": None if lean is None else lean["clause_lines"] if exact else lean["lines"],
-            "anchor": row["anchor"], "at": row["at"]}
+            "anchor": row["anchor"], "at": row["at"],
+            # Optional comparison fields; absent in examples that do not record them.
+            **({"origin": row["origin"]} if "origin" in row else {}),
+            **({key: lean[key] for key in ("fidelity", "fidelity_note", "fidelity_source") if key in lean}
+               if lean is not None else {})}
 
 
-def tie_index(content, records, stage, passages=(), names=()):
+def _phrase_tie(row, part, tone, titles):
+    """A phrase as the reader receives it: the tie's fields, its topic's colour and every Lean row."""
+    first = row["lean"][0] if row["lean"] else None
+    rows = [{key: item[key] for key in ("name", "module", "line", "end_line", "lines", "exact_lines", "relation",
+                                         "fidelity", "fidelity_note", "fidelity_source", "note", "proof_lines")
+             if key in item} | ({"plain": titles[item["name"]]} if item["name"] in titles else {})
+            for item in row["lean"]]
+    # The comparison of each row travels in `rows`; the tie's own fields name the first row only.
+    return {"record": row["record"], "phrase": row["id"], "role": row["role"], "lean": first is not None,
+            "from_record": False, **({"relation": first["relation"]} if first else {}),
+            "name": first["name"] if first else None,
+            **({"plain": titles[first["name"]]} if first and first["name"] in titles else {}),
+            "module": first["module"] if first else None, "lines": first["lines"] if first else None,
+            "anchor": row["anchor"], "at": row["at"], "origin": "ai",
+            "topic": row["topic"], "part": part, "tone": tone, "rows": rows}
+
+
+def tie_index(content, records, stage, passages=(), names=(), phrases=None):
     """Every statement slice of one paper, cut to where a reader can mark it.
 
     `segments` never overlap. Each stays inside one block and keeps its math whole, and
@@ -596,10 +884,24 @@ def tie_index(content, records, stage, passages=(), names=()):
     """
     text = content.decode("utf-8")
     bytes_at = [0, *accumulate(len(c.encode("utf-8")) for c in text)]
-    rows = {(row["start_byte"], row["end_byte"], record_id): row for record_id, record in records.items()
-            for row in record["statements"] if row["paper"] == stage}
-    keys = sorted(rows)
-    ties = [_tie(key[2], rows[key], names) for key in keys]
+    if phrases is None:
+        rows = {(row["start_byte"], row["end_byte"], record_id): row for record_id, record in records.items()
+                for row in record["statements"] if row["paper"] == stage}
+        keys = sorted(rows)
+        ties = [_tie(key[2], rows[key], names) for key in keys]
+    else:
+        # The phrase layer replaces the record statements as what the paper marks: one tie per
+        # phrase, none overlapping. A topic's ties alternate between its colour's two shades.
+        colour = {topic["id"]: n for part in phrases["parts"] for n, topic in enumerate(part["topics"])}
+        rows = {(row["start_byte"], row["end_byte"], row["id"]): row for row in phrases["ties"]}
+        keys = sorted(rows)
+        seen, ties = {}, []
+        for key in keys:
+            row = rows[key]
+            shade = seen.get(row["topic"], 0)
+            seen[row["topic"]] = shade + 1
+            ties.append(_phrase_tie(row, row["part"], 2 * colour[row["topic"]] + shade % 2,
+                                    phrases["parts"][row["part"]]["titles"]))
     pieces, inline = _pieces(text)
     starts = [left for left, _ in inline]
     piece_starts = [piece[0] for piece in pieces]
@@ -625,11 +927,27 @@ def tie_index(content, records, stage, passages=(), names=()):
                 segments.append([bytes_at[left], bytes_at[right], members])
     fallback = []
     for start, end, ids, anchor in passages:
-        held = {tie["record"] for tie in ties if tie["anchor"] == anchor}
+        held = {tie["record"] for tie in ties if tie["anchor"] == anchor and tie["record"]}
         if ids or held:
             fallback.append([start, end, sorted({*ids, *held}), anchor])
-    return {"segments": segments, "ties": ties, "passages": sorted(fallback, key=lambda row: row[:2]),
-            "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading."}
+    index = {"segments": segments, "ties": ties, "passages": sorted(fallback, key=lambda row: row[:2]),
+             "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading."}
+    if phrases is not None:
+        index["layer"] = "phrases"
+        index["topics"] = [{"id": topic["id"], "name": topic["name"], "description": topic["description"],
+                            "part": number, "colour": n}
+                           for number, part in enumerate(phrases["parts"]) for n, topic in enumerate(part["topics"])]
+        index["parts"] = [{"name": part["name"], "start_byte": part["start_byte"], "end_byte": part["end_byte"]}
+                          for part in phrases["parts"]]
+    return index
+
+
+def phrase_notes(phrases):
+    """What the reader shows on a phrase's declaration card: each part's titles and reading notes."""
+    return {"parts": [{"name": part["name"], "lines": part["lines"], "titles": part["titles"], "notes": part["notes"]}
+                      for part in phrases["parts"]],
+            "meaning": "Titles and reading notes drafted by an AI agent in the register of the paper they annotate. "
+                       "No mathematician has reviewed them."}
 
 
 def lean_steps(alignment, index, edges, *, max_depth=8):
@@ -710,8 +1028,14 @@ def check_alignment(directory, *, lean_tree=None, graph=None, papers=None, out=N
                                                         for row in statements),
             "statements_showing_the_records_lean": sum(row["lean_source"] == "record" and bool(row["lean"])
                                                        for row in statements),
-            "tie_segments": {stage: len(tie_index(content, resolved["records"], stage)["segments"])
+            "tie_segments": {stage: len(tie_index(content, resolved["records"], stage,
+                                                  phrases=resolved.get("phrases", {}).get(stage))["segments"])
                              for stage, content in contents.items()},
+            "phrases": {stage: {"ties": len(layer["ties"]),
+                                "declarations": len({row["name"] for tie in layer["ties"] for row in tie["lean"]}),
+                                "topics": sum(len(part["topics"]) for part in layer["parts"]),
+                                "ties_on_the_map": sum(tie["record"] is not None for tie in layer["ties"])}
+                        for stage, layer in resolved.get("phrases", {}).items()},
             "dictionary_terms": len(resolved["dictionary"]),
             "plain_names": len(resolved["names"]),
             "meaning": "Every pointer lands. Whether the statements match remains a reading."}

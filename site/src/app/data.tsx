@@ -58,15 +58,19 @@ const PAGE_SIZE = 200;
  * The first page states the total, so the remaining pages are asked for
  * together rather than one after another.
  */
-async function allRecords<T>(table: string): Promise<T[]> {
-  type P = { items: FullRecordItem<T>[]; total: number };
-  const first = await get<P>("/records", { table, limit: PAGE_SIZE, offset: 0 });
+async function allPages<I>(table: string, extra: Record<string, string> = {}): Promise<I[]> {
+  type P = { items: I[]; total: number };
+  const first = await get<P>("/records", { table, ...extra, limit: PAGE_SIZE, offset: 0 });
   const rest: Promise<{ data: P }>[] = [];
   for (let offset = PAGE_SIZE; offset < first.data.total; offset += PAGE_SIZE) {
-    rest.push(get<P>("/records", { table, limit: PAGE_SIZE, offset }));
+    rest.push(get<P>("/records", { table, ...extra, limit: PAGE_SIZE, offset }));
   }
   const pages = [first, ...(await Promise.all(rest))];
-  return pages.flatMap((page) => page.data.items.map((i) => i.record));
+  return pages.flatMap((page) => page.data.items);
+}
+
+async function allRecords<T>(table: string): Promise<T[]> {
+  return (await allPages<FullRecordItem<T>>(table)).map((i) => i.record);
 }
 
 interface Core {
@@ -90,13 +94,17 @@ function loadCore(): Promise<Core> {
   return Promise.all([
     get<Overview>("/overview", startupForms ? { representation: "reader" } : {}),
     get<GraphMap>("/graph", { view: "arguments", representation: startupForms ? "reader_map" : "map", scope: "corpus", assumptions: "true" }),
-    get<{ items: SummaryCard[] }>("/records", { table: "nodes", representation: "summary", limit: PAGE_SIZE }),
+    // Every page: a graph with more than one page of steps (#257 has 690) would otherwise
+    // lose the paper roles of every step after the first page.
+    allPages<SummaryCard>("nodes", { representation: "summary" }),
     allRecords<NodeRecord>("nodes"),
     allRecords<SourceRecord>("sources"),
   ]).then(([overview, map, summaries, records, sources]) => {
     const long = overview.data.papers.find((p) => p.stage === "long");
-    const goals = long?.paper_scope.selected_goal_ids ?? map.data.selected_goals;
-    return { overview: overview.data, map: map.data, summaries: summaries.data.items, records, sources, goals };
+    // The graph's selected goals, then any further goal the long record names. For the SK
+    // edition both lists hold the same goals; the #257 long record names two of its five.
+    const goals = [...new Set([...map.data.selected_goals, ...(long?.paper_scope.selected_goal_ids ?? [])])];
+    return { overview: overview.data, map: map.data, summaries, records, sources, goals };
   });
 }
 

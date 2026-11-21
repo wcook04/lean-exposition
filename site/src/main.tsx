@@ -17,6 +17,8 @@ import "./reader/reader-content.css";
 import "./figures/figures.css";
 import "./app/app.css";
 import "./home/hero.css";
+// The selected instance's own styles, if it has any (the SK site has none).
+import "@instance/theme";
 
 import { App } from "./app/App";
 import { prefetch } from "./app/prefetch";

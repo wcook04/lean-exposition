@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { frameHtml, heroHtml, heroLinks, HERO_ROWS } from "../src/home/heroMarkup";
+import { frameHtml, heroHtml, heroLinks, HERO_ROWS } from "../src/instances/qaoa-sk/hero";
 
 const lean = readFileSync(resolve("../examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKFullSupport.lean"), "utf8");
 const theorem = JSON.parse(readFileSync(resolve("../examples/qaoa-sk/alignment/main-theorem.json"), "utf8")) as {

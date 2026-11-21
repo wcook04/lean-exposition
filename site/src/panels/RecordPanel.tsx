@@ -372,7 +372,7 @@ function InLean({
     return (
       <div className="panel__lean">
         {aligned.lean.map((row, i) => (
-          <LazyLeanBlock key={`${row.name}:${i}`} name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} compact {...hosted} {...{ lines: row.lines, quietLines: true }} />
+          <LazyLeanBlock key={`${row.name}:${i}`} name={row.name} module={row.module} relation={row.relation} note={row.note} fidelity={row} clause={row.clause} compact {...hosted} {...{ lines: row.lines, quietLines: true }} />
         ))}
       </div>
     );

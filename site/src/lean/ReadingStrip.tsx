@@ -3,6 +3,7 @@
 // own at the foot of the block, or in a slot its host gives it, and that row keeps its height
 // whether or not a name is being read. So pointing moves nothing and covers nothing.
 
+import site from "@instance/site";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { texHtml } from "../figures/tex";
@@ -121,7 +122,7 @@ export function ReadingLine({ target, shell }: { target: NameTarget; shell: Lean
         <Breakable name={target.name} />
         <span className="lean-read__place">From Mathlib</span>
       </p>
-      <p className="lean-read__words">{target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}</p>
+      <p className="lean-read__words">{target.words ?? `Defined outside ${site.lean.ownerSource}, in Mathlib or Lean's core library.`}</p>
       <span className="lean-read__note">Click to find it in Mathlib's documentation, in a new tab.</span>
     </>
   );

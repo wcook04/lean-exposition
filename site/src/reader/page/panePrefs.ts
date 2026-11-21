@@ -48,3 +48,23 @@ export function saveKeepLean(open: boolean) {
     /* storage unavailable: the choice lasts until the page closes */
   }
 }
+
+const SPLIT_KEY = "lx-reader-graph-split";
+
+/** How much of the Graph tab the Lean below the graph takes: 55% until a reader draws the divider. */
+export function readSplitShare(): number {
+  try {
+    const value = Number(localStorage.getItem(SPLIT_KEY));
+    return value ? clampDock(value) : 0.55;
+  } catch {
+    return 0.55;
+  }
+}
+
+export function saveSplitShare(share: number) {
+  try {
+    localStorage.setItem(SPLIT_KEY, String(share));
+  } catch {
+    /* storage unavailable: the divider lasts until the page closes */
+  }
+}

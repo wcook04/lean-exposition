@@ -5,6 +5,7 @@
 // Every fact here comes from the API. The only editorial choices are the
 // region titles below, which name the long record's three selected goals.
 
+import site from "@instance/site";
 import type {
   EdgeRecord,
   EvidenceRecord,
@@ -179,11 +180,7 @@ export interface ArgGraph {
 export const britishLabel = (label: string) => label.replace(/inimiz/g, "inimis");
 
 /** Short names for the regions, keyed by goal id. Falls back to the goal label. */
-const REGION_TITLES: Record<string, string> = {
-  full_support: "Full support",
-  scalar_value: "Value identities",
-  qaoa_thermodynamic_first: "QAOA circuits",
-};
+const REGION_TITLES: Record<string, string> = site.regionTitles;
 
 const KIND_OF_LINK: Record<string, LinkKind> = {
   supports: "supports",
@@ -244,14 +241,19 @@ export function buildGraph(
   }
 
   const grouped = new Map<string, ArgEdge>();
+  // A graph with no recorded application (the #257 edition) gives its corpus links without
+  // the node ids; each is then read from the end of the link's node reference.
+  const nodeIdOf = (ref: string) => decodeURIComponent(ref.slice(ref.lastIndexOf("/nodes/") + "/nodes/".length));
   for (const link of map.links) {
     const kind = linkKind(link);
-    if (!kind || !nodes.has(link.from_node_id) || !nodes.has(link.to_node_id)) continue;
-    const key = `${link.from_node_id}→${link.to_node_id}→${kind}`;
+    const fromId = (link.from_node_id as string | undefined) ?? nodeIdOf(link.from);
+    const toId = (link.to_node_id as string | undefined) ?? nodeIdOf(link.to);
+    if (!kind || !nodes.has(fromId) || !nodes.has(toId)) continue;
+    const key = `${fromId}→${toId}→${kind}`;
     const edge = grouped.get(key) ?? {
       key,
-      from: link.from_node_id,
-      to: link.to_node_id,
+      from: fromId,
+      to: toId,
       kind,
       linkIds: [],
       scoped: false,
@@ -278,7 +280,7 @@ export function buildGraph(
   for (const component of map.components) {
     if (!component.cyclic) continue;
     for (const ref of component.members) {
-      const id = ref.slice(ref.lastIndexOf("/nodes/") + "/nodes/".length);
+      const id = decodeURIComponent(ref.slice(ref.lastIndexOf("/nodes/") + "/nodes/".length));
       cyclic.add(id);
     }
   }

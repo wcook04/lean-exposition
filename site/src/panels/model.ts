@@ -4,6 +4,7 @@
 // Nothing here invents a fact; each sentence restates a field the API serves.
 // DESIGN.md § Wording is the reference for every phrase.
 
+import site from "@instance/site";
 import type { AlignedPassage, Stage } from "../api/types";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { closure, type ArgGraph, type LinkKind } from "../model/graph";
@@ -221,7 +222,7 @@ export const COVERAGE_WORDS: Record<keyof Coverage, string> = {
 };
 
 export function coverageScope(total: number): string {
-  return `Across all ${total} steps`;
+  return `Across all ${total} ${site.recordKind ? "records" : "steps"}`;
 }
 
 /** The first sentence of a recorded text, for a one-line gist. */

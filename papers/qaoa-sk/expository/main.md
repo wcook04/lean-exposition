@@ -303,9 +303,9 @@ OpenAI (2026a), Figure 1; the paired example is constructed here.}
 
 A constant candidate $\gamma(t)=c>0$ sharpens the distinction. Its
 measure is $c\delta_0$, supported only at zero, so positivity of the
-function falls far short of the conclusion we seek. Full support is also
-weaker than having a density, since a measure with summable positive
-masses at a dense countable set has full support. The further-reading note returns to the stronger
+function falls far short of the conclusion we seek. Full support does not
+require a density: summable positive masses at a dense countable set
+already give full support. The further-reading note returns to the stronger
 density conclusion.
 
 <a id="question-1"></a>

@@ -1,0 +1,87 @@
+{
+ "repository": "https://github.com/wcook04/plectis-erdos",
+ "commit": "3368d1e69467aec111eb3244843ad3542171ff96",
+ "papers": {
+  "short": {
+   "source_files": {
+    "full_text_markdown": "docs/papers/full-text/erdos-257-mersenne-support-subseries.md",
+    "tex": "paper/257/erdos-257-mersenne-support-subseries.tex",
+    "aux": "erdos-257-mersenne-support-subseries.aux",
+    "pdf": "paper/257/erdos-257-mersenne-support-subseries.pdf"
+   },
+   "sha256": {
+    "full_text_markdown": "37beed6af1038beb2d901a5af22a86980a7f2bc5c27c8c40e26a524ee6a247ca",
+    "tex": "dc3986fdadf0e875ef95894e7cab1eb36f42dddfcf2bceb1eea588e556a3fd0b",
+    "aux": "fc8b44ba6c5ac5496c16b57a19ef06baba7265cfd80324647cc6af773641ff84",
+    "pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69"
+   },
+   "tex_inputs_sha256": {
+    "paper/problem-note-preamble.tex": "088d36d7ba3d3ee0cee2df99e8915927999698f19889f8ea0b8d55b3721ec778",
+    "paper/paper-house-style.sty": "554ed85b5315bd936a4d09d58f8727547c5bb1b299f9684eb6ef720b329759a2",
+    "paper/paper-evidence.tex": "1ba1b3a112445f6fee7794f2083c29a60fb102d239d5e799808a36b9a5e562e3",
+    "paper/evidence/erdos-257-mersenne-support-subseries.tex": "722ce3fc0640d2a265e5dd747e1c1d9a5d87a65aa5975d51a664acfed4135fef"
+   },
+   "outputs_sha256": {
+    "short/paper.md": "986ce71a2202ea63e52e6a173b88a17f7b47531f563f5ef0c2e56b7d3bb88426",
+    "short/paper.pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
+    "short/passages.json": "3016a4284b70440a7e9ee00ade1bbed8eb6152b92ca6bf59d0ce2cde74e9c1c7"
+   }
+  },
+  "expository": {
+   "source_files": {
+    "full_text_markdown": "docs/papers/full-text/erdos257-expository-sums-never-fractions.md",
+    "tex": "paper/257/erdos257-expository-sums-never-fractions.tex",
+    "aux": "erdos257-expository-sums-never-fractions.aux",
+    "pdf": "paper/257/erdos257-expository-sums-never-fractions.pdf"
+   },
+   "sha256": {
+    "full_text_markdown": "98d643c8c89f8c420de8a3ddcf99758a679773ffdefc7fd151fa342e6364cb2c",
+    "tex": "27275fec09eb84e1bd833411f9e30ed4e8bfae35ab711d373cc7395bd1845002",
+    "aux": "e097c6e07d4532fd32fc023672d604d799d8840f49eb7c4c1ea02c5107c3402f",
+    "pdf": "34e8bdfbe8ca43adff8e7e400cad8bf1e109cc76150f57fb98184d55d1944e0d"
+   },
+   "tex_inputs_sha256": {
+    "paper/paper-house-style.sty": "554ed85b5315bd936a4d09d58f8727547c5bb1b299f9684eb6ef720b329759a2",
+    "paper/257/figures/cycle-mean.tex": "6155b89fc5370c923a1b66e349ae7086bbb3e30c9d34bd3ca09a0583064893da"
+   },
+   "outputs_sha256": {
+    "expository/main.md": "71083856306374c63ea8277fd72b934364ef30186261add8b961bdd03dd68476",
+    "expository/main.pdf": "34e8bdfbe8ca43adff8e7e400cad8bf1e109cc76150f57fb98184d55d1944e0d",
+    "expository/passages.json": "f50a05017bad475ddab44be2605e88605448d1799fe1d9d0f3c23031b79bb90d",
+    "expository/figures/cycle-mean.svg": "5ec9d0cea94c541b195d2384b12cf35672baa1b57f3c9f1a8b54e25ff234c85e"
+   }
+  },
+  "long": {
+   "source_files": {
+    "full_text_markdown": "docs/papers/full-text/erdos257-mersenne-reasoning-surface.md",
+    "tex": "paper/257/erdos257-mersenne-reasoning-surface.tex",
+    "aux": "erdos257-mersenne-reasoning-surface.aux",
+    "pdf": "paper/257/erdos257-mersenne-reasoning-surface.pdf"
+   },
+   "sha256": {
+    "full_text_markdown": "ecd5ecb3d985f9bf345d7d7993cd686cf4f5bf2b81c49d143115d28eb88131ca",
+    "tex": "09285ac50fbb892b4a027489ccaf1e986fc72d502a761c343c6cb6334a321489",
+    "aux": "e48c0da126f94af2c3ffa8b4eef8489ff12db119507c6f2ed2ff1d58ce2ae85e",
+    "pdf": "59445e943ac9586d1bc2793a56e70704231ed2a9d679411a375ae24023b421bf"
+   },
+   "tex_inputs_sha256": {
+    "paper/paper-house-style.sty": "554ed85b5315bd936a4d09d58f8727547c5bb1b299f9684eb6ef720b329759a2",
+    "paper/paper-evidence.tex": "1ba1b3a112445f6fee7794f2083c29a60fb102d239d5e799808a36b9a5e562e3",
+    "paper/reasoning-parts/erdos257/preamble.tex": "1deb043326661007c7d751e5b3dc946431a7ae2f829c9ae993160bc082a52958",
+    "paper/evidence/erdos257-mersenne-reasoning-surface.tex": "3ae0d45633dae1966b9dbcad7d3ef837698acfd238679766000f37b47d213f37"
+   },
+   "outputs_sha256": {
+    "long/reasoning-record.md": "1fd49f692320db9f27935d8a5c8bc9bc22bddf38904cfd9fa8def31510d242d5",
+    "long/reasoning-record.pdf": "59445e943ac9586d1bc2793a56e70704231ed2a9d679411a375ae24023b421bf",
+    "long/passages.json": "d2f46693d752ed79e83d583d1b3ea0724af5370a65174d7c414e9f4055cfc172"
+   }
+  }
+ },
+ "notes": {
+  "short": [
+   "relative link to paper/synthesis/optimal-sparse-perturbations.pdf, absent from the export, linked at the pinned commit"
+  ],
+  "expository": [],
+  "long": []
+ }
+}

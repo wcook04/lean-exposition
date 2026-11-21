@@ -1,6 +1,8 @@
 // Which declaration a typed name means. Exact names come first, then names that start with
 // what was typed, then names that hold it, so the first result is the one a reader who knows
-// the name wanted. Used by the Lean page's find box and by search. No dependencies.
+// the name wanted. Used by the Lean page's find box and by search.
+
+import site from "@instance/site";
 
 /** The tiers, best first. */
 const EXACT = 0;
@@ -25,8 +27,8 @@ export function matchName(lowerName: string, lowerShort: string, query: string):
 /** The Comparator challenge files repeat names from the proof trees, and rank after them. */
 export const isChallengeCopy = (module: string) => module.startsWith("ComparatorChallenges");
 
-/** Between two proof trees that share a name, the main theorem's tree comes first. */
-export const inMainTree = (module: string) => module.includes(".SKSupport");
+/** Between two proof trees that share a name, the main theorem's tree comes first (the instance names it). */
+export const inMainTree = (module: string, mainTree: string | null = site.lean.mainTree) => (mainTree ? module.includes(mainTree) : false);
 
 export interface Nameable {
   name: string;

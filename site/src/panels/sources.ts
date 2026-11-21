@@ -18,15 +18,22 @@ export interface Provenance {
   citations: Map<string, CitationRecord>;
 }
 
+/** Every page of one table: the #257 graph has more than one page of citations. */
+async function every<T>(table: string): Promise<T[]> {
+  const out: T[] = [];
+  for (let offset = 0; ; offset += 200) {
+    const page = await get<{ items: FullRecordItem<T>[]; total: number }>("/records", { table, limit: 200, offset });
+    out.push(...page.data.items.map((i) => i.record));
+    if (page.data.items.length < 200 || out.length >= page.data.total) return out;
+  }
+}
+
 export function useProvenance() {
   return useResource<Provenance>("panel:provenance", async () => {
-    const [sources, citations] = await Promise.all([
-      get<{ items: FullRecordItem<SourceRecord>[] }>("/records", { table: "sources", limit: 200 }),
-      get<{ items: FullRecordItem<CitationRecord>[] }>("/records", { table: "citations", limit: 200 }),
-    ]);
+    const [sources, citations] = await Promise.all([every<SourceRecord>("sources"), every<CitationRecord>("citations")]);
     return {
-      sources: new Map(sources.data.items.map((i) => [i.record.id, i.record])),
-      citations: new Map(citations.data.items.map((i) => [i.record.id, i.record])),
+      sources: new Map(sources.map((r) => [r.id, r])),
+      citations: new Map(citations.map((r) => [r.id, r])),
     };
   });
 }

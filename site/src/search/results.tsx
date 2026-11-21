@@ -19,6 +19,7 @@ import { markedPieces, type LeanHit } from "./leanNames";
 import { kindWord } from "../lean/data";
 import { isChallengeCopy } from "../lean/find";
 import { hasLeanHost } from "../lean/walk";
+import { mainGoalOf } from "../app/mainGoal";
 
 /** The API table behind each kind of result, in the order results are listed. */
 export const SEARCH_TABLES: { type: SearchType; table: string; noun: [string, string] }[] = [
@@ -86,7 +87,7 @@ export function stepTitles(graph: ArgGraph, main: string | null): StepTitles {
 /** The main result the long record names, as the search's first place. */
 export function mainStep(overview: Overview, graph: ArgGraph): string | null {
   const long = overview.papers.find((paper) => paper.stage === "long");
-  return (long?.paper_scope.selected_goal_ids ?? graph.goals).find((goal) => graph.nodes.has(goal)) ?? null;
+  return mainGoalOf(long?.paper_scope.selected_goal_ids, graph.goals, (goal) => graph.nodes.has(goal)) ?? null;
 }
 
 /** Whether a Lean result would open beside what is being read. */
@@ -168,7 +169,7 @@ export function stageOf(item: SearchItem): Stage | null {
 export function idFromRef(ref: string, table: string): string {
   const marker = `/${table}/`;
   const at = ref.lastIndexOf(marker);
-  return at >= 0 ? ref.slice(at + marker.length) : ref;
+  return at >= 0 ? decodeURIComponent(ref.slice(at + marker.length)) : ref;
 }
 
 // ---------------------------------------------------------------- one result

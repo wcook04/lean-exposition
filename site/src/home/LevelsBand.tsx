@@ -7,6 +7,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import site from "@instance/site";
 import { SITE_FACTS } from "virtual:site-facts";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
@@ -22,13 +23,25 @@ import { layoutScope, recordOf, splitSharedLeaves } from "../map/engine/occurren
 import { layoutBounds, layoutTree } from "../map/engine/layout";
 import { roundedPath, route } from "../map/engine/router";
 import { METRICS_COMPACT, type EngineEdge, type Size } from "../map/engine/types";
+import { countKinds, kindsInWords } from "./recordKinds";
 
 type LevelId = "lean" | Stage;
 
-const TILE: Size = { w: 136, h: 40 };
-const ROOT: Size = { w: 248, h: 42 };
+/**
+ * Where each level draws its own goal (#257), the drawing is a handful of records wide, so its
+ * cards are sized for a whole short title on up to three lines and the drawing may grow past its
+ * natural size to fill the column (wide.css sets the type in pixels to match). The SK site keeps
+ * its compact cards.
+ */
+const ROOMY = Boolean(site.levelGoals);
+const TILE: Size = ROOMY ? { w: 132, h: 54 } : { w: 136, h: 40 };
+const ROOT: Size = ROOMY ? { w: 264, h: 46 } : { w: 248, h: 42 };
 /** The map's compact spacing with no arrowheads, drawn tight enough to read as one figure. */
-const SPACING = { ...METRICS_COMPACT, arrow: 0, gapMin: 24, trackSp: 5, padTop: 10, padBottom: 6 };
+const SPACING = { ...METRICS_COMPACT, arrow: 0, gapMin: ROOMY ? 12 : 24, trackSp: 5, padTop: 10, padBottom: 6 };
+/** How far the drawing may grow past its natural size. */
+const MAX_SCALE = ROOMY ? 1.4 : 1;
+/** A level whose own drawing is no more than its goal and one record draws the short paper's tree instead. */
+const OWN_TREE_MIN = 3;
 
 interface Tile {
   id: string;
@@ -111,15 +124,23 @@ function drawingOf(full: ArgGraph, goal: string, keep: ReadonlySet<string> | nul
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 const base = import.meta.env.BASE_URL;
 
+/**
+ * The level a reader last chose, kept while the page's scripts stay loaded, so that Back from
+ * a record opened from the tree returns to the same tree (#257; the SK band replays its opening).
+ */
+let lastChosen: LevelId | null = null;
+
 /** The levels of the funnel, widest first. */
 const STAGES: Stage[] = ["long", "short", "expository"];
 
 export function LevelsBand({ id, leanModules }: { id: string; leanModules: number | null }) {
   const edition = useEdition();
   const { graph } = edition;
-  const goal = edition.graph.goals.find((g) => g === "full_support") ?? edition.graph.goals[0];
+  const goal = edition.graph.goals.find((g) => g === site.mainGoal) ?? edition.graph.goals[0];
   const version = edition.context;
-  const [level, setLevel] = useState<LevelId>("long");
+  // Where a level draws its own goal (#257), the long record records no steps between its
+  // results, so the band opens on the short paper and the Lean level draws the whole argument.
+  const [level, setLevel] = useState<LevelId>(site.levelGoals ? (lastChosen ?? "short") : "long");
 
   const nodes = useMemo(() => [...graph.nodes.values()], [graph]);
   const total = nodes.length;
@@ -130,22 +151,41 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
     return out;
   }, [nodes]);
 
+  // The goal each level draws: the main theorem, or that paper's own record of it (site.levelGoals).
+  const goalOf = (stage: Stage) => {
+    const own = site.levelGoals?.[stage];
+    return own && graph.nodes.has(own) ? own : goal;
+  };
   const drawings = useMemo(() => {
-    const within = (stage: Stage) => new Set(nodes.filter((n) => n.id === goal || lensRole(n, stage) === "direct").map((n) => n.id));
+    const within = (stage: Stage) => new Set(nodes.filter((n) => n.id === goalOf(stage) || lensRole(n, stage) === "direct").map((n) => n.id));
     // The Lean level draws the same steps as the long record, so it shares that drawing:
     // its cards stay where they are and only their marks change.
-    const long = drawingOf(graph, goal, within("long"));
+    const long = drawingOf(graph, goalOf("long"), within("long"));
+    const short = drawingOf(graph, goalOf("short"), within("short"));
+    if (!site.levelGoals) return { lean: long, long, short, expository: drawingOf(graph, goalOf("expository"), within("expository")) } satisfies Record<LevelId, Drawing>;
+    // Where a level draws its own goal, the Lean's own tree is of declarations, not of these
+    // records, and a paper may state too few of the argument's records to make a tree. Those
+    // levels draw the short paper's tree with their own records marked (borrowed, below).
+    const own = (d: Drawing) => (d.tiles.size >= OWN_TREE_MIN ? d : short);
     return {
-      lean: long,
-      long,
-      short: drawingOf(graph, goal, within("short")),
-      expository: drawingOf(graph, goal, within("expository")),
+      lean: short,
+      long: own(long),
+      short,
+      expository: own(drawingOf(graph, goalOf("expository"), within("expository"))),
     } satisfies Record<LevelId, Drawing>;
     // The stored edges attach to the same graph object as they arrive.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph, goal, version, nodes]);
 
-  const widest = drawings.lean;
+  // The SK site draws one argument, widest at the long record; where a level draws its own
+  // goal, the stage is as wide and as tall as the largest drawing.
+  const unique = useMemo(() => [...new Set(Object.values(drawings))], [drawings]);
+  const widest = useMemo<Drawing>(() => {
+    if (!site.levelGoals) return drawings.lean;
+    const all = Object.values(drawings);
+    const wide = all.reduce((a, b) => (b.w > a.w ? b : a));
+    return { ...wide, h: Math.max(...all.map((d) => d.h)) };
+  }, [drawings]);
   const current = drawings[level];
   const everyTile = useMemo(() => {
     const seen = new Map<string, Tile>();
@@ -160,10 +200,14 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
   const chose = useRef(false);
   const choose = (next: LevelId) => {
     chose.current = true;
+    if (site.levelGoals) lastChosen = next;
     setLevel(next);
   };
   useEffect(() => {
     const el = stageRef.current;
+    // Where a level draws its own goal (#257), the band stays on the short paper, the main
+    // theorem's level, until the reader chooses another.
+    if (site.levelGoals) return;
     if (!el || typeof IntersectionObserver === "undefined" || prefersReducedMotion()) return;
     const timers: number[] = [];
     const observer = new IntersectionObserver(([entry]) => {
@@ -182,23 +226,42 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
   useLayoutEffect(() => {
     const el = stageRef.current;
     if (!el) return;
-    const measure = () => setScale(Math.min(1, el.clientWidth / widest.w));
+    const measure = () => setScale(Math.min(MAX_SCALE, el.clientWidth / widest.w));
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
     return () => observer.disconnect();
   }, [widest.w]);
 
-  const argumentSize = useMemo(() => levelCounts(graph, reach(scopedGraph(graph, goal), goal)), [graph, goal]);
+  const levelGoal = level === "lean" ? goal : goalOf(level);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const argumentSize = useMemo(() => levelCounts(graph, reach(scopedGraph(graph, levelGoal), levelGoal)), [graph, levelGoal]);
+  const argumentName = levelGoal === goal ? "the main theorem" : (graph.nodes.get(levelGoal)?.label ?? levelGoal);
   const leftover = (widest.w - current.w) / 2;
-  const offset = (t: Tile, d: Drawing) => ({ x: t.x - d.x + (d === widest ? 0 : leftover), y: t.y - d.y });
+  // A level drawn on the short paper's tree marks its own records there.
+  const borrowed = Boolean(site.levelGoals) && level !== "short" && current === drawings.short;
+  const marks = (id: string) => {
+    if (!borrowed) return false;
+    if (level === "lean") return (recordLine(id)?.lean ?? 0) > 0;
+    const node = graph.nodes.get(id);
+    return !!node && lensRole(node, level) === "direct";
+  };
+  const drawn = [...new Set([...current.tiles.values()].map((t) => t.id))];
+  const marked = drawn.filter(marks).length;
+  const offset = (t: Tile, d: Drawing) => ({ x: t.x - d.x + (d.tiles === widest.tiles ? 0 : leftover), y: t.y - d.y });
+
+  // An instance that sorts its records (#257) says what they are; the SK site calls each a step.
+  const kindOf = site.recordKind;
+  const kinds = useMemo(() => (kindOf ? countKinds(nodes, kindOf) : null), [nodes, kindOf]);
+  const levelKinds = (stage: Stage) => (kindOf ? kindsInWords(countKinds(nodes.filter((n) => lensRole(n, stage) === "direct"), kindOf), true) : "");
+  const noun = kindOf ? "records" : "steps";
 
   const rows: { id: LevelId; name: string; who: string; count: string; read?: string; readWord?: string; stage?: Stage }[] = [
     {
       id: "lean",
       name: "The Lean proof",
-      who: "OpenAI’s statements and proofs, written for the Lean compiler.",
-      count: `${leanModules === null ? "" : `${plural(leanModules, "source file")}, `}linked to ${counts.lean} of the ${total} steps on this site`,
+      who: site.leanLevelWho,
+      count: `${leanModules === null ? "" : `${plural(leanModules, "source file")}, `}linked to ${counts.lean} of the ${total} ${noun} on this site`,
       read: routeHref({ view: "lean" }),
       readWord: "Open the Lean index",
     },
@@ -207,7 +270,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       stage,
       name: PAPER_NAMES[stage].short,
       who: PAPER_NAMES[stage].reader,
-      count: `${counts[stage]} of the ${total} steps on this site${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].statements} marked statements, ${SITE_FACTS.ties.papers[stage].withLean} with Lean` : ""}`,
+      count: `${kindOf ? levelKinds(stage) : `${counts[stage]} of the ${total} steps on this site`}${SITE_FACTS.ties ? `${kindOf ? ";" : ","} ${SITE_FACTS.ties.papers[stage].statements} marked statements, ${SITE_FACTS.ties.papers[stage].withLean} with Lean` : ""}`,
       read: routeHref({ view: "read", stage }),
       readWord: "Read it here",
     })),
@@ -218,9 +281,15 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       <h2 id="front-levels" className="front__bandtitle">
         One argument at four levels
       </h2>
-      <p className="front__text">
-        The argument is one graph of {total} steps: claims, assumptions and Lean declarations, joined by what uses what. Each paper below the Lean covers fewer of those steps than the one above it, for a wider readership. Choose a level to see which steps it covers, and open any step to compare it across the levels.
-      </p>
+      {kinds ? (
+        <p className="front__text">
+          The site holds {total.toLocaleString("en-GB")} records joined by what uses what: {kindsInWords(kinds)}. Each paper below the Lean states fewer of them than the one above it, for a wider readership. Choose a level to see which records it states, and open any record to compare it across the levels.
+        </p>
+      ) : (
+        <p className="front__text">
+          The argument is one graph of {total} steps: claims, assumptions and Lean declarations, joined by what uses what. Each paper below the Lean covers fewer of those steps than the one above it, for a wider readership. Choose a level to see which steps it covers, and open any step to compare it across the levels.
+        </p>
+      )}
       <div className="levels__body">
         <ol className="levels__rail">
           {rows.map((row) => {
@@ -248,11 +317,9 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
                       loading="lazy"
                       decoding="async"
                     />
-                  ) : (
-                    <span className="levels__code">
-                      theorem full_support (W) (γ) (hmin) : FullSupportConclusion W γ := by have hμ := parameterMeasure_isStieltjes γ
-                    </span>
-                  )}
+                  ) : site.levelsLeanSnippet ? (
+                    <span className="levels__code">{site.levelsLeanSnippet}</span>
+                  ) : null}
                 </div>
                 <div className="levels__text">
                   <h3 className="levels__name">{row.name}</h3>
@@ -278,30 +345,38 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
 
         <figure className="levels__figure">
           <figcaption className="levels__cap">
-            {level === "lean" ? (
+            {borrowed && level === "lean" ? (
+              <>The Lean proof has no tree of these records of its own, so this is the short paper’s tree for {argumentName}: the {marked} of its {drawn.length} records linked to Lean declarations are marked.</>
+            ) : borrowed && level !== "lean" ? (
+              marked === 0 ? (
+                <>{PAPER_NAMES[level].short}: none of the {argumentSize.all} {noun} in the argument for {argumentName}, so it has no tree of its own. This is the short paper’s tree.</>
+              ) : (
+                <>{PAPER_NAMES[level].short} has no tree of its own for {argumentName}, so this is the short paper’s tree: the {marked} of its {drawn.length} records {PAPER_NAMES[level].short.toLowerCase()} states are marked.</>
+              )
+            ) : level === "lean" ? (
               <>The argument for the main theorem. Marked steps are linked to Lean declarations.</>
             ) : (
               <>
-                {PAPER_NAMES[level].short}: {argumentSize[level]} of the {argumentSize.all} steps in the argument for the main theorem.
+                {argumentSize[level] === 0
+                  ? `${PAPER_NAMES[level].short}: none of the ${argumentSize.all} ${noun} in the argument for ${argumentName}.`
+                  : `${PAPER_NAMES[level].short}: ${argumentSize[level]} of the ${argumentSize.all} ${noun} in the argument for ${argumentName}.`}
               </>
             )}
           </figcaption>
           <div ref={stageRef} className="levels__stage" style={{ height: widest.h * scale }}>
             <div className="levels__world" style={{ width: widest.w, height: widest.h, transform: `scale(${scale})` }}>
               <svg className="levels__lines" width={widest.w} height={widest.h} aria-hidden="true">
-                {(Object.entries(drawings) as [LevelId, Drawing][])
-                  .filter(([key]) => key !== "lean")
-                  .map(([key, d]) => (
-                    <g
-                      key={key}
-                      className={level === key || (level === "lean" && key === "long") ? "is-shown" : undefined}
-                      transform={`translate(${-d.x + (d === widest ? 0 : (widest.w - d.w) / 2)} ${-d.y})`}
-                    >
-                      {d.lines.map((path, i) => (
-                        <path key={i} d={path} />
-                      ))}
-                    </g>
-                  ))}
+                {unique.map((d, key) => (
+                  <g
+                    key={key}
+                    className={d === current ? "is-shown" : undefined}
+                    transform={`translate(${-d.x + (d.tiles === widest.tiles ? 0 : (widest.w - d.w) / 2)} ${-d.y})`}
+                  >
+                    {d.lines.map((path, i) => (
+                      <path key={i} d={path} />
+                    ))}
+                  </g>
+                ))}
               </svg>
               {everyTile.map((tile) => {
                 const here = current.tiles.get(tile.lid);
@@ -312,7 +387,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
                   <a
                     key={tile.lid}
                     href={routeHref({ view: "compare", node: tile.id })}
-                    className={`levels__tile${tile.root ? " levels__tile--root" : ""}${tile.assumption ? " levels__tile--assumption" : ""}${here ? "" : " is-gone"}${level === "lean" && hasLean ? " is-lean" : ""}`}
+                    className={`levels__tile${tile.root ? " levels__tile--root" : ""}${tile.assumption ? " levels__tile--assumption" : ""}${here ? "" : " is-gone"}${level === "lean" && hasLean ? " is-lean" : ""}${here && level !== "lean" && marks(tile.id) ? " is-marked" : ""}`}
                     style={{ width: here?.w ?? tile.w, height: here?.h ?? tile.h, transform: `translate(${at.x}px, ${at.y}px)` }}
                     tabIndex={here ? undefined : -1}
                     aria-hidden={here ? undefined : true}

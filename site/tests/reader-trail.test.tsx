@@ -209,10 +209,10 @@ describe("the Lean page", async () => {
     show({ via: "follow", record, tie: 0 });
     expect(container.querySelector(".lean-page__state")!.textContent).toBe("Changes as you scroll");
     show({ via: "follow", topics: [record] });
-    expect(container.textContent).toContain("Steps in this passage");
+    expect(container.textContent).toContain("No Lean is linked to this paragraph. Steps of the map in its passage");
     expect(container.querySelectorAll(".lean-page__topics button").length).toBe(1);
     show({ via: "follow" });
-    expect(container.textContent).toContain("Nothing in this stretch of the paper is tied to the Lean.");
+    expect(container.textContent).toContain("No Lean is linked to this paragraph, and its passage names no step of the map.");
   });
 
   it("lets a preview stand in", () => {

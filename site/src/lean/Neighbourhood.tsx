@@ -3,6 +3,7 @@
 // as lines run on the argument map. Walking opens the chosen declaration at its head;
 // Back walks home.
 
+import site from "@instance/site";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { LeanDeclaration, LeanModule } from "../api/lean";
 import { navigate, routeHref } from "../app/router";
@@ -225,7 +226,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
             </g>
           ))}
         </svg>
-        <Side title="Used by" side="by" groups={[{ id: "all", rows: sides.by }]} shell={shell} from={decl.name} empty="Nothing in OpenAI's source names it." onWalk={walk} onHover={setHot} />
+        <Side title="Used by" side="by" groups={[{ id: "all", rows: sides.by }]} shell={shell} from={decl.name} empty={`Nothing in ${site.lean.ownerSource} names it.`} onWalk={walk} onHover={setHot} />
         <div className="lean-hood__centre" ref={centre} tabIndex={-1} aria-current="true">
           <span className="lean-hood__kind">{kindWord(decl.kind)}</span>
           {shell.plain.get(decl.name) && <strong className="lean-tile__plain">{shell.plain.get(decl.name)}</strong>}
@@ -241,7 +242,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
           ]}
           shell={shell}
           from={decl.name}
-          empty="It names nothing else in OpenAI's source."
+          empty={`It names nothing else in ${site.lean.ownerSource}.`}
           onWalk={walk}
           onHover={setHot}
         />

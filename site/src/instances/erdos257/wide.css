@@ -1,0 +1,349 @@
+/* Styles only the Erdős #257 site loads (theme.ts). Will reads on a 2560×1440 monitor and on a
+   laptop. On the SK site at 2560 the type stays at 16px and the front page and What ran stay
+   1360px and 1216px wide, a strip in the middle of the window. Here the root size grows with
+   the window (the same clamp as the medagentbench reader: 100% to 115%), so every rem-sized
+   measure and type grows with it, and the fixed-pixel front page and the What ran column
+   widen on large windows. Below 1440px nothing changes from the shared layout. */
+
+html {
+  font-size: clamp(100%, calc(62.5% + 0.42vw), 115%);
+}
+
+@media (min-width: 1800px) {
+  :root {
+    --front-max-outer: 1720px;
+  }
+  .front {
+    --front-max: 1720px;
+  }
+  .checks {
+    max-width: 96rem;
+  }
+  /* The reading column, as on Proof Reader's large-monitor rule: 42rem at the larger root size. */
+  .reader .paper.prose {
+    max-width: 46rem;
+  }
+}
+
+/* The first screen has no pictures of the site in use: the title and opening on the left, the
+   three videos on the right (the lead with its picture, the other two under it). Stacked on
+   narrow windows, the videos follow the opening. */
+.front__hero--single {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  padding: 48px 0 40px;
+}
+.front__hero--single .front__intro {
+  max-width: 44rem;
+}
+.front__hero--single .front__title {
+  max-width: 17em;
+}
+@media (min-width: 68.76em) {
+  .front__hero--single:has(.front__watch) {
+    grid-template-columns: minmax(0, 10fr) minmax(0, 11fr);
+    align-items: center;
+    gap: 32px 64px;
+  }
+  .front__hero--single .front__watch {
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .front__hero--single .front__lead {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+/* The clause table's third column: what the Lean says against the paper, in words. */
+.front__theorem--verdicts .rosetta__table th + th + th,
+.rosetta__verdict {
+  width: 11em;
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+  vertical-align: top;
+}
+.rosetta__verdict[data-verdict="stronger"],
+.rosetta__verdict[data-verdict="weaker"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Asked, proved, open; and the proof in steps. */
+.asked__label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.proofsteps {
+  margin: 0;
+  padding-left: 1.4em;
+  max-width: var(--measure);
+}
+.proofsteps > li + li {
+  margin-top: var(--space-4);
+}
+.proofsteps h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-h4);
+}
+.runwords {
+  padding-left: 1.2em;
+}
+
+/* A comparison of the Lean with the paper, and who made a tie. */
+.fidelity,
+.tie-origin {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+.fidelity__verdict {
+  color: var(--ink);
+}
+.fidelity--stronger .fidelity__verdict,
+.fidelity--weaker .fidelity__verdict {
+  border-bottom: 1px solid var(--rule-strong);
+}
+.fidelity__who {
+  display: block;
+  color: var(--ink-3);
+}
+
+/* A figure that is the paper's own image file. */
+.paper-figure__image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* Every run, where and when it ran. Wider than the text, as tables are on the later readers. */
+.runs__wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.runs__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+}
+.runs__table th,
+.runs__table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.runs__table thead th {
+  font-weight: 600;
+  color: var(--ink-2);
+  border-bottom-color: var(--rule-strong);
+}
+.runs__group th {
+  padding-top: var(--space-4);
+  font-weight: 600;
+  color: var(--ink);
+}
+.runs__counts,
+.runs__sub,
+.runs__outcome {
+  display: block;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+.runs__what {
+  font-weight: 500;
+  min-width: 12em;
+}
+.runs__receipt {
+  display: block;
+  font-weight: 400;
+}
+.runs__commit,
+.runs__date {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.runs__status {
+  font-weight: 600;
+}
+.runs__status--failed {
+  color: var(--fail);
+}
+.runs__none {
+  color: var(--ink-3);
+}
+.runs__list > summary,
+.runs__theorems > summary {
+  cursor: pointer;
+}
+.runs__inner {
+  width: 100%;
+  margin-top: var(--space-2);
+  border-collapse: collapse;
+}
+
+/* Elsewhere: the plain links the old problem page offered. */
+.elsewhere {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+}
+.elsewhere__title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.elsewhere__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: var(--space-3) var(--space-5);
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+}
+.elsewhere__row dt {
+  color: var(--ink-3);
+}
+.elsewhere__row dd {
+  margin: 0;
+}
+
+/* The clause table has a third column here, so the Lean column gives up width and a long
+   formula wraps inside its own column instead of running under the verdict. */
+.front__theorem--verdicts .rosetta__table th:first-child {
+  width: 38%;
+}
+.front__theorem--verdicts .rosetta__formula {
+  max-width: 100%;
+  white-space: normal;
+}
+
+/* On a large monitor the four steps of the proof stand in two columns. */
+@media (min-width: 1800px) {
+  .proofsteps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-7, 4rem);
+    max-width: none;
+  }
+  .proofsteps > li + li {
+    margin-top: 0;
+  }
+}
+
+/* A figure drawn in black ink on a transparent ground keeps a paper ground in the dark scheme. */
+.paper-figure__image--ink {
+  width: min(100%, 40rem);
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+:root[data-theme="dark"] .paper-figure__image--ink {
+  background: #f6f1e7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .paper-figure__image--ink {
+    background: #f6f1e7;
+  }
+}
+
+/* A long Lean name in the Lean panel's head wraps instead of running under its buttons. */
+.lean-page__raw {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* On a phone each run is a card: its cells stack, each under the column's name. */
+@media (max-width: 37.5em) {
+  .runs__table,
+  .runs__table > tbody,
+  .runs__table > tbody > tr,
+  .runs__table > tbody > tr > th,
+  .runs__table > tbody > tr > td {
+    display: block;
+    width: auto;
+  }
+  .runs__table > thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .runs__table > tbody > tr {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .runs__table > tbody > tr > th,
+  .runs__table > tbody > tr > td {
+    padding: 2px 0;
+    border: 0;
+  }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td::before {
+    display: block;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(2)::before { content: "Where"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(3)::before { content: "Commit"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(4)::before { content: "Date"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(5)::before { content: "Outcome"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(6)::before { content: "What it shows"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(7)::before { content: "What it does not show"; }
+}
+
+/* Compare's goal menu: a long goal title ("Theorem A.1 (reciprocal-summable supports)") wraps
+   inside the side column instead of running over the step's head. */
+.pick--goal {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+}
+.pick--goal .pick__button {
+  white-space: normal;
+}
+
+/* The levels band: the tree takes two thirds of the band, and its cards (LevelsBand's roomy
+   size) hold a whole short title on up to three lines. The drawing is scaled to its column, so
+   the type is set in pixels of the drawing: at 1440px it reads at about 13px, larger above. */
+@media (min-width: 68.76em) {
+  .front--wide .levels__body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+}
+.front.front--wide a.levels__tile {
+  padding: 4px 8px;
+  font-size: 13.5px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.front.front--wide a.levels__tile--root {
+  font-size: 15.5px;
+}
+.front--wide .levels__cap {
+  max-width: 52rem;
+  text-wrap: pretty;
+}
+.front.front--wide a.levels__tile.is-marked {
+  border-color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--ink-2);
+}
+
+/* A Lean name with no spaces (irrational_erdosSupportSeries_of_summable_reciprocal) breaks
+   inside itself on a phone instead of pushing the page sideways. */
+.front__site,
+.lean-start code {
+  overflow-wrap: anywhere;
+}

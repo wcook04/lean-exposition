@@ -1,0 +1,166 @@
+[
+ {
+  "name": "abstract",
+  "heading": "Abstract",
+  "marker_line": 12,
+  "first_line": 13,
+  "last_line": 13,
+  "end_marker_line": 14,
+  "results": [],
+  "text_sha256": "04a4d9cf2fe5be20049d738a7ea16bd4025ca7ebe0013bff3849449730f2a897"
+ },
+ {
+  "name": "sec-problem",
+  "heading": "1. Introduction",
+  "marker_line": 20,
+  "first_line": 21,
+  "last_line": 77,
+  "end_marker_line": 78,
+  "results": [
+   "res:problem",
+   "res:weighted-support"
+  ],
+  "text_sha256": "3e2e568b49fb8bdae99e06077ee52821c84286f0c4dfd2d629f74298fb3fbdbb"
+ },
+ {
+  "name": "sec-eight-return-extensions",
+  "heading": "2. Finite averages and the weighted criterion",
+  "marker_line": 84,
+  "first_line": 85,
+  "last_line": 169,
+  "end_marker_line": 170,
+  "results": [],
+  "text_sha256": "c70fe7b7996b2263075281d593195134278af59fc17f88b406c7a90dfa71e3e8"
+ },
+ {
+  "name": "sec-common-kernel",
+  "heading": "3. Positive divisor majorants",
+  "marker_line": 176,
+  "first_line": 177,
+  "last_line": 304,
+  "end_marker_line": 305,
+  "results": [
+   "thm:variable-fractional-cover"
+  ],
+  "text_sha256": "783e2c874cf6fbfe43b63d8c2445e52758d6473de7cfa6ca1031fb5f37231dfa"
+ },
+ {
+  "name": "sec-mixed",
+  "heading": "4. A common index for the two criteria",
+  "marker_line": 311,
+  "first_line": 312,
+  "last_line": 349,
+  "end_marker_line": 350,
+  "results": [
+   "res:mixed-supports"
+  ],
+  "text_sha256": "d66d934ccf88662e76c167627c442c4739877f505c50a1a8a821669d15ea25de"
+ },
+ {
+  "name": "sec-comparison",
+  "heading": "5. Comparison of the support classes",
+  "marker_line": 356,
+  "first_line": 357,
+  "last_line": 451,
+  "end_marker_line": 452,
+  "results": [
+   "res:weighted-cover-incomparability",
+   "res:strict-mixed-supports"
+  ],
+  "text_sha256": "aac0231d43c85c2d234dc251a47e32f9cdf778cc678779048716d94136937a6b"
+ },
+ {
+  "name": "sec-map",
+  "heading": "6. Limits of the small-displacement criterion",
+  "marker_line": 458,
+  "first_line": 459,
+  "last_line": 487,
+  "end_marker_line": 488,
+  "results": [],
+  "text_sha256": "078b56b4bf1273bbb7a618d6f1dabdce0fda6f007462c40009e7d7e93370b2e4"
+ },
+ {
+  "name": "sec-reciprocal-support",
+  "heading": "A. Reciprocal-summable supports",
+  "marker_line": 494,
+  "first_line": 495,
+  "last_line": 547,
+  "end_marker_line": 548,
+  "results": [
+   "res:reciprocal-support"
+  ],
+  "text_sha256": "3df8be96e1e84e23905670ffcd231da961d8fc7364e5617ac1f997e8aff09bd8"
+ },
+ {
+  "name": "sec-period",
+  "heading": "B. Finite-support denominator periods",
+  "marker_line": 554,
+  "first_line": 555,
+  "last_line": 574,
+  "end_marker_line": 575,
+  "results": [
+   "res:period"
+  ],
+  "text_sha256": "dc3919fb0d1dde9615df34bed1629b160ec83f490d1797fb2af33b8add7b1402"
+ },
+ {
+  "name": "sec-rational-membership",
+  "heading": "C. Rational membership",
+  "marker_line": 581,
+  "first_line": 582,
+  "last_line": 683,
+  "end_marker_line": 684,
+  "results": [
+   "res:general-repair"
+  ],
+  "text_sha256": "8ad25cff2aef3ed8a7e1ee406d5ad8741528899f20749ab3d4689a520be3954e"
+ },
+ {
+  "name": "sec-open",
+  "heading": "D. Integer quotients, approximation and further questions",
+  "marker_line": 690,
+  "first_line": 691,
+  "last_line": 847,
+  "end_marker_line": 848,
+  "results": [
+   "res:one-over-twenty-one-frontier",
+   "res:terminalhalf",
+   "res:cylinderhalf",
+   "prob:one-over-twenty-one-membership",
+   "prob:scaled-return",
+   "prob:actual-invariant",
+   "prob:fatal-interval"
+  ],
+  "text_sha256": "c408bfe176365e23308de7b278e0463ebaae06aad7df9cb9820f2867a10058fb"
+ },
+ {
+  "name": "app-elementary-details",
+  "heading": "E. Elementary details used in the proofs",
+  "marker_line": 854,
+  "first_line": 855,
+  "last_line": 904,
+  "end_marker_line": 905,
+  "results": [],
+  "text_sha256": "92169433b3ebb424cc4095c2376f8e4a4925c0a97dacf7b03d300669e3ded3af"
+ },
+ {
+  "name": "app-sources",
+  "heading": "F. Sources and formal verification",
+  "marker_line": 911,
+  "first_line": 912,
+  "last_line": 916,
+  "end_marker_line": 917,
+  "results": [],
+  "text_sha256": "8a7db27cdbcfeb3f47763ef3910720600095ec6d1eb7021cd4861f2cd1f3c658"
+ },
+ {
+  "name": "references",
+  "heading": "References",
+  "marker_line": 923,
+  "first_line": 924,
+  "last_line": 954,
+  "end_marker_line": 955,
+  "results": [],
+  "text_sha256": "837b49115a3d8b0d0a0db90e34ef0bd53ede5d15d89b302887aa3be982afc880"
+ }
+]

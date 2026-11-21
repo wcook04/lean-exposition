@@ -4,7 +4,7 @@
 import { useMemo, type ReactNode } from "react";
 import { useEdition } from "../app/data";
 import { useEvidence } from "../checks/evidence";
-import { countsInWords, groupByKind, recordsWord, statedDate, type EvidenceCard } from "../checks/summary";
+import { buildModuleIn, countsInWords, groupByKind, recordsWord, statedDate, type EvidenceCard } from "../checks/summary";
 
 export function useCheckedWords(): ReactNode {
   const { graph, map } = useEdition();
@@ -14,7 +14,7 @@ export function useCheckedWords(): ReactNode {
   const passed = useMemo(() => cards.filter((card) => card.kind === "lean_build" && card.status === "passed"), [cards]);
   const evidence = useEvidence(useMemo(() => passed.map((card) => card.ref), [passed]));
   const record = evidence.status === "ready" && passed[0] ? evidence.records.get(passed[0].ref) : undefined;
-  const module = /\bOAI(?:\.\w+)+/.exec(record?.details ?? "")?.[0];
+  const module = buildModuleIn(record?.details);
   const version = /(\d+\.\d+\.\d+)/.exec(record?.tool ?? "")?.[1];
   const date = statedDate(record?.details);
   const subject = record?.subject_ids?.[0] ? graph.nodes.get(record.subject_ids[0]) : undefined;

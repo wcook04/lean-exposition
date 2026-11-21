@@ -1,0 +1,44 @@
+{
+  "data": {
+    "records": {
+      "goal.main": {
+        "short": "Main result",
+        "lean": [
+          {
+            "name": "Synthetic.main",
+            "module": "Synthetic",
+            "line": 1,
+            "end_line": 3,
+            "relation": "states",
+            "note": "Synthetic.",
+            "lines": [
+              1,
+              1
+            ],
+            "fidelity": "stronger",
+            "fidelity_note": "The Lean drops a hypothesis the paper keeps.",
+            "fidelity_source": "ai"
+          }
+        ],
+        "statements": [
+          {
+            "paper": "short",
+            "role": "statement",
+            "markdown": "**Theorem 1.** Synthetic.",
+            "start_byte": 0,
+            "end_byte": 10,
+            "at": "b0-10",
+            "anchor": null,
+            "section": "1",
+            "heading_id": null,
+            "origin": "evidence_record"
+          }
+        ]
+      }
+    },
+    "dictionary": [],
+    "names": {
+      "Synthetic.main": "Synthetic main result"
+    }
+  }
+}

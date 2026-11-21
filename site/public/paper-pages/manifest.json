@@ -9,6 +9,36 @@
     "pdf_sha256": "sha256:211ba202c2141c226389c463c5f53d9cdc1a4cace5a2a2e4bd30b8616693b867",
     "width": 352
   },
+  "erdos257/expository": {
+    "files": {
+      "176": "erdos257-exposition-176.webp",
+      "352": "erdos257-exposition-352.webp"
+    },
+    "height": 498,
+    "pdf": "papers/erdos257/expository/main.pdf",
+    "pdf_sha256": "sha256:34e8bdfbe8ca43adff8e7e400cad8bf1e109cc76150f57fb98184d55d1944e0d",
+    "width": 352
+  },
+  "erdos257/long": {
+    "files": {
+      "176": "erdos257-long-record-176.webp",
+      "352": "erdos257-long-record-352.webp"
+    },
+    "height": 498,
+    "pdf": "papers/erdos257/long/reasoning-record.pdf",
+    "pdf_sha256": "sha256:59445e943ac9586d1bc2793a56e70704231ed2a9d679411a375ae24023b421bf",
+    "width": 352
+  },
+  "erdos257/short": {
+    "files": {
+      "176": "erdos257-short-paper-176.webp",
+      "352": "erdos257-short-paper-352.webp"
+    },
+    "height": 498,
+    "pdf": "papers/erdos257/short/paper.pdf",
+    "pdf_sha256": "sha256:1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
+    "width": 352
+  },
   "expository": {
     "files": {
       "176": "exposition-176.webp",
@@ -16,7 +46,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/expository/main.pdf",
-    "pdf_sha256": "sha256:efce80a43fd3285003f3bee5e9ae031e3c61e73c945073a83fec68b6e7061ced",
+    "pdf_sha256": "sha256:28b08bdd0c7f14d2cffd2181e324235b078605491d52c1f4fd1b47a8bec37dba",
     "width": 352
   },
   "long": {

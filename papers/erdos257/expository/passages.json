@@ -1,0 +1,135 @@
+[
+ {
+  "name": "sec-intro",
+  "heading": "1. The question: which infinite sums are irrational?",
+  "marker_line": 17,
+  "first_line": 18,
+  "last_line": 72,
+  "end_marker_line": 73,
+  "results": [],
+  "text_sha256": "c67dc9f55c63184ebc90869a96dbbced8f5fd9c55565d066972631169eafa0f6"
+ },
+ {
+  "name": "sec-problem",
+  "heading": "2. Erdős’s question and the theorem",
+  "marker_line": 79,
+  "first_line": 80,
+  "last_line": 127,
+  "end_marker_line": 128,
+  "results": [
+   "thm:main"
+  ],
+  "text_sha256": "f44c1c00ef5036a887ea2eca70a4b4b46bd4e05296fc595b338ddfcba1fbd6e0"
+ },
+ {
+  "name": "sec-test",
+  "heading": "3. A rational number has a fixed positive gap",
+  "marker_line": 134,
+  "first_line": 135,
+  "last_line": 161,
+  "end_marker_line": 162,
+  "results": [],
+  "text_sha256": "dd6904b01e3f95105c30dd95ee82a9f4a9f8f13ab1dbdeafc2c86b58d0861dd6"
+ },
+ {
+  "name": "sec-split",
+  "heading": "4. Multiplying the series and retaining fractional parts",
+  "marker_line": 168,
+  "first_line": 169,
+  "last_line": 237,
+  "end_marker_line": 238,
+  "results": [],
+  "text_sha256": "9d5f44ecd96a84963b2ea9d40104eab241b97943d64effae3dbbdfe46103f79d"
+ },
+ {
+  "name": "sec-doubling",
+  "heading": "5. A complete example: the doubling exponents",
+  "marker_line": 244,
+  "first_line": 245,
+  "last_line": 262,
+  "end_marker_line": 263,
+  "results": [],
+  "text_sha256": "2d9cedf94b6098d1b2ceb42dc01d6b9d0912402d0f905610707f516fc2645a85"
+ },
+ {
+  "name": "sec-general",
+  "heading": "6. Why averaging works",
+  "marker_line": 269,
+  "first_line": 270,
+  "last_line": 485,
+  "end_marker_line": 486,
+  "results": [],
+  "text_sha256": "a1b7609e1440aecad33e95b09de9b99e5d7728b91444898f2e1c8ab59a1108a4"
+ },
+ {
+  "name": "sec-proof",
+  "heading": "7. Combining the estimates",
+  "marker_line": 492,
+  "first_line": 493,
+  "last_line": 562,
+  "end_marker_line": 563,
+  "results": [],
+  "text_sha256": "93975aabdd880042260a0a24b95edbc2f7ea6aab3d54e39ff48c28fea6ea08f5"
+ },
+ {
+  "name": "sec-limits",
+  "heading": "8. Consequences and limits",
+  "marker_line": 569,
+  "first_line": 570,
+  "last_line": 588,
+  "end_marker_line": 589,
+  "results": [],
+  "text_sha256": "b1b2a53582b3da080f6b0681d31d4b0fc9d80af11e68b85de085a0cae7e33d7f"
+ },
+ {
+  "name": "app-full",
+  "heading": "A. Supporting details and formal-proof correspondence",
+  "marker_line": 595,
+  "first_line": 596,
+  "last_line": 675,
+  "end_marker_line": 676,
+  "results": [],
+  "text_sha256": "54a606610eb431474c745c45638d349f8c88344c8d8f3fe266bad4e785c1858c"
+ },
+ {
+  "name": "sec-exercises",
+  "heading": "B. Questions and exercises",
+  "marker_line": 682,
+  "first_line": 683,
+  "last_line": 721,
+  "end_marker_line": 722,
+  "results": [
+   "chk:hypotheses",
+   "chk:positive",
+   "chk:columns",
+   "chk:partial",
+   "chk:order",
+   "ex:2",
+   "ex:3",
+   "ex:4",
+   "ex:5",
+   "ex:6"
+  ],
+  "text_sha256": "7552f9fc947d0dd1b7f1104e633bd9013909d0069c61711c98c43bf32718125a"
+ },
+ {
+  "name": "app-answers",
+  "heading": "C. Answers",
+  "marker_line": 728,
+  "first_line": 729,
+  "last_line": 747,
+  "end_marker_line": 748,
+  "results": [],
+  "text_sha256": "b727593938ce7b65bb5b2a40ff270e00c41f748cb77f92bcafcd412948c672c6"
+ },
+ {
+  "name": "references",
+  "heading": "References",
+  "marker_line": 754,
+  "first_line": 755,
+  "last_line": 767,
+  "end_marker_line": 768,
+  "results": [],
+  "text_sha256": "f117458eac2b666cd80eb5c261d4b5ee72595a82a8fc842cb8f8821f2ca15daf"
+ }
+]

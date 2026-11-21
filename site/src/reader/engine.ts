@@ -221,9 +221,16 @@ md.renderer.rules.link_open = (tokens, idx, _opts, envAny) => {
     case "companion":
       env.linkClose.push("</a>");
       return `<a href="${esc(target.href)}" class="companion" data-companion="${esc(target.stage)}" data-fragment="${esc(target.fragment)}"${titleAttr}>`;
-    case "unresolved":
+    case "unresolved": {
+      // A paper's link to its own figure file (`figures/x.svg`) opens the file the build serves.
+      const figure = /^figures\/[\w.-]+$/.test(target.original) ? figureImageSrc(env.stage, target.original) : null;
+      if (figure) {
+        env.linkClose.push("</a>");
+        return `<a href="${esc(figure)}" target="_blank" rel="noopener"${titleAttr}>`;
+      }
       env.linkClose.push("</span>");
       return `<span class="link-unresolved" data-unresolved-href="${esc(target.original)}">`;
+    }
     default:
       env.linkClose.push("</span>");
       return `<span class="link-blocked">`;
@@ -471,6 +478,20 @@ interface FigureInfo {
   caption: string;
   source: string;
   captionHtml: string;
+  /** The image file a figure shows (`\\includegraphics{figures/x.svg}`), where it is a picture rather than TikZ. */
+  image: string | null;
+}
+
+/**
+ * Where a paper's figure file is served: the build copies papers/<name>/<stage>/figures/
+ * to paper-figures/<stage>/ (vite.config.ts). Only the file's own name is used, so a
+ * figure can name no other path.
+ */
+export function figureImageSrc(stage: string, path: string): string | null {
+  const name = path.trim().split("/").pop() ?? "";
+  if (!/^[\w.-]+\.(svg|png|jpe?g|webp)$/i.test(name)) return null;
+  const base = (import.meta.env?.BASE_URL as string | undefined) ?? "/";
+  return `${base}paper-figures/${stage}/${name}`;
 }
 
 const FIG_OPEN = "";
@@ -495,7 +516,8 @@ function parseFigure(env: string, spans: MathSpan[]): FigureInfo {
   let captionTex = commandArg(clean, "caption")?.body ?? "";
   captionTex = captionTex.replace(/\\label\{[^}]*\}/g, "");
   const { html, plain } = convertCaption(captionTex, spans);
-  return { key: figureKey(env), caption: plain, source: tikz ? tikz[0] : env, captionHtml: html };
+  const image = tikz ? null : (/\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}/.exec(clean)?.[1] ?? null);
+  return { key: figureKey(env), caption: plain, source: tikz ? tikz[0] : env, captionHtml: html, image };
 }
 
 const FIGURE_ENV = /\\begin\{figure\*?\}(?:\[[^\]]*\])?[\s\S]*?\\end\{figure\*?\}/g;
@@ -631,8 +653,19 @@ function renderTokens(
     const f = st.figures[Number(n)];
     const key = esc(f.key);
     const id = refs ? ` id="${figureId(st.figuresBefore + Number(n) + 1)}"` : "";
-    return `${before}<figure class="paper-figure"${id}${line ? ` data-line="${line}"` : ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}"></div><figcaption>${f.captionHtml}</figcaption></figure>${after}`;
+    const src = f.image ? figureImageSrc(env.stage, f.image) : null;
+    return `${before}<figure class="paper-figure"${id}${line ? ` data-line="${line}"` : ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}"${src ? ` data-figure-image="${esc(src)}"` : ""}></div><figcaption>${f.captionHtml}</figcaption></figure>${after}`;
   });
+  // A paragraph that is only a Markdown image (`![caption](figures/x.svg)`) is a figure: the
+  // slot shows the file (reader/mount.tsx) and the caption is the image's title, else its text.
+  if (html.includes("<img")) {
+    html = html.replace(/<p( data-line="\d+")?>\s*<img src="([^"]*)" alt="([^"]*)"(?: title="([^"]*)")?\s*\/?>\s*<\/p>/g, (whole, line: string | undefined, path: string, alt: string, title: string | undefined) => {
+      const src = figureImageSrc(env.stage, path.replace(/&amp;/g, "&"));
+      if (!src) return whole;
+      const key = esc(`img:${src.split("/").pop()}`);
+      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div><figcaption>${title ?? alt}</figcaption></figure>`;
+    });
+  }
   html = sanitizeHtml(html);
   if (refs) html = linkReferences(html, refs.index);
   html = html.replace(new RegExp(`<p(?: data-line="\\d+")?>${MARKS}((?:\\s*<a [^>]*class="anchor"[^>]*></a>)+)\\s*${MARKS}</p>`, "g"), "$1$2$3");

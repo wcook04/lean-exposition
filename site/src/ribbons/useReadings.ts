@@ -47,7 +47,7 @@ export interface Readings {
 let cached: Promise<Readings> | null = null;
 
 function nodeIdOfRef(ref: string): string {
-  return ref.slice(ref.lastIndexOf("/nodes/") + "/nodes/".length);
+  return decodeURIComponent(ref.slice(ref.lastIndexOf("/nodes/") + "/nodes/".length));
 }
 
 function passageKeyOfRef(ref: string): string | null {

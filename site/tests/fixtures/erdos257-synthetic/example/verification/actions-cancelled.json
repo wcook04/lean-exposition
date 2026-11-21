@@ -1,0 +1,11 @@
+{
+  "record_type": "github_actions_run",
+  "repository": "example-owner/example-lean",
+  "branch": "main",
+  "event": "workflow_dispatch",
+  "workflow": "Comparator preflight",
+  "run_id": 1003,
+  "commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "started_at": "2026-10-31T09:00:00Z",
+  "conclusion": "cancelled"
+}

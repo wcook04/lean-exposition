@@ -1,0 +1,28 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Compile the paper-coverage Lean modules",
+  "repository": "wcook04/plectis-erdos",
+  "run_id": 37929526198,
+  "run_attempt": 1,
+  "url": "https://github.com/wcook04/plectis-erdos/actions/runs/37929526198",
+  "commit": "3542f64fb1f987e2dd7d6fcba43c67ac61bcbd66",
+  "branch": "main",
+  "event": "push",
+  "started_at": "2026-10-09T12:21:49Z",
+  "completed_at": "2026-10-09T13:13:52Z",
+  "conclusion": "success",
+  "shows": "The paper-coverage Lean modules compiled at a commit whose #257 Lean trees equal the pin's.",
+  "does_not_show": "It prints no axioms and runs no Comparator; it does not show that the statements match the papers.",
+  "description": "Compile the paper-coverage Lean modules",
+  "jobs": [
+    {
+      "job_id": "113816536325",
+      "name": "coverage",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:21:52Z",
+      "completed_at": "2026-10-09T13:13:51Z",
+      "seconds": 3119,
+      "failed_or_cancelled_steps": ""
+    }
+  ]
+}

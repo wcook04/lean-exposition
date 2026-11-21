@@ -8,6 +8,7 @@
 // being looked at (camera, unfolded branches, steps or overview) lives in the
 // history entry, so Back returns to the same view; see scene.ts.
 
+import site from "@instance/site";
 import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type RefObject } from "react";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
@@ -843,7 +844,7 @@ const GoalMenu = forwardRef<
       }}
     >
       <span className="goal-menu__label" id={`${id}-label`}>
-        In the Sherrington–Kirkpatrick (SK) model, argument for
+        {site.words.argumentFor}
       </span>
       <button
         ref={button}

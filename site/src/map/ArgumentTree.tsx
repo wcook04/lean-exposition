@@ -64,7 +64,8 @@ export interface MapViewHandle {
   fit(animate?: boolean): void;
   /** Move the camera by screen pixels, stopping where the drawing would leave the canvas. */
   panBy(dx: number, dy: number): void;
-  fitNodes(ids: Iterable<string>, animate?: boolean): void;
+  /** Frame these records as large as they fit, never below the readable scale; `dur` sets the glide. */
+  fitNodes(ids: Iterable<string>, animate?: boolean, dur?: number): void;
   zoomBy(factor: number): void;
   focusNode(id: string): void;
   expandAll(): void;
@@ -122,6 +123,8 @@ export interface TreeProps {
   rootContent?: ReactNode;
   /** The theorem's first sentence, shown under the plate's title in compact form when the tile has room. */
   rootExcerpt?: ReactNode;
+  /** The words over the root's title; "Main result" unless the drawing is of something else. */
+  rootKicker?: string;
   onSelect(id: string | null): void;
   onTrace(id: string): void;
   onHover?(id: string | null): void;
@@ -1558,7 +1561,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         onUserMoveRef.current?.();
         moveCamera(b ? clampView(next, b, viewport()) : next, true, CAMERA_MS);
       },
-      fitNodes: (ids, animate = true) => {
+      fitNodes: (ids, animate = true, dur) => {
         const list = [...ids];
         const fn = (l: Layout) => {
           const b = boundsOf(l, list, compact ? 24 : 40);
@@ -1566,7 +1569,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         };
         if (list.every((id) => hasRec(builtRef.current.layout, id))) {
           const v = fn(builtRef.current.layout);
-          if (v) moveCamera(v, animate);
+          if (v) moveCamera(v, animate, dur);
         } else pendingCamera.current = fn;
       },
       zoomBy: (factor) => {
@@ -2574,7 +2577,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 )}
               </div>
               <div className="card__compact" aria-hidden="true">
-                {isRoot && <span className="card__cmain">Main result</span>}
+                {isRoot && <span className="card__cmain">{props.rootKicker ?? "Main result"}</span>}
                 <span className={`card__ctitle${tileLean ? " lean" : ""}`}>{tileLean ? <LeanName name={tile} camel /> : isRoot ? <WholeWords text={tile} /> : tile}</span>
                 {section && <span className="card__csec">{section}</span>}
                 {isRoot && rootExcerpt && (

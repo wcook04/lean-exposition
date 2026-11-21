@@ -11,6 +11,7 @@ import { FrontHero } from "../home/FrontHero";
 import { PAGES, usePrefetchOnIntent } from "./prefetch";
 import { useKeptPlace } from "./restore";
 import { AddressNotice } from "./AddressNotice";
+import { mainGoalOf } from "./mainGoal";
 
 const FrontPage = lazyCode(PAGES.home, (m) => m.FrontPage);
 const MapPage = lazyCode(PAGES.map, (m) => m.MapPage);
@@ -190,7 +191,7 @@ function MapGate({ route }: { route: Extract<Route, { view: "map" }> }) {
     );
   }
   const long = edition.overview.papers.find((p) => p.stage === "long");
-  const goal = (long?.paper_scope.selected_goal_ids ?? edition.graph.goals).find((g) => edition.graph.nodes.has(g));
+  const goal = mainGoalOf(long?.paper_scope.selected_goal_ids, edition.graph.goals, (g) => edition.graph.nodes.has(g));
   return <Skeleton view="map" title={goal ? edition.graph.nodes.get(goal)!.label : undefined} />;
 }
 

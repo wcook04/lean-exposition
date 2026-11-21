@@ -8,10 +8,10 @@ declare module "virtual:paper-pdfs" {
     width: number;
     height: number;
   }
-  export const PAPER_PDFS: Record<
-    "long" | "short" | "expository" | "architecture",
-    { path: string; pages: number; firstPage?: FirstPage }
-  >;
+  /** The SK site also ships its architectural companion; another instance has the three papers only. */
+  export const PAPER_PDFS: Record<"long" | "short" | "expository", { path: string; pages: number; firstPage?: FirstPage }> & {
+    architecture: { path: string; pages: number; firstPage?: FirstPage };
+  };
 }
 
 // One line per record, from the authored alignment, built into the bundle (vite.config.ts).
@@ -42,4 +42,9 @@ declare module "virtual:front-hero" {
 declare module "virtual:paper-references/*" {
   const table: unknown;
   export default table;
+}
+
+// The What ran page's table of runs, read at build time from the graph's evidence records and their receipts (checks/runLedger.ts).
+declare module "virtual:run-ledger" {
+  export const RUN_LEDGER: import("../checks/runLedger").RunLedger;
 }

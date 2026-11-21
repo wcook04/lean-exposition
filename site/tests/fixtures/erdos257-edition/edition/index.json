@@ -1,0 +1,22 @@
+{
+ "api_version": "1.4",
+ "responses": {
+  "/alignment": "alignment.json",
+  "/overview": "24847f1168e82fdd1366d193a8694bf658bca2dd68489da70079c41fdf1f5957.json",
+  "/ties/expository": "ties/expository.json",
+  "/ties/long": "ties/long.json",
+  "/ties/short": "ties/short.json"
+ },
+ "snapshot": {
+  "bundle_id": "erdos257-lambert-subseries",
+  "bundle_version": "0.1.0",
+  "cache_key": "1ed45e186fc2bb2f00e4e582b1b22ea8a78515ce6b841de7036ac440359d08c6",
+  "graph_sha256": "72b1b4c2b4a3766719310d7deb808e62432d8c1d3e4854b25b1285cbe6056696",
+  "manifest_sha256": "bb1e0df1c0a23087463e72ce0bd0db12f00c6bb5ce16d74195c581ead3dd0ce7",
+  "ref": "sha256:bb1e0df1c0a23087463e72ce0bd0db12f00c6bb5ce16d74195c581ead3dd0ce7/corpus/0.1.1"
+ },
+ "summaries_by_table": {
+  "nodes": "0770ca4f1bab4a71756c2bd20d4349163af2f8cd555acfb9e63c40e7a8d6ec26.json"
+ },
+ "version": 2
+}

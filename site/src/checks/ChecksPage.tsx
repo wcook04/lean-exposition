@@ -14,6 +14,7 @@ import type { ArgGraph } from "../model/graph";
 import { useAlignment } from "../compare/useAlignment";
 import { useEvidence, type EvidenceRecord } from "./evidence";
 import {
+  buildModuleIn,
   CHECK_KINDS,
   countsInWords,
   failureLine,
@@ -27,7 +28,9 @@ import {
   type KindGroup,
 } from "./summary";
 import { RecordList } from "./RecordTiles";
-import { Standing } from "./Standing";
+import { ChecksIntro, ChecksNote } from "@instance/ChecksIntro";
+import site from "@instance/site";
+import { RunTable } from "./RunTable";
 import "./checks.css";
 
 const PAGE = 25;
@@ -87,7 +90,7 @@ export function rowNote(kind: string, counts: Record<string, number>): string | 
   if (kind === "comparator") return "No successful Comparator result is recorded.";
   if (kind === "semantic_review" && counts.not_run === total)
     return "All written, none read by a second reader. Each is an authored explanation of one step, with the source lines it depends on.";
-    if (kind === "extraction") return "No successful run is among these records. The extraction that finished, on 26 October 2026, is in the first table.";
+    if (kind === "extraction") return site.words.extractionNote;
   if (counts.failed || counts.unavailable) return "No successful run is recorded.";
   return null;
 }
@@ -119,7 +122,6 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
   const groups = useMemo(() => groupByKind(cards), [cards]);
   const target = useMemo(() => resolveTarget(route.node, graph, cards), [route.node, graph, cards]);
   const subject = target.type === "node" ? graph.nodes.get(target.id)! : null;
-  const supportObservation = cards.some((card) => card.id === "full_support_v2_receipt_binding_20261026");
 
   const declarations = useMemo(() => {
     const ids = graph.order.filter((id) => graph.nodes.get(id)!.kind === "declaration");
@@ -143,11 +145,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
       ) : (
         <header className="checks__first">
           <h1>What ran on this proof, and what did not</h1>
-          <p className="standing-terms">
-            OpenAI’s proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. Comparator is a program that compares a Lean proof with a separately written statement. An extraction is a program run inside Lean that lists what a compiled theorem uses and which axioms it depends on. The main theorem here is the full-support theorem for the Sherrington–Kirkpatrick (SK) spin glass. A step is one claim, assumption or Lean declaration in its argument, a tie joins a statement in a paper to a step, and a run record
-            says what ran or was planned and with what outcome.
-          </p>
-          <Standing groups={groups} />
+          <ChecksIntro groups={groups} />
         </header>
       )}
 
@@ -156,6 +154,8 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
           No step or run record on this site has the identifier <code className="lean">{target.id}</code>. All the run records are listed below.
         </p>
       )}
+
+      {target.type !== "node" && <RunTable />}
 
       {target.type === "node" && <SubjectChecks id={target.id} formal={target.formal} />}
 
@@ -171,13 +171,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
         />
         <div className="checks__notes">
         <p className="checks__edition">{editionNote(cards)}</p>
-        {supportObservation && (
-          <p className="checks__edition">
-            The build and the extraction of 26 October 2026 are described in <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
-              one published file
-            </a>. That extraction covers the main theorem only, and its graph is partial and is not in this edition, so it changes no outcome above and says nothing about Comparator.
-          </p>
-        )}
+        <ChecksNote cards={cards} />
         </div>
       </section>
 
@@ -216,7 +210,7 @@ function Established({ cards }: { cards: EvidenceCard[] }) {
   const passedBuilds = useMemo(() => cards.filter((c) => c.kind === "lean_build" && c.status === "passed"), [cards]);
   const evidence = useEvidence(useMemo(() => passedBuilds.map((c) => c.ref), [passedBuilds]));
   const record = evidence.status === "ready" && passedBuilds[0] ? evidence.records.get(passedBuilds[0].ref) : undefined;
-  const module = /\bOAI(?:\.\w+)+/.exec(record?.details ?? "")?.[0];
+  const module = buildModuleIn(record?.details);
   const version = /(\d+\.\d+\.\d+)/.exec(record?.tool ?? "")?.[1];
   const date = statedDate(record?.details);
   const subject = record?.subject_ids?.[0] ? graph.nodes.get(record.subject_ids[0]) : undefined;

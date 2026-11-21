@@ -1,0 +1,208 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Palomar Comparator replay",
+  "repository": "wcook04/plectis-erdos-lean",
+  "run_id": 35935225572,
+  "run_attempt": 2,
+  "url": "https://github.com/wcook04/plectis-erdos-lean/actions/runs/35935225572",
+  "commit": "cc7e541cf2081c6fef5a5e377d52e365e33b01eb",
+  "branch": "palomar/comparator-cycle-20260923",
+  "event": "push",
+  "started_at": "2026-09-23T23:46:12Z",
+  "completed_at": "2026-09-24T01:49:58Z",
+  "conclusion": "success",
+  "shows": "Comparator replayed every corpus entry, Challenge against Solution, with the Lean default kernel and nanoda.",
+  "does_not_show": "Whether each Challenge statement says what the papers say.",
+  "description": "Palomar Comparator replay, attempt 2: re-ran the failed shard; the run the papers pin",
+  "jobs": [
+    {
+      "job_id": "107451573409",
+      "name": "discover",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:46:17Z",
+      "completed_at": "2026-09-23T23:46:23Z",
+      "seconds": 6,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573412",
+      "name": "replay (shard-03)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T01:13:21Z",
+      "completed_at": "2026-09-24T01:49:48Z",
+      "seconds": 2187,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573573",
+      "name": "replay (shard-08)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:22:51Z",
+      "completed_at": "2026-09-24T01:10:42Z",
+      "seconds": 2871,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573737",
+      "name": "replay (shard-07)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:46:27Z",
+      "completed_at": "2026-09-24T00:32:01Z",
+      "seconds": 2734,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573781",
+      "name": "replay (shard-14)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:13:05Z",
+      "completed_at": "2026-09-24T00:31:33Z",
+      "seconds": 1108,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573836",
+      "name": "replay (shard-13)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:53:49Z",
+      "completed_at": "2026-09-24T00:19:04Z",
+      "seconds": 1515,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573855",
+      "name": "replay (shard-10)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:16:13Z",
+      "completed_at": "2026-09-24T00:38:04Z",
+      "seconds": 1311,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573878",
+      "name": "replay (shard-16)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:13:05Z",
+      "completed_at": "2026-09-24T00:44:35Z",
+      "seconds": 1890,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573908",
+      "name": "replay (shard-11)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:46:45Z",
+      "completed_at": "2026-09-24T00:09:10Z",
+      "seconds": 1345,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451573956",
+      "name": "replay (shard-12)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:26:39Z",
+      "completed_at": "2026-09-24T00:48:04Z",
+      "seconds": 1285,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451574040",
+      "name": "replay (shard-17)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:27:22Z",
+      "completed_at": "2026-09-24T00:46:02Z",
+      "seconds": 1120,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451574317",
+      "name": "replay (shard-15)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:46:26Z",
+      "completed_at": "2026-09-24T00:07:47Z",
+      "seconds": 1281,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451574348",
+      "name": "replay (shard-18)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:53:11Z",
+      "completed_at": "2026-09-24T00:13:02Z",
+      "seconds": 1191,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451574414",
+      "name": "replay (shard-19)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:46:27Z",
+      "completed_at": "2026-09-24T00:00:17Z",
+      "seconds": 830,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451592689",
+      "name": "replay (shard-02)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:12:53Z",
+      "completed_at": "2026-09-24T00:50:43Z",
+      "seconds": 2270,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451594084",
+      "name": "replay (shard-06)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:46:26Z",
+      "completed_at": "2026-09-24T00:24:13Z",
+      "seconds": 2267,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451600253",
+      "name": "replay (shard-01)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:01:09Z",
+      "completed_at": "2026-09-24T01:04:44Z",
+      "seconds": 3815,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451602224",
+      "name": "replay (shard-04)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:54:01Z",
+      "completed_at": "2026-09-24T00:22:35Z",
+      "seconds": 1714,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451606434",
+      "name": "replay (shard-05)",
+      "conclusion": "success",
+      "started_at": "2026-09-24T00:19:07Z",
+      "completed_at": "2026-09-24T01:12:51Z",
+      "seconds": 3224,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107451607665",
+      "name": "replay (shard-09)",
+      "conclusion": "success",
+      "started_at": "2026-09-23T23:51:35Z",
+      "completed_at": "2026-09-24T00:26:37Z",
+      "seconds": 2102,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "107459726922",
+      "name": "aggregate",
+      "conclusion": "success",
+      "started_at": "2026-09-24T01:49:51Z",
+      "completed_at": "2026-09-24T01:49:58Z",
+      "seconds": 7,
+      "failed_or_cancelled_steps": ""
+    }
+  ]
+}

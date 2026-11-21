@@ -65,7 +65,7 @@ The former funnel, generic evidence channels and review-state diagram remain
 outside this edition. Their useful distinctions are expressed in the
 independent account roles, scoped evidence and concrete repair. They add no
 missing relationship to the selected journeys. The reading website renders
-these figures through [its figure registry](../../site/src/figures/registry.ts);
+these figures through [its figure registry](../../site/src/instances/qaoa-sk/figures.ts);
 caption or semantic changes must be carried into those existing components.
 
 The Markdown links to local papers and guides. The standalone PDF keeps those

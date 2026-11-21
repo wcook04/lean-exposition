@@ -1,0 +1,25 @@
+{
+  "record_type": "comparator_receipt",
+  "entry_id": "single",
+  "run": {
+    "repository": "example-owner/example-lean",
+    "run_id": 3003,
+    "commit": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "date": "2026-11-02"
+  },
+  "theorem_pairs": [
+    {
+      "challenge": "Synthetic.single",
+      "solution": "Synthetic.single"
+    }
+  ],
+  "kernels": [
+    "Lean’s default kernel"
+  ],
+  "axioms": [
+    "propext"
+  ],
+  "outcome": "accepted",
+  "shows": "The solution proves the challenge statement.",
+  "does_not_show": "That the challenge statement is the paper's."
+}

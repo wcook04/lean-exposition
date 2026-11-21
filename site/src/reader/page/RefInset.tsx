@@ -482,6 +482,9 @@ export function useReferences(
       }
       const link = element.closest?.<HTMLElement>("a[data-ref]");
       if (!link) return;
+      // A link whose words are all one underlined phrase opens the phrase's Lean (the reader page).
+      const phrase = link.querySelector<HTMLElement>("[data-t][data-tone]");
+      if (phrase && phrase.textContent?.trim() === link.textContent?.trim()) return;
       const row = rowOf(link);
       if (!row) return;
       stopDwell();

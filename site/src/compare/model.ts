@@ -2,6 +2,7 @@
 // which rows the outline lists and in what order, what each level does with a record,
 // and which levels get a column at a given width.
 
+import site from "@instance/site";
 import type { RecordAlignment, StatementRole } from "../api/lean";
 import type { Stage } from "../api/types";
 import type { ArgGraph } from "../model/graph";
@@ -169,8 +170,7 @@ export function absentWords(level: Level): string {
 
 /** The sentence for a step with no linked declaration, which depends on what the Lean covers. */
 export function leanAbsence(id: string): string {
-  if (id.startsWith("circuit.") || id.startsWith("qaoa_")) return "OpenAI's Lean covers full support and the scalar value, and has no declaration for this result.";
-  return "No Lean declaration is linked to this step. OpenAI's Lean covers full support and the scalar value; the steps it uses and is used by may have their own.";
+  return site.words.leanAbsence(id);
 }
 
 // --------------------------------------------------------- reader's choice

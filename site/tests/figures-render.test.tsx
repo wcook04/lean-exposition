@@ -13,7 +13,7 @@ import { AreaFigure, AreaModelView, modelMean, PAPER_MODEL } from "../src/figure
 import { GapFigure } from "../src/figures/GapFigure";
 import { GapIngredientsFigure } from "../src/figures/GapIngredientsFigure";
 import { ReadingJourneyFigure } from "../src/figures/ReadingJourneyFigure";
-import { figureForKey } from "../src/figures/registry";
+import { figureForKey } from "../src/instances/qaoa-sk/figures";
 
 const site = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repo = path.resolve(site, "..");

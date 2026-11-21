@@ -8,8 +8,9 @@
 // is pointed at, or, between statements, what the passage discusses. The line at its head says
 // which, and an opened statement has a quiet way back to following.
 
-import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import type { Alignment, RecordAlignment, StatementLean } from "../../api/lean";
+import { OriginLine } from "../../compare/Fidelity";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import type { Alignment, PhraseLean, RecordAlignment, StatementLean } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref, type Trace } from "../../app/router";
@@ -19,7 +20,8 @@ import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
-import { leanTruth, ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
+import { isPhraseRecord, leanTruth, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
+import { declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
 
@@ -51,6 +53,8 @@ interface Props {
   /** Where the opening rises from. */
   from?: HTMLElement | null;
   passageHref(stage: Stage, anchor: string): string;
+  /** Under the graph on the Graph tab, following the paper: there is nothing to close. */
+  noClose?: boolean;
 }
 
 /** The Lean a statement means, or the record's own rows where it names none, without repeats. */
@@ -139,7 +143,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   const shown = records.filter((id) => graph.nodes.has(id));
   return (
     <>
-      <p className="lean-page__plain">No Lean is linked to the sentence you are reading. Steps in this passage:</p>
+      <p className="lean-page__plain">No Lean is linked to this paragraph. Steps of the map in its passage:</p>
       <ul className="lean-page__topics">
         {shown.map((id) => (
           <li key={id}>
@@ -161,7 +165,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref, noClose }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -174,9 +178,14 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
   const at = tie?.at ?? null;
   const record = open.record;
+  // A phrase brings its own declarations, each with its comparison; its titles and notes load here.
+  const phrase = !!tie?.rows && !open.decl;
+  const notes = usePhraseNotes(stage, !!tie?.rows);
+  const part = notes?.parts[tie?.part ?? 0];
   const rows = useMemo(() => {
     // A statement with no Lean has none, whatever its step has elsewhere.
     if (tie && !tie.lean) return [];
+    if (tie?.rows) return tie.rows as unknown as StatementLean[];
     const list = leanRows(alignment, record, at);
     if (list.length || !tie?.name || !tie.module) return list;
     // Before the alignment arrives the statement's own index row names its first declaration.
@@ -191,7 +200,34 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   }
   const row = open.decl ? null : (rows[Math.min(chosen, rows.length - 1)] ?? null);
   const name = open.decl ?? row?.name ?? null;
-  const plain = record ? shortTitle(record, graph.nodes.get(record)?.label ?? alignment?.records[record]?.short ?? record) : name ? plainName(alignment, name) : "";
+  // The graph above a phrase's card follows the declaration its card shows.
+  useEffect(() => {
+    dockDecl.set(phrase && row ? { name: row.name, module: row.module } : null);
+  }, [phrase, row]);
+  useEffect(() => () => dockDecl.set(null), []);
+  const titleOf = (decl: string) => part?.titles[decl] ?? plainName(alignment, decl);
+  const plain = phrase && name
+    ? titleOf(name)
+    : record && !isPhraseRecord(record)
+      ? shortTitle(record, graph.nodes.get(record)?.label ?? alignment?.records[record]?.short ?? record)
+      : name
+        ? plainName(alignment, name)
+        : "";
+  // The paper's phrases of a declaration light while its card is pointed at, and go out with it.
+  useLayoutEffect(() => () => declLight.set(null), []);
+  // The phrase's own words, as the paper sets them, for the head of its card.
+  const [quote, setQuote] = useState<string | null>(null);
+  const segments = phrase && open.tie !== null ? ties.segmentsOf[open.tie] : undefined;
+  useEffect(() => {
+    if (!segments?.length) return setQuote(null);
+    const read = () => {
+      const marks = segments.flatMap((segment) => [...document.querySelectorAll<HTMLElement>(`.paper [data-t="${segment}"]`)]);
+      if (marks.length) setQuote(marks.map((mark) => mark.innerHTML).join(" "));
+    };
+    read();
+    const later = window.setTimeout(read, 400);
+    return () => window.clearTimeout(later);
+  }, [segments]);
 
   useLayoutEffect(() => {
     const el = page.current;
@@ -221,6 +257,23 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   useLayoutEffect(() => {
     if (scroller.current) scroller.current.scrollTop = 0;
   }, [showing]);
+  // A phrase's card stays at the top; the tied lines are brought into view below it, as the Lean arrives.
+  useEffect(() => {
+    if (!phrase) return;
+    const bring = () => {
+      const box = scroller.current;
+      const lit = box?.querySelector<HTMLElement>(".lean-line.is-lit");
+      if (!box || !lit) return false;
+      // As far as the lines need, never past the head of the phrase's card.
+      const card = box.querySelector<HTMLElement>(".phrase-card");
+      const over = lit.getBoundingClientRect().bottom - box.getBoundingClientRect().bottom + 24;
+      const most = card ? card.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 8 : Infinity;
+      if (over > 0) box.scrollTo({ top: Math.min(box.scrollTop + over, Math.max(0, most)), behavior: "instant" as ScrollBehavior });
+      return true;
+    };
+    const timers = [60, 250, 600, 1200].map((ms) => window.setTimeout(bring, ms));
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [showing, phrase]);
 
   const empty = !record && !name;
   return (
@@ -246,9 +299,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
               Follow the text
             </button>
           )}
-          <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
-            Close
-          </button>
+          {!(noClose && open.via !== "pin") && (
+            <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
+              Close
+            </button>
+          )}
         </header>
       )}
       {slot ? (
@@ -257,7 +312,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
         </div>
       ) : (
         <div ref={scroller} className="lean-page__scroll" data-keep>
-          {record && (
+          {record && !isPhraseRecord(record) && (
             <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
               {open.via === "pin" && graph.nodes.has(record) && (
                 <button type="button" aria-pressed={full} onClick={() => setFull(!full)}>
@@ -270,8 +325,17 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
             <ul className="lean-page__rows" aria-label="Lean declarations of this step">
               {rows.map((item, i) => (
                 <li key={`${item.module}:${item.name}`}>
-                  <button type="button" aria-pressed={i === Math.min(chosen, rows.length - 1)} title={item.name} onClick={() => setChosen(i)}>
-                    {item.plain ?? plainName(alignment, item.name)}
+                  <button
+                    type="button"
+                    aria-pressed={i === Math.min(chosen, rows.length - 1)}
+                    title={phrase ? `${item.name}. Pointing lights every phrase of this paper it states.` : item.name}
+                    onClick={() => setChosen(i)}
+                    onPointerEnter={phrase ? () => declLight.set(item.name) : undefined}
+                    onPointerLeave={phrase ? () => declLight.set(null) : undefined}
+                    onFocus={phrase ? () => declLight.set(item.name) : undefined}
+                    onBlur={phrase ? () => declLight.set(null) : undefined}
+                  >
+                    {phrase ? titleOf(item.name) : (item.plain ?? plainName(alignment, item.name))}
                   </button>
                 </li>
               ))}
@@ -293,26 +357,53 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                 <Passage records={open.topics} ties={ties} alignment={alignment} onPick={onPick} onPoint={onPoint} />
               ) : (
                 <p className="lean-page__plain">
-                  Nothing in this stretch of the paper is tied to the Lean. Scroll on, or press <kbd>j</kbd> for the next tied statement.
+                  No Lean is linked to this paragraph, and its passage names no step of the map. Scroll on, or press <kbd>j</kbd> for the next underlined phrase.
                 </p>
               )
             ) : name ? (
+              <>
+              {phrase && row && (
+                <PhraseCard
+                  row={row as unknown as PhraseLean}
+                  topic={open.tie !== null ? topicOf(ties, open.tie) : null}
+                  note={part?.notes[row.name]}
+                  quote={quote}
+                />
+              )}
               <LazyLeanBlock
                 key={`${row?.module ?? open.declModule ?? ""}:${name}`}
                 name={name}
                 module={row?.module ?? open.declModule}
                 relation={row?.relation ?? undefined}
                 note={row?.note}
+                fidelity={phrase ? undefined : (row ?? undefined)}
+                // The phrase's card stays in view above a lit statement; lit proof lines are scrolled to.
+                quietLines={phrase && !(row?.proof_lines && row.lines && row.lines[0] >= row.proof_lines[0]) ? true : undefined}
                 clause={row?.clause}
                 lines={row?.lines}
                 compact
                 onName={onName}
                 noPapers
                 previewSlot={barLine && barShown ? barLine : foot}
-                below={open.tie !== null ? <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} /> : undefined}
+                below={
+                  open.tie !== null ? (
+                    ties.index.ties[open.tie]?.origin ? (
+                      <>
+                        <OriginLine origin={ties.index.ties[open.tie].origin} />
+                        <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+                      </>
+                    ) : (
+                      <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+                    )
+                  ) : undefined
+                }
               />
+              </>
             ) : alignment ? (
-              <p className="lean-page__plain">{open.tie !== null ? leanTruth(ties, open.tie, alignment).words : "No Lean linked."}</p>
+              <>
+                <p className="lean-page__plain">{open.tie !== null ? leanTruth(ties, open.tie, alignment).words : "No Lean linked."}</p>
+                {open.tie !== null && <OriginLine origin={ties.index.ties[open.tie]?.origin} />}
+              </>
             ) : null}
           </div>
         </div>

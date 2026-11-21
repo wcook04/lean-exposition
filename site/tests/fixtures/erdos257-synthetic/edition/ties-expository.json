@@ -1,0 +1,30 @@
+{
+  "data": {
+    "segments": [
+      [
+        0,
+        10,
+        [
+          0
+        ]
+      ]
+    ],
+    "ties": [
+      {
+        "record": "goal.main",
+        "role": "statement",
+        "lean": true,
+        "name": "Synthetic.main",
+        "module": "Synthetic",
+        "lines": [
+          1,
+          2
+        ],
+        "anchor": null,
+        "at": "b0-10"
+      }
+    ],
+    "passages": [],
+    "meaning": ""
+  }
+}

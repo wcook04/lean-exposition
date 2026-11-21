@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
+import site from "@instance/site";
 import { siteFilms } from "../src/app/siteFilms";
 
 vi.mock("../src/app/data", () => ({ useMaybeEdition: () => null }));
@@ -53,7 +54,7 @@ describe("Videos menu", () => {
 
   it("lists the three films in order, lead first, each opening YouTube in a new tab", async () => {
     const { pop } = await render();
-    const films = siteFilms("/");
+    const films = siteFilms("/", site.films);
     expect(films).toHaveLength(3);
     const shown = [...pop.querySelectorAll<HTMLElement>("[data-film]")];
     expect(shown.map((el) => el.dataset.film)).toEqual(films.map((f) => f.id));
@@ -90,6 +91,6 @@ describe("Videos menu", () => {
     const group = host!.querySelector<HTMLUListElement>(".phonemenu .videos__rows--phone")!;
     const head = document.getElementById(group.getAttribute("aria-labelledby")!)!;
     expect(head.textContent).toBe("Videos");
-    expect([...group.querySelectorAll<HTMLElement>("[data-film]")].map((el) => el.dataset.film)).toEqual(siteFilms("/").map((f) => f.id));
+    expect([...group.querySelectorAll<HTMLElement>("[data-film]")].map((el) => el.dataset.film)).toEqual(siteFilms("/", site.films).map((f) => f.id));
   });
 });

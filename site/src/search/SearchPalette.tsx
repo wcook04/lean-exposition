@@ -21,6 +21,7 @@ import { searchPapers, searchStatements } from "./corpus";
 import { alignmentResource } from "../compare/useAlignment";
 import { showInHost } from "../lean/walk";
 import "./search.css";
+import { mainGoalOf } from "../app/mainGoal";
 
 const DEBOUNCE = 180;
 const MAX_TOKENS = 16;
@@ -159,7 +160,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   const starts = useMemo<Option[]>(() => {
     const out: Option[] = [];
     const long = overview.papers.find((p) => p.stage === "long");
-    const main = (long?.paper_scope.selected_goal_ids ?? graph.goals).find((g) => graph.nodes.has(g));
+    const main = mainGoalOf(long?.paper_scope.selected_goal_ids, graph.goals, (g) => graph.nodes.has(g));
     if (main) {
       out.push({ key: "start:main", group: "start", title: graph.nodes.get(main)!.label, meta: "Opens the main result on the argument map", href: routeHref({ view: "map", node: main }) });
     }

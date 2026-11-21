@@ -3,6 +3,7 @@
 // papers' surrounding text stays in the reader, one link away from each statement. A row's
 // title opens that step in full.
 
+import site from "@instance/site";
 import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type RefObject } from "react";
 import type { RecordAlignment } from "../api/lean";
 import { useEdition } from "../app/data";
@@ -48,7 +49,9 @@ export function StepTable({ route }: { route: CompareRoute }) {
   const every = useMemo(() => (steps ? tableRows(steps, levels, false, main) : []), [steps, levelsKey, main]);
   const anyRows = useMemo(() => (steps ? tableRows(steps, levels, true, main) : []), [steps, levelsKey, main]);
   // A step asked for by name is always listed, even when only some of the levels have it.
-  const wide = route.any || (!!route.at && !rowFor(every, route.at) && !!rowFor(anyRows, route.at));
+  // When no step is in every column shown (the #257 exposition's steps are its own records),
+  // the table lists every step any column has rather than nothing.
+  const wide = route.any || (!every.length && anyRows.length > 0) || (!!route.at && !rowFor(every, route.at) && !!rowFor(anyRows, route.at));
   const listed = wide ? anyRows : every;
 
   const titleOf = useCallback((id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id), [graph]);
@@ -188,7 +191,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
           </header>
           {records && (
             <p className="table-line">
-              <span className="table-line__terms">A step is one claim, assumption or result in the proof that minimisers of the Sherrington–Kirkpatrick (SK) model have full support. The Lean column is OpenAI’s proof in Lean, a programming language for proofs. That Lean has two separate models, the support model for full support and the value model for the value theorem.</span>{" "}
+              <span className="table-line__terms">{site.words.stepTerms}</span>{" "}
               {rowsSentence(levels, listed.length, wide)} {orderWords(levels)}{" "}
               {someHave &&
                 (wide ? (

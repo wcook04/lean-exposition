@@ -1,0 +1,33 @@
+{
+  "schema": "palomar_replay_receipt_v1",
+  "generated_at": "2026-09-24T00:08:00Z",
+  "entry": "E257_08",
+  "github": {
+    "sha": "dddddddddddddddddddddddddddddddddddddddd",
+    "repository": "example-owner/example-lean",
+    "run_id": "2002",
+    "run_attempt": "1",
+    "workflow": "Comparator replay"
+  },
+  "challenge_module": "Synthetic.E257_08.Challenge",
+  "solution_module": "Solutions.Synthetic.E257_08",
+  "theorem_names": [
+    "Synthetic.E257_08.claim_0",
+    "Synthetic.E257_08.claim_1",
+    "Synthetic.E257_08.claim_2"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "kernel_acceptance": {
+    "lean_default": true,
+    "nanoda": true
+  },
+  "verification": {
+    "outcome": "passed",
+    "failure_stage": null,
+    "error": null
+  }
+}

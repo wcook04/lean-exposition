@@ -7,10 +7,14 @@
 // phones the button is hidden and the phone menu lists the same rows (VideoRows).
 
 import { useEffect, useId, useRef, useState } from "react";
+import site from "@instance/site";
 import { siteFilms, type SiteFilm } from "./siteFilms";
 import "./videos-menu.css";
 
-const FILMS = siteFilms(import.meta.env.BASE_URL);
+const FILMS = siteFilms(import.meta.env.BASE_URL, site.films);
+
+/** False for an instance with no released films: the button, the phone rows and every film slot go. */
+export const HAS_FILMS = FILMS.length > 0;
 
 function Frame({ film, sizes }: { film: SiteFilm; sizes: string }) {
   return (
@@ -48,6 +52,7 @@ function Row({ film }: { film: SiteFilm }) {
 
 /** The site's films as compact rows, for the phone menu. */
 export function VideoRows({ labelledBy }: { labelledBy: string }) {
+  if (!HAS_FILMS) return null;
   return (
     <ul className="videos__rows videos__rows--phone" aria-labelledby={labelledBy}>
       {FILMS.map((film) => (
@@ -87,6 +92,7 @@ export function VideosMenu() {
   }, [open]);
 
   const [lead, ...rest] = FILMS;
+  if (!lead) return null;
   return (
     <div
       className="videos"

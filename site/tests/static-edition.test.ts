@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
+import { gzipSync } from "node:zlib";
 import { describe, expect, it, vi } from "vitest";
 import { withPapers } from "../src/api/lean";
 import { search, selectionMatches, staticRequest, type SearchIndex, type StaticIndex } from "../src/api/static";
@@ -253,12 +254,20 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
     const requests: string[] = [];
     serveFiles(requests);
     try {
-      // The first drafts' targets were 40 and 120 KB, for a third as many ties. Compressed, each is under 40 KB.
+      // The first drafts' targets were 40 and 120 KB, for a third as many ties. A paper with phrase
+      // ties carries every Lean row of each phrase with its comparison, so it is held to its
+      // compressed size, which is what a reader downloads: one tie costs under 400 bytes.
       for (const [stage, limit] of [["short", 150_000], ["expository", 150_000], ["long", 250_000]] as const) {
         expect(edition.responses[`/ties/${stage}`]).toBe(`ties/${stage}.json`);
-        expect(statSync(resolve(out, `ties/${stage}.json`)).size).toBeLessThan(limit);
         const ties = await body(`/api/v1/ties/${stage}`);
-        expect(Object.keys(ties).sort()).toEqual(["meaning", "passages", "segments", "ties"]);
+        const file = readFileSync(resolve(out, `ties/${stage}.json`));
+        if (ties.layer === "phrases") {
+          expect(gzipSync(file).length).toBeLessThan(400 * ties.ties.length + 8_000);
+          expect(Object.keys(ties).sort()).toEqual(["layer", "meaning", "parts", "passages", "segments", "ties", "topics"]);
+        } else {
+          expect(file.length).toBeLessThan(limit);
+          expect(Object.keys(ties).sort()).toEqual(["meaning", "passages", "segments", "ties"]);
+        }
         let previous = 0;
         for (const [start, end, members] of ties.segments) {
           expect(start).toBeGreaterThanOrEqual(previous);

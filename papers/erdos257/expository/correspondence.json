@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.2",
+  "stage": "expository",
+  "state": "draft",
+  "path": "papers/expository.md",
+  "content_sha256": "71083856306374c63ea8277fd72b934364ef30186261add8b961bdd03dd68476",
+  "graph_sha256": "72b1b4c2b4a3766719310d7deb808e62432d8c1d3e4854b25b1285cbe6056696",
+  "selected_goal_ids": [
+    "exp.thm-main"
+  ],
+  "claim_ids": [
+    "exp.thm-main",
+    "exp.step.gap",
+    "exp.step.fractional_part",
+    "exp.step.split",
+    "exp.step.average",
+    "exp.step.cycle_bound",
+    "exp.step.uniform_bound",
+    "exp.step.explicit_choices"
+  ],
+  "citation_ids": [
+    "cite.exp.step.average",
+    "cite.exp.step.cycle_bound",
+    "cite.exp.step.explicit_choices",
+    "cite.exp.step.fractional_part",
+    "cite.exp.step.gap",
+    "cite.exp.step.split",
+    "cite.exp.step.uniform_bound",
+    "cite.exp.thm-main",
+    "cite.short.res-reciprocal-support",
+    "erdos1968_p222",
+    "lucatachiya2014independence"
+  ],
+  "assumption_ids": [],
+  "unresolved_ids": [
+    "exp.step.average",
+    "exp.step.cycle_bound",
+    "exp.step.explicit_choices",
+    "exp.step.fractional_part",
+    "exp.step.gap",
+    "exp.step.split",
+    "exp.step.uniform_bound",
+    "exp.thm-main"
+  ],
+  "passages": [
+    {
+      "anchor": "sec-intro",
+      "text_sha256": "53a6cdae922d6a0ad53c5e27b0efce1e58572846134cfd9194f5e5dee022aba3",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "1. The question: which infinite sums are irrational?: context with no mapped record."
+    },
+    {
+      "anchor": "sec-problem",
+      "text_sha256": "f84c2a2233abcd3c8446fb94a7c7c08898a91036c61881717aada96317cd9d32",
+      "claim_ids": [
+        "exp.thm-main"
+      ],
+      "citation_ids": [
+        "cite.exp.step.average",
+        "cite.exp.step.cycle_bound",
+        "cite.exp.step.explicit_choices",
+        "cite.exp.step.fractional_part",
+        "cite.exp.step.gap",
+        "cite.exp.step.split",
+        "cite.exp.step.uniform_bound",
+        "cite.exp.thm-main",
+        "cite.short.res-reciprocal-support",
+        "erdos1968_p222",
+        "lucatachiya2014independence"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "2. Erdős’s question and the theorem: states or proves the listed records; the papers' own statements are not Lean checks in this edition."
+    },
+    {
+      "anchor": "sec-test",
+      "text_sha256": "133c0b3c7fcbc47bc62d455f80725d09e8fc78031cf27aba8ca958a34c6f7513",
+      "claim_ids": [
+        "exp.step.gap"
+      ],
+      "citation_ids": [
+        "cite.exp.step.gap"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "3. A rational number has a fixed positive gap: states or proves the listed records; the papers' own statements are not Lean checks in this edition."
+    },
+    {
+      "anchor": "sec-split",
+      "text_sha256": "83a051e26dc608a8eb9d263206d031a611738627de43a60f4b2bdcd3a996e563",
+      "claim_ids": [
+        "exp.step.fractional_part",
+        "exp.step.split"
+      ],
+      "citation_ids": [
+        "cite.exp.step.fractional_part",
+        "cite.exp.step.gap",
+        "cite.exp.step.split"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "4. Multiplying the series and retaining fractional parts: states or proves the listed records; the papers' own statements are not Lean checks in this edition."
+    },
+    {
+      "anchor": "sec-doubling",
+      "text_sha256": "6b63293df53b5838ad3270d30d95f63c39f73e5f76b775fc78fdf5e76f3c104f",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "5. A complete example: the doubling exponents: context with no mapped record."
+    },
+    {
+      "anchor": "sec-general",
+      "text_sha256": "a87c66888ac9b52eff6ff89df1e522247b61933646b1f7171c907a86d6f40ee9",
+      "claim_ids": [
+        "exp.step.average",
+        "exp.step.cycle_bound",
+        "exp.step.uniform_bound"
+      ],
+      "citation_ids": [
+        "cite.exp.step.average",
+        "cite.exp.step.cycle_bound",
+        "cite.exp.step.fractional_part",
+        "cite.exp.step.uniform_bound"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "6. Why averaging works: states or proves the listed records; the papers' own statements are not Lean checks in this edition."
+    },
+    {
+      "anchor": "sec-proof",
+      "text_sha256": "9fd18ac12b867af740bf8c3f0ef041afbd8e3bb9b0cb5949a36ebb42df39da7b",
+      "claim_ids": [
+        "exp.step.explicit_choices"
+      ],
+      "citation_ids": [
+        "cite.exp.step.average",
+        "cite.exp.step.cycle_bound",
+        "cite.exp.step.explicit_choices",
+        "cite.exp.step.fractional_part",
+        "cite.exp.step.uniform_bound"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "7. Combining the estimates: states or proves the listed records; the papers' own statements are not Lean checks in this edition."
+    },
+    {
+      "anchor": "sec-limits",
+      "text_sha256": "993bdfa90a259b2dff1c3809e2a439043823e6ecd22567c0381be9ed1bebbddf",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "8. Consequences and limits: context with no mapped record."
+    },
+    {
+      "anchor": "app-full",
+      "text_sha256": "93ab84f2cc23b2c4c185778d085b93466b59ff50960c705cdf66b6d9cf22560a",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "A. Supporting details and formal-proof correspondence: context with no mapped record."
+    },
+    {
+      "anchor": "sec-exercises",
+      "text_sha256": "34d2ce195f91414877b48f72ea2c0b4209fcc9d3fc7d0c4c87e4625e0e36af56",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "B. Questions and exercises: context with no mapped record."
+    },
+    {
+      "anchor": "app-answers",
+      "text_sha256": "60368f62c285dde0c70d29f8880a68e3324bf92c11ee50589ec9efe31b2ced5c",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "C. Answers: context with no mapped record."
+    },
+    {
+      "anchor": "references",
+      "text_sha256": "ac7901c1797e77a1a5aadbf432937542d72b2ff5c57e7c3b9cf611271ba861d2",
+      "claim_ids": [],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "References: context with no mapped record."
+    }
+  ],
+  "review_state": "not_reviewed",
+  "review_notes": [
+    "AI-transcribed from the pinned papers; no independent review of the mapping.",
+    "Claim ids of a passage are the records whose anchors lie inside it, from passages.json, plus the argument steps the AI author placed in that section (examples/erdos257/tools/build_sidecars.py)."
+  ]
+}

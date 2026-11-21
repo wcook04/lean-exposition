@@ -2,6 +2,7 @@
 // a different question, so outcomes are never merged across kinds, and a run
 // that did not finish is not reported as a verdict on the mathematics.
 
+import site from "@instance/site";
 import type { Edition } from "../app/data";
 
 export interface CheckKindInfo {
@@ -286,13 +287,8 @@ export function countsInWords(counts: Record<string, number>): string {
   return `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
 }
 
-/** Plain words for the recorded failures: what stopped, in the record's own terms. */
-const FAILURE_WORDS: Record<string, string> = {
-  full_support_solution_build_failure_20261023:
-    "Comparator stopped while building the proof of the Full support theorem, because a compiled file the proof imports (AbsIncrement) was missing.",
-  scalar_value_solution_build_failure_20261024:
-    "Comparator stopped while building the proof of the scalar value theorem, because a compiled file the proof imports (IntegralPositiveMulGaussian) was missing.",
-};
+/** Plain words for the recorded failures: what stopped, in the record's own terms (the instance's). */
+const FAILURE_WORDS: Record<string, string> = site.words.failureWords;
 
 /** The date a record carries at the end of its identifier, read only for a dated failure. */
 export function identifierDate(id: string): string | null {
@@ -305,6 +301,12 @@ export function failureLine(card: Pick<EvidenceCard, "id" | "label">, record?: {
   const date = statedDate(record?.details)?.text ?? identifierDate(card.id);
   const what = FAILURE_WORDS[card.id] ?? plainDetails(record?.details) ?? record?.tool ?? card.label;
   return date ? `${date}. ${what}` : what;
+}
+
+/** The Lean module a build record's text names: under the instance's root namespace (SK: OAI), or any dotted capitalised name. */
+export function buildModuleIn(details: string | undefined | null, root: string | null = site.lean.moduleRoot): string | undefined {
+  const pattern = root ? new RegExp(`\\b${root}(?:\\.\\w+)+`) : /\b[A-Z]\w*(?:\.[A-Z]\w*)+/;
+  return pattern.exec(details ?? "")?.[0];
 }
 
 /** "1 run record" or "8 run records". */

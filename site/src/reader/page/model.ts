@@ -24,7 +24,7 @@ export function parsePassageRef(ref: string): { stage: Stage; anchor: string } |
 
 export function nodeIdOfRef(ref: string): string {
   const at = ref.lastIndexOf("/nodes/");
-  return at < 0 ? ref : ref.slice(at + "/nodes/".length);
+  return at < 0 ? ref : decodeURIComponent(ref.slice(at + "/nodes/".length));
 }
 
 export function passageOf(structure: PaperStructure | undefined, anchor: string): StructurePassage | undefined {

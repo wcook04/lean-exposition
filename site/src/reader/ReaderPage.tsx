@@ -42,7 +42,8 @@ import { FOLLOW_HOLD, leanPage, POINT_DWELL, type Followed, type Pin, type Point
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
-import { leanTruth, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
+import { declLight } from "./page/PhraseCard";
+import { isPhraseLayer, leanTruth, phraseTitle, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
   companionAnchor,
@@ -84,6 +85,7 @@ import {
 } from "./page/position";
 import "./reader-content.css";
 import "./reader-page.css";
+import "./phrases.css";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
 import "./page/map-pane.css";
 
@@ -281,11 +283,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     () =>
       new Statements(ties, doc.parts, (t) => {
         const id = ties.index.ties[t].record;
-        return `${shortTitle(id, graph.nodes.get(id)?.label ?? id)}, statement ${ties.place[t] + 1} of ${ties.stops.length}. Press Enter to open it.`;
+        const name = isPhraseLayer(ties) ? phraseTitle(ties, t) : shortTitle(id, graph.nodes.get(id)?.label ?? id);
+        return `${name}, statement ${ties.place[t] + 1} of ${ties.stops.length}. Press Enter to open it.`;
       }),
     [ties, doc, graph],
   );
   useEffect(() => () => statements.dispose(), [statements]);
+  // A declaration pointed at in the Lean pane lights every phrase of this paper it states.
+  useEffect(() => declLight.subscribe(() => statements.lightDecl(declLight.get())), [statements]);
 
   useLayoutEffect(() => {
     const root = document.documentElement;
@@ -995,7 +1000,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (!id) return release();
       const statement = statementFor(ties, id);
       selfAt.current = statement !== null ? ties.index.ties[statement].at : undefined;
-      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined });
+      // A card opens its step on the tab the pane is on; the tab never changes by itself.
+      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
     },
     [ties, release],
   );
@@ -1356,6 +1362,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         }, 210);
       return;
     }
+    // A phrase whose words are all one link opens its Lean like any phrase; the link stays a
+    // modified click away (a new tab or window).
+    const linked = a.closest<HTMLElement>("[data-t]") ?? a.querySelector<HTMLElement>("[data-t]");
+    if (linked && !(event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) && linked.textContent?.trim() === a.textContent?.trim()) {
+      const t = statementOf(ties, Number(linked.dataset.t));
+      if (t !== null && ties.index.ties[t].phrase) {
+        event.preventDefault();
+        openStatement(t);
+        return;
+      }
+    }
     const href = a.getAttribute("href") ?? "";
     const from = a.closest<HTMLElement>("[data-passage]")?.dataset.passage ?? doc.parts[signals.part.get()]?.anchor;
     if (a.dataset.companion !== undefined && a.closest(".part__text")) {
@@ -1390,7 +1407,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (id: string) => {
       const statement = statementFor(ties, id);
       const tie = statement !== null ? ties.index.ties[statement] : null;
-      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined };
+      // The step opens on the tab the pane is on: on the Graph tab, under the graph.
+      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined };
       if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
       const opened = nextOpened();
       go(to);
@@ -1484,7 +1502,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
   const outlineColumn = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
-  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine };
+  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine, topics: ties.index.topics, parts: ties.index.parts };
   const visitOriginPassage = route.beside
     ? visit && visit.stage === stage
       ? (visit.anchor ?? null)
@@ -1612,7 +1630,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <span className="visually-hidden">Sections</span>
             </button>
           )}
-          <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0} phrases={isPhraseLayer(ties)} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
           {mid && (
             <button
@@ -1831,16 +1849,20 @@ function Heading({ signals, children }: { signals: ReaderSignals; children(curre
   return <>{children(useSignal(signals.heading))}</>;
 }
 
-function Crumbs({ signals, outline, name, stage, phone, hint, onTop, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; name: string; stage: Stage; phone: boolean; hint: boolean; onTop(): void; onJump(id: string): void }) {
+function Crumbs({ signals, outline, name, stage, phone, hint, phrases, onTop, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; name: string; stage: Stage; phone: boolean; hint: boolean; phrases?: boolean; onTop(): void; onJump(id: string): void }) {
   const chain = chainOf(outline, useSignal(signals.heading));
   return (
     <nav className="crumbs" aria-label="Where you are in this paper">
       {/* The first screen says what to do; it goes as soon as there is a section to name. */}
-      {hint && !chain.length && (
+      {hint && !chain.length && (phrases ? (
+        <span className="reader-strip__hint" title="Each phrase a Lean declaration states is underlined in the colour of its topic; Sections lists the colours. j and k step through them.">
+          {phone ? "Tap" : "Click"} an underlined phrase to see the Lean that states it.
+        </span>
+      ) : (
         <span className="reader-strip__hint" title="A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean. j and k step through them.">
           {phone ? "Tap" : "Click"} a statement with a dark tick to see its Lean.
         </span>
-      )}
+      ))}
       <ol>
         <li>
           <a

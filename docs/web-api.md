@@ -132,6 +132,7 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/lean/module?name=…` | One Lean module with its source and declarations |
 | `/alignment` | Where each record is stated in Lean and in each paper, with exact Lean lines for each row and statement, the dictionary of Lean names, and the chain of names behind each step between Lean-linked records |
 | `/ties/long` | One paper's marked statements, compact enough for first paint; `short` and `expository` work likewise |
+| `/phrases/long` | Where a paper has phrase ties (`alignment/phrases-<paper>.json`): each part's AI-drafted declaration titles and reading notes. `/ties/<paper>` then lists one tie per phrase, with its topic, colour shade and every Lean row with its comparison (`same`, `stronger`, `weaker` or `different`); 404 for a paper without phrase ties |
 
 The static reading edition also carries `/alignment/core`, `/alignment/long` (and `short`,
 `expository`) and `/alignment/record?id=…`, so that a page can load part of `/alignment`, and

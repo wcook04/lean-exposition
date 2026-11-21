@@ -39,7 +39,7 @@ export function WalkingLean({ row, place, bare, foot }: Props) {
       {here ? (
         <LazyLeanBlock key={here.name} name={here.name} module={here.module} compact bare={bare} onName={walk} previewSlot={previewSlot} />
       ) : (
-        <LazyLeanBlock name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} lines={row.lines} quietLines compact bare={bare} onName={walk} previewSlot={previewSlot} />
+        <LazyLeanBlock name={row.name} module={row.module} relation={row.relation} note={row.note} fidelity={row} clause={row.clause} lines={row.lines} quietLines compact bare={bare} onName={walk} previewSlot={previewSlot} />
       )}
       {foot?.(here ?? row)}
     </>

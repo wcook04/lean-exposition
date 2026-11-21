@@ -2,6 +2,7 @@
 // A module is fetched alone and kept in memory. Nothing here runs at startup.
 
 import { useEffect, useMemo, useState } from "react";
+import site from "@instance/site";
 import {
   loadLeanModule,
   loadLeanModules,
@@ -20,11 +21,12 @@ import {
 import { alignmentResource, shortTitle, useAlignment } from "../compare/useAlignment";
 import { buildIndex, type LeanIndex } from "./resolve";
 
-export const MAIN_THEOREM = "OAI.ZeroTemperatureSK.full_support";
-export const VALUE_THEOREM = "OAI.SKValue.value_consequences";
-export const MINIMIZER = "OAI.ZeroTemperatureSK.IsMinimizer";
-export const CHALLENGE_FILE = "ComparatorChallenges.SKFullSupport";
-export const VALUE_CHALLENGE_FILE = "ComparatorChallenges.SKValue";
+// The instance's landmarks in its Lean; an instance without one gives an empty name, which no declaration has.
+export const MAIN_THEOREM = site.lean.mainTheorem ?? "";
+export const VALUE_THEOREM = site.lean.valueTheorem ?? "";
+export const MINIMIZER = site.lean.minimizer ?? "";
+export const CHALLENGE_FILE = site.lean.challengeFile ?? "";
+export const VALUE_CHALLENGE_FILE = site.lean.valueChallengeFile ?? "";
 
 let shellPending: Promise<{ modules: LeanModules; index: LeanIndex }> | null = null;
 let shell: { modules: LeanModules; index: LeanIndex } | undefined;

@@ -1,0 +1,9 @@
+{
+  "responses": {
+    "/ties/short": "ties-short.json",
+    "/ties/long": "ties-long.json",
+    "/ties/expository": "ties-expository.json",
+    "/alignment": "alignment.json",
+    "/overview": "overview.json"
+  }
+}

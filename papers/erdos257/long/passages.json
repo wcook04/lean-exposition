@@ -1,0 +1,647 @@
+[
+ {
+  "name": "abstract",
+  "heading": "Abstract",
+  "marker_line": 12,
+  "first_line": 13,
+  "last_line": 13,
+  "end_marker_line": 14,
+  "results": [],
+  "text_sha256": "0c2f3ab1174dfcd1dea2b6279fe7b2db4da6fa1d6bc64c340cb5787441ea1700"
+ },
+ {
+  "name": "introduction",
+  "heading": "Introduction",
+  "marker_line": 20,
+  "first_line": 21,
+  "last_line": 67,
+  "end_marker_line": 68,
+  "results": [],
+  "text_sha256": "0f425792c1439104897ee5e09d01a081a9baf4db2506def5480eac94e04f3537"
+ },
+ {
+  "name": "sec-257-problem",
+  "heading": "1. Support criteria and their proofs",
+  "marker_line": 78,
+  "first_line": 79,
+  "last_line": 79,
+  "end_marker_line": 80,
+  "results": [],
+  "text_sha256": "fdd2cc66efbea5decf02cd9b9f316b52541d9256c63c8a4b49bab2e075485531"
+ },
+ {
+  "name": "reciprocal-summable-supports",
+  "heading": "1.1 Reciprocal-summable supports",
+  "marker_line": 86,
+  "first_line": 87,
+  "last_line": 127,
+  "end_marker_line": 128,
+  "results": [],
+  "text_sha256": "2a304b7b895724bd797c31f55789525fbf5224c421d9c597beda0dd49c7c60a3"
+ },
+ {
+  "name": "a-weighted-condition-on-the-support",
+  "heading": "1.2 A weighted condition on the support",
+  "marker_line": 134,
+  "first_line": 135,
+  "last_line": 378,
+  "end_marker_line": 379,
+  "results": [
+   "thm:257-weighted"
+  ],
+  "text_sha256": "0a0a24ba193e74694105c298beb12f6c6946864f363ba2884e61b9b3c1125c0a"
+ },
+ {
+  "name": "sec-257-finite-witness-rules",
+  "heading": "1.3 Dependence on the chosen primes",
+  "marker_line": 385,
+  "first_line": 386,
+  "last_line": 411,
+  "end_marker_line": 412,
+  "results": [
+   "prop:257-finite-witness-rule"
+  ],
+  "text_sha256": "639fceef8536c914da39e15050c51bd8d13e7728a04c4551775e1129b91112f1"
+ },
+ {
+  "name": "sec-257-common-kernel",
+  "heading": "1.4 A finite estimate on common observation scales",
+  "marker_line": 418,
+  "first_line": 419,
+  "last_line": 465,
+  "end_marker_line": 466,
+  "results": [],
+  "text_sha256": "dbe6eb7fcd64623f1ab57e5bc9a19b1191a31bc931245e75ac43d96b11cf73a8"
+ },
+ {
+  "name": "positive-divisor-majorants",
+  "heading": "1.5 Positive divisor majorants",
+  "marker_line": 472,
+  "first_line": 473,
+  "last_line": 530,
+  "end_marker_line": 531,
+  "results": [
+   "thm:257-variable-fractional-cover"
+  ],
+  "text_sha256": "a7872e0f038e85778180005eb607a7795130af673eb0c724e359ccefb5eb1ee3"
+ },
+ {
+  "name": "combining-the-two-support-criteria",
+  "heading": "1.6 Combining the two support criteria",
+  "marker_line": 537,
+  "first_line": 538,
+  "last_line": 589,
+  "end_marker_line": 590,
+  "results": [
+   "thm:257-mixed-supports"
+  ],
+  "text_sha256": "e1145c46924b2e14388ab15425d32370b73088681129dae740dcb7f09336079b"
+ },
+ {
+  "name": "the-universal-problem-and-the-half-value-question",
+  "heading": "1.7 The universal problem and the half-value question",
+  "marker_line": 596,
+  "first_line": 597,
+  "last_line": 609,
+  "end_marker_line": 610,
+  "results": [
+   "defn:U",
+   "defn:H"
+  ],
+  "text_sha256": "fa0ec43f5d4bfea3a52041c3798df18fb22d2dc6adbf65ca49bf048bc70a3d9c"
+ },
+ {
+  "name": "known-support-theorems",
+  "heading": "1.8 Known support theorems",
+  "marker_line": 616,
+  "first_line": 617,
+  "last_line": 667,
+  "end_marker_line": 668,
+  "results": [],
+  "text_sha256": "c6d2a1ff5b6b7155b6bb99ac085f364a725e2bbfceb2a328ed262c8c7bd32e14"
+ },
+ {
+  "name": "geometry-and-rational-target-membership",
+  "heading": "1.9 Geometry and rational-target membership",
+  "marker_line": 674,
+  "first_line": 675,
+  "last_line": 732,
+  "end_marker_line": 733,
+  "results": [
+   "thm:geometry",
+   "thm:supported-dichotomy",
+   "thm:greedy-survival"
+  ],
+  "text_sha256": "63db0bc30890089c41cab0f963adbc670b836982e199a856879256e22c9edd50"
+ },
+ {
+  "name": "sec-257-wall",
+  "heading": "2. Limitations of the recorded methods",
+  "marker_line": 743,
+  "first_line": 744,
+  "last_line": 941,
+  "end_marker_line": 942,
+  "results": [
+   "obs:no-ensemble",
+   "prop:canon",
+   "lem:collapse-mech",
+   "prop:collapse",
+   "lem:sqrt-witness",
+   "prop:collapsed-list",
+   "prop:local-void",
+   "prop:exponent-gap",
+   "thm:one-sided",
+   "prop:soft",
+   "obs:box"
+  ],
+  "text_sha256": "78a59e3b730d606a2541e6b67ed0162315d0b8ff606ecfe74c8329e1f1d14933"
+ },
+ {
+  "name": "sec-257-survivors",
+  "heading": "3. Unproved inputs for further arguments",
+  "marker_line": 948,
+  "first_line": 949,
+  "last_line": 1082,
+  "end_marker_line": 1083,
+  "results": [],
+  "text_sha256": "162900a3b6fc5a693542da9298680bc4442df5ae9cd30d6d20ad429907a433ca"
+ },
+ {
+  "name": "sec-257-howto",
+  "heading": "4. Reading the detailed record",
+  "marker_line": 1089,
+  "first_line": 1090,
+  "last_line": 1092,
+  "end_marker_line": 1093,
+  "results": [],
+  "text_sha256": "7257884b4a7a0d6afe55a2bab3b04efae4fb27d4fe0b94549b34901ca1aa9a0e"
+ },
+ {
+  "name": "the-series-the-greedy-rule-and-finite-identities",
+  "heading": "5. The series, the greedy rule and finite identities",
+  "marker_line": 1103,
+  "first_line": 1104,
+  "last_line": 1356,
+  "end_marker_line": 1357,
+  "results": [
+   "defn:half-question",
+   "obs:half-controls-universal",
+   "thm:full-support",
+   "thm:purely-periodic-support",
+   "thm:eventually-periodic-support",
+   "thm:residue-class-support",
+   "thm:odd-support",
+   "thm:topology",
+   "thm:greedy-survival-record",
+   "defn:greedy-orbit",
+   "rem:no-ties",
+   "thm:master-identity",
+   "thm:real-form",
+   "thm:dynamics",
+   "obs:anchors-low",
+   "obs:anchors-depth",
+   "obs:anchors-coords"
+  ],
+  "text_sha256": "3904dcdc8d49c05c0ffb06dc2512fd33eded774dd1702fe44e953aaefa54570c"
+ },
+ {
+  "name": "detailed-results-and-their-hypotheses",
+  "heading": "6. Detailed results and their hypotheses",
+  "marker_line": 1363,
+  "first_line": 1364,
+  "last_line": 1364,
+  "end_marker_line": 1365,
+  "results": [],
+  "text_sha256": "f28616f36407f3196f91091fbbaf76ca41bd79cb1ba79b5098636be7dc4e4f61"
+ },
+ {
+  "name": "conditional-membership-tests",
+  "heading": "6.1 Conditional membership tests",
+  "marker_line": 1371,
+  "first_line": 1372,
+  "last_line": 1649,
+  "end_marker_line": 1650,
+  "results": [
+   "thm:fatal-absorbing",
+   "thm:seam-limit",
+   "thm:two-channel-cap",
+   "thm:second-channel",
+   "thm:straddle-closed-set",
+   "thm:largest-skip-late",
+   "thm:middle-producer-escape",
+   "thm:middle-allright-defect",
+   "thm:two-sided-dyadic",
+   "thm:upper-reset-band",
+   "thm:mobius-centred-nonneg",
+   "thm:sqrt-bound-route",
+   "thm:frozen-margin",
+   "thm:full-support-catalogue",
+   "thm:pairwise-coprime",
+   "thm:weighted-coeff-engine",
+   "thm:lcm-gap-engine",
+   "thm:factorial-twopow-support",
+   "thm:multiples-support",
+   "thm:periodic-support",
+   "thm:eventually-periodic",
+   "thm:residue-odd",
+   "thm:signed-periodic",
+   "thm:mersenne-channel-survival",
+   "thm:mersenne-channel-growth"
+  ],
+  "text_sha256": "b10e6877aba3b8be8a8e3019d894b7721aad48c4b5fbb0c8145aa1dcd5fd8fae"
+ },
+ {
+  "name": "exact-identities-and-reductions",
+  "heading": "6.2 Exact identities and reductions",
+  "marker_line": 1656,
+  "first_line": 1657,
+  "last_line": 2055,
+  "end_marker_line": 2056,
+  "results": [
+   "obs:half-regression",
+   "obs:period-four-obstruction",
+   "thm:mobius-lambert-identity",
+   "cor:negative-mobius-overshoot",
+   "obs:skip-block-non-invariant",
+   "thm:half-skip-dichotomy",
+   "thm:nine-way-hub",
+   "lem:eventually-right-impossible",
+   "lem:mersenne-tail-weight",
+   "thm:greedy-survival-catalogue",
+   "lem:rank-step-trichotomy",
+   "lem:fatal-gap-exclusion",
+   "lem:half-endpoint-kills",
+   "lem:straddle-agrees-greedy",
+   "thm:last-skip-iff-fatal",
+   "lem:seam-upper-or-middle",
+   "lem:largest-false-rank-algebra",
+   "thm:critical-dyadic-band",
+   "thm:final-middle-cell",
+   "lem:skipped-endpoint-trichotomy",
+   "lem:reverse-carry-word",
+   "lem:linear-channel-nogo",
+   "thm:two-thirds-band",
+   "thm:sharp-fatal-gap",
+   "lem:gap-mass-summability",
+   "lem:half-divisor-unit-drop",
+   "thm:tempered-orbit-rigidity",
+   "lem:tail-transfer",
+   "lem:dyadic-excess-reformulation",
+   "lem:denominator-sandwich",
+   "lem:denominator-survival",
+   "lem:mixed-prime-power-layer",
+   "defn:achievement-set",
+   "prop:achievement-set-topology",
+   "thm:master-dichotomy",
+   "defn:perturbed-family",
+   "thm:perturbed-family-maximality"
+  ],
+  "text_sha256": "dcb4c902477eaabe8d6c2e1820659034a294049b60c9370c99d6e430372d8430"
+ },
+ {
+  "name": "consequence-theorems",
+  "heading": "6.3 Consequence theorems",
+  "marker_line": 2062,
+  "first_line": 2063,
+  "last_line": 2401,
+  "end_marker_line": 2402,
+  "results": [
+   "record:257bm-d1",
+   "record:257bm-d2",
+   "record:257bm-d3",
+   "record:257bm-d4",
+   "record:257bm-c1",
+   "record:257bm-c2",
+   "record:257bm-c3",
+   "record:257bm-c4",
+   "record:257bm-c5",
+   "record:257bm-c6",
+   "record:257bm-c6a",
+   "record:257bm-c6b",
+   "record:257bm-c7",
+   "record:257bm-c8",
+   "record:257bm-c9",
+   "record:257bm-c10",
+   "record:257bm-c11",
+   "record:257bm-c12",
+   "record:257bm-c13",
+   "record:257bm-c14",
+   "record:257bm-c15",
+   "record:257rig-c16",
+   "record:257rig-c17",
+   "record:257rig-c18",
+   "record:257bm-c19",
+   "record:257bm-c20"
+  ],
+  "text_sha256": "5fcc88e7b3cfd069996c6bea6f0969124b46cda16400cfcf19fb8e5d573ad952"
+ },
+ {
+  "name": "invariants",
+  "heading": "6.4 Invariants",
+  "marker_line": 2408,
+  "first_line": 2409,
+  "last_line": 2799,
+  "end_marker_line": 2800,
+  "results": [
+   "record:257bm-i1a",
+   "record:257bm-i1b",
+   "record:257bm-i1c",
+   "record:257bm-i-cap",
+   "record:257bm-i5",
+   "record:257bm-i6",
+   "record:257bm-i7",
+   "record:257bm-i-rank2",
+   "record:257bm-i-seed",
+   "record:257bm-i9",
+   "record:257bm-i10",
+   "record:257bm-i11a",
+   "record:257bm-i11b",
+   "record:257bm-i11c",
+   "record:257bm-i12",
+   "record:257bm-i2",
+   "record:257bm-i-t7",
+   "record:257bm-i-mob",
+   "record:257bm-i-bridge",
+   "record:257rig-i2",
+   "record:257rig-i3",
+   "record:257rig-i4a",
+   "record:257rig-i4b",
+   "record:257rig-i5",
+   "record:257bm-i-cross",
+   "record:257bm-i-cross2",
+   "record:257hg-i6",
+   "record:257hg-i7",
+   "record:257hg-i1",
+   "record:257hg-i2",
+   "record:257hg-i3",
+   "record:257hg-i4",
+   "record:257hg-i5",
+   "record:257bm-i13",
+   "record:257bm-i14",
+   "record:257bm-i15",
+   "record:257bm-i16",
+   "record:257bm-i17"
+  ],
+  "text_sha256": "bc883ecd04a2d3c08a2e675bf0b7be2a9c0ab788e502b6776384bd778341a5e4"
+ },
+ {
+  "name": "obstructions-and-countermodels",
+  "heading": "6.5 Obstructions and countermodels",
+  "marker_line": 2806,
+  "first_line": 2807,
+  "last_line": 2898,
+  "end_marker_line": 2899,
+  "results": [
+   "record:257bm-k1",
+   "record:257bm-k-dich",
+   "record:257bm-k2",
+   "record:257bm-k3",
+   "record:257bm-k4",
+   "record:257bm-k5",
+   "record:257rig-k6",
+   "record:257rig-k7",
+   "record:257hg-k8",
+   "record:257bm-k9",
+   "record:257bm-k10",
+   "record:257bm-k11",
+   "record:257hg-k12"
+  ],
+  "text_sha256": "20e7a8633247bf8b347588886915d01dc788fec3d79be0f1e7a8f9b5e1216f0e"
+ },
+ {
+  "name": "further-finite-and-conditional-results",
+  "heading": "6.6 Further finite and conditional results",
+  "marker_line": 2905,
+  "first_line": 2906,
+  "last_line": 3136,
+  "end_marker_line": 3137,
+  "results": [
+   "prop:unsafe-middle-range-exactly-three",
+   "prop:finite-approximations-without-compatibility",
+   "prop:exact-lebesgue-measure-dichotomy"
+  ],
+  "text_sha256": "837ee6ddb9e1659cc57167d6fa82b2a11dbaa7a4aac098977d2974247120cf9a"
+ },
+ {
+  "name": "sec-scale-ladder",
+  "heading": "7. Finite ranges and unbounded parameters",
+  "marker_line": 3147,
+  "first_line": 3148,
+  "last_line": 3200,
+  "end_marker_line": 3201,
+  "results": [
+   "rem:promotion-audit"
+  ],
+  "text_sha256": "d0feaff900838dac491de4e65bceaa42fff078266c3eb0a2176390d3287b1b6b"
+ },
+ {
+  "name": "sec-four-coordinates",
+  "heading": "8. Approximations to the greedy orbit",
+  "marker_line": 3207,
+  "first_line": 3208,
+  "last_line": 3328,
+  "end_marker_line": 3329,
+  "results": [
+   "prop:one-orbit",
+   "lem:no-ties",
+   "lem:tr-forced-greedy",
+   "lem:tr-parity",
+   "thm:tr-witness-exclusion",
+   "cor:tr-half-lcm",
+   "lem:tr-mod12",
+   "thm:tr-finite-decision"
+  ],
+  "text_sha256": "ed7e2b92333d6289019dd921a167a68f568201f0d7f052d997605785af0c485b"
+ },
+ {
+  "name": "which-hypotheses-remain-unproved",
+  "heading": "9. Which hypotheses remain unproved",
+  "marker_line": 3335,
+  "first_line": 3336,
+  "last_line": 3627,
+  "end_marker_line": 3628,
+  "results": [
+   "obs:affine-excess-recurrence",
+   "obs:general-target-gap",
+   "thm:lower-bound-every-reset",
+   "rem:dangerous-reset-chain-scope",
+   "thm:one-sided-finite-decision-boundary"
+  ],
+  "text_sha256": "21c1815fc86106a613fd11ddcd1aa3cfdc81adf549b9ef2a292c5852af4b0c6e"
+ },
+ {
+  "name": "hypothesis-specific-obstructions",
+  "heading": "10. Hypothesis-specific obstructions",
+  "marker_line": 3634,
+  "first_line": 3635,
+  "last_line": 3870,
+  "end_marker_line": 3871,
+  "results": [
+   "obs:prime-doubling",
+   "obs:parity-squares",
+   "obs:irrationality-measure",
+   "prop:2adic-nogo",
+   "prop:upper-unconditional",
+   "thm:cd-neg3-impossible",
+   "cor:cd-remaining",
+   "rem:tail-dominance-open",
+   "prop:finite-state-nogo",
+   "prop:mobius-nogo",
+   "prop:finite-boolSupport-and-onesided",
+   "prop:carry-survivor-extinction",
+   "lem:scalar-localization",
+   "cor:mersenne-height",
+   "defn:band-escape",
+   "prop:critical-band-index",
+   "cert:band-through-31",
+   "rem:band-caveat"
+  ],
+  "text_sha256": "84b632f99b35faa466eaba42ad215b76e4074724a61a30ca670d16fb80404a57"
+ },
+ {
+  "name": "sec-invent-257",
+  "heading": "11. Unproved inputs for the recorded implications",
+  "marker_line": 3877,
+  "first_line": 3878,
+  "last_line": 3899,
+  "end_marker_line": 3900,
+  "results": [
+   "defn:theta"
+  ],
+  "text_sha256": "772dfc82d496e276b04bf8efefc7d6c58a8e403ae340e487d2fcc088021f25a0"
+ },
+ {
+  "name": "sec-invent-R1",
+  "heading": "11.1 Reset bounds and finite weighted divisor sums",
+  "marker_line": 3906,
+  "first_line": 3907,
+  "last_line": 4072,
+  "end_marker_line": 4073,
+  "results": [
+   "lem:odometer"
+  ],
+  "text_sha256": "0500835bcc9d7518ef1e8e47ab6b6e7c0cf4ee9270aee2ac5bf5a7971f2d7156"
+ },
+ {
+  "name": "sec-invent-R2",
+  "heading": "11.2 Progress to larger endpoint depths",
+  "marker_line": 4079,
+  "first_line": 4080,
+  "last_line": 4135,
+  "end_marker_line": 4136,
+  "results": [],
+  "text_sha256": "277d57ff18c89ce3393bd512325f2da9c56f4b613680896ee47e213b20512ea7"
+ },
+ {
+  "name": "sec-invent-R3",
+  "heading": "11.3 Prime support and the limits of one formal argument",
+  "marker_line": 4142,
+  "first_line": 4143,
+  "last_line": 4160,
+  "end_marker_line": 4161,
+  "results": [],
+  "text_sha256": "85bfd5957f16c191e8c60a17156548a38596b75b9d2ea5d7a7d2ffe5790bcdea"
+ },
+ {
+  "name": "sec-invent-R4",
+  "heading": "11.4 Equivalent carry conditions at perfect-square depths",
+  "marker_line": 4167,
+  "first_line": 4168,
+  "last_line": 4216,
+  "end_marker_line": 4217,
+  "results": [
+   "lem:sqwitness"
+  ],
+  "text_sha256": "7d1b15cd765300b281006013343512764deda7fe4634401894ddcaf7849f1f48"
+ },
+ {
+  "name": "sec-invent-R5",
+  "heading": "11.5 Sparse and dense supports under the certificate criterion",
+  "marker_line": 4223,
+  "first_line": 4224,
+  "last_line": 4278,
+  "end_marker_line": 4279,
+  "results": [
+   "prop:squarefree"
+  ],
+  "text_sha256": "c5873f0122db1e594043c275579c804b399a424dabbd549caf5aa4cf06a74f5a"
+ },
+ {
+  "name": "sec-invent-shape",
+  "heading": "11.6 What the experiments and obstructions do not imply",
+  "marker_line": 4285,
+  "first_line": 4286,
+  "last_line": 4314,
+  "end_marker_line": 4315,
+  "results": [],
+  "text_sha256": "7e92ae2c8c05a8c814a48877ed41ebdb7914c8cdc2c6d7998e08615a1c350af9"
+ },
+ {
+  "name": "what-is-open-stated-exactly",
+  "heading": "12. What is open, stated exactly",
+  "marker_line": 4325,
+  "first_line": 4326,
+  "last_line": 4576,
+  "end_marker_line": 4577,
+  "results": [
+   "prop:cpgs-equiv",
+   "prop:strip-equiv",
+   "obs:dangerous-reset-rigidity"
+  ],
+  "text_sha256": "a86c3d1ee574c709d0c2aac99daa8a871845903e5a4ddbbdcebda4307f07bc9c"
+ },
+ {
+  "name": "sec-257-logarithmic-sampling",
+  "heading": "13. Logarithmic cost under arithmetic sampling",
+  "marker_line": 4583,
+  "first_line": 4584,
+  "last_line": 4788,
+  "end_marker_line": 4789,
+  "results": [
+   "thm:257-logarithmic-counterexample",
+   "cor:257-logarithmic-separation",
+   "prop:257-logarithmic-initial-interval"
+  ],
+  "text_sha256": "0bdc4703f93bc0db57b04b506c256f2e775d3de70fb52144009eccb6b57e38c9"
+ },
+ {
+  "name": "two-proof-details-and-sources",
+  "heading": "Two proof details and sources",
+  "marker_line": 4795,
+  "first_line": 4796,
+  "last_line": 4815,
+  "end_marker_line": 4816,
+  "results": [],
+  "text_sha256": "2952cfbc988fd0463bd125e97ea6412b9bfefef3bde751787ee9045a284cc5e7"
+ },
+ {
+  "name": "verification-and-reproducibility",
+  "heading": "Verification and reproducibility",
+  "marker_line": 4822,
+  "first_line": 4823,
+  "last_line": 4825,
+  "end_marker_line": 4826,
+  "results": [],
+  "text_sha256": "eb32314e87aeeb4f40dad63bb5e7f0eaf6850819c3e3edb1a545309b1224eaaf"
+ },
+ {
+  "name": "statements-and-declarations",
+  "heading": "Statements and declarations",
+  "marker_line": 4832,
+  "first_line": 4833,
+  "last_line": 4849,
+  "end_marker_line": 4850,
+  "results": [],
+  "text_sha256": "0aeb1371c90d919af18c29797a0997ec096d8bc2e9e5995f51c0913c2967ed16"
+ },
+ {
+  "name": "references",
+  "heading": "References",
+  "marker_line": 4856,
+  "first_line": 4857,
+  "last_line": 4903,
+  "end_marker_line": 4904,
+  "results": [],
+  "text_sha256": "f851abfbcaa8d85f2463ef1bed78bc9040a284a2b97647d3fa071347903439b7"
+ }
+]
