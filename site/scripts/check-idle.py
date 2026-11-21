@@ -31,7 +31,13 @@ from playwright.sync_api import Page, sync_playwright
 INIT = r"""
 (() => {
   const w = window;
-  w.__still = { muts: 0, urls: 0, shifts: 0, scrolls: 0, tops: {} };
+  w.__still = { muts: 0, net: 0, urls: 0, shifts: 0, scrolls: 0, tops: {} };
+  // When the last network response finished: a mutation within half a second of one is data arriving.
+  w.__lastResponse = 0;
+  try {
+    new PerformanceObserver((l) => { for (const e of l.getEntries()) w.__lastResponse = Math.max(w.__lastResponse, e.responseEnd); })
+      .observe({ type: 'resource', buffered: true });
+  } catch (e) {}
   for (const k of ['pushState', 'replaceState']) {
     const o = history[k].bind(history);
     history[k] = function (...a) { w.__still.urls++; return o(...a); };
@@ -48,7 +54,9 @@ INIT = r"""
     return t.tagName.toLowerCase() + (c ? '.' + c.trim().split(/\s+/).slice(0, 2).join('.') : '');
   };
   const start = () => new MutationObserver((ms) => {
+    const arriving = performance.now() - w.__lastResponse < 500;
     for (const m of ms) {
+      if (arriving) { w.__still.net++; continue; }
       w.__still.muts++;
       const k = `${m.type} ${name(m.target)} ${m.attributeName || ''}`;
       w.__still.tops[k] = (w.__still.tops[k] || 0) + 1;
@@ -58,7 +66,7 @@ INIT = r"""
 })();
 """
 
-RESET = "() => { window.__still = { muts: 0, urls: 0, shifts: 0, scrolls: 0, tops: {} }; }"
+RESET = "() => { window.__still = { muts: 0, net: 0, urls: 0, shifts: 0, scrolls: 0, tops: {} }; }"
 
 
 def pane_tab(page: Page, which: str) -> bool:
@@ -117,13 +125,14 @@ def main() -> int:
                 got = idle(page, args.idle)
                 label = f"{path or '/'} at {widths[0]}px, {args.quiet_within} ms after first paint"
                 # The page itself must be still; an address the reader settles once (its reading place) is
-                # checked by the idle windows below, after the page has been left alone longer.
+                # checked by the idle windows below, after the page has been left alone longer. Data that
+                # arrives over the network may still fill in (counted apart), provided nothing shifts.
                 if got["muts"] > args.max_mutations or got["shifts"] or got["scrolls"]:
                     top = sorted(got["tops"].items(), key=lambda kv: -kv[1])[:3]
                     bad.append(f"{label}: {got['muts']} mutations ({'; '.join(f'{k} x{v}' for k, v in top)}), "
                                f"{got['shifts']} layout shifts, {got['scrolls']} scroll events")
                 else:
-                    print(f"ok  {label}: still for {args.idle} ms", flush=True)
+                    print(f"ok  {label}: still for {args.idle} ms" + (f" ({got['net']} mutations as data arrived, no shift)" if got["net"] else ""), flush=True)
                 page.close()
             page = browser.new_page(viewport={"width": widths[0], "height": args.height})
             page.add_init_script(INIT)

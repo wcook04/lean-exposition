@@ -56,6 +56,12 @@ export interface PreparedDocument {
   /** The source line, from 1, that holds this byte of the document. */
   lineOfByte(byte: number): number;
   render(index: number): RenderedPart;
+  /**
+   * The part's text with each formula left as its TeX source (not typeset): cheap, so every part's
+   * words can be on the page from the start, where the browser's own find can reach them. The
+   * typeset part (render) replaces it as the part comes near.
+   */
+  renderPlain(index: number): RenderedPart;
   renderAll(): RenderedPart[];
   /** Every block's words with its source line, for searching text that has not rendered yet. */
   textBlocks(): TextBlock[];
@@ -897,6 +903,23 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     return st.rendered;
   };
 
+  const plainSpan = (span: MathSpan): MathResult => ({
+    html: `<span class="math-pending" data-display="${span.display}">${esc(span.tex)}</span>`,
+  });
+  const plainParts = new Map<number, RenderedPart>();
+  const renderPlain = (index: number): RenderedPart => {
+    const st = states[index];
+    if (!st) throw new RangeError(`no part ${index}`);
+    if (st.rendered) return st.rendered;
+    let done = plainParts.get(index);
+    if (!done) {
+      const env: RenderEnv = { references, stage: input.stage, documentPath: input.documentPath, documentPaths: input.documentPaths, linkClose: [] };
+      done = { index, ...renderTokens(st, env, plainSpan, { index: refs }) };
+      plainParts.set(index, done);
+    }
+    return done;
+  };
+
   return {
     stage: input.stage,
     frontMatter: frontMatter.value,
@@ -908,6 +931,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     refs,
     lineOfByte,
     render,
+    renderPlain,
     renderAll: () => parts.map((p) => render(p.index)),
     textBlocks: () =>
       (blocks ??= states.flatMap((st, part) =>
