@@ -543,6 +543,10 @@ def main() -> None:
         "short_title": toml["paper"].get("short_title", title), "authors": authors,
         "venue": toml["paper"].get("venue", ""),
         "credit_lines": [credit] if credit else [],
+        # Companion pages credit the authors and their repository only; the main paper's own
+        # header and About carry the full credit line (credit_lines).
+        "companion_credit": (f"Paper and Lean by {', '.join(authors[:-1]) + ' and ' + authors[-1] if len(authors) > 1 else ''.join(authors)}, "
+                             f"from their repository {upstream_repo.replace('https://github.com/', '')} at {upstream_rev[:7]}."),
         "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
         "review": ("The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made "
                    "with AI and have not been reviewed by the authors. No mathematician has reviewed them."),

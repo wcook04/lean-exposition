@@ -4,7 +4,7 @@
  "state": "scaffold",
  "path": "papers/expository.md",
  "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
- "graph_sha256": "815535101674a6533518a2a4e4bedfb5764ab2807ff8a9366f51b81f824132e1",
+ "graph_sha256": "46f931d6b78c10d528444b9b0e0c7ea747c4d0c156e81d98e191dae4c2c0d23d",
  "selected_goal_ids": [
   "euler.theorem-1.1"
  ],

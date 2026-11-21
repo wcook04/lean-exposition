@@ -4,7 +4,7 @@
  "state": "draft",
  "path": "papers/short.md",
  "content_sha256": "a1593370c38e12db1c19bd7e6926ae58ff48cf2267100066f3070a6a2aaeb22c",
- "graph_sha256": "815535101674a6533518a2a4e4bedfb5764ab2807ff8a9366f51b81f824132e1",
+ "graph_sha256": "46f931d6b78c10d528444b9b0e0c7ea747c4d0c156e81d98e191dae4c2c0d23d",
  "selected_goal_ids": [
   "euler.theorem-1.1"
  ],
