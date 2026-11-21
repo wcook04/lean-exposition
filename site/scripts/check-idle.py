@@ -104,11 +104,16 @@ def main() -> int:
             page.add_init_script(INIT)
             page.goto(args.base + path, wait_until="domcontentloaded")
             page.wait_for_timeout(args.first)
-            for tab in ["Graph", "Lean"]:
-                has = pane_tab(page, tab)
-                for width in widths:
-                    page.set_viewport_size({"width": width, "height": args.height})
-                    page.wait_for_timeout(args.settle)
+            for width in widths:
+                page.set_viewport_size({"width": width, "height": args.height})
+                page.wait_for_timeout(args.settle)
+                for tab in ["Graph", "Lean"]:
+                    # The right pane shows from 1280px; below that the reader has no tabs to choose.
+                    has = pane_tab(page, tab)
+                    if not has and tab == "Lean":
+                        break
+                    if has:
+                        page.wait_for_timeout(args.settle)
                     got = idle(page, args.idle)
                     label = f"{path or '/'} at {width}px, {tab if has else 'no pane'}"
                     problems = []
@@ -124,9 +129,7 @@ def main() -> int:
                     if problems:
                         bad.append(f"{label}: " + ", ".join(problems))
                     else:
-                        print(f"ok  {label}: still for {args.idle} ms")
-                if not has:
-                    break
+                        print(f"ok  {label}: still for {args.idle} ms", flush=True)
             page.close()
         if args.at:
             page = browser.new_page(viewport={"width": widths[0], "height": args.height})
