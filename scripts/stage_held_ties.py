@@ -43,6 +43,14 @@ pages = [a.page, *a.also]
 extra = [json.loads((p / "links.json").read_text()) for p in a.also]
 
 
+def inline(text: str) -> str:
+    """Notes set displays as $$...$$; the cards typeset $...$ only, so a display becomes $\\displaystyle ...$."""
+    display = lambda m: "$\\displaystyle " + " ".join(m.group(1).split()) + "$"
+    text = re.sub(r"\$\$(.+?)\$\$", display, text, flags=re.S)
+    text = re.sub(r"\\\[(.+?)\\\]", display, text, flags=re.S)
+    return re.sub(r"\\\((.+?)\\\)", lambda m: "$" + m.group(1) + "$", text, flags=re.S)
+
+
 def unique(pattern: str, what: str) -> re.Match:
     hits = list(re.finditer(pattern, md))
     if len(hits) != 1:
@@ -108,7 +116,7 @@ for tid, t in held.items():
     comparisons = t.get("comparisons", [])
     passages.append({"id": tid, "role": "states", "quote": quote, "topic": t["topic"],
                      "lean": list(dict.fromkeys(c["lean"] for c in comparisons)),
-                     "comparisons": [{"lean": c["lean"], "fidelity": c["fidelity"], "note": c.get("note", "")} for c in comparisons]})
+                     "comparisons": [{"lean": c["lean"], "fidelity": c["fidelity"], "note": inline(c.get("note", ""))} for c in comparisons]})
 
 widened = []
 if sent:
@@ -124,7 +132,7 @@ if sent:
             raise SystemExit(f"{p['id']}: widened quote is not unique")
         passages.append({"id": p["id"], "role": p["role"], "quote": quote, "topic": p["topic"],
                          "lean": list(dict.fromkeys(p.get("lean", []) + [c["lean"] for c in p.get("comparisons", [])])),
-                         "comparisons": [{"lean": c["lean"], "fidelity": c["fidelity"], "note": c.get("note", "")}
+                         "comparisons": [{"lean": c["lean"], "fidelity": c["fidelity"], "note": inline(c.get("note", ""))}
                                          for c in p.get("comparisons", [])]})
 claims = [dict(c, passage=redirects.get(c.get("passage"), c.get("passage"))) for c in links["claims"]]
 out_links = {"schema": 1, "claims": claims, "passages": passages, "redirects": redirects,
@@ -135,8 +143,6 @@ if sent:
     out_links["families"] = sent["families_topics"]["families"]
     out_links["topics"] = sent["families_topics"]["topics"]
     # Notes set displays as $$...$$; the cards typeset $...$ only, so a display becomes $\displaystyle ...$.
-    def inline(text):
-        return re.sub(r"\$\$(.+?)\$\$", lambda m: "$\\displaystyle " + " ".join(m.group(1).split()) + "$", text, flags=re.S)
     for source in ("paper_declarations", "statement_file_declarations"):
         for row in sent[source].values():
             for key in ("note", "summary"):
@@ -221,13 +227,8 @@ toml = (a.page / "paper.toml").read_text()
 toml = toml.replace('[paper]\n', '[paper]\nmarkdown = "paper.md"\n', 1)
 (a.out / "paper.toml").write_text(toml)
 if a.sentences and (a.sentences / "ENCODING.md").is_file():
-    # The guide's opening lines speak of the annotation return's own files; the published page starts at its content.
-    guide = (a.sentences / "ENCODING.md").read_text()
-    guide = re.sub(r"References are to the supplied paper\. Each declaration has its own explanation in `declarations\.json`; "
-                   r"`READ\.html` provides a searchable reading copy\. ", "", guide, count=1)
-    if "declarations.json" in guide or "READ.html" in guide:
-        raise SystemExit("ENCODING.md: the sentence naming the return's files was not found")
-    (a.out / "guide.md").write_text(guide)
+    # The guide to how the Lean encodes the paper's objects, published as it stands.
+    (a.out / "guide.md").write_text((a.sentences / "ENCODING.md").read_text())
 (a.out / "links.json").write_text(json.dumps(out_links, ensure_ascii=False, indent=1))
 print(json.dumps({"passages": len(passages), "widened_to_whole_formulas": len(widened), "claims": len(links["claims"]), "lean_modules": len(seen),
                   "named": len(named), "named_not_in_report": missing[:20], "plain": len(out_links["plain"]),

@@ -647,6 +647,16 @@
    "path": "upstream/lean/Breakdown/Torus/CompareFinal.lean"
   },
   {
+   "id": "lean:Breakdown/Torus/Forced.lean",
+   "kind": "file",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/Forced.lean",
+   "revision": "ad53419de079eb8f95f60313473374624a348546",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "a16c58cda8213cd93f228a3b5e950f180bb6068c8f0a0cfb4de2230616e85959",
+   "path": "upstream/lean/Breakdown/Torus/Forced.lean"
+  },
+  {
    "id": "lean:Breakdown/Torus/HeatComparison.lean",
    "kind": "file",
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/HeatComparison.lean",
@@ -687,6 +697,16 @@
    "path": "upstream/lean/Breakdown/Torus/Main.lean"
   },
   {
+   "id": "lean:Breakdown/Torus/Reduction.lean",
+   "kind": "file",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/Reduction.lean",
+   "revision": "ad53419de079eb8f95f60313473374624a348546",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "2e41a3afa5a910698c2beb7c12b6f3dd52d2c87e75fb28f145bd3ac5c51e691c",
+   "path": "upstream/lean/Breakdown/Torus/Reduction.lean"
+  },
+  {
    "id": "lean:Breakdown/Torus/SeqPerturbation.lean",
    "kind": "file",
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/SeqPerturbation.lean",
@@ -705,6 +725,16 @@
    "redistribution": "vendored",
    "sha256": "1da6c6d142c0207cd7c072b8d5c053ef804a3c766427329ca0b3a4ebf273f256",
    "path": "upstream/lean/Breakdown/Torus/ShellTorus.lean"
+  },
+  {
+   "id": "lean:Breakdown/Torus/SourceCont.lean",
+   "kind": "file",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/SourceCont.lean",
+   "revision": "ad53419de079eb8f95f60313473374624a348546",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "7a27517b2b61fb3d56bafda200d6df9db23672e2241bb6dcfad8912fe956c7f7",
+   "path": "upstream/lean/Breakdown/Torus/SourceCont.lean"
   },
   {
    "id": "lean:Breakdown/Torus/StatementsAnalysis.lean",
@@ -1494,6 +1524,20 @@
    "locator": "Breakdown/FreqTr/Realization.lean, line 116"
   },
   {
+   "id": "cite.lean.Breakdown.Freq.bilinCont_holds",
+   "title": "Breakdown.Freq.bilinCont_holds",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/FreqTr/Realization.lean#L99",
+   "source_id": "lean:Breakdown/FreqTr/Realization.lean",
+   "locator": "Breakdown/FreqTr/Realization.lean, line 99"
+  },
+  {
+   "id": "cite.lean.Breakdown.Freq.bilinShift_holds",
+   "title": "Breakdown.Freq.bilinShift_holds",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/FreqTr/Realization.lean#L97",
+   "source_id": "lean:Breakdown/FreqTr/Realization.lean",
+   "locator": "Breakdown/FreqTr/Realization.lean, line 97"
+  },
+  {
    "id": "cite.lean.Breakdown.Freq.bilin_holds",
    "title": "Breakdown.Freq.bilin_holds",
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/FreqTr/Realization.lean#L95",
@@ -1541,13 +1585,6 @@
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Base/Framework.lean#L55",
    "source_id": "lean:Breakdown/Base/Framework.lean",
    "locator": "Breakdown/Base/Framework.lean, line 55"
-  },
-  {
-   "id": "cite.lean.Breakdown.MildFramework.profilePiece",
-   "title": "Breakdown.MildFramework.profilePiece",
-   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/StatementsDefs.lean#L114",
-   "source_id": "lean:Breakdown/Transfer/StatementsDefs.lean",
-   "locator": "Breakdown/Transfer/StatementsDefs.lean, line 114"
   },
   {
    "id": "cite.lean.Breakdown.MildFramework.selfSimilar",
@@ -1599,6 +1636,13 @@
    "locator": "Breakdown/Torus/StatementsInverse.lean, line 76"
   },
   {
+   "id": "cite.lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "title": "Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/Forced.lean#L228",
+   "source_id": "lean:Breakdown/Torus/Forced.lean",
+   "locator": "Breakdown/Torus/Forced.lean, line 228"
+  },
+  {
    "id": "cite.lean.Breakdown.Periodic.HeatDivFreeComparison",
    "title": "Breakdown.Periodic.HeatDivFreeComparison",
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/StatementsShell.lean#L52",
@@ -1632,6 +1676,13 @@
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/ShellTorus.lean#L33",
    "source_id": "lean:Breakdown/Torus/ShellTorus.lean",
    "locator": "Breakdown/Torus/ShellTorus.lean, line 33"
+  },
+  {
+   "id": "cite.lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   "title": "Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/SourceCont.lean#L29",
+   "source_id": "lean:Breakdown/Torus/SourceCont.lean",
+   "locator": "Breakdown/Torus/SourceCont.lean, line 29"
   },
   {
    "id": "cite.lean.Breakdown.Periodic.TorusBlowup",
@@ -1709,6 +1760,13 @@
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/KernelBound.lean#L364",
    "source_id": "lean:Breakdown/Torus/KernelBound.lean",
    "locator": "Breakdown/Torus/KernelBound.lean, line 364"
+  },
+  {
+   "id": "cite.lean.Breakdown.Periodic.kernelSharpBound_holds",
+   "title": "Breakdown.Periodic.kernelSharpBound_holds",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/Reduction.lean#L15",
+   "source_id": "lean:Breakdown/Torus/Reduction.lean",
+   "locator": "Breakdown/Torus/Reduction.lean, line 15"
   },
   {
    "id": "cite.lean.Breakdown.Periodic.seqPerturbation",
@@ -3512,7 +3570,7 @@
    ],
    "source_id": "lean:Breakdown/FreqTr/Statements.lean",
    "declaration": "Breakdown.Freq.DilationAlgebra",
-   "statement": "Dilation identities in the energy space",
+   "statement": "Dilation of solenoidal fields",
    "locator": "Breakdown/FreqTr/Statements.lean, line 22",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
@@ -3560,7 +3618,7 @@
    ],
    "source_id": "lean:Breakdown/FreqTr/Statements.lean",
    "declaration": "Breakdown.Freq.MildOfWeak",
-   "statement": "Breakdown.Freq.MildOfWeak",
+   "statement": "A sufficient weak-to-mild statement",
    "locator": "Breakdown/FreqTr/Statements.lean, line 151",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
@@ -3578,6 +3636,38 @@
    "declaration": "Breakdown.Freq.bilinCompact_holds",
    "statement": "Compactness for a test-field input",
    "locator": "Breakdown/FreqTr/Realization.lean, line 116",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "declaration",
+   "label": "Breakdown.Freq.bilinCont_holds",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.Breakdown.Freq.bilinCont_holds"
+   ],
+   "source_id": "lean:Breakdown/FreqTr/Realization.lean",
+   "declaration": "Breakdown.Freq.bilinCont_holds",
+   "statement": "Continuity in the positive heat time",
+   "locator": "Breakdown/FreqTr/Realization.lean, line 99",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "declaration",
+   "label": "Breakdown.Freq.bilinShift_holds",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.Breakdown.Freq.bilinShift_holds"
+   ],
+   "source_id": "lean:Breakdown/FreqTr/Realization.lean",
+   "declaration": "Breakdown.Freq.bilinShift_holds",
+   "statement": "Heat shift of the bilinear term",
+   "locator": "Breakdown/FreqTr/Realization.lean, line 97",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
@@ -3693,22 +3783,6 @@
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
-   "id": "lean.Breakdown.MildFramework.profilePiece",
-   "kind": "declaration",
-   "label": "Breakdown.MildFramework.profilePiece",
-   "status": "unverified",
-   "assumption_ids": [],
-   "evidence_ids": [],
-   "citation_ids": [
-    "cite.lean.Breakdown.MildFramework.profilePiece"
-   ],
-   "source_id": "lean:Breakdown/Transfer/StatementsDefs.lean",
-   "declaration": "Breakdown.MildFramework.profilePiece",
-   "statement": "A phased short profile interval",
-   "locator": "Breakdown/Transfer/StatementsDefs.lean, line 114",
-   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
-  },
-  {
    "id": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "declaration",
    "label": "Breakdown.MildFramework.selfSimilar",
@@ -3821,6 +3895,22 @@
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
+   "id": "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "kind": "declaration",
+   "label": "Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat"
+   ],
+   "source_id": "lean:Breakdown/Torus/Forced.lean",
+   "declaration": "Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "statement": "Heat composition for a periodic force",
+   "locator": "Breakdown/Torus/Forced.lean, line 228",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
    "id": "lean.Breakdown.Periodic.HeatDivFreeComparison",
    "kind": "declaration",
    "label": "Breakdown.Periodic.HeatDivFreeComparison",
@@ -3898,6 +3988,22 @@
    "declaration": "Breakdown.Periodic.ShellTorus.Internal.sourceOp_threeHalves",
    "statement": "Smoothing of a transplanted force",
    "locator": "Breakdown/Torus/ShellTorus.lean, line 33",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   "kind": "declaration",
+   "label": "Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn"
+   ],
+   "source_id": "lean:Breakdown/Torus/SourceCont.lean",
+   "declaration": "Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   "statement": "Continuity of a smoothed force",
+   "locator": "Breakdown/Torus/SourceCont.lean, line 29",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
@@ -4040,7 +4146,7 @@
    ],
    "source_id": "lean:Breakdown/Torus/ApproxSizes.lean",
    "declaration": "Breakdown.Periodic.cutoffMassBound",
-   "statement": "The squared mass of the cutoff",
+   "statement": "Breakdown.Periodic.cutoffMassBound",
    "locator": "Breakdown/Torus/ApproxSizes.lean, line 908",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
@@ -4074,6 +4180,22 @@
    "declaration": "Breakdown.Periodic.kernelSharpBound",
    "statement": "Breakdown.Periodic.kernelSharpBound",
    "locator": "Breakdown/Torus/KernelBound.lean, line 364",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.Breakdown.Periodic.kernelSharpBound_holds",
+   "kind": "declaration",
+   "label": "Breakdown.Periodic.kernelSharpBound_holds",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.Breakdown.Periodic.kernelSharpBound_holds"
+   ],
+   "source_id": "lean:Breakdown/Torus/Reduction.lean",
+   "declaration": "Breakdown.Periodic.kernelSharpBound_holds",
+   "statement": "Proof of the periodic bilinear bound",
+   "locator": "Breakdown/Torus/Reduction.lean, line 15",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
@@ -4440,7 +4562,7 @@
    ],
    "source_id": "lean:Breakdown/Transfer/Exports.lean",
    "declaration": "Breakdown.monodromy",
-   "statement": "Compactness of the period map",
+   "statement": "Monodromy as a compact perturbation",
    "locator": "Breakdown/Transfer/Exports.lean, line 47",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
@@ -5830,6 +5952,22 @@
   },
   {
    "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "supports",
    "evidence_ids": [
@@ -7078,6 +7216,22 @@
   },
   {
    "from": "lean.Breakdown.FarField.breakdownOnTorus_of_weak",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.FarField.breakdownOnTorus_of_weak",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.FarField.breakdownOnTorus_of_weak",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "supports",
    "evidence_ids": [
@@ -7174,6 +7328,22 @@
   },
   {
    "from": "lean.Breakdown.FarField.periodicLerayProfileExists_of_weak",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.FarField.periodicLerayProfileExists_of_weak",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.FarField.periodicLerayProfileExists_of_weak",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "supports",
    "evidence_ids": [
@@ -7247,6 +7417,22 @@
   {
    "from": "lean.Breakdown.FarField.smoothFieldOfOrbit_holds",
    "to": "lean.Breakdown.Freq.bilinCompact_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.FarField.smoothFieldOfOrbit_holds",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.FarField.smoothFieldOfOrbit_holds",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -7357,6 +7543,38 @@
    ]
   },
   {
+   "from": "lean.Breakdown.Freq.bilinCont_holds",
+   "to": "lean.Breakdown.Freq.BilinBound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Freq.bilinCont_holds",
+   "to": "lean.Breakdown.Freq.Internal.NiceApprox.cutoff_isTestField",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Freq.bilinCont_holds",
+   "to": "lean.Breakdown.Freq.bilin_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Freq.bilinShift_holds",
+   "to": "lean.Breakdown.Freq.bilin_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
    "from": "lean.Breakdown.Freq.bilin_holds",
    "to": "lean.Breakdown.Freq.BilinBound",
    "kind": "supports",
@@ -7406,6 +7624,22 @@
   },
   {
    "from": "lean.Breakdown.Freq.mild_holds",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Freq.mild_holds",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Freq.mild_holds",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "supports",
    "evidence_ids": [
@@ -7429,14 +7663,6 @@
    ]
   },
   {
-   "from": "lean.Breakdown.MildFramework.profilePiece",
-   "to": "lean.Breakdown.MildFramework.selfSimilar",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
    "from": "lean.Breakdown.MonodromyStatement",
    "to": "lean.Breakdown.MildFramework.IsOrbit",
    "kind": "supports",
@@ -7446,7 +7672,7 @@
   },
   {
    "from": "lean.Breakdown.MonodromyStatement",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
+   "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -7543,6 +7769,14 @@
   {
    "from": "lean.Breakdown.Periodic.approxResidualSmall",
    "to": "lean.Breakdown.Periodic.ApproxResidualSmall",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.approxResidualSmall",
+   "to": "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -7662,6 +7896,22 @@
   },
   {
    "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "supports",
    "evidence_ids": [
@@ -7702,14 +7952,6 @@
   },
   {
    "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
    "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
@@ -7726,6 +7968,14 @@
   },
   {
    "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
+   "to": "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
    "to": "lean.Breakdown.Periodic.KernelSharpBound",
    "kind": "supports",
    "evidence_ids": [
@@ -7735,6 +7985,14 @@
   {
    "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
    "to": "lean.Breakdown.Periodic.ShellTorus.Internal.sourceOp_threeHalves",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
+   "to": "lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -7814,7 +8072,7 @@
   },
   {
    "from": "lean.Breakdown.Periodic.breakdownOnTorus_of_profile",
-   "to": "lean.Breakdown.Periodic.kernelSharpBound",
+   "to": "lean.Breakdown.Periodic.kernelSharpBound_holds",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -7982,6 +8240,14 @@
   },
   {
    "from": "lean.Breakdown.Periodic.comparisonSmall",
+   "to": "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.comparisonSmall",
    "to": "lean.Breakdown.Periodic.HeatDivFreeComparison",
    "kind": "supports",
    "evidence_ids": [
@@ -8069,6 +8335,22 @@
    ]
   },
   {
+   "from": "lean.Breakdown.Periodic.kernelSharpBound_holds",
+   "to": "lean.Breakdown.Periodic.KernelSharpBound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.Periodic.kernelSharpBound_holds",
+   "to": "lean.Breakdown.Periodic.kernelSharpBound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
    "from": "lean.Breakdown.Periodic.seqPerturbation",
    "to": "lean.Breakdown.Periodic.SeqPerturbation",
    "kind": "supports",
@@ -8134,7 +8416,7 @@
   },
   {
    "from": "lean.Breakdown.Periodic.torusBlowup_of_parts",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
+   "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -8198,7 +8480,7 @@
   },
   {
    "from": "lean.Breakdown.Periodic.torusBlowup_of_parts",
-   "to": "lean.Breakdown.Periodic.kernelSharpBound",
+   "to": "lean.Breakdown.Periodic.kernelSharpBound_holds",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -8246,14 +8528,6 @@
   },
   {
    "from": "lean.Breakdown.ProfilePieceStatement",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "lean.Breakdown.ProfilePieceStatement",
    "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
@@ -8270,7 +8544,7 @@
   },
   {
    "from": "lean.Breakdown.StepDataStatement",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
+   "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -8335,6 +8609,22 @@
   {
    "from": "lean.Breakdown.breakdownOnSpace_of_profile",
    "to": "lean.Breakdown.Freq.bilinCompact_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.breakdownOnSpace_of_profile",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.breakdownOnSpace_of_profile",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -8535,6 +8825,22 @@
   {
    "from": "lean.Breakdown.extended_certificate_breakdown_on_space",
    "to": "lean.Breakdown.Freq.bilinCompact_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.extended_certificate_breakdown_on_space",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.extended_certificate_breakdown_on_space",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -8854,6 +9160,22 @@
   },
   {
    "from": "lean.Breakdown.mildRegular_realization",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.mildRegular_realization",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.mildRegular_realization",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "supports",
    "evidence_ids": [
@@ -8926,7 +9248,7 @@
   },
   {
    "from": "lean.Breakdown.monodromy",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
+   "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -9166,14 +9488,6 @@
   },
   {
    "from": "lean.Breakdown.profilePiece",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "lean.Breakdown.profilePiece",
    "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
@@ -9230,7 +9544,7 @@
   },
   {
    "from": "lean.Breakdown.stepData",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
+   "to": "lean.Breakdown.MildFramework.selfSimilar",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -9656,6 +9970,22 @@
   },
   {
    "from": "navier-stokes.lemma-3.1",
+   "to": "lean.Breakdown.Freq.bilinCont_holds",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.navier-stokes.lemma-3.1"
+   ]
+  },
+  {
+   "from": "navier-stokes.lemma-3.1",
+   "to": "lean.Breakdown.Freq.bilinShift_holds",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.navier-stokes.lemma-3.1"
+   ]
+  },
+  {
+   "from": "navier-stokes.lemma-3.1",
    "to": "lean.Breakdown.Freq.bilin_holds",
    "kind": "formalizes",
    "evidence_ids": [
@@ -9745,6 +10075,14 @@
   {
    "from": "navier-stokes.lemma-3.4",
    "to": "navier-stokes.lemma-3.3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "navier-stokes.lemma-3.4",
+   "to": "navier-stokes.lemma-4.2",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -9848,6 +10186,14 @@
   },
   {
    "from": "navier-stokes.lemma-3.7",
+   "to": "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.navier-stokes.lemma-3.7"
+   ]
+  },
+  {
+   "from": "navier-stokes.lemma-3.7",
    "to": "lean.Breakdown.Periodic.KernelSharpBound",
    "kind": "formalizes",
    "evidence_ids": [
@@ -9864,7 +10210,23 @@
   },
   {
    "from": "navier-stokes.lemma-3.7",
+   "to": "lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.navier-stokes.lemma-3.7"
+   ]
+  },
+  {
+   "from": "navier-stokes.lemma-3.7",
    "to": "lean.Breakdown.Periodic.kernelSharpBound",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.navier-stokes.lemma-3.7"
+   ]
+  },
+  {
+   "from": "navier-stokes.lemma-3.7",
+   "to": "lean.Breakdown.Periodic.kernelSharpBound_holds",
    "kind": "formalizes",
    "evidence_ids": [
     "link.navier-stokes.lemma-3.7"
@@ -10048,14 +10410,6 @@
   },
   {
    "from": "navier-stokes.lemma-4.6",
-   "to": "lean.Breakdown.MildFramework.profilePiece",
-   "kind": "formalizes",
-   "evidence_ids": [
-    "link.navier-stokes.lemma-4.6"
-   ]
-  },
-  {
-   "from": "navier-stokes.lemma-4.6",
    "to": "lean.Breakdown.PeriodicInverseStatement",
    "kind": "formalizes",
    "evidence_ids": [
@@ -10184,7 +10538,7 @@
   },
   {
    "from": "navier-stokes.lemma-4.8",
-   "to": "navier-stokes.lemma-4.6",
+   "to": "navier-stokes.lemma-4.7",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -10192,7 +10546,7 @@
   },
   {
    "from": "navier-stokes.lemma-4.8",
-   "to": "navier-stokes.lemma-4.7",
+   "to": "navier-stokes.proposition-4.3",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -11121,14 +11475,6 @@
   {
    "from": "navier-stokes.proposition-2.2",
    "to": "navier-stokes.lemma-4.2",
-   "kind": "supports",
-   "evidence_ids": [
-    "lean_dependencies"
-   ]
-  },
-  {
-   "from": "navier-stokes.proposition-2.2",
-   "to": "navier-stokes.lemma-4.6",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -12358,6 +12704,8 @@
     "lean.Breakdown.Freq.IsWeakSolution",
     "lean.Breakdown.Freq.MildOfWeak",
     "lean.Breakdown.Freq.bilinCompact_holds",
+    "lean.Breakdown.Freq.bilinCont_holds",
+    "lean.Breakdown.Freq.bilinShift_holds",
     "lean.Breakdown.Freq.bilin_holds",
     "lean.Breakdown.Freq.heatDivFree",
     "lean.Breakdown.Freq.mild_holds",
@@ -12365,7 +12713,6 @@
     "lean.Breakdown.IsPerturbation",
     "lean.Breakdown.IsSimilarityProfile",
     "lean.Breakdown.MildFramework.IsOrbit",
-    "lean.Breakdown.MildFramework.profilePiece",
     "lean.Breakdown.MildFramework.selfSimilar",
     "lean.Breakdown.MildRegular",
     "lean.Breakdown.MonodromyStatement",
@@ -12373,11 +12720,13 @@
     "lean.Breakdown.Periodic.ApproxResidualSmall",
     "lean.Breakdown.Periodic.ApproxSizes",
     "lean.Breakdown.Periodic.ComparisonSmall",
+    "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
     "lean.Breakdown.Periodic.HeatDivFreeComparison",
     "lean.Breakdown.Periodic.KernelSharpBound",
     "lean.Breakdown.Periodic.SeqPerturbation",
     "lean.Breakdown.Periodic.ShellInverseTransfer",
     "lean.Breakdown.Periodic.ShellTorus.Internal.sourceOp_threeHalves",
+    "lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
     "lean.Breakdown.Periodic.TorusBlowup",
     "lean.Breakdown.Periodic.TransplantNorm",
     "lean.Breakdown.Periodic.approxFieldProperties_holds",
@@ -12389,6 +12738,7 @@
     "lean.Breakdown.Periodic.cutoffMassBound",
     "lean.Breakdown.Periodic.heatDivFreeComparison",
     "lean.Breakdown.Periodic.kernelSharpBound",
+    "lean.Breakdown.Periodic.kernelSharpBound_holds",
     "lean.Breakdown.Periodic.seqPerturbation",
     "lean.Breakdown.Periodic.shellInverseTransfer",
     "lean.Breakdown.Periodic.torusBlowup_of_parts",
@@ -12533,6 +12883,8 @@
    ],
    "subject_ids": [
     "lean.Breakdown.Freq.BilinBound",
+    "lean.Breakdown.Freq.bilinCont_holds",
+    "lean.Breakdown.Freq.bilinShift_holds",
     "lean.Breakdown.Freq.bilin_holds",
     "lean.Breakdown.Freq.heatDivFree",
     "navier-stokes.lemma-3.1"
@@ -12632,9 +12984,12 @@
     "proof_reader"
    ],
    "subject_ids": [
+    "lean.Breakdown.Periodic.Forced.Internal.forceV_eq_heat",
     "lean.Breakdown.Periodic.KernelSharpBound",
     "lean.Breakdown.Periodic.ShellTorus.Internal.sourceOp_threeHalves",
+    "lean.Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
     "lean.Breakdown.Periodic.kernelSharpBound",
+    "lean.Breakdown.Periodic.kernelSharpBound_holds",
     "navier-stokes.lemma-3.7"
    ],
    "details": "Proof Reader's links.json at 3858afbe00b2 names these Lean declarations for Lemma 3.7: Estimates on the torus. The links were made with AI and have not been reviewed by the authors."
@@ -12705,7 +13060,6 @@
     "proof_reader"
    ],
    "subject_ids": [
-    "lean.Breakdown.MildFramework.profilePiece",
     "lean.Breakdown.PeriodicInverseStatement",
     "lean.Breakdown.StepDataStatement",
     "lean.Breakdown.orbitSeq",
