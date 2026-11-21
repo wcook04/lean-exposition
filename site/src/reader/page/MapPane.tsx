@@ -747,7 +747,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           />
         </div>
       ) : (
-        <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}${dockWide ? "" : " is-brief"}`}>
+        <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}${dockWide || folded ? "" : " is-brief"}`}>
           <div className="map-pane__drawing">
             <GraphBoundary scope={whole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
           </div>
@@ -775,7 +775,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               alignment={alignment}
               slot={preview ?? (previewCard ? null : heldList)}
               brief={!dockWide && !folded}
-              onBrief={setDockWide}
+              onBrief={folded ? undefined : setDockWide}
               onOpenLean={() => onMode("lean")}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}
