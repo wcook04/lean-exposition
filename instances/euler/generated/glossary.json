@@ -1,0 +1,1154 @@
+[
+ {
+  "term": "Periodic representation of the torus",
+  "convention": "$\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$ is represented either directly on the quotient or by fields on $\\mathbb R^3$ invariant under all integer translations. Integrals and essential suprema use the closed unit-volume cube $[-1/2,1/2]^3$; its boundary has zero volume. Removing the torus origin means removing every point of $\\mathbb Z^3$ from the covering space. Periodicity by itself imposes no regularity, parity, incompressibility or mean-zero condition.",
+  "cards": [
+   "tie:e01.torus.cell",
+   "result:TorusEuler.Paper.remark_1_2",
+   "declaration:TorusEuler.Paper.S5b.approx_divergence",
+   "declaration:TorusEuler.Paper.S5b.approx_residual",
+   "declaration:TorusEuler.Paper.S5b.approx_smooth",
+   "declaration:TorusEuler.Paper.Statement.proposition_5_11",
+   "declaration:TorusEuler.TruncatedChildStage",
+   "declaration:TorusEuler.paperProposition511_physicalCutoff"
+  ]
+ },
+ {
+  "term": "Fourier frequencies",
+  "convention": "On the unit torus, a frequency radius $\\Lambda$ means vanishing Fourier coefficients at integer vectors $k$ with $|k|>\\Lambda$. It counts the integer modes in $e^{2\\pi i k\\cdot x}$, rather than the vectors $2\\pi k$. The zero mode of the inverse Laplacian is assigned zero. The Leray projection consequently preserves constant velocity modes.",
+  "cards": [
+   "declaration:TorusEuler.RealTorusFourierBand",
+   "tie:s5.frequency-band"
+  ]
+ },
+ {
+  "term": "Classical solution and maximal lifespan",
+  "convention": "A solution is jointly smooth on $[0,T_*)\\times\\mathbb R^3$, periodic in space, and satisfies Euler pointwise, with $0<T_*<\\infty$. Maximality excludes a smooth solution on any larger such time interval agreeing in velocity on $[0,T_*)$. The value at time zero is included; the singular time is excluded. Values outside this interval are not part of the solution assertion.",
+  "cards": [
+   "result:TorusEuler.Paper.remark_1_2",
+   "declaration:TorusEuler.InductiveEulerStages.paper_proposition_8_1"
+  ]
+ },
+ {
+  "term": "Derivatives within the time domain",
+  "convention": "A derivative within a time set uses only approaching times in that set. On a nondegenerate closed interval it is the ordinary interior derivative and the one-sided derivative at each endpoint. The Euler lifespan is $[0,T_*)$; the mean problem uses $[0,T]$, $0<T\\le1$; active weighted estimates use $[t_0,T]$. Wave equations can be required on a compact set $I$ containing the physical interval. On arbitrary $I$, a supplied relative derivative need not be an unrestricted derivative; assertions using a uniquely determined derivative require the appropriate domain hypothesis.",
+  "cards": [
+   "tie:intro.affine-equations",
+   "tie:intro-amplification-gain",
+   "tie:intro-amplification-late-angle",
+   "tie:e01.endpoint.linearized-euler",
+   "declaration:TorusEuler.Paper.Statement.lemma_2_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_2_2",
+   "declaration:TorusEuler.ReferenceRiccati.reference_amplitudes_solve",
+   "declaration:TorusEuler.Paper.EndpointSystemSolution",
+   "declaration:TorusEuler.Paper.S5.fieldNorm",
+   "declaration:TorusEuler.PaperWaveCutoff",
+   "declaration:TorusEuler.HierarchyTwistedProfile.TransverseResult",
+   "declaration:TorusEuler.Paper.S5.IsExpansion",
+   "declaration:TorusEuler.Paper.S5.wNorm",
+   "declaration:TorusEuler.Paper.S5b.approx_smooth",
+   "declaration:TorusEuler.TruncatedChildStage.residual",
+   "declaration:TorusEuler.hasDerivWithinAt_wavePotential_time"
+  ]
+ },
+ {
+  "term": "Functions outside the asserted domain",
+  "convention": "Underlying fields have values at all real times, but regularity and equations are asserted only on their stated time sets. Some profile spaces use zero values outside the time slab. Such a convention does not imply smoothness through the endpoints after zero extension. Uniqueness of a solution on its interval does not determine arbitrary values outside it.",
+  "cards": [
+   "tie:intro.affine-equations",
+   "result:TorusEuler.Paper.remark_1_2",
+   "declaration:TorusEuler.InductiveEulerStages.paper_proposition_8_1"
+  ]
+ },
+ {
+  "term": "Derivative expressions outside differentiability hypotheses",
+  "convention": "The unrestricted derivative expression is zero at a point where the function is not differentiable. A derivative within a set also has a specified zero value when the hypotheses needed to select a unique derivative fail. An equation containing these expressions alone does not establish differentiability. Under the actual smoothness, differentiability and domain hypotheses, they have their ordinary mathematical meanings.",
+  "cards": [
+   "declaration:TorusEuler.norm_iteratedFDeriv_labelJacobian_le_of_flowJets",
+   "declaration:TorusEuler.Paper.S5.waveVector",
+   "tie:sec4.residual"
+  ]
+ },
+ {
+  "term": "Euclidean and pair norms",
+  "convention": "Vectors in $\\mathbb R^3$ have the Euclidean norm. The matrices $B,E_c$ in $\\delta$ use its induced operator norm. Ordinary real pairs carry $\\|(u,v)\\|_\\infty=\\max(|u|,|v|)$, and coefficient errors use the induced pair operator norm. The reference propagator estimate with explicit square roots uses the Euclidean pair norm. Bounds on sums of absolute coordinates are stated as such. These conventions must not be silently interchanged when a numerical constant is quoted.",
+  "cards": [
+   "result:TorusEuler.Paper.lemma_2_4",
+   "declaration:TorusEuler.ReferencePropagator.normalized_model_euclidean_le",
+   "declaration:TorusEuler.Paper.Lib.S2b.normalized_close_to_growing_of_dev"
+  ]
+ },
+ {
+  "term": "Division and normalization",
+  "convention": "Real division assigns $x/0=0$. Thus $v/|v|=0$ at $v=0$, and a normalized vector has unit length only under $v\\ne0$. The projection $P_\\kappa=(\\kappa\\otimes\\kappa)/|\\kappa|^2$ is zero at $\\kappa=0$, while $I-P_\\kappa$ is the identity there. Equal-point Hölder quotients also contribute zero. These definitions do not justify cancellation of a denominator. Nonzero wave data, positive scales and positive active weights are supplied where their geometric interpretation is used.",
+  "cards": [
+   "tie:intro.affine-equations",
+   "tie:intro-amplification-gain",
+   "tie:intro-amplification-crossing",
+   "tie:r2a1.intro.strong-shear-factor",
+   "declaration:TorusEuler.affineWavePressureCoeff",
+   "declaration:TorusEuler.MovingAmplitude.pressureU",
+   "declaration:TorusEuler.Paper.scaledNormSq",
+   "declaration:TorusEuler.oscillatoryTransverseProjection",
+   "declaration:TorusEuler.hierarchyFiniteWordNorm",
+   "tie:s5.projected-activation"
+  ]
+ },
+ {
+  "term": "Integer and real exponents",
+  "convention": "Derivative orders, depths, radius exponents and frequency-separation exponents are nonnegative integers. Subtraction of such indices stops at zero. A range such as $n\\ge1$ makes $5n-4$ equal to its ordinary integer value. The profile exponent $1-j$ and cutoff exponent $2-P$ are signed integers and can be negative. The hierarchy powers $-5/4-2(p-1)/3$, $-5/2-2(p-2)/3$ and $-9/4-2(p-1)/3$ use real subtraction. Fractional width and frequency powers have positive bases in the analytic applications.",
+  "cards": [
+   "tie:e01.parameters.initial-frequency",
+   "tie:e01.parameters.initial-order",
+   "tie:e01.lemma13.orders",
+   "tie:e01.lemma13.logarithmic-bound",
+   "result:TorusEuler.Paper.lemma_1_3",
+   "tie:p5.1.flow-power",
+   "result:TorusEuler.Paper.lemma_3_1",
+   "result:TorusEuler.Paper.proposition_5_11",
+   "declaration:TorusEuler.Paper.S5.width",
+   "declaration:TorusEuler.Paper.Statement.proposition_5_11",
+   "declaration:TorusEuler.hierarchyCompletionExponent",
+   "declaration:TorusEuler.hierarchyInductiveMeanExponent",
+   "declaration:TorusEuler.hierarchyMeanExponent",
+   "declaration:TorusEuler.hierarchyOscExponent",
+   "declaration:TorusEuler.hierarchy_level_bounds",
+   "declaration:TorusEuler.paperProposition511_physicalCutoff",
+   "declaration:TorusEuler.spatialHolderHalfNorm_cutoffVelocityDifference"
+  ]
+ },
+ {
+  "term": "Order of choice of constants",
+  "convention": "A constant chosen before specified data is independent of those data. In the amplification bounds, a real factor $C$ and nonnegative integer exponent $p$ are chosen before the universal integer threshold for $C_0$ and before the wave data. The smallness condition uses the integer power $T^{C_0}$. The model limit instead fixes $\\varepsilon,T$ and a tolerance before choosing its shear threshold. In the hierarchy, order-dependent constants may depend on their indicated orders and prescribed derivative bounds, while the parent exponent and radius threshold precede the later parent and frequency data. No analytic or Gevrey growth of an order-dependent sequence follows from these assertions.",
+  "cards": [
+   "tie:intro-amplification-gain",
+   "tie:intro-amplification-crossing",
+   "tie:intro-amplification-late-angle",
+   "tie:r2a1.intro.strong-shear-factor",
+   "tie:e01.endpoint.quantitative-inverse",
+   "declaration:TorusEuler.Paper.FiniteSmallness",
+   "result:TorusEuler.Paper.lemma_2_3",
+   "result:TorusEuler.Paper.lemma_2_4",
+   "tie:r5-B-uniform-exponents",
+   "tie:r5-B-order-and-depth-constants",
+   "result:TorusEuler.Paper.Text.eq_5_13"
+  ]
+ },
+ {
+  "term": "Physical and normalized time",
+  "convention": "At activation $t_0$, freeze $\\sigma=|k_p(t_0)||\\mathbf a_p(t_0)|$, $\\nu>0$ and $\\eta>0$, and put $\\varepsilon=\\eta/\\nu$, $r=\\sqrt{2\\sigma\\nu}>0$ and $S=\\sigma/r$. The normalized time is $\\tau=r(t-t_0)$, with inverse $t=t_0+\\tau/r$. The interval $[0,T]$ in normalized time corresponds to $[t_0,t_0+T/r]$. The compact physical set $I$ can be larger; the wave equations are required throughout $I$ and the physical error is measured there.",
+  "cards": [
+   "tie:intro-amplification-gain",
+   "tie:intro-amplification-crossing",
+   "tie:intro-amplification-late-angle",
+   "tie:r2a1.intro.strong-shear-factor",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.clock",
+   "result:TorusEuler.Paper.lemma_2_7"
+  ]
+ },
+ {
+  "term": "Frame orientation and indexing",
+  "convention": "The first two frame vectors are $E_1=k/|k|$ and $E_2=\\mathbf a/|\\mathbf a|$, and the third is $E_3=E_1\\times E_2$. For nonzero perpendicular data this fixes a positively oriented orthonormal frame. Its first, second and third formal positions correspond to paper indices $1,2,3$. The scalar $E_i\\cdot BE_j$ uses the same row and column order as the paper. Reversing the cross product would reverse the third axis and the corresponding coupling sign.",
+  "cards": [
+   "declaration:TorusEuler.MovingWaveVector.frame",
+   "declaration:TorusEuler.MovingWaveVector.entry",
+   "declaration:_private.TorusEuler.GrowingCouplingBounds.0.TorusEuler.GrowingCoupling.cross3_frame_coordinates"
+  ]
+ },
+ {
+  "term": "Scaled amplitude and wave-vector components",
+  "convention": "In the preceding wave’s frame, $k=\\lambda(\\zeta_1E_1+\\zeta_2E_2/S+\\zeta_3E_3)$ and $\\mathbf a=\\alpha_1E_1/S+\\alpha_2E_2+\\alpha_3E_3/S$. Several intermediate equations act on $(U,V)=(-\\alpha_1,\\alpha_2)$. Returning to the paper’s coordinates conjugates the matrix by $\\operatorname{diag}(-1,1)$. The weighted quantity $m=\\zeta_1^2+\\zeta_2^2/S^2+\\zeta_3^2$ is $|k|^2/\\lambda^2$, not the Euclidean squared norm of $\\zeta$.",
+  "cards": [
+   "declaration:TorusEuler.MovingAmplitude.U",
+   "declaration:TorusEuler.MovingAmplitude.rawMatrix",
+   "tie:r2a1.amp.coupling-ratio-coordinates"
+  ]
+ },
+ {
+  "term": "Reference angle and actual wave direction",
+  "convention": "The reference angle is $\\varphi(\\tau)=\\arctan(\\varepsilon\\tau^2/2)$. It belongs to the limiting reference equation. The angle of the actual perturbed wave is a separate quantity; the estimates compare the wave with the reference and do not identify the angles exactly. The zero of the reference slope locates the reference maximum, not necessarily the maximum of the actual amplitude.",
+  "cards": [
+   "tie:intro-amplification-late-angle",
+   "tie:intro-amplification-crossing",
+   "tie:r2a1.intro.strong-shear-factor"
+  ]
+ },
+ {
+  "term": "Reference peak and physical maximum",
+  "convention": "The reference turning time $\\tau_m$ is the unique nonnegative zero of the Riccati slope and maximizes $a_{\\rm ref}$. The crossing proposition separately asserts an attained maximum $A=\\max_{[0,T]}|\\mathbf a|$ of the physical amplitude. It does not place that maximum at $\\tau_m$ or assert a unique crossing. The numbered proposition characterizes $\\tau_m$ using every reference solution; the older crossing theorem receives one reference solution as input and produces its turning time.",
+  "cards": [
+   "result:TorusEuler.Paper.lemma_2_5",
+   "result:TorusEuler.Paper.proposition_2_8",
+   "declaration:TorusEuler.PaperAffine.finiteReturn"
+  ]
+ },
+ {
+  "term": "Reference amplitude and the interval integral",
+  "convention": "The reference amplitude is $a_{\\rm ref}(t)=\\exp\\int_0^tY$. The standard imported real interval integral reverses sign when its endpoints are reversed and is assigned zero when the integrand is not integrable; the latter assignment gives $a_{\\rm ref}=1$. A differential equation or integrability assertion does not follow from that definition. Reference solutions are continuous on the half-line, so their integrals have the ordinary meaning.",
+  "cards": [
+   "declaration:TorusEuler.Paper.referenceAmplitude",
+   "declaration:TorusEuler.ReferenceComparison.normalizedState",
+   "declaration:TorusEuler.ReferenceAmplitude.raw_ratio_eq"
+  ]
+ },
+ {
+  "term": "Real square root",
+  "convention": "The standard imported real square root is zero at nonpositive inputs, and its reciprocal is then zero. Thus $\\varepsilon^{-1/2}$ in the early-amplitude comparison means $1/\\sqrt\\varepsilon$ with that assigned value if $\\varepsilon\\le0$. That isolated comparison assumes only $2\\varepsilon\\le1$; the physical amplification application has $\\varepsilon>0$.",
+  "cards": [
+   "declaration:TorusEuler.ReferenceRiccati.amplitude_initial_window_of_reference_comparison"
+  ]
+ },
+ {
+  "term": "Observation set for the physical error",
+  "convention": "Each term in the physical error $\\delta$ is a supremum over the entire compact set $I$. This is the paper's interval supremum when $I=[t_0,t_0+T/r]$. A larger $I$ can enlarge $\\delta$, and the smallness conditions must then be checked on that larger set. Nonemptiness, compactness and continuity give the ordinary finite suprema used in the amplification estimates.",
+  "cards": [
+   "declaration:TorusEuler.MovingWaveVector.amplificationPhysicalError",
+   "tie:r2a1.wave.physical-error",
+   "result:TorusEuler.Paper.lemma_2_4"
+  ]
+ },
+ {
+  "term": "Real suprema and boundedness",
+  "convention": "The unrestricted real supremum is assigned zero for an empty set or a set not bounded above. The finite derivative expressions use sets containing zero; their numerical value alone therefore does not establish boundedness. Analytic estimates require or prove bounded derivative sets. In the weighted expressions, the reciprocal contributes $|\\gamma^{-1}|$; it is zero at $\\gamma=0$. Positive scales and a positive weight are required for the ordinary weighted-norm interpretation.",
+  "cards": [
+   "declaration:TorusEuler.hierarchyFiniteWordNorm",
+   "declaration:TorusEuler.Paper.S5.fieldNorm",
+   "tie:p5.2.holder-estimate",
+   "declaration:TorusEuler.Paper.S5.wNorm",
+   "declaration:TorusEuler.affineWaveAmplitudeOperator_add_transverseProjection",
+   "declaration:TorusEuler.norm_sq_mul_oscillatoryPressureSlope",
+   "declaration:TorusEuler.oscillatoryPhasePressure_weightedWordBound",
+   "declaration:TorusEuler.paperHierarchyActiveVelocityNorm",
+   "declaration:TorusEuler.wavePotentialTimeSource"
+  ]
+ },
+ {
+  "term": "Force, velocity and displacement in particle labels",
+  "convention": "For a flow $X$, put $F=D_aX$ and $M=DU\\circ X$. A physical force $f(t,x)$ becomes $f(t,X(t,a))$ in labels. A supplied function $f_{\\rm lab}(t,a)$ is already a label force and is identified with $f\\circ X$ only when that relation is given. If $v=z_t$, then $B=Fv$ is the correction in labels, $b=B\\circ X^{-1}$ its Eulerian form, and $\\xi=Fz$ the particle displacement. Arbitrary matrix data $F,M$ need not come from a specified flow.",
+  "cards": [
+   "tie:e01.correction.mean-equation",
+   "tie:e01.endpoint.linearized-euler",
+   "tie:e01.correction.mean-source",
+   "declaration:TorusEuler.PaperSmoothMeanSolution",
+   "tie:sec4.force-source",
+   "tie:p5.2.mean-equation"
+  ]
+ },
+ {
+  "term": "Profiles and the transported phase",
+  "convention": "A profile $f(t,a,s)$ has an independent label $a$ and phase $s$. Phase period one and $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ give the required combined periodicity. Its physical value is $f^\\natural(t,x)=f(t,X(t,\\cdot)^{-1}(x),k_*\\cdot X(t,\\cdot)^{-1}(x))$. The carrier $k_*$ can be any real vector compatible with the stated hypotheses. Periodicity of the resulting physical field is supplied by the profile continuation, not by assuming $k_*\\in\\mathbb Z^3$.",
+  "cards": [
+   "declaration:TorusEuler.HierarchyTwistedProfile.graphRead",
+   "declaration:TorusEuler.Paper.S5.IsExpansion",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_7",
+   "declaration:TorusEuler.Paper.lemma_5_7",
+   "declaration:TorusEuler.hierarchyGraphPoint",
+   "declaration:TorusEuler.paperLemma57_periodicGraphFromCell"
+  ]
+ },
+ {
+  "term": "Zero endpoint displacement",
+  "convention": "A path $z\\in H^1_0(0,T;\\mathbb R^3)$ is represented as $z(t)=\\int_0^tv(s)\\,ds$ with $v\\in L^2(0,T)$ and $\\int_0^Tv=0$. This includes every Sobolev path with zero traces at both endpoints. Zero displacement does not mean zero initial velocity.",
+  "cards": [
+   "result:TorusEuler.Paper.lemma_4_1",
+   "tie:sec4.endpoint-selection"
+  ]
+ },
+ {
+  "term": "Upper bound for a quadratic form",
+  "convention": "$H\\le cI$ means $\\langle Hw,w\\rangle\\le c|w|^2$ for every vector $w$. It is neither an absolute operator norm bound nor a symmetry assertion. The endpoint quantity is $H^\\#=-(M_t+M^2)$. For a smooth approximate parent with its flow, $H^\\#=(D_x^2p_U-D_xR_U)\\circ X$. For an exact Euler parent, the residual term vanishes. Large negative eigenvalues are permitted by an upper bound.",
+  "cards": [
+   "tie:r2a1.intro.hessian-upper",
+   "tie:e01.endpoint.linearized-euler",
+   "tie:e01.endpoint.quantitative-inverse",
+   "result:TorusEuler.Paper.lemma_4_1",
+   "tie:s5.parent-coercivity",
+   "tie:sec4.residual-gradient"
+  ]
+ },
+ {
+  "term": "Endpoint Hölder norm",
+  "convention": "The endpoint spatial $C^{0,1/2}$ norm is $\\max(\\|f\\|_\\infty,[f]_{1/2})$, followed by a supremum over the closed time interval. This is the norm on bounded half-Hölder fields in the authors' formalization. A solution estimate is $\\|v\\|\\le A\\|L\\|$ for a specified source $L$; the inverse operator has norm at most $A$. The coefficient quantities in the quantitative estimate bound values and first spatial derivatives, rather than full $C^{1,1/2}$ norms.",
+  "cards": [
+   "tie:e01.endpoint.quantitative-inverse",
+   "declaration:TorusEuler.paper_mean_inverse",
+   "result:TorusEuler.Paper.theorem_4_2"
+  ]
+ },
+ {
+  "term": "Spatial norm for convergence",
+  "convention": "The spatial $C^{m,1/2}$ norm sums, for derivative orders zero through $m$, the supremum norm and the one-half Hölder seminorm of the corresponding full multilinear spatial derivative, using its operator norm. A time-uniform bound takes the supremum in time of that spatial norm. It is not a space-time Hölder norm. Uniform derivative bounds through $m+1$ give the displayed regularity and the explicit factor $3(m+1)$ in the physical-evaluation estimate.",
+  "cards": [
+   "tie:e01.intro.spatial-convergence",
+   "declaration:TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "declaration:TorusEuler.Paper.Statement.Text.eq_5_59",
+   "declaration:TorusEuler.Paper.Statement.proposition_5_11",
+   "declaration:TorusEuler.Paper.Text.eq_5_59",
+   "declaration:TorusEuler.paperProposition511_physicalCutoff",
+   "declaration:TorusEuler.spatialHolderHalfNorm_cutoffPressureHessian_of_residual_le",
+   "declaration:TorusEuler.spatialHolderHalfNorm_cutoffVelocityDifference",
+   "declaration:TorusEuler.spatialHolderHalfNorm_le_of_uniformJets",
+   "declaration:TorusEuler.spatialHolderHalf_bilinear"
+  ]
+ },
+ {
+  "term": "Finite profile norms",
+  "convention": "For positive $\\ell_*,h$, the finite profile norm is $\\|f\\|_{[n]}=\\sum_{|\\alpha|+j\\le n}\\ell_*^{|\\alpha|}h^j\\sup_{[0,T],a,s}|\\partial_a^\\alpha\\partial_s^jf|$. The weighted version uses $[t_0,T]$ and divides by the positive $\\gamma(t)$ after label and phase differentiation. Each multiindex is counted once. No time derivatives occur. For a phase-independent field the phase derivatives of positive order vanish.",
+  "cards": [
+   "declaration:TorusEuler.Paper.S5.fieldNorm",
+   "tie:p5.1.derivative-weights",
+   "tie:p5.1.phase-independent-norm",
+   "declaration:TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_sums",
+   "declaration:TorusEuler.HierarchyTwistedProfile.amplitudeSeminorm_phaseAdv_le",
+   "declaration:TorusEuler.HierarchyTwistedProfile.boundedWeightSeminorm_labelAdv_le",
+   "declaration:TorusEuler.HierarchyTwistedProfile.boundedWeightSeminorm_slowLabelDivergenceProduct_le",
+   "declaration:TorusEuler.Paper.S5.wNorm",
+   "declaration:TorusEuler.Paper.Statement.theorem_5_6",
+   "declaration:TorusEuler.paperHierarchyActiveVelocityNorm"
+  ]
+ },
+ {
+  "term": "Ordered spatial derivatives",
+  "convention": "The physical derivative sum in Lemma 5.7 ranges over all coordinate sequences of length $m$. Equal mixed derivatives can occur more than once. It dominates the paper's multi-index sum, and the multiplicity depends only on $m$. This convention does not apply to the finite profile norm, which counts each multi-index once.",
+  "cards": [
+   "declaration:TorusEuler.HierarchyTwistedProfile.paperLemma57_graphMean",
+   "declaration:TorusEuler.HierarchyTwistedProfile.paperLemma57_graphMeanWeighted",
+   "declaration:TorusEuler.HierarchyTwistedProfile.paperLemma57_graphUnweighted",
+   "declaration:TorusEuler.HierarchyTwistedProfile.paperLemma57_graphWeighted",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_7",
+   "declaration:TorusEuler.Paper.lemma_5_7",
+   "declaration:TorusEuler.paperLemma57_periodicGraphFromCell"
+  ]
+ },
+ {
+  "term": "Pressure normalization",
+  "convention": "The Euler and truncated Poisson pressures are normalized by zero spatial mean. Transverse pressures instead have zero phase mean. The continuous-source endpoint equation determines a periodic pressure gradient; its scalar potential admits a time-dependent additive constant and is not thereby time differentiable. A chosen zero-mean potential fixes that freedom. The smooth-force theorem reconstructs a smooth, zero-mean label pressure; it does not identify it with the negative time derivative of an arbitrary earlier potential. The periodic inverse Laplacian removes the constant Fourier mode.",
+  "cards": [
+   "tie:e01.conventions.pressure-normalization",
+   "tie:e01.endpoint.quantitative-inverse",
+   "tie:e01.endpoint.linearized-euler",
+   "declaration:TorusEuler.Paper.EndpointSystemSolution",
+   "result:TorusEuler.Paper.theorem_4_2",
+   "tie:sec4.differentiate-integrated",
+   "declaration:TorusEuler.Paper.Lib.S5a.meanSolvable_of_theorem42",
+   "declaration:TorusEuler.Paper.S5.IsExpansion",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_9",
+   "declaration:TorusEuler.Paper.lemma_5_9",
+   "declaration:TorusEuler.TruncatedChildStage",
+   "declaration:TorusEuler.TruncatedChildStage.pressureHessian_le_of_cutoff",
+   "declaration:TorusEuler.pressureHessianMultiplier",
+   "declaration:TorusEuler.spatialHolderHalfNorm_cutoffPressureHessian_of_residual_le"
+  ]
+ },
+ {
+  "term": "Choice of parent pressure",
+  "convention": "The paper selects the spatial mean-zero Poisson pressure. The formal parent hypotheses in Section 5 allow any smooth periodic pressure whose residual satisfies the required oddness, Fourier, size and quadratic-form conditions; they do not separately impose a Poisson equation or divergence freedom of the residual. The new pressure after Fourier truncation is explicitly the normalized Poisson pressure.",
+  "cards": [
+   "declaration:TorusEuler.Paper.S5.Parent",
+   "result:TorusEuler.Paper.proposition_5_1",
+   "result:TorusEuler.Paper.proposition_5_11"
+  ]
+ },
+ {
+  "term": "Central transverse stability and normalization",
+  "convention": "With $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$, stability quantifies over every transverse homogeneous solution $b$ and every $t_0\\le t'\\le t\\le T$: $|b(t)|/\\gamma(t)\\le\\mathsf D|b(t')|/\\gamma(t')$. The selected seed alone does not express this control. The formal normalization is $0<\\gamma\\le1$; the paper additionally fixes the attained maximum to be one. The normalized coupling inequality is a separate hypothesis.",
+  "cards": [
+   "tie:s5.central-transverse-assumptions",
+   "tie:s5.origin-normalization",
+   "declaration:TorusEuler.Paper.theorem_5_6",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_10",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_3",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_5",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_7",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_8",
+   "declaration:TorusEuler.Paper.Statement.lemma_5_9",
+   "declaration:TorusEuler.Paper.Statement.proposition_5_4",
+   "declaration:TorusEuler.Paper.Statement.theorem_5_6",
+   "declaration:TorusEuler.weighted_near_label_forced_norm_le",
+   "declaration:TorusEuler.weighted_near_label_forward"
+  ]
+ },
+ {
+  "term": "Normalized phase primitive",
+  "convention": "For continuous $f$, put $Jf(s)=\\int_0^sf(r)\\,dr$ and $\\partial_s^{-1}f=Jf-\\int_0^1Jf$. This primitive has zero phase mean. It is one-periodic when $f$ is one-periodic with zero phase mean, and need not vanish at phase zero. The formula also accepts other inputs, for which periodicity or an ordinary derivative need not follow.",
+  "cards": [
+   "declaration:TorusEuler.phasePrimitive",
+   "tie:localized.normalized-primitive",
+   "tie:localized.completed-velocity-longitudinal",
+   "declaration:TorusEuler.HierarchyTwistedProfile.average_phaseAdv_complete",
+   "declaration:TorusEuler.Paper.S5.curlCorrection",
+   "declaration:TorusEuler.hasDerivWithinAt_wavePotential_time",
+   "declaration:TorusEuler.oscillatoryPhasePressure_weightedWordBound",
+   "declaration:TorusEuler.phaseOscillation_longitudinal_of_slope_divergence",
+   "declaration:TorusEuler.wavePotentialTimeSource"
+  ]
+ },
+ {
+  "term": "Fixed radial envelope",
+  "convention": "The formal construction selects a particular smooth cutoff $g(a)=\\chi(|a|/\\ell_*)$. For $\\ell_*>0$, it is one on $|a|\\le\\ell_*$ and zero on $|a|\\ge2\\ell_*$. It does not quantify over every admissible cutoff. At $\\ell_*=0$, division by zero gives $g\\equiv1$, so positivity is essential for localization.",
+  "cards": [
+   "declaration:TorusEuler.radialEnvelope",
+   "tie:s5.radial-envelope"
+  ]
+ },
+ {
+  "term": "Time cutoff",
+  "convention": "The cutoff is smooth on $[0,T]$, takes values in $[0,1]$, and vanishes for $t<t_0$ within that interval. It need not eventually equal one. The first wave takes $t_0=0$ and the constant cutoff one. No smoothness or vanishing outside the slab is asserted merely by the cutoff definition.",
+  "cards": [
+   "declaration:TorusEuler.PaperWaveCutoff",
+   "tie:localized.time-cutoff",
+   "tie:localized.flat-zero-extension"
+  ]
+ },
+ {
+  "term": "Correction indices",
+  "convention": "The correction stored with $V_p$ is the paper's $C_{p+1}$. The paper index is recovered by natural-number predecessor, so the bare definition gives $C_0=C_1$. The finite expansion separately requires $C_1=0$ and retains $C_{P+1}$ while imposing $V_{P+1}=B_{P+1}=0$.",
+  "cards": [
+   "declaration:TorusEuler.HierarchyOperators.meanPhaseAdvectionAtLevel_eq_sum",
+   "declaration:TorusEuler.HierarchyProfiles.velocity_eq_sum_Z_add_completion",
+   "declaration:TorusEuler.Paper.S5.Cd",
+   "declaration:TorusEuler.Paper.S5.IsExpansion",
+   "declaration:TorusEuler.Paper.S5.expansion",
+   "declaration:TorusEuler.Paper.S5.remainder"
+  ]
+ },
+ {
+  "term": "Real logarithm",
+  "convention": "The real logarithm is assigned zero at zero and extended to negative arguments using absolute value. The parameter hypotheses force the relevant frequencies and thresholds to be positive, so their logarithms have the ordinary meaning. The formula $L_j=4\\log\\lambda_{j+1}$ alone does not establish that positivity.",
+  "cards": [
+   "tie:e01.lemma13.orders",
+   "tie:e01.lemma13.logarithmic-bound",
+   "result:TorusEuler.Paper.lemma_1_3",
+   "declaration:TorusEuler.InductiveEulerParameters"
+  ]
+ },
+ {
+  "term": "Nonnegative integrals and essential suprema",
+  "convention": "The gradient and vorticity $L^\\infty$ quantities in the singularity statement are essential suprema on the unit cell, with values in $[0,\\infty]$. Their nonnegative time integrals can equal infinity. These are distinct from the real supremum expressions used in some finite-norm definitions, whose exceptional default is zero. Smooth periodic fields have finite spatial suprema at each fixed time before the singular endpoint; the time integrals can nevertheless diverge.",
+  "cards": [
+   "result:TorusEuler.Paper.remark_1_2"
+  ]
+ },
+ {
+  "term": "The unit torus and periodic lifts",
+  "convention": "The spatial domain is $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, with measure of total mass one and Fourier modes $e^{2\\pi i k\\cdot x}$ for $k\\in\\mathbb Z^3$. A periodic lift is unchanged by integer translations. Every lattice point represents the single torus origin, so the punctured torus is represented by $\\mathbb R^3\\setminus\\mathbb Z^3$. A lifted observation set must avoid that whole lattice. A support condition within distance $r$ of the lattice represents a ball about the torus origin. A lifted flow satisfies $X(t,a+n)=X(t,a)+n$: its displacement, rather than its position, is periodic.",
+  "cards": [
+   "declaration:TorusEuler.HasOffOriginLimits",
+   "declaration:TorusEuler.IsEulerSolution",
+   "declaration:TorusEuler.Paper.Proof.lemma_B_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_B_1",
+   "declaration:TorusEuler.Paper.Theorem71Conclusions",
+   "declaration:TorusEuler.Paper.Theorem71StepData",
+   "declaration:TorusEuler.Paper.theorem_7_1",
+   "declaration:TorusEuler.PaperTheorem71Conclusions",
+   "declaration:TorusEuler.cutoffSchwartzKernel",
+   "declaration:TorusEuler.fderiv_lift_realVectorFourierCutoff_single",
+   "declaration:TorusEuler.hasDerivWithinAt_realVectorFourierCutoff_time",
+   "declaration:TorusEuler.isEulerSolution_stationaryShear",
+   "declaration:TorusEuler.liftConvolution_cutoffSchwartzKernel",
+   "declaration:TorusEuler.paperLemmaB1_bernstein",
+   "declaration:TorusEuler.paperLemmaB1_bernstein_real_multiIndex",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_aeBound",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_commutes_contDiff",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_derivative",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_holder",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_sup",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_support_parity",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_tail",
+   "declaration:TorusEuler.paperLemmaB1_realBanachCutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_admissible",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_parity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_sup",
+   "declaration:TorusEuler.smoothFourierCutoff",
+   "declaration:TorusEuler.spatialHolderHalfNorm_realVectorCutoffTail",
+   "declaration:TorusEuler.stationaryShear",
+   "declaration:TorusEuler.stationaryShearFlow",
+   "declaration:TorusEuler.stationaryShear_base_T1",
+   "declaration:TorusEuler.stationaryShear_mFourierCoeff_ne_zero_iff",
+   "tie:e03-s8-off-origin"
+  ]
+ },
+ {
+  "term": "Distances on the torus and the lift",
+  "convention": "The lift $\\mathbb R^3$ carries Euclidean distance. The direct torus used in the endpoint spaces carries the product metric $d_\\infty$, the maximum of the three circle distances. If $d_2$ is the Euclidean quotient metric, then $d_\\infty\\le d_2\\le\\sqrt3\\,d_\\infty$. Consequently $[f]_{1/2,d_2}\\le[f]_{1/2,d_\\infty}\\le3^{1/4}[f]_{1/2,d_2}$. The Euclidean seminorm of a periodic lift agrees with the $d_2$ seminorm after minimizing over lattice translates, but not in general with the $d_\\infty$ seminorm. The quotient map from the Euclidean lift to the product-metric torus is nonexpanding.",
+  "cards": [
+   "declaration:TorusEuler.HasOffOriginLimits",
+   "declaration:TorusEuler.IsEulerSolution",
+   "declaration:TorusEuler.Paper.EndpointSystemSolution",
+   "declaration:TorusEuler.Paper.Proof.lemma_B_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_B_1",
+   "declaration:TorusEuler.Paper.Theorem71Conclusions",
+   "declaration:TorusEuler.Paper.Theorem71StepData",
+   "declaration:TorusEuler.Paper.theorem_7_1",
+   "declaration:TorusEuler.PaperTheorem71Conclusions",
+   "declaration:TorusEuler.continuous_and_norm_sub_le_endpointHalfHolderPrimitive",
+   "declaration:TorusEuler.cutoffSchwartzKernel",
+   "declaration:TorusEuler.fderiv_lift_realVectorFourierCutoff_single",
+   "declaration:TorusEuler.hasDerivWithinAt_realVectorFourierCutoff_time",
+   "declaration:TorusEuler.isEulerSolution_stationaryShear",
+   "declaration:TorusEuler.liftConvolution_cutoffSchwartzKernel",
+   "declaration:TorusEuler.paperLemmaB1_bernstein",
+   "declaration:TorusEuler.paperLemmaB1_bernstein_real_multiIndex",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_aeBound",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_commutes_contDiff",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_derivative",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_holder",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_sup",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_support_parity",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_tail",
+   "declaration:TorusEuler.paperLemmaB1_realBanachCutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_admissible",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_parity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_sup",
+   "declaration:TorusEuler.smoothFourierCutoff",
+   "declaration:TorusEuler.spatialHolderHalfNorm_realVectorCutoffTail",
+   "declaration:TorusEuler.stationaryShear",
+   "declaration:TorusEuler.stationaryShearFlow",
+   "declaration:TorusEuler.stationaryShear_base_T1",
+   "declaration:TorusEuler.stationaryShear_mFourierCoeff_ne_zero_iff",
+   "result:TorusEuler.Paper.theorem_A_1",
+   "tie:e03-s8-off-origin"
+  ]
+ },
+ {
+  "term": "Time derivatives within an interval",
+  "convention": "On a nondegenerate interval $[a,b]$, time derivatives use times in that interval: right derivatives at $a$, left derivatives at $b$ and ordinary derivatives inside. For a physical velocity the spatial point is fixed during this differentiation. On $[0,T)$ there is no derivative condition at the excluded endpoint $T$. A condition on a general compact time set uses derivatives relative to that set, which need not be an interval. Fields and derivative expressions are defined at other times as well; their notation alone imposes neither an equation nor differentiability there. In the cutoff commutation assertion, the symbol and frequency scale are fixed in time.",
+  "cards": [
+   "declaration:TorusEuler.FirstWaveOrigin",
+   "declaration:TorusEuler.FirstWaveOrigin.weighted_forward",
+   "declaration:TorusEuler.IsEulerSolution",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification",
+   "declaration:TorusEuler.MovingWaveVector.movingFrame_axis_derivative_bound",
+   "declaration:TorusEuler.Paper.Proof.lemma_B_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_6_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_B_1",
+   "declaration:TorusEuler.Paper.lemma_6_1",
+   "declaration:TorusEuler.exists_parentDerivedLowBounds",
+   "declaration:TorusEuler.hasDerivWithinAt_realVectorFourierCutoff_time",
+   "declaration:TorusEuler.parentResidualFourierBand_of_projectedMomentum",
+   "declaration:TorusEuler.slabTimeJet",
+   "tie:e03-appb-commutation",
+   "tie:e03-aux-fixed-spatial-point"
+  ]
+ },
+ {
+  "term": "Nonnegative integer indices and powers",
+  "convention": "Orders, depths and the schedule exponent $K(s)=320b(s+1)$ are nonnegative integers. The recurrence is $\\lambda_0=N$, $q_1=1$ and $\\lambda_j=\\lambda_{j-1}^{K(q_j)}$ for $j\\ge1$, with ordinary integer powers and $L_j=4\\log\\lambda_{j+1}$. Subtraction within the nonnegative integers stops at zero. Thus $q-1$ in the mean-source estimate means $\\max(q-1,0)$, and the otherwise unused $\\tau_0$ formula uses $\\lambda_0$ in place of $\\lambda_{-1}$. Under $j\\ge1$, $j-1$ is the ordinary difference. Internal step $i$ constructs paper wave $j=i+1$, so depth $6K(q_{i+2})$ is $6K_{j+1}$. The tail exponent $s-M$ is instead formed as a signed integer difference and may be negative.",
+  "cards": [
+   "declaration:TorusEuler.InductiveEulerParameters.stepDepth",
+   "declaration:TorusEuler.Paper.Aux.MixedIncrementBound",
+   "declaration:TorusEuler.Paper.Proof.lemma_1_3",
+   "declaration:TorusEuler.Paper.Schedule.τ",
+   "declaration:TorusEuler.ScheduledEulerConstruction.terminalMeasuredLevels",
+   "declaration:TorusEuler.TruncatedChildStage.slabTimeJet_velocityTail",
+   "declaration:TorusEuler.frequencySchedule_frequency_tendsto_atTop",
+   "declaration:TorusEuler.frequencySchedule_fullOrder_parent_budget",
+   "declaration:TorusEuler.frequencySchedule_fullOrder_wave_budget",
+   "declaration:TorusEuler.frequencySchedule_halfLength_bounds",
+   "declaration:TorusEuler.frequencySchedule_log_bound",
+   "declaration:TorusEuler.frequencySchedule_lowOrder_mean_budget",
+   "declaration:TorusEuler.frequencySchedule_order_advance_iff",
+   "declaration:TorusEuler.frequencySchedule_order_steps",
+   "declaration:TorusEuler.frequencySchedule_residual_exponent",
+   "declaration:TorusEuler.frequencySchedule_tail_absorption",
+   "declaration:TorusEuler.frequencySchedule_three_log_steps",
+   "tie:e03-appc-floor",
+   "tie:e03-appc-three-steps",
+   "tie:e03-s7-cutoff-tail",
+   "tie:e03-s7-depth",
+   "tie:e03-s7-depth-residual-identity",
+   "tie:e03-s7-half-length"
+  ]
+ },
+ {
+  "term": "Real powers of positive frequencies",
+  "convention": "Negative and fractional analytic exponents, such as $\\lambda^{-3/4}$ and $\\lambda^{-1/8}$, are real exponents. For $\\lambda>0$ they have their usual meaning. In the numerical remainder identity the allowed case $\\lambda=0$ follows $0^0=1$ and $0^r=0$ for nonzero real $r$; it has no zero-frequency-wave interpretation. The expression $2-P$ in the Fourier-tail exponent is subtraction in the real numbers and may be negative.",
+  "cards": [
+   "declaration:TorusEuler.FirstWaveOrigin.initial_strength",
+   "declaration:TorusEuler.HierarchyTwistedProfile.terminalDepthTail_rpow",
+   "declaration:TorusEuler.Paper.Schedule.τ",
+   "declaration:TorusEuler.ScheduledEulerConstruction.ScheduledParentCoefficientTimeBounds",
+   "declaration:TorusEuler.activationGrowthRate_bounds",
+   "declaration:TorusEuler.frequencySchedule_fullOrder_parent_budget",
+   "declaration:TorusEuler.frequencySchedule_fullOrder_wave_budget",
+   "declaration:TorusEuler.frequencySchedule_residual_budget",
+   "declaration:TorusEuler.frequencySchedule_residual_exponent",
+   "declaration:TorusEuler.frequencySchedule_tail_absorption",
+   "declaration:TorusEuler.induction_child_center_error_budget",
+   "declaration:TorusEuler.inner_normalize_cross3_left",
+   "tie:e03-s7-cutoff-tail",
+   "tie:e03-s7-depth-residual-identity"
+  ]
+ },
+ {
+  "term": "Euclidean vector and operator norms",
+  "convention": "Vectors in $\\mathbb R^3$ carry the Euclidean norm. A matrix acting on vectors carries the induced operator norm. With $(\\nabla U)_{ij}=\\partial_jU_i$, its action is $D_xU\\,v$, and $(a\\otimes k)v=(k\\cdot v)a$. Thus $\\|a\\otimes k\\|=|a||k|$. For the rank-one stationary shear matrix this operator norm equals its Frobenius norm. Full higher spatial derivatives carry the corresponding multilinear operator norm.",
+  "cards": [
+   "declaration:TorusEuler.FirstWaveOrigin.first_coupling_lower",
+   "declaration:TorusEuler.FirstWaveOrigin.initial_strength",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.gradient",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.initialStrength",
+   "declaration:TorusEuler.MovingWaveVector.amplificationPhysicalError_le_movingFrame",
+   "declaration:TorusEuler.MovingWaveVector.movingFrame_axis_derivative_bound",
+   "declaration:TorusEuler.exists_parentDerivedLowBounds",
+   "declaration:TorusEuler.norm_stationaryShearGradient_le",
+   "declaration:TorusEuler.stationaryShearFlow_jacobian_norms",
+   "declaration:TorusEuler.stationaryShearFlow_jacobians_eq",
+   "declaration:TorusEuler.stationaryShearGradient",
+   "declaration:TorusEuler.stationaryShearGradient_sq"
+  ]
+ },
+ {
+  "term": "Degenerate time interval",
+  "convention": "When $T=0$, the interval $[0,T]$ is the singleton $\\{0\\}$. Any proposed derivative satisfies the derivative condition relative to that singleton; it imposes no time evolution. The first-wave initial values, nonvanishing and attained maximum at zero still constrain the data. The numbered Lemma 6.1 assumes $T>0$, whereas its more general existence statements allow $T=0$.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Lib.S678b.firstWaveOrigin_exists_explicit",
+   "declaration:TorusEuler.firstWaveOrigin_exists",
+   "declaration:TorusEuler.paperLemma61_exists_firstWave",
+   "tie:e03-s6-first-wave-normalization",
+   "tie:e03-s6-lemma61-origin"
+  ]
+ },
+ {
+  "term": "Normalized wave frame",
+  "convention": "For nonzero perpendicular covector $\\kappa$ and amplitude $\\mathbf a$, set $E_1=\\kappa/|\\kappa|$, $E_2=\\mathbf a/|\\mathbf a|$ and $E_3=E_1\\times E_2$. This is an orthonormal frame. The entries of $B$ are $B_{ij}=E_i\\cdot BE_j$, with $\\nu=B_{12}$ and $\\eta=B_{32}$. Source coordinates numbered zero, one and two correspond to the paper's one, two and three.",
+  "cards": [
+   "declaration:TorusEuler.FirstWaveOrigin.first_coupling_lower",
+   "declaration:TorusEuler.FirstWaveOrigin.initial_couplings",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.gradient",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.ratio",
+   "declaration:TorusEuler.MovingWaveVector.entry",
+   "declaration:TorusEuler.MovingWaveVector.movingFrame_axis_derivative_bound",
+   "declaration:TorusEuler.Paper.Lib.S678b.first_coupling_lower"
+  ]
+ },
+ {
+  "term": "Positive denominators and division by zero",
+  "convention": "Division is defined even at a zero denominator, with $a/0=0$. Consequently a normalized-vector formula alone does not imply unit length. In the central-wave results, nonzero covectors and amplitudes and positive frozen couplings make the divisions by $|\\kappa|$, $|\\mathbf a|$, $\\nu$ and $r=\\sqrt{2\\sigma\\nu}$ ordinary divisions by positive numbers. Those hypotheses must accompany any use of the normalized frame or weighted amplitude ratio.",
+  "cards": [
+   "declaration:TorusEuler.FirstWaveOrigin",
+   "declaration:TorusEuler.FirstWaveOrigin.initial_projection",
+   "declaration:TorusEuler.FirstWaveOrigin.weighted_forward",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.elapsed",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_localized_center_estimates_threshold",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_physical_growth_bound_threshold",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.rate",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.ratio",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.shear"
+  ]
+ },
+ {
+  "term": "Normalized time and frozen growth scale",
+  "convention": "At activation, freeze positive strength $\\sigma$ and coupling $\\nu$, and set $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$. Normalized time is $\\tau=r(t-t_0)$, with inverse $t=t_0+\\tau/r$. Hence $[0,\\Theta]$ corresponds to $[t_0,t_0+\\Theta/r]$ and one normalized time unit lasts $1/r$. The exact frozen growth rate, when $\\sigma>\\nu$, is $r\\sqrt{1-\\nu/\\sigma}$.",
+  "cards": [
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.elapsed",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_growingCrossing",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_localized_center_estimates_threshold",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_physical_growth_bound_threshold",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.rate",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.shear",
+   "declaration:TorusEuler.activationGrowthRate_bounds",
+   "declaration:TorusEuler.waveSwitch_eq_one_of_activation",
+   "tie:e03-s6-rate",
+   "tie:e03-s6-normalized-time",
+   "tie:e03-s6-early-normalized-gain",
+   "tie:r2-s6-crossing-input",
+   "tie:e03-s6-first-crossing",
+   "tie:r2-s6-reference-turn"
+  ]
+ },
+ {
+  "term": "Attained amplitude maximum",
+  "convention": "Saying that the peak is $U_*$ means both $|\\mathbf a(t)|\\le U_*$ at every time of the specified closed interval and equality at some time there. It is not merely an upper bound. The first wave uses $U_*=\\lambda^{-3/4}$; the general growing-wave data permit an independent prescribed peak, specialized to that value in the induction.",
+  "cards": [
+   "declaration:TorusEuler.FirstWaveOrigin",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_growingCrossing",
+   "declaration:TorusEuler.Paper.Lib.S678b.firstWaveOrigin_exists_explicit",
+   "declaration:TorusEuler.Paper.Statement.lemma_6_1",
+   "declaration:TorusEuler.Paper.lemma_6_1",
+   "declaration:TorusEuler.firstWaveOrigin_exists",
+   "declaration:TorusEuler.paperLemma61_exists_firstWave",
+   "declaration:TorusEuler.paperLemma61_firstWave",
+   "tie:e03-s6-first-wave-normalization",
+   "tie:e03-s6-growing-peak-normalization",
+   "tie:e03-s6-early-normalized-gain"
+  ]
+ },
+ {
+  "term": "Greatest admissible derivative order",
+  "convention": "The recurrence chooses the greatest integer $s$ satisfying $1\\le s\\le q_j+1$ and $\\mathcal B(s)\\le\\lambda_{j-1}$, not just an admissible integer. The greatest element belongs to that set and dominates every other member. The values $q_0$ and $\\mathcal B(0)$ have no role in this recurrence. Arithmetic growth results can omit monotonicity and analytic-cost domination of $\\mathcal B$ even though the paper imposes both on its chosen schedule.",
+  "cards": [
+   "declaration:TorusEuler.Paper.lemma_1_3",
+   "declaration:TorusEuler.frequencySchedule_halfLength_bounds",
+   "declaration:TorusEuler.frequencySchedule_order_tendsto_atTop",
+   "tie:e03-s7-all-orders",
+   "tie:e03-s7-half-length-decay"
+  ]
+ },
+ {
+  "term": "Threshold quantifiers",
+  "convention": "The numbered common-sequence assertion fixes a Fourier symbol, then allows any integer floor $a_0$ and chooses $b\\ge1$, an exponent $a\\ge a_0$ and a majorant of fixed-order constants. The threshold function $\\mathcal B$ is quantified afterward, and the lower bound for the initial frequency may depend on it. Thus the exponent can be chosen arbitrarily large; the conclusion does not say that every sufficiently large exponent works. The shorter existence theorem chooses just one threshold function.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Proof.theorem_7_1_of",
+   "declaration:TorusEuler.Paper.Statement.theorem_7_1",
+   "declaration:TorusEuler.Paper.theorem_7_1",
+   "declaration:TorusEuler.paperTheorem71",
+   "result:TorusEuler.Paper.theorem_7_1"
+  ]
+ },
+ {
+  "term": "Pointwise time bounds and time continuity",
+  "convention": "An estimate imposed for every $t\\in[0,S]$ gives a uniform numerical bound in time. By itself it does not assert continuity of the map from time into the spatial normed space. In particular the clause bounding the spatial $C^{m,1/2}$ size of each correction is distinct from the paper's explicit $C([0,S];C^{m,1/2})$ assertion. The spatial $C^{m,1/2}$ norm is $\\sum_{i\\le m}(\\sup|D^if|+[D^if]_{1/2})$, where $D^if$ is the full $i$th derivative tensor in operator norm.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Statement.theorem_7_1",
+   "declaration:TorusEuler.Paper.Theorem71Conclusions",
+   "declaration:TorusEuler.Paper.theorem_7_1",
+   "declaration:TorusEuler.PaperTheorem71Conclusions",
+   "declaration:TorusEuler.frequencySchedule_child_velocity_increment",
+   "declaration:TorusEuler.induction_child_velocity_bound",
+   "tie:e03-s7-increment-bounds",
+   "tie:e03-s7-velocity-increment",
+   "tie:e03-s7-new-velocity"
+  ]
+ },
+ {
+  "term": "Pressure as a quadratic-form bound",
+  "convention": "The inequality $D^2\\pi_j\\le A I$ means $v\\cdot D^2\\pi_j(t,x)v\\le A|v|^2$ for every vector $v$. It is an upper bound as a quadratic form, not a bound for the norm or the absolute values of all Hessian entries. The sum $\\sum_{i<j}\\lambda_i^{-1}$ is the paper's $\\sum_{i=1}^{j}\\lambda_{i-1}^{-1}$; at $j=0$ it is empty and equals zero.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Statement.theorem_7_1",
+   "declaration:TorusEuler.Paper.Theorem71Conclusions",
+   "declaration:TorusEuler.Paper.theorem_7_1",
+   "declaration:TorusEuler.PaperTheorem71Conclusions",
+   "declaration:TorusEuler.inductionPressure_sum_le",
+   "tie:e03-s7-T3",
+   "tie:e03-s7-pressure-sum",
+   "tie:r2-s7-parent-coercivity"
+  ]
+ },
+ {
+  "term": "First crossing within the bracket",
+  "convention": "The selected crossing is least among the times in the closed bracket $[\\tau_m,2(\\varepsilon\\varepsilon_+)^{-1/2}]$ at which the successor coupling ratio equals $\\varepsilon_+$. Here $\\tau_m$ is the reference turning time and $\\tau$ is normalized time. The assertion does not exclude crossings before that bracket. Physical times are obtained by $t=t_0+\\tau/r$.",
+  "cards": [
+   "declaration:TorusEuler.InductiveEulerConstruction.centralWaves",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing",
+   "declaration:TorusEuler.MovingWaveVector.PhysicalAmplification.exists_growingCrossing",
+   "tie:r2-s6-crossing-input",
+   "tie:e03-s6-first-crossing",
+   "tie:r5-ind-figure4-crossing"
+  ]
+ },
+ {
+  "term": "Closed stage intervals and the lifespan",
+  "convention": "An approximate stage is studied on $[0,S_j]$ and includes both endpoints. The Euler solution satisfies the equations on $[0,T_*)$ with $0<T_*<\\infty$. Its functions are defined at other times, but that imposes no equation or smoothness there. An assertion about a continuous terminal velocity specifies its value at $T_*$ separately.",
+  "cards": [
+   "declaration:TorusEuler.IsEulerSolution",
+   "declaration:TorusEuler.PaperLimitAgreement",
+   "declaration:TorusEuler.slabTimeJet"
+  ]
+ },
+ {
+  "term": "Profile time and physical time",
+  "convention": "For a profile $f(t,a,s)$, time differentiation fixes the label $a$ and independent phase $s$. After substituting $a=X(t,\\cdot)^{-1}(x)$ and $s=k_*\\cdot a$, it becomes the material derivative $\\partial_t+U\\cdot\\nabla_x$. It is distinct from differentiation at fixed physical position; conversion to that derivative introduces parent-velocity and spatial derivative factors.",
+  "cards": [
+   "declaration:TorusEuler.HierarchyTwistedProfile.timeDerivative",
+   "declaration:TorusEuler.HierarchySmoothProfile.slabTimePartial_graphRead",
+   "tie:e03-r2-aux-material-graph-identity"
+  ]
+ },
+ {
+  "term": "Essential supremum and operator norm",
+  "convention": "The $L^\\infty$ measurement is the essential supremum over $[-1/2,1/2]^3$ and can take the value $+\\infty$. A spatial derivative is measured in the Euclidean operator norm, and higher full derivatives in the corresponding multilinear operator norm. For a smooth periodic field the essential supremum equals the ordinary supremum. Sums of coordinate partial-derivative norms can change fixed order-dependent constants.",
+  "cards": [
+   "declaration:TorusEuler.torusLInf_curl_le",
+   "declaration:TorusEuler.InductiveEulerStage.exists_slabTimeJet_bernsteinBounds",
+   "declaration:TorusEuler.Paper.Corollary83Conclusions"
+  ]
+ },
+ {
+  "term": "The imported spatial Hölder measurement",
+  "convention": "The spatial $C^{m,1/2}$ measurement is a sum, through order $m$, of the supremum and half-Hölder seminorm of each full spatial derivative. This sum is visible in the supplied proofs, and derivatives use multilinear operator norms. A separate condition supplies finiteness. The defining file for the underlying Hölder quotient is absent, so its exact domain and zero-increment convention remain unverified here. This spatial norm must not be identified with the maximum norm used in the endpoint space.",
+  "cards": [
+   "declaration:TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "declaration:TorusEuler.PaperLimitAgreement",
+   "declaration:TorusEuler.Paper.Aux.MixedIncrementBound"
+  ]
+ },
+ {
+  "term": "Nonnegative time integrals",
+  "convention": "The gradient and vorticity integrals are nonnegative Lebesgue integrals over $[0,T_*)$, with values in $[0,+\\infty]$. Equality to $+\\infty$ is integral divergence; the integral is not assigned a finite fallback value when the integrand is nonintegrable. A full limit of central vorticity to infinity alone does not imply divergence of this time integral.",
+  "cards": [
+   "declaration:TorusEuler.gradientIntegral_eq_top_of_curlIntegral_eq_top",
+   "declaration:TorusEuler.Paper.Corollary83Conclusions",
+   "tie:e03-s8-bkm-boundary"
+  ]
+ },
+ {
+  "term": "Factorially weighted time norms",
+  "convention": "For $T>0$ and a spatial seminorm $N$, $\\mathcal J_q(f)=\\sum_{i=0}^q T^iN(\\partial_t^if)/i!$. Time differentiation fixes label and independent phase. In an amplitude-weighted measurement, division by the positive central amplitude occurs after differentiating the profile; the amplitude is not differentiated. Extracting order $i\\le q$ costs $i!T^{-i}$.",
+  "cards": [
+   "declaration:TorusEuler.HierarchyTwistedProfile.timeJetSeminorm",
+   "declaration:TorusEuler.HierarchyTwistedProfile.norm_timeJet_le",
+   "declaration:TorusEuler.ScheduledEulerConstruction.terminalAmplitudeTimeNorm"
+  ]
+ },
+ {
+  "term": "Eventual estimates at fixed orders",
+  "convention": "For every fixed pair of derivative orders $(m,q)$ there may be a different starting stage. The assertion does not supply one starting stage for all orders at once. Likewise, constants and parent exponents in an eventual absorption estimate are fixed before the stage index tends to infinity; their permissible dependence follows their position in the quantifiers.",
+  "cards": [
+   "declaration:TorusEuler.InductiveEulerStages.HasTerminalMixedIncrementBounds",
+   "declaration:TorusEuler.InductiveEulerParameters.eventually_parentPolynomial_mul_child_rpow_le_one",
+   "tie:e03-aux-mixed-starting-index"
+  ]
+ },
+ {
+  "term": "Finite maximal lifespan",
+  "convention": "The maximal-solution comparison quantifies over a real $T>0$, hence a finite lifespan. Maximality means that no smooth periodic Euler solution on any longer interval agrees in velocity throughout $[0,T)$. An infinite lifespan is not a possible value of this parameter. This convention limits the literal comparison assertion even when a separate argument excludes a global continuation of the constructed example.",
+  "cards": [
+   "declaration:TorusEuler.IsEulerSolution.isMaximal_of_tendsto_curl_atTop",
+   "declaration:TorusEuler.PaperLimitAgreement",
+   "declaration:TorusEuler.Paper.remark_1_2"
+  ]
+ },
+ {
+  "term": "Full terminal vorticity limit",
+  "convention": "The assertion $|\\operatorname{curl}u(t,0)|\\to\\infty$ as $t\\uparrow T_*$ means that every fixed lower threshold is exceeded at every sufficiently late time in $[0,T_*)$. It is stronger than unboundedness along a sequence. The formal Proposition 8.2 additionally retains a uniform lower bound throughout each sufficiently late activation interval.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Proposition82Conclusions",
+   "declaration:TorusEuler.terminalCurl_tendsto_atTop_of_activationBounds",
+   "declaration:TorusEuler.AuxiliaryTerminalSmoothness"
+  ]
+ },
+ {
+  "term": "Spatial limits and smooth time extension",
+  "convention": "Local spatial limits for $u$ and $\\partial_tu$ require convergence of their spatial derivatives on every compact set away from the origin. A jointly smooth velocity extension through the terminal time requires all mixed derivatives and is a separate assertion. The extension agrees before the terminal time and is periodic; neither a pressure extension nor the Euler equations after that time are required.",
+  "cards": [
+   "declaration:TorusEuler.HasOffOriginLimits",
+   "declaration:TorusEuler.HasSmoothOffOriginExtension",
+   "declaration:TorusEuler.Paper.SmoothTerminalExtension"
+  ]
+ },
+ {
+  "term": "The rank-one gradient and curl",
+  "convention": "The matrix $\\mathbf a\\otimes\\kappa$ acts on $v$ by $(\\kappa\\cdot v)\\mathbf a$. Its vorticity contribution is $\\kappa\\times\\mathbf a$ with the usual orientation. Its projection along $\\kappa$ is zero. The ordering of the tensor factors fixes the sign of this identity.",
+  "cards": [
+   "declaration:TorusEuler.coordinateCurl_rankOne",
+   "declaration:TorusEuler.inner_normalize_cross3_left",
+   "tie:e03-s8-rank-one"
+  ]
+ },
+ {
+  "term": "Endpoint half-Hölder norm",
+  "convention": "For a half-Hölder field $f$ on the unit torus, the endpoint norm is $\\max\\{\\sup_a\\|f(a)\\|,\\sup_{a\\ne b}\\|f(a)-f(b)\\|/d(a,b)^{1/2}\\}$. Here $d$ is the product metric on the direct torus. The value and increment bounds use the same constant. This is the norm on the projected endpoint spaces; higher derivative norms in the sequence estimates are separate quantities.",
+  "cards": [
+   "declaration:TorusEuler.Paper.EndpointSystemSolution",
+   "declaration:TorusEuler.continuous_and_norm_sub_le_endpointHalfHolderPrimitive",
+   "result:TorusEuler.Paper.theorem_A_1"
+  ]
+ },
+ {
+  "term": "Square-integrable time paths",
+  "convention": "The formal time measure is Lebesgue measure restricted to $(0,T]$. For $T>0$, identifying functions equal almost everywhere gives the ordinary $L^2(0,T)$ space; inclusion of endpoints does not change that space. A path with zero time integral has a primitive in $H^1_0(0,T)$. If $T\\le0$, this restricted measure is zero.",
+  "cards": [
+   "declaration:TorusEuler.EndpointSobolevEnergyBound",
+   "declaration:TorusEuler.endpointProjectedWeak_eq_mean",
+   "declaration:TorusEuler.endpointWeakInstant_of_subtractMean_eq_zero"
+  ]
+ },
+ {
+  "term": "The time primitive",
+  "convention": "Write $Jv(t)=\\int_0^tv(s)\\,ds$ for the oriented vector-valued integral. On a positive finite interval, continuous curves in the complete function spaces used by the endpoint argument have the usual primitive. The expression has value zero for nonintegrable inputs; in a noncomplete target the integral is also assigned zero. Default values do not assert a fundamental theorem of calculus.",
+  "cards": [
+   "declaration:TorusEuler.endpointPrimitive",
+   "declaration:TorusEuler.paperMeanIntegratedMomentum",
+   "tie:e03-appa-primitive"
+  ]
+ },
+ {
+  "term": "Closed-interval time supremum",
+  "convention": "The time norm is the real supremum of $\\{\\|f(t)\\|:0\\le t\\le T\\}$. Empty or unbounded sets have assigned supremum zero in this real-valued expression. For a continuous curve on $[0,T]$ with $T\\ge0$, compactness makes it the ordinary finite supremum. It must not be used as an extended infinite norm.",
+  "cards": [
+   "declaration:TorusEuler.endpointClosedTimeNorm",
+   "tie:e03-appa-time-norm"
+  ]
+ },
+ {
+  "term": "Endpoint coefficient bounds",
+  "convention": "The four nonnegative numbers $K_0,K_1,\\Omega_0,\\Omega_1$ are supplied uniform bounds on coefficients and their first spatial derivatives. They are not defined to be their least bounds. The formal parameter $2+\\kappa^{-1}+\\mu^{-1}+K_0+K_1+\\Omega_0+\\Omega_1$ can be bounded by the paper's full Hölder parameter with suitable choices of these numbers; no converse bound on first-derivative Hölder seminorms follows.",
+  "cards": [
+   "tie:e03-r2-appa-size-parameter",
+   "declaration:TorusEuler.EndpointCoefficientC1Bound",
+   "result:TorusEuler.Paper.theorem_A_1"
+  ]
+ },
+ {
+  "term": "Projected spaces",
+  "convention": "For a projection $\\mathcal R$, the inverse acts on $\\{v:\\mathcal Rv=v\\}$. In Appendix A the spatial choice is Leray projection onto weakly divergence-free fields. The time-path choice also subtracts the time average. A coefficient inverse on this space is not an inverse on every half-Hölder field. Some auxiliary statements use fixed vectors of a bounded map without assuming that map is a projection.",
+  "cards": [
+   "declaration:TorusEuler.Paper.FreezingConclusion",
+   "declaration:TorusEuler.endpointSpatialWeakErrorEstimate",
+   "result:TorusEuler.Paper.lemma_A_2"
+  ]
+ },
+ {
+  "term": "Zero Fourier frequency",
+  "convention": "The spatial Leray symbol is $I-\\widehat\\xi\\otimes\\widehat\\xi$ for $\\xi\\ne0$. The normalized zero vector is assigned zero, so the zero-frequency symbol is the identity and preserves spatial constants. In the time-path setting the zero-frequency action still includes subtraction of the time average.",
+  "cards": [
+   "declaration:TorusEuler.angularLeray",
+   "declaration:TorusEuler.angularLeray_zero",
+   "tie:e03-appa-zero-mode-bound"
+  ]
+ },
+ {
+  "term": "Lipschitz spatial cutoff",
+  "convention": "For positive $r$, use $\\chi(a)=\\max\\{0,\\min\\{1,2-d(a,a_0)/r\\}\\}$. It equals one on the closed $r$-ball, vanishes at distances at least $2r$, and has Lipschitz constant $r^{-1}$. It need not have a classical derivative at the transition radii. At $r=0$ the division convention makes it identically one, so localization requires $r>0$.",
+  "cards": [
+   "declaration:TorusEuler.freezingCutoff",
+   "declaration:TorusEuler.freezingCutoff_lipschitz",
+   "declaration:TorusEuler.freezingCutoff_mem_Icc"
+  ]
+ },
+ {
+  "term": "Inverse multiplier identification",
+  "convention": "Bounds for Fourier operators built from the frozen symbols are distinct from identifying those operators with $A_0(D)^{-1}$ and $A_0(D)^{-1}\\mathcal R$. The separate Fourier identity assumes the projection symbol is homogeneous of degree zero away from zero. The spatial Leray symbol and its time-path version have this property in the paper.",
+  "cards": [
+   "declaration:TorusEuler.exists_uniform_freezingHalfHolderMultipliers_bounds",
+   "declaration:TorusEuler.freezingHalfHolderMultipliers_identity",
+   "tie:e03-appa-frozen-multiplier-bound"
+  ]
+ },
+ {
+  "term": "Finite Fourier cutoff",
+  "convention": "The cutoff is the finite sum over $|\\xi|\\le2\\Lambda$ with coefficients $\\psi(\\xi/\\Lambda)\\widehat f(\\xi)$. For $\\Lambda>0$ and a symbol supported in the radius-two ball this is the usual multiplier. For other symbols the explicit band restriction still applies. At zero scale division is assigned zero; that value is outside the paper's positive-scale assumptions. Radiality implies evenness, whereas evenness alone allows nonradial symbols.",
+  "cards": [
+   "declaration:TorusEuler.Paper.AppendixB.CutoffSymbol",
+   "declaration:TorusEuler.Paper.AppendixB.CutoffSymbol.of_radial",
+   "declaration:TorusEuler.Paper.Proof.lemma_B_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_B_1",
+   "declaration:TorusEuler.fderiv_lift_realVectorFourierCutoff_single",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_support_parity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_admissible",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_parity",
+   "declaration:TorusEuler.smoothFourierCutoff"
+  ]
+ },
+ {
+  "term": "Real part of the spectral kernel",
+  "convention": "For a real target, the separate general cutoff integrates the real part of $\\sum_{|k|\\le2\\Lambda}\\psi(k/\\Lambda)e^{2\\pi i k\\cdot(x-z)}$ against the input. An even real symbol gives the intended multiplier; a non-even symbol is replaced by its even part in this real action. This construction does not require choosing a complexification of an arbitrary real target.",
+  "cards": [
+   "declaration:TorusEuler.paperLemmaB1_realBanachCutoff_LInfinity",
+   "tie:e03-appb-operator-bounds"
+  ]
+ },
+ {
+  "term": "Strong measurability and complete targets",
+  "convention": "The Banach-valued $L^\\infty$ hypothesis includes almost-everywhere strong measurability and an essentially bounded norm. Here the measurability requirement is approximation almost everywhere by measurable simple functions. Ordinary vector-valued integration is interpreted in a complete normed target. Some helper estimates omit completeness; their formal integration convention assigns zero in an incomplete target. A numerical inequality for that assigned value is not an ordinary integral theorem in every incomplete space.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Proof.lemma_B_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_B_1",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_aeBound",
+   "declaration:TorusEuler.paperLemmaB1_realBanachCutoff_LInfinity",
+   "declaration:TorusEuler.paperLemmaB1_realCutoff_LInfinity",
+   "declaration:TorusEuler.periodic_phasePrimitive",
+   "declaration:TorusEuler.phaseMean_phasePrimitive",
+   "declaration:TorusEuler.phasePrimitive",
+   "tie:e03-appb-operator-bounds"
+  ]
+ },
+ {
+  "term": "Integral values outside the integrable case",
+  "convention": "The real and vector integral expressions are defined even when an integrand is not integrable, using zero in that case. An integral identity without an integrability hypothesis therefore does not establish integrability. For the cutoff kernel and its moments, the Schwartz property supplies actual integrability; for the phase operators the paper uses smooth finite-dimensional profiles.",
+  "cards": [
+   "declaration:TorusEuler.integral_norm_pow_scaledLiftKernel",
+   "declaration:TorusEuler.integral_scaledCutoffSchwartzKernel",
+   "declaration:TorusEuler.integral_scaledCutoffSchwartzKernel_coordinate_moment_eq_zero",
+   "declaration:TorusEuler.norm_phaseMean_le",
+   "declaration:TorusEuler.norm_phasePrimitive_le",
+   "declaration:TorusEuler.periodic_phasePrimitive",
+   "declaration:TorusEuler.phaseMean_phasePrimitive",
+   "declaration:TorusEuler.phasePrimitive",
+   "tie:e03-appb-moment-scale",
+   "tie:e03-appd-average-contraction"
+  ]
+ },
+ {
+  "term": "Integer difference in the tail exponent",
+  "convention": "In $\\Lambda^{s-M}$, the orders $s,M$ are nonnegative integers but their difference is formed as an integer. Thus for $s<M$ and $\\Lambda>0$, the factor is $\\Lambda^{-(M-s)}$. It is not the truncated natural-number difference, which would incorrectly give exponent zero.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Proof.lemma_B_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_B_1",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_tail",
+   "declaration:TorusEuler.spatialHolderHalfNorm_realVectorCutoffTail",
+   "tie:e03-appb-tail"
+  ]
+ },
+ {
+  "term": "Natural-number coefficient exponents",
+  "convention": "The coefficient estimates use a nonnegative integer $q$ in $\\mathsf D^{q(m+1)}$. For $\\mathsf D\\ge1$, a real exponent may be enlarged to an integer for a closure estimate. In the fixed-radius assertion of Lemma D.2(c), however, changing $C$ to $q=\\lceil C\\rceil$ changes both $\\ell_*\\le\\mathsf D^{-C}$ and the powers in the conclusion. Products use $2\\max(q,r)$ and inverses $3\\max(q,e)$.",
+  "cards": [
+   "declaration:TorusEuler.FiniteCoefficientMultiIndexPower",
+   "declaration:TorusEuler.Paper.AppendixD.CoefficientPower",
+   "declaration:TorusEuler.Paper.Proof.lemma_D_2",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_2",
+   "declaration:TorusEuler.Paper.lemma_D_2",
+   "declaration:TorusEuler.finiteCoefficientPower_iff_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_inverse",
+   "declaration:TorusEuler.paperLemmaD2_inverse_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_mul",
+   "declaration:TorusEuler.paperLemmaD2_mul_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_weighted",
+   "declaration:TorusEuler.paperLemmaD2_weighted_multiIndex",
+   "tie:e03-appd-power-condition",
+   "tie:e03-appd-radius-coeff"
+  ]
+ },
+ {
+  "term": "Finite mixed derivative norm",
+  "convention": "For positive scales, $\\|f\\|_{[n]}=\\sum_{|\\beta|+j\\le n}\\ell_*^{|\\beta|}h^j\\sup_{t,a,s}|\\partial_a^\\beta\\partial_s^jf|$. Each mixed multi-index occurs once. The time set is an explicit parameter, commonly $[t_0,T]$ or a closed subinterval; time is not differentiated. For a phase-independent field only $j=0$ contributes. The expressions use real-valued suprema and require bounded derivative families for their ordinary norm interpretation.",
+  "cards": [
+   "declaration:TorusEuler.Paper.AppendixD.coefficientOrderNorm",
+   "declaration:TorusEuler.Paper.AppendixD.fieldNorm",
+   "declaration:TorusEuler.Paper.AppendixD.fieldNorm_phaseIndependent",
+   "declaration:TorusEuler.Paper.AppendixD.weightedFieldNorm",
+   "declaration:TorusEuler.Paper.Proof.lemma_D_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_1",
+   "declaration:TorusEuler.Paper.lemma_D_1",
+   "declaration:TorusEuler.appendixCoefficientMultiIndexNorm",
+   "declaration:TorusEuler.appendixFiniteDerivativeNorm_scaled",
+   "declaration:TorusEuler.hierarchyFiniteWordNorm",
+   "declaration:TorusEuler.hierarchyMixedDirection",
+   "declaration:TorusEuler.paperLemmaD1_derivatives",
+   "tie:e03-appd-field-norm"
+  ]
+ },
+ {
+  "term": "Amplitude normalization",
+  "convention": "The weighted norm is the finite derivative norm of $f(t,a,s)/\\gamma(t)$. For the paper, $\\gamma>0$ on $[t_0,T]$; the estimates require bounded derivatives of this quotient. Positivity on an arbitrary time set does not itself give a positive lower bound for $\\gamma$. The unrestricted formula assigns zero to the normalized field at any time with $\\gamma=0$.",
+  "cards": [
+   "declaration:TorusEuler.Paper.AppendixD.weightedFieldNorm",
+   "declaration:TorusEuler.Paper.Proof.lemma_D_1",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_1",
+   "declaration:TorusEuler.Paper.lemma_D_1",
+   "declaration:TorusEuler.paperLemmaD1_derivatives",
+   "declaration:TorusEuler.paperLemmaD1_phaseAverage",
+   "declaration:TorusEuler.paperLemmaD1_phasePrimitive",
+   "declaration:TorusEuler.paperLemmaD1_product",
+   "tie:r5-app-weighted-time-domain",
+   "tie:e03-appd-derivative-product",
+   "tie:e03-appd-phase-operators"
+  ]
+ },
+ {
+  "term": "Half-Hölder maximum norm",
+  "convention": "For the finite norms of Appendix D, each derivative contributes the supremum over time of $\\max\\{\\|g(t)\\|_\\infty,[g(t)]_{1/2}\\}$, with $[g]_{1/2}=\\sup_{a\\ne b}|g(a)-g(b)|/|a-b|^{1/2}$. The coincident-point quotient is assigned zero. The sum convention lies between this maximum and twice it. The separate spatial Hölder norms described in Appendix B sum uniform and half-Hölder bounds of derivative tensors; the two conventions should not be silently identified.",
+  "cards": [
+   "declaration:TorusEuler.Paper.AppendixD.holderFieldNorm",
+   "declaration:TorusEuler.Paper.AppendixD.holderFieldNorm_eq_sum",
+   "declaration:TorusEuler.Paper.AppendixD.holderOrderNorm",
+   "declaration:TorusEuler.Paper.Proof.Text.eq_D_2",
+   "declaration:TorusEuler.Paper.Proof.lemma_D_1",
+   "declaration:TorusEuler.Paper.Statement.Text.eq_D_2",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_1",
+   "declaration:TorusEuler.Paper.Text.eq_D_2",
+   "declaration:TorusEuler.Paper.lemma_D_1",
+   "declaration:TorusEuler.hierarchyFiniteWordNorm",
+   "declaration:TorusEuler.paperAppendixD_holderComparison",
+   "declaration:TorusEuler.paperLemmaB1_cutoff_holder",
+   "declaration:TorusEuler.paperLemmaD1_product",
+   "tie:e03-r2-appd-holder-norm-definition",
+   "tie:e03-appd-holder-comparison",
+   "tie:e03-appd-holder-product"
+  ]
+ },
+ {
+  "term": "Derivative tensors and coordinate sums",
+  "convention": "A full spatial derivative tensor is measured in its multilinear operator norm. The quantities $|c|_m$ of Appendix D instead sum the suprema of coordinate derivatives with $|\\beta|=m$, counting each multi-index once. The supplied equivalence changes constants depending on $m$ in spatial dimension three, while preserving the exponent of $\\mathsf D$. It does not identify the numerical norms or give constants uniform across a family unless those quantifiers are stated.",
+  "cards": [
+   "declaration:TorusEuler.FiniteCoefficientMultiIndexPower",
+   "declaration:TorusEuler.Paper.AppendixD.CoefficientPower",
+   "declaration:TorusEuler.Paper.AppendixD.coefficientOrderNorm",
+   "declaration:TorusEuler.appendixCoefficientMultiIndexNorm",
+   "declaration:TorusEuler.finiteCoefficientPower_iff_multiIndex",
+   "declaration:TorusEuler.paperLemmaB1_bernstein",
+   "declaration:TorusEuler.paperLemmaB1_bernstein_real_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_inverse",
+   "declaration:TorusEuler.paperLemmaD2_inverse_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_mul",
+   "declaration:TorusEuler.paperLemmaD2_mul_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_weighted",
+   "declaration:TorusEuler.paperLemmaD2_weighted_multiIndex"
+  ]
+ },
+ {
+  "term": "Ordered derivative compositions",
+  "convention": "For arbitrary direction fields or linear derivative maps, a nondecreasing sequence specifies one chosen order of composition. The maps need not commute, so this is not automatically an ordinary mixed partial derivative. Constant coordinate derivatives commute and then give one representative per multi-index. The low-level lifting estimate needs forcing derivatives to commute; the numbered statement additionally uses commuting coefficient derivatives to pass from an exact-order sum to each individual composition.",
+  "cards": [
+   "declaration:TorusEuler.Paper.Proof.lemma_D_3",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_3",
+   "declaration:TorusEuler.Paper.lemma_D_3",
+   "declaration:TorusEuler.appendixDerivativeWord_equation",
+   "declaration:TorusEuler.appendixFiniteDerivativeNorm_scaled",
+   "declaration:TorusEuler.appendixSlowCoefficient_word_le",
+   "declaration:TorusEuler.hierarchyFiniteWordNorm",
+   "declaration:TorusEuler.paperLemmaD3_lifting",
+   "tie:e03-appd-lifting-commutation",
+   "tie:e03-appd-differentiated-equation"
+  ]
+ },
+ {
+  "term": "Phase mean and periodic primitive",
+  "convention": "The phase has period one. Its mean is $\\int_0^1f(s)\\,ds$, and the normalized primitive is $\\int_0^sf(r)\\,dr-\\int_0^1\\int_0^qf(r)\\,dr\\,dq$. For continuous Banach-valued input it has derivative $f$ and zero mean; it is periodic when the input is periodic with zero mean. The normalization fixes the mean, not the value at phase zero. The primitive bound is two times the supremum bound on one period.",
+  "cards": [
+   "declaration:TorusEuler.hasDerivAt_phasePrimitive",
+   "declaration:TorusEuler.norm_phaseMean_le",
+   "declaration:TorusEuler.norm_phasePrimitive_le",
+   "declaration:TorusEuler.paperLemmaD1_phaseAverage",
+   "declaration:TorusEuler.paperLemmaD1_phasePrimitive",
+   "declaration:TorusEuler.periodic_phasePrimitive",
+   "declaration:TorusEuler.phaseMean_phasePrimitive",
+   "declaration:TorusEuler.phasePrimitive",
+   "tie:e03-appd-phase-operators",
+   "tie:e03-appd-primitive-definition",
+   "tie:e03-appd-primitive-sup"
+  ]
+ },
+ {
+  "term": "Uniform constants",
+  "convention": "A bound with constants selected after a field and parent parameter are fixed does not by itself state uniformity over those choices. In the numbered coefficient lemma, the input constant sequences, value spaces and integer exponents are fixed first; output constants are then chosen before the time domain, parent parameter and fields. In the abstract lifting lemma the constant is selected before the derivative maps, although it may depend on the number of derivative directions.",
+  "cards": [
+   "declaration:TorusEuler.FiniteCoefficientMultiIndexPower",
+   "declaration:TorusEuler.Paper.AppendixD.CoefficientPower",
+   "declaration:TorusEuler.Paper.Proof.lemma_D_2",
+   "declaration:TorusEuler.Paper.Proof.lemma_D_3",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_2",
+   "declaration:TorusEuler.Paper.Statement.lemma_D_3",
+   "declaration:TorusEuler.Paper.lemma_D_2",
+   "declaration:TorusEuler.Paper.lemma_D_3",
+   "declaration:TorusEuler.paperLemmaD2_inverse",
+   "declaration:TorusEuler.paperLemmaD2_inverse_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_mul",
+   "declaration:TorusEuler.paperLemmaD2_mul_multiIndex",
+   "declaration:TorusEuler.paperLemmaD2_weighted",
+   "declaration:TorusEuler.paperLemmaD2_weighted_multiIndex",
+   "tie:e03-r2-appd-lifting-constant-dependence"
+  ]
+ },
+ {
+  "term": "Logarithm outside positive frequencies",
+  "convention": "The formal real logarithm is $\\log|x|$ when $x\\ne0$ and is zero at $x=0$. This convention makes the three-step logarithmic identity meaningful without a positivity hypothesis. In Appendix C the actual frequencies exceed one, so it is the ordinary real logarithm and the extension does not change the estimate.",
+  "cards": [
+   "declaration:TorusEuler.frequencySchedule_three_log_steps",
+   "tie:e03-appc-three-steps"
+  ]
+ }
+]

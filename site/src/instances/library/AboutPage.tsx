@@ -29,6 +29,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           Their repository: <Out href={`${up.repository}/tree/${up.commit}`}>{up.repository.replace("https://github.com/", "")} at {up.commit.slice(0, 7)}</Out>.
           {up.paper ? <> The authors’ <Out href={up.paper}>paper</Out>.</> : null}
         </p>
+        {PAPER.licence ? <p>Licence of the paper and its Lean: {PAPER.licence}.</p> : null}
         {PAPER.source.lean_scope ? <p>{PAPER.source.lean_scope}</p> : null}
         <p>{PAPER.host} <a href={LIBRARY_ROOT}>The library</a> lists every paper it holds.</p>
       </section>

@@ -1,0 +1,48 @@
+import Breakdown.CertTorus.DecayCompose
+import Breakdown.CertTorus.IntegralEquationClosed
+import Breakdown.CertTorus.KernelMassBound
+import Breakdown.CertTorus.RadialWeightBound
+import Breakdown.CertTorus.InnerSplitBound
+import Breakdown.CertTorus.OuterFarBound
+import Breakdown.CertTorus.OuterNearBound
+import Breakdown.CertTorus.SmallTimeIntegrable
+import Breakdown.CertTorus.OpWeightedBound
+import Breakdown.CertTorus.OpLinear
+import Breakdown.CertTorus.OpMeasurable
+import Breakdown.CertTorus.TensorWeight
+import Breakdown.CertTorus.NeumannDecay
+import Breakdown.CertTorus.KernelConvDeriv
+import Breakdown.CertTorus.ProfileOpDeriv
+import Breakdown.CertTorus.DerivRepresentation
+import Breakdown.CertTorus.FirstDerivBootstrap
+import Breakdown.CertTorus.SecondDerivBootstrap
+import Breakdown.CertTorus.PressureSumSecondPartials
+import Breakdown.CertTorus.PressureSourceDivDiv
+import Breakdown.CertTorus.PressureSourceBound
+import Breakdown.CertTorus.TensorDerivDecay
+import Breakdown.CertTorus.HarmonicMeanValue
+import Breakdown.CertTorus.HarmonicGradientBound
+import Breakdown.CertTorus.TruncatedNewton
+import Breakdown.CertTorus.PressureIdentification
+import Breakdown.CertTorus.NewtonNear
+import Breakdown.CertTorus.NewtonFarIdentity
+import Breakdown.CertTorus.NewtonFarEstimate
+import Breakdown.CertTorus.NewtonFar
+import Breakdown.CertTorus.ClassFormOfWeights
+
+namespace Breakdown.FarField
+
+theorem farFieldDecay_holds : FarFieldDecay :=
+  farFieldDecay_of_parts lerayKernelBound_holds lerayKernelMeasurable_holds kernelConvSup_holds
+    kernelMassBound_holds radialWeightBound_holds innerSplitBound_of_mass
+    outerFarBound_holds outerNearBound_holds smallTimeIntegrable_holds
+    opWeightedBound_of_split opLinear_of_kernel opMeasurable_of_kernel tensorWeight_holds
+    neumannDecay_of_op kernelConvDeriv_of_mass profileOpDeriv_holds derivRepresentation_of_op
+    firstDerivBootstrap_of_op secondDerivBootstrap_of_op
+    pressureLaplacian_holds pressureSourceDivDiv_holds pressureSourceBound_holds
+    tensorDerivDecay_holds harmonicMeanValue_holds harmonicGradientBound_of_meanValue
+    truncatedNewton_holds pressureIdentification_of_harmonic
+    newtonNear_holds newtonFarIdentity_holds newtonFarEstimate_holds newtonFar_of_identity
+    classFormOfWeights_holds
+
+end Breakdown.FarField

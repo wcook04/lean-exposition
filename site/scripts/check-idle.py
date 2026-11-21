@@ -91,6 +91,9 @@ def main() -> int:
     ap.add_argument("--settle", type=int, default=2500, help="ms after a resize or a tab change")
     ap.add_argument("--idle", type=int, default=3000, help="ms of idle time counted")
     ap.add_argument("--max-mutations", type=int, default=0)
+    ap.add_argument("--cpu-slowdown", type=float, default=1, help="slow the page's CPU by this factor, as on a shared runner")
+    ap.add_argument("--quiet-within", type=int, default=2000,
+                    help="ms after first paint by which a freshly opened page must be completely still (0 skips)")
     ap.add_argument("--at", help="a slice whose ?l= address must open on its own phrase")
     ap.add_argument("--slot", default="short", help="the paper slot of the root address, for --at")
     ap.add_argument("--headed", action="store_true")
@@ -100,6 +103,28 @@ def main() -> int:
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=not args.headed, ignore_default_args=["--hide-scrollbars"])
         for path in args.paths:
+            # Quiet soon after first paint: a page that settles only after a long wait churns while it is read.
+            if args.quiet_within:
+                page = browser.new_page(viewport={"width": widths[0], "height": args.height})
+                page.add_init_script(INIT)
+                if args.cpu_slowdown > 1:
+                    page.context.new_cdp_session(page).send("Emulation.setCPUThrottlingRate", {"rate": args.cpu_slowdown})
+                page.goto(args.base + path, wait_until="domcontentloaded")
+                page.wait_for_function("() => performance.getEntriesByName('first-contentful-paint').length > 0", timeout=60000)
+                fcp = page.evaluate("performance.getEntriesByName('first-contentful-paint')[0].startTime")
+                now = page.evaluate("performance.now()")
+                page.wait_for_timeout(max(0, fcp + args.quiet_within - now))
+                got = idle(page, args.idle)
+                label = f"{path or '/'} at {widths[0]}px, {args.quiet_within} ms after first paint"
+                # The page itself must be still; an address the reader settles once (its reading place) is
+                # checked by the idle windows below, after the page has been left alone longer.
+                if got["muts"] > args.max_mutations or got["shifts"] or got["scrolls"]:
+                    top = sorted(got["tops"].items(), key=lambda kv: -kv[1])[:3]
+                    bad.append(f"{label}: {got['muts']} mutations ({'; '.join(f'{k} x{v}' for k, v in top)}), "
+                               f"{got['shifts']} layout shifts, {got['scrolls']} scroll events")
+                else:
+                    print(f"ok  {label}: still for {args.idle} ms", flush=True)
+                page.close()
             page = browser.new_page(viewport={"width": widths[0], "height": args.height})
             page.add_init_script(INIT)
             page.goto(args.base + path, wait_until="domcontentloaded")

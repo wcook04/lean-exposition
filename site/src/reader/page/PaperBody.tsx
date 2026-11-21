@@ -47,7 +47,9 @@ interface Props {
 }
 
 const NEAR_MARGIN = "1500px 0px";
-const IDLE_DELAY_MS = 1200;
+const IDLE_DELAY_MS = 300;
+/** How many parts each side of the reader idle time prepares ahead. */
+const AHEAD_PARTS = 2;
 /** Laying out ahead of the reader waits until the page has been still this long. */
 const STILL_MS = 250;
 /** Fitting ahead takes this long at a time: an idle period can run to 50ms, and a task that long is one a reader can feel. */
@@ -274,7 +276,9 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       if (stopped) return;
       const current = renderedRef.current;
       const centre = nearestPart(elements.current, topRef.current);
-      const order = idleOrder(doc.parts.length, centre);
+      // Only the parts around the reader are prepared ahead; the rest render as they come near
+      // (nearObserver) or when a jump asks for them (ensure), so a long paper is soon still.
+      const order = idleOrder(doc.parts.length, centre).filter((i) => Math.abs(i - centre) <= AHEAD_PARTS);
       const next = order.find((i) => !prepared.has(i));
       if (next === undefined) return;
       if (current.has(next) && still()) {
@@ -382,7 +386,13 @@ interface PartProps {
 
 const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
-  const html = useMemo(() => (rendered && !part.blank ? doc.render(part.index).html : null), [rendered, part, doc]);
+  // Tones, hints and bracket-joined formula pieces go into the markup before it is placed, so a part
+  // arriving on the page is written once and then left still.
+  const html = useMemo(() => {
+    if (!rendered || part.blank) return null;
+    const raw = doc.render(part.index).html;
+    return prepareMarkup(statements ? statements.decorate(raw) : raw);
+  }, [rendered, part, doc, statements]);
   const anchor = part.kind === "passage" ? part.anchor : undefined;
   const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
   const records = useMemo(() => passageRecords(passage), [passage]);
@@ -460,6 +470,15 @@ const TAIL_EM = 2.5;
  * piece before it, so a bracketed condition such as "(0 ≤ t₁ < t₂ < 1)" never splits.
  * Runs once per formula; joined pieces render exactly as before when nothing wraps.
  */
+/** Join bracketed formula pieces in a part's markup, before it is placed (see joinBracketedPieces). */
+function prepareMarkup(html: string): string {
+  if (typeof document === "undefined" || !html.includes("katex-display")) return html;
+  const box = document.createElement("template");
+  box.innerHTML = html;
+  for (const math of Array.from(box.content.querySelectorAll<HTMLElement>(".math-display > .katex-display > .katex"))) joinBracketedPieces(math);
+  return box.innerHTML;
+}
+
 export function joinBracketedPieces(math: HTMLElement): void {
   const html = math.querySelector<HTMLElement>(":scope > .katex-html");
   if (!html || html.dataset.joined) return;
@@ -673,10 +692,20 @@ const FIT_MARGIN = "900px 0px";
 /** Formulas waiting to be fitted, across all parts: a few each frame, so scrolling never waits for a stack of them. */
 const fitQueue: (() => void)[] = [];
 let fitFrame = 0;
-const FIT_BUDGET_MS = 5;
+/** Formulas fitted per frame: near the reader they are fitted in a few frames once the fonts are in,
+ * so the page is still soon after it first paints (check-idle --quiet-within). */
+const FIT_BUDGET_MS = 40;
 
 function drainFits() {
   fitFrame = 0;
+  // A width measured in a fallback font is wrong for good: fit once, after the fonts are in.
+  if (document.fonts && document.fonts.status !== "loaded") {
+    fitFrame = -1;
+    void document.fonts.ready.then(() => {
+      fitFrame = requestAnimationFrame(drainFits);
+    });
+    return;
+  }
   const until = performance.now() + FIT_BUDGET_MS;
   while (fitQueue.length && performance.now() < until) fitQueue.shift()!();
   if (fitQueue.length) fitFrame = requestAnimationFrame(drainFits);

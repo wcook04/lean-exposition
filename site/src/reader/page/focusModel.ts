@@ -20,7 +20,8 @@ import type { FGCard, FGEdge, FGRelation, FGRole, FGRoleWords } from "../../map/
 import type { LeanShell } from "../../lean/data";
 import { findDecl } from "../../lean/resolve";
 import { declTitle } from "../../model/declTitle";
-import type { ArgEdge, ArgGraph, ArgNode } from "../../model/graph";
+import { onlyPaperLogic, type ArgEdge, type ArgGraph, type ArgNode } from "../../model/graph";
+import { routeHref } from "../../app/router";
 import { namedIn } from "../../model/leanGraph";
 import { shortTitle } from "../../compare/useAlignment";
 import { isPhraseRecord, type TieModel } from "../ties";
@@ -292,8 +293,60 @@ export function makeFocus(input: FocusInput) {
     }
     return null;
   };
-  /** To the paper's main result, else to the nearest other result the argument ends in. */
-  const routeFrom = (id: string): string[] | null => chainTo(id, new Set([input.home])) ?? chainTo(id, new Set(goals));
+  /** The shortest chain down the argument's links (a step to what it uses) from `id` to `to`. */
+  const chainDown = (id: string, to: string): string[] | null => {
+    if (id === to) return [];
+    const back = new Map<string, string>([[id, ""]]);
+    let wave = [id];
+    while (wave.length) {
+      const next: string[] = [];
+      for (const at of wave) {
+        for (const edge of graph.out.get(at) ?? []) {
+          if (edge.kind !== "supports" && edge.kind !== "assumes") continue;
+          if (back.has(edge.to)) continue;
+          back.set(edge.to, at);
+          if (edge.to === to) {
+            const chain = [edge.to];
+            for (let step = at; step !== id; step = back.get(step)!) chain.unshift(step);
+            return chain;
+          }
+          next.push(edge.to);
+        }
+      }
+      wave = next;
+    }
+    return null;
+  };
+  /**
+   * A route into the main result: up from `id` to a step that uses it, then down from that step to the
+   * main result (Proposition B.14 is used by the cell-layer theorem, which uses Corollary 7.2, which
+   * draws Theorem 1.1's conclusions). The shortest such chain, or null.
+   */
+  const routeInto = (id: string): string[] | null => {
+    const up = new Map<string, string[]>([[id, []]]);
+    let wave = [id];
+    while (wave.length) {
+      const next: string[] = [];
+      for (const at of wave) {
+        for (const edge of graph.in.get(at) ?? []) {
+          if (edge.kind !== "supports" && edge.kind !== "assumes") continue;
+          if (up.has(edge.from)) continue;
+          up.set(edge.from, [...up.get(at)!, edge.from]);
+          next.push(edge.from);
+        }
+      }
+      wave = next;
+    }
+    let best: string[] | null = null;
+    for (const [via, path] of up) {
+      if (via === id) continue;
+      const down = chainDown(via, input.home);
+      if (down && (!best || path.length + down.length < best.length)) best = [...path, ...down];
+    }
+    return best;
+  };
+  /** To the paper's main result, else along a route into it, else to the nearest other result the argument ends in. */
+  const routeFrom = (id: string): string[] | null => chainTo(id, new Set([input.home])) ?? routeInto(id) ?? chainTo(id, new Set(goals));
 
   return { declCard, declOf, recordDecls, statedBy, card, routeFrom, rowOf, declTitleOf };
 }
@@ -309,6 +362,9 @@ export const LEAN_DEPENDENCIES = "lean_dependencies";
  */
 export function relationOf(edge: Pick<ArgEdge, "from" | "to" | "kind" | "warrant">): Extract<FGRelation, "argument" | "derived" | "assumes"> {
   if (edge.kind === "assumes") return "assumes";
+  // The link's own evidence ids, where the edition carries them on the map; else its warrant, else the build's list.
+  const ids = (edge as { evidenceIds?: readonly string[] }).evidenceIds;
+  if (ids?.length) return ids.every((id) => id === LEAN_DEPENDENCIES) ? "derived" : "argument";
   if (edge.warrant ? edge.warrant.evidenceId === LEAN_DEPENDENCIES : site.leanDerivedSupports?.has(`${edge.from}→${edge.to}`)) return "derived";
   return "argument";
 }
@@ -332,6 +388,16 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
   const cards = new Map<string, FGCard>();
   const edges: FGEdge[] = [];
   const missing = new Set<string>();
+  /**
+   * An edge of the paper's argument. One that rests only on the paper's own stated logic is drawn
+   * dashed, with the sentence that states it and a link to where the using result is stated.
+   */
+  const argumentEdge = (edge: ArgEdge, from: string, to: string): FGEdge => {
+    // A supports link resting only on the paper's stated logic is "paper"; any other link is
+    // classified by relationOf: stated by the paper, derived from the Lean, or an assumption.
+    if (edge.kind !== "supports" || !onlyPaperLogic(edge)) return { from, to, kind: relationOf(edge) };
+    return { from, to, kind: "paper", why: edge.warrant?.details ?? edge.warrant?.text, href: routeHref({ view: "read", stage: input.stage, node: from }) };
+  };
   const put = (id: string) => {
     if (cards.has(id)) return true;
     const c = tools.card(id);
@@ -371,7 +437,7 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     chain.map((consumer, i) => {
       const prerequisite = i ? chain[i - 1] : start;
       const edge = (graph.out.get(consumer) ?? []).find((e) => e.to === prerequisite && (e.kind === "supports" || e.kind === "assumes"));
-      return edge ? relationOf(edge) : "argument";
+      return edge ? (argumentEdge(edge, consumer, prerequisite).kind ?? "argument") : "argument";
     });
   let routeLabel: string | undefined;
   let route: string[] | null = null;
@@ -425,11 +491,11 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     for (const s of subjects) {
       for (const edge of graph.out.get(s) ?? []) {
         if (edge.kind !== "supports" && edge.kind !== "assumes") continue;
-        if (put(edge.to)) edges.push({ from: s, to: edge.to, kind: relationOf(edge) });
+        if (put(edge.to)) edges.push(argumentEdge(edge, s, edge.to));
       }
       for (const edge of graph.in.get(s) ?? []) {
         if (edge.kind !== "supports" && edge.kind !== "assumes") continue;
-        if (put(edge.from)) edges.push({ from: edge.from, to: s, kind: relationOf(edge) });
+        if (put(edge.from)) edges.push(argumentEdge(edge, edge.from, s));
       }
     }
     // What the subjects' own declarations use in the Lean, beside what the paper's argument uses.

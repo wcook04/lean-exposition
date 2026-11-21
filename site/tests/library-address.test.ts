@@ -9,6 +9,7 @@ const BASE = "/library/euler";
 setLibraryAddresses({
   "e01.abstract.bounded-velocity": { record: null, at: "b536-564" },
   "r2.prop54.endpoint-citation": { record: "euler.proposition-5.4", at: "b9000-9050" },
+  "old.merged-phrase": { record: null, at: "b536-564", host: "e01.abstract.bounded-velocity" },
 }, { "r2-s7-pressure-input": { retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" } },
 { "theorem-1.1": ["b4441-5169", "b4441-5200"] });
 
@@ -68,6 +69,21 @@ describe("library addresses", () => {
     expect(route.at).toBeUndefined();
     expect(href).toBe(`${BASE}/@r2-s7-pressure-input`);
     expect(retiredLink("r2-s7-pressure-input")).toEqual({ retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" });
+  });
+
+  it("a phrase on the map, with no view named, selects its record at the phrase's place", () => {
+    // The reader opens it in its default pane with the same card and Lean as a click on the phrase;
+    // main.tsx parses the address again once this table has loaded (reparseCurrentRoute).
+    const { route, href } = roundTrip(`${BASE}/@r2.prop54.endpoint-citation`);
+    expect(route).toMatchObject({ node: "euler.proposition-5.4", at: "b9000-9050" });
+    expect(route.lean).toBeUndefined();
+    expect(href).toBe(`${BASE}/@r2.prop54.endpoint-citation`);
+  });
+
+  it("an old phrase id opens the phrase that now holds it, and Copy link names that phrase", () => {
+    const { route, href } = roundTrip(`${BASE}/@old.merged-phrase?v=lean`);
+    expect(route).toMatchObject({ node: "phrase:e01.abstract.bounded-velocity", at: "b536-564", lean: true });
+    expect(href).toBe(`${BASE}/@e01.abstract.bounded-velocity?v=lean`);
   });
 
   it("a Lean declaration opens its card", () => {

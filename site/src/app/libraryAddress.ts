@@ -21,7 +21,8 @@ export function pdfParams(q: URLSearchParams): { pdf?: true; page?: number } {
 /** A numbered result's address: kind and number, in lower case. */
 export const RESULT = /^(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.]+$/;
 
-export interface PhraseAddress { record: string | null; at: string }
+/** A phrase's record and place; `host` names the phrase an old (merged or replaced) id now opens. */
+export interface PhraseAddress { record: string | null; at: string; host?: string }
 /** A phrase link a re-import retired: the date, and the nearest current phrase (null when none). */
 export interface RetiredAddress { retired: string; nearest: string | null }
 let phrases: Record<string, PhraseAddress> = {};
@@ -55,7 +56,8 @@ export function setLibraryAddresses(table: Record<string, PhraseAddress>, retire
   retiredLinks = retired;
   resultTargets = results;
   byPlace.clear();
-  for (const [id, row] of Object.entries(table)) byPlace.set(`${row.record ?? `phrase:${id}`}|${row.at}`, id);
+  // Copy link names the phrase itself, never an old id that redirects to it.
+  for (const [id, row] of Object.entries(table)) if (!row.host) byPlace.set(`${row.record ?? `phrase:${id}`}|${row.at}`, id);
 }
 
 type Read = Extract<Route, { view: "read" }>;
@@ -72,7 +74,7 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   if (tie) {
     const id = decodeURIComponent(tie[1]);
     const row = phrases[id];
-    if (row) return { ...common, node: row.record ?? `phrase:${id}`, at: row.at };
+    if (row) return { ...common, node: row.record ?? `phrase:${row.host ?? id}`, at: row.at };
     // A retired link opens the paper with its notice; it never lands on a neighbouring phrase.
     if (retiredLinks[id]) return { ...common, retired: id };
     return { ...common, node: `phrase:${id}` };

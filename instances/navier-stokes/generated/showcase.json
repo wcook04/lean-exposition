@@ -1,0 +1,77 @@
+[
+ {
+  "card": "p::s1-theorem-premise",
+  "why": "States the complete smooth-profile premise and the exact global nonexistence conclusion, then separates them from the current quantitative theorem.",
+  "packet": "A"
+ },
+ {
+  "card": "decl::Breakdown.Periodic.V",
+  "why": "Makes the coefficient representation, positive zero-mode norm and difference from the mean-zero homogeneous space explicit.",
+  "packet": "A"
+ },
+ {
+  "card": "decl::Breakdown.exists_section",
+  "why": "It explains why a finite-dimensional correction can be chosen in the smooth compactly supported class, with an explicit projection identity and its consequence.",
+  "packet": "A"
+ },
+ {
+  "card": "decl::Breakdown.Periodic.TransplantNorm",
+  "why": "The exact identity isolates the additional scaled L2 term and makes the change from the paper’s homogeneous norm to the formal periodic norm directly checkable.",
+  "packet": "A"
+ },
+ {
+  "card": "decl::Breakdown.Periodic.cutoffGradientClose",
+  "why": "It defines the rescaled cutoff and distinguishes a uniform qualitative small-error statement from the paper’s quantitative estimate with an independent physical radius.",
+  "packet": "A"
+ },
+ {
+  "card": "decl::Breakdown.pinValue",
+  "why": "Makes the derivative and constraint matrix conventions explicit, so that the Frobenius pairing can be compared directly with (7.11).",
+  "packet": "B"
+ },
+ {
+  "card": "decl::Breakdown.FarField.periodicLerayProfileExists_of_weak",
+  "why": "States what an existence implication retains and what Theorem 7.1 additionally specifies about the particular profile.",
+  "packet": "B"
+ },
+ {
+  "card": "decl::Breakdown.CellReduction.Instantiation.scalarGradientOrthogonal_holds",
+  "why": "Separates a zero assigned to an ordinary integral from the integrability needed for distributional pressure cancellation.",
+  "packet": "B"
+ },
+ {
+  "card": "decl::Breakdown.CellReduction.Instantiation.IsOffsetExpansionEntry",
+  "why": "States the enclosures and the full offset budget, including the diagonal linear correction, complementary radii and exterior term.",
+  "packet": "B"
+ },
+ {
+  "card": "decl::Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+  "why": "Makes the certificate antecedent and the two precise nonexistence conclusions visible on one card.",
+  "packet": "B"
+ },
+ {
+  "card": "sfile::Breakdown.BreakdownOnTorus",
+  "why": "The exact excluded solution class is stated, and the pressure-periodicity comparison includes the erratum in [53].",
+  "packet": "C"
+ },
+ {
+  "card": "sfile::Breakdown.extended_certificate_orbit",
+  "why": "The complete certificate assumptions and weak-profile conclusion are present on one card, including the explicit departures from Theorem 7.1.",
+  "packet": "C"
+ },
+ {
+  "card": "sfile::Breakdown.CellCert.CellAnalysis.CellBox.proj",
+  "why": "The moment equations, measure and existence convention are distinguished from the weighted L² projection interpretation.",
+  "packet": "C"
+ },
+ {
+  "card": "sfile::Breakdown.CertCell.Assembly.rowBaseWeight",
+  "why": "The numerical scaling t=cτ is made explicit, including the final value c=3/50.",
+  "packet": "C"
+ },
+ {
+  "card": "sfile::Breakdown.CertCell.CellCalculus.IsAxisRegularTest",
+  "why": "The comparison distinguishes arbitrary angular frequency from the zero-frequency harmonics resolved in the paper’s axis cells.",
+  "packet": "C"
+ }
+]

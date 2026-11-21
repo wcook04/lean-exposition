@@ -25,11 +25,13 @@ if (existsSync(graphPath)) {
 }
 writeFileSync(resolve(import.meta.dirname, "../src/instances/library/current.json"), JSON.stringify(instance, null, 1) + "\n");
 const phrases = {};
-// Each numbered result's canonical target in the main document: the place of the tie at its
-// statement block (the tie index's `canonical`), so /theorem-1.1/ lands on the theorem itself.
+// Phrase addresses (/@<id>) open the main document; a companion's phrases keep the reader's own
+// addresses under /read/<slot>/. Each numbered result's canonical target in the main document is the
+// place of the tie at its statement block (the tie index's `canonical`), so /theorem-1.1/ lands on
+// the theorem itself.
 const results = {};
 const main = instance.documents.find((doc) => doc.main) ?? instance.documents[0];
-for (const doc of instance.documents) {
+for (const doc of instance.documents.filter((d) => d.main)) {
   const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
   if (!existsSync(path)) continue;
   const index = JSON.parse(readFileSync(path, "utf8"));
@@ -51,7 +53,7 @@ const retired = {};
 if (existsSync(aliases)) {
   const table = JSON.parse(readFileSync(aliases, "utf8"));
   for (const [old, host] of Object.entries(table.passages ?? {})) {
-    if (phrases[host] && !phrases[old]) phrases[old] = phrases[host];
+    if (phrases[host] && !phrases[old]) phrases[old] = { ...phrases[host], host };
   }
   for (const [old, row] of Object.entries(table.retired ?? {})) {
     if (!phrases[old]) retired[old] = { retired: row.retired, nearest: row.nearest && phrases[row.nearest] ? row.nearest : null };

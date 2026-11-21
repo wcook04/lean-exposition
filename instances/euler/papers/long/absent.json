@@ -4,7 +4,7 @@
  "state": "scaffold",
  "path": "papers/long.md",
  "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
- "graph_sha256": "281c3efc8b5f2aff49a34873e72490d88662b2b516c63540621bf56d0dba9edd",
+ "graph_sha256": "b6895856d9ff50e16496b37b717873bb085652575bcb8d1394efc1e2e75b460b",
  "selected_goal_ids": [
   "euler.theorem-1.1"
  ],
@@ -12,6 +12,7 @@
  "citation_ids": [
   "cite.euler.lemma-1.3",
   "cite.euler.lemma-2.2",
+  "cite.euler.lemma-2.3",
   "cite.euler.lemma-2.4",
   "cite.euler.lemma-2.5",
   "cite.euler.lemma-2.6",
@@ -60,6 +61,7 @@
   "cite.lean.TorusEuler.Paper.Proposition84Conclusions",
   "cite.lean.TorusEuler.Paper.Statement.corollary_8_3",
   "cite.lean.TorusEuler.Paper.Statement.lemma_1_3",
+  "cite.lean.TorusEuler.Paper.Statement.lemma_2_3",
   "cite.lean.TorusEuler.Paper.Statement.lemma_2_4",
   "cite.lean.TorusEuler.Paper.Statement.lemma_2_5",
   "cite.lean.TorusEuler.Paper.Statement.lemma_2_6",
@@ -85,6 +87,7 @@
   "cite.lean.TorusEuler.Paper.corollary_8_3",
   "cite.lean.TorusEuler.Paper.lemma_1_3",
   "cite.lean.TorusEuler.Paper.lemma_2_2",
+  "cite.lean.TorusEuler.Paper.lemma_2_3",
   "cite.lean.TorusEuler.Paper.lemma_2_4",
   "cite.lean.TorusEuler.Paper.lemma_2_5",
   "cite.lean.TorusEuler.Paper.lemma_2_6",
@@ -133,6 +136,7 @@
  "unresolved_ids": [
   "euler.lemma-1.3",
   "euler.lemma-2.2",
+  "euler.lemma-2.3",
   "euler.lemma-2.4",
   "euler.lemma-2.5",
   "euler.lemma-2.6",
@@ -181,6 +185,7 @@
   "lean.TorusEuler.Paper.Proposition84Conclusions",
   "lean.TorusEuler.Paper.Statement.corollary_8_3",
   "lean.TorusEuler.Paper.Statement.lemma_1_3",
+  "lean.TorusEuler.Paper.Statement.lemma_2_3",
   "lean.TorusEuler.Paper.Statement.lemma_2_4",
   "lean.TorusEuler.Paper.Statement.lemma_2_5",
   "lean.TorusEuler.Paper.Statement.lemma_2_6",
@@ -206,6 +211,7 @@
   "lean.TorusEuler.Paper.corollary_8_3",
   "lean.TorusEuler.Paper.lemma_1_3",
   "lean.TorusEuler.Paper.lemma_2_2",
+  "lean.TorusEuler.Paper.lemma_2_3",
   "lean.TorusEuler.Paper.lemma_2_4",
   "lean.TorusEuler.Paper.lemma_2_5",
   "lean.TorusEuler.Paper.lemma_2_6",

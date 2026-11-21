@@ -77,7 +77,13 @@ export interface ArgEdge {
   application?: EdgeApplication;
   /** In the Lean graph: what the line says, for the caption. */
   note?: string;
+  /** The evidence records the stored relation cites (paper_logic.* for the paper's own stated logic). */
+  evidenceIds?: string[];
 }
+
+/** Whether an edge rests only on the paper's own stated logic (no Lean dependency joins its ends). */
+export const onlyPaperLogic = (edge: ArgEdge): boolean =>
+  !!edge.evidenceIds?.length && edge.evidenceIds.every((id) => id === "paper_logic" || id.startsWith("paper_logic."));
 
 /** An evidence record's account of one step, split into its parts. */
 export interface Warrant {
@@ -460,6 +466,7 @@ function attachWarrants(graph: ArgGraph, edges: EdgeRecord[], evidence: Evidence
     const record = stored.get(`${edge.from}→${edge.to}→${edge.kind}`);
     if (!record) continue;
     edge.warrant = warrantFor(record.evidence_ids, edge.from, edge.to, byId, citedBy);
+    edge.evidenceIds = [...record.evidence_ids];
     // The stored record and the map link carry the same application; the
     // stored one is authoritative when both are present.
     const app = record.application;

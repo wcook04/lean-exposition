@@ -13,12 +13,13 @@
   "Paper and Lean by Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu, from their repository mcoiculescu/EulerBlowupPublic at fd3a158; their paper thanks Anthropic for supporting the collaboration from which it grew. The reading copy is set from their TeX of the arXiv version, with their numbering. The links from sentences to the Lean, the plain titles, the notes on the Lean and the comparisons were made with AI and have not been reviewed by the authors. Our files are MIT-licensed"
  ],
  "companion_credit": "Paper and Lean by Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu, from their repository mcoiculescu/EulerBlowupPublic at fd3a158.",
+ "licence": "No licence stated by the authors; hosted with credit to them, to Anthropic and to their repository",
  "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
  "review": "The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
  "source": {
   "proof_reader": {
    "repository": "https://github.com/wcook04/proof-reader",
-   "commit": "ac78b5c0b71bacd3d8411ba8071d0fc97f6f35a3",
+   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
    "page": "euler"
   },
   "upstream": {

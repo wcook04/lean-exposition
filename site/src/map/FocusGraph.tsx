@@ -36,18 +36,21 @@ export interface FGCard {
 
 /**
  * `from` uses `to`, and how that is known. Paper argument: `argument`, a link the paper states;
+ * `paper`, a use the paper's own text states and no Lean dependency joins (drawn dashed, with the
+ * sentence that states it, `why`, and a link to where the using result is stated, `href`);
  * `derived`, a link between results the edition derived from the Lean's dependencies; `assumes`,
  * an assumption. Lean: `statement`, the statement of `from` names `to`; `proof`, its proof or body
  * does; `use`, the Lean uses it and no record says whether in the statement or the proof.
  */
-export type FGRelation = "argument" | "derived" | "assumes" | "statement" | "proof" | "use";
-export interface FGEdge { from: string; to: string; kind?: FGRelation }
+export type FGRelation = "argument" | "paper" | "derived" | "assumes" | "statement" | "proof" | "use";
+export interface FGEdge { from: string; to: string; kind?: FGRelation; why?: string; href?: string }
 
 /** The order relations are listed in, and which one a card's line shows when it has several. */
-export const RELATION_ORDER: readonly FGRelation[] = ["argument", "derived", "assumes", "proof", "statement", "use"];
-/** Each relation's words in a count ("3 by the paper's argument") and in the key. */
+export const RELATION_ORDER: readonly FGRelation[] = ["argument", "paper", "derived", "assumes", "proof", "statement", "use"];
+/** Each relation's words in a count ("3 by a link the paper states") and in the key. */
 export const RELATION_WORDS: Record<FGRelation, { count: string; key: string }> = {
   argument: { count: "by a link the paper states", key: "a link the paper states" },
+  paper: { count: "by the paper's text alone", key: "a use the paper's proof states, with no Lean link" },
   derived: { count: "by a link derived from the Lean", key: "a link between results, derived from the Lean" },
   assumes: { count: "by assumption", key: "an assumption" },
   statement: { count: "in a Lean statement", key: "used in a Lean statement" },
@@ -99,11 +102,14 @@ export interface FocusGraphProps {
 }
 
 interface Box { x: number; y: number; w: number; h: number }
-interface Seg { d: string; cls: string; edge?: string; width?: number }
+interface Seg { d: string; cls: string; edge?: string; width?: number; why?: string; href?: string }
 interface Drawn { w: number; h: number; segs: Seg[]; paths: Record<string, string>; boxes: { id: string; box: Box; band: string }[] }
 type Side = "users" | "uses";
-/** A neighbour: the relation its line shows (the first of RELATION_ORDER it has), every relation it has, and the subjects it joins. */
-interface Rel { kind: FGRelation; kinds: Set<FGRelation>; of: Set<string> }
+/**
+ * A neighbour: the relation its line shows (the first of RELATION_ORDER it has), every relation it
+ * has, the subjects it joins, and for a `paper` line the sentence that states it and where.
+ */
+interface Rel { kind: FGRelation; kinds: Set<FGRelation>; of: Set<string>; why?: string; href?: string }
 
 /** How many of these neighbours each relation joins; a neighbour joined two ways counts under both. */
 function countKinds(ids: readonly string[], rels: ReadonlyMap<string, Rel>): Map<FGRelation, number> {
@@ -151,6 +157,8 @@ export function FocusGraph(props: FocusGraphProps) {
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [drawn, setDrawn] = useState<Drawn | null>(null);
   const [hot, setHot] = useState<string | null>(null);
+  /** The sentence of a use the paper's text states, while it is pointed at or after a click. */
+  const [paperNote, setPaperNote] = useState<{ why: string; href?: string; edge?: string; held: boolean } | null>(null);
   /** Groups the reader opened, by side and key. */
   const [opened, setOpened] = useState<ReadonlySet<string>>(new Set());
   /** How many times the first estimate of what fits has been tightened for this subject. */
@@ -258,21 +266,23 @@ export function FocusGraph(props: FocusGraphProps) {
     const users = new Map<string, Rel>();
     const uses = new Map<string, Rel>();
     const inner: FGEdge[] = [];
-    const add = (into: Map<string, Rel>, id: string, subject: string, kind: FGRelation = "use") => {
+    const add = (into: Map<string, Rel>, id: string, subject: string, kind: FGRelation = "use", e?: FGEdge) => {
       if (!card(id)) return;
       const row = into.get(id) ?? { kind, kinds: new Set<FGRelation>(), of: new Set<string>() };
-      // The line shows the first relation in RELATION_ORDER: the paper's argument, then a link
-      // derived from the Lean, an assumption, a proof use, a statement-only use, an unsplit use.
+      // The line shows the first relation in RELATION_ORDER: a link the paper states, a use the
+      // paper's text alone states, a link derived from the Lean, an assumption, a proof use, a
+      // statement-only use, an unsplit use.
       if (RELATION_ORDER.indexOf(kind) < RELATION_ORDER.indexOf(row.kind)) row.kind = kind;
       row.kinds.add(kind);
+      if (kind === "paper" && row.kind === "paper" && e?.why) { row.why = e.why; row.href = e.href; }
       row.of.add(subject);
       into.set(id, row);
     };
     for (const e of edges) {
       const f = isSubject.has(e.from), t = isSubject.has(e.to);
       if (f && t) { if (e.from !== e.to) inner.push(e); }
-      else if (f) add(uses, e.to, e.from, e.kind);
-      else if (t) add(users, e.from, e.to, e.kind);
+      else if (f) add(uses, e.to, e.from, e.kind, e);
+      else if (t) add(users, e.from, e.to, e.kind, e);
     }
     for (const id of users.keys()) uses.delete(id);
     // The subjects of one paragraph, in an order in which a step comes after every step that uses it.
@@ -488,7 +498,8 @@ export function FocusGraph(props: FocusGraphProps) {
         const isGroup = !e.el.dataset.card;
         const count = Number(e.el.dataset.count ?? 1);
         const kind = isGroup ? (e.el.dataset.kind ?? "use") : (rels.get(e.id)?.kind ?? "use");
-        segs.push({ d, cls: `fg__wire fg__edge fg__edge--${kind}${isGroup ? " fg__edge--group" : ""}`, edge: side === "users" ? `${e.id}>` : `>${e.id}`, width: isGroup ? 1.6 + Math.min(4.4, Math.log2(count) * 0.8) : undefined });
+        const rel = isGroup ? undefined : rels.get(e.id);
+        segs.push({ d, cls: `fg__wire fg__edge fg__edge--${kind}${isGroup ? " fg__edge--group" : ""}`, edge: side === "users" ? `${e.id}>` : `>${e.id}`, width: isGroup ? 1.6 + Math.min(4.4, Math.log2(count) * 0.8) : undefined, why: kind === "paper" ? rel?.why : undefined, href: kind === "paper" ? rel?.href : undefined });
         paths[e.id] = paths[e.id] ? `${paths[e.id]} ${d}` : d;
         // A card inside an open group lights the group's own line.
         if (isGroup) for (const m of e.el.parentElement!.querySelectorAll<HTMLElement>(".fg__card")) paths[m.dataset.card!] = paths[e.id];
@@ -503,7 +514,7 @@ export function FocusGraph(props: FocusGraphProps) {
       const d = b.y > a.y + a.h + 30 || b.y < a.y
         ? `M${x} ${a.y + a.h} C${x + bulge * 3} ${a.y + a.h + 20}, ${x + bulge * 3} ${b.y - 20}, ${x} ${b.y - 5}`
         : `M${x} ${a.y + a.h} L${x} ${b.y - 5}`;
-      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "use"} fg__inner`, edge: `${e.from}>${e.to}` });
+      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "use"} fg__inner`, edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
     });
     // The world's own size: offsetWidth is not scaled by the camera.
     setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, boxes });
@@ -803,6 +814,15 @@ export function FocusGraph(props: FocusGraphProps) {
                 <marker id="fg-arrow-hot" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0.6 L7.4 4 L0 7.4 z" className="fg__arrow fg__arrow--hot" /></marker>
               </defs>
               {drawn.segs.map((s, i) => <path key={i} d={s.d} className={s.cls} data-edge={s.edge} markerEnd="url(#fg-arrow)" style={s.width ? { strokeWidth: s.width } : undefined} />)}
+              {/* A use the paper's text states: a wide, invisible line over it answers the pointer with its sentence. */}
+              {drawn.segs.map((s, i) => s.why ? (
+                <path key={`hit${i}`} d={s.d} className="fg__edge-hit" data-edge={s.edge}
+                  onPointerEnter={() => setPaperNote({ why: s.why!, href: s.href, edge: s.edge, held: false })}
+                  onPointerLeave={() => setPaperNote((n) => (n && !n.held ? null : n))}
+                  onClick={(ev) => { ev.stopPropagation(); setPaperNote({ why: s.why!, href: s.href, edge: s.edge, held: true }); }}>
+                  <title>{s.why}</title>
+                </path>
+              ) : null)}
               {hot && drawn.paths[hot] && <path d={drawn.paths[hot]} className="fg__hotline" markerEnd="url(#fg-arrow-hot)" />}
             </svg>
           )}
@@ -841,6 +861,15 @@ export function FocusGraph(props: FocusGraphProps) {
         </div>
       )}
       </div>
+      {paperNote && (
+        <p className="fg__edge-why" role="status">
+          <span className="fg__edge-why-label">The paper:</span> {paperNote.why}{" "}
+          {paperNote.href && <a href={paperNote.href}>Read it in the paper</a>}
+          {paperNote.held && (
+            <button type="button" className="fg__edge-why-close" aria-label="Close this sentence" onClick={() => setPaperNote(null)}>×</button>
+          )}
+        </p>
+      )}
       {model.subj.length > 0 && (
         <p className="fg__key">
           <span>uses, left to right:</span>

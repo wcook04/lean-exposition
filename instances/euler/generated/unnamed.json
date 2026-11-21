@@ -171,7 +171,6 @@
   "TorusEuler.GrowingCoupling.coupling_second_numerator_bounds",
   "TorusEuler.GrowingCoupling.cross3_add_left",
   "TorusEuler.GrowingCoupling.cross3_add_right",
-  "TorusEuler.GrowingCoupling.cross3_frame_coordinates",
   "TorusEuler.GrowingCoupling.cross3_self'",
   "TorusEuler.GrowingCoupling.cross3_smul_left",
   "TorusEuler.GrowingCoupling.cross3_smul_right",

@@ -1,0 +1,21 @@
+import Breakdown.CertCell.CertTerminalTest
+import Breakdown.CertCell.CertTreeLowerBound
+import Breakdown.CertCell.CertPivotCount
+import Breakdown.CertCell.CertSlackBound
+import Breakdown.CertCell.CertComplexSlackBound
+import Breakdown.CertCell.CertRealRestriction
+import Breakdown.CertCell.CertCoordinateSlack
+
+namespace Breakdown.CertCell.Certificate
+
+theorem signedCertificateTerminal : SignedCertificateTerminal :=
+  signedCertificateTerminal_of_parts stateTerminalTest signedTreeLowerBound pivotCountPositive
+
+theorem complexNodeRealBound : ComplexNodeRealBound :=
+  complexNodeRealBound_of_parts complexSignedSlackBound realRestrictionValue complexColumnSplit
+    coordinateSlack
+
+theorem stateCertificateNonneg : StateCertificateNonneg :=
+  stateCertificateNonneg_of_parts signedCertificateTerminal signedSlackBound complexNodeRealBound
+
+end Breakdown.CertCell.Certificate
