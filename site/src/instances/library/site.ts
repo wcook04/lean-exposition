@@ -16,7 +16,13 @@ const paperNames = { long: empty, short: empty, expository: empty } as SiteInsta
 // The account line reads as sentences: "<title>, by <authors>." then the status sentence. A
 // sentence ending in a formula or abbreviation keeps its own stop.
 const sentence = (text: string) => (/[.!?]$/.test(text.trim()) ? text.trim() : `${text.trim()}.`);
-for (const doc of PAPER.documents) paperNames[doc.slot] = { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: "" };
+// The paper itself is the authors'; a companion page (a guide) is about it, written for this reader.
+for (const doc of PAPER.documents)
+  paperNames[doc.slot] = {
+    short: doc.title,
+    job: sentence(doc.main ? `${doc.title}, by ${BY}` : `${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
+    reader: "",
+  };
 
 function readme(siteUrl: string, facts: SiteFacts): string {
   const at = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);

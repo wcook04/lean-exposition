@@ -109,7 +109,13 @@ def main() -> int:
             # The PDF/typeset toggle keeps the selected phrase and the place.
             if page.locator(".view-toggle").count():
                 page.goto(base + f"@{args.phrase}?v=lean")
-                page.wait_for_selector(".phrase-card", timeout=60000)
+                page.wait_for_selector(".paper .tie", timeout=90000)
+                try:
+                    page.wait_for_selector(".phrase-card", timeout=60000)
+                except Exception:
+                    check(f"{tag} toggle setup", False, f"no phrase card at {page.url}")
+                    context.close()
+                    continue
                 page.get_by_role("button", name="PDF", exact=True).click()
                 page.wait_for_selector(".pdf-view__mark.is-selected", timeout=30000)
                 page.wait_for_timeout(1500)

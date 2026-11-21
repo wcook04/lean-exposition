@@ -1,9 +1,16 @@
 {
  "schema": 1,
  "passages": {
+  "e01.theorem.initial-data": "r5-root-theorem11-complete",
+  "e01.theorem.maximal-solution": "r5-root-theorem11-complete",
+  "e01.theorem.smooth-odd": "r5-root-theorem11-complete",
+  "e01.theorem.finite-time": "r5-root-theorem11-complete",
+  "e01.theorem.divergent-integrals": "r5-root-theorem11-complete",
+  "e01.theorem.terminal-bounds": "r5-root-theorem11-complete",
+  "e01.theorem.off-origin-limits": "r5-root-theorem11-complete",
   "sec4.inverse-existence": "sec4.inverse-hypothesis",
   "p5.1.field-hypothesis": "p5.1.polynomial-coefficients",
-  "e03-s6-normalized-shear": "e03-s6-rate"
+  "r2-s7-pressure-input": "e03-s7-new-velocity"
  },
  "claims": {
   "result-1.1": "theorem-1.1",

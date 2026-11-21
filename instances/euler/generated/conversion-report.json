@@ -3,24 +3,33 @@
   "quote_not_unique": 0,
   "lean_not_in_index": 0,
   "verdict_without_note": 0,
-  "statement_without_lean": 1,
+  "statement_without_lean": 0,
   "merged": 3,
   "long_title_without_override": 0,
-  "ties": 969,
-  "titled": 1039,
+  "gone_kept_as_addresses": 0,
+  "ties": 999,
+  "titled": 1012,
   "names": 7531,
   "results": 37,
   "sections": 44,
   "lean_files": 736,
-  "unnamed": 6930
+  "unnamed": 6957
  },
  "quote_not_unique": [],
  "lean_not_in_index": [],
  "verdict_without_note": [],
- "statement_without_lean": [
-  "r3c8-lemma53-transverse-existence"
- ],
+ "statement_without_lean": [],
  "merged": [
+  [
+   "r5-root-theorem11-complete",
+   "e01.theorem.initial-data",
+   "e01.theorem.maximal-solution",
+   "e01.theorem.smooth-odd",
+   "e01.theorem.finite-time",
+   "e01.theorem.divergent-integrals",
+   "e01.theorem.terminal-bounds",
+   "e01.theorem.off-origin-limits"
+  ],
   [
    "sec4.inverse-hypothesis",
    "sec4.inverse-existence"
@@ -28,11 +37,8 @@
   [
    "p5.1.polynomial-coefficients",
    "p5.1.field-hypothesis"
-  ],
-  [
-   "e03-s6-rate",
-   "e03-s6-normalized-shear"
   ]
  ],
- "long_title_without_override": []
+ "long_title_without_override": [],
+ "gone_kept_as_addresses": []
 }

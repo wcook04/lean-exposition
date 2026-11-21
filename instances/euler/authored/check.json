@@ -1,5 +1,7 @@
 {
  "not_joined": {
-  "euler.lemma-2.1": "Its Lean (Paper.lemma_2_1 and the statement it proves) is used by nothing the map can see: Lean's report records no proof dependencies for theorems, and the text scan of the proofs that use Lemma 2.1 does not name these declarations."
+  "euler.remark-1.2": "Remark 1.2 extends Theorem 1.1 (the solution continues smoothly away from the origin past the singular time, proved in the auxiliary note); Theorem 1.1 does not use it.",
+  "euler.lemma-2.3": "Provisional: Lean's report has no proof dependencies for theorems yet, and the proofs' text does not name Lemma 2.3's Lean on a path from Theorem 1.1. The extraction that records theorem proofs (proof-reader run 44931162441) settles it.",
+  "euler.lemma-2.1": "Provisional: Lean's report has no proof dependencies for theorems yet, and the proofs' text does not name Lemma 2.1's Lean on a path from Theorem 1.1. The extraction that records theorem proofs (proof-reader run 44931162441) settles it."
  }
 }

@@ -1510,8 +1510,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const names = PAPER_NAMES[stage];
   const status = statusWords(structure.state, structure.review_state);
-  const pdfFile = `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`;
-  const pdf = { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: PAPER_PDFS[stage].pages };
+  const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
+  const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
+  const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages } : undefined;
   // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
   const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
   useEffect(() => {
@@ -1715,7 +1716,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           <p className="account-line">
             {!phone && <>{names.job} </>}
             {names.reader}
-            {status && <> {status}</>} <PdfLink pdf={pdf} />
+            {status && <> {status}</>} {pdf && <PdfLink pdf={pdf} />}
           </p>
         )}
         {notice && (

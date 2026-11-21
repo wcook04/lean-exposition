@@ -18,7 +18,7 @@
  "source": {
   "proof_reader": {
    "repository": "https://github.com/wcook04/proof-reader",
-   "commit": "4d1a02f1d75f4d56267a67bd8fd91678a2499fa2",
+   "commit": "e84d8b60b793ee3cec783e6c04cd4921109b006f",
    "page": "euler"
   },
   "upstream": {
@@ -42,8 +42,30 @@
     "bytes": 751821,
     "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf"
    }
+  },
+  {
+   "id": "encoding",
+   "slot": "expository",
+   "slug": "how-the-lean-encodes-it",
+   "title": "How the Lean encodes it",
+   "noun": "guide"
   }
  ],
+ "comparator": {
+  "files": {
+   "Challenge.lean": "b1cf1cde05ca266849258445ed01b342942a6648efd70fd955e917133371aebb",
+   "Solution.lean": "af3133758856687a41660021db74e0de11dbb46847b18c629306ff0d177dd563",
+   "comparator.json": "075429391248ef6d119c29333696d6eb7587e2bb0d03e0f5dc34719c6748c472",
+   "definition/Challenge.lean": "ff5dada30920bda1c4789b06f3baa33bfaf46329cc930c9598968921f319f193",
+   "definition/comparator.json": "c600e6982681b25f504cf97b5b4e529899d1b8b268625a5369408e2026df99d4",
+   "negative/Challenge.lean": "1d50df07f797d905ccf174e49d7c01a20bedd4f0f0f7c088eff1d5aafb545cf0",
+   "negative/comparator.json": "c33af42cade57d8959f7ffe9f6d7dbc1ee6babc65746f404744d9fe8e84708d6",
+   "receipt.json": "6487e88b61a42069e2329fa0f1bbb2747517ba36b5c91fdbdb95b9814d1342c6",
+   "uniqueness/Challenge.lean": "be0db6f8c7a917a6dd27f96c75b9d63af4f5ad8152d1a03caaf8d2414e6469d0",
+   "uniqueness/comparator.json": "3be3a8513163ccc38230cf40cd6c387e53c753427726250fbbb412f907a3f872"
+  },
+  "receipt": "receipt.json"
+ },
  "families": [
   {
    "id": "solution",
@@ -177,5 +199,5 @@
   "auxiliary-smoothness"
  ],
  "goal": "euler.theorem-1.1",
- "main_lean": "TorusEuler.theorem11"
+ "main_lean": "TorusEuler.Paper.theorem_1_1"
 }
