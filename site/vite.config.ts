@@ -220,7 +220,7 @@ interface AuthoredRecord {
 }
 
 /** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
-const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*)\.json$/;
+const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*|phrases-.*)\.json$/;
 
 export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
   const out: ReturnType<typeof recordIndex> = {};
@@ -237,6 +237,17 @@ export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; le
       for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
       const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];
       out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, relations, levels };
+    }
+  }
+  // A declaration's own record ("lean.<name>") takes the declaration's plain title, where the
+  // alignment gives one and no batch file titles the record: a card never shows a raw name
+  // where plain words exist.
+  const namesPath = resolve(dir, "names.json");
+  if (existsSync(namesPath)) {
+    const { names: plain } = JSON.parse(readFileSync(namesPath, "utf8")) as { names: Record<string, string> };
+    for (const [name, title] of Object.entries(plain ?? {})) {
+      const id = `lean.${name}`;
+      if (!out[id]) out[id] = { short: title, lean: 0, relations: [], levels: {} };
     }
   }
   // Statements added paper by paper count towards their records' levels.

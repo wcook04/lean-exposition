@@ -155,7 +155,7 @@
     "support.zero_candidate_descent",
     "support.zero_curvature"
   ],
-  "content_sha256": "f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110",
+  "content_sha256": "ee0fac5182df824603832e07a48e54b8a432d5c639bbbff115d4bb88cad036c7",
   "graph_sha256": "f22708f3180068944c06829213f78f6ecfb65ef34f6c8decded774b95a041d92",
   "passages": [
     {
@@ -243,7 +243,7 @@
       ],
       "evidence_class": "example",
       "rationale": "An admissible nonminimizing piecewise-linear candidate explains Stieltjes increments and relative support. Constant positive and densely atomic examples distinguish support from pointwise positivity and density. No minimizer conclusion is applied to these candidates.",
-      "text_sha256": "06215a42d44123acb2eae7c96a580dc9f352734c51d658aa464295d3c1186fc4",
+      "text_sha256": "0681c5f49f882636e7fb7d65ece1c3e16f1c64c5fc7d610e57f71e96c91a4c88",
       "treatments": [
         {
           "claim_id": "support.stieltjes_measure",

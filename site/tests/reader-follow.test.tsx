@@ -203,23 +203,20 @@ describe("MapPane", async () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
 
-  it("follows each passage without folding, pauses when the reader moves the map, and refocuses when turned back on", () => {
+  it("follows each passage without folding, holds a move by hand until the subject changes, then frames the new one", () => {
     const opened = () => new Set([...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!));
     const needed = (anchor: string) => [...neededExpansion(scoped, goal, passageRecords(passageOf(structures.expository, anchor)))];
     const holds = (anchor: string) => needed(anchor).every((id) => opened().has(id));
     show("contact-and-gap");
     expect(resume()).toBeNull();
     expect(holds("contact-and-gap")).toBe(true);
-    // A wheel over the map is the reader taking control.
+    // A wheel over the map is the reader taking control: the map holds what they did.
     act(() => void container.querySelector(".map-pane .tree")!.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
     expect(resume()).not.toBeNull();
-    // Paused: the next passage changes nothing on the map.
     const before = opened();
+    // The next passage is a new subject: the pause ends and the map frames it, keeping what was open.
     show("endpoints");
-    expect(opened()).toEqual(before);
-    act(() => resume()!.click());
     expect(resume()).toBeNull();
-    // Following again opens what the passage needs and keeps what was open.
     expect(holds("endpoints")).toBe(true);
     for (const id of before) expect(opened().has(id)).toBe(true);
   });
@@ -235,13 +232,15 @@ describe("MapPane", async () => {
   it("says in one line under the graph when nothing in this stretch is tied", () => {
     show("changed-cases");
     expect(container.querySelector(".map-pane__line")!.textContent).toBe("Nothing in this stretch of the paper is tied to the Lean.");
-    expect(container.querySelector(".lean-page")).toBeNull();
+    // The Graph tab is split; the part under the graph is never empty.
+    expect(container.querySelector(".lean-page")!.textContent).toContain("No Lean is linked to this paragraph");
   });
 
-  it("has one toggle, and the Lean only in Lean mode", () => {
+  it("has one toggle; the Graph tab splits with the Lean following below it", () => {
     const onMode = vi.fn();
     show("contact-and-gap", vi.fn(), "graph", onMode);
-    expect(container.querySelector(".lean-page")).toBeNull();
+    expect(container.querySelector(".map-pane--split")).not.toBeNull();
+    expect(container.querySelector<HTMLElement>(".lean-page")!.dataset.via).toBe("follow");
     const words = [...container.querySelectorAll<HTMLButtonElement>(".mode-toggle button")];
     expect(words.map((w) => w.textContent)).toEqual(["Graph", "Lean"]);
     expect(words[0].getAttribute("aria-pressed")).toBe("true");

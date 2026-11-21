@@ -9,6 +9,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { sectionLabel } from "../../map/TheoremPlate";
 import type { PreparedDocument, TextBlock } from "../engine";
+import type { PhrasePart, PhraseTopic } from "../../api/lean";
 import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
 
@@ -22,6 +23,38 @@ interface Props {
   onJump(id: string): void;
   /** Go to a source line found by search. */
   onLine?(line: number): void;
+  /** Phrase layer: the paper's topics and its parts, for the colour key. */
+  topics?: PhraseTopic[];
+  parts?: PhrasePart[];
+}
+
+/**
+ * The colour key: each topic's colour beside its name. A paper whose topics come in parts
+ * shows the topics of the part being read.
+ */
+function PhraseKey({ topics, parts, part }: { topics: PhraseTopic[]; parts: PhrasePart[]; part: number }) {
+  const shown = topics.filter((topic) => topic.part === part);
+  if (!shown.length) return null;
+  const several = parts.length > 1;
+  return (
+    <section className="phrase-key" aria-label="Topic colours">
+      <p className="phrase-key__head">
+        Topic colours{several && parts[part]?.name ? <span> · {parts[part].name}</span> : null}
+      </p>
+      <ul>
+        {shown.map((topic) => (
+          <li key={topic.id} data-tone={topic.colour * 2} title={topic.description || undefined}>
+            <span className="phrase-key__swatch" aria-hidden="true" />
+            {topic.name}
+          </li>
+        ))}
+      </ul>
+      <p className="phrase-key__note">
+        Each phrase a Lean declaration states is underlined in its topic’s colour. Topics and ties are AI-drafted.
+        {several ? " Each part of this paper has its own topics." : ""}
+      </p>
+    </section>
+  );
 }
 
 const HITS = 24;
@@ -142,14 +175,17 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
   );
 }
 
-export function Sections({ entries, current, counts, doc, onJump, onLine, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
+export function Sections({ entries, current, counts, doc, onJump, onLine, listRef, topics, parts }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
   const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
   const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
   const [searching, setSearching] = useState(false);
   const any = !!counts && [...counts.values()].some((c) => c.lean);
+  const byId = useMemo(() => new Map((topics ?? []).map((topic) => [topic.id, topic])), [topics]);
+  const part = (current ? counts?.get(current)?.part : undefined) ?? 0;
   return (
     <>
     {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} />}
+    {!!topics?.length && !searching && <PhraseKey topics={topics} parts={parts ?? []} part={part} />}
     <ol className="outline__list" ref={listRef} hidden={searching}>
       {shown.map((entry) => (
         <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
@@ -162,7 +198,16 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
               onJump(entry.id);
             }}
           >
-            <span className="outline__name">{sectionLabel(entry.title)}</span>
+            <span className="outline__name">
+              {sectionLabel(entry.title)}
+              {!!counts?.get(entry.id)?.topics?.length && (
+                <span className="phrase-bars" title={`Topics here: ${counts.get(entry.id)!.topics!.map((id) => byId.get(id)?.name ?? id).join(", ")}`}>
+                  {counts.get(entry.id)!.topics!.slice(0, 6).map((id) => (
+                    <span key={id} data-tone={(byId.get(id)?.colour ?? 0) * 2} />
+                  ))}
+                </span>
+              )}
+            </span>
             {!!counts?.get(entry.id)?.lean && (
               <span className="outline__ties num" title={`${counts.get(entry.id)!.lean} statements with Lean, of ${counts.get(entry.id)!.all} tied`}>
                 {counts.get(entry.id)!.lean}

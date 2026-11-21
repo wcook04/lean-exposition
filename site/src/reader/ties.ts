@@ -228,8 +228,17 @@ export interface TieModel {
 
 const EMPTY: TieIndex = { segments: [], ties: [], passages: [], meaning: "" };
 
+/** The address of a phrase that no step on the argument map holds. */
+export const PHRASE_RECORD = "phrase:";
+
+/** A phrase with no step on the map is still opened and addressed by a record key of its own. */
+function withRecords(index: TieIndex): TieIndex {
+  if (index.layer !== "phrases" || index.ties.every((tie) => tie.record)) return index;
+  return { ...index, ties: index.ties.map((tie) => (tie.record ? tie : { ...tie, record: `${PHRASE_RECORD}${tie.phrase}` })) };
+}
+
 export function tieModel(index: TieIndex | null): TieModel {
-  const source = index ?? EMPTY;
+  const source = withRecords(index ?? EMPTY);
   const segmentsOf: number[][] = source.ties.map(() => []);
   source.segments.forEach(([, , members], segment) => members.forEach((t) => segmentsOf[t]?.push(segment)));
   const order = source.ties.map((_, t) => t).filter((t) => segmentsOf[t].length);
@@ -312,6 +321,10 @@ export interface TieCount {
   lean: number;
   /** All statements. */
   all: number;
+  /** Phrase layer: the topics of the section's phrases, in order of first use. */
+  topics?: string[];
+  /** Phrase layer: the part of the paper the section starts in. */
+  part?: number;
 }
 
 /**
@@ -320,7 +333,8 @@ export interface TieCount {
  * section that starts at or before it.
  */
 export function tieCounts(model: TieModel, sections: { id: string; start: number; parent: string | null }[]): Map<string, TieCount> {
-  const counts = new Map<string, TieCount>(sections.map((s) => [s.id, { lean: 0, all: 0 }]));
+  const phrases = isPhraseLayer(model);
+  const counts = new Map<string, TieCount>(sections.map((s) => [s.id, phrases ? { lean: 0, all: 0, topics: [], part: partAt(model, s.start) } : { lean: 0, all: 0 }]));
   const byId = new Map(sections.map((s) => [s.id, s]));
   const ordered = [...sections].sort((a, b) => a.start - b.start);
   for (const t of model.order) {
@@ -334,6 +348,8 @@ export function tieCounts(model: TieModel, sections: { id: string; start: number
       const count = counts.get(s.id)!;
       count.all++;
       if (model.index.ties[t].lean) count.lean++;
+      const topic = model.index.ties[t].topic;
+      if (topic && count.topics && !count.topics.includes(topic)) count.topics.push(topic);
     }
   }
   return counts;
@@ -348,3 +364,40 @@ export const ROLE_WORDS: Record<StatementRole, string> = {
   example: "Worked as an example",
   mention: "Mentioned",
 };
+
+// ---- Phrases ----------------------------------------------------------------------------
+
+/** Whether this paper's ties are phrases with topics (the phrase layer). */
+export const isPhraseLayer = (model: TieModel) => model.index.layer === "phrases";
+
+/** A record key that stands for a phrase alone, not a step on the map. */
+export const isPhraseRecord = (record: string | null | undefined) => !!record?.startsWith(PHRASE_RECORD);
+
+/** The topic of a phrase tie, or null. */
+export function topicOf(model: TieModel, t: number) {
+  const id = model.index.ties[t]?.topic;
+  return id ? (model.index.topics?.find((topic) => topic.id === id) ?? null) : null;
+}
+
+/** The title of a tie's first declaration, or the last part of its name. */
+export function phraseTitle(model: TieModel, t: number): string {
+  const tie = model.index.ties[t];
+  const first = tie?.rows?.[0];
+  if (!first) return tie?.plain ?? "";
+  return first.plain ?? first.name.slice(first.name.lastIndexOf(".") + 1).replace(/_/g, " ");
+}
+
+/** What a phrase says under the pointer: its topic and its Lean. */
+export function phraseHint(model: TieModel, t: number): string {
+  const topic = topicOf(model, t);
+  const tie = model.index.ties[t];
+  const more = (tie.rows?.length ?? 0) > 1 ? ` and ${tie.rows!.length - 1} more` : "";
+  return `${topic ? `Topic: ${topic.name}. ` : ""}${tie.lean ? `Lean: ${phraseTitle(model, t)}${more}. Click to open it.` : "No Lean linked."}`;
+}
+
+/** The part of the paper a byte lies in, for a paper whose phrase topics come in parts. */
+export function partAt(model: TieModel, byte: number): number {
+  const parts = model.index.parts ?? [];
+  const at = parts.findIndex((part) => part.start_byte <= byte && byte < part.end_byte);
+  return at < 0 ? 0 : at;
+}

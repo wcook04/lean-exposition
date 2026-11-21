@@ -103,7 +103,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <header className="about__intro">
         <h1>About this site</h1>
         <p className="about__lede">
-          This site holds three papers on one theorem about the Sherrington–Kirkpatrick (SK) spin glass, from OpenAI’s mathematics release, with OpenAI’s proof beside the text. That proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. You read a paper as you would any paper, and a statement with a dark tick in the margin opens its Lean.
+          This site holds three papers on one theorem about the Sherrington–Kirkpatrick (SK) spin glass, from OpenAI’s mathematics release, with OpenAI’s proof beside the text. That proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. You read a paper as you would any paper. Each phrase that a Lean declaration states is underlined in the colour of its topic, and clicking it opens that Lean with a plain title, whether the Lean states the same as the phrase, more or less, and a reading note drafted by an AI agent.
         </p>
       </header>
 
@@ -114,7 +114,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <ol className="about__routes">
           <li>
             <a href={routeHref({ view: "read", stage: "short" })}>The papers</a>
-            <span>Start here. A statement with a dark tick opens its Lean beside the text, and a graph of the proof beside the paper moves to the statement you are reading.</span>
+            <span>Start here. An underlined phrase opens the Lean that states it beside the text, with a plain title, a comparison and an AI-drafted reading note, and a graph of the proof beside the paper moves to the statement you are reading.</span>
           </li>
           <li>
             <a href={routeHref({ view: "compare" })}>Compare</a>

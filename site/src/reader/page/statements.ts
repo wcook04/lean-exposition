@@ -3,7 +3,7 @@
 // scrolls or moves the pointer: no React state, and nothing that invalidates layout.
 
 import type { PreparedPart } from "../engine";
-import type { TieModel } from "../ties";
+import { phraseHint, type TieModel } from "../ties";
 
 export type Light = "on" | "point" | "pin";
 
@@ -20,6 +20,8 @@ export class Statements {
   private marks = new Map<number, Mark[]>();
   private ticks = new Map<number, HTMLElement[]>();
   private lit: Record<Light, number | null> = { on: null, point: null, pin: null };
+  /** A declaration pointed at in the Lean pane: its phrases are lit. */
+  private decl: string | null = null;
   private partOfSegment: number[];
   private near: IntersectionObserver | null = null;
   private resized: ResizeObserver | null = null;
@@ -80,6 +82,15 @@ export class Statements {
     const found = Array.from(section.querySelectorAll<HTMLElement>(":scope > .part__text [data-t]")).map((el) => ({ el, segment: Number(el.dataset.t) }));
     if (!found.length) return;
     this.marks.set(part, found);
+    // A phrase carries its topic's colour, and says its topic and its Lean under the pointer.
+    for (const { el, segment } of found) {
+      const t = this.model.index.segments[segment]?.[2][0];
+      const tie = t === undefined ? undefined : this.model.index.ties[t];
+      if (tie?.tone === undefined) continue;
+      el.dataset.tone = String(tie.tone);
+      el.title = phraseHint(this.model, t!);
+      if (this.decl && tie.rows?.some((row) => row.name === this.decl)) el.setAttribute("data-decl", "");
+    }
     this.near?.observe(section);
     this.resized?.observe(section);
     for (const kind of ["on", "point", "pin"] as Light[]) {
@@ -194,6 +205,20 @@ export class Statements {
         if (!segments.has(Number(tick.dataset.s))) continue;
         if (on) tick.setAttribute(name, "");
         else tick.removeAttribute(name);
+      }
+    }
+  }
+
+  /** Light every phrase one declaration states, from its card in the Lean pane; null puts them out. */
+  lightDecl(name: string | null) {
+    if (this.decl === name) return;
+    this.decl = name;
+    for (const marks of this.marks.values()) {
+      for (const { el, segment } of marks) {
+        const t = this.model.index.segments[segment]?.[2][0];
+        const on = name !== null && t !== undefined && !!this.model.index.ties[t]?.rows?.some((row) => row.name === name);
+        if (on) el.setAttribute("data-decl", "");
+        else el.removeAttribute("data-decl");
       }
     }
   }

@@ -22,6 +22,10 @@ want to explore it:
   you are reading, and pointing at a marked statement lights its card and names it. Clicking a
   statement or a card opens its Lean, and any Back takes you to the graph and your place. Choosing
   Lean yourself keeps the Lean on the statement you are reading.
+  Each phrase that a Lean declaration states is underlined in the colour of its topic; Sections
+  opens with the colour key. The Lean of a phrase opens with its plain title, whether the Lean
+  states the same as the phrase, more, less or something different, and a reading note, all
+  drafted by an AI agent and marked so.
   Beside any passage you can list the steps linked to it and open passages in the other papers that are linked to the same steps.
 - **The Lean index.** OpenAI's source, every module and declaration, at the back of
   the book: plain titles first, each central name explained in the papers' notation,

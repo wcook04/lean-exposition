@@ -142,7 +142,7 @@ export const COPY = {
     {
       heading: "What this site is",
       paragraphs: [
-        "Three papers on Erdős problem #257 at three levels of detail, each read beside the Lean statements of its results. A statement with a tick in the margin opens its Lean. A graph of the argument follows the passage on screen, Compare sets each step side by side at every level, and What ran lists every recorded run with its outcome.",
+        "Three papers on Erdős problem #257 at three levels of detail, each read beside the Lean statements of its results. Each phrase that a Lean declaration states is underlined in the colour of its topic and opens that Lean, with a plain title, a comparison with the phrase and an AI-drafted reading note. A graph of the argument follows the passage on screen, Compare sets each step side by side at every level, and What ran lists every recorded run with its outcome.",
         "The problem is open. The papers prove sufficient conditions for irrationality and say where the method stops.",
       ],
     },

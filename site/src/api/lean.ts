@@ -195,9 +195,61 @@ export interface Alignment {
   steps?: Record<string, { route: string[] | null }>;
 }
 
+/**
+ * One Lean row of a phrase tie: a declaration that states the phrase, the lines that do,
+ * and how it compares with the phrase, as an AI agent judged it. `note` is the row's link
+ * note (at most 25 words), `plain` the declaration's title in this part of this paper.
+ */
+export interface PhraseLean extends FidelityFields {
+  name: string;
+  module: string;
+  line: number;
+  end_line: number;
+  lines: LineRange;
+  /** The return named these lines; otherwise `lines` is the whole statement. */
+  exact_lines?: boolean;
+  proof_lines?: LineRange;
+  relation: LeanRelation;
+  note: string;
+  plain?: string;
+}
+
+/** A topic of a paper's phrase ties; `colour` picks one of nine hues, `part` the part of the paper that lists it. */
+export interface PhraseTopic {
+  id: string;
+  name: string;
+  description: string;
+  part: number;
+  colour: number;
+}
+
+/** A stretch of a paper with its own topics (one for most papers). */
+export interface PhrasePart {
+  name: string;
+  start_byte: number;
+  end_byte: number;
+}
+
+/** The titles and reading notes of each part of a paper, by declaration (`/phrases/<paper>`). */
+export interface PhraseNotes {
+  parts: { name: string; lines: LineRange; titles: Record<string, string>; notes: Record<string, string> }[];
+  meaning: string;
+}
+
 /** One marked statement. A landed pointer, never a check that the two texts mean the same. */
 export interface Tie {
+  /**
+   * The step on the argument map. A phrase that no step's Lean holds has none from the
+   * server; the reader names it `phrase:<id>` so it can still be opened and addressed.
+   */
   record: string;
+  /** Phrase layer only: the phrase's id, topic, part, colour shade and every Lean row. */
+  phrase?: string;
+  topic?: string;
+  part?: number;
+  /** `2 × topic colour + shade`: neighbouring phrases of one topic alternate two shades. */
+  tone?: number;
+  rows?: PhraseLean[];
   role: StatementRole;
   /** Whether the statement has any Lean. The other Lean fields are null when it has none. */
   lean: boolean;
@@ -228,6 +280,10 @@ export type TieSegment = [startByte: number, endByte: number, ties: number[]];
 export type TiePassage = [startByte: number, endByte: number, records: string[], anchor: string];
 
 export interface TieIndex {
+  /** "phrases" when each tie is a phrase that one or more declarations state. */
+  layer?: "phrases";
+  topics?: PhraseTopic[];
+  parts?: PhrasePart[];
   segments: TieSegment[];
   ties: Tie[];
   passages: TiePassage[];
@@ -243,6 +299,7 @@ export const loadAlignmentCore = () => get<AlignmentCore>("/alignment/core").the
 export const loadAlignmentRecord = (id: string) => get<RecordAlignment>("/alignment/record", { id }).then((r) => r.data);
 export const loadAlignmentPaper = (stage: Stage) => get<AlignmentPaper>(`/alignment/${stage}`).then((r) => r.data);
 export const loadTies = (stage: Stage) => get<TieIndex>(`/ties/${stage}`).then((r) => r.data);
+export const loadPhraseNotes = (stage: Stage) => get<PhraseNotes>(`/phrases/${stage}`).then((r) => r.data);
 
 /** The core with the words of these papers' statements put back. With all three it equals `/alignment`. */
 export function withPapers<T extends AlignmentCore>(core: T, papers: readonly AlignmentPaper[]): T {

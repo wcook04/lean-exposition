@@ -3,8 +3,8 @@
 // Lean panel, the reader's tie panel and the front page. Plain functions: no browser API,
 // no import.meta, because the first screen is built in vite.config.ts with them too.
 
-/** The Lean says the same as the paper, more than it, or less. */
-export type Fidelity = "same" | "stronger" | "weaker";
+/** The Lean says the same as the paper, more than it, less, or something neither implies. */
+export type Fidelity = "same" | "stronger" | "weaker" | "different";
 
 /** Who compared them: the source repository's own evidence record, or an AI agent for this site. */
 export type FidelitySource = "recorded" | "ai";
@@ -12,12 +12,13 @@ export type FidelitySource = "recorded" | "ai";
 /** Who made a tie from a paper's statement to its Lean. */
 export type TieOrigin = "evidence_record" | "ai";
 
-export const FIDELITIES: readonly Fidelity[] = ["same", "stronger", "weaker"];
+export const FIDELITIES: readonly Fidelity[] = ["same", "stronger", "weaker", "different"];
 
 /** "Says the same as the paper", "Says more than the paper", "Says less than the paper". */
 export function verdictWords(fidelity: Fidelity, noun = "paper"): string {
   if (fidelity === "same") return `Says the same as the ${noun}`;
   if (fidelity === "stronger") return `Says more than the ${noun}`;
+  if (fidelity === "different") return `Says something different from the ${noun}`;
   return `Says less than the ${noun}`;
 }
 
@@ -25,7 +26,16 @@ export function verdictWords(fidelity: Fidelity, noun = "paper"): string {
 export function fidelitySentence(fidelity: Fidelity): string {
   if (fidelity === "same") return "The Lean statement says the same as the paper.";
   if (fidelity === "stronger") return "The Lean statement says more than the paper.";
+  if (fidelity === "different") return "The Lean statement says something different from the paper.";
   return "The Lean statement says less than the paper.";
+}
+
+/** How a phrase's Lean compares with the phrase, at the head of its note: "Lean states less". */
+export function phraseVerdict(fidelity: Fidelity): string {
+  if (fidelity === "same") return "Lean states the same as this phrase";
+  if (fidelity === "stronger") return "Lean states more";
+  if (fidelity === "different") return "Lean states something different";
+  return "Lean states less";
 }
 
 /** Who made the comparison, in plain words. */
@@ -49,5 +59,6 @@ export function originTag(origin: TieOrigin | undefined | null): string | null {
   return null;
 }
 
-export const isFidelity = (value: unknown): value is Fidelity => value === "same" || value === "stronger" || value === "weaker";
+export const isFidelity = (value: unknown): value is Fidelity =>
+  value === "same" || value === "stronger" || value === "weaker" || value === "different";
 export const isTieOrigin = (value: unknown): value is TieOrigin => value === "evidence_record" || value === "ai";

@@ -71,12 +71,15 @@ export function TopBar({ route, onSearch }: Props) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      {/* The family lockup (docs/family.md): the Plectis plait opens Will Cook's home page,
+      {/* The family lockup (docs/family.md): the Plectis plait and the name "Will Cook" open his home page,
           which lists every website and film; the rule parts it from this site's mark and name,
           which open this site's front page. */}
       <span className="fam-lockup">
         <a className="fam-lockup__home" href={FAMILY.owner.home} rel="author" title="All of Will Cook's websites and videos">
-          <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="Will Cook: all websites and videos" width={26} height={26} />
+          <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="" width={26} height={26} />
+          <span className="fam-lockup__owner" translate="no">
+            {FAMILY.owner.name}
+          </span>
         </a>
         <span className="fam-lockup__rule" aria-hidden="true" />
         <a className="fam-lockup__site" href={routeHref({ view: "home" })} aria-label={`${SITE_NAME}, front page`} aria-current={route.view === "home" ? "page" : undefined}>
