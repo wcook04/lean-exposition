@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 import urllib.request
@@ -33,6 +34,7 @@ def main() -> int:
     ap.add_argument("--result", default="theorem-1.1")
     ap.add_argument("--decl", default="TorusEuler.EulerSingularityWitness")
     ap.add_argument("--section", default="5.6")
+    ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
     args = ap.parse_args()
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
@@ -129,6 +131,18 @@ def main() -> int:
                 el = page.locator(".paper .tie[data-tone]").filter(has_text="").first
                 back = "view=pdf" not in page.url and f"@{args.phrase}" in page.url
                 check(f"{tag} toggle to text", back and page.locator(".phrase-card").count() > 0, page.url)
+            # Cards render their mathematics: no raw $ or backslash command left in the text a reader sees.
+            raw = []
+            for name in [args.decl, *args.raw_check]:
+                page.goto(base + f"lean/{name}")
+                page.wait_for_selector(".paper .tie", timeout=90000)
+                page.wait_for_timeout(2500)
+                text = page.evaluate("""() => [...document.querySelectorAll('.phrase-card, .lean-reading-note, .lean-block__link, .comparator-mark')]
+                    .map(e => { const c = e.cloneNode(true); c.querySelectorAll('.katex, code, pre').forEach(k => k.remove()); return c.innerText; }).join('\\n')""")
+                found = re.findall(r"\$|\\[A-Za-z]+", text)
+                if found:
+                    raw.append(f"{name}: {sorted(set(found))[:5]}")
+            check(f"{tag} cards typeset", not raw, "; ".join(raw[:3]))
             check(f"{tag} no page errors", not errors, "; ".join(errors[:3]))
             context.close()
         # Narrow windows and a phone: the header's visible parts never overlap, nothing scrolls

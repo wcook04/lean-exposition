@@ -31,6 +31,7 @@ for slot in long short expository; do
   fi
 done
 cd site
+node scripts/check-tex.mjs "$paper"
 node scripts/library-instance.mjs "$paper"
 LX_INSTANCE=library VITE_STATIC_EDITION=true VITE_BASE_PATH="/library/$paper/" LX_SITE_URL="https://wcook04.github.io/library/$paper/" npm run build
 cd ..
