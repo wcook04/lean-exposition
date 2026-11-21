@@ -25,6 +25,7 @@ ap.add_argument("--credit-file", type=Path, required=True)
 ap.add_argument("--statement", required=True, help="the bold label of a numbered statement, e.g. \"Theorem 1.1.\"")
 ap.add_argument("--shots", type=Path, required=True)
 ap.add_argument("--section", help="the section that states --statement, opened before the click (e.g. 1.1)")
+ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
 a = ap.parse_args()
@@ -58,6 +59,21 @@ with sync_playwright() as pw:
         check(f"{tag} credit once on paper", body.count(credit) == 1, f"{body.count(credit)} times")
         check(f"{tag} anthropic sentence once", body.count("thanks Anthropic") == 1, f"{body.count('thanks Anthropic')} times")
         page.screenshot(path=str(a.shots / f"paper-top-{tag}.png"))
+        # Find in page reaches text far from where the reader opened, and reveals it typeset.
+        if a.far_phrase:
+            found = page.evaluate("""(phrase) => {
+                const inText = document.querySelector('.paper').textContent.includes(phrase);
+                const hit = window.find(phrase, false, false, true);
+                const sel = getSelection();
+                const node = sel && sel.anchorNode;
+                const el = node && (node.nodeType === 1 ? node : node.parentElement);
+                if (el) el.scrollIntoView({ block: 'center' });
+                return { inText, hit, inPaper: !!(el && el.closest('.paper')), part: el && el.closest('.part') ? Number(el.closest('.part').dataset.part) : null };
+            }""", a.far_phrase)
+            page.wait_for_timeout(3000)
+            typeset = found["part"] is not None and page.evaluate(
+                "(i) => !document.querySelector(`.part[data-part=\"${i}\"]`).classList.contains('part--pending')", found["part"])
+            check(f"{tag} find in page", found["inText"] and found["hit"] and found["inPaper"] and typeset, f"{found}, typeset after reveal: {typeset}")
         # Topic colours across the whole paper.
         seen = set()
         for k in range(12):

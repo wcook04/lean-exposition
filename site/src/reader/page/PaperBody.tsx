@@ -388,8 +388,12 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
   const textRef = useRef<HTMLDivElement>(null);
   // Tones, hints and bracket-joined formula pieces go into the markup before it is placed, so a part
   // arriving on the page is written once and then left still.
+  // Every part's words are on the page from the start, so the browser's own find reaches the whole
+  // paper: a part not yet typeset shows its formulas as TeX source, and content-visibility keeps it
+  // out of layout and paint until it comes near (or find reveals it), when it is typeset once.
   const html = useMemo(() => {
-    if (!rendered || part.blank) return null;
+    if (part.blank) return null;
+    if (!rendered) return statements ? statements.decorate(doc.renderPlain(part.index).html) : doc.renderPlain(part.index).html;
     const raw = doc.render(part.index).html;
     return prepareMarkup(statements ? statements.decorate(raw) : raw);
   }, [rendered, part, doc, statements]);
@@ -399,7 +403,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
   const mapped = !!anchor && records.length > 0;
 
   useLayoutEffect(() => {
-    if (!html || !textRef.current) return;
+    if (!html || !rendered || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
     statements?.adopt(part.index, textRef.current.parentElement);
@@ -408,7 +412,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
       unmount();
       unmark();
     };
-  }, [html, statements, part.index]);
+  }, [html, rendered, statements, part.index]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
   // The same height before and after the text arrives, so rendering a part far away moves nothing.
@@ -423,7 +427,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
       data-part={part.index}
       data-passage={anchor}
       data-lit={lit ? "" : undefined}
-      className={`part${mapped ? " part--mapped" : ""}${html ? "" : " part--pending"}`}
+      className={`part${mapped ? " part--mapped" : ""}${rendered ? "" : " part--pending"}`}
     >
       {html ? (
         <div ref={textRef} className="part__text" style={textSize} dangerouslySetInnerHTML={{ __html: html }} />
