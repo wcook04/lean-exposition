@@ -22,8 +22,6 @@
    "href": "https://wcook04.github.io/erdos-257-reader/",
    "counts": {"phrases": 1459, "statements": 738, "lean": 881},
    "comparator": "Comparator accepted all 51 statements replayed on GitHub Actions.",
-   "colours": "examples/erdos257/alignment/colours-short.json",
-   "colour_phrases": "examples/erdos257/alignment/phrases-short.json",
    "counted_from": "lean-exposition examples/erdos257/alignment/phrases-*.json; Comparator from examples/erdos257/verification/comparator-replay-35935225572.json",
    "pages": [
     {"title": "Short paper", "href": "https://wcook04.github.io/erdos-257-reader/read/short/"},
@@ -40,8 +38,6 @@
    "where": "On its current site, SK Reader.",
    "href": "https://wcook04.github.io/lean-exposition-site/",
    "counts": {"phrases": 707, "statements": 250, "lean": 399},
-   "colours": "examples/qaoa-sk/alignment/colours-short.json",
-   "colour_phrases": "examples/qaoa-sk/alignment/phrases-short.json",
    "counted_from": "lean-exposition examples/qaoa-sk/alignment/phrases-*.json",
    "pages": [
     {"title": "Short paper", "href": "https://wcook04.github.io/lean-exposition-site/read/short/"},
@@ -58,7 +54,7 @@
    "where": "On its current site, Quartic Reader.",
    "href": "https://wcook04.github.io/quartic-query-lean/",
    "counts": {"phrases": 350, "statements": 121, "lean": 472},
-   "counts_sentence": "Links 121 statements of OpenAI’s paper and 350 passages of the three accounts to 472 Lean declarations.",
+   "count_lines": ["121 linked statements in OpenAI’s paper", "350 linked passages in the three accounts", "472 linked Lean declarations"],
    "comparator": "Comparator accepted each statement bundle in local runs.",
    "counted_from": "wcook04/quartic-query-lean 12c9f34, corpus/ties.json and the site's front page (300, 16 and 34 linked passages)",
    "pages": [
