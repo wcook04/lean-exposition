@@ -3,7 +3,7 @@
 These files transcribe three published papers by Will Cook for this repository's reader: [`short/paper.md`](short/paper.md) (*Irrationality
 criteria for Lambert subseries*, 26 pages), [`expository/main.md`](expository/main.md) (*Why certain sums of 1/(2^n-1) are irrational*, 16 pages)
 and [`long/reasoning-record.md`](long/reasoning-record.md) (*Reciprocal Mersenne Subseries*, 153 pages), each beside its unchanged PDF. The source is
-`wcook04/plectis-erdos` at commit `d9c43b26d1686523e95e09ab0014aaadb1903d03` (21 November 2026, pull requests 432, 433 and 434, which correct six statements of the long record; the short paper and the exposition are byte-identical to `3368d1e`). [`SOURCES.json`](SOURCES.json) gives every input and output sha256.
+`wcook04/plectis-erdos` at commit `a501de956765730ba4e6c9ad284e6d65855d533a` (21 November 2026, pull requests 432, 433 and 434, which correct six statements of the long record, and 435, which adds a Lean-coverage sentence to the short paper's verification paragraph; the exposition is byte-identical to `3368d1e`). [`SOURCES.json`](SOURCES.json) gives every input and output sha256.
 Licence: the source's `paper/README.md` says "The manuscript layer (the `.tex` sources and rendered PDFs) is licensed CC-BY-4.0", and its
 `REUSE.toml` gives the three PDFs `SPDX-FileCopyrightText = "2026 Will Cook"` and `SPDX-License-Identifier = "CC-BY-4.0"`. These transcriptions
 are offered under CC-BY-4.0 with that attribution. The full-text Markdown they start from falls under that repository's Apache-2.0 blanket entry.
@@ -25,7 +25,8 @@ bibliography labels from the TeX. Nothing is reworded. The rules are:
 5. Links: PDF `nameddest` links go to the companion Markdown anchor (`../long/reasoning-record.md#record257:…`), or to `#anchor` within the
    same paper. Other repository paths become pinned blob URLs. Absolute links are unchanged.
 6. Figure: the figure is a ```` ```{=latex} ```` block (TikZ and caption) as in the SK exposition, followed by a line linking to PDF page 9 and
-   to `expository/figures/cycle-mean.svg`, made by `tools/cycle-mean-standalone.tex`, Tectonic and `pdftocairo -svg`. The reader shows that SVG
+   to `expository/figures/cycle-mean.svg` by its absolute GitHub URL (the reader resolves a relative link only when it names one of its
+   papers), made by `tools/cycle-mean-standalone.tex`, Tectonic and `pdftocairo -svg`. The reader shows that SVG
    in the figure's place (`site/src/instances/erdos257/figures.ts`, keyed by the label `fig:cycle-mean`).
 7. Front matter comes from `\title`, `\subtitle`, `\author`, `\date` and the provenance note, and the abstract opens with `**Abstract.**`. Each
    section is a `<!-- passage:NAME -->` named by its anchor, as is each subsection of a long-record section over 300 lines (`<level>/passages.json`).

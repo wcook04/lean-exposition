@@ -1,0 +1,19 @@
+{
+  "recorded_by": "Claude (Anthropic), an AI agent",
+  "date": "2026-11-19",
+  "not_run": [
+    {
+      "check": "lake build",
+      "reason": "Not run for this example: the machine had about 3 GB of free disk, too little for Mathlib and the build. The vendored Lean is a subset of the repository and is not a complete Lake package."
+    },
+    {
+      "check": "Comparator",
+      "reason": "Not run for this example: comparator, landrun and lean4export are not installed on the machine."
+    },
+    {
+      "check": "lean-exposition extract",
+      "reason": "Not run: it needs a built Lean project."
+    }
+  ],
+  "what_was_run": "lean-exposition audit-sources (byte hashes of the vendored files) and lean-exposition lean-index (a source-text scan, not an elaboration)."
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "origin": "ai",
+  "author": "Claude (Anthropic), an AI agent; not independently reviewed",
+  "theorems": [
+    {
+      "record": "short.res-reciprocal-support",
+      "paper": "short",
+      "printed": "Theorem A.1",
+      "declaration": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+      "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+      "lean_source": "theorem irrational_erdosSupportSeries_of_summable_reciprocal\n    (b : ℕ) (A : Set ℕ) (hb : 2 ≤ b) (hA : A.Infinite)\n    (hsum : Summable (reciprocalSupportTerm A)) :\n    Irrational (erdosSupportSeries b A)",
+      "pairs": [
+        {
+          "lean": "(b : ℕ)",
+          "tex": "b\\ge2\\text{ an integer}",
+          "words": "The base is an integer.",
+          "fidelity": "same"
+        },
+        {
+          "lean": "(hb : 2 ≤ b)",
+          "tex": "b\\ge2",
+          "words": "Every integer b ≥ 2.",
+          "fidelity": "same"
+        },
+        {
+          "lean": "(A : Set ℕ)",
+          "tex": "A\\subseteq\\mathbb{N}_{>0}",
+          "words": "Lean allows 0 in A; the exponent 0 contributes 0 to both sums, so removing it changes nothing.",
+          "fidelity": "stronger",
+          "note": "The exposition's Appendix A.6 states this; Lean covers sets that contain 0."
+        },
+        {
+          "lean": "(hA : A.Infinite)",
+          "tex": "A\\text{ infinite}",
+          "words": "A is infinite.",
+          "fidelity": "same"
+        },
+        {
+          "lean": "(hsum : Summable (reciprocalSupportTerm A))",
+          "tex": "\\sum_{a\\in A}\\frac1a<\\infty",
+          "words": "The reciprocals of the exponents have a finite sum.",
+          "fidelity": "same"
+        },
+        {
+          "lean": "Irrational (erdosSupportSeries b A)",
+          "tex": "X_A(b)\\notin\\mathbb Q",
+          "words": "The Lambert subseries is irrational.",
+          "fidelity": "same"
+        }
+      ]
+    },
+    {
+      "record": "short.res-mixed-supports",
+      "paper": "short",
+      "printed": "Theorem 4.1",
+      "declaration": "ErdosProblems.Erdos257.PaperCompleteR7.MixedSupportClaim",
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "lean_source": "def MixedSupportClaim : Prop :=\n  ∀ E V : Set ℕ, 0 ∉ E → FinitePrimeWeighted 2 E →\n    HasStrengthenedPositiveCover V →\n    ∀ A : Set ℕ, A ⊆ E ∪ V → A.Infinite →\n      ∀ b : ℕ, 2 ≤ b → Irrational (erdosSupportSeries b A)",
+      "pairs": [
+        {
+          "lean": "∀ E V : Set ℕ, 0 ∉ E",
+          "tex": "E,V\\subseteq\\mathbb{N}_{>0}",
+          "words": "The paper's E ⊆ ℕ>0 is written 0 ∉ E. Lean puts no such condition on V; a cover's sets exclude 0.",
+          "fidelity": "same",
+          "note": "Evidence record: the paper's E ⊆ ℕ>0 written as 0 ∉ E. V ⊆ host of a cover whose frames exclude 0."
+        },
+        {
+          "lean": "FinitePrimeWeighted 2 E",
+          "tex": "E\\text{ satisfies (W) for a finite nonempty prime set }P",
+          "words": "E satisfies the base-two weighted condition (W).",
+          "fidelity": "same"
+        },
+        {
+          "lean": "HasStrengthenedPositiveCover V",
+          "tex": "V\\subseteq\\bigcup_jF_j\\text{ with (V)}",
+          "words": "V lies in a cover satisfying (V); the cover index starts at 0 in Lean.",
+          "fidelity": "same",
+          "note": "Same up to reindexing j ≥ 1 to j ≥ 0, per the evidence record. The positive-weight variant is a separate declaration."
+        },
+        {
+          "lean": "∀ A : Set ℕ, A ⊆ E ∪ V → A.Infinite →",
+          "tex": "\\text{every infinite }A\\subseteq E\\cup V",
+          "words": "Every infinite subset of E ∪ V.",
+          "fidelity": "same"
+        },
+        {
+          "lean": "∀ b : ℕ, 2 ≤ b → Irrational (erdosSupportSeries b A)",
+          "tex": "X_A(b)\\notin\\mathbb Q\\ (b\\ge2)",
+          "words": "Irrational at every integer base b ≥ 2.",
+          "fidelity": "same"
+        }
+      ]
+    }
+  ]
+}

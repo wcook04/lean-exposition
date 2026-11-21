@@ -427,7 +427,7 @@ mean, which is below $1/6$.}
 \end{figure}
 ```
 
-[Figure 1 on page 9 of the PDF](https://wcook04.github.io/practical-formal-verification/papers/erdos257-expository-sums-never-fractions.pdf#page=9) · [SVG rendering](figures/cycle-mean.svg)
+[Figure 1 on page 9 of the PDF](https://wcook04.github.io/practical-formal-verification/papers/erdos257-expository-sums-never-fractions.pdf#page=9) · [SVG rendering](https://github.com/wcook04/lean-exposition/blob/main/papers/erdos257/expository/figures/cycle-mean.svg)
 
 In general each group consists of $g$ consecutive remainders, and the sample selects the first of them, giving $0,g,\dots,n-g$. Repeating each selected value $g$ times gives a sum no larger than the sum over all $n$ remainders. After division by $n$, the copied list has the mean of the $c$ samples, while the mean over the consecutive cycle is below $1/n$. Thus, whenever $M$ is a positive multiple of $c$,
 

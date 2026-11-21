@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "terms": [
+    {
+      "file": "Erdos249257/CertificateKernel.lean",
+      "name": "Erdos249257.erdosSupportSeries",
+      "tex": "X_A(b)",
+      "words": "The Lambert subseries: the sum of 1/(b^a - 1) over a in A. In Lean the exponent 0 contributes 0, since division by 0 gives 0.",
+      "paper": "short",
+      "from": "For a set $A$ of positive integers and a real number $b>1$, write",
+      "to": "X_A(b)=\\sum_{a\\in A}\\frac1{b^a-1}.\n$$"
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement",
+      "tex": "\\Delta_{b,A}(N)",
+      "words": "The displacement at N: a shifted series minus the Lambert subseries, the positive remainder that rationality bounds below by 1/q.",
+      "paper": "short",
+      "from": "For a positive integer $N$ we put",
+      "to": "\\tag{D}\n$$"
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/PrimeWeightedDefinitions.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.FinitePrimeWeighted",
+      "tex": "A\\in\\mathcal W_b",
+      "words": "Some finite nonempty set P of primes makes the weighted sum W(b, P, A) finite.",
+      "paper": "short",
+      "from": "Let $\\mathcal W_b$ consist of supports satisfying the weighted condition",
+      "to": "for some finite nonempty prime set,"
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData",
+      "tex": "(F_j,\\alpha_j,c_{j,d})",
+      "words": "A cover: finite sets F(j) of positive integers, exponents 0 < α(j) ≤ 1, and nonnegative divisor majorants c(j, d) of the α(j)-th power of the number of members of F(j) dividing n."
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.StrengthenedCostSummable",
+      "tex": "\\text{(V)}",
+      "words": "Condition (V): the cover costs C(j) 2^(j α(j))/(2^α(j) − 1) are summable, with the index j shifted to start at 0."
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.HasStrengthenedPositiveCover",
+      "tex": "A\\in\\mathcal C",
+      "words": "A lies in the union of the sets of some cover that satisfies (V).",
+      "paper": "short",
+      "from": "let $\\mathcal C$ consist of supports with a cover satisfying",
+      "to": "[(V)](#eq:strengthened-cover)."
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR8/OptimizedCoverBudget.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR8.LogBudgetCover",
+      "tex": "(F_j,\\eta_j,\\alpha_j,c_{j,d})",
+      "words": "A cover with positive weights η(j) summing to 1, as in the positive-weight variant of (V) and the lower bound (7)."
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.DivisibilityWeightedClaim",
+      "words": "The statement of short Theorem 1.2 as a proposition: fixed-base irrationality, and under (W) irrationality at every base for every infinite subset."
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.StrengthenedPositiveCoverClaim",
+      "words": "The statement of short Theorem 3.1 as a proposition: every infinite subset of a support with a cover satisfying (V) gives an irrational value at every integer base."
+    },
+    {
+      "file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
+      "name": "ErdosProblems.Erdos257.PaperCompleteR7.MixedSupportClaim",
+      "words": "The statement of short Theorem 4.1 as a proposition: every infinite subset of E ∪ V gives an irrational value at every integer base."
+    },
+    {
+      "file": "Erdos249257/RationalSupportCarrySkeleton.lean",
+      "name": "Erdos249257.reciprocalSupportTerm",
+      "tex": "\\mathbf 1_A(a)/a",
+      "words": "The term 1/a on A and 0 elsewhere; its summability is the hypothesis of Theorem A.1."
+    }
+  ]
+}
