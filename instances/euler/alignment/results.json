@@ -5,7 +5,7 @@
    "claim": "result-1.1",
    "title": "Theorem 1.1",
    "section": "1",
-   "tie": "e01.theorem.initial-data",
+   "tie": "r5-root-theorem11-complete",
    "lean": [
     "TorusEuler.Paper.theorem_1_1"
    ]

@@ -9,37 +9,9 @@
      "file": "TorusEuler/Paper/Spine.lean",
      "name": "TorusEuler.Paper.corollary_8_3",
      "relation": "states",
-     "fidelity": "same",
+     "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "The conclusions agree: $T_*=T_\\infty\\in(0,\\infty)$, the constructed solution is maximal, and both integrals in (1.2) diverge. The proof routes differ. The paper invokes the periodic Beale–Kato–Majda criterion; the formal proof uses the quantitative vorticity lower bound retained in Proposition 8.2 together with the lengths of successive crossing intervals to prove integral divergence directly. It therefore establishes the construction-specific corollary without proving the general continuation criterion."
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.paper_section_8_of_inductiveEulerStages",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.PaperTerminalTime",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.corollary_8_3",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
-     "name": "TorusEuler.Paper.Corollary83Conclusions",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "The final conclusions agree: $T_*=T_\\infty>0$, the constructed Euler solution has no smooth continuation, and both integrals in (1.2) are infinite. The formal conclusion also identifies the same lifespan for every maximal solution of finite lifespan from the same datum. The explicit implication has a different preceding input: its version of Proposition 8.2 includes a uniform lower bound $c\\lambda_{j-1}^{1/8}-C\\lambda_{j-1}^{1/32}-C$ on every sufficiently late activation interval. The proof combines that bound with lower estimates for the crossing durations. The paper instead invokes the periodic Beale–Kato–Majda criterion after identifying the maximal time. The quantitative input is established earlier in the formal construction; it is not an unproved extra condition on the final example. This declaration proves the construction-specific corollary without proving the general continuation criterion. The integrals are nonnegative Lebesgue integrals over $[0,T_\\infty)$, with essential suprema over one spatial period and operator norm for the gradient."
     }
    ],
    "statements": [
@@ -61,31 +33,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes a nondecreasing threshold dominating the analytic costs; the formal result proves the same order and logarithmic gain bounds without those two assumptions, and for every integer $b\\ge1$. It retains the frequency recurrence, maximum rule, positivity and logarithmic floor, so this is a generalization of the arithmetic lemma rather than a relaxation of its conclusions."
-    },
-    {
-     "file": "TorusEuler/PaperParameterAndLaunchStatements.lean",
-     "name": "TorusEuler.paperLemma13_slowOrders",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes a nondecreasing threshold that dominates the analytic costs. The formal Lemma 1.3 obtains the same order growth from the recurrence, maximum rule, positivity and logarithmic floor alone, so those additional threshold assumptions are unnecessary for this conclusion."
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_1_3",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes a nondecreasing threshold that dominates the analytic costs. The formal Lemma 1.3 obtains the same order growth from the recurrence, maximum rule, positivity and logarithmic floor alone, so those additional threshold assumptions are unnecessary for this conclusion."
-    },
-    {
-     "file": "TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
-     "name": "TorusEuler.Paper.Proof.lemma_1_3",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes a nondecreasing threshold that dominates the analytic costs. The formal Lemma 1.3 obtains the same order growth from the recurrence, maximum rule, positivity and logarithmic floor alone, so those additional threshold assumptions are unnecessary for this conclusion."
+     "fidelity_note": "Let $K(s)=320b(s+1)$ with integer $b\\ge1$, $q_1=1$, $\\lambda_0=N\\ge\\mathcal B(1)$, and use the frequency recurrence and maximum rule of (1.14). The formal statement assumes only that $\\mathcal B(s)>0$ and $\\log\\mathcal B(s)\\ge4K(s+1)^3$ at positive indices. It proves $q_j\\le q_{j+1}\\le q_j+1$, $q_j\\to\\infty$, and $4\\log\\lambda_{j+2}\\le(\\log\\lambda_{j-1})^2$ for every $j\\ge1$. The last formula is exactly $L_{j+1}\\le(\\log\\lambda_{j-1})^2$, because $L_i=4\\log\\lambda_{i+1}$. In §1.5 the paper also takes $\\mathcal B$ nondecreasing and large enough to dominate all fixed-order analytic constants, and fixes $b$ from the later construction. Those extra restrictions are not needed for this arithmetic theorem. The conclusion therefore applies under fewer hypotheses, with the same index range and bound. The maximum is an actual greatest admissible integer, not an arbitrary eligible choice."
     }
    ],
    "statements": [
@@ -107,23 +55,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal result retains the Euler identities, pressure formula and preservation of nonzero transverse wave data, while requiring differentiability of $F$ and $P'=F$ rather than the paper's smooth odd periodic profile and normalization. It also weakens the regularity of $D$ to the needed derivative assumptions and proves persistence throughout the interval, including times before the chosen initial time."
-    },
-    {
-     "file": "TorusEuler/PaperAffineStatements.lean",
-     "name": "TorusEuler.PaperAffine.exactWave",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper assumes a smooth background matrix $D$; the formal statement requires only its first time derivative, while retaining zero trace and symmetry of $D'+D^2$. The same affine-wave conclusion therefore holds under weaker regularity assumptions."
-    },
-    {
-     "file": "TorusEuler/Paper/S2/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_2_1",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper assumes a smooth background matrix $D$; the formal statement requires only its first time derivative, while retaining zero trace and symmetry of $D'+D^2$. The same affine-wave conclusion therefore holds under weaker regularity assumptions."
+     "fidelity_note": "Let $J$ be an interval on which relative time derivatives are unique. The formal statement assumes a differentiable spatial linear map $D(t)$ with $\\operatorname{tr}D=0$ and symmetric $D'+D^2$, together with $k'=-D^Tk$ and $\\mathbf a'=-D\\mathbf a+2(k\\cdot D\\mathbf a)k/|k|^2$. For differentiable $F$ and any primitive $P'=F$, it proves that $u(t,x)=D(t)x+\\mathbf a(t)F(k(t)\\cdot x)$ is divergence free and satisfies the Euler momentum equation on $\\mathbb R^3$ whenever $k\\cdot\\mathbf a=0$ throughout $J$. The pressure is exactly $-x\\cdot(D'+D^2)x/2-p_{\\rm w}P(k\\cdot x)$. The needed time and spatial differentiability of the velocity and spatial differentiability of the pressure are included. If $k,\\mathbf a$ are nonzero and perpendicular at one $t_0\\in J$, these properties persist at every $t\\in J$, including times before $t_0$.\n\nThe paper assumes smooth $D$, a smooth odd one-periodic profile with $F'(0)=1$, and a primitive of zero phase average. The formal statement does not require those additional profile properties or the higher regularity of $D$. It also extends the Euler-identity part to $k=0$, where the coefficient is assigned zero by the convention that division by zero is zero. The persistence part still explicitly requires nonzero initial data. These are precise extensions of the quoted lemma, not a change from periodic Euler dynamics to an affine torus flow: this lemma concerns the local affine model on $\\mathbb R^3$."
     }
    ],
    "statements": [
@@ -145,7 +77,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement gives the same three frame equations and $(\\log\\sigma)'=B_{33}$, together with orthonormality of the frame. It does not require the paper's smoothness assumption on $B$: the wave equations, nonzero transverse data and zero trace suffice for these identities."
+     "fidelity_note": "For nonzero perpendicular paths $k,\\mathbf a\\in\\mathbb R^3$ satisfying the wave equations over a trace-free background $B$, define $E_1=k/|k|$, $E_2=\\mathbf a/|\\mathbf a|$, $E_3=E_1\\times E_2$, $B_{ij}=E_i\\cdot BE_j$, and $\\sigma=|k||\\mathbf a|$. The formal statement gives an orthonormal frame and precisely the four identities $E_1'=-B_{12}E_2-B_{13}E_3$, $E_2'=B_{12}E_1-B_{32}E_3$, $E_3'=B_{13}E_1+B_{32}E_2$, and $(\\log\\sigma)'=B_{33}$. The three frame positions correspond in order to the paper’s subscripts $1,2,3$. Nonvanishing and perpendicularity are explicit hypotheses at every time in the set under consideration; a defined normalized triple alone would not guarantee orthonormality.\n\nThe paper assumes a smooth background $B$ on an interval. The formal statement does not require any time regularity of $B$ beyond the prescribed derivatives of $k$ and $\\mathbf a$, and it permits relative derivatives on an arbitrary time set. On the paper’s interval these are the ordinary interior derivatives and the appropriate one-sided endpoint derivatives. No symmetry assumption on $B'+B^2$ appears. The stronger verdict refers to these weaker background and domain hypotheses with all four conclusions retained. It does not mean that the separate logarithmic derivatives of $|k|$ and $|\\mathbf a|$, displayed inside the proof, are also conclusions of this declaration."
     }
    ],
    "statements": [
@@ -167,7 +99,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The model equations and uniform strong-shear limit agree, with the shear threshold chosen independently of the particular wave and of time in the fixed interval. The formal statement also guarantees that $\\zeta_3$ stays nonzero for sufficiently strong shear, and permits a continuous background on a larger observation interval containing the physical interval."
+     "fidelity_note": "Take a nonzero transverse preceding wave over continuous trace-free $B$, with positive activation strength $\\sigma$ and couplings $\\nu,\\eta$. Put $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$ and $\\tau=r(t-t_0)$. On $0\\le\\tau\\le T$, $T\\ge2$, impose the model entries $B_{12}=\\nu$, $B_{32}=\\eta$, all others zero, and $E_c=0$. The new wave vector solves the wave equation and starts at $\\lambda E_3$, $\\lambda>0$. Its scaled coordinates and every transverse amplitude are those of (2.3). The formal statement retains constant preceding strength, all three finite-shear equations for $\\zeta$, and both finite-shear equations for $(\\alpha_1,\\alpha_2)$ with exactly the pressure term $\\Pi$ in the paper. The amplitude equations are asserted only where $\\zeta_3\\ne0$.\n\nFor each fixed $\\varepsilon,T$ and every tolerance $e>0$, it chooses one $S_0$ before the physical configuration, wave frequency, activation time and evaluated time. Every model wave with $S\\ge S_0$ satisfies $|\\zeta-(\\varepsilon\\tau^2/2,-\\varepsilon\\tau,1)|\\le e$ in Euclidean norm, and every entry of its amplitude matrix is within $e$ of the corresponding entry of $-\\bigl(\\begin{smallmatrix}\\varepsilon\\tau\\sin2\\varphi&\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)\\\\1&0\\end{smallmatrix}\\bigr)$, where $\\varphi=\\arctan(\\varepsilon\\tau^2/2)$. These estimates hold throughout $[0,T]$.\n\nThe statement additionally includes $\\zeta_3\\ne0$ beyond that common threshold. It permits continuous background data on a compact physical set containing the active interval, rather than requiring the smooth background on precisely that interval used in the paper. The result concerns a limit with $\\varepsilon,T$ fixed; it does not claim a polynomial shear threshold in $T$."
     }
    ],
    "statements": [
@@ -189,23 +121,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "All bounds in Lemma 2.4 are retained, with one error operator chosen before the amplitude vector. The formal statement additionally gives continuity of that operator and the bound $|\\sigma_p/\\sigma-1|\\le2T\\delta$, while allowing a continuous background on a larger observation interval, with $\\delta$ then measured over that larger interval."
-    },
-    {
-     "file": "TorusEuler/Paper/S2/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_2_4",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper's printed lemma gives the vector and amplitude comparison estimates. The formal statement also includes continuity of the common amplitude-error matrix and $|\\sigma_p/\\sigma-1|\\le2T\\delta$, making explicit two properties obtained in the paper's proof."
-    },
-    {
-     "file": "TorusEuler/PaperAffineStatements.lean",
-     "name": "TorusEuler.PaperAffine.additiveComparison",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper states both the error in $\\zeta$ and the relative error in $|k|^2\\cos^2\\varphi/\\lambda^2$. This formal theorem supplies the wave-vector error but omits the second estimate, which must be obtained through the separate norm comparison."
+     "fidelity_note": "Let the preceding wave be nonzero and transverse over continuous trace-free $B$, with positive activation strength $\\sigma$ and couplings $\\nu,\\eta$, and let $E_c$ be continuous. Set $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$ and $\\tau=r(t-t_0)$. On a compact physical set $I$ containing $[t_0,t_0+T/r]$, define $\\delta=\\|B_{12}/\\nu-1\\|_\\infty+\\|B_{32}/\\eta-1\\|_\\infty+\\|B\\|_\\infty/r+\\|E_c\\|_\\infty/\\nu$. The formal statement assumes $T\\ge2$, sufficiently large integer $C_0$, $C_0\\varepsilon\\le1$ and $C_0T^{C_0}\\delta\\le\\varepsilon$. The new wave solves $k'=-(B+\\mathbf a_p\\otimes k_p+E_c)^Tk$ and starts at $\\lambda E_3$, $\\lambda>0$.\n\nIt retains both bounds in (2.10), the bounds $1/2\\le\\zeta_3\\le3/2$ and $|\\zeta|\\le3T^2$, and the reduced amplitude equation with exactly the reference matrix in the paper’s coordinates $(\\alpha_1,\\alpha_2)$. There is one error operator $\\mathcal E(\\tau)$ for all transverse amplitude vectors. Its bound is $CT^p\\delta$, where the real factor $C$ and nonnegative integer exponent $p$ are chosen before the sufficiently large threshold for $C_0$ and before all wave data. The common bound is at most $1/2$. The formal statement additionally asserts continuity of $\\mathcal E$ and $|\\sigma_p/\\sigma-1|\\le2T\\delta$, properties obtained in the paper’s proof but omitted from its displayed lemma statement.\n\nThe norms of $B,E_c$ are Euclidean operator norms on $\\mathbb R^3$; the norm of $\\mathcal E$ is the operator norm for the maximum norm on pairs. The paper leaves these matrix norms unspecified. Taking $I$ to be exactly the active physical interval reproduces its supremum domain; enlarging $I$ can increase $\\delta$ and imposes a correspondingly stronger smallness condition. These domain and norm choices are part of the comparison, not suppressed conventions."
     }
    ],
    "statements": [
@@ -227,7 +143,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement makes the paper's “the solution” explicit by asserting existence and uniqueness on $[0,\\infty)$. It retains one common deviation $e$ in (2.13) and (2.14), the unique zero of $Y$, the global amplitude maximum there, and the stated logarithmic gain."
+     "fidelity_note": "For $0<\\varepsilon\\le1$, let $\\varphi=\\arctan(\\varepsilon\\tau^2/2)$ and consider $Y'=\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)-\\varepsilon\\tau\\sin(2\\varphi)Y-Y^2$, $Y(0)=1$, on $[0,\\infty)$. There is a unique solution on that half-line, with $|Y|\\le1$ and $Y=(1+e)\\cos\\varphi-\\varepsilon\\tau\\sin(2\\varphi)/4$ for one function $0\\le e\\le\\varepsilon/8$. Its amplitude $a_{\\rm ref}=\\exp\\int_0^\\tau Y$ equals $\\sqrt{\\cos\\varphi}\\exp\\int_0^\\tau(1+e)\\cos\\varphi$. It has its global maximum at the unique zero $\\tau_m$ of $Y$, with $2\\le\\varepsilon\\tau_m\\le3$, positive $Y$ before and negative $Y$ after, and $\\log a_{\\rm ref}(\\tau_m)\\ge\\varepsilon^{-1/2}-1$. The formal statement therefore retains all the conclusions of Lemma 2.5. It makes uniqueness on $[0,\\infty)$ explicit, matching the paper’s reference to “the solution,” and uses one common deviation $e$ in both representations. The equation, bounds and uniqueness concern only $\\tau\\ge0$, with a right derivative at zero; negative-time values are unrestricted. The statement does not assert that the perturbed amplitude has its maximum at the reference turning time."
     }
    ],
    "statements": [
@@ -249,35 +165,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains positivity, the estimates (2.17)–(2.18) and the propagator onto the transverse plane, with the explicit propagator constant $252\\exp(1)$ in place of an unspecified absolute constant. It also permits a continuous background on a larger observation interval; the paper's smooth background and interval are a special case."
-    },
-    {
-     "file": "TorusEuler/Paper/S2/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_2_6",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperAffineStatements.lean",
-     "name": "TorusEuler.PaperAffine.finiteComparison",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S2/Vocabulary.lean",
-     "name": "TorusEuler.Paper.FiniteSmallness",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
-     "name": "TorusEuler.Paper.Proof.lemma_2_6_of",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "Let $B,E_c$ be continuous on compact $I\\supset[t_0,t_0+T/r]$, with $\\operatorname{tr}B=0$ and nonzero perpendicular preceding wave data satisfying $k_p\\prime=-B^Tk_p$, $\\mathbf a_p\\prime=-B\\mathbf a_p+2(k_p\\cdot B\\mathbf a_p)k_p/|k_p|^2$. Set $E_1=\\widehat{k_p}$, $E_2=\\widehat{\\mathbf a_p}$ and $E_3=E_1\\times E_2$; $B_{ij}=E_i\\cdot BE_j$. Physical derivatives are relative to $I$; for interval $I$, endpoint derivatives are one-sided. Put $\\sigma=|k_p(t_0)||\\mathbf a_p(t_0)|$, $\\nu=B_{12}(t_0)>0$, $\\eta=B_{32}(t_0)>0$, $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$, and $\\delta=\\sup_I|B_{12}/\\nu-1|+\\sup_I|B_{32}/\\eta-1|+\\sup_I\\|B\\|/r+\\sup_I\\|E_c\\|/\\nu$. Assume $T\\ge2$ and $C_0\\varepsilon\\le1$, $C_0T^{C_0}\\delta\\le\\varepsilon$ for sufficiently large integer $C_0$. In physical time, the new wave solves $k'=-M^Tk$, $\\mathbf a'=-M\\mathbf a+2(k\\cdot M\\mathbf a)k/|k|^2$, $k\\cdot\\mathbf a=0$, with $M=B+\\mathbf a_p\\otimes k_p+E_c$, $k(t_0)=\\lambda E_3(t_0)$, $\\lambda>0$, and $\\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$. Use $\\tau=r(t-t_0)$, $\\alpha_1=S\\mathbf a\\cdot E_1$, $\\alpha_2=\\mathbf a\\cdot E_2$, $\\varphi=\\arctan(\\varepsilon\\tau^2/2)$, and $a_{\\rm ref}=\\exp\\int_0^\\tau Y$ with $Y\\prime=\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)-\\varepsilon\\tau\\sin(2\\varphi)Y-Y^2$, $Y(0)=1$, on $[0,\\infty)$. The formal statement gives $\\alpha_2>0$, $|\\alpha_1/\\alpha_2+Y|\\le CT^p\\delta$, $\\alpha_2\\le|\\mathbf a|\\le(1+CT^p\\delta)\\alpha_2$, and $|\\log(|\\mathbf a|/a_{\\rm ref})|\\le\\varepsilon$ at every $\\tau\\in[0,T]$. It also supplies an invertible linear propagator from $k(\\tau_1)^\\perp$ onto $k(\\tau_2)^\\perp$ for $0\\le\\tau_1\\le\\tau_2\\le T$, agreeing with every transverse amplitude solution and satisfying $\\|\\Phi\\|\\le252\\exp(1)S|\\mathbf a(\\tau_2)|/|\\mathbf a(\\tau_1)|$ in the Euclidean operator norm. These retain all conclusions of Lemma 2.6 and specify its propagator constant. The generalization is from smooth $B$ on the physical interval to continuous $B$ on a compact set containing it. For a larger set, the four suprema defining $\\delta$ are also taken over that set, so the smallness condition must still be checked there. The absolute factor $C$, integer exponent $p$ and integer threshold for $C_0$ are chosen before the wave data. The paper’s $CT^C$ notation is recovered by enlarging an absolute constant for $T\\ge2$."
     }
    ],
    "statements": [
@@ -299,7 +187,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The lower bound for $\\nu_+$ and both late-time estimates agree with Lemma 2.7, using the reference angle $\\varphi=\\arctan(\\varepsilon\\tau^2/2)$. The formal statement allows a continuous background on a larger observation interval, so the paper's smooth-background setting is included without losing either estimate."
+     "fidelity_note": "Let $B,E_c$ be continuous on compact $I\\supset[t_0,t_0+T/r]$, with $\\operatorname{tr}B=0$ and nonzero perpendicular preceding wave data satisfying $k_p\\prime=-B^Tk_p$, $\\mathbf a_p\\prime=-B\\mathbf a_p+2(k_p\\cdot B\\mathbf a_p)k_p/|k_p|^2$. Set $E_1=\\widehat{k_p}$, $E_2=\\widehat{\\mathbf a_p}$ and $E_3=E_1\\times E_2$; $B_{ij}=E_i\\cdot BE_j$. Physical derivatives are relative to $I$; for interval $I$, endpoint derivatives are one-sided. Put $\\sigma=|k_p(t_0)||\\mathbf a_p(t_0)|$, $\\nu=B_{12}(t_0)>0$, $\\eta=B_{32}(t_0)>0$, $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$, and $\\delta=\\sup_I|B_{12}/\\nu-1|+\\sup_I|B_{32}/\\eta-1|+\\sup_I\\|B\\|/r+\\sup_I\\|E_c\\|/\\nu$. Assume $T\\ge2$ and $C_0\\varepsilon\\le1$, $C_0T^{C_0}\\delta\\le\\varepsilon$ for sufficiently large integer $C_0$. In physical time, the new wave solves $k'=-M^Tk$, $\\mathbf a'=-M\\mathbf a+2(k\\cdot M\\mathbf a)k/|k|^2$, $k\\cdot\\mathbf a=0$, with $M=B+\\mathbf a_p\\otimes k_p+E_c$, $k(t_0)=\\lambda E_3(t_0)$, $\\lambda>0$, and $\\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$. Use $\\tau=r(t-t_0)$, $\\alpha_1=S\\mathbf a\\cdot E_1$, $\\alpha_2=\\mathbf a\\cdot E_2$, $\\varphi=\\arctan(\\varepsilon\\tau^2/2)$, and $a_{\\rm ref}=\\exp\\int_0^\\tau Y$ with $Y\\prime=\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)-\\varepsilon\\tau\\sin(2\\varphi)Y-Y^2$, $Y(0)=1$, on $[0,\\infty)$. Define the new frame by $E_{1,+}=k/|k|$, $E_{2,+}=\\mathbf a/|\\mathbf a|$, $E_{3,+}=E_{1,+}\\times E_{2,+}$ and its couplings by $\\nu_+=E_{1,+}\\cdot ME_{2,+}$, $\\eta_+=E_{3,+}\\cdot ME_{2,+}$. The formal statement gives $\\nu_+\\ge\\varepsilon\\nu/2$ on $[0,T]$. For $\\sqrt2/\\varepsilon\\le\\tau\\le T$, it proves $|\\nu_+/\\nu-1|\\le\\varepsilon$ and $|(\\eta_+/\\nu_+)/\\cos\\varphi-1|\\le1/2$. These are exactly the quantitative conclusions of Lemma 2.7, with the same reference angle. The statement is more general in requiring only continuous $B$ and permitting a larger compact observation set; the error $\\delta$ must be measured on that set. It does not identify the reference angle with the actual perturbed wave angle, and its conclusion retains the fixed tolerance $1/2$, rather than the intermediate $O(\\varepsilon)$ relative-error claim in the paper’s proof."
     }
    ],
    "statements": [
@@ -321,29 +209,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper asserts existence of a profile family with the stated symmetry, periodicity, normalization and derivative bounds. The formal theorem proves all these properties for the explicitly constructed family, identifying which profiles realize the existence claim with constants uniform in $h$."
-    },
-    {
-     "file": "TorusEuler/PaperParameterAndLaunchStatements.lean",
-     "name": "TorusEuler.paperLemma31_waveProfile",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S34A/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_3_1",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper asserts the existence of profiles with these properties. The formal statement identifies particular families $F_h$ and $P_h$ satisfying all of them, so it also specifies witnesses for the existence claim."
-    },
-    {
-     "file": "TorusEuler/Paper/S34A/Vocabulary.lean",
-     "name": "TorusEuler.Paper.ProfileFamily",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "The formal theorem proves Lemma 3.1 for one specified family, whereas the paper asserts existence of a suitable family. For every $0<h\\le1$, the constructed $F_h$ is smooth, odd and period one; its normalized primitive $P_h$ is smooth, period one and has zero phase mean, with $P_h'=F_h$. There is one $C>0$, chosen before $h$, such that $F_h'(0)=1$, $-Ch\\le F_h'\\le1$ and $\\|F_h\\|_\\infty\\le Ch$. For each integer $j\\ge2$, there is $C_j>0$, chosen before $h$ and the phase, such that $\\|\\partial_s^jF_h\\|_\\infty\\le C_jh^{1-j}$. The exponent uses integer subtraction, so it is negative for $j\\ge2$, exactly as in the paper. The specified bump is supported in $[-1/8,1/8]$, inside the interval allowed by the proof. Phase mean means integration over $[0,1]$; the primitive is normalized by subtracting that mean, not by fixing its value at zero. The formula is defined outside the admissible width range, but the theorem asserts these properties only for $0<h\\le1$. The stronger verdict concerns the identified family and its uniform estimates; it does not assert spatial periodicity after evaluation at an arbitrary real wave vector."
     }
    ],
    "statements": [
@@ -365,7 +231,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Both energy inequalities agree, including the factor $1/2$ and the sign of the vorticity term. The formal statement represents every $H^1_0$ path by its square-integrable derivative with zero time integral, so the test class is unchanged and no Euler equation is added as a requirement on the parent."
+     "fidelity_note": "Let $0<T\\le1$, let $u$ be a smooth divergence-free velocity on $[0,T]\\times\\mathbb T^3$, and let $X$ be its flow with $X(0,a)=a$. Write $F=D_aX$, $M=(\\nabla u)\\circ X$, $H^\\#=-(M_t+M^2)$, $K=F^TF$ and $\\Omega=F^T(M^T-M)F$. Suppose $w\\cdot H^\\#(t,a)w\\le|w|^2$ for every $t,a,w$; symmetry of $H^\\#$ and an Euler equation for $u$ are not assumed.\n\nFor every label $a$ and every $z\\in H^1_0([0,T];\\mathbb R^3)$, put $\\xi=Fz$. Both statements give $\\int H^\\#\\xi\\cdot\\xi\\le\\tfrac12\\int|\\xi_t|^2$ and $\\int(Kz_t\\cdot z_t+\\Omega z_t\\cdot z)\\ge\\tfrac12\\int|\\xi_t|^2$. The factor $1/2$, the sign of the $\\Omega$ term and the test class agree.\n\nThe formal statement uses periodic lifts to $\\mathbb R^3$ for the torus and represents $z$ by $z(t)=\\int_0^t v(s)\\,ds$, with $v\\in L^2(0,T;\\mathbb R^3)$ and $\\int_0^T v=0$. This is exactly the space of Sobolev paths with both endpoints zero; it does not restrict the test paths to smooth ones. It writes $\\xi_t=M\\xi+Fv$, an almost-everywhere identity sufficient for these integrals. The bound on $H^\\#$ is one-sided, not an absolute matrix-norm bound."
     }
    ],
    "statements": [
@@ -387,23 +253,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "Both the forward and inverse deformation bounds are retained. The formal statement admits any smooth periodic parent pressure satisfying the residual and coercivity bounds, whereas §5.1 selects the zero-mean Poisson pressure. It also permits a nonzero seed whose amplitude stays below $\\lambda^{-3/4}$ without requiring that peak to be attained, and bounds each perturbation derivative through order two separately rather than their sum. These choices enlarge the admissible inputs while including the paper’s case. The formal conclusion explicitly supplies a flow and gives the stated bounds for every label flow of $V+v$, with the constants chosen uniformly before the parent and expansion."
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_5_10",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper assumes a bound on the full $C^2$ norm of the perturbation. The formal statement only requires the same bound for each derivative through order two separately, and also proves existence of a flow and the estimate for every flow of that velocity."
-    },
-    {
-     "file": "TorusEuler/PaperFlowBounds.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper gives the flow estimate for its admissible expansion under the perturbation assumptions. The linked theorem additionally takes actual level and inverse deformation estimates as inputs for a selected approximation, so it is a conditional step in that proof."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nThe finite expansion is selected as follows. Extend the seed to all labels by its transverse equation with $\\mathbf a(t_0,a)=(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. Use the fixed smooth radial envelope $g$, equal to one on $|a|\\le\\ell_*$ and zero on $|a|\\ge2\\ell_*$, and the fixed one-periodic zero-mean phase profile $F_h$ of Section 3. The time cutoff $\\widetilde\\chi$ is smooth on $[0,T]$, lies in $[0,1]$, and is zero for $t<t_0$. This permits $\\widetilde\\chi\\equiv1$ when $t_0=0$. On the centered label cell set $A_1=g\\mathbf aF_h$, $V_1=\\widetilde\\chi A_1$ and $\\mathsf p_1=\\widetilde\\chi\\mathsf p[A_1]$, where $\\mathsf p[A_1]$ has zero phase mean and $A_{1,t}+MA_1+\\kappa\\partial_s\\mathsf p[A_1]=0$. Set $B_1=\\bar q_1=C_1=0$ and $C_{p+1}=C[V_p]$. Here $C[V]=\\mathbf d\\times(-\\kappa\\times\\partial_s^{-1}V/|\\kappa|^2)$, $\\mathbf d=F^{-T}\\nabla_a$, and $\\partial_s^{-1}$ is the zero-mean phase primitive. Higher transverse velocities have zero phase mean, are perpendicular to $\\kappa$ and satisfy $V_p(0)=0$. The means have $B_p=Fz_{p,t}$, $\\operatorname{div}_a z_{p,t}=0$ and $z_p(0)=z_p(T)=0$. Use the recursive sources in (5.27)–(5.28), including $-R_U\\circ X$ at mean level two. Mean pressures have zero spatial mean and transverse pressures zero phase mean. The terminal convention is $V_{P+1}=B_{P+1}=0$. All profiles are smooth on $[0,T]$, one-periodic in phase, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$.\n\nLet $P\\ge2$ and take the resulting finite expansion. Set $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$, $\\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p)$, $V=U+W^\\natural$ and $\\Pi=p_U+\\mathsf P^\\natural$. The notation $f^\\natural(t,x)$ means $f(t,a,k_*\\cdot a)$ at $a=X(t,\\cdot)^{-1}(x)$. Choose $C_{\\rm step}=\\Gamma_P\\mathsf D^b$ sufficiently large and assume $C_{\\rm step}\\lambda^{-1/12}\\le1$. The exponent $b$ is independent of $P$, whereas $\\Gamma_P$ may depend on $P$ and the fixed profiles.\n\nLet $v$ be a smooth periodic divergence-free perturbation on $[0,T]\\times\\mathbb T^3$ with $\\sup_{t,x}\\|D_x^jv(t,x)\\|\\le\\lambda^{-5/2}$ for each integer $0\\le j\\le2$. The formal statement supplies a flow $Y$ of $V+v$ and proves $\\sup_{t,a}\\|D_aY(t,a)\\|\\le C_{\\rm step}\\lambda^{1/4}$ and the same bound for the derivative of the inverse flow. It also asserts these bounds for every flow solving the stated initial-value problem on $[0,T]$.\n\nThe paper assumes the single norm bound $\\|v\\|_{C_tC^2}\\le\\lambda^{-5/2}$. The formal hypotheses bound each of the three derivative orders separately in operator norm; the paper's norm bound implies these inequalities. In addition, the formal statement allows the broader parent-pressure class and a nonzero central seed whose peak need not reach $\\lambda^{-3/4}$. These are enlargements of the admitted data, while the two bounds in (5.53) are retained.\n\nThe inverse derivative means the derivative of the transition from time $t$ back to time zero. At the particle position $Y(t,a)$ it is $(D_aY(t,a))^{-1}$; the bounds over all positions are equivalent because the flow is bijective. The formal fields are periodic lifts to $\\mathbb R^3$, and their flows commute with integer translations. Smoothness and the flow conclusions concern the closed interval $[0,T]$, not an unspecified continuation beyond it. All thresholds are fixed before the parent and perturbation."
     }
    ],
    "statements": [
@@ -425,29 +275,7 @@
      "relation": "states",
      "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains (5.19)–(5.22), including strict positive coupling, the support assumptions, the initial-value term and the factor $\\lambda$ on the pressure. Its scope changes in both directions: part (i) requires fields smooth on all of $[0,T]$, while the paper allows fields supplied only on $[t_0,T]$; the parent pressure may be more general, and the central normalization is only $0<\\gamma\\le1$, rather than $\\max\\gamma=1$. It also fixes one admissible envelope. Part (ii) bounds every solution satisfying the transverse equation and normalization; existence and uniqueness are supplied by separate results. A separate formal estimate treats fields defined only on the active interval, but this does not change the scope of the numbered statement itself."
-    },
-    {
-     "file": "TorusEuler/PaperHierarchyInverse.lean",
-     "name": "TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_5_3",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
-     "name": "TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper displays an upper amplitude bound and strict positivity of the coupling in (5.19). The formal result also gives relative seed error, a lower amplitude bound and quantitative coupling bounds, so it contains additional information about the localized seed."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nFor a profile $f(t,a,s)$, the norm $\\|f\\|_{[n]}$ sums $\\ell_*^{|\\alpha|}h^j\\sup|\\partial_a^\\alpha\\partial_s^j f|$ over $|\\alpha|+j\\le n$ on $[0,T]$. The weighted norm $\\|f\\|_{[n],\\gamma}$ uses $[t_0,T]$ and divides by $\\gamma(t)$; it differentiates only labels and phase. Each multi-index is counted once. The profiles are smooth on the closed time slab, one-periodic in $s$, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$. Their stipulated zero values outside the time slab do not assert smoothness across its endpoints.\n\nUse the particular fixed smooth radial envelope $g$, equal to one on $|a|\\le\\ell_*$ and zero for $|a|\\ge2\\ell_*$. Extend the seed from the origin by solving its linear equation with $\\mathbf a(t_0,a)=(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. For $|a|\\le2\\ell_*$ the formal statement gives $|\\mathbf a(t,a)|\\le2|\\mathbf a(t,0)|$ and the strict inequality $\\kappa\\cdot M\\mathbf a>0$ on $[t_0,T]$. For a transverse solution $V_t=-(I-2P_\\kappa)MV+(I-P_\\kappa)f$, whose initial value and source vanish outside the repeated envelope support, it gives $\\|V\\|_{[n],\\gamma}\\le C_n\\mathsf D^C(\\gamma(t_0)^{-1}\\|V(t_0)\\|_{[n]}+\\|f\\|_{[n],\\gamma})$.\n\nFor the transverse momentum equation $V_t+MV+\\kappa\\partial_s\\mathsf p=f$, the formal estimate is $\\|V\\|_{[n],\\gamma}+\\lambda\\|\\mathsf p\\|_{[n],\\gamma}\\le C_n\\mathsf D^C\\|f\\|_{[n],\\gamma}$. It assumes a full-interval solution with $V(0)=0$, $V\\perp\\kappa$, and zero phase means of $V,f,\\mathsf p$; the source vanishes before $t_0$ and outside the envelope. For $A_1=g\\mathbf aF_h$ and its zero-mean wave pressure it gives the same left-hand side bounded by $C_n\\mathsf D^C\\lambda^{-5/4}$.\n\nThe numerical powers, initial-value term and pressure factor agree with (5.19)–(5.22). The scope changes in both directions: part (i) of the numbered formal statement takes profiles smooth on $[0,T]$, while the paper permits data given only on $[t_0,T]$; a smooth extension is needed to apply that statement to such data. The parent pressure and the central normalization are less restrictive as described above. Part (ii) is an estimate conditional on a solution; its existence and uniqueness are separate results. The constants are chosen before the parent and derivative order, after fixing $a$."
     }
    ],
    "statements": [
@@ -469,15 +297,7 @@
      "relation": "states",
      "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. These broader hypotheses accompany a restriction: for general $V$ and $f$, zero phase average is required on all of $[0,T]$, whereas the weighted estimates concern $[t_0,T]$. Transversality, pressure normalization, and the momentum equation are imposed only on that active interval, so applying the theorem to arbitrary active-interval data requires a suitable extension. Both estimates retain exactly the $\\lambda^{-1}$ gain and one extra derivative. The homogeneous leading-wave clause explicitly supplies smooth full-interval representatives agreeing with $A_1$ and its pressure on the active interval. Once the envelope exponent is fixed, the parent exponent and order constants are chosen before the parent; the exponent is independent of derivative order and depth. The verdict records these mixed hypothesis changes, not a loss of frequency decay."
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_5_5",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper formulates the weighted estimates on $[t_0,T]$. The formal statement requires a smooth profile on $[0,T]$ whose phase average vanishes throughout that interval, so applying it to arbitrary active-interval data also requires an extension preserving zero phase mean."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nFor a profile $f(t,a,s)$, the norm $\\|f\\|_{[n]}$ sums $\\ell_*^{|\\alpha|}h^j\\sup|\\partial_a^\\alpha\\partial_s^j f|$ over $|\\alpha|+j\\le n$ on $[0,T]$. The weighted norm $\\|f\\|_{[n],\\gamma}$ uses $[t_0,T]$ and divides by $\\gamma(t)$; it differentiates only labels and phase. Each multi-index is counted once. The profiles are smooth on the closed time slab, one-periodic in $s$, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$. Their stipulated zero values outside the time slab do not assert smoothness across its endpoints.\n\nSet $\\mathbf d=(D_aX)^{-T}\\nabla_a$ and $C[V]=\\mathbf d\\times Q[V]$, where $Q[V]=-\\partial_s^{-1}(\\kappa\\times V/|\\kappa|^2)$ and $\\partial_s^{-1}$ takes the zero-mean periodic primitive. For $V\\perp\\kappa$ on $[t_0,T]$ with zero phase mean, the formal statement gives $\\|C[V]\\|_{[n],\\gamma}\\le C_n\\mathsf D^C\\lambda^{-1}\\|V\\|_{[n+1],\\gamma}$. If $V_t+MV+\\kappa\\partial_s\\mathsf p=f$ and the pressure and source have zero phase mean, it also gives $\\|(\\partial_t+M)C[V]+\\mathbf d\\mathsf p\\|_{[n],\\gamma}\\le C_n\\mathsf D^C\\lambda^{-1}(\\|V\\|_{[n+1],\\gamma}+\\|f\\|_{[n+1],\\gamma})$.\n\nThe gain $\\lambda^{-1}$ and the loss of one label-or-phase derivative agree exactly with (5.31)–(5.32). The numbered formal statement requires smooth profiles on the whole interval $[0,T]$ and zero phase means of $V$ and $f$ there. The differential equation, transversality and pressure normalization are required only on $[t_0,T]$. Thus an arbitrary field given on the active interval is not an input until an appropriate extension has been supplied. This restriction accompanies the weaker pressure and seed-normalization assumptions above, which explains the verdict different.\n\nFor the leading field $A_1=g\\mathbf aF_h$, the formal statement itself supplies smooth profiles on $[0,T]$ that agree with $A_1$ and its pressure on the active interval within the centered label cell; elsewhere they obey the stated coupled translation law. They satisfy the homogeneous equation throughout the active interval. The source term then vanishes in the second estimate. One exponent $C$ works at every derivative order after the envelope exponent is fixed, and all constants are chosen before the parent. Nonvanishing of $\\kappa$ and positivity of $\\gamma$ make every division used in these conclusions ordinary division."
     }
    ],
    "statements": [
@@ -499,21 +319,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. The weighted bounds on $[t_0,T]$, unweighted bounds on $[0,T]$, and both improvements for phase-independent fields are retained. The formal statement also allows any real normed target space and explicitly concludes Hölder regularity. Its derivative sum counts all ordered coordinate derivative sequences; smoothness identifies repeated mixed derivatives, and their order-dependent multiplicities are absorbed into $C_m$. The profiles already include the smooth continuation across cell faces described in the paper. Once the envelope exponent is fixed, the constants are chosen uniformly before the parent and target space, and the parent exponent does not depend on derivative order or depth. Phase-independent fields incur no factor $\\lambda^{3/2}$ per derivative."
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_5_7",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperGraphReadout.lean",
-     "name": "TorusEuler.paperLemma57_periodicGraphFromCell",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nFor a profile $f(t,a,s)$, the norm $\\|f\\|_{[n]}$ sums $\\ell_*^{|\\alpha|}h^j\\sup|\\partial_a^\\alpha\\partial_s^j f|$ over $|\\alpha|+j\\le n$ on $[0,T]$. The weighted norm $\\|f\\|_{[n],\\gamma}$ uses $[t_0,T]$ and divides by $\\gamma(t)$; it differentiates only labels and phase. Each multi-index is counted once. The profiles are smooth on the closed time slab, one-periodic in $s$, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$. Their stipulated zero values outside the time slab do not assert smoothness across its endpoints.\n\nLet $g_0$ be such a profile with values in a real normed space, independent of phase outside the repeated support of the envelope. Define its physical field by $g_0^\\natural(t,x)=g_0(t,a,k_*\\cdot a)$ with $a=X(t,\\cdot)^{-1}(x)$. The transformation rule of the profile ensures periodicity in $x$ even when $k_*\\notin\\mathbb Z^3$. For $t\\in[t_0,T]$, the formal statement bounds the sum of its order-$m$ spatial derivative suprema by $C_m(\\mathsf D^C\\lambda^{3/2})^m\\gamma(t)\\|g_0\\|_{[m],\\gamma}$ and gives $\\|g_0^\\natural(t)\\|_{C^{m,1/2}}\\le C_m(\\mathsf D^C\\lambda^{3/2})^{m+1}\\gamma(t)\\|g_0\\|_{[m+1],\\gamma}$, including membership in $C^{m,1/2}$.\n\nThe same bounds hold on $[0,T]$ with the unweighted norm and $\\gamma$ replaced by one. If $g_0$ is independent of phase everywhere, the factor $\\lambda^{3/2}$ per derivative disappears. The formal spatial derivative sum in the conclusion ranges over all ordered coordinate sequences of length $m$; the paper's sum ranges over multi-indices. Their multiplicities are bounded in terms of $m$ and absorbed into $C_m$. This physical derivative sum is distinct from the finite profile norm on the right, which counts each multi-index once.\n\nThe paper's smooth continuation across cell faces is represented by the globally defined profile and its transformation law. The formal statement also allows arbitrary real normed target spaces, asserts the Hölder regularity explicitly, and uses the broader parent and seed hypotheses above. The envelope exponent is fixed first, followed by $C$ and the sequence $C_m$, before the parent and target space. The integer $C$ is independent of derivative order and no expansion depth enters this estimate."
     }
    ],
    "statements": [
@@ -535,7 +341,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. All regularity, symmetry, incompressibility, and residual assertions in (5.46)–(5.48) are retained, including the exact term $\\|\\widetilde\\chi^{\\prime}\\gamma\\|_\\infty$ on the activation interval. Uniform bounds at each time express the time suprema, and Hölder regularity is concluded explicitly. After fixing the envelope exponent, the formal statement chooses thresholds for $b$ and $\\Gamma_P$, and constants $C_{m,P}$, before the parent. It then permits any sufficiently large $b$ and $\\Gamma_P$ satisfying the common smallness condition; the order constants do not change with these enlargements. The coefficient $\\Gamma_P$ may depend on depth, and every admissible expansion receives the estimates on the whole interval."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nThe finite expansion is selected as follows. Extend the seed to all labels by its transverse equation with $\\mathbf a(t_0,a)=(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. Use the fixed smooth radial envelope $g$, equal to one on $|a|\\le\\ell_*$ and zero on $|a|\\ge2\\ell_*$, and the fixed one-periodic zero-mean phase profile $F_h$ of Section 3. The time cutoff $\\widetilde\\chi$ is smooth on $[0,T]$, lies in $[0,1]$, and is zero for $t<t_0$. This permits $\\widetilde\\chi\\equiv1$ when $t_0=0$. On the centered label cell set $A_1=g\\mathbf aF_h$, $V_1=\\widetilde\\chi A_1$ and $\\mathsf p_1=\\widetilde\\chi\\mathsf p[A_1]$, where $\\mathsf p[A_1]$ has zero phase mean and $A_{1,t}+MA_1+\\kappa\\partial_s\\mathsf p[A_1]=0$. Set $B_1=\\bar q_1=C_1=0$ and $C_{p+1}=C[V_p]$. Here $C[V]=\\mathbf d\\times(-\\kappa\\times\\partial_s^{-1}V/|\\kappa|^2)$, $\\mathbf d=F^{-T}\\nabla_a$, and $\\partial_s^{-1}$ is the zero-mean phase primitive. Higher transverse velocities have zero phase mean, are perpendicular to $\\kappa$ and satisfy $V_p(0)=0$. The means have $B_p=Fz_{p,t}$, $\\operatorname{div}_a z_{p,t}=0$ and $z_p(0)=z_p(T)=0$. Use the recursive sources in (5.27)–(5.28), including $-R_U\\circ X$ at mean level two. Mean pressures have zero spatial mean and transverse pressures zero phase mean. The terminal convention is $V_{P+1}=B_{P+1}=0$. All profiles are smooth on $[0,T]$, one-periodic in phase, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$.\n\nLet $P\\ge2$ and take the resulting finite expansion. Set $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$, $\\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p)$, $V=U+W^\\natural$ and $\\Pi=p_U+\\mathsf P^\\natural$. The notation $f^\\natural(t,x)$ means $f(t,a,k_*\\cdot a)$ at $a=X(t,\\cdot)^{-1}(x)$. Choose $C_{\\rm step}=\\Gamma_P\\mathsf D^b$ sufficiently large and assume $C_{\\rm step}\\lambda^{-1/12}\\le1$. The exponent $b$ is independent of $P$, whereas $\\Gamma_P$ may depend on $P$ and the fixed profiles.\n\nThe formal statement says that $V$ is smooth, periodic, odd and divergence free on $[0,T]\\times\\mathbb T^3$, and that $\\Pi$ is smooth and periodic there. Its exact momentum residual is $R_V=R_P^\\natural+R_{\\widetilde\\chi}^\\natural$, where $R_P$ is the remainder of the finite expansion and $R_{\\widetilde\\chi}=\\widetilde\\chi'(A_1+C[A_1])$ is the activation error. The parent residual has already been canceled in this identity.\n\nWith $\\bar W=\\sum_{p=2}^PB_p$ and $W_{\\rm osc}=W-\\bar W$, the bounds are $\\|W_{\\rm osc}^\\natural\\|_{C_tL^\\infty}\\le C_{0,P}\\mathsf D^b\\lambda^{-5/4}$, $\\|W_{\\rm osc}^\\natural\\|_{C_tC^{m,1/2}}\\le C_{m,P}\\mathsf D^{b(m+2)}\\lambda^{3(m+1)/2-5/4}$ and $\\|\\bar W^\\natural\\|_{C_tC^{m,1/2}}\\le C_{m,P}\\mathsf D^{b(m+2)}\\lambda^{-5/2}$. The residual satisfies $\\|R_V\\|_{C_tC^{1,1/2}}\\le C_{\\rm step}\\lambda^2(\\lambda^{-2P/3}+\\|\\widetilde\\chi'\\gamma\\|_{\\infty,[t_0,T]})$. All three time norms of fields use $[0,T]$; only the last cutoff supremum uses $[t_0,T]$.\n\nThe powers, parity, divergence assertion and activation factor agree with (5.46)–(5.48). Pointwise bounds uniform in time represent the displayed time suprema; Hölder regularity is also asserted. The formal statement permits the larger pressure and seed class specified above. After fixing $a$, it chooses thresholds $b_0,\\Gamma_{0,P}$ and constants $C_{m,P}$ before the parent, then allows every $b\\ge b_0$ and $\\Gamma_P\\ge\\Gamma_{0,P}$ satisfying the corresponding smallness assumption. These constants do not change when $b$ or $\\Gamma_P$ is enlarged. No vanishing of the mean correction before activation is concluded."
     }
    ],
    "statements": [
@@ -557,38 +363,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. The pressure estimate remains an upper quadratic-form bound on all of $[0,T]$, rather than an absolute Hessian bound. On $[t_0,T]$, the central gradient retains the term $\\widetilde\\chi\\mathbf a\\otimes\\kappa$ and an operator-norm error at most $\\lambda^{-1/3}$. The formal statement bounds the displayed difference directly, which is equivalent to naming it $E_c$. The envelope exponent is fixed first, and thresholds for the common exponent $b$ and coefficients $\\Gamma_P$ are chosen before the parent and expansion. Enlarging those constants preserves the conclusion under the correspondingly stronger smallness condition, as in Lemma 5.8."
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_5_9",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperApproximateSolution.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper proves the total pressure Hessian bound by estimating its components. This linked statement combines supplied bounds for the leading, higher, and mean pressures; those hypotheses are established by the separate component results used in the full construction."
-    },
-    {
-     "file": "TorusEuler/PaperGenericPhysicalPressure.lean",
-     "name": "TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper bounds the Hessian of the full pressure correction. This linked theorem controls only the leading pressure, so the higher oscillatory and mean-pressure estimates must also be added to obtain (5.49)."
-    },
-    {
-     "file": "TorusEuler/PaperPhysicalLaterStep.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper gives this conclusion for its admissible finite expansion. The linked formal theorem chooses one seed and, for each cutoff, a corresponding expansion satisfying it; its conclusion therefore concerns those selected profiles rather than every family satisfying the expansion equations."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nThe finite expansion is selected as follows. Extend the seed to all labels by its transverse equation with $\\mathbf a(t_0,a)=(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. Use the fixed smooth radial envelope $g$, equal to one on $|a|\\le\\ell_*$ and zero on $|a|\\ge2\\ell_*$, and the fixed one-periodic zero-mean phase profile $F_h$ of Section 3. The time cutoff $\\widetilde\\chi$ is smooth on $[0,T]$, lies in $[0,1]$, and is zero for $t<t_0$. This permits $\\widetilde\\chi\\equiv1$ when $t_0=0$. On the centered label cell set $A_1=g\\mathbf aF_h$, $V_1=\\widetilde\\chi A_1$ and $\\mathsf p_1=\\widetilde\\chi\\mathsf p[A_1]$, where $\\mathsf p[A_1]$ has zero phase mean and $A_{1,t}+MA_1+\\kappa\\partial_s\\mathsf p[A_1]=0$. Set $B_1=\\bar q_1=C_1=0$ and $C_{p+1}=C[V_p]$. Here $C[V]=\\mathbf d\\times(-\\kappa\\times\\partial_s^{-1}V/|\\kappa|^2)$, $\\mathbf d=F^{-T}\\nabla_a$, and $\\partial_s^{-1}$ is the zero-mean phase primitive. Higher transverse velocities have zero phase mean, are perpendicular to $\\kappa$ and satisfy $V_p(0)=0$. The means have $B_p=Fz_{p,t}$, $\\operatorname{div}_a z_{p,t}=0$ and $z_p(0)=z_p(T)=0$. Use the recursive sources in (5.27)–(5.28), including $-R_U\\circ X$ at mean level two. Mean pressures have zero spatial mean and transverse pressures zero phase mean. The terminal convention is $V_{P+1}=B_{P+1}=0$. All profiles are smooth on $[0,T]$, one-periodic in phase, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$.\n\nLet $P\\ge2$ and take the resulting finite expansion. Set $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$, $\\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p)$, $V=U+W^\\natural$ and $\\Pi=p_U+\\mathsf P^\\natural$. The notation $f^\\natural(t,x)$ means $f(t,a,k_*\\cdot a)$ at $a=X(t,\\cdot)^{-1}(x)$. Choose $C_{\\rm step}=\\Gamma_P\\mathsf D^b$ sufficiently large and assume $C_{\\rm step}\\lambda^{-1/12}\\le1$. The exponent $b$ is independent of $P$, whereas $\\Gamma_P$ may depend on $P$ and the fixed profiles.\n\nFor every $t\\in[0,T]$, $x\\in\\mathbb T^3$ and $w\\in\\mathbb R^3$, the formal pressure conclusion is $w\\cdot D_x^2\\mathsf P^\\natural(t,x)w\\le C_{\\rm step}\\lambda^{-1/4}|w|^2$. This is the upper quadratic-form estimate (5.49) for the added pressure. It gives no matching lower bound and is not an estimate of the absolute Hessian norm.\n\nFor $t\\in[t_0,T]$, it also gives $\\|\\nabla V(t,0)-\\nabla U(t,0)-\\widetilde\\chi(t)\\mathbf a(t,0)\\otimes\\kappa(t,0)\\|\\le\\lambda^{-1/3}$. The tensor $\\mathbf a\\otimes\\kappa$ acts on $w$ as $(\\kappa\\cdot w)\\mathbf a$, and the error is measured in operator norm. Defining the displayed difference to be $E_c(t)$ gives precisely (5.50); no separate unknown error field is needed.\n\nBoth conclusions retain their different time intervals. The formal statement has the larger parent-pressure class and requires only $0<\\gamma\\le1$, without an attained peak. For each sufficiently large fixed envelope exponent, its thresholds for $b$ and $\\Gamma_P$ are chosen before the parent and expansion. The same conclusion holds after increasing those constants if the stronger smallness condition still holds. The pressure estimate is for the finite approximate solution; it is not itself the upper bound for the normalized pressure after Fourier truncation."
     }
    ],
    "statements": [
@@ -610,7 +385,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement has the same two central conditions (5.5) and the same initial-strength interval as the paper. It makes existence of the prescribed first wave explicit and proves the estimates for every wave with the stated initial directions, nonzero transversality and attained peak $\\lambda^{-3/4}$, under the paper’s parameter and short-interval assumptions."
+     "fidelity_note": "Let $U_0(x)=\\sin(2\\pi x_2)(e_1+\\rho e_3)$ and $B_\\rho=2\\pi(e_1+\\rho e_3)\\otimes e_2$. Assume $0<\\rho\\le1$, $\\lambda\\ge1$, $T>0$ and $T\\|B_\\rho\\|\\le1/8$. The frequency restriction is the standing assumption of §5.1. The formal statement first asserts existence of central paths $\\kappa,\\mathbf a$ on $[0,T]$ satisfying $\\kappa_t=-B_\\rho^T\\kappa$ and $\\mathbf a_t=-(I-2P_\\kappa)B_\\rho\\mathbf a$, where $P_\\kappa$ is orthogonal projection onto $\\mathbb R\\kappa$. They remain nonzero and perpendicular, start with $\\kappa(0)=\\lambda e_1$ and $\\mathbf a(0)=c e_2$ for some $c>0$, and attain $\\max_{[0,T]}|\\mathbf a|=\\lambda^{-3/4}$.\n\nFor every such pair, put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t)|$ and $\\nu(t)=(\\kappa/|\\kappa|)\\cdot B_\\rho(\\mathbf a/|\\mathbf a|)$. For every $\\mathsf D\\ge2$, every transverse solution $\\mathbf b_t=-(I-2P_\\kappa)B_\\rho\\mathbf b$, and every $0\\le t'\\le t\\le T$, it proves $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$ and $\\nu(t)\\ge\\mathsf D^{-1}$. It also proves $\\lambda^{1/4}/2\\le|\\kappa(0)||\\mathbf a(0)|\\le\\lambda^{1/4}$. These are precisely the two conditions (5.5) and the initial-strength interval of Lemma 6.1. Positivity of the seed makes the divisions ordinary positive divisions. The matrix norm is the Euclidean operator norm; for this rank-one matrix it equals the Frobenius norm.\n\nThe formal object records only the data at the origin, which are exactly what this lemma estimates. It does not by itself construct the spatially localized perturbation or attach the time cutoff. The paths are defined on all real times, with the equations required on $[0,T]$ and derivatives taken within that interval. Explicit existence accompanies the universal estimate; it formalizes the first-wave construction preceding the lemma rather than replacing the assertion about every normalized first wave."
     }
    ],
    "statements": [
@@ -632,21 +407,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "Both projection settings, the inverses on their projected spaces, and the higher-order isomorphisms are retained. For the base $C^{0,1/2}$ inverse, the formal statement only requires a Lipschitz coefficient, with loss controlled by its supremum and Lipschitz bound; the paper's $C^{1,1/2}$ coefficient is a special case, while the higher-order conclusions still require the stated higher regularity."
-    },
-    {
-     "file": "TorusEuler/Paper/S34A/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.theorem_A_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S34A/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_A_2",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "There are two settings: $H=\\mathbb R^3$ with $\\mathcal R=\\mathbb P$, the spatial Leray projection; or $H=L^2(0,1;\\mathbb R^3)$ with $\\mathcal R=\\mathbb P\\mathcal Q$, where $\\mathcal Qw=w-\\int_0^1w(t)\\,dt$. Let $B(a)$ be a field of bounded linear operators on $H$, with a supplied bound $L_B\\ge0$ such that $\\|B(a)-B(b)\\|\\le L_Bd(a,b)$. Suppose $\\langle B(a)w,w\\rangle\\ge\\mu\\|w\\|^2$ for $\\mu>0$ and every label, for all $w$ in the first setting and all zero-time-mean $w$ in the second. Symmetry of $B$ is not required.\n\nThe formal statement gives a bounded invertible map $v\\mapsto\\mathcal R(Bv)$ on the projected space $\\mathcal RC^{0,1/2}(\\mathbb T^3;H)$ and the estimate $\\|v\\|_{C^{0,1/2}}\\le C(2+\\mu^{-1}+\\|B\\|_\\infty+L_B)^p\\|\\mathcal RBv\\|_{C^{0,1/2}}$. One $C$ and nonnegative integer $p$ serve both settings. The range condition includes spatial divergence freedom and, in the path setting, zero time mean; the inverse is not asserted on all Hölder fields.\n\nFor every integer $k\\ge1$ such that $B\\in C^{k,1/2}$, the same map is invertible on the corresponding projected $C^{k,1/2}$ space, with equivalence of the norms of $v$ and $\\mathcal RBv$. The constants in this higher-order comparison may depend on $k$ and the coefficient and coercivity controls; the statement does not give an order-independent higher norm bound.\n\nThe paper assumes $B\\in C^{1,1/2}$ already for the base inverse. The formal statement only needs the displayed Lipschitz bound there, while retaining the paper's higher regularity assumptions for the higher-order conclusions. A bounded first spatial derivative supplies a Lipschitz constant, so the paper's estimate follows after enlarging the absolute constant. Spatial fields are functions on the flat unit torus; $L^2$ paths identify functions equal almost everywhere, so including or excluding the time endpoints does not alter the path space."
     }
    ],
    "statements": [
@@ -666,9 +427,9 @@
      "file": "TorusEuler/Paper/Spine.lean",
      "name": "TorusEuler.Paper.lemma_B_1",
      "relation": "states",
-     "fidelity": "stronger",
+     "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains the cutoff, Bernstein and tail estimates of Lemma B.1, and permits even symbols and every $\\Lambda>0$, extending the paper’s radial setting with $\\Lambda\\ge1$. All constants are chosen after the symbol and before the frequency and field; the Bernstein estimate covers every real normed target space and counts each multi-index once. Spatial commutation is stated at every order for complex Banach-valued fields, and at first order for real velocities, with a separate time-derivative clause; higher real orders follow by iteration on smooth fields. The numbered statement gives the measurable-input $L^\\infty$ bound for complex fields and the continuous-input supremum and Hölder bounds for real velocities; separate supplied results give the measurable real-velocity bound. These distinctions leave the paper’s smooth-velocity applications intact."
+     "fidelity_note": "Let $S_\\Lambda$ act on $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$ by the multiplier $\\psi(\\xi/\\Lambda)$. The paper assumes a smooth radial symbol, equal to one on the unit ball and supported in the radius-two ball, and $\\Lambda\\ge1$. The formal statement permits even symbols and every $\\Lambda>0$, and chooses all constants before the frequency, fields and target spaces. It includes the support, parity, divergence, Bernstein and tail estimates. Bernstein's sum counts each multi-index once for every real normed target. The operator bound on measurable $L^\\infty$ inputs is stated for complex Banach targets; the real-velocity branch instead assumes continuous inputs. A separate supplied theorem proves the measurable real-velocity bound. Spatial commutation is explicit at every complex order, at first real coordinate order, and at first time order on a smooth closed slab; further real orders require iteration. Thus the paper's smooth-velocity applications are covered, but the literal formal statement combines extensions with differently organized scope. Its supplied description specifies derivative-tensor Hölder norms; their underlying higher-order definition is not included in this packet and has not been independently checked here."
     }
    ],
    "statements": [
@@ -690,31 +451,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement includes all of (D.3)–(D.5) and the phase-independent Hölder product estimate in the paper’s smooth-profile setting. It gives explicit constants three for the summed label derivatives and two for the primitive, and extends products to continuous bilinear maps with their operator norms included. The constants are independent of the fields, scales and positive time weight. Periodicity is required for the phase operators, with zero phase average additionally required for the primitive; the derivative and product estimates need neither condition. The assumptions explicitly require finite derivative norms, and the conclusions establish finiteness of the output norms. The maximum convention for Hölder norms is equivalent to the customary sum convention, so only order-dependent constants change."
-    },
-    {
-     "file": "TorusEuler/PaperAppendixDFields.lean",
-     "name": "TorusEuler.paperLemmaD1_derivatives",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The display combines derivative and product estimates. This result proves the two derivative bounds; applying it to $f/\\gamma(t)$ gives (D.3), while (D.4) is supplied by the product theorem."
-    },
-    {
-     "file": "TorusEuler/PaperAppendixDFields.lean",
-     "name": "TorusEuler.paperLemmaD1_product",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The display contains derivative estimates and a product estimate. This result gives the product bound, including the norm of a general bilinear map; the two derivative bounds are separate results."
-    },
-    {
-     "file": "TorusEuler/Paper/SBD/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_D_1",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper gives the derivative and ordinary product estimates. The formal statement makes the summed label constant three and extends products to continuous bilinear maps, including their operator norm in the bound."
+     "fidelity_note": "For positive scales $\\ell_*,h$, a positive time weight $\\gamma$, and smooth fields with the required bounded spatial and phase derivatives, the formal statement proves all of (D.3)–(D.5) and finiteness of the resulting norms. It supplies the explicit label-derivative constant three and primitive constant two. Products may be any continuous bilinear map, with its operator norm included; the constants are independent of the fields, scales and time weight. The finite norms count every mixed multi-index once after division by $\\gamma$. Periodicity of period one is needed for the phase operators, and zero phase average is additionally needed for the primitive. Those operations take values in a real Banach space. The derivative and product estimates need neither periodicity nor zero average. For phase-independent fields the Hölder product estimate uses the maximum of the supremum and seminorm. Replacing this by their sum alters only the order-dependent constant, leaving the paper's stated estimate intact."
     }
    ],
    "statements": [
@@ -736,31 +473,7 @@
      "relation": "states",
      "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "Products and inverses retain polynomial derivative growth, with constants chosen uniformly before the parent parameter and coefficient fields. The formal statement also permits bounded bilinear products and invertible elements of complete real normed algebras. The consequential difference is that its exponents are nonnegative integers, while part (c) keeps the paper’s specified real exponent $C$. Rounding upward changes the radius condition to $\\ell_*\\le\\mathsf D^{-\\lceil C\\rceil}$ and the powers to $\\mathsf D^{\\lceil C\\rceil}$ and $\\mathsf D^{2\\lceil C\\rceil}$. For example, with $C=1/2$ and $\\mathsf D=4$, the paper allows $\\ell_*=1/2$, whereas the rounded condition requires $\\ell_*\\le1/4$. Rounding is sufficient when the absolute exponent and radius remain freely adjustable in the construction, but it does not reproduce the literal fixed-exponent clause."
-    },
-    {
-     "file": "TorusEuler/PaperAppendixDMultiIndex.lean",
-     "name": "TorusEuler.paperLemmaD2_mul_multiIndex",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper uses fixed-order constants to control products in (D.6). This result gives such constants after fixing the parent parameter and coefficients, with integer exponents; the separate full coefficient lemma makes their uniformity explicit."
-    },
-    {
-     "file": "TorusEuler/PaperAppendixD.lean",
-     "name": "TorusEuler.paperLemmaD2_mul",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper’s coefficient estimates use fixed-order constants. This result proves product closure for fixed coefficients and parent parameter using an integer exponent, so it alone does not express constants uniform over those choices."
-    },
-    {
-     "file": "TorusEuler/Paper/SBD/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_D_2",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper proves product closure for matrix coefficients. The formal statement allows bilinear products of norm at most one and chooses output constants before the parent parameter, time domain and fields, preserving the required uniformity."
+     "fidelity_note": "For smooth phase-independent coefficients and $\\mathsf D\\ge1$, the formal statement retains polynomial derivative bounds under products and inversion, with output constants chosen before the time domain, parent parameter and fields. It extends matrix products to bounded bilinear actions and inversion to complete real normed algebras, requiring pointwise invertibility. Its exponents are nonnegative integers: input exponents $q,r$ give product exponent $2\\max(q,r)$, and inverse growth exponent $e$ gives inverse exponent $3\\max(q,e)$. In part (c), $0<\\ell_*\\le\\mathsf D^{-q}$ implies $\\|c\\|_{[n]}\\le C_n\\mathsf D^q$ and $\\ell_*^m|c|_m\\le C_m\\mathsf D^{2q}\\ell_*$ for $m\\ge1$. The paper retains its specified real exponent $C$ in this part. Replacing it by $\\lceil C\\rceil$ changes both the allowed radius and the concluding powers. For $C=1/2$ and $\\mathsf D=4$, the paper's radius bound is $1/2$, whereas the rounded condition is $1/4$. Rounding is adequate when the construction can choose a smaller radius, but it does not prove the literal clause at the original fixed exponent."
     }
    ],
    "statements": [
@@ -782,7 +495,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal theorem retains the higher-order estimate with a single factor $C_{\\rm low}$ and requires the zero-order bound uniformly for every admissible solution, as the paper needs when differentiating. It generalizes the argument to seminormed solution and forcing spaces and arbitrary finite families of derivative directions, requiring coefficient bounds only through the requested order $n$. The constant $C_n$ is chosen after the finite ordered set of derivative directions and the numerical coefficient bounds, but before the spaces, derivative operators, coefficients and solution. Constraints, prescribed data and equations modulo gradients must be represented by the chosen spaces and differentiation rules. The result estimates existing solutions and does not assert existence or invertibility for an arbitrary equation."
+     "fidelity_note": "Assume a finite coefficient equation $\\mathcal Lv=\\mathcal L_0v+\\sum_\\nu T_\\nu(c_\\nu v)=f$, a zero-order estimate for every admissible unknown with its own forcing, principal commutation and product-rule identities, commuting coefficient and forcing derivatives, and nonnegative operator bounds. For a conclusion at order $n$, the formal statement needs the weighted coefficient bounds (D.7) only for $1\\le m\\le n$. It then proves $\\|v\\|_{[n]}\\le C_nC_{\\rm low}\\|f\\|_{[n]}$, preserving one factor of the zero-order bound. The spaces are arbitrary real seminormed vector spaces and the derivatives form an arbitrary finite ordered family. Thus constraints, equations modulo gradients and prescribed data must be represented in the chosen solution and forcing spaces and their derivative maps. The weighted spatial-and-phase norms, or the half-Hölder norms, are applications after these choices. The constant is selected before the spaces, maps and coefficients, but may depend on the finite derivative family, which is fixed in the paper. The result estimates existing solutions; it asserts no existence or invertibility of a general equation."
     }
    ],
    "statements": [
@@ -804,7 +517,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains existence of a crossing, the strength bounds at every crossing in the stated interval, and the early-time suppression relative to one maximum over $[0,T]$. It gives the explicit lower and upper factors $\\exp(-1)/4$ and $18\\exp(3)$ in (2.23), and allows the same continuous-background generalization as the preceding lemmas."
+     "fidelity_note": "Let $B,E_c$ be continuous on compact $I\\supset[t_0,t_0+T/r]$, with $\\operatorname{tr}B=0$ and nonzero perpendicular preceding wave data satisfying $k_p\\prime=-B^Tk_p$, $\\mathbf a_p\\prime=-B\\mathbf a_p+2(k_p\\cdot B\\mathbf a_p)k_p/|k_p|^2$. Set $E_1=\\widehat{k_p}$, $E_2=\\widehat{\\mathbf a_p}$ and $E_3=E_1\\times E_2$; $B_{ij}=E_i\\cdot BE_j$. Physical derivatives are relative to $I$; for interval $I$, endpoint derivatives are one-sided. Put $\\sigma=|k_p(t_0)||\\mathbf a_p(t_0)|$, $\\nu=B_{12}(t_0)>0$, $\\eta=B_{32}(t_0)>0$, $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$, and $\\delta=\\sup_I|B_{12}/\\nu-1|+\\sup_I|B_{32}/\\eta-1|+\\sup_I\\|B\\|/r+\\sup_I\\|E_c\\|/\\nu$. Assume $T\\ge2$ and $C_0\\varepsilon\\le1$, $C_0T^{C_0}\\delta\\le\\varepsilon$ for sufficiently large integer $C_0$. In physical time, the new wave solves $k'=-M^Tk$, $\\mathbf a'=-M\\mathbf a+2(k\\cdot M\\mathbf a)k/|k|^2$, $k\\cdot\\mathbf a=0$, with $M=B+\\mathbf a_p\\otimes k_p+E_c$, $k(t_0)=\\lambda E_3(t_0)$, $\\lambda>0$, and $\\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$. Use $\\tau=r(t-t_0)$, $\\alpha_1=S\\mathbf a\\cdot E_1$, $\\alpha_2=\\mathbf a\\cdot E_2$, $\\varphi=\\arctan(\\varepsilon\\tau^2/2)$, and $a_{\\rm ref}=\\exp\\int_0^\\tau Y$ with $Y\\prime=\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)-\\varepsilon\\tau\\sin(2\\varphi)Y-Y^2$, $Y(0)=1$, on $[0,\\infty)$. Define $E_{1,+}=k/|k|$, $E_{2,+}=\\mathbf a/|\\mathbf a|$, $E_{3,+}=E_{1,+}\\times E_{2,+}$, $\\nu_+=E_{1,+}\\cdot ME_{2,+}$ and $\\eta_+=E_{3,+}\\cdot ME_{2,+}$. Assume $0<\\varepsilon_+\\le\\varepsilon/32$ and $H=2/\\sqrt{\\varepsilon\\varepsilon_+}\\le T$. The formal statement identifies the unique nonnegative zero $\\tau_m$ of every reference slope, with $\\tau_m\\ge2/\\varepsilon$, and supplies a crossing $\\eta_+/\\nu_+=\\varepsilon_+$ in $[\\tau_m,H]$. It chooses one attained maximum $A=\\max_{[0,T]}|\\mathbf a|$. At every crossing in that interval, $\\exp(-1)/(4\\sqrt{\\varepsilon\\varepsilon_+})\\le|\\mathbf a||k|/(\\lambda A)\\le18\\exp(3)/\\sqrt{\\varepsilon\\varepsilon_+}$. On $[0,1]$ it gives $|\\mathbf a|\\le\\exp(3-1/\\sqrt\\varepsilon)A$. These retain Proposition 2.8 with explicit absolute strength factors and the same early-time factor. Continuous $B$ and a larger compact observation set are permitted, with $\\delta$ measured on that set. The proposition does not state uniqueness of a crossing or locate the perturbed amplitude maximum at $\\tau_m$. A separate older formal theorem locates a crossing strictly inside the bracket and uses the weaker symmetric lower factor $1/(18\\exp(3))$; that is not the exact lower constant of the current formal statement."
     }
    ],
    "statements": [
@@ -826,21 +539,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains all six coefficient families and estimates (5.7)–(5.8), while allowing any smooth periodic pressure meeting the residual and coercivity bounds; the zero-mean Poisson pressure fixed in §5.1 is a special case. One exponent $C$ is chosen before the parent and derivative order, and the composition constants depend only on the prescribed derivative bounds for $f$. Operator norms replace sums of coordinate derivatives, with the order-dependent comparison absorbed in $C_m$; the explicit condition $0<\\ell_*\\le\\mathsf D^{-C}$ supplies the small radius used in the paper."
-    },
-    {
-     "file": "TorusEuler/PaperParentCoefficientStatements.lean",
-     "name": "TorusEuler.paperProposition51_parentCoefficients",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.proposition_5_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nChoose $k_*\\ne0$ and $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$, where $\\kappa=(D_aX)^{-T}k_*$. For each of $(D_aX)^{\\pm1}$, $M=(\\nabla U)\\circ X$, $\\kappa/\\lambda$, $\\lambda^2/|\\kappa|^2$ and $P_\\kappa=\\kappa\\otimes\\kappa/|\\kappa|^2$, the formal statement bounds its $m$th label derivative by $C_m\\mathsf D^{C(m+1)}$, uniformly in time and label. It also gives $|f\\circ X|_m\\le C_m A_f\\mathsf D^{Cm}$ whenever all spatial derivatives of $f$ satisfy $|f|_m\\le C'_m A_f\\mathsf D^m$, with $A_f\\ge0$ and an arbitrary real normed target space.\n\nFor every $0<\\ell_*\\le\\mathsf D^{-C}$, summing the derivatives with weights $\\ell_*^m$ gives $\\|c\\|_{[n]}\\le C_n\\mathsf D^C$ and $\\|f\\circ X\\|_{[n]}\\le C_n A_f$. Here the formal derivative norm is the operator norm of the full multilinear derivative, whereas the paper sums coordinate derivatives; finite-dimensional comparison only changes the order-dependent constants. One integer $C$ and the coefficient constants are chosen before the parent and the derivative order. The composition constants may depend on the prescribed sequence $C'_m$, as the paper permits. The transported covector is nonzero, so the displayed divisions are ordinary divisions. The stronger verdict concerns the larger parent-pressure class; it does not assert a better power of $\\lambda$."
     }
    ],
    "statements": [
@@ -862,7 +561,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains the frequency supports $2\\Lambda$ and $4\\Lambda$, oddness, incompressibility, the tail estimate (5.56), and the one-sided pressure bound (5.57). It allows the broader parent-pressure class and a nonzero seed bounded by $\\lambda^{-3/4}$ without requiring an attained peak; the paper’s choices remain included. The two terms on the left of the second estimate in (5.56) may be evaluated at independent times, so the formal conclusion controls the sum of their time suprema. Existence of the cutoff velocity and its zero-mean Poisson pressure is explicit, with constants chosen before the parent, depth and cutoff frequency; uniqueness follows from the cutoff identity and uniqueness of normalized periodic pressure."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nThe finite expansion is selected as follows. Extend the seed to all labels by its transverse equation with $\\mathbf a(t_0,a)=(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. Use the fixed smooth radial envelope $g$, equal to one on $|a|\\le\\ell_*$ and zero on $|a|\\ge2\\ell_*$, and the fixed one-periodic zero-mean phase profile $F_h$ of Section 3. The time cutoff $\\widetilde\\chi$ is smooth on $[0,T]$, lies in $[0,1]$, and is zero for $t<t_0$. This permits $\\widetilde\\chi\\equiv1$ when $t_0=0$. On the centered label cell set $A_1=g\\mathbf aF_h$, $V_1=\\widetilde\\chi A_1$ and $\\mathsf p_1=\\widetilde\\chi\\mathsf p[A_1]$, where $\\mathsf p[A_1]$ has zero phase mean and $A_{1,t}+MA_1+\\kappa\\partial_s\\mathsf p[A_1]=0$. Set $B_1=\\bar q_1=C_1=0$ and $C_{p+1}=C[V_p]$. Here $C[V]=\\mathbf d\\times(-\\kappa\\times\\partial_s^{-1}V/|\\kappa|^2)$, $\\mathbf d=F^{-T}\\nabla_a$, and $\\partial_s^{-1}$ is the zero-mean phase primitive. Higher transverse velocities have zero phase mean, are perpendicular to $\\kappa$ and satisfy $V_p(0)=0$. The means have $B_p=Fz_{p,t}$, $\\operatorname{div}_a z_{p,t}=0$ and $z_p(0)=z_p(T)=0$. Use the recursive sources in (5.27)–(5.28), including $-R_U\\circ X$ at mean level two. Mean pressures have zero spatial mean and transverse pressures zero phase mean. The terminal convention is $V_{P+1}=B_{P+1}=0$. All profiles are smooth on $[0,T]$, one-periodic in phase, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$.\n\nLet $P\\ge2$ and take the resulting finite expansion. Set $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$, $\\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p)$, $V=U+W^\\natural$ and $\\Pi=p_U+\\mathsf P^\\natural$. The notation $f^\\natural(t,x)$ means $f(t,a,k_*\\cdot a)$ at $a=X(t,\\cdot)^{-1}(x)$. Choose $C_{\\rm step}=\\Gamma_P\\mathsf D^b$ sufficiently large and assume $C_{\\rm step}\\lambda^{-1/12}\\le1$. The exponent $b$ is independent of $P$, whereas $\\Gamma_P$ may depend on $P$ and the fixed profiles.\n\nFix a smooth radial multiplier $\\psi$ with $0\\le\\psi\\le1$, $\\psi=1$ on $|\\xi|\\le1$ and $\\psi=0$ for $|\\xi|>2$. For $\\Lambda\\ge1$, let $u=S_\\Lambda V$, where the multiplier on $e^{2\\pi i\\xi\\cdot x}$ is $\\psi(\\xi/\\Lambda)$, and let $p$ be the periodic zero-mean solution of $\\Delta p=-\\operatorname{tr}((\\nabla u)^2)$. The formal statement supplies such $u,p$. It proves $u$ smooth, odd and divergence free, with Fourier support $|\\xi|\\le2\\Lambda$, and proves its momentum residual $R_u=u_t+u\\cdot\\nabla u+\\nabla p$ odd and divergence free, with support $|\\xi|\\le4\\Lambda$.\n\nPut $\\varepsilon_\\Lambda=\\Lambda^{2-P}(1+\\|V\\|_{C_tC^{P,1/2}})^2$. The conclusions are $\\|u-V\\|_{C_tC^{2,1/2}}\\le C_{2,P}\\varepsilon_\\Lambda$ and $\\|R_u\\|_{C_tC^{1,1/2}}+\\|D^2(p-\\Pi)\\|_{C_tC^{0,1/2}}\\le C\\|R_V\\|_{C_tC^{1,1/2}}+C_{2,P}\\varepsilon_\\Lambda$. They imply the stated upper quadratic-form bound $D^2(p-p_U)\\le(C_{\\rm step}\\lambda^{-1/4}+C\\|R_V\\|_{C_tC^{1,1/2}}+C_{2,P}\\varepsilon_\\Lambda)I$. All time suprema are over $[0,T]$.\n\nThe exponent $2-P$ is an integer, so it is negative when $P>2$; it is not subtraction truncated at zero. The formal estimate for the sum permits the two terms to be evaluated at independent times. This represents the sum of two time suprema in (5.56), not a weaker bound at one common time. The multiplier is fixed before its constants are chosen, and those constants precede the parent, depth and cutoff frequency. The larger parent-pressure and seed classes remain admissible, but the new pressure $p$ is normalized by the Poisson equation exactly as in the paper. Existence is explicit; uniqueness of this normalized pressure follows from the periodic Poisson problem rather than an additional uniqueness clause in this numbered statement."
     }
    ],
    "statements": [
@@ -884,28 +583,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper's mean estimate (5.12) is retained for every solution with $B=D_aXz_t$ and $z(0)=z(T)=0$, including exactly one additional derivative of the source. The formal statement allows the broader pressure class specified by the residual and coercivity bounds, so the paper's Poisson pressure is covered. Once the envelope exponent is fixed sufficiently large, the parent exponent is uniform in the parent and derivative order. This is an estimate for existing mean solutions; existence comes from the endpoint problem and the expansion construction."
-    },
-    {
-     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
-     "name": "TorusEuler.paper_mean_columns",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
-     "name": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.proposition_5_2",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nLet $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\mathbf d=F^{-T}\\nabla_a$. For smooth periodic phase-independent fields $\\bar f,B,\\bar q$, suppose $B_t+MB+\\mathbf d\\bar q=\\bar f$ and $B=Fz_t$, where the smooth periodic displacement $z$ satisfies $z(0)=z(T)=0$ and $\\operatorname{div}_a z_t=0$. Volume preservation makes the last condition equivalent to $\\mathbf d\\cdot B=0$. No vanishing of the mean correction before activation is required.\n\nFor a sufficiently large fixed integer $a$ and $\\ell_*=\\mathsf D^{-a}$, the formal statement gives $\\|B\\|_{[n]}\\le C_n\\mathsf D^C\\|\\bar f\\|_{[n+1]}$ at every nonnegative integer order $n$. These are unweighted suprema on the entire interval $[0,T]$, summed over label derivatives with weights $\\ell_*^{|\\alpha|}$; phase derivatives vanish. The statement estimates every solution satisfying these conditions. It does not assert existence or choose the additive function of time in $\\bar q$.\n\nThe derivative loss is exactly one, as in (5.12). Once $a$ is fixed, one integer exponent $C$ is chosen before the parent and before $n$; only $C_n$ varies with order. The formal statement enlarges the allowed parent-pressure class described above. Its explicit endpoint and divergence requirements express the paper's mean equation, rather than additional initial-value restrictions."
     }
    ],
    "statements": [
@@ -927,30 +605,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "For the fixed profiles, the formal statement retains the expansion, divergence and residual identities, support and preactivation vanishing, the final-level convention, and phase independence of the remainder outside the envelope. It makes the finite construction's existence and uniqueness explicit and also asserts existence of the seed; uniqueness concerns exactly the levels used in the construction. Its parent pressure assumptions are broader than §5.1, and it permits any nonzero central seed with $\\gamma\\le1$, so the paper's normalization is included. The radius threshold is uniform in the parent and expansion depth."
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.proposition_5_4",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/HierarchyPhysicalApproximation.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper asserts that the finite expansion is well defined. This formal definition builds profiles from supplied leading data and selected solves; existence of the localized seed and uniqueness of the resulting expansion require separate results."
-    },
-    {
-     "file": "TorusEuler/PaperHierarchyIdentity.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper asserts that the finite expansion is well defined. The linked formal theorem proves identities for an already supplied physical construction, so it does not itself establish seed existence or uniqueness among all admissible expansions."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nLet $g$ be the fixed smooth radial envelope, equal to one on $|a|\\le\\ell_*$ and zero for $|a|\\ge2\\ell_*$, and let $\\widetilde\\chi$ be a smooth time cutoff with $0\\le\\widetilde\\chi\\le1$, vanishing for $t<t_0$. Here $F_h$ is the fixed smooth one-periodic zero-mean phase profile of Section 3. The seed is the transverse linear solution with initial value $(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. For each integer $P\\ge2$, the formal statement supplies this seed and a smooth finite expansion with $A_1=g\\mathbf aF_h$, $V_1=\\widetilde\\chi A_1$, $C_1=B_1=\\bar q_1=0$, $C_{p+1}=C[V_p]$, and the mean and transverse equations (5.11), (5.27) and (5.28). Mean pressures have zero spatial mean; transverse pressures have zero phase mean. For $p\\ge2$, $V_p(0)=0$, while $B_p=Fz_{p,t}$ with $\\operatorname{div}_a z_{p,t}=0$ and $z_p(0)=z_p(T)=0$. The level-two mean source includes $-R_U\\circ X$.\n\nWrite $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$, $\\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p)$ and $\\widetilde{\\mathbf d}=\\mathbf d+\\kappa\\partial_s$, with $\\mathbf d=F^{-T}\\nabla_a$. The conclusion is $\\widetilde{\\mathbf d}\\cdot W=0$ and $W_t+MW+(W\\cdot\\widetilde{\\mathbf d})W+\\widetilde{\\mathbf d}\\mathsf P+R_U\\circ X=R_P+R_{\\widetilde\\chi}$. Here $R_P$ is the finite remainder (5.30), and $R_{\\widetilde\\chi}=S+C[S]$ with $S=\\widetilde\\chi'A_1$. The oscillatory part, and the oscillatory sources at levels $2\\le p\\le P$, vanish outside the repeated envelope. Oscillatory velocities, their pressures and all retained divergence corrections vanish before activation. The means need not vanish there.\n\nThe final convention is $V_{P+1}=B_{P+1}=0$, hence $Y_{P+1}=Z_{P+1}=C_{P+1}$. Outside the envelope $R_P$ is phase-independent; this does not say it vanishes. Uniqueness concerns $V_p,B_p,\\mathsf p_p,\\bar q_p$ for $1\\le p\\le P$ and $C_p$ for $1\\le p\\le P+1$, not unused entries of an infinite family. Profiles represent periodic physical fields by the relation $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$; smoothness is on $[0,T]$. The identities and support conclusions match the paper. The formal statement explicitly asserts existence and uniqueness and allows the broader pressure and seed normalization above; the radius threshold is chosen independently of the parent and depth."
     }
    ],
    "statements": [
@@ -972,35 +627,7 @@
      "relation": "states",
      "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper begins with the maximal smooth solution supplied by general existence theory, whose lifespan could still be infinite at this stage. The formal statement instead constructs a smooth odd Euler solution on $[0,T_\\infty)$, proves the stated initial-data and earlier-interval convergence in every $C^{m,1/2}$ norm, and compares that solution conditionally with every maximal solution of finite lifespan from the same data. It does not assert general maximal-solution existence. The preterminal Euler existence and convergence conclusions are present; Corollary 8.3 later proves that this constructed solution itself is maximal at the finite time $T_\\infty$."
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.InductiveEulerStages.paper_proposition_8_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.PaperLimitAgreement",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.proposition_8_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
-     "name": "TorusEuler.Paper.Proposition81Conclusions",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "For the common construction of Theorem 7.1, the formal statement produces a smooth odd periodic Euler solution on $[0,T_\\infty)$ with mean-zero pressure. The initial data converge in every $C^{m,1/2}$, and convergence in that spatial norm is uniform on every $[0,S]$ with $S<T_\\infty$. It then says that any maximal solution of finite lifespan from the same datum lasts at least to $T_\\infty$ and agrees with this limit. The paper instead starts with the maximal solution supplied by general existence theory, whose lifespan may still be infinite at this point. Thus the preterminal existence and convergence conclusions are present, but general maximal-solution existence is not asserted by this declaration. Corollary 8.3 subsequently proves finite maximality for the constructed solution. Fields are period-one functions on $\\mathbb R^3$; the exact numerical normalization of the spatial Hölder norm is defined in an imported file absent from this packet."
     }
    ],
    "statements": [
@@ -1022,35 +649,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains bounded velocity and central vorticity tending to infinity. It additionally gives fixed constants $c>0$ and $C$ such that, on every sufficiently late interval $[t_j,t_{j+1})$, $|\\operatorname{curl}u(t,0)|\\ge c\\lambda_{j-1}^{1/8}-C\\lambda_{j-1}^{1/32}-C$. This is a quantitative conclusion for the limiting solution, obtained from (8.2) by controlling the older-gradient term and later increments. The formal proof of Corollary 8.3 uses this extra bound; pointwise blow-up alone would not imply divergence of the time integral."
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.paper_section_8_of_inductiveEulerStages",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.PaperTerminalVelocityCurl",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.proposition_8_2",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
-     "name": "TorusEuler.Paper.Proposition82Conclusions",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "For the smooth Euler limit of the common construction, the formal statement gives both printed conclusions: one finite bound for the velocity throughout $[0,T_\\infty)$ and the full limit $|\\operatorname{curl}u(t,0)|\\to\\infty$. It additionally supplies fixed real constants $c>0,C$ and an index $J$ such that, for every $j\\ge J$ and every $t\\in[t_j,t_{j+1})$, $|\\operatorname{curl}u(t,0)|\\ge c\\lambda_{j-1}^{1/8}-C\\lambda_{j-1}^{1/32}-C$. This bound is for the limiting solution, whereas (8.2) bounds the approximation and uses the older-gradient term $\\lambda_{j-2}^9$. The constants are independent of the late index and time. The velocity norm is the essential supremum on the unit cell. The stronger interval estimate, together with crossing-duration bounds, supplies the direct integral argument in the formal Corollary 8.3; a divergent pointwise limit alone would not suffice."
     }
    ],
    "statements": [
@@ -1072,43 +671,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement includes both limits in the paper: velocity and its time derivative converge in $C^m(K)$ for every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every finite spatial order. Convergence is expressed for spatial derivatives of local extensions on neighborhoods of $K$, so it includes derivatives as well as values. Joint smooth extension through the terminal time is the separate conclusion of the auxiliary note."
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.paper_section_8_of_inductiveEulerStages",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperTerminalStatements.lean",
-     "name": "TorusEuler.PaperTerminalOffOrigin",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Statement.lean",
-     "name": "TorusEuler.HasOffOriginLimits",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper asserts limits for both $u$ and $\\partial_tu$. This formal condition concerns one field at a time; the terminal statement requires it for both fields."
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.proposition_8_4",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
-     "name": "TorusEuler.Paper.Proposition84Conclusions",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "For the Euler limit of the common construction, the formal statement gives both limits in Proposition 8.4. For every compact $K$ avoiding the torus origin and every integer $m\\ge0$, $u(t)$ and $\\partial_tu(t)$ converge uniformly with all spatial derivatives through order $m$ as $t\\uparrow T_\\infty$. The torus is represented by periodic functions on $\\mathbb R^3$, so a compact observation set avoids every integer lattice point. For each field, compact set and order, the limit is represented by a $C^m$ function on an open neighbourhood of that set. The time derivative is taken within $[0,T_\\infty)$, including a right derivative at zero. These are local spatial limits of the velocity and its first time derivative. The statement does not assert that every construction admits one jointly smooth extension through the terminal time; the auxiliary note proves that stronger conclusion after a suitable choice of the construction."
     }
    ],
    "statements": [
@@ -1130,43 +693,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Both statements assert that a solution satisfying Theorem 1.1 can be chosen with a smooth extension through $T_*$ away from the origin, without requiring that extension to solve Euler after $T_*$. The formal proof obtains this existential conclusion from a particular auxiliary construction, rather than proving the broader auxiliary assertion for every admissible construction."
-    },
-    {
-     "file": "TorusEuler/AuxiliaryTerminalSmoothness.lean",
-     "name": "TorusEuler.auxiliaryTerminalSmoothness",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/TerminalAuxiliaryAssembly.lean",
-     "name": "TorusEuler.AuxiliaryTerminalSmoothness",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/TerminalSeeleyExtension.lean",
-     "name": "TorusEuler.HasSmoothOffOriginExtension",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_source": "ai",
-     "fidelity_note": "Remark 1.2 asks for smooth extension through $T_*$ away from the origin; the linked formal condition requires a periodic extension smooth there for every real time. This is a stronger extension property, without imposing the Euler equations after $T_*$."
-    },
-    {
-     "file": "TorusEuler/Paper/Auxiliary/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.remark_1_2",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
-     "name": "TorusEuler.Paper.Proof.remark_1_2",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "The paper and the formal statement both assert that one solution satisfying Theorem 1.1 can be chosen with a smooth space-time extension through $T_*$ away from the torus origin. Thus the same solution has bounded velocity, divergent gradient and vorticity integrals, central vorticity divergence and the two off-origin spatial limits. The formal statement also records uniqueness of its maximal velocity and lifespan. The extension is periodic; it is not required to solve Euler after $T_*$. The proof uses an auxiliary theorem that selects an exponent and threshold and produces an extension smooth away from the integer lattice for all real times. This stronger input suffices for the local existential remark. It does not establish the auxiliary note’s broader assertion for every threshold satisfying its additional estimates; the supplied auxiliary statement file explicitly leaves that broader assertion outside the proved sequence of numbered results."
     }
    ],
    "statements": [
@@ -1188,35 +715,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains every conclusion of Theorem 1.1, including the two divergent integrals and both off-origin limits. It explicitly states that the maximal classical velocity and its lifespan are unique for the chosen initial data, making precise the paper's phrase “whose maximal classical solution.”"
-    },
-    {
-     "file": "TorusEuler/Statement.lean",
-     "name": "TorusEuler.Theorem11",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Statement.lean",
-     "name": "TorusEuler.EulerSingularityWitness",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/MainTheorem.lean",
-     "name": "TorusEuler.theorem11",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.theorem_1_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "Both statements assert existence of smooth odd divergence-free data on $\\mathbb T^3$ and a maximal smooth odd Euler solution on $[0,T_*)$, with finite $T_*>0$. The velocity is uniformly bounded, $|\\operatorname{curl}u(t,0)|\\to\\infty$, and the time integrals of the gradient and vorticity $L^\\infty$ norms diverge. For every compact set away from the origin and every nonnegative integer $m$, both velocity and its time derivative converge in $C^m$. The formal statement represents torus fields by integer-periodic functions on $\\mathbb R^3$, uses essential suprema on the centered unit cube and the Euclidean operator norm for the gradient, and takes the derivative at time zero from the right. Pressure has zero spatial mean, as required in the paper’s conventions. It explicitly asserts that every maximal solution from the selected initial data has the same lifespan and velocity. This makes the classical uniqueness implicit in the paper precise. Neither statement imposes the Euler equations after $T_*$."
     }
    ],
    "statements": [
@@ -1238,7 +737,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The formal statement retains the endpoint solution, uniqueness of velocity, displacement, the time-independent field $c$ and pressure gradient, smooth recovery of the physical correction, and the fixed-time inverse bound. Its polynomial bound uses supremum bounds for $K$, $\\Omega$ and their first spatial derivatives, rather than the larger $C^{1,1/2}$ norms in (4.10), so the paper's quantitative estimate follows after adjusting an absolute constant."
+     "fidelity_note": "Let $0<T\\le1$ and let $U$ be a smooth periodic divergence-free parent, with flow $X$, $F=D_aX$, $M=(D_xU)\\circ X$, $K=F^TF$ and $\\Omega=F^T(M^T-M)F$. Under $H^\\#=-(M_t+M^2)\\le I$, the formal theorem has the endpoint conclusion of Theorem 4.2 for every $L\\in C([0,T];C^{0,1/2}(\\mathbb T^3))$. It gives divergence-free $z\\in C^1([0,T];C^{0,1/2})$ and $v=z_t$, a time-independent divergence-free $c$, and a continuous Hölder pressure gradient satisfying $Kv-\\int_0^t\\Omega v+L=c+\\nabla_a\\phi$, $z(0)=z(T)=0$. Uniqueness is of $z,v,c,\\nabla_a\\phi$, with equality of time-dependent fields on $[0,T]$; the scalar potential retains its arbitrary function of time. The bound is $C(D_-+L_M+K_0+K_1+\\Omega_0+\\Omega_1)^p$, where these numbers bound $F^{-1}$, $M$, the coefficients and their first label derivatives in supremum norm, and $C\\ge0$ and the nonnegative integer $p$ are chosen before all parent data. Here $L_M$ denotes the bound for $M$, to distinguish it from the source $L$. This is quantitatively stronger than (4.10), which uses full $C^{1,1/2}$ coefficient norms; those norms control the displayed bounds up to an absolute constant. A separate supplied inverse estimate uses exponent $4\\cdot291=1164$; the formal statement of Theorem 4.2 leaves $p$ existential. The $C^{0,1/2}$ norm is the maximum of supremum norm and half-Hölder seminorm. For $L=-\\int_0^tF^T(f\\circ X)$ with smooth periodic $f$, the formal statement also gives smooth $z$, a smooth zero-spatial-mean label pressure satisfying (4.11), smooth $b=(Fv)\\circ X^{-1}$ and $q$ solving (4.12), and $b(0)=c$. The same bound controls the fixed-time inverse on divergence-free Hölder fields. No Euler equation for the parent is assumed."
     }
    ],
    "statements": [
@@ -1260,30 +759,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. Within this broader class, all powers in (5.34)–(5.38) agree, including the leading-level clauses, means beginning at level two, the correction $C_{p+1}$, and the remainder without an extra factor $\\mathsf D^C$. The formal statement treats each finite depth $P$ and all retained levels, using constants $C_{n,p}$ independent of $P$; the constants for sums and the remainder may depend on $P$. Proposition 5.4 supplies every depth, and uniqueness makes their common levels agree. After fixing the envelope exponent, one parent exponent $C$ is chosen before the parent and is independent of derivative order, level, and depth. That same $C$ occurs in the hypothesis $\\mathsf D^C\\lambda^{-1/12}\\le1$, and the same expansion satisfies every derivative order."
-    },
-    {
-     "file": "TorusEuler/Paper/S5/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.theorem_5_6",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/PaperGenericWaveSwitchDepth.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper states the hierarchy bounds for its admissible construction. The linked formal result chooses one seed and one expansion satisfying them, so it proves existence for a particular choice rather than the bounds for every admissible construction."
-    },
-    {
-     "file": "TorusEuler/PaperHierarchyDepthGeneral.lean",
-     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper derives the hierarchy estimates from the standing construction. The linked formal theorem instead assumes the leading correction identities, inactive-region property, and leading bounds at every order, so these analytical inputs must be supplied before its conclusion applies."
+     "fidelity_note": "Let $0<T\\le1$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\\times\\mathbb T^3$, with Fourier support $|\\xi|\\le2\\mathsf D$ and flow $X$. The bounds $\\|\\nabla U\\|_\\infty,\\|D_aX\\|_\\infty,\\|(D_aX)^{-1}\\|_\\infty\\le\\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\\cdot\\nabla U+\\nabla p_U$; require $R_U$ odd, supported in $|\\xi|\\le4\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and $D^2p_U-\\nabla R_U\\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\\operatorname{div}R_U=0$.\n\nWrite $F=D_aX$, $M=(\\nabla U)\\circ X$ and $\\kappa=F^{-T}k_*$, where $k_*\\ne0$. Choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the origin take a nonzero transverse solution $\\mathbf a$ of $\\mathbf a_t=-M\\mathbf a+2\\kappa(\\kappa\\cdot M\\mathbf a)/|\\kappa|^2$. Put $\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t,0)|$. For every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$, assume $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$, and assume $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ at the origin. The formal normalization is $0<\\gamma\\le1$; the paper additionally requires $\\max\\gamma=1$. Fix $\\ell_*=\\mathsf D^{-a}$ for a sufficiently large integer $a$, and $h=\\lambda^{-1/2}$.\n\nFor a profile $f(t,a,s)$, the norm $\\|f\\|_{[n]}$ sums $\\ell_*^{|\\alpha|}h^j\\sup|\\partial_a^\\alpha\\partial_s^j f|$ over $|\\alpha|+j\\le n$ on $[0,T]$. The weighted norm $\\|f\\|_{[n],\\gamma}$ uses $[t_0,T]$ and divides by $\\gamma(t)$; it differentiates only labels and phase. Each multi-index is counted once. The profiles are smooth on the closed time slab, one-periodic in $s$, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$. Their stipulated zero values outside the time slab do not assert smoothness across its endpoints.\n\nThe finite expansion is selected as follows. Extend the seed to all labels by its transverse equation with $\\mathbf a(t_0,a)=(I-P_{\\kappa(t_0,a)})\\mathbf a(t_0,0)$. Use the fixed smooth radial envelope $g$, equal to one on $|a|\\le\\ell_*$ and zero on $|a|\\ge2\\ell_*$, and the fixed one-periodic zero-mean phase profile $F_h$ of Section 3. The time cutoff $\\widetilde\\chi$ is smooth on $[0,T]$, lies in $[0,1]$, and is zero for $t<t_0$. This permits $\\widetilde\\chi\\equiv1$ when $t_0=0$. On the centered label cell set $A_1=g\\mathbf aF_h$, $V_1=\\widetilde\\chi A_1$ and $\\mathsf p_1=\\widetilde\\chi\\mathsf p[A_1]$, where $\\mathsf p[A_1]$ has zero phase mean and $A_{1,t}+MA_1+\\kappa\\partial_s\\mathsf p[A_1]=0$. Set $B_1=\\bar q_1=C_1=0$ and $C_{p+1}=C[V_p]$. Here $C[V]=\\mathbf d\\times(-\\kappa\\times\\partial_s^{-1}V/|\\kappa|^2)$, $\\mathbf d=F^{-T}\\nabla_a$, and $\\partial_s^{-1}$ is the zero-mean phase primitive. Higher transverse velocities have zero phase mean, are perpendicular to $\\kappa$ and satisfy $V_p(0)=0$. The means have $B_p=Fz_{p,t}$, $\\operatorname{div}_a z_{p,t}=0$ and $z_p(0)=z_p(T)=0$. Use the recursive sources in (5.27)–(5.28), including $-R_U\\circ X$ at mean level two. Mean pressures have zero spatial mean and transverse pressures zero phase mean. The terminal convention is $V_{P+1}=B_{P+1}=0$. All profiles are smooth on $[0,T]$, one-periodic in phase, and satisfy $f(t,a+n,s+k_*\\cdot n)=f(t,a,s)$ for $n\\in\\mathbb Z^3$.\n\nFor an expansion of finite depth $P\\ge2$ obtained by the mean and transverse equations, assume $\\mathsf D^C\\lambda^{-1/12}\\le1$. The formal statement gives, for $2\\le p\\le P$, $\\|V_p\\|_{[n],\\gamma}+\\|f_p+f_p^S\\|_{[n],\\gamma}+\\lambda\\|\\mathsf p_p\\|_{[n],\\gamma}\\le C_{n,p}\\mathsf D^C\\lambda^{-5/4-2(p-1)/3}$ and $\\|B_p\\|_{[n]}+\\|\\bar f_p\\|_{[n]}\\le C_{n,p}\\mathsf D^C\\lambda^{-5/2-2(p-2)/3}$. It also bounds $\\|C_{p+1}\\|_{[n],\\gamma}$ by $C_{n,p}\\mathsf D^C\\lambda^{-9/4-2(p-1)/3}$ for $1\\le p\\le P$. At level one the oscillation and pressure bound holds with no source term.\n\nFor $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$ and $W_{\\rm osc}=W-\\langle W\\rangle_s$, the conclusion includes $\\|W_{\\rm osc}\\|_{[m],\\gamma}\\le C_{m,P}\\mathsf D^C\\lambda^{-5/4}$ and $\\|\\sum_{p=2}^PB_p\\|_{[m]}+\\|\\sum_{p=2}^P\\bar f_p\\|_{[m]}\\le C_{m,P}\\mathsf D^C\\lambda^{-5/2}$. The remainder in the momentum identity satisfies $\\|R_P\\|_{[m]}\\le C_{m,P}\\lambda^{-5/4-2P/3}$, with no extra power of $\\mathsf D$.\n\nThese are the powers and index ranges of (5.34)–(5.38). The same expansion satisfies every derivative order. The formal statement quantifies the level constants $C_{n,p}$ independently of the terminal depth $P$, while the sum and remainder constants may depend on $P$. The integer exponent $C$ is fixed before the parent, level, depth and derivative order, after choosing the envelope exponent $a$; that same $C$ occurs in the smallness assumption. The stronger verdict records the larger pressure and seed-normalization class. The statement concerns finite expansions; it neither asserts convergence of an infinite expansion at fixed frequency nor supplies a bound on the growth of $C_{n,p}$ with $n$ or $p$."
     }
    ],
    "statements": [
@@ -1305,22 +781,7 @@
      "relation": "states",
      "fidelity": "different",
      "fidelity_source": "ai",
-     "fidelity_note": "The bounds (T1)–(T4), positive common time, localized oscillations and summable increments are retained. The formal statement also supplies equations connecting each step to Section 5 and later comparison bounds, fixes the strength constant as $18e^3$, and chooses the other constants before the admissible threshold function and initial frequency. Its envelope exponent can be chosen above any prescribed lower bound, without asserting that every larger exponent works. The contextual identifications are incomplete: the central amplitude is identified with the localized seed, but the central covector is not explicitly identified with its transported counterpart, and the first-wave direction and attained normalization are not restated. The supplied smooth step data should still be used when interpreting time regularity."
-    },
-    {
-     "file": "TorusEuler/PaperSequenceStatements.lean",
-     "name": "TorusEuler.paperTheorem71",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_source": "ai",
-     "fidelity_note": "The paper allows every admissible threshold function once the fixed constants are chosen. The formal theorem constructs one such function and does not include the Section 5 step identities."
-    },
-    {
-     "file": "TorusEuler/Paper/S678/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.theorem_7_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "The formal theorem constructs a single sequence of approximate velocities with the principal bounds of Theorem 7.1 and also identifies the expansion and truncation used at each step. Its parameter quantifiers and some identifications of the central wave differ from the paper's contextual description.\n\nFirst fix a smooth radial Fourier symbol $\\psi$ with $0\\le\\psi\\le1$, equal to one on the unit ball and zero outside the ball of radius two. For every integer $a_0\\ge0$, the formal theorem chooses integers $b\\ge1$, $a\\ge a_0$ and a majorant $F$ of the fixed-order constants. These choices precede the threshold function $\\mathcal B$. Every positive nondecreasing $\\mathcal B$ satisfying $F(s)\\le\\mathcal B(s)$ and $\\log\\mathcal B(s)\\ge4K(s+1)^3$ for $s\\ge1$, with $K(s)=320b(s+1)$, then admits a threshold $N_1$. For every real $N\\ge N_1$ it constructs the sequence with $\\lambda_0=N$, $q_1=1$, $\\lambda_j=\\lambda_{j-1}^{K(q_j)}$ and $q_{j+1}=\\max\\{1\\le s\\le q_j+1:\\mathcal B(s)\\le\\lambda_{j-1}\\}$. Thus the envelope exponent can be chosen above any prescribed lower bound; the statement does not assert that every sufficiently large $a$ works. The strength constant is fixed explicitly as $C=18e^3$.\n\nThe spatial domain is $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, represented by periodic functions on $\\mathbb R^3$. Write $L_j=4\\log\\lambda_{j+1}$, $\\varepsilon_j=L_j^{-2}$, $\\tau_j=\\lambda_{j-1}^{-1/8}L_{j+1}^3$ and $S_j=t_j+2\\tau_j$ for $j\\ge1$, with $S_0=1$. The velocities are jointly smooth on $[0,S_j]\\times\\mathbb T^3$, odd, divergence free and supported in Fourier frequencies $|k|\\le2\\lambda_j^5$. The initial field is $U_0(x)=\\sin(2\\pi x_2)(e_1+\\varepsilon_1e_3)$. The flow $X_j$ is the actual label flow of $U_j$ from time zero; $\\pi_j$ is its zero-mean pressure; and $R_j=\\partial_tU_j+(U_j\\cdot\\nabla)U_j+\\nabla\\pi_j$ is its momentum residual. Throughout each slab the theorem gives $\\|U_j\\|_\\infty\\le\\lambda_j$, $\\|(D_aX_j)^{\\pm1}\\|_\\infty\\le\\lambda_j$, $\\|R_j\\|_\\infty\\le\\lambda_{j+1}^{-3}$ and $D^2\\pi_j\\le(\\sum_{i<j}\\lambda_i^{-1})I$. Matrix inequalities are quadratic-form inequalities and matrix norms are operator norms.\n\nFor $j\\ge1$, the central gradient is split as $\\nabla U_j(t,0)=\\nabla U_{j-1}(t,0)+\\widetilde\\chi_j(t)\\mathbf a_j(t)\\otimes\\kappa_j(t)+E_{c,j}(t)$ on $[t_j,S_j]$, with $\\|E_{c,j}\\|\\le\\lambda_j^{-1/4}$. With $E_1=\\kappa_j/|\\kappa_j|$, $E_2=\\mathbf a_j/|\\mathbf a_j|$ and $E_3=E_1\\times E_2$, the couplings are $\\nu_j=E_1\\cdot\\nabla U_{j-1}(t,0)E_2$ and $\\eta_j=E_3\\cdot\\nabla U_{j-1}(t,0)E_2$. At $t_{j+1}$ they satisfy $\\eta_j/\\nu_j=\\varepsilon_j$, $\\pi\\le\\nu_j\\le4\\pi$ and $C^{-1}\\lambda_j^{1/4}\\le|\\mathbf a_j||\\kappa_j|\\le C\\lambda_j^{1/4}L_{j+1}^2$. Also $0\\le t_{j+1}-t_j\\le\\tau_j$, and the cutoff equals one from $t_{j+1}$ to $S_j$. The activation times satisfy $0=t_1=t_2<t_3<\\cdots\\to T_\\infty>0$, with $T_\\infty<S_j$ for every $j$.\n\nThe oscillation $O_j$ is identified with the oscillatory part of the finite localized expansion, evaluated using the inverse parent flow. The expansion has depth $6K_{j+1}$ and envelope radius $\\lambda_{j-1}^{-9a}$, and the child velocity is its parent-plus-increment after Fourier cutoff at $\\lambda_j^5$. The support of $O_j(t)$ lies within distance $\\lambda_{j-1}^{-1}$ of the integer lattice, which represents the single origin on the torus. For each $t\\in[0,S_j]$ the formal conditions give $\\|O_j(t)\\|_\\infty\\le\\lambda_j^{-1}$ and $\\|U_j(t)-U_{j-1}(t)-O_j(t)\\|_{C^{m,1/2}}\\le\\lambda_j^{-1}$ for integers $0\\le m\\le q_j$. For $j\\ge2$, $O_j$ vanishes on $[0,t_j]$. The Hölder bounds are expressed at each time, with a separate finiteness requirement. The exact definition of that spatial norm is absent from this packet, so its normalization and exact correspondence with the displayed $C([0,S_j];C^{m,1/2})$ norm cannot be independently checked. Smooth step data are also supplied; the pointwise formulation alone is not evidence that time continuity fails.\n\nTwo contextual equalities remain missing from the exported conditions. The localized seed at the origin is identified with $\\mathbf a_j$, but the transported covector $(D_aX_{j-1})^{-T}k_*$ is not identified with $\\kappa_j$. Moreover, the first wave's initial covector $\\lambda_1e_1$, initial amplitude direction $e_2$ and attained normalization $\\max|\\mathbf a_1|=\\lambda_1^{-3/4}$ are not recorded; its initial first coupling $\\nu_1(0)=2\\pi$ is recorded. Later waves do carry their prescribed initial directions and normalization through the selected crossing data. These omissions, together with the precise envelope-exponent quantifier, prevent an unqualified assertion that the two statements are identical."
     }
    ],
    "statements": [
@@ -1342,21 +803,7 @@
      "relation": "states",
      "fidelity": "stronger",
      "fidelity_source": "ai",
-     "fidelity_note": "The endpoint solution, uniqueness and smooth-data conclusions are retained under the same ellipticity and coercivity hypotheses on all $H^1_0$ paths. The formal hypotheses require time continuity in $C^{0,1/2}$ and bounded first spatial derivatives of the coefficients, instead of time continuity in $C^{1,1/2}$, and the bound uses these smaller coefficient quantities; the paper's hypotheses therefore give a special case."
-    },
-    {
-     "file": "TorusEuler/Paper/S34A/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.theorem_A_1",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
-    },
-    {
-     "file": "TorusEuler/Paper/S34A/Statements.lean",
-     "name": "TorusEuler.Paper.Statement.lemma_A_2",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_source": "ai"
+     "fidelity_note": "On $I=[0,1]$ and $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, let $K(t,a)$ be symmetric and $\\Omega(t,a)$ skew-symmetric. Assume $K\\ge\\kappa I$ for $\\kappa>0$ and $\\int_0^1(Kz_t\\cdot z_t+\\Omega z_t\\cdot z)\\,dt\\ge\\mu\\int_0^1|z_t|^2\\,dt$ for every label $a$ and $z\\in H^1_0(I;\\mathbb R^3)$, with $\\mu>0$. The formal numbered statement retains both symmetry assumptions.\n\nFor every $L\\in C(I;C^{0,1/2})$ it supplies unique divergence-free $z\\in C^1(I;C^{0,1/2})$ and time-independent divergence-free $c\\in C^{0,1/2}$, and a unique gradient $\\nabla\\phi\\in C(I;C^{0,1/2})$, such that $Kz_t-\\int_0^t\\Omega(s)z_t(s)\\,ds+L=c+\\nabla\\phi$ and $z(0)=z(1)=0$. Uniqueness is on $I$ and concerns the gradient, not the scalar potential up to an additive function of time. Smooth $K,\\Omega,L$ give smooth $z,c,\\nabla\\phi$ on the closed slab.\n\nThe regularity hypothesis is weaker than the paper's $C(I;C^{1,1/2})$: the formal statement assumes continuity in $C^{0,1/2}$, spatial differentiability, and uniform bounds $K_0,K_1,\\Omega_0,\\Omega_1$ on the coefficients and their first spatial derivatives. With $Q=2+\\kappa^{-1}+\\mu^{-1}+K_0+K_1+\\Omega_0+\\Omega_1$, it gives $\\sup_{t\\in I}\\|z_t(t)\\|_{C^{0,1/2}}\\le CQ^p\\sup_{t\\in I}\\|L(t)\\|_{C^{0,1/2}}$, for a single constant $C$ and nonnegative integer $p$ chosen before the data. The paper's hypotheses imply these bounds, with a change of absolute constant.\n\nThe formal $C^{0,1/2}$ norm is the maximum of the supremum norm and the half-Hölder seminorm; this is equivalent to their sum. Sobolev test paths are represented by the primitives of zero-mean $L^2$ velocities, which is exactly $H^1_0$. Divergence-free Hölder fields are understood weakly. Neither representation reduces the paper's solution or test class."
     }
    ],
    "statements": [

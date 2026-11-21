@@ -18,7 +18,7 @@
  "source": {
   "proof_reader": {
    "repository": "https://github.com/wcook04/proof-reader",
-   "commit": "4d1a02f1d75f4d56267a67bd8fd91678a2499fa2",
+   "commit": "e84d8b60b793ee3cec783e6c04cd4921109b006f",
    "page": "euler"
   },
   "upstream": {
@@ -42,6 +42,13 @@
     "bytes": 751821,
     "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf"
    }
+  },
+  {
+   "id": "encoding",
+   "slot": "expository",
+   "slug": "how-the-lean-encodes-it",
+   "title": "How the Lean encodes it",
+   "noun": "guide"
   }
  ],
  "families": [
@@ -177,5 +184,5 @@
   "auxiliary-smoothness"
  ],
  "goal": "euler.theorem-1.1",
- "main_lean": "TorusEuler.theorem11"
+ "main_lean": "TorusEuler.Paper.theorem_1_1"
 }

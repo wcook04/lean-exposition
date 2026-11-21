@@ -38,6 +38,23 @@
   "TorusEuler.paper_mean_inverse_smooth_force_of_flow": "Mean inverse over the actual flow",
   "TorusEuler.planeWave_selfAdvection": "Transverse wave does not self-advect",
   "TorusEuler.pulledBackCurl_material_eq": "Time derivative of the label curl",
-  "TorusEuler.stationaryShear_mFourierCoeff_ne_zero_iff": "Two Fourier modes of the shear"
+  "TorusEuler.stationaryShear_mFourierCoeff_ne_zero_iff": "Two Fourier modes of the shear",
+  "TorusEuler.InductiveEulerStages.stageMixedIncrementBound_zero": "Correction bound at time order zero",
+  "TorusEuler.LocalizedAmplitude.SeedOn.genericLeading_cell_eval": "Activated wave on the label cell",
+  "TorusEuler.MovingWaveVector.PhysicalAmplification.physicalEta": "Second coupling in the new frame",
+  "TorusEuler.MovingWaveVector.PhysicalAmplification.physicalNu": "First coupling in the new frame",
+  "TorusEuler.MovingWaveVector.amplificationPhysicalError": "Error measured on the time set",
+  "TorusEuler.Paper.Aux.MixedIncrementBound": "Full mixed bound at one stage",
+  "TorusEuler.Paper.Aux.TimeBounds": "Full time bounds at one stage",
+  "TorusEuler.Paper.Lib.S2b.norm_zeta_le": "Bound for the scaled wave vector",
+  "TorusEuler.ReferenceRiccati.couplingRatio_clock_bounds": "Ratio in terms of the tangent",
+  "TorusEuler.ReferenceRiccati.inv_sq_window_le_s": "Lower bound for the reference cosine",
+  "TorusEuler.ReferenceRiccati.riccati_abs_le_one": "Uniform bound for the reference slope",
+  "TorusEuler.ReferenceRiccati.x_mul_s_lt_one": "Reference sine is below one",
+  "TorusEuler.appendixSlowCoefficient_word_le": "Derivative bounded by its sum",
+  "TorusEuler.endpointClosedTimeNorm": "Norm on the closed time interval",
+  "TorusEuler.exists_spatialHolderHalfNorm_le_of_word_bounds": "Coordinate bounds give the full norm",
+  "TorusEuler.frequencySchedule_order_steps": "Order changes by at most one",
+  "TorusEuler.torusLInf_curl_le": "Curl bounded by the gradient"
  }
 }
