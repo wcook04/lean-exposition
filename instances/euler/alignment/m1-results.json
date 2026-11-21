@@ -62,8 +62,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "Let $D(t)$ be smooth and trace free, with $D'+D^2$ symmetric. Then $Dx$ solves t",
-     "to": "$\\langle H\\rangle_s=\\int_0^1H(s)\\,\\mathrm ds$ is the phase average.",
+     "from": "**Lemma 2.1.** Let the wave vector $k(t)\\ne0$ and the amplitude vector $\\mathbf a(t)$",
+     "to": "ar for every $t\\ge t_0$ in the interval of existence of $D$.",
      "origin": "ai"
     }
    ]
@@ -84,8 +84,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The following calculation uses only $\\operatorname{tr}B=0$; it requires no symme",
-     "to": "$\\operatorname{tr}B=0$; it requires no symmetry of $B'+B^2$.",
+     "from": "**Lemma 2.2.** Let $B(t)$ be a smooth trace-free matrix, and let $k\\ne0$ and $\\mathbf a\\ne0$",
+     "to": "$$\\begin{equation}\n E_1'=-\\nu E_2-B_{13}E_3,\\quad\n E_2'=\\nu E_1-\\eta E_3,\\quad\n E_3'=B_{13}E_1+\\eta E_2,\n \\qquad(\\log\\sigma)'=B_{33}. \\tag{2.2}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -106,8 +106,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "In the strong-shear limit $\\sigma/\\nu\\to\\infty$, the wave pressure multiplies th",
-     "to": "imum of $|\\mathbf a|$ on that interval to its initial value.",
+     "from": "**Lemma 2.3.** Suppose that on $0\\le\\tau\\le T$ the entries of $B$ in the frame a",
+     "to": "$$\\begin{equation}\n \\alpha_1'=-\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)\\alpha_2\n                 -\\varepsilon\\tau\\sin2\\varphi\\,\\alpha_1,\n \\qquad \\alpha_2'=-\\alpha_1 . \\tag{2.5}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -194,8 +194,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "For the perturbed wave, Lemma 2.7 shows that at late times $\\nu_+$ is close to $\\nu$",
-     "to": "ation and the orientation needed to repeat the construction.",
+     "from": "**Lemma 2.7.** Assume (2.7), and let $\\mathbf a$ be the amplitude vector of Lemm",
+     "to": "$$\\begin{equation}\n \\left|\\frac{\\nu_+}{\\nu}-1\\right|\\le\\varepsilon,\\qquad\n \\left|\\frac{\\eta_+/\\nu_+}{\\cos\\varphi}-1\\right|\\le\\frac12. \\tag{2.19}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -348,8 +348,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "$$V=U+W^\\natural,\\qquad \\Pi=p_U+\\mathsf P^\\natural,\\qquad\n W=W_{\\rm osc}+\\bar W,\\quad \\bar W=\\sum_{p=2}^PB_p .$$",
-     "to": "nt $C$ of Theorem 5.6, the hypothesis of that theorem holds.",
+     "from": "**Lemma 5.8.** The field $V$ is smooth, odd and divergence free, $\\Pi$ is smooth",
+     "to": "$$\\begin{equation}\n\\begin{gathered}\n \\|W_{\\rm osc}^\\natural\\|_{C_tC^{m,1/2}}\n \\le C_{m,P}\\mathsf D^{b(m+2)}\\lambda^{3(m+1)/2-5/4},\\qquad\n \\|\\bar W^\\natural\\|_{C_tC^{m,1/2}}\n \\le C_{m,P}\\mathsf D^{b(m+2)}\\lambda^{-5/2},\\\\\n \\|R_V\\|_{C_tC^{1,1/2}}\n \\le C_{\\rm step}\\lambda^2\n   \\bigl(\\lambda^{-2P/3}+\\|\\widetilde\\chi'\\gamma\\|_\\infty\\bigr),\n\\end{gathered} \\tag{5.48}\n\\end{equation}$$ where the last supremum is over $[t_0,T]$.",
      "origin": "ai"
     }
    ]
@@ -392,8 +392,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "For $0<\\rho\\le1$ let $$\\begin{equation}\n U_0(x)=\\sin(2\\pi x_2)(e_1+\\rho e_3),\\qquad B_\\rho=2\\pi(e_1+\\rho e_3)\\otimes e_2 \\tag{6.1}\n\\end{equation}$$",
-     "to": "$B_\\rho^2=0$. The origin is a fixed particle and $|B_\\rho|\\le4\\pi$.",
+     "from": "**Lemma 6.1.** If $T|B_\\rho|\\le1/8$, the first wave satisfies the two conditions",
+     "to": "ime zero lies between $\\lambda^{1/4}/2$ and $\\lambda^{1/4}$.",
      "origin": "ai"
     }
    ]
@@ -414,8 +414,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "Constants $C,p$ depend only on the dimension.",
-     "to": "Constants $C,p$ depend only on the dimension.",
+     "from": "**Lemma A.2.** Let either $H=\\mathbb R^3$, $\\mathcal R=\\mathbb P$, or $H=L^2(I;\\mathbb R^3)$",
+     "to": "r is an isomorphism on $\\mathcal RC^{k,1/2}(\\mathbb T^3;H)$.",
      "origin": "ai"
     }
    ]
@@ -436,8 +436,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "$S_\\Lambda$ multiply the spatial Fourier mode $e^{2\\pi i\\xi\\cdot x}$, $\\xi\\in\\mathbb Z^3$",
-     "to": " $u$ and its residual, while (B.2) controls the error $u-V$.",
+     "from": "**Lemma B.1.** $S_\\Lambda$ commutes with derivatives, preserves parity and diver",
+     "to": "ts $C_m$ and $C_M$ depend only on their index and on $\\psi$.",
      "origin": "ai"
     }
    ]
@@ -480,8 +480,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The product $cd$ satisfies (D.6).",
-     "to": "The product $cd$ satisfies (D.6).",
+     "from": "**Lemma D.2.** Let $c,d$ be smooth phase-independent matrix fields that satisfy ",
+     "to": "e smooth phase-independent matrix fields that satisfy (D.6).",
      "origin": "ai"
     }
    ]
@@ -524,8 +524,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "We call a time $\\tau$ at which $\\eta_+/\\nu_+=\\varepsilon_+$ a *crossing*: there ",
-     "to": "supply the frozen parameters $\\sigma,\\nu$ for the next wave.",
+     "from": "**Proposition 2.8.** Assume (2.7), let $\\mathbf a$ be the amplitude vector of Le",
+     "to": "$$\\begin{equation}\n |\\mathbf a(\\tau)|\\le\\exp\\bigl(3-\\varepsilon^{-1/2}\\bigr)\n \\max_{[0,T]}|\\mathbf a|\\qquad(0\\le\\tau\\le1). \\tag{2.24}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -744,8 +744,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "To avoid exciting growing modes, we prescribe the final particle positions and c",
-     "to": "cle positions and choose the initial velocity to reach them.",
+     "from": "**Theorem 4.2.** Assume $H^\\#\\le\\operatorname{Id}$ on $I\\times\\mathbb T^3$ as qu",
+     "to": "$\\left\\lVert v\\right\\rVert_{C_tC^{0,1/2}}\\le A\\left\\lVert L\\right\\rVert_{C_tC^{0,1/2}}$.",
      "origin": "ai"
     }
    ]
@@ -810,8 +810,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "Constants $C,p$ depend only on the dimension.",
-     "to": "Constants $C,p$ depend only on the dimension.",
+     "from": "**Theorem A.1.** Under (A.1)–(A.2), let $L\\in C(I;C^{0,1/2})$. There are unique ",
+     "to": "$I\\times\\mathbb T^3$, then so are $z$, $c$ and $\\nabla\\phi$.",
      "origin": "ai"
     }
    ]

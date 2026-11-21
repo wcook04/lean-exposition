@@ -273,12 +273,22 @@ export function sameWords(model: TieModel, t: number): number[] {
   return members.filter((other) => other !== t);
 }
 
-/** An exact slice wins; otherwise open an authored statement before a passing mention. */
+/**
+ * An exact slice wins; otherwise the record's canonical target, the tie at its statement block;
+ * otherwise an authored statement before a passing mention.
+ */
 export function statementFor(model: TieModel, record: string | undefined, at?: string): number | null {
   if (!record) return null;
   if (at) {
     const exact = model.byKey.get(`${record}|${at}`);
     if (exact !== undefined) return exact;
+  }
+  const canonical = model.index.canonical?.[record];
+  if (canonical) {
+    // The statement block is the target: its tie, or none (the block is then marked by its place),
+    // never an introduction or a later use of the record.
+    const t = canonical[0];
+    return t !== null && model.index.ties[t]?.record === record ? t : null;
   }
   const rows = model.byRecord.get(record);
   if (!rows?.length) return null;
