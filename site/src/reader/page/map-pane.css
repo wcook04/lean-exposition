@@ -1156,7 +1156,7 @@ html[data-right-sheet] .reader__paper {
    rows that fill the width, every card with its whole title. */
 .nb-view {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--kept-bottom, 0) 0;
   overflow: auto;
   padding: var(--space-3) var(--space-4) var(--space-4);
 }
@@ -1246,4 +1246,33 @@ html[data-right-sheet] .reader__paper {
   font-family: var(--font-sans);
   font-size: 12px;
   color: var(--ink-3);
+}
+
+/* A card the visible area cannot show whole is not drawn in part. */
+.map-pane .card[data-cut],
+.nb-view .nb-card[data-cut] {
+  visibility: hidden;
+}
+
+.nb-card__title--name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.nb-view .nb-card[data-record] {
+  cursor: default;
+}
+
+.nb-view__cut {
+  position: sticky;
+  bottom: 0;
+  margin: var(--space-2) 0 0;
+  padding: 4px 10px;
+  width: max-content;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--ink-2);
 }
