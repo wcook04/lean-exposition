@@ -1861,7 +1861,7 @@
           "paper": "long",
           "role": "statement",
           "from": "**Proposition 11.4 (Squarefree support: a limit of the certificate method, not an open value).**",
-          "to": "block-certificate schema has an instance at any even base.*",
+          "to": "schema can supply certificates for every $q>0$.*",
           "origin": "evidence_record"
         }
       ]

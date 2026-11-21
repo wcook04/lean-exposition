@@ -1,6 +1,6 @@
 {
  "repository": "https://github.com/wcook04/plectis-erdos",
- "commit": "a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3",
+ "commit": "b6ca129771dd54e27477a554475fb6c66c0a9e23",
  "papers": {
   "short": {
    "source_files": {
@@ -22,9 +22,9 @@
     "paper/evidence/erdos-257-mersenne-support-subseries.tex": "722ce3fc0640d2a265e5dd747e1c1d9a5d87a65aa5975d51a664acfed4135fef"
    },
    "outputs_sha256": {
-    "short/paper.md": "94cd0707e9d5a1188db4447d478fe9424a6446da6a3a7810daaec2606eb6f675",
+    "short/paper.md": "bc3515bcc38b5434e78e4b6a3a4dd30976283e09b93c233d8b6d1b19afda3ba1",
     "short/paper.pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
-    "short/passages.json": "36aaeebd4350cdcbff4ba644d86dd36624a9bd7f7f47ff998042102dbf5af277"
+    "short/passages.json": "5d8e9b0df934dfc8f8772c7c8446ca65c1bf4a83c3ea6d4929c3c2d3349f8b8b"
    }
   },
   "expository": {
@@ -59,21 +59,21 @@
     "pdf": "paper/257/erdos257-mersenne-reasoning-surface.pdf"
    },
    "sha256": {
-    "full_text_markdown": "b75c9e4801df27d5dc4de6772e87ec3218ea09e2e41be4c6922d01bab409527d",
-    "tex": "433c824c8b067da594531191409933245f9231ebfdc073f486a41ff3ef217cf1",
+    "full_text_markdown": "4814db10a16a5b07b9efdb3fdd987caaf85bd1e4ddf86282803d4c6d292dae80",
+    "tex": "31f08c74e4085954a13562586f1e34e7702c8d362132f7c6c243c0d2f287b8f3",
     "aux": "db0471c5a444a849dffc6cdf0e175d6bc02a561d75b5a85e1b2e656cce8db34c",
-    "pdf": "58ebe2ed0f7de06e22f51616159405b1cc3c25edf176502c303de2aed9970303"
+    "pdf": "c9ef5b8b374e34d6b5a900182b26fc9bc487e39f46eaf14a41a8fe77b48b9f53"
    },
    "tex_inputs_sha256": {
     "paper/paper-house-style.sty": "554ed85b5315bd936a4d09d58f8727547c5bb1b299f9684eb6ef720b329759a2",
     "paper/paper-evidence.tex": "1ba1b3a112445f6fee7794f2083c29a60fb102d239d5e799808a36b9a5e562e3",
     "paper/reasoning-parts/erdos257/preamble.tex": "1deb043326661007c7d751e5b3dc946431a7ae2f829c9ae993160bc082a52958",
-    "paper/evidence/erdos257-mersenne-reasoning-surface.tex": "bf3c18eda0925f862e304c5dbd2c356f110e8901fd23338e31d5cdbd9e268446"
+    "paper/evidence/erdos257-mersenne-reasoning-surface.tex": "15ae25a970b6947076fc505b40a86b2baf168771818137cbb7b5d8d88373e0aa"
    },
    "outputs_sha256": {
-    "long/reasoning-record.md": "9db121aa3907c3f1a8a48d6797094bb13e0c3efb5c7f42f8664bb4e6fba1025c",
-    "long/reasoning-record.pdf": "58ebe2ed0f7de06e22f51616159405b1cc3c25edf176502c303de2aed9970303",
-    "long/passages.json": "01589505a2e31f96b9c71dc70faa87de5aeff46ae9929734ae4156d96faa97c8"
+    "long/reasoning-record.md": "d4cff05445a8091e88a0215dc5b8dd28497dfc8c7317357a03f3ed6190b2e19c",
+    "long/reasoning-record.pdf": "c9ef5b8b374e34d6b5a900182b26fc9bc487e39f46eaf14a41a8fe77b48b9f53",
+    "long/passages.json": "4ba61659ae0028d27bfc5244debe01383cd244cd5b47783a8e27d364363cad54"
    }
   }
  },
