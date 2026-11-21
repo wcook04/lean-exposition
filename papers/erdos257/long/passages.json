@@ -154,7 +154,7 @@
    "prop:soft",
    "obs:box"
   ],
-  "text_sha256": "78a59e3b730d606a2541e6b67ed0162315d0b8ff606ecfe74c8329e1f1d14933"
+  "text_sha256": "12fa1c2d5d5a0c148d6d74155a95fbbb3be7e1c41e0c9d27a27e07287267d3ff"
  },
  {
   "name": "sec-257-survivors",
@@ -432,7 +432,7 @@
   "results": [
    "rem:promotion-audit"
   ],
-  "text_sha256": "d0feaff900838dac491de4e65bceaa42fff078266c3eb0a2176390d3287b1b6b"
+  "text_sha256": "b63b641cfc0789c95c4a38640310703613a74ba29091a1e0762031a08a568eb5"
  },
  {
   "name": "sec-four-coordinates",
@@ -564,7 +564,7 @@
   "results": [
    "prop:squarefree"
   ],
-  "text_sha256": "c5873f0122db1e594043c275579c804b399a424dabbd549caf5aa4cf06a74f5a"
+  "text_sha256": "491bab0a778dd36c27a9f202872230170e115e5766836d85ffb00318030558d5"
  },
  {
   "name": "sec-invent-shape",
@@ -588,7 +588,7 @@
    "prop:strip-equiv",
    "obs:dangerous-reset-rigidity"
   ],
-  "text_sha256": "a86c3d1ee574c709d0c2aac99daa8a871845903e5a4ddbbdcebda4307f07bc9c"
+  "text_sha256": "42d2a4cc5866ea1ca974957c4a18a373b3a9205c4b0f00741d7efe5e3937a243"
  },
  {
   "name": "sec-257-logarithmic-sampling",
@@ -622,7 +622,7 @@
   "last_line": 4825,
   "end_marker_line": 4826,
   "results": [],
-  "text_sha256": "eb32314e87aeeb4f40dad63bb5e7f0eaf6850819c3e3edb1a545309b1224eaaf"
+  "text_sha256": "fa226a65bba083201a91782fafc2a71e3df876a7de465a8a85576e32d5270adf"
  },
  {
   "name": "statements-and-declarations",

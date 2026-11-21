@@ -1155,7 +1155,7 @@
    },
    "prop:strip-equiv": {
     "printed": "12.4",
-    "page": 134,
+    "page": 135,
     "kind": "proposition",
     "title": "Terminal carry bounds are equivalent to half-membership"
    },
@@ -1653,7 +1653,7 @@
    },
    "rem:no-ties": {
     "printed": "5.12",
-    "page": 40,
+    "page": 41,
     "kind": "remark",
     "title": "No-ties: both greedy-orbit boundaries are strict"
    },
@@ -1767,7 +1767,7 @@
    },
    "sec:o4": {
     "printed": "12.5",
-    "page": 136,
+    "page": 137,
     "kind": "subsection",
     "title": "Reset bounds and runs of right transitions"
    },
@@ -1785,7 +1785,7 @@
    },
    "ssec:anchors": {
     "printed": "5.7",
-    "page": 43,
+    "page": 44,
     "kind": "subsection",
     "title": "Reported finite checks"
    },
@@ -1893,7 +1893,7 @@
    },
    "thm:factorial-twopow-support": {
     "printed": "6.18",
-    "page": 49,
+    "page": 50,
     "kind": "theorem",
     "title": "Factorial-support and $2^k$-support instances"
    },
@@ -1917,13 +1917,13 @@
    },
    "thm:full-support": {
     "printed": "5.4",
-    "page": 38,
+    "page": 39,
     "kind": "theorem",
     "title": "Full-support irrationality, unconditional, every base $b \\ge 2$"
    },
    "thm:full-support-catalogue": {
     "printed": "6.14",
-    "page": 48,
+    "page": 49,
     "kind": "theorem",
     "title": "Erd\\H {o}s--Borwein full-support irrationality, unconditional"
    },
@@ -2013,7 +2013,7 @@
    },
    "thm:middle-producer-escape": {
     "printed": "6.7",
-    "page": 46,
+    "page": 47,
     "kind": "theorem",
     "title": "Two sufficient bounds at middle transitions"
    },
@@ -2061,7 +2061,7 @@
    },
    "thm:pairwise-coprime": {
     "printed": "6.15",
-    "page": 48,
+    "page": 49,
     "kind": "theorem",
     "title": "Pairwise-coprime support irrationality, Erd\\H {o}s 1968"
    },
@@ -2151,7 +2151,7 @@
    },
    "thm:topology": {
     "printed": "5.9",
-    "page": 39,
+    "page": 40,
     "kind": "theorem",
     "title": "Achievement-set topology and measure"
    },
@@ -2169,7 +2169,7 @@
    },
    "thm:two-channel-cap": {
     "printed": "6.3",
-    "page": 45,
+    "page": 46,
     "kind": "theorem",
     "title": "Two-channel and dyadic cap sufficiency"
    },
@@ -2187,7 +2187,7 @@
    },
    "thm:upper-reset-band": {
     "printed": "6.10",
-    "page": 47,
+    "page": 48,
     "kind": "theorem",
     "title": "Upper-reset dyadic-band escape, checked for $13\\le d\\le 30$"
    },

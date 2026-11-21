@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "1fd49f692320db9f27935d8a5c8bc9bc22bddf38904cfd9fa8def31510d242d5",
-  "graph_sha256": "72b1b4c2b4a3766719310d7deb808e62432d8c1d3e4854b25b1285cbe6056696",
+  "content_sha256": "f7c2487ba172be55e583becc143742c2d34c576d0d1339fd730197a0c97bb374",
+  "graph_sha256": "264b08973a5f23b2f98ad989b0c1708096513d86929f19048623a2a9fe18092c",
   "selected_goal_ids": [
     "short.res-mixed-supports",
     "short.thm-variable-fractional-cover"
@@ -1638,7 +1638,7 @@
     },
     {
       "anchor": "sec-257-wall",
-      "text_sha256": "8f69cc62f102e588e43cb84c6426f9cf501aea224056f28333351e0ed5c258bf",
+      "text_sha256": "b37e29666a257024472115896ebae0fcd970df085cb417723eb31ff3ad1675c1",
       "claim_ids": [
         "long.prop-canon",
         "long.lem-collapse-mech",
@@ -2415,7 +2415,7 @@
     },
     {
       "anchor": "sec-scale-ladder",
-      "text_sha256": "7dfd4f497a1fa6592ccd48f52c9f27742cb6d78accd65b3db8be0ac708ba6341",
+      "text_sha256": "f7505dbba2ab04e03bf1c098506c916a1f3469b80bb569cef6b5c580be3e88a2",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
@@ -2612,7 +2612,7 @@
     },
     {
       "anchor": "sec-invent-R5",
-      "text_sha256": "9e9a25766296e835bec9090d2d47a9271f1f9e9b08669b28e3124e7a6f3041fa",
+      "text_sha256": "f2c0dafbc467b45c2c7904199491fe50e42c508a715f6e05561b061df4a89297",
       "claim_ids": [
         "long.prop-squarefree"
       ],
@@ -2635,7 +2635,7 @@
     },
     {
       "anchor": "what-is-open-stated-exactly",
-      "text_sha256": "9a54de1894ac063e90a774da6ffc84de911d7bf811e3e12eecee60823bc9cebe",
+      "text_sha256": "675d1f4def0e2d16217931c4ed5b35e22cb969c64127cb148af0d6b0fba00250",
       "claim_ids": [
         "long.prop-cpgs-equiv",
         "long.prop-strip-equiv"
@@ -2685,7 +2685,7 @@
     },
     {
       "anchor": "verification-and-reproducibility",
-      "text_sha256": "55c7ccc2a781d93db7905bf513120008f36602600c07d44ff18c3fd8b3c0d210",
+      "text_sha256": "9c4c3eee0c4fcd18879251371b205b6a52808f0be7922df223ecfb246a2c4560",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],

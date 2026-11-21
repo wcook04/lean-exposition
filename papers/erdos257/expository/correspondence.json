@@ -4,7 +4,7 @@
   "state": "draft",
   "path": "papers/expository.md",
   "content_sha256": "71083856306374c63ea8277fd72b934364ef30186261add8b961bdd03dd68476",
-  "graph_sha256": "72b1b4c2b4a3766719310d7deb808e62432d8c1d3e4854b25b1285cbe6056696",
+  "graph_sha256": "264b08973a5f23b2f98ad989b0c1708096513d86929f19048623a2a9fe18092c",
   "selected_goal_ids": [
     "exp.thm-main"
   ],

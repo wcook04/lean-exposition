@@ -42,695 +42,695 @@
  "expository": {},
  "long": {
   "cor:257-logarithmic-separation": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-13.md#cor-257-logarithmic-separation",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-13.md#cor-257-logarithmic-separation-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-13.md#cor-257-logarithmic-separation",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-13.md#cor-257-logarithmic-separation-comparator"
   ],
   "cor:cd-remaining": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/BranchCellHorizonExclusions.lean#L81",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#cor-cd-remaining-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#cor-cd-remaining-comparator"
   ],
   "cor:mersenne-height": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/ScalarLocalisationHeightObstruction.lean#L77",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#cor-mersenne-height-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#cor-mersenne-height-comparator"
   ],
   "cor:negative-mobius-overshoot": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#cor-negative-mobius-overshoot",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#cor-negative-mobius-overshoot-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#cor-negative-mobius-overshoot",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#cor-negative-mobius-overshoot-comparator"
   ],
   "cor:tr-half-lcm": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/TruncatedRungWitnessHorizon.lean#L467",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#cor-tr-half-lcm-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#cor-tr-half-lcm-comparator"
   ],
   "lem:collapse-mech": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#lem-collapse-mech",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#lem-collapse-mech-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#lem-collapse-mech",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#lem-collapse-mech-comparator"
   ],
   "lem:denominator-sandwich": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-denominator-sandwich"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-denominator-sandwich"
   ],
   "lem:denominator-survival": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-denominator-survival",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-denominator-survival-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-denominator-survival",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-denominator-survival-comparator"
   ],
   "lem:dyadic-excess-reformulation": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-dyadic-excess-reformulation"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-dyadic-excess-reformulation"
   ],
   "lem:eventually-right-impossible": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-eventually-right-impossible",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-eventually-right-impossible-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-eventually-right-impossible",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-eventually-right-impossible-comparator"
   ],
   "lem:fatal-gap-exclusion": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-fatal-gap-exclusion",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-fatal-gap-exclusion-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-fatal-gap-exclusion",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-fatal-gap-exclusion-comparator"
   ],
   "lem:gap-mass-summability": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-gap-mass-summability",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-gap-mass-summability-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-gap-mass-summability",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-gap-mass-summability-comparator"
   ],
   "lem:half-divisor-unit-drop": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-divisor-unit-drop",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-divisor-unit-drop-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-divisor-unit-drop",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-divisor-unit-drop-comparator"
   ],
   "lem:half-endpoint-kills": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-endpoint-kills",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-endpoint-kills-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-endpoint-kills",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-half-endpoint-kills-comparator"
   ],
   "lem:largest-false-rank-algebra": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-largest-false-rank-algebra",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-largest-false-rank-algebra-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-largest-false-rank-algebra",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-largest-false-rank-algebra-comparator"
   ],
   "lem:linear-channel-nogo": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-linear-channel-nogo",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-linear-channel-nogo-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-linear-channel-nogo",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-linear-channel-nogo-comparator"
   ],
   "lem:mersenne-tail-weight": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-mersenne-tail-weight",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-mersenne-tail-weight-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-mersenne-tail-weight",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#lem-mersenne-tail-weight-comparator"
   ],
   "lem:mixed-prime-power-layer": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-mixed-prime-power-layer",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-mixed-prime-power-layer-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-mixed-prime-power-layer",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-mixed-prime-power-layer-comparator"
   ],
   "lem:no-ties": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-no-ties",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-no-ties-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-no-ties",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-no-ties-comparator"
   ],
   "lem:odometer": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-odometer",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-odometer-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-odometer",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-odometer-comparator"
   ],
   "lem:rank-step-trichotomy": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-rank-step-trichotomy"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-rank-step-trichotomy"
   ],
   "lem:reverse-carry-word": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-reverse-carry-word",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-reverse-carry-word-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-reverse-carry-word",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-reverse-carry-word-comparator"
   ],
   "lem:scalar-localization": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#lem-scalar-localization",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#lem-scalar-localization-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#lem-scalar-localization",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#lem-scalar-localization-comparator"
   ],
   "lem:seam-upper-or-middle": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/HalfCylinderHalfMembershipClassification.lean#L57",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-seam-upper-or-middle-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-seam-upper-or-middle-comparator"
   ],
   "lem:skipped-endpoint-trichotomy": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/HalfCylinderSkippedEndpointClassifier.lean#L246",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-skipped-endpoint-trichotomy-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-skipped-endpoint-trichotomy-comparator"
   ],
   "lem:sqrt-witness": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR20/CarryCollapseCorrespondence.lean#L8",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#lem-sqrt-witness-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#lem-sqrt-witness-comparator"
   ],
   "lem:sqwitness": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-sqwitness",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-sqwitness-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-sqwitness",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-11.md#lem-sqwitness-comparator"
   ],
   "lem:straddle-agrees-greedy": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/HalfCutLocator.lean#L442",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-straddle-agrees-greedy-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-straddle-agrees-greedy-comparator"
   ],
   "lem:tail-transfer": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-tail-transfer",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-tail-transfer-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-tail-transfer",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#lem-tail-transfer-comparator"
   ],
   "lem:tr-forced-greedy": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-tr-forced-greedy"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-tr-forced-greedy"
   ],
   "lem:tr-mod12": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/TruncatedRungWitnessHorizon.lean#L544",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-tr-mod12-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-tr-mod12-comparator"
   ],
   "lem:tr-parity": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/TruncatedRungWitnessHorizon.lean#L176",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-tr-parity-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#lem-tr-parity-comparator"
   ],
   "prop:257-finite-witness-rule": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/WitnessLogicIrrational.lean#L39"
   ],
   "prop:257-logarithmic-initial-interval": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/LogarithmicInitialInterval.lean#L491",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-13.md#prop-257-logarithmic-initial-interval-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-13.md#prop-257-logarithmic-initial-interval-comparator"
   ],
   "prop:2adic-nogo": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/CentredCompletionAndDecisionBoundary.lean#L34",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-2adic-nogo-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-2adic-nogo-comparator"
   ],
   "prop:achievement-set-topology": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/AchievementSetTopologyAndFiniteHalf.lean#L27",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#prop-achievement-set-topology-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#prop-achievement-set-topology-comparator"
   ],
   "prop:canon": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-canon",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-canon-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-canon",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-canon-comparator"
   ],
   "prop:carry-survivor-extinction": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-carry-survivor-extinction",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-carry-survivor-extinction-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-carry-survivor-extinction",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-carry-survivor-extinction-comparator"
   ],
   "prop:collapse": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-collapse",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-collapse-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-collapse",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-collapse-comparator"
   ],
   "prop:collapsed-list": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR20/SixMembershipConditions.lean#L123",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-collapsed-list-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-collapsed-list-comparator"
   ],
   "prop:cpgs-equiv": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/SquareDepthAndHalfMembershipEquivalences.lean#L44",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-12.md#prop-cpgs-equiv-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-12.md#prop-cpgs-equiv-comparator"
   ],
   "prop:critical-band-index": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/CriticalDyadicBandCollapse.lean#L20",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-critical-band-index-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-critical-band-index-comparator"
   ],
   "prop:exact-lebesgue-measure-dichotomy": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/SharedPrefixFamiliesAndMeasureDichotomy.lean#L68",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-exact-lebesgue-measure-dichotomy-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-exact-lebesgue-measure-dichotomy-comparator"
   ],
   "prop:exponent-gap": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-exponent-gap",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-exponent-gap-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-exponent-gap",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-exponent-gap-comparator"
   ],
   "prop:finite-approximations-without-compatibility": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-finite-approximations-without-compatibility",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-finite-approximations-without-compatibility-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-finite-approximations-without-compatibility",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-finite-approximations-without-compatibility-comparator"
   ],
   "prop:finite-boolSupport-and-onesided": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/MobiusSignAndFiniteCertificates.lean#L101",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-finite-boolsupport-and-onesided-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-finite-boolsupport-and-onesided-comparator"
   ],
   "prop:finite-state-nogo": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-finite-state-nogo",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-finite-state-nogo-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-finite-state-nogo",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-finite-state-nogo-comparator"
   ],
   "prop:local-void": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-local-void"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#prop-local-void"
   ],
   "prop:mobius-nogo": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-mobius-nogo",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-mobius-nogo-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-mobius-nogo",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-mobius-nogo-comparator"
   ],
   "prop:one-orbit": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#prop-one-orbit",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#prop-one-orbit-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#prop-one-orbit",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#prop-one-orbit-comparator"
   ],
   "prop:squarefree": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/SquarefreeSupportEngineCeiling.lean#L20",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-11.md#prop-squarefree-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-11.md#prop-squarefree-comparator"
   ],
   "prop:strip-equiv": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-12.md#prop-strip-equiv",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-12.md#prop-strip-equiv-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-12.md#prop-strip-equiv",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-12.md#prop-strip-equiv-comparator"
   ],
   "prop:unsafe-middle-range-exactly-three": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/LinearChannelAndMiddleCellExclusion.lean#L83",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-unsafe-middle-range-exactly-three-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#prop-unsafe-middle-range-exactly-three-comparator"
   ],
   "prop:upper-unconditional": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/BranchCellHorizonExclusions.lean#L31",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-upper-unconditional-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#prop-upper-unconditional-comparator"
   ],
   "record:257bm-c1": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c1",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c1-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c1",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c1-comparator"
   ],
   "record:257bm-c10": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/MersenneQuotientRowRecurrences.lean#L264",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c10-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c10-comparator"
   ],
   "record:257bm-c11": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c11",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c11-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c11",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c11-comparator"
   ],
   "record:257bm-c12": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c12",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c12-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c12",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c12-comparator"
   ],
   "record:257bm-c14": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c14",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c14-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c14",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c14-comparator"
   ],
   "record:257bm-c15": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c15",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c15-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c15",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c15-comparator"
   ],
   "record:257bm-c19": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c19",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c19-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c19",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c19-comparator"
   ],
   "record:257bm-c2": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c2",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c2",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c2-comparator"
   ],
   "record:257bm-c20": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c20",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c20-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c20",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c20-comparator"
   ],
   "record:257bm-c3": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c3",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c3-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c3",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c3-comparator"
   ],
   "record:257bm-c4": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c4",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c4-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c4",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c4-comparator"
   ],
   "record:257bm-c5": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c5"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#record-257bm-c5"
   ],
   "record:257bm-c6": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusCriticalCapacityCofinal.lean#L1068",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6-comparator"
   ],
   "record:257bm-c6a": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6a",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6a-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6a",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6a-comparator"
   ],
   "record:257bm-c6b": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6b",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6b-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6b",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c6b-comparator"
   ],
   "record:257bm-c7": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusSkipRow.lean#L238",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c7-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c7-comparator"
   ],
   "record:257bm-c8": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusSkipRow.lean#L332",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c8-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c8-comparator"
   ],
   "record:257bm-c9": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c9",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c9-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c9",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-c9-comparator"
   ],
   "record:257bm-i-bridge": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-bridge",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-bridge-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-bridge",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-bridge-comparator"
   ],
   "record:257bm-i-cross2": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusExactRowCrossing.lean#L31",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-cross2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-cross2-comparator"
   ],
   "record:257bm-i-mob": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-mob",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-mob-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-mob",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i-mob-comparator"
   ],
   "record:257bm-i-rank2": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusExactRowRankTwo.lean#L23",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i-rank2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i-rank2-comparator"
   ],
   "record:257bm-i-t7": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/GenericTailOrbitRigidity.lean#L435",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i-t7-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i-t7-comparator"
   ],
   "record:257bm-i10": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i10",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i10-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i10",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i10-comparator"
   ],
   "record:257bm-i11a": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusGreedyReduction.lean#L918",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11a-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11a-comparator"
   ],
   "record:257bm-i11b": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11b",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11b-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11b",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11b-comparator"
   ],
   "record:257bm-i11c": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusGreedyReduction.lean#L997",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11c-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i11c-comparator"
   ],
   "record:257bm-i12": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i12",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i12-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i12",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i12-comparator"
   ],
   "record:257bm-i13": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/DyadicBandAndTwoSidedBounds.lean#L105",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i13-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i13-comparator"
   ],
   "record:257bm-i14": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i14",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i14-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i14",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i14-comparator"
   ],
   "record:257bm-i15": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i15",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i15-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i15",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i15-comparator"
   ],
   "record:257bm-i16": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i16",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i16-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i16",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i16-comparator"
   ],
   "record:257bm-i17": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i17",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i17-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i17",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-i17-comparator"
   ],
   "record:257bm-i1a": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1a",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1a-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1a",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1a-comparator"
   ],
   "record:257bm-i1b": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusExactTransition.lean#L131",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1b-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1b-comparator"
   ],
   "record:257bm-i1c": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1c",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1c-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1c",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i1c-comparator"
   ],
   "record:257bm-i2": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i2",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i2",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i2-comparator"
   ],
   "record:257bm-i5": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusSkippedCoreCriticalCapacity.lean#L22",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i5-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i5-comparator"
   ],
   "record:257bm-i6": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i6",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i6-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i6",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i6-comparator"
   ],
   "record:257bm-i7": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i7",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i7-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i7",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i7-comparator"
   ],
   "record:257bm-i9": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/BooleanMobiusGlobalRepair.lean#L243",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i9-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257bm-i9-comparator"
   ],
   "record:257bm-k-dich": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k-dich",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k-dich-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k-dich",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k-dich-comparator"
   ],
   "record:257bm-k1": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k1",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k1-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k1",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k1-comparator"
   ],
   "record:257bm-k2": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k2",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k2",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k2-comparator"
   ],
   "record:257bm-k4": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k4",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k4-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k4",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k4-comparator"
   ],
   "record:257bm-k9": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k9",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k9-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k9",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257bm-k9-comparator"
   ],
   "record:257hg-i2": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i2",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i2",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i2-comparator"
   ],
   "record:257hg-i4": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i4",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i4-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i4",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i4-comparator"
   ],
   "record:257hg-i5": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i5",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i5-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i5",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i5-comparator"
   ],
   "record:257hg-i6": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i6",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i6-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i6",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i6-comparator"
   ],
   "record:257hg-i7": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/HalfCylinderSkippedEndpointClassifier.lean#L246",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i7-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-i7-comparator"
   ],
   "record:257hg-k12": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-k12",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-k12-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-k12",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257hg-k12-comparator"
   ],
   "record:257rig-c16": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c16",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c16-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c16",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c16-comparator"
   ],
   "record:257rig-c17": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c17",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c17-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c17",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c17-comparator"
   ],
   "record:257rig-c18": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c18",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c18-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c18",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-3.md#record-257rig-c18-comparator"
   ],
   "record:257rig-i2": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i2",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i2-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i2",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i2-comparator"
   ],
   "record:257rig-i3": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i3",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i3-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i3",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i3-comparator"
   ],
   "record:257rig-i4a": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4a",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4a-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4a",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4a-comparator"
   ],
   "record:257rig-i4b": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4b",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4b-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4b",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i4b-comparator"
   ],
   "record:257rig-i5": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i5",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i5-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i5",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-i5-comparator"
   ],
   "record:257rig-k6": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/ExactRowDichotomyCountermodels.lean#L231",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-k6-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-4.md#record-257rig-k6-comparator"
   ],
   "thm:257-logarithmic-counterexample": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-13.md#thm-257-logarithmic-counterexample",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-13.md#thm-257-logarithmic-counterexample-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-13.md#thm-257-logarithmic-counterexample",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-13.md#thm-257-logarithmic-counterexample-comparator"
   ],
   "thm:257-mixed-supports": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-mixed-supports",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-mixed-supports-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-mixed-supports",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-mixed-supports-comparator"
   ],
   "thm:257-variable-fractional-cover": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR8/PositiveCoverReturn.lean#L241",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-variable-fractional-cover-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-variable-fractional-cover-comparator"
   ],
   "thm:257-weighted": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-weighted",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-weighted-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-weighted",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-257-weighted-comparator"
   ],
   "thm:cd-neg3-impossible": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/BranchCellHorizonExclusions.lean#L50",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-10.md#thm-cd-neg3-impossible-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-10.md#thm-cd-neg3-impossible-comparator"
   ],
   "thm:critical-dyadic-band": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-critical-dyadic-band",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-critical-dyadic-band-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-critical-dyadic-band",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-critical-dyadic-band-comparator"
   ],
   "thm:dynamics": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-dynamics",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-dynamics-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-dynamics",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-dynamics-comparator"
   ],
   "thm:eventually-periodic": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L11604",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-eventually-periodic-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-eventually-periodic-comparator"
   ],
   "thm:eventually-periodic-support": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L11604",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-eventually-periodic-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-eventually-periodic-support-comparator"
   ],
   "thm:factorial-twopow-support": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-factorial-twopow-support",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-factorial-twopow-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-factorial-twopow-support",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-factorial-twopow-support-comparator"
   ],
   "thm:fatal-absorbing": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/GreedyGapCriteria.lean#L27",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-fatal-absorbing-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-fatal-absorbing-comparator"
   ],
   "thm:final-middle-cell": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-final-middle-cell",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-final-middle-cell-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-final-middle-cell",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-final-middle-cell-comparator"
   ],
   "thm:frozen-margin": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-frozen-margin",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-frozen-margin-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-frozen-margin",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-frozen-margin-comparator"
   ],
   "thm:full-support": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L8328",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-full-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-full-support-comparator"
   ],
   "thm:full-support-catalogue": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L8328",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-full-support-catalogue-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-full-support-catalogue-comparator"
   ],
   "thm:geometry": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR20/AchievementGeometry.lean#L40",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-geometry-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-geometry-comparator"
   ],
   "thm:greedy-survival": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR20/GeneralTargetGap.lean#L183",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-greedy-survival-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-greedy-survival-comparator"
   ],
   "thm:greedy-survival-catalogue": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/GreedyAchievementSet.lean#L1458",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-greedy-survival-catalogue-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-greedy-survival-catalogue-comparator"
   ],
   "thm:greedy-survival-record": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-greedy-survival-record",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-greedy-survival-record-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-greedy-survival-record",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-greedy-survival-record-comparator"
   ],
   "thm:half-skip-dichotomy": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-half-skip-dichotomy",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-half-skip-dichotomy-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-half-skip-dichotomy",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-half-skip-dichotomy-comparator"
   ],
   "thm:largest-skip-late": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-largest-skip-late",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-largest-skip-late-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-largest-skip-late",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-largest-skip-late-comparator"
   ],
   "thm:last-skip-iff-fatal": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-last-skip-iff-fatal",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-last-skip-iff-fatal-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-last-skip-iff-fatal",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-last-skip-iff-fatal-comparator"
   ],
   "thm:lcm-gap-engine": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L5883",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-lcm-gap-engine-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-lcm-gap-engine-comparator"
   ],
   "thm:lower-bound-every-reset": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-9.md#thm-lower-bound-every-reset",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-9.md#thm-lower-bound-every-reset-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-9.md#thm-lower-bound-every-reset",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-9.md#thm-lower-bound-every-reset-comparator"
   ],
   "thm:master-dichotomy": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-master-dichotomy",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-master-dichotomy-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-master-dichotomy",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-master-dichotomy-comparator"
   ],
   "thm:master-identity": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR20/QuotientRowIdentity.lean#L89",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-master-identity-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-master-identity-comparator"
   ],
   "thm:mersenne-channel-growth": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-growth",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-growth-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-growth",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-growth-comparator"
   ],
   "thm:mersenne-channel-survival": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-survival",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-survival-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-survival",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mersenne-channel-survival-comparator"
   ],
   "thm:middle-allright-defect": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-allright-defect",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-allright-defect-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-allright-defect",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-allright-defect-comparator"
   ],
   "thm:middle-producer-escape": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-producer-escape",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-producer-escape-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-producer-escape",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-middle-producer-escape-comparator"
   ],
   "thm:mobius-centred-nonneg": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mobius-centred-nonneg",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mobius-centred-nonneg-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mobius-centred-nonneg",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mobius-centred-nonneg-comparator"
   ],
   "thm:mobius-lambert-identity": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/MersenneLambertLadder.lean#L587",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mobius-lambert-identity-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-mobius-lambert-identity-comparator"
   ],
   "thm:multiples-support": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-multiples-support",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-multiples-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-multiples-support",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-multiples-support-comparator"
   ],
   "thm:nine-way-hub": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-nine-way-hub",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-nine-way-hub-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-nine-way-hub",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-nine-way-hub-comparator"
   ],
   "thm:odd-support": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L11686",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-odd-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-odd-support-comparator"
   ],
   "thm:one-sided": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#thm-one-sided",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-2.md#thm-one-sided-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#thm-one-sided",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-2.md#thm-one-sided-comparator"
   ],
   "thm:one-sided-finite-decision-boundary": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/CentredCompletionAndDecisionBoundary.lean#L77",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-9.md#thm-one-sided-finite-decision-boundary-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-9.md#thm-one-sided-finite-decision-boundary-comparator"
   ],
   "thm:pairwise-coprime": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L10776",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-pairwise-coprime-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-pairwise-coprime-comparator"
   ],
   "thm:periodic-support": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR20/PositivePeriodicSupport.lean#L49"
   ],
   "thm:perturbed-family-maximality": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-perturbed-family-maximality"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-perturbed-family-maximality"
   ],
   "thm:purely-periodic-support": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L11590",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-purely-periodic-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-purely-periodic-support-comparator"
   ],
   "thm:real-form": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-real-form",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-real-form-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-real-form",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-real-form-comparator"
   ],
   "thm:residue-class-support": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/ResidueClassSupport.lean#L21",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-residue-class-support-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-residue-class-support-comparator"
   ],
   "thm:residue-odd": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-residue-odd",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-residue-odd-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-residue-odd",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-residue-odd-comparator"
   ],
   "thm:seam-limit": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-seam-limit",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-seam-limit-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-seam-limit",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-seam-limit-comparator"
   ],
   "thm:second-channel": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-second-channel",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-second-channel-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-second-channel",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-second-channel-comparator"
   ],
   "thm:sharp-fatal-gap": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/GreedyGapCriteria.lean#L299",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-sharp-fatal-gap-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-sharp-fatal-gap-comparator"
   ],
   "thm:signed-periodic": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-signed-periodic",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-signed-periodic-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-signed-periodic",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-signed-periodic-comparator"
   ],
   "thm:sqrt-bound-route": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-sqrt-bound-route",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-sqrt-bound-route-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-sqrt-bound-route",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-sqrt-bound-route-comparator"
   ],
   "thm:straddle-closed-set": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-straddle-closed-set",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-straddle-closed-set-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-straddle-closed-set",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-straddle-closed-set-comparator"
   ],
   "thm:supported-dichotomy": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-supported-dichotomy",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-supported-dichotomy-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-supported-dichotomy",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-1.md#thm-supported-dichotomy-comparator"
   ],
   "thm:tempered-orbit-rigidity": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-tempered-orbit-rigidity",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-tempered-orbit-rigidity-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-tempered-orbit-rigidity",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-tempered-orbit-rigidity-comparator"
   ],
   "thm:topology": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-topology",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-topology-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-topology",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-5.md#thm-topology-comparator"
   ],
   "thm:tr-finite-decision": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/TruncatedRungGreedyDecision.lean#L896",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#thm-tr-finite-decision-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#thm-tr-finite-decision-comparator"
   ],
   "thm:tr-witness-exclusion": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/TruncatedRungWitnessHorizon.lean#L250",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-8.md#thm-tr-witness-exclusion-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-8.md#thm-tr-witness-exclusion-comparator"
   ],
   "thm:two-channel-cap": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-two-channel-cap",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-two-channel-cap-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-two-channel-cap",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-two-channel-cap-comparator"
   ],
   "thm:two-sided-dyadic": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/HalfCylinderMiddleCarryLowerBound.lean#L4448",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-two-sided-dyadic-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-two-sided-dyadic-comparator"
   ],
   "thm:two-thirds-band": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/ErdosProblems/Erdos257/PaperCompleteR21/PostTakeBandLocalisation.lean#L96",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-two-thirds-band-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-2.md#thm-two-thirds-band-comparator"
   ],
   "thm:upper-reset-band": [
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-upper-reset-band",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-upper-reset-band-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-upper-reset-band",
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-upper-reset-band-comparator"
   ],
   "thm:weighted-coeff-engine": [
    "https://github.com/wcook04/plectis-erdos/blob/436f55ebdafa67e4af0fff79f621c13f2ded12bf/lean/Erdos249257/CertificateKernel.lean#L8665",
-   "https://github.com/wcook04/plectis-erdos/blob/b4d9b60327e3c4d4cc50acb37e62268788cd77e0/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-weighted-coeff-engine-comparator"
+   "https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface/section-6-1.md#thm-weighted-coeff-engine-comparator"
   ]
  }
 }
