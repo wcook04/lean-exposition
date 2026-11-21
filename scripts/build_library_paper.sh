@@ -42,3 +42,5 @@ for address in results:
     (dist / address / "index.html").write_text(shell)
 print(f"static addresses: / and {len(results)} results")
 PYEOF
+# Put back the tracked placeholder that library-instance.mjs replaced.
+git checkout -- site/src/instances/library/current.json 2>/dev/null || true
