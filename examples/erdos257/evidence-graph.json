@@ -1250,8 +1250,8 @@
     {
       "id": "paper.long.pdf",
       "kind": "file",
-      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/b6ca129771dd54e27477a554475fb6c66c0a9e23/paper/257/erdos257-mersenne-reasoning-surface.pdf",
-      "revision": "b6ca129771dd54e27477a554475fb6c66c0a9e23",
+      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/d9c43b26d1686523e95e09ab0014aaadb1903d03/paper/257/erdos257-mersenne-reasoning-surface.pdf",
+      "revision": "d9c43b26d1686523e95e09ab0014aaadb1903d03",
       "license": "CC-BY-4.0",
       "redistribution": "reference_only",
       "sha256": "58ebe2ed0f7de06e22f51616159405b1cc3c25edf176502c303de2aed9970303"
@@ -1259,8 +1259,8 @@
     {
       "id": "paper.long.tex",
       "kind": "file",
-      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/b6ca129771dd54e27477a554475fb6c66c0a9e23/paper/257/erdos257-mersenne-reasoning-surface.tex",
-      "revision": "b6ca129771dd54e27477a554475fb6c66c0a9e23",
+      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/d9c43b26d1686523e95e09ab0014aaadb1903d03/paper/257/erdos257-mersenne-reasoning-surface.tex",
+      "revision": "d9c43b26d1686523e95e09ab0014aaadb1903d03",
       "license": "CC-BY-4.0",
       "redistribution": "reference_only",
       "sha256": "433c824c8b067da594531191409933245f9231ebfdc073f486a41ff3ef217cf1"

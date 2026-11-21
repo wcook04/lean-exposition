@@ -13,11 +13,11 @@ Problem #257 asks whether $X_A(2)=\sum_{a\in A}1/(2^a-1)$ is irrational for ever
 | What | Repository | Commit |
 | --- | --- | --- |
 | Papers, evidence mapping, vendored Lean | [wcook04/plectis-erdos](https://github.com/wcook04/plectis-erdos) | `3368d1e69467aec111eb3244843ad3542171ff96` (16 November 2026) |
-| Long record source, PDF and reader copy (five statements corrected) | same | `b6ca129771dd54e27477a554475fb6c66c0a9e23` (21 November 2026, pull requests 432 and 433) |
+| Long record source, PDF and reader copy (six statements corrected) | same | `d9c43b26d1686523e95e09ab0014aaadb1903d03` (21 November 2026, pull requests 432, 433 and 434) |
 | Lean pin cited by the evidence mapping | same | `436f55ebdafa67e4af0fff79f621c13f2ded12bf` |
 | Comparator corpus and replay run 35935225572 | [wcook04/plectis-erdos-lean](https://github.com/wcook04/plectis-erdos-lean) | `cc7e541cf2081c6fef5a5e377d52e365e33b01eb` |
 
-At `b6ca129` the long record's Proposition 2.5 states $1\notin A$, and four other sentences, among them Proposition 11.4 on squarefree certificates, say what their Lean proves; the graph's `paper.long.pdf` and `paper.long.tex` and the statements of `long.prop-collapse` and `long.prop-squarefree` follow that commit, and every other record, the evidence mapping and the vendored Lean are unchanged from `3368d1e`, whose Lean trees `b6ca129` keeps. The Git tree hashes of `lean/ErdosProblems/Erdos257`, `lean/ErdosProblems/Erdos249` and `lean/Erdos249257` are the same at `436f55e` and `3368d1e` (checked with the GitHub contents API), so the vendored bytes are the Lean the evidence mapping cites. Toolchain `leanprover/lean4:v4.29.1`, Mathlib `5e932f97dd25535344f80f9dd8da3aab83df0fe6`.
+At `d9c43b2` the long record's Proposition 2.5 states $1\notin A$, and five other sentences, among them Proposition 11.4 on squarefree certificates and the rejection of O1' in Section 12, say what their Lean proves; the graph's `paper.long.pdf` and `paper.long.tex` and the statements of `long.prop-collapse` and `long.prop-squarefree` follow that commit, and every other record, the evidence mapping and the vendored Lean are unchanged from `3368d1e`, whose Lean trees `d9c43b2` keeps. The Git tree hashes of `lean/ErdosProblems/Erdos257`, `lean/ErdosProblems/Erdos249` and `lean/Erdos249257` are the same at `436f55e` and `3368d1e` (checked with the GitHub contents API), so the vendored bytes are the Lean the evidence mapping cites. Toolchain `leanprover/lean4:v4.29.1`, Mathlib `5e932f97dd25535344f80f9dd8da3aab83df0fe6`.
 
 ## Files
 
