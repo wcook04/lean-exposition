@@ -94,7 +94,7 @@ const site = {
   paperNames,
   stages: PAPER.documents.map((d) => d.slot),
   paperStatus: PAPER.review,
-  library: { paper: PAPER.id, main: MAIN.slot },
+  library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
   recordKind,
   levelGoals: null,
   mainGoal: PAPER.goal,

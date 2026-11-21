@@ -115,7 +115,7 @@ export interface SiteInstance {
   /** The reader's line on who made the document and its links, in place of the draft and review words; absent keeps them. */
   paperStatus?: string;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
-  library?: { paper: string; main: InstanceStage };
+  library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
    * A paper whose argument for the main theorem is its own record (the #257 exposition proves

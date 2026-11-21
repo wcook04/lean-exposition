@@ -213,6 +213,29 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
     return ties, aliases
 
 
+def keep_addresses(old_order: list[str], old_aliases: dict, aliases: dict, new_ids: list[str], report: dict) -> dict:
+    """Every old tie id stays an address: a tie that is gone points at its nearest surviving neighbour
+    in the old reading order (the one before it, else the one after), and old aliases follow."""
+    alive = set(new_ids)
+    out = dict(aliases)
+    gone = [i for i in old_order if i not in alive]
+    for k, old in enumerate(old_order):
+        if old in alive:
+            continue
+        before = next((old_order[j] for j in range(k - 1, -1, -1) if old_order[j] in alive), None)
+        after = next((old_order[j] for j in range(k + 1, len(old_order)) if old_order[j] in alive), None)
+        target = before or after or (new_ids[0] if new_ids else None)
+        if target:
+            out[old] = target
+    for old, host in old_aliases.items():
+        while host in out and host not in alive and out[host] != host:
+            host = out[host]
+        if old not in alive and host in alive:
+            out.setdefault(old, host)
+    report["gone_kept_as_addresses"] = gone
+    return out
+
+
 def references(text: str, slot: str) -> dict:
     data = text.encode("utf-8")
     offsets = [0]
@@ -252,6 +275,9 @@ def main() -> None:
     ap.add_argument("--goal", default="theorem-1.1", help="the numbered result the map starts from")
     ap.add_argument("--slot", default="short", choices=SLOTS)
     ap.add_argument("--pdf", type=Path, help="the authors' own PDF of the paper, published byte for byte")
+    ap.add_argument("--reimport", action="store_true",
+                    help="replace the ties, comparisons and notes of an existing instance, keeping every old tie id as an address")
+    ap.add_argument("--guide", type=Path, help="a Markdown guide to how the Lean encodes the paper's objects, read as a page of its own")
     ap.add_argument("--lean-exposition", default="lean-exposition", help="the lean-exposition command")
     args = ap.parse_args()
     page, out, slot = args.page, args.out, args.slot
@@ -260,6 +286,15 @@ def main() -> None:
     md = (page / toml["paper"].get("markdown", "paper.md")).read_text()
     report = {k: [] for k in ("quote_not_unique", "lean_not_in_index", "verdict_without_note",
                               "statement_without_lean", "merged", "long_title_without_override")}
+    # Re-import: the old ties in reading order and the old aliases, so no address that worked stops working.
+    old_order, old_aliases = [], {}
+    if args.reimport:
+        old_phrases = out / f"alignment/phrases-{slot}.json"
+        if not old_phrases.is_file():
+            raise SystemExit(f"--reimport needs an existing instance: {old_phrases} is missing")
+        old_order = [t["id"] for t in json.loads(old_phrases.read_text())["ties"]]
+        if (out / "alignment/aliases.json").is_file():
+            old_aliases = json.loads((out / "alignment/aliases.json").read_text()).get("passages", {})
     if out.exists():
         for child in ("papers", "alignment", "upstream", "generated", "evidence-graph.json", "instance.json"):
             target = out / child
@@ -307,6 +342,8 @@ def main() -> None:
 
     # ---- phrase ties, titles and notes
     ties, aliases = phrase_rows(text, links["passages"], lean, links, report)
+    if args.reimport:
+        aliases = keep_addresses(old_order, old_aliases, aliases, [t["id"] for t in ties], report)
     overrides = json.loads(args.titles.read_text())["titles"] if args.titles else {}
     named = sorted({row["name"] for t in ties for row in t["lean"]})
     back = {}
@@ -528,6 +565,45 @@ def main() -> None:
             write(out / "papers" / s / "absent.md", EMPTY)
             write(out / "papers" / s / "absent.json", dumps(mapping(s, EMPTY.encode("utf-8"), [])))
 
+    # ---- Comparator: the layout Proof Reader's paper.py reads (Challenge, Solution, config, receipt.json), carried unchanged
+    comparator = None
+    folder = toml.get("comparator", {}).get("evidence")
+    folder = (page / folder) if folder else (page / "comparator")
+    if folder.is_dir():
+        files = {}
+        for f in sorted(folder.rglob("*")):
+            if f.is_file():
+                rel = f.relative_to(folder).as_posix()
+                files[rel] = write(out / "generated/comparator" / rel, f.read_bytes())
+        receipt = json.loads((folder / "receipt.json").read_text()) if (folder / "receipt.json").is_file() else None
+        comparator = {"files": files, "receipt": "receipt.json" if receipt else None}
+
+    # ---- the guide to how the Lean encodes the paper, as a page of its own (the exposition slot)
+    guide = None
+    if args.guide:
+        gslot = next(s for s in ("expository", "long") if s != slot)
+        gtext = args.guide.read_text()
+        gtext, gsections, _ = reading_copy(gtext, [])
+        gbytes = gtext.encode("utf-8")
+        write(out / "papers" / gslot / "paper.md", gtext)
+        (out / "papers" / gslot / "absent.md").unlink(missing_ok=True)
+        (out / "papers" / gslot / "absent.json").unlink(missing_ok=True)
+        gpassages, cursor = [], 0
+        for sec in gsections:
+            marker, end = f"<!-- passage:{sec['anchor']} -->", f"<!-- /passage:{sec['anchor']} -->"
+            start = gtext.index(marker, cursor) + len(marker)
+            stop = gtext.index(end, start)
+            cursor = stop
+            gpassages.append({"anchor": sec["anchor"], "text_sha256": sha(gtext[start:stop].encode("utf-8")), "claim_ids": [],
+                              "citation_ids": [], "assumption_ids": [], "evidence_class": "context",
+                              "rationale": f"{sec['heading']}: how the formalisation encodes the paper's objects."})
+        mapped = mapping(gslot, gbytes, gpassages)
+        mapped["state"] = "draft"
+        mapped["claim_ids"] = [goal]
+        write(out / "papers" / gslot / "correspondence.json", dumps(mapped))
+        write(out / f"alignment/references-{gslot}.json", dumps(references(gtext, gslot)))
+        guide = {"id": "encoding", "slot": gslot, "slug": "how-the-lean-encodes-it", "title": "How the Lean encodes it", "noun": "guide"}
+
     # ---- supplementary checks and the declarations no sentence names
     if (page / "generated/checks.json").is_file():
         write(out / "generated/checks.json", (page / "generated/checks.json").read_bytes())
@@ -555,7 +631,8 @@ def main() -> None:
                    "upstream": {"repository": upstream_repo, "commit": upstream_rev, "paper": toml["paper"].get("url")},
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
-                       "main": True, **({"pdf": pdf} if pdf else {})}],
+                       "main": True, **({"pdf": pdf} if pdf else {})}] + ([guide] if guide else []),
+        **({"comparator": comparator} if comparator else {}),
         "families": links.get("families", []),
         "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""), "family": t.get("family")}
                    for t in links["topics"]],

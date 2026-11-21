@@ -4,7 +4,7 @@
 import { describe, expect, it } from "vitest";
 import { libraryHref, parseLibraryPath, setLibraryAddresses } from "../src/app/libraryAddress";
 
-const lib = { paper: "euler", main: "short" as const };
+const lib = { paper: "euler", main: "short" as const, pages: { "how-the-lean-encodes-it": "expository" as const } };
 const BASE = "/library/euler";
 setLibraryAddresses({
   "e01.abstract.bounded-velocity": { record: null, at: "b536-564" },
@@ -62,6 +62,12 @@ describe("library addresses", () => {
     expect(route).toMatchObject({ pdf: true, page: 32, lean: true, node: "euler.proposition-5.4" });
     expect(href).toBe(`${BASE}/@r2.prop54.endpoint-citation?v=lean&view=pdf&page=32`);
     expect(roundTrip(`${BASE}/theorem-1.1/?view=pdf&page=3`).href).toBe(`${BASE}/theorem-1.1/?view=pdf&page=3`);
+  });
+
+  it("a companion page opens its own document", () => {
+    const { route, href } = roundTrip(`${BASE}/how-the-lean-encodes-it/`);
+    expect(route.stage).toBe("expository");
+    expect(href).toBe(`${BASE}/how-the-lean-encodes-it/`);
   });
 
   it("any other reading state keeps the reader's own parameters at the paper's top", () => {
