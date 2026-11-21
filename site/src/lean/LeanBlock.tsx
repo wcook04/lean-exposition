@@ -25,6 +25,7 @@ import {
 import "./lean.css";
 import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
 import { LeanReadingNote } from "./libraryNotes";
+import { ComparatorMark } from "./comparatorMark";
 import { SITE_FACTS } from "virtual:site-facts";
 import { MODELS_STEP } from "../app/caveat";
 import { useAlignment } from "../compare/useAlignment";
@@ -515,6 +516,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
           {!bare && <p className="lean-block__caveat">{LINK_CAVEAT}</p>}
         </div>
       )}
+      <ComparatorMark name={decl.name} />
       {!relation && !note && <LeanReadingNote name={decl.name} />}
       {!relation && fidelity?.fidelity && (
         <div className="lean-block__link">

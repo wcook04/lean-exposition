@@ -216,6 +216,27 @@ def outbound(href: str) -> bool:
     return not href.startswith(BASE)
 
 
+WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"}
+
+
+def comparator_line(paper: str) -> str | None:
+    """One sentence from the paper's Comparator receipt (instances/<paper>/generated/comparator/receipt.json)."""
+    path = ROOT / "instances" / paper / "generated/comparator/receipt.json"
+    if not path.is_file():
+        return None
+    r = json.loads(path.read_text())
+    accepted = (r.get("accepted") or {}).get("theorem_names") or []
+    if not accepted:
+        return None
+    controls = (1 if r.get("rejected_control") else 0) + len(r.get("other_rejected_controls") or {})
+    n = lambda k: WORDS.get(k, str(k))
+    line = (f"Comparator accepted the main theorem's Lean against the authors' definitions with {n(len(r.get('kernels') or []))} kernels"
+            f" and only the axioms {', '.join(r.get('permitted_axioms') or [])}.")
+    if controls:
+        line += f" {n(controls).capitalize()} altered statements were rejected."
+    return line
+
+
 def entry_html(entry: dict) -> str:
     href = entry["href"]
     away = outbound(href)
@@ -406,7 +427,7 @@ def main() -> None:
             entry = {
                 "id": paper, "title": inst["title"], "authors": inst["authors"], "href": f"{BASE}{paper}/",
                 "sentence": item.get("sentence", ""), "credit": inst.get("companion_credit", ""),
-                "counts": counts, "pages": pages, "comparator": item.get("comparator"),
+                "counts": counts, "pages": pages, "comparator": item.get("comparator") or comparator_line(paper),
                 "strip": strip(alignment / f"colours-{slot}.json", alignment / f"phrases-{slot}.json"),
             }
             if search:
