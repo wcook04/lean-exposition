@@ -75,6 +75,7 @@ jobs:
       - name: Check ${{ matrix.paper }} in a browser at 1440x900 and 2560x1440
         run: |
           mkdir -p serve/library && cp -R site/dist serve/library/${{ matrix.paper }}
+          python scripts/build_library_index.py serve/library ${{ matrix.paper }}
           python scripts/serve_library.py serve 47311 &
           sleep 2
           python scripts/check_library_paper.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --shots shots --budget 10 $(cat instances/${{ matrix.paper }}/check.args 2>/dev/null || true)

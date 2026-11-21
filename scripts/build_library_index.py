@@ -78,7 +78,17 @@ Source: <a href="https://github.com/wcook04/lean-exposition">lean-exposition</a>
 """
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(page)
-    (out / "404.html").write_text(page.replace("<h1>Reading library</h1>", "<h1>Reading library</h1>\n<p>There is no page at this address. These are the papers.</p>"))
+    # GitHub Pages answers every missing path with this one file. An address inside a paper
+    # (a phrase /@id or a Lean name /lean/<name>) is that paper's reader: load the paper's own
+    # shell in place, at the same address. Anything else gets the list of papers.
+    ids = json.dumps([p["id"] for p in papers])
+    boot = (f"<script>(function(){{var ids={ids};var m=location.pathname.match(/^\\/library\\/([a-z0-9-]+)\\//);"
+            "if(!m||ids.indexOf(m[1])<0)return;document.documentElement.style.visibility='hidden';"
+            "fetch('/library/'+m[1]+'/404.html').then(function(r){return r.ok?r.text():null}).then(function(t){"
+            "if(!t){document.documentElement.style.visibility='';return}document.open();document.write(t);document.close();})"
+            ".catch(function(){document.documentElement.style.visibility=''});})();</script>")
+    missing = page.replace("<h1>Reading library</h1>", "<h1>Reading library</h1>\n<p>There is no page at this address. These are the papers.</p>")
+    (out / "404.html").write_text(missing.replace("</head>", boot + "\n</head>"))
     (out / "catalog.json").write_text(json.dumps(catalog, indent=1, ensure_ascii=False) + "\n")
     (out / ".nojekyll").write_text("")
     print(f"library index: {len(papers)} paper(s)")
