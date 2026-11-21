@@ -29,9 +29,9 @@ export type Route =
       anchor?: string;
       /** The exact source to land on: a line ("120"), lines ("120-134") or a byte range ("b4521-5120"). */
       at?: string;
-      /** The right pane is in Lean mode. */
+      /** The right pane shows the Lean view. */
       lean?: boolean;
-      /** The reader chose the graph: a statement opened here stays on the graph. */
+      /** The reader chose the graph: a statement or declaration opened here stays on the graph. */
       graph?: boolean;
       node?: string;
       beside?: { stage: Stage; anchor: string };
@@ -217,7 +217,7 @@ export function routeHref(route: Route): string {
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.lean) q.set("v", "lean");
-      else if (route.graph && route.node) q.set("v", "graph");
+      else if (route.graph && (route.node || route.decl)) q.set("v", "graph");
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);

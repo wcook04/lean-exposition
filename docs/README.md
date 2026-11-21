@@ -40,6 +40,8 @@ The [architectural companion](../papers/architecture/README.md) gives the reason
   backend benchmark.
 - [Record alignment](record-alignment.md): where each record is stated, in Lean
   and in each paper, and how `check-alignment` tests those pointers.
+- [The graph pane](graph-pane.md): what the reading sites' right pane draws around
+  one subject, and the browser checks it must pass.
 - [Reading-copy links](bundle-consumers.md#distribute-reading-copies-with-working-links):
   preserve usable references when PDFs leave their manuscript directories.
 - [Contributing](../CONTRIBUTING.md): set up development, run repository checks

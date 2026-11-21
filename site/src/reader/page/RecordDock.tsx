@@ -1,10 +1,9 @@
-// The Lean page. The graph is what stands on the right page while reading; a click on a
-// statement or a highlighted card opens that step here, rising from its card over the graph,
-// which keeps its place underneath. It is headed by the step's plain title with the raw name
+// The Lean page: the dock under the graph and, filling the pane, the Lean view. A click on a
+// statement or a card shows that step here. It is headed by the step's plain title with the raw name
 // small beside it, then where each paper states the step, then the raw Lean with its exact
 // lines lit. A step with no Lean says so and offers the papers. Back or Escape closes it.
 //
-// Lean mode with nothing opened follows the text: the Lean of the statement being read, of what
+// With nothing opened it follows the text: the Lean of the statement being read, of what
 // is pointed at, or, between statements, what the passage discusses. The line at its head says
 // which, and an opened statement has a quiet way back to following.
 
@@ -55,6 +54,8 @@ interface Props {
   passageHref(stage: Stage, anchor: string): string;
   /** Under the graph on the Graph tab, following the paper: there is nothing to close. */
   noClose?: boolean;
+  /** Under the graph: show the same declaration in the Lean view. */
+  onOpenLean?(): void;
 }
 
 /** The Lean a statement means, or the record's own rows where it names none, without repeats. */
@@ -165,7 +166,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref, noClose }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref, noClose, onOpenLean }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -294,6 +295,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
             {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
           {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
           </div>
+          {onOpenLean && !empty && (
+            <button type="button" className="lean-page__quiet" onClick={onOpenLean}>
+              Open its Lean
+            </button>
+          )}
           {open.via === "pin" && onFollowText && !slot && (
             <button type="button" className="lean-page__quiet" onClick={onFollowText}>
               Follow the text

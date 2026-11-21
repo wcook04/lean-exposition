@@ -34,7 +34,7 @@ import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
 import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
-import type { PaneHover } from "./page/MapPane";
+import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
 import { readKeepLean, saveKeepLean } from "./page/panePrefs";
 import { RightSheet } from "./page/RightSheet";
@@ -43,14 +43,13 @@ import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
 import { declLight } from "./page/PhraseCard";
-import { isPhraseLayer, leanTruth, phraseTitle, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
+import { isPhraseLayer, isPhraseRecord, leanTruth, phraseTitle, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
   companionAnchor,
   firstPassageFor,
   outlineOf,
   outlineTieCounts,
-  paperTrail,
   passageOf,
   passageRecords,
   partsOfLines,
@@ -189,10 +188,7 @@ const LEAN_TARGET = ".lean-line.is-lit, .lean-page__title";
 const OPENED = "opened";
 interface Opened {
   steps: number;
-  fromGraph: boolean;
 }
-/** On an entry: the toggle pushed it, so Graph is one Back away. */
-const WENT_TO_LEAN = "wentToLean";
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"]);
 
 function cssPx(name: string, fallback: number): number {
@@ -316,6 +312,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [notice, setNotice] = useState<string | null>(null);
   const [action, setAction] = useState<SelectionAction | null>(null);
   const [inspect, setInspect] = useState<InspectorTarget | null>(null);
+  /** A paragraph the reader clicked: the pane's subject until something else is clicked or Escape. */
+  const [held, setHeld] = useState<HeldParagraph | null>(null);
   const [chooser, setChooser] = useState<string | null>(null);
   const [sectionsOpen, setSectionsOpen] = useState(false);
   /** Below 1680px the sections stand on the right page, where they cover no text. */
@@ -646,6 +644,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, [route.node, route.at, statementAt, ties]);
   const pinRef = useRef(pin);
   pinRef.current = pin;
+  useEffect(() => {
+    if (route.node || route.decl) setHeld(null);
+  }, [route.node, route.decl]);
   /** The statement under the reading line, on the page at once. */
   const current = useRef<number | null>(null);
   const currentSegment = useRef<number | null>(null);
@@ -700,10 +701,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
   const noLeanRef = useRef(pinWithoutLean);
   noLeanRef.current = pinWithoutLean;
-  // A statement opened while the graph was chosen stays on the graph; otherwise it opens its Lean.
-  const mode: PaneMode = route.graph && !route.lean && !route.decl ? "graph" : route.lean || route.decl || (pin && !pinWithoutLean) ? "lean" : "graph";
+  // The view is the one the address names. An address that names none opens a statement's or a
+  // declaration's Lean, and the graph otherwise. Clicks keep the view; only the view buttons change it.
+  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : route.decl || (pin && !pinWithoutLean) ? "lean" : "graph";
   const modeRef = useRef(mode);
   modeRef.current = mode;
+  // The view stays as the reader left it through Back and Forward: an entry keeps its subject,
+  // and the view is the one now on screen.
+  const viewKept = useRef(mode);
+  useEffect(() => {
+    if (arrivedBy() === "pop" && mode !== viewKept.current) {
+      const kept = viewKept.current;
+      navigate({ ...hereRef.current, graph: kept === "graph" || undefined, lean: kept === "lean" || undefined }, { replace: true });
+      return;
+    }
+    viewKept.current = mode;
+  }, [route, mode]);
   useEffect(() => {
     if (!pin || pin.tie === null || !pinWithoutLean) return;
     const t = pin.tie;
@@ -766,8 +779,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const nextOpened = useCallback((): Opened | undefined => {
     const here = hereRef.current;
     const prior = readEntry<Opened>(OPENED);
-    if (prior) return { steps: prior.steps + 1, fromGraph: prior.fromGraph };
-    return here.node || here.decl ? undefined : { steps: 1, fromGraph: !here.lean };
+    if (prior) return { steps: prior.steps + 1 };
+    return here.node || here.decl ? undefined : { steps: 1 };
   }, []);
 
   useEffect(() => {
@@ -921,7 +934,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
   }, [signals, drawThread]);
 
-  const trail = useMemo(() => paperTrail(structure), [structure]);
 
   // The place being left, named once for every way of leaving it.
   useEffect(
@@ -929,12 +941,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       namePlace(() => {
         // Leaving an open step, the way back names the step in words.
         const open = hereRef.current.node;
+        // A phrase that no step holds goes by its declaration's plain title.
+        const phrase = open && isPhraseRecord(open) ? statementAt(open, hereRef.current.at) : null;
+        if (phrase !== null) return phraseTitle(ties, phrase);
         if (open) return shortTitle(open, graph.nodes.get(open)?.label ?? open);
+        const decl = hereRef.current.decl;
+        if (decl) return decl.slice(decl.lastIndexOf(".") + 1);
         const chain = chainOf(outline, signals.heading.get());
         const last = chain[chain.length - 1];
         return `${PAPER_NAMES[stage].short}${last ? ` ${sectionNumber(last.title)}` : ""}`;
       }),
-    [outline, signals, stage, graph],
+    [outline, signals, stage, graph, ties, statementAt],
   );
 
   // ---- Links -------------------------------------------------------------------------
@@ -1097,55 +1114,24 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const toggleMap = useCallback(() => showMap(!mapShown), [showMap, mapShown]);
   /**
-   * The toggle. Choosing Lean with nothing open is one history entry, so Back undoes it. Choosing
-   * Graph lands where Back from an opened statement lands: the browser's own Back when that is
-   * one step away, and in place otherwise.
+   * The view buttons. A view change keeps the subject and adds no history entry: it replaces
+   * the address's view, so Back and Escape never undo it.
    */
-  const setMode = useCallback(
-    (mode: PaneMode) => {
-      setInspect(null);
-      setSectionsSide(false);
-      const here = hereRef.current;
-      const open = !!here.decl || (!!pinRef.current && !noLeanRef.current);
-      if (mode === "lean") {
-        // A statement pinned on the graph: its Lean opens in place.
-        if (here.graph && here.node) return navigate({ ...here, graph: undefined, lean: true }, { replace: true });
-        if (here.lean || open) return;
-        const push = !here.node;
-        navigate({ ...here, lean: true }, { replace: !push });
-        if (push) writeEntry(WENT_TO_LEAN, true);
-        return;
-      }
-      if (here.graph) return;
-      // A statement opened from the paper stays pinned; the pane shows it on the graph.
-      if (here.node && !here.decl) return navigate({ ...here, graph: true, lean: undefined }, { replace: true });
-      const opened = readEntry<Opened>(OPENED);
-      if (opened?.fromGraph) return window.history.go(-opened.steps);
-      if (here.node || here.decl || here.lean) {
-        if (!here.node && !here.decl && readEntry(WENT_TO_LEAN)) return window.history.back();
-        writeEntry(OPENED, undefined);
-        writeEntry(WENT_TO_LEAN, undefined);
-        navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined, lean: undefined }, { replace: true });
-      }
-    },
-    [],
-  );
+  const setMode = useCallback((mode: PaneMode) => {
+    setInspect(null);
+    setSectionsSide(false);
+    const here = hereRef.current;
+    viewKept.current = mode;
+    if (mode === "lean" ? here.lean : here.graph) return;
+    navigate({ ...here, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined }, { replace: true });
+  }, []);
 
-  /** Close and Escape: one level, from an opened statement to what was there, or from Lean to Graph. */
+  /** Close, Escape and "Follow the paper again": let go of what was clicked; the view stays. */
   const closeLean = useCallback(() => {
     const here = hereRef.current;
+    setHeld(null);
     if (here.node || here.decl) release();
-    else setMode("graph");
-  }, [release, setMode]);
-
-  /** From an opened statement to the Lean following the text. */
-  const followText = useCallback(() => {
-    const here = hereRef.current;
-    const opened = readEntry<Opened>(OPENED);
-    writeEntry(OPENED, undefined);
-    writeEntry(WENT_TO_LEAN, !!opened?.fromGraph && opened.steps === 1);
-    navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined, lean: true }, { replace: true });
-  }, []);
+  }, [release]);
 
   const closeSheet = useCallback(() => {
     setSheetOpen(false);
@@ -1294,7 +1280,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         } else if (!paneOn && sheetOpen) {
           event.preventDefault();
           closeSheet();
-        } else if (hereRef.current.node || hereRef.current.decl || hereRef.current.lean) {
+        } else if (hereRef.current.node || hereRef.current.decl || held) {
           event.preventDefault();
           closeLean();
         }
@@ -1325,7 +1311,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [route.beside, inspect, sectionsSide, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, closeLean, step, openStatement, setMode]);
+  }, [route.beside, inspect, sectionsSide, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, closeLean, step, openStatement, setMode, held]);
 
   // ---- Clicks inside the paper ---------------------------------------------------------
 
@@ -1345,12 +1331,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const waiting = pinTimer.current !== 0;
       window.clearTimeout(pinTimer.current);
       pinTimer.current = 0;
-      if (!mark || (event.detail > 1 && waiting)) return;
+      if (event.detail > 1 && waiting) return;
       // A drag or a selection is reading, not asking.
       const down = downAt.current;
       const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 5;
       const selection = window.getSelection();
       if (moved || (selection && !selection.isCollapsed && selection.toString().trim())) return;
+      if (!mark) {
+        if (event.detail === 1 && paneOn) holdParagraph(target);
+        return;
+      }
       const t = statementOf(ties, Number(mark.dataset.t));
       if (t === null) return;
       // The second click of a double click selects a word; wait to see that it does not come.
@@ -1416,6 +1406,27 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     },
     [go, ties, landSlice, nextOpened],
   );
+
+  /** A declaration's card: it becomes the subject, as one history entry, and the view stays. */
+  const openDeclHere = useCallback(
+    (name: string, module?: string) => {
+      const opened = nextOpened();
+      go({ ...hereRef.current, node: undefined, at: undefined, decl: name, declModule: module, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
+      writeEntry(OPENED, opened);
+    },
+    [go, nextOpened],
+  );
+
+  /** A paragraph clicked away from its phrases: what is tied to it, or nothing, and its passage. */
+  const holdParagraph = (target: Element) => {
+    const block = target.closest?.(".part__text p, .part__text li, .part__text figure, .part__text table, .part__text blockquote, .part__text .math-display");
+    if (!block) return;
+    const anchor = block.closest<HTMLElement>("[data-passage]")?.dataset.passage ?? doc.parts[signals.part.get()]?.anchor ?? null;
+    const tied = [...new Set([...block.querySelectorAll<HTMLElement>("[data-t]")].map((el) => statementOf(ties, Number(el.dataset.t))).filter((t): t is number => t !== null))];
+    const records = [...new Set(tied.map((t) => ties.index.ties[t].record))].filter((id) => graph.nodes.has(id));
+    const decl = records.length ? undefined : tied.map((t) => ties.index.ties[t].rows?.[0]?.name).find((name) => !!name);
+    setHeld({ anchor, records, decl });
+  };
 
   const toTop = () => {
     go({ ...here, anchor: undefined, at: undefined, node: undefined, beside: undefined });
@@ -1514,8 +1525,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const paneProps = {
     stage,
     structures,
-    outline,
-    trail,
     signals,
     ties,
     pin,
@@ -1524,8 +1533,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     alignment,
     hoverRef: paneHover,
     onRecord: openFromMap,
+    onDecl: openDeclHere,
+    held,
     onRelease: closeLean,
-    onFollowText: followText,
+    onFollowText: closeLean,
     onMode: setMode,
     mode,
     onName: openDecl,

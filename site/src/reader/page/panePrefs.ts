@@ -1,37 +1,36 @@
-// What a reader chose for the right pane, kept in this browser: which mode, and how much of the
-// pane the Lean takes when they have drawn the graph back above it. Small on purpose: the paper's
-// own code reads the mode at startup, and nothing here brings the Lean or the map with it.
+// What a reader chose for the right pane, kept in this browser: which view, and how much of the
+// Graph view the dock under the graph takes. Small on purpose: the paper's own code reads the
+// view at startup, and nothing here brings the Lean or the map with it.
 
-const SHARE_KEY = "lx-reader-lean-share";
 const KEEP_KEY = "lx-reader-keep-lean";
-export const DOCK_MIN = 0.3;
-export const DOCK_MAX = 1;
+const DOCK_KEY = "lx-reader-graph-dock";
+/** The dock's height as a share of the Graph view: 30% until a reader draws the handle. */
+export const DOCK_DEFAULT = 0.3;
+export const DOCK_MIN = 0.15;
+export const DOCK_MAX = 0.7;
 
 export function clampDock(share: number): number {
   return Math.min(DOCK_MAX, Math.max(DOCK_MIN, share));
 }
 
-const shareKey = (side: boolean) => `${SHARE_KEY}${side ? "-side" : ""}`;
-
-/** The Lean has the whole pane until a reader draws the handle to show the graph as well. */
-export function readDockShare(side = false): number {
+export function readDockShare(): number {
   try {
-    const value = Number(localStorage.getItem(shareKey(side)));
-    return value ? clampDock(value) : DOCK_MAX;
+    const value = Number(localStorage.getItem(DOCK_KEY));
+    return value ? clampDock(value) : DOCK_DEFAULT;
   } catch {
-    return DOCK_MAX;
+    return DOCK_DEFAULT;
   }
 }
 
-export function saveDockShare(share: number, side = false) {
+export function saveDockShare(share: number) {
   try {
-    localStorage.setItem(shareKey(side), String(share));
+    localStorage.setItem(DOCK_KEY, String(clampDock(share)));
   } catch {
     /* storage unavailable: the height lasts until the page closes */
   }
 }
 
-/** Whether this reader's pane is in Lean mode. Graph unless they chose it. */
+/** Whether this reader's pane is in the Lean view. Graph unless they chose it. */
 export function readKeepLean(): boolean {
   try {
     return localStorage.getItem(KEEP_KEY) === "open";
@@ -46,25 +45,5 @@ export function saveKeepLean(open: boolean) {
     else localStorage.removeItem(KEEP_KEY);
   } catch {
     /* storage unavailable: the choice lasts until the page closes */
-  }
-}
-
-const SPLIT_KEY = "lx-reader-graph-split";
-
-/** How much of the Graph tab the Lean below the graph takes: 55% until a reader draws the divider. */
-export function readSplitShare(): number {
-  try {
-    const value = Number(localStorage.getItem(SPLIT_KEY));
-    return value ? clampDock(value) : 0.55;
-  } catch {
-    return 0.55;
-  }
-}
-
-export function saveSplitShare(share: number) {
-  try {
-    localStorage.setItem(SPLIT_KEY, String(share));
-  } catch {
-    /* storage unavailable: the divider lasts until the page closes */
   }
 }
