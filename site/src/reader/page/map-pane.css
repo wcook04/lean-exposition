@@ -1114,38 +1114,30 @@ html[data-right-sheet] .reader__paper {
 
 /* A phone's sheet has no room for half a graph: the split keeps the graph's head as a strip
    naming the phrase's step (or saying it is not on the map), with the card and Lean below. */
-.right-sheet--phone .map-pane--split .map-pane__graph,
-.map-pane--strip.map-pane--split .map-pane__graph {
+.right-sheet--phone .map-pane--split .map-pane__graph {
   visibility: visible;
 }
 
 .right-sheet--phone .map-pane--split .map-pane__body,
-.map-pane--strip.map-pane--split .map-pane__body,
-.right-sheet--phone .map-pane--split .map-pane__foot,
-.map-pane--strip.map-pane--split .map-pane__foot {
+.right-sheet--phone .map-pane--split .map-pane__foot {
   visibility: hidden;
 }
 
-.right-sheet--phone .map-pane--split .lean-page,
-.map-pane--strip.map-pane--split .lean-page {
+.right-sheet--phone .map-pane--split .lean-page {
   height: calc(100% - var(--split-strip, 96px));
   box-shadow: 0 -1px 0 var(--rule-strong);
 }
 
-.right-sheet--phone .map-pane--split,
-.map-pane--strip.map-pane--split {
+.right-sheet--phone .map-pane--split {
   --split-strip: 78px;
 }
 
 .right-sheet--phone .map-pane--split .map-pane__head .map-pane__progress,
-.map-pane--strip.map-pane--split .map-pane__head .map-pane__progress,
-.right-sheet--phone .map-pane--split .map-pane__head .map-pane__meter,
-.map-pane--strip.map-pane--split .map-pane__head .map-pane__meter {
+.right-sheet--phone .map-pane--split .map-pane__head .map-pane__meter {
   display: none;
 }
 
-.right-sheet--phone .map-pane--split .map-pane__head .map-pane__name,
-.map-pane--strip.map-pane--split .map-pane__head .map-pane__name {
+.right-sheet--phone .map-pane--split .map-pane__head .map-pane__name {
   display: block;
   overflow: hidden;
   font-size: var(--fs-card);
@@ -1156,9 +1148,7 @@ html[data-right-sheet] .reader__paper {
 /* On the strip: the step's name alone (the card says the topic), or the one line that says the
    phrase is not on the map; the sheet's own close button closes the card. */
 .right-sheet--phone .map-pane--split .map-pane__now[data-named] .map-pane__rest,
-.map-pane--strip.map-pane--split .map-pane__now[data-named] .map-pane__rest,
-.right-sheet--phone .map-pane--split .map-pane__keep,
-.map-pane--strip.map-pane--split .map-pane__keep {
+.right-sheet--phone .map-pane--split .map-pane__keep {
   display: none;
 }
 
@@ -1166,7 +1156,7 @@ html[data-right-sheet] .reader__paper {
    rows that fill the width, every card with its whole title. */
 .nb-view {
   position: absolute;
-  inset: 0 0 var(--kept-bottom, 0) 0;
+  inset: 0;
   overflow: auto;
   padding: var(--space-3) var(--space-4) var(--space-4);
 }
@@ -1256,54 +1246,4 @@ html[data-right-sheet] .reader__paper {
   font-family: var(--font-sans);
   font-size: 12px;
   color: var(--ink-3);
-}
-
-/* A card the visible area cannot show whole is not drawn in part. */
-.map-pane .card[data-cut],
-.nb-view .nb-card[data-cut] {
-  visibility: hidden;
-}
-
-.nb-card__title--name {
-  font-family: var(--font-mono);
-  font-size: 12px;
-}
-
-.nb-view .nb-card[data-record] {
-  cursor: default;
-}
-
-.nb-view__cut {
-  position: sticky;
-  margin: var(--space-2) 0 0;
-  padding: 4px 10px;
-  width: max-content;
-  border: 1px solid var(--rule-strong);
-  border-radius: 999px;
-  background: var(--surface);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--ink-2);
-}
-
-/* A pane too short for half a graph (a laptop's or tablet's short window, a side sheet):
-   the graph's head stays as a strip naming the step, and the card and Lean take the rest. */
-.map-pane--strip .map-pane__handle {
-  display: none;
-}
-
-/* The sheet beside a paper whose strip has the Graph and Lean toggle: one toggle is enough. */
-.right-sheet--side .map-pane__bar .mode-toggle {
-  display: none;
-}
-
-/* The "+N more" line keeps a row of its own at the foot of the view; no card sits under it. */
-.nb-view[data-more] {
-  padding-bottom: 44px;
-}
-
-.nb-view__cut {
-  position: absolute;
-  bottom: 8px;
-  left: var(--space-4);
 }

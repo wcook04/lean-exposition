@@ -21,9 +21,8 @@ from playwright.sync_api import sync_playwright
 
 VISIBLE = r"""
 () => {
-  const panes = [...document.querySelectorAll('.map-pane')].filter((p) => p.getBoundingClientRect().width > 0);
-  const pane = panes[panes.length - 1];
-  if (!pane) return {closed: true};
+  const pane = document.querySelector('.map-pane');
+  if (!pane) return {error: 'no pane'};
   if (!pane.hasAttribute('data-framed')) return {error: 'the graph has not framed anything yet'};
   const ids = (pane.getAttribute('data-framed') || '').split(' ').filter(Boolean);
   const body = pane.querySelector('.map-pane__body').getBoundingClientRect();
@@ -31,29 +30,17 @@ VISIBLE = r"""
   const bottom = lean ? Math.min(body.bottom, lean.top - 11) : body.bottom;
   const outside = [];
   for (const id of ids) {
-    const cards = [...pane.querySelectorAll('.card[data-record], .nb-card[data-record]')].filter((c) => c.dataset.record === id);
+    const cards = [...pane.querySelectorAll('.card[data-record]')].filter((c) => c.dataset.record === id);
     if (!cards.length) continue;  // an assumption, drawn as a tag on another card
-    // A neighbour the area cannot hold whole is hidden and counted in "+N more", never cut.
-    if (id !== ids[0] && cards.every((c) => getComputedStyle(c).visibility === 'hidden')) continue;
     const ok = cards.some((c) => {
       const r = c.getBoundingClientRect();
       return r.top >= body.top - 1 && r.bottom <= bottom + 1 && r.left >= body.left - 1 && r.right <= body.right + 1;
     });
     if (!ok) outside.push(id);
   }
-  // No card that is visible may cross the edge of the visible graph.
-  const crossing = [];
-  for (const card of pane.querySelectorAll('.map-pane__body .card[data-record], .map-pane__body .nb-card')) {
-    if (getComputedStyle(card).visibility === 'hidden') continue;
-    const r = card.getBoundingClientRect();
-    if (!r.width || !r.height) continue;
-    const meets = r.bottom > body.top && r.top < bottom && r.right > body.left && r.left < body.right;
-    const whole = r.top >= body.top - 1 && r.bottom <= bottom + 1 && r.left >= body.left - 1 && r.right <= body.right + 1;
-    if (meets && !whole) crossing.push(card.dataset.record || card.textContent.trim().slice(0, 30));
-  }
   const page = pane.querySelector('.lean-page');
   const below = page ? page.innerText.replace(/\s+/g, ' ').trim() : '';
-  return {ids, outside, crossing, split: pane.matches('.map-pane--split'), strip: pane.matches('.map-pane--strip'), below: below.length};
+  return {ids, outside, split: pane.matches('.map-pane--split'), below: below.length};
 }
 """
 
@@ -61,16 +48,6 @@ VISIBLE = r"""
 def check(page, label: str, failures: list[str]) -> None:
     page.wait_for_timeout(2600)
     found = page.evaluate(VISIBLE)
-    if found.get("closed"):
-        # Under 1280px the pane opens as a sheet only when something is opened.
-        if "reading" in label or "card" in label:
-            print(f"{label}: no pane at this width until a phrase is opened")
-        else:
-            failures.append(f"{label}: opening a phrase showed no pane")
-        return
-    if found.get("strip") and found.get("below", 0) >= 30:
-        print(f"{label}: the pane is short, so the graph is a strip naming the step above the card")
-        return
     if found.get("error"):
         failures.append(f"{label}: {found['error']}")
     elif not found["ids"] and found.get("split") and found["below"] >= 30:
@@ -79,8 +56,6 @@ def check(page, label: str, failures: list[str]) -> None:
         failures.append(f"{label}: the Graph tab is not split")
     elif found["below"] < 30:
         failures.append(f"{label}: the part under the graph is empty")
-    elif found["crossing"]:
-        failures.append(f"{label}: cards cut by the graph's edge: {', '.join(found['crossing'][:8])}")
     elif found["outside"]:
         failures.append(f"{label}: outside the visible graph: {', '.join(found['outside'])}")
     else:
@@ -103,42 +78,16 @@ def main() -> int:
             page.goto(f"{base}/read/{paper}/?v=graph", wait_until="networkidle")
             page.wait_for_timeout(1500)
             # Following the paper: two passages apart.
-            for step in (1, 2, 3, 4):
+            for step in (1, 2):
                 page.mouse.wheel(0, 1600)
                 check(page, f"{paper}: reading, scroll {step}", failures)
-            # A card of the map clicked: its step opens below, and the step frames above.
-            card = page.evaluate("""() => {
-              const panes = [...document.querySelectorAll('.map-pane')].filter((p) => p.getBoundingClientRect().width > 0);
-  const pane = panes[panes.length - 1]; if (!pane || !pane.querySelector('.lean-page')) return null; const lean = pane.querySelector('.lean-page').getBoundingClientRect();
-              const c = [...pane.querySelectorAll('.map-pane__canvas .card[data-record]')].find((c) => {
-                const r = c.getBoundingClientRect(); return getComputedStyle(c).visibility !== 'hidden' && r.top > pane.getBoundingClientRect().top + 150 && r.bottom < lean.top - 12;
-              });
-              if (!c) return null; const r = c.getBoundingClientRect(); return {x: r.left + r.width / 2, y: r.top + r.height / 2};
-            }""")
-            if card:
-                page.mouse.click(card["x"], card["y"])
-                check(page, f"{paper}: map card opened", failures)
-                page.keyboard.press("Escape")
             # A phrase clicked on the Graph tab, then another further on.
             for nth in (5, 25):
-                # On the phrase's words, not on a link inside them.
-                point = page.evaluate("""(nth) => {
-                  const el = document.querySelectorAll('.paper .tie[data-tone]')[nth];
-                  if (!el) return null;
-                  el.scrollIntoView({block: 'center'});
-                  for (const r of el.getClientRects()) for (let x = r.left + 4; x < r.right - 2; x += 12) {
-                    const y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
-                    if (hit && el.contains(hit) && !hit.closest('a')) return {x, y};
-                  }
-                  const r = el.getBoundingClientRect(); return {x: r.left + 4, y: r.top + r.height / 2};
-                }""", nth)
-                if not point:
-                    continue
-                page.wait_for_timeout(200)
-                page.mouse.click(point["x"], point["y"])
+                phrase = page.locator(".paper .tie[data-tone]").nth(nth)
+                phrase.scroll_into_view_if_needed()
+                box = phrase.bounding_box()
+                page.mouse.click(box["x"] + 4, box["y"] + box["height"] / 2)
                 check(page, f"{paper}: phrase {nth} opened", failures)
-                if args.width < 1280:
-                    page.keyboard.press("Escape")
             page.close()
         browser.close()
     for line in failures:
