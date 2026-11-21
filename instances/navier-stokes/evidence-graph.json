@@ -3,7 +3,7 @@
  "id": "navier-stokes-library-edition",
  "title": "Finite-time blow-up for the Navier–Stokes equations",
  "selected_goals": [
-  "navier-stokes.corollary-7.2"
+  "navier-stokes.theorem-1.1"
  ],
  "sources": [
   {
@@ -1002,6 +1002,13 @@
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/StatementDefs.lean#L6177",
    "source_id": "lean:Breakdown/CertCell/StatementDefs.lean",
    "locator": "Breakdown/CertCell/StatementDefs.lean, line 6177"
+  },
+  {
+   "id": "cite.lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "title": "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Solution.lean#L350",
+   "source_id": "lean:Solution.lean",
+   "locator": "Solution.lean, line 350"
   },
   {
    "id": "cite.lean.Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
@@ -2451,6 +2458,22 @@
    "declaration": "Breakdown.CellLayerSystem.ShiftNumbersBounded",
    "statement": "Bounds for the two profile changes",
    "locator": "Breakdown/CertCell/StatementDefs.lean, line 6177",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "kind": "declaration",
+   "label": "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition"
+   ],
+   "source_id": "lean:Solution.lean",
+   "declaration": "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "statement": "Conditional breakdown on both domains",
+   "locator": "Solution.lean, line 350",
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
@@ -4646,9 +4669,24 @@
    "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
   },
   {
+   "id": "navier-stokes.cell-layer-theorem",
+   "kind": "claim",
+   "label": "The cell-layer theorem, after Proposition B.14",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.navier-stokes.cell-layer-theorem"
+   ],
+   "citation_ids": [],
+   "source_id": "paper",
+   "locator": "Appendix B.4, after the proof of Proposition B.14",
+   "statement": "By Theorem 7.1 and Corollary 7.2, data as in Proposition B.14 therefore give a profile, and the conclusions of Theorem 1.1 on $\\mathbb R^3$ and on $\\mathbb T^3$.",
+   "boundary": "A result the paper states without a number. Its link to the Lean was made with AI and has not been reviewed by the authors."
+  },
+  {
    "id": "navier-stokes.corollary-7.2",
-   "kind": "goal",
-   "label": "Corollary 7.2: A certificate gives blow-up",
+   "kind": "claim",
+   "label": "Corollary 7.2: how the profile is obtained",
    "status": "unverified",
    "assumption_ids": [],
    "evidence_ids": [
@@ -5373,7 +5411,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition B.14: Cell data give a certificate, Section B.4. The other conditions and the statement",
-   "statement": "Let data of the form of Subsection B.1 be given, with the weights, bounds, matrices and numbers of Subsections B.2 to B.4, and suppose that they satisfy the conditions of this appendix.",
+   "statement": "**Proposition B.14.** Let data of the form of Subsection B.1 be given, with the weights, bounds, matrices and numbers of Subsections B.2 to B.4, and suppose that they satisfy the conditions of this appendix.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -5412,7 +5450,7 @@
   },
   {
    "id": "navier-stokes.theorem-1.1",
-   "kind": "claim",
+   "kind": "goal",
    "label": "Theorem 1.1: A profile gives blow-up",
    "status": "unverified",
    "assumption_ids": [],
@@ -5577,6 +5615,294 @@
   {
    "from": "lean.Breakdown.CellLayerSystem.ShiftNumbersBounded",
    "to": "lean.Breakdown.supBoundFactor",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.AdjointDefect.AdjointDefectBounded",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.AdjointDefect.adjointDefectBridge_of_pieces",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.AdjointDefect.dualBoundedBound_of_parts",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.AdjointDefect.remainderAzimuthalHolds_proof",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.AdjointDefect.remainderPlainHolds_proof",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.AdjointDefect.weightedPairingIntegrable_proof",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CellLayerSystem.CellSystemCondition",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CellReduction.Instantiation.AdjointEntryLinks",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CellReduction.Instantiation.IsOffsetExpansionEntry",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CellReduction.Instantiation.offsetBallIdentity_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CellReduction.Instantiation.offsetClause_holds_of",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.AdjointQuadraticBounded",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.FrozenFormBounded",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.adjointQuadTerm_of",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.adjointQuadraticBridge_of",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.formShiftBridgeHolds_proof",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.frozenFormBridgeHolds_of_convection",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.CertReduction.gapTransferBridgeHolds_proof",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.FarField.breakdownOnTorus_of_weak",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.BilinBound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.BilinCompact",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.DilationAlgebra",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.Internal.NiceApprox.cutoff_isTestField",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.MildOfWeak",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.bilinCompact_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.bilin_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.Freq.mild_holds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.IsPerturbation",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.MildFramework.IsOrbit",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.MildRegular",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.dichotomyHolds",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.extended_certificate_orbit_proved",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.mildRegular_realization",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.supBoundFactor",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "to": "lean.Breakdown.transferHolds_of_dichotomy",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -9103,6 +9429,22 @@
    ]
   },
   {
+   "from": "navier-stokes.cell-layer-theorem",
+   "to": "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.navier-stokes.cell-layer-theorem"
+   ]
+  },
+  {
+   "from": "navier-stokes.cell-layer-theorem",
+   "to": "navier-stokes.proposition-b.14",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
+   ]
+  },
+  {
    "from": "navier-stokes.corollary-7.2",
    "to": "lean.Breakdown.FarField.breakdownOnTorus_of_weak",
    "kind": "formalizes",
@@ -9208,6 +9550,14 @@
   },
   {
    "from": "navier-stokes.corollary-7.2",
+   "to": "navier-stokes.proposition-b.14",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
+   ]
+  },
+  {
+   "from": "navier-stokes.corollary-7.2",
    "to": "navier-stokes.theorem-1.1",
    "kind": "supports",
    "evidence_ids": [
@@ -9219,7 +9569,8 @@
    "to": "navier-stokes.theorem-7.1",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11411,7 +11762,16 @@
    "to": "navier-stokes.lemma-b.10",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
+   ]
+  },
+  {
+   "from": "navier-stokes.proposition-b.14",
+   "to": "navier-stokes.lemma-b.11",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
    ]
   },
   {
@@ -11419,7 +11779,8 @@
    "to": "navier-stokes.lemma-b.12",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11427,7 +11788,8 @@
    "to": "navier-stokes.lemma-b.13",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11435,7 +11797,8 @@
    "to": "navier-stokes.lemma-b.2",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11443,7 +11806,8 @@
    "to": "navier-stokes.lemma-b.3",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11451,7 +11815,8 @@
    "to": "navier-stokes.lemma-b.5",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11459,7 +11824,8 @@
    "to": "navier-stokes.lemma-b.6",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11467,7 +11833,8 @@
    "to": "navier-stokes.lemma-b.7",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11475,7 +11842,16 @@
    "to": "navier-stokes.lemma-b.9",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
+   ]
+  },
+  {
+   "from": "navier-stokes.proposition-b.14",
+   "to": "navier-stokes.proposition-b.1",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
    ]
   },
   {
@@ -11483,7 +11859,8 @@
    "to": "navier-stokes.proposition-b.4",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11491,7 +11868,8 @@
    "to": "navier-stokes.proposition-b.8",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic"
    ]
   },
   {
@@ -11652,6 +12030,22 @@
    "kind": "formalizes",
    "evidence_ids": [
     "link.navier-stokes.theorem-1.1"
+   ]
+  },
+  {
+   "from": "navier-stokes.theorem-1.1",
+   "to": "navier-stokes.cell-layer-theorem",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
+   ]
+  },
+  {
+   "from": "navier-stokes.theorem-1.1",
+   "to": "navier-stokes.corollary-7.2",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
    ]
   },
   {
@@ -11989,6 +12383,14 @@
    "evidence_ids": [
     "lean_dependencies"
    ]
+  },
+  {
+   "from": "navier-stokes.theorem-7.1",
+   "to": "navier-stokes.proposition-b.14",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic"
+   ]
   }
  ],
  "evidence": [
@@ -12013,6 +12415,7 @@
     "lean.Breakdown.AdjointDefect.weightedPairingIntegrable_proof",
     "lean.Breakdown.CellLayerSystem.CellSystemCondition",
     "lean.Breakdown.CellLayerSystem.ShiftNumbersBounded",
+    "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
     "lean.Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
     "lean.Breakdown.CellReduction.Instantiation.AdjointEntryLinks",
     "lean.Breakdown.CellReduction.Instantiation.IsOffsetExpansionEntry",
@@ -12175,7 +12578,6 @@
     "navier-stokes.lemma-b.10",
     "navier-stokes.lemma-b.11",
     "navier-stokes.lemma-b.12",
-    "navier-stokes.lemma-b.13",
     "navier-stokes.lemma-b.2",
     "navier-stokes.lemma-b.3",
     "navier-stokes.lemma-b.5",
@@ -12199,6 +12601,21 @@
     "navier-stokes.theorem-7.1"
    ],
    "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.navier-stokes.cell-layer-theorem",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+    "navier-stokes.cell-layer-theorem"
+   ],
+   "details": "The phrase ns-b4-091 names this Lean. Made with AI; not reviewed by the authors."
   },
   {
    "id": "link.navier-stokes.corollary-7.2",
@@ -13020,6 +13437,37 @@
     "navier-stokes.theorem-7.1"
    ],
    "details": "Proof Reader's links.json at 3858afbe00b2 names these Lean declarations for Theorem 7.1: A certificate gives a profile. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "paper_logic",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statements of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.cell-layer-theorem",
+    "navier-stokes.corollary-7.2",
+    "navier-stokes.lemma-b.10",
+    "navier-stokes.lemma-b.11",
+    "navier-stokes.lemma-b.12",
+    "navier-stokes.lemma-b.13",
+    "navier-stokes.lemma-b.2",
+    "navier-stokes.lemma-b.3",
+    "navier-stokes.lemma-b.5",
+    "navier-stokes.lemma-b.6",
+    "navier-stokes.lemma-b.7",
+    "navier-stokes.lemma-b.9",
+    "navier-stokes.proposition-b.1",
+    "navier-stokes.proposition-b.14",
+    "navier-stokes.proposition-b.4",
+    "navier-stokes.proposition-b.8",
+    "navier-stokes.theorem-1.1",
+    "navier-stokes.theorem-7.1"
+   ],
+   "details": "theorem-1.1 uses corollary-7.2: Section 7 supplies Theorem 1.1's hypothesis; Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold. corollary-7.2 uses theorem-7.1: Corollary 7.2 follows from Theorem 7.1, which gives a profile from a certificate. theorem-7.1 uses proposition-b.14: Proposition B.14: data that satisfy the conditions of Appendix B are a certificate. corollary-7.2 uses proposition-b.14: The certificate of Corollary 7.2 is obtained from cell data by Proposition B.14. theorem-1.1 uses cell-layer-theorem: The sentence after Proposition B.14's proof states the conclusions of Theorem 1.1 from the cell conditions. cell-layer-theorem uses proposition-b.14: The cell-layer theorem goes through Proposition B.14. proposition-b.14 uses lemma-b.10: The proof of Proposition B.14 names Lemma B.10. proposition-b.14 uses lemma-b.11: Proposition B.14 rests on Lemma B.11 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.12: The proof of Proposition B.14 names Lemma B.12. proposition-b.14 uses lemma-b.13: The proof of Proposition B.14 names Lemma B.13. proposition-b.14 uses lemma-b.2: The proof of Proposition B.14 names Lemma B.2. proposition-b.14 uses lemma-b.3: Proposition B.14 rests on Lemma B.3 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.5: Proposition B.14 rests on Lemma B.5 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.6: Proposition B.14 rests on Lemma B.6 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.7: Proposition B.14 rests on Lemma B.7 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.9: The proof of Proposition B.14 names Lemma B.9. proposition-b.14 uses proposition-b.1: Proposition B.14 rests on Proposition B.1 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses proposition-b.4: Proposition B.14 rests on Proposition B.4 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses proposition-b.8: The proof of Proposition B.14 names Proposition B.8."
   }
  ],
  "scope": "Finite-time blow-up for the Navier–Stokes equations, by Levent Alpöge, Tristan Buckmaster, with their Lean at https://github.com/tristanbuckmaster/navier-stokes ad53419de079eb8f95f60313473374624a348546, as read for Proof Reader (wcook04/proof-reader 3858afbe00b23dd8bba13ffa41409310b712723d). The numbered results are the authors'; their links to the Lean were made with AI.",

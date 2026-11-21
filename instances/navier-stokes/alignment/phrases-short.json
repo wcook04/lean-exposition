@@ -22441,29 +22441,30 @@
    ]
   },
   {
-   "id": "pdf-item-theorem-B-14",
-   "from": "Let data of the form of Subsection B.1 be given, with the weights, bounds, matrices and numbers of Subsections B.2 to B.4, and suppose that they satisfy the conditions of this appendix.",
-   "to": "Let data of the form of Subsection B.1 be given, with the weights, bounds, matrices and numbers of Subsections B.2 to B.4, and suppose that they satisfy the conditions of this appendix.",
+   "id": "b4-prop-b14",
+   "from": "**Proposition B.14.** Let data of the form of Subsection B.1 be given, with the weights, bounds, matrices and numbers of Subsections B.2 to B.4, and suppose that they satisfy the conditions of this appendix.",
+   "to": "**Proposition B.14.** Let data of the form of Subsection B.1 be given, with the weights, bounds, matrices and numbers of Subsections B.2 to B.4, and suppose that they satisfy the conditions of this appendix.",
    "role": "statement",
    "topic": "offset-certificate",
    "status": "new",
    "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
+     "file": "Breakdown/CellReduction/CellLayerBreakdownCompose.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "The paper proves here that data of the form of Subsection B.1 meeting the conditions of this appendix are a certificate in the sense of Section 7, using Propositions B.1 and B.4 and Lemmas B.2 to B.13. The formal statement reaches the same certificate, with an existentially chosen decay constant, but takes ten of those analytic steps (among them the offset, profile-change and adjoint estimates) as explicit premises; the closed cell theorem tied to the sentence after this proof supplies them, so the two together assert what the paper proves."
+    },
     {
      "name": "Breakdown.CellLayerSystem.CellSystemCondition",
      "file": "Breakdown/CertCell/StatementDefs.lean",
      "relation": "states",
      "fidelity": "different",
      "fidelity_note": "The formal hypothesis specifies fifteen groups for one consistent data set, including functional and representation conditions left unwritten in the paper; the full equivalence of the condition lists cannot be read from this sentence alone."
-    },
-    {
-     "name": "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
-     "file": "Breakdown/CellReduction/CellLayerBreakdownCompose.lean",
-     "relation": "states",
-     "fidelity": "different",
-     "fidelity_note": "The formal conclusion supplies a common decay constant making these data a certificate and takes ten analytic implications as explicit premises; the later closed cell theorem supplies their proofs."
     }
    ],
    "replaces": [
+    "pdf-item-theorem-B-14",
     "ns-b4-086"
    ]
   },

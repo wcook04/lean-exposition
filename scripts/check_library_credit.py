@@ -24,6 +24,7 @@ ap.add_argument("base")
 ap.add_argument("--credit-file", type=Path, required=True)
 ap.add_argument("--statement", required=True, help="the bold label of a numbered statement, e.g. \"Theorem 1.1.\"")
 ap.add_argument("--shots", type=Path, required=True)
+ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
 a = ap.parse_args()
 base = a.base.rstrip("/") + "/"
@@ -87,6 +88,15 @@ with sync_playwright() as pw:
         code = page.eval_on_selector_all("pre, .code, .lean-code, code", "els => els.map(e => e.innerText).join('\\n')")
         check(f"{tag} statement lean", "v=lean" in page.url and ("theorem" in code or "def " in code or "structure" in code), page.url)
         page.screenshot(path=str(a.shots / f"statement-lean-{tag}.png"))
+        # The statement's phrase address, with no view named, opens the same card and Lean as a click.
+        if a.statement_tie:
+            page.goto(base + f"@{a.statement_tie}", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(4000)
+            card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
+            pane = page.evaluate("() => (document.querySelector('.lean-page') || {}).innerText || ''")
+            check(f"{tag} statement address", "AI-assessed" in card and "No Lean linked" not in pane, pane[:160])
+            page.screenshot(path=str(a.shots / f"statement-address-{tag}.png"))
         # Click a statement in the text itself.
         page.goto(base, wait_until="domcontentloaded")
         page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)

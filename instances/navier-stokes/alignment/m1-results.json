@@ -1310,7 +1310,7 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "Let data of the form of Subsection B.1 be given, with the weights, bounds, matri",
+     "from": "**Proposition B.14.** Let data of the form of Subsection B.1 be given, with the ",
      "to": " the conditions are a certificate in the sense of Section 7.",
      "origin": "ai"
     }

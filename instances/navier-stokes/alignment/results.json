@@ -469,7 +469,7 @@
    "claim": "claim-theorem-B-14",
    "title": "Proposition B.14: Cell data give a certificate",
    "section": "B.4. The other conditions and the statement",
-   "tie": "pdf-item-theorem-B-14",
+   "tie": "b4-prop-b14",
    "lean": [
     "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts"
    ]

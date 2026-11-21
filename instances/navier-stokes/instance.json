@@ -204,6 +204,6 @@
   "adjoint",
   "offset-certificate"
  ],
- "goal": "navier-stokes.corollary-7.2",
- "main_lean": "Breakdown.extended_certificate_breakdown_on_space"
+ "goal": "navier-stokes.theorem-1.1",
+ "main_lean": "Breakdown.breakdownOnSpace_of_profile"
 }

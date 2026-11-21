@@ -290,6 +290,15 @@ if (canonicalPath(window.location.pathname) !== window.location.pathname) {
 let current = parseRoute(new URL(window.location.href));
 const listeners = new Set<() => void>();
 
+/**
+ * Parse the address again, once tables it depends on have loaded. A library paper's phrase addresses
+ * (/@<id>) name a phrase that may stand on a numbered result; until its table is read the first parse
+ * can only treat it as a phrase alone, which would open no Lean.
+ */
+export function reparseCurrentRoute(): void {
+  current = parseRoute(new URL(window.location.href));
+}
+
 function emit() {
   current = parseRoute(new URL(window.location.href));
   listeners.forEach((l) => l());

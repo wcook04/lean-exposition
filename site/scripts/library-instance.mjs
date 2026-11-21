@@ -27,7 +27,7 @@ for (const doc of instance.documents.filter((d) => d.main)) {
 const aliases = resolve(import.meta.dirname, "../../instances", paper, "alignment/aliases.json");
 if (existsSync(aliases)) {
   for (const [old, host] of Object.entries(JSON.parse(readFileSync(aliases, "utf8")).passages ?? {})) {
-    if (phrases[host] && !phrases[old]) phrases[old] = phrases[host];
+    if (phrases[host] && !phrases[old]) phrases[old] = { ...phrases[host], host };
   }
 }
 // Reading notes on Lean and the supplementary checks, published beside the edition when the paper has them.

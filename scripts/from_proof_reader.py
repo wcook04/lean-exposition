@@ -289,6 +289,9 @@ def main() -> None:
     ap.add_argument("--companion", action="append", default=[], metavar="SLOT=PAGE[+PAGE...][|slug|Title]",
                     help="a companion reading page in another document slot, read beside the same Lean "
                          "(several pages joined with + are read as one document, in order)")
+    ap.add_argument("--paper-logic", type=Path,
+                    help="authored JSON: the paper's own stated logic between its results, as supports edges sourced to the "
+                         "paper, and unnumbered results it states (nodes with their phrase and Lean)")
     ap.add_argument("--credit", help="the credit line, exactly, in place of paper.toml's [credit] text")
     args = ap.parse_args()
     page, out, slot = args.page, args.out, args.slot
@@ -594,6 +597,48 @@ def main() -> None:
                     nodes[nid]["evidence_ids"].append(eid)
                 evidence[eid]["subject_ids"] = sorted(set(evidence[eid]["subject_ids"]) | {nid, did})
                 edges.append({"from": nid, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
+    # The paper's own stated logic: edges the authors' text states between results ("If there exists a
+    # certificate, then the conclusions of Theorem 1.1 hold"), sourced to the paper, beside Lean's.
+    if args.paper_logic:
+        logic = json.loads(args.paper_logic.read_text())
+        for extra_node in logic.get("nodes", []):
+            nid = f"{args.paper}.{extra_node['id']}"
+            tie = next((t for t in ties if t["id"] == tie_of.get(extra_node["tie"], extra_node["tie"])), None)
+            node(nid, "claim", extra_node["label"], "unverified", source_id="paper", locator=extra_node["locator"],
+                 statement=tie["from"] if tie else extra_node["label"], citation_ids=[],
+                 boundary="A result the paper states without a number. Its link to the Lean was made with AI and has not "
+                          "been reviewed by the authors.")
+            for target in extra_node.get("lean", []):
+                found = lean.resolve(target)
+                if not found:
+                    raise SystemExit(f"--paper-logic: {target} is not in the Lean index")
+                did = add_decl(*found)
+                eid = f"link.{nid}"
+                evidence.setdefault(eid, {"id": eid, "kind": "semantic_review", "status": "not_run", "command": [],
+                                          "tool": "Links made with AI; carried by scripts/from_proof_reader.py",
+                                          "source_ids": ["proof_reader"], "subject_ids": [nid],
+                                          "details": f"The phrase {extra_node['tie']} names this Lean. Made with AI; not reviewed by the authors."})
+                if eid not in nodes[nid]["evidence_ids"]:
+                    nodes[nid]["evidence_ids"].append(eid)
+                evidence[eid]["subject_ids"] = sorted(set(evidence[eid]["subject_ids"]) | {nid, did})
+                edges.append({"from": nid, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
+        for address, label in logic.get("labels", {}).items():
+            nodes[f"{args.paper}.{address}"]["label"] = label
+        if logic.get("edges"):
+            evidence["paper_logic"] = {"id": "paper_logic", "kind": "semantic_review", "status": "not_run", "command": [],
+                                       "tool": "The paper's own statements of how its results join; transcribed with AI",
+                                       "source_ids": ["paper"], "subject_ids": [],
+                                       "details": " ".join(f"{e['from']} uses {e['to']}: {e['why']}" for e in logic["edges"])}
+        for e in logic.get("edges", []):
+            a, b = f"{args.paper}.{e['from']}", f"{args.paper}.{e['to']}"
+            if a not in nodes or b not in nodes:
+                raise SystemExit(f"--paper-logic: {e['from']} or {e['to']} is not a result on the map")
+            same = next((x for x in edges if x["from"] == a and x["to"] == b and x["kind"] == "supports"), None)
+            if same:
+                same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {"paper_logic"})
+            else:
+                edges.append({"from": a, "to": b, "kind": "supports", "evidence_ids": ["paper_logic"]})
+            evidence["paper_logic"]["subject_ids"] = sorted(set(evidence["paper_logic"]["subject_ids"]) | {a, b})
     on_map = {n[len("lean."):] for n in nodes if n.startswith("lean.")}
     if facts and on_map:
         evidence["lean_dependencies"] = {
@@ -662,6 +707,10 @@ def main() -> None:
         for nid, used in sorted(result_uses.items()):
             for other in sorted(used):
                 if reaches(other, nid) and order.get(nid, 0) < order.get(other, 0):
+                    continue
+                same = next((x for x in edges if x["from"] == nid and x["to"] == other and x["kind"] == "supports"), None)
+                if same:
+                    same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {"lean_dependencies"})
                     continue
                 edges.append({"from": nid, "to": other, "kind": "supports", "evidence_ids": ["lean_dependencies"]})
                 evidence["lean_dependencies"]["subject_ids"] = sorted(set(evidence["lean_dependencies"]["subject_ids"]) | {nid, other})

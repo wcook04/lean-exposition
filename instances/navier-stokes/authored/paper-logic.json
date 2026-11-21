@@ -1,0 +1,114 @@
+{
+ "meaning": "The paper's own stated logic between its results, beside Lean's dependencies. Theorem 1.1 is the main result: Sections 2 to 6 prove it from a profile (route 1, from Lean). Section 7 supplies its hypothesis: a certificate gives a profile (Theorem 7.1), so the conclusions of Theorem 1.1 hold (Corollary 7.2) (route 2). Appendix B shows that cell data satisfying its conditions are a certificate (Proposition B.14, from B.1 to B.13); the cell-layer theorem after its proof states the whole chain in Lean (route 3).",
+ "labels": {
+  "corollary-7.2": "Corollary 7.2: how the profile is obtained"
+ },
+ "nodes": [
+  {
+   "id": "cell-layer-theorem",
+   "label": "The cell-layer theorem, after Proposition B.14",
+   "tie": "ns-b4-091",
+   "locator": "Appendix B.4, after the proof of Proposition B.14",
+   "lean": [
+    "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "theorem-1.1",
+   "to": "corollary-7.2",
+   "why": "Section 7 supplies Theorem 1.1's hypothesis; Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold."
+  },
+  {
+   "from": "corollary-7.2",
+   "to": "theorem-7.1",
+   "why": "Corollary 7.2 follows from Theorem 7.1, which gives a profile from a certificate."
+  },
+  {
+   "from": "theorem-7.1",
+   "to": "proposition-b.14",
+   "why": "Proposition B.14: data that satisfy the conditions of Appendix B are a certificate."
+  },
+  {
+   "from": "corollary-7.2",
+   "to": "proposition-b.14",
+   "why": "The certificate of Corollary 7.2 is obtained from cell data by Proposition B.14."
+  },
+  {
+   "from": "theorem-1.1",
+   "to": "cell-layer-theorem",
+   "why": "The sentence after Proposition B.14's proof states the conclusions of Theorem 1.1 from the cell conditions."
+  },
+  {
+   "from": "cell-layer-theorem",
+   "to": "proposition-b.14",
+   "why": "The cell-layer theorem goes through Proposition B.14."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.10",
+   "why": "The proof of Proposition B.14 names Lemma B.10."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.11",
+   "why": "Proposition B.14 rests on Lemma B.11 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.12",
+   "why": "The proof of Proposition B.14 names Lemma B.12."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.13",
+   "why": "The proof of Proposition B.14 names Lemma B.13."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.2",
+   "why": "The proof of Proposition B.14 names Lemma B.2."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.3",
+   "why": "Proposition B.14 rests on Lemma B.3 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.5",
+   "why": "Proposition B.14 rests on Lemma B.5 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.6",
+   "why": "Proposition B.14 rests on Lemma B.6 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.7",
+   "why": "Proposition B.14 rests on Lemma B.7 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "lemma-b.9",
+   "why": "The proof of Proposition B.14 names Lemma B.9."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "proposition-b.1",
+   "why": "Proposition B.14 rests on Proposition B.1 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "proposition-b.4",
+   "why": "Proposition B.14 rests on Proposition B.4 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "from": "proposition-b.14",
+   "to": "proposition-b.8",
+   "why": "The proof of Proposition B.14 names Proposition B.8."
+  }
+ ]
+}
