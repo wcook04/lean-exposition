@@ -5252,6 +5252,14 @@
   },
   {
    "from": "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+   "to": "lean.TorusEuler.IsMaximalEulerSolution",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.InductiveEulerStages.paper_proposition_8_1",
    "to": "lean.TorusEuler.PaperLimitAgreement",
    "kind": "supports",
    "evidence_ids": [
@@ -5413,6 +5421,14 @@
   {
    "from": "lean.TorusEuler.Paper.corollary_8_3",
    "to": "lean.TorusEuler.IsMaximalEulerSolution",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.corollary_8_3",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
@@ -6292,6 +6308,22 @@
   },
   {
    "from": "lean.TorusEuler.Paper.proposition_8_1",
+   "to": "lean.TorusEuler.IsMaximalEulerSolution",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_1",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_1",
    "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
    "kind": "supports",
    "evidence_ids": [
@@ -6404,6 +6436,14 @@
   },
   {
    "from": "lean.TorusEuler.Paper.proposition_8_4",
+   "to": "lean.TorusEuler.Paper.Proposition84Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.proposition_8_4",
    "to": "lean.TorusEuler.Paper.Statement.lemma_1_3",
    "kind": "supports",
    "evidence_ids": [
@@ -6485,6 +6525,14 @@
   {
    "from": "lean.TorusEuler.Paper.theorem_1_1",
    "to": "lean.TorusEuler.Paper.Corollary83Conclusions",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.TorusEuler.Paper.theorem_1_1",
+   "to": "lean.TorusEuler.Paper.Proposition81Conclusions",
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies"
