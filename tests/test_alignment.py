@@ -732,8 +732,9 @@ class Phrases(unittest.TestCase):
         self.assertEqual([tie["phrase"] for tie in index["ties"]], ["p1", "p3", "p2"])
         # One tie per segment; the phrase around a display runs text, display, text.
         self.assertEqual([members for _, _, members in index["segments"]], [[0], [1], [2], [2], [2]])
-        # Neighbouring ties of one topic take its two shades in turn.
-        self.assertEqual([tie["tone"] for tie in index["ties"]], [0, 1, 0])
+        # Every tie of a topic takes its topic's one colour; with no stored colours, authored order.
+        self.assertEqual([tie["tone"] for tie in index["ties"]], [0, 0, 0])
+        self.assertEqual([topic["tone"] for topic in index["topics"]], [0, 1])
         self.assertEqual(index["ties"][2]["rows"][0]["fidelity"], "stronger")
         self.assertEqual([topic["name"] for topic in index["topics"]], ["Topic", "Other"])
         notes = alignment.phrase_notes(resolved["phrases"]["long"])

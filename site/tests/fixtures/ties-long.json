@@ -1,4 +1,38 @@
 {
+ "families": [
+  {
+   "id": "family-model",
+   "name": "The SK model and Parisi functional · Variational contact · Strict curvature on constant intervals",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "curvature",
+    "contact",
+    "model"
+   ]
+  },
+  {
+   "id": "family-support",
+   "name": "Excluding support gaps · Further consequences · Formal statements and their scope",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "support",
+    "consequences",
+    "scope"
+   ]
+  },
+  {
+   "id": "family-scalar",
+   "name": "The scalar ground-state value · Finite Gaussian approximation",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "gaussian",
+    "scalar"
+   ]
+  }
+ ],
  "layer": "phrases",
  "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading.",
  "parts": [
@@ -3274,7 +3308,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -3318,7 +3352,7 @@
      "relation": "states"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -3362,7 +3396,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -3405,7 +3439,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -3448,7 +3482,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -3491,7 +3525,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -3582,7 +3616,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3621,7 +3655,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3680,7 +3714,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3724,7 +3758,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3763,7 +3797,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3802,7 +3836,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3857,7 +3891,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3896,7 +3930,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3951,7 +3985,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4010,7 +4044,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4054,7 +4088,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4118,7 +4152,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4177,7 +4211,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -4232,7 +4266,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4271,7 +4305,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4310,7 +4344,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4369,7 +4403,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -4428,7 +4462,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -4487,7 +4521,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -4546,7 +4580,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -4605,7 +4639,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -4668,7 +4702,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4751,7 +4785,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -4794,7 +4828,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -4858,7 +4892,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4923,7 +4957,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -4966,7 +5000,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5010,7 +5044,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5053,7 +5087,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -5096,7 +5130,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5159,7 +5193,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5222,7 +5256,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5265,7 +5299,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -5308,7 +5342,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -5351,7 +5385,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -5394,7 +5428,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -5437,7 +5471,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -5492,7 +5526,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5531,7 +5565,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5575,7 +5609,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5619,7 +5653,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5663,7 +5697,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5727,7 +5761,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5813,7 +5847,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5856,7 +5890,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5915,7 +5949,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -5980,7 +6014,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6043,7 +6077,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6086,7 +6120,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6145,7 +6179,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6188,7 +6222,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6231,7 +6265,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6275,7 +6309,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6338,7 +6372,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6381,7 +6415,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6444,7 +6478,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6508,7 +6542,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6552,7 +6586,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -6596,7 +6630,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -6640,7 +6674,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -6684,7 +6718,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -6727,7 +6761,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -6770,7 +6804,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -6813,7 +6847,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -6877,7 +6911,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -6940,7 +6974,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -6984,7 +7018,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7047,7 +7081,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -7110,7 +7144,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7153,7 +7187,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7216,7 +7250,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7255,7 +7289,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7294,7 +7328,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7353,7 +7387,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7424,7 +7458,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7468,7 +7502,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7527,7 +7561,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7590,7 +7624,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7634,7 +7668,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7698,7 +7732,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7742,7 +7776,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7806,7 +7840,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7850,7 +7884,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7894,7 +7928,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7933,7 +7967,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -7977,7 +8011,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8021,7 +8055,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8061,7 +8095,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8101,7 +8135,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8140,7 +8174,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8183,7 +8217,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8222,7 +8256,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8285,7 +8319,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8328,7 +8362,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8372,7 +8406,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8437,7 +8471,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8480,7 +8514,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8523,7 +8557,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8606,7 +8640,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -8709,7 +8743,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -8772,7 +8806,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -8815,7 +8849,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -8858,7 +8892,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -8923,7 +8957,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -8986,7 +9020,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9049,7 +9083,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9112,7 +9146,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9151,7 +9185,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9195,7 +9229,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9239,7 +9273,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9279,7 +9313,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9323,7 +9357,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9363,7 +9397,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9422,7 +9456,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9466,7 +9500,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9509,7 +9543,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9553,7 +9587,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9596,7 +9630,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9639,7 +9673,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9682,7 +9716,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9725,7 +9759,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9765,7 +9799,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9808,7 +9842,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9851,7 +9885,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9914,7 +9948,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -9957,7 +9991,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10000,7 +10034,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10043,7 +10077,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10086,7 +10120,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10129,7 +10163,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10169,7 +10203,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10212,7 +10246,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10255,7 +10289,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10298,7 +10332,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10342,7 +10376,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10413,7 +10447,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10453,7 +10487,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10560,7 +10594,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10603,7 +10637,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10646,7 +10680,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10686,7 +10720,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10730,7 +10764,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10774,7 +10808,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10818,7 +10852,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10862,7 +10896,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -10981,7 +11015,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11068,7 +11102,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11123,7 +11157,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11162,7 +11196,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11222,7 +11256,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11262,7 +11296,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11365,7 +11399,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11404,7 +11438,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11448,7 +11482,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11487,7 +11521,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11550,7 +11584,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11613,7 +11647,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11657,7 +11691,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11740,7 +11774,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11783,7 +11817,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11826,7 +11860,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11869,7 +11903,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11913,7 +11947,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -11976,7 +12010,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12019,7 +12053,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12063,7 +12097,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12126,7 +12160,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12170,7 +12204,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12253,7 +12287,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12316,7 +12350,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12360,7 +12394,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12403,7 +12437,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12466,7 +12500,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -12509,7 +12543,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12568,7 +12602,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12647,7 +12681,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12690,7 +12724,7 @@
      "relation": "states"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12753,7 +12787,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12816,7 +12850,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12859,7 +12893,7 @@
      "relation": "states"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12902,7 +12936,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12945,7 +12979,7 @@
      "relation": "states"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -12988,7 +13022,7 @@
      "relation": "states"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13032,7 +13066,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13076,7 +13110,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13119,7 +13153,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13162,7 +13196,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13205,7 +13239,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13248,7 +13282,7 @@
      "relation": "states"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13311,7 +13345,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13354,7 +13388,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13397,7 +13431,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13440,7 +13474,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13483,7 +13517,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13526,7 +13560,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13569,7 +13603,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13612,7 +13646,7 @@
      "relation": "states"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13655,7 +13689,7 @@
      "relation": "states"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13718,7 +13752,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13761,7 +13795,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13824,7 +13858,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13887,7 +13921,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13930,7 +13964,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -13974,7 +14008,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14018,7 +14052,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14058,7 +14092,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14102,7 +14136,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14146,7 +14180,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14190,7 +14224,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14234,7 +14268,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14278,7 +14312,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14322,7 +14356,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14366,7 +14400,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14410,7 +14444,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14454,7 +14488,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14498,7 +14532,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14542,7 +14576,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14582,7 +14616,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14626,7 +14660,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14670,7 +14704,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14714,7 +14748,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14758,7 +14792,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -14801,7 +14835,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -14845,7 +14879,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -14885,7 +14919,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -14925,7 +14959,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -14964,7 +14998,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15019,7 +15053,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15063,7 +15097,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15107,7 +15141,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15151,7 +15185,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15195,7 +15229,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15234,7 +15268,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15289,7 +15323,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15332,7 +15366,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15376,7 +15410,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15419,7 +15453,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15480,7 +15514,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15524,7 +15558,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15568,7 +15602,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15611,7 +15645,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15655,7 +15689,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15699,7 +15733,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15742,7 +15776,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15785,7 +15819,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15828,7 +15862,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15872,7 +15906,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15916,7 +15950,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -15956,7 +15990,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -16000,7 +16034,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -16044,7 +16078,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -16087,7 +16121,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -16131,7 +16165,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -16190,7 +16224,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 12,
+   "tone": 4,
    "topic": "consequences"
   },
   {
@@ -16234,7 +16268,7 @@
      "relation": "states"
     }
    ],
-   "tone": 13,
+   "tone": 4,
    "topic": "consequences"
   },
   {
@@ -16277,7 +16311,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16316,7 +16350,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16359,7 +16393,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16402,7 +16436,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16445,7 +16479,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16488,7 +16522,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16531,7 +16565,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16574,7 +16608,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16617,7 +16651,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16660,7 +16694,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16703,7 +16737,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16746,7 +16780,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16789,7 +16823,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16832,7 +16866,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16875,7 +16909,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16918,7 +16952,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 1,
    "topic": "contact"
   },
   {
@@ -16961,7 +16995,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -17004,7 +17038,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -17047,7 +17081,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17086,7 +17120,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -17129,7 +17163,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17172,7 +17206,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17215,7 +17249,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17258,7 +17292,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17297,7 +17331,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17352,7 +17386,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17395,7 +17429,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17438,7 +17472,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17477,7 +17511,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17520,7 +17554,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17563,7 +17597,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17606,7 +17640,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17649,7 +17683,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17692,7 +17726,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17735,7 +17769,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17774,7 +17808,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17813,7 +17847,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17852,7 +17886,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17891,7 +17925,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17935,7 +17969,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -17978,7 +18012,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18021,7 +18055,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18065,7 +18099,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18109,7 +18143,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18153,7 +18187,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18196,7 +18230,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18239,7 +18273,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18283,7 +18317,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18326,7 +18360,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18370,7 +18404,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18414,7 +18448,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18457,7 +18491,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18500,7 +18534,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18543,7 +18577,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18586,7 +18620,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18629,7 +18663,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -18672,7 +18706,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -18715,7 +18749,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -18758,7 +18792,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -18797,7 +18831,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 11,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18840,7 +18874,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 6,
    "topic": "gaussian"
   },
   {
@@ -18883,7 +18917,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -18923,7 +18957,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -18963,7 +18997,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -19003,7 +19037,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 8,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -19068,7 +19102,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 7,
    "topic": "scalar"
   },
   {
@@ -19111,7 +19145,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19150,7 +19184,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -19193,7 +19227,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -19236,7 +19270,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19275,7 +19309,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 3,
    "topic": "support"
   },
   {
@@ -19314,7 +19348,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19353,7 +19387,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19396,7 +19430,7 @@
      "relation": "states"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19439,7 +19473,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19502,7 +19536,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19545,7 +19579,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19588,7 +19622,7 @@
      "relation": "states"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19631,7 +19665,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19674,7 +19708,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19717,7 +19751,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19760,7 +19794,7 @@
      "relation": "states"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19803,7 +19837,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19846,7 +19880,7 @@
      "relation": "states"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19885,7 +19919,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19940,7 +19974,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -19996,7 +20030,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20035,7 +20069,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20106,7 +20140,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20145,7 +20179,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20184,7 +20218,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20223,7 +20257,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20266,7 +20300,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20309,7 +20343,7 @@
      "relation": "states"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20373,7 +20407,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20416,7 +20450,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20455,7 +20489,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20494,7 +20528,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20549,7 +20583,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20588,7 +20622,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20627,7 +20661,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20666,7 +20700,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20705,7 +20739,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20762,7 +20796,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20801,7 +20835,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20840,7 +20874,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 5,
    "topic": "scope"
   },
   {
@@ -20879,7 +20913,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 4,
+   "tone": 0,
    "topic": "curvature"
   },
   {
@@ -20923,66 +20957,90 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 0,
    "topic": "curvature"
   }
  ],
  "topics": [
   {
-   "colour": 0,
-   "description": "The Hamiltonian, admissible order parameters, control value, diffusion and compact-strip regularity.",
-   "id": "model",
-   "name": "The SK model and Parisi functional",
-   "part": 0
-  },
-  {
-   "colour": 1,
-   "description": "Feasible changes of coefficient or Stieltjes mass and the moment equalities they force on the support.",
-   "id": "contact",
-   "name": "Variational contact",
-   "part": 0
-  },
-  {
-   "colour": 2,
+   "dark": "oklch(0.595 0.128 336.6)",
    "description": "Backward and forward shape estimates, the rational certificate and its integrated coercivity bound.",
+   "family": "family-model",
    "id": "curvature",
+   "light": "oklch(0.395 0.087 336.6)",
    "name": "Strict curvature on constant intervals",
-   "part": 0
+   "part": 0,
+   "tone": 0
   },
   {
-   "colour": 3,
+   "dark": "oklch(0.680 0.114 351.0)",
+   "description": "Feasible changes of coefficient or Stieltjes mass and the moment equalities they force on the support.",
+   "family": "family-model",
+   "id": "contact",
+   "light": "oklch(0.480 0.078 351.0)",
+   "name": "Variational contact",
+   "part": 0,
+   "tone": 1
+  },
+  {
+   "dark": "oklch(0.765 0.100 5.4)",
+   "description": "The Hamiltonian, admissible order parameters, control value, diffusion and compact-strip regularity.",
+   "family": "family-model",
+   "id": "model",
+   "light": "oklch(0.565 0.069 5.4)",
+   "name": "The SK model and Parisi functional",
+   "part": 0,
+   "tone": 2
+  },
+  {
+   "dark": "oklch(0.580 0.128 116.6)",
    "description": "The terminal, positive-height and zero-height gap arguments and their full-support conclusion.",
+   "family": "family-support",
    "id": "support",
+   "light": "oklch(0.380 0.087 116.6)",
    "name": "Excluding support gaps",
-   "part": 0
+   "part": 0,
+   "tone": 3
   },
   {
-   "colour": 4,
-   "description": "The bounded martingale, terminal spin and the scalar identities and comparison bounds for the ground-state value.",
-   "id": "scalar",
-   "name": "The scalar ground-state value",
-   "part": 0
-  },
-  {
-   "colour": 5,
-   "description": "Euler paths, curvature normalization, randomized rounding and convergence of the adjacent-correlation sum.",
-   "id": "gaussian",
-   "name": "Finite Gaussian approximation",
-   "part": 0
-  },
-  {
-   "colour": 6,
+   "dark": "oklch(0.665 0.114 131.0)",
    "description": "Consequences of the main argument with their own hypotheses and source scope.",
+   "family": "family-support",
    "id": "consequences",
+   "light": "oklch(0.465 0.078 131.0)",
    "name": "Further consequences",
-   "part": 0
+   "part": 0,
+   "tone": 4
   },
   {
-   "colour": 7,
+   "dark": "oklch(0.750 0.100 145.4)",
    "description": "The two formal models, their quantified endpoints and the distinctions needed to compare them with the paper.",
+   "family": "family-support",
    "id": "scope",
+   "light": "oklch(0.550 0.069 145.4)",
    "name": "Formal statements and their scope",
-   "part": 0
+   "part": 0,
+   "tone": 5
+  },
+  {
+   "dark": "oklch(0.623 0.121 228.3)",
+   "description": "Euler paths, curvature normalization, randomized rounding and convergence of the adjacent-correlation sum.",
+   "family": "family-scalar",
+   "id": "gaussian",
+   "light": "oklch(0.423 0.083 228.3)",
+   "name": "Finite Gaussian approximation",
+   "part": 0,
+   "tone": 6
+  },
+  {
+   "dark": "oklch(0.708 0.107 242.7)",
+   "description": "The bounded martingale, terminal spin and the scalar identities and comparison bounds for the ground-state value.",
+   "family": "family-scalar",
+   "id": "scalar",
+   "light": "oklch(0.508 0.073 242.7)",
+   "name": "The scalar ground-state value",
+   "part": 0,
+   "tone": 7
   }
  ]
 }
