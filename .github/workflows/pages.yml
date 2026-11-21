@@ -46,13 +46,14 @@ jobs:
       - name: Publish only built website files
         env:
           PAGES_DEPLOY_KEY: ${{ secrets.PAGES_DEPLOY_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           install -d -m 700 "$HOME/.ssh"
           key=$(mktemp)
           trap 'rm -f "$key"' EXIT
           printf '%s\n' "$PAGES_DEPLOY_KEY" > "$key"
           chmod 600 "$key"
-          curl --fail --silent https://api.github.com/meta | python -c 'import json,sys; print("\n".join("github.com " + key for key in json.load(sys.stdin)["ssh_keys"]))' >> "$HOME/.ssh/known_hosts"
+          curl --fail --silent --retry 3 --retry-all-errors -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/meta | python -c 'import json,sys; print("\n".join("github.com " + key for key in json.load(sys.stdin)["ssh_keys"]))' >> "$HOME/.ssh/known_hosts"
           export GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes"
           git clone --depth 1 git@github.com:wcook04/lean-exposition-site.git build/pages-publish
           find build/pages-publish -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
