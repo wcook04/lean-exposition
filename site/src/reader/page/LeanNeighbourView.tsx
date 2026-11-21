@@ -16,9 +16,13 @@ export function LeanNeighbourView({ hood, name, kicker = "This declaration", use
     const view = box.current;
     if (!view) return;
     const mark = () => {
-      const edge = view.getBoundingClientRect();
+      const box = view.getBoundingClientRect();
+      // Past the height, the foot of the view holds the "+N more" line: no card sits under it.
+      const over = view.scrollHeight > view.clientHeight + 1;
+      view.toggleAttribute("data-more", over);
+      const edge = { top: box.top, bottom: box.bottom - (over ? 44 : 0) };
       let n = 0;
-      for (const card of view.querySelectorAll<HTMLElement>(".nb-card")) {
+      for (const card of view.querySelectorAll<HTMLElement>(".nb-card:not(.nb-card--root)")) {
         const r = card.getBoundingClientRect();
         const off = r.bottom > edge.bottom + 0.5 || r.top < edge.top - 0.5;
         card.toggleAttribute("data-cut", off);
@@ -77,7 +81,7 @@ export function LeanNeighbourView({ hood, name, kicker = "This declaration", use
         )}
       </section>
       {cut > 0 && (
-        <p className="nb-view__cut" aria-live="polite">
+        <p className="nb-view__cut" aria-live="polite" style={{ position: "sticky", bottom: 8, marginTop: 8 }}>
           +{cut} more {cut === 1 ? "card" : "cards"}, scroll to see {cut === 1 ? "it" : "them"}
         </p>
       )}

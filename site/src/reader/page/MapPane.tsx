@@ -38,6 +38,8 @@ import "./map-pane.css";
 
 /** From this page width the Lean stands beside the graph, next to the paper. */
 const SIDE_BY_SIDE = 860;
+/** Under this height the Graph tab's graph folds to a strip above the card and Lean. */
+const SHORT_PANE = 760;
 /** The phrase split, until a reader draws its handle: the graph above, the card below. */
 const splitShare = { current: readSplitShare() };
 /** From this share up the Lean has the pane, and no graph shows. */
@@ -584,6 +586,17 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   }, [markCut]);
   const subjectRef = useRef(subject);
   subjectRef.current = subject;
+  // A pane too short to give the graph a useful half folds it to a strip, as on a phone.
+  const [short, setShort] = useState(false);
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const measure = () => setShort(root.clientHeight > 0 && root.clientHeight < SHORT_PANE);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+  const strip = split && short;
   const splitRef = useRef(split);
   splitRef.current = split;
   const reducedRef = useRef(reduced);
@@ -727,7 +740,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const line = lineFor();
 
   return (
-    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}${split ? " map-pane--split" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}${split ? " map-pane--split" : ""}${strip ? " map-pane--strip" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
         <ModeToggle mode={mode} onMode={onMode} />
         <span className="map-pane__goal" title={title}>

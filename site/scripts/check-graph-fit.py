@@ -21,8 +21,9 @@ from playwright.sync_api import sync_playwright
 
 VISIBLE = r"""
 () => {
-  const pane = document.querySelector('.map-pane');
-  if (!pane) return {error: 'no pane'};
+  const panes = [...document.querySelectorAll('.map-pane')].filter((p) => p.getBoundingClientRect().width > 0);
+  const pane = panes[panes.length - 1];
+  if (!pane) return {closed: true};
   if (!pane.hasAttribute('data-framed')) return {error: 'the graph has not framed anything yet'};
   const ids = (pane.getAttribute('data-framed') || '').split(' ').filter(Boolean);
   const body = pane.querySelector('.map-pane__body').getBoundingClientRect();
@@ -52,7 +53,7 @@ VISIBLE = r"""
   }
   const page = pane.querySelector('.lean-page');
   const below = page ? page.innerText.replace(/\s+/g, ' ').trim() : '';
-  return {ids, outside, crossing, split: pane.matches('.map-pane--split'), below: below.length};
+  return {ids, outside, crossing, split: pane.matches('.map-pane--split'), strip: pane.matches('.map-pane--strip'), below: below.length};
 }
 """
 
@@ -60,6 +61,16 @@ VISIBLE = r"""
 def check(page, label: str, failures: list[str]) -> None:
     page.wait_for_timeout(2600)
     found = page.evaluate(VISIBLE)
+    if found.get("closed"):
+        # Under 1280px the pane opens as a sheet only when something is opened.
+        if "reading" in label or "card" in label:
+            print(f"{label}: no pane at this width until a phrase is opened")
+        else:
+            failures.append(f"{label}: opening a phrase showed no pane")
+        return
+    if found.get("strip") and found.get("below", 0) >= 30:
+        print(f"{label}: the pane is short, so the graph is a strip naming the step above the card")
+        return
     if found.get("error"):
         failures.append(f"{label}: {found['error']}")
     elif not found["ids"] and found.get("split") and found["below"] >= 30:
@@ -97,7 +108,8 @@ def main() -> int:
                 check(page, f"{paper}: reading, scroll {step}", failures)
             # A card of the map clicked: its step opens below, and the step frames above.
             card = page.evaluate("""() => {
-              const pane = document.querySelector('.map-pane'); const lean = pane.querySelector('.lean-page').getBoundingClientRect();
+              const panes = [...document.querySelectorAll('.map-pane')].filter((p) => p.getBoundingClientRect().width > 0);
+  const pane = panes[panes.length - 1]; if (!pane || !pane.querySelector('.lean-page')) return null; const lean = pane.querySelector('.lean-page').getBoundingClientRect();
               const c = [...pane.querySelectorAll('.map-pane__canvas .card[data-record]')].find((c) => {
                 const r = c.getBoundingClientRect(); return getComputedStyle(c).visibility !== 'hidden' && r.top > pane.getBoundingClientRect().top + 150 && r.bottom < lean.top - 12;
               });
@@ -109,11 +121,24 @@ def main() -> int:
                 page.keyboard.press("Escape")
             # A phrase clicked on the Graph tab, then another further on.
             for nth in (5, 25):
-                phrase = page.locator(".paper .tie[data-tone]").nth(nth)
-                phrase.scroll_into_view_if_needed()
-                box = phrase.bounding_box()
-                page.mouse.click(box["x"] + 4, box["y"] + box["height"] / 2)
+                # On the phrase's words, not on a link inside them.
+                point = page.evaluate("""(nth) => {
+                  const el = document.querySelectorAll('.paper .tie[data-tone]')[nth];
+                  if (!el) return null;
+                  el.scrollIntoView({block: 'center'});
+                  for (const r of el.getClientRects()) for (let x = r.left + 4; x < r.right - 2; x += 12) {
+                    const y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
+                    if (hit && el.contains(hit) && !hit.closest('a')) return {x, y};
+                  }
+                  const r = el.getBoundingClientRect(); return {x: r.left + 4, y: r.top + r.height / 2};
+                }""", nth)
+                if not point:
+                    continue
+                page.wait_for_timeout(200)
+                page.mouse.click(point["x"], point["y"])
                 check(page, f"{paper}: phrase {nth} opened", failures)
+                if args.width < 1280:
+                    page.keyboard.press("Escape")
             page.close()
         browser.close()
     for line in failures:
