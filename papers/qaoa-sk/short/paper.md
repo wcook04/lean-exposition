@@ -69,7 +69,11 @@ $$
 $$
 Thus $\mu_\gamma((s,t])=\gamma(t)-\gamma(s)$. The measure may have an
 atom of size $\gamma(0)$ at zero, and its total mass need not be finite
-or equal to one. Support statements refer to the relative topology of
+or equal to one. Integrability allows $\gamma(t)\to\infty$ as $t\to1$, so
+the mass near one can be infinite, and $\gamma$ need not be the
+distribution function of a probability measure. The point $0$ lies in the
+support whenever $\gamma(t)>0$ for all $t>0$, even if $\gamma(0)=0$.
+Support statements refer to the relative topology of
 $[0,1)$. A gap is a relatively open interval of positive length and zero
 mass, and $\gamma$ is constant on it.
 
@@ -900,8 +904,13 @@ $\mathcal C_\gamma(t)\geq0$ as $\delta\to0$. Proposition 5 needs neither
 hypothesis, and its right side converges to
 $\gamma(t)^2\,\mathbb E a^4/1000>0$.
 
-(ii) *The constant.* The constant $1/2000$ is not sharp: for the data
-of §3.1 the best constant in (6) is $2/5$.
+(ii) *The constant.* The constant $1/2000$ is not sharp. Lemma 3,
+Proposition 5 and (10) hold with the coefficient $\kappa$ of (6) in place
+of $1/1000$, since each limit preserves a non-strict inequality and its
+constant. The argument above then gives
+$\gamma'(t)\geq\kappa\gamma(t)^2/2$, and
+$\kappa/2=1661507/3042000000>1/2000$. The case of §3.1 bounds what (6) can
+give, since there its best constant is $2/5$.
 
 (iii) *Related arguments at a fixed time.*
 [Lopatto's v4, Proposition 5.1 and Corollary 5.6][Lopatto-v4] give

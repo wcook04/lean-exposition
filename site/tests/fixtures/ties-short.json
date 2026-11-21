@@ -3,7 +3,7 @@
  "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading.",
  "parts": [
   {
-   "end_byte": 60166,
+   "end_byte": 60482,
    "name": "",
    "start_byte": 0
   }
@@ -24,7 +24,7 @@
   ],
   [
    1362,
-   4925,
+   5189,
    [
     "assumptions.full_support_minimizer",
     "assumptions.value_diffusion",
@@ -38,8 +38,8 @@
    "model"
   ],
   [
-   4978,
-   10078,
+   5242,
+   10342,
    [
     "assumptions.full_support_minimizer",
     "full_support",
@@ -62,8 +62,8 @@
    "main-result"
   ],
   [
-   10215,
-   12984,
+   10479,
+   13248,
    [
     "scalar.paper_admissible",
     "scalar.paper_minimizer",
@@ -76,8 +76,8 @@
    "contact"
   ],
   [
-   13067,
-   17050,
+   13331,
+   17314,
    [
     "scalar.paper_admissible",
     "scalar.paper_minimizer",
@@ -98,8 +98,8 @@
    "gap-proof"
   ],
   [
-   17183,
-   33755,
+   17447,
+   34019,
    [
     "support.backward_shapes",
     "support.fixed_time_spatial_coercivity",
@@ -115,8 +115,8 @@
    "curvature"
   ],
   [
-   33928,
-   41367,
+   34192,
+   41932,
    [
     "scalar.paper_admissible",
     "scalar.paper_minimizer",
@@ -126,8 +126,8 @@
    "density-consequence"
   ],
   [
-   41501,
-   45259,
+   42066,
+   45824,
    [
     "assumptions.value_diffusion",
     "scalar.manuscript_terminal_value",
@@ -142,8 +142,8 @@
    "scalar-value"
   ],
   [
-   45321,
-   50224,
+   45886,
+   50789,
    [
     "assumptions.qaoa_model_and_limits",
     "circuit.bounded_trigonometric",
@@ -166,8 +166,8 @@
    "qaoa-boundary"
   ],
   [
-   50341,
-   52542,
+   50906,
+   53107,
    [
     "assumptions.full_support_minimizer",
     "assumptions.value_diffusion",
@@ -246,1093 +246,1093 @@
    ]
   ],
   [
-   3420,
-   3480,
+   3684,
+   3744,
    [
     8
    ]
   ],
   [
-   3556,
-   3582,
+   3820,
+   3846,
    [
     9
    ]
   ],
   [
-   3734,
-   3893,
+   3998,
+   4157,
    [
     10
    ]
   ],
   [
-   4028,
-   4076,
+   4292,
+   4340,
    [
     11
    ]
   ],
   [
-   4097,
-   4145,
+   4361,
+   4409,
    [
     12
    ]
   ],
   [
-   4232,
-   4253,
+   4496,
+   4517,
    [
     13
    ]
   ],
   [
-   4306,
-   4356,
+   4570,
+   4620,
    [
     14
    ]
   ],
   [
-   4517,
-   4527,
+   4781,
+   4791,
    [
     15
    ]
   ],
   [
-   4532,
-   4545,
+   4796,
+   4809,
    [
     16
    ]
   ],
   [
-   4547,
-   4582,
+   4811,
+   4846,
    [
     17
    ]
   ],
   [
-   4660,
-   4746,
+   4924,
+   5010,
    [
     18
    ]
   ],
   [
-   4747,
-   4784,
+   5011,
+   5048,
    [
     19
    ]
   ],
   [
-   5581,
-   5603,
+   5845,
+   5867,
    [
     20
    ]
   ],
   [
-   5610,
-   5705,
+   5874,
+   5969,
    [
     21
    ]
   ],
   [
-   5767,
-   5811,
+   6031,
+   6075,
    [
     22
    ]
   ],
   [
-   6463,
-   6473,
+   6727,
+   6737,
    [
     23
    ]
   ],
   [
-   6672,
-   6757,
+   6936,
+   7021,
    [
     24
    ]
   ],
   [
-   7072,
-   7147,
+   7336,
+   7411,
    [
     25
    ]
   ],
   [
-   7689,
-   7746,
+   7953,
+   8010,
    [
     26
    ]
   ],
   [
-   7952,
-   8007,
+   8216,
+   8271,
    [
     27
    ]
   ],
   [
-   8015,
-   8074,
+   8279,
+   8338,
    [
     28
    ]
   ],
   [
-   8133,
-   8177,
+   8397,
+   8441,
    [
     29
    ]
   ],
   [
-   8286,
-   8317,
+   8550,
+   8581,
    [
     30
    ]
   ],
   [
-   8732,
-   8882,
+   8996,
+   9146,
    [
     31
    ]
   ],
   [
-   10243,
-   10270,
+   10507,
+   10534,
    [
     32
    ]
   ],
   [
-   10272,
-   10278,
+   10536,
+   10542,
    [
     33
    ]
   ],
   [
-   10283,
-   10305,
+   10547,
+   10569,
    [
     34
    ]
   ],
   [
-   10307,
-   10419,
+   10571,
+   10683,
    [
     35
    ]
   ],
   [
-   10934,
-   11015,
+   11198,
+   11279,
    [
     36
    ]
   ],
   [
-   11031,
-   11081,
+   11295,
+   11345,
    [
     37
    ]
   ],
   [
-   11202,
-   11297,
+   11466,
+   11561,
    [
     38
    ]
   ],
   [
-   11573,
-   11648,
+   11837,
+   11912,
    [
     39
    ]
   ],
   [
-   11757,
-   11795,
+   12021,
+   12059,
    [
     40
    ]
   ],
   [
-   12029,
-   12076,
+   12293,
+   12340,
    [
     41
    ]
   ],
   [
-   12095,
-   12184,
+   12359,
+   12448,
    [
     42
    ]
   ],
   [
-   12185,
-   12282,
+   12449,
+   12546,
    [
     43
    ]
   ],
   [
-   12352,
-   12414,
+   12616,
+   12678,
    [
     44
    ]
   ],
   [
-   12553,
-   12660,
+   12817,
+   12924,
    [
     45
    ]
   ],
   [
-   12710,
-   12718,
+   12974,
+   12982,
    [
     46
    ]
   ],
   [
-   12787,
-   12835,
+   13051,
+   13099,
    [
     47
    ]
   ],
   [
-   13300,
-   13414,
+   13564,
+   13678,
    [
     48
    ]
   ],
   [
-   13415,
-   13472,
+   13679,
+   13736,
    [
     49
    ]
   ],
   [
-   13474,
-   13535,
+   13738,
+   13799,
    [
     50
    ]
   ],
   [
-   13752,
-   13796,
+   14016,
+   14060,
    [
     51
    ]
   ],
   [
-   13943,
-   14059,
+   14207,
+   14323,
    [
     52
    ]
   ],
   [
-   14060,
-   14114,
+   14324,
+   14378,
    [
     53
    ]
   ],
   [
-   14116,
-   14216,
+   14380,
+   14480,
    [
     54
    ]
   ],
   [
-   14218,
-   14280,
+   14482,
+   14544,
    [
     55
    ]
   ],
   [
-   14286,
-   14311,
+   14550,
+   14575,
    [
     56
    ]
   ],
   [
-   14313,
-   14383,
+   14577,
+   14647,
    [
     57
    ]
   ],
   [
-   14389,
-   14454,
+   14653,
+   14718,
    [
     58
    ]
   ],
   [
-   14960,
-   14987,
+   15224,
+   15251,
    [
     59
    ]
   ],
   [
-   14993,
-   15027,
+   15257,
+   15291,
    [
     60
    ]
   ],
   [
-   15437,
-   15459,
+   15701,
+   15723,
    [
     61
    ]
   ],
   [
-   15461,
-   15493,
+   15725,
+   15757,
    [
     62
    ]
   ],
   [
-   15499,
-   15578,
+   15763,
+   15842,
    [
     63
    ]
   ],
   [
-   15590,
-   15639,
+   15854,
+   15903,
    [
     64
    ]
   ],
   [
-   15856,
-   15931,
+   16120,
+   16195,
    [
     65
    ]
   ],
   [
-   17223,
-   17234,
+   17487,
+   17498,
    [
     66
    ]
   ],
   [
-   17236,
-   17243,
+   17500,
+   17507,
    [
     67
    ]
   ],
   [
-   17245,
-   17255,
+   17509,
+   17519,
    [
     68
    ]
   ],
   [
-   17260,
-   17271,
+   17524,
+   17535,
    [
     69
    ]
   ],
   [
-   17289,
-   17315,
+   17553,
+   17579,
    [
     70
    ]
   ],
   [
-   17483,
-   17517,
+   17747,
+   17781,
    [
     71
    ]
   ],
   [
-   17677,
-   17825,
+   17941,
+   18089,
    [
     72
    ]
   ],
   [
-   17963,
-   18013,
+   18227,
+   18277,
    [
     73
    ]
   ],
   [
-   18364,
-   18387,
+   18628,
+   18651,
    [
     74
    ]
   ],
   [
-   21724,
-   21835,
+   21988,
+   22099,
    [
     75
    ]
   ],
   [
-   22142,
-   22242,
+   22406,
+   22506,
    [
     76
    ]
   ],
   [
-   22383,
-   22417,
+   22647,
+   22681,
    [
     77
    ]
   ],
   [
-   22468,
-   22524,
+   22732,
+   22788,
    [
     78
    ]
   ],
   [
-   22609,
-   22814,
+   22873,
+   23078,
    [
     79
    ]
   ],
   [
-   23089,
-   23178,
+   23353,
+   23442,
    [
     80
    ]
   ],
   [
-   23294,
-   23405,
+   23558,
+   23669,
    [
     81
    ]
   ],
   [
-   23602,
-   23682,
+   23866,
+   23946,
    [
     82
    ]
   ],
   [
-   23759,
-   23844,
+   24023,
+   24108,
    [
     83
    ]
   ],
   [
-   23896,
-   23994,
+   24160,
+   24258,
    [
     84
    ]
   ],
   [
-   24744,
-   24842,
+   25008,
+   25106,
    [
     85
    ]
   ],
   [
-   24870,
-   24907,
+   25134,
+   25171,
    [
     86
    ]
   ],
   [
-   25308,
-   25387,
+   25572,
+   25651,
    [
     87
    ]
   ],
   [
-   25501,
-   25543,
+   25765,
+   25807,
    [
     88
    ]
   ],
   [
-   25544,
-   25606,
+   25808,
+   25870,
    [
     89
    ]
   ],
   [
-   25611,
-   25759,
+   25875,
+   26023,
    [
     90
    ]
   ],
   [
-   25766,
-   25794,
+   26030,
+   26058,
    [
     91
    ]
   ],
   [
-   26330,
-   26513,
+   26594,
+   26777,
    [
     92
    ]
   ],
   [
-   26536,
-   26556,
+   26800,
+   26820,
    [
     93
    ]
   ],
   [
-   26558,
-   26843,
+   26822,
+   27107,
    [
     94
    ]
   ],
   [
-   27140,
-   27599,
+   27404,
+   27863,
    [
     95
    ]
   ],
   [
-   27606,
-   27698,
+   27870,
+   27962,
    [
     96
    ]
   ],
   [
-   28515,
-   28581,
+   28779,
+   28845,
    [
     97
    ]
   ],
   [
-   28645,
-   28673,
+   28909,
+   28937,
    [
     98
    ]
   ],
   [
-   28675,
-   28781,
+   28939,
+   29045,
    [
     99
    ]
   ],
   [
-   28783,
-   28879,
+   29047,
+   29143,
    [
     100
    ]
   ],
   [
-   29102,
-   29249,
+   29366,
+   29513,
    [
     101
    ]
   ],
   [
-   30457,
-   30674,
+   30721,
+   30938,
    [
     102
    ]
   ],
   [
-   30675,
-   30828,
+   30939,
+   31092,
    [
     103
    ]
   ],
   [
-   30895,
-   30972,
+   31159,
+   31236,
    [
     104
    ]
   ],
   [
-   30973,
-   31000,
+   31237,
+   31264,
    [
     105
    ]
   ],
   [
-   31006,
-   31060,
+   31270,
+   31324,
    [
     106
    ]
   ],
   [
-   31307,
-   31392,
+   31571,
+   31656,
    [
     107
    ]
   ],
   [
-   31393,
-   31579,
+   31657,
+   31843,
    [
     108
    ]
   ],
   [
-   33971,
-   34081,
+   34235,
+   34345,
    [
     109
    ]
   ],
   [
-   34511,
-   34603,
+   34775,
+   34867,
    [
     110
    ]
   ],
   [
-   34604,
-   34707,
+   34868,
+   34971,
    [
     111
    ]
   ],
   [
-   35455,
-   35557,
+   35719,
+   35821,
    [
     112
    ]
   ],
   [
-   36277,
-   36331,
+   36541,
+   36595,
    [
     113
    ]
   ],
   [
-   36847,
-   36882,
+   37111,
+   37146,
    [
     114
    ]
   ],
   [
-   36945,
-   37020,
+   37209,
+   37284,
    [
     115
    ]
   ],
   [
-   37078,
-   37095,
+   37342,
+   37359,
    [
     116
    ]
   ],
   [
-   37288,
-   37296,
+   37552,
+   37560,
    [
     117
    ]
   ],
   [
-   37345,
-   37371,
+   37609,
+   37635,
    [
     118
    ]
   ],
   [
-   37471,
-   37479,
+   37735,
+   37743,
    [
     119
    ]
   ],
   [
-   37486,
-   37505,
+   37750,
+   37769,
    [
     120
    ]
   ],
   [
-   37667,
-   37738,
+   37931,
+   38002,
    [
     121
    ]
   ],
   [
-   37954,
-   38021,
+   38218,
+   38285,
    [
     122
    ]
   ],
   [
-   38022,
-   38081,
+   38286,
+   38345,
    [
     123
    ]
   ],
   [
-   38082,
-   38158,
+   38346,
+   38422,
    [
     124
    ]
   ],
   [
-   39188,
-   39258,
+   39452,
+   39522,
    [
     125
    ]
   ],
   [
-   39342,
-   39357,
+   39606,
+   39621,
    [
     126
    ]
   ],
   [
-   42218,
-   42269,
+   42783,
+   42834,
    [
     127
    ]
   ],
   [
-   42456,
-   42499,
+   43021,
+   43064,
    [
     128
    ]
   ],
   [
-   42504,
-   42562,
+   43069,
+   43127,
    [
     129
    ]
   ],
   [
-   42563,
-   42639,
+   43128,
+   43204,
    [
     130
    ]
   ],
   [
-   42640,
-   42692,
+   43205,
+   43257,
    [
     131
    ]
   ],
   [
-   42715,
-   42801,
+   43280,
+   43366,
    [
     132
    ]
   ],
   [
-   42802,
-   42830,
+   43367,
+   43395,
    [
     133
    ]
   ],
   [
-   42885,
-   42910,
+   43450,
+   43475,
    [
     134
    ]
   ],
   [
-   43015,
-   43027,
+   43580,
+   43592,
    [
     135
    ]
   ],
   [
-   43093,
-   43151,
+   43658,
+   43716,
    [
     136
    ]
   ],
   [
-   43165,
-   43199,
+   43730,
+   43764,
    [
     137
    ]
   ],
   [
-   43238,
-   43257,
+   43803,
+   43822,
    [
     138
    ]
   ],
   [
-   43263,
-   43281,
+   43828,
+   43846,
    [
     139
    ]
   ],
   [
-   43650,
-   43673,
+   44215,
+   44238,
    [
     140
    ]
   ],
   [
-   43678,
-   43733,
+   44243,
+   44298,
    [
     141
    ]
   ],
   [
-   46613,
-   46626,
+   47178,
+   47191,
    [
     142
    ]
   ],
   [
-   46632,
-   46644,
+   47197,
+   47209,
    [
     143
    ]
   ],
   [
-   46651,
-   46700,
+   47216,
+   47265,
    [
     144
    ]
   ],
   [
-   46754,
-   46992,
+   47319,
+   47557,
    [
     145
    ]
   ],
   [
-   47023,
-   47084,
+   47588,
+   47649,
    [
     146
    ]
   ],
   [
-   47161,
-   47205,
+   47726,
+   47770,
    [
     147
    ]
   ],
   [
-   47257,
-   47317,
+   47822,
+   47882,
    [
     148
    ]
   ],
   [
-   47327,
-   47514,
+   47892,
+   48079,
    [
     149
    ]
   ],
   [
-   47521,
-   47563,
+   48086,
+   48128,
    [
     150
    ]
   ],
   [
-   47565,
-   47586,
+   48130,
+   48151,
    [
     151
    ]
   ],
   [
-   47591,
-   47611,
+   48156,
+   48176,
    [
     152
    ]
   ],
   [
-   47674,
-   47698,
+   48239,
+   48263,
    [
     153
    ]
   ],
   [
-   48665,
-   48722,
+   49230,
+   49287,
    [
     154
    ]
   ],
   [
-   49909,
-   49932,
+   50474,
+   50497,
    [
     155
    ]
   ],
   [
-   50570,
-   50613,
+   51135,
+   51178,
    [
     156
    ]
   ],
   [
-   50667,
-   50702,
+   51232,
+   51267,
    [
     157
    ]
   ],
   [
-   50739,
-   50764,
+   51304,
+   51329,
    [
     158
    ]
   ],
   [
-   50769,
-   50798,
+   51334,
+   51363,
    [
     159
    ]
   ],
   [
-   50811,
-   50873,
+   51376,
+   51438,
    [
     160
    ]
   ],
   [
-   50881,
-   50904,
+   51446,
+   51469,
    [
     161
    ]
   ],
   [
-   50909,
-   50939,
+   51474,
+   51504,
    [
     162
    ]
   ],
   [
-   50952,
-   50977,
+   51517,
+   51542,
    [
     163
    ]
@@ -1700,7 +1700,7 @@
   },
   {
    "anchor": "model",
-   "at": "b3420-3480",
+   "at": "b3684-3744",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -1739,7 +1739,7 @@
   },
   {
    "anchor": "model",
-   "at": "b3556-3582",
+   "at": "b3820-3846",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -1783,7 +1783,7 @@
   },
   {
    "anchor": "model",
-   "at": "b3734-3893",
+   "at": "b3998-4157",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -1882,7 +1882,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4028-4076",
+   "at": "b4292-4340",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -1921,7 +1921,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4097-4145",
+   "at": "b4361-4409",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -1965,7 +1965,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4232-4253",
+   "at": "b4496-4517",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2008,7 +2008,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4306-4356",
+   "at": "b4570-4620",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2052,7 +2052,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4517-4527",
+   "at": "b4781-4791",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2091,7 +2091,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4532-4545",
+   "at": "b4796-4809",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2130,7 +2130,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4547-4582",
+   "at": "b4811-4846",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2169,7 +2169,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4660-4746",
+   "at": "b4924-5010",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2226,7 +2226,7 @@
   },
   {
    "anchor": "model",
-   "at": "b4747-4784",
+   "at": "b5011-5048",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2291,7 +2291,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b5581-5603",
+   "at": "b5845-5867",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2330,7 +2330,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b5610-5705",
+   "at": "b5874-5969",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2374,7 +2374,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b5767-5811",
+   "at": "b6031-6075",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2435,7 +2435,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b6463-6473",
+   "at": "b6727-6737",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2479,7 +2479,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b6672-6757",
+   "at": "b6936-7021",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2522,7 +2522,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b7072-7147",
+   "at": "b7336-7411",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2629,7 +2629,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b7689-7746",
+   "at": "b7953-8010",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2715,7 +2715,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b7952-8007",
+   "at": "b8216-8271",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2758,7 +2758,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b8015-8074",
+   "at": "b8279-8338",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2802,7 +2802,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b8133-8177",
+   "at": "b8397-8441",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2846,7 +2846,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b8286-8317",
+   "at": "b8550-8581",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2889,7 +2889,7 @@
   },
   {
    "anchor": "main-result",
-   "at": "b8732-8882",
+   "at": "b8996-9146",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2932,7 +2932,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b10243-10270",
+   "at": "b10507-10534",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -2975,7 +2975,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b10272-10278",
+   "at": "b10536-10542",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3018,7 +3018,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b10283-10305",
+   "at": "b10547-10569",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3061,7 +3061,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b10307-10419",
+   "at": "b10571-10683",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3126,7 +3126,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b10934-11015",
+   "at": "b11198-11279",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3191,7 +3191,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b11031-11081",
+   "at": "b11295-11345",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3234,7 +3234,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b11202-11297",
+   "at": "b11466-11561",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3278,7 +3278,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b11573-11648",
+   "at": "b11837-11912",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3318,7 +3318,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b11757-11795",
+   "at": "b12021-12059",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3378,7 +3378,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12029-12076",
+   "at": "b12293-12340",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3418,7 +3418,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12095-12184",
+   "at": "b12359-12448",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3462,7 +3462,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12185-12282",
+   "at": "b12449-12546",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3506,7 +3506,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12352-12414",
+   "at": "b12616-12678",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3549,7 +3549,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12553-12660",
+   "at": "b12817-12924",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3614,7 +3614,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12710-12718",
+   "at": "b12974-12982",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3657,7 +3657,7 @@
   },
   {
    "anchor": "contact",
-   "at": "b12787-12835",
+   "at": "b13051-13099",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3701,7 +3701,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b13300-13414",
+   "at": "b13564-13678",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3787,7 +3787,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b13415-13472",
+   "at": "b13679-13736",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3873,7 +3873,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b13474-13535",
+   "at": "b13738-13799",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3938,7 +3938,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b13752-13796",
+   "at": "b14016-14060",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -3982,7 +3982,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b13943-14059",
+   "at": "b14207-14323",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4026,7 +4026,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14060-14114",
+   "at": "b14324-14378",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4070,7 +4070,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14116-14216",
+   "at": "b14380-14480",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4113,7 +4113,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14218-14280",
+   "at": "b14482-14544",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4156,7 +4156,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14286-14311",
+   "at": "b14550-14575",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4199,7 +4199,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14313-14383",
+   "at": "b14577-14647",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4263,7 +4263,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14389-14454",
+   "at": "b14653-14718",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4307,7 +4307,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14960-14987",
+   "at": "b15224-15251",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4351,7 +4351,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b14993-15027",
+   "at": "b15257-15291",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4395,7 +4395,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b15437-15459",
+   "at": "b15701-15723",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4439,7 +4439,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b15461-15493",
+   "at": "b15725-15757",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4483,7 +4483,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b15499-15578",
+   "at": "b15763-15842",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4526,7 +4526,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b15590-15639",
+   "at": "b15854-15903",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4591,7 +4591,7 @@
   },
   {
    "anchor": "gap-proof",
-   "at": "b15856-15931",
+   "at": "b16120-16195",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4635,7 +4635,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17223-17234",
+   "at": "b17487-17498",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4674,7 +4674,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17236-17243",
+   "at": "b17500-17507",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4713,7 +4713,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17245-17255",
+   "at": "b17509-17519",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4752,7 +4752,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17260-17271",
+   "at": "b17524-17535",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4791,7 +4791,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17289-17315",
+   "at": "b17553-17579",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4835,7 +4835,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17483-17517",
+   "at": "b17747-17781",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -4900,7 +4900,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17677-17825",
+   "at": "b17941-18089",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5007,7 +5007,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b17963-18013",
+   "at": "b18227-18277",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5050,7 +5050,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b18364-18387",
+   "at": "b18628-18651",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5089,7 +5089,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b21724-21835",
+   "at": "b21988-22099",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5133,7 +5133,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22142-22242",
+   "at": "b22406-22506",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5194,7 +5194,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22383-22417",
+   "at": "b22647-22681",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5233,7 +5233,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22468-22524",
+   "at": "b22732-22788",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5319,7 +5319,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22609-22814",
+   "at": "b22873-23078",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5443,7 +5443,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23089-23178",
+   "at": "b23353-23442",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5487,7 +5487,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23294-23405",
+   "at": "b23558-23669",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5530,7 +5530,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23602-23682",
+   "at": "b23866-23946",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5595,7 +5595,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23759-23844",
+   "at": "b24023-24108",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5660,7 +5660,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23896-23994",
+   "at": "b24160-24258",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5704,7 +5704,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24744-24842",
+   "at": "b25008-25106",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5816,7 +5816,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24870-24907",
+   "at": "b25134-25171",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5860,7 +5860,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25308-25387",
+   "at": "b25572-25651",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5921,7 +5921,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25501-25543",
+   "at": "b25765-25807",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5961,7 +5961,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25544-25606",
+   "at": "b25808-25870",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6005,7 +6005,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25611-25759",
+   "at": "b25875-26023",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6091,7 +6091,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25766-25794",
+   "at": "b26030-26058",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6135,7 +6135,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26330-26513",
+   "at": "b26594-26777",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6192,7 +6192,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26536-26556",
+   "at": "b26800-26820",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6252,7 +6252,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26558-26843",
+   "at": "b26822-27107",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6291,7 +6291,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27140-27599",
+   "at": "b27404-27863",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6334,7 +6334,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27606-27698",
+   "at": "b27870-27962",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6373,7 +6373,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28515-28581",
+   "at": "b28779-28845",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6416,7 +6416,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28645-28673",
+   "at": "b28909-28937",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6460,7 +6460,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28675-28781",
+   "at": "b28939-29045",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6504,7 +6504,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28783-28879",
+   "at": "b29047-29143",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6548,7 +6548,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b29102-29249",
+   "at": "b29366-29513",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6634,7 +6634,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b30457-30674",
+   "at": "b30721-30938",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6716,7 +6716,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b30675-30828",
+   "at": "b30939-31092",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6781,7 +6781,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b30895-30972",
+   "at": "b31159-31236",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6824,7 +6824,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b30973-31000",
+   "at": "b31237-31264",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6868,7 +6868,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b31006-31060",
+   "at": "b31270-31324",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6912,7 +6912,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b31307-31392",
+   "at": "b31571-31656",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6977,7 +6977,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b31393-31579",
+   "at": "b31657-31843",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7063,7 +7063,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b33971-34081",
+   "at": "b34235-34345",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7106,7 +7106,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b34511-34603",
+   "at": "b34775-34867",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7170,7 +7170,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b34604-34707",
+   "at": "b34868-34971",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7213,7 +7213,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b35455-35557",
+   "at": "b35719-35821",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7256,7 +7256,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b36277-36331",
+   "at": "b36541-36595",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7299,7 +7299,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b36847-36882",
+   "at": "b37111-37146",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7343,7 +7343,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b36945-37020",
+   "at": "b37209-37284",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7387,7 +7387,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37078-37095",
+   "at": "b37342-37359",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7430,7 +7430,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37288-37296",
+   "at": "b37552-37560",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7473,7 +7473,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37345-37371",
+   "at": "b37609-37635",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7516,7 +7516,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37471-37479",
+   "at": "b37735-37743",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7559,7 +7559,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37486-37505",
+   "at": "b37750-37769",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7603,7 +7603,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37667-37738",
+   "at": "b37931-38002",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7642,7 +7642,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b37954-38021",
+   "at": "b38218-38285",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7685,7 +7685,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b38022-38081",
+   "at": "b38286-38345",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7728,7 +7728,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b38082-38158",
+   "at": "b38346-38422",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7771,7 +7771,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b39188-39258",
+   "at": "b39452-39522",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7815,7 +7815,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b39342-39357",
+   "at": "b39606-39621",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7858,7 +7858,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42218-42269",
+   "at": "b42783-42834",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7901,7 +7901,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42456-42499",
+   "at": "b43021-43064",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7944,7 +7944,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42504-42562",
+   "at": "b43069-43127",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7988,7 +7988,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42563-42639",
+   "at": "b43128-43204",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8031,7 +8031,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42640-42692",
+   "at": "b43205-43257",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8090,7 +8090,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42715-42801",
+   "at": "b43280-43366",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8149,7 +8149,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42802-42830",
+   "at": "b43367-43395",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8188,7 +8188,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b42885-42910",
+   "at": "b43450-43475",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8232,7 +8232,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43015-43027",
+   "at": "b43580-43592",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8275,7 +8275,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43093-43151",
+   "at": "b43658-43716",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8318,7 +8318,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43165-43199",
+   "at": "b43730-43764",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8357,7 +8357,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43238-43257",
+   "at": "b43803-43822",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8401,7 +8401,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43263-43281",
+   "at": "b43828-43846",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8444,7 +8444,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43650-43673",
+   "at": "b44215-44238",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8488,7 +8488,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b43678-43733",
+   "at": "b44243-44298",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8532,7 +8532,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46613-46626",
+   "at": "b47178-47191",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8571,7 +8571,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46632-46644",
+   "at": "b47197-47209",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8610,7 +8610,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46651-46700",
+   "at": "b47216-47265",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8649,7 +8649,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46754-46992",
+   "at": "b47319-47557",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8723,7 +8723,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47023-47084",
+   "at": "b47588-47649",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8762,7 +8762,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47161-47205",
+   "at": "b47726-47770",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8806,7 +8806,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47257-47317",
+   "at": "b47822-47882",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8849,7 +8849,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47327-47514",
+   "at": "b47892-48079",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8909,7 +8909,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47521-47563",
+   "at": "b48086-48128",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8953,7 +8953,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47565-47586",
+   "at": "b48130-48151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -8997,7 +8997,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47591-47611",
+   "at": "b48156-48176",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9041,7 +9041,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47674-47698",
+   "at": "b48239-48263",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9084,7 +9084,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b48665-48722",
+   "at": "b49230-49287",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9127,7 +9127,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b49909-49932",
+   "at": "b50474-50497",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9170,7 +9170,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50570-50613",
+   "at": "b51135-51178",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9213,7 +9213,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50667-50702",
+   "at": "b51232-51267",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9256,7 +9256,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50739-50764",
+   "at": "b51304-51329",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9299,7 +9299,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50769-50798",
+   "at": "b51334-51363",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9342,7 +9342,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50811-50873",
+   "at": "b51376-51438",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9385,7 +9385,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50881-50904",
+   "at": "b51446-51469",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9428,7 +9428,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50909-50939",
+   "at": "b51474-51504",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -9471,7 +9471,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b50952-50977",
+   "at": "b51517-51542",
    "from_record": false,
    "lean": true,
    "lines": [
