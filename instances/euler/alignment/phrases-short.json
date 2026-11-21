@@ -1,7 +1,7 @@
 {
  "schema": "phrase-ties/1",
  "paper": "short",
- "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as read side by side for Proof Reader (wcook04/proof-reader e84d8b60b793, papers/euler). Titles, reading notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them.",
+ "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as read side by side for Proof Reader (wcook04/proof-reader ac78b5c0b71b, papers/euler). Titles, reading notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them.",
  "families": [
   {
    "id": "solution",
@@ -55,7 +55,7 @@
     1,
     1856
    ],
-   "source_commit": "e84d8b60b793ee3cec783e6c04cd4921109b006f",
+   "source_commit": "ac78b5c0b71bacd3d8411ba8071d0fc97f6f35a3",
    "topics": [
     {
      "id": "singularity",

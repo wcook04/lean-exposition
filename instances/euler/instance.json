@@ -18,7 +18,7 @@
  "source": {
   "proof_reader": {
    "repository": "https://github.com/wcook04/proof-reader",
-   "commit": "e84d8b60b793ee3cec783e6c04cd4921109b006f",
+   "commit": "ac78b5c0b71bacd3d8411ba8071d0fc97f6f35a3",
    "page": "euler"
   },
   "upstream": {
