@@ -27,6 +27,8 @@ export interface LibraryInstance {
   comparisons_hidden?: boolean;
   /** What the formal development does in each section, by section number or title (generated/section-aids.json). */
   section_aids?: Record<string, string>;
+  /** Which guides the paper has, known to the build (generated/showcase.json, route.json). */
+  reading_aids?: { showcase: boolean; route: boolean };
   comparisons_held_text?: string;
   /** Written by scripts/library-instance.mjs: supports links ("from→to") whose only evidence is the Lean's dependencies. */
   lean_derived_supports?: string[];

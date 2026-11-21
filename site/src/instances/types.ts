@@ -121,6 +121,8 @@ export interface SiteInstance {
    * number ("5.6") or heading. The reader sets one under each section head as a reader annotation.
    */
   sectionAids?: Partial<Record<string, Record<string, string>>>;
+  /** Which of a paper's guides exist, so their links stand from the first paint. */
+  readingAids?: { showcase: boolean; route: boolean };
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
   library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage>; /** The paper's guide to its formal conventions, shown in the pane as "How to read the Lean". */ guide?: InstanceStage };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;

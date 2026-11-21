@@ -639,12 +639,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           </button>
         )}
         <span className="map-pane__guides">
-          {aids.showcase.length > 0 && (
+          {(site.readingAids?.showcase ?? aids.showcase.length > 0) && (
             <button type="button" className="map-pane__guide" aria-expanded={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
               Start here
             </button>
           )}
-          {aids.route && (
+          {(site.readingAids?.route ?? !!aids.route) && (
             <button type="button" className="map-pane__guide" aria-expanded={aside === "route"} onClick={() => setAside(aside === "route" ? null : "route")}>
               Follow the proof
             </button>

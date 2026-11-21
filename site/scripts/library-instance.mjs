@@ -38,7 +38,15 @@ if (existsSync(graphPath)) {
     .map((e) => `${e.from}→${e.to}`)
     .sort();
 }
-writeFileSync(resolve(import.meta.dirname, "../src/instances/library/current.json"), JSON.stringify(sectionAids ? { ...instance, section_aids: sectionAids } : instance, null, 1) + "\n");
+// Which guides the paper has is known to the build, so the pane's links to them stand from the first
+// paint and nothing shifts when the guides' own data arrives.
+const hasShowcase = (generated("showcase.json") ?? []).length > 0;
+const routeData = generated("route.json");
+const hasRoute = Array.isArray(routeData) ? routeData.length > 0 : Array.isArray(routeData?.steps) && routeData.steps.length > 0;
+writeFileSync(
+  resolve(import.meta.dirname, "../src/instances/library/current.json"),
+  JSON.stringify({ ...instance, ...(sectionAids ? { section_aids: sectionAids } : {}), reading_aids: { showcase: hasShowcase, route: hasRoute } }, null, 1) + "\n",
+);
 const phrases = {};
 // Phrase addresses (/@<id>) open the main document; a companion's phrases keep the reader's own
 // addresses under /read/<slot>/. Each numbered result's canonical target in the main document is the

@@ -1471,3 +1471,8 @@ html[data-right-sheet] {
 .lean-page__brief .lean-page__quiet {
   justify-self: start;
 }
+
+/* The Graph tab keeps one width whether or not its count has arrived, so nothing beside it moves. */
+.map-pane .mode-toggle button[aria-label="Graph"] {
+  min-width: 92px;
+}
