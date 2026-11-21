@@ -12,8 +12,12 @@ interface Mark {
   segment: number;
 }
 
-/** What a paragraph's margin control selects: the block of text that holds its links. */
-const PICK_BLOCKS = "p, li, figure, table, blockquote, .math-display";
+/**
+ * What a paragraph's margin control selects: the block of text that holds its links. A displayed
+ * formula set inside a paragraph belongs to that paragraph; one that stands alone is its own block.
+ */
+const PICK_PROSE = "p, li, figure, table, blockquote";
+const PICK_DISPLAY = ".math-display";
 const PICK_LABEL = "Select this paragraph’s links";
 
 /** How far from a part's edge a tick layer is laid out before it can be seen. */
@@ -230,7 +234,8 @@ export class Statements {
     // (every link in it also has words in a paragraph) is reached through that paragraph's control.
     const linksOf = new Map<HTMLElement, Set<number>>();
     for (const { el, segment } of marks) {
-      const block = el.closest<HTMLElement>(PICK_BLOCKS);
+      const prose = el.closest<HTMLElement>(PICK_PROSE);
+      const block = prose && section.contains(prose) ? prose : el.closest<HTMLElement>(PICK_DISPLAY);
       if (!block || !section.contains(block)) continue;
       const t = this.model.index.segments[segment]?.[2][0];
       if (t === undefined) continue;
