@@ -34,7 +34,9 @@ holds and `FAIL ...` for each that does not, and exits 1 if any failed.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
+import urllib.request
 
 from playwright.sync_api import Browser, Page, sync_playwright
 
@@ -291,7 +293,7 @@ PICK = r"""
     const ts = new Set([...near[0].querySelectorAll('[data-t]')].map((e) => e.dataset.t));
     if (!ts.size) continue;
     if (focus) pk.focus({ preventScroll: true });
-    return { x: r.left + r.width / 2, y, linked: ts.size, label: pk.getAttribute('aria-label') };
+    return { x: r.left + r.width / 2, y, marks: [...ts].map(Number), label: pk.getAttribute('aria-label') };
   }
   return null;
 }
@@ -316,7 +318,12 @@ def paragraph_pick(browser: Browser, base: str) -> None:
         page.wait_for_timeout(900)
         check(state(page) == "paragraph", f"7 ({how}) the margin control selects the paragraph", f"state {state(page)}")
         rows = page.evaluate("document.querySelectorAll('.para-links__list button').length")
-        check(rows == pick["linked"], f"7 ({how}) the list has one row per linked passage", f"{rows} rows for {pick['linked']} linked passages")
+        # One link's words can stand in several marks (a formula between them), so links are counted
+        # from the paper's own index: each mark's first link (edition/ties/<slot>.json).
+        with urllib.request.urlopen(f"{base}edition/ties/short.json") as r:
+            segments = json.load(r)["segments"]
+        linked = len({segments[t][2][0] for t in pick["marks"]})
+        check(rows == linked, f"7 ({how}) the list has one row per linked passage", f"{rows} rows for {linked} linked passages")
         if rows:
             centre_click(page, ".para-links__list button")
             page.wait_for_timeout(900)
