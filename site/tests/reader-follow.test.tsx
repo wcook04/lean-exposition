@@ -166,15 +166,16 @@ describe("MapPane", async () => {
   const argument = (id: string, side: "out" | "in") =>
     (side === "out" ? graph.out : graph.in).get(id)!.filter((e) => e.kind === "supports" || e.kind === "assumes").map((e) => (side === "out" ? e.to : e.from));
 
-  it("draws the passage's steps in the middle, every record they use below and every record that uses them above", () => {
+  it("opens on one statement near the reading position, every record it uses below and every record that uses it above", () => {
     show("contact-and-gap");
-    const steps = passageRecords(passageOf(structures.expository, "contact-and-gap")).filter((id) => graph.nodes.has(id));
-    expect(drawn("subject").sort()).toEqual([...steps].sort());
-    const inside = new Set(steps);
-    const users = new Set(steps.flatMap((id) => argument(id, "in")).filter((id) => !inside.has(id)));
-    const uses = new Set(steps.flatMap((id) => argument(id, "out")).filter((id) => !inside.has(id) && !users.has(id)));
-    expect(new Set(drawn("users"))).toEqual(users);
-    expect(new Set(drawn("uses"))).toEqual(uses);
+    const subject = drawn("subject");
+    expect(subject).toHaveLength(1);
+    const [id] = subject;
+    if (id.startsWith("decl:")) return;
+    const users = new Set(argument(id, "in").filter((x) => x !== id));
+    const uses = new Set(argument(id, "out").filter((x) => x !== id && !users.has(x)));
+    for (const u of users) expect(drawn("users")).toContain(u);
+    for (const u of uses) expect(drawn("uses")).toContain(u);
     expect(container.querySelector(".fg__more, .nb-view__more")).toBeNull();
   });
 

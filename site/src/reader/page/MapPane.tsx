@@ -196,13 +196,21 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     return null;
   }, [decl, pin, pinTie, onGraph, asSubject, showSteps, stepsNear, shown, held, followRecord, follow.tie, ties]);
   // A paragraph with nothing tied to it keeps the last subject, and the line over the drawing says whose it is.
-  // Before anything has been tied, the passage's steps, or else the main result, so the graph is never blank.
+  // Before anything has been tied, the statement nearest the reading position, or else the main result,
+  // so the graph is never blank and never draws a whole passage at once.
   const kept = useRef<{ subject: Subject; why: Why; anchor: string | null } | null>(null);
   if (fresh) kept.current = { ...fresh, anchor: held?.anchor ?? anchor };
   const opening = useMemo((): { subject: Subject; why: Why } => {
-    const steps = passage.filter((id) => onGraph(id) && graph.nodes.get(id)!.kind !== "declaration");
-    return { subject: { kind: "records", ids: steps.length ? steps : [home] }, why: "follow" };
-  }, [passage, onGraph, graph, home]);
+    let best: string | null = null;
+    let gap = Infinity;
+    for (const t of ties.order) {
+      const tie = ties.index.ties[t];
+      if (!tie.record || !onGraph(tie.record)) continue;
+      const d = Math.abs((startOf(tie.at) ?? 0) - (readAt ?? 0));
+      if (d < gap) [best, gap] = [tie.record, d];
+    }
+    return { subject: best ? asSubject(best) : { kind: "records", ids: [home] }, why: "follow" };
+  }, [ties, onGraph, asSubject, readAt, home]);
   const current = fresh ?? kept.current ?? opening;
   const stale = !fresh && !!kept.current;
   const subjectKey = current ? (current.subject.kind === "decl" ? `d:${current.subject.name}` : `r:${current.subject.ids.join("|")}`) : "";
