@@ -35,6 +35,8 @@ def main() -> int:
     ap.add_argument("--decl", default="TorusEuler.EulerSingularityWitness")
     ap.add_argument("--section", default="5.6")
     ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
+    ap.add_argument("--notes-optional", action="store_true",
+                    help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
     args = ap.parse_args()
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
@@ -71,7 +73,14 @@ def main() -> int:
             card = page.locator(".phrase-card").first
             card.wait_for(timeout=15000)
             text = card.inner_text()
-            check(f"{tag} phrase click", "AI-assessed" in text and "Reading note" in text, page.url)
+            # The card's notes load after it opens: wait for the note before reading the card.
+            if not args.notes_optional:
+                try:
+                    page.wait_for_function("() => (document.querySelector('.phrase-card') || {}).innerText?.includes('Reading note')", timeout=10000)
+                except Exception:
+                    pass
+            text = card.inner_text()
+            check(f"{tag} phrase click", "AI-assessed" in text and (args.notes_optional or "Reading note" in text), page.url)
             page.get_by_role("button", name="Lean", exact=True).first.click()
             page.wait_for_selector(".phrase-card, .decl, pre, code", timeout=15000)
             check(f"{tag} phrase Lean", "v=lean" in page.url, page.url)
@@ -178,6 +187,32 @@ def main() -> int:
             check(f"{tag} no sideways scroll", wide <= 1, f"{wide}px wider than the window")
             if args.shots:
                 page.screenshot(path=str(args.shots / f"top-{tag}.png"))
+            context.close()
+        # The PDF view's strip: the paper's name, the Text and PDF toggle and the step controls never
+        # overlap, at a laptop's width and in narrower windows.
+        for width, height in ((1440, 900), (1000, 800), (800, 700)):
+            tag = f"{width}x{height} pdf"
+            context = browser.new_context(viewport={"width": width, "height": height})
+            page = context.new_page()
+            page.goto(base + "?view=pdf&page=1")
+            page.wait_for_selector(".reader-strip .view-toggle", timeout=60000)
+            page.wait_for_timeout(1500)
+            clash = page.evaluate("""() => {
+                const els = [...document.querySelectorAll('.reader-strip .crumbs li, .reader-strip .reader-strip__hint, .reader-strip .view-toggle, .reader-strip > button, .reader-strip .reader-strip__steps, .reader-strip .sections-toggle')]
+                  .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1);
+                const out = [];
+                for (let i = 0; i < els.length; i++) for (let j = i + 1; j < els.length; j++) {
+                  const a = els[i], b = els[j];
+                  if (a.contains(b) || b.contains(a)) continue;
+                  const r = a.getBoundingClientRect(), q = b.getBoundingClientRect();
+                  if (r.left < q.right - 1 && q.left < r.right - 1 && r.top < q.bottom - 1 && q.top < r.bottom - 1)
+                    out.push([a.className || a.textContent.slice(0, 20), b.className || b.textContent.slice(0, 20)]);
+                }
+                return out;
+            }""")
+            check(f"{tag} strip", not clash, f"overlapping: {clash[:3]}")
+            if args.shots:
+                page.screenshot(path=str(args.shots / f"pdf-strip-{width}x{height}.png"))
             context.close()
         browser.close()
     print(json.dumps(report, indent=1))

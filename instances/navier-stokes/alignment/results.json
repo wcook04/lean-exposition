@@ -1,0 +1,526 @@
+{
+ "schema": 1,
+ "results": {
+  "theorem-1.1": {
+   "claim": "claim-theorem-1-1",
+   "title": "Theorem 1.1: A profile gives blow-up",
+   "section": "1.1",
+   "tie": "s1-theorem-premise",
+   "lean": [
+    "Breakdown.breakdownOnSpace_of_profile",
+    "Breakdown.Periodic.breakdownOnTorus_of_profile"
+   ]
+  },
+  "proposition-2.1": {
+   "claim": "claim-theorem-2-1",
+   "title": "Proposition 2.1: Correcting a nearby datum",
+   "section": "2.2",
+   "tie": "s2-whole-space-proposition",
+   "lean": [
+    "Breakdown.TransferHolds",
+    "Breakdown.transferHolds_of_dichotomy"
+   ]
+  },
+  "proposition-2.2": {
+   "claim": "claim-theorem-2-2",
+   "title": "Proposition 2.2: Torus blow-up from a profile",
+   "section": "2.2",
+   "tie": "s2-periodic-proposition",
+   "lean": [
+    "Breakdown.Periodic.TorusBlowup",
+    "Breakdown.Periodic.torusBlowup_of_parts"
+   ]
+  },
+  "lemma-2.3": {
+   "claim": "claim-theorem-2-3",
+   "title": "Lemma 2.3: Mild solutions are classical",
+   "section": "2.3",
+   "tie": "s2-smoothness-lemma",
+   "lean": [
+    "Breakdown.MildRegular",
+    "Breakdown.mildRegular_realization"
+   ]
+  },
+  "lemma-3.1": {
+   "claim": "claim-theorem-3-1",
+   "title": "Lemma 3.1: Heat and bilinear estimates",
+   "section": "3.2",
+   "tie": "ns-s3-projected-heat-forcing",
+   "lean": [
+    "Breakdown.Freq.BilinBound",
+    "Breakdown.Freq.bilin_holds"
+   ]
+  },
+  "lemma-3.2": {
+   "claim": "claim-theorem-3-2",
+   "title": "Lemma 3.2: The bilinear operator is compact",
+   "section": "3.3",
+   "tie": "ns-s3-compactness-lemma",
+   "lean": [
+    "Breakdown.Freq.BilinCompact",
+    "Breakdown.Freq.bilinCompact_holds"
+   ]
+  },
+  "lemma-3.3": {
+   "claim": "claim-theorem-3-3",
+   "title": "Lemma 3.3: The bilinear time integral",
+   "section": "3.4",
+   "tie": "ns-3late-lemma-3-3",
+   "lean": [
+    "Breakdown.VarConstIntegralStatement",
+    "Breakdown.varConstIntegral"
+   ]
+  },
+  "lemma-3.4": {
+   "claim": "claim-theorem-3-4",
+   "title": "Lemma 3.4: Solving the linearized equation",
+   "section": "3.4",
+   "tie": "ns-3late-lemma-3-4-equation",
+   "lean": [
+    "Breakdown.MonodromyStatement",
+    "Breakdown.monodromy"
+   ]
+  },
+  "lemma-3.5": {
+   "claim": "claim-theorem-3-5",
+   "title": "Lemma 3.5: Restarting and uniqueness",
+   "section": "3.4",
+   "tie": "pdf-item-theorem-3-5",
+   "lean": [
+    "Breakdown.RestrictStatement",
+    "Breakdown.restrict",
+    "Breakdown.UniqueStatement",
+    "Breakdown.mildUnique"
+   ]
+  },
+  "lemma-3.6": {
+   "claim": "claim-theorem-3-6",
+   "title": "Lemma 3.6: Weak solutions are mild",
+   "section": "3.5",
+   "tie": "ns-3late-weak-assumptions",
+   "lean": [
+    "Breakdown.Freq.MildOfWeak",
+    "Breakdown.Freq.mild_holds"
+   ]
+  },
+  "lemma-3.7": {
+   "claim": "claim-theorem-3-7",
+   "title": "Lemma 3.7: Estimates on the torus",
+   "section": "3.6",
+   "tie": "pdf-item-theorem-3-7",
+   "lean": [
+    "Breakdown.Periodic.KernelSharpBound",
+    "Breakdown.Periodic.kernelSharpBound"
+   ]
+  },
+  "proposition-4.1": {
+   "claim": "claim-theorem-4-1",
+   "title": "Proposition 4.1: The profile's velocity",
+   "section": "4.1",
+   "tie": "pdf-item-equation-4-1",
+   "lean": [
+    "Breakdown.EmbeddedProfileOrbit",
+    "Breakdown.embeddedProfileOrbit_holds",
+    "Breakdown.PhysicalMild",
+    "Breakdown.physicalMild_unconditional"
+   ]
+  },
+  "lemma-4.2": {
+   "claim": "claim-theorem-4-2",
+   "title": "Lemma 4.2: Periods and the H1 rate",
+   "section": "4.1",
+   "tie": "pdf-item-equation-4-2",
+   "lean": [
+    "Breakdown.ProfilePieceStatement",
+    "Breakdown.profilePiece"
+   ]
+  },
+  "proposition-4.3": {
+   "claim": "claim-theorem-4-3",
+   "title": "Proposition 4.3: A right inverse",
+   "section": "4.2",
+   "tie": "ns-s4-018",
+   "lean": [
+    "Breakdown.StepDataStatement",
+    "Breakdown.stepData",
+    "Breakdown.PeriodicInverseStatement",
+    "Breakdown.periodicInverse",
+    "Breakdown.SectionStatement",
+    "Breakdown.exists_section"
+   ]
+  },
+  "lemma-4.4": {
+   "claim": "claim-theorem-4-4",
+   "title": "Lemma 4.4: Monodromy is compact plus small",
+   "section": "4.3",
+   "tie": "ns-s4-019",
+   "lean": [
+    "Breakdown.MonodromyStatement",
+    "Breakdown.monodromy"
+   ]
+  },
+  "lemma-4.5": {
+   "claim": "claim-theorem-4-5",
+   "title": "Lemma 4.5: Spectral splitting",
+   "section": "4.3",
+   "tie": "ns-s4-024",
+   "lean": [
+    "Breakdown.DichotomyHolds",
+    "Breakdown.dichotomyHolds"
+   ]
+  },
+  "lemma-4.6": {
+   "claim": "claim-theorem-4-6",
+   "title": "Lemma 4.6: The monodromy recurrence",
+   "section": "4.4",
+   "tie": "ns-s4-026",
+   "lean": [
+    "Breakdown.orbitSeq"
+   ]
+  },
+  "lemma-4.7": {
+   "claim": "claim-theorem-4-7",
+   "title": "Lemma 4.7: Weighted Duhamel bounds",
+   "section": "4.5",
+   "tie": "pdf-item-equation-4-7",
+   "lean": [
+    "Breakdown.PieceOperatorStatement",
+    "Breakdown.pieceOperator"
+   ]
+  },
+  "lemma-4.8": {
+   "claim": "claim-theorem-4-8",
+   "title": "Lemma 4.8: Correcting to an exact solution",
+   "section": "4.5",
+   "tie": "pdf-item-equation-4-8",
+   "lean": [
+    "Breakdown.Periodic.SeqPerturbation",
+    "Breakdown.Periodic.seqPerturbation"
+   ]
+  },
+  "lemma-5.1": {
+   "claim": "claim-theorem-5-1",
+   "title": "Lemma 5.1: The solenoidal cutoff",
+   "section": "5.1",
+   "tie": "ns5.lemma5.1.geometry",
+   "lean": [
+    "Breakdown.Periodic.ApproxFieldProperties",
+    "Breakdown.Periodic.approxFieldProperties_holds"
+   ]
+  },
+  "lemma-6.1": {
+   "claim": "claim-theorem-6-1",
+   "title": "Lemma 6.1: Periodic and whole-space heat flow",
+   "section": "6.1",
+   "tie": "ns6.lemma-6-1",
+   "lean": [
+    "Breakdown.Periodic.HeatDivFreeComparison",
+    "Breakdown.Periodic.heatDivFreeComparison"
+   ]
+  },
+  "lemma-6.2": {
+   "claim": "claim-theorem-6-2",
+   "title": "Lemma 6.2: The periodized cutoff",
+   "section": "6.2",
+   "tie": "pdf-item-theorem-6-2",
+   "lean": [
+    "Breakdown.Periodic.ApproxSizes",
+    "Breakdown.Periodic.approxSizes",
+    "Breakdown.Periodic.ApproxResidualSmall",
+    "Breakdown.Periodic.approxResidualSmall"
+   ]
+  },
+  "lemma-6.3": {
+   "claim": "claim-theorem-6-3",
+   "title": "Lemma 6.3: The periodic right inverse",
+   "section": "6.3",
+   "tie": "ns6.lemma-6-3",
+   "lean": [
+    "Breakdown.Periodic.ComparisonSmall",
+    "Breakdown.Periodic.comparisonSmall",
+    "Breakdown.Periodic.ShellInverseTransfer",
+    "Breakdown.Periodic.shellInverseTransfer"
+   ]
+  },
+  "theorem-7.1": {
+   "claim": "claim-theorem-7-1",
+   "title": "Theorem 7.1: A certificate gives a profile",
+   "section": "7.4",
+   "tie": "pdf-item-theorem-7-1",
+   "lean": [
+    "Breakdown.extended_certificate_orbit_proved"
+   ]
+  },
+  "corollary-7.2": {
+   "claim": "claim-theorem-7-2",
+   "title": "Corollary 7.2: how the profile is obtained",
+   "section": "7.4",
+   "tie": "pdf-item-theorem-7-2",
+   "lean": [
+    "Breakdown.extended_certificate_breakdown_on_space"
+   ]
+  },
+  "lemma-7.4": {
+   "claim": "claim-theorem-7-4",
+   "title": "Lemma 7.4: Admissible perturbations",
+   "section": "7.5",
+   "tie": "s7-linear-p02-01",
+   "lean": [
+    "Breakdown.Cert.freeEnergyLocalHolds_of"
+   ]
+  },
+  "proposition-7.5": {
+   "claim": "claim-theorem-7-5",
+   "title": "Proposition 7.5: Inverting the free operator",
+   "section": "7.5",
+   "tie": "s7-linear-p08-01",
+   "lean": [
+    "Breakdown.Cert.exists_gradInvSpec"
+   ]
+  },
+  "lemma-7.6": {
+   "claim": "claim-theorem-7-6",
+   "title": "Lemma 7.6: The convection estimate",
+   "section": "7.6",
+   "tie": "s7-linear-p14-01",
+   "lean": [
+    "Breakdown.Cert.sliceSupBoundHolds_of"
+   ]
+  },
+  "lemma-7.7": {
+   "claim": "claim-theorem-7-7",
+   "title": "Lemma 7.7: Linearised convection is compact",
+   "section": "7.6",
+   "tie": "s7-linear-p16-01",
+   "lean": [
+    "Breakdown.Cert.extendedConvectionHolds_of"
+   ]
+  },
+  "proposition-7.8": {
+   "claim": "claim-theorem-7-8",
+   "title": "Proposition 7.8: The constrained linear equation",
+   "section": "7.7",
+   "tie": "s7-linear-p22-01",
+   "lean": [
+    "Breakdown.Cert.extendedBorderedInvertibleHolds_of"
+   ]
+  },
+  "proposition-7.9": {
+   "claim": "claim-theorem-7-9",
+   "title": "Proposition 7.9: The gradient estimate",
+   "section": "7.7",
+   "tie": "s7-linear-p26-01",
+   "lean": [
+    "Breakdown.Cert.extendedSupBoundHolds_of"
+   ]
+  },
+  "proposition-7.10": {
+   "claim": "claim-theorem-7-10",
+   "title": "Proposition 7.10: The nonlinear correction",
+   "section": "7.8",
+   "tie": "sec7-nonlinear-008",
+   "lean": [
+    "Breakdown.Cert.extendedExistsZeroHeldHolds_of"
+   ]
+  },
+  "proposition-7.11": {
+   "claim": "claim-theorem-7-11",
+   "title": "Proposition 7.11: Weak profiles are smooth",
+   "section": "7.9",
+   "tie": "pdf-item-theorem-7-11",
+   "lean": [
+    "Breakdown.FarField.periodicLerayProfileExists_of_weak"
+   ]
+  },
+  "proposition-b.1": {
+   "claim": "claim-theorem-B-1",
+   "title": "Proposition B.1: The multiplier",
+   "section": "B.2. The multiplier inequality",
+   "tie": "b12-prop-b1-hypotheses",
+   "lean": [
+    "Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof",
+    "Breakdown.CoerciveWeak.PieceMultiplierDensityWeakHolds"
+   ]
+  },
+  "lemma-b.2": {
+   "claim": "claim-theorem-B-2",
+   "title": "Lemma B.2: The a priori certificate estimate",
+   "section": "B.2. The multiplier inequality",
+   "tie": "b12-lemma-b2",
+   "lean": [
+    "Breakdown.CoerciveWeak.extendedCoerciveClause_of_pieceData_proved",
+    "Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity"
+   ]
+  },
+  "lemma-b.3": {
+   "claim": "claim-theorem-B-3",
+   "title": "Lemma B.3: Symmetry reduction of the density",
+   "section": "B.3. The cells, their complement and the tree",
+   "tie": "pdf-item-theorem-B-3",
+   "lean": [
+    "Breakdown.CertCell.modeDensityBridge_closed",
+    "Breakdown.CertCell.DensityIdentity"
+   ]
+  },
+  "proposition-b.4": {
+   "claim": "claim-theorem-B-4",
+   "title": "Proposition B.4: What valid cell data give",
+   "section": "B.3. The cells, their complement and the tree",
+   "tie": "pdf-item-theorem-B-4",
+   "lean": [
+    "Breakdown.CertCell.cellJunctions_closed",
+    "Breakdown.CertCell.cellFormAssembly_closed",
+    "Breakdown.CertCell.formNegFinite"
+   ]
+  },
+  "lemma-b.5": {
+   "claim": "claim-theorem-B-5",
+   "title": "Lemma B.5: One azimuthal mode",
+   "section": "B.3. The cells, their complement and the tree",
+   "tie": "pdf-item-theorem-B-5",
+   "lean": [
+    "Breakdown.CertCell.TailBand.angularModeBounds",
+    "Breakdown.CertCell.TailBand.pointwiseQuadraticTest",
+    "Breakdown.CertCell.Assembly.offModeConditionSound_holds"
+   ]
+  },
+  "lemma-b.6": {
+   "claim": "claim-theorem-B-6",
+   "title": "Lemma B.6: The exterior Hardy estimate",
+   "section": "B.3. The cells, their complement and the tree",
+   "tie": "pdf-item-theorem-B-6",
+   "lean": [
+    "Breakdown.CertCell.TailBand.modeRayInverseSquare",
+    "Breakdown.CertCell.exteriorConditionSound_closed"
+   ]
+  },
+  "lemma-b.7": {
+   "claim": "claim-theorem-B-7",
+   "title": "Lemma B.7: The tree conditions",
+   "section": "B.3. The cells, their complement and the tree",
+   "tie": "pdf-item-theorem-B-7",
+   "lean": [
+    "Breakdown.CertCell.Certificate.signedTreeLowerBound",
+    "Breakdown.CertCell.Certificate.pivotCountPositive"
+   ]
+  },
+  "proposition-b.8": {
+   "claim": "claim-theorem-B-8",
+   "title": "Proposition B.8: The density lower bound",
+   "section": "B.3. The cells, their complement and the tree",
+   "tie": "pdf-item-theorem-B-8",
+   "lean": [
+    "Breakdown.CertCell.rowRestClause_closed",
+    "Breakdown.CoerciveWeak.RowRestClause"
+   ]
+  },
+  "lemma-b.9": {
+   "claim": "claim-theorem-B-9",
+   "title": "Lemma B.9: Gap transfer",
+   "section": "B.4. The other conditions and the statement",
+   "tie": "pdf-item-theorem-B-9",
+   "lean": [
+    "Breakdown.CertReduction.gapTransferBridgeHolds_proof",
+    "Breakdown.CertReduction.formShiftBridgeHolds_proof",
+    "Breakdown.CertReduction.frozenFormBridgeHolds_of_convection"
+   ]
+  },
+  "lemma-b.10": {
+   "claim": "claim-theorem-B-10",
+   "title": "Lemma B.10: The adjoint pairing estimate",
+   "section": "B.4. The other conditions and the statement",
+   "tie": "pdf-item-theorem-B-10",
+   "lean": [
+    "Breakdown.CertReduction.adjointQuadraticBridge_of",
+    "Breakdown.CertReduction.adjointQuadTerm_of"
+   ]
+  },
+  "lemma-b.11": {
+   "claim": "claim-theorem-B-11",
+   "title": "Lemma B.11: The dual pairing bound",
+   "section": "B.4. The other conditions and the statement",
+   "tie": "pdf-item-theorem-B-11",
+   "lean": [
+    "Breakdown.AdjointDefect.dualBoundedBound_of_parts",
+    "Breakdown.AdjointDefect.remainderPlainHolds_proof",
+    "Breakdown.AdjointDefect.remainderAzimuthalHolds_proof"
+   ]
+  },
+  "lemma-b.12": {
+   "claim": "claim-theorem-B-12",
+   "title": "Lemma B.12: The linear adjoint defect",
+   "section": "B.4. The other conditions and the statement",
+   "tie": "pdf-item-theorem-B-12",
+   "lean": [
+    "Breakdown.AdjointDefect.adjointDefectBridge_of_pieces"
+   ]
+  },
+  "lemma-b.13": {
+   "claim": "claim-theorem-B-13",
+   "title": "Lemma B.13: The offset estimate",
+   "section": "B.4. The other conditions and the statement",
+   "tie": "pdf-item-theorem-B-13",
+   "lean": [
+    "Breakdown.CellReduction.Instantiation.offsetClause_holds_of",
+    "Breakdown.CellReduction.Instantiation.offsetBallIdentity_holds"
+   ]
+  },
+  "proposition-b.14": {
+   "claim": "claim-theorem-B-14",
+   "title": "Proposition B.14: Cell data give a certificate",
+   "section": "B.4. The other conditions and the statement",
+   "tie": "b4-prop-b14",
+   "lean": [
+    "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts"
+   ]
+  }
+ },
+ "sections": {
+  "1": "1 Introduction",
+  "1.1": "1.1 Main results",
+  "1.2": "1.2 Background",
+  "1.3": "1.3 Ideas of the proof",
+  "1.4": "1.4 Organization and conventions",
+  "1.5": "1.5 Formalization",
+  "1.6": "1.6 AI statement",
+  "2": "2 Outline of the proof",
+  "2.1": "2.1 The space $X$ and the notion of solution",
+  "2.2": "2.2 Blow-up on $\\mathbb R^3$ and on the torus",
+  "2.3": "2.3 Proof of Theorem 1.1",
+  "3": "3 Preliminaries",
+  "3.1": "3.1 The space $X$",
+  "3.2": "3.2 The bilinear term",
+  "3.3": "3.3 Compactness",
+  "3.4": "3.4 An abstract setting",
+  "3.5": "3.5 Solutions in the sense of distributions",
+  "3.6": "3.6 The heat flow and the bilinear term on the torus",
+  "4": "4 The equation linearized about $u^*$",
+  "4.1": "4.1 The field $u^*$",
+  "4.2": "4.2 The linearized equation",
+  "4.3": "4.3 The monodromy operator",
+  "4.4": "4.4 Proof of Proposition 4.3",
+  "4.5": "4.5 Correction of an approximate solution",
+  "5": "5 Blow-up on $\\mathbb R^3$",
+  "5.1": "5.1 The cutoff",
+  "5.2": "5.2 Proof of Proposition 2.1",
+  "6": "6 Blow-up on the torus",
+  "6.1": "6.1 Comparison of the heat flows on $\\mathbb T_L^3$ and $\\mathbb R^3$",
+  "6.2": "6.2 The approximate solution",
+  "6.3": "6.3 An approximate right inverse",
+  "6.4": "6.4 Proof of Proposition 2.2",
+  "7": "7 From a certificate to a profile",
+  "7.1": "7.1 The equation in rescaled time",
+  "7.2": "7.2 The approximate profiles and the problem for a perturbation",
+  "7.3": "7.3 The conditions of a certificate",
+  "7.4": "7.4 The theorem and related constructions",
+  "7.5": "7.5 The free equation",
+  "7.6": "7.6 The quadratic term and the terms from the approximate profile",
+  "7.7": "7.7 The linearized problem",
+  "7.8": "7.8 The nonlinear problem and the choice of the parameter",
+  "7.9": "7.9 Proof of Theorem 7.1",
+  "7.10": "7.10 Proof of Proposition 7.11",
+  "appendix-a": "Appendix A Proofs of the lemmas of Sections 2 and 3",
+  "appendix-b": "Appendix B Certificates in the formalization",
+  "appendix-c": "Appendix C The computation of the approximate profile"
+ }
+}

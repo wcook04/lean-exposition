@@ -16,13 +16,17 @@ const paperNames = { long: empty, short: empty, expository: empty } as SiteInsta
 // The account line reads as sentences: "<title>, by <authors>." then the status sentence. A
 // sentence ending in a formula or abbreviation keeps its own stop.
 const sentence = (text: string) => (/[.!?]$/.test(text.trim()) ? text.trim() : `${text.trim()}.`);
-// The paper itself is the authors'; a companion page (a guide) is about it, written for this reader.
+// The paper itself is the authors': its header carries their full credit line, once. A companion page
+// (an account or a guide) is about it, written for this reader with AI, and names the authors and their
+// repository only (companion_credit).
 for (const doc of PAPER.documents)
-  paperNames[doc.slot] = {
-    short: doc.title,
-    job: sentence(doc.main ? `${doc.title}, by ${BY}` : `${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
-    reader: "",
-  };
+  paperNames[doc.slot] = doc.main
+    ? { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: PAPER.credit_lines.map(sentence).join(" ") }
+    : {
+        short: doc.title,
+        job: sentence(`${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
+        reader: PAPER.companion_credit ? sentence(PAPER.companion_credit) : "",
+      };
 
 function readme(siteUrl: string, facts: SiteFacts): string {
   const at = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);

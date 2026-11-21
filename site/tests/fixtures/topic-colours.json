@@ -173,6 +173,138 @@
    ]
   }
  },
+ "0a0fe824d26ab452": {
+  "used_by": [
+   "instances/navier-stokes/alignment/colours-long.json#0",
+   "instances/navier-stokes/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "theorems",
+    21,
+    [
+     "fractional",
+     "statement"
+    ]
+   ],
+   [
+    "torus",
+    72.43,
+    [
+     "torus"
+    ]
+   ],
+   [
+    "profile-to-blowup",
+    116.86,
+    [
+     "monodromy",
+     "mild",
+     "profile"
+    ]
+   ],
+   [
+    "certificate-to-profile",
+    170.79,
+    [
+     "certificate",
+     "coercive"
+    ]
+   ],
+   [
+    "cell-data",
+    221.21,
+    [
+     "encoding",
+     "quarter-plane",
+     "cells-tails"
+    ]
+   ],
+   [
+    "cell-estimates",
+    267.64,
+    [
+     "angular",
+     "tree",
+     "profile-change"
+    ]
+   ],
+   [
+    "cell-certificate",
+    329.57,
+    [
+     "adjoint",
+     "offset-certificate"
+    ]
+   ]
+  ],
+  "colours": {
+   "fractional": [
+    "oklch(0.383 0.064 17.9)",
+    "oklch(0.623 0.103 17.9)"
+   ],
+   "statement": [
+    "oklch(0.467 0.056 24.1)",
+    "oklch(0.708 0.091 24.1)"
+   ],
+   "torus": [
+    "oklch(0.485 0.060 72.4)",
+    "oklch(0.725 0.097 72.4)"
+   ],
+   "monodromy": [
+    "oklch(0.340 0.067 110.7)",
+    "oklch(0.580 0.109 110.7)"
+   ],
+   "mild": [
+    "oklch(0.425 0.060 116.9)",
+    "oklch(0.665 0.097 116.9)"
+   ],
+   "profile": [
+    "oklch(0.510 0.053 123.0)",
+    "oklch(0.750 0.085 123.0)"
+   ],
+   "certificate": [
+    "oklch(0.383 0.064 167.7)",
+    "oklch(0.623 0.103 167.7)"
+   ],
+   "coercive": [
+    "oklch(0.467 0.056 173.9)",
+    "oklch(0.708 0.091 173.9)"
+   ],
+   "encoding": [
+    "oklch(0.380 0.067 215.0)",
+    "oklch(0.620 0.109 215.0)"
+   ],
+   "quarter-plane": [
+    "oklch(0.465 0.060 221.2)",
+    "oklch(0.705 0.097 221.2)"
+   ],
+   "cells-tails": [
+    "oklch(0.550 0.053 227.4)",
+    "oklch(0.790 0.085 227.4)"
+   ],
+   "angular": [
+    "oklch(0.335 0.067 261.5)",
+    "oklch(0.575 0.109 261.5)"
+   ],
+   "tree": [
+    "oklch(0.420 0.060 267.6)",
+    "oklch(0.660 0.097 267.6)"
+   ],
+   "profile-change": [
+    "oklch(0.505 0.053 273.8)",
+    "oklch(0.745 0.085 273.8)"
+   ],
+   "adjoint": [
+    "oklch(0.383 0.064 326.5)",
+    "oklch(0.623 0.103 326.5)"
+   ],
+   "offset-certificate": [
+    "oklch(0.467 0.056 332.7)",
+    "oklch(0.708 0.091 332.7)"
+   ]
+  }
+ },
  "0d805052b50983fb": {
   "used_by": [
    "examples/erdos257/alignment/colours-expository.json#0"

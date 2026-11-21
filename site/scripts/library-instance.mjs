@@ -14,7 +14,9 @@ if (!existsSync(from)) throw new Error(`No library paper ${paper}: ${from} is mi
 copyFileSync(from, resolve(import.meta.dirname, "../src/instances/library/current.json"));
 const instance = JSON.parse(readFileSync(from, "utf8"));
 const phrases = {};
-for (const doc of instance.documents) {
+// Phrase addresses (/@<id>) open the main document; a companion's phrases keep the reader's own
+// addresses under /read/<slot>/.
+for (const doc of instance.documents.filter((d) => d.main)) {
   const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
   if (!existsSync(path)) continue;
   for (const tie of JSON.parse(readFileSync(path, "utf8")).ties ?? []) {
@@ -25,7 +27,7 @@ for (const doc of instance.documents) {
 const aliases = resolve(import.meta.dirname, "../../instances", paper, "alignment/aliases.json");
 if (existsSync(aliases)) {
   for (const [old, host] of Object.entries(JSON.parse(readFileSync(aliases, "utf8")).passages ?? {})) {
-    if (phrases[host] && !phrases[old]) phrases[old] = phrases[host];
+    if (phrases[host] && !phrases[old]) phrases[old] = { ...phrases[host], host };
   }
 }
 // Reading notes on Lean and the supplementary checks, published beside the edition when the paper has them.

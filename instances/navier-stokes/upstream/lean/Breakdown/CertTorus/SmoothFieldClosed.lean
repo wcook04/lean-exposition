@@ -1,0 +1,45 @@
+import Breakdown.CertTorus.HomWiener
+import Breakdown.CertTorus.VelocityOfSymbol
+import Breakdown.CertTorus.BilinSymbol
+import Breakdown.CertTorus.DerivSobolev
+import Breakdown.CertTorus.DerivAlgebra
+import Breakdown.CertTorus.DerivHeat
+import Breakdown.CertTorus.DerivIntegral
+import Breakdown.CertTorus.DerivClosed
+import Breakdown.CertTorus.ShiftCovariance
+import Breakdown.CertTorus.DiffQuotient
+import Breakdown.CertTorus.BilinLeibnizOfShift
+import Breakdown.CertTorus.PicardConverges
+import Breakdown.CertTorus.PicardDerivBound
+import Breakdown.CertTorus.LocalGainOfPicard
+import Breakdown.CertTorus.MildRestrict
+import Breakdown.CertTorus.MildSmoothing
+import Breakdown.CertTorus.DuhamelSymbolOfBilinSymbol
+import Breakdown.CertTorus.SymbolCurve
+import Breakdown.CertTorus.WienerSolution
+import Breakdown.CertTorus.DilateSymbol
+import Breakdown.CertTorus.RotateSymbol
+import Breakdown.CertTorus.WindowResidual
+import Breakdown.CertTorus.OrbitWindows
+import Breakdown.CertTorus.PhysFieldDerivBound
+import Breakdown.CertTorus.PressureGradL2OfWiener
+import Breakdown.CertTorus.OrbitSmoothOfWindows
+import Breakdown.CertTorus.OrbitHomSobolevOfWindows
+import Breakdown.CertTorus.OrbitDerivBoundOfSymbolCurve
+import Breakdown.CertTorus.OrbitTailOfSymbolCurve
+
+namespace Breakdown.FarField
+
+theorem smoothFieldOfOrbit_holds : SmoothFieldOfOrbit :=
+  smoothFieldOfOrbit_of_symbolCalculus homWiener_holds velocityOfSymbolOfWiener_holds
+    bilinSymbolOfVelocity_holds derivSobolev_holds derivAlgebra_holds derivHeat_holds
+    derivIntegral_holds derivClosed_holds shiftCovariance_holds diffQuotient_holds
+    bilinLeibnizOfShift_holds picardConverges_holds picardDerivBoundOfCalculus_holds
+    localGainOfPicard_holds mildRestrict_holds mildSmoothingOfLocalGain_holds
+    duhamelSymbolOfBilinSymbol_holds symbolCurveOfDuhamel_holds wienerSolution_holds
+    dilateSymbol_holds rotateSymbol_holds windowResidual_holds orbitWindows_holds
+    physFieldDerivBound_holds pressureGradL2OfWiener_holds orbitSmoothOfWindows_holds
+    orbitHomSobolevOfWindows_holds orbitDerivBoundOfSymbolCurve_holds
+    orbitTailOfSymbolCurve_holds
+
+end Breakdown.FarField

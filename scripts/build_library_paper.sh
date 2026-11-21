@@ -51,7 +51,12 @@ results = json.loads(Path(f"instances/{paper}/alignment/results.json").read_text
 for address in results:
     (dist / address).mkdir(exist_ok=True)
     (dist / address / "index.html").write_text(shell)
-print(f"static addresses: / and {len(results)} results")
+# Companion pages (/<slug>/) open as their own document's first screen.
+pages = [d for d in inst["documents"] if not d.get("main") and d.get("slug")]
+for doc in pages:
+    (dist / doc["slug"]).mkdir(exist_ok=True)
+    (dist / doc["slug"] / "index.html").write_text((dist / "read" / doc["slot"] / "index.html").read_text())
+print(f"static addresses: / and {len(results)} results and {len(pages)} pages")
 PYEOF
 # Put back the tracked placeholder that library-instance.mjs replaced.
 git checkout -- site/src/instances/library/current.json 2>/dev/null || true

@@ -10,6 +10,7 @@ import { isFidelity, phraseVerdict } from "../../compare/fidelityWords";
 import { renderTex } from "../math";
 import site from "@instance/site";
 import { Signal } from "./signal";
+import { useLeanNote } from "../../lean/noteSummaries";
 
 const cache = new Map<Stage, Promise<PhraseNotes | null>>();
 
@@ -80,8 +81,28 @@ export function noteHtml(text: string): { html: string; errors: string[] } {
   return { html, errors };
 }
 
+/**
+ * A reading note in a card: its summary first when it has one, with a "more" control that expands
+ * the whole note in place; a note without a summary shows whole, as before.
+ */
+export function NoteBody({ text, summary, className = "phrase-card__text" }: { text: string; summary?: string; className?: string }) {
+  const [open, setOpen] = useState(false);
+  if (!summary || summary.trim() === text.trim()) return <p className={className} dangerouslySetInnerHTML={{ __html: noteHtml(text).html }} />;
+  return (
+    <>
+      <p className={`${className} note-summary`}>
+        <span dangerouslySetInnerHTML={{ __html: noteHtml(open ? text : summary).html }} />{" "}
+        <button type="button" className="note-more" aria-expanded={open} onClick={() => setOpen(!open)}>
+          {open ? "less" : "more"}
+        </button>
+      </p>
+    </>
+  );
+}
+
 export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null }) {
   const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
+  const leanNote = useLeanNote(row.name);
   return (
     <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
       {topic && (
@@ -112,7 +133,7 @@ export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic
           <p className="phrase-card__label">
             Reading note <span>· AI-drafted</span>
           </p>
-          <p className="phrase-card__text" dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />
+          <NoteBody text={note} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
         </div>
       )}
     </section>

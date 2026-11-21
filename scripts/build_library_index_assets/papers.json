@@ -9,31 +9,8 @@
   },
   {
    "id": "navier-stokes",
-   "title": "Finite-time blow-up for the Navier–Stokes equations",
-   "authors": ["Levent Alpöge", "Tristan Buckmaster"],
-   "sentence": "Proves that there are smooth, compactly supported, divergence-free initial data on ℝ³, and smooth divergence-free data on the torus, whose solutions of the unforced three-dimensional Navier–Stokes equations blow up in finite time, with the profile obtained from a numerical certificate the authors will release.",
-   "credit": "Paper and Lean by Levent Alpöge and Tristan Buckmaster, from their repository tristanbuckmaster/navier-stokes at ad53419.",
-   "where": "Moving into the library today. Until then it is on Proof Reader.",
-   "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-paper",
-   "counts": {"phrases": 242, "statements": 30, "lean": 401},
-   "comparator": "Comparator accepted the 15 selected theorems and rejected a control with a deleted hypothesis.",
-   "counted_from": "wcook04/proof-reader 6092102, papers/navier-stokes-paper/links.json; Comparator from papers/navier-stokes/paper.md",
-   "pages": [
-    {"title": "The paper by number", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-index"},
-    {"title": "Specialist digest", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-digest"},
-    {"title": "Part I: Theorem 1.1", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-part-1"},
-    {"title": "Part II: Theorem 7.1", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-part-2"},
-    {"title": "Part III: Appendix B", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-appendix-b"},
-    {"title": "What the Lean states", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes"},
-    {"title": "Statement files", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-statement-files"},
-    {"title": "Proof routes", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-routes"},
-    {"title": "Proof routes in detail", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-route-details"},
-    {"title": "Cell layer guide", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-cell-guide"},
-    {"title": "Cell reference", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-cell-reference"},
-    {"title": "Cell layer and Appendix B", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-cell-fidelity"},
-    {"title": "The certificate checker", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-certificate-checker"},
-    {"title": "Library guides 1 to 30", "href": "https://wcook04.github.io/proof-reader/#/navier-stokes-library-01"}
-   ]
+   "library": true,
+   "sentence": "Proves that there are smooth, compactly supported, divergence-free initial data on ℝ³, and smooth divergence-free data on the torus, whose solutions of the unforced three-dimensional Navier–Stokes equations blow up in finite time, with the profile obtained from a numerical certificate the authors will release."
   },
   {
    "id": "erdos-257",

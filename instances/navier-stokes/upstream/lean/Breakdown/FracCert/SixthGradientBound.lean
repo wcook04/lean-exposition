@@ -1,0 +1,409 @@
+import Breakdown.FracCert.SecondOrderComplete
+import Breakdown.FreqTr.GradSixDecay
+
+open scoped ContDiff ENNReal NNReal
+open MeasureTheory Filter Topology
+open scoped Convolution
+
+noncomputable section
+
+namespace Breakdown
+
+namespace SteadyCert
+
+namespace SixthGradientBoundInternal
+
+open Breakdown.Freq.Internal.GradSixDecay
+
+private theorem normPow_conv_le_of_dom (φ : ContDiffBump (0 : Space)) (f : Space → Space)
+    (E : Space → ℝ) (hE : Integrable E) (k : ℕ) (hk : 1 ≤ k) (hdom : ∀ z, ‖f z‖ ^ k ≤ E z)
+    (y : Space) :
+    ‖(φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] f) y‖ ^ k ≤
+      (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] fun z => ‖f z‖ ^ k) y := by
+  set ρ : Space → ℝ := φ.normed volume with hρ
+  have hρ0 : ∀ t, 0 ≤ ρ t := fun t => φ.nonneg_normed t
+  have hρc : Continuous ρ := φ.continuous_normed
+  set d : Space → ℝ≥0 := fun t => (ρ t).toNNReal with hd
+  have hdm : Measurable d := hρc.measurable.real_toNNReal
+  set μ : Measure Space := volume.withDensity (fun t => (d t : ℝ≥0∞)) with hμ
+  have hprob : IsProbabilityMeasure μ := by
+    constructor
+    rw [hμ, withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ]
+    have h1 : ∫⁻ t, ENNReal.ofReal (ρ t) = ENNReal.ofReal (∫ t, ρ t) :=
+      (ofReal_integral_eq_lintegral_ofReal φ.integrable_normed (ae_of_all _ hρ0)).symm
+    have h2 : ∫ t, ρ t = 1 := φ.integral_normed
+    rw [h2, ENNReal.ofReal_one] at h1
+    exact h1
+  have hint : ∀ g : Space → Space, ∫ t, g t ∂μ = ∫ t, ρ t • g t := by
+    intro g
+    rw [hμ, integral_withDensity_eq_integral_smul hdm]
+    refine integral_congr_ae (ae_of_all _ fun t => ?_)
+    simp only [hd, NNReal.smul_def, Real.coe_toNNReal _ (hρ0 t)]
+  have hintR : ∀ g : Space → ℝ, ∫ t, g t ∂μ = ∫ t, ρ t • g t := by
+    intro g
+    rw [hμ, integral_withDensity_eq_integral_smul hdm]
+    refine integral_congr_ae (ae_of_all _ fun t => ?_)
+    simp only [hd, NNReal.smul_def, Real.coe_toNNReal _ (hρ0 t)]
+  have hL : (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] f) y = ∫ t, f (y - t) ∂μ := by
+    rw [convolution_def, hint]
+    rfl
+  have hR : (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] fun z => ‖f z‖ ^ k) y =
+      ∫ t, ‖f (y - t)‖ ^ k ∂μ := by
+    rw [convolution_def, hintR]
+    rfl
+  rw [hL, hR]
+  by_cases hfi : Integrable (fun t => f (y - t)) μ
+  · obtain ⟨C, hC⟩ := hρc.bounded_above_of_compact_support φ.hasCompactSupport_normed
+    have hIt : Integrable (fun t => E (y - t)) := hE.comp_sub_left y
+    have hEμ : Integrable (fun t => E (y - t)) μ := by
+      rw [hμ, integrable_withDensity_iff_integrable_smul hdm]
+      refine (hIt.const_mul C).mono' ?_ (ae_of_all _ fun t => ?_)
+      · exact (hdm.coe_nnreal_real.aestronglyMeasurable).smul hIt.aestronglyMeasurable
+      · have hE0 : 0 ≤ E (y - t) := (by positivity : (0 : ℝ) ≤ ‖f (y - t)‖ ^ k).trans (hdom _)
+        simp only [hd, NNReal.smul_def, Real.coe_toNNReal _ (hρ0 t), smul_eq_mul, norm_mul,
+          Real.norm_eq_abs, abs_of_nonneg (hρ0 t), abs_of_nonneg hE0]
+        have h1 : ρ t ≤ C := by simpa [Real.norm_eq_abs, abs_of_nonneg (hρ0 t)] using hC t
+        exact mul_le_mul_of_nonneg_right h1 hE0
+    have hgi : Integrable (fun t => ‖f (y - t)‖ ^ k) μ :=
+      hEμ.mono' (hfi.aestronglyMeasurable.norm.pow k) (ae_of_all _ fun t => by
+        rw [Real.norm_of_nonneg (by positivity)]
+        exact hdom _)
+    have hconv : ConvexOn ℝ Set.univ (fun x : Space => ‖x‖ ^ k) :=
+      (convexOn_norm convex_univ).pow (fun x _ => norm_nonneg x) k
+    exact hconv.map_integral_le ((continuous_norm.pow k).continuousOn) isClosed_univ
+      (ae_of_all _ fun _ => Set.mem_univ _) hfi hgi
+  · rw [integral_undef hfi, norm_zero, zero_pow (by omega)]
+    exact integral_nonneg fun t => by positivity
+
+private theorem sum_integral_le {ι : Type*} (s : Finset ι) (h : ι → Space → ℝ) (B : Space → ℝ)
+    (h0 : ∀ i z, 0 ≤ h i z) (hB : Integrable B) (hle : ∀ z, ∑ i ∈ s, h i z ≤ B z) :
+    ∑ i ∈ s, ∫ z, h i z ≤ ∫ z, B z := by
+  classical
+  have e : ∑ i ∈ s, ∫ z, h i z = ∑ i ∈ s.filter (fun i => Integrable (h i)), ∫ z, h i z := by
+    rw [Finset.sum_filter]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    split_ifs with hi
+    · rfl
+    · exact integral_undef hi
+  rw [e, ← integral_finsetSum _ (fun i hi => (Finset.mem_filter.1 hi).2)]
+  exact integral_mono (integrable_finsetSum _ fun i hi => (Finset.mem_filter.1 hi).2) hB fun z =>
+    (Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _) fun i _ _ => h0 i z).trans
+      (hle z)
+
+private theorem conv_sum_le (φ : ContDiffBump (0 : Space)) (c : Fin 3 → Space → Space)
+    (E : Space → ℝ) (hE : Integrable E) (hdom : ∀ z, ∑ j : Fin 3, ‖c j z‖ ^ 2 ≤ E z) (y : Space) :
+    ∑ j : Fin 3, (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] fun z => ‖c j z‖ ^ 2) y ≤
+      (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] E) y := by
+  have hex := (φ.hasCompactSupport_normed (μ := volume)).convolutionExists_left (μ := volume)
+    (ContinuousLinearMap.lsmul ℝ ℝ) (φ.continuous_normed (μ := volume)) hE.locallyIntegrable y
+  have hI : Integrable (fun t => φ.normed volume t * E (y - t)) := by
+    simpa [ConvolutionExistsAt] using hex
+  simp only [convolution_def, ContinuousLinearMap.lsmul_apply, smul_eq_mul]
+  exact sum_integral_le Finset.univ (fun j t => φ.normed volume t * ‖c j (y - t)‖ ^ 2) _
+    (fun j t => mul_nonneg (φ.nonneg_normed t) (by positivity)) hI fun t => by
+      rw [← Finset.mul_sum]
+      exact mul_le_mul_of_nonneg_left (hdom _) (φ.nonneg_normed t)
+
+private theorem mollify_fderiv_apply (φ : ContDiffBump (0 : Space)) (g : Space → Space)
+    (c : Fin 3 → Space → Space) (hloc : LocallyIntegrable g volume)
+    (hw : ∀ ψ : Space → ℝ, IsTestScalar ψ → ∀ j : Fin 3,
+      ∫ y, (fderiv ℝ ψ y (unitVector j)) • g y = -∫ y, ψ y • c j y) (y : Space) (j : Fin 3) :
+    fderiv ℝ (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) y (unitVector j) =
+      (φ.normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] c j) y := by
+  have hcf : HasCompactSupport (φ.normed volume) := φ.hasCompactSupport_normed
+  have hcd : ContDiff ℝ ∞ (φ.normed volume) := φ.contDiff_normed
+  have hd1 : ContDiff ℝ 1 (φ.normed volume) := hcd.of_le (by simp)
+  have hder := hcf.hasFDerivAt_convolution_left (ContinuousLinearMap.lsmul ℝ ℝ) hd1 hloc y
+  rw [hder.fderiv]
+  have hex := (hcf.fderiv (𝕜 := ℝ)).convolutionExists_left
+    ((ContinuousLinearMap.lsmul ℝ ℝ : ℝ →L[ℝ] Space →L[ℝ] Space).precompL Space)
+    (hcd.continuous_fderiv (by simp)) hloc y
+  rw [convolution_eq_swap, ContinuousLinearMap.integral_apply hex.integrable_swap, convolution_eq_swap]
+  simp only [ContinuousLinearMap.precompL_apply, ContinuousLinearMap.lsmul_apply]
+  set ψ : Space → ℝ := fun s => φ.normed volume (y - s) with hψ
+  have hψt : IsTestScalar ψ := by
+    refine ⟨hcd.comp (contDiff_const.sub contDiff_id), ?_⟩
+    exact hcf.comp_homeomorph (Homeomorph.subLeft y)
+  have hψd : ∀ s, fderiv ℝ ψ s (unitVector j) = -fderiv ℝ (φ.normed volume) (y - s) (unitVector j) := by
+    intro s
+    have h1 : HasFDerivAt (φ.normed volume) (fderiv ℝ (φ.normed volume) (y - s)) (y - s) :=
+      ((hcd.differentiable (by simp)) (y - s)).hasFDerivAt
+    have h2 : HasFDerivAt ψ ((fderiv ℝ (φ.normed volume) (y - s)).comp (-ContinuousLinearMap.id ℝ Space)) s :=
+      h1.comp s ((hasFDerivAt_id s).const_sub y)
+    rw [h2.fderiv]
+    simp
+  have hwj := hw ψ hψt j
+  simp only [hψd, neg_smul, integral_neg] at hwj
+  exact neg_injective hwj
+
+private theorem memLp_six_iff {f : Space → Space} (hf : AEStronglyMeasurable f volume) :
+    MemLp f 6 volume ↔ Integrable (fun y => ‖f y‖ ^ 6) := by
+  rw [← integrable_norm_rpow_iff hf (by norm_num) (by norm_num)]
+  have h : ((6 : ℝ≥0∞).toReal) = ((6 : ℕ) : ℝ) := by norm_num
+  simp_rw [h, Real.rpow_natCast]
+
+private theorem cross_tail_le {f : Space → Space} (hf : Continuous f) {K R : ℝ} (hK0 : 0 ≤ K)
+    (hR : 0 < R) (hK : ∀ y, ‖fderiv ℝ (cutoff R) y‖ ≤ K / R) :
+    eLpNorm (fun y => ‖fderiv ℝ (cutoff R) y‖ * ‖f y‖) 2 volume ≤
+      ENNReal.ofReal (2 * K) * volume (Metric.ball (0 : Space) 1) ^ (1 / 3 : ℝ) *
+        eLpNorm ({y : Space | R ≤ ‖y‖}.indicator f) 6 volume := by
+  set B := Metric.closedBall (0 : Space) (2 * R) with hBdef
+  set T := {y : Space | R ≤ ‖y‖}.indicator f with hTdef
+  have hTm : AEStronglyMeasurable T volume :=
+    hf.aestronglyMeasurable.indicator (measurableSet_le measurable_const continuous_norm.measurable)
+  have hpt : ∀ y, ‖‖fderiv ℝ (cutoff R) y‖ * ‖f y‖‖ ≤ B.indicator ((K / R) • fun y => ‖T y‖) y := by
+    intro y
+    rw [Real.norm_of_nonneg (by positivity)]
+    by_cases hy : y ∈ B
+    · rw [Set.indicator_of_mem hy]
+      simp only [Pi.smul_apply, smul_eq_mul]
+      by_cases h' : ‖y‖ < R
+      · rw [fderiv_cutoff_eq_zero_of_lt hR h']
+        simp only [norm_zero, zero_mul]
+        positivity
+      · have hT : T y = f y :=
+          Set.indicator_of_mem (show y ∈ {y : Space | R ≤ ‖y‖} from not_lt.1 h') f
+        rw [hT]
+        exact mul_le_mul_of_nonneg_right (hK y) (norm_nonneg _)
+    · rw [Set.indicator_of_notMem hy, fderiv_cutoff_eq_zero_of_gt hR
+        (lt_of_not_ge fun h => hy (mem_closedBall_zero_iff.2 h))]
+      simp
+  refine (eLpNorm_mono_real hpt).trans ?_
+  rw [eLpNorm_indicator_eq_eLpNorm_restrict measurableSet_closedBall]
+  have hsm : AEStronglyMeasurable ((K / R) • fun y => ‖T y‖) (volume.restrict B) :=
+    (hTm.norm.const_smul _).restrict
+  have hexp : (1 / (2 : ℝ≥0∞).toReal - 1 / (6 : ℝ≥0∞).toReal) = (1 / 3 : ℝ) := by norm_num
+  have hvol : volume B ^ (1 / 3 : ℝ) = ENNReal.ofReal (2 * R) *
+      volume (Metric.ball (0 : Space) 1) ^ (1 / 3 : ℝ) := by
+    rw [hBdef, Measure.addHaar_closedBall volume 0 (by positivity), finrank_euclideanSpace_fin,
+      ENNReal.mul_rpow_of_nonneg _ _ (by norm_num),
+      ENNReal.ofReal_rpow_of_nonneg (by positivity) (by norm_num)]
+    congr 2
+    rw [← Real.rpow_natCast, ← Real.rpow_mul (by positivity)]
+    norm_num
+  calc eLpNorm ((K / R) • fun y => ‖T y‖) 2 (volume.restrict B)
+      ≤ eLpNorm ((K / R) • fun y => ‖T y‖) 6 (volume.restrict B) *
+          (volume.restrict B) Set.univ ^ (1 / (2 : ℝ≥0∞).toReal - 1 / (6 : ℝ≥0∞).toReal) :=
+        eLpNorm_le_eLpNorm_mul_rpow_measure_univ (by norm_num) hsm
+    _ ≤ eLpNorm ((K / R) • fun y => ‖T y‖) 6 volume * volume B ^ (1 / 3 : ℝ) := by
+        rw [Measure.restrict_apply_univ, hexp]
+        gcongr
+        exact Measure.restrict_le_self
+    _ = ENNReal.ofReal (K / R) * eLpNorm T 6 volume *
+          (ENNReal.ofReal (2 * R) * volume (Metric.ball (0 : Space) 1) ^ (1 / 3 : ℝ)) := by
+        rw [eLpNorm_const_smul, eLpNorm_norm, Real.enorm_of_nonneg (by positivity), hvol]
+    _ = ENNReal.ofReal (2 * K) * volume (Metric.ball (0 : Space) 1) ^ (1 / 3 : ℝ) *
+          eLpNorm T 6 volume := by
+        have h2 : ENNReal.ofReal (2 * K) = ENNReal.ofReal (K / R) * ENNReal.ofReal (2 * R) := by
+          rw [← ENNReal.ofReal_mul (by positivity)]
+          congr 1
+          field_simp
+        rw [h2]
+        ring
+
+private theorem tail_tendsto {f : Space → Space} (hf : MemLp f 6 volume) :
+    Tendsto (fun n : ℕ => eLpNorm ({y : Space | (n : ℝ) + 1 ≤ ‖y‖}.indicator f) 6 volume) atTop
+      (𝓝 0) := by
+  have h6 : (6 : ℝ≥0∞) ≠ 0 := by norm_num
+  have h6t : (6 : ℝ≥0∞) ≠ ⊤ := by norm_num
+  simp_rw [eLpNorm_eq_lintegral_rpow_enorm_toReal h6 h6t]
+  have hfin : ∫⁻ y, ‖f y‖ₑ ^ (6 : ℝ≥0∞).toReal ≠ ⊤ :=
+    (lintegral_rpow_enorm_lt_top_of_eLpNorm_lt_top h6 h6t hf.eLpNorm_lt_top).ne
+  have hlim : Tendsto (fun n : ℕ => ∫⁻ y, ‖({y : Space | (n : ℝ) + 1 ≤ ‖y‖}.indicator f) y‖ₑ ^
+      (6 : ℝ≥0∞).toReal) atTop (𝓝 (∫⁻ _ : Space, 0)) := by
+    refine tendsto_lintegral_of_dominated_convergence' (fun y => ‖f y‖ₑ ^ (6 : ℝ≥0∞).toReal)
+      (fun n => ?_) (fun n => ae_of_all _ fun y => ?_) hfin (ae_of_all _ fun y => ?_)
+    · exact ((hf.1.indicator (measurableSet_le measurable_const
+        continuous_norm.measurable)).enorm.pow_const _)
+    · dsimp only
+      by_cases hy : y ∈ {y : Space | (n : ℝ) + 1 ≤ ‖y‖}
+      · rw [Set.indicator_of_mem hy]
+      · rw [Set.indicator_of_notMem hy, enorm_zero, ENNReal.zero_rpow_of_pos (by norm_num)]
+        exact zero_le
+    · obtain ⟨N, hN⟩ := exists_nat_ge ‖y‖
+      refine tendsto_atTop_of_eventually_const (i₀ := N) fun n hn => ?_
+      have hn' : (N : ℝ) ≤ n := by exact_mod_cast hn
+      have hy : y ∉ {y : Space | (n : ℝ) + 1 ≤ ‖y‖} := by
+        simp only [Set.mem_ofPred_eq, not_le]
+        linarith
+      rw [Set.indicator_of_notMem hy, enorm_zero, ENNReal.zero_rpow_of_pos (by norm_num)]
+  rw [lintegral_zero] at hlim
+  have hc := (ENNReal.continuous_rpow_const (y := 1 / (6 : ℝ≥0∞).toReal)).tendsto 0
+  rw [ENNReal.zero_rpow_of_pos (by norm_num)] at hc
+  exact hc.comp hlim
+
+private theorem smooth_six_of_six {f : Space → Space} (hf : ContDiff ℝ ∞ f) (h6 : MemLp f 6 volume) :
+    eLpNorm f 6 volume ≤
+      (SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : ℝ≥0∞) *
+        eLpNorm (fderiv ℝ f) 2 volume := by
+  obtain ⟨K, hK0, hK⟩ := exists_fderiv_cutoff_le
+  set D : ℝ≥0∞ := ENNReal.ofReal (2 * K) * volume (Metric.ball (0 : Space) 1) ^ (1 / 3 : ℝ) with hD
+  have hDt : D ≠ ⊤ := ENNReal.mul_ne_top ENNReal.ofReal_ne_top
+    (ENNReal.rpow_ne_top_of_nonneg (by norm_num) measure_ball_lt_top.ne)
+  have hR : ∀ n : ℕ, 0 < (n : ℝ) + 1 := fun n => by positivity
+  have hstep : ∀ n : ℕ, eLpNorm (cutoff ((n : ℝ) + 1) • f) 6 volume ≤
+      (SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : ℝ≥0∞) *
+        (eLpNorm (fderiv ℝ f) 2 volume +
+          D * eLpNorm ({y : Space | (n : ℝ) + 1 ≤ ‖y‖}.indicator f) 6 volume) := by
+    intro n
+    have hu : ContDiff ℝ 1 (cutoff ((n : ℝ) + 1) • f) :=
+      (show ContDiff ℝ ∞ (fun y => cutoff ((n : ℝ) + 1) y • f y) from
+        (cutoff_contDiff _).smul hf).of_le (by simp)
+    have hs : HasCompactSupport (cutoff ((n : ℝ) + 1) • f) :=
+      HasCompactSupport.intro (isCompact_closedBall (0 : Space) (2 * ((n : ℝ) + 1))) fun x hx => by
+        simp [cutoff_eq_zero (hR n)
+          (le_of_lt (lt_of_not_ge fun h => hx (mem_closedBall_zero_iff.2 h)))]
+    have hg := eLpNorm_le_eLpNorm_fderiv_of_eq volume hu hs (p := 2) (p' := 6) (by norm_num)
+      (by simp) (by simp; norm_num)
+    have e6 : ((6 : NNReal) : ℝ≥0∞) = 6 := rfl
+    have e2 : ((2 : NNReal) : ℝ≥0∞) = 2 := rfl
+    rw [e6, e2] at hg
+    refine hg.trans (mul_le_mul_right ?_ _)
+    have hcd : Continuous (fderiv ℝ f) := hf.continuous_fderiv (by simp)
+    have hcc : Continuous (fun y => ‖fderiv ℝ (cutoff ((n : ℝ) + 1)) y‖ * ‖f y‖) :=
+      ((cutoff_contDiff _).continuous_fderiv (by simp)).norm.mul hf.continuous.norm
+    calc eLpNorm (fderiv ℝ (cutoff ((n : ℝ) + 1) • f)) 2 volume
+        ≤ eLpNorm ((fun y => ‖fderiv ℝ f y‖) +
+            fun y => ‖fderiv ℝ (cutoff ((n : ℝ) + 1)) y‖ * ‖f y‖) 2 volume :=
+          eLpNorm_mono_real fun y => by
+            simp only [Pi.add_apply]
+            exact norm_fderiv_cutoff_smul_le hf _ y
+      _ ≤ eLpNorm (fun y => ‖fderiv ℝ f y‖) 2 volume +
+            eLpNorm (fun y => ‖fderiv ℝ (cutoff ((n : ℝ) + 1)) y‖ * ‖f y‖) 2 volume :=
+          eLpNorm_add_le hcd.norm.aestronglyMeasurable hcc.aestronglyMeasurable (by norm_num)
+      _ ≤ _ := by
+          rw [eLpNorm_norm]
+          exact add_le_add le_rfl (cross_tail_le hf.continuous hK0 (hR n) (hK _ (hR n)))
+  have hlim := Lp.eLpNorm_lim_le_liminf_eLpNorm (p := 6) (μ := volume)
+    (f := fun n : ℕ => cutoff ((n : ℝ) + 1) • f)
+    (fun n => ((cutoff_contDiff _).continuous.smul hf.continuous).aestronglyMeasurable) f
+    (Filter.Eventually.of_forall fun x => by
+      obtain ⟨N, hN⟩ := exists_nat_ge ‖x‖
+      refine tendsto_atTop_of_eventually_const (i₀ := N) fun n hn => ?_
+      have hn' : (N : ℝ) ≤ n := by exact_mod_cast hn
+      show cutoff _ x • f x = f x
+      rw [cutoff_eq_one (hR n) (by linarith), one_smul])
+  refine hlim.trans ?_
+  have h0 : Tendsto (fun n : ℕ => D * eLpNorm ({y : Space | (n : ℝ) + 1 ≤ ‖y‖}.indicator f) 6 volume)
+      atTop (𝓝 0) := by
+    simpa using ENNReal.Tendsto.const_mul (tail_tendsto h6) (Or.inr hDt)
+  have hT := ENNReal.Tendsto.const_mul
+    (tendsto_const_nhds (x := eLpNorm (fderiv ℝ f) 2 volume) |>.add h0)
+    (Or.inr ENNReal.coe_ne_top)
+    (a := (SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : ℝ≥0∞))
+  rw [add_zero] at hT
+  rw [← hT.liminf_eq]
+  exact Filter.liminf_le_liminf (Filter.Eventually.of_forall hstep)
+
+private theorem six_bound_of_weak (g : Space → Space) (c : Fin 3 → Space → Space) (E : Space → ℝ)
+    (hg6 : MemLp g 6 volume) (hE : Integrable E) (hdom : ∀ z, ∑ j : Fin 3, ‖c j z‖ ^ 2 ≤ E z)
+    (hw : ∀ ψ : Space → ℝ, IsTestScalar ψ → ∀ j : Fin 3,
+      ∫ y, (fderiv ℝ ψ y (unitVector j)) • g y = -∫ y, ψ y • c j y) :
+    eLpNorm g 6 volume ≤
+      (SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : ℝ≥0∞) *
+        ENNReal.ofReal (3 * Real.sqrt (∫ y, E y)) := by
+  have hloc : LocallyIntegrable g volume := hg6.locallyIntegrable (by norm_num)
+  have hgi : Integrable (fun y => ‖g y‖ ^ 6) := (memLp_six_iff hg6.1).1 hg6
+  have hcE : ∀ j z, ‖c j z‖ ^ 2 ≤ E z := fun j z =>
+    (Finset.single_le_sum (f := fun i => ‖c i z‖ ^ 2) (fun i _ => by positivity)
+      (Finset.mem_univ j)).trans (hdom z)
+  let φ : ℕ → ContDiffBump (0 : Space) := fun n =>
+    ⟨1 / (2 * ((n : ℝ) + 1)), 1 / ((n : ℝ) + 1), by positivity, by
+      have : (0 : ℝ) < (n : ℝ) + 1 := by positivity
+      rw [div_lt_div_iff₀ (by positivity) this]
+      linarith⟩
+  have hρi : ∀ n, Integrable ((φ n).normed volume) := fun n => (φ n).integrable_normed
+  have hwc : ∀ n, ContDiff ℝ ∞ ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) :=
+    fun n => ((φ n).hasCompactSupport_normed).contDiff_convolution_left _ (φ n).contDiff_normed hloc
+  have hw6 : ∀ n, MemLp ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) 6 volume := by
+    intro n
+    have hm : AEStronglyMeasurable ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g)
+        volume := (hwc n).continuous.aestronglyMeasurable
+    refine (memLp_six_iff hm).2 ?_
+    exact ((hρi n).integrable_convolution _ hgi).mono' (hm.norm.pow 6) (ae_of_all _ fun y => by
+      rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+      exact normPow_conv_le_of_dom (φ n) g _ hgi 6 (by norm_num) (fun z => le_rfl) y)
+  have hEpt : ∀ n y, ∑ i : Fin 3,
+      ‖fderiv ℝ ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) y (unitVector i)‖ ^ 2 ≤
+      ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] E) y := by
+    intro n y
+    simp only [mollify_fderiv_apply (φ n) g c hloc hw y]
+    exact (Finset.sum_le_sum fun j _ =>
+      normPow_conv_le_of_dom (φ n) (c j) E hE 2 (by norm_num) (hcE j) y).trans
+        (conv_sum_le (φ n) c E hE hdom y)
+  have hSi : ∀ n, Integrable ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] E) :=
+    fun n => (hρi n).integrable_convolution _ hE
+  have hEc : ∀ n, Continuous (fun y => ∑ i : Fin 3,
+      ‖fderiv ℝ ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) y (unitVector i)‖ ^ 2) := by
+    intro n
+    exact continuous_finsetSum _ fun i _ =>
+      ((((hwc n).continuous_fderiv (by simp)).clm_apply continuous_const).norm).pow 2
+  have hEi : ∀ n, Integrable (fun y => ∑ i : Fin 3,
+      ‖fderiv ℝ ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) y (unitVector i)‖ ^ 2) :=
+    fun n => (hSi n).mono' (hEc n).aestronglyMeasurable (ae_of_all _ fun y => by
+      rw [Real.norm_eq_abs, abs_of_nonneg (Finset.sum_nonneg fun _ _ => by positivity)]
+      exact hEpt n y)
+  have hEle : ∀ n, ∫ y, ∑ i : Fin 3,
+      ‖fderiv ℝ ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) y (unitVector i)‖ ^ 2 ≤
+      ∫ y, E y := by
+    intro n
+    refine (integral_mono (hEi n) (hSi n) (hEpt n)).trans_eq ?_
+    rw [integral_convolution (ContinuousLinearMap.lsmul ℝ ℝ) (hρi n) hE]
+    simp [ContDiffBump.integral_normed]
+  set S := (SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : ℝ≥0∞)
+    with hSdef
+  set B := S * ENNReal.ofReal (3 * Real.sqrt (∫ y, E y)) with hB
+  have hbound : ∀ n, eLpNorm ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) 6 volume ≤ B :=
+    fun n => (smooth_six_of_six (hwc n) (hw6 n)).trans (mul_le_mul_right
+      ((eLpNorm_fderiv_le (hwc n) (hEi n)).trans (ENNReal.ofReal_le_ofReal
+        (mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt (hEle n)) (by norm_num)))) _)
+  have hae : ∀ᵐ y ∂volume, Tendsto (fun n =>
+      ((φ n).normed volume ⋆[ContinuousLinearMap.lsmul ℝ ℝ, volume] g) y) atTop (𝓝 (g y)) := by
+    refine ContDiffBump.ae_convolution_tendsto_right_of_locallyIntegrable (φ := φ) (K := 2) ?_ ?_ hloc
+    · exact tendsto_one_div_add_atTop_nhds_zero_nat
+    · refine Eventually.of_forall fun n => le_of_eq ?_
+      show 1 / ((n : ℝ) + 1) = 2 * (1 / (2 * ((n : ℝ) + 1)))
+      field_simp
+  have hlim := Lp.eLpNorm_lim_le_liminf_eLpNorm (p := 6) (μ := volume)
+    (fun n => (hwc n).continuous.aestronglyMeasurable) g hae
+  exact hlim.trans ((Filter.liminf_le_liminf (Eventually.of_forall hbound)).trans
+    (le_of_eq (liminf_const B)))
+
+end SixthGradientBoundInternal
+
+open SixthGradientBoundInternal
+
+theorem sixthGradientBound : SixthGradientBoundStatement := by
+  set s : ℝ := ((SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : NNReal) : ℝ)
+    with hs
+  refine ⟨729 * s ^ 6, fun v G hvm hv hG hw => ?_⟩
+  have hE0 : ∀ y, 0 ≤ entrySq (G y) := fun y => by unfold entrySq; positivity
+  have hb := six_bound_of_weak v (fun j y => G y (unitVector j)) (fun y => entrySq (G y)) hv hG
+    (fun z => le_rfl) hw
+  set I := ∫ y, entrySq (G y) with hI
+  have hI0 : 0 ≤ I := integral_nonneg hE0
+  set J := ∫ y, ‖v y‖ ^ 6 with hJ
+  have hJ0 : 0 ≤ J := integral_nonneg fun y => by positivity
+  have hs0 : 0 ≤ s := NNReal.coe_nonneg _
+  have heq : eLpNorm v 6 volume = ENNReal.ofReal (J ^ ((6 : ℕ) : ℝ)⁻¹) := by
+    rw [hv.eLpNorm_eq_integral_rpow_norm (by norm_num) (by norm_num)]
+    have h6 : ((6 : ℝ≥0∞).toReal) = ((6 : ℕ) : ℝ) := by norm_num
+    simp_rw [h6, Real.rpow_natCast]
+    rfl
+  have hB : (SNormLESNormFDerivOfEqConst Space (volume : Measure Space) ((2 : NNReal) : ℝ) : ℝ≥0∞) *
+      ENNReal.ofReal (3 * Real.sqrt I) = ENNReal.ofReal (s * (3 * Real.sqrt I)) := by
+    rw [ENNReal.ofReal_mul hs0, hs, ENNReal.ofReal_coe_nnreal]
+  rw [heq, hB, ENNReal.ofReal_le_ofReal_iff (by positivity)] at hb
+  have hp : J = (J ^ ((6 : ℕ) : ℝ)⁻¹) ^ 6 := (Real.rpow_inv_natCast_pow hJ0 (by norm_num)).symm
+  rw [hp]
+  calc (J ^ ((6 : ℕ) : ℝ)⁻¹) ^ 6 ≤ (s * (3 * Real.sqrt I)) ^ 6 :=
+        pow_le_pow_left₀ (by positivity) hb 6
+    _ = 729 * s ^ 6 * I ^ 3 := by
+        have h : Real.sqrt I ^ 6 = I ^ 3 := by
+          rw [show (6 : ℕ) = 2 * 3 by norm_num, pow_mul, Real.sq_sqrt hI0]
+        rw [mul_pow, mul_pow, h]
+        ring
+
+end SteadyCert
+
+end Breakdown

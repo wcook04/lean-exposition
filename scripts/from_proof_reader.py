@@ -42,6 +42,9 @@ import sys
 import tomllib
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from lean_exposition.alignment import _math_spans  # noqa: E402
+
 SLOTS = ("long", "short", "expository")
 ROLE = {"states": ("statement", "states"), "defines": ("definition", "defines"),
         "proves": ("derivation", "proof"), "explains": ("explanation", "part"),
@@ -281,6 +284,15 @@ def main() -> None:
     ap.add_argument("--hold-comparisons", action="store_true",
                     help="keep the page's comparisons hidden: every comparison is replaced by the page's held text (fidelity_held)")
     ap.add_argument("--lean-exposition", default="lean-exposition", help="the lean-exposition command")
+    ap.add_argument("--partial", action="store_true",
+                    help="allow linked declarations without a plain title or reading note (the card shows the Lean name)")
+    ap.add_argument("--companion", action="append", default=[], metavar="SLOT=PAGE[+PAGE...][|slug|Title]",
+                    help="a companion reading page in another document slot, read beside the same Lean "
+                         "(several pages joined with + are read as one document, in order)")
+    ap.add_argument("--paper-logic", type=Path,
+                    help="authored JSON: the paper's own stated logic between its results, as supports edges sourced to the "
+                         "paper, and unnumbered results it states (nodes with their phrase and Lean)")
+    ap.add_argument("--credit", help="the credit line, exactly, in place of paper.toml's [credit] text")
     args = ap.parse_args()
     page, out, slot = args.page, args.out, args.slot
     toml = tomllib.loads((page / "paper.toml").read_text())
@@ -320,7 +332,9 @@ def main() -> None:
     write(out / "upstream/source-lock.json", dumps({
         "schema_version": "1.0", "id": args.paper, "repository": upstream_repo, "revision": upstream_rev,
         "via": f"wcook04/proof-reader {args.source_commit}, papers/{page.name}/{toml['lean']['project']}",
-        "license": "NOASSERTION", "files": locked}))
+        "license": "NOASSERTION", "files": locked,
+        # The modules the page reads: their top-level directories, and top-level module files such as Solution.
+        **({"lean_roots": sorted({m.split(".")[0] for m in toml["lean"]["modules"]})} if toml["lean"].get("modules") else {})}))
     index_path = out / "generated/lean-index.json"
     index_path.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run([args.lean_exposition, "lean-index", str(lean_out), "--out", str(index_path)], check=True,
@@ -374,6 +388,9 @@ def main() -> None:
     ties, aliases = phrase_rows(text, links["passages"], lean, links, report)
     if args.reimport:
         aliases = keep_addresses(old_order, old_aliases, aliases, [t["id"] for t in ties], report)
+    # A tie the source replaced by other phrases keeps its address: it opens the first of them.
+    for old_id, new_id in links.get("redirects", {}).items():
+        aliases.setdefault(old_id, aliases.get(new_id, new_id))
     overrides = json.loads(args.titles.read_text())["titles"] if args.titles else {}
     named = sorted({row["name"] for t in ties for row in t["lean"]})
     back = {}
@@ -387,8 +404,10 @@ def main() -> None:
         title = overrides.get(source) or links["plain"].get(source, "")
         if not 2 <= words(title) <= 6:
             report["long_title_without_override"].append(source)
-            continue
-        titles[target] = title
+            if not args.partial:
+                continue
+        else:
+            titles[target] = title
         note = links["notes"].get(source, {})
         notes[target] = note.get("text", "").strip() or note.get("summary", "").strip()
     topic_order = [t["id"] for t in links["topics"]]
@@ -403,7 +422,8 @@ def main() -> None:
         "parts": [{"name": "", "lines": [first_line, last_line], "source_commit": args.source_commit,
                    "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""),
                                "family": t.get("family")} for t in links["topics"]],
-                   "titles": titles, "notes": notes}],
+                   "titles": titles, "notes": {k: v for k, v in notes.items() if v},
+                   **({"partial": True} if args.partial else {})}],
         "ties": ties,
         "removed": [],
     }
@@ -425,11 +445,15 @@ def main() -> None:
         tie_of[t["id"]] = t["id"]
         for old in t.get("replaces", []):
             tie_of[old] = t["id"]
+    relabel = json.loads(args.paper_logic.read_text()).get("labels", {}) if args.paper_logic else {}
     results, claims = {}, []
     for c in links.get("claims", []):
         address = slug_of(c["title"])
         if not address or address in results:
             continue
+        # The paper's stated logic may name a result by its role ("Corollary 7.2: how the profile is obtained").
+        if address in relabel:
+            c = dict(c, title=relabel[address])
         results[address] = {"claim": c["id"], "title": c["title"], "section": c.get("section"),
                             "tie": tie_of.get(c.get("passage")), "lean": c.get("lean", [])}
         claims.append((address, c))
@@ -449,8 +473,15 @@ def main() -> None:
         stop = len(text) if stop < 0 else stop
         if stop - begin > 1700:
             begin, stop = at, at + len(tie["from"])
-        first = text[begin:begin + min(80, stop - begin)]
-        last = text[max(begin, stop - 60):stop]
+        # The statement's first and last words, never cutting a formula.
+        cut_a, cut_b = begin + min(80, stop - begin), max(begin, stop - 60)
+        for x, y, _ in _math_spans(text[begin:stop]):
+            if x < cut_a - begin < y:
+                cut_a = begin + y
+            if x < cut_b - begin < y:
+                cut_b = begin + x
+        first = text[begin:min(cut_a, stop)]
+        last = text[max(begin, cut_b):stop]
         rows = []
         for name in c.get("lean", []):
             found = lean.resolve(name)
@@ -464,7 +495,8 @@ def main() -> None:
             elif row["fidelity"] != "same":
                 row["fidelity_note"] = "The source records this verdict without a note."
             rows.append(row)
-        batch[f"{args.paper}.{address}"] = {slot: c["title"], "lean": rows,
+        short = c["title"] if words(c["title"]) <= 6 else c["title"].split(":")[0].strip()
+        batch[f"{args.paper}.{address}"] = {slot: short, "lean": rows,
                                              "statements": [{"paper": slot, "role": "statement", "from": first, "to": last,
                                                              "origin": "ai"}]}
     write(out / "alignment/m1-results.json", dumps({
@@ -569,6 +601,47 @@ def main() -> None:
                     nodes[nid]["evidence_ids"].append(eid)
                 evidence[eid]["subject_ids"] = sorted(set(evidence[eid]["subject_ids"]) | {nid, did})
                 edges.append({"from": nid, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
+    # The paper's own stated logic: edges the authors' text states between results ("If there exists a
+    # certificate, then the conclusions of Theorem 1.1 hold"), sourced to the paper, beside Lean's.
+    if args.paper_logic:
+        logic = json.loads(args.paper_logic.read_text())
+        for extra_node in logic.get("nodes", []):
+            nid = f"{args.paper}.{extra_node['id']}"
+            tie = next((t for t in ties if t["id"] == tie_of.get(extra_node["tie"], extra_node["tie"])), None)
+            node(nid, "claim", extra_node["label"], "unverified", source_id="paper", locator=extra_node["locator"],
+                 statement=tie["from"] if tie else extra_node["label"], citation_ids=[],
+                 boundary="A result the paper states without a number. Its link to the Lean was made with AI and has not "
+                          "been reviewed by the authors.")
+            for target in extra_node.get("lean", []):
+                found = lean.resolve(target)
+                if not found:
+                    raise SystemExit(f"--paper-logic: {target} is not in the Lean index")
+                did = add_decl(*found)
+                eid = f"link.{nid}"
+                evidence.setdefault(eid, {"id": eid, "kind": "semantic_review", "status": "not_run", "command": [],
+                                          "tool": "Links made with AI; carried by scripts/from_proof_reader.py",
+                                          "source_ids": ["proof_reader"], "subject_ids": [nid],
+                                          "details": f"The phrase {extra_node['tie']} names this Lean. Made with AI; not reviewed by the authors."})
+                if eid not in nodes[nid]["evidence_ids"]:
+                    nodes[nid]["evidence_ids"].append(eid)
+                evidence[eid]["subject_ids"] = sorted(set(evidence[eid]["subject_ids"]) | {nid, did})
+                edges.append({"from": nid, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
+        for address, label in logic.get("labels", {}).items():
+            nodes[f"{args.paper}.{address}"]["label"] = label
+        # Each edge carries its own evidence (paper_logic.<from>.<to>): the sentence that states it.
+        for e in logic.get("edges", []):
+            a, b = f"{args.paper}.{e['from']}", f"{args.paper}.{e['to']}"
+            if a not in nodes or b not in nodes:
+                raise SystemExit(f"--paper-logic: {e['from']} or {e['to']} is not a result on the map")
+            eid = f"paper_logic.{e['from']}.{e['to']}"
+            evidence[eid] = {"id": eid, "kind": "semantic_review", "status": "not_run", "command": [],
+                             "tool": "The paper's own statement of how its results join; transcribed with AI",
+                             "source_ids": ["paper"], "subject_ids": sorted({a, b}), "details": e["why"]}
+            same = next((x for x in edges if x["from"] == a and x["to"] == b and x["kind"] == "supports"), None)
+            if same:
+                same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {eid})
+            else:
+                edges.append({"from": a, "to": b, "kind": "supports", "evidence_ids": [eid]})
     on_map = {n[len("lean."):] for n in nodes if n.startswith("lean.")}
     if facts and on_map:
         evidence["lean_dependencies"] = {
@@ -638,6 +711,10 @@ def main() -> None:
             for other in sorted(used):
                 if reaches(other, nid) and order.get(nid, 0) < order.get(other, 0):
                     continue
+                same = next((x for x in edges if x["from"] == nid and x["to"] == other and x["kind"] == "supports"), None)
+                if same:
+                    same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {"lean_dependencies"})
+                    continue
                 edges.append({"from": nid, "to": other, "kind": "supports", "evidence_ids": ["lean_dependencies"]})
                 evidence["lean_dependencies"]["subject_ids"] = sorted(set(evidence["lean_dependencies"]["subject_ids"]) | {nid, other})
     if goal not in nodes:
@@ -697,8 +774,91 @@ def main() -> None:
                          "evidence_class": "context" if not ids else ("open_question" if statuses == {"open"} else "source_argument"),
                          "rationale": f"{sec['heading']}: " + ("states or proves the listed results." if ids else "context with no numbered result.")})
     write(paper_dir / "correspondence.json", dumps(mapping(slot, paper_md, passages)))
+    companion_docs = []
+    for spec in args.companion:
+        cslot, pages_spec = spec.split("=", 1)
+        pages_spec, cslug, ctitle_given = (pages_spec.split("|") + ["", ""])[:3]
+        if cslot == slot or cslot not in SLOTS or cslot in {d["slot"] for d in companion_docs}:
+            raise SystemExit(f"--companion {spec}: the slot must be a free one of {SLOTS}")
+        cpages = [Path(x) for x in pages_spec.split("+")]
+        ctomls = [tomllib.loads((cp / "paper.toml").read_text()) for cp in cpages]
+        clinks = [json.loads((cp / "links.json").read_text()) for cp in cpages]
+        cmd = "\n\n".join((cp / t["paper"].get("markdown", "paper.md")).read_text().rstrip("\n")
+                            for cp, t in zip(cpages, ctomls)) + "\n"
+        cpassages = [x for cl in clinks for x in cl["passages"]]
+        ctext, csections, _ = reading_copy(cmd, cpassages)
+        cdir = out / "papers" / cslot
+        write(cdir / "paper.md", ctext)
+        for cp in cpages:
+            if (cp / "figures").is_dir():
+                for fig in sorted((cp / "figures").iterdir()):
+                    write(cdir / "figures" / fig.name, fig.read_bytes())
+        cplain = {k: v for cl in clinks for k, v in cl.get("plain", {}).items()}
+        cnotes = {k: v for cl in clinks for k, v in cl.get("notes", {}).items()}
+        merged_links = {"plain": cplain, "notes": cnotes}
+        creport = {k: [] for k in report}
+        cties, caliases = phrase_rows(ctext, cpassages, lean, merged_links, creport)
+        aliases.update({k: v for k, v in caliases.items() if k not in aliases})
+        cback = {}
+        for name in cplain:
+            found = lean.resolve(name)
+            if found:
+                cback.setdefault(found[0], name)
+        ctitles, cnote_rows = {}, {}
+        for target in sorted({row["name"] for t in cties for row in t["lean"]}):
+            source = cback.get(target, target)
+            ctitle = overrides.get(source) or cplain.get(source, "") or plain.get(target, "")
+            if 2 <= words(ctitle) <= 6:
+                ctitles[target] = ctitle
+            elif not args.partial:
+                creport["long_title_without_override"].append(source)
+                continue
+            note = cnotes.get(source, {})
+            text_note = (note.get("text", "").strip() or note.get("summary", "").strip()) if isinstance(note, dict) else ""
+            if text_note:
+                cnote_rows[target] = text_note
+            if 2 <= words(ctitle) <= 6:
+                plain.setdefault(target, ctitle)
+        ctopics = clinks[0].get("topics", links.get("topics", []))
+        write(out / f"alignment/phrases-{cslot}.json", dumps({
+            "schema": "phrase-ties/1", "paper": cslot,
+            "meaning": phrases["meaning"].replace(f"papers/{page.name}", "papers/" + "+".join(cp.name for cp in cpages)),
+            "families": clinks[0].get("families", links.get("families", [])),
+            "topic_order": [t["id"] for t in ctopics],
+            "parts": [{"name": "", "lines": [1, ctext.count("\n") + 1], "source_commit": args.source_commit,
+                       "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""),
+                                   "family": t.get("family")} for t in ctopics],
+                       "titles": ctitles, "notes": cnote_rows, **({"partial": True} if args.partial else {})}],
+            "ties": cties, "removed": []}))
+        write(out / f"alignment/references-{cslot}.json", dumps(references(ctext, cslot)))
+        cbytes = ctext.encode("utf-8")
+        cps, cursor = [], 0
+        for sec in csections:
+            marker, end = f"<!-- passage:{sec['anchor']} -->", f"<!-- /passage:{sec['anchor']} -->"
+            start = ctext.index(marker, cursor) + len(marker)
+            stop = ctext.index(end, start)
+            cursor = stop
+            # A companion is an account of the whole paper: its first section carries the paper's goal.
+            ids = [goal] if not cps else []
+            cps.append({"anchor": sec["anchor"], "text_sha256": sha(ctext[start:stop].encode("utf-8")), "claim_ids": ids,
+                        "citation_ids": sorted(required_citation_ids(graph, ids)) if ids else [], "assumption_ids": [],
+                        "evidence_class": "context",
+                        "rationale": f"{sec['heading']}: a companion account of the paper; its links to the Lean are its phrase ties."})
+        write(cdir / "correspondence.json", dumps(mapping(cslot, cbytes, cps)))
+        t0 = ctomls[0]["paper"]
+        companion_docs.append({"id": "+".join(cp.name for cp in cpages), "slot": cslot,
+                               "slug": cslug or (cpages[0].name.removeprefix(f"{page.name.split('-paper')[0]}-") if len(cpages) == 1 else "accounts"),
+                               "title": ctitle_given or (t0["title"] if len(cpages) == 1 else " · ".join(t["paper"]["short_title"] for t in ctomls)),
+                               "noun": t0.get("noun", "account")})
+        summary_c = {k: (len(v) if isinstance(v, list) else v) for k, v in creport.items()}
+        report.setdefault("companions", {})["+".join(cp.name for cp in cpages)] = {**summary_c, "ties": len(cties), "titled": len(ctitles), "noted": len(cnote_rows)}
+    if args.companion:
+        write(out / "alignment/names.json", dumps({"schema": 1, "names": dict(sorted(plain.items()))}))
+        write(out / "alignment/aliases.json", dumps({"schema": 1, "passages": aliases,
+                                                     "claims": {c["id"]: a for a, c in claims}}))
+    used = {slot, *(d["slot"] for d in companion_docs)}
     for s in SLOTS:
-        if s != slot:
+        if s not in used:
             write(out / "papers" / s / "absent.md", EMPTY)
             write(out / "papers" / s / "absent.json", dumps(mapping(s, EMPTY.encode("utf-8"), [])))
 
@@ -765,7 +925,7 @@ def main() -> None:
     write(out / "generated/unnamed.json", dumps({"schema": 1, "names": unnamed}))
 
     # ---- the instance
-    credit = toml.get("credit", {}).get("text", "")
+    credit = args.credit or toml.get("credit", {}).get("text", "")
     instance = {
         "schema": "library-instance/1", "id": args.paper, "title": title,
         "short_title": toml["paper"].get("short_title", title), "authors": authors,
@@ -775,6 +935,7 @@ def main() -> None:
         # header and About carry the full credit line (credit_lines).
         "companion_credit": (f"Paper and Lean by {', '.join(authors[:-1]) + ' and ' + authors[-1] if len(authors) > 1 else ''.join(authors)}, "
                              f"from their repository {upstream_repo.replace('https://github.com/', '')} at {upstream_rev[:7]}."),
+        **({"licence": toml["paper"]["licence"]} if toml["paper"].get("licence") else {}),
         "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
         "review": ("The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made "
                    "with AI and have not been reviewed by the authors. No mathematician has reviewed them."),
@@ -783,7 +944,7 @@ def main() -> None:
                    "upstream": {"repository": upstream_repo, "commit": upstream_rev, "paper": toml["paper"].get("url")},
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
-                       "main": True, **({"pdf": pdf} if pdf else {})}] + ([guide] if guide else []),
+                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + ([guide] if guide else []),
         **({"comparator": comparator} if comparator else {}),
         **({"comparisons_hidden": True, "comparisons_held_text": held} if held else {}),
         "families": links.get("families", []),
