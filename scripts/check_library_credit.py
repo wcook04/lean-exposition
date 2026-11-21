@@ -24,6 +24,7 @@ ap.add_argument("base")
 ap.add_argument("--credit-file", type=Path, required=True)
 ap.add_argument("--statement", required=True, help="the bold label of a numbered statement, e.g. \"Theorem 1.1.\"")
 ap.add_argument("--shots", type=Path, required=True)
+ap.add_argument("--section", help="the section that states --statement, opened before the click (e.g. 1.1)")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
 a = ap.parse_args()
@@ -72,10 +73,12 @@ with sync_playwright() as pw:
         with urllib.request.urlopen(url.split("#")[0]) as r:
             check(f"{tag} open pdf", target == "_blank" and r.status == 200 and r.headers.get("Content-Type", "").startswith("application/pdf"),
                   f"{href} target={target} {r.status} {r.headers.get('Content-Type')}")
-        # A statement click opens its card, comparison and Lean.
-        page.goto(base, wait_until="domcontentloaded")
+        # A statement click opens its card, comparison and Lean. The reader renders the text near the
+        # reader, so the check opens the paper at the statement's section first.
+        page.goto(base + (f"#{a.section}" if a.section else ""), wait_until="domcontentloaded")
         page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
         el = page.locator(".paper .tie", has_text=a.statement).first
+        el.wait_for(timeout=30000)
         el.scroll_into_view_if_needed()
         el.click()
         page.wait_for_selector(".phrase-card", timeout=60000)
