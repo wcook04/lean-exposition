@@ -1,4 +1,46 @@
 {
+ "families": [
+  {
+   "id": "family-model",
+   "name": "The SK model and Parisi functional · Full support and variational conditions · Excluding gaps in the support",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "support",
+    "gap",
+    "model"
+   ]
+  },
+  {
+   "id": "family-shape",
+   "name": "Heat equations and shape inequalities · The rational identity and coercive inequality",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "certificate",
+    "shape"
+   ]
+  },
+  {
+   "id": "family-energy",
+   "name": "Ground-state energy and Gaussian approximation · QAOA and optimisation consequences",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "energy",
+    "qaoa"
+   ]
+  },
+  {
+   "id": "family-density",
+   "name": "Smoothness and positive density",
+   "named": false,
+   "part": 0,
+   "topics": [
+    "density"
+   ]
+  }
+ ],
  "layer": "phrases",
  "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading.",
  "parts": [
@@ -1380,7 +1422,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -1419,7 +1461,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1458,7 +1500,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1535,7 +1577,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1574,7 +1616,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1613,7 +1655,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1656,7 +1698,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1695,7 +1737,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1734,7 +1776,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1778,7 +1820,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -1877,7 +1919,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1916,7 +1958,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -1960,7 +2002,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2003,7 +2045,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2047,7 +2089,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2086,7 +2128,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2125,7 +2167,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2164,7 +2206,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2221,7 +2263,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2286,7 +2328,7 @@
      "relation": "part"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2325,7 +2367,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -2369,7 +2411,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -2430,7 +2472,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -2474,7 +2516,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -2517,7 +2559,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -2624,7 +2666,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -2710,7 +2752,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -2753,7 +2795,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -2797,7 +2839,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -2841,7 +2883,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -2884,7 +2926,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -2927,7 +2969,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -2970,7 +3012,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3013,7 +3055,7 @@
      "relation": "states"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3056,7 +3098,7 @@
      "relation": "states"
     }
    ],
-   "tone": 1,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3121,7 +3163,7 @@
      "relation": "part"
     }
    ],
-   "tone": 0,
+   "tone": 2,
    "topic": "model"
   },
   {
@@ -3186,7 +3228,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3229,7 +3271,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3273,7 +3315,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3313,7 +3355,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3373,7 +3415,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3413,7 +3455,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3457,7 +3499,7 @@
      "relation": "part"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3501,7 +3543,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3544,7 +3586,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3609,7 +3651,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3652,7 +3694,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3696,7 +3738,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -3782,7 +3824,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -3868,7 +3910,7 @@
      "relation": "part"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -3933,7 +3975,7 @@
      "relation": "part"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -3977,7 +4019,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4021,7 +4063,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4065,7 +4107,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4108,7 +4150,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4151,7 +4193,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4194,7 +4236,7 @@
      "relation": "states"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4258,7 +4300,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4302,7 +4344,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4346,7 +4388,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4390,7 +4432,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 5,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4434,7 +4476,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -4478,7 +4520,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -4521,7 +4563,7 @@
      "relation": "states"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -4586,7 +4628,7 @@
      "relation": "part"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -4630,7 +4672,7 @@
      "relation": "states"
     }
    ],
-   "tone": 4,
+   "tone": 1,
    "topic": "gap"
   },
   {
@@ -4669,7 +4711,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -4708,7 +4750,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -4747,7 +4789,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -4786,7 +4828,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -4830,7 +4872,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -4895,7 +4937,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5002,7 +5044,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5045,7 +5087,7 @@
      "relation": "states"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -5084,7 +5126,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5128,7 +5170,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5189,7 +5231,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5228,7 +5270,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5314,7 +5356,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5438,7 +5480,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5482,7 +5524,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5525,7 +5567,7 @@
      "relation": "states"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5590,7 +5632,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5655,7 +5697,7 @@
      "relation": "part"
     }
    ],
-   "tone": 6,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5699,7 +5741,7 @@
      "relation": "part"
     }
    ],
-   "tone": 7,
+   "tone": 4,
    "topic": "shape"
   },
   {
@@ -5811,7 +5853,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -5855,7 +5897,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -5916,7 +5958,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -5956,7 +5998,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6000,7 +6042,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6086,7 +6128,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6130,7 +6172,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6187,7 +6229,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6247,7 +6289,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6286,7 +6328,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6329,7 +6371,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6368,7 +6410,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6411,7 +6453,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6455,7 +6497,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6499,7 +6541,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6543,7 +6585,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6629,7 +6671,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6711,7 +6753,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6776,7 +6818,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6819,7 +6861,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6863,7 +6905,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6907,7 +6949,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -6972,7 +7014,7 @@
      "relation": "part"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -7058,7 +7100,7 @@
      "relation": "part"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -7101,7 +7143,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7165,7 +7207,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7208,7 +7250,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7251,7 +7293,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7294,7 +7336,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7338,7 +7380,7 @@
      "relation": "part"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7382,7 +7424,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7425,7 +7467,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7468,7 +7510,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7511,7 +7553,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7554,7 +7596,7 @@
      "relation": "states"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7598,7 +7640,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7637,7 +7679,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7680,7 +7722,7 @@
      "relation": "states"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7723,7 +7765,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7766,7 +7808,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7810,7 +7852,7 @@
      "relation": "part"
     }
    ],
-   "tone": 10,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7853,7 +7895,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 11,
+   "tone": 7,
    "topic": "density"
   },
   {
@@ -7896,7 +7938,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -7939,7 +7981,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -7983,7 +8025,7 @@
      "relation": "part"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8026,7 +8068,7 @@
      "relation": "states"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8085,7 +8127,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8144,7 +8186,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8183,7 +8225,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8227,7 +8269,7 @@
      "relation": "states"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8270,7 +8312,7 @@
      "relation": "states"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8313,7 +8355,7 @@
      "relation": "states"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8352,7 +8394,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8396,7 +8438,7 @@
      "relation": "states"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8439,7 +8481,7 @@
      "relation": "states"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8483,7 +8525,7 @@
      "relation": "part"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8527,7 +8569,7 @@
      "relation": "part"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -8566,7 +8608,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8605,7 +8647,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8644,7 +8686,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8718,7 +8760,7 @@
      "relation": "part"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8757,7 +8799,7 @@
      "relation": "defines"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8801,7 +8843,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8844,7 +8886,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8904,7 +8946,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8948,7 +8990,7 @@
      "relation": "part"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -8992,7 +9034,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -9036,7 +9078,7 @@
      "relation": "states"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -9079,7 +9121,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -9122,7 +9164,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -9165,7 +9207,7 @@
      "relation": "states"
     }
    ],
-   "tone": 15,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -9208,7 +9250,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 3,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -9251,7 +9293,7 @@
      "relation": "states"
     }
    ],
-   "tone": 2,
+   "tone": 0,
    "topic": "support"
   },
   {
@@ -9294,7 +9336,7 @@
      "relation": "states"
     }
    ],
-   "tone": 8,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -9337,7 +9379,7 @@
      "relation": "proof"
     }
    ],
-   "tone": 9,
+   "tone": 3,
    "topic": "certificate"
   },
   {
@@ -9380,7 +9422,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -9423,7 +9465,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 12,
+   "tone": 5,
    "topic": "energy"
   },
   {
@@ -9466,7 +9508,7 @@
      "relation": "contains"
     }
    ],
-   "tone": 14,
+   "tone": 6,
    "topic": "qaoa"
   },
   {
@@ -9505,66 +9547,90 @@
      "relation": "defines"
     }
    ],
-   "tone": 13,
+   "tone": 5,
    "topic": "energy"
   }
  ],
  "topics": [
   {
-   "colour": 0,
-   "description": "The spin energy, cumulative order parameter, value function, and auxiliary diffusion define the problem.",
-   "id": "model",
-   "name": "The SK model and Parisi functional",
-   "part": 0
-  },
-  {
-   "colour": 1,
+   "dark": "oklch(0.590 0.124 359.7)",
    "description": "Minimality relates the consistency function to the support of the order-parameter measure.",
+   "family": "family-model",
    "id": "support",
+   "light": "oklch(0.370 0.084 359.7)",
    "name": "Full support and variational conditions",
-   "part": 0
+   "part": 0,
+   "tone": 0
   },
   {
-   "colour": 2,
+   "dark": "oklch(0.675 0.111 10.5)",
    "description": "Curvature and endpoint conditions rule out intervals with no mass.",
+   "family": "family-model",
    "id": "gap",
+   "light": "oklch(0.455 0.075 10.5)",
    "name": "Excluding gaps in the support",
-   "part": 0
+   "part": 0,
+   "tone": 1
   },
   {
-   "colour": 3,
-   "description": "The forward and backward equations supply the signs needed by the integral estimate.",
-   "id": "shape",
-   "name": "Heat equations and shape inequalities",
-   "part": 0
+   "dark": "oklch(0.760 0.098 21.3)",
+   "description": "The spin energy, cumulative order parameter, value function, and auxiliary diffusion define the problem.",
+   "family": "family-model",
+   "id": "model",
+   "light": "oklch(0.540 0.066 21.3)",
+   "name": "The SK model and Parisi functional",
+   "part": 0,
+   "tone": 2
   },
   {
-   "colour": 4,
+   "dark": "oklch(0.608 0.118 101.6)",
    "description": "An exact polynomial identity and a vanishing integral leave a positive lower bound.",
+   "family": "family-shape",
    "id": "certificate",
+   "light": "oklch(0.388 0.079 101.6)",
    "name": "The rational identity and coercive inequality",
-   "part": 0
+   "part": 0,
+   "tone": 3
   },
   {
-   "colour": 5,
-   "description": "A bound at a fixed time combines with the minimiser identities to control the derivative of the order parameter.",
-   "id": "density",
-   "name": "Smoothness and positive density",
-   "part": 0
+   "dark": "oklch(0.693 0.104 112.4)",
+   "description": "The forward and backward equations supply the signs needed by the integral estimate.",
+   "family": "family-shape",
+   "id": "shape",
+   "light": "oklch(0.473 0.070 112.4)",
+   "name": "Heat equations and shape inequalities",
+   "part": 0,
+   "tone": 4
   },
   {
-   "colour": 6,
+   "dark": "oklch(0.683 0.118 190.6)",
    "description": "Martingale moments express the energy and allow approximation by finitely many Gaussian variables.",
+   "family": "family-energy",
    "id": "energy",
+   "light": "oklch(0.463 0.080 190.6)",
    "name": "Ground-state energy and Gaussian approximation",
-   "part": 0
+   "part": 0,
+   "tone": 5
   },
   {
-   "colour": 7,
+   "dark": "oklch(0.768 0.104 201.4)",
    "description": "Full support supplies inputs to classical optimisation and the separate construction of near-optimal quantum circuits.",
+   "family": "family-energy",
    "id": "qaoa",
+   "light": "oklch(0.547 0.071 201.4)",
    "name": "QAOA and optimisation consequences",
-   "part": 0
+   "part": 0,
+   "tone": 6
+  },
+  {
+   "dark": "oklch(0.775 0.111 277.0)",
+   "description": "A bound at a fixed time combines with the minimiser identities to control the derivative of the order parameter.",
+   "family": "family-density",
+   "id": "density",
+   "light": "oklch(0.555 0.075 277.0)",
+   "name": "Smoothness and positive density",
+   "part": 0,
+   "tone": 7
   }
  ]
 }

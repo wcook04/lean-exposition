@@ -1,0 +1,563 @@
+{
+ "05f42a990c6bad32": {
+  "used_by": [
+   "examples/erdos257/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "family-setup",
+    20.5,
+    [
+     "setup",
+     "weighted"
+    ]
+   ],
+   [
+    "family-cover",
+    85.5,
+    [
+     "comparison",
+     "cover"
+    ]
+   ],
+   [
+    "family-membership",
+    147,
+    [
+     "membership",
+     "approximation"
+    ]
+   ],
+   [
+    "family-boundaries",
+    214,
+    [
+     "boundaries"
+    ]
+   ],
+   [
+    "family-finite-period",
+    262,
+    [
+     "finite-period"
+    ]
+   ],
+   [
+    "family-mixed",
+    327,
+    [
+     "mixed"
+    ]
+   ]
+  ],
+  "colours": {
+   "setup": [
+    "oklch(0.558 0.201 16.9)",
+    "oklch(0.703 0.190 16.9)"
+   ],
+   "weighted": [
+    "oklch(0.643 0.179 24.1)",
+    "oklch(0.788 0.122 24.1)"
+   ],
+   "comparison": [
+    "oklch(0.553 0.114 81.9)",
+    "oklch(0.698 0.143 81.9)"
+   ],
+   "cover": [
+    "oklch(0.638 0.130 89.1)",
+    "oklch(0.783 0.160 89.1)"
+   ],
+   "membership": [
+    "oklch(0.533 0.176 143.4)",
+    "oklch(0.678 0.201 143.4)"
+   ],
+   "approximation": [
+    "oklch(0.617 0.167 150.6)",
+    "oklch(0.763 0.179 150.6)"
+   ],
+   "boundaries": [
+    "oklch(0.625 0.109 214.0)",
+    "oklch(0.770 0.135 214.0)"
+   ],
+   "finite-period": [
+    "oklch(0.485 0.190 262.0)",
+    "oklch(0.630 0.190 262.0)"
+   ],
+   "mixed": [
+    "oklch(0.475 0.190 327.0)",
+    "oklch(0.620 0.190 327.0)"
+   ]
+  }
+ },
+ "0740139f71c4ab95": {
+  "used_by": [
+   "examples/qaoa-sk/alignment/colours-expository.json#0"
+  ],
+  "families": [
+   [
+    "family-spins",
+    21,
+    [
+     "spins"
+    ]
+   ],
+   [
+    "family-order-parameter",
+    104,
+    [
+     "order-parameter"
+    ]
+   ],
+   [
+    "family-full-support",
+    159,
+    [
+     "spin-consequences",
+     "curvature",
+     "full-support"
+    ]
+   ],
+   [
+    "family-control-value",
+    240.5,
+    [
+     "control-value",
+     "response-process"
+    ]
+   ],
+   [
+    "family-first-variation",
+    321,
+    [
+     "first-variation",
+     "contact"
+    ]
+   ]
+  ],
+  "colours": {
+   "spins": [
+    "oklch(0.515 0.190 21.0)",
+    "oklch(0.630 0.190 21.0)"
+   ],
+   "order-parameter": [
+    "oklch(0.630 0.133 104.0)",
+    "oklch(0.745 0.157 104.0)"
+   ],
+   "spin-consequences": [
+    "oklch(0.450 0.122 150.4)",
+    "oklch(0.565 0.154 150.4)"
+   ],
+   "curvature": [
+    "oklch(0.535 0.123 159.0)",
+    "oklch(0.650 0.149 159.0)"
+   ],
+   "full-support": [
+    "oklch(0.620 0.126 167.6)",
+    "oklch(0.735 0.149 167.6)"
+   ],
+   "control-value": [
+    "oklch(0.548 0.118 236.2)",
+    "oklch(0.663 0.143 236.2)"
+   ],
+   "response-process": [
+    "oklch(0.633 0.158 244.8)",
+    "oklch(0.747 0.139 244.8)"
+   ],
+   "first-variation": [
+    "oklch(0.503 0.201 316.7)",
+    "oklch(0.618 0.201 316.7)"
+   ],
+   "contact": [
+    "oklch(0.588 0.179 325.3)",
+    "oklch(0.703 0.179 325.3)"
+   ]
+  }
+ },
+ "0d805052b50983fb": {
+  "used_by": [
+   "examples/erdos257/alignment/colours-expository.json#0"
+  ],
+  "families": [
+   [
+    "family-series",
+    58,
+    [
+     "series",
+     "rational-gap",
+     "scope"
+    ]
+   ],
+   [
+    "family-remainders",
+    158,
+    [
+     "combining-estimates",
+     "remainders",
+     "cycle-averages"
+    ]
+   ],
+   [
+    "family-incomplete-cycles",
+    257,
+    [
+     "incomplete-cycles"
+    ]
+   ],
+   [
+    "family-doubling",
+    339,
+    [
+     "doubling"
+    ]
+   ]
+  ],
+  "colours": {
+   "series": [
+    "oklch(0.475 0.131 47.2)",
+    "oklch(0.590 0.162 47.2)"
+   ],
+   "rational-gap": [
+    "oklch(0.560 0.134 58.0)",
+    "oklch(0.675 0.161 58.0)"
+   ],
+   "scope": [
+    "oklch(0.645 0.140 68.8)",
+    "oklch(0.760 0.165 68.8)"
+   ],
+   "combining-estimates": [
+    "oklch(0.450 0.133 147.2)",
+    "oklch(0.565 0.167 147.2)"
+   ],
+   "remainders": [
+    "oklch(0.535 0.125 158.0)",
+    "oklch(0.650 0.152 158.0)"
+   ],
+   "cycle-averages": [
+    "oklch(0.620 0.124 168.8)",
+    "oklch(0.735 0.147 168.8)"
+   ],
+   "incomplete-cycles": [
+    "oklch(0.585 0.190 257.0)",
+    "oklch(0.700 0.158 257.0)"
+   ],
+   "doubling": [
+    "oklch(0.545 0.190 339.0)",
+    "oklch(0.660 0.190 339.0)"
+   ]
+  }
+ },
+ "7ed4708c74e4b821": {
+  "used_by": [
+   "examples/erdos257/alignment/colours-long.json#1"
+  ],
+  "families": [
+   [
+    "family-p2-series-greedy",
+    25,
+    [
+     "p2-series-greedy"
+    ]
+   ],
+   [
+    "family-p2-support-irrationality",
+    79.5,
+    [
+     "p2-support-irrationality"
+    ]
+   ],
+   [
+    "family-p2-finite-approximations",
+    149.5,
+    [
+     "p2-finite-approximations"
+    ]
+   ],
+   [
+    "family-p2-open-inputs",
+    214.5,
+    [
+     "p2-open-inputs"
+    ]
+   ],
+   [
+    "family-p2-obstructions",
+    261,
+    [
+     "p2-arithmetic-cost",
+     "p2-obstructions"
+    ]
+   ],
+   [
+    "family-p2-integer-quotients",
+    334.5,
+    [
+     "p2-dyadic-margins",
+     "p2-integer-quotients",
+     "p2-conditional-membership"
+    ]
+   ]
+  ],
+  "colours": {
+   "p2-series-greedy": [
+    "oklch(0.660 0.190 25.0)",
+    "oklch(0.770 0.135 25.0)"
+   ],
+   "p2-support-irrationality": [
+    "oklch(0.640 0.132 79.5)",
+    "oklch(0.750 0.155 79.5)"
+   ],
+   "p2-finite-approximations": [
+    "oklch(0.615 0.171 149.5)",
+    "oklch(0.725 0.190 149.5)"
+   ],
+   "p2-open-inputs": [
+    "oklch(0.625 0.110 214.5)",
+    "oklch(0.735 0.129 214.5)"
+   ],
+   "p2-arithmetic-cost": [
+    "oklch(0.518 0.187 257.4)",
+    "oklch(0.628 0.201 257.4)"
+   ],
+   "p2-obstructions": [
+    "oklch(0.603 0.179 264.6)",
+    "oklch(0.713 0.148 264.6)"
+   ],
+   "p2-dyadic-margins": [
+    "oklch(0.485 0.213 327.3)",
+    "oklch(0.595 0.213 327.3)"
+   ],
+   "p2-integer-quotients": [
+    "oklch(0.570 0.190 334.5)",
+    "oklch(0.680 0.190 334.5)"
+   ],
+   "p2-conditional-membership": [
+    "oklch(0.655 0.167 341.7)",
+    "oklch(0.765 0.167 341.7)"
+   ]
+  }
+ },
+ "f2cafbbf690e654d": {
+  "used_by": [
+   "examples/qaoa-sk/alignment/colours-long.json#0"
+  ],
+  "families": [
+   [
+    "family-model",
+    6,
+    [
+     "curvature",
+     "contact",
+     "model"
+    ]
+   ],
+   [
+    "family-support",
+    150,
+    [
+     "support",
+     "consequences",
+     "scope"
+    ]
+   ],
+   [
+    "family-scalar",
+    264,
+    [
+     "gaussian",
+     "scalar"
+    ]
+   ]
+  ],
+  "colours": {
+   "curvature": [
+    "oklch(0.425 0.176 351.6)",
+    "oklch(0.560 0.213 351.6)"
+   ],
+   "contact": [
+    "oklch(0.510 0.190 6.0)",
+    "oklch(0.645 0.190 6.0)"
+   ],
+   "model": [
+    "oklch(0.595 0.167 20.4)",
+    "oklch(0.730 0.166 20.4)"
+   ],
+   "support": [
+    "oklch(0.450 0.133 135.6)",
+    "oklch(0.585 0.172 135.6)"
+   ],
+   "consequences": [
+    "oklch(0.535 0.147 150.0)",
+    "oklch(0.670 0.184 150.0)"
+   ],
+   "scope": [
+    "oklch(0.620 0.131 164.4)",
+    "oklch(0.755 0.160 164.4)"
+   ],
+   "gaussian": [
+    "oklch(0.498 0.175 256.8)",
+    "oklch(0.633 0.199 256.8)"
+   ],
+   "scalar": [
+    "oklch(0.583 0.179 271.2)",
+    "oklch(0.718 0.146 271.2)"
+   ]
+  }
+ },
+ "f3c5d51eefaaf881": {
+  "used_by": [
+   "examples/qaoa-sk/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "family-model",
+    55,
+    [
+     "support",
+     "gap",
+     "model"
+    ]
+   ],
+   [
+    "family-shape",
+    153.5,
+    [
+     "certificate",
+     "shape"
+    ]
+   ],
+   [
+    "family-energy",
+    248,
+    [
+     "energy",
+     "qaoa"
+    ]
+   ],
+   [
+    "family-density",
+    344,
+    [
+     "density"
+    ]
+   ]
+  ],
+  "colours": {
+   "support": [
+    "oklch(0.475 0.137 44.2)",
+    "oklch(0.545 0.158 44.2)"
+   ],
+   "gap": [
+    "oklch(0.560 0.138 55.0)",
+    "oklch(0.630 0.156 55.0)"
+   ],
+   "model": [
+    "oklch(0.645 0.143 65.8)",
+    "oklch(0.715 0.159 65.8)"
+   ],
+   "certificate": [
+    "oklch(0.528 0.152 148.1)",
+    "oklch(0.598 0.172 148.1)"
+   ],
+   "shape": [
+    "oklch(0.612 0.141 158.9)",
+    "oklch(0.683 0.157 158.9)"
+   ],
+   "energy": [
+    "oklch(0.548 0.131 242.6)",
+    "oklch(0.618 0.148 242.6)"
+   ],
+   "qaoa": [
+    "oklch(0.633 0.179 253.4)",
+    "oklch(0.703 0.159 253.4)"
+   ],
+   "density": [
+    "oklch(0.550 0.190 344.0)",
+    "oklch(0.620 0.190 344.0)"
+   ]
+  }
+ },
+ "f6987931a7ccfe84": {
+  "used_by": [
+   "examples/erdos257/alignment/colours-long.json#0"
+  ],
+  "families": [
+   [
+    "family-p1-weighted",
+    15,
+    [
+     "p1-weighted",
+     "p1-average"
+    ]
+   ],
+   [
+    "family-p1-cover",
+    103,
+    [
+     "p1-cover",
+     "p1-mixed"
+    ]
+   ],
+   [
+    "family-p1-witness",
+    159,
+    [
+     "p1-witness"
+    ]
+   ],
+   [
+    "family-p1-scope",
+    245.5,
+    [
+     "p1-scope",
+     "p1-inputs"
+    ]
+   ],
+   [
+    "family-p1-geometry",
+    310.5,
+    [
+     "p1-limits",
+     "p1-geometry"
+    ]
+   ]
+  ],
+  "colours": {
+   "p1-weighted": [
+    "oklch(0.513 0.201 10.7)",
+    "oklch(0.583 0.201 10.7)"
+   ],
+   "p1-average": [
+    "oklch(0.598 0.179 19.3)",
+    "oklch(0.668 0.179 19.3)"
+   ],
+   "p1-cover": [
+    "oklch(0.548 0.113 98.7)",
+    "oklch(0.618 0.128 98.7)"
+   ],
+   "p1-mixed": [
+    "oklch(0.633 0.136 107.3)",
+    "oklch(0.703 0.151 107.3)"
+   ],
+   "p1-witness": [
+    "oklch(0.620 0.142 159.0)",
+    "oklch(0.690 0.158 159.0)"
+   ],
+   "p1-scope": [
+    "oklch(0.548 0.128 241.2)",
+    "oklch(0.618 0.144 241.2)"
+   ],
+   "p1-inputs": [
+    "oklch(0.633 0.178 249.8)",
+    "oklch(0.703 0.161 249.8)"
+   ],
+   "p1-limits": [
+    "oklch(0.508 0.201 306.2)",
+    "oklch(0.578 0.201 306.2)"
+   ],
+   "p1-geometry": [
+    "oklch(0.593 0.179 314.8)",
+    "oklch(0.663 0.179 314.8)"
+   ]
+  }
+ }
+}

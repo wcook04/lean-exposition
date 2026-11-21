@@ -219,8 +219,8 @@ interface AuthoredRecord {
   statements?: { paper: string; role: string }[];
 }
 
-/** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
-const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*|phrases-.*)\.json$/;
+/** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties, reference tables and topic colours. */
+const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*|phrases-.*|colours-.*)\.json$/;
 
 export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
   const out: ReturnType<typeof recordIndex> = {};
@@ -232,7 +232,7 @@ export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; le
   for (const name of names) {
     if (!name.endsWith(".json") || NOT_A_BATCH.test(name)) continue;
     const { records } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { records: Record<string, AuthoredRecord> };
-    for (const [id, row] of Object.entries(records)) {
+    for (const [id, row] of Object.entries(records ?? {})) {
       const levels: Record<string, string> = {};
       for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
       const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];

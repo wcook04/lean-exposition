@@ -146,7 +146,7 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
 export function PhraseCard({ row, topic, note, quote, merged }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[] }) {
   const shown = assessmentsOf(row, merged);
   return (
-    <section className="phrase-card" data-tone={topic ? topic.colour * 2 : undefined} aria-label="About this phrase and its Lean">
+    <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
       {topic && (
         <p className="phrase-card__topic" title={topic.description || undefined}>
           <span className="phrase-card__swatch" aria-hidden="true" />

@@ -67,7 +67,7 @@ describe("phrase notes", () => {
   it("gives a phrase with no step on the map a record of its own, and says its topic", () => {
     const index: TieIndex = {
       layer: "phrases",
-      topics: [{ id: "t", name: "Topic one", description: "", part: 0, colour: 0 }],
+      topics: [{ id: "t", name: "Topic one", description: "", part: 0, tone: 0 }],
       parts: [{ name: "", start_byte: 0, end_byte: 100 }, { name: "Part two", start_byte: 100, end_byte: 200 }],
       segments: [[0, 5, [0]]],
       ties: [{ record: null as unknown as string, phrase: "p", topic: "t", tone: 0, role: "statement", lean: true, name: "A.b", module: "A", lines: [1, 1], anchor: null, at: "b0-5",

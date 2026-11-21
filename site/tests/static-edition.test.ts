@@ -263,7 +263,7 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
         const file = readFileSync(resolve(out, `ties/${stage}.json`));
         if (ties.layer === "phrases") {
           expect(gzipSync(file).length).toBeLessThan(400 * ties.ties.length + 8_000);
-          expect(Object.keys(ties).sort().filter((key) => key !== "canonical")).toEqual(["layer", "meaning", "parts", "passages", "segments", "ties", "topics"]);
+          expect(Object.keys(ties).sort().filter((key) => key !== "canonical" && key !== "families")).toEqual(["layer", "meaning", "parts", "passages", "segments", "ties", "topics"]);
         } else {
           expect(file.length).toBeLessThan(limit);
           expect(Object.keys(ties).sort().filter((key) => key !== "canonical")).toEqual(["meaning", "passages", "segments", "ties"]);
