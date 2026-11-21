@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { formulaExtent, groupRelationRuns, joinBracketedPieces, markWideMaths } from "../src/reader/page/PaperBody";
+import { renderTex } from "../src/reader/math";
+import { formulaExtent, joinBracketedPieces, markWideMaths, scaleToFit } from "../src/reader/page/PaperBody";
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -33,7 +34,7 @@ describe("display fitting notifications", () => {
     let width = 300;
     Object.defineProperty(box, "clientWidth", { get: () => width });
     Object.defineProperty(box, "scrollWidth", { get: () => width });
-    Object.defineProperty(math, "scrollWidth", { get: () => 360 });
+    Object.defineProperty(math, "scrollWidth", { get: () => 320 });
     const stop = markWideMaths(root);
     const changes = new MutationObserver(() => {});
     changes.observe(root, { attributes: true, subtree: true, childList: true });
@@ -53,7 +54,7 @@ describe("display fitting notifications", () => {
     notify();
     expect(changes.takeRecords().length).toBeGreaterThan(0);
     expect(box.dataset.fit).toBeUndefined();
-    expect(box.style.fontSize).toBe("");
+    expect(math.style.fontSize).toBe("");
     changes.disconnect();
     stop();
   });
@@ -105,7 +106,7 @@ describe("display fitting notifications", () => {
     const root = document.createElement("div");
     root.innerHTML = '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html"><span class="katex-base">x = y</span></span></span></span></div>';
     const box = root.firstElementChild as HTMLElement;
-    let formulaWidth = 360;
+    let formulaWidth = 320;
     Object.defineProperty(box, "clientWidth", { get: () => 300 });
     Object.defineProperty(box, "scrollWidth", { get: () => 300 });
     Object.defineProperty(box.querySelector(".katex"), "scrollWidth", { get: () => formulaWidth });
@@ -115,7 +116,8 @@ describe("display fitting notifications", () => {
       formulaWidth = 600;
       ready();
       await Promise.resolve();
-      expect(box.dataset.fit).toBe("wrap");
+      // No broken form (the formula has no TeX to break): it shrinks to fit and offers Expand.
+      expect(box.dataset.fit).toBe("squeezed");
     } finally {
       stop();
       if (previous) Object.defineProperty(document, "fonts", previous);
@@ -164,51 +166,6 @@ describe("a breaking display", () => {
   });
 });
 
-// KaTeX's pieces for "P(…) ≥ 1 − Ke^{−n/K},  n ≥ 1.": one after each relation sign and each operator.
-function bound(): HTMLElement {
-  const math = document.createElement("span");
-  math.className = "katex";
-  const piece = (text: string, last: "mrel" | "mbin" | "mord") =>
-    `<span class="katex-base"><span class="katex-strut"></span><span class="mord">${text}</span><span class="${last}">${last === "mord" ? "." : last === "mrel" ? "≥" : "−"}</span>${last === "mord" ? "" : '<span class="mspace"></span>'}</span>`;
-  math.innerHTML = `<span class="katex-html">${piece("P(…)", "mrel")}${piece("1", "mbin")}${piece("Ke, n", "mrel")}${piece("1", "mord")}</span>`;
-  return math;
-}
-
-describe("a breaking display's runs", () => {
-  const runs = (math: HTMLElement) =>
-    Array.from(math.querySelector(".katex-html")!.children).map((c) => (c.classList.contains("math-seg") ? Array.from(c.children).map((p) => p.textContent) : [c.textContent]));
-
-  it("breaks only after a relation sign: an operator's pieces stay with what follows them", () => {
-    const math = bound();
-    const before = math.textContent;
-    groupRelationRuns(math, 0);
-    expect(runs(math)).toEqual([["P(…)≥"], ["1−", "Ke, n≥"], ["1."]]);
-    expect(math.textContent).toBe(before);
-  });
-
-  it("keeps a short last run with the run before it, and runs once per formula", () => {
-    const math = bound();
-    // The pieces' widths on the page, 0.8em of an 18px display: "P(…) ≥" 480px, "1 −" 26px, "Ke, n ≥" 118px, "1." 12px.
-    const widths = [480, 26, 118, 12];
-    math.querySelectorAll<HTMLElement>(".katex-base").forEach((p, i) => {
-      p.getBoundingClientRect = () => ({ width: widths[i] }) as DOMRect;
-    });
-    groupRelationRuns(math, 54);
-    groupRelationRuns(math, 54);
-    expect(runs(math)).toEqual([["P(…)≥"], ["1−", "Ke, n≥", "1."]]);
-  });
-
-  it("never joins across an explicit line break", () => {
-    const math = bound();
-    const html = math.querySelector(".katex-html")!;
-    const br = document.createElement("span");
-    br.className = "katex-newline";
-    html.children[2].before(br);
-    groupRelationRuns(math, 0);
-    expect(Array.from(html.children).map((c) => c.className)).toEqual(["katex-base", "katex-base", "katex-newline", "katex-base", "katex-base"]);
-  });
-});
-
 // A numbered display at 1440px: formula and number fit the 680px column, but KaTeX's 2px strut past
 // the number's edge (.vlist-s) made the box report scrollWidth 682, and the display offered to scroll.
 describe("a numbered display that fits", () => {
@@ -235,34 +192,17 @@ describe("a numbered display that fits", () => {
     expect(formulaExtent(box)).toBe(680);
   });
 
-  it("gets no scroll row and is not marked as overflowing", () => {
+  it("is left as it is, with no Expand row", () => {
     vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
     const root = numbered(460.47, 680, 682);
     const box = root.firstElementChild as HTMLElement;
     const stop = markWideMaths(root);
-    expect(box.dataset.overflow).toBe("false");
+    expect(box.dataset.fit).toBeUndefined();
     expect(root.querySelector(".math-cue")).toBeNull();
-    expect(box.hasAttribute("tabindex")).toBe(false);
     stop();
   });
 
-  // (1.1) at 390px: an aligned block 460px wide beside its number in a 350px column keeps its
-  // shape at 80% and scrolls; the number, pinned to the edge, was drawn over the formula's end.
-  it("sets the number under a numbered display that keeps its shape and scrolls", () => {
-    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
-    const root = numbered(460, 350, 370);
-    const box = root.firstElementChild as HTMLElement;
-    box.querySelector(".katex-base")!.innerHTML = '<span class="mtable">u</span>';
-    const stop = markWideMaths(root);
-    expect(box.dataset.fit).toBe("scaled");
-    expect(box.dataset.tag).toBe("below");
-    stop();
-    const fits = numbered(300, 680, 682);
-    markWideMaths(fits)();
-    expect((fits.firstElementChild as HTMLElement).dataset.tag).toBeUndefined();
-  });
-
-  it("still offers the scroll row when the formula itself is wider than the column", () => {
+  it("shrinks a formula with no break to fit, and offers Expand but never a scroll control", () => {
     vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
     const root = document.createElement("div");
     root.innerHTML = '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html"><span class="katex-base"><span class="mtable">x</span></span></span></span></span></div>';
@@ -274,8 +214,54 @@ describe("a numbered display that fits", () => {
     box.getBoundingClientRect = () => rect(0, 300);
     piece.getBoundingClientRect = () => rect(0, 420);
     const stop = markWideMaths(root);
-    expect(box.dataset.overflow).toBe("true");
-    expect(root.querySelector(".math-cue")).not.toBeNull();
+    expect(box.dataset.fit).toBe("squeezed");
+    expect(root.querySelector(".math-cue__expand")).not.toBeNull();
+    expect(root.querySelector(".math-cue__scroll")).toBeNull();
+    stop();
+  });
+});
+
+describe("the scale a display fits at", () => {
+  it("leaves a fitting formula whole, centred beside its number when there is room", () => {
+    expect(scaleToFit({ formula: 400, tag: 40 }, 680)).toEqual({ scale: 1, start: false });
+    expect(scaleToFit({ formula: 600, tag: 0 }, 680)).toEqual({ scale: 1, start: false });
+  });
+
+  it("sets a numbered formula flush left, then shrinks it, keeping its number at full size", () => {
+    expect(scaleToFit({ formula: 600, tag: 40 }, 680)).toEqual({ scale: 1, start: true });
+    const { scale, start } = scaleToFit({ formula: 700, tag: 40 }, 680);
+    expect(start).toBe(true);
+    expect(scale).toBeCloseTo((680 - 40 - 16) / 700);
+  });
+
+  it("shrinks an unnumbered formula by the share it overflows", () => {
+    expect(scaleToFit({ formula: 750, tag: 0 }, 680).scale).toBeCloseTo(680 / 750);
+  });
+});
+
+describe("a display with one equation number", () => {
+  it("sets the number beside the formula as its own element, and hides KaTeX's", () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+    const root = document.createElement("div");
+    root.innerHTML = `<div class="math-display">${renderTex("\\begin{equation} a = b, \\qquad c = d. \\tag{1.2}\\end{equation}", true).html}</div>`;
+    const box = root.firstElementChild as HTMLElement;
+    Object.defineProperty(box, "clientWidth", { get: () => 600 });
+    const stop = markWideMaths(root);
+    expect(box.dataset.number).toBe("");
+    expect(box.querySelector(":scope > .math-number")?.textContent).toBe("(1.2)");
+    expect(box.querySelectorAll(":scope > .katex-display")).toHaveLength(1);
+    stop();
+  });
+
+  it("leaves a display with several numbers to KaTeX", () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+    const root = document.createElement("div");
+    root.innerHTML = `<div class="math-display">${renderTex("\\begin{gather} a = b \\tag{1} \\\\ c = d \\tag{2} \\end{gather}", true).html}</div>`;
+    const box = root.firstElementChild as HTMLElement;
+    Object.defineProperty(box, "clientWidth", { get: () => 600 });
+    const stop = markWideMaths(root);
+    expect(box.dataset.number).toBeUndefined();
+    expect(box.querySelector(".math-number")).toBeNull();
     stop();
   });
 });
