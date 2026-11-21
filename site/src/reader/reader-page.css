@@ -557,6 +557,7 @@ html.is-reading {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   overscroll-behavior: contain;
   margin: 0;
   padding: 0;
@@ -779,6 +780,7 @@ html.is-reading {
   margin: var(--space-2) 0 0;
   padding: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   list-style: none;
 }
 
@@ -869,6 +871,7 @@ html.is-reading {
   margin: 0;
   padding: 0 0 var(--space-6);
   overflow-y: auto;
+  scrollbar-gutter: stable;
   flex: 1;
   min-height: 0;
   scrollbar-width: thin;
@@ -988,6 +991,7 @@ html.is-reading {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   padding: var(--space-1) var(--space-5) var(--space-6);
@@ -1305,6 +1309,7 @@ html.is-reading {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   overscroll-behavior: contain;
   padding: var(--space-4) var(--space-5) calc(var(--space-5) + env(safe-area-inset-bottom));
 }
@@ -1601,6 +1606,7 @@ html.is-reading {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   padding: var(--space-5) 0 var(--space-8);

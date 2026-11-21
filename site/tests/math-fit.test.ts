@@ -11,7 +11,16 @@ describe("display fitting notifications", () => {
     expect(observer).not.toHaveBeenCalled();
   });
 
+  /** Frames run when the test says so: the fitter reads sizes once a frame, after the frame's changes. */
+  const frames = () => {
+    const queue: FrameRequestCallback[] = [];
+    vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => queue.push(cb));
+    vi.stubGlobal("cancelAnimationFrame", () => {});
+    return () => { while (queue.length) queue.shift()!(0); };
+  };
+
   it("avoids DOM writes on duplicate, height-only and scroll notifications, and refits a changed width", () => {
+    const flush = frames();
     let resize: ResizeObserverCallback | undefined;
     vi.stubGlobal("ResizeObserver", class {
       constructor(callback: ResizeObserverCallback) { resize = callback; }
@@ -28,10 +37,13 @@ describe("display fitting notifications", () => {
     const stop = markWideMaths(root);
     const changes = new MutationObserver(() => {});
     changes.observe(root, { attributes: true, subtree: true, childList: true });
-    const notify = () => resize!([{
-      target: box, contentRect: box.getBoundingClientRect(),
-      borderBoxSize: [], contentBoxSize: [], devicePixelContentBoxSize: [],
-    }], {} as ResizeObserver);
+    const notify = () => {
+      resize!([{
+        target: box, contentRect: box.getBoundingClientRect(),
+        borderBoxSize: [], contentBoxSize: [], devicePixelContentBoxSize: [],
+      }], {} as ResizeObserver);
+      flush();
+    };
     notify();
     box.dispatchEvent(new Event("scroll"));
     notify();
@@ -42,6 +54,43 @@ describe("display fitting notifications", () => {
     expect(changes.takeRecords().length).toBeGreaterThan(0);
     expect(box.dataset.fit).toBeUndefined();
     expect(box.style.fontSize).toBe("");
+    changes.disconnect();
+    stop();
+  });
+
+  it("keeps its decision when a width flips straight back (a scroll bar its own fit brought and took away)", () => {
+    const flush = frames();
+    let resize: ResizeObserverCallback | undefined;
+    vi.stubGlobal("ResizeObserver", class {
+      constructor(callback: ResizeObserverCallback) { resize = callback; }
+      observe() {} disconnect() {}
+    });
+    const root = document.createElement("div");
+    root.innerHTML = '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html"><span class="katex-base">x = y</span></span></span></span></div>';
+    const box = root.firstElementChild as HTMLElement;
+    const math = box.querySelector<HTMLElement>(".katex")!;
+    let width = 350;
+    Object.defineProperty(box, "clientWidth", { get: () => width });
+    Object.defineProperty(box, "scrollWidth", { get: () => width });
+    Object.defineProperty(math, "scrollWidth", { get: () => 360 });
+    const stop = markWideMaths(root);
+    const notify = () => {
+      resize!([{ target: box, contentRect: box.getBoundingClientRect(), borderBoxSize: [], contentBoxSize: [], devicePixelContentBoxSize: [] }], {} as ResizeObserver);
+      flush();
+    };
+    notify();
+    expect(box.dataset.fit).toBe("scaled");
+    // The column gains a scroll bar and narrows, then loses it: the second width is the first again.
+    width = 380;
+    notify();
+    expect(box.dataset.fit).toBeUndefined();
+    const changes = new MutationObserver(() => {});
+    changes.observe(root, { attributes: true, subtree: true, childList: true });
+    width = 350;
+    notify();
+    width = 380;
+    notify();
+    expect(changes.takeRecords()).toHaveLength(0);
     changes.disconnect();
     stop();
   });
