@@ -7,19 +7,19 @@
    "key": "0d805052b50983fb",
    "shared_by": 1,
    "lightness": {
-    "light": 0.465,
-    "dark": 0.675
+    "light": 0.46,
+    "dark": 0.665
    },
    "chroma": {
-    "light": 0.071,
-    "dark": 0.11
+    "light": 0.07,
+    "dark": 0.108
    },
    "families": [
     {
      "id": "family-series",
      "name": "The chosen exponents and their sums · A rational number’s fixed gap · Consequences and other bases",
      "named": false,
-     "hue": 1,
+     "hue": 1.5,
      "topics": [
       "series",
       "rational-gap",
@@ -30,7 +30,7 @@
      "id": "family-remainders",
      "name": "Multiplication and fractional parts · Averaging complete cycles · Combining the estimates",
      "named": false,
-     "hue": 113,
+     "hue": 112.5,
      "topics": [
       "combining-estimates",
       "remainders",
@@ -60,50 +60,50 @@
     "series": {
      "index": 0,
      "family": "family-series",
-     "light": "oklch(0.385 0.080 350.2)",
-     "dark": "oklch(0.595 0.123 350.2)"
+     "light": "oklch(0.385 0.078 350.7)",
+     "dark": "oklch(0.590 0.121 350.7)"
     },
     "rational-gap": {
      "index": 1,
      "family": "family-series",
-     "light": "oklch(0.470 0.071 1.0)",
-     "dark": "oklch(0.680 0.110 1.0)"
+     "light": "oklch(0.470 0.070 1.5)",
+     "dark": "oklch(0.675 0.108 1.5)"
     },
     "scope": {
      "index": 2,
      "family": "family-series",
-     "light": "oklch(0.555 0.062 11.8)",
-     "dark": "oklch(0.765 0.097 11.8)"
+     "light": "oklch(0.555 0.062 12.3)",
+     "dark": "oklch(0.760 0.095 12.3)"
     },
     "combining-estimates": {
      "index": 3,
      "family": "family-remainders",
-     "light": "oklch(0.380 0.080 102.2)",
-     "dark": "oklch(0.590 0.123 102.2)"
+     "light": "oklch(0.375 0.078 101.7)",
+     "dark": "oklch(0.580 0.121 101.7)"
     },
     "remainders": {
      "index": 4,
      "family": "family-remainders",
-     "light": "oklch(0.465 0.071 113.0)",
-     "dark": "oklch(0.675 0.110 113.0)"
+     "light": "oklch(0.460 0.070 112.5)",
+     "dark": "oklch(0.665 0.108 112.5)"
     },
     "cycle-averages": {
      "index": 5,
      "family": "family-remainders",
-     "light": "oklch(0.550 0.062 123.8)",
-     "dark": "oklch(0.760 0.097 123.8)"
+     "light": "oklch(0.545 0.062 123.3)",
+     "dark": "oklch(0.750 0.095 123.3)"
     },
     "incomplete-cycles": {
      "index": 6,
      "family": "family-incomplete-cycles",
-     "light": "oklch(0.545 0.071 203.0)",
-     "dark": "oklch(0.755 0.110 203.0)"
+     "light": "oklch(0.545 0.070 203.0)",
+     "dark": "oklch(0.750 0.108 203.0)"
     },
     "doubling": {
      "index": 7,
      "family": "family-doubling",
-     "light": "oklch(0.485 0.071 271.0)",
-     "dark": "oklch(0.695 0.110 271.0)"
+     "light": "oklch(0.490 0.070 271.0)",
+     "dark": "oklch(0.695 0.108 271.0)"
     }
    }
   }

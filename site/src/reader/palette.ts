@@ -27,7 +27,7 @@ const RAD = Math.PI / 180;
 
 export const MAX_FAMILIES = 8;
 export const MAX_SHADES = 3;
-/** How much of the topic colour an underline draws over the page (phrases.css: 80%). */
+/** The opacity at which an underline draws the topic colour over the page (phrases.css: 80%). */
 export const UNDERLINE = 0.8;
 /** WCAG contrast of every drawn colour against its page. */
 export const MIN_CONTRAST = 3;
@@ -128,12 +128,21 @@ const simulate = (lin: Vec, vision: Vision): Vec => {
   return clip(m.map((row) => row[0] * lin[0] + row[1] * lin[1] + row[2] * lin[2]) as Vec);
 };
 
-const GROUND_LAB = { light: linearToOklab(hexToLinear(GROUNDS.light)), dark: linearToOklab(hexToLinear(GROUNDS.dark)) };
+const encode = (c: number) => {
+  const v = Math.min(1, Math.max(0, c));
+  return v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055;
+};
+const decode = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const GROUND_LINEAR = { light: hexToLinear(GROUNDS.light), dark: hexToLinear(GROUNDS.dark) };
 
-/** A colour as an underline draws it: UNDERLINE of the tone over the page, mixed in Oklab as CSS color-mix does. */
+/**
+ * A colour as an underline draws it. `color-mix(in oklab, tone 80%, transparent)` is the tone at
+ * 80% opacity, and the browser composites that over the page in gamma-encoded sRGB.
+ */
 export function drawnLinear(tone: Vec, theme: ThemeName): Vec {
-  const g = GROUND_LAB[theme];
-  return clip(oklabToLinear(tone.map((v, i) => UNDERLINE * v + (1 - UNDERLINE) * g[i]) as Vec));
+  const t = clip(oklabToLinear(tone));
+  const g = GROUND_LINEAR[theme];
+  return t.map((v, i) => decode(UNDERLINE * encode(v) + (1 - UNDERLINE) * encode(g[i]))) as Vec;
 }
 
 /** The drawn colour in CIELAB as one vision sees it. */
