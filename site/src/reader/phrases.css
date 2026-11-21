@@ -7,10 +7,13 @@
    two. A colour never says how the Lean compares with the phrase; the card says that in words.
    tests/topic-colours.test.ts checks the floors, the contrast and that the stored colours are current. */
 
-/* The phrase at rest: an underline in its topic's colour, drawn under each of its lines. With
-   "Colour underlines by topic" off (data-tones on the root) every underline is one neutral ink. */
+/* The phrase at rest: a 3px underline in its topic's colour at full strength, drawn under each of
+   its lines, over a faint wash of the same colour, so that a topic reads as a run of colour at
+   reading distance. palette.ts fits the colours to keep 3:1 against the page at full strength.
+   With "Colour underlines by topic" off (data-tones on the root) every underline is one neutral ink. */
 .paper .tie[data-tone] {
-  --tie-ink: color-mix(in oklab, var(--tone) 80%, transparent);
+  --tie-ink: var(--tone);
+  background-color: color-mix(in oklab, var(--tie-ink) 8%, transparent);
   background-image: linear-gradient(var(--tie-ink), var(--tie-ink));
   background-repeat: no-repeat;
   background-position: 0 100%;
@@ -25,6 +28,12 @@
 /* A display is underlined by a rule beside it. */
 .paper .math-display.tie[data-tone] {
   background-image: none;
+  background-color: color-mix(in oklab, var(--tie-ink) 5%, transparent);
+  box-shadow: inset var(--tie-rule) 0 0 var(--tie-ink);
+}
+
+.paper .math-display.tie[data-tone][data-point],
+.paper .math-display.tie[data-tone]:hover {
   box-shadow: inset var(--tie-rule-strong) 0 0 var(--tie-ink);
 }
 
@@ -47,11 +56,12 @@
 .paper .tie[data-tone][data-pin]:hover {
   --tie-ink: var(--sel-ink);
   background-color: var(--sel-wash);
-  background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule-strong);
+  background-size: calc(100% - var(--tie-end-gap)) var(--sel-rule);
 }
 
 .paper .math-display.tie[data-tone][data-pin] {
-  box-shadow: inset var(--sel-rail) 0 0 var(--sel-ink);
+  background-color: var(--sel-wash);
+  box-shadow: inset var(--sel-rule) 0 0 var(--sel-ink);
 }
 
 /* Where colours are forced the underline is a real text decoration and the selection the system's highlight. */
