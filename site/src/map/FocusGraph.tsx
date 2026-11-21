@@ -172,7 +172,8 @@ export function FocusGraph(props: FocusGraphProps) {
   const H = (size.h || 420) / zoom;
   const both = model.left.length > 0 && model.right.length > 0;
   const gap = Math.round(Math.max(30, Math.min(96, W * 0.07)));
-  const subjectW = Math.round(Math.max(190, Math.min(280, W * (both ? 0.27 : 0.3))));
+  // The subject is at least 190 wide where two side columns of 150 still fit beside it, and 168 in a narrower pane.
+  const subjectW = Math.round(Math.max(W >= 2 * 150 + 2 * gap + 2 * PAD_X + 190 ? 190 : 168, Math.min(280, W * (both ? 0.27 : 0.3))));
   /** The width of the note that stands where a side has nothing. */
   const NOTE_W = 132;
   // Too narrow for three columns (a phone): the sides stand over and under the subject, at the pane's width.
