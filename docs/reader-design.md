@@ -263,6 +263,9 @@ right, nothing over the text. Widths are CSS pixels of the window.
   while the drawing keeps 260px; where both cannot fit, the drawing folds to one line.
 - From 1024 to 1279 the paper's measure narrows so that both columns fit. Before this design
   the pane covered the paper there, which hid the words being checked.
+- "Hide pane" leaves the paper alone at its measure and lets any selection go, since nothing
+  would show it. Selecting words while the pane is hidden brings the pane back beside the paper;
+  the reader's stored choice to hide it is not changed by that.
 
 ### A phone: inspect and return
 

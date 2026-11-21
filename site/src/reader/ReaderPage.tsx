@@ -1173,10 +1173,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // Underlines carry their topics' colours unless this reader turned that off.
   useLayoutEffect(() => applyTones(readTones()), []);
+  /** "Hide pane": the paper alone. What was selected is let go, since nothing would show it. */
   const hideMap = useCallback(() => {
     showMap(false);
-    closeSheet();
-  }, [showMap, closeSheet]);
+    closeLean();
+  }, [showMap, closeLean]);
+  // A selection made while the pane is hidden brings the pane back beside the paper, where there is
+  // room for both; the reader's stored choice to hide it is left as it is.
+  const subjectKey = `${route.node ?? ""}|${route.at ?? ""}|${route.decl ?? ""}|${held ? "p" : ""}`;
+  useEffect(() => {
+    if (paneRoom && !mapShown && (route.node || route.decl || held)) setMapShown(true);
+    // Only when the subject changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subjectKey]);
 
   const dismissVisit = useCallback(() => {
     patchHistoryState({ lxVisit: undefined });
@@ -1611,7 +1620,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
 
   /** Below 1024px, or with the pane turned off: the inspector over the whole screen, opened on demand. */
-  const sheetShown = !paneOn && !route.beside && !sheetCollapsed && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || !!held || (!!route.lean && !paneRoom));
+  const sheetShown = !paneRoom && !route.beside && !sheetCollapsed && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || !!held || (!!route.lean && !paneRoom));
   sheetShownRef.current = sheetShown;
   const heldPlace = held ? placeWords(held.anchor ?? undefined) : pin?.tie != null ? placeWords(ties.index.ties[pin.tie].anchor ?? undefined) : "";
 
@@ -1859,7 +1868,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         </RightSheet>
       )}
 
-      {!paneOn && !route.beside && sheetCollapsed && (!!pin || !!route.decl || !!held) && (
+      {!paneRoom && !route.beside && sheetCollapsed && (!!pin || !!route.decl || !!held) && (
         <HeldBar
           state={held ? "Selected paragraph" : route.decl ? "Selected declaration" : "Selected words"}
           place={heldPlace}
