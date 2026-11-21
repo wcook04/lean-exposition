@@ -42,6 +42,9 @@ import sys
 import tomllib
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from lean_exposition.alignment import _math_spans  # noqa: E402
+
 SLOTS = ("long", "short", "expository")
 ROLE = {"states": ("statement", "states"), "defines": ("definition", "defines"),
         "proves": ("derivation", "proof"), "explains": ("explanation", "part"),
@@ -463,8 +466,15 @@ def main() -> None:
         stop = len(text) if stop < 0 else stop
         if stop - begin > 1700:
             begin, stop = at, at + len(tie["from"])
-        first = text[begin:begin + min(80, stop - begin)]
-        last = text[max(begin, stop - 60):stop]
+        # The statement's first and last words, never cutting a formula.
+        cut_a, cut_b = begin + min(80, stop - begin), max(begin, stop - 60)
+        for x, y, _ in _math_spans(text[begin:stop]):
+            if x < cut_a - begin < y:
+                cut_a = begin + y
+            if x < cut_b - begin < y:
+                cut_b = begin + x
+        first = text[begin:min(cut_a, stop)]
+        last = text[max(begin, cut_b):stop]
         rows = []
         for name in c.get("lean", []):
             found = lean.resolve(name)

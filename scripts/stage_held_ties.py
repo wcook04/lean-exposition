@@ -50,18 +50,47 @@ def unique(pattern: str, what: str) -> re.Match:
     return hits[0]
 
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from lean_exposition.alignment import _math_spans  # noqa: E402
+
+MATH = [(x, y) for x, y, _ in _math_spans(md)]
+
+
+def snapped(start: int, stop: int) -> tuple[int, int]:
+    """Widen a quote to whole formulas, and end it at its paragraph: a tie never cuts a formula."""
+    for _ in range(3):
+        for x, y in MATH:
+            if x < start < y:
+                start = x
+            if x < stop < y:
+                stop = y
+        cut, at = None, start
+        while True:
+            br = md.find("\n\n", at, stop)
+            if br < 0:
+                break
+            if not any(x <= br < y for x, y in MATH):
+                cut = br
+                break
+            at = br + 2
+        if cut is not None:
+            stop = cut
+    return start, stop
+
+
 passages, redirects = [], {}
 for tid, t in held.items():
     anchor = t["anchor"]
     if t.get("audit", {}).get("verdict") == "replaced" and t.get("replacement_passages"):
         redirects[tid] = t["replacement_passages"][0]
         continue
-    if anchor.get("quote"):
-        # The audit's exact quote of the tie.
+    if anchor.get("quote") and not anchor.get("label"):
+        # The audit's exact quote of the tie, widened to whole formulas and kept in its paragraph.
         if md.count(anchor["quote"]) != 1:
             raise SystemExit(f"{tid}: anchor quote occurs {md.count(anchor['quote'])} times in the reading copy")
         start = md.index(anchor["quote"])
-        stop = start + len(anchor["quote"])
+        start, stop = snapped(start, start + len(anchor["quote"]))
     elif anchor.get("tag"):
         m = unique(r"\\tag\{" + re.escape(anchor["tag"]) + r"\}", tid)
         start = md.rfind("$$", 0, m.start())
@@ -81,11 +110,19 @@ for tid, t in held.items():
                      "lean": list(dict.fromkeys(c["lean"] for c in comparisons)),
                      "comparisons": [{"lean": c["lean"], "fidelity": c["fidelity"], "note": c.get("note", "")} for c in comparisons]})
 
+widened = []
 if sent:
     for p in sent["passages"]:
         if md.count(p["quote"]) != 1:
             raise SystemExit(f"{p['id']}: quote occurs {md.count(p['quote'])} times in the reading copy")
-        passages.append({"id": p["id"], "role": p["role"], "quote": p["quote"], "topic": p["topic"],
+        at = md.index(p["quote"])
+        start, stop = snapped(at, at + len(p["quote"]))
+        quote = md[start:stop].rstrip()
+        if quote != p["quote"]:
+            widened.append(p["id"])
+        if md.count(quote) != 1:
+            raise SystemExit(f"{p['id']}: widened quote is not unique")
+        passages.append({"id": p["id"], "role": p["role"], "quote": quote, "topic": p["topic"],
                          "lean": list(dict.fromkeys(p.get("lean", []) + [c["lean"] for c in p.get("comparisons", [])])),
                          "comparisons": [{"lean": c["lean"], "fidelity": c["fidelity"], "note": c.get("note", "")}
                                          for c in p.get("comparisons", [])]})
@@ -184,6 +221,6 @@ if a.sentences and (a.sentences / "ENCODING.md").is_file():
         raise SystemExit("ENCODING.md: the sentence naming the return's files was not found")
     (a.out / "guide.md").write_text(guide)
 (a.out / "links.json").write_text(json.dumps(out_links, ensure_ascii=False, indent=1))
-print(json.dumps({"passages": len(passages), "claims": len(links["claims"]), "lean_modules": len(seen),
+print(json.dumps({"passages": len(passages), "widened_to_whole_formulas": len(widened), "claims": len(links["claims"]), "lean_modules": len(seen),
                   "named": len(named), "named_not_in_report": missing[:20], "plain": len(out_links["plain"]),
                   "notes": len(out_links["notes"])}, indent=1))
