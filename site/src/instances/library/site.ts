@@ -13,7 +13,10 @@ const BY = authors(PAPER.authors);
 const LINK_CAVEAT = PAPER.review;
 const empty = { short: "", job: "", reader: "" };
 const paperNames = { long: empty, short: empty, expository: empty } as SiteInstance["paperNames"];
-for (const doc of PAPER.documents) paperNames[doc.slot] = { short: doc.title, job: `${doc.title}, by ${BY}`, reader: "Readers who know the theory" };
+// The account line reads as sentences: "<title>, by <authors>." then the status sentence. A
+// sentence ending in a formula or abbreviation keeps its own stop.
+const sentence = (text: string) => (/[.!?]$/.test(text.trim()) ? text.trim() : `${text.trim()}.`);
+for (const doc of PAPER.documents) paperNames[doc.slot] = { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: "" };
 
 function readme(siteUrl: string, facts: SiteFacts): string {
   const at = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);
@@ -93,7 +96,7 @@ const site = {
   regionTitles: {},
   paperNames,
   stages: PAPER.documents.map((d) => d.slot),
-  paperStatus: PAPER.review,
+  paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
   recordKind,
   levelGoals: null,
