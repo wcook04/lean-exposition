@@ -29,7 +29,7 @@ import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { SubjectBand, type SubjectState } from "./SubjectBand";
 import { GuidePanel, StartHere } from "./Guides";
-import { useAids } from "../aids";
+import { cardKeys, useAids } from "../aids";
 import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
@@ -476,7 +476,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- The subject band, and the two guides that can stand in the pane ----------------------
 
   const aids = useAids();
-  const guideStage = site.library && stage === site.library.main ? Object.values(site.library.pages ?? {})[0] : undefined;
+  const guideStage = site.library && stage === site.library.main ? site.library.guide : undefined;
   const [aside, setAside] = useState<"start" | "guide" | null>(null);
   // A guide is read with nothing else in mind: a new selection takes its place.
   useEffect(() => setAside(null), [pin?.record, pin?.tie, decl, held]);
@@ -530,6 +530,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const firstLink = ties.order.length ? startOf(ties.index.ties[ties.order[0]].at) : null;
   const atFront = !holding && follow.tie === null && (readAt === null || readAt === undefined || firstLink === null || readAt < firstLink);
   const frontSlot = atFront && aids.showcase.length > 0 ? <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} /> : undefined;
+  // Where the selection is one of the paper's showcase cards, the pane says which, with the way to the next.
+  const tourAt = useMemo(() => {
+    if (!aids.showcase.length || (!pinTie && !decl)) return -1;
+    const keys = new Set(cardKeys(pinTie?.phrase, decl ? [decl] : (pinTie?.rows ?? []).map((row) => row.name)));
+    return aids.showcase.findIndex((item) => keys.has(item.card));
+  }, [aids, pinTie, decl]);
   const asideSlot =
     aside === "start" ? (
       <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
@@ -638,6 +644,19 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           </button>
         )}
       </div>
+      {!fill && tourAt >= 0 && (
+        <p className="tour-line">
+          <span>
+            Start here, example {tourAt + 1} of {aids.showcase.length}
+          </span>
+          <button type="button" disabled={tourAt === 0} onClick={() => openCard(aids.showcase[tourAt - 1].card)}>
+            Previous
+          </button>
+          <button type="button" disabled={tourAt === aids.showcase.length - 1} onClick={() => openCard(aids.showcase[tourAt + 1].card)}>
+            Next
+          </button>
+        </p>
+      )}
       {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onReturn={(pin?.tie != null || held?.block) && onReturn ? onReturn : undefined} />}
       {fill ? (
         <div className="map-pane__fill">

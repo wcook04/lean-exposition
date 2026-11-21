@@ -122,7 +122,7 @@ export interface SiteInstance {
    */
   sectionAids?: Partial<Record<string, Record<string, string>>>;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
-  library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
+  library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage>; /** The paper's guide to its formal conventions, shown in the pane as "How to read the Lean". */ guide?: InstanceStage };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
    * A paper whose argument for the main theorem is its own record (the #257 exposition proves

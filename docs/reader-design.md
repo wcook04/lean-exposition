@@ -331,10 +331,10 @@ Every change below is caused by the reader. Nothing else moves. Under
 | --- | --- | --- |
 | Pointer on a link or control | 120ms, ease-out `(0.2, 0.7, 0.2, 1)` | background and border colour |
 | Press | 0 | colour |
-| Selecting words | underline and rules at once; wash 160ms ease-out | background colour, once |
+| Selecting words | underline and rules at once; wash 120ms ease-out | background colour, once |
 | The inspector's content for a new subject | 0 | replaced whole; no cross-fade between two statements |
-| Lean to Graph and back | 120ms ease-out | opacity of the incoming view |
-| The phone's inspector | opens 180ms, closes 120ms | opacity; it has its final box from the first frame |
+| Lean to Graph and back | 0 | replaced whole, in the same box |
+| The phone's inspector | opens over 180ms, closes at once | opacity; it has its final box from the first frame |
 | A group's member list | 160ms ease-out | opacity |
 | Fit, and the camera on a new subject | 320ms, ease-in-out `(0.45, 0, 0.2, 1)` | the drawing's transform; a new input cuts it short |
 | Return to selected words | the browser's smooth scroll; instant under reduced motion | scroll |

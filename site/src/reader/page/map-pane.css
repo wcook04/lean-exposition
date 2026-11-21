@@ -806,9 +806,11 @@ html[data-right-sheet] {
    The subject band, the inspector's order and type, the paragraph list and the two guides.
    These rules come last in the pane's stylesheet and restate what the design changes. */
 
+/* The bar wraps where the pane is narrow: no control is ever pushed out of sight. */
 .map-pane__bar {
-  gap: var(--space-2);
-  padding-left: var(--space-4);
+  flex-wrap: wrap;
+  gap: 6px var(--space-2);
+  padding: 7px var(--space-2) 7px var(--space-4);
 }
 
 .map-pane__bar .map-pane__open {
@@ -1230,7 +1232,7 @@ html[data-right-sheet] {
 .lean-page .lean-line.is-lit {
   --lit-row: color-mix(in oklab, var(--lit-line) 13%, transparent);
   background: var(--lit-row);
-  box-shadow: -4px 0 0 var(--lit-row), 4px 0 0 var(--lit-row), -6px 0 0 var(--sel-ink);
+  box-shadow: inset 2px 0 0 var(--sel-ink), -4px 0 0 var(--lit-row), 4px 0 0 var(--lit-row);
 }
 
 .lean-page .lean-crumbs {
@@ -1262,4 +1264,45 @@ html[data-right-sheet] {
 
 .right-sheet .subject-band__act {
   min-height: 36px;
+}
+
+/* While the selection is one of the paper's showcase cards: which one, and the way to the next. */
+.tour-line {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  margin: 0;
+  padding: 0 var(--space-3) 0 var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.tour-line span {
+  flex: 1;
+}
+
+.tour-line button {
+  min-height: 26px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tour-line button:disabled {
+  color: var(--ink-3);
+  border-color: var(--rule-strong);
+  cursor: default;
+}
+
+.tour-line button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
 }
