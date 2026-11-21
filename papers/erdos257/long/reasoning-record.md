@@ -4265,7 +4265,7 @@ The dense branch as stated is *false*: an explicit, natural, divisor-dense suppo
 $$
 c_{A}(n)=2^{\omega(n)}-1,
 $$
-*which is odd for every $n\ge2$. Consequently neither the digitwise nor the carry-aware divisibility-first block-certificate schema has an instance at any even base.*
+*which is odd for every $n\ge2$. Consequently, at each even base, neither the digitwise nor the carry-aware divisibility-first block-certificate schema can supply certificates for every $q>0$.*
 
 This does not leave the squarefree value open. Duverney–Tachiya’s Corollary 1.2 and Example 1.1 prove that, for every $h\ge1$,
 $$
@@ -4820,7 +4820,7 @@ The following fixed-revision links locate the supplementary formal statements us
 ### Verification and reproducibility
 
 <!-- passage:verification-and-reproducibility -->
-The verification concordance lists the formal proofs by statement. *Lean* links to the supporting declarations; a dagger identifies a proof that assumes a named input. *Comparator* links to a recorded kernel check against a separately written statement; *pending* means that this comparison has not been recorded. The [verification record](https://github.com/wcook04/plectis-erdos/blob/f9e7a10b2925316d287aa4375136d0df6d71984a/evidence/erdos257-mersenne-reasoning-surface.md) gives the precise correspondence, dependencies and reproducible checks. A row with only a record link has no complete formal proof recorded.
+The verification concordance lists the formal proofs by statement. *Lean* links to the supporting declarations; a dagger identifies a proof that assumes a named input. *Comparator* links to a recorded kernel check against a separately written statement; *pending* means that this comparison has not been recorded. The [verification record](https://github.com/wcook04/plectis-erdos/blob/469b88fe013bd3d41ef91e6c5d49bb5628d0a57e/evidence/erdos257-mersenne-reasoning-surface.md) gives the precise correspondence, dependencies and reproducible checks. A row with only a record link has no complete formal proof recorded.
 
 Each link marked <span class="smallcaps">Lean source</span> identifies the declaration associated with a statement or proof step. The integer-quotient proof for $1/21$ and the other arguments without a formal link are ordinary proofs, and this document claims no new formal or independent human verification. The linked records identify the propositions checked and their source revisions.
 <!-- /passage:verification-and-reproducibility -->

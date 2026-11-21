@@ -564,7 +564,7 @@
   "results": [
    "prop:squarefree"
   ],
-  "text_sha256": "c5873f0122db1e594043c275579c804b399a424dabbd549caf5aa4cf06a74f5a"
+  "text_sha256": "491bab0a778dd36c27a9f202872230170e115e5766836d85ffb00318030558d5"
  },
  {
   "name": "sec-invent-shape",
@@ -622,7 +622,7 @@
   "last_line": 4825,
   "end_marker_line": 4826,
   "results": [],
-  "text_sha256": "01aa03dbde7e73d3b6214e6aeb3229ecfd9069e116e64e602bc188c87f146fa2"
+  "text_sha256": "fa226a65bba083201a91782fafc2a71e3df876a7de465a8a85576e32d5270adf"
  },
  {
   "name": "statements-and-declarations",
