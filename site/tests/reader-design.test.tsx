@@ -298,13 +298,16 @@ describe("the inspector's phrase card", async () => {
 // ---------------------------------------------------------------- conventions
 
 describe("the conventions that bear on a card", async () => {
-  const { cardKeys, conventionsFor } = await import("../src/reader/aids");
+  const { cardKeys, cardTarget, conventionsFor } = await import("../src/reader/aids");
   const aids = { glossary: AIDS.glossary, showcase: [] };
 
-  it("names a card by its phrase and each declaration, as a declaration and a result", () => {
-    expect(cardKeys("p1", ["A.b", "C.d"])).toEqual(["tie:p1", "declaration:A.b", "result:A.b", "declaration:C.d", "result:C.d"]);
-    expect(cardKeys(null, ["A.b"])).toEqual(["declaration:A.b", "result:A.b"]);
+  it("names a card by its phrase and each declaration, as a declaration, a result and bare", () => {
+    expect(cardKeys("p1", ["A.b", "C.d"])).toEqual(["tie:p1", "p1", "declaration:A.b", "result:A.b", "A.b", "declaration:C.d", "result:C.d", "C.d"]);
+    expect(cardKeys(null, ["A.b"])).toEqual(["declaration:A.b", "result:A.b", "A.b"]);
     expect(cardKeys(undefined, [])).toEqual([]);
+    // Navier–Stokes names a showcase card by its bare phrase id; Euler by kind and id.
+    expect(cardTarget("p::s1-theorem-premise")).toEqual({ kind: "bare", id: "p::s1-theorem-premise" });
+    expect(cardTarget("result:TorusEuler.Paper.lemma_1_3")).toEqual({ kind: "result", id: "TorusEuler.Paper.lemma_1_3" });
   });
 
   it("matches by tie, declaration and result keys, in the glossary's order", () => {

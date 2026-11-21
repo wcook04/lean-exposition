@@ -61,7 +61,16 @@ export function conventionsFor(aids: ReadingAids, keys: readonly string[]): Conv
   return aids.glossary.filter((entry) => entry.cards.some((card) => wanted.has(card)));
 }
 
-/** The keys a phrase's card answers to: its own, and each Lean declaration it shows, as a declaration and as a result. */
+/**
+ * The keys a phrase's card answers to: its own, and each Lean declaration it shows, as a declaration
+ * and as a result. A paper may also name a card by its bare phrase id or Lean name, so those answer too.
+ */
 export function cardKeys(phrase: string | null | undefined, names: readonly string[]): string[] {
-  return [...(phrase ? [`tie:${phrase}`] : []), ...names.flatMap((name) => [`declaration:${name}`, `result:${name}`])];
+  return [...(phrase ? [`tie:${phrase}`, phrase] : []), ...names.flatMap((name) => [`declaration:${name}`, `result:${name}`, name])];
+}
+
+/** What a card names: linked words, a numbered result or a declaration; a bare id is taken as written. */
+export function cardTarget(card: string): { kind: "tie" | "result" | "declaration" | "bare"; id: string } {
+  const found = /^(tie|result|declaration):(.+)$/.exec(card);
+  return found ? { kind: found[1] as "tie" | "result" | "declaration", id: found[2] } : { kind: "bare", id: card };
 }

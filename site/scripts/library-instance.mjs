@@ -22,7 +22,8 @@ const generated = (name) => {
 const sectionAids = (() => {
   const raw = generated("section-aids.json") ?? generated("reading_aids.json");
   if (!raw) return null;
-  const table = raw.sections ?? raw.aids ?? raw;
+  // Euler's file is the table itself; Navier–Stokes's keeps the paper's sections under `paper`.
+  const table = raw.paper ?? raw.sections ?? raw.aids ?? raw;
   if (Array.isArray(table)) return Object.fromEntries(table.filter((row) => row && (row.section ?? row.key) && (row.aid ?? row.text)).map((row) => [String(row.section ?? row.key), String(row.aid ?? row.text)]));
   return Object.fromEntries(Object.entries(table).filter(([, text]) => typeof text === "string"));
 })();

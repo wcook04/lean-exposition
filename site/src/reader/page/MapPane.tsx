@@ -29,7 +29,7 @@ import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { SubjectBand, type SubjectState } from "./SubjectBand";
 import { GuidePanel, StartHere } from "./Guides";
-import { cardKeys, useAids } from "../aids";
+import { cardKeys, cardTarget, useAids } from "../aids";
 import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
@@ -498,14 +498,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   /** A showcase card names linked words, a numbered result or a declaration: open whichever it is. */
   const openCard = useCallback(
     (card: string) => {
-      const at = card.indexOf(":");
-      const [kind, id] = [card.slice(0, at), card.slice(at + 1)];
+      const { kind, id } = cardTarget(card);
       setAside(null);
-      if (kind === "tie") {
-        const t = ties.order.find((n) => ties.index.ties[n].phrase === id);
-        if (t !== undefined) onOpenTie?.(t, true);
-        return;
-      }
+      const phrase = kind === "tie" || kind === "bare" ? ties.order.find((n) => ties.index.ties[n].phrase === id) : undefined;
+      if (phrase !== undefined) return onOpenTie?.(phrase, true);
+      if (kind === "tie") return;
       // A result opens at the words that state it, where the paper has them; else as a declaration.
       const stated = kind === "result" ? ties.order.find((n) => ties.index.ties[n].role === "statement" && ties.index.ties[n].rows?.some((row) => row.name === id)) : undefined;
       if (stated !== undefined) onOpenTie?.(stated, true);
@@ -515,13 +512,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   );
   const cardTitle = useCallback(
     (card: string) => {
-      const at = card.indexOf(":");
-      const [kind, id] = [card.slice(0, at), card.slice(at + 1)];
-      if (kind === "tie") {
-        const t = ties.order.find((n) => ties.index.ties[n].phrase === id);
-        return t !== undefined ? phraseTitle(ties, t) : id;
-      }
-      return plainName(alignment, id);
+      const { kind, id } = cardTarget(card);
+      const t = kind === "tie" || kind === "bare" ? ties.order.find((n) => ties.index.ties[n].phrase === id) : undefined;
+      if (t !== undefined) return phraseTitle(ties, t);
+      return kind === "tie" ? id : plainName(alignment, id);
     },
     [ties, alignment],
   );
