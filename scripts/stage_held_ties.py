@@ -140,7 +140,7 @@ if sent:
             if row.get("title"):
                 out_links["plain"].setdefault(name, row["title"])
             if row.get("note"):
-                out_links["notes"].setdefault(name, {"text": row["note"]})
+                out_links["notes"].setdefault(name, {"text": row["note"], **({"summary": row["summary"]} if row.get("summary") else {})})
 topic_ids = {t["id"] for t in out_links["topics"]}
 bad = sorted({p["topic"] for p in passages} - topic_ids)
 if bad:
