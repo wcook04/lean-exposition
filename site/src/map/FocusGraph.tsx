@@ -82,7 +82,10 @@ interface Rel { kind: string; of: Set<string> }
 /** One thing in a side's column: a card, or a named group of cards that opens in place. */
 type Item =
   | { type: "node"; id: string }
-  | { type: "group"; key: string; name: string; tone?: string; ids: string[]; open: boolean; children: Item[] };
+  | { type: "group"; key: string; name: string; tone?: string; role?: FGRole; ids: string[]; open: boolean; children: Item[] };
+/** How one side is divided when it does not fit: named parts, some of them drawn out as their own nodes. */
+interface Part { key: string; name: string; list: string[]; depth: number }
+type Plan = { flat: true } | { flat: false; parts: Part[]; out: ReadonlySet<string> };
 
 const ZOOMS = [0.93, 1, 1.15, 1.3, 1.5];
 const PAD_X = 16;
@@ -109,6 +112,8 @@ export function FocusGraph(props: FocusGraphProps) {
   /** How many times the first estimate of what fits has been tightened for this subject. */
   const [tight, setTight] = useState(0);
   const moved = useRef(false);
+  const openedNow = useRef(false);
+  openedNow.current = opened.size > 0;
 
   const words = useCallback((role: FGRole): FGRoleWords => ({ ...FG_ROLES[role], ...(props.roles?.[role] ?? {}) }), [props.roles]);
 
@@ -157,7 +162,8 @@ export function FocusGraph(props: FocusGraphProps) {
   const key = model.subj.join("|");
   const many = model.subj.length > 1;
   useLayoutEffect(() => { setOpened(new Set()); setTight(0); }, [key]);
-  useLayoutEffect(() => { setTight(0); }, [size.w, size.h, zoom]);
+  // A new size is fitted afresh, unless the reader has a group open.
+  useLayoutEffect(() => { if (!openedNow.current) setTight(0); }, [size.w, size.h, zoom]);
 
   // The widths of the three columns, for the room there is.
   const W = (size.w || 640) / zoom;
@@ -167,85 +173,97 @@ export function FocusGraph(props: FocusGraphProps) {
   const subjectW = Math.round(Math.max(168, Math.min(280, W * (both ? 0.27 : 0.3))));
   /** The width of the note that stands where a side has nothing. */
   const NOTE_W = 132;
-  const sideW = Math.floor(Math.max(150, Math.min(both ? 380 : 460, both ? (W - subjectW - 2 * PAD_X - 2 * gap) / 2 : W - subjectW - 2 * PAD_X - 2 * gap - NOTE_W)));
+  // Too narrow for three columns (a phone): the sides stand over and under the subject, at the pane's width.
+  const stacked = W < 520;
+  const sideW = stacked ? Math.floor(W - 2 * PAD_X - 18) : Math.floor(Math.max(150, Math.min(both ? 380 : 460, both ? (W - subjectW - 2 * PAD_X - 2 * gap) / 2 : W - subjectW - 2 * PAD_X - 2 * gap - NOTE_W)));
 
   // A column fits when its nodes' heights, estimated from the length of each title, come to no more
-  // than the height of the area. A side that does not fit is drawn as groups, by topic where the cards
-  // have one and by kind otherwise; the smallest groups are then drawn out again while there is room.
-  const column = useCallback((side: Side, ids: string[]): Item[] => {
+  // than the height of the area. A side that does not fit starts from its kinds and divides the largest
+  // group that can be divided (by topic, then by file or section), largest pieces first, for as long as
+  // the column still fits; the smallest groups are then drawn out as their own nodes while there is room.
+  const narrow = stacked;
+  const plan = useCallback((ids: string[]): Plan => {
     const lines = (text: string, tag = "") => Math.max(1, Math.ceil(((text.length + (tag ? tag.length + 1 : 0)) * 6.9) / (sideW - 24)));
     const nodeH = (id: string) => { const c = card(id)!; return 10 + lines(c.title, c.kicker) * 17.5 + ITEM_GAP; };
-    const headH = (name: string) => 12 + lines(name + " 000") * 17.5 + ITEM_GAP;
-    const room = (H - 2 * PAD_Y - 30) * Math.pow(0.86, tight);
-    const node = (id: string): Item => ({ type: "node", id });
+    const headH = (name: string) => 15 + lines(name + " 00000") * 17.5 + ITEM_GAP;
+    const room = (narrow ? Math.max(H, 520) * 0.5 : H - 2 * PAD_Y - 30) * Math.pow(0.86, tight);
+    if (ids.reduce((sum, id) => sum + nodeH(id), 0) <= room) return { flat: true };
     const by = (list: string[], pick: (c: FGCard) => string) => {
       const groups = new Map<string, string[]>();
       for (const id of list) { const k = pick(card(id)!); groups.set(k, [...(groups.get(k) ?? []), id]); }
       return [...groups.entries()];
     };
-    const open = (path: string) => opened.has(`${side}:${path}`);
-    const group = (path: string, name: string, list: string[], divide: boolean): Item => {
-      const tones = new Set(list.map((id) => card(id)!.tone));
-      const isOpen = open(path);
-      let children: Item[] = [];
-      if (isOpen) {
-        const sections = divide && list.length > DIVIDE_ABOVE ? by(list, (c) => c.section ?? "") : [];
-        children = sections.length > 1 && sections.length < list.length
-          ? sections.map(([s, part]) => (part.length === 1 ? node(part[0]) : group(`${path}/${s}`, s || "Elsewhere", part, false)))
-          : list.map(node);
-      }
-      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, ids: list, open: isOpen, children };
-    };
-    if (ids.reduce((sum, id) => sum + nodeH(id), 0) <= room) return ids.map(node);
-    // Start from the kinds, then divide the largest group that can be divided (by topic, then by file or
-    // section) for as long as the column still fits: the column says as much as its height allows.
-    interface Part { name: string; list: string[]; depth: number }
-    const several = by(ids, (c) => c.role).length > 1;
-    let parts: Part[] = by(ids, (c) => words(c.role).many).map(([name, list]) => ({ name, list, depth: 0 }));
+    let parts: Part[] = by(ids, (c) => c.role).map(([role, list]) => ({ key: role, name: words(role as FGRole).many, list, depth: 0 }));
     const total = (ps: Part[]) => ps.reduce((sum, p) => sum + headH(p.name), 0);
-    const divide = (p: Part): Part[] | null => {
-      const kind = words(card(p.list[0])!.role).many;
-      const lower = kind.charAt(0).toLowerCase() + kind.slice(1);
+    // The pieces a part divides into, largest first: by topic, and a part that is one topic by file or section.
+    const pieces = (p: Part): Part[] | null => {
       for (const depth of [1, 2]) {
         if (p.depth >= depth) continue;
-        const pieces = by(p.list, (c) => (depth === 1 ? c.topic : c.section) ?? "");
-        if (pieces.length < 2) continue;
-        const base = p.depth === 0 ? "" : p.name;
-        return pieces.map(([k, list]) => ({
-          list,
-          depth,
-          name: depth === 1 ? (k ? (several ? `${k} · ${lower}` : k) : p.name) : (k ? `${base ? base + " · " : ""}${k}` : p.name),
-        }));
+        const found = by(p.list, (c) => (depth === 1 ? c.topic : c.section) ?? "").sort((x, y) => y[1].length - x[1].length);
+        if (found.length < 2) continue;
+        return found.map(([k, list]) => ({ key: `${p.key}/${depth}:${k}`, list, depth, name: k ? (depth === 2 && p.depth === 1 ? `${p.name} · ${k}` : k) : `Other ${p.name.charAt(0).toLowerCase()}${p.name.slice(1)}` }));
       }
       return null;
     };
-    for (let guard = 0; guard < 40; guard++) {
-      const order = parts.map((p, i) => i).sort((a, b) => parts[b].list.length - parts[a].list.length);
+    for (let guard = 0; guard < 60; guard++) {
+      const order = parts.map((_, i) => i).sort((a, b) => parts[b].list.length - parts[a].list.length);
       let done = false;
       for (const i of order) {
-        if (parts[i].list.length < 4) break;
-        const pieces = divide(parts[i]);
-        if (!pieces) continue;
-        const next = [...parts.slice(0, i), ...pieces, ...parts.slice(i + 1)];
-        if (total(next) > room) continue;
-        parts = next;
-        done = true;
-        break;
+        if (parts[i].list.length < 4 || parts[i].key.endsWith("/rest")) continue;
+        const all = pieces(parts[i]);
+        if (!all) continue;
+        // As many of the largest pieces as fit; what is left stays together under the part's own name.
+        for (let take = all.length; take >= 1 && !done; take--) {
+          const rest = all.slice(take).flatMap((x) => x.list);
+          if (take < all.length && rest.length === 0) continue;
+          const kept: Part[] = take === all.length ? all : [...all.slice(0, take), { key: `${parts[i].key}/rest`, name: parts[i].name.startsWith("Other ") ? parts[i].name : `Other ${parts[i].name.charAt(0).toLowerCase()}${parts[i].name.slice(1)}`, list: rest, depth: parts[i].depth }];
+          const next = [...parts.slice(0, i), ...kept, ...parts.slice(i + 1)];
+          if (total(next) <= room) { parts = next; done = true; }
+        }
+        if (done) break;
       }
       if (!done) break;
     }
-    // Draw out the smallest groups as their own nodes while the column still fits.
     let left = room - total(parts);
-    const out = new Set<number>();
-    for (const i of parts.map((p, n) => n).sort((a, b) => parts[a].list.length - parts[b].list.length)) {
-      const cost = parts[i].list.reduce((sum, id) => sum + nodeH(id), 0) - headH(parts[i].name);
-      if (parts[i].list.length === 1 || cost <= left) { out.add(i); left -= Math.max(0, cost); }
+    const out = new Set<string>();
+    for (const p of [...parts].sort((a, b) => a.list.length - b.list.length)) {
+      const cost = p.list.reduce((sum, id) => sum + nodeH(id), 0) - headH(p.name);
+      if (p.list.length === 1 || cost <= left) { out.add(p.key); left -= Math.max(0, cost); }
     }
-    return parts.flatMap((p, i) => (out.has(i) && !open(p.name) ? p.list.map(node) : [group(p.name, p.name, p.list, p.depth < 2)]));
-  }, [card, words, sideW, H, tight, opened]);
+    return { flat: false, parts, out };
+  }, [card, words, sideW, H, tight, narrow]);
 
-  const leftItems = useMemo(() => column("users", model.left), [column, model.left]);
-  const rightItems = useMemo(() => column("uses", model.right), [column, model.right]);
+  // While the reader has a group open the division is kept as it was, so that the group stays where it is.
+  const kept = useRef<{ key: string; users: Plan; uses: Plan } | null>(null);
+  const plans = useMemo(() => {
+    if (opened.size && kept.current?.key === key) return kept.current;
+    kept.current = { key, users: plan(model.left), uses: plan(model.right) };
+    return kept.current;
+  }, [plan, model.left, model.right, opened, key]);
+
+  const column = useCallback((side: Side, ids: string[], how: Plan): Item[] => {
+    const node = (id: string): Item => ({ type: "node", id });
+    if (how.flat) return ids.map(node);
+    const open = (path: string) => opened.has(`${side}:${path}`);
+    const group = (path: string, name: string, list: string[], divide: boolean): Item => {
+      const tones = new Set(list.map((id) => card(id)!.tone));
+      const kinds = new Set(list.map((id) => card(id)!.role));
+      const isOpen = open(path);
+      let children: Item[] = [];
+      if (isOpen) {
+        const sections = new Map<string, string[]>();
+        if (divide && list.length > DIVIDE_ABOVE) for (const id of list) { const k = card(id)!.section ?? ""; sections.set(k, [...(sections.get(k) ?? []), id]); }
+        children = sections.size > 1 && sections.size < list.length
+          ? [...sections.entries()].map(([sec, part]) => (part.length === 1 ? node(part[0]) : group(`${path}/s:${sec}`, sec || "Elsewhere", part, false)))
+          : list.map(node);
+      }
+      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, role: kinds.size === 1 ? [...kinds][0] : undefined, ids: list, open: isOpen, children };
+    };
+    return how.parts.flatMap((p) => (how.out.has(p.key) && !open(p.key) ? p.list.map(node) : [group(p.key, p.name, p.list, p.depth < 2)]));
+  }, [card, opened]);
+
+  const leftItems = useMemo(() => column("users", model.left, plans.users), [column, model.left, plans]);
+  const rightItems = useMemo(() => column("uses", model.right, plans.uses), [column, model.right, plans]);
 
   useLayoutEffect(() => {
     const el = scroller.current;
@@ -269,6 +287,7 @@ export function FocusGraph(props: FocusGraphProps) {
     const frame = w.querySelector(".fg__subjects");
     if (!frame) { setDrawn(null); return; }
     const F = box(frame);
+    const stackedNow = w.classList.contains("fg__world--narrow");
     const segs: Seg[] = [];
     const paths: Record<string, string> = {};
     const boxes: Drawn["boxes"] = [];
@@ -311,7 +330,11 @@ export function FocusGraph(props: FocusGraphProps) {
         const spread = Math.min(e.to.h - 12, (n - 1) * 5);
         const ty = e.to.y + e.to.h / 2 + (n > 1 ? -spread / 2 + (spread * i) / (n - 1) : 0);
         const ny = e.b.y + e.b.h / 2;
-        const d = side === "users" ? curve(e.b.x + e.b.w, ny, e.to.x - 5, ty) : curve(e.to.x + e.to.w, ty, e.b.x - 5, ny);
+        // Stacked, every line runs in the left margin, from the left edge of one to the left edge of the other.
+        const loop = (x1: number, y1: number, x2: number, y2: number) => { const m = Math.min(x1, x2) - 16; return `M${x1.toFixed(1)} ${y1.toFixed(1)} C${m.toFixed(1)} ${y1.toFixed(1)}, ${m.toFixed(1)} ${y2.toFixed(1)}, ${(x2 - 5).toFixed(1)} ${y2.toFixed(1)}`; };
+        const d = stackedNow
+          ? (side === "users" ? loop(e.b.x, ny, e.to.x, ty) : loop(e.to.x, ty, e.b.x, ny))
+          : side === "users" ? curve(e.b.x + e.b.w, ny, e.to.x - 5, ty) : curve(e.to.x + e.to.w, ty, e.b.x - 5, ny);
         const isGroup = !e.el.dataset.card;
         const count = Number(e.el.dataset.count ?? 1);
         const kind = isGroup ? (e.el.dataset.kind ?? "proof") : (rels.get(e.id)?.kind ?? "proof");
@@ -430,8 +453,13 @@ export function FocusGraph(props: FocusGraphProps) {
     });
     moved.current = true;
     requestAnimationFrame(() => requestAnimationFrame(() => {
+      const sc = scroller.current;
       const el = world.current?.querySelector<HTMLElement>(`.fg__side[data-band="${side}"] .fg__group[data-group="${CSS.escape(path)}"]`);
-      el?.scrollIntoView({ block: el.getBoundingClientRect().height > (scroller.current?.clientHeight ?? 0) ? "start" : "nearest", inline: "nearest" });
+      if (!sc || !el) return;
+      // Only the graph's own area moves: the page and the paper stay where they are.
+      const v = sc.getBoundingClientRect(), r = el.getBoundingClientRect();
+      if (r.height > v.height - 16 || r.top < v.top + 8) sc.scrollTop += r.top - v.top - 8;
+      else if (r.bottom > v.bottom - 8) sc.scrollTop += r.bottom - v.bottom + 8;
     }));
   };
 
@@ -481,7 +509,7 @@ export function FocusGraph(props: FocusGraphProps) {
         <div key={`g:${it.key}`} className={`fg__group${it.open ? " is-open" : ""}`} data-group={it.key} style={it.tone ? ({ "--fg-tone": it.tone } as React.CSSProperties) : undefined}>
           <button
             type="button"
-            className="fg__grouphead"
+            className={`fg__grouphead${it.role ? ` fg__grouphead--${it.role}` : ""}`}
             data-group={it.key}
             data-count={it.ids.length}
             data-kind={kind}
@@ -499,7 +527,7 @@ export function FocusGraph(props: FocusGraphProps) {
     });
 
   const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => (
-    <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: ids.length ? sideW : NOTE_W }}>
+    <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: ids.length || stacked ? sideW : NOTE_W }}>
       {ids.length > 0
         ? <>
           <h4 className="fg__sidehead">{side === "users" ? (many ? "Use these" : "Use this") : (many ? "These use" : "This uses")} <span>{ids.length}</span></h4>
@@ -564,7 +592,7 @@ export function FocusGraph(props: FocusGraphProps) {
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
-        <div className="fg__world" ref={world} style={{ zoom, columnGap: gap, }}>
+        <div className={`fg__world${narrow ? " fg__world--narrow" : ""}`} ref={world} style={{ zoom, columnGap: gap }}>
           {drawn && (
             <svg className="fg__lines" width={drawn.w} height={drawn.h} aria-hidden="true">
               <defs>
@@ -579,7 +607,7 @@ export function FocusGraph(props: FocusGraphProps) {
             ? <p className="fg__none">Nothing is drawn for this place in the paper.</p>
             : <>
               {renderSide("users", leftItems, model.left, model.users)}
-              <div className={`fg__subjects${many ? " fg__subjects--many" : ""}`} data-count={model.subj.length} style={{ width: subjectW }}>
+              <div className={`fg__subjects${many ? " fg__subjects--many" : ""}`} data-count={model.subj.length} style={{ width: stacked ? sideW : subjectW }}>
                 {many && <h4 className="fg__sidehead">{props.manyLabel ?? "Stated in this paragraph"} <span>{model.subj.length}</span></h4>}
                 {model.subj.map((id) => renderCard(id, "subject"))}
               </div>

@@ -123,7 +123,7 @@ def check_groups(page: Page, label: str) -> list[str]:
             bad.append(f"{label}: the drawing overflows but there is no overview")
         hidden = page.evaluate(
             """() => { const sc = document.querySelector('.fg__scroll'); const v = sc.getBoundingClientRect(); const out = [];
-            for (const c of sc.querySelectorAll('.fg__card')) { c.scrollIntoView({block: 'nearest', inline: 'nearest'}); const r = c.getBoundingClientRect();
+            for (const c of sc.querySelectorAll('.fg__card')) { let r = c.getBoundingClientRect(); if (r.top < v.top) sc.scrollTop += r.top - v.top - 4; else if (r.bottom > v.bottom) sc.scrollTop += r.bottom - v.bottom + 4; if (r.left < v.left) sc.scrollLeft += r.left - v.left - 4; else if (r.right > v.right) sc.scrollLeft += r.right - v.right + 4; r = c.getBoundingClientRect();
               if (r.height <= v.height && (r.top < v.top - 1 || r.bottom > v.bottom + 1 || r.left < v.left - 1 || r.right > v.right + 1)) out.push(c.dataset.card); }
             return out; }"""
         )

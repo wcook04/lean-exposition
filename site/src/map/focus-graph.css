@@ -146,6 +146,11 @@
   cursor: pointer;
 }
 .fg__grouphead::before { content: ""; position: absolute; left: -1.5px; top: -1.5px; bottom: -1.5px; width: 6px; border-radius: 9px 0 0 9px; background: var(--fg-tone, transparent); }
+.fg__grouphead--definition { border-radius: 2px; background: var(--fg-definition); }
+.fg__grouphead--definition::before { border-radius: 2px 0 0 2px; }
+.fg__grouphead--helper, .fg__grouphead--library { border-style: dashed; }
+.fg__grouphead--result { background: var(--fg-result); }
+.fg__grouphead--cited, .fg__grouphead--open { border-style: dotted; }
 .fg__grouphead:hover, .fg__grouphead:focus-visible { border-color: var(--fg-accent); outline: none; }
 .fg__group.is-open > .fg__grouphead { box-shadow: none; margin: 0; }
 .fg__groupname { overflow-wrap: break-word; }
@@ -167,6 +172,10 @@
 .fg__mini i.is-hot { background: var(--fg-ink); }
 .fg__mini b { position: absolute; border: 1.5px solid var(--fg-accent); background: color-mix(in srgb, var(--fg-accent) 12%, transparent); border-radius: 2px; pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) { .fg__card, .fg__grouphead { transition: box-shadow 120ms ease, border-color 120ms ease; } }
+/* Too narrow for three columns: users over the subject, uses under it, lines in the left margin. */
+.fg__world--narrow { flex-direction: column; align-items: flex-start; justify-content: flex-start; row-gap: 18px; padding-left: 30px; }
+.fg__world--narrow .fg__side, .fg__world--narrow .fg__group, .fg__world--narrow .fg__members { align-items: flex-start !important; }
+.fg__world--narrow .fg__side[data-band="users"] .fg__members { padding: 0 0 0 12px; margin: 0 0 0 8px; border-right: 0; border-left: 2px solid color-mix(in srgb, var(--fg-wire) 60%, transparent); }
 /* A phone has no room for the key or the overview: the drawing takes it. */
 @media (max-width: 600px) {
   .fg__key, .fg__mini { display: none; }
