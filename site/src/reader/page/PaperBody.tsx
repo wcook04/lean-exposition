@@ -531,6 +531,7 @@ function measureNatural(box: HTMLElement, math: HTMLElement): Natural {
   box.style.fontSize = "";
   delete box.dataset.fit;
   delete box.dataset.align;
+  delete box.dataset.tag;
   joinBracketedPieces(math);
   groupRelationRuns(math, TAIL_EM * (parseFloat(getComputedStyle(math).fontSize) || 16));
   const tag = box.querySelector<HTMLElement>(".katex-tag, .tag");
@@ -573,6 +574,8 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     size = measureNatural(box, math);
     natural.set(box, size);
   }
+  // Whether a numbered display's number goes under the formula, decided below and written once.
+  numberBelow(box, !!size.tag && taggedScrolls(box, math, size, available));
   if (size.tag) {
     const centred = size.formula + 2 * (size.tag + TAG_GAP);
     const flush = size.formula + size.tag + TAG_GAP;
@@ -621,6 +624,24 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
   box.style.fontSize = `${wrap}em`;
   box.dataset.fit = "wrap";
   openRuns(size, wrap, available);
+}
+
+/**
+ * A numbered display too wide to shrink beside its number that cannot break (a cases or aligned
+ * block, or a display in a slice) keeps its shape and scrolls. Its number stays pinned to the
+ * column's edge and was drawn over the formula's end, so the number goes under the formula.
+ */
+function taggedScrolls(box: HTMLElement, math: HTMLElement, size: Natural, available: number): boolean {
+  const flush = size.formula + size.tag + TAG_GAP;
+  if (flush <= available + 1 || available / flush >= TAGGED_FLOOR) return false;
+  return unbreakable(math) || staysOnOneLine(box);
+}
+
+/** Set a numbered display's number on its own line under the formula, or back beside it. */
+function numberBelow(box: HTMLElement, below: boolean): void {
+  if (below) {
+    if (box.dataset.tag !== "below") box.dataset.tag = "below";
+  } else if (box.dataset.tag) delete box.dataset.tag;
 }
 
 /** A cases or aligned block has rows and a brace: breaking it inline tears them apart. */
@@ -686,6 +707,26 @@ function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
   return true;
 }
 
+/**
+ * How far right a display's formula and its equation number reach, from the start of the
+ * box's scrolled content. The box's scrollWidth is not this: KaTeX draws each vertical list
+ * with a 2px strut past its edge (.vlist-s), so a number set flush against the right edge
+ * reports a scrollWidth 2px wider than the column although every glyph fits. A display
+ * KaTeX did not render (a fallback) has only its scrollWidth.
+ */
+export function formulaExtent(box: HTMLElement): number {
+  const html = box.querySelector<HTMLElement>(":scope > .katex-display > .katex > .katex-html");
+  if (!html) return box.scrollWidth;
+  const parts = html.querySelectorAll<HTMLElement>(
+    ":scope > .katex-base, :scope > .math-seg > .katex-base, :scope > .katex-tag, :scope > .tag",
+  );
+  if (!parts.length) return box.scrollWidth;
+  const start = box.getBoundingClientRect().left + box.clientLeft - box.scrollLeft;
+  let right = 0;
+  for (const part of Array.from(parts)) right = Math.max(right, part.getBoundingClientRect().right - start);
+  return right;
+}
+
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
@@ -708,7 +749,7 @@ export function markWideMaths(root: HTMLElement): () => void {
       widths.set(box, { now: width, before: seen?.now ?? null, at: performance.now() });
     }
     // Only a formula that still does not fit after shrinking and breaking scrolls.
-    const wide = box.scrollWidth > box.clientWidth + 1;
+    const wide = formulaExtent(box) > box.clientWidth + 1;
     if (box.dataset.overflow !== String(wide)) box.dataset.overflow = String(wide);
     const atStart = box.scrollLeft <= 1;
     const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
