@@ -4,7 +4,7 @@
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
 import { useEffect, useMemo, useState } from "react";
-import { loadPhraseNotes, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
+import { loadPhraseNotes, type ComparisonMatters, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { isFidelity, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
@@ -171,7 +171,64 @@ function Conventions({ keys }: { keys: readonly string[] }) {
  * conventions the statement relies on. The topic's colour marks nothing here: the amber rule
  * beside the quotation is the same mark the selected words carry in the paper.
  */
-export function PhraseCard({ row, note, quote, phrase, names }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; phrase?: string | null; names?: readonly string[] }) {
+const MATTERS_KIND: Record<string, string> = {
+  scope: "a difference of scope",
+  granularity: "a difference of granularity",
+  convention: "a difference of convention",
+  "genuine-gap": "a genuine gap",
+};
+
+/** The verdict's last line: whether the difference bears on the paper's main result, and why. */
+function Matters({ matters, mainResult }: { matters: ComparisonMatters; mainResult?: string }) {
+  const answer = matters.affects_main_result === "yes" ? "Yes" : matters.affects_main_result === "no" ? "No" : "Not settled";
+  return (
+    <p className="phrase-card__matters" data-affects={matters.affects_main_result}>
+      <span className="phrase-card__ask">Does this affect {mainResult ? <span dangerouslySetInnerHTML={{ __html: noteHtml(mainResult).html }} /> : "the main result"}?</span>{" "}
+      <strong>{answer}.</strong>
+      {MATTERS_KIND[matters.kind] ? ` This is ${MATTERS_KIND[matters.kind]}.` : ""}
+      {matters.line && (
+        <>
+          {" "}
+          <span dangerouslySetInnerHTML={{ __html: noteHtml(matters.line).html }} />
+        </>
+      )}
+    </p>
+  );
+}
+
+/** What the quoted words say, in the paper's notation, with its sources; and what is not settled from them. */
+function Explanation({ explanation }: { explanation: PhraseExplanation }) {
+  const sources = explanation.citations ?? [];
+  return (
+    <div className="phrase-card__explanation">
+      <p className="phrase-card__label">
+        What these words say <span>AI-drafted</span>
+      </p>
+      <p className="phrase-card__text" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.text).html }} />
+      {explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
+      {sources.length > 0 && (
+        <details className="phrase-card__sources">
+          <summary>{sources.length === 1 ? "The source this rests on" : `The ${sources.length} sources this rests on`}</summary>
+          <ul>
+            {sources.map((source) => (
+              <li key={`${source.ref}:${source.where ?? ""}`}>
+                {source.url ? <a href={source.url}>{source.title}</a> : source.title}
+                {source.where && <>, {source.where}</>}
+                {source.supports && (
+                  <>
+                    : <span dangerouslySetInnerHTML={{ __html: noteHtml(source.supports).html }} />
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </div>
+  );
+}
+
+export function PhraseCard({ row, note, quote, phrase, names, explanation, mainResult }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string }) {
   const state = row.fidelity as string | undefined;
   const verdict = isFidelity(row.fidelity) ? VERDICT[row.fidelity] : null;
   const leanNote = useLeanNote(row.name);
@@ -179,6 +236,7 @@ export function PhraseCard({ row, note, quote, phrase, names }: { row: PhraseLea
   return (
     <section className="phrase-card" aria-label="These words and how the Lean compares with them">
       {quote && <blockquote className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />}
+      {explanation?.text && <Explanation explanation={explanation} />}
       <div className="phrase-card__compare">
         <p className="phrase-card__label">
           Comparison with these words {verdict && <span>AI-assessed</span>}
@@ -202,6 +260,7 @@ export function PhraseCard({ row, note, quote, phrase, names }: { row: PhraseLea
             No comparison is recorded for this passage and formal statement.
           </p>
         )}
+        {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
         <ComparisonLegend />
       </div>
       {note && (

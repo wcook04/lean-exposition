@@ -1306,3 +1306,21 @@ html[data-right-sheet] {
   outline: var(--focus-ring);
   outline-offset: 2px;
 }
+
+.guide-panel__cards .guide-panel__plain {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 2px var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+}
+
+.guide-panel__statement {
+  color: var(--ink);
+}
+
+.guide-panel__cards button > span:not(.guide-panel__n),
+.guide-panel__plain > span:not(.guide-panel__n) {
+  grid-column: 2;
+}

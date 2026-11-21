@@ -28,7 +28,7 @@ import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, typ
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { SubjectBand, type SubjectState } from "./SubjectBand";
-import { GuidePanel, StartHere } from "./Guides";
+import { GuidePanel, ProofRoute, StartHere } from "./Guides";
 import { cardKeys, cardTarget, useAids } from "../aids";
 import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
@@ -477,7 +477,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
 
   const aids = useAids();
   const guideStage = site.library && stage === site.library.main ? site.library.guide : undefined;
-  const [aside, setAside] = useState<"start" | "guide" | null>(null);
+  const [aside, setAside] = useState<"start" | "guide" | "route" | null>(null);
   // A guide is read with nothing else in mind: a new selection takes its place.
   useEffect(() => setAside(null), [pin?.record, pin?.tie, decl, held]);
   const holding = !!pin || !!decl || !!held;
@@ -519,7 +519,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     },
     [ties, alignment],
   );
-  const about = site.sectionAids?.[stage]?.[PAPER_NAMES[stage].short];
+  // The paper's own short orientation where it has one; else what its main formal statement asserts.
+  const about = aids.summary ?? site.sectionAids?.[stage]?.[PAPER_NAMES[stage].short];
   // Before the paper's first link (its title and authors) there is nothing to follow: the pane offers where to start.
   const firstLink = ties.order.length ? startOf(ties.index.ties[ties.order[0]].at) : null;
   const atFront = !holding && follow.tie === null && (readAt === null || readAt === undefined || firstLink === null || readAt < firstLink);
@@ -533,6 +534,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const asideSlot =
     aside === "start" ? (
       <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
+    ) : aside === "route" && aids.route ? (
+      <ProofRoute steps={aids.route} onOpen={openCard} onClose={() => setAside(null)} />
     ) : aside === "guide" && guideStage ? (
       <GuidePanel stage={guideStage} onClose={() => setAside(null)} />
     ) : null;
@@ -597,6 +600,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         {aids.showcase.length > 0 && (
           <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
             Start here
+          </button>
+        )}
+        {aids.route && (
+          <button type="button" className="map-pane__whole map-pane__guide" aria-pressed={aside === "route"} onClick={() => setAside(aside === "route" ? null : "route")}>
+            Follow the proof
           </button>
         )}
         {guideStage && (

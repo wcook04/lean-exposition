@@ -378,3 +378,53 @@
 :root[data-tones="off"] .phrase-bars > span {
   background: var(--ink-3);
 }
+
+/* What the quoted words say, between the quotation and the comparison; and the verdict's last line. */
+.phrase-card__explanation {
+  max-width: var(--evidence-measure);
+}
+
+/* Not settled from the sources: said plainly, with a rule, never coloured as a failure. */
+.phrase-card__open {
+  margin-top: var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--ink-2);
+  color: var(--ink);
+}
+
+.phrase-card__sources {
+  margin-top: var(--space-2);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.phrase-card__sources summary {
+  width: fit-content;
+  min-height: 24px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+}
+
+.phrase-card__sources summary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.phrase-card__sources ul {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding-left: 1.1em;
+}
+
+.phrase-card__matters {
+  margin-top: var(--space-2);
+}
+
+.phrase-card__ask {
+  font-weight: 600;
+}

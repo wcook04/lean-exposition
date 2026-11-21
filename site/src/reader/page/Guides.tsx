@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import type { Stage } from "../../api/types";
 import { PAPER_NAMES } from "../../app/papers";
 import { routeHref } from "../../app/router";
-import type { ShowcaseCard } from "../aids";
+import type { RouteStep, ShowcaseCard } from "../aids";
 import { useDocument } from "../documents";
 import { TonesSwitch } from "./Outline";
 import { ComparisonLegend, noteHtml } from "./PhraseCard";
@@ -51,6 +51,47 @@ export function StartHere({ cards, about, titleOf, onOpen, onClose }: { cards: r
             </button>
           </li>
         ))}
+      </ol>
+    </section>
+  );
+}
+
+/** "Follow the proof": the paper's proof as ordered steps, each opening its result with the Lean beside it. */
+export function ProofRoute({ steps, onOpen, onClose }: { steps: readonly RouteStep[]; onOpen(card: string): void; onClose(): void }) {
+  return (
+    <section className="guide-panel" aria-label="Follow the proof">
+      <Head title="Follow the proof" onClose={onClose} />
+      <p className="guide-panel__lead">The proof in {steps.length} steps, in the order the argument uses them. Each opens its result in the paper with the comparison and the Lean beside it.</p>
+      <p className="guide-panel__who">Drafted with AI; no mathematician has reviewed it.</p>
+      <ol className="guide-panel__cards">
+        {steps.map((item, i) => {
+          const body = (
+            <>
+              <span className="guide-panel__n" aria-hidden="true">
+                {i + 1}
+              </span>
+              <span className="guide-panel__title" dangerouslySetInnerHTML={{ __html: noteHtml(item.result).html }} />
+              {item.statement && <span className="guide-panel__why guide-panel__statement" dangerouslySetInnerHTML={{ __html: noteHtml(item.statement).html }} />}
+              {item.why_needed && (
+                <span className="guide-panel__why">
+                  <strong>Why the proof needs it:</strong> <span dangerouslySetInnerHTML={{ __html: noteHtml(item.why_needed).html }} />
+                </span>
+              )}
+            </>
+          );
+          const lean = item.lean?.[0];
+          return (
+            <li key={`${item.step}:${item.result}`}>
+              {lean ? (
+                <button type="button" onClick={() => onOpen(`result:${lean}`)}>
+                  {body}
+                </button>
+              ) : (
+                <div className="guide-panel__plain">{body}</div>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </section>
   );

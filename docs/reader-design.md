@@ -134,22 +134,29 @@ is fixed, and is the order of the questions a reader asks.
 2. **The exact quotation.** The selected words as the paper sets them, in the serif at 17px,
    with an amber rule at their left: the same mark as in the paper's margin. Never clamped or
    elided; a long quotation scrolls with the inspector, not inside a box of its own.
-3. **The comparison, with its whole qualification.** The verdict in words, then every sentence
+3. **What these words say**, where the paper's data has it: three to five sentences in the
+   paper's notation, labelled "AI-drafted", with the sources it rests on behind one disclosure.
+   Where part of it is not settled from the sources, that part is said plainly under it ("Not
+   settled from the sources: ..."), with an ink rule and never the colour of a failure.
+4. **The comparison, with its whole qualification.** The verdict in words, then every sentence
    of qualification the data carries, whatever the verdict, then "AI-assessed". A verdict of
-   *same* shows its note too. An absent comparison says "No comparison is recorded for this
+   *same* shows its note too. Where the data says whether the difference bears on the paper's
+   main result, the verdict ends with that as a question and its answer: "Does this affect
+   Theorem 1.1? No. This is a difference of convention." and the recorded line of why. An absent comparison says "No comparison is recorded for this
    passage and formal statement."; a withheld one says so and gives the recorded reason.
    Neither is drawn as agreement. One line under it opens the legend (below).
-4. **The reading note**, labelled "AI-drafted": what the formal statement says, in the
+5. **The reading note**, labelled "AI-drafted": what the formal statement says, in the
    paper's notation. Sans, 16px on a 24px line, at most 38rem wide however wide the pane.
-5. **Conventions used here**, where the paper has a glossary of formal conventions: each as a
-   disclosure that states the convention as mathematics.
-6. **The formal statement**: the Lean, mono at 14px on a 21px line, with the tied lines lit by
+6. **Conventions used here**, where the paper has a glossary of formal conventions: each as a
+   disclosure that states the convention as mathematics, and how it differs from the paper's
+   where the glossary says.
+7. **The formal statement**: the Lean, mono at 14px on a 21px line, with the tied lines lit by
    a narrow amber rule and a pale wash, and its Comparator line in the Comparator's own words.
-7. **The graph**: in the Lean view a link, "See what this uses in the graph"; in the Graph view
-   the drawing itself, above.
+8. **The graph**: in the Lean view a link at the foot, "See what this uses, and what uses it,
+   in the graph"; in the Graph view the drawing itself, above.
 
-Several declarations linked to the same words are a row of buttons between 2 and 3; choosing
-one changes 3 to 7 and never the quotation.
+Several declarations linked to the same words are a row of buttons between 1 and 2; choosing
+one changes 4 to 8 and never the quotation or what the words say.
 
 ### The legend
 
@@ -243,6 +250,79 @@ The drawing is as specified in [the graph pane](graph-pane.md), with these chang
   "Preview". A click makes it the subject, as one step in the browser's history.
 - The view the reader has arranged (zoom, place, an open list) is kept until the subject
   changes.
+
+## What a paper can supply
+
+All of this is optional data in a paper's instance. The reader draws each when it is there and
+shows nothing in its place when it is not; no paper needs any of it to be read.
+
+| Data | Where the reader looks | What the reader draws |
+| --- | --- | --- |
+| Section aids | `generated/section-aids.json`, or `reading_aids.json`: section number or heading to text, flat or under `paper` | the reader annotation under each section head |
+| Glossary | `generated/glossary.json`: `{term, convention, differs_from_paper, cards}` | "Conventions used here" in the inspector |
+| Showcase | `generated/showcase.json`: `{card, why}`; a card is `tie:<phrase>`, `result:<Lean name>`, `declaration:<Lean name>` or a bare phrase id | "Start here", and the line "Start here, example 3 of 10" with Previous and Next while one is open |
+| Start summary | `generated/start-here-summary.md`, at most 150 words | the paragraph that opens "Start here" |
+| Proof route | `generated/route.json`: steps `{step, result, statement, explanation, citations, lean[], verdict, why_needed}` | "Follow the proof" in the pane: the steps in order, each opening its result |
+| Explanation | on a phrase's tie: `explanation {text, citations[{ref, title, url, where, supports}], grounded, open}` | "What these words say" in the inspector |
+| Bearing on the main result | on a phrase's Lean row: `matters {kind, affects_main_result, line}`; `main_result` on the paper's ties | the verdict's "Does this affect the main result?" line |
+| Guide | a document of kind `guide` | "How to read the Lean" in the pane |
+
+Two longer pieces a paper may bring, a summary of differences (`differences-summary.md`) and a
+long "Start here" (`start-here.md`), are pages: documents of the instance with their own
+addresses, reached from the pane's "Start here" and from Read. They are not drawn in the pane.
+
+## Adapted editions (planned, not built)
+
+A paper may gain an adapted edition: a corrected, clearer version of the authors' text beside the
+authors' own, with its own layer of Lean statements that are proved from the authors'
+declarations. The reader shows either text, never a blend, and says at every moment which.
+
+**One switch.** "Authors' paper" and "Adapted edition" stand in the strip beside "Text" and
+"PDF", as a second pair of pressed buttons. The authors' paper is the default and every existing
+address means the authors' paper. The switch keeps the reader's place by paragraph: the
+alignment map gives, for the paragraph under the reading line, the paragraph on the other side.
+A paragraph with no partner (a cut, an addition) lands on the nearest one before it and says so
+in one line: "This paragraph has no counterpart in the authors' paper." The switch changes the
+text and nothing else: the view and the pane stay, and a selection is let go, because its words
+belong to the text being left.
+
+**The states stay the same.** Following, Preview and Selected mean what they mean above. The
+subject band names the text as well as the state while the adapted edition is open: "Selected
+words in §5.6, adapted edition".
+
+**A changes layer with its own mark.** Topic colour says topic and amber says selection, so a
+change is marked by neither. Each changed passage of the adapted edition carries a mark in the
+right margin, the one margin the other marks do not use: a short dotted rule in ink the height
+of the passage, headed by a small open square. Dotted and on the right is the whole of the
+encoding; the kind of change is said in words, never by a colour. The mark is a button named
+"See what changed here". It opens the change in the pane as a **Selected change**: the authors'
+text, the adapted text, the kind (correction, added justification, clarification, restatement,
+or cut) and the reason with its source. A cut is marked where the text was. **Show changes**, a
+button beside the switch, lists every change in the order of the text, each opening its passage.
+The authors' paper carries no change marks; from it, a paragraph's margin control offers "See
+this paragraph in the adapted edition" where the two differ.
+
+**Links for both texts.** The adapted edition's words link to the adapted statements. The
+inspector for such a link shows two formal statements in order: the adapted statement, then
+"Proved from the authors' declaration" with that declaration, its Comparator line and the way to
+its own card. The comparison is between the adapted words and the adapted statement; how the
+adapted statement stands to the authors' is a second, separately labelled comparison.
+
+**Credit.** The adapted edition's header and About say, whole: "An adapted edition of [authors]'
+paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the
+authors'. Every change is marked, and no change has been reviewed by the authors." The authors'
+paper keeps its own credit unchanged, and the two are never merged into one line.
+
+**What the instance needs.**
+
+| Field | Shape | Use |
+| --- | --- | --- |
+| `documents[].kind` | `"adapted"`, with `of: <document id>` | the second text and which text it adapts |
+| `documents[].credit` | the sentence above, with the authors' names | the adapted edition's header and About |
+| `alignment/changes.json` | `{authors, adapted, paragraphs: [{authors: <paragraph id or null>, adapted: <paragraph id or null>, change: null or {kind, reason, source: {ref, title, url, where}}}]}` | keeping the place across the switch, the margin marks and "Show changes" |
+| paragraph ids | stable ids in both texts, with their byte ranges | the alignment map's two sides |
+| `phrases-<adapted>.json` rows | each row may carry `proved_from: [{name, module}]` | the authors' declaration under the adapted statement |
+| a second comparison | on those rows, `to_authors {fidelity, fidelity_note}` | how the adapted statement stands to the authors' |
 
 ## Layout
 
@@ -386,7 +466,8 @@ loops. Left alone, the page makes no change at all, and `check-idle.py` holds it
 
 ## Not in this pass
 
-Named so that nobody takes their absence for a decision: zoom and one-stop-per-link marks in
+Named so that nobody takes their absence for a decision: adapted editions (planned above);
+pages for a paper's summary of differences and its long "Start here"; zoom and one-stop-per-link marks in
 the PDF view (packet 02); a recorded map between places in the reading copy and the PDF (02);
 the whole map's opening as an argument overview (03); search scope and result rows (05); the
 Compare page's columns for papers with other document kinds (05); one inventory of checks

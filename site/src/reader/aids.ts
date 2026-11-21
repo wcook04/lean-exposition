@@ -23,9 +23,24 @@ export interface ShowcaseCard {
   text: string;
 }
 
+/** One step of the paper's proof, in order: the result, what it states, why the proof needs it, and its Lean. */
+export interface RouteStep {
+  step: number | string;
+  result: string;
+  statement?: string;
+  explanation?: string;
+  why_needed?: string;
+  verdict?: string;
+  lean?: string[];
+}
+
 export interface ReadingAids {
   glossary: Convention[];
   showcase: ShowcaseCard[];
+  /** A short orientation for the pane's "Start here" (the paper's start-here-summary.md). */
+  summary?: string;
+  /** The proof as an ordered list of steps (the paper's route.json), for "Follow the proof". */
+  route?: RouteStep[];
 }
 
 const NONE: ReadingAids = { glossary: [], showcase: [] };
@@ -35,7 +50,12 @@ export function loadAids(): Promise<ReadingAids> {
   if (!site.library) return Promise.resolve(NONE);
   loading ??= fetch(`${import.meta.env.BASE_URL}aids.json`)
     .then((r) => (r.ok ? r.json() : NONE))
-    .then((data: Partial<ReadingAids>) => ({ glossary: Array.isArray(data.glossary) ? data.glossary : [], showcase: Array.isArray(data.showcase) ? data.showcase : [] }))
+    .then((data: Partial<ReadingAids>) => ({
+      glossary: Array.isArray(data.glossary) ? data.glossary : [],
+      showcase: Array.isArray(data.showcase) ? data.showcase : [],
+      summary: typeof data.summary === "string" && data.summary.trim() ? data.summary : undefined,
+      route: Array.isArray(data.route) && data.route.length ? data.route : undefined,
+    }))
     .catch(() => NONE);
   return loading;
 }

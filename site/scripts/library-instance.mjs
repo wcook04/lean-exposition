@@ -52,9 +52,21 @@ for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["ge
   if (existsSync(source)) copyFileSync(source, target);
   else if (existsSync(target)) rmSync(target);
 }
-const aids = { glossary: generated("glossary.json") ?? [], showcase: generated("showcase.json") ?? [] };
+// Also, where the paper has them: a short orientation for "Start here" (start-here-summary.md) and
+// the proof as ordered steps (route.json, a list or {steps: [...]}), for "Follow the proof".
+const generatedText = (name) => {
+  const path = resolve(import.meta.dirname, "../../instances", paper, "generated", name);
+  return existsSync(path) ? readFileSync(path, "utf8").replace(/^#[^\n]*\n+/, "").trim() : "";
+};
+const route = generated("route.json");
+const aids = {
+  glossary: generated("glossary.json") ?? [],
+  showcase: generated("showcase.json") ?? [],
+  summary: generatedText("start-here-summary.md") || undefined,
+  route: Array.isArray(route) ? route : Array.isArray(route?.steps) ? route.steps : undefined,
+};
 const aidsPath = resolve(import.meta.dirname, "../public/aids.json");
-if (aids.glossary.length || aids.showcase.length) writeFileSync(aidsPath, JSON.stringify(aids));
+if (aids.glossary.length || aids.showcase.length || aids.summary || aids.route) writeFileSync(aidsPath, JSON.stringify(aids));
 else if (existsSync(aidsPath)) rmSync(aidsPath);
 writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses)`);

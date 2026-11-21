@@ -388,6 +388,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   quote={quote}
                   phrase={tie?.phrase}
                   names={names}
+                  explanation={tie?.explanation}
+                  mainResult={ties.index.main_result}
                 />
               )}
               {phrase && row && crumbs}
