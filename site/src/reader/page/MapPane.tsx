@@ -15,7 +15,7 @@ import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
-import { FocusGraph, type FGCard } from "../../map/FocusGraph";
+import { FocusGraph, relationCounts, type FGCard, type FGRelation } from "../../map/FocusGraph";
 import { GraphBoundary } from "../../map/GraphBoundary";
 import { mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { useKeptCamera } from "../../map/scene";
@@ -454,11 +454,26 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- Layout ----------------------------------------------------------------------------
 
   const counts = useMemo(() => {
-    if (!focus) return { uses: 0, usedBy: 0 };
+    if (!focus) return { uses: 0, usedBy: 0, usesHow: "", usedByHow: "" };
     const here = new Set(focus.subjects);
-    const uses = new Set(focus.edges.filter((e) => here.has(e.from) && !here.has(e.to)).map((e) => e.to));
-    const usedBy = new Set(focus.edges.filter((e) => here.has(e.to) && !here.has(e.from)).map((e) => e.from));
-    return { uses: uses.size, usedBy: usedBy.size };
+    // Each side counted as FocusGraph counts it: unique neighbours, a card used by the subject and
+    // using it counted among its users, and each relation counted apart.
+    const usedByKinds = new Map<string, Set<FGRelation>>();
+    const usesKinds = new Map<string, Set<FGRelation>>();
+    for (const e of focus.edges) {
+      const into = here.has(e.to) && !here.has(e.from) ? [usedByKinds, e.from] as const : here.has(e.from) && !here.has(e.to) ? [usesKinds, e.to] as const : null;
+      if (!into) continue;
+      const [map, id] = into;
+      if (!map.has(id)) map.set(id, new Set());
+      map.get(id)!.add(e.kind ?? "use");
+    }
+    for (const id of usedByKinds.keys()) usesKinds.delete(id);
+    const tally = (side: Map<string, Set<FGRelation>>) => {
+      const n = new Map<FGRelation, number>();
+      for (const kinds of side.values()) for (const k of kinds) n.set(k, (n.get(k) ?? 0) + 1);
+      return relationCounts(n);
+    };
+    return { uses: usesKinds.size, usedBy: usedByKinds.size, usesHow: tally(usesKinds), usedByHow: tally(usedByKinds) };
   }, [focus]);
   const folded = narrow && !unfolded && !whole;
   const fill = !!leanSlot;
@@ -489,7 +504,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     <div className="map-pane__strip" role="group" aria-label="The graph, folded">
       <span className="map-pane__strip-title">{subjectTitle || (focus?.subjects.length ? `${focus.subjects.length} steps` : "Nothing drawn here")}</span>
       <span className="map-pane__strip-counts">
-        uses {counts.uses}, used by {counts.usedBy}
+        uses {counts.uses}{counts.usesHow && ` (${counts.usesHow})`}, used by {counts.usedBy}{counts.usedByHow && ` (${counts.usedByHow})`}
       </span>
       <button type="button" onClick={() => setUnfolded(true)}>
         Show the graph
@@ -502,6 +517,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       edges={focus.edges}
       route={focus.route}
       routeNote={focus.routeNote}
+      routeLabel={focus.routeLabel}
       label={label}
       lit={lit}
       held={previewCard}

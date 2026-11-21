@@ -2699,7 +2699,7 @@ const MapEdgeControls = forwardRef<{ update(chips: ChipState): void }, {
       onClick={(event) => event.stopPropagation()}
     >
       {outsideCount > 0 && <p className="tree__note" role="status">
-        {outsideCount === 1 ? "1 linked step is not in the argument for this main result" : `${outsideCount} linked steps are not in the argument for this main result`}
+        {outsideCount === 1 ? "1 linked step is not in the recorded argument for this main result" : `${outsideCount} linked steps are not in the recorded argument for this main result`}
       </p>}
       {unroutableCount > 0 && <p className="tree__note tree__note--unroutable" role="status" data-unroutable-count={unroutableCount}>
         {unroutableCount === 1
