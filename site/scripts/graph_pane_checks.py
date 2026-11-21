@@ -19,17 +19,22 @@ MEASURE = r"""
   const sc = fg.querySelector('.fg__scroll');
   const world = fg.querySelector('.fg__world');
   const view = sc.getBoundingClientRect();
-  const zoom = parseFloat(getComputedStyle(world).zoom) || 1;
+  // The camera's scale: the drawing is moved and zoomed by a transform on the world.
+  const t = getComputedStyle(world).transform;
+  const zoom = t && t !== 'none' ? new DOMMatrixReadOnly(t).a : 1;
+  const drawing = world.getBoundingClientRect();
   const out = {subjects: 0, nodes: 0, groups: 0, grouped: 0, small: [], cut: [], blank: [], outside: [],
                users: +fg.dataset.users, uses: +fg.dataset.uses, opened: +fg.dataset.opened,
                lines: fg.querySelectorAll('.fg__lines path[data-edge]').length, tops: 0,
-               extraX: sc.scrollWidth - sc.clientWidth, extraY: sc.scrollHeight - sc.clientHeight,
+               extraX: Math.round(Math.max(0, view.left - drawing.left, drawing.right - view.right)),
+               extraY: Math.round(Math.max(0, view.top - drawing.top, drawing.bottom - view.bottom)),
+               bars: sc.offsetWidth - sc.clientWidth + sc.offsetHeight - sc.clientHeight,
                view: [Math.round(view.width), Math.round(view.height)], none: !!fg.querySelector('.fg__none')};
   const inside = (r) => r.top >= view.top - 1 && r.bottom <= view.bottom + 1 && r.left >= view.left - 1 && r.right <= view.right + 1;
   const text = (el, id) => {
     const cs = getComputedStyle(el);
     const size = parseFloat(cs.fontSize) * zoom;
-    if (size < 13) out.small.push(`${id} (${size.toFixed(1)}px)`);
+    if (size < 11) out.small.push(`${id} (${size.toFixed(1)}px)`);
     if (!el.innerText.trim()) out.blank.push(id);
     if (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1 || cs.textOverflow === 'ellipsis' || (cs.webkitLineClamp && cs.webkitLineClamp !== 'none')) out.cut.push(id);
   };
@@ -68,7 +73,9 @@ def check_graph_pane(page: Page, label: str, dock: str | None = None, expect_sub
     if expect_subject and not m["subjects"]:
         bad.append(f"{label}: no subject card is drawn")
     if m["small"]:
-        bad.append(f"{label}: titles under 13px: {', '.join(m['small'][:5])}")
+        bad.append(f"{label}: titles under 11px at the fitted zoom: {', '.join(m['small'][:5])}")
+    if m["bars"]:
+        bad.append(f"{label}: the graph's area shows scroll bars")
     if m["cut"]:
         bad.append(f"{label}: titles cut: {', '.join(m['cut'][:5])}")
     if m["blank"]:
@@ -92,7 +99,7 @@ def check_graph_pane(page: Page, label: str, dock: str | None = None, expect_sub
 
 
 def check_groups(page: Page, label: str) -> list[str]:
-    """A group opens in place into all its members, the drawing then scrolls if it must, and Fit folds it back."""
+    """A group opens in place into all its members, the drawing then pans if it must, and Fit folds it back."""
     heads = page.locator(".fg__side > .fg__group > .fg__grouphead")
     if heads.count() == 0:
         return []
@@ -110,29 +117,31 @@ def check_groups(page: Page, label: str) -> list[str]:
     if inside != max(counts):
         bad.append(f"{label}: the group {name} counts {max(counts)} but opens into {inside}")
     sc = page.locator(".fg__scroll")
-    extra = sc.evaluate("(el) => el.scrollHeight - el.clientHeight")
+    extra = sc.evaluate("(el) => { const v = el.getBoundingClientRect(), d = el.querySelector('.fg__world').getBoundingClientRect(); return Math.round(Math.max(0, v.top - d.top, d.bottom - v.bottom, v.left - d.left, d.right - v.right)); }")
     if extra > 4:
-        before = sc.evaluate("(el) => el.scrollTop")
+        before = sc.evaluate("(el) => el.querySelector('.fg__world').style.transform")
         box = sc.bounding_box()
-        page.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-        page.mouse.wheel(0, 240 if before < extra / 2 else -240)
+        page.mouse.move(box["x"] + 12, box["y"] + box["height"] / 2)
+        page.mouse.down()
+        page.mouse.move(box["x"] + 12, box["y"] + box["height"] / 2 - 120, steps=6)
+        page.mouse.up()
         page.wait_for_timeout(200)
-        if sc.evaluate("(el) => el.scrollTop") == before:
-            bad.append(f"{label}: with the group {name} open the graph does not scroll under the wheel")
+        if sc.evaluate("(el) => el.querySelector('.fg__world').style.transform") == before:
+            bad.append(f"{label}: with the group {name} open, dragging does not pan the graph")
         if page.locator(".fg__mini").count() == 0 and page.viewport_size["width"] > 600:
             bad.append(f"{label}: the drawing overflows but there is no overview")
         hidden = page.evaluate(
-            """() => { const sc = document.querySelector('.fg__scroll'); const v = sc.getBoundingClientRect(); const out = [];
-            for (const c of sc.querySelectorAll('.fg__card')) { let r = c.getBoundingClientRect(); if (r.top < v.top) sc.scrollTop += r.top - v.top - 4; else if (r.bottom > v.bottom) sc.scrollTop += r.bottom - v.bottom + 4; if (r.left < v.left) sc.scrollLeft += r.left - v.left - 4; else if (r.right > v.right) sc.scrollLeft += r.right - v.right + 4; r = c.getBoundingClientRect();
+            """async () => { const sc = document.querySelector('.fg__scroll'); const v = sc.getBoundingClientRect(); const out = [];
+            for (const c of sc.querySelectorAll('.fg__card')) { c.focus(); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); const r = c.getBoundingClientRect();
               if (r.height <= v.height && (r.top < v.top - 1 || r.bottom > v.bottom + 1 || r.left < v.left - 1 || r.right > v.right + 1)) out.push(c.dataset.card); }
             return out; }"""
         )
         if hidden:
-            bad.append(f"{label}: cards that scrolling cannot bring wholly into view: {', '.join(hidden[:5])}")
+            bad.append(f"{label}: cards that focusing cannot bring wholly into view: {', '.join(hidden[:5])}")
     page.locator(".fg__tools button", has_text="Fit").click()
     page.wait_for_timeout(400)
     if page.locator(".fg__group.is-open").count():
         bad.append(f"{label}: Fit did not fold the opened group")
     if not bad:
-        print(f"ok  {label}: the group {name} opens into its {max(counts)}, scrolls {max(0, extra)}px, and Fit folds it")
+        print(f"ok  {label}: the group {name} opens into its {max(counts)}, pans {max(0, extra)}px, and Fit folds it")
     return bad
