@@ -1250,20 +1250,20 @@
     {
       "id": "paper.long.pdf",
       "kind": "file",
-      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/3368d1e69467aec111eb3244843ad3542171ff96/paper/257/erdos257-mersenne-reasoning-surface.pdf",
-      "revision": "3368d1e69467aec111eb3244843ad3542171ff96",
+      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3/paper/257/erdos257-mersenne-reasoning-surface.pdf",
+      "revision": "a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3",
       "license": "CC-BY-4.0",
       "redistribution": "reference_only",
-      "sha256": "59445e943ac9586d1bc2793a56e70704231ed2a9d679411a375ae24023b421bf"
+      "sha256": "58ebe2ed0f7de06e22f51616159405b1cc3c25edf176502c303de2aed9970303"
     },
     {
       "id": "paper.long.tex",
       "kind": "file",
-      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/3368d1e69467aec111eb3244843ad3542171ff96/paper/257/erdos257-mersenne-reasoning-surface.tex",
-      "revision": "3368d1e69467aec111eb3244843ad3542171ff96",
+      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3/paper/257/erdos257-mersenne-reasoning-surface.tex",
+      "revision": "a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3",
       "license": "CC-BY-4.0",
       "redistribution": "reference_only",
-      "sha256": "09285ac50fbb892b4a027489ccaf1e986fc72d502a761c343c6cb6334a321489"
+      "sha256": "433c824c8b067da594531191409933245f9231ebfdc073f486a41ff3ef217cf1"
     },
     {
       "id": "paper.short.pdf",
@@ -17081,7 +17081,7 @@
       ],
       "source_id": "paper.long.pdf",
       "locator": "Long record Proposition 2.5, p. 28, label prop:collapse",
-      "statement": "*If $|\\operatorname{ihc}(A,N)|\\le C\\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\\delta=0$. For the particular greedy support $A=G$ of $1/2$, a one-sided upper bound $\\operatorname{ihc}(G,N)\\le C\\sqrt{N+1}+C'$ already suffices.*",
+      "statement": "*Let $A \\subseteq \\mathbb{N}$ with $1 \\notin A$. If $|\\operatorname{ihc}(A,N)|\\le C\\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\\delta=0$. For the particular greedy support $A=G$ of $1/2$, a one-sided upper bound $\\operatorname{ihc}(G,N)\\le C\\sqrt{N+1}+C'$ already suffices.*",
       "boundary": "The evidence mapping records a Lean proof of exactly this statement. Lean status per paper is kept in authored/evidence-status.json."
     },
     {

@@ -1,6 +1,6 @@
 {
  "repository": "https://github.com/wcook04/plectis-erdos",
- "commit": "3368d1e69467aec111eb3244843ad3542171ff96",
+ "commit": "a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3",
  "papers": {
   "short": {
    "source_files": {
@@ -22,9 +22,9 @@
     "paper/evidence/erdos-257-mersenne-support-subseries.tex": "722ce3fc0640d2a265e5dd747e1c1d9a5d87a65aa5975d51a664acfed4135fef"
    },
    "outputs_sha256": {
-    "short/paper.md": "986ce71a2202ea63e52e6a173b88a17f7b47531f563f5ef0c2e56b7d3bb88426",
+    "short/paper.md": "94cd0707e9d5a1188db4447d478fe9424a6446da6a3a7810daaec2606eb6f675",
     "short/paper.pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
-    "short/passages.json": "3016a4284b70440a7e9ee00ade1bbed8eb6152b92ca6bf59d0ce2cde74e9c1c7"
+    "short/passages.json": "36aaeebd4350cdcbff4ba644d86dd36624a9bd7f7f47ff998042102dbf5af277"
    }
   },
   "expository": {
@@ -59,28 +59,26 @@
     "pdf": "paper/257/erdos257-mersenne-reasoning-surface.pdf"
    },
    "sha256": {
-    "full_text_markdown": "ecd5ecb3d985f9bf345d7d7993cd686cf4f5bf2b81c49d143115d28eb88131ca",
-    "tex": "09285ac50fbb892b4a027489ccaf1e986fc72d502a761c343c6cb6334a321489",
-    "aux": "e48c0da126f94af2c3ffa8b4eef8489ff12db119507c6f2ed2ff1d58ce2ae85e",
-    "pdf": "59445e943ac9586d1bc2793a56e70704231ed2a9d679411a375ae24023b421bf"
+    "full_text_markdown": "b75c9e4801df27d5dc4de6772e87ec3218ea09e2e41be4c6922d01bab409527d",
+    "tex": "433c824c8b067da594531191409933245f9231ebfdc073f486a41ff3ef217cf1",
+    "aux": "db0471c5a444a849dffc6cdf0e175d6bc02a561d75b5a85e1b2e656cce8db34c",
+    "pdf": "58ebe2ed0f7de06e22f51616159405b1cc3c25edf176502c303de2aed9970303"
    },
    "tex_inputs_sha256": {
     "paper/paper-house-style.sty": "554ed85b5315bd936a4d09d58f8727547c5bb1b299f9684eb6ef720b329759a2",
     "paper/paper-evidence.tex": "1ba1b3a112445f6fee7794f2083c29a60fb102d239d5e799808a36b9a5e562e3",
     "paper/reasoning-parts/erdos257/preamble.tex": "1deb043326661007c7d751e5b3dc946431a7ae2f829c9ae993160bc082a52958",
-    "paper/evidence/erdos257-mersenne-reasoning-surface.tex": "3ae0d45633dae1966b9dbcad7d3ef837698acfd238679766000f37b47d213f37"
+    "paper/evidence/erdos257-mersenne-reasoning-surface.tex": "bf3c18eda0925f862e304c5dbd2c356f110e8901fd23338e31d5cdbd9e268446"
    },
    "outputs_sha256": {
-    "long/reasoning-record.md": "1fd49f692320db9f27935d8a5c8bc9bc22bddf38904cfd9fa8def31510d242d5",
-    "long/reasoning-record.pdf": "59445e943ac9586d1bc2793a56e70704231ed2a9d679411a375ae24023b421bf",
-    "long/passages.json": "d2f46693d752ed79e83d583d1b3ea0724af5370a65174d7c414e9f4055cfc172"
+    "long/reasoning-record.md": "9db121aa3907c3f1a8a48d6797094bb13e0c3efb5c7f42f8664bb4e6fba1025c",
+    "long/reasoning-record.pdf": "58ebe2ed0f7de06e22f51616159405b1cc3c25edf176502c303de2aed9970303",
+    "long/passages.json": "01589505a2e31f96b9c71dc70faa87de5aeff46ae9929734ae4156d96faa97c8"
    }
   }
  },
  "notes": {
-  "short": [
-   "relative link to paper/synthesis/optimal-sparse-perturbations.pdf, absent from the export, linked at the pinned commit"
-  ],
+  "short": [],
   "expository": [],
   "long": []
  }

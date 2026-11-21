@@ -23,7 +23,7 @@ import unicodedata
 import urllib.parse
 from pathlib import Path
 
-COMMIT = "3368d1e69467aec111eb3244843ad3542171ff96"
+COMMIT = "a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3"
 REPO = "wcook04/plectis-erdos"
 BLOB = f"https://github.com/{REPO}/blob/{COMMIT}/"
 PAGES = "https://wcook04.github.io/practical-formal-verification/papers/"

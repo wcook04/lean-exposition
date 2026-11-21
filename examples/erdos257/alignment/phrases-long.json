@@ -7418,8 +7418,8 @@
   },
   {
    "id": "p1-long.prop-collapse#1",
-   "from": "If $|\\operatorname{ihc}(A,N)|\\le C\\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\\delta=0$.",
-   "to": "If $|\\operatorname{ihc}(A,N)|\\le C\\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\\delta=0$.",
+   "from": "Let $A \\subseteq \\mathbb{N}$ with $1 \\notin A$. If $|\\operatorname{ihc}(A,N)|\\le C\\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\\delta=0$.",
+   "to": "Let $A \\subseteq \\mathbb{N}$ with $1 \\notin A$. If $|\\operatorname{ihc}(A,N)|\\le C\\sqrt{N+1}+C'$ for arbitrarily large $N$, with fixed constants $C,C'$, then $\\delta=0$.",
    "role": "statement",
    "topic": "p1-limits",
    "status": "revised",
@@ -7433,8 +7433,8 @@
       50
      ],
      "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "Lean requires hone : 1 ∉ A. The proposition does not repeat that exclusion; its claim is correct only if Lemma 2.4’s support hypothesis is carried forward."
+     "fidelity": "same",
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the proposition now states 1 ∉ A, the hypothesis hone : 1 ∉ A of the Lean theorem, which takes constants C, D for C, C′ and the cofinal ∀ K, ∃ N ≥ K for “arbitrarily large N”. Earlier note: the proposition did not repeat Lemma 2.4’s exclusion of 1."
     }
    ]
   },
@@ -21050,8 +21050,8 @@
   },
   {
    "id": "p2-iv.scale.dichotomy",
-   "from": "From an exact row, either repeated doubling is available or an exact row is obtained at some $2c-2$ with $c\\le n$; these alternatives need not be disjoint.",
-   "to": "From an exact row, either repeated doubling is available or an exact row is obtained at some $2c-2$ with $c\\le n$; these alternatives need not be disjoint.",
+   "from": "From an exact row, either an exact row is obtained at $2n-1$ or one is obtained at some $2c-2$ with $4\\le c\\le n$; these alternatives need not be disjoint.",
+   "to": "From an exact row, either an exact row is obtained at $2n-1$ or one is obtained at some $2c-2$ with $4\\le c\\le n$; these alternatives need not be disjoint.",
    "after": "<a id=\"tab:scale-ladder\"></a>",
    "role": "statement",
    "topic": "p2-integer-quotients",
@@ -21066,8 +21066,8 @@
       31
      ],
      "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "The first alternative supplies one exact row at 2n−1. It does not supply repeated doubling or preserve the below-half hypothesis needed to repeat that construction."
+     "fidelity": "same",
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the row now names the two alternatives of the Lean disjunction, ExactLocalMersenneHalfRow (2n−1) or ∃ c, 4 ≤ c ≤ n with ExactLocalMersenneHalfRow (2c−2), under n ≥ 6 and an exact row at n. Earlier note: the row said repeated doubling, which the Lean does not supply."
     }
    ]
   },
@@ -25892,8 +25892,8 @@
   },
   {
    "id": "p2-v12.squarefree-precision",
-   "from": "the digitwise certificate schema has no instance at any even base",
-   "to": "the digitwise certificate schema has no instance at any even base",
+   "from": "at each even base the digitwise certificate schema cannot supply certificates for every $q>0$",
+   "to": "at each even base the digitwise certificate schema cannot supply certificates for every $q>0$",
    "after": "<a id=\"the-universal-statement\"></a>",
    "role": "statement",
    "topic": "p2-obstructions",
@@ -25908,8 +25908,8 @@
       300
      ],
      "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "The source negates ∀ q>0, ∃ N K L C, certificate. It rules out a supply at every q, not every individual certificate instance; the phrase must refer to the full quantified schema to be exact."
+     "fidelity": "same",
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the sentence now says what the Lean proves: for each even b ≥ 2, ¬ (∀ q > 0, ∃ N K L C, certificate). Earlier note: “no instance at any even base” negated individual certificates, which is stronger than the Lean."
     }
    ]
   },
@@ -26947,8 +26947,8 @@
   },
   {
    "id": "p2-v12.table-exact-equivalence",
-   "from": "$\\Leftrightarrow$ half-membership (Prop. [2.7](#prop:collapsed-list)(c)); Lean proves $\\Rightarrow$",
-   "to": "$\\Leftrightarrow$ half-membership (Prop. [2.7](#prop:collapsed-list)(c)); Lean proves $\\Rightarrow$",
+   "from": "$\\Leftrightarrow$ half-membership (Prop. [2.7](#prop:collapsed-list)(c)); Lean proves $\\Leftrightarrow$",
+   "to": "$\\Leftrightarrow$ half-membership (Prop. [2.7](#prop:collapsed-list)(c)); Lean proves $\\Leftrightarrow$",
    "after": "<a id=\"sec:v-table\"></a>",
    "role": "statement",
    "topic": "p2-conditional-membership",
@@ -26963,8 +26963,8 @@
       57
      ],
      "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_note": "The source states a full ↔, including HALF → cofinal exact rows. The table understates source coverage by saying Lean proves only ⇒."
+     "fidelity": "same",
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the table now says Lean proves the equivalence: half_mem_iff_cofinal_exact_rows states 1/2 ∈ 𝒜 ↔ CofinalExactLocalMersenneHalfRows, whose definition is exact finite quotient rows at arbitrarily large endpoints with no agreement between witnesses. Earlier note: the table said Lean proves only ⇒."
     }
    ]
   },

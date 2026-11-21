@@ -3,7 +3,7 @@
 These files transcribe three published papers by Will Cook for this repository's reader: [`short/paper.md`](short/paper.md) (*Irrationality
 criteria for Lambert subseries*, 26 pages), [`expository/main.md`](expository/main.md) (*Why certain sums of 1/(2^n-1) are irrational*, 16 pages)
 and [`long/reasoning-record.md`](long/reasoning-record.md) (*Reciprocal Mersenne Subseries*, 153 pages), each beside its unchanged PDF. The source is
-`wcook04/plectis-erdos` at commit `3368d1e69467aec111eb3244843ad3542171ff96`. [`SOURCES.json`](SOURCES.json) gives every input and output sha256.
+`wcook04/plectis-erdos` at commit `a5e7700e30374e3aaeeeff0284ec2ec0d2322fc3` (21 November 2026, pull request 432, which corrects four statements of the long record; the short paper and the exposition are byte-identical to `3368d1e`). [`SOURCES.json`](SOURCES.json) gives every input and output sha256.
 Licence: the source's `paper/README.md` says "The manuscript layer (the `.tex` sources and rendered PDFs) is licensed CC-BY-4.0", and its
 `REUSE.toml` gives the three PDFs `SPDX-FileCopyrightText = "2026 Will Cook"` and `SPDX-License-Identifier = "CC-BY-4.0"`. These transcriptions
 are offered under CC-BY-4.0 with that attribution. The full-text Markdown they start from falls under that repository's Apache-2.0 blanket entry.
