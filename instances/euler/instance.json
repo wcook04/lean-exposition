@@ -1,0 +1,179 @@
+{
+ "schema": "library-instance/1",
+ "id": "euler",
+ "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations",
+ "short_title": "Euler singularity on the torus",
+ "authors": [
+  "Levent Alpöge",
+  "Tristan Buckmaster",
+  "Matei P. Coiculescu"
+ ],
+ "venue": "arXiv version, in the authors' repository EulerBlowupPublic at fd3a158",
+ "credit_lines": [
+  "Paper and Lean by Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu, from their repository mcoiculescu/EulerBlowupPublic at fd3a158; their paper thanks Anthropic for supporting the collaboration from which it grew. The reading copy is set from their TeX of the arXiv version, with their numbering. The links from sentences to the Lean, the plain titles, the notes on the Lean and the comparisons were made with AI and have not been reviewed by the authors. Our files are MIT-licensed"
+ ],
+ "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
+ "review": "The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
+ "source": {
+  "proof_reader": {
+   "repository": "https://github.com/wcook04/proof-reader",
+   "commit": "4d1a02f1d75f4d56267a67bd8fd91678a2499fa2",
+   "page": "euler"
+  },
+  "upstream": {
+   "repository": "https://github.com/mcoiculescu/EulerBlowupPublic",
+   "commit": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "paper": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf"
+  },
+  "lean_scope": "Lean compiled all 729 modules of the authors' package at fd3a158, and each declaration's statement, dependencies and axioms shown here are Lean's own report from those compiled modules. The authors' Paper layer gives one statement and one spine theorem for each numbered result of the arXiv version. The links from the paper's sentences to the Lean, the plain titles and the notes were made with AI and have not been reviewed by the authors."
+ },
+ "documents": [
+  {
+   "id": "paper",
+   "slot": "short",
+   "slug": "",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations",
+   "noun": "paper",
+   "main": true,
+   "pdf": {
+    "file": "paper.pdf",
+    "sha256": "9d1a7be6a66d2933a00b25318fda0d6a9da6039a6249b477778dabdc2c8234b8",
+    "bytes": 751821,
+    "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf"
+   }
+  }
+ ],
+ "families": [
+  {
+   "id": "solution",
+   "name": "The singular solution"
+  },
+  {
+   "id": "waves",
+   "name": "Waves and their amplification"
+  },
+  {
+   "id": "endpoint",
+   "name": "The endpoint problem"
+  },
+  {
+   "id": "induction",
+   "name": "The inductive sequence"
+  },
+  {
+   "id": "expansion",
+   "name": "The finite expansion and the mean"
+  },
+  {
+   "id": "approximate",
+   "name": "The approximate solution"
+  },
+  {
+   "id": "supporting",
+   "name": "Cutoff and finite norms"
+  }
+ ],
+ "topics": [
+  {
+   "id": "singularity",
+   "name": "The singular Euler solution",
+   "description": "The smooth odd periodic initial data, maximal Euler solution and conclusions of Theorem 1.1.",
+   "family": "solution"
+  },
+  {
+   "id": "affine-wave",
+   "name": "Exact waves and the preceding frame",
+   "description": "The Craik–Criminale wave, its pressure, scaled coordinates and the frame of the preceding wave.",
+   "family": "waves"
+  },
+  {
+   "id": "amplification",
+   "name": "The wave and its amplification",
+   "description": "The strong shear limit, additive comparison, reference solution, positive couplings and successor crossing.",
+   "family": "waves"
+  },
+  {
+   "id": "endpoint-inverse",
+   "name": "The endpoint problem and its Hölder inverse",
+   "description": "The displacement with two end conditions, coercivity and the mean inverse developed in Section 4 and Appendix A.",
+   "family": "endpoint"
+  },
+  {
+   "id": "induction",
+   "name": "The initial wave and the common sequence",
+   "description": "The stationary first wave, parameter schedule, next-wave choice and the common inductive sequence.",
+   "family": "induction"
+  },
+  {
+   "id": "localized-wave",
+   "name": "Localized waves and profiles",
+   "description": "The transported phase, localized amplitude, narrow periodic profile and curl completion.",
+   "family": "waves"
+  },
+  {
+   "id": "hierarchy",
+   "name": "The finite expansion",
+   "description": "The transverse equation, leading oscillation, mean terms and successive finite hierarchy profiles.",
+   "family": "expansion"
+  },
+  {
+   "id": "parent-step",
+   "name": "The truncated parent and its coefficients",
+   "description": "Frequency truncation of the parent flow, its coefficient fields and the central wave data.",
+   "family": "approximate"
+  },
+  {
+   "id": "mean-estimates",
+   "name": "Finite-order estimates for the mean",
+   "description": "The phase-independent correction, the integrated inverse and the finite-order bounds of Section 5.",
+   "family": "expansion"
+  },
+  {
+   "id": "approximate",
+   "name": "The approximate Euler solution",
+   "description": "Evaluation of profiles in physical space, the cutoff derivative and the approximate Euler residual.",
+   "family": "approximate"
+  },
+  {
+   "id": "pressure-flow",
+   "name": "Pressure, central gradient and flow",
+   "description": "Pressure readout, the central rank-one contribution and control of the new flow.",
+   "family": "approximate"
+  },
+  {
+   "id": "terminal",
+   "name": "The limit and its terminal behavior",
+   "description": "Closed-slab velocity convergence, preterminal smoothness, central vorticity growth and the maximal time.",
+   "family": "solution"
+  },
+  {
+   "id": "supporting-estimates",
+   "name": "Frequency cutoff and finite norms",
+   "description": "The Fourier cutoff, parameter inequalities and finite coefficient estimates in Appendices B–D.",
+   "family": "supporting"
+  },
+  {
+   "id": "auxiliary-smoothness",
+   "name": "Smooth terminal regularity away from the origin",
+   "description": "The specialized auxiliary construction, mixed derivative estimates and the smooth extension through the terminal time.",
+   "family": "solution"
+  }
+ ],
+ "topic_order": [
+  "singularity",
+  "affine-wave",
+  "amplification",
+  "endpoint-inverse",
+  "induction",
+  "localized-wave",
+  "hierarchy",
+  "parent-step",
+  "mean-estimates",
+  "approximate",
+  "pressure-flow",
+  "terminal",
+  "supporting-estimates",
+  "auxiliary-smoothness"
+ ],
+ "goal": "euler.theorem-1.1"
+}

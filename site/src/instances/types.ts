@@ -107,6 +107,15 @@ export interface SiteInstance {
    * what they are (results, proof steps, Lean declarations). Null keeps the SK site's single
    * word for every record, "step".
    */
+  /**
+   * The document slots this example uses, in reading order. Absent means all three
+   * (exposition, short paper, long record); a library paper uses only the slots its data names.
+   */
+  stages?: InstanceStage[];
+  /** The reader's line on who made the document and its links, in place of the draft and review words; absent keeps them. */
+  paperStatus?: string;
+  /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
+  library?: { paper: string; main: InstanceStage };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
    * A paper whose argument for the main theorem is its own record (the #257 exposition proves

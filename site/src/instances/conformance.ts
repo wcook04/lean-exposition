@@ -16,6 +16,12 @@ import * as erdosAbout from "./erdos257/AboutPage";
 import * as erdosLean from "./erdos257/LeanLanding";
 import * as erdosChecks from "./erdos257/ChecksIntro";
 import * as erdosFigures from "./erdos257/figures";
+import librarySite from "./library/site";
+import * as libraryFront from "./library/FrontPage";
+import * as libraryAbout from "./library/AboutPage";
+import * as libraryLean from "./library/LeanLanding";
+import * as libraryChecks from "./library/ChecksIntro";
+import * as libraryFigures from "./library/figures";
 
 interface InstanceModules {
   site: SiteInstance;
@@ -30,4 +36,5 @@ interface InstanceModules {
 export const CONFORMS: Record<string, InstanceModules> = {
   "qaoa-sk": { site: skSite, ...skFront, ...skAbout, ...skLean, ...skChecks, ...skFigures },
   erdos257: { site: erdosSite, ...erdosFront, ...erdosAbout, ...erdosLean, ...erdosChecks, ...erdosFigures },
+  library: { site: librarySite, ...libraryFront, ...libraryAbout, ...libraryLean, ...libraryChecks, ...libraryFigures },
 };

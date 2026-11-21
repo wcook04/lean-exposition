@@ -1,0 +1,2648 @@
+{
+ "schema_version": "1.2",
+ "id": "euler-library-edition",
+ "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations",
+ "selected_goals": [
+  "euler.theorem-1.1"
+ ],
+ "sources": [
+  {
+   "id": "lean:TorusEuler/Paper/Spine.lean",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "ee06fa27bb265f17719d25999f4a5a727403a6a49c48b2d6ff5e1d5b8f070d4b",
+   "path": "upstream/lean/TorusEuler/Paper/Spine.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "a1593370c38e12db1c19bd7e6926ae58ff48cf2267100066f3070a6a2aaeb22c"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "4d1a02f1d75f4d56267a67bd8fd91678a2499fa2",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic",
+   "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.euler.corollary-8.3",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Corollary 8.3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Corollary 8.3, Section 8"
+  },
+  {
+   "id": "cite.euler.lemma-1.3",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 1.3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 1.3, Section 1"
+  },
+  {
+   "id": "cite.euler.lemma-2.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.1, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-2.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.2, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-2.3",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.3, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-2.4",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.4, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-2.5",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.5",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.5, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-2.6",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.6",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.6, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-2.7",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 2.7",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 2.7, Section 2"
+  },
+  {
+   "id": "cite.euler.lemma-3.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 3.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 3.1, Section 3"
+  },
+  {
+   "id": "cite.euler.lemma-4.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 4.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 4.1, Section 4"
+  },
+  {
+   "id": "cite.euler.lemma-5.10",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 5.10",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 5.10, Section 5"
+  },
+  {
+   "id": "cite.euler.lemma-5.3",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 5.3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 5.3, Section 5"
+  },
+  {
+   "id": "cite.euler.lemma-5.5",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 5.5",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 5.5, Section 5"
+  },
+  {
+   "id": "cite.euler.lemma-5.7",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 5.7",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 5.7, Section 5"
+  },
+  {
+   "id": "cite.euler.lemma-5.8",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 5.8",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 5.8, Section 5"
+  },
+  {
+   "id": "cite.euler.lemma-5.9",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 5.9",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 5.9, Section 5"
+  },
+  {
+   "id": "cite.euler.lemma-6.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma 6.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma 6.1, Section 6"
+  },
+  {
+   "id": "cite.euler.lemma-a.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma A.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma A.2, Section A"
+  },
+  {
+   "id": "cite.euler.lemma-b.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma B.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma B.1, Section B"
+  },
+  {
+   "id": "cite.euler.lemma-d.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma D.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma D.1, Section D"
+  },
+  {
+   "id": "cite.euler.lemma-d.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma D.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma D.2, Section D"
+  },
+  {
+   "id": "cite.euler.lemma-d.3",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Lemma D.3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Lemma D.3, Section D"
+  },
+  {
+   "id": "cite.euler.proposition-2.8",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 2.8",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 2.8, Section 2"
+  },
+  {
+   "id": "cite.euler.proposition-5.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 5.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 5.1, Section 5"
+  },
+  {
+   "id": "cite.euler.proposition-5.11",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 5.11",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 5.11, Section 5"
+  },
+  {
+   "id": "cite.euler.proposition-5.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 5.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 5.2, Section 5"
+  },
+  {
+   "id": "cite.euler.proposition-5.4",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 5.4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 5.4, Section 5"
+  },
+  {
+   "id": "cite.euler.proposition-8.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 8.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 8.1, Section 8"
+  },
+  {
+   "id": "cite.euler.proposition-8.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 8.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 8.2, Section 8"
+  },
+  {
+   "id": "cite.euler.proposition-8.4",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Proposition 8.4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Proposition 8.4, Section 8"
+  },
+  {
+   "id": "cite.euler.remark-1.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Remark 1.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Remark 1.2, Section 1"
+  },
+  {
+   "id": "cite.euler.theorem-1.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Theorem 1.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Theorem 1.1, Section 1"
+  },
+  {
+   "id": "cite.euler.theorem-4.2",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Theorem 4.2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Theorem 4.2, Section 4"
+  },
+  {
+   "id": "cite.euler.theorem-5.6",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Theorem 5.6",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Theorem 5.6, Section 5"
+  },
+  {
+   "id": "cite.euler.theorem-7.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Theorem 7.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Theorem 7.1, Section 7"
+  },
+  {
+   "id": "cite.euler.theorem-a.1",
+   "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, Theorem A.1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/manuscript/paper.pdf",
+   "source_id": "paper",
+   "locator": "Theorem A.1, Section A"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.corollary_8_3",
+   "title": "TorusEuler.Paper.corollary_8_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L38",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 38"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_1_3",
+   "title": "TorusEuler.Paper.lemma_1_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L10",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 10"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_1",
+   "title": "TorusEuler.Paper.lemma_2_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L170",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 170"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_2",
+   "title": "TorusEuler.Paper.lemma_2_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L22",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 22"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_3",
+   "title": "TorusEuler.Paper.lemma_2_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L174",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 174"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_4",
+   "title": "TorusEuler.Paper.lemma_2_4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L26",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 26"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_5",
+   "title": "TorusEuler.Paper.lemma_2_5",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L46",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 46"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_6",
+   "title": "TorusEuler.Paper.lemma_2_6",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L50",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 50"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_2_7",
+   "title": "TorusEuler.Paper.lemma_2_7",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L54",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 54"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_3_1",
+   "title": "TorusEuler.Paper.lemma_3_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L82",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 82"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_4_1",
+   "title": "TorusEuler.Paper.lemma_4_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L62",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 62"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_5_10",
+   "title": "TorusEuler.Paper.lemma_5_10",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L142",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 142"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_5_3",
+   "title": "TorusEuler.Paper.lemma_5_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L102",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 102"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_5_5",
+   "title": "TorusEuler.Paper.lemma_5_5",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L106",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 106"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_5_7",
+   "title": "TorusEuler.Paper.lemma_5_7",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L130",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 130"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_5_8",
+   "title": "TorusEuler.Paper.lemma_5_8",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L134",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 134"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_5_9",
+   "title": "TorusEuler.Paper.lemma_5_9",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L138",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 138"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_6_1",
+   "title": "TorusEuler.Paper.lemma_6_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L150",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 150"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_A_2",
+   "title": "TorusEuler.Paper.lemma_A_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L66",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 66"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_B_1",
+   "title": "TorusEuler.Paper.lemma_B_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L30",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 30"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_D_1",
+   "title": "TorusEuler.Paper.lemma_D_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L94",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 94"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_D_2",
+   "title": "TorusEuler.Paper.lemma_D_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L86",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 86"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.lemma_D_3",
+   "title": "TorusEuler.Paper.lemma_D_3",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L98",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 98"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_2_8",
+   "title": "TorusEuler.Paper.proposition_2_8",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L58",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 58"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_5_1",
+   "title": "TorusEuler.Paper.proposition_5_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L90",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 90"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_5_11",
+   "title": "TorusEuler.Paper.proposition_5_11",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L146",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 146"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_5_2",
+   "title": "TorusEuler.Paper.proposition_5_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L122",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 122"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_5_4",
+   "title": "TorusEuler.Paper.proposition_5_4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L78",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 78"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_8_1",
+   "title": "TorusEuler.Paper.proposition_8_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L18",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 18"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_8_2",
+   "title": "TorusEuler.Paper.proposition_8_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L34",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 34"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.proposition_8_4",
+   "title": "TorusEuler.Paper.proposition_8_4",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L42",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 42"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.remark_1_2",
+   "title": "TorusEuler.Paper.remark_1_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L166",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 166"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.theorem_1_1",
+   "title": "TorusEuler.Paper.theorem_1_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L162",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 162"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.theorem_4_2",
+   "title": "TorusEuler.Paper.theorem_4_2",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L74",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 74"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.theorem_5_6",
+   "title": "TorusEuler.Paper.theorem_5_6",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L126",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 126"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.theorem_7_1",
+   "title": "TorusEuler.Paper.theorem_7_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L154",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 154"
+  },
+  {
+   "id": "cite.lean.TorusEuler.Paper.theorem_A_1",
+   "title": "TorusEuler.Paper.theorem_A_1",
+   "url": "https://github.com/mcoiculescu/EulerBlowupPublic/blob/fd3a1588967810b9abe42a1dcf46ee662d6434e2/lean/TorusEuler/Paper/Spine.lean#L70",
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 70"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "euler.corollary-8.3",
+   "kind": "claim",
+   "label": "Corollary 8.3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.corollary-8.3"
+   ],
+   "citation_ids": [
+    "cite.euler.corollary-8.3"
+   ],
+   "source_id": "paper",
+   "locator": "Corollary 8.3, Section 8",
+   "statement": "The maximal existence time is $T_*=T_\\infty\\in(0,\\infty)$, and both integrals in (1.2) diverge.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-1.3",
+   "kind": "claim",
+   "label": "Lemma 1.3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-1.3"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-1.3"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 1.3, Section 1",
+   "statement": "The integers $q_j$ satisfy $q_j\\le q_{j+1}\\le q_j+1$ and tend to infinity",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.1",
+   "kind": "claim",
+   "label": "Lemma 2.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.1"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.1, Section 2",
+   "statement": "Let $D(t)$ be smooth and trace free, with $D'+D^2$ symmetric.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.2",
+   "kind": "claim",
+   "label": "Lemma 2.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.2"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.2"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.2, Section 2",
+   "statement": "The following calculation uses only $\\operatorname{tr}B=0$; it requires no symmetry of $B'+B^2$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.3",
+   "kind": "claim",
+   "label": "Lemma 2.3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.3"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.3"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.3, Section 2",
+   "statement": "In the strong-shear limit $\\sigma/\\nu\\to\\infty$, the wave pressure multiplies the driving coefficient $2\\nu$ in the equation for $a_1$ by $\\cos^2\\varphi\\,(1-\\varepsilon\\tan\\varphi)$ (Lemma 2.3).",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.4",
+   "kind": "claim",
+   "label": "Lemma 2.4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.4"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.4"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.4, Section 2",
+   "statement": "$$\\begin{equation}\n \\sup|\\zeta-\\zeta_0|\\le CT^C\\delta\\le\\tfrac12,\\qquad\n \\sup\\left|\\frac{|k|^2\\cos^2\\varphi}{\\lambda^2}-1\\right|\n       \\le CT^C\\delta\\le\\tfrac12. \\tag{2.10}\n\\end{equation}$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.5",
+   "kind": "claim",
+   "label": "Lemma 2.5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.5"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.5"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.5, Section 2",
+   "statement": "Let $0<\\varepsilon\\le1$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.6",
+   "kind": "claim",
+   "label": "Lemma 2.6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.6"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.6"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.6, Section 2",
+   "statement": "Assume (2.7), and let $\\mathbf a$ be the amplitude vector with $\\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$, that is, with $(\\alpha_1,\\alpha_2)(0)=(-1,1)$ in (2.3), the initial data of the reference solution.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-2.7",
+   "kind": "claim",
+   "label": "Lemma 2.7",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-2.7"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-2.7"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.7, Section 2",
+   "statement": "For the perturbed wave, Lemma 2.7 shows that at late times $\\nu_+$ is close to $\\nu$ and $\\eta_+/\\nu_+$ is comparable to $\\cos\\varphi$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-3.1",
+   "kind": "claim",
+   "label": "Lemma 3.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-3.1"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-3.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 3.1, Section 3",
+   "statement": "There are odd smooth $1$-periodic functions $F_h$, $0<h\\le1$, with zero-mean primitives $P_h$, such that",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-4.1",
+   "kind": "claim",
+   "label": "Lemma 4.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-4.1"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-4.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 4.1, Section 4",
+   "statement": "Assume $H^\\#\\le\\operatorname{Id}$ on $I\\times\\mathbb T^3$ as quadratic forms. Then",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-5.10",
+   "kind": "claim",
+   "label": "Lemma 5.10",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-5.10"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-5.10"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.10, Section 5",
+   "statement": "Let $v$ be a smooth divergence-free field on $[0,T]\\times\\mathbb T^3$ with $\\left\\lVert v\\right\\rVert_{C_tC^2}\\le\\lambda^{-5/2}$. The flow $Y$ of $V+v$ from time zero satisfies",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-5.3",
+   "kind": "claim",
+   "label": "Lemma 5.3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-5.3"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-5.3"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.3, Section 5",
+   "statement": "$$\\begin{equation}\n |\\mathbf a(t,a)|\\le2|\\mathbf a(t,0)|,\\qquad\n (\\kappa\\cdot M\\mathbf a)(t,a)>0 . \\tag{5.19}\n\\end{equation}$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-5.5",
+   "kind": "claim",
+   "label": "Lemma 5.5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-5.5"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-5.5"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.5, Section 5",
+   "statement": "There is an absolute exponent $C$ such that, for every $n\\ge0$ and every field $V$ with $\\langle V\\rangle_s=0$ and $\\kappa\\cdot V=0$,",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-5.7",
+   "kind": "claim",
+   "label": "Lemma 5.7",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-5.7"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-5.7"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.7, Section 5",
+   "statement": "Let $g_0(t,a,s)$ be smooth and independent of the phase at the labels outside $\\operatorname{supp}g$. Assume its phase average extends smoothly and periodically in $a$ across the cell faces.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-5.8",
+   "kind": "claim",
+   "label": "Lemma 5.8",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-5.8"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-5.8"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.8, Section 5",
+   "statement": "$$V=U+W^\\natural,\\qquad \\Pi=p_U+\\mathsf P^\\natural,\\qquad\n W=W_{\\rm osc}+\\bar W,\\quad \\bar W=\\sum_{p=2}^PB_p .$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-5.9",
+   "kind": "claim",
+   "label": "Lemma 5.9",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-5.9"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-5.9"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.9, Section 5",
+   "statement": "$$\\begin{equation}\n D_x^2\\mathsf P^\\natural\\le C_{\\rm step}\\lambda^{-1/4}\\operatorname{Id}. \\tag{5.49}\n\\end{equation}$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-6.1",
+   "kind": "claim",
+   "label": "Lemma 6.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-6.1"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-6.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 6.1, Section 6",
+   "statement": "For $0<\\rho\\le1$ let",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-a.2",
+   "kind": "claim",
+   "label": "Lemma A.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-a.2"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-a.2"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma A.2, Section A",
+   "statement": "Constants $C,p$ depend only on the dimension.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-b.1",
+   "kind": "claim",
+   "label": "Lemma B.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-b.1"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-b.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma B.1, Section B",
+   "statement": "$S_\\Lambda$ multiply the spatial Fourier mode $e^{2\\pi i\\xi\\cdot x}$, $\\xi\\in\\mathbb Z^3$, by $\\psi(\\xi/\\Lambda)$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-d.1",
+   "kind": "claim",
+   "label": "Lemma D.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-d.1"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-d.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma D.1, Section D",
+   "statement": "$$\\begin{align}\n \\sum_i\\|\\partial_{a_i}f\\|_{[n],\\gamma}\n &\\le C\\ell_*^{-1}\\|f\\|_{[n+1],\\gamma},\\qquad\n \\|\\partial_sf\\|_{[n],\\gamma}\n \\le h^{-1}\\|f\\|_{[n+1],\\gamma}, \\tag{D.3}\\\\\n \\|fg\\|_{[n],\\gamma}\n &\\le C_n\\|f\\|_{[n]}\\|g\\|_{[n],\\gamma}. \\tag{D.4}\n\\end{align}$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-d.2",
+   "kind": "claim",
+   "label": "Lemma D.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-d.2"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-d.2"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma D.2, Section D",
+   "statement": "The product $cd$ satisfies (D.6).",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.lemma-d.3",
+   "kind": "claim",
+   "label": "Lemma D.3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.lemma-d.3"
+   ],
+   "citation_ids": [
+    "cite.euler.lemma-d.3"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma D.3, Section D",
+   "statement": "$$\\mathcal Lv=\\mathcal L_0v+\\sum_\\nu T_\\nu(c_\\nu v)=F$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-2.8",
+   "kind": "claim",
+   "label": "Proposition 2.8",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-2.8"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-2.8"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 2.8, Section 2",
+   "statement": "We call a time $\\tau$ at which $\\eta_+/\\nu_+=\\varepsilon_+$ a *crossing*: there the ratio reaches the threshold $\\varepsilon_+$ prescribed for the next wave.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-5.1",
+   "kind": "claim",
+   "label": "Proposition 5.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-5.1"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-5.1"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 5.1, Section 5",
+   "statement": "$$(D_aX)^{\\pm1},\\qquad M,\\qquad\n \\kappa/\\lambda,\\qquad \\lambda^2/|\\kappa|^2,\\qquad P_\\kappa$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-5.11",
+   "kind": "claim",
+   "label": "Proposition 5.11",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-5.11"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-5.11"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 5.11, Section 5",
+   "statement": "$$\\begin{equation}\n u=S_\\Lambda V,\\qquad v_\\Lambda=u-V,\\qquad\n \\varepsilon_\\Lambda=\\Lambda^{2-P}\n \\bigl(1+\\left\\lVert V\\right\\rVert_{C_tC^{P,1/2}}\\bigr)^2 . \\tag{5.55}\n\\end{equation}$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-5.2",
+   "kind": "claim",
+   "label": "Proposition 5.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-5.2"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-5.2"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 5.2, Section 5",
+   "statement": "every solution of the mean equation (5.11)",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-5.4",
+   "kind": "claim",
+   "label": "Proposition 5.4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-5.4"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-5.4"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 5.4, Section 5",
+   "statement": "For every integer $P\\ge2$, the profiles obtained from (5.11), (5.27) and (5.28) are well defined",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-8.1",
+   "kind": "claim",
+   "label": "Proposition 8.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-8.1"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-8.1"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 8.1, Section 8",
+   "statement": "The data $U_j(0)$ converge in every $C^{m,1/2}$ to an odd divergence-free field $u_0$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-8.2",
+   "kind": "claim",
+   "label": "Proposition 8.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-8.2"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-8.2"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 8.2, Section 8",
+   "statement": "The solution has bounded velocity on $[0,T_\\infty)$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.proposition-8.4",
+   "kind": "claim",
+   "label": "Proposition 8.4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ],
+   "citation_ids": [
+    "cite.euler.proposition-8.4"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 8.4, Section 8",
+   "statement": "For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_\\infty$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.remark-1.2",
+   "kind": "claim",
+   "label": "Remark 1.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.remark-1.2"
+   ],
+   "citation_ids": [
+    "cite.euler.remark-1.2"
+   ],
+   "source_id": "paper",
+   "locator": "Remark 1.2, Section 1",
+   "statement": "The solution in Theorem 1.1 may be chosen so that it extends smoothly in space and time through $T_*$ away from the origin.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.theorem-1.1",
+   "kind": "goal",
+   "label": "Theorem 1.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.theorem-1.1"
+   ],
+   "citation_ids": [
+    "cite.euler.theorem-1.1"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 1.1, Section 1",
+   "statement": "There is an odd divergence-free $u_0\\in C^\\infty(\\mathbb T^3;\\mathbb R^3)$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.theorem-4.2",
+   "kind": "claim",
+   "label": "Theorem 4.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.theorem-4.2"
+   ],
+   "citation_ids": [
+    "cite.euler.theorem-4.2"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 4.2, Section 4",
+   "statement": "To avoid exciting growing modes, we prescribe the final particle positions and choose the initial velocity to reach them.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.theorem-5.6",
+   "kind": "claim",
+   "label": "Theorem 5.6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.theorem-5.6"
+   ],
+   "citation_ids": [
+    "cite.euler.theorem-5.6"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 5.6, Section 5",
+   "statement": "There is an absolute exponent $C$ such that the following holds if $\\mathsf D^C\\lambda^{-1/12}\\le1$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.theorem-7.1",
+   "kind": "claim",
+   "label": "Theorem 7.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.theorem-7.1"
+   ],
+   "citation_ids": [
+    "cite.euler.theorem-7.1"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 7.1, Section 7",
+   "statement": "For every sufficiently large $N$ there are fields $U_j$, $j\\ge1$, and times $0=t_1=t_2<t_3<\\cdots$ with the following properties",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "euler.theorem-a.1",
+   "kind": "claim",
+   "label": "Theorem A.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.euler.theorem-a.1"
+   ],
+   "citation_ids": [
+    "cite.euler.theorem-a.1"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem A.1, Section A",
+   "statement": "Constants $C,p$ depend only on the dimension.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.corollary_8_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.corollary_8_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.corollary_8_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.corollary_8_3",
+   "statement": "Maximality and divergent time integrals",
+   "locator": "TorusEuler/Paper/Spine.lean, line 38",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_1_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_1_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_1_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_1_3",
+   "statement": "The slow-growth schedule lemma",
+   "locator": "TorusEuler/Paper/Spine.lean, line 10",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_1",
+   "statement": "The exact affine-wave theorem",
+   "locator": "TorusEuler/Paper/Spine.lean, line 170",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_2",
+   "statement": "The moving-frame theorem",
+   "locator": "TorusEuler/Paper/Spine.lean, line 22",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_3",
+   "statement": "The model and its strong-shear limit",
+   "locator": "TorusEuler/Paper/Spine.lean, line 174",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_4"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_4",
+   "statement": "Control of the wave-vector error",
+   "locator": "TorusEuler/Paper/Spine.lean, line 26",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_5",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_5"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_5",
+   "statement": "The reference solution is controlled",
+   "locator": "TorusEuler/Paper/Spine.lean, line 46",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_6",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_6"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_6",
+   "statement": "Amplitude comparison is proved",
+   "locator": "TorusEuler/Paper/Spine.lean, line 50",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_2_7",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_2_7",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_2_7"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_2_7",
+   "statement": "Successor coupling bounds are proved",
+   "locator": "TorusEuler/Paper/Spine.lean, line 54",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_3_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_3_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_3_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_3_1",
+   "statement": "The periodic-profile theorem",
+   "locator": "TorusEuler/Paper/Spine.lean, line 82",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_4_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_4_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_4_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_4_1",
+   "statement": "Displacement coercivity",
+   "locator": "TorusEuler/Paper/Spine.lean, line 62",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_5_10",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_5_10",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_5_10"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_5_10",
+   "statement": "The deformation bound is proved",
+   "locator": "TorusEuler/Paper/Spine.lean, line 142",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_5_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_5_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_5_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_5_3",
+   "statement": "The proved transverse estimates",
+   "locator": "TorusEuler/Paper/Spine.lean, line 102",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_5_5",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_5_5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_5_5"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_5_5",
+   "statement": "The correction estimates are proved",
+   "locator": "TorusEuler/Paper/Spine.lean, line 106",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_5_7",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_5_7",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_5_7"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_5_7",
+   "statement": "The physical derivative estimates",
+   "locator": "TorusEuler/Paper/Spine.lean, line 130",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_5_8",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_5_8",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_5_8"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_5_8",
+   "statement": "The approximate Euler solution",
+   "locator": "TorusEuler/Paper/Spine.lean, line 134",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_5_9",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_5_9",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_5_9"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_5_9",
+   "statement": "The pressure and central bounds",
+   "locator": "TorusEuler/Paper/Spine.lean, line 138",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_6_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_6_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_6_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_6_1",
+   "statement": "The normalized first-wave estimates",
+   "locator": "TorusEuler/Paper/Spine.lean, line 150",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_A_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_A_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_A_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_A_2",
+   "statement": "Spatial freezing in both settings",
+   "locator": "TorusEuler/Paper/Spine.lean, line 66",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_B_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_B_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_B_1",
+   "statement": "The frequency cutoff estimates",
+   "locator": "TorusEuler/Paper/Spine.lean, line 30",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_D_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_D_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_D_1",
+   "statement": "Rules for the finite derivative norms",
+   "locator": "TorusEuler/Paper/Spine.lean, line 94",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_D_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_D_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_D_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_D_2",
+   "statement": "Products and inverses of coefficients",
+   "locator": "TorusEuler/Paper/Spine.lean, line 86",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.lemma_D_3",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.lemma_D_3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.lemma_D_3"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.lemma_D_3",
+   "statement": "Higher derivatives of the inverse",
+   "locator": "TorusEuler/Paper/Spine.lean, line 98",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_2_8",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_2_8",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_2_8"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_2_8",
+   "statement": "The successor crossing is proved",
+   "locator": "TorusEuler/Paper/Spine.lean, line 58",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_5_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_5_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_5_1",
+   "statement": "The proved parent coefficient bounds",
+   "locator": "TorusEuler/Paper/Spine.lean, line 90",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_5_11",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_5_11",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_5_11"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_5_11",
+   "statement": "A frequency-truncated next parent",
+   "locator": "TorusEuler/Paper/Spine.lean, line 146",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_5_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_5_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_5_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_5_2",
+   "statement": "The proved mean correction estimate",
+   "locator": "TorusEuler/Paper/Spine.lean, line 122",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_5_4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_5_4"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_5_4",
+   "statement": "The finite hierarchy is well defined",
+   "locator": "TorusEuler/Paper/Spine.lean, line 78",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_8_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_8_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_8_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_8_1",
+   "statement": "The Euler limit before blow-up",
+   "locator": "TorusEuler/Paper/Spine.lean, line 18",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_8_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_8_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_8_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_8_2",
+   "statement": "The central vorticity diverges",
+   "locator": "TorusEuler/Paper/Spine.lean, line 34",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.proposition_8_4",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.proposition_8_4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.proposition_8_4"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.proposition_8_4",
+   "statement": "Limits off the singular point",
+   "locator": "TorusEuler/Paper/Spine.lean, line 42",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.remark_1_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.remark_1_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.remark_1_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.remark_1_2",
+   "statement": "A proof of smooth terminal extension",
+   "locator": "TorusEuler/Paper/Spine.lean, line 166",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.theorem_1_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.theorem_1_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.theorem_1_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.theorem_1_1",
+   "statement": "The singularity theorem",
+   "locator": "TorusEuler/Paper/Spine.lean, line 162",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.theorem_4_2",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.theorem_4_2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.theorem_4_2"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.theorem_4_2",
+   "statement": "The endpoint problem selects the mean",
+   "locator": "TorusEuler/Paper/Spine.lean, line 74",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.theorem_5_6",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.theorem_5_6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.theorem_5_6"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.theorem_5_6",
+   "statement": "Frequency decay at every level",
+   "locator": "TorusEuler/Paper/Spine.lean, line 126",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.theorem_7_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.theorem_7_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.theorem_7_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.theorem_7_1",
+   "statement": "The common sequence exists",
+   "locator": "TorusEuler/Paper/Spine.lean, line 154",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.TorusEuler.Paper.theorem_A_1",
+   "kind": "declaration",
+   "label": "TorusEuler.Paper.theorem_A_1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.TorusEuler.Paper.theorem_A_1"
+   ],
+   "source_id": "lean:TorusEuler/Paper/Spine.lean",
+   "declaration": "TorusEuler.Paper.theorem_A_1",
+   "statement": "The Hölder endpoint theorem",
+   "locator": "TorusEuler/Paper/Spine.lean, line 70",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  }
+ ],
+ "edges": [
+  {
+   "from": "euler.corollary-8.3",
+   "to": "lean.TorusEuler.Paper.corollary_8_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.corollary-8.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-1.3",
+   "to": "lean.TorusEuler.Paper.lemma_1_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-1.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.1",
+   "to": "lean.TorusEuler.Paper.lemma_2_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.2",
+   "to": "lean.TorusEuler.Paper.lemma_2_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.2"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.3",
+   "to": "lean.TorusEuler.Paper.lemma_2_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.4",
+   "to": "lean.TorusEuler.Paper.lemma_2_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.4"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.5",
+   "to": "lean.TorusEuler.Paper.lemma_2_5",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.5"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.6",
+   "to": "lean.TorusEuler.Paper.lemma_2_6",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.6"
+   ]
+  },
+  {
+   "from": "euler.lemma-2.7",
+   "to": "lean.TorusEuler.Paper.lemma_2_7",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-2.7"
+   ]
+  },
+  {
+   "from": "euler.lemma-3.1",
+   "to": "lean.TorusEuler.Paper.lemma_3_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-3.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-4.1",
+   "to": "lean.TorusEuler.Paper.lemma_4_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-4.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.10",
+   "to": "lean.TorusEuler.Paper.lemma_5_10",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.10"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.3",
+   "to": "lean.TorusEuler.Paper.lemma_5_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.3"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.5",
+   "to": "lean.TorusEuler.Paper.lemma_5_5",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.5"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.7",
+   "to": "lean.TorusEuler.Paper.lemma_5_7",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.7"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.8",
+   "to": "lean.TorusEuler.Paper.lemma_5_8",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.8"
+   ]
+  },
+  {
+   "from": "euler.lemma-5.9",
+   "to": "lean.TorusEuler.Paper.lemma_5_9",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-5.9"
+   ]
+  },
+  {
+   "from": "euler.lemma-6.1",
+   "to": "lean.TorusEuler.Paper.lemma_6_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-6.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-a.2",
+   "to": "lean.TorusEuler.Paper.lemma_A_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-a.2"
+   ]
+  },
+  {
+   "from": "euler.lemma-b.1",
+   "to": "lean.TorusEuler.Paper.lemma_B_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-b.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.1",
+   "to": "lean.TorusEuler.Paper.lemma_D_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.1"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.2",
+   "to": "lean.TorusEuler.Paper.lemma_D_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.2"
+   ]
+  },
+  {
+   "from": "euler.lemma-d.3",
+   "to": "lean.TorusEuler.Paper.lemma_D_3",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.lemma-d.3"
+   ]
+  },
+  {
+   "from": "euler.proposition-2.8",
+   "to": "lean.TorusEuler.Paper.proposition_2_8",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-2.8"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.1",
+   "to": "lean.TorusEuler.Paper.proposition_5_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.11",
+   "to": "lean.TorusEuler.Paper.proposition_5_11",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.11"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.2",
+   "to": "lean.TorusEuler.Paper.proposition_5_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-5.4",
+   "to": "lean.TorusEuler.Paper.proposition_5_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-5.4"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.1",
+   "to": "lean.TorusEuler.Paper.proposition_8_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.1"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.2",
+   "to": "lean.TorusEuler.Paper.proposition_8_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.2"
+   ]
+  },
+  {
+   "from": "euler.proposition-8.4",
+   "to": "lean.TorusEuler.Paper.proposition_8_4",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.proposition-8.4"
+   ]
+  },
+  {
+   "from": "euler.remark-1.2",
+   "to": "lean.TorusEuler.Paper.remark_1_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.remark-1.2"
+   ]
+  },
+  {
+   "from": "euler.theorem-1.1",
+   "to": "lean.TorusEuler.Paper.theorem_1_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-1.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-4.2",
+   "to": "lean.TorusEuler.Paper.theorem_4_2",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-4.2"
+   ]
+  },
+  {
+   "from": "euler.theorem-5.6",
+   "to": "lean.TorusEuler.Paper.theorem_5_6",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-5.6"
+   ]
+  },
+  {
+   "from": "euler.theorem-7.1",
+   "to": "lean.TorusEuler.Paper.theorem_7_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-7.1"
+   ]
+  },
+  {
+   "from": "euler.theorem-a.1",
+   "to": "lean.TorusEuler.Paper.theorem_A_1",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.euler.theorem-a.1"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "link.euler.corollary-8.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.corollary-8.3",
+    "lean.TorusEuler.Paper.corollary_8_3"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Corollary 8.3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-1.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-1.3",
+    "lean.TorusEuler.Paper.lemma_1_3"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 1.3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.1",
+    "lean.TorusEuler.Paper.lemma_2_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.2",
+    "lean.TorusEuler.Paper.lemma_2_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.3",
+    "lean.TorusEuler.Paper.lemma_2_3"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.4",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.4",
+    "lean.TorusEuler.Paper.lemma_2_4"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.4. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.5",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.5",
+    "lean.TorusEuler.Paper.lemma_2_5"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.5. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.6",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.6",
+    "lean.TorusEuler.Paper.lemma_2_6"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.6. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-2.7",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-2.7",
+    "lean.TorusEuler.Paper.lemma_2_7"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 2.7. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-3.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-3.1",
+    "lean.TorusEuler.Paper.lemma_3_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 3.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-4.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-4.1",
+    "lean.TorusEuler.Paper.lemma_4_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 4.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-5.10",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-5.10",
+    "lean.TorusEuler.Paper.lemma_5_10"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.10. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-5.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-5.3",
+    "lean.TorusEuler.Paper.lemma_5_3"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-5.5",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-5.5",
+    "lean.TorusEuler.Paper.lemma_5_5"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.5. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-5.7",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-5.7",
+    "lean.TorusEuler.Paper.lemma_5_7"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.7. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-5.8",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-5.8",
+    "lean.TorusEuler.Paper.lemma_5_8"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.8. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-5.9",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-5.9",
+    "lean.TorusEuler.Paper.lemma_5_9"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 5.9. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-6.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-6.1",
+    "lean.TorusEuler.Paper.lemma_6_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma 6.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-a.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-a.2",
+    "lean.TorusEuler.Paper.lemma_A_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma A.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-b.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-b.1",
+    "lean.TorusEuler.Paper.lemma_B_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma B.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-d.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-d.1",
+    "lean.TorusEuler.Paper.lemma_D_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma D.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-d.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-d.2",
+    "lean.TorusEuler.Paper.lemma_D_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma D.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.lemma-d.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.lemma-d.3",
+    "lean.TorusEuler.Paper.lemma_D_3"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Lemma D.3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-2.8",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-2.8",
+    "lean.TorusEuler.Paper.proposition_2_8"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 2.8. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-5.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-5.1",
+    "lean.TorusEuler.Paper.proposition_5_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-5.11",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-5.11",
+    "lean.TorusEuler.Paper.proposition_5_11"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.11. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-5.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-5.2",
+    "lean.TorusEuler.Paper.proposition_5_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-5.4",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-5.4",
+    "lean.TorusEuler.Paper.proposition_5_4"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 5.4. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-8.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-8.1",
+    "lean.TorusEuler.Paper.proposition_8_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 8.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-8.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-8.2",
+    "lean.TorusEuler.Paper.proposition_8_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 8.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.proposition-8.4",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.proposition-8.4",
+    "lean.TorusEuler.Paper.proposition_8_4"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Proposition 8.4. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.remark-1.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.remark-1.2",
+    "lean.TorusEuler.Paper.remark_1_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Remark 1.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.theorem-1.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.theorem-1.1",
+    "lean.TorusEuler.Paper.theorem_1_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 1.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.theorem-4.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.theorem-4.2",
+    "lean.TorusEuler.Paper.theorem_4_2"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 4.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.theorem-5.6",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.theorem-5.6",
+    "lean.TorusEuler.Paper.theorem_5_6"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 5.6. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.theorem-7.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.theorem-7.1",
+    "lean.TorusEuler.Paper.theorem_7_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem 7.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.euler.theorem-a.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by tools/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "euler.theorem-a.1",
+    "lean.TorusEuler.Paper.theorem_A_1"
+   ],
+   "details": "Proof Reader's links.json at 4d1a02f1d75f names these Lean declarations for Theorem A.1. The links were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "scope": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations, by Levent Alpöge, Tristan Buckmaster, Matei P. Coiculescu, with their Lean at https://github.com/mcoiculescu/EulerBlowupPublic fd3a1588967810b9abe42a1dcf46ee662d6434e2, as read for Proof Reader (wcook04/proof-reader 4d1a02f1d75f4d56267a67bd8fd91678a2499fa2). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by tools/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

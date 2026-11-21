@@ -1,0 +1,24 @@
+{
+ "schema_version": "1.2",
+ "stage": "long",
+ "state": "scaffold",
+ "path": "papers/long.md",
+ "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
+ "graph_sha256": "815535101674a6533518a2a4e4bedfb5764ab2807ff8a9366f51b81f824132e1",
+ "selected_goal_ids": [
+  "euler.theorem-1.1"
+ ],
+ "claim_ids": [],
+ "citation_ids": [
+  "cite.euler.theorem-1.1",
+  "cite.lean.TorusEuler.Paper.theorem_1_1"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "euler.theorem-1.1",
+  "lean.TorusEuler.Paper.theorem_1_1"
+ ],
+ "passages": [],
+ "review_state": "not_reviewed",
+ "review_notes": []
+}

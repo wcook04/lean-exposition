@@ -1,0 +1,38 @@
+{
+ "summary": {
+  "quote_not_unique": 0,
+  "lean_not_in_index": 0,
+  "verdict_without_note": 0,
+  "statement_without_lean": 1,
+  "merged": 3,
+  "long_title_without_override": 0,
+  "ties": 969,
+  "titled": 1039,
+  "names": 7531,
+  "results": 37,
+  "sections": 44,
+  "lean_files": 736,
+  "unnamed": 6930
+ },
+ "quote_not_unique": [],
+ "lean_not_in_index": [],
+ "verdict_without_note": [],
+ "statement_without_lean": [
+  "r3c8-lemma53-transverse-existence"
+ ],
+ "merged": [
+  [
+   "sec4.inverse-hypothesis",
+   "sec4.inverse-existence"
+  ],
+  [
+   "p5.1.polynomial-coefficients",
+   "p5.1.field-hypothesis"
+  ],
+  [
+   "e03-s6-rate",
+   "e03-s6-normalized-shear"
+  ]
+ ],
+ "long_title_without_override": []
+}

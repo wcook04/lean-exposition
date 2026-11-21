@@ -4,6 +4,7 @@
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
 import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
+import { libraryHref, parseLibraryPath } from "./libraryAddress";
 
 export type Trace = "rests" | "uses";
 
@@ -120,6 +121,8 @@ export function parseRoute(url: URL): Route {
   // The front page lives at "/". The map moved to "/map"; a link to "/" that
   // carries any map parameter was made when the map lived there, so it still
   // opens the map.
+  const library = parseLibraryPath(path, q, hash);
+  if (library) return library;
   const MAP_PARAMS = ["g", "n", "t", "lens", "e"];
   if (path === "/" && !MAP_PARAMS.some((name) => q.has(name))) return hash ? { view: "home", anchor: hash } : { view: "home" };
   if (path === "/" || path === "/map") {
@@ -214,6 +217,8 @@ export function routeHref(route: Route): string {
       return `${BASE}/map/${s ? `?${s}` : ""}`;
     }
     case "read": {
+      const library = libraryHref(route, BASE);
+      if (library) return library;
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.lean) q.set("v", "lean");

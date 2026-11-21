@@ -3,10 +3,11 @@
 // alias "@instance/site". No browser API and no import.meta.
 
 import erdos257 from "./erdos257/site.ts";
+import library from "./library/site.ts";
 import qaoaSk from "./qaoa-sk/site.ts";
 import type { SiteInstance } from "./types.ts";
 
-export const INSTANCES: Record<string, SiteInstance> = { "qaoa-sk": qaoaSk, erdos257 };
+export const INSTANCES: Record<string, SiteInstance> = { "qaoa-sk": qaoaSk, erdos257, library };
 
 export const DEFAULT_INSTANCE = "qaoa-sk";
 

@@ -1,0 +1,384 @@
+{
+ "schema": 1,
+ "results": {
+  "theorem-1.1": {
+   "claim": "result-1.1",
+   "title": "Theorem 1.1",
+   "section": "1",
+   "tie": "e01.theorem.initial-data",
+   "lean": [
+    "TorusEuler.Paper.theorem_1_1"
+   ]
+  },
+  "remark-1.2": {
+   "claim": "result-1.2",
+   "title": "Remark 1.2",
+   "section": "1",
+   "tie": "e01.remark.smooth-extension",
+   "lean": [
+    "TorusEuler.Paper.remark_1_2"
+   ]
+  },
+  "lemma-1.3": {
+   "claim": "result-1.3",
+   "title": "Lemma 1.3",
+   "section": "1",
+   "tie": "e01.lemma13.orders",
+   "lean": [
+    "TorusEuler.Paper.lemma_1_3"
+   ]
+  },
+  "lemma-2.1": {
+   "claim": "result-2.1",
+   "title": "Lemma 2.1",
+   "section": "2",
+   "tie": "affine.background-hypotheses",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_1"
+   ]
+  },
+  "lemma-2.2": {
+   "claim": "result-2.2",
+   "title": "Lemma 2.2",
+   "section": "2",
+   "tie": "c8-frame-trace-scope",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_2"
+   ]
+  },
+  "lemma-2.3": {
+   "claim": "result-2.3",
+   "title": "Lemma 2.3",
+   "section": "2",
+   "tie": "r2a1.intro.strong-shear-factor",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_3"
+   ]
+  },
+  "lemma-2.4": {
+   "claim": "result-2.4",
+   "title": "Lemma 2.4",
+   "section": "2",
+   "tie": "r2a1.wave.vector-comparison",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_4"
+   ]
+  },
+  "lemma-2.5": {
+   "claim": "result-2.5",
+   "title": "Lemma 2.5",
+   "section": "2",
+   "tie": "lem-2-4-parameter",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_5"
+   ]
+  },
+  "lemma-2.6": {
+   "claim": "result-2.6",
+   "title": "Lemma 2.6",
+   "section": "2",
+   "tie": "r2a1.amp.comparison-hypotheses",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_6"
+   ]
+  },
+  "lemma-2.7": {
+   "claim": "result-2.7",
+   "title": "Lemma 2.7",
+   "section": "2",
+   "tie": "intro-amplification-late-angle",
+   "lean": [
+    "TorusEuler.Paper.lemma_2_7"
+   ]
+  },
+  "proposition-2.8": {
+   "claim": "result-2.8",
+   "title": "Proposition 2.8",
+   "section": "2",
+   "tie": "r2a1.amp.crossing-definition",
+   "lean": [
+    "TorusEuler.Paper.proposition_2_8"
+   ]
+  },
+  "lemma-3.1": {
+   "claim": "result-3.1",
+   "title": "Lemma 3.1",
+   "section": "3",
+   "tie": "localized.lemma31.existential-profile",
+   "lean": [
+    "TorusEuler.Paper.lemma_3_1"
+   ]
+  },
+  "lemma-4.1": {
+   "claim": "result-4.1",
+   "title": "Lemma 4.1",
+   "section": "4",
+   "tie": "sec4.hardy-hypothesis",
+   "lean": [
+    "TorusEuler.Paper.lemma_4_1"
+   ]
+  },
+  "theorem-4.2": {
+   "claim": "result-4.2",
+   "title": "Theorem 4.2",
+   "section": "4",
+   "tie": "c8-endpoint-choice-introduction",
+   "lean": [
+    "TorusEuler.Paper.theorem_4_2"
+   ]
+  },
+  "proposition-5.1": {
+   "claim": "result-5.1",
+   "title": "Proposition 5.1",
+   "section": "5",
+   "tie": "p5.1.coefficient-list",
+   "lean": [
+    "TorusEuler.Paper.proposition_5_1"
+   ]
+  },
+  "proposition-5.2": {
+   "claim": "result-5.2",
+   "title": "Proposition 5.2",
+   "section": "5",
+   "tie": "p5.2.all-solutions",
+   "lean": [
+    "TorusEuler.Paper.proposition_5_2"
+   ]
+  },
+  "lemma-5.3": {
+   "claim": "result-5.3",
+   "title": "Lemma 5.3",
+   "section": "5",
+   "tie": "e02.lemma53.near-origin",
+   "lean": [
+    "TorusEuler.Paper.lemma_5_3"
+   ]
+  },
+  "proposition-5.4": {
+   "claim": "result-5.4",
+   "title": "Proposition 5.4",
+   "section": "5",
+   "tie": "e02.prop54.well-defined",
+   "lean": [
+    "TorusEuler.Paper.proposition_5_4"
+   ]
+  },
+  "lemma-5.5": {
+   "claim": "result-5.5",
+   "title": "Lemma 5.5",
+   "section": "5",
+   "tie": "r2.lemma55.hypotheses",
+   "lean": [
+    "TorusEuler.Paper.lemma_5_5"
+   ]
+  },
+  "theorem-5.6": {
+   "claim": "result-5.6",
+   "title": "Theorem 5.6",
+   "section": "5",
+   "tie": "e02.thm56.smallness",
+   "lean": [
+    "TorusEuler.Paper.theorem_5_6"
+   ]
+  },
+  "lemma-5.7": {
+   "claim": "result-5.7",
+   "title": "Lemma 5.7",
+   "section": "5",
+   "tie": "euler02.approximate.graph-cell-hypotheses",
+   "lean": [
+    "TorusEuler.Paper.lemma_5_7"
+   ]
+  },
+  "lemma-5.8": {
+   "claim": "result-5.8",
+   "title": "Lemma 5.8",
+   "section": "5",
+   "tie": "euler02.approximate.fields",
+   "lean": [
+    "TorusEuler.Paper.lemma_5_8"
+   ]
+  },
+  "lemma-5.9": {
+   "claim": "result-5.9",
+   "title": "Lemma 5.9",
+   "section": "5",
+   "tie": "euler02.pressure-flow.pressure-upper",
+   "lean": [
+    "TorusEuler.Paper.lemma_5_9"
+   ]
+  },
+  "lemma-5.10": {
+   "claim": "result-5.10",
+   "title": "Lemma 5.10",
+   "section": "5",
+   "tie": "euler02.pressure-flow.perturbation-hypotheses",
+   "lean": [
+    "TorusEuler.Paper.lemma_5_10"
+   ]
+  },
+  "proposition-5.11": {
+   "claim": "result-5.11",
+   "title": "Proposition 5.11",
+   "section": "5",
+   "tie": "euler02.truncation.fields-and-budget",
+   "lean": [
+    "TorusEuler.Paper.proposition_5_11"
+   ]
+  },
+  "lemma-6.1": {
+   "claim": "result-6.1",
+   "title": "Lemma 6.1",
+   "section": "6",
+   "tie": "r2-s6-rho-hypothesis",
+   "lean": [
+    "TorusEuler.Paper.lemma_6_1"
+   ]
+  },
+  "theorem-7.1": {
+   "claim": "result-7.1",
+   "title": "Theorem 7.1",
+   "section": "7",
+   "tie": "e03-s7-existence",
+   "lean": [
+    "TorusEuler.Paper.theorem_7_1"
+   ]
+  },
+  "proposition-8.1": {
+   "claim": "result-8.1",
+   "title": "Proposition 8.1",
+   "section": "8",
+   "tie": "e03-s8-initial-data",
+   "lean": [
+    "TorusEuler.Paper.proposition_8_1"
+   ]
+  },
+  "proposition-8.2": {
+   "claim": "result-8.2",
+   "title": "Proposition 8.2",
+   "section": "8",
+   "tie": "e03-s8-bounded-velocity",
+   "lean": [
+    "TorusEuler.Paper.proposition_8_2"
+   ]
+  },
+  "corollary-8.3": {
+   "claim": "result-8.3",
+   "title": "Corollary 8.3",
+   "section": "8",
+   "tie": "e03-s8-maximal-and-integrals",
+   "lean": [
+    "TorusEuler.Paper.corollary_8_3"
+   ]
+  },
+  "proposition-8.4": {
+   "claim": "result-8.4",
+   "title": "Proposition 8.4",
+   "section": "8",
+   "tie": "e03-s8-off-origin",
+   "lean": [
+    "TorusEuler.Paper.proposition_8_4"
+   ]
+  },
+  "theorem-a.1": {
+   "claim": "result-A.1",
+   "title": "Theorem A.1",
+   "section": "A",
+   "tie": "e03-r2-appa-dimensional-constants",
+   "lean": [
+    "TorusEuler.Paper.theorem_A_1"
+   ]
+  },
+  "lemma-a.2": {
+   "claim": "result-A.2",
+   "title": "Lemma A.2",
+   "section": "A",
+   "tie": "e03-r2-appa-dimensional-constants",
+   "lean": [
+    "TorusEuler.Paper.lemma_A_2"
+   ]
+  },
+  "lemma-b.1": {
+   "claim": "result-B.1",
+   "title": "Lemma B.1",
+   "section": "B",
+   "tie": "e03-appb-multiplier-definition",
+   "lean": [
+    "TorusEuler.Paper.lemma_B_1"
+   ]
+  },
+  "lemma-d.1": {
+   "claim": "result-D.1",
+   "title": "Lemma D.1",
+   "section": "D",
+   "tie": "e03-appd-derivative-product",
+   "lean": [
+    "TorusEuler.Paper.lemma_D_1"
+   ]
+  },
+  "lemma-d.2": {
+   "claim": "result-D.2",
+   "title": "Lemma D.2",
+   "section": "D",
+   "tie": "e03-appd-product-coeff",
+   "lean": [
+    "TorusEuler.Paper.lemma_D_2"
+   ]
+  },
+  "lemma-d.3": {
+   "claim": "result-D.3",
+   "title": "Lemma D.3",
+   "section": "D",
+   "tie": "e03-appd-lifting-equation",
+   "lean": [
+    "TorusEuler.Paper.lemma_D_3"
+   ]
+  }
+ },
+ "sections": {
+  "1": "1 Introduction",
+  "1.1": "1.1 Waves and successive amplification",
+  "1.2": "1.2 Controlling corrections in an amplifying flow",
+  "1.3": "1.3 Correcting a localized wave",
+  "1.4": "1.4 Comparison with blow-up constructions with forcing",
+  "1.5": "1.5 Choice of parameters",
+  "1.6": "1.6 Provenance",
+  "1.7": "1.7 AI statement",
+  "2": "2 The wave and its amplification",
+  "2.1": "2.1 Exact waves over a linear background",
+  "2.1.1": "2.1.1 The preceding frame",
+  "2.2": "2.2 Amplification on a prescribed interval",
+  "2.2.1": "2.2.1 The new wave in the preceding frame",
+  "2.2.2": "2.2.2 The reference solution",
+  "2.2.3": "2.2.3 Comparison with the reference solution",
+  "2.2.4": "2.2.4 The couplings of the new wave",
+  "2.2.5": "2.2.5 The crossing",
+  "3": "3 Localized waves over a smooth parent",
+  "3.1": "3.1 Lagrangian coordinates and the leading wave",
+  "3.2": "3.2 The profile",
+  "4": "4 Selecting initial data by the endpoint problem",
+  "4.1": "4.1 Displacement and the two end conditions",
+  "4.2": "4.2 Coercivity",
+  "4.3": "4.3 The inverse and its pressure",
+  "5": "5 From a localized wave to an approximate solution",
+  "5.1": "5.1 A step over a truncated parent",
+  "5.2": "5.2 Coefficient bounds for the parent",
+  "5.3": "5.3 Finite-order estimates for the mean",
+  "5.4": "5.4 The transverse equation",
+  "5.5": "5.5 The finite expansion",
+  "5.5.1": "5.5.1 The equations at each level",
+  "5.5.2": "5.5.2 Bounds at every order",
+  "5.6": "5.6 The approximate solution",
+  "5.7": "5.7 Frequency truncation",
+  "6": "6 The initial wave and the inductive step",
+  "6.1": "6.1 The initial wave over a stationary shear",
+  "6.2": "6.2 Choosing the next wave",
+  "7": "7 A common sequence of approximate solutions",
+  "7.1": "7.1 The data of a step",
+  "7.2": "7.2 Proof of Theorem 7.1",
+  "8": "8 The limit and its terminal behavior",
+  "8.1": "8.1 Convergence before the accumulation time",
+  "8.2": "8.2 Velocity, central vorticity and the maximal time",
+  "8.3": "8.3 The velocity away from the origin at the singular time"
+ }
+}

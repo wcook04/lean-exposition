@@ -80,7 +80,7 @@ instances/<paper>/
 
 **Existing instances.** SK and #257 keep their `examples/` and `papers/` folders. Their `instance.json` points at those folders, so nothing moves on the first pass. Their `copy.ts` slots become `instance.json` fields. Their FrontPage, AboutPage, LeanLanding and ChecksIntro components are dropped, because there are no front pages; any sentences they hold become `about[]`.
 
-**`tools/from_proof_reader.py`.** This converter turns a Proof Reader page (`paper.toml`, `links.json`, paper source, `generated/lean.json(.gz)`, `checks/`) into this format:
+**`scripts/from_proof_reader.py`.** This converter turns a Proof Reader page (`paper.toml`, `links.json`, paper source, `generated/lean.json(.gz)`, `checks/`) into this format:
 
 - **Passages.** Each passage becomes a tie, and its id is kept.
 - **Claims.** Each claim becomes a result slug. For example, `result-1.1` with the title "Theorem 1.1" becomes `theorem-1.1`.

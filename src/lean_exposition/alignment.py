@@ -26,6 +26,9 @@ RELATIONS = {"states", "contains", "part", "proof", "defines"}
 ROLES = {"statement", "definition", "explanation", "derivation", "example", "mention"}
 MAX_SLICE_CHARACTERS = 1800
 MAX_NOTE_WORDS = 25
+# The reader's palette has nine topic colours; a paper with more topics reuses them in order until
+# the family palette (one hue per family, shades within it) replaces this.
+PALETTE_COLOURS = 9
 # Optional comparison fields. `fidelity` says whether a Lean row states the same,
 # a stronger, a weaker or a different statement from the paper (different: neither
 # implies the other as written); `fidelity_source` says whether
@@ -443,7 +446,8 @@ def resolve_phrases(directory, prepared, names, records, errors):
                     ids.append(topic["id"])
             parts.append({"name": part["name"], "lines": [first, last],
                           "start_byte": bytes_at[begin], "end_byte": bytes_at[end],
-                          "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", "")}
+                          "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""),
+                                      **({"family": t["family"]} if t.get("family") else {})}
                                      for t in part["topics"] if t.get("id") in ids],
                           "titles": {}, "notes": {}, "_titles": part["titles"], "_notes": part["notes"],
                           **{key: part[key] for key in ("packet", "source_commit") if key in part}})
@@ -892,7 +896,7 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
     else:
         # The phrase layer replaces the record statements as what the paper marks: one tie per
         # phrase, none overlapping. A topic's ties alternate between its colour's two shades.
-        colour = {topic["id"]: n for part in phrases["parts"] for n, topic in enumerate(part["topics"])}
+        colour = {topic["id"]: n % PALETTE_COLOURS for part in phrases["parts"] for n, topic in enumerate(part["topics"])}
         rows = {(row["start_byte"], row["end_byte"], row["id"]): row for row in phrases["ties"]}
         keys = sorted(rows)
         seen, ties = {}, []
@@ -935,7 +939,8 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
     if phrases is not None:
         index["layer"] = "phrases"
         index["topics"] = [{"id": topic["id"], "name": topic["name"], "description": topic["description"],
-                            "part": number, "colour": n}
+                            "part": number, "colour": n % PALETTE_COLOURS,
+                            **({"family": topic["family"]} if topic.get("family") else {})}
                            for number, part in enumerate(phrases["parts"]) for n, topic in enumerate(part["topics"])]
         index["parts"] = [{"name": part["name"], "start_byte": part["start_byte"], "end_byte": part["end_byte"]}
                           for part in phrases["parts"]]

@@ -232,7 +232,8 @@ export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; le
   for (const name of names) {
     if (!name.endsWith(".json") || NOT_A_BATCH.test(name)) continue;
     const { records } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { records: Record<string, AuthoredRecord> };
-    for (const [id, row] of Object.entries(records)) {
+    // Other authored companions (results.json, aliases.json) share the folder; only batch files hold records.
+    for (const [id, row] of Object.entries(records ?? {})) {
       const levels: Record<string, string> = {};
       for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
       const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];
@@ -407,7 +408,7 @@ async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record
   try {
     const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
     const screens: Record<string, string> = {};
-    for (const stage of Object.keys(index.documents)) {
+    for (const stage of Object.keys(index.documents).filter((s) => !INSTANCE.stages || INSTANCE.stages.includes(s as never))) {
       const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
       const { account, parts } = firstScreen(stage, edition(index.documents[stage]), body(index.responses[`/papers/${stage}/structure?representation=reader`]), body(index.responses[`/ties/${stage}`]), references);
       screens[stage] = readerFirstScreenHtml(account, parts);
@@ -571,7 +572,7 @@ export default defineConfig(({ mode, command }) => {
         const out = resolve("dist");
         const shell = resolve(out, ".route-shell.html");
         const screens = await paperFirstScreens(base, facts);
-        for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
+        for (const route of ["map", "compare", "lean", "checks", "about", "search", ...(INSTANCE.stages ?? ["long", "short", "expository"]).map((stage) => `read/${stage}`)]) {
           mkdirSync(resolve(out, route), { recursive: true });
           const preload = [...routeFonts(route, base), ...routeCode(route, base), ...routeData(route, base)].join("");
           // A paper's first paint is already its text, in the shape of the page, so nothing moves when the page arrives.

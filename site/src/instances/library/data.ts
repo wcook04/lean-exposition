@@ -1,0 +1,26 @@
+// The library paper this build is for, as data: instances/<LX_PAPER>/instance.json, copied to
+// current.json by scripts/library-instance.mjs before a build. No code here is a paper's own.
+import current from "./current.json";
+
+export interface LibraryDocument { id: string; slot: "long" | "short" | "expository"; slug: string; title: string; noun: string; main?: boolean; pdf?: { file: string; sha256: string; bytes: number; url: string } }
+export interface LibraryInstance {
+  schema: string;
+  id: string;
+  title: string;
+  short_title: string;
+  authors: string[];
+  venue: string;
+  credit_lines: string[];
+  host: string;
+  review: string;
+  source: { proof_reader?: { repository: string; commit: string; page: string }; upstream: { repository: string; commit: string; paper?: string }; lean_scope?: string };
+  documents: LibraryDocument[];
+  families: { id: string; name: string }[];
+  topics: { id: string; name: string; description: string; family: string | null }[];
+  topic_order: string[];
+  goal: string;
+}
+
+export const PAPER = current as LibraryInstance;
+export const MAIN = PAPER.documents.find((d) => d.main) ?? PAPER.documents[0];
+export const LIBRARY_ROOT = "https://wcook04.github.io/library/";
