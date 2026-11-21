@@ -4,7 +4,7 @@
 // the view buttons, and a control that names the other view ("Open its Lean"), change it.
 //
 // Graph is the focus graph (FocusGraph, specified in docs/graph-pane.md): the subject in the
-// middle, everything that uses it above and everything it uses below, grouped by kind, with
+// middle, everything that uses it on the left and everything it uses on the right, grouped by topic, with
 // the dock under it showing one card in detail. The whole proof map stays one button away,
 // in the same place. Lean is the Lean of the subject, the whole height of the pane. Under
 // 1280px the same page opens as a sheet; under 600px of width the graph folds to one line.
@@ -137,7 +137,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
 
   const shellState = useLeanShell();
   const shell = shellState.status === "ready" ? shellState.shell : null;
-  const places = useMemo(() => paperPlaces(ties), [ties]);
+  const places = useMemo(
+    () => paperPlaces(ties, (structures[stage]?.paper.sections ?? []).map((s) => ({ start: s.heading_span.start_byte, title: s.title }))),
+    [ties, structures, stage],
+  );
   const readAt = follow.tie !== null ? startOf(ties.index.ties[follow.tie].at) : passageStart(ties, anchor);
   const [loaded, setLoaded] = useState(0);
   const input = useMemo(

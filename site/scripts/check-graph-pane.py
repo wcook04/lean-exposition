@@ -3,7 +3,7 @@
 
 For each paper, at 1440x900 and 2560x1440, the pane is checked while following the paper
 (two places), after a phrase is clicked and after a neighbour card is clicked, with the shared
-assertions of `graph_pane_checks.py` (`check_graph_pane`, `check_scrolls`). Then it checks what
+assertions of `graph_pane_checks.py` (`check_graph_pane`, then `check_groups`, which opens the largest group). Then it checks what
 the shared module cannot know about this reader: a click on a phrase or a card keeps the view,
 Escape returns to following the paper, and the dock under the graph is never empty.
 
@@ -22,7 +22,7 @@ from urllib.parse import parse_qs, urlsplit
 from playwright.sync_api import Page, sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from graph_pane_checks import check_graph_pane, check_scrolls  # noqa: E402
+from graph_pane_checks import check_graph_pane, check_groups  # noqa: E402
 
 DOCK = ".map-pane__dock"
 SIZES = [(1440, 900), (2560, 1440)]
@@ -81,7 +81,7 @@ def main() -> int:
                     page.mouse.wheel(0, 1800 * step)
                     settle(page)
                     failures += check_graph_pane(page, f"{label}: following, place {step}", dock=DOCK)
-                    failures += check_scrolls(page, f"{label}: following, place {step}")
+                    failures += check_groups(page, f"{label}: following, place {step}")
                 shot("following")
                 # A phrase clicked: the view stays Graph.
                 if click_phrase(page, args.phrase):
@@ -91,7 +91,7 @@ def main() -> int:
                     if "n" not in parse_qs(urlsplit(page.url).query):
                         failures.append(f"{label}: the phrase click opened nothing")
                     failures += check_graph_pane(page, f"{label}: phrase clicked", dock=DOCK)
-                    failures += check_scrolls(page, f"{label}: phrase clicked")
+                    failures += check_groups(page, f"{label}: phrase clicked")
                     shot("phrase")
                 # A neighbour card clicked: it becomes the subject, and the view stays Graph.
                 card = page.locator('.fg__card[data-band="uses"], .fg__card[data-band="users"]').first
@@ -106,7 +106,7 @@ def main() -> int:
                     if view(page) != "graph":
                         failures.append(f"{label}: a card click changed the view to {view(page)}")
                     failures += check_graph_pane(page, f"{label}: card clicked", dock=DOCK)
-                    failures += check_scrolls(page, f"{label}: card clicked")
+                    failures += check_groups(page, f"{label}: card clicked")
                     shot("card")
                 # Escape follows the paper again and keeps the view.
                 page.keyboard.press("Escape")

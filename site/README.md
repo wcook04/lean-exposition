@@ -20,8 +20,8 @@ want to explore it:
 - **The papers.** The exposition, the short paper and the long reasoning record.
   The pane facing the paper has two views, Graph and Lean, which share one subject: the phrase,
   card or paragraph you clicked, or else the statement you are reading. Graph draws the subject
-  in the middle, every step and declaration that uses it above and everything it uses below,
-  grouped by kind and joined by lines, with the chain of uses up to the main result over it and
+  in the middle, every step and declaration that uses it on the left and everything it uses on
+  the right, gathered into named groups by topic where a side is crowded and joined by lines, with the chain of uses up to the main result over it and
   the subject's Lean in a dock under it. Lean gives the whole pane to the subject's Lean. A click
   changes the subject and never the view; Escape follows the paper again. The whole proof map is
   one button away. [The graph pane](../docs/graph-pane.md) specifies it.

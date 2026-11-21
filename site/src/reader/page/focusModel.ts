@@ -63,6 +63,11 @@ export interface PaperPlaces {
   declAt: Map<string, number>;
   recordTone: Map<string, string>;
   declTone: Map<string, string>;
+  /** The name of that topic, as the paper's legend shows it. */
+  recordTopic: Map<string, string>;
+  declTopic: Map<string, string>;
+  /** The paper's sections by their first byte, in order: a step's section is the last that starts before it. */
+  sections: { start: number; title: string }[];
 }
 
 export const startOf = (at: string | null | undefined) => {
@@ -70,9 +75,18 @@ export const startOf = (at: string | null | undefined) => {
   return m ? Number(m[1]) : null;
 };
 
-/** Read once per paper: the first place each record and declaration is stated, and its topic colour. */
-export function paperPlaces(ties: TieModel): PaperPlaces {
-  const places: PaperPlaces = { recordAt: new Map(), declAt: new Map(), recordTone: new Map(), declTone: new Map() };
+/** Read once per paper: the first place each record and declaration is stated, its topic and colour, and the sections. */
+export function paperPlaces(ties: TieModel, sections: readonly { start: number; title: string }[] = []): PaperPlaces {
+  const places: PaperPlaces = {
+    recordAt: new Map(),
+    declAt: new Map(),
+    recordTone: new Map(),
+    declTone: new Map(),
+    recordTopic: new Map(),
+    declTopic: new Map(),
+    sections: [...sections].sort((a, b) => a.start - b.start),
+  };
+  const topicName = new Map((ties.index.topics ?? []).map((topic) => [topic.id, topic.name]));
   const first = <K>(map: Map<K, number>, key: K, at: number) => {
     if (!map.has(key) || map.get(key)! > at) map.set(key, at);
   };
@@ -80,13 +94,16 @@ export function paperPlaces(ties: TieModel): PaperPlaces {
     const at = startOf(tie.at);
     const tone = tie.tone !== undefined ? `var(--tone-${tie.tone})` : null;
     const names = tie.rows?.map((row) => row.name) ?? (tie.name ? [tie.name] : []);
+    const topic = tie.topic ? topicName.get(tie.topic) : undefined;
     if (tie.record && !isPhraseRecord(tie.record)) {
       if (at !== null) first(places.recordAt, tie.record, at);
       if (tone && !places.recordTone.has(tie.record)) places.recordTone.set(tie.record, tone);
+      if (topic && !places.recordTopic.has(tie.record)) places.recordTopic.set(tie.record, topic);
     }
     for (const name of names) {
       if (at !== null) first(places.declAt, name, at);
       if (tone && !places.declTone.has(name)) places.declTone.set(name, tone);
+      if (topic && !places.declTopic.has(name)) places.declTopic.set(name, topic);
     }
   }
   return places;
@@ -102,6 +119,26 @@ export function passageStart(ties: TieModel, anchor: string | null): number | nu
 const DEFINITION_KINDS: readonly LeanKind[] = ["def", "abbrev", "structure", "class", "inductive", "opaque"];
 
 const lastName = (name: string) => name.slice(name.lastIndexOf(".") + 1);
+
+/**
+ * A Lean file by its name: `OAI.Probability.SKSupport.Model` is `Model.lean`. A zero-width space
+ * before each inner capital lets a long name such as `GreedyAchievementSet.lean` wrap in a narrow column.
+ */
+export const leanFile = (module: string) => `${module.slice(module.lastIndexOf(".") + 1).replace(/([a-z0-9])(?=[A-Z])/g, "$1\u200b")}.lean`;
+
+/** The group of Lean in files no phrase of the paper names: opened, it divides by those files. */
+export const UNNAMED = "Not named in the paper";
+
+/** The section of the paper a byte lies in, by its title. */
+export function sectionAt(places: PaperPlaces, at: number | undefined): string | undefined {
+  if (at === undefined) return undefined;
+  let title: string | undefined;
+  for (const s of places.sections) {
+    if (s.start > at) break;
+    title = s.title;
+  }
+  return title;
+}
 
 /** "Theorem 4.1", "Long record, Lemma 6.55": the number the paper prints, said for this paper. */
 export function printedNumber(label: string, stage: Stage): string | undefined {
@@ -135,6 +172,22 @@ export function makeFocus(input: FocusInput) {
     return node?.kind === "declaration" ? (node.declaration ?? node.label) : null;
   };
   const rowOf = (name: string) => (shell ? findDecl(shell.index, name) : undefined);
+  /**
+   * The topic of a Lean file: the topic most of the paper's phrases have whose declarations are in it.
+   * A declaration no phrase names takes its file's topic; one in a file no phrase names is "Not named in the paper".
+   */
+  const fileTopic = new Map<string, string>();
+  if (shell) {
+    const counts = new Map<string, Map<string, number>>();
+    for (const [name, topic] of input.places.declTopic) {
+      const module = findDecl(shell.index, name)?.module;
+      if (!module) continue;
+      const row = counts.get(module) ?? new Map<string, number>();
+      row.set(topic, (row.get(topic) ?? 0) + 1);
+      counts.set(module, row);
+    }
+    for (const [module, row] of counts) fileTopic.set(module, [...row.entries()].sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]))[0][0]);
+  }
   const declTitleOf = (name: string) => shell?.plain.get(name) ?? declTitle(alignment as never, name) ?? lastName(name).replace(/_/g, " ");
 
   /** A record's declarations: those the alignment links it to, then those its `formalizes` links name. */
@@ -183,12 +236,17 @@ export function makeFocus(input: FocusInput) {
       role: recordRole(node),
       kicker: node.kind === "assumption" ? "Assumption" : node.kind === "goal" && !printedNumber(node.label, stage) ? "Main result" : printedNumber(node.label, stage),
       tone: input.places.recordTone.get(id) ?? (decls[0] ? input.places.declTone.get(decls[0]) : undefined),
+      // A step no phrase of this paper names is grouped by the section of the paper that states it.
+      topic: input.places.recordTopic.get(id) ?? (decls[0] ? (input.places.declTopic.get(decls[0]) ?? fileTopic.get(rowOf(decls[0])?.module ?? "")) : undefined) ?? sectionAt(input.places, input.places.recordAt.get(id)),
+      section: sectionAt(input.places, input.places.recordAt.get(id)) ?? (decls[0] && rowOf(decls[0]) ? leanFile(rowOf(decls[0])!.module) : undefined),
       seen: seen(input.places.recordAt.get(id)),
     };
   };
   const declCardOf = (name: string, id = declCard(name)): FGCard => {
     const stated = statedBy(name)[0];
     const number = stated ? printedNumber(graph.nodes.get(stated)!.label, stage) : undefined;
+    const row = rowOf(name);
+    const file = row ? leanFile(row.module) : undefined;
     return {
       id,
       title: declTitleOf(name),
@@ -197,6 +255,9 @@ export function makeFocus(input: FocusInput) {
       // A declaration that states a record of the paper says which.
       kicker: stated ? `Lean of ${number ?? "a step"}` : undefined,
       tone: input.places.declTone.get(name),
+      // A declaration no phrase of this paper names is grouped with its Lean file's phrases, else as not named in the paper.
+      topic: input.places.declTopic.get(name) ?? (row ? (fileTopic.get(row.module) ?? UNNAMED) : undefined),
+      section: file,
       seen: seen(input.places.declAt.get(name)),
     };
   };
@@ -298,7 +359,7 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     if (stated && chain) {
       route = [stated, ...chain];
       for (const r of route) put(r);
-    } else routeNote = "This declaration is not a step of the paper’s argument, so no chain of uses joins it to the main result.";
+    } else routeNote = "Not a step of the paper’s argument: no chain of uses joins it to the main result.";
   } else {
     subjects = subject.ids.filter((id) => put(id));
     const here = new Set(subjects);

@@ -166,7 +166,7 @@ describe("MapPane", async () => {
   const argument = (id: string, side: "out" | "in") =>
     (side === "out" ? graph.out : graph.in).get(id)!.filter((e) => e.kind === "supports" || e.kind === "assumes").map((e) => (side === "out" ? e.to : e.from));
 
-  it("opens on one statement near the reading position, every record it uses below and every record that uses it above", () => {
+  it("opens on one statement near the reading position, every record that uses it on the left and every record it uses on the right", () => {
     show("contact-and-gap");
     const subject = drawn("subject");
     expect(subject).toHaveLength(1);

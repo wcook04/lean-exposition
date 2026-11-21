@@ -496,15 +496,19 @@ change it. A view change replaces the address's `v=` and adds no history entry, 
 view on screen.
 
 **Graph** is the focus graph (`src/map/FocusGraph.tsx`): the subject in the middle, what uses it
-above and what it uses below, grouped by kind. Records come from the argument graph: the main
+on the left and what it uses on the right, as compact one-line nodes that fit the pane when it
+opens. Records come from the argument graph: the main
 result and each paper's numbered results are results, the authored steps (and, on the SK site,
 the assumptions) are steps of the argument, literature is cited, open records are open questions.
 Its `supports` and `assumes` links are drawn as argument lines. What a step's own Lean declarations
-use in the Lean index is drawn too, as Lean lemmas and Lean definitions in groups of their own, a
-dashed line where only the statement names the declaration. A phrase whose declaration is no step
+use in the Lean index is drawn too, as Lean helper lemmas and definitions, a dashed line where
+only the statement names the declaration. A side with more neighbours than fit is drawn as named
+groups with counts that open in place: by the topic of the paper's phrases (the names in the
+"Topic colours" key), and for a declaration no phrase names, by its Lean file. A large group opens
+into its Lean files, or for steps the paper's sections. A phrase whose declaration is no step
 of the argument draws that declaration with its Lean neighbours, and the line over the drawing
-offers the paragraph's steps instead. A card's left edge carries its phrases' topic colour, and
-"read" or "stated later" says where the paper states it against the reading line. Under the
+offers the paragraph's steps instead. A node's left edge carries its phrases' topic colour, and a
+node the paper states further on is set in paler ink. Under the
 drawing a dock, 30% of the pane until a reader draws its handle (15% to 70%, remembered), shows
 the card under the pointer, the clicked phrase, or the subject's Lean, in that order, and "No Lean
 is linked to this paragraph." where there is none. "Whole proof map" puts the argument tree in the
