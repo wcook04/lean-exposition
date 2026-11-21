@@ -727,7 +727,7 @@ def _lock(tree, explicit=None):
 
 
 def lean_roots(tree, lock=None):
-    """The top-level directories whose Lean files form the indexed modules."""
+    """The top-level directories (or top-level module files) whose Lean files form the indexed modules."""
     tree = Path(tree)
     named = (lock or {}).get("lean_roots")
     if named is not None:
@@ -765,8 +765,13 @@ def build_index(tree, *, lock=None, extraction=()):
     modules = []
     source_lock = _lock(tree, lock)
     roots = lean_roots(tree, source_lock)
+    # Top-level module files are read only when the lock names their roots.
+    named_files = bool((source_lock or {}).get("lean_roots"))
     for root in roots:
-        for file in sorted((tree / root).rglob("*.lean")):
+        # A root names a top-level directory, or a top-level module file of that name (Solution.lean).
+        files = (sorted((tree / root).rglob("*.lean")) if (tree / root).is_dir() else []) + \
+            ([tree / f"{root}.lean"] if named_files and (tree / f"{root}.lean").is_file() else [])
+        for file in files:
             relative = file.relative_to(tree)
             raw = file.read_bytes()
             module = parse_module(raw.decode("utf-8"), _module_name(relative), relative.as_posix())

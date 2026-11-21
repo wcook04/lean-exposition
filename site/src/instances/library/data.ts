@@ -11,6 +11,10 @@ export interface LibraryInstance {
   authors: string[];
   venue: string;
   credit_lines: string[];
+  /** The credit line companion pages carry: the authors and their repository only. */
+  companion_credit?: string;
+  /** The authors' licence for their paper and Lean, as the source states it. */
+  licence?: string;
   host: string;
   review: string;
   source: { proof_reader?: { repository: string; commit: string; page: string }; upstream: { repository: string; commit: string; paper?: string }; lean_scope?: string };

@@ -431,7 +431,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
         for n, part in enumerate(data.get("parts") or ()):
             at = f"{where}:parts[{n}]"
             if not _check_keys(part, {"name", "lines", "topics", "titles", "notes"},
-                               {"packet", "source_commit"}, at, errors):
+                               {"packet", "source_commit", "partial"}, at, errors):
                 continue
             first, last = part["lines"]
             begin = line_starts[first - 1] if 0 < first <= len(line_starts) else 0
@@ -452,7 +452,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
                                       **({"family": t["family"]} if t.get("family") else {})}
                                      for t in part["topics"] if t.get("id") in ids],
                           "titles": {}, "notes": {}, "_titles": part["titles"], "_notes": part["notes"],
-                          **{key: part[key] for key in ("packet", "source_commit") if key in part}})
+                          **{key: part[key] for key in ("packet", "source_commit", "partial") if key in part}})
         if not parts:
             errors.append(f"{where}: no parts")
             continue
@@ -515,9 +515,14 @@ def resolve_phrases(directory, prepared, names, records, errors):
             for name in sorted(named):
                 title, note = part["titles"].get(name), part["notes"].get(name)
                 words = len(title.split()) if type(title) is str else 0
-                if not 2 <= words <= 6 or title != title.strip():
+                # A part marked `partial: true` may leave a declaration without a title or a note (the
+                # card then shows the Lean name alone); what it does give must still be well formed.
+                partial = part.get("partial") is True
+                if (title is not None or not partial) and (not 2 <= words <= 6 or title != title.strip()):
                     errors.append(f"{where}: {name} needs a trimmed title of two to six words in {part['name'] or 'its part'}")
-                if type(note) is not str or not note.strip():
+                if (note is None and partial):
+                    pass
+                elif type(note) is not str or not note.strip():
                     errors.append(f"{where}: {name} needs a reading note in {part['name'] or 'its part'}")
                 elif note.replace("\\$", "").count("$") % 2:
                     errors.append(f"{where}: {name} has unbalanced mathematics in its reading note")
