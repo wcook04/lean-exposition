@@ -513,6 +513,8 @@
 /* The authors, as the paper sets them: one line under the title, joined with "and". The reading
    copy carries them as a list (ul.authors); its words are not changed. */
 .paper.prose ul.authors {
+  display: flex;
+  flex-wrap: wrap;
   margin: 0 0 var(--space-5);
   padding: 0;
   list-style: none;
@@ -520,7 +522,6 @@
 }
 
 .paper.prose ul.authors > li {
-  display: inline;
   margin: 0;
   padding: 0;
 }
@@ -529,10 +530,13 @@
   content: none;
 }
 
+/* As flex items the names stand with no stray space before a comma; the joiners keep their own. */
 .paper.prose ul.authors > li + li::before {
   content: ", ";
+  white-space: pre;
 }
 
 .paper.prose ul.authors > li + li:last-child::before {
   content: " and ";
+  white-space: pre;
 }
