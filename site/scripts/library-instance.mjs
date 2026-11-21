@@ -4,7 +4,7 @@
 // public/addresses.json, the table of phrase addresses (/@<tie id>) read from the exported
 // edition (public/edition/ties/<slot>.json). Run after export-static.py.
 // Usage: library-instance.mjs <paper>
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const paper = process.argv[2] ?? process.env.LX_PAPER;
@@ -27,6 +27,13 @@ if (existsSync(aliases)) {
   for (const [old, host] of Object.entries(JSON.parse(readFileSync(aliases, "utf8")).passages ?? {})) {
     if (phrases[host] && !phrases[old]) phrases[old] = phrases[host];
   }
+}
+// Reading notes on Lean and the supplementary checks, published beside the edition when the paper has them.
+for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["generated/checks.json", "checks.json"]]) {
+  const source = resolve(import.meta.dirname, "../../instances", paper, from);
+  const target = resolve(import.meta.dirname, "../public", to);
+  if (existsSync(source)) copyFileSync(source, target);
+  else if (existsSync(target)) rmSync(target);
 }
 writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses)`);

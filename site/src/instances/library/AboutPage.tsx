@@ -6,6 +6,7 @@ import { routeHref } from "../../app/router";
 import { Out } from "../../app/Out";
 import { AboutKey, AboutUsing } from "../../reader/aboutParts";
 import { PAPER, MAIN, LIBRARY_ROOT } from "./data";
+import { SupplementaryChecks } from "./Checks";
 import "../../reader/reader-content.css";
 import "../../reader/about.css";
 
@@ -35,6 +36,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <p>{PAPER.review}</p>
         <p>Comparisons are marked AI-assessed; plain titles and reading notes are marked AI-drafted. Topics are AI-assigned.</p>
       </section>
+      <SupplementaryChecks />
       <AboutUsing />
       <AboutKey />
       <p><a href={routeHref({ view: "read", stage: MAIN.slot })}>Back to the paper</a></p>

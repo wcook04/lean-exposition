@@ -609,6 +609,14 @@ def main() -> None:
         write(out / "generated/checks.json", (page / "generated/checks.json").read_bytes())
         for f in sorted((page / "checks").glob("*.lean")) if (page / "checks").is_dir() else ():
             write(out / "generated/checks" / f.name, f.read_bytes())
+    # Reading notes on every declaration Proof Reader wrote one for, by its name in the Lean index.
+    lean_notes = {}
+    for name, note in links.get("notes", {}).items():
+        found = lean.resolve(name)
+        if found and (note.get("text") or "").strip():
+            lean_notes[found[0]] = {"text": note["text"].strip(), **({"summary": note["summary"]} if note.get("summary") else {})}
+    write(out / "generated/lean-notes.json", json.dumps({"schema": 1, "notes": dict(sorted(lean_notes.items()))},
+                                                        ensure_ascii=False, separators=(",", ":")))
     unnamed = sorted({r[0] for n in links.get("show_also", []) if (r := lean.resolve(n))})
     write(out / "generated/unnamed.json", dumps({"schema": 1, "names": unnamed}))
 

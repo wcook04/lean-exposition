@@ -6,3 +6,5 @@ playwright-report/
 public/edition
 public/addresses.json
 public/pdf-marks
+public/lean-notes.json
+public/checks.json
