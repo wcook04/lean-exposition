@@ -113,10 +113,12 @@ def main() -> int:
                 page.wait_for_timeout(max(0, fcp + args.quiet_within - now))
                 got = idle(page, args.idle)
                 label = f"{path or '/'} at {widths[0]}px, {args.quiet_within} ms after first paint"
-                if got["muts"] > args.max_mutations or got["urls"] or got["shifts"] or got["scrolls"]:
+                # The page itself must be still; an address the reader settles once (its reading place) is
+                # checked by the idle windows below, after the page has been left alone longer.
+                if got["muts"] > args.max_mutations or got["shifts"] or got["scrolls"]:
                     top = sorted(got["tops"].items(), key=lambda kv: -kv[1])[:3]
                     bad.append(f"{label}: {got['muts']} mutations ({'; '.join(f'{k} x{v}' for k, v in top)}), "
-                               f"{got['shifts']} layout shifts, {got['scrolls']} scroll events, {got['urls']} address changes")
+                               f"{got['shifts']} layout shifts, {got['scrolls']} scroll events")
                 else:
                     print(f"ok  {label}: still for {args.idle} ms", flush=True)
                 page.close()
