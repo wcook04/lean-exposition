@@ -1324,3 +1324,11 @@ html[data-right-sheet] {
 .guide-panel__plain > span:not(.guide-panel__n) {
   grid-column: 2;
 }
+
+/* A graph that failed to draw (map/GraphBoundary.tsx): its notice in the graph's place. */
+.graph-boundary {
+  padding: 16px;
+}
+.graph-boundary p {
+  margin: 0 0 8px;
+}

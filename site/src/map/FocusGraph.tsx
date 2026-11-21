@@ -36,13 +36,34 @@ export interface FGCard {
   seen?: "before" | "here" | "later";
 }
 
-/** `from` uses `to`. `statement`: only the statement of `from` names `to`; `proof`: its proof or body does;
- *  `argument`: the paper's own argument, as authored. */
 /**
- * A drawn use. `paper` is a use the paper's own text states and no Lean dependency joins: drawn
- * dashed, with the sentence that states it (`why`) and a link to where the using result is stated.
+ * `from` uses `to`, and how that is known. Paper argument: `argument`, a link the paper states;
+ * `paper`, a use the paper's own text states and no Lean dependency joins (drawn dashed, with the
+ * sentence that states it, `why`, and a link to where the using result is stated, `href`);
+ * `derived`, a link between results the edition derived from the Lean's dependencies; `assumes`,
+ * an assumption. Lean: `statement`, the statement of `from` names `to`; `proof`, its proof or body
+ * does; `use`, the Lean uses it and no record says whether in the statement or the proof.
  */
-export interface FGEdge { from: string; to: string; kind?: "proof" | "statement" | "argument" | "paper"; why?: string; href?: string }
+export type FGRelation = "argument" | "paper" | "derived" | "assumes" | "statement" | "proof" | "use";
+export interface FGEdge { from: string; to: string; kind?: FGRelation; why?: string; href?: string }
+
+/** The order relations are listed in, and which one a card's line shows when it has several. */
+export const RELATION_ORDER: readonly FGRelation[] = ["argument", "paper", "derived", "assumes", "proof", "statement", "use"];
+/** Each relation's words in a count ("3 by a link the paper states") and in the key. */
+export const RELATION_WORDS: Record<FGRelation, { count: string; key: string }> = {
+  argument: { count: "by a link the paper states", key: "a link the paper states" },
+  paper: { count: "by the paper's text alone", key: "a use the paper's proof states, with no Lean link" },
+  derived: { count: "by a link derived from the Lean", key: "a link between results, derived from the Lean" },
+  assumes: { count: "by assumption", key: "an assumption" },
+  statement: { count: "in a Lean statement", key: "used in a Lean statement" },
+  proof: { count: "in a Lean proof or body", key: "used in a Lean proof or body" },
+  use: { count: "in the Lean, statement or proof not recorded", key: "used in the Lean, statement or proof not recorded" },
+};
+
+/** How many neighbours each relation joins, as words: "4: 1 by a link the paper states, 3 in a Lean proof or body". */
+export function relationCounts(counts: ReadonlyMap<FGRelation, number>): string {
+  return RELATION_ORDER.filter((k) => counts.get(k)).map((k) => `${counts.get(k)} ${RELATION_WORDS[k].count}`).join(", ");
+}
 
 export interface FGRoleWords { order: number; one: string; many: string; uses: string; usedBy: string }
 
@@ -66,6 +87,8 @@ export interface FocusGraphProps {
   route?: readonly string[] | null;
   /** Said when there is no route to draw. */
   routeNote?: ReactNode;
+  /** The words before the route's steps (focusModel's routeWords); absent, a plain count of links. */
+  routeLabel?: string;
   /** One line over the drawing: what this view is, and a way back if it is a view of its own. */
   label?: ReactNode;
   /** Cards lit from outside: the phrase or sentence under the pointer. */
@@ -84,7 +107,18 @@ interface Box { x: number; y: number; w: number; h: number }
 interface Seg { d: string; cls: string; kind: string; edge?: string; why?: string; href?: string }
 interface Drawn { w: number; h: number; segs: Seg[]; paths: Record<string, string>; boxes: { id: string; box: Box; band: string }[] }
 type Side = "users" | "uses";
-interface Rel { kind: string; of: Set<string>; why?: string; href?: string }
+/**
+ * A neighbour: the relation its line shows (the first of RELATION_ORDER it has), every relation it
+ * has, the subjects it joins, and for a `paper` line the sentence that states it and where.
+ */
+interface Rel { kind: FGRelation; kinds: Set<FGRelation>; of: Set<string>; why?: string; href?: string }
+
+/** How many of these neighbours each relation joins; a neighbour joined two ways counts under both. */
+function countKinds(ids: readonly string[], rels: ReadonlyMap<string, Rel>): Map<FGRelation, number> {
+  const counts = new Map<FGRelation, number>();
+  for (const id of ids) for (const k of rels.get(id)?.kinds ?? []) counts.set(k, (counts.get(k) ?? 0) + 1);
+  return counts;
+}
 /** One thing in a side's column: a card, or a named group of cards that opens in place. */
 type Item =
   | { type: "node"; id: string }
@@ -114,14 +148,11 @@ const ITEM_GAP = 6;
 const LIST_ABOVE = 8;
 /** Members of a listed group shown at once. */
 const LIST_PAGE = 20;
-/** What each kind of line means, in the key and in the line's own tooltip. */
-const RELATION: Record<string, string> = {
-  proof: "Proof uses",
-  statement: "Statement uses",
-  paper: "The paper states this use",
-  argument: "Step of the paper's argument",
+/** What each kind of line records, in the key and in the line's own tooltip: RELATION_WORDS's key words, as a name. */
+const relation = (kind: string) => {
+  const words = RELATION_WORDS[kind as FGRelation]?.key ?? RELATION_WORDS.use.key;
+  return words.charAt(0).toUpperCase() + words.slice(1);
 };
-const relation = (kind: string) => RELATION[kind] ?? RELATION.proof;
 /** A kind's words inside a sentence: "Definitions" becomes "definitions"; "Lean helper lemmas" keeps its capital. */
 const inSentence = (words: string) => (words.startsWith("Lean ") ? words : words.charAt(0).toLowerCase() + words.slice(1));
 const MINI_W = 150;
@@ -129,7 +160,7 @@ const MINI_H = 58;
 const MINI_MIN_W = 64;
 
 export function FocusGraph(props: FocusGraphProps) {
-  const { subjects, card, edges, route, routeNote, label, lit, held, onSubject, onHover, renderTitle } = props;
+  const { subjects, card, edges, route, routeNote, routeLabel, label, lit, held, onSubject, onHover, renderTitle } = props;
   const scroller = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -251,13 +282,14 @@ export function FocusGraph(props: FocusGraphProps) {
     const users = new Map<string, Rel>();
     const uses = new Map<string, Rel>();
     const inner: FGEdge[] = [];
-    const add = (into: Map<string, Rel>, id: string, subject: string, kind = "proof", e?: FGEdge) => {
+    const add = (into: Map<string, Rel>, id: string, subject: string, kind: FGRelation = "use", e?: FGEdge) => {
       if (!card(id)) return;
-      const row = into.get(id) ?? { kind, of: new Set<string>() };
-      // A statement-only use is said so only if no proof or body also uses it; the paper's argument outranks
-      // both, and a use the Lean makes outranks one the paper's text alone states.
-      const rank = (k: string) => ({ argument: 3, paper: 2, proof: 1, statement: 0 })[k] ?? 1;
-      if (!into.has(id) || rank(kind) > rank(row.kind)) row.kind = kind;
+      const row = into.get(id) ?? { kind, kinds: new Set<FGRelation>(), of: new Set<string>() };
+      // The line shows the first relation in RELATION_ORDER: a link the paper states, a use the
+      // paper's text alone states, a link derived from the Lean, an assumption, a proof use, a
+      // statement-only use, an unsplit use.
+      if (RELATION_ORDER.indexOf(kind) < RELATION_ORDER.indexOf(row.kind)) row.kind = kind;
+      row.kinds.add(kind);
       if (kind === "paper" && row.kind === "paper" && e?.why) { row.why = e.why; row.href = e.href; }
       row.of.add(subject);
       into.set(id, row);
@@ -473,7 +505,7 @@ export function FocusGraph(props: FocusGraphProps) {
           ? (side === "users" ? loop(e.b.x, ny, e.to.x, ty) : loop(e.to.x, ty, e.b.x, ny))
           : side === "users" ? curve(e.b.x + e.b.w, ny, e.to.x - 5, ty) : curve(e.to.x + e.to.w, ty, e.b.x - 5, ny);
         const isGroup = !e.el.dataset.card;
-        const kind = isGroup ? (e.el.dataset.kind ?? "proof") : (rels.get(e.id)?.kind ?? "proof");
+        const kind = isGroup ? (e.el.dataset.kind ?? "use") : (rels.get(e.id)?.kind ?? "use");
         const rel = isGroup ? undefined : rels.get(e.id);
         // A line's weight says its kind alone: a group's size is its badge, never a heavier line.
         segs.push({ d, cls: `fg__wire fg__edge fg__edge--${kind}${isGroup ? " fg__edge--group" : ""}`, kind, edge: side === "users" ? `${e.id}>` : `>${e.id}`, why: kind === "paper" ? rel?.why : undefined, href: kind === "paper" ? rel?.href : undefined });
@@ -491,7 +523,7 @@ export function FocusGraph(props: FocusGraphProps) {
       const d = b.y > a.y + a.h + 30 || b.y < a.y
         ? `M${x} ${a.y + a.h} C${x + bulge * 3} ${a.y + a.h + 20}, ${x + bulge * 3} ${b.y - 20}, ${x} ${b.y - 5}`
         : `M${x} ${a.y + a.h} L${x} ${b.y - 5}`;
-      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "proof"} fg__inner`, kind: e.kind ?? "proof", edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
+      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "use"} fg__inner`, kind: e.kind ?? "use", edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
     });
     // The world's own size: offsetWidth is not scaled by the camera.
     setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, boxes });
@@ -699,8 +731,9 @@ export function FocusGraph(props: FocusGraphProps) {
   const renderItems = (side: Side, items: Item[], rels: Map<string, Rel>): ReactNode =>
     items.map((it) => {
       if (it.type === "node") return renderCard(it.id, side, rels.get(it.id)?.kind);
-      const kinds = new Set(it.ids.map((id) => rels.get(id)?.kind ?? "proof"));
-      const kind = kinds.has("argument") ? "argument" : kinds.has("paper") ? "paper" : kinds.size === 1 && kinds.has("statement") ? "statement" : "proof";
+      const lines = new Set(it.ids.map((id) => rels.get(id)?.kind ?? "use"));
+      const kind = RELATION_ORDER.find((k) => lines.has(k)) ?? "use";
+      const how = relationCounts(countKinds(it.ids, rels));
       const large = it.ids.length > LIST_ABOVE;
       const isListed = large && listed?.side === side && listed.path === it.key;
       return (
@@ -713,7 +746,7 @@ export function FocusGraph(props: FocusGraphProps) {
             data-kind={kind}
             data-opens={large ? "list" : "here"}
             aria-expanded={large ? isListed : it.open}
-            title={large ? (isListed ? "Close the list of these members" : `List these ${it.ids.length} members`) : it.open ? "Fold these back into one group" : `Show these ${it.ids.length} cards here`}
+            title={large ? (isListed ? `Close the list of these members (${how})` : `List these ${it.ids.length} members (${how})`) : it.open ? `Fold these back into one group (${how})` : `Show these ${it.ids.length} cards here (${how})`}
             onClick={() => toggle(side, it.key, it.ids.length)}
           >
             <span className="fg__groupname">{it.name}{it.said && <span className="fg__groupkind"> {it.said}</span>}</span>
@@ -730,6 +763,7 @@ export function FocusGraph(props: FocusGraphProps) {
   const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => ids.length > 0 && (
     <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: sideW }}>
       <h4 className="fg__sidehead">{side === "users" ? (many ? "Use these" : "Use this") : (many ? "These use" : "This uses")} <span>{ids.length}</span></h4>
+      <p className="fg__sidekinds" data-band-kinds={side}>{relationCounts(countKinds(ids, rels))}</p>
       {renderItems(side, items, rels)}
     </div>
   );
@@ -803,7 +837,7 @@ export function FocusGraph(props: FocusGraphProps) {
         <nav className="fg__route" aria-label="From this step to the main result">
           {route && route.length > 0
             ? <>
-              <span className="fg__routeword">{route.length === 1 ? "The main result uses this directly:" : `${route.length} steps to the main result:`}</span>
+              <span className="fg__routeword">{routeLabel ?? (route.length === 1 ? "The main result uses this directly:" : `${route.length} links to the main result:`)}</span>
               {route.map((id, i) => (
                 <span key={id} className="fg__crumb">
                   <span aria-hidden="true">→</span>
@@ -961,10 +995,7 @@ export function FocusGraph(props: FocusGraphProps) {
       {model.subj.length > 0 && (
         <p className="fg__key">
           <span className="fg__keydir">Arrows run from a statement to what it uses.</span>
-          {kinds.has("proof") && <span><i className="fg__keyline" /> {RELATION.proof}</span>}
-          {kinds.has("statement") && <span><i className="fg__keyline fg__keyline--statement" /> {RELATION.statement}</span>}
-          {kinds.has("paper") && <span><i className="fg__keyline fg__keyline--paper" /> {RELATION.paper}</span>}
-          {kinds.has("argument") && <span><i className="fg__keyline fg__keyline--argument" /> {RELATION.argument}</span>}
+          {RELATION_ORDER.filter((k) => kinds.has(k)).map((k) => <span key={k} data-key-kind={k}><i className={`fg__keyline fg__keyline--${k}`} /> {relation(k)}</span>)}
           {(roles.has("helper") || roles.has("library")) && <span><i className="fg__keybox fg__keybox--helper" /> Lean helper</span>}
           {roles.has("definition") && <span><i className="fg__keybox fg__keybox--definition" /> definition</span>}
           {groups(leftItems) + groups(rightItems) > 0 && <span><i className="fg__keybox fg__keybox--group" /> group, opens its members</span>}

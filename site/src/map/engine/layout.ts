@@ -97,13 +97,16 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
     const a = rank.get(e.from)!;
     const b = rank.get(e.to)!;
     const chain: string[] = [];
+    chains.set(e.key, chain);
+    // An edge whose prerequisite is not below its consumer (a cycle) has no rows to run through;
+    // the router draws it as unroutable, and it takes no part in ordering the rows.
+    if (b <= a) continue;
     for (let r = a + 1; r < b; r++) {
       const key = `§${e.key}#${r}`;
       chain.push(key);
       dummyEdge.set(key, e.key);
       dummyRank.set(key, r);
     }
-    chains.set(e.key, chain);
     const path = [e.from, ...chain, e.to];
     for (let i = 0; i + 1 < path.length; i++) link(path[i], path[i + 1]);
   }

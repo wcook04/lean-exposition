@@ -28,6 +28,8 @@ export interface LibraryInstance {
   /** What the formal development does in each section, by section number or title (generated/section-aids.json). */
   section_aids?: Record<string, string>;
   comparisons_held_text?: string;
+  /** Written by scripts/library-instance.mjs: supports links ("from→to") whose only evidence is the Lean's dependencies. */
+  lean_derived_supports?: string[];
 }
 
 export const PAPER = current as LibraryInstance;

@@ -2,7 +2,7 @@
 // reader on what it names, and the address the reader writes for that state (Copy link) is the
 // same address. Runs under every instance: the library settings are passed in.
 import { describe, expect, it } from "vitest";
-import { libraryHref, parseLibraryPath, setLibraryAddresses } from "../src/app/libraryAddress";
+import { libraryHref, parseLibraryPath, retiredLink, setLibraryAddresses } from "../src/app/libraryAddress";
 
 const lib = { paper: "euler", main: "short" as const, pages: { "how-the-lean-encodes-it": "expository" as const } };
 const BASE = "/library/euler";
@@ -10,7 +10,8 @@ setLibraryAddresses({
   "e01.abstract.bounded-velocity": { record: null, at: "b536-564" },
   "r2.prop54.endpoint-citation": { record: "euler.proposition-5.4", at: "b9000-9050" },
   "old.merged-phrase": { record: null, at: "b536-564", host: "e01.abstract.bounded-velocity" },
-});
+}, { "r2-s7-pressure-input": { retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" } },
+{ "theorem-1.1": ["b4441-5169", "b4441-5200"] });
 
 function roundTrip(address: string) {
   const url = new URL(address, "https://wcook04.github.io");
@@ -33,10 +34,20 @@ describe("library addresses", () => {
     expect(href).toBe(`${BASE}/#5.6`);
   });
 
-  it("a numbered result selects its record", () => {
+  it("a numbered result selects its record at its canonical target, the statement block", () => {
     const { route, href } = roundTrip(`${BASE}/theorem-1.1/`);
     expect(route.node).toBe("euler.theorem-1.1");
+    expect(route.at).toBe("b4441-5169");
     expect(href).toBe(`${BASE}/theorem-1.1/`);
+  });
+
+  it("Copy link, search and Compare name a result at its statement block by the result's address", () => {
+    const read = { view: "read" as const, stage: "short" as const, node: "euler.theorem-1.1" };
+    expect(libraryHref({ ...read, at: "b4441-5169" }, BASE, lib)).toBe(`${BASE}/theorem-1.1/`);
+    expect(libraryHref({ ...read, at: "b4441-5200" }, BASE, lib)).toBe(`${BASE}/theorem-1.1/`);
+    expect(libraryHref({ ...read, at: "b4441-5200", lean: true }, BASE, lib)).toBe(`${BASE}/theorem-1.1/?v=lean`);
+    // Another place of the same record is not the result's address.
+    expect(libraryHref({ ...read, at: "b100-200" }, BASE, lib)).not.toBe(`${BASE}/theorem-1.1/`);
   });
 
   it("a phrase off the map selects the phrase and its place", () => {
@@ -49,6 +60,15 @@ describe("library addresses", () => {
     const { route, href } = roundTrip(`${BASE}/@r2.prop54.endpoint-citation?v=lean`);
     expect(route).toMatchObject({ node: "euler.proposition-5.4", at: "b9000-9050", lean: true });
     expect(href).toBe(`${BASE}/@r2.prop54.endpoint-citation?v=lean`);
+  });
+
+  it("a retired phrase link opens a notice, never its neighbour", () => {
+    const { route, href } = roundTrip(`${BASE}/@r2-s7-pressure-input`);
+    expect(route).toMatchObject({ view: "read", stage: "short", retired: "r2-s7-pressure-input" });
+    expect(route.node).toBeUndefined();
+    expect(route.at).toBeUndefined();
+    expect(href).toBe(`${BASE}/@r2-s7-pressure-input`);
+    expect(retiredLink("r2-s7-pressure-input")).toEqual({ retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" });
   });
 
   it("a phrase on the map, with no view named, selects its record at the phrase's place", () => {

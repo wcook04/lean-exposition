@@ -86,9 +86,25 @@ export type { Fidelity, FidelitySource, TieOrigin } from "../compare/fidelityWor
  * an edition without them reads as before.
  */
 export interface FidelityFields {
-  fidelity?: import("../compare/fidelityWords").Fidelity;
+  /** A verdict, or "held" / "unassessed" (see Assessment); absent in editions that do not record one. */
+  fidelity?: import("../compare/fidelityWords").Assessment;
   fidelity_note?: string;
   fidelity_source?: import("../compare/fidelityWords").FidelitySource;
+}
+
+/** One phrase's own comparison of a Lean row, kept when overlapping phrases share one tie. */
+export interface PhraseAssessment {
+  phrase: string;
+  fidelity: import("../compare/fidelityWords").Assessment;
+  fidelity_note?: string;
+}
+
+/** A phrase a merged tie holds: its id, its own words, role and topic. */
+export interface MergedPhrase {
+  id: string;
+  quote: string;
+  role?: string;
+  topic?: string;
 }
 
 /** First and last line, both inclusive and counted from 1. */
@@ -212,6 +228,8 @@ export interface PhraseLean extends FidelityFields {
   relation: LeanRelation;
   note: string;
   plain?: string;
+  /** In a tie that holds several overlapping phrases: every phrase's own comparison of this Lean. */
+  assessments?: PhraseAssessment[];
   /** Whether this comparison's difference bears on the paper's main result, where the paper's data says. */
   matters?: ComparisonMatters;
 }
@@ -297,6 +315,8 @@ export interface Tie {
   /** The topic's colour index (see PhraseTopic.tone). */
   tone?: number;
   rows?: PhraseLean[];
+  /** The phrases this tie holds when the source's phrases overlapped and were merged into one. */
+  merged?: MergedPhrase[];
   role: StatementRole;
   /** Whether the statement has any Lean. The other Lean fields are null when it has none. */
   lean: boolean;
@@ -315,7 +335,7 @@ export interface Tie {
   /** Who made the tie (see AlignedStatement.origin); absent in editions that do not say. */
   origin?: import("../compare/fidelityWords").TieOrigin;
   /** What the first Lean row says against the statement (see FidelityFields). */
-  fidelity?: import("../compare/fidelityWords").Fidelity;
+  fidelity?: import("../compare/fidelityWords").Assessment;
   fidelity_note?: string;
   fidelity_source?: import("../compare/fidelityWords").FidelitySource;
 }
@@ -331,6 +351,13 @@ export interface TieIndex {
   layer?: "phrases";
   /** The paper's main result in words, for "Does this affect the main result?". */
   main_result?: string;
+  /**
+   * Each record's one canonical target in this paper: the tie at its statement block, and the
+   * block's UTF-8 byte range. An address, search result, Copy link, Compare and the graph that name
+   * the record without a place all land here; with no tie there (null), on the block itself.
+   * Absent in editions exported before it existed.
+   */
+  canonical?: Record<string, [tie: number | null, startByte: number, endByte: number]>;
   topics?: PhraseTopic[];
   families?: PhraseFamily[];
   parts?: PhrasePart[];

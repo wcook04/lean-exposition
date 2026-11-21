@@ -34,6 +34,7 @@ import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
 import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
 import { applyTones, readTones, readView, saveView } from "./page/panePrefs";
@@ -1758,10 +1759,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           )}
         </div>
 
-        {!outlineColumn && !phone && (
+        {/* Every width shows who made what, the phone too: the paper's own line, then the status
+            sentence (in a library paper, that its links, titles, notes and comparisons were made
+            with AI and not reviewed). Wide layouts carry it at the head of the outline column. */}
+        {!outlineColumn && (
           <p className="account-line">
-            {!phone && <>{names.job} </>}
-            {names.reader}
+            {names.job} {names.reader}
             {status && <> {status}</>} {pdf && <PdfLink pdf={pdf} />}
           </p>
         )}
@@ -1819,6 +1822,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       {paneOn && (
         <div className="reader__map">
           {paneReady && (
+            <GraphBoundary scope={`pane beside ${route.stage}`}>
             <Suspense fallback={null}>
               <MapPane
                 {...paneProps}
@@ -1856,15 +1860,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 }
               />
             </Suspense>
+            </GraphBoundary>
           )}
         </div>
       )}
 
       {sheetShown && (
         <RightSheet onClose={closeSheet}>
-          <Suspense fallback={<p className="right-sheet__wait">Loading the Lean</p>}>
-            <MapPane {...paneProps} inModal onHide={closeSheet} />
-          </Suspense>
+          <GraphBoundary scope={`sheet beside ${route.stage}`}>
+            <Suspense fallback={<p className="right-sheet__wait">Loading the Lean</p>}>
+              <MapPane {...paneProps} inModal onHide={closeSheet} />
+            </Suspense>
+          </GraphBoundary>
         </RightSheet>
       )}
 

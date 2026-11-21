@@ -146,7 +146,12 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
         plain_titles = core_data.get("names", {}) or {}
         for rid, record in core_data.get("records", {}).items():
             slug = rid.split(".", 1)[1] if "." in rid else rid
-            first = next((s for s in record.get("statements", []) if s.get("role") != "mention"), None)
+            # The excerpt is the result's canonical target, its statement block: a "statement" slice
+            # first, then a "definition", and only then another non-mention. An introduction before
+            # the result is never offered as the result's words.
+            stated = [s for s in record.get("statements", []) if s.get("role") != "mention"]
+            rank = {"statement": 0, "definition": 1}
+            first = min(stated, key=lambda s: (rank.get(s.get("role"), 2), s.get("start_byte", 0)), default=None)
             if first:
                 body = bodies.get(first.get("paper", ""), b"")
                 text = first.get("markdown") or (body[first["start_byte"]:first["end_byte"]].decode("utf8", "replace")
@@ -254,11 +259,24 @@ SCHEME = """<button type="button" class="scheme-toggle" aria-label="Switch to da
 </button>"""
 
 
+def search_scope(papers: list[dict]) -> str:
+    """What the library search covers, with its denominators: the papers whose contents are indexed
+    (statements and Lean names) and those matched by title, authors and summary only."""
+    full = sum(1 for p in papers if p.get("shard"))
+    titles = len(papers) - full
+    paper = lambda k: f"{k} paper" if k == 1 else f"{k} papers"
+    parts = [f"{paper(full)}’ contents indexed (statements and Lean names)" if full != 1 else "1 paper’s contents indexed (statements and Lean names)"]
+    if titles:
+        parts.append(f"{titles} by title, authors and summary only")
+    return "Covers " + ", ".join(parts) + "."
+
+
 def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash: str) -> str:
     items = "\n".join(entry_html(e) for e in entries)
     data = json.dumps(search_meta, ensure_ascii=False).replace("</", "<\\/")
     notice = '<p class="notice">There is no page at this address. These are the papers.</p>' if missing else ""
     count = len(entries)
+    scope = search_scope(search_meta["papers"])
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -292,10 +310,11 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 <h1 id="library-title">Mathematics papers, read beside their Lean</h1>
 <p class="lede">Each phrase that a Lean declaration states is underlined in its paper. Click it and that Lean opens beside the text, with a plain title, a comparison and a reading note.</p>
 <form class="search" role="search" action="{BASE}" onsubmit="return false">
-<label class="search__label" for="q">Search every paper: statements, titles and Lean names</label>
+<label class="search__label" for="q">Search the papers</label>
+<p class="search__scope" id="search-scope">{esc(scope)}</p>
 <div class="search__field">
 <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.4 10.4 L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-<input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="vorticity, Lemma 2.1, Navier–Stokes, theorem11" aria-describedby="search-status">
+<input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="vorticity, Lemma 2.1, Navier–Stokes, theorem11" aria-describedby="search-scope search-status">
 <kbd class="kbd" aria-hidden="true">/</kbd>
 </div>
 <p id="search-status" class="search__status" aria-live="polite"></p>

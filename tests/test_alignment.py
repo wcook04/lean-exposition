@@ -440,6 +440,33 @@ class TieIndex(unittest.TestCase):
         self.assertEqual(alignment.tie_index(b"Alpha.\n", records, "short")["ties"], [])
 
 
+class CanonicalTargets(unittest.TestCase):
+    """A record's canonical target is the tie at its statement block, never an earlier introduction."""
+
+    def test_the_statement_block_wins_over_an_earlier_introduction(self):
+        records = {"p.theorem-1.1": {"statements": [{"paper": "short", "role": "mention", "start_byte": 0, "end_byte": 40},
+                                                    {"paper": "short", "role": "statement", "start_byte": 100, "end_byte": 400}]}}
+        # The introduction (0-60) is a statement tie of the same record and comes first in reading order.
+        keys = [(0, 60, "intro"), (100, 180, "label"), (200, 260, "inside")]
+        ties = [{"record": "p.theorem-1.1", "role": "statement"}, {"record": "p.theorem-1.1", "role": "statement"},
+                {"record": "p.theorem-1.1", "role": "explanation"}]
+        self.assertEqual(alignment.canonical_targets(records, "short", keys, ties), {"p.theorem-1.1": [1, 100, 400]})
+
+    def test_a_statement_tie_inside_the_block_comes_before_another_role(self):
+        records = {"r": {"statements": [{"paper": "short", "role": "statement", "start_byte": 0, "end_byte": 100}]}}
+        keys = [(0, 20, "a"), (30, 50, "b")]
+        ties = [{"record": "r", "role": "explanation"}, {"record": "r", "role": "statement"}]
+        self.assertEqual(alignment.canonical_targets(records, "short", keys, ties)["r"][0], 1)
+
+    def test_without_a_tie_inside_the_most_overlapping_one_and_otherwise_none(self):
+        records = {"r": {"statements": [{"paper": "short", "role": "statement", "start_byte": 50, "end_byte": 100}]},
+                   "s": {"statements": [{"paper": "short", "role": "statement", "start_byte": 500, "end_byte": 600}]},
+                   "t": {"statements": [{"paper": "long", "role": "statement", "start_byte": 0, "end_byte": 10}]}}
+        keys = [(0, 60, "a"), (40, 120, "b")]
+        ties = [{"record": "r", "role": "statement"}, {"record": "r", "role": "statement"}]
+        self.assertEqual(alignment.canonical_targets(records, "short", keys, ties), {"r": [1, 50, 100], "s": [None, 500, 600]})
+
+
 class RealFiles(unittest.TestCase):
     def test_the_documented_ties_file_lands_in_the_real_tree_and_papers(self):
         guide = (ROOT / "docs/record-alignment.md").read_text(encoding="utf-8")

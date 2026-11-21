@@ -4,9 +4,9 @@
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
 import { useEffect, useMemo, useState } from "react";
-import { loadPhraseNotes, type ComparisonMatters, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
+import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
-import { isFidelity, type Fidelity } from "../../compare/fidelityWords";
+import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
 import { renderTex } from "../math";
 import site from "@instance/site";
@@ -101,37 +101,119 @@ export function NoteBody({ text, summary, className = "phrase-card__text" }: { t
   );
 }
 
-/** Each comparison word in one sentence, in mathematical terms (docs/reader-design.md, "The legend"). */
+/**
+ * The opening words of a merged phrase, enough to tell it from the others: display formulas become
+ * an ellipsis, Markdown emphasis is dropped, and the cut falls between words outside any formula.
+ */
+export function phraseOpening(quote: string, most = 14): string {
+  const flat = quote.replace(/\$\$[\s\S]*?\$\$/g, " … ").replace(/\*\*|__/g, "").replace(/\\([[\]])/g, "$1").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/\s+/g, " ").trim();
+  const words = flat.split(" ");
+  let out = "";
+  let open = false;
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    out += (out ? " " : "") + word;
+    for (let j = 0; j < word.length; j++) if (word[j] === "$" && word[j - 1] !== "\\") open = !open;
+    if (i + 1 >= most && !open) return i + 1 < words.length ? `${out} …` : out;
+  }
+  return open ? out.replace(/\$/g, "") : out;
+}
+
+/**
+ * One comparison of the phrase with its Lean, in words: the verdict and every qualification the
+ * source wrote, "Not assessed" where none is recorded, or the paper's held text. A note is shown
+ * whatever the verdict, "same" included: a qualification is never hidden behind agreement.
+ */
+export function Verdict({ assessment, words }: { assessment: Pick<PhraseAssessment, "fidelity" | "fidelity_note">; words?: string | null }) {
+  const { fidelity, fidelity_note: note } = assessment;
+  const lead = words ? <span className="phrase-card__for">For “<span dangerouslySetInnerHTML={{ __html: noteHtml(words).html }} />”: </span> : null;
+  if (fidelity === "held") {
+    return (
+      <p className="phrase-card__fidelity" data-fidelity="held">
+        {lead}
+        {site.comparisonsHeld ?? note ?? "This comparison is held."}
+      </p>
+    );
+  }
+  if (!isFidelity(fidelity)) {
+    return (
+      <p className="phrase-card__fidelity" data-fidelity="unassessed">
+        {lead}
+        <strong>{NOT_ASSESSED}</strong>. {NOT_ASSESSED_DETAIL}
+      </p>
+    );
+  }
+  return (
+    <p className="phrase-card__fidelity" data-fidelity={fidelity}>
+      {lead}
+      <strong>{phraseVerdict(fidelity)}</strong>
+      {note ? (
+        <>
+          : <span dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />
+        </>
+      ) : (
+        "."
+      )}{" "}
+      <span className="phrase-card__who">AI-assessed</span>
+    </p>
+  );
+}
+
+/**
+ * The comparisons a card shows for one Lean row. A tie that holds several overlapping phrases
+ * shows each phrase's own comparison with that phrase's words, so a verdict about one phrase is
+ * never read as a verdict about the others; a tie of one phrase shows its single comparison.
+ */
+export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] | undefined): { assessment: Pick<PhraseAssessment, "fidelity" | "fidelity_note">; words: string | null }[] {
+  const own = row.assessments ?? [];
+  if (merged && merged.length > 1 && own.length) {
+    const words = new Map(merged.map((m) => [m.id, m.quote]));
+    return own.map((a) => ({ assessment: a, words: words.has(a.phrase) ? phraseOpening(words.get(a.phrase)!) : null }));
+  }
+  return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
+}
+
+/** What each comparison means, in one sentence of mathematical terms (docs/reader-design.md, "The legend"). */
+const FIDELITY_MEANING: Record<Fidelity, string> = {
+  same: "The formal statement asserts what the quoted words assert, after the translation the note states.",
+  stronger: "The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference.",
+  weaker: "The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference.",
+  different: "Neither implies the other as stated: for example, a definition linked to a sentence about a construction.",
+};
+
+/**
+ * Each comparison as the card words it, with its meaning: the four verdicts in `phraseVerdict`'s
+ * words, "Not assessed" as `NOT_ASSESSED`, and a withheld comparison.
+ */
 export const COMPARISON_LEGEND: readonly (readonly [string, string])[] = [
-  ["Same", "The formal statement asserts what the quoted words assert, after the translation the note states."],
-  ["Stronger", "The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference."],
-  ["Weaker", "The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference."],
-  ["Different", "Neither implies the other as stated: for example, a definition linked to a sentence about a construction."],
-  ["Not assessed", "No comparison has been recorded for this pair. That says nothing about whether they agree."],
+  ...FIDELITIES.map((f) => [phraseVerdict(f), FIDELITY_MEANING[f]] as const),
+  [NOT_ASSESSED, "No comparison has been recorded for this pair. That says nothing about whether they agree."],
   ["Withheld", "A comparison was drafted and is not shown, for the reason given beside it."],
 ];
 
-const VERDICT: Record<Fidelity, readonly [string, string]> = {
-  same: ["Same", "the Lean states what these words state."],
-  stronger: ["Stronger", "the Lean states more than these words."],
-  weaker: ["Weaker", "the Lean states less than these words."],
-  different: ["Different", "the Lean states something these words neither imply nor are implied by."],
-};
-
-/** The legend under every comparison: closed until asked for, and the same words wherever it stands. */
+/**
+ * The legend under every comparison: closed until asked for, and the same words wherever it
+ * stands. Its words are written only once it is opened, so a closed legend never sets a verdict's
+ * name ("same" among them) beside a comparison that is not that verdict.
+ */
 export function ComparisonLegend() {
+  const [open, setOpen] = useState(false);
   return (
-    <details className="phrase-card__legend">
+    <details className="phrase-card__legend" onToggle={(e) => setOpen(e.currentTarget.open)}>
       <summary>What do these words mean?</summary>
-      <dl>
-        {COMPARISON_LEGEND.map(([word, meaning]) => (
-          <div key={word}>
-            <dt>{word}</dt>
-            <dd>{meaning}</dd>
-          </div>
-        ))}
-      </dl>
-      <p>A comparison concerns the quoted words only. A shared name or number is not evidence that two statements agree, and a check of the Lean by its kernel is not a check of this comparison.</p>
+      {open && (
+        <>
+          <dl>
+            {COMPARISON_LEGEND.map(([word, meaning]) => (
+              <div key={word}>
+                <dt>{word}</dt>
+                <dd>{meaning}</dd>
+              </div>
+            ))}
+          </dl>
+          <p>A comparison concerns the quoted words only. A shared name or number is not evidence that two statements agree, and a check of the Lean by its kernel is not a check of this comparison.</p>
+        </>
+      )}
     </details>
   );
 }
@@ -228,9 +310,8 @@ function Explanation({ explanation }: { explanation: PhraseExplanation }) {
   );
 }
 
-export function PhraseCard({ row, note, quote, phrase, names, explanation, mainResult }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string }) {
-  const state = row.fidelity as string | undefined;
-  const verdict = isFidelity(row.fidelity) ? VERDICT[row.fidelity] : null;
+export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string }) {
+  const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
   const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
   return (
@@ -239,27 +320,16 @@ export function PhraseCard({ row, note, quote, phrase, names, explanation, mainR
       {explanation?.text && <Explanation explanation={explanation} />}
       <div className="phrase-card__compare">
         <p className="phrase-card__label">
-          Comparison with these words {verdict && <span>AI-assessed</span>}
+          Comparison with these words
         </p>
-        {verdict ? (
-          <p className="phrase-card__fidelity" data-fidelity={row.fidelity}>
-            <strong>{verdict[0]}:</strong> {verdict[1]}
-            {row.fidelity_note && (
-              <>
-                {" "}
-                <span dangerouslySetInnerHTML={{ __html: noteHtml(row.fidelity_note).html }} />
-              </>
-            )}
-          </p>
-        ) : state === "held" ? (
-          <p className="phrase-card__fidelity" data-fidelity="held">
-            <strong>Withheld:</strong> {site.comparisonsHeld ?? "a comparison was drafted and is not shown."}
-          </p>
-        ) : (
-          <p className="phrase-card__fidelity" data-fidelity="none">
-            No comparison is recorded for this passage and formal statement.
+        {merged && merged.length > 1 && (
+          <p className="phrase-card__merged" data-merged={merged.length}>
+            These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
           </p>
         )}
+        {shown.map(({ assessment, words }, i) => (
+          <Verdict key={i} assessment={assessment} words={words} />
+        ))}
         {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
         <ComparisonLegend />
       </div>

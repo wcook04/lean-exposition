@@ -5,8 +5,13 @@
   "verdict_without_note": 0,
   "statement_without_lean": 0,
   "merged": 3,
+  "merged_assessments_differ": 4,
+  "unassessed": 0,
+  "result_label_not_found": 0,
+  "result_without_statement": 0,
   "long_title_without_override": 0,
   "gone_kept_as_addresses": 0,
+  "retired": 1,
   "ties": 999,
   "titled": 1013,
   "names": 7551,
@@ -39,6 +44,82 @@
    "p5.1.field-hypothesis"
   ]
  ],
+ "merged_assessments_differ": [
+  [
+   "r5-root-theorem11-complete",
+   "TorusEuler.Paper.theorem_1_1",
+   [
+    [
+     "r5-root-theorem11-complete",
+     "same"
+    ],
+    [
+     "e01.theorem.initial-data",
+     "stronger"
+    ],
+    [
+     "e01.theorem.maximal-solution",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "r5-root-theorem11-complete",
+   "TorusEuler.EulerSingularityWitness",
+   [
+    [
+     "e01.theorem.smooth-odd",
+     "same"
+    ],
+    [
+     "e01.theorem.divergent-integrals",
+     "same"
+    ],
+    [
+     "e01.theorem.terminal-bounds",
+     "same"
+    ],
+    [
+     "e01.theorem.off-origin-limits",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "sec4.inverse-hypothesis",
+   "TorusEuler.Paper.Statement.theorem_4_2",
+   [
+    [
+     "sec4.inverse-hypothesis",
+     "same"
+    ],
+    [
+     "sec4.inverse-existence",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "sec4.inverse-hypothesis",
+   "TorusEuler.Paper.theorem_4_2",
+   [
+    [
+     "sec4.inverse-hypothesis",
+     "same"
+    ],
+    [
+     "sec4.inverse-existence",
+     "same"
+    ]
+   ]
+  ]
+ ],
+ "unassessed": [],
+ "result_label_not_found": [],
+ "result_without_statement": [],
  "long_title_without_override": [],
- "gone_kept_as_addresses": []
+ "gone_kept_as_addresses": [],
+ "retired": [
+  "r2-s7-pressure-input"
+ ]
 }

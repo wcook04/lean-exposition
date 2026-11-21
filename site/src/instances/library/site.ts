@@ -111,6 +111,7 @@ const site = {
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
   library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])), guide: PAPER.documents.find((d) => !d.main && d.noun === "guide")?.slot },
   recordKind,
+  leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
   levelGoals: null,
   mainGoal: PAPER.goal,
   leanLevelWho: `Statements and proofs by ${BY}`,

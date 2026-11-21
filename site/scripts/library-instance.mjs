@@ -27,22 +27,51 @@ const sectionAids = (() => {
   if (Array.isArray(table)) return Object.fromEntries(table.filter((row) => row && (row.section ?? row.key) && (row.aid ?? row.text)).map((row) => [String(row.section ?? row.key), String(row.aid ?? row.text)]));
   return Object.fromEntries(Object.entries(table).filter(([, text]) => typeof text === "string"));
 })();
-writeFileSync(resolve(import.meta.dirname, "../src/instances/library/current.json"), JSON.stringify(sectionAids ? { ...instance, section_aids: sectionAids } : instance, null, 1));
+// The supports links whose only evidence is the Lean's dependencies (the converter's
+// "lean_dependencies" record), so the reader calls them derived from the Lean and never the
+// paper's own argument. Links the paper states carry other evidence.
+const graphPath = resolve(import.meta.dirname, "../../instances", paper, "evidence-graph.json");
+if (existsSync(graphPath)) {
+  const graph = JSON.parse(readFileSync(graphPath, "utf8"));
+  instance.lean_derived_supports = (graph.edges ?? [])
+    .filter((e) => e.kind === "supports" && e.evidence_ids?.length && e.evidence_ids.every((id) => id === "lean_dependencies"))
+    .map((e) => `${e.from}→${e.to}`)
+    .sort();
+}
+writeFileSync(resolve(import.meta.dirname, "../src/instances/library/current.json"), JSON.stringify(sectionAids ? { ...instance, section_aids: sectionAids } : instance, null, 1) + "\n");
 const phrases = {};
 // Phrase addresses (/@<id>) open the main document; a companion's phrases keep the reader's own
-// addresses under /read/<slot>/.
+// addresses under /read/<slot>/. Each numbered result's canonical target in the main document is the
+// place of the tie at its statement block (the tie index's `canonical`), so /theorem-1.1/ lands on
+// the theorem itself.
+const results = {};
+const main = instance.documents.find((doc) => doc.main) ?? instance.documents[0];
 for (const doc of instance.documents.filter((d) => d.main)) {
   const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
   if (!existsSync(path)) continue;
-  for (const tie of JSON.parse(readFileSync(path, "utf8")).ties ?? []) {
+  const index = JSON.parse(readFileSync(path, "utf8"));
+  for (const tie of index.ties ?? []) {
     if (tie.phrase) phrases[tie.phrase] = { record: tie.record ?? null, at: tie.at };
+  }
+  if (doc === main) {
+    for (const [record, [t, start, end]] of Object.entries(index.canonical ?? {})) {
+      // With no tie at the statement block, the block's own place is the target.
+      if (record.startsWith(`${paper}.`)) results[record.slice(paper.length + 1)] = [t !== null && index.ties[t] ? index.ties[t].at : `b${start}-${end}`, `b${start}-${end}`];
+    }
   }
 }
 // Passages merged into another phrase keep their old id as an address of the phrase that holds them.
+// A retired phrase link keeps its address too, but opens a notice (when it was retired, and the nearest
+// current phrase to follow), never the neighbour itself.
 const aliases = resolve(import.meta.dirname, "../../instances", paper, "alignment/aliases.json");
+const retired = {};
 if (existsSync(aliases)) {
-  for (const [old, host] of Object.entries(JSON.parse(readFileSync(aliases, "utf8")).passages ?? {})) {
+  const table = JSON.parse(readFileSync(aliases, "utf8"));
+  for (const [old, host] of Object.entries(table.passages ?? {})) {
     if (phrases[host] && !phrases[old]) phrases[old] = { ...phrases[host], host };
+  }
+  for (const [old, row] of Object.entries(table.retired ?? {})) {
+    if (!phrases[old]) retired[old] = { retired: row.retired, nearest: row.nearest && phrases[row.nearest] ? row.nearest : null };
   }
 }
 // Reading notes on Lean and the supplementary checks, published beside the edition when the paper has them.
@@ -68,5 +97,5 @@ const aids = {
 const aidsPath = resolve(import.meta.dirname, "../public/aids.json");
 if (aids.glossary.length || aids.showcase.length || aids.summary || aids.route) writeFileSync(aidsPath, JSON.stringify(aids));
 else if (existsSync(aidsPath)) rmSync(aidsPath);
-writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases }));
-console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses)`);
+writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results }));
+console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets)`);

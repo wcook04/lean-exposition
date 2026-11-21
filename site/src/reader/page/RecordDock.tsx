@@ -386,6 +386,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   row={row as unknown as PhraseLean}
                   note={part?.notes[row.name]}
                   quote={quote}
+                  merged={tie?.merged}
                   phrase={tie?.phrase}
                   names={names}
                   explanation={tie?.explanation}

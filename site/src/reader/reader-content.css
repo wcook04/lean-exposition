@@ -205,6 +205,18 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* KaTeX ends each vertical list with a 2px strut past its edge (.vlist-s). On an equation
+   number pinned to the right edge that strut alone overflowed the box (scrollWidth 682 in a
+   680 column), so a formula that fits got a scroll bar. The strut holds no glyph. */
+.prose .math-display :is(.katex-tag, .tag) {
+  overflow-x: clip;
+}
+
+/* A display whose formula and number fit (PaperBody.tsx, formulaExtent) never scrolls. */
+.prose .math-display[data-overflow="false"] {
+  overflow-x: hidden;
+}
+
 /* In a narrow cell the words under the formula say it scrolls. */
 .slice .math-display {
   scrollbar-width: none;
@@ -236,6 +248,15 @@
 .prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex > .katex-html > :is(.katex-tag, .tag) {
   position: static;
   flex-basis: 100%;
+  text-align: right;
+}
+
+/* A numbered display that keeps its shape and scrolls (PaperBody.tsx, numberBelow) sets its
+   number on a line of its own under the formula, flush right, so the number is never drawn
+   over the formula's end. */
+.prose .math-display[data-tag="below"] > .katex-display > .katex > .katex-html > :is(.katex-tag, .tag) {
+  position: static;
+  display: block;
   text-align: right;
 }
 

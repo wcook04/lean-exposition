@@ -138,7 +138,7 @@ with sync_playwright() as pw:
             page.locator(".fg__edge-hit").first.dispatch_event("click")
             page.wait_for_timeout(500)
             why = page.evaluate("() => (document.querySelector('.fg__edge-why') || {}).innerText || ''")
-        check(f"{tag} paper-logic edges", dashed > 0 and "The paper states this use" in key and "Read it in the paper" in why,
+        check(f"{tag} paper-logic edges", dashed > 0 and "A use the paper's proof states, with no Lean link" in key and "Read it in the paper" in why,
               f"{dashed} dashed; key: {key[:80]}; why: {why[:120]}")
         page.screenshot(path=str(a.shots / f"graph-routes-{tag}.png"))
         # PDF view.

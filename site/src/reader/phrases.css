@@ -131,6 +131,31 @@
   background: var(--tone);
 }
 
+.phrase-card__fidelity strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.phrase-card__who,
+.phrase-card__label span {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.phrase-card__who {
+  white-space: nowrap;
+}
+
+/* A tie that holds several overlapping phrases says so, and each comparison names its phrase. */
+.phrase-card__merged,
+.phrase-card__for {
+  color: var(--ink-3);
+}
+
+.phrase-card__merged {
+  font-size: var(--fs-sm);
+}
+
 /* A small heading for each part of the card, with who made it beside it. */
 .phrase-card__label {
   display: flex;

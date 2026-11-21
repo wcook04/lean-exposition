@@ -183,12 +183,12 @@ describe("the key names the relations drawn", () => {
     draw();
     const key = $(".fg__key")!.textContent!;
     expect(key).toContain("Arrows run from a statement to what it uses.");
-    expect(key).toContain("Proof uses");
-    expect(key).not.toContain("Statement uses");
+    expect(key).toContain("Used in a Lean proof or body");
+    expect(key).not.toContain("Used in a Lean statement");
     expect(key).toContain("group, opens its members");
     // Each line carries its relation's name, and a group's line is no heavier than any other.
     const line = $(".fg__lines path.fg__edge")!;
-    expect(line.querySelector("title")!.textContent).toBe("Proof uses");
+    expect(line.querySelector("title")!.textContent).toBe("Used in a Lean proof or body");
     expect(line.getAttribute("style")).toBeNull();
   });
 });

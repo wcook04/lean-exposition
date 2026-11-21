@@ -162,6 +162,13 @@ main {
   color: var(--ink);
 }
 
+/* What the search covers, with its denominators. */
+.search__scope {
+  margin: 0 0 var(--space-2);
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+
 .search__field {
   position: relative;
   display: flex;

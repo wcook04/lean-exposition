@@ -270,28 +270,40 @@ describe("the inspector's phrase card", async () => {
 
   it("shows a same verdict's note and says AI-assessed", () => {
     act(() => root.render(<PhraseCard row={row({ fidelity: "same", fidelity_note: "After reading $n$ as a natural number." })} note={undefined} />));
-    expect(fidelityText()).toContain("Same:");
+    expect(fidelityText()).toContain("Lean states the same as this phrase:");
     expect(fidelityText()).toContain("After reading");
     expect(container.querySelector(".phrase-card__fidelity .katex")).not.toBeNull();
-    expect(container.querySelector(".phrase-card__compare .phrase-card__label")!.textContent).toContain("AI-assessed");
+    // The verdict says who assessed it; the block's label does not say it a second time.
+    expect(fidelityText()).toContain("AI-assessed");
+    expect(container.querySelector(".phrase-card__compare .phrase-card__label")!.textContent).toBe("Comparison with these words");
   });
 
   it("says when no comparison is recorded, and does not call it AI-assessed", () => {
     act(() => root.render(<PhraseCard row={row({})} note={undefined} />));
-    expect(fidelityText()).toBe("No comparison is recorded for this passage and formal statement.");
+    expect(fidelityText()).toBe("Not assessed. No comparison of these words with this Lean is recorded.");
+    expect(container.querySelector(".phrase-card__fidelity")!.getAttribute("data-fidelity")).toBe("unassessed");
     expect(container.textContent).not.toContain("AI-assessed");
+    expect(container.textContent).not.toMatch(/same/i);
   });
 
   it("says a withheld comparison is withheld", () => {
     act(() => root.render(<PhraseCard row={row({ fidelity: "held" as never })} note={undefined} />));
-    expect(fidelityText().startsWith("Withheld:")).toBe(true);
+    expect(container.querySelector(".phrase-card__fidelity")!.getAttribute("data-fidelity")).toBe("held");
+    expect(fidelityText()).not.toMatch(/same|not assessed/i);
     expect(container.textContent).not.toContain("AI-assessed");
   });
 
-  it("gives the legend's six words", () => {
+  it("gives the legend's six words, in the card's own words, once it is opened", () => {
     act(() => root.render(<PhraseCard row={row({ fidelity: "weaker" })} note={undefined} />));
-    const words = [...container.querySelectorAll(".phrase-card__legend dt")].map((dt) => dt.textContent);
-    expect(words).toEqual(["Same", "Stronger", "Weaker", "Different", "Not assessed", "Withheld"]);
+    const legend = container.querySelector<HTMLDetailsElement>(".phrase-card__legend")!;
+    // Closed, it names no verdict, so no verdict's name stands beside a different comparison.
+    expect(legend.querySelectorAll("dt")).toHaveLength(0);
+    act(() => {
+      legend.open = true;
+      legend.dispatchEvent(new Event("toggle"));
+    });
+    const words = [...legend.querySelectorAll("dt")].map((dt) => dt.textContent);
+    expect(words).toEqual(["Lean states the same as this phrase", "Lean states more", "Lean states less", "Lean states something different", "Not assessed", "Withheld"]);
   });
 });
 

@@ -1,3 +1,5 @@
+"""scripts/build_library_index.py: each paper's row writes its counts as labelled lines, and the
+library search says what it covers, with its denominators."""
 import importlib.util
 from pathlib import Path
 import unittest
@@ -6,6 +8,7 @@ spec = importlib.util.spec_from_file_location(
     "build_library_index", Path(__file__).resolve().parents[1] / "scripts" / "build_library_index.py")
 index = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(index)
+search_scope = index.search_scope
 
 ENTRY = {
     "id": "p", "title": "A paper", "authors": ["A. Author"], "href": "/library/p/", "sentence": "",
@@ -40,6 +43,17 @@ class LibraryIndexRow(unittest.TestCase):
         self.assertNotIn("Linked material", row)
         self.assertNotIn("Recorded checks", row)
         self.assertIn("Credit and source", row)
+
+
+class SearchScope(unittest.TestCase):
+    def test_names_the_indexed_papers_and_the_title_only_ones(self):
+        papers = [{"id": "euler", "shard": "x"}] + [{"id": f"p{k}"} for k in range(9)]
+        self.assertEqual(search_scope(papers), "Covers 1 paper’s contents indexed (statements and Lean names), "
+                                               "9 by title, authors and summary only.")
+
+    def test_every_paper_indexed(self):
+        self.assertEqual(search_scope([{"id": "a", "shard": "x"}, {"id": "b", "shard": "y"}]),
+                         "Covers 2 papers’ contents indexed (statements and Lean names).")
 
 
 if __name__ == "__main__":

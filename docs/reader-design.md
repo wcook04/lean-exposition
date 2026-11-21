@@ -27,8 +27,8 @@ Three rules follow, and the rest of this page applies them.
 
 - **Scrolling changes what is followed. A click selects exact words. Only an explicit jump
   moves the paper.**
-- **Each mark has one job.** Colour says topic. Amber says "you selected this". A dashed line
-  says "the paper states this use". No mark says whether a statement is proved, matched or
+- **Each mark has one job.** Colour says topic. Amber says "you selected this". A line's style
+  says which relation it records, and the key names it. No mark says whether a statement is proved, matched or
   reviewed; words say that, next to the name of who assessed it.
 - **The page is still.** Nothing moves, fades or reflows unless the reader just did something,
   and then briefly.
@@ -142,8 +142,10 @@ is fixed, and is the order of the questions a reader asks.
    of qualification the data carries, whatever the verdict, then "AI-assessed". A verdict of
    *same* shows its note too. Where the data says whether the difference bears on the paper's
    main result, the verdict ends with that as a question and its answer: "Does this affect
-   Theorem 1.1? No. This is a difference of convention." and the recorded line of why. An absent comparison says "No comparison is recorded for this
-   passage and formal statement."; a withheld one says so and gives the recorded reason.
+   Theorem 1.1? No. This is a difference of convention." and the recorded line of why. An absent comparison says "Not assessed. No comparison of these
+   words with this Lean is recorded."; a withheld one gives the recorded reason. A link that
+   holds several overlapping phrases shows each phrase's own comparison, each headed by that
+   phrase's opening words.
    Neither is drawn as agreement. One line under it opens the legend (below).
 5. **The reading note**, labelled "AI-drafted": what the formal statement says, in the
    paper's notation. Sans, 16px on a 24px line, at most 38rem wide however wide the pane.
@@ -161,14 +163,15 @@ one changes 4 to 8 and never the quotation or what the words say.
 ### The legend
 
 A disclosure under every comparison, and at the foot of "How to read the Lean": "What do these
-words mean?" It gives one sentence each, in mathematical terms.
+words mean?" It gives one sentence each, in mathematical terms, and writes them only once it
+is opened, so a closed legend never sets a verdict's name beside a different comparison.
 
-| Word | Meaning |
+| Words on the card | Meaning |
 | --- | --- |
-| Same | The formal statement asserts what the quoted words assert, after the translation the note states. |
-| Stronger | The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference. |
-| Weaker | The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference. |
-| Different | Neither implies the other as stated: for example a definition linked to a sentence about a construction. |
+| Lean states the same as this phrase | The formal statement asserts what the quoted words assert, after the translation the note states. |
+| Lean states more | The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference. |
+| Lean states less | The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference. |
+| Lean states something different | Neither implies the other as stated: for example a definition linked to a sentence about a construction. |
 | Not assessed | No comparison has been recorded for this pair. This says nothing about whether they agree. |
 | Withheld | A comparison was drafted and is not shown, for the reason given beside it. |
 
@@ -234,11 +237,14 @@ The drawing is as specified in [the graph pane](graph-pane.md), with these chang
   drawing pans and zooms, so a reader who has dragged the subject out of view still reads what
   the lines are about.
 - **Relation types have names**, in the key under the drawing and in each line's tooltip:
-  "Proof uses" (solid), "Statement uses" (thin dashes), "The paper states this use" (heavy
-  dashes; the line opens the sentence that states it), and "Step of the paper's argument"
-  (heavy solid) where a paper has an authored argument. The key says which way arrows run: from
-  a statement to what it uses. A count is a number on a badge; a line never grows heavier
-  because a group is large.
+  "A link the paper states" (heavy solid) where a paper has an authored argument, "A use the
+  paper's proof states, with no Lean link" (heavy dashes; the line opens the sentence that states
+  it), "A link between results, derived from the Lean" (heavy, longer dashes; never called the
+  paper's argument), "An assumption" (heavy dots), "Used in a Lean proof or body" (solid), "Used
+  in a Lean statement" (thin dashes) and "Used in the Lean, statement or proof not recorded"
+  (thin dots). The key names only the kinds drawn and says which way arrows run: from a
+  statement to what it uses. Each side's count says how many of its cards each relation joins.
+  A count is a number on a badge; a line never grows heavier because a group is large.
 - **A large group opens as a list, not in the drawing.** Choosing a group of more than eight
   shows its members in a panel beside the drawing: a search field over the whole group, twenty
   members to a page, each with its whole title and kind. The subject does not move and the

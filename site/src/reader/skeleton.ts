@@ -18,7 +18,7 @@ const STYLE = `.reader-shape{display:grid;grid-template-columns:minmax(0,var(--r
 .reader-shape .part{position:relative;display:flow-root;padding-bottom:var(--space-4)}
 .reader-shape .part__text{content-visibility:visible;contain-intrinsic-block-size:none}
 .reader-shape .part__text>:last-child{margin-bottom:0}
-@media (max-width:700px){.reader-shape{padding-inline:20px}.reader-shape__strip{margin-left:-15px}.reader-shape .account-line{display:none}}
+@media (max-width:700px){.reader-shape{padding-inline:20px}.reader-shape__strip{margin-left:-15px}.reader-shape .account-line{margin:var(--space-3) 0 var(--space-4)}}
 @media (min-width:1024px){.reader-shape{grid-template-columns:minmax(0,min(var(--reader-measure),50vw)) minmax(0,1fr);justify-content:start;column-gap:24px;padding-left:32px;padding-right:0}
 .reader-shape__side{display:block;position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));border-left:1px solid var(--rule)}}
 @media (min-width:1280px){.reader-shape{column-gap:var(--reader-gap)}.reader-shape__side{margin-left:16px}}

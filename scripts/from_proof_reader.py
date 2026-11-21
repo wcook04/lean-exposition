@@ -160,8 +160,29 @@ def reading_copy(md: str, passages: list[dict]) -> tuple[str, list[dict], dict]:
     return "".join(out), sections, anchors
 
 
+UNASSESSED = "unassessed"
+
+
+def assessment(comparisons: dict, name: str) -> dict:
+    """The comparison the source recorded for this Lean name, or the explicit unassessed state.
+
+    Three states, never defaulted into one another: assessed (a verdict, with its note), held
+    (a comparison exists but is not shown) and unassessed (the source records none).
+    """
+    c = comparisons.get(name)
+    if c is None:
+        return {"fidelity": UNASSESSED, "note": ""}
+    return {"fidelity": c["fidelity"], "note": (c.get("note") or "").strip()}
+
+
 def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report: dict):
-    """Every passage as a phrase tie. Identical or nested spans merge; the merged id is kept as an alias."""
+    """Every passage as a phrase tie.
+
+    The reader's phrases may not overlap, so identical or nested spans share one tie; its id is the
+    first phrase's and the others are kept as aliases. Nothing is lost in the merge: the tie records
+    every phrase it holds (`merged`), and each Lean row keeps every phrase's own comparison of it
+    (`assessments`), so a verdict about one phrase is never shown as a verdict about another.
+    """
     spans = []
     for p in passages:
         at = text.find(p["quote"])
@@ -182,7 +203,7 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
     ties = []
     for start, stop, first, group in merged:
         role, _ = ROLE[first["role"]]
-        rows, seen = [], set()
+        rows, by_target = [], {}
         for p in group:
             comparisons = {c["lean"]: c for c in p.get("comparisons", [])}
             for name in p["lean"]:
@@ -191,18 +212,31 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
                     report["lean_not_in_index"].append(name)
                     continue
                 target, path, decl = found
-                if target in seen:
-                    continue
-                seen.add(target)
-                c = comparisons.get(name, {"fidelity": "same", "note": ""})
-                row = {"name": target, "file": path, "relation": ROLE[p["role"]][1], "fidelity": c["fidelity"]}
-                note = c.get("note", "").strip()
-                if c["fidelity"] != "same" and not note:
+                c = assessment(comparisons, name)
+                if c["fidelity"] == UNASSESSED:
+                    report["unassessed"].append([p["id"], target])
+                note = c["note"]
+                if c["fidelity"] not in {"same", UNASSESSED} and not note:
                     note = "The source records this verdict without a note."
                     report["verdict_without_note"].append(p["id"])
+                one = {"phrase": p["id"], "fidelity": c["fidelity"], **({"fidelity_note": note} if note else {})}
+                if target in by_target:
+                    by_target[target]["assessments"].append(one)
+                    continue
+                row = {"name": target, "file": path, "relation": ROLE[p["role"]][1], "fidelity": c["fidelity"]}
                 if note:
                     row["fidelity_note"] = note
+                row["assessments"] = [one]
+                by_target[target] = row
                 rows.append(row)
+        for row in rows:
+            # A row's own fields are the first phrase's assessment; the others travel with it. A tie
+            # of one phrase needs no list.
+            if len(group) == 1:
+                del row["assessments"]
+            elif len({(a["fidelity"], a.get("fidelity_note", "")) for a in row["assessments"]}) > 1:
+                report["merged_assessments_differ"].append([first["id"], row["name"],
+                                                            [[a["phrase"], a["fidelity"]] for a in row["assessments"]]])
         body = text[start:stop]
         tie = {"id": first["id"], "from": body, "to": body, "role": role, "topic": first["topic"],
                "status": "new", "lean": rows}
@@ -211,32 +245,109 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
             report["statement_without_lean"].append(first["id"])
         if len(group) > 1:
             tie["replaces"] = [p["id"] for p in group[1:]]
+            # The merge, recorded: each phrase the tie holds, with its own words, role and topic.
+            tie["merged"] = [{"id": p["id"], "quote": p["quote"], "role": ROLE[p["role"]][0], "topic": p["topic"]}
+                             for p in group]
             report["merged"].append([p["id"] for p in group])
         ties.append(tie)
     return ties, aliases
 
 
-def keep_addresses(old_order: list[str], old_aliases: dict, aliases: dict, new_ids: list[str], report: dict) -> dict:
-    """Every old tie id stays an address: a tie that is gone points at its nearest surviving neighbour
-    in the old reading order (the one before it, else the one after), and old aliases follow."""
+MAX_BLOCK = 1700  # under the alignment's limit on one statement slice (MAX_SLICE_CHARACTERS)
+
+
+def math_open(text: str, start: int, stop: int) -> bool:
+    """Whether `stop` falls inside a formula, reading from `start` (a paragraph's beginning)."""
+    i, inline, display = start, False, False
+    while i < stop:
+        if text.startswith("\\$", i):
+            i += 2
+            continue
+        if text.startswith("$$", i):
+            display = not display
+            i += 2
+            continue
+        if text[i] == "$" and not display:
+            inline = not inline
+        i += 1
+    return inline or display
+
+
+def statement_block(text: str, title: str, section_at: int | None, fallback: tuple[int, int] | None) -> tuple[int, int, bool]:
+    """A numbered result's canonical target: its statement block, from the authors' bold label
+    ("**Theorem 1.1.**") to the end of that paragraph, displays included.
+
+    Where the label occurs more than once, the first occurrence in the result's own section wins.
+    A block longer than the alignment allows ends at its last sentence that fits. Without a label,
+    the claim's own phrase is the block. Returns (start, stop, found_label).
+    """
+    label = re.compile(r"\*\*" + re.escape(title) + r"(?=[.\s(*:])(?!\.\d)")
+    hits = [m.start() for m in label.finditer(text)]
+    if section_at is not None and any(h >= section_at for h in hits):
+        hits = [h for h in hits if h >= section_at]
+    if not hits:
+        if fallback is None:
+            raise ValueError(f"no statement of {title}")
+        return fallback[0], fallback[1], False
+    begin = hits[0]
+    stop = begin
+    while True:
+        nxt = text.find("\n\n", stop)
+        if nxt < 0:
+            stop = len(text)
+            break
+        if not math_open(text, begin, nxt):
+            stop = nxt
+            break
+        stop = nxt + 2
+    while text[stop - 1:stop].isspace():
+        stop -= 1
+    if stop - begin > MAX_BLOCK:
+        cuts = [m.end() for m in re.finditer(r"[.;:](?=\s)", text[begin:begin + MAX_BLOCK])]
+        cuts = [begin + c for c in cuts if not math_open(text, begin, begin + c)]
+        stop = cuts[-1] if cuts else min(stop, (fallback or (begin, begin + MAX_BLOCK))[1])
+    return begin, stop, True
+
+
+def keep_addresses(old_order: list[str], old_aliases: dict, aliases: dict, new_ids: list[str], report: dict,
+                   date: str, old_retired: dict | None = None) -> tuple[dict, dict]:
+    """Every old tie id stays an address, without ever silently meaning something else.
+
+    A phrase merged into another (`aliases`) genuinely lives inside it, so its id is an alias of the
+    tie that holds it. A tie that is gone, or an old alias no current merge explains, is retired: its address
+    opens a notice saying when it was retired and naming the nearest current phrase in the old reading
+    order, which the reader may follow; it never lands there by itself.
+    Returns (aliases, retired).
+    """
     alive = set(new_ids)
     out = dict(aliases)
-    gone = [i for i in old_order if i not in alive]
+    retired = {}
+    for old, row in (old_retired or {}).items():
+        if old in alive or old in out:
+            continue  # a retired id that names a phrase again is an address of that phrase
+        nearest = row.get("nearest")
+        while nearest in out and nearest not in alive:
+            nearest = out[nearest]
+        retired[old] = {**row, "nearest": nearest if nearest in alive else None}
+    gone = [i for i in old_order if i not in alive and i not in out]
     for k, old in enumerate(old_order):
-        if old in alive:
+        if old in alive or old in out:
             continue
         before = next((old_order[j] for j in range(k - 1, -1, -1) if old_order[j] in alive), None)
         after = next((old_order[j] for j in range(k + 1, len(old_order)) if old_order[j] in alive), None)
-        target = before or after or (new_ids[0] if new_ids else None)
-        if target:
-            out[old] = target
+        retired[old] = {"retired": date, "nearest": before or after}
+    # An old alias is kept only when this import merges the same phrase again (it is then in `out`).
+    # Any other old alias names a phrase that is gone, or one an earlier import sent to a neighbour;
+    # it is retired, with the tie it pointed at offered as the nearest current phrase.
     for old, host in old_aliases.items():
-        while host in out and host not in alive and out[host] != host:
+        if old in alive or old in out or old in retired:
+            continue
+        while host in out and host not in alive:
             host = out[host]
-        if old not in alive and host in alive:
-            out.setdefault(old, host)
+        retired[old] = {"retired": date, "nearest": host if host in alive else None}
     report["gone_kept_as_addresses"] = gone
-    return out
+    report["retired"] = sorted(retired)
+    return out, dict(sorted(retired.items()))
 
 
 def references(text: str, slot: str) -> dict:
@@ -280,6 +391,8 @@ def main() -> None:
     ap.add_argument("--pdf", type=Path, help="the authors' own PDF of the paper, published byte for byte")
     ap.add_argument("--reimport", action="store_true",
                     help="replace the ties, comparisons and notes of an existing instance, keeping every old tie id as an address")
+    ap.add_argument("--retired-on", default=__import__("datetime").date.today().isoformat(),
+                    help="the date a re-import records for the phrase links it retires (YYYY-MM-DD; default today)")
     ap.add_argument("--guide", type=Path, help="a Markdown guide to how the Lean encodes the paper's objects, read as a page of its own")
     ap.add_argument("--hold-comparisons", action="store_true",
                     help="keep the page's comparisons hidden: every comparison is replaced by the page's held text (fidelity_held)")
@@ -299,16 +412,18 @@ def main() -> None:
     links = json.loads((page / "links.json").read_text())
     md = (page / toml["paper"].get("markdown", "paper.md")).read_text()
     report = {k: [] for k in ("quote_not_unique", "lean_not_in_index", "verdict_without_note",
-                              "statement_without_lean", "merged", "long_title_without_override")}
+                              "statement_without_lean", "merged", "merged_assessments_differ", "unassessed",
+                              "result_label_not_found", "result_without_statement", "long_title_without_override")}
     # Re-import: the old ties in reading order and the old aliases, so no address that worked stops working.
-    old_order, old_aliases = [], {}
+    old_order, old_aliases, old_retired = [], {}, {}
     if args.reimport:
         old_phrases = out / f"alignment/phrases-{slot}.json"
         if not old_phrases.is_file():
             raise SystemExit(f"--reimport needs an existing instance: {old_phrases} is missing")
         old_order = [t["id"] for t in json.loads(old_phrases.read_text())["ties"]]
         if (out / "alignment/aliases.json").is_file():
-            old_aliases = json.loads((out / "alignment/aliases.json").read_text()).get("passages", {})
+            old_table = json.loads((out / "alignment/aliases.json").read_text())
+            old_aliases, old_retired = old_table.get("passages", {}), old_table.get("retired", {})
     if out.exists():
         for child in ("papers", "alignment", "upstream", "generated", "evidence-graph.json", "instance.json"):
             target = out / child
@@ -386,11 +501,15 @@ def main() -> None:
             p["comparisons"] = [{"lean": n, "fidelity": "held", "note": held} for n in p["lean"]]
         links["fidelity"] = {}
     ties, aliases = phrase_rows(text, links["passages"], lean, links, report)
+    retired = {}
     if args.reimport:
-        aliases = keep_addresses(old_order, old_aliases, aliases, [t["id"] for t in ties], report)
-    # A tie the source replaced by other phrases keeps its address: it opens the first of them.
+        aliases, retired = keep_addresses(old_order, old_aliases, aliases, [t["id"] for t in ties], report,
+                                          args.retired_on, old_retired)
+    # A tie the source replaced by other phrases keeps its address: it opens the first of them. This is
+    # the source's own relocation, so it is an alias, not a retirement.
     for old_id, new_id in links.get("redirects", {}).items():
         aliases.setdefault(old_id, aliases.get(new_id, new_id))
+        retired.pop(old_id, None)
     overrides = json.loads(args.titles.read_text())["titles"] if args.titles else {}
     named = sorted({row["name"] for t in ties for row in t["lean"]})
     back = {}
@@ -458,40 +577,61 @@ def main() -> None:
                             "tie": tie_of.get(c.get("passage")), "lean": c.get("lean", [])}
         claims.append((address, c))
     write(out / "alignment/results.json", dumps({"schema": 1, "results": results, "sections": section_anchors}))
-    # Each numbered result's statement as a record of the map: from its bold label to the end of its paragraph.
-    batch = {}
+    # Each numbered result's canonical target, its statement block: from the authors' bold label to the
+    # end of that paragraph. The claim's own phrase in the source can be an introduction or a mention
+    # before the result, so it is used only where the paper prints no label.
+    batch, blocks = {}, {}
     for address, c in claims:
         tie = next((t for t in ties if t["id"] == tie_of.get(c.get("passage"))), None)
-        if not tie:
+        at = text.find(tie["from"]) if tie else -1
+        marker = text.find(f'<a id="{c.get("section")}"></a>') if c.get("section") else -1
+        try:
+            begin, stop, labelled = statement_block(text, c["title"], marker if marker >= 0 else None,
+                                                    (at, at + len(tie["from"])) if tie else None)
+        except ValueError:
+            report["result_without_statement"].append(address)
             continue
-        at = text.find(tie["from"])
-        para = text.rfind("\n\n", 0, at) + 2
-        label = f"**{c['title']}"
-        lab = text.find(label, para, at + 1)
-        begin = lab if lab >= 0 else at
-        stop = text.find("\n\n", max(at + len(tie["from"]), begin))
-        stop = len(text) if stop < 0 else stop
-        if stop - begin > 1700:
-            begin, stop = at, at + len(tie["from"])
-        # The statement's first and last words, never cutting a formula.
-        cut_a, cut_b = begin + min(80, stop - begin), max(begin, stop - 60)
-        for x, y, _ in _math_spans(text[begin:stop]):
-            if x < cut_a - begin < y:
-                cut_a = begin + y
-            if x < cut_b - begin < y:
-                cut_b = begin + x
-        first = text[begin:min(cut_a, stop)]
-        last = text[max(begin, cut_b):stop]
+        if not labelled:
+            report["result_label_not_found"].append(address)
+        blocks[address] = (begin, stop)
+        # The slice is located by its first and last words: each found once, and never cutting a formula.
+        spans = _math_spans(text[begin:stop])
+
+        def whole(cut_a, cut_b):
+            for x, y, _ in spans:
+                if x < cut_a - begin < y:
+                    cut_a = begin + y
+                if x < cut_b - begin < y:
+                    cut_b = begin + x
+            return min(cut_a, stop), max(begin, cut_b)
+
+        grow = 0
+        while True:
+            a, b = whole(begin + min(80 + grow, stop - begin), stop - min(60 + grow, stop - begin))
+            first, last = text[begin:a], text[b:stop]
+            if (text.count(first) == 1 and text.find(last, begin) + len(last) == stop) or a >= stop:
+                break
+            grow += 20
         rows = []
         for name in c.get("lean", []):
             found = lean.resolve(name)
             if not found:
                 continue
-            verdict = links.get("fidelity", {}).get(name, {})
+            # Assessed, held or unassessed: a missing verdict is never read as "same".
+            if held is not None:
+                row = {"file": found[1], "name": found[0], "relation": "states", "fidelity": "held",
+                       "fidelity_note": held, "fidelity_source": "ai"}
+                rows.append(row)
+                continue
+            verdict = links.get("fidelity", {}).get(name)
+            if not verdict or not verdict.get("verdict"):
+                report["unassessed"].append([address, found[0]])
+                rows.append({"file": found[1], "name": found[0], "relation": "states", "fidelity": UNASSESSED})
+                continue
             row = {"file": found[1], "name": found[0], "relation": "states",
-                   "fidelity": verdict.get("verdict", "same"), "fidelity_source": "ai"}
-            if verdict.get("text"):
-                row["fidelity_note"] = verdict["text"]
+                   "fidelity": verdict["verdict"], "fidelity_source": "ai"}
+            if (verdict.get("text") or "").strip():
+                row["fidelity_note"] = verdict["text"].strip()
             elif row["fidelity"] != "same":
                 row["fidelity_note"] = "The source records this verdict without a note."
             rows.append(row)
@@ -503,6 +643,7 @@ def main() -> None:
         "schema_version": "1.0", "provenance": "Generated by scripts/from_proof_reader.py from Proof Reader's claims and fidelity",
         "records": dict(sorted(batch.items()))}))
     write(out / "alignment/aliases.json", dumps({"schema": 1, "passages": aliases,
+                                                 **({"retired": retired} if retired else {}),
                                                  "claims": {c["id"]: a for a, c in claims}}))
 
     paper_md = text.encode("utf-8")
@@ -529,7 +670,8 @@ def main() -> None:
         citations[cid] = {"id": cid, "title": f"{title}, {c['title']}", "url": sources["paper"]["url"],
                           "source_id": "paper", "locator": f"{c['title']}, Section {c.get('section')}"}
         tie = next((t for t in ties if t["id"] == tie_of.get(c.get("passage"))), None)
-        statement = tie["from"] if tie else c["title"]
+        # The map shows the result's own statement block, the same canonical target the reader opens.
+        statement = text[blocks[address][0]:blocks[address][1]] if address in blocks else (tie["from"] if tie else c["title"])
         node(nid, "goal" if nid == goal else "claim", c["title"], "unverified", source_id="paper",
              locator=f"{c['title']}, Section {c.get('section')}", statement=statement, citation_ids=[cid],
              boundary="A result as the authors number it. Its links to the Lean were made with AI for Proof Reader "
@@ -740,11 +882,7 @@ def main() -> None:
     # ---- paper mappings
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
     from lean_exposition.contracts import closure, required_citation_ids
-    claim_at = {}
-    for address, c in claims:
-        tie = next((t for t in ties if t["id"] == tie_of.get(c.get("passage"))), None)
-        if tie:
-            claim_at[f"{args.paper}.{address}"] = text.find(tie["from"])
+    claim_at = {f"{args.paper}.{address}": blocks[address][0] for address, _ in claims if address in blocks}
 
     def mapping(s, content, passages):
         claim_ids = list(dict.fromkeys([goal] + [c for p in passages for c in p["claim_ids"]]))
