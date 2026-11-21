@@ -66,6 +66,24 @@ export class Statements {
     cancelAnimationFrame(this.frame);
   }
 
+  /**
+   * A part's HTML with each phrase's topic tone and pointer hint already in its markup, so placing it
+   * on the page writes nothing afterwards (adopt then finds every attribute in place).
+   */
+  decorate(html: string): string {
+    if (typeof document === "undefined" || !html.includes("data-t=")) return html;
+    const box = document.createElement("template");
+    box.innerHTML = html;
+    for (const el of Array.from(box.content.querySelectorAll<HTMLElement>("[data-t]"))) {
+      const t = this.model.index.segments[Number(el.dataset.t)]?.[2][0];
+      const tie = t === undefined ? undefined : this.model.index.ties[t];
+      if (tie?.tone === undefined) continue;
+      el.dataset.tone = String(tie.tone);
+      el.title = phraseHint(this.model, t!);
+    }
+    return box.innerHTML;
+  }
+
   /** A part's text has been placed on the page, or has left it. */
   adopt(part: number, section: HTMLElement | null) {
     const old = this.sections.get(part);
@@ -87,9 +105,13 @@ export class Statements {
       const t = this.model.index.segments[segment]?.[2][0];
       const tie = t === undefined ? undefined : this.model.index.ties[t];
       if (tie?.tone === undefined) continue;
-      el.dataset.tone = String(tie.tone);
-      el.title = phraseHint(this.model, t!);
-      if (this.decl && tie.rows?.some((row) => row.name === this.decl)) el.setAttribute("data-decl", "");
+      // Written only when they change: an identical write still records a mutation and invalidates
+      // style, and a part is adopted again each time its text is placed.
+      const tone = String(tie.tone);
+      if (el.dataset.tone !== tone) el.dataset.tone = tone;
+      const hint = phraseHint(this.model, t!);
+      if (el.title !== hint) el.title = hint;
+      if (this.decl && !el.hasAttribute("data-decl") && tie.rows?.some((row) => row.name === this.decl)) el.setAttribute("data-decl", "");
     }
     this.near?.observe(section);
     this.resized?.observe(section);
