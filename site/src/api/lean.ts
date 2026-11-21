@@ -214,13 +214,29 @@ export interface PhraseLean extends FidelityFields {
   plain?: string;
 }
 
-/** A topic of a paper's phrase ties; `colour` picks one of nine hues, `part` the part of the paper that lists it. */
+/**
+ * A topic of a paper's phrase ties, in colour order: `part` is the part of the paper that lists it,
+ * `tone` its index (the `--tone-N` it sets), `family` the family whose hue it takes a shade of, and
+ * `light` and `dark` its stored colour in each theme (absent for a paper not yet coloured).
+ */
 export interface PhraseTopic {
   id: string;
   name: string;
   description: string;
   part: number;
-  colour: number;
+  tone: number;
+  family?: string;
+  light?: string;
+  dark?: string;
+}
+
+/** A family of topics, in hue order round the circle; `named` is false when derived from relatedness. */
+export interface PhraseFamily {
+  id: string;
+  name: string;
+  named: boolean;
+  part: number;
+  topics: string[];
 }
 
 /** A stretch of a paper with its own topics (one for most papers). */
@@ -247,7 +263,7 @@ export interface Tie {
   phrase?: string;
   topic?: string;
   part?: number;
-  /** `2 × topic colour + shade`: neighbouring phrases of one topic alternate two shades. */
+  /** The topic's colour index (see PhraseTopic.tone). */
   tone?: number;
   rows?: PhraseLean[];
   role: StatementRole;
@@ -283,6 +299,7 @@ export interface TieIndex {
   /** "phrases" when each tie is a phrase that one or more declarations state. */
   layer?: "phrases";
   topics?: PhraseTopic[];
+  families?: PhraseFamily[];
   parts?: PhrasePart[];
   segments: TieSegment[];
   ties: Tie[];

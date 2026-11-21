@@ -8,6 +8,9 @@ PY=${PYTHON:-python3}
 I=instances/$paper
 pair() { if [ -f "$I/papers/$1/paper.md" ]; then echo "$I/papers/$1/paper.md $I/papers/$1/correspondence.json"; else echo "$I/papers/$1/absent.md $I/papers/$1/absent.json"; fi; }
 rm -rf "build/$paper-edition"
+# Topic colours are computed once per shared topic list over every paper that uses it, and stored
+# beside each phrases file (alignment/colours-<slot>.json); this keeps them current.
+node site/scripts/topic-colours.ts
 "$LX" validate "$I/evidence-graph.json" > /dev/null
 "$LX" check-alignment "$I/alignment" --lean-tree "$I/upstream/lean" --graph "$I/evidence-graph.json" \
   --paper long $(pair long | cut -d' ' -f1) --paper short $(pair short | cut -d' ' -f1) --paper expository $(pair expository | cut -d' ' -f1) > "build/$paper-alignment.json"

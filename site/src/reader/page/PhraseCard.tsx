@@ -82,7 +82,7 @@ export function noteHtml(text: string): { html: string; errors: string[] } {
 export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null }) {
   const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
   return (
-    <section className="phrase-card" data-tone={topic ? topic.colour * 2 : undefined} aria-label="About this phrase and its Lean">
+    <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
       {topic && (
         <p className="phrase-card__topic" title={topic.description || undefined}>
           <span className="phrase-card__swatch" aria-hidden="true" />

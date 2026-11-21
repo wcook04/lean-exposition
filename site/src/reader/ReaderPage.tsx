@@ -86,6 +86,7 @@ import { PdfView, atOnPage, loadPdfMarks, pageAtByte, type PdfMarks } from "./pd
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
+import { useTopicColours } from "./topicColours";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
 import "./page/map-pane.css";
 
@@ -234,6 +235,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const edition = snapshot.cache_key;
   const { doc, paper, ties } = loaded;
   useFirstScreenDone();
+  useTopicColours(ties.index.topics);
   const stage = route.stage;
   const structure = paper.structure;
   const wide = useMedia("(min-width: 1360px)");
@@ -1542,7 +1544,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
   const outlineColumn = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
-  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine, topics: ties.index.topics, parts: ties.index.parts };
+  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine, topics: ties.index.topics, families: ties.index.families, parts: ties.index.parts };
   const visitOriginPassage = route.beside
     ? visit && visit.stage === stage
       ? (visit.anchor ?? null)

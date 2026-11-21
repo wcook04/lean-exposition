@@ -9,7 +9,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { sectionLabel } from "../../map/TheoremPlate";
 import type { PreparedDocument, TextBlock } from "../engine";
-import type { PhrasePart, PhraseTopic } from "../../api/lean";
+import type { PhraseFamily, PhrasePart, PhraseTopic } from "../../api/lean";
 import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
 
@@ -25,32 +25,46 @@ interface Props {
   onLine?(line: number): void;
   /** Phrase layer: the paper's topics and its parts, for the colour key. */
   topics?: PhraseTopic[];
+  families?: PhraseFamily[];
   parts?: PhrasePart[];
 }
 
 /**
- * The colour key: each topic's colour beside its name. A paper whose topics come in parts
- * shows the topics of the part being read.
+ * The colour key: each topic's colour beside its name, grouped under its family. Families the
+ * authors named carry their name; families derived from how the topics co-occur are set apart
+ * without one. A paper whose topics come in parts shows the topics of the part being read.
  */
-function PhraseKey({ topics, parts, part }: { topics: PhraseTopic[]; parts: PhrasePart[]; part: number }) {
+function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; families: PhraseFamily[]; parts: PhrasePart[]; part: number }) {
   const shown = topics.filter((topic) => topic.part === part);
   if (!shown.length) return null;
   const several = parts.length > 1;
+  const byId = new Map(shown.map((topic) => [topic.id, topic]));
+  const groups = families.filter((family) => family.part === part);
+  const item = (topic: PhraseTopic) => (
+    <li key={topic.id} data-tone={topic.tone} title={topic.description || undefined}>
+      <span className="phrase-key__swatch" aria-hidden="true" />
+      {topic.name}
+    </li>
+  );
   return (
     <section className="phrase-key" aria-label="Topic colours">
       <p className="phrase-key__head">
         Topic colours{several && parts[part]?.name ? <span> · {parts[part].name}</span> : null}
       </p>
-      <ul>
-        {shown.map((topic) => (
-          <li key={topic.id} data-tone={topic.colour * 2} title={topic.description || undefined}>
-            <span className="phrase-key__swatch" aria-hidden="true" />
-            {topic.name}
-          </li>
-        ))}
-      </ul>
+      {groups.length ? (
+        <div className="phrase-key__families">
+          {groups.map((family) => (
+            <div key={family.id} className="phrase-key__family">
+              {family.named && family.topics.length > 1 && <p className="phrase-key__family-name">{family.name}</p>}
+              <ul>{family.topics.flatMap((id) => (byId.has(id) ? [item(byId.get(id)!)] : []))}</ul>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <ul>{shown.map(item)}</ul>
+      )}
       <p className="phrase-key__note">
-        Each phrase a Lean declaration states is underlined in its topic’s colour. Topics and ties are AI-drafted.
+        Each phrase a Lean declaration states is underlined in its topic’s colour; topics of one family share a hue. Topics and ties are AI-drafted.
         {several ? " Each part of this paper has its own topics." : ""}
       </p>
     </section>
@@ -175,7 +189,7 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
   );
 }
 
-export function Sections({ entries, current, counts, doc, onJump, onLine, listRef, topics, parts }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
+export function Sections({ entries, current, counts, doc, onJump, onLine, listRef, topics, families, parts }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
   const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
   const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
   const [searching, setSearching] = useState(false);
@@ -185,7 +199,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
   return (
     <>
     {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} />}
-    {!!topics?.length && !searching && <PhraseKey topics={topics} parts={parts ?? []} part={part} />}
+    {!!topics?.length && !searching && <PhraseKey topics={topics} families={families ?? []} parts={parts ?? []} part={part} />}
     <ol className="outline__list" ref={listRef} hidden={searching}>
       {shown.map((entry) => (
         <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
@@ -203,7 +217,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
               {!!counts?.get(entry.id)?.topics?.length && (
                 <span className="phrase-bars" title={`Topics here: ${counts.get(entry.id)!.topics!.map((id) => byId.get(id)?.name ?? id).join(", ")}`}>
                   {counts.get(entry.id)!.topics!.slice(0, 6).map((id) => (
-                    <span key={id} data-tone={(byId.get(id)?.colour ?? 0) * 2} />
+                    <span key={id} data-tone={byId.get(id)?.tone ?? 0} />
                   ))}
                 </span>
               )}
