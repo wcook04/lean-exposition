@@ -18,10 +18,13 @@ want to explore it:
   record, the short paper and the exposition. Choose which levels show, and open
   any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  The pane facing the paper has two modes, Graph and Lean. In Graph the graph moves to the statement
-  you are reading, and pointing at a marked statement lights its card and names it. Clicking a
-  statement or a card opens its Lean, and any Back takes you to the graph and your place. Choosing
-  Lean yourself keeps the Lean on the statement you are reading.
+  The pane facing the paper has two views, Graph and Lean, which share one subject: the phrase,
+  card or paragraph you clicked, or else the statement you are reading. Graph draws the subject
+  in the middle, every step and declaration that uses it above and everything it uses below,
+  grouped by kind and joined by lines, with the chain of uses up to the main result over it and
+  the subject's Lean in a dock under it. Lean gives the whole pane to the subject's Lean. A click
+  changes the subject and never the view; Escape follows the paper again. The whole proof map is
+  one button away. [The graph pane](../docs/graph-pane.md) specifies it.
   Each phrase that a Lean declaration states is underlined in the colour of its topic; Sections
   opens with the colour key. The Lean of a phrase opens with its plain title, whether the Lean
   states the same as the phrase, more, less or something different, and a reading note, all

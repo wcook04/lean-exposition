@@ -317,12 +317,9 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   line of words open the view it is of. Retake them with `scripts/capture-tour-stills.py` when
   those pages change visibly (`loading="lazy"`, so only the picture and scheme in use are
   fetched). The theorem, clause by clause, is the band under the first screen.
-- **The reader's graph pane names the step being read.** At the head of the pane are a label
-  (Reading, Pointing at, Open), the step's name in the serif at 20px, one line on its Lean, and
-  a meter of how many of the paper's steps the reader has reached. They change as the paper
-  scrolls, so the pane has in words what the amber ring has on the drawing. The head's height
-  is held, the key to the drawing's marks is the foot, and a card under the pane's handle
-  counts as out of view, so the camera moves to it.
+- **The reader's graph pane draws one subject at a time.** The step or declaration being read
+  stands in the middle with every neighbour around it, and the line over the drawing names the
+  chain of uses up to the main result. [The graph pane](../docs/graph-pane.md) specifies it.
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
@@ -487,47 +484,55 @@ page.
 
 ## The reader
 
-A reader reads the paper, as they always have. The pane beside it has two modes and one toggle,
+A reader reads the paper, as they always have. The pane beside it has two views and one toggle,
 `Graph | Lean`, in the same place in both. The strip's "Hide pane" hides the whole pane in either.
+[The graph pane](../docs/graph-pane.md) is the authority for its behaviour; this section says how
+this reader follows it.
 
-**Graph mode** is a sidecar: the graph, following the reading, with one line under it naming what is
-lit in plain words and saying whether it has Lean. Clicking a statement or a highlighted card goes
-to Lean mode on that statement, as one history entry.
+Both views share one subject: the declaration of a clicked phrase, a clicked card, a clicked
+paragraph, or else the statement under the reading line. A click changes the subject and never the
+view; only the toggle and a control that names the other view ("Open its Lean", "See its Lean")
+change it. A view change replaces the address's `v=` and adds no history entry, and Back keeps the
+view on screen.
 
-**Lean mode** gives the pane to the Lean. An opened statement rises from its card and stays put
-while the reader scrolls, headed by its plain title with the raw name small beside it, then a link
-to where each paper states it, and Compare; "Follow the text" lets go of it. The toggle's Lean,
-with nothing opened, is immediate detail: the Lean follows the text. A statement with no Lean shows
-its note, or "No Lean linked". A handle draws the graph back above the Lean, side by side from 860px
-of pane, and the size is remembered.
+**Graph** is the focus graph (`src/map/FocusGraph.tsx`): the subject in the middle, what uses it
+above and what it uses below, grouped by kind. Records come from the argument graph: the main
+result and each paper's numbered results are results, the authored steps (and, on the SK site,
+the assumptions) are steps of the argument, literature is cited, open records are open questions.
+Its `supports` and `assumes` links are drawn as argument lines. What a step's own Lean declarations
+use in the Lean index is drawn too, as Lean lemmas and Lean definitions in groups of their own, a
+dashed line where only the statement names the declaration. A phrase whose declaration is no step
+of the argument draws that declaration with its Lean neighbours, and the line over the drawing
+offers the paragraph's steps instead. A card's left edge carries its phrases' topic colour, and
+"read" or "stated later" says where the paper states it against the reading line. Under the
+drawing a dock, 30% of the pane until a reader draws its handle (15% to 70%, remembered), shows
+the card under the pointer, the clicked phrase, or the subject's Lean, in that order, and "No Lean
+is linked to this paragraph." where there is none. "Whole proof map" puts the argument tree in the
+drawing's place, and "Around this step" brings the subject back. Under 600px of width the drawing
+folds to one line with the subject and its counts.
 
-Every way back lands in the same place. Back, the site's Back, `[`, Escape, Close and the toggle's
-Graph all return to Graph mode with the same camera, paper position and highlight, because closing
-what a click opened is the browser's own Back: there is never a dead Back behind it. The graph
-underneath keeps its size and camera throughout. Close and Escape step one level, from an opened
-statement to what was there before it; the toggle goes straight to Graph. The mode is in the
-address (`v=lean`), survives a reload and carries to the next paper. `g` switches it. Below 1280px
-the same pane is a sheet; on a phone the toggle is on the one row and the sheet is Lean mode. It is
-never modal: the paper stays where it is and can still be scrolled.
+**Lean** gives the pane to the subject's Lean, headed by its plain title with the raw name small
+beside it, then a link to where each paper states it, and Compare. "Follow the text", Close,
+Escape and Back let go of what was clicked. Below 1280px the same pane is a sheet; on a phone the
+toggle is on the one row. It is never modal: the paper stays where it is and can still be scrolled.
 
 Four verbs run the page.
 
 - **Follow.** One reading line, 30% of the way down the paper, picks the statement under
   it, or the nearest within a third of the page, the one just read winning a near tie.
   Its tick in the margin lights at once, and nothing touches the words: the paper reads as a
-  paper. Once it has held the line for 200ms, and the page is no longer flying past, its card
-  lights and the line under the graph names it. The address keeps up by replacing the entry once the reader stops.
+  paper. Once it has held the line for 200ms, and the page is no longer flying past, its step,
+  or the declaration its phrase is tied to, becomes the pane's subject. Between statements the
+  graph keeps the last subject and says so. The address keeps up by replacing the entry once the reader stops.
 - **Point.** A statement under the pointer or focus takes a soft wash and its card lights
-  at once; after a 150ms dwell the line under the graph names it, and a Lean kept open
-  previews it. Moving away restores. A card does the same in the other direction. An untied
-  paragraph names its passage's records in that line and moves nothing. Pointing never
-  pushes history.
-- **Open.** A click opens the Lean, and only then does the statement take the full highlighter.
-  From Graph mode a step with no Lean does not open: the note stands under the statement. A click is one history entry, `?n=<record>&l=<slice>`,
-  and the paper does not move. A card pins too, and the paper goes to the statement while the
-  graph stays. A name in the Lean walks in place, as its own entry. A pin lasts until Escape,
-  Close, Back or "Follow the text". A drag or a double click that selects text
-  never pins.
+  at once if the graph draws it. A card under the pointer shows its Lean in the dock after a
+  150ms dwell, and moving away restores. Pointing never pushes history.
+- **Open.** A click on a phrase, a card or a paragraph makes it the subject and keeps the view,
+  and only then does the statement take the full highlighter. A click is one history entry,
+  `?n=<record>&l=<slice>` for a phrase or a step and `?d=<declaration>` for a declaration's
+  card, and the paper does not move. A name in the Lean walks in place, as its own entry. A
+  subject lasts until Escape, Close, Back, "Follow the paper again" or "Follow the text". A drag
+  or a double click that selects text never pins.
 - **Back.** The browser's own, named in the strip.
 
 `j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases. The
