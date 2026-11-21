@@ -2,7 +2,9 @@
 // middle, the cards that use it on the left and the cards it uses on the right, each joined to
 // it by a curved line. It fits its pane when it opens: nodes are one compact line of plain
 // words, and a side with more neighbours than fit is drawn as named groups, each with its
-// count, that open in place. Nothing is left out and nothing is replaced by a bare count.
+// count. A small group opens in place; a large one opens as a list of its members beside the
+// drawing, so the drawing never has to grow to hold it. Nothing is left out and nothing is
+// replaced by a bare count.
 // The same file serves the Quartic Reader, the SK and Erdős #257 readers and Proof Reader:
 // docs/graph-pane.md is its specification, and a change here should be copied to the other two.
 //
@@ -79,7 +81,7 @@ export interface FocusGraphProps {
 }
 
 interface Box { x: number; y: number; w: number; h: number }
-interface Seg { d: string; cls: string; edge?: string; width?: number; why?: string; href?: string }
+interface Seg { d: string; cls: string; kind: string; edge?: string; why?: string; href?: string }
 interface Drawn { w: number; h: number; segs: Seg[]; paths: Record<string, string>; boxes: { id: string; box: Box; band: string }[] }
 type Side = "users" | "uses";
 interface Rel { kind: string; of: Set<string>; why?: string; href?: string }
@@ -108,8 +110,18 @@ const clampTo = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo,
 const PAD_X = 16;
 const PAD_Y = 14;
 const ITEM_GAP = 6;
-/** A group with more members than this, from several files or sections, opens into those first. */
-const DIVIDE_ABOVE = 18;
+/** A group with more members than this opens as a list beside the drawing, not in it. */
+const LIST_ABOVE = 8;
+/** Members of a listed group shown at once. */
+const LIST_PAGE = 20;
+/** What each kind of line means, in the key and in the line's own tooltip. */
+const RELATION: Record<string, string> = {
+  proof: "Proof uses",
+  statement: "Statement uses",
+  paper: "The paper states this use",
+  argument: "Step of the paper's argument",
+};
+const relation = (kind: string) => RELATION[kind] ?? RELATION.proof;
 /** A kind's words inside a sentence: "Definitions" becomes "definitions"; "Lean helper lemmas" keeps its capital. */
 const inSentence = (words: string) => (words.startsWith("Lean ") ? words : words.charAt(0).toLowerCase() + words.slice(1));
 const MINI_W = 150;
@@ -133,6 +145,13 @@ export function FocusGraph(props: FocusGraphProps) {
   openedNow.current = opened.size > 0;
   const tightNow = useRef(0);
   tightNow.current = tight;
+  /** The large group whose members are listed beside the drawing, by side and key. It is not "opened": the drawing does not change. */
+  const [listed, setListed] = useState<{ side: Side; path: string } | null>(null);
+  const listedNow = useRef(false);
+  listedNow.current = !!listed;
+  /** What the reader searched for and which page they were on in each listed group, until the subject changes. */
+  const [lists, setLists] = useState<Record<string, { q: string; page: number }>>({});
+  const searchBox = useRef<HTMLInputElement>(null);
 
   // ---- The camera ---------------------------------------------------------------------------
   // The drawing is laid out once for the pane's size and never for the view of it: panning and
@@ -271,7 +290,7 @@ export function FocusGraph(props: FocusGraphProps) {
 
   const key = model.subj.join("|");
   const many = model.subj.length > 1;
-  useLayoutEffect(() => { setOpened(new Set()); setTight(0); setHot(null); auto.current = true; }, [key]);
+  useLayoutEffect(() => { setOpened(new Set()); setTight(0); setHot(null); setListed(null); setLists({}); auto.current = true; }, [key]);
   // A new size of the pane (never of the drawing) is laid out and fitted afresh while the view is the fitted one.
   useLayoutEffect(() => {
     if (!size.w || !auto.current || openedNow.current) return;
@@ -351,10 +370,10 @@ export function FocusGraph(props: FocusGraphProps) {
     return { flat: false, parts, out };
   }, [card, words, sideW, H, tight, narrow]);
 
-  // While the reader has a group open the division is kept as it was, so that the group stays where it is.
+  // While the reader has a group open or listed the division is kept as it was, so that the group stays where it is.
   const kept = useRef<{ key: string; users: Plan; uses: Plan } | null>(null);
   const plans = useMemo(() => {
-    if (opened.size && kept.current?.key === key) return kept.current;
+    if ((opened.size || listedNow.current) && kept.current?.key === key) return kept.current;
     kept.current = { key, users: plan(model.left), uses: plan(model.right) };
     return kept.current;
   }, [plan, model.left, model.right, opened, key]);
@@ -363,21 +382,14 @@ export function FocusGraph(props: FocusGraphProps) {
     const node = (id: string): Item => ({ type: "node", id });
     if (how.flat) return ids.map(node);
     const open = (path: string) => opened.has(`${side}:${path}`);
-    const group = (path: string, name: string, list: string[], divide: boolean): Item => {
+    // Only a small group opens in place; a large one is listed beside the drawing and never opens here.
+    const group = (path: string, name: string, list: string[]): Item => {
       const tones = new Set(list.map((id) => card(id)!.tone));
       const kinds = new Set(list.map((id) => card(id)!.role));
-      const isOpen = open(path);
-      let children: Item[] = [];
-      if (isOpen) {
-        const sections = new Map<string, string[]>();
-        if (divide && list.length > DIVIDE_ABOVE) for (const id of list) { const k = card(id)!.section ?? ""; sections.set(k, [...(sections.get(k) ?? []), id]); }
-        children = sections.size > 1 && sections.size < list.length
-          ? [...sections.entries()].map(([sec, part]) => (part.length === 1 ? node(part[0]) : group(`${path}/s:${sec}`, sec || "Elsewhere", part, false)))
-          : list.map(node);
-      }
-      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, role: kinds.size === 1 ? [...kinds][0] : undefined, ids: list, open: isOpen, children };
+      const isOpen = list.length <= LIST_ABOVE && open(path);
+      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, role: kinds.size === 1 ? [...kinds][0] : undefined, ids: list, open: isOpen, children: isOpen ? list.map(node) : [] };
     };
-    const items = how.parts.flatMap((p) => (how.out.has(p.key) && !open(p.key) ? p.list.map(node) : [group(p.key, p.name, p.list, p.depth < 2)]));
+    const items = how.parts.flatMap((p) => (how.out.has(p.key) && !open(p.key) ? p.list.map(node) : [group(p.key, p.name, p.list)]));
     // Two groups of one name (one topic among the definitions and again among the lemmas) each say their kind.
     const names = new Map<string, number>();
     for (const it of items) if (it.type === "group") names.set(it.name, (names.get(it.name) ?? 0) + 1);
@@ -461,10 +473,10 @@ export function FocusGraph(props: FocusGraphProps) {
           ? (side === "users" ? loop(e.b.x, ny, e.to.x, ty) : loop(e.to.x, ty, e.b.x, ny))
           : side === "users" ? curve(e.b.x + e.b.w, ny, e.to.x - 5, ty) : curve(e.to.x + e.to.w, ty, e.b.x - 5, ny);
         const isGroup = !e.el.dataset.card;
-        const count = Number(e.el.dataset.count ?? 1);
         const kind = isGroup ? (e.el.dataset.kind ?? "proof") : (rels.get(e.id)?.kind ?? "proof");
         const rel = isGroup ? undefined : rels.get(e.id);
-        segs.push({ d, cls: `fg__wire fg__edge fg__edge--${kind}${isGroup ? " fg__edge--group" : ""}`, edge: side === "users" ? `${e.id}>` : `>${e.id}`, width: isGroup ? 1.6 + Math.min(4.4, Math.log2(count) * 0.8) : undefined, why: kind === "paper" ? rel?.why : undefined, href: kind === "paper" ? rel?.href : undefined });
+        // A line's weight says its kind alone: a group's size is its badge, never a heavier line.
+        segs.push({ d, cls: `fg__wire fg__edge fg__edge--${kind}${isGroup ? " fg__edge--group" : ""}`, kind, edge: side === "users" ? `${e.id}>` : `>${e.id}`, why: kind === "paper" ? rel?.why : undefined, href: kind === "paper" ? rel?.href : undefined });
         paths[e.id] = paths[e.id] ? `${paths[e.id]} ${d}` : d;
         // A card inside an open group lights the group's own line.
         if (isGroup) for (const m of e.el.parentElement!.querySelectorAll<HTMLElement>(".fg__card")) paths[m.dataset.card!] = paths[e.id];
@@ -479,7 +491,7 @@ export function FocusGraph(props: FocusGraphProps) {
       const d = b.y > a.y + a.h + 30 || b.y < a.y
         ? `M${x} ${a.y + a.h} C${x + bulge * 3} ${a.y + a.h + 20}, ${x + bulge * 3} ${b.y - 20}, ${x} ${b.y - 5}`
         : `M${x} ${a.y + a.h} L${x} ${b.y - 5}`;
-      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "proof"} fg__inner`, edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
+      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "proof"} fg__inner`, kind: e.kind ?? "proof", edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
     });
     // The world's own size: offsetWidth is not scaled by the camera.
     setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, boxes });
@@ -598,18 +610,30 @@ export function FocusGraph(props: FocusGraphProps) {
     const p = local(e);
     zoomBy(1.6, p.x, p.y);
   };
-  /** Fold every group, then fit the whole drawing; from here the view is kept fitted again. */
+  /** Frame the drawing as it is: Fit only moves the camera, and folds, closes and forgets nothing. From here the view is kept fitted again. */
   const fit = () => {
     auto.current = true;
-    if (opened.size) setOpened(new Set());
-    else fitNow();
+    fitNow();
   };
 
   const hover = (id: string | null) => { setHot(id); onHover?.(id); };
   const choose = (id: string) => { if (!suppressClick.current) onSubject(id); };
-  // Opening a group keeps it in view: the drawing may now be taller than its area, and scrolls.
-  const toggle = (side: Side, path: string) => {
+  const headOf = (side: Side, path: string) =>
+    [...(world.current?.querySelectorAll<HTMLElement>(`.fg__side[data-band="${side}"] .fg__grouphead`) ?? [])].find((h) => h.dataset.group === path) ?? null;
+  /** Close the list of a large group and give the keyboard back to the group's own button, without moving the drawing. */
+  const closeList = () => {
+    const was = listed;
+    setListed(null);
+    if (was) headOf(was.side, was.path)?.focus({ preventScroll: true });
+  };
+  // A large group is listed beside the drawing: the drawing, its groups and the camera stay exactly as they are.
+  // A small one opens in place and is kept in view: the drawing may now be taller than its area.
+  const toggle = (side: Side, path: string, count: number) => {
     if (suppressClick.current) return;
+    if (count > LIST_ABOVE) {
+      setListed((was) => (was && was.side === side && was.path === path ? null : { side, path }));
+      return;
+    }
     const k = `${side}:${path}`;
     setOpened((was) => {
       const next = new Set(was);
@@ -631,6 +655,9 @@ export function FocusGraph(props: FocusGraphProps) {
       if (dx || dy) setCam({ ...cam.current, x: cam.current.x + dx, y: cam.current.y + dy });
     }));
   };
+
+  // The list takes the keyboard when it opens, at its search field.
+  useEffect(() => { if (listed) searchBox.current?.focus({ preventScroll: true }); }, [listed]);
 
   const litSet = useMemo(() => new Set(lit ?? []), [lit]);
   const hotOf = hot ? (model.users.get(hot)?.of ?? model.uses.get(hot)?.of) : null;
@@ -674,17 +701,20 @@ export function FocusGraph(props: FocusGraphProps) {
       if (it.type === "node") return renderCard(it.id, side, rels.get(it.id)?.kind);
       const kinds = new Set(it.ids.map((id) => rels.get(id)?.kind ?? "proof"));
       const kind = kinds.has("argument") ? "argument" : kinds.has("paper") ? "paper" : kinds.size === 1 && kinds.has("statement") ? "statement" : "proof";
+      const large = it.ids.length > LIST_ABOVE;
+      const isListed = large && listed?.side === side && listed.path === it.key;
       return (
-        <div key={`g:${it.key}`} className={`fg__group${it.open ? " is-open" : ""}`} data-group={it.key} style={it.tone ? ({ "--fg-tone": it.tone } as React.CSSProperties) : undefined}>
+        <div key={`g:${it.key}`} className={`fg__group${it.open ? " is-open" : ""}${isListed ? " is-listed" : ""}`} data-group={it.key} style={it.tone ? ({ "--fg-tone": it.tone } as React.CSSProperties) : undefined}>
           <button
             type="button"
             className={`fg__grouphead${it.role ? ` fg__grouphead--${it.role}` : ""}`}
             data-group={it.key}
             data-count={it.ids.length}
             data-kind={kind}
-            aria-expanded={it.open}
-            title={it.open ? "Fold these back into one group" : `Show these ${it.ids.length} cards here`}
-            onClick={() => toggle(side, it.key)}
+            data-opens={large ? "list" : "here"}
+            aria-expanded={large ? isListed : it.open}
+            title={large ? (isListed ? "Close the list of these members" : `List these ${it.ids.length} members`) : it.open ? "Fold these back into one group" : `Show these ${it.ids.length} cards here`}
+            onClick={() => toggle(side, it.key, it.ids.length)}
           >
             <span className="fg__groupname">{it.name}{it.said && <span className="fg__groupkind"> {it.said}</span>}</span>
             <span className="fg__count">{it.ids.length}</span>
@@ -721,9 +751,39 @@ export function FocusGraph(props: FocusGraphProps) {
     auto.current = false;
     setCam({ k, x: el.clientWidth / 2 - ((e.clientX - r.left) / miniX) * k, y: el.clientHeight / 2 - ((e.clientY - r.top) / mini) * k });
   };
-  const kinds = new Set([...model.users.values(), ...model.uses.values(), ...model.inner.map((e) => ({ kind: e.kind ?? "proof" }))].map((r) => r.kind));
+  // The key names the kinds of line actually drawn, a group's line included.
+  const kinds = new Set((drawn?.segs ?? []).map((s) => s.kind));
   const groups = (items: Item[]) => items.filter((it) => it.type === "group").length;
   const roles = new Set([...model.left, ...model.right].map((id) => card(id)!.role));
+
+  // The listed group, found among the groups on show; if it is no longer drawn, nothing is listed.
+  const find = (items: Item[], path: string): Extract<Item, { type: "group" }> | null => {
+    for (const it of items) {
+      if (it.type !== "group") continue;
+      if (it.key === path) return it;
+      const inner = find(it.children, path);
+      if (inner) return inner;
+    }
+    return null;
+  };
+  const listGroup = listed ? find(listed.side === "users" ? leftItems : rightItems, listed.path) : null;
+  const listKey = listed ? `${listed.side}:${listed.path}` : "";
+  const listState = lists[listKey] ?? { q: "", page: 0 };
+  const setList = (next: Partial<{ q: string; page: number }>) => setLists((was) => ({ ...was, [listKey]: { ...(was[listKey] ?? { q: "", page: 0 }), ...next } }));
+  const listIds = listGroup?.ids ?? [];
+  const needle = listState.q.trim().toLowerCase();
+  // The search runs over the whole group, every page of it: the plain title, the kicker and the Lean name.
+  const matching = needle
+    ? listIds.filter((id) => { const c = card(id); return !!c && [c.title, c.kicker ?? "", c.name ?? ""].some((t) => t.toLowerCase().includes(needle)); })
+    : listIds;
+  const pages = Math.max(1, Math.ceil(matching.length / LIST_PAGE));
+  const page = Math.min(listState.page, pages - 1);
+  const shown = matching.slice(page * LIST_PAGE, (page + 1) * LIST_PAGE);
+  const range = `${page * LIST_PAGE + 1}\u2013${page * LIST_PAGE + shown.length}`;
+  const listStatus = !listGroup ? "" : needle
+    ? (matching.length ? `${matching.length} of ${listIds.length} members match${matching.length > LIST_PAGE ? `, ${range} shown` : ""}` : `No matches among the ${listIds.length} members.`)
+    : `${range} of ${listIds.length} members`;
+  const hotPath = hot && drawn ? (drawn.paths[hot] ?? (listGroup && listIds.includes(hot) ? drawn.paths[`group:${listGroup.key}`] : undefined)) : undefined;
 
   return (
     <div
@@ -736,6 +796,7 @@ export function FocusGraph(props: FocusGraphProps) {
       data-cards={drawn?.boxes.filter((b) => b.band !== "group").length ?? 0}
       data-lines={drawn?.segs.filter((s) => s.edge).length ?? 0}
       data-overflow={overflow ? "true" : "false"}
+      data-listed={listGroup ? listKey : undefined}
     >
       {label && <p className="fg__label">{label}</p>}
       {(route || routeNote) && (
@@ -753,7 +814,7 @@ export function FocusGraph(props: FocusGraphProps) {
             : <span className="fg__routeword">{routeNote}</span>}
         </nav>
       )}
-      <div className="fg__stage">
+      <div className="fg__stage" data-list-side={listGroup ? listed!.side : undefined}>
       <div
         className="fg__scroll"
         ref={scroller}
@@ -775,17 +836,20 @@ export function FocusGraph(props: FocusGraphProps) {
                 <marker id="fg-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0.6 L7.4 4 L0 7.4 z" className="fg__arrow" /></marker>
                 <marker id="fg-arrow-hot" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0.6 L7.4 4 L0 7.4 z" className="fg__arrow fg__arrow--hot" /></marker>
               </defs>
-              {drawn.segs.map((s, i) => <path key={i} d={s.d} className={s.cls} data-edge={s.edge} markerEnd="url(#fg-arrow)" style={s.width ? { strokeWidth: s.width } : undefined} />)}
-              {/* A use the paper's text states: a wide, invisible line over it answers the pointer with its sentence. */}
+              {drawn.segs.map((s, i) => <path key={i} d={s.d} className={s.cls} data-edge={s.edge} markerEnd="url(#fg-arrow)"><title>{relation(s.kind)}</title></path>)}
+              {/* A wide, invisible line over each line answers the pointer with its relation's name; over a use the
+                  paper's text states, with its sentence too, held by a click. */}
               {drawn.segs.map((s, i) => s.why ? (
                 <path key={`hit${i}`} d={s.d} className="fg__edge-hit" data-edge={s.edge}
                   onPointerEnter={() => setPaperNote({ why: s.why!, href: s.href, edge: s.edge, held: false })}
                   onPointerLeave={() => setPaperNote((n) => (n && !n.held ? null : n))}
                   onClick={(ev) => { ev.stopPropagation(); setPaperNote({ why: s.why!, href: s.href, edge: s.edge, held: true }); }}>
-                  <title>{s.why}</title>
+                  <title>{`${relation(s.kind)}: ${s.why}`}</title>
                 </path>
-              ) : null)}
-              {hot && drawn.paths[hot] && <path d={drawn.paths[hot]} className="fg__hotline" markerEnd="url(#fg-arrow-hot)" />}
+              ) : (
+                <path key={`hit${i}`} d={s.d} className="fg__edge-hit fg__edge-hit--plain"><title>{relation(s.kind)}</title></path>
+              ))}
+              {hotPath && <path d={hotPath} className="fg__hotline" markerEnd="url(#fg-arrow-hot)" />}
             </svg>
           )}
           {model.subj.length === 0
@@ -805,7 +869,7 @@ export function FocusGraph(props: FocusGraphProps) {
       <div className="fg__tools" role="group" aria-label="Move the graph">
         <button type="button" onClick={() => zoomBy(1 / 1.25)} aria-label="Zoom out" title="Zoom out (−)">−</button>
         <button type="button" onClick={() => zoomBy(1.25)} aria-label="Zoom in" title="Zoom in (+)">+</button>
-        <button type="button" onClick={fit} title="Fold every group and fit the whole graph in view (0)">Fit</button>
+        <button type="button" onClick={fit} title="Fit the whole graph in view (0)">Fit</button>
       </div>
       {overflow && drawn && (
         <div
@@ -822,6 +886,67 @@ export function FocusGraph(props: FocusGraphProps) {
           <b ref={miniView} />
         </div>
       )}
+      {listGroup && (
+        <section
+          className={`fg__list fg__list--${listed!.side}${narrow ? " fg__list--narrow" : ""}`}
+          role="region"
+          aria-label={`Members of ${listGroup.name}`}
+          data-group={listGroup.key}
+          data-count={listIds.length}
+          onKeyDown={(e) => {
+            // Escape closes the list only; the page's own Escape (following the paper again) is not reached.
+            if (e.key !== "Escape") return;
+            e.preventDefault();
+            e.stopPropagation();
+            closeList();
+          }}
+        >
+          <div className="fg__listhead">
+            <h4 className="fg__listname">{listGroup.name}{listGroup.said && <span className="fg__groupkind"> {listGroup.said}</span>}, {listIds.length}</h4>
+            <button type="button" className="fg__listback" onClick={closeList}>Back to the graph</button>
+          </div>
+          <input
+            ref={searchBox}
+            type="search"
+            className="fg__listsearch"
+            aria-label="Search these members"
+            placeholder="Search these members"
+            value={listState.q}
+            onChange={(e) => setList({ q: e.target.value, page: 0 })}
+          />
+          <p className="fg__liststatus" role="status">{listStatus}</p>
+          <ul className="fg__listitems">
+            {shown.map((id) => {
+              const c = card(id)!;
+              return (
+                <li key={id}>
+                  <button
+                    type="button"
+                    className={`fg__member fg__member--${c.role}${hot === id ? " is-hot" : ""}`}
+                    data-card={id}
+                    data-role={c.role}
+                    data-seen={c.seen}
+                    style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
+                    onClick={() => onSubject(id)}
+                    onMouseEnter={() => hover(id)}
+                    onMouseLeave={() => hover(null)}
+                    onFocus={() => hover(id)}
+                    onBlur={() => hover(null)}
+                  >
+                    {c.kicker && <span className="fg__memberkicker">{c.kicker}</span>}
+                    <span className="fg__membertitle">{renderTitle ? renderTitle(c) : c.title}</span>
+                    <span className="fg__memberkind">{words(c.role).one}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="fg__listpages">
+            <button type="button" disabled={page <= 0} onClick={() => setList({ page: page - 1 })}>Previous</button>
+            <button type="button" disabled={page >= pages - 1} onClick={() => setList({ page: page + 1 })}>Next</button>
+          </div>
+        </section>
+      )}
       </div>
       {paperNote && (
         <p className="fg__edge-why" role="status">
@@ -834,13 +959,14 @@ export function FocusGraph(props: FocusGraphProps) {
       )}
       {model.subj.length > 0 && (
         <p className="fg__key">
-          <span><i className="fg__keyline" /> uses, left to right</span>
-          {kinds.has("argument") && kinds.size > 1 && <span><i className="fg__keyline fg__keyline--argument" /> the paper's argument</span>}
-          {kinds.has("statement") && kinds.size > 1 && <span><i className="fg__keyline fg__keyline--statement" /> statement only</span>}
-          {kinds.has("paper") && <span><i className="fg__keyline fg__keyline--paper" /> the paper's proof uses this</span>}
+          <span className="fg__keydir">Arrows run from a statement to what it uses.</span>
+          {kinds.has("proof") && <span><i className="fg__keyline" /> {RELATION.proof}</span>}
+          {kinds.has("statement") && <span><i className="fg__keyline fg__keyline--statement" /> {RELATION.statement}</span>}
+          {kinds.has("paper") && <span><i className="fg__keyline fg__keyline--paper" /> {RELATION.paper}</span>}
+          {kinds.has("argument") && <span><i className="fg__keyline fg__keyline--argument" /> {RELATION.argument}</span>}
           {(roles.has("helper") || roles.has("library")) && <span><i className="fg__keybox fg__keybox--helper" /> Lean helper</span>}
           {roles.has("definition") && <span><i className="fg__keybox fg__keybox--definition" /> definition</span>}
-          {groups(leftItems) + groups(rightItems) > 0 && <span><i className="fg__keybox fg__keybox--group" /> group, opens here</span>}
+          {groups(leftItems) + groups(rightItems) > 0 && <span><i className="fg__keybox fg__keybox--group" /> group, opens its members</span>}
         </p>
       )}
     </div>

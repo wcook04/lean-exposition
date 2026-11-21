@@ -35,6 +35,7 @@
 .fg__crumb button.is-main { font-weight: 650; }
 .fg__key { display: flex; flex-wrap: wrap; gap: 2px 16px; align-items: center; border-top: 1px solid color-mix(in srgb, var(--fg-edge) 55%, transparent); font-size: 12.5px; min-height: 22px; }
 .fg__key span { white-space: nowrap; }
+.fg__key .fg__keydir { white-space: normal; color: var(--fg-ink); }
 .fg__keyline { display: inline-block; width: 22px; height: 0; margin: 0 5px 3px 0; border-top: 1.4px solid var(--fg-wire); vertical-align: middle; }
 .fg__keyline--statement { border-top-style: dashed; }
 .fg__keyline--argument { border-top-width: 2.6px; border-top-color: var(--fg-ink); }
@@ -188,6 +189,101 @@
 .fg__edge--paper { stroke: color-mix(in srgb, var(--fg-ink) 70%, transparent); stroke-width: 2; stroke-dasharray: 6 4; }
 .fg__keyline--paper { border-top-width: 2px; border-top-style: dashed; border-top-color: var(--fg-ink); }
 .fg__edge-hit { fill: none; stroke: transparent; stroke-width: 12; pointer-events: stroke; cursor: pointer; }
+/* Every other line answers the pointer only with its relation's name: a drag over it still pans. */
+.fg__edge-hit--plain { cursor: inherit; }
 .fg__edge-why { margin: 0; padding: 6px 10px; font-size: 0.82rem; line-height: 1.4; color: var(--fg-ink); background: var(--fg-card, transparent); border-top: 1px solid var(--rule, #ddd); }
 .fg__edge-why-label { font-weight: 600; }
 .fg__edge-why-close { margin-left: 6px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+
+/* A large group's members, listed over the side of the drawing the group is on. The list stands
+   over the canvas and takes no room from it: the drawing, its world and its camera do not change
+   when it opens or closes, so the subject does not move. */
+.fg__list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: min(360px, 60%);
+  min-height: 0;
+  background: var(--fg-card);
+  color: var(--fg-ink);
+}
+.fg__list--users { left: 0; border-right: 1px solid var(--fg-edge); }
+.fg__list--uses { right: 0; border-left: 1px solid var(--fg-edge); }
+/* On a phone the sides stand over and under the subject: the list takes the whole width. */
+.fg__list--narrow { left: 0; right: 0; width: auto; border-left: 0; border-right: 0; }
+@media (prefers-reduced-motion: no-preference) { .fg__list { animation: fg-list-in 160ms cubic-bezier(0.2, 0.7, 0.2, 1); } }
+@keyframes fg-list-in { from { opacity: 0; } }
+/* The buttons and the overview move to the other side of the area, so that the list never hides them. */
+.fg__stage[data-list-side="uses"] .fg__tools, .fg__stage[data-list-side="uses"] .fg__mini { right: auto; left: 12px; }
+.fg__listhead { flex: none; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 10px 12px 6px 14px; }
+.fg__listname { margin: 0; font: 600 14px/1.3 var(--fg-sans); overflow-wrap: break-word; }
+.fg__listback, .fg__listpages button {
+  flex: none;
+  min-height: 32px;
+  padding: 4px 10px;
+  font: 500 13px/1.2 var(--fg-sans);
+  color: var(--fg-ink);
+  background: var(--fg-card);
+  border: 1px solid var(--fg-edge);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.fg__listsearch {
+  flex: none;
+  box-sizing: border-box;
+  margin: 2px 12px 0 14px;
+  min-height: 36px;
+  padding: 6px 10px;
+  font: 14px/1.3 var(--fg-sans);
+  color: var(--fg-ink);
+  background: var(--fg-card);
+  border: 1px solid var(--fg-edge);
+  border-radius: 7px;
+}
+.fg__liststatus { flex: none; margin: 0; padding: 6px 14px; font-size: 13px; line-height: 1.35; color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+.fg__listitems { flex: 1 1 auto; min-height: 0; margin: 0; padding: 0 8px 0 10px; list-style: none; overflow-y: auto; overscroll-behavior: contain; border-top: 1px solid color-mix(in srgb, var(--fg-edge) 55%, transparent); }
+.fg__listitems li { margin: 0; padding: 0; }
+.fg__member {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
+  padding: 6px 8px 6px 12px;
+  text-align: left;
+  font: inherit;
+  color: var(--fg-ink);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--fg-edge) 45%, transparent);
+  cursor: pointer;
+  overflow-wrap: break-word;
+}
+.fg__member::before { content: ""; position: absolute; left: 2px; top: 6px; bottom: 6px; width: 4px; border-radius: 2px; background: var(--fg-tone, transparent); }
+.fg__memberkicker { font: 600 13px/1.3 var(--fg-sans); letter-spacing: 0.03em; text-transform: uppercase; color: var(--fg-muted); }
+.fg__membertitle { font-size: 14px; line-height: 1.35; text-wrap: pretty; }
+.fg__member--result .fg__membertitle { font-weight: 600; }
+.fg__member[data-seen="later"] .fg__membertitle { color: color-mix(in srgb, var(--fg-ink) 70%, transparent); }
+.fg__memberkind { font-size: 13px; line-height: 1.3; color: var(--fg-muted); }
+.fg__listpages { flex: none; display: flex; justify-content: space-between; gap: 8px; padding: 8px 12px 10px 14px; border-top: 1px solid color-mix(in srgb, var(--fg-edge) 55%, transparent); }
+.fg__listpages button:disabled { opacity: 0.45; cursor: default; }
+.fg__member:hover, .fg__member.is-hot { background: color-mix(in srgb, var(--fg-accent) 10%, transparent); }
+.fg__listback:hover, .fg__listpages button:not(:disabled):hover { border-color: var(--fg-accent); }
+/* The file's focus style: the accent edge with a ring, and no browser outline. */
+.fg__member:focus-visible { outline: none; box-shadow: inset 0 0 0 1.5px var(--fg-accent); background: color-mix(in srgb, var(--fg-accent) 10%, transparent); }
+.fg__listback:focus-visible, .fg__listpages button:focus-visible, .fg__listsearch:focus-visible { outline: none; border-color: var(--fg-accent); box-shadow: 0 0 0 1.5px var(--fg-accent); }
+.fg__group.is-listed > .fg__grouphead { border-color: var(--fg-accent); }
+@media (pointer: coarse) {
+  .fg__member { min-height: 44px; }
+  .fg__listback, .fg__listpages button, .fg__listsearch { min-height: 44px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fg__member, .fg__listback, .fg__listpages button { transition: background-color 120ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 120ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+}
