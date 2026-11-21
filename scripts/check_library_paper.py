@@ -7,8 +7,10 @@ For each window size, from a cold browser: the paper's top opens and its first u
 appears within the load budget; clicking a phrase opens its card with the comparison and note,
 and the address names the phrase; topic colours show (several distinct tones); the Graph view
 draws; each kind of address (numbered result, phrase, Lean declaration, section) opens what it
-names; the Open PDF link opens the PDF in a new tab and the file is a PDF. Needs Playwright for
-Python with Chromium. Exits 1 if any check fails.
+names; the Open PDF link opens the PDF in a new tab and the file is a PDF; display formulas that fit
+do not scroll; the front matter carries the AI notice (--notice). Then at 800, 1000, 390, 360 and
+320 px: the header's controls do not overlap and Search and Menu stay inside the window.
+Needs Playwright for Python with Chromium. Exits 1 if any check fails.
 """
 from __future__ import annotations
 
@@ -25,6 +27,26 @@ from playwright.sync_api import sync_playwright
 SIZES = [(1440, 900), (2560, 1440)]
 
 
+# Every fitted display formula: one whose formula and equation number fit its column (measured
+# from KaTeX's pieces and number, not from scrollWidth, which counts KaTeX's 2px strut past a
+# number's edge) neither scrolls nor offers the "Scroll formula" row; one that does not fit offers it.
+MATHS = """() => [...document.querySelectorAll('.prose .math-display[data-overflow]')].map((box, i) => {
+  const html = box.querySelector(':scope > .katex-display > .katex > .katex-html');
+  const parts = html ? [...html.querySelectorAll(':scope > .katex-base, :scope > .math-seg > .katex-base, :scope > .katex-tag, :scope > .tag')] : [];
+  const start = box.getBoundingClientRect().left + box.clientLeft - box.scrollLeft;
+  const extent = parts.length ? Math.max(...parts.map(p => p.getBoundingClientRect().right - start)) : box.scrollWidth;
+  const cue = box.nextElementSibling && box.nextElementSibling.classList.contains('math-cue') && !box.nextElementSibling.hidden;
+  const fits = extent <= box.clientWidth + 1;
+  const ok = fits ? box.scrollWidth <= box.clientWidth && !cue && box.dataset.overflow === 'false' : cue && box.dataset.overflow === 'true';
+  return ok ? null : `#${i} ${box.textContent.slice(-12)}: extent ${extent.toFixed(1)}, scrollWidth ${box.scrollWidth}, clientWidth ${box.clientWidth}, cue ${cue}`;
+}).filter(Boolean)"""
+
+# The front matter's line naming who made what, wherever this width puts it.
+NOTICE = """() => [...document.querySelectorAll('.account-line, .outline__job')]
+  .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1 && e.getBoundingClientRect().left >= 0)
+  .map(e => (e.closest('.outline') || e).textContent).join(' ')"""
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("base")
@@ -35,6 +57,7 @@ def main() -> int:
     ap.add_argument("--decl", default="TorusEuler.EulerSingularityWitness")
     ap.add_argument("--section", default="5.6")
     ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
+    ap.add_argument("--notice", default="made with AI", help="words of the AI notice the front matter must show at every width")
     args = ap.parse_args()
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
@@ -58,6 +81,10 @@ def main() -> int:
             first = time.monotonic() - start
             page.wait_for_load_state("networkidle")
             check(f"{tag} load", first <= args.budget, f"first underlined phrase after {first:.2f}s (budget {args.budget}s)")
+            page.wait_for_timeout(1500)
+            bad = page.evaluate(MATHS)
+            check(f"{tag} display maths fit without scrolling", not bad, "; ".join(bad[:3]))
+            check(f"{tag} AI notice shown", args.notice in page.evaluate(NOTICE), f"no front-matter line containing {args.notice!r}")
             tones = page.eval_on_selector_all(".paper .tie[data-tone]", "els => new Set(els.map(e => e.dataset.tone)).size")
             check(f"{tag} topic colours", tones >= 3, f"{tones} distinct tones")
             if args.shots:
@@ -159,9 +186,10 @@ def main() -> int:
             check(f"{tag} cards typeset", not raw, "; ".join(raw[:3]))
             check(f"{tag} no page errors", not errors, "; ".join(errors[:3]))
             context.close()
-        # Narrow windows and a phone: the header's visible parts never overlap, nothing scrolls
-        # sideways, and the paper's phrases are there to tap.
-        for width, height in ((800, 700), (1000, 800), (390, 844)):
+        # Narrow windows and phones: the header's visible parts never overlap, Search and Menu lie
+        # inside the window, nothing scrolls sideways, a formula that fits does not scroll, the AI
+        # notice is in the front matter, and the paper's phrases are there to tap.
+        for width, height in ((800, 700), (1000, 800), (390, 844), (360, 740), (320, 640)):
             tag = f"{width}x{height}"
             context = browser.new_context(viewport={"width": width, "height": height}, is_mobile=width < 500, has_touch=width < 500)
             page = context.new_page()
@@ -176,6 +204,17 @@ def main() -> int:
             check(f"{tag} header", not clash, f"overlapping: {clash[:3]}")
             wide = page.evaluate("document.documentElement.scrollWidth - innerWidth")
             check(f"{tag} no sideways scroll", wide <= 1, f"{wide}px wider than the window")
+            # Measured against the window asked for: a phone browser widens its layout to fit
+            # what overflows, so innerWidth alone would follow a bar pushed off the screen.
+            ways = page.evaluate("""() => ['.search-trigger', '.menu-toggle'].map(s => document.querySelector('.topbar ' + s))
+                .filter(e => e && e.offsetParent).map(e => { const r = e.getBoundingClientRect(); return [e.className.split(' ').pop(), r.left, r.right, r.width, r.height]; })""")
+            outside = [w for w in ways if w[1] < 0 or w[2] > width + 0.5 or w[3] < 24 or w[4] < 24]
+            check(f"{tag} search and menu on screen", ways and not outside, f"{outside or 'no Search or Menu button'} in a {width}px window")
+            page.wait_for_timeout(1500)
+            bad = page.evaluate(MATHS)
+            check(f"{tag} display maths fit without scrolling", not bad, "; ".join(bad[:3]))
+            notice = page.evaluate(NOTICE)
+            check(f"{tag} AI notice shown", args.notice in notice, f"no front-matter line containing {args.notice!r}")
             if args.shots:
                 page.screenshot(path=str(args.shots / f"top-{tag}.png"))
             context.close()
