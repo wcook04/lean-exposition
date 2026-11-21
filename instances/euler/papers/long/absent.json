@@ -4,7 +4,7 @@
  "state": "scaffold",
  "path": "papers/long.md",
  "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
- "graph_sha256": "a36e91bc5016ddb9bc06c5aa03801b802710f25448aebbdca71e3fb4b5730c68",
+ "graph_sha256": "281c3efc8b5f2aff49a34873e72490d88662b2b516c63540621bf56d0dba9edd",
  "selected_goal_ids": [
   "euler.theorem-1.1"
  ],

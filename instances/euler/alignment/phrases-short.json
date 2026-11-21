@@ -2345,49 +2345,123 @@
      "file": "TorusEuler/Paper/S678/Statements.lean",
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "The formal statement retains the smooth odd periodic data, the positive finite maximal lifespan, both divergent time integrals, bounded velocity, central vorticity divergence and both families of spatial $C^m$ limits. It spells out that every maximal solution from the chosen datum has the same lifespan and velocity. This makes the paper’s classical uniqueness explicit; it does not add an Euler extension after the singularity."
+     "fidelity_note": "The formal statement retains the smooth odd periodic data, the positive finite maximal lifespan, both divergent time integrals, bounded velocity, central vorticity divergence and both families of spatial $C^m$ limits. It spells out that every maximal solution from the chosen datum has the same lifespan and velocity. This makes the paper’s classical uniqueness explicit; it does not add an Euler extension after the singularity.",
+     "assessments": [
+      {
+       "phrase": "r5-root-theorem11-complete",
+       "fidelity": "same",
+       "fidelity_note": "The formal statement retains the smooth odd periodic data, the positive finite maximal lifespan, both divergent time integrals, bounded velocity, central vorticity divergence and both families of spatial $C^m$ limits. It spells out that every maximal solution from the chosen datum has the same lifespan and velocity. This makes the paper’s classical uniqueness explicit; it does not add an Euler extension after the singularity."
+      }
+     ]
     },
     {
      "name": "TorusEuler.Paper.theorem_1_1",
      "file": "TorusEuler/Paper/Spine.lean",
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "The formal theorem proves the full stated existence assertion, with all conclusions referring to one chosen datum, solution and endpoint. Periodic fields on $\\mathbb R^3$ represent the unit torus, time derivatives at zero are from the right, and pressure has zero mean as stipulated in the paper’s conventions."
+     "fidelity_note": "The formal theorem proves the full stated existence assertion, with all conclusions referring to one chosen datum, solution and endpoint. Periodic fields on $\\mathbb R^3$ represent the unit torus, time derivatives at zero are from the right, and pressure has zero mean as stipulated in the paper’s conventions.",
+     "assessments": [
+      {
+       "phrase": "r5-root-theorem11-complete",
+       "fidelity": "same",
+       "fidelity_note": "The formal theorem proves the full stated existence assertion, with all conclusions referring to one chosen datum, solution and endpoint. Periodic fields on $\\mathbb R^3$ represent the unit torus, time derivatives at zero are from the right, and pressure has zero mean as stipulated in the paper’s conventions."
+      },
+      {
+       "phrase": "e01.theorem.initial-data",
+       "fidelity": "stronger",
+       "fidelity_note": "The phrase asserts existence of smooth odd divergence-free initial data. The formal theorem constructs those data together with a unique maximal periodic Euler velocity of positive finite lifespan, bounded velocity, divergent gradient and vorticity integrals, central vorticity divergence and the two off-origin spatial limits. The existence claim therefore has a direct theorem link, rather than a list containing only conditions on a hypothetical datum."
+      },
+      {
+       "phrase": "e01.theorem.maximal-solution",
+       "fidelity": "stronger",
+       "fidelity_note": "The complete formal theorem supplies the selected initial datum and maximal solution, and states that every maximal solution from that datum has the same time $T_*$ and the same velocity before it. It also includes all the blow-up and off-origin conclusions of Theorem 1.1. This is the direct existence and uniqueness assertion behind the shorter phrase."
+      }
+     ]
     },
     {
      "name": "TorusEuler.IsMaximalEulerSolution",
      "file": "TorusEuler/Statement.lean",
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The paper refers to the maximal classical solution of its selected datum. The formal definition specifies what maximal means: a smooth periodic solution on $[0,T_*)$ has no smooth extension to any longer interval agreeing in velocity. It neither asserts existence nor proves uniqueness. Those assertions occur in the complete theorem."
+     "fidelity_note": "The paper refers to the maximal classical solution of its selected datum. The formal definition specifies what maximal means: a smooth periodic solution on $[0,T_*)$ has no smooth extension to any longer interval agreeing in velocity. It neither asserts existence nor proves uniqueness. Those assertions occur in the complete theorem.",
+     "assessments": [
+      {
+       "phrase": "e01.theorem.maximal-solution",
+       "fidelity": "weaker",
+       "fidelity_note": "The paper refers to the maximal classical solution of its selected datum. The formal definition specifies what maximal means: a smooth periodic solution on $[0,T_*)$ has no smooth extension to any longer interval agreeing in velocity. It neither asserts existence nor proves uniqueness. Those assertions occur in the complete theorem."
+      }
+     ]
     },
     {
      "name": "TorusEuler.IsEulerSolution.velocity_eq_on_common_interval",
      "file": "TorusEuler/PeriodicEulerUniqueness.lean",
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "Given two smooth periodic Euler solutions with the same initial velocity, the formal theorem proves equality on $[0,\\min(T_1,T_2))$. This proves the velocity-uniqueness ingredient in the paper’s phrase. It assumes both solutions exist, does not assume maximality, and does not by itself identify their lifespans."
+     "fidelity_note": "Given two smooth periodic Euler solutions with the same initial velocity, the formal theorem proves equality on $[0,\\min(T_1,T_2))$. This proves the velocity-uniqueness ingredient in the paper’s phrase. It assumes both solutions exist, does not assume maximality, and does not by itself identify their lifespans.",
+     "assessments": [
+      {
+       "phrase": "e01.theorem.maximal-solution",
+       "fidelity": "weaker",
+       "fidelity_note": "Given two smooth periodic Euler solutions with the same initial velocity, the formal theorem proves equality on $[0,\\min(T_1,T_2))$. This proves the velocity-uniqueness ingredient in the paper’s phrase. It assumes both solutions exist, does not assume maximality, and does not by itself identify their lifespans."
+      }
+     ]
     },
     {
      "name": "TorusEuler.EulerSingularityWitness",
      "file": "TorusEuler/Statement.lean",
      "relation": "defines",
      "fidelity": "same",
-     "fidelity_note": "The formal condition requires the chosen Euler velocity to be jointly smooth on $[0,T_*)\\times\\mathbb R^3$ and periodic there, and separately requires $u(t,-x)=-u(t,x)$ for every $0\\le t<T_*$. These clauses express both smoothness and oddness in the quoted phrase; the smooth-Euler condition alone does not include oddness."
+     "fidelity_note": "The formal condition requires the chosen Euler velocity to be jointly smooth on $[0,T_*)\\times\\mathbb R^3$ and periodic there, and separately requires $u(t,-x)=-u(t,x)$ for every $0\\le t<T_*$. These clauses express both smoothness and oddness in the quoted phrase; the smooth-Euler condition alone does not include oddness.",
+     "assessments": [
+      {
+       "phrase": "e01.theorem.smooth-odd",
+       "fidelity": "same",
+       "fidelity_note": "The formal condition requires the chosen Euler velocity to be jointly smooth on $[0,T_*)\\times\\mathbb R^3$ and periodic there, and separately requires $u(t,-x)=-u(t,x)$ for every $0\\le t<T_*$. These clauses express both smoothness and oddness in the quoted phrase; the smooth-Euler condition alone does not include oddness."
+      },
+      {
+       "phrase": "e01.theorem.divergent-integrals",
+       "fidelity": "same",
+       "fidelity_note": "The two selected clauses say exactly that the nonnegative integrals of $\\|D_xu(t)\\|_{L^\\infty}$ and $\\|\\operatorname{curl}u(t)\\|_{L^\\infty}$ over $[0,T_*)$ are infinite. The spatial quantities are essential suprema on the fundamental cube; the gradient uses the Euclidean operator norm. Using a half-open time interval does not change a nonnegative Lebesgue integral."
+      },
+      {
+       "phrase": "e01.theorem.terminal-bounds",
+       "fidelity": "same",
+       "fidelity_note": "For the chosen solution, the formal clauses require a single finite uniform bound on $\\|u(t)\\|_{L^\\infty}$ for $0\\le t<T_*$ and the full limit $|\\operatorname{curl}u(t,0)|\\to\\infty$ as $t\\uparrow T_*$. These are the two conclusions in (1.3), with the same solution and the same endpoint."
+      },
+      {
+       "phrase": "e01.theorem.off-origin-limits",
+       "fidelity": "same",
+       "fidelity_note": "The formal condition applies spatial-limit convergence separately to $u$ and its time derivative. For each compact set disjoint from $\\mathbb Z^3$ and each $m$, all derivatives through $m$ converge uniformly to those of a local $C^m$ field. Periodicity identifies this with the paper’s compact subsets of the punctured torus. The time derivative is taken within $[0,T_*)$."
+      }
+     ]
     },
     {
      "name": "TorusEuler.IsEulerSolution",
      "file": "TorusEuler/Statement.lean",
      "relation": "defines",
      "fidelity": "same",
-     "fidelity_note": "The formal solution condition takes $T_*$ to be a real number and explicitly assumes $0<T_*$. Hence it is a positive finite time, not an extended-real endpoint. This is a requirement on the selected solution; it is the theorem, not this clause, that supplies such a solution."
+     "fidelity_note": "The formal solution condition takes $T_*$ to be a real number and explicitly assumes $0<T_*$. Hence it is a positive finite time, not an extended-real endpoint. This is a requirement on the selected solution; it is the theorem, not this clause, that supplies such a solution.",
+     "assessments": [
+      {
+       "phrase": "e01.theorem.finite-time",
+       "fidelity": "same",
+       "fidelity_note": "The formal solution condition takes $T_*$ to be a real number and explicitly assumes $0<T_*$. Hence it is a positive finite time, not an extended-real endpoint. This is a requirement on the selected solution; it is the theorem, not this clause, that supplies such a solution."
+      }
+     ]
     },
     {
      "name": "TorusEuler.HasOffOriginLimits",
      "file": "TorusEuler/Statement.lean",
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "The paper asserts both limits for its Euler solution. This linked definition only specifies convergence for one given field: for every compact set and $m$, there is a local $C^m$ limit whose spatial derivatives through $m$ are the uniform limits. It does not assert the condition for $u$ or $\\partial_tu$ and does not itself impose periodicity or a positive endpoint."
+     "fidelity_note": "The paper asserts both limits for its Euler solution. This linked definition only specifies convergence for one given field: for every compact set and $m$, there is a local $C^m$ limit whose spatial derivatives through $m$ are the uniform limits. It does not assert the condition for $u$ or $\\partial_tu$ and does not itself impose periodicity or a positive endpoint.",
+     "assessments": [
+      {
+       "phrase": "e01.theorem.off-origin-limits",
+       "fidelity": "weaker",
+       "fidelity_note": "The paper asserts both limits for its Euler solution. This linked definition only specifies convergence for one given field: for every compact set and $m$, there is a local $C^m$ limit whose spatial derivatives through $m$ are the uniform limits. It does not assert the condition for $u$ or $\\partial_tu$ and does not itself impose periodicity or a positive endpoint."
+      }
+     ]
     }
    ],
    "replaces": [
@@ -2398,6 +2472,56 @@
     "e01.theorem.divergent-integrals",
     "e01.theorem.terminal-bounds",
     "e01.theorem.off-origin-limits"
+   ],
+   "merged": [
+    {
+     "id": "r5-root-theorem11-complete",
+     "quote": "**Theorem 1.1.** There is an odd divergence-free $u_0\\in C^\\infty(\\mathbb T^3;\\mathbb R^3)$ whose maximal classical solution $u$ of (1.1) is smooth and odd on $\\mathbb T^3\\times[0,T_*)$ for a finite $T_*>0$, and satisfies $$\\begin{equation}\n \\int_0^{T_*}\\|\\nabla u(t)\\|_{L^\\infty}\\,\\mathrm dt=\\infty,\n \\qquad\n \\int_0^{T_*}\\|\\operatorname{curl}u(t)\\|_{L^\\infty}\\,\\mathrm dt=\\infty. \\tag{1.2}\n\\end{equation}$$ Moreover, $$\\begin{equation}\n \\sup_{0\\le t<T_*}\\|u(t)\\|_{L^\\infty}<\\infty,\n \\qquad \\lim_{t\\uparrow T_*}|\\operatorname{curl}u(t,0)|=\\infty. \\tag{1.3}\n\\end{equation}$$ For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_*$.",
+     "role": "statement",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.initial-data",
+     "quote": "There is an odd divergence-free $u_0\\in C^\\infty(\\mathbb T^3;\\mathbb R^3)$",
+     "role": "statement",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.maximal-solution",
+     "quote": "whose maximal classical solution $u$ of (1.1)",
+     "role": "statement",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.smooth-odd",
+     "quote": "is smooth and odd on $\\mathbb T^3\\times[0,T_*)$",
+     "role": "definition",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.finite-time",
+     "quote": "for a finite $T_*>0$",
+     "role": "definition",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.divergent-integrals",
+     "quote": "$$\\begin{equation}\n \\int_0^{T_*}\\|\\nabla u(t)\\|_{L^\\infty}\\,\\mathrm dt=\\infty,\n \\qquad\n \\int_0^{T_*}\\|\\operatorname{curl}u(t)\\|_{L^\\infty}\\,\\mathrm dt=\\infty. \\tag{1.2}\n\\end{equation}$$",
+     "role": "definition",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.terminal-bounds",
+     "quote": "$$\\begin{equation}\n \\sup_{0\\le t<T_*}\\|u(t)\\|_{L^\\infty}<\\infty,\n \\qquad \\lim_{t\\uparrow T_*}|\\operatorname{curl}u(t,0)|=\\infty. \\tag{1.3}\n\\end{equation}$$",
+     "role": "definition",
+     "topic": "singularity"
+    },
+    {
+     "id": "e01.theorem.off-origin-limits",
+     "quote": "For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_*$.",
+     "role": "definition",
+     "topic": "singularity"
+    }
    ]
   },
   {
@@ -9801,44 +9925,105 @@
      "name": "TorusEuler.PaperMeanParent",
      "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
      "relation": "part",
-     "fidelity": "same"
+     "fidelity": "same",
+     "assessments": [
+      {
+       "phrase": "sec4.inverse-hypothesis",
+       "fidelity": "same"
+      }
+     ]
     },
     {
      "name": "TorusEuler.Paper.Statement.theorem_4_2",
      "file": "TorusEuler/Paper/S34A/Statements.lean",
      "relation": "part",
-     "fidelity": "same"
+     "fidelity": "same",
+     "assessments": [
+      {
+       "phrase": "sec4.inverse-hypothesis",
+       "fidelity": "same"
+      },
+      {
+       "phrase": "sec4.inverse-existence",
+       "fidelity": "same"
+      }
+     ]
     },
     {
      "name": "TorusEuler.Paper.theorem_4_2",
      "file": "TorusEuler/Paper/Spine.lean",
      "relation": "part",
-     "fidelity": "same"
+     "fidelity": "same",
+     "assessments": [
+      {
+       "phrase": "sec4.inverse-hypothesis",
+       "fidelity": "same"
+      },
+      {
+       "phrase": "sec4.inverse-existence",
+       "fidelity": "same"
+      }
+     ]
     },
     {
      "name": "TorusEuler.paper_mean_inverse",
      "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "Under $0<T\\le1$, inverse-deformation and gradient bounds, and $H^\\#\\le I$, the formal result constructs a continuous solenoidal velocity, its zero endpoint primitive, a constant field and a continuous periodic pressure gradient. Its stated uniqueness identifies the projected velocity and constant field. The paper also states uniqueness of the displacement and pressure gradient; those follow by integration and subtraction using the other linked results, rather than appearing in this helper's uniqueness clause."
+     "fidelity_note": "Under $0<T\\le1$, inverse-deformation and gradient bounds, and $H^\\#\\le I$, the formal result constructs a continuous solenoidal velocity, its zero endpoint primitive, a constant field and a continuous periodic pressure gradient. Its stated uniqueness identifies the projected velocity and constant field. The paper also states uniqueness of the displacement and pressure gradient; those follow by integration and subtraction using the other linked results, rather than appearing in this helper's uniqueness clause.",
+     "assessments": [
+      {
+       "phrase": "sec4.inverse-existence",
+       "fidelity": "weaker",
+       "fidelity_note": "Under $0<T\\le1$, inverse-deformation and gradient bounds, and $H^\\#\\le I$, the formal result constructs a continuous solenoidal velocity, its zero endpoint primitive, a constant field and a continuous periodic pressure gradient. Its stated uniqueness identifies the projected velocity and constant field. The paper also states uniqueness of the displacement and pressure gradient; those follow by integration and subtraction using the other linked results, rather than appearing in this helper's uniqueness clause."
+      }
+     ]
     },
     {
      "name": "TorusEuler.PaperMeanIntegratedSolution.pressure_gradient_eq_on",
      "file": "TorusEuler/PaperMeanPressureCompatibility.lean",
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The paper asserts existence and uniqueness of the whole endpoint solution for every continuous half-Hölder source. This formal result only shows that the pressure gradients agree if the velocities and constant fields already agree and both integrated equations hold on $[0,T]$. It supplies the final uniqueness step, without constructing a velocity or proving its uniqueness."
+     "fidelity_note": "The paper asserts existence and uniqueness of the whole endpoint solution for every continuous half-Hölder source. This formal result only shows that the pressure gradients agree if the velocities and constant fields already agree and both integrated equations hold on $[0,T]$. It supplies the final uniqueness step, without constructing a velocity or proving its uniqueness.",
+     "assessments": [
+      {
+       "phrase": "sec4.inverse-existence",
+       "fidelity": "weaker",
+       "fidelity_note": "The paper asserts existence and uniqueness of the whole endpoint solution for every continuous half-Hölder source. This formal result only shows that the pressure gradients agree if the velocities and constant fields already agree and both integrated equations hold on $[0,T]$. It supplies the final uniqueness step, without constructing a velocity or proving its uniqueness."
+      }
+     ]
     },
     {
      "name": "TorusEuler.PaperMeanIntegratedSolution.exists_of_displacement_pressure_equation",
      "file": "TorusEuler/PaperMeanPressureCompatibility.lean",
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The paper asserts existence and uniqueness for each source. This formal result starts from a supplied zero endpoint displacement with continuous solenoidal derivative and a periodic pressure equation, and converts it to the projected formulation. It does not establish existence for the source or uniqueness; it is used to transfer the inverse theorem's uniqueness to the original formulation."
+     "fidelity_note": "The paper asserts existence and uniqueness for each source. This formal result starts from a supplied zero endpoint displacement with continuous solenoidal derivative and a periodic pressure equation, and converts it to the projected formulation. It does not establish existence for the source or uniqueness; it is used to transfer the inverse theorem's uniqueness to the original formulation.",
+     "assessments": [
+      {
+       "phrase": "sec4.inverse-existence",
+       "fidelity": "weaker",
+       "fidelity_note": "The paper asserts existence and uniqueness for each source. This formal result starts from a supplied zero endpoint displacement with continuous solenoidal derivative and a periodic pressure equation, and converts it to the projected formulation. It does not establish existence for the source or uniqueness; it is used to transfer the inverse theorem's uniqueness to the original formulation."
+      }
+     ]
     }
    ],
    "replaces": [
     "sec4.inverse-existence"
+   ],
+   "merged": [
+    {
+     "id": "sec4.inverse-hypothesis",
+     "quote": "Assume $H^\\#\\le\\operatorname{Id}$ on $I\\times\\mathbb T^3$ as quadratic forms. For",
+     "role": "explanation",
+     "topic": "endpoint-inverse"
+    },
+    {
+     "id": "sec4.inverse-existence",
+     "quote": "For every $L\\in C(I;C^{0,1/2})$ the system (4.9) has a unique solution with $z\\in C^1(I;C^{0,1/2})$, $c\\in C^{0,1/2}$ divergence free and $\\nabla_a\\phi\\in C(I;C^{0,1/2})$.",
+     "role": "statement",
+     "topic": "endpoint-inverse"
+    }
    ]
   },
   {
@@ -11351,39 +11536,88 @@
      "file": "TorusEuler/PaperParentCoefficientStatements.lean",
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The paper leaves the common polynomial exponent unspecified. Under smooth-flow, deformation and velocity derivative bounds, the formal statement gives the explicit common exponent $16m+16$ for all six coefficient families. It does not need the parent pressure, residual or oddness hypotheses for this coefficient conclusion."
+     "fidelity_note": "The paper leaves the common polynomial exponent unspecified. Under smooth-flow, deformation and velocity derivative bounds, the formal statement gives the explicit common exponent $16m+16$ for all six coefficient families. It does not need the parent pressure, residual or oddness hypotheses for this coefficient conclusion.",
+     "assessments": [
+      {
+       "phrase": "p5.1.polynomial-coefficients",
+       "fidelity": "stronger",
+       "fidelity_note": "The paper leaves the common polynomial exponent unspecified. Under smooth-flow, deformation and velocity derivative bounds, the formal statement gives the explicit common exponent $16m+16$ for all six coefficient families. It does not need the parent pressure, residual or oddness hypotheses for this coefficient conclusion."
+      }
+     ]
     },
     {
      "name": "TorusEuler.ParentLabelJetBound",
      "file": "TorusEuler/PaperParentCoefficientStatements.lean",
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "The paper asserts polynomial derivative bounds for six specified coefficients. This definition describes the inequality $\\|D_a^jf\\|\\le C_j\\mathsf D^{pj+c}$ for an arbitrary field; it does not establish the inequality for any coefficient. The coefficient theorem linked here supplies that assertion."
+     "fidelity_note": "The paper asserts polynomial derivative bounds for six specified coefficients. This definition describes the inequality $\\|D_a^jf\\|\\le C_j\\mathsf D^{pj+c}$ for an arbitrary field; it does not establish the inequality for any coefficient. The coefficient theorem linked here supplies that assertion.",
+     "assessments": [
+      {
+       "phrase": "p5.1.polynomial-coefficients",
+       "fidelity": "different",
+       "fidelity_note": "The paper asserts polynomial derivative bounds for six specified coefficients. This definition describes the inequality $\\|D_a^jf\\|\\le C_j\\mathsf D^{pj+c}$ for an arbitrary field; it does not establish the inequality for any coefficient. The coefficient theorem linked here supplies that assertion."
+      }
+     ]
     },
     {
      "name": "TorusEuler.Paper.proposition_5_1",
      "file": "TorusEuler/Paper/Spine.lean",
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The formal statement includes all six polynomial coefficient bounds with one exponent chosen before the parent and derivative order. Its parent pressure need only be smooth and periodic with the required residual and quadratic-form bounds; the paper’s zero-mean Poisson pressure is a special case."
+     "fidelity_note": "The formal statement includes all six polynomial coefficient bounds with one exponent chosen before the parent and derivative order. Its parent pressure need only be smooth and periodic with the required residual and quadratic-form bounds; the paper’s zero-mean Poisson pressure is a special case.",
+     "assessments": [
+      {
+       "phrase": "p5.1.polynomial-coefficients",
+       "fidelity": "stronger",
+       "fidelity_note": "The formal statement includes all six polynomial coefficient bounds with one exponent chosen before the parent and derivative order. Its parent pressure need only be smooth and periodic with the required residual and quadratic-form bounds; the paper’s zero-mean Poisson pressure is a special case."
+      }
+     ]
     },
     {
      "name": "TorusEuler.paperProposition51_parentComposition",
      "file": "TorusEuler/PaperParentCoefficientStatements.lean",
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "The paper uses sums of coordinate derivative suprema. The formal hypothesis uses operator norms of multilinear derivatives and assumes smooth spatial slices and $A_f\\ge0$. For smooth fields in three spatial dimensions these norms are equivalent with order-dependent constants; the comparison does not change the exponent’s uniformity in the order."
+     "fidelity_note": "The paper uses sums of coordinate derivative suprema. The formal hypothesis uses operator norms of multilinear derivatives and assumes smooth spatial slices and $A_f\\ge0$. For smooth fields in three spatial dimensions these norms are equivalent with order-dependent constants; the comparison does not change the exponent’s uniformity in the order.",
+     "assessments": [
+      {
+       "phrase": "p5.1.field-hypothesis",
+       "fidelity": "different",
+       "fidelity_note": "The paper uses sums of coordinate derivative suprema. The formal hypothesis uses operator norms of multilinear derivatives and assumes smooth spatial slices and $A_f\\ge0$. For smooth fields in three spatial dimensions these norms are equivalent with order-dependent constants; the comparison does not change the exponent’s uniformity in the order."
+      }
+     ]
     },
     {
      "name": "TorusEuler.Paper.Statement.proposition_5_1",
      "file": "TorusEuler/Paper/S5/Statements.lean",
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "The formal hypothesis bounds multilinear derivative operator norms, assumes smooth spatial slices and $A_f\\ge0$, and chooses composition constants after the prescribed sequence $C_m^{\\prime}$. The paper writes coordinate derivative sums. Their order-dependent equivalence permits the same estimate after changing those constants."
+     "fidelity_note": "The formal hypothesis bounds multilinear derivative operator norms, assumes smooth spatial slices and $A_f\\ge0$, and chooses composition constants after the prescribed sequence $C_m^{\\prime}$. The paper writes coordinate derivative sums. Their order-dependent equivalence permits the same estimate after changing those constants.",
+     "assessments": [
+      {
+       "phrase": "p5.1.field-hypothesis",
+       "fidelity": "different",
+       "fidelity_note": "The formal hypothesis bounds multilinear derivative operator norms, assumes smooth spatial slices and $A_f\\ge0$, and chooses composition constants after the prescribed sequence $C_m^{\\prime}$. The paper writes coordinate derivative sums. Their order-dependent equivalence permits the same estimate after changing those constants."
+      }
+     ]
     }
    ],
    "replaces": [
     "p5.1.field-hypothesis"
+   ],
+   "merged": [
+    {
+     "id": "p5.1.polynomial-coefficients",
+     "quote": "satisfies (D.6). Let",
+     "role": "statement",
+     "topic": "parent-step"
+    },
+    {
+     "id": "p5.1.field-hypothesis",
+     "quote": "Let $f(t,x)$ be a field with values in a normed space such that $|f|_m\\le C_m'A_f\\mathsf D^m$ for every $m\\ge0$ and a number $A_f$.",
+     "role": "statement",
+     "topic": "parent-step"
+    }
    ]
   },
   {
