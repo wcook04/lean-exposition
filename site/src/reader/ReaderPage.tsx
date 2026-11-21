@@ -1712,10 +1712,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           )}
         </div>
 
-        {!outlineColumn && !phone && (
+        {/* Every width shows who made what, the phone too: the paper's own line, then the status
+            sentence (in a library paper, that its links, titles, notes and comparisons were made
+            with AI and not reviewed). Wide layouts carry it at the head of the outline column. */}
+        {!outlineColumn && (
           <p className="account-line">
-            {!phone && <>{names.job} </>}
-            {names.reader}
+            {names.job} {names.reader}
             {status && <> {status}</>} {pdf && <PdfLink pdf={pdf} />}
           </p>
         )}
