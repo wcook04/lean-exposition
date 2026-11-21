@@ -2,7 +2,22 @@
 // current.json by scripts/library-instance.mjs before a build. No code here is a paper's own.
 import current from "./current.json";
 
-export interface LibraryDocument { id: string; slot: "long" | "short" | "expository"; slug: string; title: string; noun: string; main?: boolean; pdf?: { file: string; sha256: string; bytes: number; url: string } }
+export interface LibraryDocument {
+  id: string;
+  /** One of the three accounts (long, short, expository), or a companion's own page name (digest, library-07). */
+  slot: string;
+  slug: string;
+  title: string;
+  noun: string;
+  main?: boolean;
+  pdf?: { file: string; sha256: string; bytes: number; url: string };
+  /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
+  kind?: "companion";
+  group?: string;
+  group_title?: string;
+  order?: number;
+  credit?: string;
+}
 export interface LibraryInstance {
   schema: string;
   id: string;

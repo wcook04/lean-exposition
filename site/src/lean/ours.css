@@ -1,0 +1,23 @@
+/* Our own statements: set apart from the authors' Lean by a dashed rule and a tinted ground. */
+.ours {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  border: 1.5px dashed color-mix(in srgb, var(--ink-2) 55%, transparent);
+  border-radius: var(--radius-m, 8px);
+  background: color-mix(in srgb, var(--accent, #6a5acd) 6%, var(--surface, transparent));
+  font-size: var(--fs-sm);
+}
+.ours__badge {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-xs, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.ours__title { margin: 0 0 var(--space-2); font-size: var(--fs-md, 1rem); }
+.ours__name { font-size: 0.85em; color: var(--ink-3); overflow-wrap: anywhere; }
+.ours__who { color: var(--ink-3); font-size: 0.9em; }
+.ours__more summary { cursor: pointer; color: var(--ink-2); }
+.ours__source { overflow-x: auto; max-width: 100%; font-size: 0.85em; padding: var(--space-2); background: var(--sunk, transparent); }
+.ours__status { color: var(--ink-3); font-size: 0.9em; }

@@ -3,7 +3,7 @@
 // and comparison notes. Each $...$ is rendered with KaTeX; text outside formulas may hold no
 // backslash command and no unmatched $. Fails naming each field that would show raw TeX.
 // Usage: check-tex.mjs <paper>   (from site/)
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import katex from "katex";
 
@@ -13,7 +13,11 @@ const read = (rel) => (existsSync(resolve(root, rel)) ? JSON.parse(readFileSync(
 const fields = [];
 const names = read("alignment/names.json");
 for (const [name, title] of Object.entries(names?.names ?? {})) fields.push([`title ${name}`, title]);
-for (const slot of ["long", "short", "expository"]) {
+// Every document's phrases: the three accounts and any companion documents (phrases-<page>.json).
+const slots = existsSync(resolve(root, "alignment"))
+  ? readdirSync(resolve(root, "alignment")).filter((f) => /^phrases-.+\.json$/.test(f)).map((f) => f.slice(8, -5))
+  : [];
+for (const slot of slots) {
   const phrases = read(`alignment/phrases-${slot}.json`);
   for (const part of phrases?.parts ?? []) {
     for (const [name, t] of Object.entries(part.titles ?? {})) fields.push([`${slot} title ${name}`, t]);

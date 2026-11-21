@@ -66,5 +66,22 @@ for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["ge
   if (existsSync(source)) copyFileSync(source, target);
   else if (existsSync(target)) rmSync(target);
 }
+// Our own Lean statements beside the authors' (generated/ours.json): each comparison is filed under
+// the phrase that now carries its card (p::<passage>, tie::<key>, through the aliases).
+{
+  const source = resolve(import.meta.dirname, "../../instances", paper, "generated/ours.json");
+  const target = resolve(import.meta.dirname, "../public/ours.json");
+  if (existsSync(source)) {
+    const ours = JSON.parse(readFileSync(source, "utf8"));
+    const byPhrase = {};
+    for (const row of ours.comparisons ?? []) {
+      const id = row.card.replace(/^(p|tie)::/, "");
+      const host = phrases[id]?.host ?? id;
+      if (!phrases[host]) throw new Error(`ours.json: card ${row.card} names no phrase of the paper`);
+      (byPhrase[host] ??= []).push({ lean: row.lean, fidelity: row.fidelity, note: row.note });
+    }
+    writeFileSync(target, JSON.stringify({ declarations: ours.declarations, byPhrase }));
+  } else if (existsSync(target)) rmSync(target);
+}
 writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets)`);

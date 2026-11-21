@@ -197,6 +197,9 @@ while todo:
 if a.out.exists():
     shutil.rmtree(a.out)
 (a.out / "lean").mkdir(parents=True)
+# Every module of the authors' Breakdown library, not only the closure the ties need: companion pages
+# (the library guides) read all of it.
+seen |= {str(f.relative_to(lean_dir).with_suffix("")).replace("/", ".") for f in (lean_dir / "Breakdown").rglob("*.lean")}
 for mod in sorted(seen):
     rel = mod.replace(".", "/") + ".lean"
     (a.out / "lean" / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -234,6 +237,15 @@ if a.sentences:
                          ("showcase.json", "showcase.json")):
         if (a.sentences / source).is_file():
             shutil.copyfile(a.sentences / source, a.out / "notes" / name)
+    # Our own Lean statements (proved from the authors' library), and the comparisons they add to
+    # existing cards: carried as one file, shown apart from the authors' Lean.
+    ours = a.sentences / "our_lean"
+    if (ours / "declarations.json").is_file():
+        (a.out / "notes" / "ours.json").write_text(json.dumps({
+            "schema": 1,
+            "meaning": "Our own Lean statements, proved from the authors' Lean library; not the authors' Lean.",
+            "declarations": json.loads((ours / "declarations.json").read_text()),
+            "comparisons": json.loads((ours / "ties.json").read_text())["comparisons"]}, ensure_ascii=False))
 if a.sentences and (a.sentences / "ENCODING.md").is_file():
     # The guide to how the Lean encodes the paper's objects, published as it stands.
     (a.out / "guide.md").write_text((a.sentences / "ENCODING.md").read_text())

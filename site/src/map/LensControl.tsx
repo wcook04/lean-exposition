@@ -1,7 +1,7 @@
 // The level lens: All, Long record, Short paper, Exposition, each with the number of
 // steps of this argument it uses, as plain words: the one chosen is underlined.
 
-import type { Stage } from "../api/types";
+import type { Account as Stage } from "../api/types";
 import { PAPER_NAMES } from "../app/papers";
 import { LENS_ORDER, type LevelCounts } from "./levels";
 

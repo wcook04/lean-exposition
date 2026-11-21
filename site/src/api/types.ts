@@ -1,7 +1,10 @@
 // Types for the parts of the lean-exposition web API (version 1.2) that the
 // site reads. Field names follow the API exactly; unknown fields are ignored.
 
-export type Stage = "long" | "short" | "expository";
+/** A document of the edition: one of the three accounts (long, short, expository), or a companion page of a library paper (digest, library-07). */
+export type Stage = string;
+/** One of the three accounts a paper may have; levels and Compare are about these. */
+export type Account = "long" | "short" | "expository";
 export const STAGES: readonly Stage[] = ["expository", "short", "long"];
 
 export interface Snapshot {

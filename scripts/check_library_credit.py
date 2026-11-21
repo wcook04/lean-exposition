@@ -25,6 +25,9 @@ ap.add_argument("--credit-file", type=Path, required=True)
 ap.add_argument("--statement", required=True, help="the bold label of a numbered statement, e.g. \"Theorem 1.1.\"")
 ap.add_argument("--shots", type=Path, required=True)
 ap.add_argument("--section", help="the section that states --statement, opened before the click (e.g. 1.1)")
+ap.add_argument("--our-tie", help="a phrase whose card shows our own Lean statement beside the authors'")
+ap.add_argument("--companion-phrase", nargs=2, metavar=("PAGE", "ID"), help="a phrase of a companion page: /<page>/@<id> opens its card")
+ap.add_argument("--companion-lean", nargs=2, metavar=("PAGE", "NAME"), help="/<page>/lean/<name> opens that Lean card")
 ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
@@ -155,13 +158,38 @@ with sync_playwright() as pw:
         check(f"{tag} about licence", "none stated by the authors; hosted with credit to them, to Anthropic and to their repository" in about, "")
         check(f"{tag} about AI", "AI-assessed" in about and "AI-drafted" in about and "No mathematician has reviewed" in about, "")
         page.screenshot(path=str(a.shots / f"about-{tag}.png"), full_page=True)
+        if a.our_tie:
+            page.goto(base + f"@{a.our_tie}?v=lean", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(4000)
+            ours = page.evaluate("() => [...document.querySelectorAll('.ours')].map(e => e.innerText).join(' | ')")
+            check(f"{tag} our statement", "Our statement, proved from the authors' Lean library" in ours and "Not the authors' Lean" in ours, ours[:200])
+            page.screenshot(path=str(a.shots / f"ours-{tag}.png"))
+        if a.companion_phrase:
+            cp, cid = a.companion_phrase
+            page.goto(base + f"{cp}/@{cid}", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(4000)
+            card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
+            check(f"{tag} companion phrase address", "AI-assessed" in card or "Topic" in card, f"{page.url} {card[:120]}")
+            page.screenshot(path=str(a.shots / f"companion-phrase-{tag}.png"))
+        if a.companion_lean:
+            cp, name = a.companion_lean
+            page.goto(base + f"{cp}/lean/{name}", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper", timeout=60000)
+            page.wait_for_timeout(5000)
+            pane = page.evaluate("() => (document.querySelector('.lean-page') || {}).innerText || ''")
+            short = name.rsplit(".", 1)[-1]
+            check(f"{tag} companion lean address", short in pane, f"{page.url} {pane[:120]}")
         for slot in a.companion:
             page.goto(base + f"{slot}/", wait_until="domcontentloaded")
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(1500)
             text = page.inner_text("body")
             n = page.eval_on_selector_all(".paper .tie", "els => els.length")
-            check(f"{tag} companion {slot}", n > 20 and "thanks Anthropic" not in text, f"{n} ties; anthropic={'thanks Anthropic' in text}")
+            wide = page.evaluate("document.documentElement.scrollWidth - innerWidth")
+            check(f"{tag} companion {slot}", n > 10 and "thanks Anthropic" not in text and wide <= 1,
+                  f"{n} ties; anthropic={'thanks Anthropic' in text}; {wide}px sideways")
             page.screenshot(path=str(a.shots / f"companion-{slot}-{tag}.png"))
         # The whole proof map, as its own page and from the graph pane's button: it draws, with no page error.
         before = len(errors)

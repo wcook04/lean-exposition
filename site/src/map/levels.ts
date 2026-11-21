@@ -5,7 +5,7 @@
 // page may say one level contains another.
 
 import site from "@instance/site";
-import type { PaperStructure, Stage } from "../api/types";
+import type { PaperStructure, Account as Stage } from "../api/types";
 import type { ArgGraph, ArgNode } from "../model/graph";
 import { ACCOUNT_IN_PROSE } from "../app/papers";
 import type { AlignmentCore } from "../api/lean";

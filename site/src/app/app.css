@@ -642,3 +642,29 @@ a.out::after {
   color: var(--ink-2);
   overflow-wrap: anywhere;
 }
+
+/* A library paper's companion documents, by group, under its accounts: the menu scrolls when long. */
+.readmenu__menu:has(.readmenu__group) {
+  width: 26rem;
+  max-height: min(70vh, 40rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.readmenu__grouphead {
+  margin: var(--space-3) var(--space-2) var(--space-1);
+  font-size: var(--fs-xs, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.readmenu__item--companion {
+  padding-block: 0.3rem;
+}
+
+.readmenu__item--companion .readmenu__name {
+  font-size: var(--fs-sm);
+  font-weight: 400;
+}

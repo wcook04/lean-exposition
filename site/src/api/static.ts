@@ -1,6 +1,7 @@
 // A derived transport for the reading website, captured by export-static.py.
 // This supports the site's requests; it does not advertise a replacement API.
 import type { Snapshot } from "./types";
+import site from "@instance/site";
 
 type Row = Record<string, any>;
 export interface StaticIndex {
@@ -147,8 +148,43 @@ async function loadRecords(index: StaticIndex, summary: boolean, table: string |
   return (await Promise.all(Object.values(tableFiles).map((file) => load<Row[]>(file)))).flat();
 }
 
+/** A library paper's companion documents, each answered from its own edition under docs/<page>/. */
+const COMPANIONS = new Set((site.library?.companions ?? []).map((c) => c.slot));
+const STAGED_ROUTE = /^(\/api\/v1)?\/(papers|alignment|ties|phrases)\/([^/?]+)/;
+
+/** The companion a request is about, if any: in its path (/papers/<page>/…) or its paper parameter. */
+function companionOf(url: URL): string | null {
+  const inPath = url.pathname.match(STAGED_ROUTE)?.[3];
+  if (inPath && COMPANIONS.has(inPath)) return inPath;
+  const paper = url.searchParams.get("paper");
+  return paper && COMPANIONS.has(paper) ? paper : null;
+}
+
+/** A companion's edition calls its document "short"; the reader knows it by its page. */
+function restage(value: unknown, page: string): unknown {
+  if (Array.isArray(value)) return value.map((v) => restage(v, page));
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) out[k] = (k === "stage" || k === "paper") && v === "short" ? page : restage(v, page);
+    return out;
+  }
+  return value;
+}
+
 export async function staticRequest(url: string): Promise<Response> {
-  const index = await load<StaticIndex>("index.json");
+  const asked = new URL(url, window.location.origin);
+  const page = COMPANIONS.size ? companionOf(asked) : null;
+  if (!page) return serve("index.json", url);
+  asked.pathname = asked.pathname.replace(STAGED_ROUTE, (whole, api = "", kind, stage) => (stage === page ? `${api}/${kind}/short` : whole));
+  if (asked.searchParams.get("paper") === page) asked.searchParams.set("paper", "short");
+  const response = await serve(`docs/${page}/index.json`, asked.pathname + asked.search);
+  if (!(response.headers.get("content-type") ?? "").includes("json")) return response;
+  const body = await response.json();
+  return Response.json(restage(body, page), { status: response.status });
+}
+
+async function serve(indexName: string, url: string): Promise<Response> {
+  const index = await load<StaticIndex>(indexName);
   if (index.version !== 1 && index.version !== 2) throw new Error("Unsupported captured-edition format.");
   const request = new URL(url, window.location.origin);
   const route = request.pathname.replace(/^\/api\/v1/, "");

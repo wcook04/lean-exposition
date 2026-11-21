@@ -1,6 +1,7 @@
 // Every navigational state lives in the URL, so Back, reload and shared links
 // return to the same view, selection and reading position.
 
+import site from "@instance/site";
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
 import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
@@ -96,7 +97,8 @@ function isSearchType(value: string | null): value is SearchType {
   return !!value && (SEARCH_TYPES as readonly string[]).includes(value);
 }
 
-const STAGE_SET = new Set(["long", "short", "expository"]);
+// The three accounts, and a library paper's companion documents, each read at /read/<page>/.
+const STAGE_SET = new Set(["long", "short", "expository", ...(site.library?.companions ?? []).map((c) => c.slot)]);
 const BASE = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "");
 
 function isStage(value: string | null | undefined): value is Stage {
@@ -359,7 +361,7 @@ export function placeOf(route: Route): string {
     case "map":
       return "the map";
     case "read":
-      return route.decl?.split(".").pop() ?? { long: "the long record", short: "the short paper", expository: "the exposition" }[route.stage];
+      return route.decl?.split(".").pop() ?? ({ long: "the long record", short: "the short paper", expository: "the exposition" } as Record<string, string>)[route.stage] ?? "the paper";
     case "checks":
       return "What ran";
     case "compare":

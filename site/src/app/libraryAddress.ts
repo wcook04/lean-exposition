@@ -82,7 +82,14 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   const lean = path.match(/^\/lean\/(.+)$/);
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
   const page = path.match(/^\/([a-z0-9-]+)$/);
-  if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]] };
+  if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]], node: q.get("n") ?? undefined, at: q.get("l") ?? undefined };
+  // Inside a companion page: /<page>/@<phrase> and /<page>/lean/<full.name>, as in the paper itself.
+  const inPage = path.match(/^\/([a-z0-9-]+)\/(@[^/]+|lean\/.+)$/);
+  if (inPage && lib.pages?.[inPage[1]]) {
+    const stage = lib.pages[inPage[1]];
+    if (inPage[2].startsWith("@")) return { ...common, stage, node: `phrase:${decodeURIComponent(inPage[2].slice(1))}`, at: q.get("l") ?? undefined };
+    return { ...common, stage, decl: decodeURIComponent(inPage[2].slice(5)), lean: v === "graph" ? undefined : true };
+  }
   const result = path.match(/^\/([a-z]+-[0-9a-z.]+)$/);
   // A numbered result lands on its canonical target, the statement block, never an earlier mention.
   if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] };
@@ -109,6 +116,16 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     const slug = Object.entries(lib.pages ?? {}).find(([, stage]) => stage === route.stage)?.[0];
     if (!slug) return null;
     const q = new URLSearchParams();
+    const pageTail = route.anchor ? `#${encodeURIComponent(route.anchor)}` : "";
+    if (route.lean) q.set("v", "lean");
+    else if (route.graph) q.set("v", "graph");
+    // A phrase of the page, and a Lean declaration read beside it, have addresses of their own.
+    if (route.node?.startsWith("phrase:")) {
+      if (route.decl) q.set("d", route.decl);
+      return `${base}/${slug}/@${encodeURIComponent(route.node.slice(7))}${q.size ? `?${q}` : ""}${pageTail}`;
+    }
+    if (route.decl && route.lean && !route.node) return `${base}/${slug}/lean/${encodeURIComponent(route.decl)}${pageTail}`;
+    q.delete("v");
     if (route.node) q.set("n", route.node);
     if (route.at) q.set("l", route.at);
     if (route.lean) q.set("v", "lean");
