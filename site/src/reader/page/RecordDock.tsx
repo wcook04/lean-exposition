@@ -329,11 +329,6 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
               Open its Lean
             </button>
           )}
-          {onOpenGraph && !empty && (
-            <button type="button" className="lean-page__quiet" onClick={onOpenGraph}>
-              See what this uses in the graph
-            </button>
-          )}
         </header>
       )}
       {slot ? (
@@ -431,6 +426,13 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                 {open.tie !== null && <OriginLine origin={ties.index.ties[open.tie]?.origin} />}
               </>
             ) : null}
+            {onOpenGraph && name && !full && (
+              <p className="lean-page__tograph">
+                <button type="button" className="lean-page__quiet" onClick={onOpenGraph}>
+                  See what this uses, and what uses it, in the graph
+                </button>
+              </p>
+            )}
           </div>
         </div>
       )}

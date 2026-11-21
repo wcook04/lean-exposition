@@ -1248,3 +1248,18 @@ html[data-right-sheet] {
   color: var(--ink-2);
   text-wrap: pretty;
 }
+
+.lean-page__tograph {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+/* On a narrow window the band's two acts share one row under the state. */
+.right-sheet .subject-band__acts {
+  flex: 1 1 100%;
+}
+
+.right-sheet .subject-band__act {
+  min-height: 36px;
+}

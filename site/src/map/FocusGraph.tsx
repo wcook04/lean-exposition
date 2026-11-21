@@ -888,7 +888,8 @@ export function FocusGraph(props: FocusGraphProps) {
       )}
       {listGroup && (
         <section
-          className={`fg__list fg__list--${listed!.side}${narrow ? " fg__list--narrow" : ""}`}
+          // Beside the drawing only where the pane is wide enough to leave the subject in view; else over all of it.
+          className={`fg__list fg__list--${listed!.side}${narrow || size.w < 900 ? " fg__list--narrow" : ""}`}
           role="region"
           aria-label={`Members of ${listGroup.name}`}
           data-group={listGroup.key}

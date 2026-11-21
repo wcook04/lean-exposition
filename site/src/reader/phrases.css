@@ -347,3 +347,34 @@
   text-underline-offset: 2px;
   cursor: pointer;
 }
+
+/* "Colour underlines by topic", under the key and in the guide. */
+.tones-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  margin-top: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.tones-switch input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
+.tones-switch input:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* With colour off the key's swatches and the graph's topic edges go neutral with the underlines. */
+:root[data-tones="off"] .phrase-key__swatch,
+:root[data-tones="off"] .phrase-bars > span {
+  background: var(--ink-3);
+}

@@ -256,9 +256,18 @@ export class Statements {
       pick.title = PICK_LABEL;
       pick.setAttribute("aria-label", PICK_LABEL);
       pick.style.top = `${Math.round(top.top - box.top)}px`;
-      if (block === this.heldBlock) pick.setAttribute("aria-pressed", "true");
       this.picks.set(pick, block);
       fragment.append(pick);
+      if (block !== this.heldBlock) continue;
+      // The selected paragraph: the selection's amber rule down its whole height, in the ticks' column.
+      pick.setAttribute("aria-pressed", "true");
+      const whole = block.getBoundingClientRect();
+      const rail = document.createElement("i");
+      rail.className = "para-rail";
+      rail.setAttribute("aria-hidden", "true");
+      rail.style.top = `${Math.round(whole.top - box.top)}px`;
+      rail.style.height = `${Math.round(whole.height)}px`;
+      fragment.append(rail);
     }
     layer.replaceChildren(fragment);
   }
@@ -271,14 +280,11 @@ export class Statements {
   /** Mark one paragraph as the selected one, or none. */
   holdBlock(block: HTMLElement | null) {
     if (this.heldBlock === block) return;
-    this.heldBlock?.removeAttribute("data-held");
+    const was = this.heldBlock;
     this.heldBlock = block;
-    block?.setAttribute("data-held", "");
-    for (const section of this.sections.values()) {
-      for (const pick of section.querySelectorAll<HTMLElement>(":scope > .part__picks > .para-pick")) {
-        if (block && this.picks.get(pick) === block) pick.setAttribute("aria-pressed", "true");
-        else pick.removeAttribute("aria-pressed");
-      }
+    // Redraw the margin of the part that held the mark and of the part that takes it.
+    for (const [part, section] of this.sections) {
+      if ((was && section.contains(was)) || (block && section.contains(block))) this.drawTicks(part);
     }
   }
 

@@ -717,7 +717,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // quotation, the comparison and the note, then the Lean (docs/reader-design.md). A statement with
   // no Lean has nothing to compare, so it opens on the graph. Clicks keep the view; only the view
   // buttons change it.
-  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : pinWithoutLean ? "graph" : "lean";
+  // A view this reader chose with the tabs before is the default in place of Lean; it is read once and is
+  // not written into the address, so an address names a view only when someone chose one for it.
+  const [chosenView] = useState(readView);
+  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : pinWithoutLean ? "graph" : (chosenView ?? "lean");
   const modeRef = useRef(mode);
   modeRef.current = mode;
   // The view stays as the reader left it through Back and Forward: an entry keeps its subject,
@@ -1168,19 +1171,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     else if (here.lean || here.graph) navigate({ ...here, lean: undefined, graph: undefined }, { replace: true });
   }, []);
 
-  // The mode carries to another paper and survives a reload; the address says which it is.
-  const seeded = useRef(false);
-  useEffect(() => {
-    if (!paneRoom) return;
-    if (!seeded.current) {
-      seeded.current = true;
-      // A view this reader chose with the tabs is a default only: an address that names a view keeps it.
-      if (!route.lean && !route.graph && readView() === "graph" && arrivedBy() !== "pop") {
-        navigate({ ...hereRef.current, graph: true }, { replace: true });
-        return;
-      }
-    }
-  }, [route.lean, route.graph, paneRoom]);
   // Underlines carry their topics' colours unless this reader turned that off.
   useLayoutEffect(() => applyTones(readTones()), []);
   const hideMap = useCallback(() => {
@@ -1371,7 +1361,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (event.detail > 1 && waiting) return;
       // A drag or a selection is reading, not asking.
       const down = downAt.current;
-      const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 5;
+      // A finger's tap lands a few pixels from where it went down (the browser nudges it to a target).
+      const slack = (event.nativeEvent as PointerEvent).pointerType === "touch" ? 12 : 5;
+      const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > slack;
       const selection = window.getSelection();
       if (moved || (selection && !selection.isCollapsed && selection.toString().trim())) return;
       if (!mark) return;

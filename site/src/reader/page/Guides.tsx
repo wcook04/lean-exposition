@@ -9,6 +9,7 @@ import { PAPER_NAMES } from "../../app/papers";
 import { routeHref } from "../../app/router";
 import type { ShowcaseCard } from "../aids";
 import { useDocument } from "../documents";
+import { TonesSwitch } from "./Outline";
 import { ComparisonLegend, noteHtml } from "./PhraseCard";
 
 function Head({ title, onClose }: { title: string; onClose(): void }) {
@@ -67,6 +68,7 @@ export function GuidePanel({ stage, onClose }: { stage: Stage; onClose(): void }
         <>
           <div className="guide-panel__text prose" dangerouslySetInnerHTML={{ __html: html }} />
           <ComparisonLegend />
+          <TonesSwitch />
           <p className="guide-panel__who">
             <a href={routeHref({ view: "read", stage })}>Open “{PAPER_NAMES[stage].short}” as a page</a>
           </p>

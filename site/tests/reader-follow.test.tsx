@@ -211,8 +211,9 @@ describe("MapPane", async () => {
     const onMode = vi.fn();
     show("contact-and-gap", { onMode });
     const words = [...container.querySelectorAll<HTMLButtonElement>(".mode-toggle button")];
-    expect(words.map((w) => w.textContent)).toEqual(["Graph", "Lean"]);
-    act(() => words[1].click());
+    // Lean stands first: it is the view a reader opens on (docs/reader-design.md).
+    expect(words.map((w) => w.textContent)).toEqual(["Lean", "Graph"]);
+    act(() => words[0].click());
     expect(onMode).toHaveBeenCalledWith("lean");
     const whole = [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Whole proof map")!;
     act(() => whole.click());

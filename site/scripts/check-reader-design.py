@@ -1,0 +1,475 @@
+#!/usr/bin/env python3
+"""Check a served library paper's reader against docs/reader-design.md, in a real browser.
+
+It checks, each from a fresh browser with empty storage:
+
+ 1. first visit: the pane opens on the Lean tab, the address has no `v=`, and the hint
+    (`.reader-hint`) is visible and whole, at 1440x900 and at 390x844;
+ 2. a click on linked words selects them (`.subject-band[data-state="words"]`, `data-pin`, a 3px
+    underline) and does not scroll the paper;
+ 3. Graph and back to Lean change neither the scroll, the subject nor the history;
+ 4. "Resume here", and Escape, release the selection in place: no scroll, no history entry;
+ 5. "Return to selected words" brings the selection back into view and keeps it;
+ 6. a click on plain, unlinked words changes neither the state nor the address;
+ 7. a paragraph's margin control selects the paragraph, lists its linked passages, and choosing
+    one selects those words; Enter on the control does the same as a click;
+ 8. at 1100x900 the paper and the pane stand side by side, nothing fixed over the paper;
+ 9. on a 390x844 touch phone: a tap opens the whole-screen sheet, "Back to paper" restores the
+    place and leaves the held bar, scrolling never reopens the sheet, the bar's View reopens it
+    and its Resume ends the selection;
+10. in the Graph view Fit changes only the drawing: the band's words stay, an opened member
+    list stays open, and the band does not move;
+11. under `prefers-reduced-motion: reduce` the selected marks have no transition and the sheet
+    and member list no running animation.
+
+Controls in the sticky pane are clicked with the mouse at the centre of their box, never with
+Playwright's own `click()`, which scrolls the page first and would falsify every scroll check.
+
+    /Users/willcook/src/ai_workflow/.venv/bin/python site/scripts/check-reader-design.py \
+        http://127.0.0.1:47342/library/euler/
+
+It needs Playwright for Python with Chromium installed. It prints `ok ...` for each check that
+holds and `FAIL ...` for each that does not, and exits 1 if any failed.
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+
+from playwright.sync_api import Browser, Page, sync_playwright
+
+FAILURES: list[str] = []
+
+
+def check(ok: bool, what: str, detail: str = "") -> bool:
+    if ok:
+        print(f"ok   {what}")
+    else:
+        FAILURES.append(what)
+        print(f"FAIL {what}" + (f": {detail}" if detail else ""))
+    return ok
+
+
+# ------------------------------------------------------------------------------------ helpers
+
+
+def open_page(browser: Browser, base: str, width: int, height: int, touch: bool = False, reduced: bool = False) -> Page:
+    context = browser.new_context(
+        viewport={"width": width, "height": height},
+        has_touch=touch,
+        is_mobile=touch,
+        device_scale_factor=1,
+    )
+    page = context.new_page()
+    if reduced:
+        page.emulate_media(reduced_motion="reduce")
+    page.goto(base)
+    page.wait_for_selector(".part__text [data-t]", timeout=30000)
+    page.wait_for_timeout(1500)
+    return page
+
+
+def state(page: Page) -> str | None:
+    return page.evaluate("document.querySelector('.subject-band')?.dataset.state ?? null")
+
+
+def band_words(page: Page) -> str | None:
+    return page.evaluate("document.querySelector('.subject-band__words')?.textContent ?? null")
+
+
+def scroll_y(page: Page) -> float:
+    return page.evaluate("scrollY")
+
+
+def history_length(page: Page) -> int:
+    return page.evaluate("history.length")
+
+
+def centre_click(page: Page, selector: str, text: str | None = None) -> bool:
+    """Click the first visible match at the centre of its box with the mouse. False if none."""
+    loc = page.locator(selector, has_text=text) if text else page.locator(selector)
+    for i in range(loc.count()):
+        box = loc.nth(i).bounding_box()
+        if box and box["width"] > 0 and box["height"] > 0 and loc.nth(i).is_visible():
+            page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+            return True
+    return False
+
+
+def pane_tab(page: Page, which: str) -> bool:
+    return centre_click(page, ".map-pane button[aria-pressed]", which)
+
+
+# A point on the first line fragment of a linked phrase in the paper, inside the viewport and not
+# under anything else: the element at that point must be the phrase or inside it.
+TIE_POINT = r"""
+(minTop) => {
+  const vh = innerHeight;
+  for (const e of document.querySelectorAll('.part__text [data-t]')) {
+    const r = e.getClientRects()[0];
+    if (!r || r.width < 24 || r.top < minTop || r.bottom > vh - 120) continue;
+    // The centre of the fragment's own rectangle, on its words and not on a formula, so a touch
+    // tap is not moved by the browser's touch adjustment towards some other target.
+    const y = r.top + r.height / 2;
+    for (const f of [0.5, 0.35, 0.65, 0.2, 0.8]) {
+      const x = r.left + r.width * f;
+      const hit = document.elementFromPoint(x, y);
+      if (hit && (hit === e || e.contains(hit)) && !hit.closest('.katex')) return { x, y, t: e.dataset.t };
+    }
+  }
+  return null;
+}
+"""
+
+
+def click_tie(page: Page, min_top: int = 150, tap: bool = False) -> dict | None:
+    point = page.evaluate(TIE_POINT, min_top)
+    for _ in range(8):
+        if point is not None:
+            break
+        scroll_by(page, 300)
+        point = page.evaluate(TIE_POINT, min_top)
+    if point is None:
+        return None
+    point["scroll_before"] = scroll_y(page)
+    if tap:
+        page.touchscreen.tap(point["x"], point["y"])
+    else:
+        page.mouse.click(point["x"], point["y"])
+    page.wait_for_timeout(800)
+    return point
+
+
+def scroll_by(page: Page, dy: int) -> None:
+    page.evaluate("(dy) => window.scrollBy(0, dy)", dy)
+    page.wait_for_timeout(700)
+
+
+def pins(page: Page) -> int:
+    return page.evaluate("document.querySelectorAll('.part__text [data-t][data-pin]').length")
+
+
+# ------------------------------------------------------------------------------------ checks
+
+
+def first_visit(browser: Browser, base: str) -> None:
+    for width, height in ((1440, 900), (390, 844)):
+        page = open_page(browser, base, width, height, touch=width < 768)
+        at = f"{width}x{height}"
+        if width >= 768:
+            pressed = page.evaluate("[...document.querySelectorAll('.map-pane button[aria-pressed=\"true\"]')].map(b => b.textContent.trim())")
+            check(pressed == ["Lean"], f"1 first visit {at}: the pressed tab is Lean", f"pressed {pressed}")
+        check("v=" not in page.url, f"1 first visit {at}: the address has no v=", page.url)
+        hint = page.evaluate(
+            """() => { const e = document.querySelector('.reader-hint'); if (!e) return null;
+                 const r = e.getBoundingClientRect(); const s = getComputedStyle(e);
+                 return { visible: r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none',
+                          sw: e.scrollWidth, cw: e.clientWidth, text: e.textContent }; }"""
+        )
+        check(hint is not None and hint["visible"], f"1 first visit {at}: the hint is visible", str(hint))
+        if hint:
+            check(hint["sw"] <= hint["cw"], f"1 first visit {at}: the hint's whole text fits", f"scrollWidth {hint['sw']} > clientWidth {hint['cw']}")
+        if width < 768:
+            # docs/reader-design.md, "A phone": nothing scrolls sideways but a formula or the Lean in its own box.
+            wide = page.evaluate("[document.documentElement.scrollWidth, document.documentElement.clientWidth]")
+            check(wide[0] <= wide[1], f"1 first visit {at}: the page does not scroll sideways", f"document scrollWidth {wide[0]} > clientWidth {wide[1]}")
+        page.context.close()
+
+
+def select_and_views(browser: Browser, base: str) -> None:
+    page = open_page(browser, base, 1440, 900)
+    scroll_by(page, 1200)
+    y0 = scroll_y(page)
+    point = click_tie(page)
+    if not check(point is not None, "2 a linked phrase is in view to click"):
+        page.context.close()
+        return
+    check(state(page) == "words", "2 a click on linked words selects them", f"state {state(page)}")
+    check(pins(page) > 0, "2 the selected marks carry data-pin", f"{pins(page)} pinned")
+    sizes = page.evaluate("[...document.querySelectorAll('.part__text [data-t][data-pin]')].map(e => getComputedStyle(e).backgroundSize)")
+    heights = [s.split()[-1] if s else "" for s in sizes]
+    check(bool(heights) and all(h == "3px" for h in heights), "2 the selected underline is 3px", f"background-size {sizes[:3]}")
+    check(abs(scroll_y(page) - y0) <= 1, "2 the click does not scroll the paper", f"scrollY {y0} -> {scroll_y(page)}")
+
+    # 3: Graph then Lean.
+    y1, h1 = scroll_y(page), history_length(page)
+    title = page.evaluate("document.querySelector('.lean-page__title')?.textContent ?? null")
+    ok = pane_tab(page, "Graph")
+    page.wait_for_timeout(1500)
+    ok = pane_tab(page, "Lean") and ok
+    page.wait_for_timeout(1200)
+    check(ok, "3 the Graph and Lean tabs are there to press")
+    check(abs(scroll_y(page) - y1) <= 1, "3 Graph and back to Lean do not scroll the paper", f"scrollY {y1} -> {scroll_y(page)}")
+    after = page.evaluate("document.querySelector('.lean-page__title')?.textContent ?? null")
+    check(title is not None and after == title, "3 Graph and back to Lean keep the subject", f"{title!r} -> {after!r}")
+    check(state(page) == "words", "3 Graph and back to Lean keep the selection", f"state {state(page)}")
+    check(history_length(page) == h1, "3 Graph and back to Lean add no history entry", f"history {h1} -> {history_length(page)}")
+
+    # 5: Return to selected words.
+    scroll_by(page, 1500)
+    centre_click(page, ".subject-band__act:not(.subject-band__act--resume)")
+    page.wait_for_timeout(2000)
+    inside = page.evaluate(
+        """() => [...document.querySelectorAll('.part__text [data-t][data-pin]')].some(e => [...e.getClientRects()].some(r => r.bottom > 0 && r.top < innerHeight && r.width > 0))"""
+    )
+    check(inside, "5 Return to selected words brings a selected mark into view")
+    check(state(page) == "words", "5 Return to selected words keeps the selection", f"state {state(page)}")
+
+    # 4: Resume here, then Escape.
+    for how in ("Resume here", "Escape"):
+        if state(page) != "words":
+            click_tie(page)
+        if not check(state(page) == "words", f"4 words are selected before {how}", f"state {state(page)}"):
+            continue
+        scroll_by(page, 1500)
+        y2, h2 = scroll_y(page), history_length(page)
+        if how == "Escape":
+            page.keyboard.press("Escape")
+        else:
+            centre_click(page, ".subject-band__act--resume")
+        page.wait_for_timeout(1000)
+        check(abs(scroll_y(page) - y2) <= 1, f"4 {how} does not move the paper", f"scrollY {y2} -> {scroll_y(page)}")
+        check(state(page) == "following", f"4 {how} follows the paper again", f"state {state(page)}")
+        check(page.evaluate("document.querySelectorAll('[data-pin]').length") == 0, f"4 {how} leaves no mark pinned")
+        check(history_length(page) == h2, f"4 {how} adds no history entry", f"history {h2} -> {history_length(page)}")
+    page.context.close()
+
+
+PLAIN_POINT = r"""
+() => {
+  for (const p of document.querySelectorAll('.part__text p')) {
+    const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const parent = n.parentElement;
+      if (!parent || parent.closest('[data-t], a, .katex, button')) continue;
+      const text = n.textContent;
+      for (let i = 0; i + 3 < text.length; i++) {
+        if (!/\w\w\w/.test(text.slice(i, i + 3))) continue;
+        const range = document.createRange();
+        range.setStart(n, i + 1);
+        range.setEnd(n, i + 2);
+        const r = range.getClientRects()[0];
+        if (!r || r.top < 150 || r.bottom > innerHeight - 120 || r.width <= 0) continue;
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        if (hit && hit === parent && !hit.closest('[data-t], a')) return { x, y };
+      }
+    }
+  }
+  return null;
+}
+"""
+
+
+def plain_words(browser: Browser, base: str) -> None:
+    page = open_page(browser, base, 1440, 900)
+    scroll_by(page, 900)
+    # Following writes the reading place into the address once the paper rests; let it settle first.
+    page.wait_for_timeout(1500)
+    point = page.evaluate(PLAIN_POINT)
+    if not check(point is not None, "6 plain words are in view to click"):
+        page.context.close()
+        return
+    before, url = state(page), page.url
+    page.mouse.click(point["x"], point["y"])
+    page.wait_for_timeout(800)
+    check(state(page) == before, "6 a click on plain words leaves the state", f"{before} -> {state(page)}")
+    check(page.url == url, "6 a click on plain words leaves the address", f"{url} -> {page.url}")
+    page.context.close()
+
+
+PICK = r"""
+(focus) => {
+  for (const pk of document.querySelectorAll('.para-pick')) {
+    const r = pk.getBoundingClientRect();
+    if (r.width <= 0 || r.top < 150 || r.bottom > innerHeight - 150) continue;
+    if (!(pk.getAttribute('aria-label') || '').includes('Select this paragraph')) continue;
+    const y = r.top + r.height / 2;
+    const ps = [...pk.closest('.part').querySelectorAll('.part__text p')];
+    const near = ps.map((p) => [p, p.getBoundingClientRect()]).sort((a, b) => Math.abs(a[1].top - r.top) - Math.abs(b[1].top - r.top))[0];
+    if (!near) continue;
+    const ts = new Set([...near[0].querySelectorAll('[data-t]')].map((e) => e.dataset.t));
+    if (!ts.size) continue;
+    if (focus) pk.focus({ preventScroll: true });
+    return { x: r.left + r.width / 2, y, linked: ts.size, label: pk.getAttribute('aria-label') };
+  }
+  return null;
+}
+"""
+
+
+def paragraph_pick(browser: Browser, base: str) -> None:
+    for how in ("click", "Enter"):
+        page = open_page(browser, base, 1440, 900)
+        scroll_by(page, 1200)
+        page.wait_for_timeout(1000)
+        pick = page.evaluate(PICK, how == "Enter")
+        if not check(pick is not None, f"7 ({how}) a paragraph's margin control is in view"):
+            page.context.close()
+            continue
+        if how == "click":
+            page.mouse.click(pick["x"], pick["y"])
+        else:
+            focused = page.evaluate("document.activeElement?.classList.contains('para-pick') ?? false")
+            check(focused, "7 (Enter) the margin control takes focus")
+            page.keyboard.press("Enter")
+        page.wait_for_timeout(900)
+        check(state(page) == "paragraph", f"7 ({how}) the margin control selects the paragraph", f"state {state(page)}")
+        rows = page.evaluate("document.querySelectorAll('.para-links__list button').length")
+        check(rows == pick["linked"], f"7 ({how}) the list has one row per linked passage", f"{rows} rows for {pick['linked']} linked passages")
+        if rows:
+            centre_click(page, ".para-links__list button")
+            page.wait_for_timeout(900)
+            check(state(page) == "words", f"7 ({how}) choosing the first row selects its words", f"state {state(page)}")
+        page.context.close()
+
+
+def side_by_side(browser: Browser, base: str) -> None:
+    page = open_page(browser, base, 1100, 900)
+    got = page.evaluate(
+        """() => { const m = document.querySelector('.reader__map'), p = document.querySelector('.reader__paper') || document.querySelector('.part__text');
+          const mr = m && m.getBoundingClientRect(), pr = p && p.getBoundingClientRect();
+          const fixedOver = [...document.querySelectorAll('body *')].filter((e) => { const s = getComputedStyle(e); if (s.position !== 'fixed' || s.display === 'none' || s.visibility === 'hidden') return false;
+              const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && pr && r.left < pr.right && r.right > pr.left && r.top < innerHeight && r.bottom > 0; }).map((e) => e.className);
+          return { map: !!m && mr.width > 0 && mr.height > 0 && getComputedStyle(m).visibility !== 'hidden', mapLeft: mr && mr.left, paperRight: pr && pr.right, fixedOver, sheet: !!document.querySelector('.right-sheet') }; }"""
+    )
+    check(got["map"], "8 at 1100 the pane is visible")
+    check(got["mapLeft"] is not None and got["paperRight"] is not None and got["mapLeft"] >= got["paperRight"], "8 at 1100 the pane stands right of the paper", f"pane left {got['mapLeft']}, paper right {got['paperRight']}")
+    check(not got["sheet"], "8 at 1100 there is no sheet")
+    check(not got["fixedOver"], "8 at 1100 nothing fixed covers the paper", str(got["fixedOver"]))
+    page.context.close()
+
+
+def phone(browser: Browser, base: str) -> None:
+    page = open_page(browser, base, 390, 844, touch=True)
+    scroll_by(page, 1200)
+    point = click_tie(page, min_top=120, tap=True)
+    if not check(point is not None, "9 a linked phrase is in view to tap"):
+        page.context.close()
+        return
+    y0 = point["scroll_before"]
+    sheet = page.evaluate(
+        """() => { const s = document.querySelector('.right-sheet'); if (!s) return null; const r = s.getBoundingClientRect();
+          const bar = document.querySelector('.topbar'); const top = Math.max(0, bar ? bar.getBoundingClientRect().bottom : 0);
+          return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, barBottom: top, w: document.documentElement.clientWidth, h: innerHeight }; }"""
+    )
+    if check(sheet is not None, "9 a tap on linked words opens the sheet"):
+        covers = sheet["left"] <= 0.5 and sheet["right"] >= sheet["w"] - 0.5 and sheet["bottom"] >= sheet["h"] - 0.5 and sheet["top"] <= sheet["barBottom"] + 1
+        check(covers, "9 the sheet covers the screen below the top bar", str(sheet))
+    if not centre_click(page, ".right-sheet__back"):
+        check(False, "9 the sheet has Back to paper")
+        page.context.close()
+        return
+    page.wait_for_timeout(900)
+    check(page.locator(".right-sheet").count() == 0, "9 Back to paper closes the sheet")
+    check(abs(scroll_y(page) - y0) <= 2, "9 Back to paper keeps the place", f"scrollY {y0} -> {scroll_y(page)}")
+    check(page.locator(".held-bar").count() > 0 and page.locator(".held-bar").first.is_visible(), "9 the held bar shows after Back to paper")
+    scroll_by(page, 600)
+    page.wait_for_timeout(600)
+    check(page.locator(".right-sheet").count() == 0, "9 scrolling never reopens the sheet")
+    if centre_click(page, ".held-bar__view"):
+        page.wait_for_timeout(900)
+        check(page.locator(".right-sheet").count() > 0, "9 the held bar's View reopens the sheet")
+        centre_click(page, ".right-sheet__back")
+        page.wait_for_timeout(900)
+    else:
+        check(False, "9 the held bar has View")
+    if centre_click(page, ".held-bar__resume"):
+        page.wait_for_timeout(900)
+        check(page.locator(".held-bar").count() == 0, "9 the held bar's Resume removes the bar")
+        check(page.evaluate("document.querySelectorAll('[data-pin]').length") == 0, "9 the held bar's Resume ends the selection")
+    else:
+        check(False, "9 the held bar has Resume")
+    page.context.close()
+
+
+def band_box(page: Page) -> dict | None:
+    return page.evaluate("(() => { const r = document.querySelector('.subject-band')?.getBoundingClientRect(); return r ? { x: r.x, y: r.y, w: r.width, h: r.height } : null; })()")
+
+
+def graph_fit(browser: Browser, base: str) -> None:
+    page = open_page(browser, base, 1440, 900)
+    scroll_by(page, 1200)
+    click_tie(page)
+    if not check(state(page) == "words", "10 words are selected before the graph", f"state {state(page)}"):
+        page.context.close()
+        return
+    pane_tab(page, "Graph")
+    page.wait_for_timeout(2000)
+    text = page.evaluate("document.querySelector('.subject-band')?.textContent")
+    if not check(centre_click(page, ".map-pane button", "Fit"), "10 the Graph view has Fit"):
+        page.context.close()
+        return
+    page.wait_for_timeout(800)
+    check(page.evaluate("document.querySelector('.subject-band')?.textContent") == text, "10 Fit leaves the subject band's words")
+    if page.locator('[data-opens="list"]').count():
+        before = band_box(page)
+        centre_click(page, '[data-opens="list"]')
+        page.wait_for_timeout(900)
+        check(page.locator(".fg__list").count() > 0 and page.locator(".fg__list").first.is_visible(), "10 a large group opens as a list")
+        after = band_box(page)
+        moved = before and after and all(abs(before[k] - after[k]) <= 1 for k in ("x", "y", "w", "h"))
+        check(bool(moved), "10 opening the list does not move the subject band", f"{before} -> {after}")
+        centre_click(page, ".map-pane button", "Fit")
+        page.wait_for_timeout(800)
+        check(page.locator(".fg__list").count() > 0, "10 Fit leaves the member list open")
+    else:
+        print("ok   10 (no group opens as a list here; list checks skipped)")
+    page.context.close()
+
+
+NO_MOTION = "(s) => [...document.querySelectorAll(s)].every(e => e.getAnimations().length === 0)"
+
+
+def reduced_motion(browser: Browser, base: str) -> None:
+    page = open_page(browser, base, 1440, 900, reduced=True)
+    scroll_by(page, 1200)
+    click_tie(page)
+    durations = page.evaluate("[...document.querySelectorAll('.part__text [data-t][data-pin]')].map(e => getComputedStyle(e).transitionDuration)")
+    # The site sets every transition to 1ms under reduced motion (styles/base.css), so that code
+    # waiting on a transition's end still hears it: nothing longer than that may remain.
+    seconds = lambda part: float(part.strip()[:-2]) / 1000 if part.strip().endswith("ms") else float(part.strip()[:-1])
+    still = bool(durations) and all(all(seconds(part) <= 0.001 for part in d.split(",")) for d in durations)
+    check(still, "11 reduced motion: a selected mark's transition is at most 1ms", f"transition-duration {sorted(set(durations))}")
+    pane_tab(page, "Graph")
+    page.wait_for_timeout(1500)
+    if page.locator('[data-opens="list"]').count():
+        centre_click(page, '[data-opens="list"]')
+        page.wait_for_timeout(50)
+        check(page.evaluate(NO_MOTION, ".fg__list, .fg__list *"), "11 reduced motion: the member list does not animate")
+    page.context.close()
+
+    page = open_page(browser, base, 390, 844, touch=True, reduced=True)
+    scroll_by(page, 1200)
+    click_tie(page, min_top=120, tap=True)
+    page.wait_for_timeout(20)
+    if page.locator(".right-sheet").count():
+        check(page.evaluate(NO_MOTION, ".right-sheet, .right-sheet *"), "11 reduced motion: the sheet does not animate")
+    else:
+        check(False, "11 reduced motion: a tap opens the sheet")
+    page.context.close()
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    parser.add_argument("base", help="a served library paper, such as http://127.0.0.1:47342/library/euler/")
+    parser.add_argument("--headed", action="store_true", help="show the browser")
+    args = parser.parse_args()
+    base = args.base if args.base.endswith("/") else args.base + "/"
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=not args.headed, ignore_default_args=["--hide-scrollbars"])
+        for step in (first_visit, select_and_views, plain_words, paragraph_pick, side_by_side, phone, graph_fit, reduced_motion):
+            try:
+                step(browser, base)
+            except Exception as error:  # a step that cannot run is a failure, and the others still run
+                check(False, f"{step.__name__} ran", repr(error)[:300])
+        browser.close()
+    if FAILURES:
+        print(f"\n{len(FAILURES)} check(s) failed")
+        return 1
+    print("\nall checks passed")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -589,31 +589,25 @@ html.is-reading {
   background: var(--sel-ink);
 }
 
-/* The selected paragraph: the selection's amber rule down its whole height, in the tick's column. */
-.part__text [data-held] {
-  position: relative;
-}
-
-.part__text [data-held]::before {
-  content: "";
+/* The selected paragraph: the selection's amber rule down its whole height, in the ticks' column. */
+.para-rail {
   position: absolute;
-  top: 0.3em;
-  bottom: 0.3em;
   left: calc(-1 * var(--mark-x) - 1px);
   width: var(--sel-rail);
   border-radius: 1px;
   background: var(--sel-ink);
+  pointer-events: none;
 }
 
 @media (max-width: 700px) {
   .para-pick {
-    left: calc(-1 * var(--mark-x) - 3px);
+    left: calc(-1 * var(--mark-x) - 4px);
   }
 
   .para-pick::before {
-    width: 6px;
-    height: 6px;
-    margin: -3px 0 0 -3px;
+    width: 5px;
+    height: 5px;
+    margin: -2.5px 0 0 -2.5px;
   }
 }
 

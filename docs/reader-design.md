@@ -51,7 +51,7 @@ Four independent things describe the reader. Each has one owner in the code.
 | Thing | Values | Changed by |
 | --- | --- | --- |
 | Reading place | the block under the reading line | scrolling; an explicit jump |
-| Attention | Following, Selected | a click or Enter on linked words, a graph card or a Lean name selects; "Resume here" or Escape follows again |
+| Attention | Following, Selected | a click or Enter on linked words, a paragraph's margin control, a graph card or a Lean name selects; "Resume here" or Escape follows again |
 | View | Lean, Graph | the two tabs; a control that names a view ("Open its Lean") |
 | Presentation | open, collapsed | opening and closing the pane; on a phone, "Back to paper" |
 
@@ -85,10 +85,20 @@ The browser's Back keeps its own meaning: the previous subject and place.
 A graph card or a Lean name chosen in the pane is a **Selected declaration**. It has no words
 in the paper unless the data records them, and the band says which.
 
-There is no selection by clicking plain text. A click on a paragraph's unlinked words does
-nothing but place the caret, as in any document. (The earlier engine held the whole paragraph;
-packet 01 found that a click between two lines could select something the reader never
-pointed at.)
+### Selected paragraph
+
+A reader can select by phrase and by paragraph. A paragraph is selected by its own control, never
+by a click on its words. Each block of text that has links carries one small ring in the margin at
+its first line, a real button named "Select this paragraph's links" (the same words show under the
+pointer). A click on it, or Enter, selects the paragraph: the band says **Selected paragraph**, an
+amber rule runs down the paragraph's whole height in the margin, and the pane lists every link in
+the paragraph in the order of the text, each with its words whole and what they are linked to.
+Choosing a row selects those words. A displayed formula that only continues a sentence is reached
+through that sentence's paragraph and has no ring of its own.
+
+A click on a paragraph's plain words does nothing but place the caret, as in any document. (The
+earlier engine held the whole paragraph on such a click; packet 01 found that a click between two
+lines could select something the reader never pointed at.)
 
 ### Deep links
 
@@ -101,11 +111,16 @@ One strip under the pane's tabs, in both views, outside the graph's canvas. 56px
 line at pane widths from 520px; it may wrap to two lines below that, and its height then
 depends on the pane's width alone, never on the state, so a change of state reflows nothing.
 
-- Left: the state in the sans at 13px, semibold; then the place ("Abstract", "§5.6",
-  "Theorem 1.1") as a link that returns to it.
-- Right: the state's actions as quiet buttons: "Resume here" and "Return to selected words"
-  when Selected; nothing when Following; "Preview" has no actions.
-- The band is not coloured by topic and carries no verdict.
+- Left: the state in the sans at 14px, semibold; then the place ("in §5.6", "in the opening")
+  as a control that returns to it.
+- Right: the state's actions as quiet buttons: "Return to selected words" and "Resume here" when
+  Selected; nothing when Following or in a Preview.
+- A selection puts the selection's amber rule on the band's left edge, the same mark the selected
+  words carry in the paper's margin. The band is not coloured by topic and carries no verdict.
+- The place control and both buttons show the amber focus ring when reached by keyboard.
+- Each change of state (Following, Preview, Selected words, Selected paragraph, Selected
+  declaration) is said once through a polite live region in the band. A new subject within one
+  state is not announced, so scrolling does not read every passage aloud.
 
 ## The inspector
 
@@ -138,8 +153,8 @@ one changes 3 to 7 and never the quotation.
 
 ### The legend
 
-A disclosure under every comparison: "What do these words mean?" It gives one sentence each,
-in mathematical terms, and the paper's own guide may replace the first four.
+A disclosure under every comparison, and at the foot of "How to read the Lean": "What do these
+words mean?" It gives one sentence each, in mathematical terms.
 
 | Word | Meaning |
 | --- | --- |
@@ -160,7 +175,9 @@ statements agree, and a kernel check of a declaration is not a check of the comp
 | Linked, at rest | 2px underline in the topic's colour, stopping 3px short of the phrase's end so neighbours read as two | thin tick |
 | Pointed at | the same underline at 3px and a 12% wash of the topic's colour | tick in ink |
 | Followed | no change to the words | tick in ink, 2px |
-| Selected | 3px amber underline, amber wash, on every fragment of the exact recorded range | 3px amber rule |
+| Selected words | 3px amber underline, amber wash, on every fragment of the exact recorded range | 3px amber rule |
+| Selected paragraph | no change to the words | 3px amber rule down the paragraph, and its ring filled amber |
+| A paragraph with links | no change to the words | a 7px ring at its first line, between the ticks and the text; fills with ink under the pointer |
 | Keyboard focus | 2px amber outline at 2px offset, on top of any of the above | none |
 | Display formula | a rule at its left instead of an underline, in the same colours and weights | as above |
 
@@ -183,20 +200,24 @@ system's highlight.
 - The pane opens on the **Lean** view: the quotation, the comparison and the note, then the
   Lean. The graph is one tab away. A view named in the address wins; then a view the reader
   chose before (stored as an explicit choice of `graph` or `lean`); then Lean.
-- One sentence, whole at every width including a phone, stands in the strip until there is a
-  section to name: "Underlined words are linked to a Lean statement. Click them to see the
-  statement and how it compares."
+- One sentence, whole at every width including a phone, stands at the head of the paper above
+  its title: "Underlined words are linked to a Lean statement. Select them to see the statement
+  and how it compares." It is part of the page, so it wraps and scrolls away with the title, and
+  it is in the first screen's own HTML, so nothing shifts when the page starts.
 - Where the paper supplies them:
   - **Start here**: a short list of worked examples chosen to show how the formalisation
-    matches the paper, each with one line on why it is worth reading. It stands in the pane
-    while the reader is at the top of the paper and nothing is selected, and is one button away
-    afterwards.
+    matches the paper, each with one line on why it is worth reading, under one paragraph on
+    what the paper's main formal statement asserts. It stands in the pane before the paper's
+    first link (beside the title and authors, where there is nothing yet to follow) and is one
+    button away afterwards. Choosing an example selects its words and brings the paper to them.
   - **How to read the Lean**: the paper's own guide to its conventions, as a panel in the pane.
-  - **At each section head**, one quiet line in the sans under the heading: what the formal
-    development does in this section. It is labelled as a reader annotation, belongs to the
-    annotation layer and never to the authors' text, and is not underlined or linked.
-- The counter reads "Linked passage 12 of 999". These are links, not theorems, and the number
-  is never shown as a share of anything.
+  - **At each section head**, one quiet note in the sans under the heading: what the formal
+    development does in this section. Its first sentence shows and the rest opens in place. It
+    is labelled "Reader annotation, AI-drafted", belongs to the annotation layer and never to
+    the authors' text, and is not underlined or linked. It is set when the paper is prepared,
+    in the first screen's HTML too, so it never arrives late and moves the text.
+- The counter reads "Link 12 of 999". These are links, not theorems, and the number is never
+  shown as a share of anything.
 
 ## The graph
 
@@ -231,7 +252,7 @@ right, nothing over the text. Widths are CSS pixels of the window.
 | Window | Outline | Paper | Pane | Notes |
 | --- | --- | --- | --- | --- |
 | 390 | drawer | 350 | none beside | inspect and return, below |
-| 1100 | drawer | 545 | 483 | two columns from 1024; the graph is folded to a line at this pane width |
+| 1100 | drawer | 550 | 479 | two columns from 1024; the graph is folded to a line at this pane width |
 | 1440 | drawer | 680 | 672 | |
 | 2000 | 208 | 689 | to the edge, at least 600 | |
 | 2560 | 208 | 755 | 1024, the pair centred | notes stay at 38rem; the Lean takes the rest |
@@ -248,10 +269,10 @@ right, nothing over the text. Widths are CSS pixels of the window.
 1. **Read.** The paper alone. The hint and the reader-annotation notice are on the first screen.
 2. **Tap linked words.** The inspector opens over the whole screen under the top bar, at once,
    with the quotation first. Its head is one row: "Back to paper" and the two tabs.
-3. **Back to paper** (or the browser's Back, or Escape) closes it. The paper is exactly where
-   it was. A bar stays at the foot: the selection's title, which returns to the words; "View",
-   which reopens the inspector; and "Resume", which lets the selection go. The paper reserves
-   the bar's height so it covers no last line.
+3. **Back to paper** (or Escape) closes it. The paper is exactly where it was. A bar stays at
+   the foot: the selection's state and place, which returns to the words; "View", which
+   reopens the inspector; and "Resume", which lets the selection go. The paper reserves the
+   bar's height so it covers no last line.
 4. Scrolling never reopens the inspector.
 
 Nothing on a phone scrolls sideways except a formula or the Lean inside its own box.
@@ -303,7 +324,8 @@ passes 3:1 alone.
 ## Motion
 
 Every change below is caused by the reader. Nothing else moves. Under
-`prefers-reduced-motion: reduce` every duration is 0.
+`prefers-reduced-motion: reduce` nothing animates: every transition is cut to the site's 1ms
+(kept above zero so that code waiting on a transition's end still hears it) and no keyframe runs.
 
 | Change | Duration, curve | What animates |
 | --- | --- | --- |
