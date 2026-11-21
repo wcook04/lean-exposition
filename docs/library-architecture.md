@@ -26,7 +26,7 @@ The aim is one engine that reads every paper from data. All of it sits under one
 3. **No per-paper home pages.** `/<paper>/` opens the reader at the top of the paper's text. Front matter that a landing page carried moves into the reader's header line and its About panel. That covers credit, the "what this is" line and the shelf of companion pages. The landing pages themselves become redirects: the 257 and SK front pages, the quartic front page and Proof Reader's per-paper fronts.
 4. **Proof Reader's Euler and Navier–Stokes pages.** The earlier brief said to leave them up. Item 4 of the new brief says every old address redirects deeply. I follow the new brief: each Proof Reader page becomes a redirect once its library address passes its browser check. Before that, it stays up unchanged. *Please confirm.*
 5. **Navier–Stokes before the checked typeset copy.** `/navier-stokes/` opens the digest, and its header says the authors' paper is coming. When the verified copy arrives, it becomes the paper's main document and the digest moves to `/navier-stokes/digest/`. The digest's tie ids do not change, so links made in between still resolve. No page is ever set from the PDF's text layer.
-6. **Quartic's pinned editions are dropped.** Quartic's hash-verified `?ed=` editions are not kept. Git history on `wcook04/library` already pins every deployed byte, and no other paper needs pinned editions. An old `?ed=` link redirects to the current reading, and the page says so in one line.
+6. **Quartic's pinned editions are kept as snapshots.** The `?ed=` links went out in emails as fixed, checkable versions. Each old edition is published once, from the quartic gh-pages history, as a static read-only snapshot at `/library/quartic/editions/<ed>/`. Each snapshot carries a one-line banner linking to the current reading. An old `?ed=` link redirects to its snapshot. No new editions are made.
 
 ## 2. URL scheme
 
@@ -62,7 +62,9 @@ instances/<paper>/
   instance.json      id, title, short title, authors[], credit (who wrote, who formalised, the source pins),
                      host line, about[] sections, documents[] (id, slug, title, noun, kind: markdown|pdf|api-map,
                      source path, main: true on one), levels (optional: ordered document ids for Compare),
-                     families[], topics[] (id, name, description, family), shelf groups (e.g. "Library guide")
+                     families[], topics[] (id, name, description, family), topic_order (the seriated colour order,
+                     stored with the topic list), shelf groups (e.g. "Library guide"),
+                     credit_lines[] (the source's own credit, intact: authors, repo, commit, thanks such as Anthropic)
   documents/<doc>/   reading.md (KaTeX-ready, \tag{n}, explicit anchors) or paper.pdf + reading.md transcription;
                      figures/*; numbering.json (label → printed number, used for result and section addresses)
   alignment/         phrases-<doc>.json (phrase-ties/1: ties with id, from/to, role, topic, lean[], comparisons
@@ -73,6 +75,8 @@ instances/<paper>/
                      comparator/ (receipts), unnamed.json (declarations no sentence names)
   graph.json         optional evidence graph; when absent the engine draws the map from ties and Lean dependencies
 ```
+
+**Labels and credit.** Every comparison, title and note carries `source: ai | recorded`. The cards print "AI-assessed" (comparisons) or "AI-drafted" (titles, notes). The header and About carry `credit_lines[]` intact, for example Physlib, Euler and Navier–Stokes. About says no mathematician has reviewed the AI-made links.
 
 **Existing instances.** SK and #257 keep their `examples/` and `papers/` folders. Their `instance.json` points at those folders, so nothing moves on the first pass. Their `copy.ts` slots become `instance.json` fields. Their FrontPage, AboutPage, LeanLanding and ChecksIntro components are dropped, because there are no front pages; any sentences they hold become `about[]`.
 
@@ -121,7 +125,7 @@ A phrase card and the About panel then list "also in <paper>". Euler and Navier�
 |---|---|---|---|
 | Phrase-to-Lean ties, phrase cards, topics | lean-exposition | Kept (base) | The UI Will prefers |
 | Topic families and family colours | lean-exposition (palette change in flight), data from Proof Reader | Kept | The new Euler and NS data carries them; the palette lands separately |
-| Topic colour distance test (CIEDE2000 ΔE ≥ 15, both themes) | quartic | Kept | Guards the palette for 14–16 topics |
+| Topic colour tests | quartic (single ΔE ≥ 15 test), replaced | Kept, as a two-level family palette test | One floor between families and one between shades within a family. Both are tested on the light and dark themes and under deuteranopia and protanopia simulation. The colour order is seriated once per shared topic list and stored with the list, so identical lists get identical colours. The palette module is a separate task. |
 | Argument map, focus graph, edge panel | lean-exposition | Kept | Already shared with the other two by copying |
 | Phrase/graph split with draggable divider; local neighbourhood | quartic | Kept | Better than a tab switch on wide screens |
 | Compare (levels funnel) | lean-exposition | Kept, only for instances with levels | Only SK, #257 and quartic have several levels of one argument |
@@ -143,7 +147,8 @@ A phrase card and the About panel then list "also in <paper>". Euler and Navier�
 | Per-paper position memory and Return | quartic | Kept | Needed once papers switch inside one site |
 | Videos menu with chapters | lean-exposition, quartic | Kept, one menu | |
 | Search | lean-exposition | Kept, across papers | |
-| Hash-verified immutable editions, `?ed=` | quartic | Dropped | Git history pins every deploy; see §1.6 |
+| Hash-verified immutable editions, `?ed=` | quartic | Kept, as frozen snapshots under `quartic/editions/<ed>/` | Emailed links name fixed, checkable versions; see §1.6 |
+| "AI-assessed" and "AI-drafted" labels on comparisons, titles and notes | lean-exposition, quartic | Kept on every phrase and Lean card | About also says no mathematician has reviewed them, as #257 does now |
 | Per-instance front pages and hero (`FrontPage.tsx`, levels band) | lean-exposition | Dropped | No home pages per paper; credit and the "what this is" line move into the header and About |
 | Proof Reader shelf front page | Proof Reader | Dropped, replaced by the library index | One home page |
 | Phone statement sheet (`@sheet`) | Proof Reader | Kept as the reader's phone layout | lean-exposition's phone layout is the base; the sheet transition is adopted if it tests better |
@@ -181,7 +186,7 @@ A phrase card and the About panel then list "also in <paper>". Euler and Navier�
   - `v` → `v`, where `passage` and `closed` drop out
   - `j`, `step` → `?j=&step=`
   - `e=from→to→kind` → `map/?e=from~to~kind`
-  - `ed` is dropped, with a notice
+  - `ed=<hash>` goes to `L/quartic/editions/<hash>/` with the same route, which is the frozen snapshot (§1.6)
 - `reading-api/v1/*` stays served for one release, for any outside reader.
 
 **`proof-reader` (hash routes; `wcook04/proof-reader`, Actions Pages).** Every slug maps to a paper and page:
@@ -245,7 +250,8 @@ library/
    - An engine change re-renders shells for every paper, which takes seconds per paper. Playwright then runs on the smoke set only, unless the PR is labelled `full`.
 4. **`smoke`.** A fixed set runs on every deploy:
    - the library index;
-   - `/euler/`, the largest page, with a load-time budget;
+   - `/euler/`, with a cold-cache load budget at 1440 width;
+   - a Navier–Stokes library guide (the 43k-declaration case), with its own cold-cache load budget at 1440 width;
    - `/erdos-257/record/`;
    - `/navier-stokes/part-1/`;
    - the quartic PDF page;
