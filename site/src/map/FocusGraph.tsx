@@ -1,31 +1,35 @@
-// The focus graph: one subject (a step, a declaration, or the steps of one paragraph) with
-// everything that uses it above and everything it uses below. Every direct neighbour is drawn
-// with its line; neighbours are grouped by what they are; the drawing scrolls when it is larger
-// than its pane, and a small overview shows where the view is. The same file serves the
-// Quartic Reader, the SK and Erdős #257 readers and Proof Reader: docs/graph-pane.md is its
-// specification, and a change here should be copied to the other two.
+// The focus graph: one subject (a step, a declaration, or the steps of one paragraph) in the
+// middle, the cards that use it on the left and the cards it uses on the right, each joined to
+// it by a curved line. It fits its pane when it opens: nodes are one compact line of plain
+// words, and a side with more neighbours than fit is drawn as named groups, each with its
+// count, that open in place. Nothing is left out and nothing is replaced by a bare count.
+// The same file serves the Quartic Reader, the SK and Erdős #257 readers and Proof Reader:
+// docs/graph-pane.md is its specification, and a change here should be copied to the other two.
 //
-// Layout is the browser's own (grids of whole, wrapped titles); the lines are measured from
-// the cards after layout, so a title of any length, or one with typeset mathematics, is never
-// cut and never estimated.
+// Layout is the browser's own (columns of wrapped titles); the lines are measured from the
+// nodes after layout, so a title of any length, or one with typeset mathematics, is never cut.
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import "./focus-graph.css";
 
-/** What a card is, for the reader: this decides its group and its look. */
+/** What a card is, for the reader: this decides its look and, on a crowded side, its group. */
 export type FGRole = "result" | "step" | "definition" | "helper" | "library" | "cited" | "open";
 
 export interface FGCard {
   id: string;
   /** Plain words, shown whole. */
   title: string;
-  /** The raw Lean name, small under the title. */
+  /** The raw Lean name, shown on the subject and in the dock. */
   name?: string;
   role: FGRole;
-  /** A short line over the title: "Theorem 2.1", "Lean helper", "Definition". */
+  /** A short tag before the title: "Theorem 2.1", "Lemma 4.5". */
   kicker?: string;
   /** The topic colour this card shares with its phrases in the paper (any CSS colour). */
   tone?: string;
+  /** The name of that topic: a crowded side is grouped by it. */
+  topic?: string;
+  /** The Lean file or the section of the paper it belongs to: a large group is divided by it. */
+  section?: string;
   /** Where the paper states it, against the reading position. */
   seen?: "before" | "here" | "later";
 }
@@ -34,16 +38,16 @@ export interface FGCard {
  *  `argument`: the paper's own argument, as authored. */
 export interface FGEdge { from: string; to: string; kind?: "proof" | "statement" | "argument" }
 
-export interface FGRoleWords { order: number; one: string; uses: string; usedBy: string }
+export interface FGRoleWords { order: number; one: string; many: string; uses: string; usedBy: string }
 
 export const FG_ROLES: Record<FGRole, FGRoleWords> = {
-  result: { order: 0, one: "Paper result", uses: "Results of the paper it uses", usedBy: "Results of the paper that use it" },
-  step: { order: 1, one: "Step", uses: "Steps of the argument it uses", usedBy: "Steps of the argument that use it" },
-  definition: { order: 2, one: "Definition", uses: "Definitions it uses", usedBy: "Definitions that use it" },
-  cited: { order: 3, one: "Cited result", uses: "Cited results it uses", usedBy: "Cited results that use it" },
-  open: { order: 4, one: "Open question", uses: "Open questions it rests on", usedBy: "Open questions that use it" },
-  helper: { order: 5, one: "Lean helper", uses: "Lean helper lemmas it uses", usedBy: "Lean helper lemmas that use it" },
-  library: { order: 6, one: "Library fact", uses: "Library facts it uses", usedBy: "Library facts that use it" },
+  result: { order: 0, one: "Paper result", many: "Results of the paper", uses: "Results of the paper it uses", usedBy: "Results of the paper that use it" },
+  step: { order: 1, one: "Step", many: "Steps of the argument", uses: "Steps of the argument it uses", usedBy: "Steps of the argument that use it" },
+  definition: { order: 2, one: "Definition", many: "Definitions", uses: "Definitions it uses", usedBy: "Definitions that use it" },
+  cited: { order: 3, one: "Cited result", many: "Cited results", uses: "Cited results it uses", usedBy: "Cited results that use it" },
+  open: { order: 4, one: "Open question", many: "Open questions", uses: "Open questions it rests on", usedBy: "Open questions that use it" },
+  helper: { order: 5, one: "Lean helper", many: "Lean helper lemmas", uses: "Lean helper lemmas it uses", usedBy: "Lean helper lemmas that use it" },
+  library: { order: 6, one: "Library fact", many: "Library facts", uses: "Library facts it uses", usedBy: "Library facts that use it" },
 };
 
 export interface FocusGraphProps {
@@ -71,50 +75,56 @@ export interface FocusGraphProps {
 }
 
 interface Box { x: number; y: number; w: number; h: number }
-interface Seg { d: string; cls: string; edge?: string }
+interface Seg { d: string; cls: string; edge?: string; width?: number }
 interface Drawn { w: number; h: number; segs: Seg[]; paths: Record<string, string>; boxes: { id: string; box: Box; band: string }[] }
+type Side = "users" | "uses";
+interface Rel { kind: string; of: Set<string> }
+/** One thing in a side's column: a card, or a named group of cards that opens in place. */
+type Item =
+  | { type: "node"; id: string }
+  | { type: "group"; key: string; name: string; tone?: string; ids: string[]; open: boolean; children: Item[] };
 
 const ZOOMS = [0.93, 1, 1.15, 1.3, 1.5];
-const CARD_MIN = 178;
-const CARD_MAX = 248;
-const GAP = 12;
-const PAD = 22;
-/** A group's frame: its padding and border. */
-const FRAME = 40;
-/** The frame and the extra left padding of the drawing, where the lines run. */
-const GROUP_CHROME = FRAME + 12;
-const MINI_W = 132;
-const MINI_H = 150;
-const MINI_MIN_W = 72;
-
+const PAD_X = 16;
+const PAD_Y = 14;
+const ITEM_GAP = 6;
+/** A group with more members than this, from several files or sections, opens into those first. */
+const DIVIDE_ABOVE = 18;
+const MINI_W = 150;
+const MINI_H = 58;
+const MINI_MIN_W = 64;
 
 export function FocusGraph(props: FocusGraphProps) {
   const { subjects, card, edges, route, routeNote, label, lit, held, onSubject, onHover, renderTitle } = props;
   const scroller = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
+  const [size, setSize] = useState({ w: 0, h: 0 });
   const [zoomAt, setZoomAt] = useState(1);
   const zoom = ZOOMS[zoomAt];
   const [drawn, setDrawn] = useState<Drawn | null>(null);
   const [hot, setHot] = useState<string | null>(null);
   const [view, setView] = useState<Box>({ x: 0, y: 0, w: 0, h: 0 });
+  /** Groups the reader opened, by side and key. */
+  const [opened, setOpened] = useState<ReadonlySet<string>>(new Set());
+  /** How many times the first estimate of what fits has been tightened for this subject. */
+  const [tight, setTight] = useState(0);
   const moved = useRef(false);
 
   const words = useCallback((role: FGRole): FGRoleWords => ({ ...FG_ROLES[role], ...(props.roles?.[role] ?? {}) }), [props.roles]);
 
-  // What is drawn: the subjects, in ranks when they use one another; above, the cards that use
-  // a subject; below, the cards a subject uses. A card that both uses and is used is drawn above.
+  // What is drawn: the subjects, in ranks when they use one another; on the left the cards that
+  // use a subject; on the right the cards a subject uses. A card that both uses and is used is on the left.
   const model = useMemo(() => {
     const subj = subjects.filter((id, i) => card(id) && subjects.indexOf(id) === i);
     const isSubject = new Set(subj);
-    const users = new Map<string, { kind: string; of: Set<string> }>();
-    const uses = new Map<string, { kind: string; of: Set<string> }>();
+    const users = new Map<string, Rel>();
+    const uses = new Map<string, Rel>();
     const inner: FGEdge[] = [];
-    const add = (into: typeof users, id: string, subject: string, kind = "proof") => {
+    const add = (into: Map<string, Rel>, id: string, subject: string, kind = "proof") => {
       if (!card(id)) return;
       const row = into.get(id) ?? { kind, of: new Set<string>() };
-      // A statement-only use is said so only if no proof or body also uses it.
-      if (kind !== "statement") row.kind = kind;
+      // A statement-only use is said so only if no proof or body also uses it; the paper's argument outranks both.
+      if (kind === "argument" || (kind !== "statement" && row.kind !== "argument")) row.kind = kind;
       row.of.add(subject);
       into.set(id, row);
     };
@@ -125,7 +135,7 @@ export function FocusGraph(props: FocusGraphProps) {
       else if (t) add(users, e.from, e.to, e.kind);
     }
     for (const id of users.keys()) uses.delete(id);
-    // Ranks of the subjects: a subject sits under every subject that uses it.
+    // The subjects of one paragraph, in an order in which a step comes after every step that uses it.
     const rank = new Map(subj.map((id) => [id, 0]));
     for (let pass = 0; pass < subj.length; pass++) {
       let changed = false;
@@ -135,43 +145,119 @@ export function FocusGraph(props: FocusGraphProps) {
       }
       if (!changed) break;
     }
-    const ranks: string[][] = [];
-    for (const id of subj) (ranks[rank.get(id) ?? 0] ??= []).push(id);
-    const group = (side: Map<string, { kind: string; of: Set<string> }>) => {
-      const by = new Map<FGRole, string[]>();
-      for (const id of side.keys()) {
-        const role = card(id)!.role;
-        by.set(role, [...(by.get(role) ?? []), id]);
-      }
-      return [...by.entries()].sort((a, b) => words(a[0]).order - words(b[0]).order).map(([role, ids]) => ({ role, ids }));
-    };
-    return { subj, ranks: ranks.filter(Boolean), inner, users, uses, above: group(users), below: group(uses) };
+    const ordered = [...subj].sort((a, b) => (rank.get(a) ?? 0) - (rank.get(b) ?? 0));
+    const sorted = (side: Map<string, Rel>) =>
+      [...side.keys()].sort((a, b) => {
+        const A = card(a)!, B = card(b)!;
+        return words(A.role).order - words(B.role).order || (A.topic ?? "~").localeCompare(B.topic ?? "~") || A.title.localeCompare(B.title);
+      });
+    return { subj: ordered, inner, users, uses, left: sorted(users), right: sorted(uses) };
   }, [subjects, card, edges, words]);
 
   const key = model.subj.join("|");
   const many = model.subj.length > 1;
+  useLayoutEffect(() => { setOpened(new Set()); setTight(0); }, [key]);
+  useLayoutEffect(() => { setTight(0); }, [size.w, size.h, zoom]);
 
-  // How many cards a row holds, and how wide each is, for the room there is.
-  // A drawing taller than its area keeps a column on the right for the overview, so no card lies under it.
-  const tall = !!drawn && drawn.h * zoom > view.h + 4;
-  const reserve = tall ? MINI_W + 18 : 0;
-  const room = Math.max(CARD_MIN, ((width || 600) - reserve) / zoom - 2 * PAD - GROUP_CHROME);
-  const cols = Math.max(1, Math.floor((room + GAP) / (CARD_MIN + GAP)));
-  const biggest = Math.max(1, ...model.above.map((g) => g.ids.length), ...model.below.map((g) => g.ids.length), ...model.ranks.map((r) => r.length));
-  const used = Math.min(cols, biggest);
-  const cardW = Math.floor(Math.min(CARD_MAX, (room - (used - 1) * GAP) / used));
+  // The widths of the three columns, for the room there is.
+  const W = (size.w || 640) / zoom;
+  const H = (size.h || 420) / zoom;
+  const both = model.left.length > 0 && model.right.length > 0;
+  const gap = Math.round(Math.max(30, Math.min(96, W * 0.07)));
+  const subjectW = Math.round(Math.max(168, Math.min(280, W * (both ? 0.27 : 0.3))));
+  /** The width of the note that stands where a side has nothing. */
+  const NOTE_W = 132;
+  const sideW = Math.floor(Math.max(150, Math.min(both ? 380 : 460, both ? (W - subjectW - 2 * PAD_X - 2 * gap) / 2 : W - subjectW - 2 * PAD_X - 2 * gap - NOTE_W)));
+
+  // A column fits when its nodes' heights, estimated from the length of each title, come to no more
+  // than the height of the area. A side that does not fit is drawn as groups, by topic where the cards
+  // have one and by kind otherwise; the smallest groups are then drawn out again while there is room.
+  const column = useCallback((side: Side, ids: string[]): Item[] => {
+    const lines = (text: string, tag = "") => Math.max(1, Math.ceil(((text.length + (tag ? tag.length + 1 : 0)) * 6.9) / (sideW - 24)));
+    const nodeH = (id: string) => { const c = card(id)!; return 10 + lines(c.title, c.kicker) * 17.5 + ITEM_GAP; };
+    const headH = (name: string) => 12 + lines(name + " 000") * 17.5 + ITEM_GAP;
+    const room = (H - 2 * PAD_Y - 30) * Math.pow(0.86, tight);
+    const node = (id: string): Item => ({ type: "node", id });
+    const by = (list: string[], pick: (c: FGCard) => string) => {
+      const groups = new Map<string, string[]>();
+      for (const id of list) { const k = pick(card(id)!); groups.set(k, [...(groups.get(k) ?? []), id]); }
+      return [...groups.entries()];
+    };
+    const open = (path: string) => opened.has(`${side}:${path}`);
+    const group = (path: string, name: string, list: string[], divide: boolean): Item => {
+      const tones = new Set(list.map((id) => card(id)!.tone));
+      const isOpen = open(path);
+      let children: Item[] = [];
+      if (isOpen) {
+        const sections = divide && list.length > DIVIDE_ABOVE ? by(list, (c) => c.section ?? "") : [];
+        children = sections.length > 1 && sections.length < list.length
+          ? sections.map(([s, part]) => (part.length === 1 ? node(part[0]) : group(`${path}/${s}`, s || "Elsewhere", part, false)))
+          : list.map(node);
+      }
+      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, ids: list, open: isOpen, children };
+    };
+    if (ids.reduce((sum, id) => sum + nodeH(id), 0) <= room) return ids.map(node);
+    // Start from the kinds, then divide the largest group that can be divided (by topic, then by file or
+    // section) for as long as the column still fits: the column says as much as its height allows.
+    interface Part { name: string; list: string[]; depth: number }
+    const several = by(ids, (c) => c.role).length > 1;
+    let parts: Part[] = by(ids, (c) => words(c.role).many).map(([name, list]) => ({ name, list, depth: 0 }));
+    const total = (ps: Part[]) => ps.reduce((sum, p) => sum + headH(p.name), 0);
+    const divide = (p: Part): Part[] | null => {
+      const kind = words(card(p.list[0])!.role).many;
+      const lower = kind.charAt(0).toLowerCase() + kind.slice(1);
+      for (const depth of [1, 2]) {
+        if (p.depth >= depth) continue;
+        const pieces = by(p.list, (c) => (depth === 1 ? c.topic : c.section) ?? "");
+        if (pieces.length < 2) continue;
+        const base = p.depth === 0 ? "" : p.name;
+        return pieces.map(([k, list]) => ({
+          list,
+          depth,
+          name: depth === 1 ? (k ? (several ? `${k} · ${lower}` : k) : p.name) : (k ? `${base ? base + " · " : ""}${k}` : p.name),
+        }));
+      }
+      return null;
+    };
+    for (let guard = 0; guard < 40; guard++) {
+      const order = parts.map((p, i) => i).sort((a, b) => parts[b].list.length - parts[a].list.length);
+      let done = false;
+      for (const i of order) {
+        if (parts[i].list.length < 4) break;
+        const pieces = divide(parts[i]);
+        if (!pieces) continue;
+        const next = [...parts.slice(0, i), ...pieces, ...parts.slice(i + 1)];
+        if (total(next) > room) continue;
+        parts = next;
+        done = true;
+        break;
+      }
+      if (!done) break;
+    }
+    // Draw out the smallest groups as their own nodes while the column still fits.
+    let left = room - total(parts);
+    const out = new Set<number>();
+    for (const i of parts.map((p, n) => n).sort((a, b) => parts[a].list.length - parts[b].list.length)) {
+      const cost = parts[i].list.reduce((sum, id) => sum + nodeH(id), 0) - headH(parts[i].name);
+      if (parts[i].list.length === 1 || cost <= left) { out.add(i); left -= Math.max(0, cost); }
+    }
+    return parts.flatMap((p, i) => (out.has(i) && !open(p.name) ? p.list.map(node) : [group(p.name, p.name, p.list, p.depth < 2)]));
+  }, [card, words, sideW, H, tight, opened]);
+
+  const leftItems = useMemo(() => column("users", model.left), [column, model.left]);
+  const rightItems = useMemo(() => column("uses", model.right), [column, model.right]);
 
   useLayoutEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    const read = () => setWidth(el.clientWidth);
+    const read = () => setSize((s) => (s.w === el.clientWidth && s.h === el.clientHeight ? s : { w: el.clientWidth, h: el.clientHeight }));
     read();
     const ro = new ResizeObserver(read);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  // The lines, measured from the cards as the browser laid them out.
+  // The lines, measured from the nodes as the browser laid them out.
   const measure = useCallback(() => {
     const w = world.current;
     if (!w) return;
@@ -182,84 +268,72 @@ export function FocusGraph(props: FocusGraphProps) {
     };
     const frame = w.querySelector(".fg__subjects");
     if (!frame) { setDrawn(null); return; }
-    const S = box(frame);
-    const sx = Math.round(S.x + S.w / 2);
+    const F = box(frame);
     const segs: Seg[] = [];
     const paths: Record<string, string> = {};
     const boxes: Drawn["boxes"] = [];
-    const line = (pts: [number, number][]) => pts.map(([x, y], i) => `${i ? "L" : "M"}${Math.round(x)} ${Math.round(y)}`).join(" ");
-    for (const el of w.querySelectorAll<HTMLElement>(".fg__card")) boxes.push({ id: el.dataset.card!, box: box(el), band: el.dataset.band! });
-
+    const subjectBox = new Map<string, Box>();
+    for (const el of w.querySelectorAll<HTMLElement>(".fg__card, .fg__grouphead")) {
+      const b = box(el);
+      boxes.push({ id: el.dataset.card ?? `group:${el.dataset.group}`, box: b, band: el.dataset.band ?? "group" });
+      if (el.dataset.band === "subject") subjectBox.set(el.dataset.card!, b);
+    }
+    const curve = (x1: number, y1: number, x2: number, y2: number) => {
+      const mx = (x1 + x2) / 2;
+      return `M${x1.toFixed(1)} ${y1.toFixed(1)} C${mx.toFixed(1)} ${y1.toFixed(1)}, ${mx.toFixed(1)} ${y2.toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+    };
     for (const side of ["users", "uses"] as const) {
-      const band = w.querySelector(`.fg__band[data-band="${side}"]`);
-      if (!band) continue;
-      const B = box(band);
-      const up = side === "users";
-      const mx = B.x - 12;
-      const busY = up ? (B.y + B.h + S.y) / 2 : (S.y + S.h + B.y) / 2;
-      const stubs: number[] = [];
-      const row = (band as HTMLElement).dataset.flow === "row";
-      const spines: number[] = [];
-      for (const g of band.querySelectorAll<HTMLElement>(".fg__group")) {
-        const G = box(g);
-        const spine = G.x + 12;
-        // Side by side, each group's own line meets the bus; stacked, a stub joins it to the shared line on the left.
-        const stubY = row ? busY : up ? G.y + G.h - 12 : G.y + 17;
-        if (row) spines.push(spine);
-        else {
-          stubs.push(stubY);
-          segs.push({ d: line([[mx, stubY], [spine, stubY]]), cls: "fg__wire" });
+      const col = w.querySelector(`.fg__side[data-band="${side}"]`);
+      if (!col) continue;
+      const rels = side === "users" ? model.users : model.uses;
+      // Where lines meet a subject: spread along its edge, in the order of the nodes they come from.
+      const tops = [...col.querySelectorAll<HTMLElement>(":scope > .fg__card, :scope > .fg__group > .fg__grouphead")];
+      const perSubject = new Map<string, number>();
+      const ends: { el: HTMLElement; b: Box; to: Box; id: string }[] = [];
+      for (const el of tops) {
+        const b = box(el);
+        const id = el.dataset.card;
+        const of = id ? [...(rels.get(id)?.of ?? [])] : [];
+        // A group's line goes to the frame of the subjects; a card's to each subject it is related to.
+        const targets = many && of.length ? of.map((s) => subjectBox.get(s)).filter((x): x is Box => !!x) : [F];
+        for (const to of targets) {
+          const k = `${to.x},${to.y}`;
+          perSubject.set(k, (perSubject.get(k) ?? 0) + 1);
+          ends.push({ el, b, to, id: id ?? `group:${el.dataset.group}` });
         }
-        const rows = new Map<number, { el: HTMLElement; b: Box }[]>();
-        for (const c of g.querySelectorAll<HTMLElement>(".fg__card")) {
-          const b = box(c);
-          const at = Math.round(b.y);
-          rows.set(at, [...(rows.get(at) ?? []), { el: c, b }]);
-        }
-        let far = stubY;
-        for (const [, cards] of rows) {
-          const top = Math.min(...cards.map((c) => c.b.y));
-          const bottom = Math.max(...cards.map((c) => c.b.y + c.b.h));
-          const railY = up ? bottom + 9 : top - 9;
-          far = up ? Math.min(far, railY) : Math.max(far, railY);
-          const last = Math.max(...cards.map((c) => c.b.x + c.b.w / 2));
-          segs.push({ d: line([[spine, railY], [last, railY]]), cls: "fg__wire" });
-          for (const c of cards) {
-            const cx = c.b.x + c.b.w / 2;
-            const id = c.el.dataset.card!;
-            const kind = c.el.dataset.kind ?? "proof";
-            const edge = up ? `${id}>` : `>${id}`;
-            segs.push({ d: line(up ? [[cx, c.b.y + c.b.h], [cx, railY]] : [[cx, railY], [cx, c.b.y]]), cls: `fg__wire fg__tick fg__tick--${kind}`, edge });
-            const join: [number, number][] = row ? [[spine, busY]] : [[spine, stubY], [mx, stubY], [mx, busY]];
-            const whole: [number, number][] = up
-              ? [[cx, c.b.y + c.b.h], [cx, railY], [spine, railY], ...join, [sx, busY], [sx, S.y]]
-              : [[sx, S.y + S.h], [sx, busY], ...[...join].reverse(), [spine, railY], [cx, railY], [cx, c.b.y]];
-            paths[id] = line(whole);
-          }
-        }
-        segs.push({ d: line([[spine, stubY], [spine, far]]), cls: "fg__wire" });
       }
-      if (spines.length) {
-        segs.push({ d: line([[Math.min(sx, ...spines), busY], [Math.max(sx, ...spines), busY]]), cls: "fg__wire fg__trunk" });
-        segs.push({ d: line([[sx, busY], [sx, up ? S.y : S.y + S.h]]), cls: "fg__wire fg__trunk" });
-      }
-      if (stubs.length) {
-        const end = up ? Math.min(...stubs) : Math.max(...stubs);
-        segs.push({ d: line([[mx, end], [mx, busY], [sx, busY], [sx, up ? S.y : S.y + S.h]]), cls: "fg__wire fg__trunk" });
+      const seenAt = new Map<string, number>();
+      for (const e of ends) {
+        const k = `${e.to.x},${e.to.y}`;
+        const n = perSubject.get(k)!;
+        const i = seenAt.get(k) ?? 0;
+        seenAt.set(k, i + 1);
+        const spread = Math.min(e.to.h - 12, (n - 1) * 5);
+        const ty = e.to.y + e.to.h / 2 + (n > 1 ? -spread / 2 + (spread * i) / (n - 1) : 0);
+        const ny = e.b.y + e.b.h / 2;
+        const d = side === "users" ? curve(e.b.x + e.b.w, ny, e.to.x - 5, ty) : curve(e.to.x + e.to.w, ty, e.b.x - 5, ny);
+        const isGroup = !e.el.dataset.card;
+        const count = Number(e.el.dataset.count ?? 1);
+        const kind = isGroup ? (e.el.dataset.kind ?? "proof") : (rels.get(e.id)?.kind ?? "proof");
+        segs.push({ d, cls: `fg__wire fg__edge fg__edge--${kind}${isGroup ? " fg__edge--group" : ""}`, edge: side === "users" ? `${e.id}>` : `>${e.id}`, width: isGroup ? 1.6 + Math.min(4.4, Math.log2(count) * 0.8) : undefined });
+        paths[e.id] = paths[e.id] ? `${paths[e.id]} ${d}` : d;
+        // A card inside an open group lights the group's own line.
+        if (isGroup) for (const m of e.el.parentElement!.querySelectorAll<HTMLElement>(".fg__card")) paths[m.dataset.card!] = paths[e.id];
       }
     }
-    // Between the subjects of one paragraph: each line drops from a step to one it uses.
-    const at = new Map(boxes.filter((b) => b.band === "subject").map((b) => [b.id, b.box]));
+    // Between the subjects of one paragraph: each line runs down from a step to one it uses.
     model.inner.forEach((e, i) => {
-      const a = at.get(e.from), b = at.get(e.to);
+      const a = subjectBox.get(e.from), b = subjectBox.get(e.to);
       if (!a || !b) return;
-      const lane = 8 + (i % 4) * 4;
-      const ax = a.x + a.w / 2 + ((i % 3) - 1) * 10, bx = b.x + b.w / 2 + ((i % 3) - 1) * 10;
-      const d = line([[ax, a.y + a.h], [ax, b.y - lane], [bx, b.y - lane], [bx, b.y]]);
-      segs.push({ d, cls: `fg__wire fg__tick fg__tick--${e.kind ?? "proof"} fg__inner`, edge: `${e.from}>${e.to}` });
+      const bulge = 14 + (i % 3) * 9;
+      const x = a.x + a.w - 14 - (i % 4) * 12;
+      const d = b.y > a.y + a.h + 30 || b.y < a.y
+        ? `M${x} ${a.y + a.h} C${x + bulge * 3} ${a.y + a.h + 20}, ${x + bulge * 3} ${b.y - 20}, ${x} ${b.y - 5}`
+        : `M${x} ${a.y + a.h} L${x} ${b.y - 5}`;
+      segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "proof"} fg__inner`, edge: `${e.from}>${e.to}` });
     });
     setDrawn({ w: Math.ceil(origin.width / zoom), h: Math.ceil(origin.height / zoom), segs, paths, boxes });
-  }, [zoom, model]);
+  }, [zoom, model, many]);
 
   useLayoutEffect(() => {
     measure();
@@ -268,34 +342,37 @@ export function FocusGraph(props: FocusGraphProps) {
     // Fonts and typeset titles can arrive after the first layout.
     const ro = new ResizeObserver(() => measure());
     ro.observe(w);
-    for (const c of w.querySelectorAll(".fg__card")) ro.observe(c);
+    for (const c of w.querySelectorAll(".fg__card, .fg__grouphead")) ro.observe(c);
     return () => ro.disconnect();
-  }, [measure, key, cardW, used]);
+  }, [measure, key, leftItems, rightItems, sideW, subjectW]);
 
-  // The subject comes to the middle whenever it changes; a reader's own scrolling is kept until then.
+  // If the estimate let through more than fits, group more. The reader's own opened groups may overflow: they scroll.
+  useLayoutEffect(() => {
+    const el = scroller.current, w = world.current;
+    if (!el || !w || opened.size || tight >= 6) return;
+    const grouped = (items: Item[]) => items.every((it) => it.type === "group");
+    if (w.getBoundingClientRect().height > el.clientHeight + 2 && !(grouped(leftItems) && grouped(rightItems))) setTight((t) => t + 1);
+  }, [drawn, opened, tight, leftItems, rightItems]);
+
+  // The subject is in the middle whenever it changes; a reader's own scrolling is kept until then.
   const centre = useCallback(() => {
     const el = scroller.current, w = world.current;
     const frame = w?.querySelector<HTMLElement>(".fg__subjects");
     if (!el || !w || !frame) return;
     const o = w.getBoundingClientRect(), r = frame.getBoundingClientRect();
-    const cx = r.left - o.left + r.width / 2, top = r.top - o.top, cy = top + r.height / 2;
-    // Parents above, as many neighbours as fit below: the subject sits a little above the middle,
-    // and wholly in view when it is taller than that leaves room for.
-    let y = cy - el.clientHeight * 0.42;
-    // Nothing drawn below: the room goes to what uses it, above.
-    if (!w.querySelector('.fg__band[data-band="uses"]')) y = Math.max(top + r.height + 64 - el.clientHeight, Math.min(y, top - 12));
-    if (r.height > el.clientHeight * 0.8) y = top - 12;
+    const cx = r.left - o.left + r.width / 2, cy = r.top - o.top + r.height / 2;
+    const y = r.height > el.clientHeight - 24 ? r.top - o.top - 12 : cy - el.clientHeight / 2;
     el.scrollTo({ left: Math.max(0, cx - el.clientWidth / 2), top: Math.max(0, y) });
     moved.current = false;
   }, []);
   useLayoutEffect(() => { centre(); }, [key, centre]);
-  useLayoutEffect(() => { if (!moved.current) centre(); }, [drawn?.h, drawn?.w, width, centre]);
+  useLayoutEffect(() => { if (!moved.current && !opened.size) centre(); }, [drawn?.h, drawn?.w, size.w, size.h, centre, opened]);
 
   const readView = useCallback(() => {
     const el = scroller.current;
     if (el) setView({ x: el.scrollLeft, y: el.scrollTop, w: el.clientWidth, h: el.clientHeight });
   }, []);
-  useLayoutEffect(readView, [readView, drawn, width]);
+  useLayoutEffect(readView, [readView, drawn, size]);
 
   // Drag to pan. A drag that starts on a card and moves is a pan, not a click.
   const drag = useRef<{ x: number; y: number; left: number; top: number; far: boolean } | null>(null);
@@ -342,14 +419,30 @@ export function FocusGraph(props: FocusGraphProps) {
 
   const hover = (id: string | null) => { setHot(id); onHover?.(id); };
   const choose = (id: string) => { if (!suppressClick.current) onSubject(id); };
+  // Opening a group keeps it in view: the drawing may now be taller than its area, and scrolls.
+  const toggle = (side: Side, path: string) => {
+    if (suppressClick.current) return;
+    const k = `${side}:${path}`;
+    setOpened((was) => {
+      const next = new Set(was);
+      if (next.has(k)) { for (const o of was) if (o === k || o.startsWith(`${k}/`)) next.delete(o); } else next.add(k);
+      return next;
+    });
+    moved.current = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const el = world.current?.querySelector<HTMLElement>(`.fg__side[data-band="${side}"] .fg__group[data-group="${CSS.escape(path)}"]`);
+      el?.scrollIntoView({ block: el.getBoundingClientRect().height > (scroller.current?.clientHeight ?? 0) ? "start" : "nearest", inline: "nearest" });
+    }));
+  };
 
   const litSet = useMemo(() => new Set(lit ?? []), [lit]);
   const hotOf = hot ? (model.users.get(hot)?.of ?? model.uses.get(hot)?.of) : null;
 
-  const renderCard = (id: string, band: "users" | "subject" | "uses", kind?: string) => {
+  const renderCard = (id: string, band: Side | "subject", kind?: string) => {
     const c = card(id)!;
-    const w = words(c.role);
-    const cls = ["fg__card", `fg__card--${c.role}`, band === "subject" ? "is-subject" : "", litSet.has(id) ? "is-lit" : "", held === id ? "is-held" : "", hot === id ? "is-hot" : "", band === "subject" && hotOf?.has(id) ? "is-related" : ""].filter(Boolean).join(" ");
+    const subject = band === "subject";
+    const cls = ["fg__card", `fg__card--${c.role}`, subject ? "is-subject" : "", litSet.has(id) ? "is-lit" : "", held === id ? "is-held" : "", hot === id ? "is-hot" : "", subject && hotOf?.has(id) ? "is-related" : ""].filter(Boolean).join(" ");
+    const said = `${c.kicker ?? words(c.role).one}${c.seen === "later" ? ", stated later in the paper" : c.seen === "before" ? ", already read" : ""}`;
     return (
       <button
         key={id}
@@ -360,46 +453,61 @@ export function FocusGraph(props: FocusGraphProps) {
         data-role={c.role}
         data-kind={kind}
         data-seen={c.seen}
-        aria-current={band === "subject" ? "true" : undefined}
-        style={{ width: cardW, ...(c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : {}) }}
+        aria-current={subject ? "true" : undefined}
+        title={subject ? undefined : said}
+        style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
         onClick={() => choose(id)}
         onMouseEnter={() => hover(id)}
         onMouseLeave={() => hover(null)}
         onFocus={() => hover(id)}
         onBlur={() => hover(null)}
       >
-        <span className="fg__kicker">
-          <span>{c.kicker ?? w.one}</span>
-          {c.seen === "later" && <span className="fg__seen">stated later</span>}
-          {c.seen === "before" && <span className="fg__seen">read</span>}
+        {subject && <span className="fg__kicker">{c.kicker ?? words(c.role).one}</span>}
+        <span className="fg__title">
+          {!subject && c.kicker && <span className="fg__tag">{c.kicker}</span>}
+          {renderTitle ? renderTitle(c) : c.title}
         </span>
-        <span className="fg__title">{renderTitle ? renderTitle(c) : c.title}</span>
-        {c.name && <code className="fg__name">{c.name}</code>}
+        {subject && !many && c.name && <code className="fg__name">{c.name}</code>}
       </button>
     );
   };
 
-  // Groups stand side by side when they all fit in one row; otherwise they stack on one left edge.
-  const sideBySide = (groups: { ids: string[] }[]) =>
-    groups.length > 1 && groups.reduce((sum, g) => sum + Math.min(used, g.ids.length) * (cardW + GAP) - GAP + 40, (groups.length - 1) * 16) <= room + FRAME;
+  const renderItems = (side: Side, items: Item[], rels: Map<string, Rel>): ReactNode =>
+    items.map((it) => {
+      if (it.type === "node") return renderCard(it.id, side, rels.get(it.id)?.kind);
+      const kinds = new Set(it.ids.map((id) => rels.get(id)?.kind ?? "proof"));
+      const kind = kinds.has("argument") ? "argument" : kinds.size === 1 && kinds.has("statement") ? "statement" : "proof";
+      return (
+        <div key={`g:${it.key}`} className={`fg__group${it.open ? " is-open" : ""}`} data-group={it.key} style={it.tone ? ({ "--fg-tone": it.tone } as React.CSSProperties) : undefined}>
+          <button
+            type="button"
+            className="fg__grouphead"
+            data-group={it.key}
+            data-count={it.ids.length}
+            data-kind={kind}
+            aria-expanded={it.open}
+            title={it.open ? "Fold these back into one group" : `Show these ${it.ids.length} cards here`}
+            onClick={() => toggle(side, it.key)}
+          >
+            <span className="fg__groupname">{it.name}</span>
+            <span className="fg__count">{it.ids.length}</span>
+            <span className="fg__sign" aria-hidden="true">{it.open ? "−" : "+"}</span>
+          </button>
+          {it.open && <div className="fg__members">{renderItems(side, it.children, rels)}</div>}
+        </div>
+      );
+    });
 
-  const renderBand = (side: "users" | "uses", groups: { role: FGRole; ids: string[] }[], rows: Map<string, { kind: string }>) =>
-    groups.length > 0 && (
-      <div className="fg__band" data-band={side} data-flow={sideBySide(groups) ? "row" : "column"}>
-        {groups.map((g) => {
-          const w = words(g.role);
-          const text = side === "uses" ? w.uses : w.usedBy;
-          return (
-            <section key={g.role} className={`fg__group fg__group--${g.role}`} data-group={g.role} aria-label={text}>
-              <h4 className="fg__grouphead">{many ? text.replace(/\bit uses\b/, "these use").replace(/\buse it\b/, "use these").replace(/\bit rests on\b/, "these rest on") : text} <span>{g.ids.length}</span></h4>
-              <div className="fg__grid" style={{ gridTemplateColumns: `repeat(${Math.min(used, g.ids.length)}, ${cardW}px)` }}>
-                {g.ids.map((id) => renderCard(id, side, rows.get(id)?.kind))}
-              </div>
-            </section>
-          );
-        })}
-      </div>
-    );
+  const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => (
+    <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: ids.length ? sideW : NOTE_W }}>
+      {ids.length > 0
+        ? <>
+          <h4 className="fg__sidehead">{side === "users" ? (many ? "Use these" : "Use this") : (many ? "These use" : "This uses")} <span>{ids.length}</span></h4>
+          {renderItems(side, items, rels)}
+        </>
+        : <p className="fg__edge-note" data-band-note={side}>{side === "users" ? `Nothing drawn here uses ${many ? "these" : "this"}.` : `${many ? "These use" : "This uses"} nothing else drawn here.`}</p>}
+    </div>
+  );
 
   const overflow = !!drawn && (drawn.h * zoom > view.h + 4 || drawn.w * zoom > view.w + 4);
   const mini = drawn ? Math.min(MINI_W / drawn.w, MINI_H / drawn.h) : 0;
@@ -412,10 +520,22 @@ export function FocusGraph(props: FocusGraphProps) {
     moved.current = true;
     el.scrollTo({ left: ((e.clientX - r.left) / miniX) * zoom - el.clientWidth / 2, top: ((e.clientY - r.top) / mini) * zoom - el.clientHeight / 2 });
   };
-  const kinds = new Set([...model.users.values(), ...model.uses.values()].map((r) => r.kind));
+  const kinds = new Set([...model.users.values(), ...model.uses.values(), ...model.inner.map((e) => ({ kind: e.kind ?? "proof" }))].map((r) => r.kind));
+  const groups = (items: Item[]) => items.filter((it) => it.type === "group").length;
+  const roles = new Set([...model.left, ...model.right].map((id) => card(id)!.role));
 
   return (
-    <div className="fg" data-subjects={key} data-cards={(drawn?.boxes.length ?? 0)} data-lines={drawn?.segs.filter((s) => s.edge).length ?? 0} data-overflow={overflow ? "true" : "false"}>
+    <div
+      className="fg"
+      data-subjects={key}
+      data-users={model.left.length}
+      data-uses={model.right.length}
+      data-groups={groups(leftItems) + groups(rightItems)}
+      data-opened={opened.size}
+      data-cards={drawn?.boxes.filter((b) => b.band !== "group").length ?? 0}
+      data-lines={drawn?.segs.filter((s) => s.edge).length ?? 0}
+      data-overflow={overflow ? "true" : "false"}
+    >
       {label && <p className="fg__label">{label}</p>}
       {(route || routeNote) && (
         <nav className="fg__route" aria-label="From this step to the main result">
@@ -424,7 +544,7 @@ export function FocusGraph(props: FocusGraphProps) {
               <span className="fg__routeword">{route.length === 1 ? "The main result uses this directly:" : `${route.length} steps to the main result:`}</span>
               {route.map((id, i) => (
                 <span key={id} className="fg__crumb">
-                  <span aria-hidden="true">↑</span>
+                  <span aria-hidden="true">→</span>
                   <button type="button" onClick={() => onSubject(id)} className={i === route.length - 1 ? "is-main" : undefined}>{card(id) ? (renderTitle ? renderTitle(card(id)!) : card(id)!.title) : id}</button>
                 </span>
               ))}
@@ -437,38 +557,40 @@ export function FocusGraph(props: FocusGraphProps) {
         ref={scroller}
         tabIndex={0}
         role="group"
-        aria-label="Graph: what uses this step, above, and what it uses, below. Scroll or drag to move."
+        aria-label="Graph: what uses this step, on the left, and what it uses, on the right. Scroll or drag to move."
         onScroll={readView}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
-        <div className="fg__world" ref={world} style={{ zoom, paddingRight: PAD + reserve / zoom }}>
+        <div className="fg__world" ref={world} style={{ zoom, columnGap: gap, }}>
           {drawn && (
             <svg className="fg__lines" width={drawn.w} height={drawn.h} aria-hidden="true">
-              {drawn.segs.map((s, i) => <path key={i} d={s.d} className={s.cls} data-edge={s.edge} />)}
-              {hot && drawn.paths[hot] && <path d={drawn.paths[hot]} className="fg__hotline" />}
+              <defs>
+                <marker id="fg-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0.6 L7.4 4 L0 7.4 z" className="fg__arrow" /></marker>
+                <marker id="fg-arrow-hot" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0.6 L7.4 4 L0 7.4 z" className="fg__arrow fg__arrow--hot" /></marker>
+              </defs>
+              {drawn.segs.map((s, i) => <path key={i} d={s.d} className={s.cls} data-edge={s.edge} markerEnd="url(#fg-arrow)" style={s.width ? { strokeWidth: s.width } : undefined} />)}
+              {hot && drawn.paths[hot] && <path d={drawn.paths[hot]} className="fg__hotline" markerEnd="url(#fg-arrow-hot)" />}
             </svg>
           )}
           {model.subj.length === 0
             ? <p className="fg__none">Nothing is drawn for this place in the paper.</p>
             : <>
-              {renderBand("users", model.above, model.users)}
-              {model.above.length === 0 && <p className="fg__edge-note" data-band-note="users">Nothing drawn here uses {many ? "these" : "this"}.</p>}
-              <div className={`fg__subjects${many ? " fg__subjects--many" : ""}`} data-count={model.subj.length}>
-                {many && <h4 className="fg__grouphead">{props.manyLabel ?? "Stated in this paragraph"} <span>{model.subj.length}</span></h4>}
-                {model.ranks.map((ids, i) => <div key={i} className="fg__rank" style={{ maxWidth: used * (cardW + GAP) - GAP }}>{ids.map((id) => renderCard(id, "subject"))}</div>)}
+              {renderSide("users", leftItems, model.left, model.users)}
+              <div className={`fg__subjects${many ? " fg__subjects--many" : ""}`} data-count={model.subj.length} style={{ width: subjectW }}>
+                {many && <h4 className="fg__sidehead">{props.manyLabel ?? "Stated in this paragraph"} <span>{model.subj.length}</span></h4>}
+                {model.subj.map((id) => renderCard(id, "subject"))}
               </div>
-              {renderBand("uses", model.below, model.uses)}
-              {model.below.length === 0 && <p className="fg__edge-note" data-band-note="uses">{many ? "These use" : "This uses"} nothing else drawn here.</p>}
+              {renderSide("uses", rightItems, model.right, model.uses)}
             </>}
         </div>
       </div>
       <div className="fg__tools" role="group" aria-label="Move the graph">
         <button type="button" onClick={() => setZoomAt((z) => Math.max(0, z - 1))} disabled={zoomAt === 0} aria-label="Smaller">−</button>
         <button type="button" onClick={() => setZoomAt((z) => Math.min(ZOOMS.length - 1, z + 1))} disabled={zoomAt === ZOOMS.length - 1} aria-label="Larger">+</button>
-        <button type="button" onClick={() => { setZoomAt(1); requestAnimationFrame(centre); }} title="Bring the subject back to the middle">Centre</button>
+        <button type="button" onClick={() => { setZoomAt(1); setOpened(new Set()); requestAnimationFrame(centre); }} title="Fold every group and bring the subject back to the middle">Fit</button>
       </div>
       {overflow && drawn && (
         <div
@@ -486,10 +608,13 @@ export function FocusGraph(props: FocusGraphProps) {
         </div>
       )}
       {model.subj.length > 0 && (
-        <p className="fg__key">
-          A line runs down from a card to one it uses.
-          {kinds.has("statement") && kinds.size > 1 && <> <i className="fg__keyline fg__keyline--statement" /> used in the statement only <i className="fg__keyline" /> used in the proof or definition.</>}
-          {" "}Click a card to put it in the middle.
+        <p className={`fg__key${overflow ? " fg__key--mini" : ""}`}>
+          <span><i className="fg__keyline" /> uses, left to right</span>
+          {kinds.has("argument") && kinds.size > 1 && <span><i className="fg__keyline fg__keyline--argument" /> the paper's argument</span>}
+          {kinds.has("statement") && kinds.size > 1 && <span><i className="fg__keyline fg__keyline--statement" /> statement only</span>}
+          {(roles.has("helper") || roles.has("library")) && <span><i className="fg__keybox fg__keybox--helper" /> Lean helper</span>}
+          {roles.has("definition") && <span><i className="fg__keybox fg__keybox--definition" /> definition</span>}
+          {groups(leftItems) + groups(rightItems) > 0 && <span><i className="fg__keybox fg__keybox--group" /> group, opens here</span>}
         </p>
       )}
     </div>
