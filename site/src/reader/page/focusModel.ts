@@ -128,9 +128,6 @@ const lastName = (name: string) => name.slice(name.lastIndexOf(".") + 1);
  */
 export const leanFile = (module: string) => `${module.slice(module.lastIndexOf(".") + 1).replace(/([a-z0-9])(?=[A-Z])/g, "$1\u200b")}.lean`;
 
-/** The group of Lean in files no phrase of the paper names: opened, it divides by those files. */
-export const UNNAMED = "Not named in the paper";
-
 /** The section of the paper a byte lies in, by its title. */
 export function sectionAt(places: PaperPlaces, at: number | undefined): string | undefined {
   if (at === undefined) return undefined;
@@ -176,7 +173,7 @@ export function makeFocus(input: FocusInput) {
   const rowOf = (name: string) => (shell ? findDecl(shell.index, name) : undefined);
   /**
    * The topic of a Lean file: the topic most of the paper's phrases have whose declarations are in it.
-   * A declaration no phrase names takes its file's topic; one in a file no phrase names is "Not named in the paper".
+   * A declaration no phrase names takes its file's topic; one in a file no phrase names is grouped under that file's name.
    */
   const fileTopic = new Map<string, string>();
   if (shell) {
@@ -257,8 +254,8 @@ export function makeFocus(input: FocusInput) {
       // A declaration that states a record of the paper says which.
       kicker: stated ? `Lean of ${number ?? "a step"}` : undefined,
       tone: input.places.declTone.get(name),
-      // A declaration no phrase of this paper names is grouped with its Lean file's phrases, else as not named in the paper.
-      topic: input.places.declTopic.get(name) ?? (row ? (fileTopic.get(row.module) ?? UNNAMED) : undefined),
+      // A declaration no phrase of this paper names is grouped with its Lean file's phrases, else under its file's own name.
+      topic: input.places.declTopic.get(name) ?? (row ? (fileTopic.get(row.module) ?? leanFile(row.module)) : undefined),
       section: file,
       seen: seen(input.places.declAt.get(name)),
     };

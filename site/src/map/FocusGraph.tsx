@@ -174,11 +174,9 @@ export function FocusGraph(props: FocusGraphProps) {
   const gap = Math.round(Math.max(30, Math.min(96, W * 0.07)));
   // The subject is at least 190 wide where two side columns of 150 still fit beside it, and 168 in a narrower pane.
   const subjectW = Math.round(Math.max(W >= 2 * 150 + 2 * gap + 2 * PAD_X + 190 ? 190 : 168, Math.min(280, W * (both ? 0.27 : 0.3))));
-  /** The width of the note that stands where a side has nothing. */
-  const NOTE_W = 132;
   // Too narrow for three columns (a phone): the sides stand over and under the subject, at the pane's width.
   const stacked = W < 520;
-  const sideW = stacked ? Math.floor(W - 2 * PAD_X - 18) : Math.floor(Math.max(150, Math.min(both ? 380 : 460, both ? (W - subjectW - 2 * PAD_X - 2 * gap) / 2 : W - subjectW - 2 * PAD_X - 2 * gap - NOTE_W)));
+  const sideW = stacked ? Math.floor(W - 2 * PAD_X - 18) : Math.floor(Math.max(150, Math.min(both ? 380 : 460, both ? (W - subjectW - 2 * PAD_X - 2 * gap) / 2 : W - subjectW - 2 * PAD_X - gap)));
 
   // A column fits when its nodes' heights, estimated from the length of each title, come to no more
   // than the height of the area. A side that does not fit starts from its kinds and divides the largest
@@ -325,7 +323,7 @@ export function FocusGraph(props: FocusGraphProps) {
         const id = el.dataset.card;
         const of = id ? [...(rels.get(id)?.of ?? [])] : [];
         // A group's line goes to the frame of the subjects; a card's to each subject it is related to.
-        const targets = many && of.length ? of.map((s) => subjectBox.get(s)).filter((x): x is Box => !!x) : [F];
+        const targets = many ? (of.length ? of.map((s) => subjectBox.get(s)).filter((x): x is Box => !!x) : [F]) : [subjectBox.get(model.subj[0]) ?? F];
         for (const to of targets) {
           const k = `${to.x},${to.y}`;
           perSubject.set(k, (perSubject.get(k) ?? 0) + 1);
@@ -538,15 +536,16 @@ export function FocusGraph(props: FocusGraphProps) {
       );
     });
 
-  const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => (
-    <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: ids.length || stacked ? sideW : NOTE_W }}>
-      {ids.length > 0
-        ? <>
-          <h4 className="fg__sidehead">{side === "users" ? (many ? "Use these" : "Use this") : (many ? "These use" : "This uses")} <span>{ids.length}</span></h4>
-          {renderItems(side, items, rels)}
-        </>
-        : <p className="fg__edge-note" data-band-note={side}>{side === "users" ? `Nothing drawn here uses ${many ? "these" : "this"}.` : `${many ? "These use" : "This uses"} nothing else drawn here.`}</p>}
+  // A side with nothing on it takes no room: the subject and the other side have the middle of the area,
+  // and one line under the subject says that the side is empty.
+  const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => ids.length > 0 && (
+    <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: sideW }}>
+      <h4 className="fg__sidehead">{side === "users" ? (many ? "Use these" : "Use this") : (many ? "These use" : "This uses")} <span>{ids.length}</span></h4>
+      {renderItems(side, items, rels)}
     </div>
+  );
+  const emptyNote = (side: Side, ids: string[]) => ids.length === 0 && (
+    <p className="fg__edge-note" data-band-note={side}>{side === "users" ? `Nothing drawn here uses ${many ? "these" : "this"}.` : `${many ? "These use" : "This uses"} nothing else drawn here.`}</p>
   );
 
   const overflow = !!drawn && (drawn.h * zoom > view.h + 4 || drawn.w * zoom > view.w + 4);
@@ -622,6 +621,8 @@ export function FocusGraph(props: FocusGraphProps) {
               <div className={`fg__subjects${many ? " fg__subjects--many" : ""}`} data-count={model.subj.length} style={{ width: stacked ? sideW : subjectW }}>
                 {many && <h4 className="fg__sidehead">{props.manyLabel ?? "Stated in this paragraph"} <span>{model.subj.length}</span></h4>}
                 {model.subj.map((id) => renderCard(id, "subject"))}
+                {emptyNote("users", model.left)}
+                {emptyNote("uses", model.right)}
               </div>
               {renderSide("uses", rightItems, model.right, model.uses)}
             </>}
