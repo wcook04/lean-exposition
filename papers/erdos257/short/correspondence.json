@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "bc3515bcc38b5434e78e4b6a3a4dd30976283e09b93c233d8b6d1b19afda3ba1",
-  "graph_sha256": "f31aeb6174afd909393ada9bc329cd29dc9b1b6a0de8f72a49f18ab372947af5",
+  "content_sha256": "8d9f75b758e3c8d7c7bbc7ef963f0552dfa559e1b857f3a5a36242c215f86526",
+  "graph_sha256": "264b08973a5f23b2f98ad989b0c1708096513d86929f19048623a2a9fe18092c",
   "selected_goal_ids": [
     "short.res-mixed-supports",
     "short.res-weighted-support",
@@ -408,7 +408,7 @@
     },
     {
       "anchor": "sec-map",
-      "text_sha256": "104b77f97bbb368ea0cceb09f34dd27ad8341947a2fc4ce3966abaebbb4412a2",
+      "text_sha256": "276494c28a74409ca68ef6a5341595e7761b475301297ffc9cf3cec65dcf31a8",
       "claim_ids": [
         "step.full_support_limit",
         "step.primes_limit",

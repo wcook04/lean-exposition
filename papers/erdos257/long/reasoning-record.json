@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "d4cff05445a8091e88a0215dc5b8dd28497dfc8c7317357a03f3ed6190b2e19c",
-  "graph_sha256": "f31aeb6174afd909393ada9bc329cd29dc9b1b6a0de8f72a49f18ab372947af5",
+  "content_sha256": "f7c2487ba172be55e583becc143742c2d34c576d0d1339fd730197a0c97bb374",
+  "graph_sha256": "264b08973a5f23b2f98ad989b0c1708096513d86929f19048623a2a9fe18092c",
   "selected_goal_ids": [
     "short.res-mixed-supports",
     "short.thm-variable-fractional-cover"
@@ -2635,7 +2635,7 @@
     },
     {
       "anchor": "what-is-open-stated-exactly",
-      "text_sha256": "f8a2b2cdfd59f772857b888ac50b7f11150fb994ebe50be9048143522167c77a",
+      "text_sha256": "675d1f4def0e2d16217931c4ed5b35e22cb969c64127cb148af0d6b0fba00250",
       "claim_ids": [
         "long.prop-cpgs-equiv",
         "long.prop-strip-equiv"

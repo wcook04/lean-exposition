@@ -588,7 +588,7 @@
    "prop:strip-equiv",
    "obs:dangerous-reset-rigidity"
   ],
-  "text_sha256": "f5f3ee39b9ff1f5df9c460f27501e63fe62a5472ffa0c65b7280804a66a4a0f4"
+  "text_sha256": "42d2a4cc5866ea1ca974957c4a18a373b3a9205c4b0f00741d7efe5e3937a243"
  },
  {
   "name": "sec-257-logarithmic-sampling",

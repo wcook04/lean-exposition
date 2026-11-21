@@ -1,6 +1,6 @@
 {
  "repository": "https://github.com/wcook04/plectis-erdos",
- "commit": "b6ca129771dd54e27477a554475fb6c66c0a9e23",
+ "commit": "d9c43b26d1686523e95e09ab0014aaadb1903d03",
  "papers": {
   "short": {
    "source_files": {
@@ -22,9 +22,9 @@
     "paper/evidence/erdos-257-mersenne-support-subseries.tex": "722ce3fc0640d2a265e5dd747e1c1d9a5d87a65aa5975d51a664acfed4135fef"
    },
    "outputs_sha256": {
-    "short/paper.md": "bc3515bcc38b5434e78e4b6a3a4dd30976283e09b93c233d8b6d1b19afda3ba1",
+    "short/paper.md": "8d9f75b758e3c8d7c7bbc7ef963f0552dfa559e1b857f3a5a36242c215f86526",
     "short/paper.pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
-    "short/passages.json": "5d8e9b0df934dfc8f8772c7c8446ca65c1bf4a83c3ea6d4929c3c2d3349f8b8b"
+    "short/passages.json": "5f7f1c53625e984086b874b4c1722e00fe1b596b5d4cf3ccab426b25162dc31d"
    }
   },
   "expository": {
@@ -59,10 +59,10 @@
     "pdf": "paper/257/erdos257-mersenne-reasoning-surface.pdf"
    },
    "sha256": {
-    "full_text_markdown": "4814db10a16a5b07b9efdb3fdd987caaf85bd1e4ddf86282803d4c6d292dae80",
-    "tex": "31f08c74e4085954a13562586f1e34e7702c8d362132f7c6c243c0d2f287b8f3",
+    "full_text_markdown": "d8dce35192eec3ba17065ada80ef0136d175f672dd5f2822d8de9a7a40e6c2b6",
+    "tex": "124e5bfacaf9a76302db80f8aed0fb78d2825b4195268a637a74ecda2d44665a",
     "aux": "db0471c5a444a849dffc6cdf0e175d6bc02a561d75b5a85e1b2e656cce8db34c",
-    "pdf": "c9ef5b8b374e34d6b5a900182b26fc9bc487e39f46eaf14a41a8fe77b48b9f53"
+    "pdf": "2c46ccea30e1c533b5f3bde2aba0c0711dc60fff424dfaa05baaa7653abc99ca"
    },
    "tex_inputs_sha256": {
     "paper/paper-house-style.sty": "554ed85b5315bd936a4d09d58f8727547c5bb1b299f9684eb6ef720b329759a2",
@@ -71,9 +71,9 @@
     "paper/evidence/erdos257-mersenne-reasoning-surface.tex": "15ae25a970b6947076fc505b40a86b2baf168771818137cbb7b5d8d88373e0aa"
    },
    "outputs_sha256": {
-    "long/reasoning-record.md": "d4cff05445a8091e88a0215dc5b8dd28497dfc8c7317357a03f3ed6190b2e19c",
-    "long/reasoning-record.pdf": "c9ef5b8b374e34d6b5a900182b26fc9bc487e39f46eaf14a41a8fe77b48b9f53",
-    "long/passages.json": "4ba61659ae0028d27bfc5244debe01383cd244cd5b47783a8e27d364363cad54"
+    "long/reasoning-record.md": "f7c2487ba172be55e583becc143742c2d34c576d0d1339fd730197a0c97bb374",
+    "long/reasoning-record.pdf": "2c46ccea30e1c533b5f3bde2aba0c0711dc60fff424dfaa05baaa7653abc99ca",
+    "long/passages.json": "26009564502076c9d496728de6c81a34189fde32a30db5e98b783665208616a9"
    }
   }
  },
