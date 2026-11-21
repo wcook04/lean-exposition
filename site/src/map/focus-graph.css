@@ -127,3 +127,9 @@
 .fg__mini i.is-hot { background: var(--fg-ink); }
 .fg__mini b { position: absolute; border: 1.5px solid var(--fg-accent); background: color-mix(in srgb, var(--fg-accent) 12%, transparent); border-radius: 2px; pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) { .fg__card { transition: box-shadow 120ms ease, border-color 120ms ease; } }
+/* A phone has no room for the key or the overview: the drawing takes it. */
+@media (max-width: 600px) {
+  .fg__key, .fg__mini { display: none; }
+  .fg__tools { bottom: 10px; }
+  .fg__world { padding: 16px 12px 56px 24px; }
+}
