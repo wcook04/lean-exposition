@@ -87,7 +87,20 @@ type Item =
 interface Part { key: string; name: string; list: string[]; depth: number }
 type Plan = { flat: true } | { flat: false; parts: Part[]; out: ReadonlySet<string> };
 
-const ZOOMS = [0.93, 1, 1.15, 1.3, 1.5];
+/** Below this scale a title is too small to read: a side that needs it is grouped further instead. */
+const MIN_READ = 0.85;
+/** The scales the reader can reach with the buttons, wheel, pinch and keys. */
+const K_MIN = 0.2;
+const K_MAX = 2.5;
+/** A fitted drawing is never set larger than its own size, and never below this when grouping cannot help. */
+const FIT_MAX = 1;
+const FIT_FLOOR = 0.45;
+/** Room kept around a fitted drawing, and how much of it a pan always leaves in view. */
+const FIT_MARGIN = 18;
+const KEEP_IN_VIEW = 60;
+/** The height the buttons over the bottom of the view take. */
+const TOOLS_ROOM = 36;
+const clampTo = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const PAD_X = 16;
 const PAD_Y = 14;
 const ITEM_GAP = 6;
@@ -104,18 +117,104 @@ export function FocusGraph(props: FocusGraphProps) {
   const scroller = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const [zoomAt, setZoomAt] = useState(1);
-  const zoom = ZOOMS[zoomAt];
   const [drawn, setDrawn] = useState<Drawn | null>(null);
   const [hot, setHot] = useState<string | null>(null);
-  const [view, setView] = useState<Box>({ x: 0, y: 0, w: 0, h: 0 });
   /** Groups the reader opened, by side and key. */
   const [opened, setOpened] = useState<ReadonlySet<string>>(new Set());
   /** How many times the first estimate of what fits has been tightened for this subject. */
   const [tight, setTight] = useState(0);
-  const moved = useRef(false);
   const openedNow = useRef(false);
   openedNow.current = opened.size > 0;
+  const tightNow = useRef(0);
+  tightNow.current = tight;
+
+  // ---- The camera ---------------------------------------------------------------------------
+  // The drawing is laid out once for the pane's size and never for the view of it: panning and
+  // zooming only set a transform on the world, so nothing the camera does can change the layout,
+  // and the layout changes the camera only by an explicit fit. There are no scroll bars.
+  const cam = useRef({ x: 0, y: 0, k: 1 });
+  /** True from opening, a new subject or Fit until the reader moves the view or opens a group: the drawing is kept fitted. */
+  const auto = useRef(true);
+  const drawnRef = useRef<Drawn | null>(null);
+  drawnRef.current = drawn;
+  const miniView = useRef<HTMLElement>(null);
+  const miniScale = useRef({ x: 0, y: 0 });
+  const [overflow, setOverflow] = useState(false);
+  const overflowNow = useRef(false);
+  const applyCam = () => {
+    const w = world.current, el = scroller.current;
+    if (!w || !el) return;
+    const c = cam.current;
+    const t = `translate(${c.x.toFixed(1)}px, ${c.y.toFixed(1)}px) scale(${c.k.toFixed(4)})`;
+    if (w.style.transform !== t) w.style.transform = t;
+    const d = drawnRef.current;
+    const vw = el.clientWidth, vh = el.clientHeight;
+    const over = !!d && (c.x < -2 || c.y < -2 || c.x + d.w * c.k > vw + 2 || c.y + d.h * c.k > vh + 2);
+    if (over !== overflowNow.current) { overflowNow.current = over; setOverflow(over); }
+    const b = miniView.current, m = miniScale.current;
+    if (b && d && m.x) {
+      const left = clampTo(-c.x / c.k, 0, d.w), top = clampTo(-c.y / c.k, 0, d.h);
+      const right = clampTo((vw - c.x) / c.k, 0, d.w), bottom = clampTo((vh - c.y) / c.k, 0, d.h);
+      b.style.left = `${left * m.x}px`; b.style.top = `${top * m.y}px`;
+      b.style.width = `${Math.max(0, right - left) * m.x}px`; b.style.height = `${Math.max(0, bottom - top) * m.y}px`;
+    }
+  };
+  /** Move the camera, keeping some of the drawing in view whatever the reader does. */
+  const setCam = (next: { x: number; y: number; k: number }) => {
+    const d = drawnRef.current, el = scroller.current;
+    if (d && el) {
+      const keepX = Math.min(KEEP_IN_VIEW, (d.w * next.k) / 2), keepY = Math.min(KEEP_IN_VIEW, (d.h * next.k) / 2);
+      next = { k: next.k, x: clampTo(next.x, keepX - d.w * next.k, el.clientWidth - keepX), y: clampTo(next.y, keepY - d.h * next.k, el.clientHeight - keepY) };
+    }
+    cam.current = next;
+    applyCam();
+  };
+  /** Zoom by a factor about a point of the view (its centre by default), by the reader's hand. */
+  const zoomBy = (factor: number, px?: number, py?: number) => {
+    const el = scroller.current;
+    if (!el) return;
+    const c = cam.current;
+    const k = clampTo(c.k * factor, K_MIN, K_MAX);
+    const ox = px ?? el.clientWidth / 2, oy = py ?? el.clientHeight / 2;
+    auto.current = false;
+    setCam({ k, x: ox - ((ox - c.x) * k) / c.k, y: oy - ((oy - c.y) * k) / c.k });
+  };
+  const panBy = (dx: number, dy: number) => {
+    auto.current = false;
+    setCam({ ...cam.current, x: cam.current.x + dx, y: cam.current.y + dy });
+  };
+  /**
+   * Fit the whole drawing in view with a margin, no larger than its own size. When that would set the
+   * titles below a readable size, the sides are grouped further first (up to six times) and the fit
+   * waits for the new layout. Returns false while it waits.
+   */
+  const fitNow = (): boolean => {
+    const d = drawnRef.current, el = scroller.current, w = world.current;
+    if (!d || !el || !w || !el.clientWidth || !el.clientHeight || !d.w || !d.h) return false;
+    // The buttons stand over the bottom of the view: a fitted drawing stays above them.
+    const vw = el.clientWidth, vh = el.clientHeight - TOOLS_ROOM;
+    const byH = (vh - 2 * FIT_MARGIN) / d.h, byW = (vw - 2 * FIT_MARGIN) / d.w;
+    if (byH < MIN_READ && !openedNow.current && tightNow.current < 6) {
+      setTight((t) => Math.min(6, t + 1));
+      return false;
+    }
+    const k = Math.max(FIT_FLOOR, Math.min(FIT_MAX, byH, byW));
+    let x = (vw - d.w * k) / 2, y = (vh - d.h * k) / 2;
+    // Stacked on a phone the drawing reads from its top: what uses the subject, the subject, what it uses.
+    if (w.classList.contains("fg__world--narrow")) y = FIT_MARGIN;
+    else if (d.w * k > vw || d.h * k > vh) {
+      // Even grouped it is larger than the view: the subject is in the middle, and the rest is a pan away.
+      const f = d.boxes.filter((b) => b.band === "subject").map((b) => b.box);
+      if (f.length) {
+        const left = Math.min(...f.map((b) => b.x)), right = Math.max(...f.map((b) => b.x + b.w));
+        const top = Math.min(...f.map((b) => b.y)), bottom = Math.max(...f.map((b) => b.y + b.h));
+        if (d.w * k > vw) x = vw / 2 - ((left + right) / 2) * k;
+        if (d.h * k > vh) y = Math.min(FIT_MARGIN - top * k + 12, vh / 2 - ((top + bottom) / 2) * k);
+      }
+    }
+    setCam({ x, y, k });
+    return true;
+  };
 
   const words = useCallback((role: FGRole): FGRoleWords => ({ ...FG_ROLES[role], ...(props.roles?.[role] ?? {}) }), [props.roles]);
 
@@ -163,13 +262,19 @@ export function FocusGraph(props: FocusGraphProps) {
 
   const key = model.subj.join("|");
   const many = model.subj.length > 1;
-  useLayoutEffect(() => { setOpened(new Set()); setTight(0); setHot(null); }, [key]);
-  // A new size is fitted afresh, unless the reader has a group open.
-  useLayoutEffect(() => { if (!openedNow.current) setTight(0); }, [size.w, size.h, zoom]);
+  useLayoutEffect(() => { setOpened(new Set()); setTight(0); setHot(null); auto.current = true; }, [key]);
+  // A new size of the pane (never of the drawing) is laid out and fitted afresh while the view is the fitted one.
+  useLayoutEffect(() => {
+    if (!size.w || !auto.current || openedNow.current) return;
+    if (tightNow.current) setTight(0);
+    else fitNow();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size.w, size.h]);
 
-  // The widths of the three columns, for the room there is.
-  const W = (size.w || 640) / zoom;
-  const H = (size.h || 420) / zoom;
+  // The widths of the three columns, for the room there is. The height a column may take is the
+  // pane's at the smallest readable scale: a taller drawing is grouped further, a shorter one is fitted.
+  const W = size.w || 640;
+  const H = (size.h || 420) / MIN_READ;
   const both = model.left.length > 0 && model.right.length > 0;
   const gap = Math.round(Math.max(30, Math.min(96, W * 0.07)));
   // The subject is at least 190 wide where two side columns of 150 still fit beside it, and 168 in a narrower pane.
@@ -288,10 +393,12 @@ export function FocusGraph(props: FocusGraphProps) {
   const measure = useCallback(() => {
     const w = world.current;
     if (!w) return;
+    // Rectangles on the screen carry the camera's scale; the drawing's own units do not.
+    const k = cam.current.k;
     const origin = w.getBoundingClientRect();
     const box = (el: Element): Box => {
       const r = el.getBoundingClientRect();
-      return { x: (r.left - origin.left) / zoom, y: (r.top - origin.top) / zoom, w: r.width / zoom, h: r.height / zoom };
+      return { x: (r.left - origin.left) / k, y: (r.top - origin.top) / k, w: r.width / k, h: r.height / k };
     };
     const frame = w.querySelector(".fg__subjects");
     if (!frame) { setDrawn(null); return; }
@@ -364,8 +471,9 @@ export function FocusGraph(props: FocusGraphProps) {
         : `M${x} ${a.y + a.h} L${x} ${b.y - 5}`;
       segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "proof"} fg__inner`, edge: `${e.from}>${e.to}` });
     });
-    setDrawn({ w: Math.ceil(origin.width / zoom), h: Math.ceil(origin.height / zoom), segs, paths, boxes });
-  }, [zoom, model, many]);
+    // The world's own size: offsetWidth is not scaled by the camera.
+    setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, boxes });
+  }, [model, many]);
 
   useLayoutEffect(() => {
     measure();
@@ -378,77 +486,114 @@ export function FocusGraph(props: FocusGraphProps) {
     return () => ro.disconnect();
   }, [measure, key, leftItems, rightItems, sideW, subjectW]);
 
-  // If the estimate let through more than fits, group more: fewer nodes, or fewer and larger groups when every
-  // item is already a group. The reader's own opened groups may overflow: they scroll.
+  // A new drawing is fitted while the view is the fitted one; otherwise the camera only keeps some of it in view.
   useLayoutEffect(() => {
-    const el = scroller.current, w = world.current;
-    if (!el || !w || opened.size || tight >= 6) return;
-    if (w.getBoundingClientRect().height > el.clientHeight + 2) setTight((t) => t + 1);
-  }, [drawn, opened, tight, leftItems, rightItems]);
+    if (!drawn) return;
+    if (auto.current && !openedNow.current) fitNow();
+    else applyCam();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawn]);
 
-  // The subject is in the middle whenever it changes; a reader's own scrolling is kept until then.
-  const centre = useCallback(() => {
-    const el = scroller.current, w = world.current;
-    const frame = w?.querySelector<HTMLElement>(".fg__subjects");
-    if (!el || !w || !frame) return;
-    const o = w.getBoundingClientRect(), r = frame.getBoundingClientRect();
-    const cx = r.left - o.left + r.width / 2, cy = r.top - o.top + r.height / 2;
-    // Stacked on a phone the drawing reads from its top: what uses the subject, the subject, what it uses.
-    const y = w.classList.contains("fg__world--narrow") ? 0 : r.height > el.clientHeight - 24 ? r.top - o.top - 12 : cy - el.clientHeight / 2;
-    el.scrollTo({ left: Math.max(0, cx - el.clientWidth / 2), top: Math.max(0, y) });
-    moved.current = false;
-  }, []);
-  useLayoutEffect(() => { centre(); }, [key, centre]);
-  useLayoutEffect(() => { if (!moved.current && !opened.size) centre(); }, [drawn?.h, drawn?.w, size.w, size.h, centre, opened]);
-
-  const readView = useCallback(() => {
-    const el = scroller.current;
-    if (el) setView({ x: el.scrollLeft, y: el.scrollTop, w: el.clientWidth, h: el.clientHeight });
-  }, []);
-  useLayoutEffect(readView, [readView, drawn, size]);
-
-  // Drag to pan. A drag that starts on a card and moves is a pan, not a click.
-  const drag = useRef<{ x: number; y: number; left: number; top: number; far: boolean } | null>(null);
+  // Drag to pan, two fingers to pinch. A drag that starts on a card and moves is a pan, not a click.
+  const drag = useRef<{ x: number; y: number; cx: number; cy: number; far: boolean } | null>(null);
+  const touches = useRef(new Map<number, { x: number; y: number }>());
+  const pinch = useRef<{ dist: number; k: number } | null>(null);
+  const local = (e: { clientX: number; clientY: number }) => {
+    const r = scroller.current!.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  };
   const onPointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0 || (e.target as HTMLElement).closest(".fg__mini, .fg__tools")) return;
-    const el = scroller.current!;
-    drag.current = { x: e.clientX, y: e.clientY, left: el.scrollLeft, top: el.scrollTop, far: false };
+    if ((e.target as HTMLElement).closest(".fg__mini, .fg__tools")) return;
+    if (e.pointerType === "touch") touches.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (touches.current.size === 2) {
+      const [a, b] = [...touches.current.values()];
+      pinch.current = { dist: Math.hypot(a.x - b.x, a.y - b.y), k: cam.current.k };
+      drag.current = null;
+      return;
+    }
+    if (e.button !== 0) return;
+    drag.current = { x: e.clientX, y: e.clientY, cx: cam.current.x, cy: cam.current.y, far: false };
   };
   const onPointerMove = (e: React.PointerEvent) => {
+    if (touches.current.has(e.pointerId)) touches.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch.current && touches.current.size === 2) {
+      const [a, b] = [...touches.current.values()];
+      const mid = local({ clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 });
+      zoomBy((pinch.current.k * Math.hypot(a.x - b.x, a.y - b.y)) / pinch.current.dist / cam.current.k, mid.x, mid.y);
+      return;
+    }
     const d = drag.current;
     if (!d) return;
     const dx = e.clientX - d.x, dy = e.clientY - d.y;
     if (!d.far && Math.hypot(dx, dy) < 5) return;
     if (!d.far) { d.far = true; scroller.current!.setPointerCapture(e.pointerId); scroller.current!.classList.add("is-panning"); }
-    moved.current = true;
-    scroller.current!.scrollTo({ left: d.left - dx, top: d.top - dy });
+    auto.current = false;
+    setCam({ ...cam.current, x: d.cx + dx, y: d.cy + dy });
   };
   const suppressClick = useRef(false);
   const onPointerUp = (e: React.PointerEvent) => {
+    touches.current.delete(e.pointerId);
+    if (touches.current.size < 2) pinch.current = null;
     const d = drag.current;
     drag.current = null;
     if (d?.far) {
       suppressClick.current = true;
       window.setTimeout(() => { suppressClick.current = false; }, 0);
-      scroller.current!.releasePointerCapture(e.pointerId);
+      if (scroller.current!.hasPointerCapture(e.pointerId)) scroller.current!.releasePointerCapture(e.pointerId);
       scroller.current!.classList.remove("is-panning");
     }
   };
-  // Ctrl or ⌘ with the wheel zooms; the wheel alone scrolls, as everywhere.
+  // The wheel and the trackpad: a pinch (which browsers send as the wheel with Ctrl) or a mouse wheel's
+  // notches zoom about the pointer; a trackpad's two-finger scroll pans. Nothing scrolls the page from here.
   useEffect(() => {
     const el = scroller.current;
     if (!el) return;
     const wheel = (e: WheelEvent) => {
-      moved.current = true;
-      if (!(e.ctrlKey || e.metaKey)) return;
       e.preventDefault();
-      setZoomAt((z) => Math.max(0, Math.min(ZOOMS.length - 1, z + (e.deltaY < 0 ? 1 : -1))));
+      const p = local(e);
+      const notched = e.deltaMode !== 0 || (e.deltaX === 0 && Math.abs(e.deltaY) >= 50 && Number.isInteger(e.deltaY));
+      if (e.ctrlKey || e.metaKey) zoomBy(Math.exp(-e.deltaY * (e.deltaMode ? 0.05 : 0.01)), p.x, p.y);
+      else if (notched && !e.shiftKey) zoomBy(e.deltaY < 0 ? 1.15 : 1 / 1.15, p.x, p.y);
+      else panBy(-(e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX), e.shiftKey && !e.deltaX ? 0 : -e.deltaY);
     };
-    const keyed = (e: KeyboardEvent) => { if (e.key.startsWith("Arrow") || e.key.startsWith("Page") || e.key === "Home" || e.key === "End" || e.key === " ") moved.current = true; };
     el.addEventListener("wheel", wheel, { passive: false });
-    el.addEventListener("keydown", keyed);
-    return () => { el.removeEventListener("wheel", wheel); el.removeEventListener("keydown", keyed); };
+    return () => el.removeEventListener("wheel", wheel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // Keys on the graph: arrows pan, + and − zoom, 0 fits.
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const step = e.shiftKey ? 160 : 60;
+    const pans: Record<string, [number, number]> = { ArrowLeft: [step, 0], ArrowRight: [-step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] };
+    if (pans[e.key]) panBy(...pans[e.key]);
+    else if (e.key === "+" || e.key === "=") zoomBy(1.2);
+    else if (e.key === "-" || e.key === "_") zoomBy(1 / 1.2);
+    else if (e.key === "0") fit();
+    else return;
+    e.preventDefault();
+  };
+  // The canvas never scrolls, but the browser scrolls even a clipped box to bring a focused card
+  // into view: that becomes a move of the camera, and the box is put back.
+  const onScroll = () => {
+    const el = scroller.current;
+    if (!el || (!el.scrollLeft && !el.scrollTop)) return;
+    const dx = el.scrollLeft, dy = el.scrollTop;
+    el.scrollLeft = 0;
+    el.scrollTop = 0;
+    setCam({ ...cam.current, x: cam.current.x - dx, y: cam.current.y - dy });
+  };
+  // A double click on the drawing (not on a card) zooms in there.
+  const onDoubleClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("button, .fg__mini, .fg__tools")) return;
+    const p = local(e);
+    zoomBy(1.6, p.x, p.y);
+  };
+  /** Fold every group, then fit the whole drawing; from here the view is kept fitted again. */
+  const fit = () => {
+    auto.current = true;
+    if (opened.size) setOpened(new Set());
+    else fitNow();
+  };
 
   const hover = (id: string | null) => { setHot(id); onHover?.(id); };
   const choose = (id: string) => { if (!suppressClick.current) onSubject(id); };
@@ -461,15 +606,19 @@ export function FocusGraph(props: FocusGraphProps) {
       if (next.has(k)) { for (const o of was) if (o === k || o.startsWith(`${k}/`)) next.delete(o); } else next.add(k);
       return next;
     });
-    moved.current = true;
+    auto.current = false;
     requestAnimationFrame(() => requestAnimationFrame(() => {
       const sc = scroller.current;
       const el = world.current?.querySelector<HTMLElement>(`.fg__side[data-band="${side}"] .fg__group[data-group="${CSS.escape(path)}"]`);
       if (!sc || !el) return;
-      // Only the graph's own area moves: the page and the paper stay where they are.
+      // Only the graph's own view moves: the page and the paper stay where they are.
       const v = sc.getBoundingClientRect(), r = el.getBoundingClientRect();
-      if (r.height > v.height - 16 || r.top < v.top + 8) sc.scrollTop += r.top - v.top - 8;
-      else if (r.bottom > v.bottom - 8) sc.scrollTop += r.bottom - v.bottom + 8;
+      let dx = 0, dy = 0;
+      if (r.height > v.height - 16 || r.top < v.top + 8) dy = v.top + 8 - r.top;
+      else if (r.bottom > v.bottom - 8) dy = v.bottom - 8 - r.bottom;
+      if (r.left < v.left + 8) dx = v.left + 8 - r.left;
+      else if (r.right > v.right - 8) dx = Math.max(v.left + 8 - r.left, v.right - 8 - r.right);
+      if (dx || dy) setCam({ ...cam.current, x: cam.current.x + dx, y: cam.current.y + dy });
     }));
   };
 
@@ -548,16 +697,19 @@ export function FocusGraph(props: FocusGraphProps) {
     <p className="fg__edge-note" data-band-note={side}>{side === "users" ? `Nothing drawn here uses ${many ? "these" : "this"}.` : `${many ? "These use" : "This uses"} nothing else drawn here.`}</p>
   );
 
-  const overflow = !!drawn && (drawn.h * zoom > view.h + 4 || drawn.w * zoom > view.w + 4);
   const mini = drawn ? Math.min(MINI_W / drawn.w, MINI_H / drawn.h) : 0;
   // A very tall drawing keeps an overview wide enough to read: its width is stretched to at least MINI_MIN_W.
   const miniX = drawn ? Math.max(mini, Math.min(MINI_W, MINI_MIN_W) / drawn.w) : 0;
+  miniScale.current = { x: miniX, y: mini };
+  // The overview's frame is drawn by the camera; when it first appears, it is drawn once here.
+  useLayoutEffect(() => { if (overflow) applyCam(); });
   const miniMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!drawn || !(e.buttons & 1)) return;
     const r = e.currentTarget.getBoundingClientRect();
     const el = scroller.current!;
-    moved.current = true;
-    el.scrollTo({ left: ((e.clientX - r.left) / miniX) * zoom - el.clientWidth / 2, top: ((e.clientY - r.top) / mini) * zoom - el.clientHeight / 2 });
+    const k = cam.current.k;
+    auto.current = false;
+    setCam({ k, x: el.clientWidth / 2 - ((e.clientX - r.left) / miniX) * k, y: el.clientHeight / 2 - ((e.clientY - r.top) / mini) * k });
   };
   const kinds = new Set([...model.users.values(), ...model.uses.values(), ...model.inner.map((e) => ({ kind: e.kind ?? "proof" }))].map((r) => r.kind));
   const groups = (items: Item[]) => items.filter((it) => it.type === "group").length;
@@ -591,19 +743,22 @@ export function FocusGraph(props: FocusGraphProps) {
             : <span className="fg__routeword">{routeNote}</span>}
         </nav>
       )}
+      <div className="fg__stage">
       <div
         className="fg__scroll"
         ref={scroller}
         tabIndex={0}
         role="group"
-        aria-label="Graph: what uses this step, on the left, and what it uses, on the right. Scroll or drag to move."
-        onScroll={readView}
+        aria-label="Graph: what uses this step, on the left, and what it uses, on the right. Drag to move, pinch or wheel to zoom; arrow keys move, plus and minus zoom, 0 fits."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
+        onKeyDown={onKeyDown}
+        onScroll={onScroll}
+        onDoubleClick={onDoubleClick}
       >
-        <div className={`fg__world${narrow ? " fg__world--narrow" : ""}`} ref={world} style={{ zoom, columnGap: gap }}>
+        <div className={`fg__world${narrow ? " fg__world--narrow" : ""}`} ref={world} style={{ columnGap: gap }}>
           {drawn && (
             <svg className="fg__lines" width={drawn.w} height={drawn.h} aria-hidden="true">
               <defs>
@@ -629,9 +784,9 @@ export function FocusGraph(props: FocusGraphProps) {
         </div>
       </div>
       <div className="fg__tools" role="group" aria-label="Move the graph">
-        <button type="button" onClick={() => setZoomAt((z) => Math.max(0, z - 1))} disabled={zoomAt === 0} aria-label="Smaller">−</button>
-        <button type="button" onClick={() => setZoomAt((z) => Math.min(ZOOMS.length - 1, z + 1))} disabled={zoomAt === ZOOMS.length - 1} aria-label="Larger">+</button>
-        <button type="button" onClick={() => { setZoomAt(1); setOpened(new Set()); requestAnimationFrame(centre); }} title="Fold every group and bring the subject back to the middle">Fit</button>
+        <button type="button" onClick={() => zoomBy(1 / 1.25)} aria-label="Zoom out" title="Zoom out (−)">−</button>
+        <button type="button" onClick={() => zoomBy(1.25)} aria-label="Zoom in" title="Zoom in (+)">+</button>
+        <button type="button" onClick={fit} title="Fold every group and fit the whole graph in view (0)">Fit</button>
       </div>
       {overflow && drawn && (
         <div
@@ -645,11 +800,12 @@ export function FocusGraph(props: FocusGraphProps) {
           {drawn.boxes.map((b) => (
             <i key={b.band + b.id} className={b.band === "subject" ? "is-subject" : hot === b.id ? "is-hot" : undefined} style={{ left: b.box.x * miniX, top: b.box.y * mini, width: Math.max(2, b.box.w * miniX), height: Math.max(2, b.box.h * mini) }} />
           ))}
-          <b style={{ left: (view.x / zoom) * miniX, top: (view.y / zoom) * mini, width: Math.min(drawn.w, view.w / zoom) * miniX, height: Math.min(drawn.h, view.h / zoom) * mini }} />
+          <b ref={miniView} />
         </div>
       )}
+      </div>
       {model.subj.length > 0 && (
-        <p className={`fg__key${overflow ? " fg__key--mini" : ""}`}>
+        <p className="fg__key">
           <span><i className="fg__keyline" /> uses, left to right</span>
           {kinds.has("argument") && kinds.size > 1 && <span><i className="fg__keyline fg__keyline--argument" /> the paper's argument</span>}
           {kinds.has("statement") && kinds.size > 1 && <span><i className="fg__keyline fg__keyline--statement" /> statement only</span>}

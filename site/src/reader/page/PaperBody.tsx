@@ -691,16 +691,21 @@ export function markWideMaths(root: HTMLElement): () => void {
   if (!boxes.length) return () => {};
   const cues = new Map<HTMLElement, HTMLElement>();
   const natural = new WeakMap<HTMLElement, Natural>();
-  const widths = new WeakMap<HTMLElement, number>();
+  const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
   let live = true;
   const update = (box: HTMLElement, force = false) => {
     const width = box.clientWidth;
-    // Fitting can change a display's height, which the observer reports back.
-    // Only a different available width (or newly loaded fonts) needs another
-    // fit; scrolling a formula only changes its cue.
-    if (force || widths.get(box) !== width) {
+    // Fitting can change a display's height, which the observer reports back, and a height can
+    // bring a scroll bar to the column, which narrows it. Only a different available width (or
+    // newly loaded fonts) needs another fit, and a width that returns within a second to the one
+    // before the last is that loop answering itself: the last decision stands. Scrolling a formula
+    // only changes its cue.
+    const seen = widths.get(box);
+    const changed = !seen || Math.abs(seen.now - width) > 1;
+    const flipBack = !!seen && seen.before !== null && Math.abs(seen.before - width) <= 1 && performance.now() - seen.at < 1000;
+    if (force || (changed && !flipBack)) {
       fitDisplay(box, natural);
-      widths.set(box, width);
+      widths.set(box, { now: width, before: seen?.now ?? null, at: performance.now() });
     }
     // Only a formula that still does not fit after shrinking and breaking scrolls.
     const wide = box.scrollWidth > box.clientWidth + 1;
@@ -731,7 +736,18 @@ export function markWideMaths(root: HTMLElement): () => void {
   };
   const onScroll = (event: Event) => update(event.currentTarget as HTMLElement);
   boxes.forEach((b) => b.addEventListener("scroll", onScroll, { passive: true }));
-  const observer = new ResizeObserver((entries) => entries.forEach((e) => update(e.target as HTMLElement)));
+  // Sizes are read once a frame, after every change of that frame, never inside the change itself.
+  const resized = new Set<HTMLElement>();
+  let resizeFrame = 0;
+  const observer = new ResizeObserver((entries) => {
+    entries.forEach((e) => resized.add(e.target as HTMLElement));
+    resizeFrame ||= requestAnimationFrame(() => {
+      resizeFrame = 0;
+      const boxes = [...resized];
+      resized.clear();
+      if (live) boxes.forEach((box) => update(box));
+    });
+  });
   const fitted = new Set<HTMLElement>();
   const fit = (box: HTMLElement) => {
     fitted.add(box);
@@ -778,6 +794,7 @@ export function markWideMaths(root: HTMLElement): () => void {
     fitters.delete(root);
     near?.disconnect();
     observer.disconnect();
+    cancelAnimationFrame(resizeFrame);
     boxes.forEach((b) => b.removeEventListener("scroll", onScroll));
     cues.forEach((cue) => cue.remove());
   };

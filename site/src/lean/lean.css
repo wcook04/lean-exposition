@@ -240,7 +240,7 @@
 /* Filling a host: head and reading line hold still, and all else scrolls between them. */
 .lean-block.is-fill { display: flex; flex-direction: column; height: 100%; min-height: 0; }
 .lean-block.is-fill > .lean-block__head { flex: none; margin-bottom: 0; padding-bottom: var(--space-2); }
-.lean-block__scroll { flex: 1 1 0; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.lean-block__scroll { flex: 1 1 0; min-height: 0; overflow-y: auto; scrollbar-gutter: stable; overscroll-behavior: contain; }
 .lean-block.is-fill > .lean-slot { margin-top: 0; }
 .lean-block.is-bare .lean-block__head { margin-bottom: var(--space-1); }
 .is-compact .lean-block__relation { font-size: var(--fs-sm); }

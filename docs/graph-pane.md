@@ -54,17 +54,18 @@ No view is ever blank. A paragraph with nothing tied to it says "No Lean is link
 - The subject is in the middle, with its kind, its whole title and its Lean name. A paragraph that states several steps has them all in the middle, inside one frame, each above the steps it uses, with the lines between them drawn.
 - The cards that use a subject are in a column on the left under "Use this" with their number. The cards a subject uses are in a column on the right under "This uses" with their number. A curved line with an arrowhead joins each to the subject.
 - Within a column the paper's results come first, then steps, definitions, cited results, open questions, Lean helper lemmas and library facts.
-- A node is one line of plain words, wrapped onto a second line when the title is long. No title is truncated or clamped, no type is under 13 pixels at any zoom, and no type shrinks to make a drawing fit.
-- The drawing fits its area when it opens. A column that would not fit is drawn as groups by topic, or by kind when the topics themselves would not fit; the smallest groups are then drawn out as their own nodes while there is room. Every neighbour is either a node on show or is counted by one group on show.
+- A node is one line of plain words, wrapped onto a second line when the title is long. No title is truncated or clamped. Titles are 13.5 pixels at full size, and a fitted drawing is never set below 0.85 of it (a title stays at least 11.5 pixels): a drawing that would need less is grouped further instead.
+- The drawing fits its area when it opens: it is zoomed out, never beyond its own size, until all of it is in view with a margin. A column that would not fit is drawn as groups by topic, or by kind when the topics themselves would not fit; the smallest groups are then drawn out as their own nodes while there is room. Every neighbour is either a node on show or is counted by one group on show.
 - Clicking a group opens it in place: its members stand under its name, joined by a bracket, and the group stays in view. A group of more than 18 members from several Lean files or sections opens into those first. Clicking the group's name again folds it.
 - Lines between two neighbours are left out. Clicking a neighbour puts it in the middle with its own neighbourhood.
 - A key under the drawing names the line styles and node styles in use.
 
 ### Moving about
 
-- An opened group can make the drawing taller than its area. It then scrolls with the wheel, the trackpad, the arrow and page keys and a visible scrollbar, and dragging pans it. An overview beside the buttons shows the whole drawing and the part in view; clicking or dragging in it moves the view.
-- The buttons −, + and Fit change the zoom; Fit also folds every opened group and brings the subject back to the middle. Ctrl or ⌘ with the wheel zooms.
-- When the subject changes, the drawing is laid out afresh, fitted and centred. After that the reader's own scrolling and opened groups are kept until the subject changes again.
+- The drawing's area is a canvas with no scroll bars: it never scrolls. Dragging pans it; a trackpad's two-finger scroll pans it; a pinch, Ctrl or ⌘ with the wheel, or a mouse wheel's notches zoom about the pointer; a double click on the drawing zooms in there. On the keyboard the arrows pan, + and − zoom and 0 fits. A pan always leaves part of the drawing in view, and focusing a card brings it into view.
+- An overview over the corner of the area, shown whenever part of the drawing is out of view, shows the whole drawing and the part in view; clicking or dragging in it moves the view.
+- The buttons −, + and Fit change the zoom; Fit also folds every opened group and fits the whole drawing again.
+- The drawing is fitted when it opens, when the subject changes, on Fit, and when the pane itself changes size while the view is still the fitted one. The camera never changes the layout and the layout never moves the camera except by such a fit, so the drawing is completely still while nobody touches it. After the reader pans, zooms or opens a group, the view is kept until the subject changes or Fit is pressed.
 - Pointing at or focusing a node lights its line to the subject and shows the node's detail in the dock. A member of an open group lights the group's line. Clicking a node makes it the subject.
 - Pointing at a phrase or a sentence in the paper lights its node if it is drawn.
 
@@ -98,9 +99,11 @@ Under 600 pixels of width the graph folds to one line that names the subject and
 - a subject is drawn;
 - on opening, the whole drawing lies inside its area, with nothing to scroll;
 - the nodes on show and the counts of the groups on show add up to the number of neighbours;
-- every title and group name is whole and at least 13 pixels;
+- every title and group name is whole and, at the fitted zoom, at least 11 pixels;
 - there is a line for every node and group beside the subject;
 - the dock is never empty;
-- the largest group opens into exactly its count, the drawing then scrolls under the wheel and shows the overview, every card can be brought wholly into view, and Fit folds the group again.
+- the largest group opens into exactly its count; when the drawing is then larger than its area, dragging pans it, the overview is shown and focusing each card brings it wholly into view; Fit folds the group again.
+
+`check-idle.py` asserts that the page, the graph included, makes no change at all while it is left alone (no mutation, address change, layout shift or scroll), across window widths, with classic scroll bars that take room.
 
 Each repository's own script drives its pages and calls these checks.
