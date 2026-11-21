@@ -117,7 +117,13 @@ export interface SiteInstance {
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
-  library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
+  library?: {
+    paper: string;
+    main: InstanceStage;
+    pages?: Record<string, InstanceStage>;
+    /** Documents of the same paper read in another build (a fourth document, served at its own address); the Read menu links to them. */
+    external?: { title: string; job: string; href: string }[];
+  };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
    * The `supports` links ("from→to", node ids) the edition derived from the Lean's dependencies

@@ -1,0 +1,73 @@
+name = "TCSFormalizations"
+defaultTargets = ["Sunflower", "SunflowerChecks", "TSPGap", "TSPGapChecks", "Palomar", "IPPSPACE", "Toda", "PCP"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc2"
+
+[[lean_lib]]
+name = "Palomar"
+globs = ["Palomar.+"]
+
+[[lean_lib]]
+name = "Sunflower"
+
+[[lean_lib]]
+name = "SunflowerChecks"
+
+[[lean_lib]]
+name = "TSPGap"
+
+[lean_lib.leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+# Unchanged upstream source snapshots shared by IPPSPACE, Toda and PCP.
+# Attribution, exact revisions, and checksums: vendor/UPSTREAM.json.
+[[lean_lib]]
+name = "Cslib"
+srcDir = "vendor"
+roots = ["Cslib.Computability.Circuit.Signature"]
+globs = ["Cslib.+"]
+
+[[lean_lib]]
+name = "Complexitylib"
+srcDir = "vendor"
+roots = ["Complexitylib"]
+globs = ["Complexitylib.+"]
+
+[[lean_lib]]
+name = "IPPSPACE"
+
+[lean_lib.leanOptions]
+autoImplicit = false
+pp.unicode.fun = true
+
+[[lean_lib]]
+name = "Toda"
+
+[lean_lib.leanOptions]
+autoImplicit = false
+pp.unicode.fun = true
+
+[[lean_lib]]
+name = "PCP"
+
+[lean_lib.leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+weak.linter.style.header = false
+
+[[lean_lib]]
+name = "TSPGapChecks"
+
+[lean_lib.leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3

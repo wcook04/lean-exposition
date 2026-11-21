@@ -4,7 +4,7 @@
 
 import type { SiteFacts } from "../../home/siteFacts.ts";
 import type { RecordKind, SiteInstance } from "../types.ts";
-import { PAPER, MAIN, LIBRARY_ROOT } from "./data.ts";
+import { PAPER, MAIN, BUILT, LIBRARY_ROOT } from "./data.ts";
 
 const n = (value: number) => value.toLocaleString("en-GB");
 const plain = (text: string) => text.replace(/\$([^$]+)\$/g, "$1");
@@ -19,12 +19,12 @@ const sentence = (text: string) => (/[.!?]$/.test(text.trim()) ? text.trim() : `
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
-for (const doc of PAPER.documents)
+for (const doc of BUILT)
   paperNames[doc.slot] = doc.main
     ? { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: PAPER.credit_lines.map(sentence).join(" ") }
     : {
         short: doc.title,
-        job: sentence(`${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
+        job: sentence(`${doc.title}: ${/^[aeiou]/i.test(doc.noun) ? "an" : "a"} ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
         reader: PAPER.companion_credit ? sentence(PAPER.companion_credit) : "",
       };
 
@@ -79,8 +79,8 @@ const site = {
     noscript: `The paper and its Lean are in the repository under <code>instances/${PAPER.id}/</code>.`,
     ogImage: false,
   },
-  defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.id}/`,
-  pdfs: Object.fromEntries(PAPER.documents.filter((d) => d.pdf).map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.slug ? `${d.slug}.pdf` : "paper.pdf" }])),
+  defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.path ?? PAPER.id}/`,
+  pdfs: Object.fromEntries(BUILT.filter((d) => d.pdf).map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.slug ? `${d.slug}.pdf` : "paper.pdf" }])),
   publicObservations: [],
   publishReceipts: false,
   sitePages: [""],
@@ -105,10 +105,17 @@ const site = {
   },
   regionTitles: {},
   paperNames,
-  stages: PAPER.documents.map((d) => d.slot),
+  stages: BUILT.map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
-  library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
+  library: {
+    paper: PAPER.id,
+    main: MAIN.slot,
+    pages: Object.fromEntries(BUILT.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
+    external: PAPER.documents
+      .filter((d) => d.href && !d.slot)
+      .map((d) => ({ title: d.title, job: sentence(`${d.title}: the ${d.noun}`), href: `${LIBRARY_ROOT}${d.href}` })),
+  },
   recordKind,
   leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
   levelGoals: null,

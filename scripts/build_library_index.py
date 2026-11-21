@@ -107,12 +107,14 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
     phrases = statements = 0
     lean: set[str] = set()
     rows_statements: list[list[str]] = []
-    slot_slug = {d["slot"]: d.get("slug", "") for d in inst["documents"]}
+    # Documents read in another build (an `href` and no slot) are listed as pages, not counted here.
+    built = [d for d in inst["documents"] if d.get("slot")]
+    slot_slug = {d["slot"]: d.get("slug", "") for d in built}
     bodies: dict[str, bytes] = {}
-    for doc in inst["documents"]:
+    for doc in built:
         doc_file = index.get("documents", {}).get(doc["slot"])
         bodies[doc["slot"]] = (root / doc_file).read_bytes() if doc_file and (root / doc_file).exists() else b""
-    for doc in inst["documents"]:
+    for doc in built:
         ties_path = root / "ties" / f"{doc['slot']}.json"
         if not ties_path.exists():
             continue
@@ -436,7 +438,8 @@ def main() -> None:
                 continue
             paper = inst["id"]
             main_doc = next(d for d in inst["documents"] if d.get("main"))
-            pages = [{"title": d["title"], "href": f"{BASE}{paper}/{d['slug']}/"} for d in inst["documents"] if not d.get("main") and d.get("slug")]
+            pages = [{"title": d["title"], "href": f"{BASE}{d['href']}" if d.get("href") else f"{BASE}{paper}/{d['slug']}/"}
+                     for d in inst["documents"] if not d.get("main") and (d.get("slug") or d.get("href"))]
             pdf = (main_doc.get("pdf") or {}).get("url")
             if pdf:
                 pages.append({"title": "The authors’ PDF", "href": pdf})

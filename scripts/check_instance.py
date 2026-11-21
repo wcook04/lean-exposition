@@ -9,7 +9,8 @@ Lean tree). Fails, naming each problem, when:
   * a numbered result of the paper is not used, through the map's edges in the direction of use,
     by the main result (unless authored/check.json records why);
   * a declaration a phrase names shows no uses, unless its own source names none either
-    (the text scan finds nothing outside its own name).
+    (the text scan finds nothing outside its own name), recorded with why in authored/check.json
+    ("no_uses").
 """
 from __future__ import annotations
 
@@ -102,8 +103,10 @@ def main() -> int:
     named = set()
     for path in sorted((root / "alignment").glob("phrases-*.json")):
         named |= {row["name"] for t in json.loads(path.read_text())["ties"] for row in t["lean"]}
+    # A declaration whose body uses only Mathlib is recorded in authored/check.json ("no_uses", with why).
+    no_uses = json.loads((root / "authored/check.json").read_text()).get("no_uses", {}) if (root / "authored/check.json").is_file() else {}
     empty = [n for n in sorted(named) if n in rows and not rows[n].get("uses") and rows[n].get("dependency_source") != "lean_report"
-             and rows[n]["kind"] not in ("axiom", "inductive", "structure", "class")]
+             and rows[n]["kind"] not in ("axiom", "inductive", "structure", "class") and n not in no_uses]
     if empty:
         problems.append(f"{len(empty)} declaration(s) a phrase names show no uses and carry no Lean report: {', '.join(empty[:6])}")
     for p in problems:

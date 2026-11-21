@@ -86,12 +86,40 @@ def slug_of(title: str) -> str | None:
     return f"{m.group(1).lower()}-{m.group(2).lower().rstrip('.')}"
 
 
-def section_number(heading: str) -> str | None:
-    """`5.5.1 The equations at each level` -> `5.5.1`; `Appendix A ...` -> `appendix-a`."""
-    m = re.match(r"^(\d+(?:\.\d+)*)\s", heading)
+def address_of(claim: dict) -> str:
+    """A result's address: its number in the authors' numbering (`theorem-1.1`), or, for a result the
+    page states without a number ("The PCP theorem"), its Proof Reader claim id under `claim-`
+    (`claim-1`, `claim-reference-np-equivalence`), so the old claim address maps onto it exactly."""
+    numbered = slug_of(claim["title"])
+    if numbered:
+        return numbered
+    cid = re.sub(r"[^0-9a-z.-]+", "-", claim["id"].lower()).strip("-")
+    return cid if re.match(r"^claim-[0-9a-z.]", cid) else f"claim-{cid}"
+
+
+LABEL = re.compile(r"\*\*\s*((" + "|".join(w.capitalize() for w in KIND_WORDS) + r")\s+([0-9A-Z](?:[0-9A-Za-z]|\.(?=[0-9A-Za-z]))*))\.?(?:\s*\(([^;)]*)[;)])?")
+
+
+def printed_label(claim: dict, quote: str, text: str) -> str | None:
+    """The authors' own label for a result Proof Reader titles in words: the bold label that opens
+    its statement ("**Lemma 4.1 (standard low-degree test; ...).**"), found where its phrase begins,
+    or as the label whose parenthesised name is the claim's title. None when the paper prints no number."""
+    m = LABEL.match(quote.lstrip())
     if m:
         return m.group(1)
-    m = re.match(r"^(?:Appendix\s+)?([A-Z])(?:\.(\d+(?:\.\d+)*))?\s", heading)
+    title = claim["title"].strip().lower()
+    for m in LABEL.finditer(text):
+        if m.group(4) and m.group(4).strip().lower() == title:
+            return m.group(1)
+    return None
+
+
+def section_number(heading: str) -> str | None:
+    """`5.5.1 The equations at each level` -> `5.5.1`; `Appendix A ...` -> `appendix-a`."""
+    m = re.match(r"^(\d+(?:\.\d+)*)\.?\s", heading)
+    if m:
+        return m.group(1)
+    m = re.match(r"^(?:Appendix\s+)?([A-Z])(?:\.(\d+(?:\.\d+)*))?\.?\s", heading)
     if m and heading.startswith("Appendix"):
         return "appendix-" + m.group(1).lower() + (f".{m.group(2)}" if m.group(2) else "")
     return None
@@ -129,6 +157,11 @@ def reading_copy(md: str, passages: list[dict]) -> tuple[str, list[dict], dict]:
     section anchors by number. A Proof Reader quote never crosses a heading, so every
     quote stays inside one marked section.
     """
+    # The source's own markup that this reader writes itself: a YAML front-matter block, and Proof
+    # Reader's block markers (<!-- passage:id --> ... <!-- /passage:id -->), which would nest inside
+    # the section markers below. The passages keep their ids as ties; the markers carry no text.
+    md = re.sub(r"\A---\n.*?\n---\n+", "", md, flags=re.S)
+    md = re.sub(r"^<!-- /?passage:[^>]*-->[ \t]*\n?", "", md, flags=re.M)
     heads = [(m.start(), len(m.group(1)), m.group(2).strip()) for m in HEADING.finditer(md)]
     out, sections, anchors, last = [], [], {}, 0
     bounds = [h for h in heads if h[1] <= 2]
@@ -160,6 +193,45 @@ def reading_copy(md: str, passages: list[dict]) -> tuple[str, list[dict], dict]:
     return "".join(out), sections, anchors
 
 
+def github_slug(heading: str) -> str:
+    """The fragment GitHub gives a Markdown heading: `4.2 The standard test` -> `42-the-standard-test`."""
+    text = re.sub(r"[*_`$\\]", "", heading.strip().lower())
+    return re.sub(r"\s", "-", re.sub(r"[^\w\s-]", "", text))
+
+
+def section_slugs(md: str) -> dict[str, str]:
+    """Each numbered heading's GitHub fragment and the section number this reader anchors it at."""
+    out = {}
+    for m in HEADING.finditer(md):
+        number = section_number(m.group(2).strip())
+        if number:
+            out.setdefault(github_slug(m.group(2)), number)
+    return out
+
+
+LINK = re.compile(r"\]\(([^()\s]*)\)")
+
+
+def relink(md: str, own: dict[str, str], companions: dict[str, dict[str, str]], base_url: str) -> str:
+    """Point a page's links where this reader can follow them. A fragment written as GitHub's heading
+    slug (`#42-the-standard-test`), in the page itself or in a companion page this paper carries, names
+    the section number the reader anchors (`#4.2`). Any other relative link (a README or a Lean file of
+    the authors' repository) is resolved against the page's own URL in that repository."""
+    from urllib.parse import urljoin
+
+    def one(m):
+        href = m.group(1)
+        path, _, frag = href.partition("#")
+        if not path:
+            return f"]({'#' + own.get(frag, frag) if frag else href})"
+        if path in companions:
+            return f"]({path}{'#' + companions[path].get(frag, frag) if frag else ''})"
+        if re.match(r"^[a-z][a-z0-9+.-]*:", path) or path.startswith("/") or not base_url:
+            return m.group(0)
+        return f"]({urljoin(base_url, href)})"
+    return LINK.sub(one, md)
+
+
 UNASSESSED = "unassessed"
 
 
@@ -175,6 +247,71 @@ def assessment(comparisons: dict, name: str) -> dict:
     return {"fidelity": c["fidelity"], "note": (c.get("note") or "").strip()}
 
 
+def plain_index(text: str) -> tuple[str, list[int]]:
+    """The text a reader sees, without Markdown's inline markup (code ticks, emphasis, link targets,
+    escapes, HTML tags, footnote marks), and for each of its characters the offset in the source."""
+    out, at, i, n = [], [], 0, len(text)
+    while i < n:
+        c = text[i]
+        if c == "\\" and i + 1 < n and text[i + 1] in "[]()*_`$#\\":
+            out.append(text[i + 1]); at.append(i + 1); i += 2; continue
+        if c in "`*" or (c == "_" and (i == 0 or not text[i - 1].isalnum() or i + 1 >= n or not text[i + 1].isalnum())):
+            i += 1; continue
+        if c == "]" and text.startswith("(", i + 1):
+            close = text.find(")", i + 1)
+            i = close + 1 if close > 0 else i + 1; continue
+        if c == "[" and text.startswith("^", i + 1):
+            close = text.find("]", i)
+            i = close + 1 if close > 0 else i + 1; continue
+        if c in "[":
+            i += 1; continue
+        if c == "<":
+            close = text.find(">", i)
+            if 0 < close < i + 200:
+                i = close + 1; continue
+        if c.isspace():
+            if out and out[-1] == " ":
+                i += 1; continue
+            out.append(" "); at.append(i); i += 1; continue
+        out.append(c); at.append(i); i += 1
+    return "".join(out), at
+
+
+def locate(text: str, quote: str, section: str | None, plain: tuple[str, list[int]]) -> tuple[int, int] | None:
+    """Where a quote stands in the source: exactly once, or once as the reader sees the text (markup
+    removed), taking the first place inside the quote's own section when the words recur. The span is
+    widened to whole code spans, emphasis and links so the phrase never cuts the markup."""
+    at = text.find(quote)
+    if at >= 0 and text.find(quote, at + 1) < 0:
+        return at, at + len(quote)
+    flat, back = plain
+    q = re.sub(r"\s+", " ", re.sub(r"[`*]", "", quote)).strip()
+    hits = [m.start() for m in re.finditer(re.escape(q), flat)] if q else []
+    if len(hits) > 1 and section:
+        mark = text.find(f'<a id="{section}"></a>')
+        if mark >= 0:
+            inside = [h for h in hits if back[h] >= mark]
+            hits = inside[:1] if inside else hits
+    if len(hits) != 1:
+        return None
+    start, stop = back[hits[0]], back[hits[0] + len(q) - 1] + 1
+    for delim in ("`", "**", "*"):
+        while text[start:stop].count(delim) % 2 and text[start - len(delim):start] == delim:
+            start -= len(delim)
+        while text[start:stop].count(delim) % 2 and text[stop:stop + len(delim)] == delim:
+            stop += len(delim)
+    # A link cut by the end of the phrase keeps its target; one cut by its start keeps its bracket.
+    if text[start:stop].count("[") > text[start:stop].count("]"):
+        close = text.find(")", text.find("](", stop) + 1) if text.find("](", stop) >= 0 else -1
+        if close > 0:
+            stop = close + 1
+    if text[start:stop].count("](") > text[start:stop].count("["):
+        start = text.rfind("[", 0, start)
+    if re.search(r"\]\([^)]*$", text[start:stop]):
+        stop = text.find(")", stop) + 1
+    return start, stop
+
+
 def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report: dict):
     """Every passage as a phrase tie.
 
@@ -183,13 +320,15 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
     every phrase it holds (`merged`), and each Lean row keeps every phrase's own comparison of it
     (`assessments`), so a verdict about one phrase is never shown as a verdict about another.
     """
-    spans = []
+    spans, plain = [], plain_index(text)
     for p in passages:
-        at = text.find(p["quote"])
-        if at < 0 or text.find(p["quote"], at + 1) >= 0:
+        found = locate(text, p["quote"], p.get("section"), plain)
+        if not found:
             report["quote_not_unique"].append(p["id"])
             continue
-        spans.append([at, at + len(p["quote"]), p])
+        if text[found[0]:found[1]] != p["quote"]:
+            report.setdefault("quote_read_through_markup", []).append(p["id"])
+        spans.append([found[0], found[1], p])
     spans.sort(key=lambda s: (s[0], -s[1]))
     merged, aliases = [], {}
     for s in spans:
@@ -406,6 +545,11 @@ def main() -> None:
                     help="authored JSON: the paper's own stated logic between its results, as supports edges sourced to the "
                          "paper, and unnumbered results it states (nodes with their phrase and Lean)")
     ap.add_argument("--credit", help="the credit line, exactly, in place of paper.toml's [credit] text")
+    ap.add_argument("--authors", action="append", help="the paper's authors as the header names them, in place of paper.toml's (repeat for each)")
+    ap.add_argument("--companion-credit", help="the line companion pages carry, in place of 'Paper and Lean by <authors>, from their repository ...'")
+    ap.add_argument("--path", help="where the paper is served under the library, when not at its id (a document of another paper: pcp/reading-guide)")
+    ap.add_argument("--external", action="append", default=[], metavar="HREF|Title|noun",
+                    help="a document of the same paper read in another build, at HREF under the library root (pcp/reading-guide/); the Read menu links to it")
     args = ap.parse_args()
     page, out, slot = args.page, args.out, args.slot
     toml = tomllib.loads((page / "paper.toml").read_text())
@@ -479,6 +623,26 @@ def main() -> None:
     uses_of = {d["name"]: d["uses"] for m in enriched["modules"] for d in m["declarations"]}
 
     # ---- the reading copy
+    # Links between the pages: Proof Reader's [reading.companions] names each page another file stands for.
+    pr_companions = toml.get("reading", {}).get("companions", {})
+    page_md = {page.name: md}
+    for spec in args.companion:
+        for cp in spec.split("=", 1)[1].split("|")[0].split("+"):
+            cp = Path(cp)
+            page_md[cp.name] = (cp / tomllib.loads((cp / "paper.toml").read_text())["paper"].get("markdown", "paper.md")).read_text()
+    slugs_of = {name: section_slugs(text_) for name, text_ in page_md.items()}
+    base_url = toml["paper"].get("url", "") if "/blob/" in toml["paper"].get("url", "") else ""
+
+    def relinked(source_md: str, page_name: str, own_companions: dict, own_base: str) -> str:
+        targets = {path: slugs_of.get(name, {}) for path, name in own_companions.items()}
+        return relink(source_md, slugs_of.get(page_name) or section_slugs(source_md), targets, own_base)
+
+    def relink_quotes(passages, page_name, own_companions, own_base):
+        for p in passages:
+            p["quote"] = relinked(p["quote"], page_name, own_companions, own_base)
+
+    md = relinked(md, page.name, pr_companions, base_url)
+    relink_quotes(links["passages"], page.name, pr_companions, base_url)
     text, sections, section_anchors = reading_copy(md, links["passages"])
     paper_dir = out / "papers" / slot
     write(paper_dir / "paper.md", text)
@@ -566,9 +730,15 @@ def main() -> None:
             tie_of[old] = t["id"]
     relabel = json.loads(args.paper_logic.read_text()).get("labels", {}) if args.paper_logic else {}
     results, claims = {}, []
+    quote_of = {p["id"]: p["quote"] for p in links["passages"]}
     for c in links.get("claims", []):
-        address = slug_of(c["title"])
-        if not address or address in results:
+        # A result Proof Reader titles in words keeps the number the paper prints for it, when it prints one.
+        if not slug_of(c["title"]):
+            label = printed_label(c, quote_of.get(c.get("passage"), ""), text)
+            if label:
+                c = dict(c, title=label, name=c["title"])
+        address = address_of(c)
+        if address in results:
             continue
         # The paper's stated logic may name a result by its role ("Corollary 7.2: how the profile is obtained").
         if address in relabel:
@@ -648,7 +818,7 @@ def main() -> None:
 
     paper_md = text.encode("utf-8")
     title = toml["paper"]["title"]
-    authors = toml["paper"].get("authors", [])
+    authors = args.authors or toml["paper"].get("authors", [])
     sources, citations, nodes, edges, evidence = {}, {}, {}, [], {}
 
     def node(nid, kind, label, status, **extra):
@@ -915,14 +1085,17 @@ def main() -> None:
     companion_docs = []
     for spec in args.companion:
         cslot, pages_spec = spec.split("=", 1)
-        pages_spec, cslug, ctitle_given = (pages_spec.split("|") + ["", ""])[:3]
+        pages_spec, cslug, ctitle_given, cnoun = (pages_spec.split("|") + ["", "", ""])[:4]
         if cslot == slot or cslot not in SLOTS or cslot in {d["slot"] for d in companion_docs}:
             raise SystemExit(f"--companion {spec}: the slot must be a free one of {SLOTS}")
         cpages = [Path(x) for x in pages_spec.split("+")]
         ctomls = [tomllib.loads((cp / "paper.toml").read_text()) for cp in cpages]
         clinks = [json.loads((cp / "links.json").read_text()) for cp in cpages]
-        cmd = "\n\n".join((cp / t["paper"].get("markdown", "paper.md")).read_text().rstrip("\n")
+        cmd = "\n\n".join(relinked((cp / t["paper"].get("markdown", "paper.md")).read_text(), cp.name,
+                                     t.get("reading", {}).get("companions", {}), "").rstrip("\n")
                             for cp, t in zip(cpages, ctomls)) + "\n"
+        for cp, t, cl in zip(cpages, ctomls, clinks):
+            relink_quotes(cl["passages"], cp.name, t.get("reading", {}).get("companions", {}), "")
         cpassages = [x for cl in clinks for x in cl["passages"]]
         ctext, csections, _ = reading_copy(cmd, cpassages)
         cdir = out / "papers" / cslot
@@ -987,7 +1160,7 @@ def main() -> None:
         companion_docs.append({"id": "+".join(cp.name for cp in cpages), "slot": cslot,
                                "slug": cslug or (cpages[0].name.removeprefix(f"{page.name.split('-paper')[0]}-") if len(cpages) == 1 else "accounts"),
                                "title": ctitle_given or (t0["title"] if len(cpages) == 1 else " · ".join(t["paper"]["short_title"] for t in ctomls)),
-                               "noun": t0.get("noun", "account")})
+                               "noun": cnoun or t0.get("noun", "account")})
         summary_c = {k: (len(v) if isinstance(v, list) else v) for k, v in creport.items()}
         report.setdefault("companions", {})["+".join(cp.name for cp in cpages)] = {**summary_c, "ties": len(cties), "titled": len(ctitles), "noted": len(cnote_rows)}
     if args.companion:
@@ -1070,13 +1243,13 @@ def main() -> None:
     # ---- the instance
     credit = args.credit or toml.get("credit", {}).get("text", "")
     instance = {
-        "schema": "library-instance/1", "id": args.paper, "title": title,
+        "schema": "library-instance/1", "id": args.paper, **({"path": args.path} if args.path else {}), "title": title,
         "short_title": toml["paper"].get("short_title", title), "authors": authors,
         "venue": toml["paper"].get("venue", ""),
         "credit_lines": [credit] if credit else [],
         # Companion pages credit the authors and their repository only; the main paper's own
         # header and About carry the full credit line (credit_lines).
-        "companion_credit": (f"Paper and Lean by {', '.join(authors[:-1]) + ' and ' + authors[-1] if len(authors) > 1 else ''.join(authors)}, "
+        "companion_credit": args.companion_credit or (f"Paper and Lean by {', '.join(authors[:-1]) + ' and ' + authors[-1] if len(authors) > 1 else ''.join(authors)}, "
                              f"from their repository {upstream_repo.replace('https://github.com/', '')} at {upstream_rev[:7]}."),
         **({"licence": toml["paper"]["licence"]} if toml["paper"].get("licence") else {}),
         "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
@@ -1087,7 +1260,9 @@ def main() -> None:
                    "upstream": {"repository": upstream_repo, "commit": upstream_rev, "paper": toml["paper"].get("url")},
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
-                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + ([guide] if guide else []),
+                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + ([guide] if guide else [])
+                     + [{"id": "external:" + href, "href": href, "slug": "", "title": t, "noun": n or "page"}
+                        for href, t, n in ((x.split("|") + ["", ""])[:3] for x in args.external)],
         **({"comparator": comparator} if comparator else {}),
         **({"comparisons_hidden": True, "comparisons_held_text": held} if held else {}),
         "families": links.get("families", []),

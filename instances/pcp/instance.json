@@ -1,0 +1,279 @@
+{
+ "schema": "library-instance/1",
+ "id": "pcp",
+ "title": "Constant-query verification by algebraic encoding",
+ "short_title": "Constant-query verification by algebraic encoding",
+ "authors": [
+  "Will Cook, with AI assistance"
+ ],
+ "venue": "Explanatory reconstruction of Troy Lee's pinned formalization",
+ "credit_lines": [
+  "Original algebraic proof: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee. Explanatory reconstruction prepared by Will Cook with AI assistance"
+ ],
+ "companion_credit": "Original algebraic proof by Amireddy, Behera, Srinivasan, Sudan and Willumsgaard; Lean formalization by Troy Lee, from his repository troyjlee/tcs-formalizations at a0ce13e (Apache-2.0).",
+ "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
+ "review": "The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
+ "source": {
+  "proof_reader": {
+   "repository": "https://github.com/wcook04/proof-reader",
+   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "page": "pcp-specialist"
+  },
+  "upstream": {
+   "repository": "https://github.com/troyjlee/tcs-formalizations",
+   "commit": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "paper": null
+  },
+  "lean_scope": "Lean 4.35.0-rc2 compiled the listed modules of the authors' project, and each declaration's statement, dependencies and axioms shown here are Lean's own report from those compiled modules. Comparator, run in its sandbox, accepted the authors' proofs of the forward theorem, the converse and the equivalence with the reference NP class against statements copied from their source, and refused a control that changed the soundness bound. The links from the paper's sentences to the Lean, the plain titles and the notes were made with AI and have not been reviewed by the authors."
+ },
+ "documents": [
+  {
+   "id": "paper",
+   "slot": "short",
+   "slug": "",
+   "title": "Constant-query verification by algebraic encoding",
+   "noun": "paper",
+   "main": true
+  },
+  {
+   "id": "pcp-full-argument",
+   "slot": "long",
+   "slug": "full-argument",
+   "title": "The algebraic PCP theorem: a detailed account",
+   "noun": "detailed account"
+  },
+  {
+   "id": "pcp-exposition",
+   "slot": "expository",
+   "slug": "exposition",
+   "title": "Checking a long proof by reading a few bits",
+   "noun": "exposition"
+  },
+  {
+   "id": "external:pcp/reading-guide/",
+   "href": "pcp/reading-guide/",
+   "slug": "",
+   "title": "Reading the Lean PCP proof, by Troy Lee",
+   "noun": "reading guide to the Lean"
+  }
+ ],
+ "comparator": {
+  "files": {
+   "Challenge.lean": "5a3a21f36f3332098a64d62754de680e0f9607fb9d89783a6c4aef60264b5a50",
+   "Solution.lean": "ed29999d68b77e882636f5a4cbe9b94de01fb45c7828d4e8f2597501426633f3",
+   "comparator.json": "46e5d339f8aa13b28a6d5c2ba18aee716912f0a26527705bd7d1df9f75d9b75a",
+   "negative/Challenge.lean": "04bff4952768847ce734c606c6dd753a0705ec436a99b376a2afadcce48f41dc",
+   "negative/comparator.json": "700b83f3c6e5c06cfcee5bce12527887aef5d64c765fb1e67f58f64450e68615",
+   "receipt.json": "4b9a3ca28c8edd803622838de82d38876570eca9c60e7b7c73ddc6db66293d48"
+  },
+  "receipt": "receipt.json"
+ },
+ "families": [
+  {
+   "id": "np-and-pcp",
+   "name": "NP and PCP"
+  },
+  {
+   "id": "polynomials-and-grids",
+   "name": "Polynomials and grids"
+  },
+  {
+   "id": "hadamard-encoding",
+   "name": "Hadamard encoding"
+  },
+  {
+   "id": "verifier-model-and-resources",
+   "name": "Verifier model and resources"
+  },
+  {
+   "id": "three-colouring-verifier",
+   "name": "Three-colouring verifier"
+  },
+  {
+   "id": "binary-low-degree-testing",
+   "name": "Binary low-degree testing"
+  },
+  {
+   "id": "local-correction-and-grid-testing",
+   "name": "Local correction and grid testing"
+  },
+  {
+   "id": "field-low-degree-testing",
+   "name": "Low-degree testing over fields"
+  }
+ ],
+ "topics": [
+  {
+   "id": "pcp-characterization",
+   "name": "PCP theorem",
+   "description": "Polynomial-time verification with logarithmic randomness and a constant number of proof-bit queries characterizes NP.",
+   "family": "np-and-pcp"
+  },
+  {
+   "id": "polynomial-distance",
+   "name": "Polynomial distance",
+   "description": "The Schwartz–Zippel bound limits the fraction of points where a nonzero polynomial vanishes.",
+   "family": "polynomials-and-grids"
+  },
+  {
+   "id": "grid-interpolation",
+   "name": "Low-degree extension",
+   "description": "Interpolation represents a table on a grid by a unique polynomial with a degree bound in each variable.",
+   "family": "polynomials-and-grids"
+  },
+  {
+   "id": "hadamard-labels",
+   "name": "Labels and encoding",
+   "description": "Polynomial labels turn field values and their polynomial expressions into bits and distinguish full, affine and homogeneous observations.",
+   "family": "hadamard-encoding"
+  },
+  {
+   "id": "verifier-model",
+   "name": "Verifier and query trees",
+   "description": "A verifier selects an adaptive query tree from its input and random seed, with explicit acceptance probabilities and proof-address bounds.",
+   "family": "verifier-model-and-resources"
+  },
+  {
+   "id": "machine-implementation",
+   "name": "Polynomial-time implementation",
+   "description": "A finite multi-stack machine implements the verifier or witness checker with polynomial running time.",
+   "family": "verifier-model-and-resources"
+  },
+  {
+   "id": "colouring-constraints",
+   "name": "Colouring constraints",
+   "description": "Vertex values and edge differences satisfy polynomial equations exactly when they define a proper three-colouring.",
+   "family": "three-colouring-verifier"
+  },
+  {
+   "id": "vanishing-certificates",
+   "name": "Vanishing certificates",
+   "description": "A polynomial vanishing on a grid admits a decomposition using the coordinate vanishing polynomials and a certificate expressed by two identities.",
+   "family": "polynomials-and-grids"
+  },
+  {
+   "id": "linearity-self-correction",
+   "name": "Linearity and self-correction",
+   "description": "Linearity testing finds a nearby linear word, and two randomly shifted queries recover a requested value with controlled error.",
+   "family": "hadamard-encoding"
+  },
+  {
+   "id": "resource-bounds",
+   "name": "Queries, randomness and repetition",
+   "description": "Query counts, fair-bit sampling, proof length and independent repetition give the resource bounds and final soundness error.",
+   "family": "verifier-model-and-resources"
+  },
+  {
+   "id": "proof-tables-checks",
+   "name": "Proof tables and checks",
+   "description": "Four pairs of points and lines tables supply the answers read by four low-degree tests, two grid tests and a difference check.",
+   "family": "three-colouring-verifier"
+  },
+  {
+   "id": "binary-low-degree-test",
+   "name": "Binary low-degree test",
+   "description": "Small rejection gives one polynomial whose encoding is close to the points table on both full and homogeneous labels.",
+   "family": "binary-low-degree-testing"
+  },
+  {
+   "id": "zero-on-grid-test",
+   "name": "Zero-on-grid test",
+   "description": "Corrected certificate queries test vanishing identities at prescribed points and relate failure on the grid to rejection.",
+   "family": "local-correction-and-grid-testing"
+  },
+  {
+   "id": "colouring-guarantees",
+   "name": "Completeness and soundness",
+   "description": "An honest colouring passes every check, while sufficiently small rejection forces four nearby polynomials to describe a proper colouring.",
+   "family": "three-colouring-verifier"
+  },
+  {
+   "id": "np-reduction",
+   "name": "Reduction to three-colouring",
+   "description": "Accepting computations become finite constraints, Boolean clauses and graphs while preserving the existence of a witness.",
+   "family": "np-and-pcp"
+  },
+  {
+   "id": "np-witnesses",
+   "name": "NP witness verification",
+   "description": "A language belongs to NP when membership is witnessed by a polynomial-length string accepted by a polynomial-time checker.",
+   "family": "np-and-pcp"
+  },
+  {
+   "id": "standard-low-degree-test",
+   "name": "Standard low-degree test",
+   "description": "Weighted interpolation at generator powers tests low degree, with plurality correction turning small rejection into polynomial agreement.",
+   "family": "field-low-degree-testing"
+  },
+  {
+   "id": "field-local-correction",
+   "name": "Local correction over fields",
+   "description": "Random line queries recover a polynomial value at a prescribed point or bound the probability of accepting a wrong value.",
+   "family": "local-correction-and-grid-testing"
+  },
+  {
+   "id": "bivariate-agreement",
+   "name": "Bivariate agreement",
+   "description": "Agreement between low-degree row and column polynomials produces a nearby bivariate polynomial and consistent values at selected crossings.",
+   "family": "field-low-degree-testing"
+  },
+  {
+   "id": "point-line-test",
+   "name": "Point-versus-line test",
+   "description": "Agreement with supplied line polynomials at random points yields one nearby polynomial of bounded total degree.",
+   "family": "field-low-degree-testing"
+  },
+  {
+   "id": "set-multilinear-encoding",
+   "name": "Set-multilinear encoding",
+   "description": "Writing exponents in a fixed number of base digits replaces a line polynomial by a polynomial of fixed total degree.",
+   "family": "binary-low-degree-testing"
+  },
+  {
+   "id": "hadamard-testing",
+   "name": "Hadamard test",
+   "description": "Linearity, unit, product and affine consistency checks test whether a word is close to the encoding of one field value.",
+   "family": "hadamard-encoding"
+  },
+  {
+   "id": "inner-low-degree-test",
+   "name": "Inner low-degree test",
+   "description": "A random choice between Hadamard testing and a binary weighted identity tests one encoded line entry for low degree.",
+   "family": "binary-low-degree-testing"
+  },
+  {
+   "id": "binary-local-correction",
+   "name": "Local correction on bits",
+   "description": "Weighted bit queries and tests of encoded line entries recover a homogeneous observation at a prescribed point, allowing rejection.",
+   "family": "local-correction-and-grid-testing"
+  }
+ ],
+ "topic_order": [
+  "pcp-characterization",
+  "polynomial-distance",
+  "grid-interpolation",
+  "hadamard-labels",
+  "verifier-model",
+  "machine-implementation",
+  "colouring-constraints",
+  "vanishing-certificates",
+  "linearity-self-correction",
+  "resource-bounds",
+  "proof-tables-checks",
+  "binary-low-degree-test",
+  "zero-on-grid-test",
+  "colouring-guarantees",
+  "np-reduction",
+  "np-witnesses",
+  "standard-low-degree-test",
+  "field-local-correction",
+  "bivariate-agreement",
+  "point-line-test",
+  "set-multilinear-encoding",
+  "hadamard-testing",
+  "inner-low-degree-test",
+  "binary-local-correction"
+ ],
+ "goal": "pcp.theorem-1.1",
+ "main_lean": "PCP.np_subset_pcp"
+}

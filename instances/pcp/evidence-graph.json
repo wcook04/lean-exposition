@@ -1,0 +1,1498 @@
+{
+ "schema_version": "1.2",
+ "id": "pcp-library-edition",
+ "title": "Constant-query verification by algebraic encoding",
+ "selected_goals": [
+  "pcp.theorem-1.1"
+ ],
+ "sources": [
+  {
+   "id": "lean:PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+   "path": "upstream/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/BinaryLocalRowDecoding.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+   "path": "upstream/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e",
+   "path": "upstream/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "6e58a5b2b12060f38bc3c640be2169ef0ddbd3652deed85ce5453c094fd7cfa0",
+   "path": "upstream/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+   "path": "upstream/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/GeneratorLowDegreeTest.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4",
+   "path": "upstream/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/PointLineSoundness.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/PointLineSoundness.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74",
+   "path": "upstream/lean/PCP/Algebraic/PointLineSoundness.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a",
+   "path": "upstream/lean/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/ThreeColorGrid.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/ThreeColorGrid.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e",
+   "path": "upstream/lean/PCP/Algebraic/ThreeColorGrid.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae",
+   "path": "upstream/lean/PCP/Algebraic/ThreeColorVerifierCompleteness.lean"
+  },
+  {
+   "id": "lean:PCP/Algebraic/VanishingCertificate.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/VanishingCertificate.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "f8a240c66a7507cbfd78bfabc0e858e1342ae7ad2bf5e8bb1ded5b5b2a25add6",
+   "path": "upstream/lean/PCP/Algebraic/VanishingCertificate.lean"
+  },
+  {
+   "id": "lean:PCP/Complexity/ReferenceNPConverse.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Complexity/ReferenceNPConverse.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+   "path": "upstream/lean/PCP/Complexity/ReferenceNPConverse.lean"
+  },
+  {
+   "id": "lean:PCP/Complexity/ThreeColorRuntime.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Complexity/ThreeColorRuntime.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c",
+   "path": "upstream/lean/PCP/Complexity/ThreeColorRuntime.lean"
+  },
+  {
+   "id": "lean:PCP/ReverseConcrete.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/ReverseConcrete.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c",
+   "path": "upstream/lean/PCP/ReverseConcrete.lean"
+  },
+  {
+   "id": "lean:PCP/Theorem.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Theorem.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+   "path": "upstream/lean/PCP/Theorem.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "a65094c08b7fb151c3fafa730ab0eb4fd614d5308dbb0d2e2466e668130e13b4"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "title": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean#L222",
+   "source_id": "lean:PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+   "locator": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean, line 222"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "title": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean#L108",
+   "source_id": "lean:PCP/Algebraic/BinaryLocalRowDecoding.lean",
+   "locator": "PCP/Algebraic/BinaryLocalRowDecoding.lean, line 108"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "title": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean#L249",
+   "source_id": "lean:PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+   "locator": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean, line 249"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "title": "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean#L246",
+   "source_id": "lean:PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+   "locator": "PCP/Algebraic/DerivedZeroOnGridSoundness.lean, line 246"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "title": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean#L325",
+   "source_id": "lean:PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+   "locator": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean, line 325"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "title": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean#L274",
+   "source_id": "lean:PCP/Algebraic/GeneratorLowDegreeTest.lean",
+   "locator": "PCP/Algebraic/GeneratorLowDegreeTest.lean, line 274"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "title": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/VanishingCertificate.lean#L119",
+   "source_id": "lean:PCP/Algebraic/VanishingCertificate.lean",
+   "locator": "PCP/Algebraic/VanishingCertificate.lean, line 119"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "title": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/PointLineSoundness.lean#L58",
+   "source_id": "lean:PCP/Algebraic/PointLineSoundness.lean",
+   "locator": "PCP/Algebraic/PointLineSoundness.lean, line 58"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "title": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean#L72",
+   "source_id": "lean:PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+   "locator": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean, line 72"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "title": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/ThreeColorGrid.lean#L117",
+   "source_id": "lean:PCP/Algebraic/ThreeColorGrid.lean",
+   "locator": "PCP/Algebraic/ThreeColorGrid.lean, line 117"
+  },
+  {
+   "id": "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "title": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Algebraic/ThreeColorVerifierCompleteness.lean#L101",
+   "source_id": "lean:PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+   "locator": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean, line 101"
+  },
+  {
+   "id": "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "title": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Complexity/ThreeColorRuntime.lean#L11",
+   "source_id": "lean:PCP/Complexity/ThreeColorRuntime.lean",
+   "locator": "PCP/Complexity/ThreeColorRuntime.lean, line 11"
+  },
+  {
+   "id": "cite.lean.PCP.ReferenceNP.inNP_iff_mem",
+   "title": "PCP.ReferenceNP.inNP_iff_mem",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Complexity/ReferenceNPConverse.lean#L39",
+   "source_id": "lean:PCP/Complexity/ReferenceNPConverse.lean",
+   "locator": "PCP/Complexity/ReferenceNPConverse.lean, line 39"
+  },
+  {
+   "id": "cite.lean.PCP.np_subset_pcp",
+   "title": "PCP.np_subset_pcp",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Theorem.lean#L25",
+   "source_id": "lean:PCP/Theorem.lean",
+   "locator": "PCP/Theorem.lean, line 25"
+  },
+  {
+   "id": "cite.lean.PCP.pcp_subset_np_concrete",
+   "title": "PCP.pcp_subset_np_concrete",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/ReverseConcrete.lean#L33",
+   "source_id": "lean:PCP/ReverseConcrete.lean",
+   "locator": "PCP/ReverseConcrete.lean, line 33"
+  },
+  {
+   "id": "cite.pcp.claim-10",
+   "title": "Constant-query verification by algebraic encoding, Polynomial-time implementation",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Polynomial-time implementation, Section 7"
+  },
+  {
+   "id": "cite.pcp.claim-derived-zero",
+   "title": "Constant-query verification by algebraic encoding, Grid test with self-corrected reads",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Grid test with self-corrected reads, Section 5"
+  },
+  {
+   "id": "cite.pcp.claim-reference-np-equivalence",
+   "title": "Constant-query verification by algebraic encoding, Equivalence with the reference NP class",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Equivalence with the reference NP class, Section Formalization and sources"
+  },
+  {
+   "id": "cite.pcp.claim-source-11",
+   "title": "Constant-query verification by algebraic encoding, Perfect completeness",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Perfect completeness, Section 6"
+  },
+  {
+   "id": "cite.pcp.claim-source-12",
+   "title": "Constant-query verification by algebraic encoding, Repetition on the same proof",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Repetition on the same proof, Section 7"
+  },
+  {
+   "id": "cite.pcp.claim-source-13",
+   "title": "Constant-query verification by algebraic encoding, The reverse inclusion",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "The reverse inclusion, Section 7"
+  },
+  {
+   "id": "cite.pcp.claim-vanishing-certificate",
+   "title": "Constant-query verification by algebraic encoding, Vanishing certificate",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Vanishing certificate, Section 2"
+  },
+  {
+   "id": "cite.pcp.lemma-2.1",
+   "title": "Constant-query verification by algebraic encoding, Lemma 2.1",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Lemma 2.1, Section 2"
+  },
+  {
+   "id": "cite.pcp.lemma-4.1",
+   "title": "Constant-query verification by algebraic encoding, Lemma 4.1",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Lemma 4.1, Section 4"
+  },
+  {
+   "id": "cite.pcp.lemma-4.3",
+   "title": "Constant-query verification by algebraic encoding, Lemma 4.3",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Lemma 4.3, Section 4"
+  },
+  {
+   "id": "cite.pcp.lemma-5.2",
+   "title": "Constant-query verification by algebraic encoding, Lemma 5.2",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Lemma 5.2, Section 5"
+  },
+  {
+   "id": "cite.pcp.theorem-1.1",
+   "title": "Constant-query verification by algebraic encoding, Theorem 1.1",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Theorem 1.1, Section 1"
+  },
+  {
+   "id": "cite.pcp.theorem-4.5",
+   "title": "Constant-query verification by algebraic encoding, Theorem 4.5",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Theorem 4.5, Section 4"
+  },
+  {
+   "id": "cite.pcp.theorem-4.6",
+   "title": "Constant-query verification by algebraic encoding, Theorem 4.6",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Theorem 4.6, Section 4"
+  },
+  {
+   "id": "cite.pcp.theorem-5.1",
+   "title": "Constant-query verification by algebraic encoding, Theorem 5.1",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "source_id": "paper",
+   "locator": "Theorem 5.1, Section 5"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le"
+   ],
+   "source_id": "lean:PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+   "declaration": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "statement": "Failure bound for binary correction",
+   "locator": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean, line 222",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+   ],
+   "source_id": "lean:PCP/Algebraic/BinaryLocalRowDecoding.lean",
+   "declaration": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "statement": "A nearby inner polynomial",
+   "locator": "PCP/Algebraic/BinaryLocalRowDecoding.lean, line 108",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound"
+   ],
+   "source_id": "lean:PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+   "declaration": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "statement": "The grid-test rejection inequality",
+   "locator": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean, line 249",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
+   ],
+   "source_id": "lean:PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+   "declaration": "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "statement": "Soundness with self-corrected reads",
+   "locator": "PCP/Algebraic/DerivedZeroOnGridSoundness.lean, line 246",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close"
+   ],
+   "source_id": "lean:PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+   "declaration": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "statement": "One polynomial fits both label sets",
+   "locator": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean, line 325",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
+   ],
+   "source_id": "lean:PCP/Algebraic/GeneratorLowDegreeTest.lean",
+   "declaration": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "statement": "Low rejection gives polynomial proximity",
+   "locator": "PCP/Algebraic/GeneratorLowDegreeTest.lean, line 274",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
+   ],
+   "source_id": "lean:PCP/Algebraic/VanishingCertificate.lean",
+   "declaration": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "statement": "Bounded-degree vanishing certificates",
+   "locator": "PCP/Algebraic/VanishingCertificate.lean, line 119",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection"
+   ],
+   "source_id": "lean:PCP/Algebraic/PointLineSoundness.lean",
+   "declaration": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "statement": "Point-versus-line test gives proximity",
+   "locator": "PCP/Algebraic/PointLineSoundness.lean, line 58",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
+   ],
+   "source_id": "lean:PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+   "declaration": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "statement": "Amplified verifier with error $1/2$",
+   "locator": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean, line 72",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
+   ],
+   "source_id": "lean:PCP/Algebraic/ThreeColorGrid.lean",
+   "declaration": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "statement": "Colourability as solvable grid equations",
+   "locator": "PCP/Algebraic/ThreeColorGrid.lean, line 117",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "kind": "declaration",
+   "label": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
+   ],
+   "source_id": "lean:PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+   "declaration": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "statement": "Colourings give an always-accepted proof",
+   "locator": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean, line 101",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "kind": "declaration",
+   "label": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg"
+   ],
+   "source_id": "lean:PCP/Complexity/ThreeColorRuntime.lean",
+   "declaration": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "statement": "Polynomial time for amplified verifier",
+   "locator": "PCP/Complexity/ThreeColorRuntime.lean, line 11",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.ReferenceNP.inNP_iff_mem",
+   "kind": "declaration",
+   "label": "PCP.ReferenceNP.inNP_iff_mem",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.ReferenceNP.inNP_iff_mem"
+   ],
+   "source_id": "lean:PCP/Complexity/ReferenceNPConverse.lean",
+   "declaration": "PCP.ReferenceNP.inNP_iff_mem",
+   "statement": "Witness NP equals nondeterministic NP",
+   "locator": "PCP/Complexity/ReferenceNPConverse.lean, line 39",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.np_subset_pcp",
+   "kind": "declaration",
+   "label": "PCP.np_subset_pcp",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.np_subset_pcp"
+   ],
+   "source_id": "lean:PCP/Theorem.lean",
+   "declaration": "PCP.np_subset_pcp",
+   "statement": "Constant-query verification for NP",
+   "locator": "PCP/Theorem.lean, line 25",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.PCP.pcp_subset_np_concrete",
+   "kind": "declaration",
+   "label": "PCP.pcp_subset_np_concrete",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.pcp_subset_np_concrete"
+   ],
+   "source_id": "lean:PCP/ReverseConcrete.lean",
+   "declaration": "PCP.pcp_subset_np_concrete",
+   "statement": "Efficient PCP verification implies NP",
+   "locator": "PCP/ReverseConcrete.lean, line 33",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "pcp.claim-10",
+   "kind": "claim",
+   "label": "Polynomial-time implementation",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-10"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-10"
+   ],
+   "source_id": "paper",
+   "locator": "Polynomial-time implementation, Section 7",
+   "statement": "Lee's implementation finds the field, generators and cube roots by bounded search in time polynomial in $q$, hence in the input length, and compiles the verifier into Mathlib's finite multi-stack machine model with a polynomial cost bound.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.claim-derived-zero",
+   "kind": "claim",
+   "label": "Grid test with self-corrected reads",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-derived-zero"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-derived-zero"
+   ],
+   "source_id": "paper",
+   "locator": "Grid test with self-corrected reads, Section 5",
+   "statement": "$$\n\\frac{1-Dh/q}{2}\n\\le(1+2C)(\\kappa+2\\epsilon)+2\\delta_M+\\frac{D}{q-1}.\n\\tag{16}\n$$",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.claim-reference-np-equivalence",
+   "kind": "claim",
+   "label": "Equivalence with the reference NP class",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-reference-np-equivalence"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-reference-np-equivalence"
+   ],
+   "source_id": "paper",
+   "locator": "Equivalence with the reference NP class, Section Formalization and sources",
+   "statement": "explicit simulations identify its witness class with [the NP class in the unchanged vendored ComplexityLib][lean-reference-np].",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.claim-source-11",
+   "kind": "claim",
+   "label": "Perfect completeness",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-source-11"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-source-11"
+   ],
+   "source_id": "paper",
+   "locator": "Perfect completeness, Section 6",
+   "statement": "For completeness, a proper colouring, its low-degree extension, exact vanishing certificates and honest lines tables, with degrees below $b^c$, pass every check for every seed: one fixed eight-table proof with perfect completeness.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.claim-source-12",
+   "kind": "claim",
+   "label": "Repetition on the same proof",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-source-12"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-source-12"
+   ],
+   "source_id": "paper",
+   "locator": "Repetition on the same proof, Section 7",
+   "statement": "After fair-bit sampling the rejection gap is at least $g_c/16$, and constantly many independent repetitions on the same proof reduce soundness error to $1/2$, keeping logarithmic randomness and constant queries.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.claim-source-13",
+   "kind": "claim",
+   "label": "The reverse inclusion",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-source-13"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-source-13"
+   ],
+   "source_id": "paper",
+   "locator": "The reverse inclusion, Section 7",
+   "statement": "For the converse, take the verifier and bounds $p,\\alpha,\\beta$ of Theorem 1.1, guess the first $p(n)$ proof bits and simulate the verifier, in polynomial time, on each of the at most $2^\\beta(2(n+2))^\\alpha$ random strings. Perfect completeness gives a prefix accepted on every run. If such a prefix existed for a no-instance, its zero extension would have acceptance probability one, contradicting soundness. The resulting witness relation is decidable in polynomial time, so the language lies in NP.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.claim-vanishing-certificate",
+   "kind": "claim",
+   "label": "Vanishing certificate",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.claim-vanishing-certificate"
+   ],
+   "citation_ids": [
+    "cite.pcp.claim-vanishing-certificate"
+   ],
+   "source_id": "paper",
+   "locator": "Vanishing certificate, Section 2",
+   "statement": "Equivalently, some polynomial $M(X,Y)$ of degree at most $\\deg A$, a vanishing certificate, satisfies",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.lemma-2.1",
+   "kind": "claim",
+   "label": "Lemma 2.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.lemma-2.1"
+   ],
+   "citation_ids": [
+    "cite.pcp.lemma-2.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2.1, Section 2",
+   "statement": "**Lemma 2.1 (colouring constraints).** The restriction $P|_{H^m}$ is a proper colouring of the padded graph exactly when $A_P|_{H^m}=0$ and $B_P|_{H^{2m}}=0$, and $Q_P,A_P,B_P$ have degrees at most $d_0,3d_0,5d_0$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.lemma-4.1",
+   "kind": "claim",
+   "label": "Lemma 4.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.lemma-4.1"
+   ],
+   "citation_ids": [
+    "cite.pcp.lemma-4.1"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 4.1, Section 4",
+   "statement": "**Lemma 4.1 (standard low-degree test; [ABSSW26, Fact 2.7 and Lemma 3.3]).** Assume $q>2c$, let $\\zeta$ generate $F^\\times$, and let",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.lemma-4.3",
+   "kind": "claim",
+   "label": "Lemma 4.3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.lemma-4.3"
+   ],
+   "citation_ids": [
+    "cite.pcp.lemma-4.3"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 4.3, Section 4",
+   "statement": "**Lemma 4.3 (inner low-degree test; cf. [ABSSW26, Lemma 4.3]).** On a table $w:F^{cb}\\times\\mathcal B_r\\to\\mathbb F_2$, the inner low-degree test flips a fair coin between the Hadamard test on $w(\\xi,\\cdot)$ at a uniform inner point $\\xi$ and a one-bit observation of the standard low-degree test, (10) read through a uniform homogeneous label at uniform $u,v$. If $q>2c$ and the test rejects with probability $\\kappa$, some polynomial $U$ of total degree at most $c$ satisfies",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.lemma-5.2",
+   "kind": "claim",
+   "label": "Lemma 5.2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.lemma-5.2"
+   ],
+   "citation_ids": [
+    "cite.pcp.lemma-5.2"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5.2, Section 5",
+   "statement": "**Lemma 5.2 (zero-on-grid test; cf. [ABSSW26, Theorem 6.1]).** The zero-on-grid test checks (2) on tables of $A$ and a certificate. It samples uniform $x,L$, reads the bit $a_{\\rm bit}$ of $A$'s table at $(x,L)$ and, with the same $x,L$ and independent seeds, gets $b_0,b_Z$ or rejection from the certificate's local corrector at $(x,0)$ and $(x,Z_H(x))$; it accepts exactly when neither rejects, $b_0=0$ and $b_Z=a_{\\rm bit}$. Under the hypotheses of Theorem 5.1, let $A$ and a proposed certificate $M$ have degree at most $D$, with tables at homogeneous distances $\\delta_A,\\delta_M$ from their encodings. If $A$ does not vanish on $H^k$ and the test rejects with probability $\\kappa$, then (15) holds.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.theorem-1.1",
+   "kind": "goal",
+   "label": "Theorem 1.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.theorem-1.1"
+   ],
+   "citation_ids": [
+    "cite.pcp.theorem-1.1"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 1.1, Section 1",
+   "statement": "**Theorem 1.1 (PCP theorem; [AS98, ALMSS98]).** For every language $\\mathcal L\\subseteq\\{0,1\\}^{*}$ in NP, there are a polynomial-time verifier $V$, natural numbers $\\alpha,\\beta,\\ell$, and a polynomial $p\\in\\mathbb N[X]$ with the following properties. On an input $x$ of length $n$, the verifier uses exactly",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.theorem-4.5",
+   "kind": "claim",
+   "label": "Theorem 4.5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.theorem-4.5"
+   ],
+   "citation_ids": [
+    "cite.pcp.theorem-4.5"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 4.5, Section 4",
+   "statement": "**Theorem 4.5 (point-versus-line test; [ALMSS98, Theorem 45]).** Suppose",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.theorem-4.6",
+   "kind": "claim",
+   "label": "Theorem 4.6",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.theorem-4.6"
+   ],
+   "citation_ids": [
+    "cite.pcp.theorem-4.6"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 4.6, Section 4",
+   "statement": "**Theorem 4.6 (binary low-degree test; [ABSSW26, Theorem 4.1]).** Let $D=cb^c$ and $q\\ge10^6D^3$, and with $K$ as in (11) put $J=2((c+1)K+29)$ and $S=28+J$. If this test rejects $(f,f')$ with probability $\\kappa$ and $J\\kappa\\le1/(4\\cdot10^6)$, then some polynomial $P$ of total degree at most $D$ has $\\Delta_{\\rm full}(f,\\mathcal H_r(P))\\le S\\kappa$ and $\\Delta_{\\rm hom}(f,\\mathcal H_r(P))\\le S\\kappa$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "pcp.theorem-5.1",
+   "kind": "claim",
+   "label": "Theorem 5.1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp.theorem-5.1"
+   ],
+   "citation_ids": [
+    "cite.pcp.theorem-5.1"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 5.1, Section 5",
+   "statement": "**Theorem 5.1 (local correction at a prescribed point; cf. [ABSSW26, Theorem 5.1]).** Let $q>2c$, let $P$ have total degree at most $D\\ge cb^c$ with $\\Delta_{\\rm hom}(f,\\mathcal H_1(P))\\le\\delta$, and let $f'$ be arbitrary. If the local corrector rejects at $a$ with probability $\\kappa_a$, the probability over all its randomness, $L$ included, of rejection or a returned bit other than $L(P(a))$ satisfies",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  }
+ ],
+ "edges": [
+  {
+   "from": "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "to": "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "to": "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "to": "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "to": "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "to": "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "to": "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "to": "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "to": "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "to": "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "to": "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "to": "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.np_subset_pcp",
+   "to": "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.PCP.np_subset_pcp",
+   "to": "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-10",
+   "to": "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-10"
+   ]
+  },
+  {
+   "from": "pcp.claim-derived-zero",
+   "to": "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-derived-zero"
+   ]
+  },
+  {
+   "from": "pcp.claim-derived-zero",
+   "to": "pcp.lemma-5.2",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-reference-np-equivalence",
+   "to": "lean.PCP.ReferenceNP.inNP_iff_mem",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-reference-np-equivalence"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-11",
+   "to": "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-source-11"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-11",
+   "to": "pcp.claim-vanishing-certificate",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-11",
+   "to": "pcp.lemma-2.1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-12",
+   "to": "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-source-12"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-12",
+   "to": "pcp.claim-derived-zero",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-12",
+   "to": "pcp.claim-source-11",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-12",
+   "to": "pcp.theorem-4.6",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.claim-source-13",
+   "to": "lean.PCP.pcp_subset_np_concrete",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-source-13"
+   ]
+  },
+  {
+   "from": "pcp.claim-vanishing-certificate",
+   "to": "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.claim-vanishing-certificate"
+   ]
+  },
+  {
+   "from": "pcp.lemma-2.1",
+   "to": "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.lemma-2.1"
+   ]
+  },
+  {
+   "from": "pcp.lemma-4.1",
+   "to": "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.lemma-4.1"
+   ]
+  },
+  {
+   "from": "pcp.lemma-4.3",
+   "to": "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.lemma-4.3"
+   ]
+  },
+  {
+   "from": "pcp.lemma-4.3",
+   "to": "pcp.lemma-4.1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.lemma-5.2",
+   "to": "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.lemma-5.2"
+   ]
+  },
+  {
+   "from": "pcp.lemma-5.2",
+   "to": "pcp.theorem-5.1",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.theorem-1.1",
+   "to": "lean.PCP.np_subset_pcp",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.theorem-1.1"
+   ]
+  },
+  {
+   "from": "pcp.theorem-1.1",
+   "to": "pcp.claim-10",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.theorem-1.1",
+   "to": "pcp.claim-source-12",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.theorem-4.5",
+   "to": "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.theorem-4.5"
+   ]
+  },
+  {
+   "from": "pcp.theorem-4.6",
+   "to": "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.theorem-4.6"
+   ]
+  },
+  {
+   "from": "pcp.theorem-4.6",
+   "to": "pcp.lemma-4.3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.theorem-4.6",
+   "to": "pcp.theorem-4.5",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "pcp.theorem-5.1",
+   "to": "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp.theorem-5.1"
+   ]
+  },
+  {
+   "from": "pcp.theorem-5.1",
+   "to": "pcp.lemma-4.3",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+    "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+    "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+    "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "lean.PCP.ReferenceNP.inNP_iff_mem",
+    "lean.PCP.np_subset_pcp",
+    "lean.PCP.pcp_subset_np_concrete",
+    "pcp.claim-10",
+    "pcp.claim-derived-zero",
+    "pcp.claim-source-11",
+    "pcp.claim-source-12",
+    "pcp.claim-vanishing-certificate",
+    "pcp.lemma-2.1",
+    "pcp.lemma-4.1",
+    "pcp.lemma-4.3",
+    "pcp.lemma-5.2",
+    "pcp.theorem-1.1",
+    "pcp.theorem-4.5",
+    "pcp.theorem-4.6",
+    "pcp.theorem-5.1"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.pcp.claim-10",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "pcp.claim-10"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Polynomial-time implementation. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.claim-derived-zero",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+    "pcp.claim-derived-zero"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Grid test with self-corrected reads. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.claim-reference-np-equivalence",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.ReferenceNP.inNP_iff_mem",
+    "pcp.claim-reference-np-equivalence"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Equivalence with the reference NP class. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.claim-source-11",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+    "pcp.claim-source-11"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Perfect completeness. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.claim-source-12",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+    "pcp.claim-source-12"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Repetition on the same proof. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.claim-source-13",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.pcp_subset_np_concrete",
+    "pcp.claim-source-13"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for The reverse inclusion. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.claim-vanishing-certificate",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "pcp.claim-vanishing-certificate"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Vanishing certificate. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.lemma-2.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "pcp.lemma-2.1"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Lemma 2.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.lemma-4.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "pcp.lemma-4.1"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Lemma 4.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.lemma-4.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "pcp.lemma-4.3"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Lemma 4.3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.lemma-5.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "pcp.lemma-5.2"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Lemma 5.2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.theorem-1.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.np_subset_pcp",
+    "pcp.theorem-1.1"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Theorem 1.1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.theorem-4.5",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "pcp.theorem-4.5"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Theorem 4.5. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.theorem-4.6",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "pcp.theorem-4.6"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Theorem 4.6. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.pcp.theorem-5.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "pcp.theorem-5.1"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Theorem 5.1. The links were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "scope": "Constant-query verification by algebraic encoding, by Will Cook, with AI assistance, with their Lean at https://github.com/troyjlee/tcs-formalizations a0ce13ed0fa264f051c1278e039596ce65557fa4, as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

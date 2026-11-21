@@ -18,8 +18,8 @@ export function pdfParams(q: URLSearchParams): { pdf?: true; page?: number } {
   return Number.isInteger(page) && page >= 1 ? { pdf: true, page } : { pdf: true };
 }
 
-/** A numbered result's address: kind and number, in lower case. */
-export const RESULT = /^(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.]+$/;
+/** A numbered result's address: kind and number, in lower case; a result the paper states without a number keeps its claim id (`claim-reference-np-equivalence`). */
+export const RESULT = /^(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.]+(?:-[0-9a-z.]+)*$/;
 
 /** A phrase's record and place; `host` names the phrase an old (merged or replaced) id now opens. */
 export interface PhraseAddress { record: string | null; at: string; host?: string }
@@ -83,7 +83,7 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
   const page = path.match(/^\/([a-z0-9-]+)$/);
   if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]] };
-  const result = path.match(/^\/([a-z]+-[0-9a-z.]+)$/);
+  const result = path.match(/^\/([a-z]+-[0-9a-z.-]+)$/);
   // A numbered result lands on its canonical target, the statement block, never an earlier mention.
   if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] };
   return null;

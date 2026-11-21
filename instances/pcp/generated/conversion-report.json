@@ -1,0 +1,190 @@
+{
+ "summary": {
+  "quote_not_unique": 0,
+  "lean_not_in_index": 0,
+  "verdict_without_note": 0,
+  "statement_without_lean": 0,
+  "merged": 2,
+  "merged_assessments_differ": 1,
+  "unassessed": 15,
+  "result_label_not_found": 7,
+  "result_without_statement": 0,
+  "long_title_without_override": 0,
+  "companions": {
+   "pcp-full-argument": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "ties": 75,
+    "titled": 77,
+    "noted": 66
+   },
+   "pcp-exposition": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 1,
+    "merged_assessments_differ": 1,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 32,
+    "titled": 36,
+    "noted": 29
+   }
+  },
+  "ties": 21,
+  "titled": 25,
+  "names": 169,
+  "results": 15,
+  "sections": 8,
+  "lean_files": 1056,
+  "unnamed": 0
+ },
+ "quote_not_unique": [],
+ "lean_not_in_index": [],
+ "verdict_without_note": [],
+ "statement_without_lean": [],
+ "merged": [
+  [
+   "pcp-short-forward-statement",
+   "pcp-short-reference-np-context"
+  ],
+  [
+   "pcp-short-reference-np",
+   "pcp-short-concrete-reference-np"
+  ]
+ ],
+ "merged_assessments_differ": [
+  [
+   "pcp-short-reference-np",
+   "PCP.ReferenceNP.inNP_iff_mem",
+   [
+    [
+     "pcp-short-reference-np",
+     "same"
+    ],
+    [
+     "pcp-short-concrete-reference-np",
+     "same"
+    ]
+   ]
+  ]
+ ],
+ "unassessed": [
+  [
+   "theorem-1.1",
+   "PCP.np_subset_pcp"
+  ],
+  [
+   "lemma-2.1",
+   "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
+  ],
+  [
+   "lemma-4.1",
+   "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
+  ],
+  [
+   "lemma-4.3",
+   "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+  ],
+  [
+   "theorem-4.6",
+   "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close"
+  ],
+  [
+   "theorem-5.1",
+   "PCP.Algebraic.BinaryLocalCorrection.failure_le"
+  ],
+  [
+   "lemma-5.2",
+   "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound"
+  ],
+  [
+   "claim-source-11",
+   "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
+  ],
+  [
+   "claim-source-12",
+   "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
+  ],
+  [
+   "claim-10",
+   "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
+  ],
+  [
+   "claim-source-13",
+   "PCP.pcp_subset_np_concrete"
+  ],
+  [
+   "claim-reference-np-equivalence",
+   "PCP.ReferenceNP.inNP_iff_mem"
+  ],
+  [
+   "claim-derived-zero",
+   "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
+  ],
+  [
+   "claim-vanishing-certificate",
+   "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
+  ],
+  [
+   "theorem-4.5",
+   "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection"
+  ]
+ ],
+ "result_label_not_found": [
+  "claim-source-11",
+  "claim-source-12",
+  "claim-10",
+  "claim-source-13",
+  "claim-reference-np-equivalence",
+  "claim-derived-zero",
+  "claim-vanishing-certificate"
+ ],
+ "result_without_statement": [],
+ "long_title_without_override": [],
+ "companions": {
+  "pcp-full-argument": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "ties": 75,
+   "titled": 77,
+   "noted": 66
+  },
+  "pcp-exposition": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 1,
+   "merged_assessments_differ": 1,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 32,
+   "titled": 36,
+   "noted": 29
+  }
+ }
+}

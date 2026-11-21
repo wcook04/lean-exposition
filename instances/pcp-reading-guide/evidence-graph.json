@@ -1,0 +1,143 @@
+{
+ "schema_version": "1.2",
+ "id": "pcp-reading-guide-library-edition",
+ "title": "Reading the Lean PCP proof",
+ "selected_goals": [
+  "pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "sources": [
+  {
+   "id": "lean:PCP/Theorem.lean",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Theorem.lean",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+   "path": "upstream/lean/PCP/Theorem.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/docs/pcp/reading-guide.md",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "b508f1874c9f50630ac7a077957360bc7650b8eea2c6234c9e96f78d1d627e6f"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://github.com/troyjlee/tcs-formalizations",
+   "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.lean.PCP.np_subset_pcp",
+   "title": "PCP.np_subset_pcp",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/lean/PCP/Theorem.lean#L25",
+   "source_id": "lean:PCP/Theorem.lean",
+   "locator": "PCP/Theorem.lean, line 25"
+  },
+  {
+   "id": "cite.pcp-reading-guide.claim-pcp-theorem",
+   "title": "Reading the Lean PCP proof, NP ⊆ PCP(O(log n), O(1))",
+   "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/docs/pcp/reading-guide.md",
+   "source_id": "paper",
+   "locator": "NP ⊆ PCP(O(log n), O(1)), Section 4"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "lean.PCP.np_subset_pcp",
+   "kind": "declaration",
+   "label": "PCP.np_subset_pcp",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.PCP.np_subset_pcp"
+   ],
+   "source_id": "lean:PCP/Theorem.lean",
+   "declaration": "PCP.np_subset_pcp",
+   "statement": "The forward PCP theorem",
+   "locator": "PCP/Theorem.lean, line 25",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "pcp-reading-guide.claim-pcp-theorem",
+   "kind": "goal",
+   "label": "NP ⊆ PCP(O(log n), O(1))",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.pcp-reading-guide.claim-pcp-theorem"
+   ],
+   "citation_ids": [
+    "cite.pcp-reading-guide.claim-pcp-theorem"
+   ],
+   "source_id": "paper",
+   "locator": "NP ⊆ PCP(O(log n), O(1)), Section 4",
+   "statement": "theorem np_subset_pcp (L : Language) (hL : InNP Machine.PolyTimeRel L) :\n    ∃ (V : Verifier) (alg : VerifierAlg) (a b q : ℕ) (p : Polynomial ℕ),\n      Machine.PolyTimeAlg alg ∧\n      V.ImplementedBy alg ∧\n      V.queries = q ∧\n      V.CanonicalRandomness a b ∧\n      (∀ x : List Bool, V.ReadsBelow x (p.eval x.length)) ∧\n      (∀ x : List Bool, L x → V.CompleteAt x) ∧\n      (∀ x : List Bool, ¬ L x → V.SoundAt x (1 / 2))",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  }
+ ],
+ "edges": [
+  {
+   "from": "pcp-reading-guide.claim-pcp-theorem",
+   "to": "lean.PCP.np_subset_pcp",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.pcp-reading-guide.claim-pcp-theorem"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "lean.PCP.np_subset_pcp"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.pcp-reading-guide.claim-pcp-theorem",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.PCP.np_subset_pcp",
+    "pcp-reading-guide.claim-pcp-theorem"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for NP ⊆ PCP(O(log n), O(1)). The links were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "scope": "Reading the Lean PCP proof, by Troy Lee, with their Lean at https://github.com/troyjlee/tcs-formalizations a0ce13ed0fa264f051c1278e039596ce65557fa4, as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

@@ -1,0 +1,179 @@
+{
+ "schema_version": "1.2",
+ "stage": "long",
+ "state": "draft",
+ "path": "papers/long.md",
+ "content_sha256": "dc56e4e1daa1b8023dc887b37931e10b5bd993197dfab563721fc18944d9dea7",
+ "graph_sha256": "41f00933958a68496ebe52b82a33d5b4472891bad301e913de1e17449956ec38",
+ "selected_goal_ids": [
+  "pcp.theorem-1.1"
+ ],
+ "claim_ids": [
+  "pcp.theorem-1.1"
+ ],
+ "citation_ids": [
+  "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+  "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+  "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+  "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+  "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+  "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+  "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+  "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+  "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+  "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+  "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+  "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+  "cite.lean.PCP.np_subset_pcp",
+  "cite.pcp.claim-10",
+  "cite.pcp.claim-derived-zero",
+  "cite.pcp.claim-source-11",
+  "cite.pcp.claim-source-12",
+  "cite.pcp.claim-vanishing-certificate",
+  "cite.pcp.lemma-2.1",
+  "cite.pcp.lemma-4.1",
+  "cite.pcp.lemma-4.3",
+  "cite.pcp.lemma-5.2",
+  "cite.pcp.theorem-1.1",
+  "cite.pcp.theorem-4.5",
+  "cite.pcp.theorem-4.6",
+  "cite.pcp.theorem-5.1"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+  "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+  "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+  "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+  "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+  "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+  "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+  "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+  "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+  "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+  "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+  "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+  "lean.PCP.np_subset_pcp",
+  "pcp.claim-10",
+  "pcp.claim-derived-zero",
+  "pcp.claim-source-11",
+  "pcp.claim-source-12",
+  "pcp.claim-vanishing-certificate",
+  "pcp.lemma-2.1",
+  "pcp.lemma-4.1",
+  "pcp.lemma-4.3",
+  "pcp.lemma-5.2",
+  "pcp.theorem-1.1",
+  "pcp.theorem-4.5",
+  "pcp.theorem-4.6",
+  "pcp.theorem-5.1"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "9607c6208bfb1b8a69037a6650d6f2815499dde63fe348e35f7018f0e8093002",
+   "claim_ids": [
+    "pcp.theorem-1.1"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+    "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+    "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "cite.lean.PCP.np_subset_pcp",
+    "cite.pcp.claim-10",
+    "cite.pcp.claim-derived-zero",
+    "cite.pcp.claim-source-11",
+    "cite.pcp.claim-source-12",
+    "cite.pcp.claim-vanishing-certificate",
+    "cite.pcp.lemma-2.1",
+    "cite.pcp.lemma-4.1",
+    "cite.pcp.lemma-4.3",
+    "cite.pcp.lemma-5.2",
+    "cite.pcp.theorem-1.1",
+    "cite.pcp.theorem-4.5",
+    "cite.pcp.theorem-4.6",
+    "cite.pcp.theorem-5.1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "19f3b30ec699bdaee913ad4d2e74a7462323f01b07f3574c09ab37f8e8b9ad51",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "1. Introduction: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "fa6de117768a747d99ed8d2a980fa08a72a6cbf97e707db25410770b730e5fe7",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "2. Preliminaries: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "b3da2d7e98753f02bb8dc63fa0985cbfc8263a632855fb756812504967637b1e",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "3. The three-colourability verifier and the proof of the PCP theorem: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "7b9ce1b18b838f94df9424eb37bdcdce1b575eaa35047c1b78c1ffa507d94188",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "4. Algebraic tests and local correction: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "70c20c05172dc5145b2b39f24af61ae4c680a0baef1c77f9aaf2a5bdcde0131f",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "5. Binary encodings and constant-query tests: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "768029c500520e6ec28640a246a5c3e19185ecbc31def793a832485d75a785c5",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "6. Formalization and sources: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-references",
+   "text_sha256": "0a13610e6817633ac6197ad24e1bec91b9b5e9f77887a5970faafb2941e75252",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "References: a companion account of the paper; its links to the Lean are its phrase ties."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}

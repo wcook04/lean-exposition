@@ -33,7 +33,9 @@ done
 cd site
 node scripts/check-tex.mjs "$paper"
 node scripts/library-instance.mjs "$paper"
-LX_INSTANCE=library VITE_STATIC_EDITION=true VITE_BASE_PATH="/library/$paper/" LX_SITE_URL="https://wcook04.github.io/library/$paper/" npm run build
+# Where the paper is served: its id, or the instance's own path (a document of another paper, "pcp/reading-guide").
+at=$("$PY" -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "../$I/instance.json")
+LX_INSTANCE=library VITE_STATIC_EDITION=true VITE_BASE_PATH="/library/$at/" LX_SITE_URL="https://wcook04.github.io/library/$at/" npm run build
 cd ..
 # The paper's own addresses as static pages: its top (/) and each numbered result (/theorem-1.1/)
 # get the main document's first screen, so they load with a 200 and a first paint of the text.
@@ -52,7 +54,7 @@ for address in results:
     (dist / address).mkdir(exist_ok=True)
     (dist / address / "index.html").write_text(shell)
 # Companion pages (/<slug>/) open as their own document's first screen.
-pages = [d for d in inst["documents"] if not d.get("main") and d.get("slug")]
+pages = [d for d in inst["documents"] if not d.get("main") and d.get("slug") and d.get("slot")]
 for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
     (dist / doc["slug"] / "index.html").write_text((dist / "read" / doc["slot"] / "index.html").read_text())

@@ -96,7 +96,7 @@ def main() -> int:
             tie = page.locator(".paper .tie[data-tone]").nth(1)
             tie.scroll_into_view_if_needed()
             tie.click()
-            page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
+            page.wait_for_function("() => /\\/@|[?&]n=|\\/(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.-]+\\//.test(location.href)", timeout=15000)
             card = page.locator(".phrase-card").first
             card.wait_for(timeout=15000)
             text = card.inner_text()
