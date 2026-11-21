@@ -96,5 +96,25 @@ class FromProofReader(unittest.TestCase):
             self.assertEqual(aliases["p.roll"], "p.theorem")
 
 
+    def test_held_comparisons_stay_hidden_and_others_show(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            folder = page(root, [dict(ALL[0], comparisons=[{"lean": "Demo.widget_round", "fidelity": "weaker", "note": "Says less."}]), ALL[2]])
+            links = json.loads((folder / "links.json").read_text())
+            links["fidelity_held"] = "The comparisons are held until the authors have seen them."
+            (folder / "links.json").write_text(json.dumps(links))
+            out = self.convert(root, folder)
+            shown = json.loads((out / "alignment/phrases-short.json").read_text())
+            self.assertEqual(shown["ties"][0]["lean"][0]["fidelity"], "weaker")
+            self.assertNotIn("comparisons_hidden", json.loads((out / "instance.json").read_text()))
+            out = self.convert(root, folder, "--hold-comparisons")
+            held = json.loads((out / "alignment/phrases-short.json").read_text())
+            self.assertEqual({row["fidelity"] for t in held["ties"] for row in t["lean"]}, {"held"})
+            self.assertNotIn("Says less", json.dumps(held))
+            instance = json.loads((out / "instance.json").read_text())
+            self.assertTrue(instance["comparisons_hidden"])
+            self.assertEqual(instance["comparisons_held_text"], links["fidelity_held"])
+
+
 if __name__ == "__main__":
     unittest.main()

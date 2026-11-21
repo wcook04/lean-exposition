@@ -263,9 +263,11 @@ html[data-view="map"] .app {
   }
 }
 
-/* Phones and narrow tablets: brand, named Search, and one menu. The widths are in em,
-   so a reader whose browser sets larger text gets the menu at a wider window. */
-@media (max-width: 56.25em) {
+/* Phones, tablets and narrow windows: brand, named Search, and one menu. Below 68.75em the
+   brand, a paper's own name and six links no longer fit on one line, and the links ran into each
+   other. The widths are in em, so a reader whose browser sets larger text gets the menu at a
+   wider window. */
+@media (max-width: 68.75em) {
   .topbar {
     gap: var(--space-3);
     padding: 0 var(--space-4);

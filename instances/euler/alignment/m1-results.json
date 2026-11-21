@@ -12,6 +12,34 @@
      "fidelity": "same",
      "fidelity_source": "ai",
      "fidelity_note": "The conclusions agree: $T_*=T_\\infty\\in(0,\\infty)$, the constructed solution is maximal, and both integrals in (1.2) diverge. The proof routes differ. The paper invokes the periodic Beale–Kato–Majda criterion; the formal proof uses the quantitative vorticity lower bound retained in Proposition 8.2 together with the lengths of successive crossing intervals to prove integral divergence directly. It therefore establishes the construction-specific corollary without proving the general continuation criterion."
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.paper_section_8_of_inductiveEulerStages",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.PaperTerminalTime",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.corollary_8_3",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
+     "name": "TorusEuler.Paper.Corollary83Conclusions",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -34,6 +62,30 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The paper fixes a nondecreasing threshold dominating the analytic costs; the formal result proves the same order and logarithmic gain bounds without those two assumptions, and for every integer $b\\ge1$. It retains the frequency recurrence, maximum rule, positivity and logarithmic floor, so this is a generalization of the arithmetic lemma rather than a relaxation of its conclusions."
+    },
+    {
+     "file": "TorusEuler/PaperParameterAndLaunchStatements.lean",
+     "name": "TorusEuler.paperLemma13_slowOrders",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper fixes a nondecreasing threshold that dominates the analytic costs. The formal Lemma 1.3 obtains the same order growth from the recurrence, maximum rule, positivity and logarithmic floor alone, so those additional threshold assumptions are unnecessary for this conclusion."
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_1_3",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper fixes a nondecreasing threshold that dominates the analytic costs. The formal Lemma 1.3 obtains the same order growth from the recurrence, maximum rule, positivity and logarithmic floor alone, so those additional threshold assumptions are unnecessary for this conclusion."
+    },
+    {
+     "file": "TorusEuler/Paper/Proofs/S678b/Lemma13.lean",
+     "name": "TorusEuler.Paper.Proof.lemma_1_3",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper fixes a nondecreasing threshold that dominates the analytic costs. The formal Lemma 1.3 obtains the same order growth from the recurrence, maximum rule, positivity and logarithmic floor alone, so those additional threshold assumptions are unnecessary for this conclusion."
     }
    ],
    "statements": [
@@ -56,6 +108,22 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The formal result retains the Euler identities, pressure formula and preservation of nonzero transverse wave data, while requiring differentiability of $F$ and $P'=F$ rather than the paper's smooth odd periodic profile and normalization. It also weakens the regularity of $D$ to the needed derivative assumptions and proves persistence throughout the interval, including times before the chosen initial time."
+    },
+    {
+     "file": "TorusEuler/PaperAffineStatements.lean",
+     "name": "TorusEuler.PaperAffine.exactWave",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper assumes a smooth background matrix $D$; the formal statement requires only its first time derivative, while retaining zero trace and symmetry of $D'+D^2$. The same affine-wave conclusion therefore holds under weaker regularity assumptions."
+    },
+    {
+     "file": "TorusEuler/Paper/S2/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_2_1",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper assumes a smooth background matrix $D$; the formal statement requires only its first time derivative, while retaining zero trace and symmetry of $D'+D^2$. The same affine-wave conclusion therefore holds under weaker regularity assumptions."
     }
    ],
    "statements": [
@@ -122,6 +190,22 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "All bounds in Lemma 2.4 are retained, with one error operator chosen before the amplitude vector. The formal statement additionally gives continuity of that operator and the bound $|\\sigma_p/\\sigma-1|\\le2T\\delta$, while allowing a continuous background on a larger observation interval, with $\\delta$ then measured over that larger interval."
+    },
+    {
+     "file": "TorusEuler/Paper/S2/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_2_4",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper's printed lemma gives the vector and amplitude comparison estimates. The formal statement also includes continuity of the common amplitude-error matrix and $|\\sigma_p/\\sigma-1|\\le2T\\delta$, making explicit two properties obtained in the paper's proof."
+    },
+    {
+     "file": "TorusEuler/PaperAffineStatements.lean",
+     "name": "TorusEuler.PaperAffine.additiveComparison",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper states both the error in $\\zeta$ and the relative error in $|k|^2\\cos^2\\varphi/\\lambda^2$. This formal theorem supplies the wave-vector error but omits the second estimate, which must be obtained through the separate norm comparison."
     }
    ],
    "statements": [
@@ -166,6 +250,34 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement retains positivity, the estimates (2.17)–(2.18) and the propagator onto the transverse plane, with the explicit propagator constant $252\\exp(1)$ in place of an unspecified absolute constant. It also permits a continuous background on a larger observation interval; the paper's smooth background and interval are a special case."
+    },
+    {
+     "file": "TorusEuler/Paper/S2/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_2_6",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperAffineStatements.lean",
+     "name": "TorusEuler.PaperAffine.finiteComparison",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S2/Vocabulary.lean",
+     "name": "TorusEuler.Paper.FiniteSmallness",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/Proofs/S2b/Lemma26.lean",
+     "name": "TorusEuler.Paper.Proof.lemma_2_6_of",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -210,6 +322,28 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The paper asserts existence of a profile family with the stated symmetry, periodicity, normalization and derivative bounds. The formal theorem proves all these properties for the explicitly constructed family, identifying which profiles realize the existence claim with constants uniform in $h$."
+    },
+    {
+     "file": "TorusEuler/PaperParameterAndLaunchStatements.lean",
+     "name": "TorusEuler.paperLemma31_waveProfile",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S34A/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_3_1",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper asserts the existence of profiles with these properties. The formal statement identifies particular families $F_h$ and $P_h$ satisfying all of them, so it also specifies witnesses for the existence claim."
+    },
+    {
+     "file": "TorusEuler/Paper/S34A/Vocabulary.lean",
+     "name": "TorusEuler.Paper.ProfileFamily",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -254,6 +388,22 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "Both the forward and inverse deformation bounds are retained. The formal statement admits any smooth periodic parent pressure satisfying the residual and coercivity bounds, whereas §5.1 selects the zero-mean Poisson pressure. It also permits a nonzero seed whose amplitude stays below $\\lambda^{-3/4}$ without requiring that peak to be attained, and bounds each perturbation derivative through order two separately rather than their sum. These choices enlarge the admissible inputs while including the paper’s case. The formal conclusion explicitly supplies a flow and gives the stated bounds for every label flow of $V+v$, with the constants chosen uniformly before the parent and expansion."
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_5_10",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper assumes a bound on the full $C^2$ norm of the perturbation. The formal statement only requires the same bound for each derivative through order two separately, and also proves existence of a flow and the estimate for every flow of that velocity."
+    },
+    {
+     "file": "TorusEuler/PaperFlowBounds.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma510_flowBounds",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper gives the flow estimate for its admissible expansion under the perturbation assumptions. The linked theorem additionally takes actual level and inverse deformation estimates as inputs for a selected approximation, so it is a conditional step in that proof."
     }
    ],
    "statements": [
@@ -276,6 +426,28 @@
      "fidelity": "different",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement retains (5.19)–(5.22), including strict positive coupling, the support assumptions, the initial-value term and the factor $\\lambda$ on the pressure. Its scope changes in both directions: part (i) requires fields smooth on all of $[0,T]$, while the paper allows fields supplied only on $[t_0,T]$; the parent pressure may be more general, and the central normalization is only $0<\\gamma\\le1$, rather than $\\max\\gamma=1$. It also fixes one admissible envelope. Part (ii) bounds every solution satisfying the transverse equation and normalization; existence and uniqueness are supplied by separate results. A separate formal estimate treats fields defined only on the active interval, but this does not change the scope of the numbered statement itself."
+    },
+    {
+     "file": "TorusEuler/PaperHierarchyInverse.lean",
+     "name": "TorusEuler.LocalizedAmplitude.paper_hierarchy_near_seed",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_5_3",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/Proofs/S5a/Library/Near519.lean",
+     "name": "TorusEuler.Paper.Lib.S5a.seedNear_of_h51",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper displays an upper amplitude bound and strict positivity of the coupling in (5.19). The formal result also gives relative seed error, a lower amplitude bound and quantitative coupling bounds, so it contains additional information about the localized seed."
     }
    ],
    "statements": [
@@ -298,6 +470,14 @@
      "fidelity": "different",
      "fidelity_source": "ai",
      "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. These broader hypotheses accompany a restriction: for general $V$ and $f$, zero phase average is required on all of $[0,T]$, whereas the weighted estimates concern $[t_0,T]$. Transversality, pressure normalization, and the momentum equation are imposed only on that active interval, so applying the theorem to arbitrary active-interval data requires a suitable extension. Both estimates retain exactly the $\\lambda^{-1}$ gain and one extra derivative. The homogeneous leading-wave clause explicitly supplies smooth full-interval representatives agreeing with $A_1$ and its pressure on the active interval. Once the envelope exponent is fixed, the parent exponent and order constants are chosen before the parent; the exponent is independent of derivative order and depth. The verdict records these mixed hypothesis changes, not a loss of frequency decay."
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_5_5",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper formulates the weighted estimates on $[t_0,T]$. The formal statement requires a smooth profile on $[0,T]$ whose phase average vanishes throughout that interval, so applying it to arbitrary active-interval data also requires an extension preserving zero phase mean."
     }
    ],
    "statements": [
@@ -320,6 +500,20 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. The weighted bounds on $[t_0,T]$, unweighted bounds on $[0,T]$, and both improvements for phase-independent fields are retained. The formal statement also allows any real normed target space and explicitly concludes Hölder regularity. Its derivative sum counts all ordered coordinate derivative sequences; smoothness identifies repeated mixed derivatives, and their order-dependent multiplicities are absorbed into $C_m$. The profiles already include the smooth continuation across cell faces described in the paper. Once the envelope exponent is fixed, the constants are chosen uniformly before the parent and target space, and the parent exponent does not depend on derivative order or depth. Phase-independent fields incur no factor $\\lambda^{3/2}$ per derivative."
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_5_7",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperGraphReadout.lean",
+     "name": "TorusEuler.paperLemma57_periodicGraphFromCell",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -364,6 +558,37 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. The pressure estimate remains an upper quadratic-form bound on all of $[0,T]$, rather than an absolute Hessian bound. On $[t_0,T]$, the central gradient retains the term $\\widetilde\\chi\\mathbf a\\otimes\\kappa$ and an operator-norm error at most $\\lambda^{-1/3}$. The formal statement bounds the displayed difference directly, which is equivalent to naming it $E_c$. The envelope exponent is fixed first, and thresholds for the common exponent $b$ and coefficients $\\Gamma_P$ are chosen before the parent and expansion. Enlarging those constants preserves the conclusion under the correspondingly stronger smallness condition, as in Lemma 5.8."
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_5_9",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperApproximateSolution.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paperLemma59_pressureCenter",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper proves the total pressure Hessian bound by estimating its components. This linked statement combines supplied bounds for the leading, higher, and mean pressures; those hypotheses are established by the separate component results used in the full construction."
+    },
+    {
+     "file": "TorusEuler/PaperGenericPhysicalPressure.lean",
+     "name": "TorusEuler.exists_parent_genericLeading_pressure_hessian_bound",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper bounds the Hessian of the full pressure correction. This linked theorem controls only the leading pressure, so the higher oscillatory and mean-pressure estimates must also be added to obtain (5.49)."
+    },
+    {
+     "file": "TorusEuler/PaperPhysicalLaterStep.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_physicalLaterStep",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper gives this conclusion for its admissible finite expansion. The linked formal theorem chooses one seed and, for each cutoff, a corresponding expansion satisfying it; its conclusion therefore concerns those selected profiles rather than every family satisfying the expansion equations."
     }
    ],
    "statements": [
@@ -408,6 +633,20 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "Both projection settings, the inverses on their projected spaces, and the higher-order isomorphisms are retained. For the base $C^{0,1/2}$ inverse, the formal statement only requires a Lipschitz coefficient, with loss controlled by its supremum and Lipschitz bound; the paper's $C^{1,1/2}$ coefficient is a special case, while the higher-order conclusions still require the stated higher regularity."
+    },
+    {
+     "file": "TorusEuler/Paper/S34A/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.theorem_A_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S34A/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_A_2",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -452,6 +691,30 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement includes all of (D.3)–(D.5) and the phase-independent Hölder product estimate in the paper’s smooth-profile setting. It gives explicit constants three for the summed label derivatives and two for the primitive, and extends products to continuous bilinear maps with their operator norms included. The constants are independent of the fields, scales and positive time weight. Periodicity is required for the phase operators, with zero phase average additionally required for the primitive; the derivative and product estimates need neither condition. The assumptions explicitly require finite derivative norms, and the conclusions establish finiteness of the output norms. The maximum convention for Hölder norms is equivalent to the customary sum convention, so only order-dependent constants change."
+    },
+    {
+     "file": "TorusEuler/PaperAppendixDFields.lean",
+     "name": "TorusEuler.paperLemmaD1_derivatives",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The display combines derivative and product estimates. This result proves the two derivative bounds; applying it to $f/\\gamma(t)$ gives (D.3), while (D.4) is supplied by the product theorem."
+    },
+    {
+     "file": "TorusEuler/PaperAppendixDFields.lean",
+     "name": "TorusEuler.paperLemmaD1_product",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The display contains derivative estimates and a product estimate. This result gives the product bound, including the norm of a general bilinear map; the two derivative bounds are separate results."
+    },
+    {
+     "file": "TorusEuler/Paper/SBD/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_D_1",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper gives the derivative and ordinary product estimates. The formal statement makes the summed label constant three and extends products to continuous bilinear maps, including their operator norm in the bound."
     }
    ],
    "statements": [
@@ -474,6 +737,30 @@
      "fidelity": "different",
      "fidelity_source": "ai",
      "fidelity_note": "Products and inverses retain polynomial derivative growth, with constants chosen uniformly before the parent parameter and coefficient fields. The formal statement also permits bounded bilinear products and invertible elements of complete real normed algebras. The consequential difference is that its exponents are nonnegative integers, while part (c) keeps the paper’s specified real exponent $C$. Rounding upward changes the radius condition to $\\ell_*\\le\\mathsf D^{-\\lceil C\\rceil}$ and the powers to $\\mathsf D^{\\lceil C\\rceil}$ and $\\mathsf D^{2\\lceil C\\rceil}$. For example, with $C=1/2$ and $\\mathsf D=4$, the paper allows $\\ell_*=1/2$, whereas the rounded condition requires $\\ell_*\\le1/4$. Rounding is sufficient when the absolute exponent and radius remain freely adjustable in the construction, but it does not reproduce the literal fixed-exponent clause."
+    },
+    {
+     "file": "TorusEuler/PaperAppendixDMultiIndex.lean",
+     "name": "TorusEuler.paperLemmaD2_mul_multiIndex",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper uses fixed-order constants to control products in (D.6). This result gives such constants after fixing the parent parameter and coefficients, with integer exponents; the separate full coefficient lemma makes their uniformity explicit."
+    },
+    {
+     "file": "TorusEuler/PaperAppendixD.lean",
+     "name": "TorusEuler.paperLemmaD2_mul",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper’s coefficient estimates use fixed-order constants. This result proves product closure for fixed coefficients and parent parameter using an integer exponent, so it alone does not express constants uniform over those choices."
+    },
+    {
+     "file": "TorusEuler/Paper/SBD/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_D_2",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper proves product closure for matrix coefficients. The formal statement allows bilinear products of norm at most one and chooses output constants before the parent parameter, time domain and fields, preserving the required uniformity."
     }
    ],
    "statements": [
@@ -540,6 +827,20 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement retains all six coefficient families and estimates (5.7)–(5.8), while allowing any smooth periodic pressure meeting the residual and coercivity bounds; the zero-mean Poisson pressure fixed in §5.1 is a special case. One exponent $C$ is chosen before the parent and derivative order, and the composition constants depend only on the prescribed derivative bounds for $f$. Operator norms replace sums of coordinate derivatives, with the order-dependent comparison absorbed in $C_m$; the explicit condition $0<\\ell_*\\le\\mathsf D^{-C}$ supplies the small radius used in the paper."
+    },
+    {
+     "file": "TorusEuler/PaperParentCoefficientStatements.lean",
+     "name": "TorusEuler.paperProposition51_parentCoefficients",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.proposition_5_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -584,6 +885,27 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The paper's mean estimate (5.12) is retained for every solution with $B=D_aXz_t$ and $z(0)=z(T)=0$, including exactly one additional derivative of the source. The formal statement allows the broader pressure class specified by the residual and coercivity bounds, so the paper's Poisson pressure is covered. Once the envelope exponent is fixed sufficiently large, the parent exponent is uniform in the parent and derivative order. This is an estimate for existing mean solutions; existence comes from the endpoint problem and the expansion construction."
+    },
+    {
+     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
+     "name": "TorusEuler.paper_mean_columns",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
+     "name": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.proposition_5_2",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -606,6 +928,29 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "For the fixed profiles, the formal statement retains the expansion, divergence and residual identities, support and preactivation vanishing, the final-level convention, and phase independence of the remainder outside the envelope. It makes the finite construction's existence and uniqueness explicit and also asserts existence of the seed; uniqueness concerns exactly the levels used in the construction. Its parent pressure assumptions are broader than §5.1, and it permits any nonzero central seed with $\\gamma\\le1$, so the paper's normalization is included. The radius threshold is uniform in the parent and expansion depth."
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.proposition_5_4",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/HierarchyPhysicalApproximation.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.profiles",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper asserts that the finite expansion is well defined. This formal definition builds profiles from supplied leading data and selected solves; existence of the localized seed and uniqueness of the resulting expansion require separate results."
+    },
+    {
+     "file": "TorusEuler/PaperHierarchyIdentity.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.PhysicalApproximationData.paper_hierarchy_identity",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper asserts that the finite expansion is well defined. The linked formal theorem proves identities for an already supplied physical construction, so it does not itself establish seed existence or uniqueness among all admissible expansions."
     }
    ],
    "statements": [
@@ -628,6 +973,34 @@
      "fidelity": "different",
      "fidelity_source": "ai",
      "fidelity_note": "The paper begins with the maximal smooth solution supplied by general existence theory, whose lifespan could still be infinite at this stage. The formal statement instead constructs a smooth odd Euler solution on $[0,T_\\infty)$, proves the stated initial-data and earlier-interval convergence in every $C^{m,1/2}$ norm, and compares that solution conditionally with every maximal solution of finite lifespan from the same data. It does not assert general maximal-solution existence. The preterminal Euler existence and convergence conclusions are present; Corollary 8.3 later proves that this constructed solution itself is maximal at the finite time $T_\\infty$."
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.InductiveEulerStages.paper_proposition_8_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.PaperLimitAgreement",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.proposition_8_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
+     "name": "TorusEuler.Paper.Proposition81Conclusions",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -650,6 +1023,34 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement retains bounded velocity and central vorticity tending to infinity. It additionally gives fixed constants $c>0$ and $C$ such that, on every sufficiently late interval $[t_j,t_{j+1})$, $|\\operatorname{curl}u(t,0)|\\ge c\\lambda_{j-1}^{1/8}-C\\lambda_{j-1}^{1/32}-C$. This is a quantitative conclusion for the limiting solution, obtained from (8.2) by controlling the older-gradient term and later increments. The formal proof of Corollary 8.3 uses this extra bound; pointwise blow-up alone would not imply divergence of the time integral."
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.paper_section_8_of_inductiveEulerStages",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.PaperTerminalVelocityCurl",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.proposition_8_2",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
+     "name": "TorusEuler.Paper.Proposition82Conclusions",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -672,6 +1073,42 @@
      "fidelity": "same",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement includes both limits in the paper: velocity and its time derivative converge in $C^m(K)$ for every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every finite spatial order. Convergence is expressed for spatial derivatives of local extensions on neighborhoods of $K$, so it includes derivatives as well as values. Joint smooth extension through the terminal time is the separate conclusion of the auxiliary note."
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.paper_section_8_of_inductiveEulerStages",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperTerminalStatements.lean",
+     "name": "TorusEuler.PaperTerminalOffOrigin",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Statement.lean",
+     "name": "TorusEuler.HasOffOriginLimits",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper asserts limits for both $u$ and $\\partial_tu$. This formal condition concerns one field at a time; the terminal statement requires it for both fields."
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.proposition_8_4",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
+     "name": "TorusEuler.Paper.Proposition84Conclusions",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -694,6 +1131,42 @@
      "fidelity": "same",
      "fidelity_source": "ai",
      "fidelity_note": "Both statements assert that a solution satisfying Theorem 1.1 can be chosen with a smooth extension through $T_*$ away from the origin, without requiring that extension to solve Euler after $T_*$. The formal proof obtains this existential conclusion from a particular auxiliary construction, rather than proving the broader auxiliary assertion for every admissible construction."
+    },
+    {
+     "file": "TorusEuler/AuxiliaryTerminalSmoothness.lean",
+     "name": "TorusEuler.auxiliaryTerminalSmoothness",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/TerminalAuxiliaryAssembly.lean",
+     "name": "TorusEuler.AuxiliaryTerminalSmoothness",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/TerminalSeeleyExtension.lean",
+     "name": "TorusEuler.HasSmoothOffOriginExtension",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_source": "ai",
+     "fidelity_note": "Remark 1.2 asks for smooth extension through $T_*$ away from the origin; the linked formal condition requires a periodic extension smooth there for every real time. This is a stronger extension property, without imposing the Euler equations after $T_*$."
+    },
+    {
+     "file": "TorusEuler/Paper/Auxiliary/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.remark_1_2",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+     "name": "TorusEuler.Paper.Proof.remark_1_2",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -716,6 +1189,34 @@
      "fidelity": "same",
      "fidelity_source": "ai",
      "fidelity_note": "The formal statement retains every conclusion of Theorem 1.1, including the two divergent integrals and both off-origin limits. It explicitly states that the maximal classical velocity and its lifespan are unique for the chosen initial data, making precise the paper's phrase “whose maximal classical solution.”"
+    },
+    {
+     "file": "TorusEuler/Statement.lean",
+     "name": "TorusEuler.Theorem11",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Statement.lean",
+     "name": "TorusEuler.EulerSingularityWitness",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/MainTheorem.lean",
+     "name": "TorusEuler.theorem11",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.theorem_1_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -760,6 +1261,29 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The paper fixes the zero-mean Poisson pressure and normalizes $\\max_{[t_0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. The formal statement allows any smooth periodic parent pressure satisfying the stated residual and coercivity conditions, and requires only $0<|\\mathbf a(t,0)|\\le\\lambda^{-3/4}$. Within this broader class, all powers in (5.34)–(5.38) agree, including the leading-level clauses, means beginning at level two, the correction $C_{p+1}$, and the remainder without an extra factor $\\mathsf D^C$. The formal statement treats each finite depth $P$ and all retained levels, using constants $C_{n,p}$ independent of $P$; the constants for sums and the remainder may depend on $P$. Proposition 5.4 supplies every depth, and uniqueness makes their common levels agree. After fixing the envelope exponent, one parent exponent $C$ is chosen before the parent and is independent of derivative order, level, and depth. That same $C$ occurs in the hypothesis $\\mathsf D^C\\lambda^{-1/12}\\le1$, and the same expansion satisfies every derivative order."
+    },
+    {
+     "file": "TorusEuler/Paper/S5/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.theorem_5_6",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/PaperGenericWaveSwitchDepth.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper states the hierarchy bounds for its admissible construction. The linked formal result chooses one seed and one expansion satisfying them, so it proves existence for a particular choice rather than the bounds for every admissible construction."
+    },
+    {
+     "file": "TorusEuler/PaperHierarchyDepthGeneral.lean",
+     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper derives the hierarchy estimates from the standing construction. The linked formal theorem instead assumes the leading correction identities, inactive-region property, and leading bounds at every order, so these analytical inputs must be supplied before its conclusion applies."
     }
    ],
    "statements": [
@@ -782,6 +1306,21 @@
      "fidelity": "different",
      "fidelity_source": "ai",
      "fidelity_note": "The bounds (T1)–(T4), positive common time, localized oscillations and summable increments are retained. The formal statement also supplies equations connecting each step to Section 5 and later comparison bounds, fixes the strength constant as $18e^3$, and chooses the other constants before the admissible threshold function and initial frequency. Its envelope exponent can be chosen above any prescribed lower bound, without asserting that every larger exponent works. The contextual identifications are incomplete: the central amplitude is identified with the localized seed, but the central covector is not explicitly identified with its transported counterpart, and the first-wave direction and attained normalization are not restated. The supplied smooth step data should still be used when interpreting time regularity."
+    },
+    {
+     "file": "TorusEuler/PaperSequenceStatements.lean",
+     "name": "TorusEuler.paperTheorem71",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_source": "ai",
+     "fidelity_note": "The paper allows every admissible threshold function once the fixed constants are chosen. The formal theorem constructs one such function and does not include the Section 5 step identities."
+    },
+    {
+     "file": "TorusEuler/Paper/S678/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.theorem_7_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [
@@ -804,6 +1343,20 @@
      "fidelity": "stronger",
      "fidelity_source": "ai",
      "fidelity_note": "The endpoint solution, uniqueness and smooth-data conclusions are retained under the same ellipticity and coercivity hypotheses on all $H^1_0$ paths. The formal hypotheses require time continuity in $C^{0,1/2}$ and bounded first spatial derivatives of the coefficients, instead of time continuity in $C^{1,1/2}$, and the bound uses these smaller coefficient quantities; the paper's hypotheses therefore give a special case."
+    },
+    {
+     "file": "TorusEuler/Paper/S34A/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.theorem_A_1",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
+    },
+    {
+     "file": "TorusEuler/Paper/S34A/Statements.lean",
+     "name": "TorusEuler.Paper.Statement.lemma_A_2",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_source": "ai"
     }
    ],
    "statements": [

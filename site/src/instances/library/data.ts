@@ -19,6 +19,9 @@ export interface LibraryInstance {
   topics: { id: string; name: string; description: string; family: string | null }[];
   topic_order: string[];
   goal: string;
+  main_lean?: string | null;
+  comparisons_hidden?: boolean;
+  comparisons_held_text?: string;
 }
 
 export const PAPER = current as LibraryInstance;

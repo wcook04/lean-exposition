@@ -8,6 +8,7 @@ import { loadPhraseNotes, type PhraseLean, type PhraseNotes, type PhraseTopic } 
 import type { Stage } from "../../api/types";
 import { isFidelity, phraseVerdict } from "../../compare/fidelityWords";
 import { renderTex } from "../math";
+import site from "@instance/site";
 import { Signal } from "./signal";
 
 const cache = new Map<Stage, Promise<PhraseNotes | null>>();
@@ -105,6 +106,7 @@ export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic
           <span className="phrase-card__who">AI-assessed</span>
         </p>
       )}
+      {(row.fidelity as string) === "held" && site.comparisonsHeld && <p className="phrase-card__fidelity">{site.comparisonsHeld}</p>}
       {note && (
         <div className="phrase-card__note">
           <p className="phrase-card__label">

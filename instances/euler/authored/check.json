@@ -1,0 +1,5 @@
+{
+ "not_joined": {
+  "euler.lemma-2.1": "Its Lean (Paper.lemma_2_1 and the statement it proves) is used by nothing the map can see: Lean's report records no proof dependencies for theorems, and the text scan of the proofs that use Lemma 2.1 does not name these declarations."
+ }
+}

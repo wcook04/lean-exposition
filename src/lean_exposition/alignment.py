@@ -35,7 +35,8 @@ COLOURS_HINT = "run node site/scripts/topic-colours.ts"
 # implies the other as written); `fidelity_source` says whether
 # that judgement is the recorded evidence mapping's or an AI author's; `origin`
 # says where a statement slice came from. Absent fields mean "not recorded".
-FIDELITY = {"same", "stronger", "weaker", "different"}
+# "held": a comparison exists but is not shown; the reader shows the paper's held text in its place.
+FIDELITY = {"same", "stronger", "weaker", "different", "held"}
 FIDELITY_SOURCES = {"recorded", "ai"}
 ORIGINS = {"evidence_record", "ai"}
 FIDELITY_KEYS = {"fidelity", "fidelity_note", "fidelity_source"}

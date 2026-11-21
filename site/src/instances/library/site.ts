@@ -89,7 +89,7 @@ const site = {
   observation: null,
   tieAudit: null,
   lean: {
-    mainTheorem: null, valueTheorem: null, minimizer: null, challengeFile: null, valueChallengeFile: null,
+    mainTheorem: PAPER.main_lean ?? null, valueTheorem: null, minimizer: null, challengeFile: null, valueChallengeFile: null,
     mainTree: null, valueModel: null, folderWords: {}, folderPrefix: "", moduleRoot: null, roots: null,
     owner: `${BY}’s`, ownerSource: `${BY}’s source`,
   },
@@ -97,6 +97,7 @@ const site = {
   paperNames,
   stages: PAPER.documents.map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
+  comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
   recordKind,
   levelGoals: null,

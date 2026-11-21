@@ -114,6 +114,8 @@ export interface SiteInstance {
   stages?: InstanceStage[];
   /** The reader's line on who made the document and its links, in place of the draft and review words; absent keeps them. */
   paperStatus?: string;
+  /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
+  comparisonsHeld?: string;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
   library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
