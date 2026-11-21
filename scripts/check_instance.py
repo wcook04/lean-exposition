@@ -6,7 +6,8 @@
 LEAN_INDEX is the index the reader will show (a JSON file from enrich_lean_index.py, or the
 Lean tree). Fails, naming each problem, when:
   * the main result's Lean has no statement uses;
-  * a numbered result of the paper is not joined to the main result on the map;
+  * a numbered result of the paper is not used, through the map's edges in the direction of use,
+    by the main result (unless authored/check.json records why);
   * a declaration a phrase names shows no uses, unless its own source names none either
     (the text scan finds nothing outside its own name).
 """
@@ -36,17 +37,23 @@ def main() -> int:
         uses = d.get("statement_uses", d.get("uses", []))
         if not uses:
             problems.append(f"the main result's Lean {name} has no statement uses")
-    # Every numbered result joined to the main result, following edges either way.
-    near = {}
+    # Every numbered result the main result uses: following the map's edges in the direction of use
+    # (a result to its Lean, a declaration to what it uses), from the main result. A result is joined
+    # when the main result reaches it this way, or reaches any declaration it states.
+    out = {}
     for e in graph["edges"]:
-        near.setdefault(e["from"], set()).add(e["to"])
-        near.setdefault(e["to"], set()).add(e["from"])
+        out.setdefault(e["from"], set()).add(e["to"])
+    formal = {}
+    for e in graph["edges"]:
+        if e["kind"] == "formalizes":
+            formal.setdefault(e["to"], set()).add(e["from"])
     seen, frontier = {goal}, [goal]
     while frontier:
-        for n in near.get(frontier.pop(), ()):
+        for n in out.get(frontier.pop(), ()):
             if n not in seen:
                 seen.add(n)
                 frontier.append(n)
+    seen |= {r for d in list(seen) for r in formal.get(d, ())}
     results = [n["id"] for n in graph["nodes"] if n["kind"] in ("claim", "goal") and n["id"].startswith(f"{paper}.")]
     # A result may be known to stand apart, with the reason recorded in authored/check.json.
     allowed = {}

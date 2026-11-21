@@ -464,13 +464,6 @@ def main() -> None:
             elif row["fidelity"] != "same":
                 row["fidelity_note"] = "The source records this verdict without a note."
             rows.append(row)
-        # The Lean its own phrase states belongs to the result too (Theorem 1.1's phrase names theorem11).
-        listed = {row["name"] for row in rows}
-        for row in tie["lean"]:
-            if row["relation"] == "states" and row["name"] not in listed:
-                listed.add(row["name"])
-                rows.append({"file": row["file"], "name": row["name"], "relation": "states", "fidelity": row["fidelity"],
-                             "fidelity_source": "ai", **({"fidelity_note": row["fidelity_note"]} if row.get("fidelity_note") else {})})
         batch[f"{args.paper}.{address}"] = {slot: c["title"], "lean": rows,
                                              "statements": [{"paper": slot, "role": "statement", "from": first, "to": last,
                                                              "origin": "ai"}]}
@@ -602,6 +595,30 @@ def main() -> None:
             for target in sorted(reach):
                 edges.append({"from": "lean." + start, "to": "lean." + target, "kind": "supports",
                               "evidence_ids": ["lean_dependencies"]})
+    # The paper's own chain: a numbered result uses another when the Lean of the first uses the Lean of
+    # the second, directly or through declarations that state no numbered result.
+    if facts:
+        owners = {}
+        for e in edges:
+            if e["kind"] == "formalizes":
+                owners.setdefault(e["to"][len("lean."):], set()).add(e["from"])
+        for address, c in claims:
+            nid = f"{args.paper}.{address}"
+            starts = [e["to"][len("lean."):] for e in edges if e["from"] == nid and e["kind"] == "formalizes"]
+            seen, frontier, used = set(starts), [u for s_ in starts for u in uses_of.get(s_, [])], set()
+            while frontier:
+                name = frontier.pop()
+                if name in seen:
+                    continue
+                seen.add(name)
+                others = owners.get(name, set()) - {nid}
+                if others:
+                    used |= others
+                    continue
+                frontier.extend(uses_of.get(name, []))
+            for other in sorted(used):
+                edges.append({"from": nid, "to": other, "kind": "supports", "evidence_ids": ["lean_dependencies"]})
+                evidence["lean_dependencies"]["subject_ids"] = sorted(set(evidence["lean_dependencies"]["subject_ids"]) | {nid, other})
     if goal not in nodes:
         raise SystemExit(f"the goal {args.goal} is not a numbered result of this page")
     graph = {
@@ -696,9 +713,12 @@ def main() -> None:
             gpassages.append({"anchor": sec["anchor"], "text_sha256": sha(gtext[start:stop].encode("utf-8")), "claim_ids": [],
                               "citation_ids": [], "assumption_ids": [], "evidence_class": "context",
                               "rationale": f"{sec['heading']}: how the formalisation encodes the paper's objects."})
+        # The guide explains how the main result is encoded; its opening section carries that result.
+        if gpassages:
+            gpassages[0].update(claim_ids=[goal], citation_ids=sorted(required_citation_ids(graph, [goal])),
+                                evidence_class="source_argument")
         mapped = mapping(gslot, gbytes, gpassages)
         mapped["state"] = "draft"
-        mapped["claim_ids"] = [goal]
         write(out / "papers" / gslot / "correspondence.json", dumps(mapped))
         write(out / f"alignment/references-{gslot}.json", dumps(references(gtext, gslot)))
         guide = {"id": "encoding", "slot": gslot, "slug": "how-the-lean-encodes-it", "title": "How the Lean encodes it", "noun": "guide"}
@@ -716,6 +736,10 @@ def main() -> None:
             lean_notes[found[0]] = {"text": note["text"].strip(), **({"summary": note["summary"]} if note.get("summary") else {})}
     write(out / "generated/lean-notes.json", json.dumps({"schema": 1, "notes": dict(sorted(lean_notes.items()))},
                                                         ensure_ascii=False, separators=(",", ":")))
+    # Why a paragraph has no phrase, or which phrases link it (Proof Reader's paragraph dispositions),
+    # kept with the instance until the reader shows them.
+    if (page / "notes/paragraph-dispositions.json").is_file():
+        write(out / "generated/paragraph-dispositions.json", (page / "notes/paragraph-dispositions.json").read_bytes())
     unnamed = sorted({r[0] for n in links.get("show_also", []) if (r := lean.resolve(n))})
     write(out / "generated/unnamed.json", dumps({"schema": 1, "names": unnamed}))
 

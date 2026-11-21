@@ -37,5 +37,5 @@ export function firstScreen(stage: Stage, bytes: Uint8Array, structure: PaperStr
   const status = statusWords(structure.state, structure.review_state);
   const pdf = PAPER_PDFS[stage];
   const account = [names.job, names.reader, status].filter(Boolean).join(" ");
-  return { account: accountLineHtml(account, `${import.meta.env.BASE_URL}${pdf.path}`, pdf.pages), parts };
+  return { account: accountLineHtml(account, pdf ? `${import.meta.env.BASE_URL}${pdf.path}` : null, pdf?.pages ?? 0), parts };
 }
