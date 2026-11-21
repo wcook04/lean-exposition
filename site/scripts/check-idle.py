@@ -91,6 +91,7 @@ def main() -> int:
     ap.add_argument("--settle", type=int, default=2500, help="ms after a resize or a tab change")
     ap.add_argument("--idle", type=int, default=3000, help="ms of idle time counted")
     ap.add_argument("--max-mutations", type=int, default=0)
+    ap.add_argument("--cpu-slowdown", type=float, default=1, help="slow the page's CPU by this factor, as on a shared runner")
     ap.add_argument("--quiet-within", type=int, default=2000,
                     help="ms after first paint by which a freshly opened page must be completely still (0 skips)")
     ap.add_argument("--at", help="a slice whose ?l= address must open on its own phrase")
@@ -106,6 +107,8 @@ def main() -> int:
             if args.quiet_within:
                 page = browser.new_page(viewport={"width": widths[0], "height": args.height})
                 page.add_init_script(INIT)
+                if args.cpu_slowdown > 1:
+                    page.context.new_cdp_session(page).send("Emulation.setCPUThrottlingRate", {"rate": args.cpu_slowdown})
                 page.goto(args.base + path, wait_until="domcontentloaded")
                 page.wait_for_function("() => performance.getEntriesByName('first-contentful-paint').length > 0", timeout=60000)
                 fcp = page.evaluate("performance.getEntriesByName('first-contentful-paint')[0].startTime")

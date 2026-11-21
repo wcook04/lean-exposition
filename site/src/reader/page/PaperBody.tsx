@@ -47,7 +47,7 @@ interface Props {
 }
 
 const NEAR_MARGIN = "1500px 0px";
-const IDLE_DELAY_MS = 1200;
+const IDLE_DELAY_MS = 300;
 /** How many parts each side of the reader idle time prepares ahead. */
 const AHEAD_PARTS = 2;
 /** Laying out ahead of the reader waits until the page has been still this long. */
@@ -671,10 +671,20 @@ const FIT_MARGIN = "900px 0px";
 /** Formulas waiting to be fitted, across all parts: a few each frame, so scrolling never waits for a stack of them. */
 const fitQueue: (() => void)[] = [];
 let fitFrame = 0;
-const FIT_BUDGET_MS = 5;
+/** Formulas fitted per frame: near the reader they are fitted in a few frames once the fonts are in,
+ * so the page is still soon after it first paints (check-idle --quiet-within). */
+const FIT_BUDGET_MS = 40;
 
 function drainFits() {
   fitFrame = 0;
+  // A width measured in a fallback font is wrong for good: fit once, after the fonts are in.
+  if (document.fonts && document.fonts.status !== "loaded") {
+    fitFrame = -1;
+    void document.fonts.ready.then(() => {
+      fitFrame = requestAnimationFrame(drainFits);
+    });
+    return;
+  }
   const until = performance.now() + FIT_BUDGET_MS;
   while (fitQueue.length && performance.now() < until) fitQueue.shift()!();
   if (fitQueue.length) fitFrame = requestAnimationFrame(drainFits);
