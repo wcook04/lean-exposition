@@ -313,7 +313,7 @@ Built and checked:
 - **Open PDF.** The link opens the PDF and carries `#page=N`.
 - **Reading notes.** Notes on any Lean card come from `lean-notes.json`.
 - **Supplementary checks.** They are listed in About.
-- **Converter.** `scripts/from_proof_reader.py` has `--reimport` (it keeps every old tie id as an address), `--guide` and `--pdf`, and it carries Comparator folders.
+- **Converter.** `scripts/from_proof_reader.py` has `--reimport`, `--guide` and `--pdf`, and it carries Comparator folders. A re-import keeps every old tie id as an address: a phrase merged into another is an alias of the tie that holds it, and a tie that is gone is retired (`aliases.json` `retired`), so its address opens a notice with the date and the nearest current phrase instead of landing on a neighbour. A comparison is assessed (a verdict), held, or `unassessed`; a missing one is never written as `same`. Overlapping phrases share one tie that lists them (`merged`) and keeps each phrase's own comparison on every Lean row (`assessments`). Each numbered result's statement is its block from the authors' bold label to the end of that paragraph; the tie index names that block and its tie as the result's canonical target (`canonical`), which addresses, search, Copy link, Compare and the graph use.
 - **Publishing.** The private-source guard runs before every publish. `library.yml` handles per-paper builds, browser checks and deploys.
 
 Changed from the plan:

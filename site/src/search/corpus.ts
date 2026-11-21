@@ -18,18 +18,25 @@ export interface CorpusRow extends IndexRow {
   role?: string;
 }
 
-const STATEMENT_HREF = (statement: AlignedStatement) => routeHref({ view: "read", stage: statement.paper, anchor: statement.anchor ?? undefined, at: `b${statement.start_byte}-${statement.end_byte}` });
+/**
+ * Where a statement row opens. A record's own statement (or definition) also names the record, so a
+ * numbered result opens at its canonical target and keeps its own address (/theorem-1.1/); a
+ * derivation or explanation opens at its exact words.
+ */
+const STATEMENT_HREF = (statement: AlignedStatement, record?: string) =>
+  routeHref({ view: "read", stage: statement.paper, anchor: statement.anchor ?? undefined, at: `b${statement.start_byte}-${statement.end_byte}`,
+    node: record && (statement.role === "statement" || statement.role === "definition") ? record : undefined });
 
 /** Each exact statement once, with the record that gives it. A bare mention is left to the paper's text. */
 export function statementRows(alignment: Alignment): CorpusRow[] {
   const seen = new Set<string>();
   const rows: CorpusRow[] = [];
-  for (const record of Object.values(alignment.records)) {
+  for (const [id, record] of Object.entries(alignment.records)) {
     for (const statement of record.statements) {
       const key = `${statement.paper}:${statement.start_byte}`;
       if (statement.role === "mention" || seen.has(key)) continue;
       seen.add(key);
-      rows.push({ ref: `statement:${key}`, table: "statements", label: record.short, text: statement.markdown.replace(/\*\*/g, ""), stage: statement.paper, papers: [statement.paper], href: STATEMENT_HREF(statement), section: statement.section, role: statement.role });
+      rows.push({ ref: `statement:${key}`, table: "statements", label: record.short, text: statement.markdown.replace(/\*\*/g, ""), stage: statement.paper, papers: [statement.paper], href: STATEMENT_HREF(statement, id), section: statement.section, role: statement.role });
     }
   }
   return rows;

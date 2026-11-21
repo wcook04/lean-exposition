@@ -42,6 +42,8 @@ export type Route =
       /** The authors' PDF in place of the typeset text (`view=pdf`), opened at this page. */
       pdf?: boolean;
       page?: number;
+      /** A retired phrase link (`/@<id>` of a library paper): the paper opens with a notice, at no phrase. */
+      retired?: string;
     }
   | { view: "checks"; node?: string }
   | {

@@ -1321,7 +1321,7 @@
    ],
    "source_id": "paper",
    "locator": "Corollary 8.3, Section 8",
-   "statement": "The maximal existence time is $T_*=T_\\infty\\in(0,\\infty)$, and both integrals in (1.2) diverge.",
+   "statement": "**Corollary 8.3.** The maximal existence time is $T_*=T_\\infty\\in(0,\\infty)$, and both integrals in (1.2) diverge.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1338,7 +1338,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 1.3, Section 1",
-   "statement": "The integers $q_j$ satisfy $q_j\\le q_{j+1}\\le q_j+1$ and tend to infinity",
+   "statement": "**Lemma 1.3.** The integers $q_j$ satisfy $q_j\\le q_{j+1}\\le q_j+1$ and tend to infinity, and $$\\begin{equation}\n L_{j+1}\\le(\\log\\lambda_{j-1})^2\\qquad(j\\ge1). \\tag{1.15}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1355,7 +1355,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.1, Section 2",
-   "statement": "Let $D(t)$ be smooth and trace free, with $D'+D^2$ symmetric.",
+   "statement": "**Lemma 2.1.** Let the wave vector $k(t)\\ne0$ and the amplitude vector $\\mathbf a(t)$, functions of time alone, satisfy $$\\begin{equation}\n k'=-D^Tk,\\qquad\n \\mathbf a'=-D\\mathbf a+p_{\\rm w} k,\\qquad\n p_{\\rm w}=\\frac{2k\\cdot D\\mathbf a}{|k|^2},\\qquad\n k\\cdot\\mathbf a=0. \\tag{2.1}\n\\end{equation}$$ Then $Dx+\\mathbf aF(k\\cdot x)$ is divergence free and solves the Euler equations on $\\mathbb R^3$ with pressure $-x\\cdot(D'+D^2)x/2-p_{\\rm w} P(k\\cdot x)$. If $k(t_0)\\ne0$, $\\mathbf a(t_0)\\ne0$ and $k(t_0)\\cdot\\mathbf a(t_0)=0$, then both vectors remain nonzero and perpendicular for every $t\\ge t_0$ in the interval of existence of $D$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1372,7 +1372,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.2, Section 2",
-   "statement": "The following calculation uses only $\\operatorname{tr}B=0$; it requires no symmetry of $B'+B^2$.",
+   "statement": "**Lemma 2.2.** Let $B(t)$ be a smooth trace-free matrix, and let $k\\ne0$ and $\\mathbf a\\ne0$ satisfy (2.1) with $D$ replaced by $B$. Put $E_1=\\frac{k}{|k|}$, $E_2=\\frac{\\mathbf a}{|\\mathbf a|}$ and $E_3=E_1\\times E_2$, write $B_{ij}=E_i\\cdot BE_j$ $(i,j=1,2,3)$ for the entries of $B$ in this orthonormal frame, and let $\\sigma=|k|\\,|\\mathbf a|$, $\\nu=B_{12}$ and $\\eta=B_{32}$. Then $$\\begin{equation}\n E_1'=-\\nu E_2-B_{13}E_3,\\quad\n E_2'=\\nu E_1-\\eta E_3,\\quad\n E_3'=B_{13}E_1+\\eta E_2,\n \\qquad(\\log\\sigma)'=B_{33}. \\tag{2.2}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1389,7 +1389,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.3, Section 2",
-   "statement": "In the strong-shear limit $\\sigma/\\nu\\to\\infty$, the wave pressure multiplies the driving coefficient $2\\nu$ in the equation for $a_1$ by $\\cos^2\\varphi\\,(1-\\varepsilon\\tan\\varphi)$ (Lemma 2.3).",
+   "statement": "**Lemma 2.3.** Suppose that on $0\\le\\tau\\le T$ the entries of $B$ in the frame are $B_{12}=\\nu$, $B_{32}=\\eta$ and $B_{ij}=0$ otherwise, and that $E_c=0$. Then $\\sigma_p=\\sigma$, and the scaled components of the wave vector satisfy $$\\zeta_1'=-\\Bigl(1+\\frac1{2S^2}\\Bigr)\\zeta_2,\\qquad\n \\zeta_2'=-\\varepsilon\\zeta_3,\\qquad\n \\zeta_3'=\\frac{\\varepsilon}{2S^2}\\zeta_2 .$$ Where $\\zeta_3\\ne0$, the components $\\alpha_1,\\alpha_2$ of every amplitude vector satisfy $$\\begin{aligned}\n \\alpha_1'&=-\\alpha_2+\\zeta_1\\Pi,\\\\\n \\alpha_2'&=-\\Bigl(1-\\frac1{2S^2}\\Bigr)\\alpha_1\n   +\\frac{\\varepsilon}{2S^2}\\,\\frac{\\zeta_1\\alpha_1+\\zeta_2\\alpha_2}{\\zeta_3}\n   +\\frac{\\zeta_2}{S^2}\\,\\Pi,\n \\end{aligned}\n \\qquad\n \\Pi=\\frac{2\\zeta_2\\alpha_1+(\\zeta_1+\\varepsilon\\zeta_3)\\alpha_2}m .$$ As $S\\to\\infty$ with $\\varepsilon$ and $T$ fixed, $\\zeta\\to\\zeta_0$ uniformly on $[0,T]$, and the coefficients of this system for $(\\alpha_1,\\alpha_2)$ converge uniformly on $[0,T]$ to those of $$\\begin{equation}\n \\alpha_1'=-\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)\\alpha_2\n                 -\\varepsilon\\tau\\sin2\\varphi\\,\\alpha_1,\n \\qquad \\alpha_2'=-\\alpha_1 . \\tag{2.5}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1406,7 +1406,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.4, Section 2",
-   "statement": "$$\\begin{equation}\n \\sup|\\zeta-\\zeta_0|\\le CT^C\\delta\\le\\tfrac12,\\qquad\n \\sup\\left|\\frac{|k|^2\\cos^2\\varphi}{\\lambda^2}-1\\right|\n       \\le CT^C\\delta\\le\\tfrac12. \\tag{2.10}\n\\end{equation}$$",
+   "statement": "**Lemma 2.4.** Assume (2.7). The scaled components of the wave vector satisfy $$\\begin{equation}\n \\sup|\\zeta-\\zeta_0|\\le CT^C\\delta\\le\\tfrac12,\\qquad\n \\sup\\left|\\frac{|k|^2\\cos^2\\varphi}{\\lambda^2}-1\\right|\n       \\le CT^C\\delta\\le\\tfrac12. \\tag{2.10}\n\\end{equation}$$ In particular $$\\begin{equation}\n \\tfrac12\\le\\zeta_3\\le\\tfrac32,\\qquad |\\zeta|\\le3T^2 . \\tag{2.11}\n\\end{equation}$$ The components $\\alpha_1,\\alpha_2$ of every amplitude vector satisfy $$\\frac{d}{d\\tau}\\binom{\\alpha_1}{\\alpha_2}\n =\\left\\{-\\begin{pmatrix}\n \\varepsilon\\tau\\sin2\\varphi&\\cos^2\\varphi(1-\\varepsilon\\tan\\varphi)\\\\\n 1&0\n \\end{pmatrix}+\\mathcal E(\\tau)\\right\\}\\binom{\\alpha_1}{\\alpha_2},\n \\qquad \\sup|\\mathcal E|\\le CT^C\\delta,$$ where $\\mathcal E$ is the same for all amplitude vectors.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1423,7 +1423,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.5, Section 2",
-   "statement": "Let $0<\\varepsilon\\le1$.",
+   "statement": "**Lemma 2.5.** Let $0<\\varepsilon\\le1$. The solution $Y$ of (2.12) exists for all $\\tau\\ge0$, satisfies $|Y|\\le1$, and has the form $$\\begin{equation}\n Y=(1+e)\\cos\\varphi-\\tfrac14\\varepsilon\\tau\\sin2\\varphi,\n \\qquad 0\\le e\\le\\tfrac18\\varepsilon. \\tag{2.13}\n\\end{equation}$$ The reference amplitude satisfies $$\\begin{equation}\n a_{\\rm ref}(\\tau)=\\sqrt{\\cos\\varphi(\\tau)}\n       \\exp\\left(\\int_0^\\tau(1+e)\\cos\\varphi\\,d\\tau'\\right). \\tag{2.14}\n\\end{equation}$$ The function $Y$ has exactly one zero $\\tau_m$, with $2\\le\\varepsilon\\tau_m\\le3$. It is positive before this zero and negative afterwards, so $a_{\\rm ref}$ is largest at $\\tau_m$, and $$\\log a_{\\rm ref}(\\tau_m)\\ge\\varepsilon^{-1/2}-1.$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1440,7 +1440,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.6, Section 2",
-   "statement": "Assume (2.7), and let $\\mathbf a$ be the amplitude vector with $\\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$, that is, with $(\\alpha_1,\\alpha_2)(0)=(-1,1)$ in (2.3), the initial data of the reference solution.",
+   "statement": "**Lemma 2.6.** Assume (2.7), and let $\\mathbf a$ be the amplitude vector with $\\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$, that is, with $(\\alpha_1,\\alpha_2)(0)=(-1,1)$ in (2.3), the initial data of the reference solution. Then $\\alpha_2>0$ on $0\\le\\tau\\le T$, and $$\\begin{equation}\n \\left|\\frac{\\alpha_1}{\\alpha_2}+Y\\right|\\le CT^C\\delta,\\qquad\n \\alpha_2\\le|\\mathbf a|\\le(1+CT^C\\delta)\\alpha_2. \\tag{2.17}\n\\end{equation}$$ Moreover, $$\\begin{equation}\n \\left|\\log\\frac{|\\mathbf a|}{a_{\\rm ref}}\\right|\\le\\varepsilon. \\tag{2.18}\n\\end{equation}$$ For $0\\le\\tau_1\\le\\tau_2\\le T$, let $\\Phi(\\tau_2,\\tau_1)$ map $\\mathbf b(\\tau_1)$ to $\\mathbf b(\\tau_2)$ for every amplitude vector $\\mathbf b$. It maps the plane perpendicular to $k(\\tau_1)$ onto the plane perpendicular to $k(\\tau_2)$, and $$\\|\\Phi(\\tau_2,\\tau_1)\\|\n \\le CS\\,\\frac{|\\mathbf a(\\tau_2)|}{|\\mathbf a(\\tau_1)|}.$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1457,7 +1457,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 2.7, Section 2",
-   "statement": "For the perturbed wave, Lemma 2.7 shows that at late times $\\nu_+$ is close to $\\nu$ and $\\eta_+/\\nu_+$ is comparable to $\\cos\\varphi$.",
+   "statement": "**Lemma 2.7.** Assume (2.7), and let $\\mathbf a$ be the amplitude vector of Lemma 2.6. Put $E_{1,+}=k/|k|$, $E_{2,+}=\\mathbf a/|\\mathbf a|$ and $E_{3,+}=E_{1,+}\\times E_{2,+}$, and define $$\\nu_+=E_{1,+}\\cdot ME_{2,+},\\qquad\n \\eta_+=E_{3,+}\\cdot ME_{2,+}.$$ Then $\\nu_+\\ge\\varepsilon\\nu/2$ on $0\\le\\tau\\le T$. Where $\\varepsilon\\tan\\varphi\\ge1$, that is, for $\\sqrt2/\\varepsilon\\le\\tau\\le T$, $$\\begin{equation}\n \\left|\\frac{\\nu_+}{\\nu}-1\\right|\\le\\varepsilon,\\qquad\n \\left|\\frac{\\eta_+/\\nu_+}{\\cos\\varphi}-1\\right|\\le\\frac12. \\tag{2.19}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1474,7 +1474,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 3.1, Section 3",
-   "statement": "There are odd smooth $1$-periodic functions $F_h$, $0<h\\le1$, with zero-mean primitives $P_h$, such that",
+   "statement": "**Lemma 3.1.** There are odd smooth $1$-periodic functions $F_h$, $0<h\\le1$, with zero-mean primitives $P_h$, such that $$F_h'(0)=1,\\qquad -Ch\\le F_h'\\le1,\\qquad\n \\left\\lVert F_h\\right\\rVert_\\infty\\le Ch,\\qquad\n \\left\\lVert\\partial_s^jF_h\\right\\rVert_\\infty\\le C_jh^{1-j}\\quad(j\\ge2).$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1491,7 +1491,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 4.1, Section 4",
-   "statement": "Assume $H^\\#\\le\\operatorname{Id}$ on $I\\times\\mathbb T^3$ as quadratic forms. Then",
+   "statement": "**Lemma 4.1.** Assume $H^\\#\\le\\operatorname{Id}$ on $I\\times\\mathbb T^3$ as quadratic forms. Then for every $a\\in\\mathbb T^3$, $z\\in H^1_0(I;\\mathbb R^3)$ and $\\xi=D_aX(\\cdot,a)z$, one has $\\int_I H^\\#\\xi\\cdot\\xi\\,\\mathrm dt\\le\\frac12\\int_I|\\xi_t|^2\\,\\mathrm dt$. Hence $$\\begin{equation}\n \\int_I(Kz_t\\cdot z_t+\\Omega z_t\\cdot z)\\,\\mathrm dt\n \\ge\\frac12\\int_I|\\xi_t|^2\\,\\mathrm dt. \\tag{4.8}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1508,7 +1508,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 5.10, Section 5",
-   "statement": "Let $v$ be a smooth divergence-free field on $[0,T]\\times\\mathbb T^3$ with $\\left\\lVert v\\right\\rVert_{C_tC^2}\\le\\lambda^{-5/2}$. The flow $Y$ of $V+v$ from time zero satisfies",
+   "statement": "**Lemma 5.10.** Let $v$ be a smooth divergence-free field on $[0,T]\\times\\mathbb T^3$ with $\\left\\lVert v\\right\\rVert_{C_tC^2}\\le\\lambda^{-5/2}$. The flow $Y$ of $V+v$ from time zero satisfies $$\\begin{equation}\n \\sup|(D_aY)^{\\pm1}|\\le C_{\\rm step}\\lambda^{1/4}. \\tag{5.53}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1525,7 +1525,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 5.3, Section 5",
-   "statement": "$$\\begin{equation}\n |\\mathbf a(t,a)|\\le2|\\mathbf a(t,0)|,\\qquad\n (\\kappa\\cdot M\\mathbf a)(t,a)>0 . \\tag{5.19}\n\\end{equation}$$",
+   "statement": "**Lemma 5.3.** For $t_0\\le t\\le T$ and $|a|\\le2\\ell_*$, the seed satisfies $$\\begin{equation}\n |\\mathbf a(t,a)|\\le2|\\mathbf a(t,0)|,\\qquad\n (\\kappa\\cdot M\\mathbf a)(t,a)>0 . \\tag{5.19}\n\\end{equation}$$ There is an absolute exponent $C$ such that the following holds at every order $n\\ge0$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1542,7 +1542,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 5.5, Section 5",
-   "statement": "There is an absolute exponent $C$ such that, for every $n\\ge0$ and every field $V$ with $\\langle V\\rangle_s=0$ and $\\kappa\\cdot V=0$,",
+   "statement": "**Lemma 5.5.** There is an absolute exponent $C$ such that, for every $n\\ge0$ and every field $V$ with $\\langle V\\rangle_s=0$ and $\\kappa\\cdot V=0$, $$\\begin{equation}\n \\|C[V]\\|_{[n],\\gamma}\\le C_n\\mathsf D^C\\lambda^{-1}\\|V\\|_{[n+1],\\gamma}. \\tag{5.31}\n\\end{equation}$$ If moreover $V_t+MV+\\kappa\\partial_s\\mathsf p=f$ with $\\langle f\\rangle_s=0$ and $\\langle \\mathsf p\\rangle_s=0$, then $$\\begin{equation}\n \\|(\\partial_t+M)C[V]+\\mathbf d\\mathsf p\\|_{[n],\\gamma}\n \\le C_n\\mathsf D^C\\lambda^{-1}\n             \\bigl(\\|V\\|_{[n+1],\\gamma}+\\|f\\|_{[n+1],\\gamma}\\bigr). \\tag{5.32}\n\\end{equation}$$ For the leading oscillation $V=A_1$ on $[t_0,T]$, the source in this estimate is $f=0$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1559,7 +1559,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 5.7, Section 5",
-   "statement": "Let $g_0(t,a,s)$ be smooth and independent of the phase at the labels outside $\\operatorname{supp}g$. Assume its phase average extends smoothly and periodically in $a$ across the cell faces.",
+   "statement": "**Lemma 5.7.** Let $g_0(t,a,s)$ be smooth and independent of the phase at the labels outside $\\operatorname{supp}g$. Assume its phase average extends smoothly and periodically in $a$ across the cell faces. There is an absolute exponent $C$ such that, for every integer $m\\ge0$ and every $t\\in[t_0,T]$, $$\\begin{align}\n \\sum_{|\\beta|=m}\\|\\partial_x^\\beta g_0^\\natural(t)\\|_{L^\\infty}\n &\\le C_m(\\mathsf D^C\\lambda^{3/2})^m\\gamma(t)\n                  \\|g_0\\|_{[m],\\gamma}, \\tag{5.44}\\\\\n \\|g_0^\\natural(t)\\|_{C^{m,1/2}}\n &\\le C_m(\\mathsf D^C\\lambda^{3/2})^{m+1}\\gamma(t)\n                  \\|g_0\\|_{[m+1],\\gamma}. \\tag{5.45}\n\\end{align}$$ Both bounds also hold on $[0,T]$ with $\\gamma$ replaced by one, and for a phase-independent field with $\\mathsf D^C\\lambda^{3/2}$ replaced by $\\mathsf D^C$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1576,7 +1576,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 5.8, Section 5",
-   "statement": "$$V=U+W^\\natural,\\qquad \\Pi=p_U+\\mathsf P^\\natural,\\qquad\n W=W_{\\rm osc}+\\bar W,\\quad \\bar W=\\sum_{p=2}^PB_p .$$",
+   "statement": "**Lemma 5.8.** The field $V$ is smooth, odd and divergence free, $\\Pi$ is smooth, and $$\\begin{equation}\n V_t+V\\cdot\\nabla V+\\nabla\\Pi=R_V,\\qquad\n R_V=R_P^\\natural+R_{\\widetilde\\chi}^\\natural . \\tag{5.46}\n\\end{equation}$$ The oscillation satisfies $$\\begin{equation}\n \\|W_{\\rm osc}^\\natural\\|_{C_tL^\\infty}\n \\le C_{0,P}\\mathsf D^b\\lambda^{-5/4}, \\tag{5.47}\n\\end{equation}$$ and for every $m\\ge0$, $$\\begin{equation}\n\\begin{gathered}\n \\|W_{\\rm osc}^\\natural\\|_{C_tC^{m,1/2}}\n \\le C_{m,P}\\mathsf D^{b(m+2)}\\lambda^{3(m+1)/2-5/4},\\qquad\n \\|\\bar W^\\natural\\|_{C_tC^{m,1/2}}\n \\le C_{m,P}\\mathsf D^{b(m+2)}\\lambda^{-5/2},\\\\\n \\|R_V\\|_{C_tC^{1,1/2}}\n \\le C_{\\rm step}\\lambda^2\n   \\bigl(\\lambda^{-2P/3}+\\|\\widetilde\\chi'\\gamma\\|_\\infty\\bigr),\n\\end{gathered} \\tag{5.48}\n\\end{equation}$$ where the last supremum is over $[t_0,T]$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1593,7 +1593,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 5.9, Section 5",
-   "statement": "$$\\begin{equation}\n D_x^2\\mathsf P^\\natural\\le C_{\\rm step}\\lambda^{-1/4}\\operatorname{Id}. \\tag{5.49}\n\\end{equation}$$",
+   "statement": "**Lemma 5.9.** On $[0,T]\\times\\mathbb T^3$, $$\\begin{equation}\n D_x^2\\mathsf P^\\natural\\le C_{\\rm step}\\lambda^{-1/4}\\operatorname{Id}. \\tag{5.49}\n\\end{equation}$$ At $x=0$, for $t_0\\le t\\le T$, $$\\begin{equation}\n \\nabla V(t,0)=\\nabla U(t,0)\n   +\\widetilde\\chi(t)\\,\\mathbf a(t,0)\\otimes\\kappa(t,0)+E_c(t),\n \\qquad\n |E_c|\\le\\lambda^{-1/3} . \\tag{5.50}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1610,7 +1610,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma 6.1, Section 6",
-   "statement": "For $0<\\rho\\le1$ let",
+   "statement": "**Lemma 6.1.** If $T|B_\\rho|\\le1/8$, the first wave satisfies the two conditions (5.5) for every $\\mathsf D\\ge2$, and its strength at the origin at time zero lies between $\\lambda^{1/4}/2$ and $\\lambda^{1/4}$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1627,7 +1627,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma A.2, Section A",
-   "statement": "Constants $C,p$ depend only on the dimension.",
+   "statement": "**Lemma A.2.** Let either $H=\\mathbb R^3$, $\\mathcal R=\\mathbb P$, or $H=L^2(I;\\mathbb R^3)$, $\\mathcal R=\\mathbb P\\mathcal Q$, where $\\mathcal Qv=v-\\int_0^1v(t)\\,\\mathrm dt$. Let $B\\in C^{1,1/2}(\\mathbb T^3;\\mathcal L(H))$ and $\\mu>0$. Suppose $$\\begin{equation}\n \\langle B(a)w,w\\rangle_H\\ge\\mu\\left\\lVert w\\right\\rVert_H^2 \\tag{A.4}\n\\end{equation}$$ for every $a\\in\\mathbb T^3$ and every $w\\in H$, with $\\mathcal Qw=w$ in the second case. Then $\\mathcal RB$ is an isomorphism on $\\mathcal RC^{0,1/2}(\\mathbb T^3;H)$, and $$\\begin{equation}\n \\left\\lVert v\\right\\rVert_{C^{0,1/2}_a(H)}\n \\le C(2+\\mu^{-1}+\\left\\lVert B\\right\\rVert_{C^1_a\\mathcal L(H)})^{p}\n            \\left\\lVert\\mathcal RBv\\right\\rVert_{C^{0,1/2}_a(H)}. \\tag{A.5}\n\\end{equation}$$ If moreover $B\\in C^{k,1/2}(\\mathbb T^3;\\mathcal L(H))$ for an integer $k\\ge1$, the same operator is an isomorphism on $\\mathcal RC^{k,1/2}(\\mathbb T^3;H)$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1644,7 +1644,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma B.1, Section B",
-   "statement": "$S_\\Lambda$ multiply the spatial Fourier mode $e^{2\\pi i\\xi\\cdot x}$, $\\xi\\in\\mathbb Z^3$, by $\\psi(\\xi/\\Lambda)$.",
+   "statement": "**Lemma B.1.** $S_\\Lambda$ commutes with derivatives, preserves parity and divergence freeness, and maps into fields supported on frequencies at most $2\\Lambda$. Its operator norms on $L^\\infty$ and on $C^{0,1/2}$ are bounded in terms of $\\psi$ alone. For every integer $m\\ge0$ and every normed-space-valued $f$ supported on frequencies at most $4\\Lambda$, $$\\begin{equation}\n \\sum_{|\\beta|=m}\\left\\lVert\\partial^\\beta f\\right\\rVert_\\infty\\le C_m\\Lambda^m\\left\\lVert f\\right\\rVert_\\infty . \\tag{B.1}\n\\end{equation}$$ For all integers $0\\le s\\le M$ and every $f\\in C^{M,1/2}$, $$\\begin{equation}\n \\left\\lVert(\\operatorname{Id}-S_\\Lambda)f\\right\\rVert_{C^{s,1/2}}\n \\le C_M\\Lambda^{s-M}\\left\\lVert f\\right\\rVert_{C^{M,1/2}}. \\tag{B.2}\n\\end{equation}$$ The constants $C_m$ and $C_M$ depend only on their index and on $\\psi$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1661,7 +1661,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma D.1, Section D",
-   "statement": "$$\\begin{align}\n \\sum_i\\|\\partial_{a_i}f\\|_{[n],\\gamma}\n &\\le C\\ell_*^{-1}\\|f\\|_{[n+1],\\gamma},\\qquad\n \\|\\partial_sf\\|_{[n],\\gamma}\n \\le h^{-1}\\|f\\|_{[n+1],\\gamma}, \\tag{D.3}\\\\\n \\|fg\\|_{[n],\\gamma}\n &\\le C_n\\|f\\|_{[n]}\\|g\\|_{[n],\\gamma}. \\tag{D.4}\n\\end{align}$$",
+   "statement": "**Lemma D.1.** For every $n\\ge0$ and fields $f,g$, $$\\begin{align}\n \\sum_i\\|\\partial_{a_i}f\\|_{[n],\\gamma}\n &\\le C\\ell_*^{-1}\\|f\\|_{[n+1],\\gamma},\\qquad\n \\|\\partial_sf\\|_{[n],\\gamma}\n \\le h^{-1}\\|f\\|_{[n+1],\\gamma}, \\tag{D.3}\\\\\n \\|fg\\|_{[n],\\gamma}\n &\\le C_n\\|f\\|_{[n]}\\|g\\|_{[n],\\gamma}. \\tag{D.4}\n\\end{align}$$ With $\\langle f\\rangle_s$ the phase average, $$\\begin{equation}\n \\|\\langle f\\rangle_s\\|_{[n],\\gamma}\\le\\|f\\|_{[n],\\gamma},\\qquad\n \\|f-\\langle f\\rangle_s\\|_{[n],\\gamma}\\le2\\|f\\|_{[n],\\gamma},\\qquad\n \\|\\partial_s^{-1}f\\|_{[n],\\gamma}\\le C\\|f\\|_{[n],\\gamma}\n \\quad(\\langle f\\rangle_s=0). \\tag{D.5}\n\\end{equation}$$ For phase-independent fields, (D.4) also holds with $\\|\\cdot\\|_{[n],1/2}$ in place of $\\|\\cdot\\|_{[n]}$ and $\\gamma\\equiv1$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1678,7 +1678,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma D.2, Section D",
-   "statement": "The product $cd$ satisfies (D.6).",
+   "statement": "**Lemma D.2.** Let $c,d$ be smooth phase-independent matrix fields that satisfy (D.6).",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1695,7 +1695,7 @@
    ],
    "source_id": "paper",
    "locator": "Lemma D.3, Section D",
-   "statement": "$$\\mathcal Lv=\\mathcal L_0v+\\sum_\\nu T_\\nu(c_\\nu v)=F$$",
+   "statement": "**Lemma D.3.** Consider a linear equation of the form $$\\mathcal Lv=\\mathcal L_0v+\\sum_\\nu T_\\nu(c_\\nu v)=F$$ with finitely many phase-independent coefficients $c_\\nu(t,a)$. Assume that $\\mathcal L_0$ and the linear operators $T_\\nu$ commute with label and phase derivatives. The equation may hold modulo a fixed subspace, such as gradients. Assume that differentiation preserves this subspace and the linear constraints on $v$, and commutes with the maps giving any prescribed data. Write $f$ for the forcing $F$ together with these data, with the sum of their norms. Suppose that for every admissible source one has the estimate $$\\|v\\|_{[0],\\gamma}\\le C_{\\rm low}\\|f\\|_{[0],\\gamma}.$$ Let $b_\\nu$ be the operator norm of $T_\\nu$ from $\\|\\cdot\\|_{[0],\\gamma}$ to the forcing norm. If $$\\begin{equation}\n C_{\\rm low}\\sum_\\nu b_\\nu\\ell_*^m|c_\\nu|_m\\le C_m\\qquad(m\\ge1), \\tag{D.7}\n\\end{equation}$$ then every smooth solution satisfies, for $n\\ge0$, $$\\|v\\|_{[n],\\gamma}\\le C_n C_{\\rm low}\\|f\\|_{[n],\\gamma}.$$ Here $C_n$ depends only on $n$ and the bounds $C_m$ in (D.7) for $m\\le n$. For phase-independent fields with $\\gamma\\equiv1$, the same assertion holds using $\\|\\cdot\\|_{[n],1/2}$ and $|c_\\nu|_{m,1/2}$ throughout, with $b_\\nu$ taken in the corresponding zero-order norms.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1712,7 +1712,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 2.8, Section 2",
-   "statement": "We call a time $\\tau$ at which $\\eta_+/\\nu_+=\\varepsilon_+$ a *crossing*: there the ratio reaches the threshold $\\varepsilon_+$ prescribed for the next wave.",
+   "statement": "**Proposition 2.8.** Assume (2.7), let $\\mathbf a$ be the amplitude vector of Lemma 2.6, with the couplings of Lemma 2.7, and suppose that $0<\\varepsilon_+\\le\\varepsilon/32$ and $T\\ge2(\\varepsilon\\varepsilon_+)^{-1/2}$. Then the interval $\\tau_m\\le\\tau\\le2(\\varepsilon\\varepsilon_+)^{-1/2}$, where $\\tau_m\\ge2/\\varepsilon$ is the zero of $Y$ (Lemma 2.5), contains a crossing. At every crossing in this interval the strength $\\sigma_+=|\\mathbf a(\\tau)||k(\\tau)|$ satisfies $$\\begin{equation}\n C^{-1}(\\varepsilon\\varepsilon_+)^{-1/2}\n \\le\\frac{\\sigma_+}{\\lambda\\max_{[0,T]}|\\mathbf a|}\n \\le C(\\varepsilon\\varepsilon_+)^{-1/2}. \\tag{2.23}\n\\end{equation}$$ Moreover $$\\begin{equation}\n |\\mathbf a(\\tau)|\\le\\exp\\bigl(3-\\varepsilon^{-1/2}\\bigr)\n \\max_{[0,T]}|\\mathbf a|\\qquad(0\\le\\tau\\le1). \\tag{2.24}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1729,7 +1729,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 5.1, Section 5",
-   "statement": "$$(D_aX)^{\\pm1},\\qquad M,\\qquad\n \\kappa/\\lambda,\\qquad \\lambda^2/|\\kappa|^2,\\qquad P_\\kappa$$",
+   "statement": "**Proposition 5.1.** There is an absolute exponent $C$ such that each coefficient $c$ among $$(D_aX)^{\\pm1},\\qquad M,\\qquad\n \\kappa/\\lambda,\\qquad \\lambda^2/|\\kappa|^2,\\qquad P_\\kappa$$ satisfies (D.6). Let $f(t,x)$ be a field with values in a normed space such that $|f|_m\\le C_m'A_f\\mathsf D^m$ for every $m\\ge0$ and a number $A_f$. Then $$\\begin{equation}\n |f\\circ X|_m\\le C_mA_f\\mathsf D^{Cm}\\qquad(m\\ge0). \\tag{5.7}\n\\end{equation}$$ Consequently, for every $n\\ge0$, $$\\begin{equation}\n \\|c\\|_{[n]}\\le C_n\\mathsf D^C,\\qquad\n \\|f\\circ X\\|_{[n]}\\le C_nA_f . \\tag{5.8}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1746,7 +1746,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 5.11, Section 5",
-   "statement": "$$\\begin{equation}\n u=S_\\Lambda V,\\qquad v_\\Lambda=u-V,\\qquad\n \\varepsilon_\\Lambda=\\Lambda^{2-P}\n \\bigl(1+\\left\\lVert V\\right\\rVert_{C_tC^{P,1/2}}\\bigr)^2 . \\tag{5.55}\n\\end{equation}$$",
+   "statement": "**Proposition 5.11.** Let $\\Lambda\\ge1$, and with the depth $P$ of the expansion put $$\\begin{equation}\n u=S_\\Lambda V,\\qquad v_\\Lambda=u-V,\\qquad\n \\varepsilon_\\Lambda=\\Lambda^{2-P}\n \\bigl(1+\\left\\lVert V\\right\\rVert_{C_tC^{P,1/2}}\\bigr)^2 . \\tag{5.55}\n\\end{equation}$$ Let $p$ be the function of zero mean with $\\Delta p=-\\operatorname{tr}((\\nabla u)^2)$, and let $R_u=u_t+u\\cdot\\nabla u+\\nabla p$. Then $u$ is smooth, odd, divergence free and supported on frequencies at most $2\\Lambda$, its residual $R_u$ is odd, divergence free and supported on frequencies at most $4\\Lambda$, and $$\\begin{equation}\n \\left\\lVert v_\\Lambda\\right\\rVert_{C_tC^{2,1/2}}\\le C_{2,P}\\varepsilon_\\Lambda,\\qquad\n \\left\\lVert R_u\\right\\rVert_{C_tC^{1,1/2}}+\\left\\lVert D^2(p-\\Pi)\\right\\rVert_{C_tC^{0,1/2}}\n \\le C\\left\\lVert R_V\\right\\rVert_{C_tC^{1,1/2}}+C_{2,P}\\varepsilon_\\Lambda . \\tag{5.56}\n\\end{equation}$$ Moreover, on $[0,T]\\times\\mathbb T^3$, $$\\begin{equation}\n D^2(p-p_U)\\le\\bigl(C_{\\rm step}\\lambda^{-1/4}\n   +C\\left\\lVert R_V\\right\\rVert_{C_tC^{1,1/2}}+C_{2,P}\\varepsilon_\\Lambda\\bigr)\\operatorname{Id}. \\tag{5.57}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1763,7 +1763,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 5.2, Section 5",
-   "statement": "every solution of the mean equation (5.11)",
+   "statement": "**Proposition 5.2.** There is an absolute exponent $C$ such that, for every $n\\ge0$, every solution of the mean equation (5.11) satisfies $$\\begin{equation}\n \\left\\lVert B\\right\\rVert_{[n]}\\le C_n\\mathsf D^C\\left\\lVert\\bar f\\right\\rVert_{[n+1]}. \\tag{5.12}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1780,7 +1780,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 5.4, Section 5",
-   "statement": "For every integer $P\\ge2$, the profiles obtained from (5.11), (5.27) and (5.28) are well defined",
+   "statement": "**Proposition 5.4.** For every integer $P\\ge2$, the profiles obtained from (5.11), (5.27) and (5.28) are well defined, and $$W=\\sum_{p=1}^PZ_p+C_{P+1}=\\sum_{p=1}^P(V_p+C_{p+1}+B_p),\\qquad\n \\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p),\\quad \\bar q_1=0,$$ satisfy $\\widetilde {\\mathbf d}\\cdot W=0$ and $$\\begin{equation}\n W_t+MW+(W\\cdot\\widetilde {\\mathbf d})W+\\widetilde {\\mathbf d}\\mathsf P\n       +R_U\\circ X=R_P+R_{\\widetilde\\chi}. \\tag{5.29}\n\\end{equation}$$ Since $\\langle V_p\\rangle_s=\\langle C_p\\rangle_s=0$, the oscillatory part $W_{\\rm osc}=W-\\langle W\\rangle_s=\\sum_{p=1}^P(V_p+C_{p+1})$ is supported in $\\operatorname{supp}g$, and so are the sources $f_p+f_p^S$. The fields $V_p$, $C_p$, $\\mathsf p_p$ and $f_p+f_p^S$ vanish for $t<t_0$. Set $V_{P+1}=B_{P+1}=0$, so that $Y_{P+1}=Z_{P+1}=C_{P+1}$. The remainder of the expansion is $$\\begin{align}\n R_P={}&(\\partial_t+M)C_{P+1}+\\mathbf d\\mathsf p_P \\tag{5.30}\\\\\n &+\\sum_{\\substack{i,j\\le P+1\\\\i+j\\ge P+1}}\n                  (Z_i\\cdot \\mathbf d)Z_j\n +\\sum_{\\substack{i,j\\le P+1\\\\i+j\\ge P+2}}\n                  (Z_i\\cdot\\kappa)\\partial_sY_j.\n\\end{align}$$ At the labels outside $\\operatorname{supp}g$ it is independent of the phase. The construction is jointly smooth.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1797,7 +1797,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 8.1, Section 8",
-   "statement": "The data $U_j(0)$ converge in every $C^{m,1/2}$ to an odd divergence-free field $u_0$.",
+   "statement": "**Proposition 8.1.** The data $U_j(0)$ converge in every $C^{m,1/2}$ to an odd divergence-free field $u_0$. In particular, $u_0\\in C^\\infty(\\mathbb T^3;\\mathbb R^3)$. Let $u$ be the maximal smooth solution of the Euler equations from $u_0$, with maximal time $T_*>0$, supplied by Section 1. Then $T_*\\ge T_\\infty$ and, for every $T<T_\\infty$ and integer $m\\ge0$, $U_j\\to u$ in $C([0,T];C^{m,1/2})$. The solution is smooth and odd on $[0,T_\\infty)\\times\\mathbb T^3$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1814,7 +1814,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 8.2, Section 8",
-   "statement": "The solution has bounded velocity on $[0,T_\\infty)$",
+   "statement": "**Proposition 8.2.** The solution has bounded velocity on $[0,T_\\infty)$, and $|\\operatorname{curl}u(t,0)|\\longrightarrow\\infty$ as $t\\uparrow T_\\infty$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1831,7 +1831,7 @@
    ],
    "source_id": "paper",
    "locator": "Proposition 8.4, Section 8",
-   "statement": "For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_\\infty$.",
+   "statement": "**Proposition 8.4.** For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_\\infty$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1848,7 +1848,7 @@
    ],
    "source_id": "paper",
    "locator": "Remark 1.2, Section 1",
-   "statement": "The solution in Theorem 1.1 may be chosen so that it extends smoothly in space and time through $T_*$ away from the origin.",
+   "statement": "**Remark 1.2.** The solution in Theorem 1.1 may be chosen so that it extends smoothly in space and time through $T_*$ away from the origin. A proof is given in the auxiliary note \\[[31](#cite-TerminalSmoothness)\\].",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1882,7 +1882,7 @@
    ],
    "source_id": "paper",
    "locator": "Theorem 4.2, Section 4",
-   "statement": "To avoid exciting growing modes, we prescribe the final particle positions and choose the initial velocity to reach them.",
+   "statement": "**Theorem 4.2.** Assume $H^\\#\\le\\operatorname{Id}$ on $I\\times\\mathbb T^3$ as quadratic forms. For every $L\\in C(I;C^{0,1/2})$ the system (4.9) has a unique solution with $z\\in C^1(I;C^{0,1/2})$, $c\\in C^{0,1/2}$ divergence free and $\\nabla_a\\phi\\in C(I;C^{0,1/2})$. There are absolute $C,p$ such that, with $$\\begin{equation}\n A=C\\bigl(D_-+\\|M\\|_\\infty+\\left\\lVert K\\right\\rVert_{C_tC^{1,1/2}}\n   +\\left\\lVert\\Omega\\right\\rVert_{C_tC^{1,1/2}}\\bigr)^p, \\tag{4.10}\n\\end{equation}$$ one has $\\left\\lVert v\\right\\rVert_{C_tC^{0,1/2}}\\le A\\left\\lVert L\\right\\rVert_{C_tC^{0,1/2}}$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1899,7 +1899,7 @@
    ],
    "source_id": "paper",
    "locator": "Theorem 5.6, Section 5",
-   "statement": "There is an absolute exponent $C$ such that the following holds if $\\mathsf D^C\\lambda^{-1/12}\\le1$.",
+   "statement": "**Theorem 5.6.** There is an absolute exponent $C$ such that the following holds if $\\mathsf D^C\\lambda^{-1/12}\\le1$. For all integers $n\\ge0$ and $p\\ge2$, the construction satisfies $$\\begin{align}\n \\|V_p\\|_{[n],\\gamma}+\\|f_p+f_p^S\\|_{[n],\\gamma}\n        +\\lambda\\|\\mathsf p_p\\|_{[n],\\gamma}\n &\\le C_{n,p}\\mathsf D^C\\lambda^{-5/4}\\lambda^{-2(p-1)/3}, \\tag{5.34}\\\\\n \\|B_p\\|_{[n]}+\\|\\bar f_p\\|_{[n]}\n &\\le C_{n,p}\\mathsf D^C\\lambda^{-5/2}\\lambda^{-2(p-2)/3}, \\tag{5.35}\\\\\n \\|C_{p+1}\\|_{[n],\\gamma}\n &\\le C_{n,p}\\mathsf D^C\\lambda^{-9/4}\\lambda^{-2(p-1)/3}. \\tag{5.36}\n\\end{align}$$ The bounds (5.34) and (5.36) also hold for $p=1$, with $f_1=f_1^S=0$. For all integers $P\\ge2$ and $m\\ge0$, the expansion of Proposition 5.4 at the depth $P$ satisfies $$\\begin{equation}\n \\|W_{\\rm osc}\\|_{[m],\\gamma}\\le C_{m,P}\\mathsf D^C\\lambda^{-5/4},\\qquad\n \\Big\\|\\sum_{p=2}^PB_p\\Big\\|_{[m]}+\\Big\\|\\sum_{p=2}^P\\bar f_p\\Big\\|_{[m]}\n \\le C_{m,P}\\mathsf D^C\\lambda^{-5/2}, \\tag{5.37}\n\\end{equation}$$ and its remainder satisfies $$\\begin{equation}\n \\|R_P\\|_{[m]}\\le C_{m,P}\\lambda^{-5/4}\\lambda^{-2P/3}. \\tag{5.38}\n\\end{equation}$$",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1916,7 +1916,7 @@
    ],
    "source_id": "paper",
    "locator": "Theorem 7.1, Section 7",
-   "statement": "For every sufficiently large $N$ there are fields $U_j$, $j\\ge1$, and times $0=t_1=t_2<t_3<\\cdots$ with the following properties",
+   "statement": "**Theorem 7.1.** For every sufficiently large $N$ there are fields $U_j$, $j\\ge1$, and times $0=t_1=t_2<t_3<\\cdots$ with the following properties, in which $U_0$ is the shear (6.1) at $\\rho=\\varepsilon_1$: <span class=\"upright\">(T1)</span>–<span class=\"upright\">(T3)</span> for $j\\ge0$ and <span class=\"upright\">(T4)</span> for $j\\ge1$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {
@@ -1933,7 +1933,7 @@
    ],
    "source_id": "paper",
    "locator": "Theorem A.1, Section A",
-   "statement": "Constants $C,p$ depend only on the dimension.",
+   "statement": "**Theorem A.1.** Under (A.1)–(A.2), let $L\\in C(I;C^{0,1/2})$. There are unique $z\\in C^1(I;C^{0,1/2})$, $c\\in C^{0,1/2}$ divergence free and $\\nabla\\phi\\in C(I;C^{0,1/2})$ satisfying $$Kz_t-J(\\Omega z_t)+L=c+\\nabla\\phi,\n \\qquad \\operatorname{div}z=0,\\qquad z(0)=z(1)=0.$$ They obey $$\\begin{equation}\n \\left\\lVert z_t\\right\\rVert_0\\le CQ^p\\left\\lVert L\\right\\rVert_0. \\tag{A.3}\n\\end{equation}$$ If $K$, $\\Omega$ and $L$ are smooth on $I\\times\\mathbb T^3$, then so are $z$, $c$ and $\\nabla\\phi$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
   {

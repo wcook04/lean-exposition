@@ -26,7 +26,8 @@ import { parseRoute, reparseCurrentRoute } from "./app/router";
 import { loadLibraryAddresses } from "./app/libraryAddress";
 import { loadLeanNotes } from "./lean/noteSummaries";
 
-// A library paper reads its phrase addresses before the first route is parsed.
+// A library paper reads its phrase addresses before the first route is used; the router parsed the
+// address when it loaded, so it parses it again with the table.
 await loadLibraryAddresses((import.meta.env.BASE_URL ?? "/").replace(/\/$/, ""));
 reparseCurrentRoute();
 // A library paper's reading notes fill its Lean cards; fetched now, they are in before a card opens,

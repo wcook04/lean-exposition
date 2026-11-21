@@ -45,10 +45,27 @@ const SHOWN = 4;
 
 const fold = (text) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 const words = (query) => fold(query).split(/[\s,]+/).filter(Boolean);
-const holdsAll = (hay, terms) => terms.every((t) => hay.includes(t));
+// A number matches only as a whole number: "2.1" finds Lemma 2.1, never "(2.12)" or "2.1.3".
+const NUMBER = /^\d+(?:\.\d+)*$/;
+const escapeRe = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const numberAt = new Map();
+function numberRe(t) {
+  if (!numberAt.has(t)) numberAt.set(t, new RegExp(`(?<![\\d.])${escapeRe(t)}(?![\\d]|\\.\\d)`));
+  return numberAt.get(t);
+}
+const holds = (hay, t) => (NUMBER.test(t) ? numberRe(t).test(hay) : hay.includes(t));
+const holdsAll = (hay, terms) => terms.every((t) => holds(hay, t));
+// "Lemma 2.1": a kind of numbered result and its number. Such a query matches result labels exactly.
+const KINDS = "theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step";
+const NUMBERED = new RegExp(`^(${KINDS})\\s+(\\d+(?:\\.\\d+)*[a-z]?)$`);
+function numberedQuery(query) {
+  const m = NUMBERED.exec(fold(query).trim().replace(/\s+/g, " "));
+  return m ? new RegExp(`^\\W*${m[1]}\\s+${escapeRe(m[2])}(?![\\d]|\\.\\d)`) : null;
+}
 const fmt = (k) => k.toLocaleString("en-GB");
 
 const shards = new Map(); // paper id -> {statements, lean} with folded text
+const failed = new Set(); // paper ids whose contents could not be loaded
 let loading = null;
 
 function loadShards() {
@@ -56,14 +73,18 @@ function loadShards() {
     DATA.papers.filter((p) => p.shard).map(async (p) => {
       try {
         const response = await fetch(p.shard);
-        if (!response.ok) return;
+        if (!response.ok) {
+          failed.add(p.id);
+          return;
+        }
         const data = await response.json();
         shards.set(p.id, {
           statements: data.statements.map(([label, text, href]) => ({ label, text, href, hay: fold(`${label} ${text}`) })),
           lean: data.lean.map(([name, plain = ""]) => ({ name, plain, href: data.lean_base + name, hay: fold(`${name} ${name.replace(/[._]/g, " ")} ${plain}`) })),
         });
       } catch {
-        /* this paper's statements stay unsearched; its title still matches */
+        // This paper's statements stay unsearched, and the status says so; its title still matches.
+        failed.add(p.id);
       }
     }),
   ).then(() => run());
@@ -119,13 +140,16 @@ function rank(rows, terms, key) {
     .map((x) => x.r);
 }
 
-function group(paper, terms, open) {
+function group(paper, terms, open, numbered) {
   const titleHay = fold(`${paper.title} ${paper.authors} ${paper.sentence} ${paper.pages.map((p) => p.title).join(" ")}`);
-  const titleHit = holdsAll(titleHay, terms);
+  const titleHit = !numbered && holdsAll(titleHay, terms);
   const shard = shards.get(paper.id);
-  const statements = shard ? rank(shard.statements, terms, (r) => r.label || r.text) : [];
-  const lean = shard ? rank(shard.lean, terms, (r) => r.name) : [];
-  const pages = paper.pages.filter((p) => holdsAll(fold(p.title), terms));
+  // A numbered query ("Lemma 2.1") lists the results with exactly that label, not every row that
+  // holds the kind and the number somewhere.
+  const statements = !shard ? [] : numbered ? shard.statements.filter((r) => r.label && numbered.test(fold(r.label)))
+    : rank(shard.statements, terms, (r) => r.label || r.text);
+  const lean = shard && !numbered ? rank(shard.lean, terms, (r) => r.name) : [];
+  const pages = numbered ? [] : paper.pages.filter((p) => holdsAll(fold(p.title), terms));
   if (!titleHit && !statements.length && !lean.length && !pages.length) return null;
 
   const box = el("section", { class: "results__paper", "aria-label": paper.title });
@@ -177,13 +201,28 @@ function run() {
     status.textContent = "";
     return;
   }
-  const groups = DATA.papers.map((p) => group(p, terms, opened)).filter(Boolean);
+  const numbered = numberedQuery(query);
+  const groups = DATA.papers.map((p) => group(p, terms, opened, numbered)).filter(Boolean);
   results.append(...groups);
   results.hidden = groups.length === 0;
-  const pending = loading && shards.size < DATA.papers.filter((p) => p.shard).length;
-  status.textContent = groups.length
-    ? `Matches in ${groups.length} ${groups.length === 1 ? "paper" : "papers"}.${pending ? " Still loading the statements and Lean names." : ""}`
-    : pending ? "Loading the statements and Lean names…" : "No paper matches every word.";
+  status.textContent = statusLine(groups.length, !!numbered);
+}
+
+/** The result count with its denominators: how many papers were searched by contents, and how. */
+function statusLine(matched, numbered) {
+  const indexed = DATA.papers.filter((p) => p.shard);
+  const loaded = indexed.filter((p) => shards.has(p.id)).length;
+  const lost = indexed.filter((p) => failed.has(p.id));
+  const pending = !!loading && loaded + lost.length < indexed.length;
+  const titleOnly = DATA.papers.length - indexed.length;
+  const paper = (k) => `${fmt(k)} ${k === 1 ? "paper" : "papers"}`;
+  const searched = numbered
+    ? `Searched the numbered results of ${paper(loaded)}; ${titleOnly ? `${paper(titleOnly)} ${titleOnly === 1 ? "is" : "are"} indexed by title only and not searched for results.` : ""}`
+    : `Searched the contents of ${paper(loaded)}${titleOnly ? ` and the titles of ${paper(titleOnly)} more` : ""}.`;
+  const failure = lost.length ? ` The contents of ${lost.map((p) => p.title).join(", ")} could not be loaded; ${lost.length === 1 ? "its title was" : "their titles were"} still searched.` : "";
+  if (pending) return `${matched ? `Matches in ${paper(matched)} so far. ` : ""}Loading the statements and Lean names…`;
+  const head = matched ? `Matches in ${paper(matched)} of ${fmt(DATA.papers.length)}.` : numbered ? "No result has that number." : "No paper matches every word.";
+  return `${head} ${searched}${failure}`.replace(/\s+$/, "");
 }
 
 if (input && results) {

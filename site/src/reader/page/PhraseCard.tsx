@@ -4,9 +4,9 @@
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
 import { useEffect, useState } from "react";
-import { loadPhraseNotes, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
+import { loadPhraseNotes, type MergedPhrase, type PhraseAssessment, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
-import { isFidelity, phraseVerdict } from "../../compare/fidelityWords";
+import { isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict } from "../../compare/fidelityWords";
 import { renderTex } from "../math";
 import site from "@instance/site";
 import { Signal } from "./signal";
@@ -100,8 +100,80 @@ export function NoteBody({ text, summary, className = "phrase-card__text" }: { t
   );
 }
 
-export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null }) {
-  const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
+/**
+ * The opening words of a merged phrase, enough to tell it from the others: display formulas become
+ * an ellipsis, Markdown emphasis is dropped, and the cut falls between words outside any formula.
+ */
+export function phraseOpening(quote: string, most = 14): string {
+  const flat = quote.replace(/\$\$[\s\S]*?\$\$/g, " … ").replace(/\*\*|__/g, "").replace(/\\([[\]])/g, "$1").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/\s+/g, " ").trim();
+  const words = flat.split(" ");
+  let out = "";
+  let open = false;
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    out += (out ? " " : "") + word;
+    for (let j = 0; j < word.length; j++) if (word[j] === "$" && word[j - 1] !== "\\") open = !open;
+    if (i + 1 >= most && !open) return i + 1 < words.length ? `${out} …` : out;
+  }
+  return open ? out.replace(/\$/g, "") : out;
+}
+
+/**
+ * One comparison of the phrase with its Lean, in words: the verdict and every qualification the
+ * source wrote, "Not assessed" where none is recorded, or the paper's held text. A note is shown
+ * whatever the verdict, "same" included: a qualification is never hidden behind agreement.
+ */
+export function Verdict({ assessment, words }: { assessment: Pick<PhraseAssessment, "fidelity" | "fidelity_note">; words?: string | null }) {
+  const { fidelity, fidelity_note: note } = assessment;
+  const lead = words ? <span className="phrase-card__for">For “<span dangerouslySetInnerHTML={{ __html: noteHtml(words).html }} />”: </span> : null;
+  if (fidelity === "held") {
+    return (
+      <p className="phrase-card__fidelity" data-fidelity="held">
+        {lead}
+        {site.comparisonsHeld ?? note ?? "This comparison is held."}
+      </p>
+    );
+  }
+  if (!isFidelity(fidelity)) {
+    return (
+      <p className="phrase-card__fidelity" data-fidelity="unassessed">
+        {lead}
+        <strong>{NOT_ASSESSED}</strong>. {NOT_ASSESSED_DETAIL}
+      </p>
+    );
+  }
+  return (
+    <p className="phrase-card__fidelity" data-fidelity={fidelity}>
+      {lead}
+      <strong>{phraseVerdict(fidelity)}</strong>
+      {note ? (
+        <>
+          : <span dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />
+        </>
+      ) : (
+        "."
+      )}{" "}
+      <span className="phrase-card__who">AI-assessed</span>
+    </p>
+  );
+}
+
+/**
+ * The comparisons a card shows for one Lean row. A tie that holds several overlapping phrases
+ * shows each phrase's own comparison with that phrase's words, so a verdict about one phrase is
+ * never read as a verdict about the others; a tie of one phrase shows its single comparison.
+ */
+export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] | undefined): { assessment: Pick<PhraseAssessment, "fidelity" | "fidelity_note">; words: string | null }[] {
+  const own = row.assessments ?? [];
+  if (merged && merged.length > 1 && own.length) {
+    const words = new Map(merged.map((m) => [m.id, m.quote]));
+    return own.map((a) => ({ assessment: a, words: words.has(a.phrase) ? phraseOpening(words.get(a.phrase)!) : null }));
+  }
+  return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
+}
+
+export function PhraseCard({ row, topic, note, quote, merged }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[] }) {
+  const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
   return (
     <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
@@ -114,20 +186,14 @@ export function PhraseCard({ row, topic, note, quote }: { row: PhraseLean; topic
       {quote && (
         <blockquote className="phrase-card__quote" aria-label="The phrase in the paper" dangerouslySetInnerHTML={{ __html: quote }} />
       )}
-      {verdict && (
-        <p className="phrase-card__fidelity" data-fidelity={row.fidelity}>
-          <strong>{verdict}</strong>
-          {row.fidelity !== "same" && row.fidelity_note ? (
-            <>
-              : <span dangerouslySetInnerHTML={{ __html: noteHtml(row.fidelity_note).html }} />
-            </>
-          ) : (
-            "."
-          )}{" "}
-          <span className="phrase-card__who">AI-assessed</span>
+      {merged && merged.length > 1 && (
+        <p className="phrase-card__merged" data-merged={merged.length}>
+          These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
         </p>
       )}
-      {(row.fidelity as string) === "held" && site.comparisonsHeld && <p className="phrase-card__fidelity">{site.comparisonsHeld}</p>}
+      {shown.map(({ assessment, words }, i) => (
+        <Verdict key={i} assessment={assessment} words={words} />
+      ))}
       {note && (
         <div className="phrase-card__note">
           <p className="phrase-card__label">

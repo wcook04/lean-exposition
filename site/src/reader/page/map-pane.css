@@ -796,3 +796,11 @@ html[data-right-sheet] .reader__paper {
 .map-pane .fg__title .katex {
   font-size: 1.05em;
 }
+
+/* A graph that failed to draw (map/GraphBoundary.tsx): its notice in the graph's place. */
+.graph-boundary {
+  padding: 16px;
+}
+.graph-boundary p {
+  margin: 0 0 8px;
+}

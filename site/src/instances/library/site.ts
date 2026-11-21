@@ -110,6 +110,7 @@ const site = {
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
   recordKind,
+  leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
   levelGoals: null,
   mainGoal: PAPER.goal,
   leanLevelWho: `Statements and proofs by ${BY}`,

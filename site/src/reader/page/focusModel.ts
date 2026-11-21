@@ -6,15 +6,17 @@
 // means; FocusGraph draws it.
 //
 // Lean expression, curated argument and citation stay apart. The argument's links are drawn as
-// argument edges between records. A record's Lean declarations are named on its card and shown
+// edges between records, each saying where it comes from: stated by the paper, derived from the
+// Lean's dependencies (relationOf), or an assumption. A record's Lean declarations are named on its card and shown
 // in the dock, never drawn as neighbours (`formalizes` is a correspondence, not a use). What
 // those declarations use in the Lean is drawn as Lean declarations, in their own groups, with a
 // dashed line where only the statement names the declaration. Citations are not dependencies.
 
 import site from "@instance/site";
 import type { Alignment, LeanDeclaration, LeanKind, LeanModule } from "../../api/lean";
+import { compiled } from "../../lean/data";
 import type { Stage } from "../../api/types";
-import type { FGCard, FGEdge, FGRole, FGRoleWords } from "../../map/FocusGraph";
+import type { FGCard, FGEdge, FGRelation, FGRole, FGRoleWords } from "../../map/FocusGraph";
 import type { LeanShell } from "../../lean/data";
 import { findDecl } from "../../lean/resolve";
 import { declTitle } from "../../model/declTitle";
@@ -54,6 +56,8 @@ export interface Focus {
   edges: FGEdge[];
   route: string[] | null;
   routeNote?: string;
+  /** The words before the route's steps: how many links, and which kind each is. */
+  routeLabel?: string;
   /** The Lean modules this drawing needs and has not loaded yet. */
   missing: string[];
   /** Words for the groups, where this paper's data asks for them. */
@@ -349,6 +353,32 @@ export function makeFocus(input: FocusInput) {
 
 export type FocusTools = ReturnType<typeof makeFocus>;
 
+/** The evidence record the converter writes for links read off the Lean's dependencies. */
+export const LEAN_DEPENDENCIES = "lean_dependencies";
+
+/**
+ * Where an argument link between two records comes from: the paper's own statement, the Lean's
+ * dependencies (a `supports` link the edition derived, not one the paper states), or an assumption.
+ */
+export function relationOf(edge: Pick<ArgEdge, "from" | "to" | "kind" | "warrant">): Extract<FGRelation, "argument" | "derived" | "assumes"> {
+  if (edge.kind === "assumes") return "assumes";
+  // The link's own evidence ids, where the edition carries them on the map; else its warrant, else the build's list.
+  const ids = (edge as { evidenceIds?: readonly string[] }).evidenceIds;
+  if (ids?.length) return ids.every((id) => id === LEAN_DEPENDENCIES) ? "derived" : "argument";
+  if (edge.warrant ? edge.warrant.evidenceId === LEAN_DEPENDENCIES : site.leanDerivedSupports?.has(`${edge.from}→${edge.to}`)) return "derived";
+  return "argument";
+}
+
+/** The words before a route's steps, saying how many links it has and of which kind. */
+export function routeWords(hops: readonly FGRelation[], toMain: boolean): string {
+  const end = toMain ? "the main result" : "one of the paper’s main results";
+  const lean = hops.filter((k) => k === "derived").length;
+  const paper = hops.length - lean;
+  if (hops.length === 1) return `${end.charAt(0).toUpperCase()}${end.slice(1)} uses this directly, by a link ${lean ? "derived from the Lean" : "the paper states"}:`;
+  const how = lean === 0 ? "each stated by the paper" : paper === 0 ? "each derived from the Lean" : `${paper} stated by the paper and ${lean} derived from the Lean`;
+  return `${hops.length} links to ${end}, ${how}:`;
+}
+
 const HELPER_WORDS: Partial<FGRoleWords> = { one: "Lean lemma", uses: "Lean lemmas it uses", usedBy: "Lean lemmas that use it" };
 const LEAN_DEFINITION_WORDS: Partial<FGRoleWords> = { one: "Lean definition", uses: "Lean definitions it uses", usedBy: "Lean definitions that use it" };
 
@@ -363,8 +393,9 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
    * dashed, with the sentence that states it and a link to where the using result is stated.
    */
   const argumentEdge = (edge: ArgEdge, from: string, to: string): FGEdge => {
-    if (edge.kind === "assumes") return { from, to, kind: "statement" };
-    if (!onlyPaperLogic(edge)) return { from, to, kind: "argument" };
+    // A supports link resting only on the paper's stated logic is "paper"; any other link is
+    // classified by relationOf: stated by the paper, derived from the Lean, or an assumption.
+    if (edge.kind !== "supports" || !onlyPaperLogic(edge)) return { from, to, kind: relationOf(edge) };
     return { from, to, kind: "paper", why: edge.warrant?.details ?? edge.warrant?.text, href: routeHref({ view: "read", stage: input.stage, node: from }) };
   };
   const put = (id: string) => {
@@ -389,14 +420,26 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
   };
   /** What a declaration uses in the Lean, drawn below the subject card `from`. */
   const leanUses = (from: string, decl: LeanDeclaration, skip: ReadonlySet<string>) => {
-    const text = statementText(decl);
+    // Lean's own split (type dependencies are the statement's) where the edition has it, else
+    // whether the statement's text names the declaration.
+    const facts = compiled(decl);
+    const inStatement = facts.statement_uses ? new Set(facts.statement_uses) : null;
+    const text = inStatement ? "" : statementText(decl);
     for (const name of new Set(decl.uses)) {
       if (name === decl.name || skip.has(name) || !tools.rowOf(name)) continue;
       const id = tools.declCard(name);
       if (id === from || !put(id)) continue;
-      edges.push({ from, to: id, kind: namedIn(text, name) ? "statement" : "proof" });
+      edges.push({ from, to: id, kind: (inStatement ? inStatement.has(name) : namedIn(text, name)) ? "statement" : "proof" });
     }
   };
+  /** The kinds of each link along a route, from `start` up through `chain`. */
+  const hopsOf = (start: string, chain: readonly string[]): FGRelation[] =>
+    chain.map((consumer, i) => {
+      const prerequisite = i ? chain[i - 1] : start;
+      const edge = (graph.out.get(consumer) ?? []).find((e) => e.to === prerequisite && (e.kind === "supports" || e.kind === "assumes"));
+      return edge ? (argumentEdge(edge, consumer, prerequisite).kind ?? "argument") : "argument";
+    });
+  let routeLabel: string | undefined;
   let route: string[] | null = null;
   let routeNote: string | undefined;
   let subjects: string[];
@@ -408,11 +451,22 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     const decl = declaration(subject.name);
     if (decl) {
       leanUses(id, decl, new Set());
+      // Lean's own split says whether each user names this one in its statement or its proof; without
+      // it (a text scan), only the user's own statement could say, and its module is not loaded.
+      const facts = compiled(decl);
+      const inStatement = new Set(facts.statement_used_by ?? []);
+      const inProof = new Set(facts.proof_used_by ?? []);
+      const split = !!facts.statement_used_by && !!facts.proof_used_by;
       for (const name of new Set(decl.used_by)) {
         if (name === decl.name || !tools.rowOf(name)) continue;
         const user = tools.declCard(name);
-        // Only the user's own statement could say whether it names this one; its module is not loaded.
-        if (user !== id && put(user)) edges.push({ from: user, to: id });
+        if (user === id || !put(user)) continue;
+        if (!split) edges.push({ from: user, to: id, kind: "use" });
+        else {
+          if (inStatement.has(name)) edges.push({ from: user, to: id, kind: "statement" });
+          if (inProof.has(name)) edges.push({ from: user, to: id, kind: "proof" });
+          if (!inStatement.has(name) && !inProof.has(name)) edges.push({ from: user, to: id, kind: "use" });
+        }
       }
     }
     // The main theorem's own Lean (site.lean.mainTheorem) is stated by the main result, even where
@@ -422,7 +476,15 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     if (stated && chain) {
       route = [stated, ...chain];
       for (const r of route) put(r);
-    } else routeNote = "Not a step of the paper’s argument: no chain of uses joins it to the main result.";
+      // The first crumb is the result this declaration states: a correspondence, not a link of the argument.
+      const toMain = (chain.length ? chain[chain.length - 1] : stated) === input.home;
+      routeLabel = chain.length
+        ? `This declaration states the first of these. From it, ${routeWords(hopsOf(stated, chain), toMain).replace(/^./, (c) => c.toLowerCase())}`
+        : `This declaration states ${toMain ? "the main result" : "one of the paper’s main results"}:`;
+    } else
+      routeNote = stated
+        ? "No paper-argument route is recorded for this declaration: no recorded link joins the result it states to the main result."
+        : "No paper-argument route is recorded for this declaration: it is not linked to a result of the paper.";
   } else {
     subjects = subject.ids.filter((id) => put(id));
     const here = new Set(subjects);
@@ -447,11 +509,16 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
       }
     }
     // The route: from whichever subject is nearest the main result.
+    let start: string | null = null;
     for (const s of subjects) {
       const chain = tools.routeFrom(s);
-      if (chain && (route === null || chain.length < route.length)) route = chain;
+      if (chain && (route === null || chain.length < route.length)) {
+        route = chain;
+        start = s;
+      }
     }
     if (route) for (const r of route) put(r);
+    if (route && route.length && start) routeLabel = routeWords(hopsOf(start, route), route[route.length - 1] === input.home);
     if (route && route.length === 0) {
       // The paper's own main result is its first selected goal; the others are among its main results.
       const first = input.selected?.[0] ?? input.home;
@@ -462,12 +529,12 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
       route = null;
     } else if (!route && subjects.length) {
       const main = tools.card(input.home)?.title ?? "the main result";
-      routeNote = `No chain of uses in the paper’s argument joins ${subjects.length > 1 ? "these steps" : "this step"} to the main result, ${main}.`;
+      routeNote = `No recorded link joins ${subjects.length > 1 ? "these steps" : "this step"} to the main result, ${main}, so no route to it is recorded.`;
     }
   }
   // Where the paper states the subject is the reading position itself.
   for (const id of subjects) cards.set(id, { ...cards.get(id)!, seen: undefined });
-  return { subjects, cards, edges, route, routeNote, missing: [...missing], roles: leanWords };
+  return { subjects, cards, edges, route, routeNote, routeLabel, missing: [...missing], roles: leanWords };
 }
 
 /** The modules a subject's drawing reads, so they can be fetched before it is drawn. */
