@@ -131,6 +131,20 @@ def main() -> int:
                 el = page.locator(".paper .tie[data-tone]").filter(has_text="").first
                 back = "view=pdf" not in page.url and f"@{args.phrase}" in page.url
                 check(f"{tag} toggle to text", back and page.locator(".phrase-card").count() > 0, page.url)
+            # The whole map, from the header's Map link and from the pane after a phrase click.
+            before = len(errors)
+            page.goto(base + "map/")
+            page.wait_for_timeout(4000)
+            body = page.inner_text("body")
+            check(f"{tag} map page", len(errors) == before and len(body.strip()) > 200 and not page.locator(".page-guard").count(), "; ".join(errors[before:][:2]) or f"{len(body)} characters")
+            page.goto(base + f"@{args.phrase}?v=graph")
+            page.wait_for_selector(".phrase-card", timeout=60000)
+            whole = page.get_by_role("button", name="Whole proof map")
+            if whole.count():
+                before = len(errors)
+                whole.first.click()
+                page.wait_for_timeout(3000)
+                check(f"{tag} whole proof map", len(errors) == before and not page.locator(".page-guard").count(), "; ".join(errors[before:][:2]))
             # Cards render their mathematics: no raw $ or backslash command left in the text a reader sees.
             raw = []
             for name in [args.decl, *args.raw_check]:

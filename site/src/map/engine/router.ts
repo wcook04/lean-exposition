@@ -252,7 +252,8 @@ export function plan(layout: Layout): Plan {
   const busObj = new Map<string, Obj>();
   const pieceObj = new Map<string, Obj>();
   for (const pe of edges.values()) {
-    pe.tracks = new Array(pe.rankTo - pe.rankFrom).fill(null);
+    // An edge that does not point down a layer (the graph had a cycle) gets no tracks instead of an invalid array.
+    pe.tracks = new Array(Math.max(0, pe.rankTo - pe.rankFrom)).fill(null);
     let xb = topX.get(pe.key)!;
     for (let g = pe.rankTo - 1; g >= pe.rankFrom; g--) {
       const atParent = g === pe.rankFrom;

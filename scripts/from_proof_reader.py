@@ -602,6 +602,7 @@ def main() -> None:
         for e in edges:
             if e["kind"] == "formalizes":
                 owners.setdefault(e["to"][len("lean."):], set()).add(e["from"])
+        result_uses = {}
         for address, c in claims:
             nid = f"{args.paper}.{address}"
             starts = [e["to"][len("lean."):] for e in edges if e["from"] == nid and e["kind"] == "formalizes"]
@@ -616,7 +617,27 @@ def main() -> None:
                     used |= others
                     continue
                 frontier.extend(uses_of.get(name, []))
+            result_uses[nid] = used
+        # Results that share Lean reach each other both ways; the map needs a direction. Within a
+        # cycle a result uses only results printed before it, so the main result and the results it
+        # rests on stay joined and no edge points back.
+        order = {f"{args.paper}.{address}": k for k, (address, _) in enumerate(claims)}
+        reach = {}
+        def reaches(a, b):
+            seen, stack = set(), [a]
+            while stack:
+                x = stack.pop()
+                if x == b:
+                    return True
+                if x in seen:
+                    continue
+                seen.add(x)
+                stack.extend(result_uses.get(x, ()))
+            return False
+        for nid, used in sorted(result_uses.items()):
             for other in sorted(used):
+                if reaches(other, nid) and order.get(nid, 0) < order.get(other, 0):
+                    continue
                 edges.append({"from": nid, "to": other, "kind": "supports", "evidence_ids": ["lean_dependencies"]})
                 evidence["lean_dependencies"]["subject_ids"] = sorted(set(evidence["lean_dependencies"]["subject_ids"]) | {nid, other})
     if goal not in nodes:

@@ -62,6 +62,24 @@ def main() -> int:
     apart = [r for r in results if r not in seen and r not in allowed]
     if apart:
         problems.append(f"{len(apart)} numbered result(s) not joined to the main result: {', '.join(apart[:8])}")
+    # The map is drawn in layers, so its edges may not form a cycle.
+    colour, cycle = {}, []
+    def visit(u, path):
+        colour[u] = 1
+        path.append(u)
+        for v in sorted(out.get(u, ())):
+            if colour.get(v) == 1 and not cycle:
+                cycle.extend(path[path.index(v):] + [v])
+            elif not colour.get(v):
+                visit(v, path)
+        path.pop()
+        colour[u] = 2
+    sys.setrecursionlimit(max(10000, 4 * len(graph["nodes"])))
+    for n in sorted(out):
+        if not colour.get(n) and not cycle:
+            visit(n, [])
+    if cycle:
+        problems.append(f"the map has a cycle: {' -> '.join(cycle[:6])}")
     # No phrase's declaration shows zero uses unless its source names nothing.
     named = set()
     for path in sorted((root / "alignment").glob("phrases-*.json")):
