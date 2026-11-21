@@ -3,8 +3,8 @@
  "stage": "expository",
  "state": "draft",
  "path": "papers/expository.md",
- "content_sha256": "b5aba4b5b32bfb0fe529b97534c4014c4e2ae9da8410f7f2a6caeb5207ac8bf6",
- "graph_sha256": "a36e91bc5016ddb9bc06c5aa03801b802710f25448aebbdca71e3fb4b5730c68",
+ "content_sha256": "ac9916d1ac153686a97c543a0407fd5891500f4d75d0a51f0565cca6570236cf",
+ "graph_sha256": "7ca7cbc8954cb08dd6f691844f9cf114e7660b3457e915d375b4bc3a25758401",
  "selected_goal_ids": [
   "euler.theorem-1.1"
  ],
@@ -14,6 +14,7 @@
  "citation_ids": [
   "cite.euler.lemma-1.3",
   "cite.euler.lemma-2.2",
+  "cite.euler.lemma-2.3",
   "cite.euler.lemma-2.4",
   "cite.euler.lemma-2.5",
   "cite.euler.lemma-2.6",
@@ -62,6 +63,7 @@
   "cite.lean.TorusEuler.Paper.Proposition84Conclusions",
   "cite.lean.TorusEuler.Paper.Statement.corollary_8_3",
   "cite.lean.TorusEuler.Paper.Statement.lemma_1_3",
+  "cite.lean.TorusEuler.Paper.Statement.lemma_2_3",
   "cite.lean.TorusEuler.Paper.Statement.lemma_2_4",
   "cite.lean.TorusEuler.Paper.Statement.lemma_2_5",
   "cite.lean.TorusEuler.Paper.Statement.lemma_2_6",
@@ -87,6 +89,7 @@
   "cite.lean.TorusEuler.Paper.corollary_8_3",
   "cite.lean.TorusEuler.Paper.lemma_1_3",
   "cite.lean.TorusEuler.Paper.lemma_2_2",
+  "cite.lean.TorusEuler.Paper.lemma_2_3",
   "cite.lean.TorusEuler.Paper.lemma_2_4",
   "cite.lean.TorusEuler.Paper.lemma_2_5",
   "cite.lean.TorusEuler.Paper.lemma_2_6",
@@ -135,6 +138,7 @@
  "unresolved_ids": [
   "euler.lemma-1.3",
   "euler.lemma-2.2",
+  "euler.lemma-2.3",
   "euler.lemma-2.4",
   "euler.lemma-2.5",
   "euler.lemma-2.6",
@@ -183,6 +187,7 @@
   "lean.TorusEuler.Paper.Proposition84Conclusions",
   "lean.TorusEuler.Paper.Statement.corollary_8_3",
   "lean.TorusEuler.Paper.Statement.lemma_1_3",
+  "lean.TorusEuler.Paper.Statement.lemma_2_3",
   "lean.TorusEuler.Paper.Statement.lemma_2_4",
   "lean.TorusEuler.Paper.Statement.lemma_2_5",
   "lean.TorusEuler.Paper.Statement.lemma_2_6",
@@ -208,6 +213,7 @@
   "lean.TorusEuler.Paper.corollary_8_3",
   "lean.TorusEuler.Paper.lemma_1_3",
   "lean.TorusEuler.Paper.lemma_2_2",
+  "lean.TorusEuler.Paper.lemma_2_3",
   "lean.TorusEuler.Paper.lemma_2_4",
   "lean.TorusEuler.Paper.lemma_2_5",
   "lean.TorusEuler.Paper.lemma_2_6",
@@ -255,13 +261,14 @@
  "passages": [
   {
    "anchor": "front",
-   "text_sha256": "63de1c29979142f80a374626c1ebd8fd5650f16aa20a0709cb58517ec5fd1938",
+   "text_sha256": "b9c3e40664adfb98bb35c3741d723395e0cf6ffb822f01ae24017c6b574a66d2",
    "claim_ids": [
     "euler.theorem-1.1"
    ],
    "citation_ids": [
     "cite.euler.lemma-1.3",
     "cite.euler.lemma-2.2",
+    "cite.euler.lemma-2.3",
     "cite.euler.lemma-2.4",
     "cite.euler.lemma-2.5",
     "cite.euler.lemma-2.6",
@@ -310,6 +317,7 @@
     "cite.lean.TorusEuler.Paper.Proposition84Conclusions",
     "cite.lean.TorusEuler.Paper.Statement.corollary_8_3",
     "cite.lean.TorusEuler.Paper.Statement.lemma_1_3",
+    "cite.lean.TorusEuler.Paper.Statement.lemma_2_3",
     "cite.lean.TorusEuler.Paper.Statement.lemma_2_4",
     "cite.lean.TorusEuler.Paper.Statement.lemma_2_5",
     "cite.lean.TorusEuler.Paper.Statement.lemma_2_6",
@@ -335,6 +343,7 @@
     "cite.lean.TorusEuler.Paper.corollary_8_3",
     "cite.lean.TorusEuler.Paper.lemma_1_3",
     "cite.lean.TorusEuler.Paper.lemma_2_2",
+    "cite.lean.TorusEuler.Paper.lemma_2_3",
     "cite.lean.TorusEuler.Paper.lemma_2_4",
     "cite.lean.TorusEuler.Paper.lemma_2_5",
     "cite.lean.TorusEuler.Paper.lemma_2_6",
@@ -384,62 +393,35 @@
    "rationale": "Front matter: how the formalisation encodes the paper's objects."
   },
   {
-   "anchor": "sec-the-torus-and-periodic-fields",
-   "text_sha256": "cdbc558a8a72a286c9d774fc37efc3fe1a2c05709ba71394d101431724b16f1a",
+   "anchor": "sec-what-a-comparison-means",
+   "text_sha256": "5b3a7b08545f4dfaf0c4092865106281fc50ab0286d1489822884dac1fd6045a",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
    "evidence_class": "context",
-   "rationale": "The torus and periodic fields: how the formalisation encodes the paper's objects."
+   "rationale": "What a comparison means: how the formalisation encodes the paper's objects."
   },
   {
-   "anchor": "sec-velocity-pressure-and-norms",
-   "text_sha256": "c9453a90ae0e91c9ffcf4d11980f4453c3fee04776b2938634f5c4e846412a1f",
+   "anchor": "sec-the-torus-and-the-time-interval",
+   "text_sha256": "07d5e8bc805bf623948a6134dd13667059374364be464cfec063fd4a3559db6a",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
    "evidence_class": "context",
-   "rationale": "Velocity, pressure and norms: how the formalisation encodes the paper's objects."
+   "rationale": "The torus and the time interval: how the formalisation encodes the paper's objects."
   },
   {
-   "anchor": "sec-classical-solutions-and-maximality",
-   "text_sha256": "1cbd3bc7a32c90b71c4ed6e1d6ce3308bd791547f0949be859d5e329aa486ac7",
+   "anchor": "sec-norms-and-default-values",
+   "text_sha256": "9c0fd0e1443ffb1d34024c836c2863920af5ac59a971a28ab74ec90eb48a3e4a",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
    "evidence_class": "context",
-   "rationale": "Classical solutions and maximality: how the formalisation encodes the paper's objects."
-  },
-  {
-   "anchor": "sec-the-singular-time-and-spatial-limits",
-   "text_sha256": "5af6ad75f0ccbd6f56c387f6edbbccdf3955bf89cd6dd40268c5e44aba69bb1d",
-   "claim_ids": [],
-   "citation_ids": [],
-   "assumption_ids": [],
-   "evidence_class": "context",
-   "rationale": "The singular time and spatial limits: how the formalisation encodes the paper's objects."
-  },
-  {
-   "anchor": "sec-the-profile",
-   "text_sha256": "a75fd92ca5a3881f69f3fc950e75940268428678b29db1b5016892aac0887059",
-   "claim_ids": [],
-   "citation_ids": [],
-   "assumption_ids": [],
-   "evidence_class": "context",
-   "rationale": "The profile: how the formalisation encodes the paper's objects."
-  },
-  {
-   "anchor": "sec-localized-profiles",
-   "text_sha256": "f86bf8e63244e94edca465847ddb77ae194c2d3c6afabfab97b0d9f31f4c8412",
-   "claim_ids": [],
-   "citation_ids": [],
-   "assumption_ids": [],
-   "evidence_class": "context",
-   "rationale": "Localized profiles: how the formalisation encodes the paper's objects."
+   "rationale": "Norms and default values: how the formalisation encodes the paper's objects."
   },
   {
    "anchor": "sec-the-wave-and-its-frame",
-   "text_sha256": "61ab134f5038d7bf00ad717b91bcd5d761111eee0de0cce14c5598578f6ca45f",
+   "text_sha256": "dc19cc55fd1345f18bc2ded53b0c9a119861563fc08f920795b9bc9ce5f0a1fa",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -447,22 +429,22 @@
    "rationale": "The wave and its frame: how the formalisation encodes the paper's objects."
   },
   {
-   "anchor": "sec-the-endpoint-unknowns",
-   "text_sha256": "69dd4d6a0e89d3ed2263f2ddda78ba4a27eb6467817da7f60b5e8b96be1012db",
+   "anchor": "sec-the-endpoint-problem",
+   "text_sha256": "62ac7918ec345c613c776f1d50c146ecff94e24f5b975bda5ddfabf07ee3cba4",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
    "evidence_class": "context",
-   "rationale": "The endpoint unknowns: how the formalisation encodes the paper's objects."
+   "rationale": "The endpoint problem: how the formalisation encodes the paper's objects."
   },
   {
-   "anchor": "sec-the-inductive-sequence",
-   "text_sha256": "3c1b3bde60f2ddcdfa2b42914eb0fa0d26193bf7438e467d3d7ffbd020880196",
+   "anchor": "sec-the-sequence-and-the-terminal-time",
+   "text_sha256": "4500ce2d7d68444e16fedbea7ef6e9630f1c96a476384d3fb9e2be07c3a78f92",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
    "evidence_class": "context",
-   "rationale": "The inductive sequence: how the formalisation encodes the paper's objects."
+   "rationale": "The sequence and the terminal time: how the formalisation encodes the paper's objects."
   }
  ],
  "review_state": "not_reviewed",
