@@ -919,6 +919,11 @@ def main() -> None:
                                                         ensure_ascii=False, separators=(",", ":")))
     # Why a paragraph has no phrase, or which phrases link it (Proof Reader's paragraph dispositions),
     # kept with the instance until the reader shows them.
+    # Optional reading aids the reader does not draw yet: the paper's glossary of conventions, section
+    # aids and showcase cards. Carried unchanged so a later design pass can render them.
+    for aid in ("glossary.json", "section-aids.json", "showcase.json"):
+        if (page / "notes" / aid).is_file():
+            write(out / "generated" / aid, (page / "notes" / aid).read_bytes())
     if (page / "notes/paragraph-dispositions.json").is_file():
         write(out / "generated/paragraph-dispositions.json", (page / "notes/paragraph-dispositions.json").read_bytes())
     unnamed = sorted({r[0] for n in links.get("show_also", []) if (r := lean.resolve(n))})
