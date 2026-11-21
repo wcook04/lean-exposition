@@ -34,6 +34,7 @@ import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
 import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
 import { readKeepLean, saveKeepLean } from "./page/panePrefs";
@@ -43,7 +44,7 @@ import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
 import { declLight } from "./page/PhraseCard";
-import { isPhraseLayer, isPhraseRecord, leanTruth, phraseTitle, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
+import { isPhraseLayer, isPhraseRecord, leanTruth, phraseTitle, statementFor, statementOf, statementPlace, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
   companionAnchor,
@@ -344,8 +345,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const saved = loadPosition(keyRef.current) ?? (from ? loadPosition(from) : null);
     const savedPart = saved ? partOfPosition(saved, { stage, edition, parts: doc.parts }) : null;
     const hit = route.anchor ? resolveAnchor(doc, route.anchor) : null;
-    const lines = route.at ? resolveAt(doc, route.at) : null;
     const named = statementAt(route.node, route.at);
+    // A record whose statement block has no tie of its own opens at the block itself.
+    const place = route.at ?? (named === null ? statementPlace(ties, route.node) : undefined);
+    const lines = place ? resolveAt(doc, place) : null;
     const start = savedPart ?? (named !== null ? statements.partOf(named) : undefined) ?? (lines ? partsOfLines(doc.parts, lines)[0] : undefined) ?? hit?.part ?? 0;
     const parts = new Set<number>();
     for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
@@ -565,7 +568,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     root.style.overflowAnchor = "none";
     // A record's address opened cold lands on its statement, with or without `l`.
     const named = statementAt(route.node, route.at);
-    const at = named !== null ? ties.index.ties[named].at : route.at;
+    const at = named !== null ? ties.index.ties[named].at : (route.at ?? statementPlace(ties, route.node));
     if (initial.saved) {
       void restorePosition(initial.saved);
       if (at) void landSlice(at, { scroll: false, node: route.node });
@@ -1015,10 +1018,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const selectRecord = useCallback(
     (id: string | null) => {
       if (!id) return release();
-      const statement = statementFor(ties, id);
-      selfAt.current = statement !== null ? ties.index.ties[statement].at : undefined;
+      const at = statementPlace(ties, id);
+      selfAt.current = at;
       // A card opens its step on the tab the pane is on; the tab never changes by itself.
-      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
+      navigate({ ...hereRef.current, node: id, at, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
     },
     [ties, release],
   );
@@ -1395,11 +1398,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   /** From the map: the paper goes to the statement, and the graph stays where it is. */
   const openFromMap = useCallback(
     (id: string) => {
-      const statement = statementFor(ties, id);
-      const tie = statement !== null ? ties.index.ties[statement] : null;
+      const at = statementPlace(ties, id);
       // The step opens on the tab the pane is on: on the Graph tab, under the graph.
-      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined };
-      if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
+      const to = { ...hereRef.current, node: id, at, decl: undefined, declModule: undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined };
+      if (at && hereRef.current.at === at) void landSlice(at, { smooth: true, node: id });
       const opened = nextOpened();
       go(to);
       writeEntry(OPENED, opened);
@@ -1674,10 +1676,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           )}
         </div>
 
-        {!outlineColumn && !phone && (
+        {/* Every width shows who made what, the phone too: the paper's own line, then the status
+            sentence, which says what was made with AI. Wide layouts carry it at the head of the outline column. */}
+        {!outlineColumn && (
           <p className="account-line">
-            {!phone && <>{names.job} </>}
-            {names.reader}
+            {names.job} {names.reader}
             {status && <> {status}</>} <PdfLink pdf={pdf} />
           </p>
         )}
@@ -1726,6 +1729,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       {paneOn && (
         <div className="reader__map">
           {paneReady && (
+            <GraphBoundary scope={`pane beside ${route.stage}`}>
             <Suspense fallback={null}>
               <MapPane
                 {...paneProps}
@@ -1763,15 +1767,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 }
               />
             </Suspense>
+            </GraphBoundary>
           )}
         </div>
       )}
 
       {!paneOn && !route.beside && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || (!!route.lean && !paneRoom)) && (
         <RightSheet phone={phone} onClose={closeSheet}>
-          <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
-            <MapPane {...paneProps} inModal onHide={closeSheet} />
-          </Suspense>
+          <GraphBoundary scope={`sheet beside ${route.stage}`}>
+            <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
+              <MapPane {...paneProps} inModal onHide={closeSheet} />
+            </Suspense>
+          </GraphBoundary>
         </RightSheet>
       )}
 

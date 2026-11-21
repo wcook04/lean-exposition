@@ -273,17 +273,40 @@ export function sameWords(model: TieModel, t: number): number[] {
   return members.filter((other) => other !== t);
 }
 
-/** An exact slice wins; otherwise open an authored statement before a passing mention. */
+/**
+ * An exact slice wins; otherwise the record's canonical target, the tie at its statement block;
+ * otherwise an authored statement before a passing mention.
+ */
 export function statementFor(model: TieModel, record: string | undefined, at?: string): number | null {
   if (!record) return null;
   if (at) {
     const exact = model.byKey.get(`${record}|${at}`);
     if (exact !== undefined) return exact;
   }
+  const canonical = model.index.canonical?.[record];
+  if (canonical) {
+    // The statement block is the target: its tie, or none (the block is then marked by its place),
+    // never an introduction or a later use of the record.
+    const t = canonical[0];
+    return t !== null && model.index.ties[t]?.record === record ? t : null;
+  }
   const rows = model.byRecord.get(record);
   if (!rows?.length) return null;
   const stated = rows.filter((t) => model.index.ties[t].role === "statement");
   return stated.find((t) => model.index.ties[t].lean) ?? stated[0] ?? rows.find((t) => model.index.ties[t].lean) ?? rows[0];
+}
+
+/**
+ * Where a record opens in this paper: its statement's tie, or, when its canonical target has no
+ * tie (the statement block has none of the record's phrases), the block's own byte range, which the
+ * reader lands on and marks. Undefined when the paper places the record nowhere.
+ */
+export function statementPlace(model: TieModel, record: string | undefined): string | undefined {
+  if (!record) return undefined;
+  const t = statementFor(model, record);
+  if (t !== null) return model.index.ties[t].at;
+  const canonical = model.index.canonical?.[record];
+  return canonical ? `b${canonical[1]}-${canonical[2]}` : undefined;
 }
 
 /** The next stop after this segment, by a step of +1 or -1; from nothing, the first or the last. */

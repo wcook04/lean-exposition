@@ -6,6 +6,16 @@
 /** The Lean says the same as the paper, more than it, less, or something neither implies. */
 export type Fidelity = "same" | "stronger" | "weaker" | "different";
 
+/**
+ * Every state a comparison can be in. A verdict is one of the four above; "unassessed" means
+ * none is recorded. A missing comparison is never read as "same".
+ */
+export type Assessment = Fidelity | "unassessed";
+
+/** "Not assessed": what the site says where no comparison of a statement and its Lean is recorded. */
+export const NOT_ASSESSED = "Not assessed";
+export const NOT_ASSESSED_DETAIL = "No comparison of these words with this Lean is recorded.";
+
 /** Who compared them: the source repository's own evidence record, or an AI agent for this site. */
 export type FidelitySource = "recorded" | "ai";
 
@@ -61,4 +71,5 @@ export function originTag(origin: TieOrigin | undefined | null): string | null {
 
 export const isFidelity = (value: unknown): value is Fidelity =>
   value === "same" || value === "stronger" || value === "weaker" || value === "different";
+export const isAssessment = (value: unknown): value is Assessment => isFidelity(value) || value === "unassessed";
 export const isTieOrigin = (value: unknown): value is TieOrigin => value === "evidence_record" || value === "ai";

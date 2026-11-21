@@ -36,6 +36,14 @@ describe("a paper's first screen in its HTML", () => {
     expect(openedFirstScreen(document)).toContain("Title");
   });
 
+  // A phone hid the line naming who made what, so the AI notice was missing at 390px.
+  it("keeps the account line, with its AI notice, on a phone", () => {
+    const html = readerFirstScreenHtml("<p class='account-line'>Line</p>", "");
+    const phone = /@media \(max-width:700px\)\{([^@]*)\}/.exec(html)?.[1] ?? "";
+    expect(phone).toContain(".reader-shape");
+    expect(phone).not.toMatch(/\.account-line\{[^}]*display:none/);
+  });
+
   it.each([["#theorem-1"], ["?l=b1-2"]])("gives way to the empty shape at %s, which opens further down", (address) => {
     window.history.replaceState(null, "", address);
     open(readerFirstScreenHtml("", "<section class='part'><div class='part__text'><h1>Title</h1></div></section>"));
