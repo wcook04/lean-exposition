@@ -221,13 +221,22 @@ describe("the Lean page", async () => {
     expect(container.querySelector("[data-testid=lean]")).toBeNull();
   });
 
-  it("has the whole pane until a reader draws the graph back, and remembers", () => {
+  it("gives the dock under the graph 30% until a reader draws the handle, between 15% and 70%, and remembers", () => {
     expect(clampDock(0.1)).toBe(DOCK_MIN);
     expect(clampDock(1.2)).toBe(DOCK_MAX);
-    expect(readDockShare()).toBe(1);
+    expect([DOCK_MIN, DOCK_MAX]).toEqual([0.15, 0.7]);
+    expect(readDockShare()).toBe(0.3);
     saveDockShare(0.61);
     expect(readDockShare()).toBe(0.61);
-    expect(readDockShare(true)).toBe(1);
+  });
+
+  it("offers the same declaration in the Lean view from the dock", () => {
+    const onOpenLean = vi.fn();
+    show({ record, tie: 0 }, { onOpenLean });
+    act(() => button("Open its Lean")!.click());
+    expect(onOpenLean).toHaveBeenCalledTimes(1);
+    show({ via: "follow" }, { onOpenLean });
+    expect(button("Open its Lean")).toBeUndefined();
   });
 
   it("following a statement with no Lean says so, even where its step has Lean elsewhere", () => {
@@ -242,7 +251,7 @@ describe("the Lean page", async () => {
     expect(container.textContent).toContain("Illustration only.");
   });
 
-  it("is in Graph mode unless this reader chose Lean", () => {
+  it("is in the Graph view unless this reader chose Lean", () => {
     expect(readKeepLean()).toBe(false);
     saveKeepLean(true);
     expect(readKeepLean()).toBe(true);

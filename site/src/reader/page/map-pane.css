@@ -2,8 +2,9 @@
    measure (at least half the window's width from 1280 to 1679px, where the outline folds
    into "Sections"), then the right page to the window's edge, full height under the top
    bar. From 1680px the outline returns, which leaves the graph the width it needs.
-   The graph stands above the Lean; from 860px of page they stand side by side, the Lean
-   next to the paper. Below 1280px it opens as a sheet. */
+   The pane has two views, Graph and Lean, each filling it. Graph is the focus graph
+   (src/map/focus-graph.css) with the dock under it. Below 1280px it opens as a sheet. */
+
 
 .reader.reader--follow {
   grid-template-columns: minmax(0, min(var(--reader-measure), 50vw)) minmax(0, 1fr);
@@ -35,8 +36,8 @@
   display: flex;
 }
 
+
 .map-pane {
-  --lean-share: 0.75;
   position: relative;
   display: flex;
   flex: 1;
@@ -49,7 +50,7 @@
   container: right-page / inline-size;
 }
 
-/* The pane's one row, the same in both modes: the toggle, what is being argued, the ways out. */
+/* The pane's one row, the same in both views: the toggle, the whole proof map, the ways out. */
 .map-pane__bar {
   flex: none;
   display: flex;
@@ -95,279 +96,6 @@
   color: var(--ground);
 }
 
-.map-pane__pages {
-  position: relative;
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-}
-
-.map-pane__graph {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-}
-
-/* One line under the graph, in plain words, so nothing ever floats over a card. */
-.map-pane__foot {
-  --foot-h: 46px;
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  height: var(--foot-h);
-  padding: 0 var(--space-3) 0 var(--space-4);
-  border-top: 1px solid var(--rule);
-}
-
-/* Two lines at most, in a foot of fixed height: an author's note is read whole. */
-.map-pane__line {
-  flex: 1;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  min-width: 0;
-  margin: 0;
-  overflow: hidden;
-  line-height: 1.35;
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.map-pane__line[data-via="point"] {
-  color: var(--ink);
-}
-
-.map-pane__keep {
-  flex: none;
-  min-height: 24px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ink-3);
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  white-space: nowrap;
-  text-decoration: underline;
-  text-decoration-color: var(--rule-strong);
-  text-underline-offset: 0.2em;
-  cursor: pointer;
-}
-
-.map-pane__keep:hover {
-  color: var(--ink);
-  text-decoration-color: currentColor;
-}
-
-/* The Lean: a layer that rises over the graph. The graph beneath keeps its size and camera. */
-.lean-page {
-  position: absolute;
-  z-index: 4;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
-  box-shadow: 0 -1px 0 var(--rule-strong);
-}
-
-.lean-page__also {
-  margin-top: var(--space-3);
-}
-
-.map-pane__handle {
-  position: absolute;
-  z-index: 5;
-  left: 0;
-  right: 0;
-  /* At rest it lies at the foot of the graph, just above the line that names what is lit. */
-  bottom: max(47px, min(calc(var(--lean-share) * 100%), calc(100% - 11px)));
-  display: grid;
-  place-items: center;
-  height: 11px;
-  background: var(--ground);
-  border-top: 1px solid var(--rule);
-  cursor: ns-resize;
-  touch-action: none;
-}
-
-.map-pane__handle span {
-  width: 40px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--rule-strong);
-  transition: background-color var(--t-hover) var(--ease-out);
-}
-
-.map-pane__handle:hover span,
-.map-pane.is-dragging .map-pane__handle span {
-  background: var(--ink-3);
-}
-
-.map-pane.is-dragging {
-  user-select: none;
-}
-
-/* Out of the Lean's way, and back: a transform only, so the camera is never touched. */
-.map-pane__canvas {
-  transition:
-    transform 240ms var(--ease-out),
-    opacity var(--t-state) var(--ease-out);
-}
-
-.map-pane--fold .lean-page {
-  height: 100%;
-}
-
-.map-pane--fold .map-pane__handle {
-  display: none;
-}
-
-/* The Lean open: head and foot give way without changing the canvas's size or camera. */
-.map-pane--open .map-pane__head,
-.map-pane--open .map-pane__foot {
-  visibility: hidden;
-}
-
-@container right-page (max-width: 859.98px) {
-  .map-pane--open .map-pane__body {
-    z-index: 3;
-  }
-}
-
-
-@container right-page (min-width: 860px) {
-  /* Side by side, with the Lean next to the paper it answers. */
-  .lean-page {
-    top: 0;
-    right: auto;
-    width: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
-    height: auto;
-    box-shadow: 1px 0 0 var(--rule-strong);
-  }
-  .map-pane__handle {
-    top: 0;
-    right: auto;
-    bottom: 0;
-    left: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
-    width: 11px;
-    height: auto;
-    border-top: 0;
-    border-left: 1px solid var(--rule);
-    border-right: 1px solid var(--rule);
-    cursor: ew-resize;
-  }
-  .map-pane__handle span {
-    width: 3px;
-    height: 40px;
-  }
-  .map-pane__handle {
-    bottom: 0;
-  }
-}
-
-/* ---- Header ---------------------------------------------------------------------- */
-
-.map-pane__head {
-  position: relative;
-  z-index: 3;
-  flex: none;
-  padding: 6px var(--space-2) 6px var(--space-4);
-  border-bottom: 1px solid var(--rule);
-  background: var(--ground);
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.map-pane__row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-width: 0;
-  min-height: 32px;
-}
-
-.map-pane__row--trail {
-  flex-wrap: wrap;
-  gap: 2px var(--space-3);
-  min-height: 24px;
-  color: var(--ink-3);
-}
-
-/* The goal's name, one line: the map under it starts at the records. */
-.map-pane__goal {
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-family: var(--font-serif);
-  font-size: var(--fs-base);
-  font-weight: 500;
-  color: var(--ink);
-}
-
-.map-pane__progress {
-  flex: none;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.map-pane__state {
-  flex: 0 1 auto;
-  min-width: 0;
-  color: var(--ink-2);
-}
-
-.map-pane__state:empty {
-  display: none;
-}
-
-.map-pane__follow {
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  flex: none;
-  min-height: 28px;
-  padding: 0 var(--space-2);
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink-2);
-  font: inherit;
-  cursor: pointer;
-  transition:
-    color var(--t-hover) var(--ease-out),
-    border-color var(--t-hover) var(--ease-out),
-    background-color var(--t-hover) var(--ease-out);
-}
-
-.map-pane__follow:hover {
-  color: var(--ink);
-  border-color: var(--ink-3);
-}
-
-.map-pane__follow[aria-pressed="true"] {
-  color: var(--ink);
-}
-
-/* Paused: the one control that resumes, in ink. */
-.map-pane__follow--resume {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--ground);
-}
-
-.map-pane__follow--resume:hover {
-  border-color: var(--ink);
-  color: var(--ground);
-}
-
 .map-pane__open {
   flex: none;
   white-space: nowrap;
@@ -401,16 +129,6 @@
   background: var(--sunk);
 }
 
-/* ---- Canvas ---------------------------------------------------------------------- */
-
-/* Everything under the header: the canvas, the notice and the inspector laid over it. */
-.map-pane__body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
 
 .map-pane__canvas {
   position: relative;
@@ -460,49 +178,12 @@
   }
 }
 
-/* One line says what the strengths mean. */
-.map-pane__legend {
-  margin-left: auto;
-  font-size: var(--fs-xs);
-  color: var(--ink-3);
-}
-
-/* The key's one mark: the amber outline a card takes while its passage is on screen. */
-.map-pane__key {
-  display: inline-block;
-  width: 14px;
-  height: 9px;
-  margin-right: 6px;
-  border: 1.5px solid var(--lit);
-  border-radius: 3px;
-  vertical-align: -1px;
-}
-
 /* The note about undrawn links and the assumption tags belong to the full map: here
    a tile is its name, with nothing over its text. The sheet lists a record's assumptions. */
 .map-pane .sim,
 .map-pane .tag,
 .map-pane .tree__note {
   display: none;
-}
-
-/* ---- The reading trail on the map ------------------------------------------------ */
-
-/* The graph fills in as the reader reads: no colour of its own, so a card's fill can say
-   what the Lean says. Ahead is lighter ink, passed is full strength, here is the amber
-   outline, and records this paper does not discuss stay the faintest (.is-elsewhere). */
-.map-pane .card[data-trail="ahead"]:not(.is-elsewhere):not(.card--root) {
-  opacity: 0.62;
-}
-
-.map-pane .card[data-trail="here"]:not(.is-selected) {
-  border-color: var(--lit-line);
-  box-shadow: 0 0 0 1px var(--lit-line);
-}
-
-.map-pane .card[data-trail="pinned"] {
-  border-color: var(--lit-line);
-  box-shadow: 0 0 0 2px var(--lit-line);
 }
 
 /* ---- The Lean page ---------------------------------------------------------------- */
@@ -917,22 +598,9 @@
   padding-right: 44px;
 }
 
-/* A phone has the toggle in its one row, and the sheet is Lean mode. */
-.right-sheet--phone .map-pane__bar {
+/* A phone has the toggle in the paper's one row. */
+.right-sheet--phone .map-pane__bar .mode-toggle {
   display: none;
-}
-
-/* A phone has no room for a band of graph: an open step fills the sheet. */
-.right-sheet--phone .map-pane--open .map-pane__graph {
-  visibility: hidden;
-}
-
-.right-sheet--phone .map-pane--open .map-pane__handle {
-  display: none;
-}
-
-.right-sheet--phone .lean-page {
-  height: 100%;
 }
 
 .right-sheet__wait {
@@ -953,297 +621,176 @@ html[data-right-sheet] .reader__paper {
   }
 }
 
+/* ---- The two views ------------------------------------------------------------------ */
 
-/* ---- The head of the graph: the step being read, named large, and how far the reader is.
-   It changes as the paper scrolls, so the pane says in words what the amber outline says
-   on the drawing. Its height is held, so the graph under it never jumps. ---- */
-.map-pane__head {
-  padding: 10px var(--space-4) 10px;
-}
-
-.map-pane__now {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: var(--space-3);
-  align-content: start;
-  align-items: end;
-  min-height: 4.5rem;
-  padding-left: 12px;
-  border-left: 3px solid var(--rule-strong);
-  transition: border-color var(--t-hover) var(--ease-out);
-}
-
-.map-pane__now[data-named] {
-  border-left-color: var(--lit);
-}
-
-.map-pane__top {
-  grid-column: 1 / -1;
+.map-pane__lean,
+.map-pane__fill {
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: 20px;
-  font-size: var(--fs-xs);
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
 }
 
-.map-pane__via {
-  flex: 1 1 auto;
-  font-weight: 600;
-  color: var(--ink-3);
+.map-pane__lean > .lean-page,
+.map-pane__fill > .lean-page {
+  flex: 1;
 }
 
-.map-pane__now .map-pane__line {
-  display: block;
-  overflow: visible;
-  -webkit-line-clamp: none;
-  line-clamp: none;
+/* Graph: the drawing, a handle, and the dock under it (15% to 70% of the height, 30% at first). */
+.map-pane__graphview {
+  --dock-share: 0.3;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
 }
 
-.map-pane__name {
-  display: block;
-  margin-bottom: 2px;
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.005em;
-  color: var(--ink);
-  text-wrap: balance;
+.map-pane__graphview.is-dragging {
+  user-select: none;
 }
 
-.map-pane__rest {
-  color: var(--ink-2);
+.map-pane__drawing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
 }
 
-.map-pane__now .map-pane__keep {
-  align-self: end;
-  margin-bottom: 1px;
+.map-pane__drawing > .fg,
+.map-pane__drawing > .map-pane__canvas {
+  flex: 1;
 }
 
-.map-pane__head .map-pane__progress {
-  color: var(--ink-2);
+.map-pane__dock {
+  display: flex;
+  flex: 0 0 calc(var(--dock-share) * 100%);
+  flex-direction: column;
+  min-height: 0;
 }
 
-/* How many of the paper's steps the reader has reached, as a length. */
-.map-pane__meter {
-  flex: 0 0 88px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--rule);
-  overflow: hidden;
+.map-pane__dock > .lean-page {
+  flex: 1;
 }
 
-.map-pane__meter i {
-  display: block;
-  height: 100%;
-  border-radius: 2px;
-  background: var(--lit);
-  transition: inline-size 300ms var(--ease-out);
+.map-pane__graphview.is-folded .map-pane__drawing {
+  flex: none;
 }
 
-/* The foot is the key to the drawing's marks; the handle rests on its top edge. */
-.map-pane__foot {
-  --foot-h: 34px;
+.map-pane__graphview.is-folded .map-pane__dock {
+  flex: 1;
+  border-top: 1px solid var(--rule);
 }
 
 .map-pane__handle {
-  bottom: max(35px, min(calc(var(--lean-share) * 100%), calc(100% - 11px)));
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 11px;
+  background: var(--ground);
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule);
+  cursor: ns-resize;
+  touch-action: none;
 }
 
-.map-pane__foot .map-pane__legend {
-  margin-left: 0;
+.map-pane__handle span {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--rule-strong);
+  transition: background-color var(--t-hover) var(--ease-out);
 }
 
-/* The card whose passage is on screen: a full amber ring and full-strength words. */
-.map-pane .card[data-trail="here"]:not(.is-selected) {
-  border-color: var(--lit);
-  box-shadow: 0 0 0 2px var(--lit);
+.map-pane__handle:hover span,
+.map-pane__handle:focus-visible span,
+.map-pane__graphview.is-dragging .map-pane__handle span {
+  background: var(--ink-3);
 }
 
-.map-pane .card[data-trail="here"] .card__ctitle,
-.map-pane .card[data-trail="here"] .card__title {
-  color: var(--ink);
-  font-style: normal;
-}
-
-.map-pane .card[data-trail="pinned"] {
-  border-color: var(--lit);
-  box-shadow: 0 0 0 3px var(--lit);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .map-pane__meter i {
-    transition: none;
-  }
-}
-
-/* A phrase opened on the Graph tab: the graph keeps the top of the pane, with its head naming
-   the phrase, and the phrase's card and Lean take the bottom, one above the other at any width. */
-.map-pane--split .map-pane__head {
-  visibility: visible;
-}
-
-@container right-page (min-width: 860px) {
-  .map-pane--split .lean-page {
-    top: auto;
-    right: 0;
-    width: auto;
-    height: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
-    box-shadow: 0 -1px 0 var(--rule-strong);
-  }
-  .map-pane--split .map-pane__handle {
-    top: auto;
-    right: 0;
-    bottom: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
-    left: 0;
-    width: auto;
-    height: 11px;
-    border-top: 1px solid var(--rule);
-    border-left: 0;
-    border-right: 0;
-    cursor: ns-resize;
-  }
-}
-
-/* The graph moved to centre the phrase's step stays inside its own half, under the head. */
-.map-pane--split .map-pane__body {
-  position: relative;
-  z-index: auto;
-  overflow: hidden;
-}
-
-/* A phone's sheet has no room for half a graph: the split keeps the graph's head as a strip
-   naming the phrase's step (or saying it is not on the map), with the card and Lean below. */
-.right-sheet--phone .map-pane--split .map-pane__graph {
-  visibility: visible;
-}
-
-.right-sheet--phone .map-pane--split .map-pane__body,
-.right-sheet--phone .map-pane--split .map-pane__foot {
-  visibility: hidden;
-}
-
-.right-sheet--phone .map-pane--split .lean-page {
-  height: calc(100% - var(--split-strip, 96px));
-  box-shadow: 0 -1px 0 var(--rule-strong);
-}
-
-.right-sheet--phone .map-pane--split {
-  --split-strip: 78px;
-}
-
-.right-sheet--phone .map-pane--split .map-pane__head .map-pane__progress,
-.right-sheet--phone .map-pane--split .map-pane__head .map-pane__meter {
-  display: none;
-}
-
-.right-sheet--phone .map-pane--split .map-pane__head .map-pane__name {
-  display: block;
-  overflow: hidden;
-  font-size: var(--fs-card);
+.map-pane__whole {
+  flex: none;
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
-/* On the strip: the step's name alone (the card says the topic), or the one line that says the
-   phrase is not on the map; the sheet's own close button closes the card. */
-.right-sheet--phone .map-pane--split .map-pane__now[data-named] .map-pane__rest,
-.right-sheet--phone .map-pane--split .map-pane__keep {
-  display: none;
+.map-pane__whole:hover {
+  color: var(--ink);
+  border-color: var(--ink-3);
 }
 
-/* A declaration's Lean neighbours: those that use it, itself, and those it uses, each group in
-   rows that fill the width, every card with its whole title. */
-.nb-view {
-  position: absolute;
-  inset: 0;
-  overflow: auto;
-  padding: var(--space-3) var(--space-4) var(--space-4);
+.map-pane__whole[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--sunk);
 }
 
-.nb-view__group {
-  margin: var(--space-3) 0 0;
+.map-pane__bar .map-pane__open {
+  margin-left: auto;
 }
 
-.nb-view__label {
-  margin: 0 0 6px;
+.map-pane__none {
+  margin: auto;
+  padding: var(--space-4);
   font-family: var(--font-sans);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-size: var(--fs-sm);
   color: var(--ink-2);
 }
 
-.nb-view__cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.nb-card {
+/* Under 600px of width: one line that names the subject and counts its neighbours. */
+.map-pane__strip {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  padding: 7px 10px;
-  border: 1px solid var(--card-border);
-  border-radius: 7px;
-  background: var(--card);
-  box-shadow: var(--card-shadow);
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px var(--space-3);
+  padding: var(--space-2) var(--space-4);
   font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
 }
 
-.nb-card__title {
-  font-size: 13px;
-  line-height: 1.25;
-  color: var(--ink);
-  overflow-wrap: anywhere;
-}
-
-.nb-card__note {
-  font-size: 11px;
-  line-height: 1.3;
-  color: var(--ink-3);
-}
-
-.nb-card--root {
-  align-items: center;
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 10px 18px;
-  border-color: var(--lit);
-  box-shadow: 0 0 0 2px var(--lit);
-  text-align: center;
-}
-
-.nb-card--root .nb-card__title {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  line-height: 1.2;
-}
-
-.nb-card__kicker {
-  font-size: 10px;
+.map-pane__strip-title {
   font-weight: 600;
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink);
 }
 
-/* The uses run from the declaration to what it uses: a short stem between the groups. */
-.nb-view__line {
-  width: 1.5px;
-  height: 14px;
-  margin: 4px auto;
-  background: var(--rel-supports);
+.map-pane__strip button {
+  margin-left: auto;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
 }
 
-.nb-view__more {
-  align-self: center;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--ink-3);
+/* The focus graph in this site's colours (src/map/focus-graph.css reads these). */
+.map-pane .fg {
+  --fg-ink-token: var(--ink);
+  --fg-muted-token: var(--ink-2);
+  --fg-ground-token: var(--ground);
+  --fg-card-token: var(--card);
+  --fg-edge-token: var(--card-border);
+  --fg-wire-token: var(--edge-rest);
+  --fg-accent-token: var(--lit-line);
+  --fg-result-token: var(--lean-fill-part);
+  --fg-definition-token: var(--field-support);
+  --fg-helper-token: transparent;
+  --fg-sans-token: var(--font-sans);
+  --fg-mono-token: var(--font-mono);
+}
+
+.map-pane .fg__title .katex {
+  font-size: 1.05em;
 }

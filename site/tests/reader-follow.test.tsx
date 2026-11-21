@@ -6,7 +6,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { graphFixture, structureFixture } from "./fixtures";
 import { chooseGoal, neededExpansion, pathFromGoal, reach, scopedGraph, visibleSet } from "../src/map/treeModel";
-import { paperTrail, passageOf, passageRecords } from "../src/reader/page/model";
+import { passageOf, passageRecords } from "../src/reader/page/model";
 import { Signal } from "../src/reader/page/signal";
 import type { Followed, Pointed } from "../src/reader/page/rightPage";
 import { tieModel } from "../src/reader/ties";
@@ -152,110 +152,85 @@ describe("MapPane", async () => {
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   };
-  const trail = paperTrail(structures.expository);
   const ties = tieModel(null);
+  // jsdom lays nothing out and has no element scrolling: the drawing still builds every card and line.
+  beforeEach(() => {
+    Element.prototype.scrollTo ??= function scrollTo() {};
+  });
 
-  function show(anchor: string | null, onJump = vi.fn(), mode: "graph" | "lean" = "graph", onMode: (m: "graph" | "lean") => void = () => {}) {
+  function show(anchor: string | null, props: Record<string, unknown> = {}) {
     act(() => signals.follow.set({ tie: null, anchor, part: 0 }));
-    act(() =>
-      root.render(<MapPane stage="expository" structures={structures} outline={[]} trail={trail} signals={signals} ties={ties} pin={null} mode={mode} onMode={onMode} onHide={() => {}} onRecord={onJump} onRelease={() => {}} onPoint={() => {}} />),
-    );
+    act(() => root.render(<MapPane stage="expository" structures={structures} signals={signals} ties={ties} pin={null} mode="graph" onMode={() => {}} onHide={() => {}} onRecord={() => {}} onRelease={() => {}} onPoint={() => {}} {...props} />));
   }
-  const resume = () => container.querySelector<HTMLButtonElement>(".map-pane__follow");
+  const drawn = (band: string) => [...container.querySelectorAll<HTMLElement>(`.fg__card[data-band="${band}"]`)].map((el) => el.dataset.card!);
+  const argument = (id: string, side: "out" | "in") =>
+    (side === "out" ? graph.out : graph.in).get(id)!.filter((e) => e.kind === "supports" || e.kind === "assumes").map((e) => (side === "out" ? e.to : e.from));
 
-  it("keeps following through initial framing, then yields to wheel and drag input immediately, and says how to resume", async () => {
-    vi.stubGlobal("ResizeObserver", class {
-      constructor(private cb: (entries: unknown[]) => void) {}
-      observe(el: HTMLElement) {
-        if (el.classList.contains("tree")) this.cb([{ contentRect: { width: 820, height: 900 }, target: el }]);
-      }
-      disconnect() {}
-    });
-    vi.stubGlobal("matchMedia", (q: string) => ({ matches: q.includes("reduce"), media: q, addEventListener() {}, removeEventListener() {} }));
+  it("draws the passage's steps in the middle, every record they use below and every record that uses them above", () => {
     show("contact-and-gap");
-    // Includes expandAll, the delayed initial passage frame, and late first-fit setup.
-    await act(() => new Promise((resolve) => setTimeout(resolve, 1300)));
-    expect(resume()).toBeNull();
-    const tree = container.querySelector<HTMLElement>(".map-pane .tree")!;
-    const world = tree.querySelector<HTMLElement>(".tree__world")!;
-    const before = world.style.transform;
-    act(() => void tree.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
-    expect(world.style.transform).not.toBe(before);
-    expect(resume()!.textContent).toBe("Move the graph with the text again");
-    act(() => resume()!.click());
-    expect(resume()).toBeNull();
-    const beforeDrag = world.style.transform;
-    const mouse = (type: string, clientX: number, clientY: number) => {
-      const event = new MouseEvent(type, { clientX, clientY, bubbles: true });
-      // Vitest's Window proxy is rejected by jsdom's UIEvent constructor.
-      Object.defineProperty(event, "view", { value: window });
-      return event;
-    };
-    act(() => {
-      tree.dispatchEvent(mouse("mousedown", 400, 400));
-      window.dispatchEvent(mouse("mousemove", 450, 420));
-      window.dispatchEvent(mouse("mouseup", 450, 420));
-    });
-    expect(world.style.transform).not.toBe(beforeDrag);
-    expect(resume()).not.toBeNull();
-    // d3 suppresses the click following a drag until the next task; let that
-    // capture listener expire before another test clicks in this window.
-    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    const steps = passageRecords(passageOf(structures.expository, "contact-and-gap")).filter((id) => graph.nodes.has(id));
+    expect(drawn("subject").sort()).toEqual([...steps].sort());
+    const inside = new Set(steps);
+    const users = new Set(steps.flatMap((id) => argument(id, "in")).filter((id) => !inside.has(id)));
+    const uses = new Set(steps.flatMap((id) => argument(id, "out")).filter((id) => !inside.has(id) && !users.has(id)));
+    expect(new Set(drawn("users"))).toEqual(users);
+    expect(new Set(drawn("uses"))).toEqual(uses);
+    expect(container.querySelector(".fg__more, .nb-view__more")).toBeNull();
   });
 
-  it("follows each passage without folding, holds a move by hand until the subject changes, then frames the new one", () => {
-    const opened = () => new Set([...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!));
-    const needed = (anchor: string) => [...neededExpansion(scoped, goal, passageRecords(passageOf(structures.expository, anchor)))];
-    const holds = (anchor: string) => needed(anchor).every((id) => opened().has(id));
-    show("contact-and-gap");
-    expect(resume()).toBeNull();
-    expect(holds("contact-and-gap")).toBe(true);
-    // A wheel over the map is the reader taking control: the map holds what they did.
-    act(() => void container.querySelector(".map-pane .tree")!.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
-    expect(resume()).not.toBeNull();
-    const before = opened();
-    // The next passage is a new subject: the pause ends and the map frames it, keeping what was open.
-    show("endpoints");
-    expect(resume()).toBeNull();
-    expect(holds("endpoints")).toBe(true);
-    for (const id of before) expect(opened().has(id)).toBe(true);
+  it("names the chain of uses up to the main result, each link a way in", () => {
+    const onRecord = vi.fn();
+    const deep = [...reach(scoped, goal)].find((id) => (pathFromGoal(scoped, goal, id)?.length ?? 0) >= 3 && graph.nodes.get(id)!.kind === "claim")!;
+    show(null, { pin: { record: deep, tie: null }, onRecord });
+    const crumbs = [...container.querySelectorAll<HTMLButtonElement>(".fg__crumb button")];
+    expect(crumbs.length).toBeGreaterThanOrEqual(2);
+    expect(crumbs[crumbs.length - 1].className).toContain("is-main");
+    act(() => crumbs[crumbs.length - 1].click());
+    expect(onRecord).toHaveBeenCalledWith(goal);
+    show(null, { pin: { record: goal, tie: null } });
+    expect(container.querySelector(".fg__route")!.textContent).toBe("This is the main result.");
   });
 
-  it("fades records the paper does not discuss, and names the paper that does when one is chosen", () => {
-    show("contact-and-gap");
-    const covered = new Set(structures.expository.paper.passages.flatMap((p) => [...p.claim_ids, ...p.assumption_ids]));
-    const cards = [...container.querySelectorAll<HTMLElement>(".card:not(.card--root)")];
-    expect(cards.length).toBeGreaterThan(0);
-    for (const el of cards) expect(el.classList.contains("is-elsewhere")).toBe(!covered.has(el.dataset.record!));
-  });
-
-  it("says in one line under the graph when nothing in this stretch is tied", () => {
-    show("changed-cases");
-    expect(container.querySelector(".map-pane__line")!.textContent).toBe("Nothing in this stretch of the paper is tied to the Lean.");
-    // The Graph tab is split; the part under the graph is never empty.
-    expect(container.querySelector(".lean-page")!.textContent).toContain("No Lean is linked to this paragraph");
-  });
-
-  it("has one toggle; the Graph tab splits with the Lean following below it", () => {
+  it("changes the subject on a card click and never the view", () => {
+    const onRecord = vi.fn();
     const onMode = vi.fn();
-    show("contact-and-gap", vi.fn(), "graph", onMode);
-    expect(container.querySelector(".map-pane--split")).not.toBeNull();
-    expect(container.querySelector<HTMLElement>(".lean-page")!.dataset.via).toBe("follow");
+    show("contact-and-gap", { onRecord, onMode });
+    const neighbour = container.querySelector<HTMLButtonElement>('.fg__card[data-band="uses"], .fg__card[data-band="users"]')!;
+    act(() => neighbour.click());
+    expect(onRecord).toHaveBeenCalledWith(neighbour.dataset.card);
+    expect(onMode).not.toHaveBeenCalled();
+  });
+
+  it("keeps the dock under the graph, never empty, and says so when nothing is tied", () => {
+    show("changed-cases");
+    expect(container.querySelector(".map-pane__dock .lean-page")!.textContent).toContain("No Lean is linked to this paragraph");
+  });
+
+  it("has one toggle; Lean fills the pane, and the whole proof map is one button away in Graph", () => {
+    const onMode = vi.fn();
+    show("contact-and-gap", { onMode });
     const words = [...container.querySelectorAll<HTMLButtonElement>(".mode-toggle button")];
     expect(words.map((w) => w.textContent)).toEqual(["Graph", "Lean"]);
-    expect(words[0].getAttribute("aria-pressed")).toBe("true");
     act(() => words[1].click());
     expect(onMode).toHaveBeenCalledWith("lean");
-    show("contact-and-gap", vi.fn(), "lean", onMode);
-    expect(container.querySelector<HTMLElement>(".lean-page")!.dataset.via).toBe("follow");
+    const whole = [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Whole proof map")!;
+    act(() => whole.click());
+    expect(container.querySelector(".map-pane .tree")).not.toBeNull();
+    expect(container.querySelector(".fg")).toBeNull();
+    act(() => [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Around this step")!.click());
+    expect(container.querySelector(".fg")).not.toBeNull();
+    show("contact-and-gap", { mode: "lean" });
+    expect(container.querySelector(".fg")).toBeNull();
+    expect(container.querySelector(".map-pane__lean .lean-page")).not.toBeNull();
     expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe("Lean");
   });
 
-  it("lights the passage's drawn records", () => {
+  it("lights the card of a statement under the pointer", () => {
     show("contact-and-gap");
-    const records = passageRecords(passageOf(structures.expository, "contact-and-gap"));
-    const lit = [...container.querySelectorAll<HTMLElement>(".card.is-passage")].map((el) => el.dataset.record);
-    for (const id of lit) expect(records).toContain(id);
+    const id = drawn("uses")[0] ?? drawn("subject")[0];
+    act(() => signals.point.set({ tie: null, record: id }));
+    expect(container.querySelector(`.fg__card[data-card="${CSS.escape(id)}"]`)!.className).toContain("is-lit");
+    act(() => signals.point.set(null));
   });
 });
 

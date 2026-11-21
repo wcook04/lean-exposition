@@ -1,6 +1,6 @@
-// The right pane's two modes, and the one control that chooses between them. Graph follows the
-// reading with the graph; Lean gives the pane to the Lean. Pressing the mode already on does
-// nothing, and says so by being marked.
+// The right pane's two views, and the one control that chooses between them. Graph draws the
+// subject with its neighbours; Lean gives the pane to the subject's Lean. Pressing the view
+// already on does nothing, and says so by being marked.
 
 export type PaneMode = "graph" | "lean";
 
