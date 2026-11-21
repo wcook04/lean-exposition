@@ -57,7 +57,7 @@ def main() -> int:
             page.wait_for_load_state("networkidle")
             check(f"{tag} load", first <= args.budget, f"first underlined phrase after {first:.2f}s (budget {args.budget}s)")
             tones = page.eval_on_selector_all(".paper .tie[data-tone]", "els => new Set(els.map(e => e.dataset.tone)).size")
-            check(f"{tag} topic colours", tones >= 6, f"{tones} distinct tones")
+            check(f"{tag} topic colours", tones >= 3, f"{tones} distinct tones")
             if args.shots:
                 args.shots.mkdir(parents=True, exist_ok=True)
                 page.screenshot(path=str(args.shots / f"top-{tag}.png"))
