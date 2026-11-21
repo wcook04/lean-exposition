@@ -336,7 +336,15 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       )}
       {!slot && onBrief && !empty && (
         <div className="lean-page__brief">
-          {brief && phrase && row && assessmentsOf(row as unknown as PhraseLean, tie?.merged).slice(0, 1).map(({ assessment }, i) => <Verdict key={i} assessment={assessment} />)}
+          {brief && phrase && row && (
+            <section className="phrase-card phrase-card--brief" aria-label="How the Lean compares with these words, in short">
+              {assessmentsOf(row as unknown as PhraseLean, tie?.merged)
+                .slice(0, 1)
+                .map(({ assessment }, i) => (
+                  <Verdict key={i} assessment={assessment} />
+                ))}
+            </section>
+          )}
           <button type="button" className="lean-page__quiet" aria-expanded={!brief} onClick={() => onBrief(!!brief)}>
             {brief ? "Show the whole card" : "Show less, and give the graph the room"}
           </button>

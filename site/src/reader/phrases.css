@@ -453,3 +453,10 @@
 .phrase-card__ask {
   font-weight: 600;
 }
+
+/* Under the drawing the card is short: its verdict alone, three lines at most, until the reader opens it. */
+.phrase-card--brief {
+  margin: 0;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+}
