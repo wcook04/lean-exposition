@@ -33,7 +33,7 @@
 .fg__crumb button { font: inherit; color: var(--fg-ink); background: none; border: 0; padding: 1px 0; text-align: left; text-decoration: underline; text-decoration-color: var(--fg-edge); text-underline-offset: 3px; cursor: pointer; }
 .fg__crumb button:hover, .fg__crumb button:focus-visible { text-decoration-color: var(--fg-accent); }
 .fg__crumb button.is-main { font-weight: 650; }
-.fg__key { border-top: 1px solid color-mix(in srgb, var(--fg-edge) 55%, transparent); font-size: 12.5px; }
+.fg__key { border-top: 1px solid color-mix(in srgb, var(--fg-edge) 55%, transparent); font-size: 12.5px; padding-right: 150px; min-height: 22px; }
 .fg__keyline { display: inline-block; width: 22px; height: 0; margin: 0 4px 3px 8px; border-top: 1.5px solid var(--fg-wire); vertical-align: middle; }
 .fg__keyline--statement { border-top-style: dashed; }
 
@@ -117,11 +117,11 @@
 .fg__edge-note, .fg__none { margin: 0; font-size: 13px; color: var(--fg-muted); }
 .fg__none { padding: 28px 0; font-size: 14px; }
 
-.fg__tools { position: absolute; top: var(--fg-tools-top, auto); right: 18px; bottom: 44px; display: flex; gap: 1px; border: 1px solid var(--fg-edge); border-radius: 7px; overflow: hidden; background: var(--fg-card); box-shadow: 0 1px 6px rgb(0 0 0 / 0.12); height: max-content; }
+.fg__tools { position: absolute; top: var(--fg-tools-top, auto); right: 18px; bottom: 4px; display: flex; gap: 1px; border: 1px solid var(--fg-edge); border-radius: 7px; overflow: hidden; background: var(--fg-card); box-shadow: 0 1px 6px rgb(0 0 0 / 0.12); height: max-content; }
 .fg__tools button { font: 500 13px/1 var(--fg-sans); color: var(--fg-ink); background: none; border: 0; padding: 7px 10px; cursor: pointer; }
 .fg__tools button:disabled { opacity: 0.4; cursor: default; }
 .fg__tools button:not(:disabled):hover { background: color-mix(in srgb, var(--fg-accent) 14%, transparent); }
-.fg__mini { position: absolute; right: 18px; bottom: 84px; border: 1px solid var(--fg-edge); border-radius: 5px; background: color-mix(in srgb, var(--fg-card) 92%, transparent); box-shadow: 0 1px 8px rgb(0 0 0 / 0.16); cursor: pointer; overflow: hidden; touch-action: none; }
+.fg__mini { position: absolute; right: 18px; bottom: 48px; border: 1px solid var(--fg-edge); border-radius: 5px; background: color-mix(in srgb, var(--fg-card) 92%, transparent); box-shadow: 0 1px 8px rgb(0 0 0 / 0.16); cursor: pointer; overflow: hidden; touch-action: none; }
 .fg__mini i { position: absolute; background: color-mix(in srgb, var(--fg-wire) 60%, transparent); border-radius: 1px; }
 .fg__mini i.is-subject { background: var(--fg-accent); }
 .fg__mini i.is-hot { background: var(--fg-ink); }

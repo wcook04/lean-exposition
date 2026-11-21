@@ -38,7 +38,10 @@ MEASURE = r"""
     if (r.width > view.width) out.unreachable.push(id + ' (wider than the pane)');
     if (c.dataset.band === 'subject') {
       out.subjects += 1;
-      const fits = r.height <= view.height - 8;
+      // Several subjects in a frame taller than the area: the frame starts in view, so its first rank must be.
+      const frame = c.closest('.fg__subjects');
+      const firstRank = !frame || frame.getBoundingClientRect().height <= view.height - 8 || c.parentElement === frame.querySelector('.fg__rank');
+      const fits = firstRank && r.height <= view.height - 8;
       if (fits && (r.top < view.top - 1 || r.bottom > view.bottom + 1 || r.left < view.left - 1 || r.right > view.right + 1)) out.subjectHidden.push(id);
     } else out.neighbours += 1;
   }
@@ -91,7 +94,7 @@ def check_scrolls(page: Page, label: str) -> list[str]:
     before = sc.evaluate("(el) => el.scrollTop")
     box = sc.bounding_box()
     page.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-    page.mouse.wheel(0, 240 if before < extra - 240 else -240)
+    page.mouse.wheel(0, 240 if before < extra / 2 else -240)
     page.wait_for_timeout(200)
     if sc.evaluate("(el) => el.scrollTop") == before:
         bad.append(f"{label}: the graph does not scroll under the wheel")

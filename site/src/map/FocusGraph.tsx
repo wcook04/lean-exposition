@@ -425,7 +425,7 @@ export function FocusGraph(props: FocusGraphProps) {
               {route.map((id, i) => (
                 <span key={id} className="fg__crumb">
                   <span aria-hidden="true">↑</span>
-                  <button type="button" onClick={() => onSubject(id)} className={i === route.length - 1 ? "is-main" : undefined}>{card(id)?.title ?? id}</button>
+                  <button type="button" onClick={() => onSubject(id)} className={i === route.length - 1 ? "is-main" : undefined}>{card(id) ? (renderTitle ? renderTitle(card(id)!) : card(id)!.title) : id}</button>
                 </span>
               ))}
             </>
