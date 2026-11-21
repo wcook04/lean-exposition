@@ -2354,7 +2354,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               .map((pe) => (
                 <g key={pe.key}>
                   <path ref={pathRef(`case:${pe.key}`)} className="casing" />
-                  <path ref={pathRef(`edge:${pe.key}`)} className={`link link--${pe.kind}`} />
+                  <path ref={pathRef(`edge:${pe.key}`)} className={`link link--${pe.kind}${pe.unroutable ? " link--unroutable" : ""}`} data-unroutable={pe.unroutable || undefined} />
                 </g>
               ))}
             {ghostsAndFresh.ghosts.map((g) => (
@@ -2636,11 +2636,12 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       <MapEdgeControls
         ref={controlsRef}
         showChips={showChips}
-        showNotes={!compact && previewOutside.length > 0}
+        showNotes={!compact && (previewOutside.length > 0 || built.plan.unroutable.length > 0)}
         notesHost={props.notesHost}
         insets={insets}
         notesRef={notesRef}
         outsideCount={previewOutside.length}
+        unroutableCount={built.plan.unroutable.length}
         graph={fullGraph}
         hiddenEdges={hiddenEdges}
         onChip={chipClick}
@@ -2667,12 +2668,14 @@ const MapEdgeControls = forwardRef<{ update(chips: ChipState): void }, {
   insets: Insets;
   notesRef: RefObject<HTMLDivElement | null>;
   outsideCount: number;
+  /** Edges the layered layout could not route (the graph had a cycle), drawn dashed and straight. */
+  unroutableCount: number;
   graph: ArgGraph;
   hiddenEdges: readonly ArgEdge[];
   notesHost?: HTMLElement | null;
   onChip(side: Side): void;
   onChoose(key: string): void;
-}>(function MapEdgeControls({ showChips, showNotes, insets, notesRef, outsideCount, graph, hiddenEdges, notesHost, onChip, onChoose }, ref) {
+}>(function MapEdgeControls({ showChips, showNotes, insets, notesRef, outsideCount, unroutableCount, graph, hiddenEdges, notesHost, onChip, onChoose }, ref) {
   const [chips, setChips] = useState(emptyChips);
   useImperativeHandle(ref, () => ({ update: setChips }), []);
   return <>
@@ -2697,6 +2700,11 @@ const MapEdgeControls = forwardRef<{ update(chips: ChipState): void }, {
     >
       {outsideCount > 0 && <p className="tree__note" role="status">
         {outsideCount === 1 ? "1 linked step is not in the argument for this main result" : `${outsideCount} linked steps are not in the argument for this main result`}
+      </p>}
+      {unroutableCount > 0 && <p className="tree__note tree__note--unroutable" role="status" data-unroutable-count={unroutableCount}>
+        {unroutableCount === 1
+          ? "1 recorded relation could not be placed between rows; it is drawn as a straight dashed line without an arrowhead"
+          : `${unroutableCount} recorded relations could not be placed between rows; they are drawn as straight dashed lines without arrowheads`}
       </p>}
     </div>}
   </>;

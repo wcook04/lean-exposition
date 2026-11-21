@@ -34,6 +34,7 @@ import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
 import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
 import { readKeepLean, saveKeepLean } from "./page/panePrefs";
@@ -1778,6 +1779,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       {paneOn && (
         <div className="reader__map">
           {paneReady && (
+            <GraphBoundary scope={`pane beside ${route.stage}`}>
             <Suspense fallback={null}>
               <MapPane
                 {...paneProps}
@@ -1815,15 +1817,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 }
               />
             </Suspense>
+            </GraphBoundary>
           )}
         </div>
       )}
 
       {!paneOn && !route.beside && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || (!!route.lean && !paneRoom)) && (
         <RightSheet phone={phone} onClose={closeSheet}>
-          <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
-            <MapPane {...paneProps} inModal onHide={closeSheet} />
-          </Suspense>
+          <GraphBoundary scope={`sheet beside ${route.stage}`}>
+            <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
+              <MapPane {...paneProps} inModal onHide={closeSheet} />
+            </Suspense>
+          </GraphBoundary>
         </RightSheet>
       )}
 

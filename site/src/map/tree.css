@@ -62,6 +62,15 @@
   stroke-dasharray: calc(6px / var(--k)) calc(4px / var(--k));
 }
 
+/* An edge the layered layout could not route (its consumer is not above its prerequisite): a
+   straight line between the two cards in the failure colour, with long dashes, so it is never
+   mistaken for a routed relation. The pane's notes count these. */
+.link.link--unroutable {
+  stroke: var(--fail);
+  stroke-width: calc(1.75px / var(--k));
+  stroke-dasharray: calc(10px / var(--k)) calc(5px / var(--k));
+}
+
 /* The Lean graph. As in a blueprint: a solid line for a use in the proof (the `supports` line),
    a dashed one for a use in the statement. A use through helpers is dotted and thin. */
 .link--lean_type_dependency {

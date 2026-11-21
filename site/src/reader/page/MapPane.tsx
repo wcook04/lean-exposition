@@ -16,6 +16,7 @@ import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { FocusGraph, type FGCard } from "../../map/FocusGraph";
+import { GraphBoundary } from "../../map/GraphBoundary";
 import { mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { useKeptCamera } from "../../map/scene";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
@@ -575,7 +576,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         </div>
       ) : (
         <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}`}>
-          <div className="map-pane__drawing">{drawing}</div>
+          <div className="map-pane__drawing">
+            <GraphBoundary scope={whole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
+          </div>
           {!folded && (
             <div
               className="map-pane__handle"
