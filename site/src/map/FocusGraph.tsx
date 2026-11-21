@@ -378,12 +378,12 @@ export function FocusGraph(props: FocusGraphProps) {
     return () => ro.disconnect();
   }, [measure, key, leftItems, rightItems, sideW, subjectW]);
 
-  // If the estimate let through more than fits, group more. The reader's own opened groups may overflow: they scroll.
+  // If the estimate let through more than fits, group more: fewer nodes, or fewer and larger groups when every
+  // item is already a group. The reader's own opened groups may overflow: they scroll.
   useLayoutEffect(() => {
     const el = scroller.current, w = world.current;
     if (!el || !w || opened.size || tight >= 6) return;
-    const grouped = (items: Item[]) => items.every((it) => it.type === "group");
-    if (w.getBoundingClientRect().height > el.clientHeight + 2 && !(grouped(leftItems) && grouped(rightItems))) setTight((t) => t + 1);
+    if (w.getBoundingClientRect().height > el.clientHeight + 2) setTight((t) => t + 1);
   }, [drawn, opened, tight, leftItems, rightItems]);
 
   // The subject is in the middle whenever it changes; a reader's own scrolling is kept until then.
