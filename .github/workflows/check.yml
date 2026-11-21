@@ -59,3 +59,10 @@ jobs:
         env:
           VITE_STATIC_EDITION: 'true'
           VITE_BASE_PATH: /lean-exposition-site/
+      - run: python -m pip install playwright && python -m playwright install --with-deps chromium
+      - name: Check the site is still while left alone, graph open and closed, 1100 to 2600 pixels wide
+        run: |
+          mkdir -p serve && cp -R site/dist serve/lean-exposition-site
+          python -m http.server 47321 --directory serve &
+          sleep 2
+          python site/scripts/check-idle.py http://127.0.0.1:47321/lean-exposition-site/ --paths read/short read/long --sweep 1100 2600 500
