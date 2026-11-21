@@ -36,7 +36,11 @@ COLOURS_HINT = "run node site/scripts/topic-colours.ts"
 # that judgement is the recorded evidence mapping's or an AI author's; `origin`
 # says where a statement slice came from. Absent fields mean "not recorded".
 # "held": a comparison exists but is not shown; the reader shows the paper's held text in its place.
-FIDELITY = {"same", "stronger", "weaker", "different", "held"}
+# "unassessed": no comparison is recorded; the reader says "Not assessed", never "same".
+FIDELITY = {"same", "stronger", "weaker", "different", "held", "unassessed"}
+# Verdicts that need no note: an assessed "same" and the explicit absence of an assessment.
+NOTE_OPTIONAL = {"same", "unassessed"}
+MERGED_KEYS = {"id", "quote", "role", "topic"}
 FIDELITY_SOURCES = {"recorded", "ai"}
 ORIGINS = {"evidence_record", "ai"}
 FIDELITY_KEYS = {"fidelity", "fidelity_note", "fidelity_source"}
@@ -367,15 +371,30 @@ def _phrase_record(row, names, start_byte, end_byte, records, stage, by_name):
 def _phrase_lean(item, names, where, errors):
     """One Lean row of a phrase tie, resolved to what the reader receives, or None."""
     if not _check_keys(item, {"name", "file", "relation", "fidelity"},
-                       {"lines", "fidelity_note", "link_note"}, where, errors):
+                       {"lines", "fidelity_note", "link_note", "assessments"}, where, errors):
         return None
     if item["relation"] not in RELATIONS:
         errors.append(f"{where}: unknown relation {item['relation']!r}")
     if item["fidelity"] not in FIDELITY:
         errors.append(f"{where}: unknown fidelity {item['fidelity']!r}")
     note = item.get("fidelity_note")
-    if item["fidelity"] != "same" and (type(note) is not str or not note.strip()):
-        errors.append(f"{where}: a fidelity other than same needs a fidelity_note")
+    if item["fidelity"] not in NOTE_OPTIONAL and (type(note) is not str or not note.strip()):
+        errors.append(f"{where}: a fidelity other than same or unassessed needs a fidelity_note")
+    # A tie that holds several phrases keeps each phrase's own comparison of this Lean.
+    assessments = []
+    for k, one in enumerate(item.get("assessments") or ()):
+        at = f"{where}.assessments[{k}]"
+        if not _check_keys(one, {"phrase", "fidelity"}, {"fidelity_note"}, at, errors):
+            continue
+        if one["fidelity"] not in FIDELITY:
+            errors.append(f"{at}: unknown fidelity {one['fidelity']!r}")
+        own = one.get("fidelity_note")
+        if one["fidelity"] not in NOTE_OPTIONAL and (type(own) is not str or not own.strip()):
+            errors.append(f"{at}: a fidelity other than same or unassessed needs a fidelity_note")
+        assessments.append({"phrase": one["phrase"], "fidelity": one["fidelity"],
+                            **({"fidelity_note": own} if own else {})})
+    if "assessments" in item and type(item["assessments"]) is not list:
+        errors.append(f"{where}: assessments must be a list")
     link = item.get("link_note", "")
     if type(link) is not str or len(link.split()) > MAX_NOTE_WORDS:
         errors.append(f"{where}: link_note must be text of at most {MAX_NOTE_WORDS} words")
@@ -390,7 +409,8 @@ def _phrase_lean(item, names, where, errors):
             "end_line": target["end_line"], "lines": lines or _statement_lines(target),
             "exact_lines": lines is not None, **_proof_lines(target), "relation": item["relation"],
             "note": link, "fidelity": item["fidelity"],
-            **({"fidelity_note": note} if note else {}), "fidelity_source": "ai"}
+            **({"fidelity_note": note} if note else {}), "fidelity_source": "ai",
+            **({"assessments": assessments} if assessments else {})}
 
 
 def resolve_phrases(directory, prepared, names, records, errors):
@@ -460,8 +480,12 @@ def resolve_phrases(directory, prepared, names, records, errors):
         for n, row in enumerate(data.get("ties") or ()):
             at = f"{where}:ties[{n}]"
             if not _check_keys(row, {"id", "from", "to", "role", "topic", "status", "lean"},
-                               {"after", "replaces", "reason"}, at, errors):
+                               {"after", "replaces", "reason", "merged"}, at, errors):
                 continue
+            merged = []
+            for k, one in enumerate(row.get("merged") or ()):
+                if _check_keys(one, {"id", "quote"}, MERGED_KEYS - {"id", "quote"}, f"{where}:ties[{n}].merged[{k}]", errors):
+                    merged.append({key: one[key] for key in sorted(MERGED_KEYS) if key in one})
             at = f"{where}:{row['id']}"
             if row["id"] in seen:
                 errors.append(f"{at}: id is repeated")
@@ -505,7 +529,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
                          "at": f"b{start_byte}-{end_byte}", **located,
                          "record": _phrase_record(row, {item["name"] for item in lean}, start_byte, end_byte,
                                                   records, stage, by_name),
-                         "lean": lean})
+                         "lean": lean, **({"merged": merged} if merged else {})})
         taken.sort()
         for (a, b, one), (c, d, other) in zip(taken, taken[1:]):
             if c < b:
@@ -921,7 +945,8 @@ def _phrase_tie(row, part, tone, titles):
     """A phrase as the reader receives it: the tie's fields, its topic's colour and every Lean row."""
     first = row["lean"][0] if row["lean"] else None
     rows = [{key: item[key] for key in ("name", "module", "line", "end_line", "lines", "exact_lines", "relation",
-                                         "fidelity", "fidelity_note", "fidelity_source", "note", "proof_lines")
+                                         "fidelity", "fidelity_note", "fidelity_source", "assessments", "note",
+                                         "proof_lines")
              if key in item} | ({"plain": titles[item["name"]]} if item["name"] in titles else {})
             for item in row["lean"]]
     # The comparison of each row travels in `rows`; the tie's own fields name the first row only.
@@ -931,7 +956,8 @@ def _phrase_tie(row, part, tone, titles):
             **({"plain": titles[first["name"]]} if first and first["name"] in titles else {}),
             "module": first["module"] if first else None, "lines": first["lines"] if first else None,
             "anchor": row["anchor"], "at": row["at"], "origin": "ai",
-            "topic": row["topic"], "part": part, "tone": tone, "rows": rows}
+            "topic": row["topic"], "part": part, "tone": tone, "rows": rows,
+            **({"merged": row["merged"]} if row.get("merged") else {})}
 
 
 def tie_index(content, records, stage, passages=(), names=(), phrases=None):
@@ -989,6 +1015,9 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
             fallback.append([start, end, sorted({*ids, *held}), anchor])
     index = {"segments": segments, "ties": ties, "passages": sorted(fallback, key=lambda row: row[:2]),
              "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading."}
+    canonical = canonical_targets(records, stage, keys, ties)
+    if canonical:
+        index["canonical"] = canonical
     if phrases is not None:
         index["layer"] = "phrases"
         index["topics"] = topic_rows
@@ -997,6 +1026,39 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
         index["parts"] = [{"name": part["name"], "start_byte": part["start_byte"], "end_byte": part["end_byte"]}
                           for part in phrases["parts"]]
     return index
+
+
+STATEMENT_ROLES = ("statement", "definition")
+
+
+def canonical_targets(records, stage, keys, ties):
+    """Each record's one canonical target in this paper: the tie at its statement block.
+
+    A record's statement block is its earliest slice in this paper with the role "statement" (else
+    "definition"). The canonical tie is the earliest tie of that record inside the block, a statement
+    tie first; failing that, the record's tie that overlaps the block most. An introduction or a later
+    mention is never the target. With no tie of the record at the block the tie is None and the block
+    itself is the target. Records with no statement slice have none. Returns {record: [tie, start, end]}.
+    """
+    out = {}
+    for record_id, record in sorted(records.items()):
+        blocks = sorted((STATEMENT_ROLES.index(row["role"]), row["start_byte"], row["end_byte"])
+                        for row in record.get("statements", ()) if row["paper"] == stage and row["role"] in STATEMENT_ROLES)
+        if not blocks:
+            continue
+        _, start, end = blocks[0]
+        mine = [n for n, tie in enumerate(ties) if tie["record"] == record_id]
+        inside = [n for n in mine if start <= keys[n][0] and keys[n][1] <= end]
+        if inside:
+            chosen = min(inside, key=lambda n: (ties[n]["role"] != "statement", keys[n][0], n))
+        else:
+            overlap = lambda n: min(end, keys[n][1]) - max(start, keys[n][0])
+            near = [n for n in mine if overlap(n) > 0]
+            # No tie of the record at its statement: the block itself is the target, and no other
+            # tie of the record (an introduction, a later use) stands in for it.
+            chosen = max(near, key=lambda n: (overlap(n), -n)) if near else None
+        out[record_id] = [chosen, start, end]
+    return out
 
 
 def phrase_notes(phrases):

@@ -219,6 +219,25 @@ describe("the model", () => {
     expect(statementFor(model, "nothing")).toBeNull();
   });
 
+  it("opens a record at its canonical target, the statement block, before an earlier introduction", () => {
+    const tie = (at: string, role: "statement" | "explanation") => ({ record: "r", role, lean: true, name: "A", module: "M", lines: [1, 1] as [number, number], anchor: "p", at });
+    const canonical: TieIndex = {
+      meaning: "",
+      segments: [[0, 10, [0]], [20, 30, [1]], [40, 50, [2]]],
+      // An introduction stated before the result is the record's first statement tie.
+      ties: [tie("b0-10", "statement"), tie("b20-30", "statement"), tie("b40-50", "statement")],
+      passages: [],
+      canonical: { r: [1, 20, 45] },
+    };
+    expect(statementFor(tieModel(canonical), "r")).toBe(1);
+    // An exact place still wins.
+    expect(statementFor(tieModel(canonical), "r", "b40-50")).toBe(2);
+    // With no tie at the block, no other tie stands in for it.
+    expect(statementFor(tieModel({ ...canonical, canonical: { r: [null, 20, 45] } }), "r")).toBeNull();
+    // Without a canonical entry (an older edition), the first statement as before.
+    expect(statementFor(tieModel({ ...canonical, canonical: undefined }), "r")).toBe(0);
+  });
+
   it("keeps record links usable when earlier prose changes their old byte offsets", () => {
     expect(statementFor(model, "a", "b5970-6319")).toBe(statementFor(model, "a"));
     expect(statementFor(model, "b", "b6000-6400")).toBe(statementFor(model, "b"));

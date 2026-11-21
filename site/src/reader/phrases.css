@@ -99,6 +99,16 @@
   white-space: nowrap;
 }
 
+/* A tie that holds several overlapping phrases says so, and each comparison names its phrase. */
+.phrase-card__merged,
+.phrase-card__for {
+  color: var(--ink-3);
+}
+
+.phrase-card__merged {
+  font-size: var(--fs-sm);
+}
+
 .phrase-card__label {
   font-size: var(--fs-sm);
   font-weight: 600;

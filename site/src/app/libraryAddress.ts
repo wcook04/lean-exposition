@@ -22,7 +22,16 @@ export function pdfParams(q: URLSearchParams): { pdf?: true; page?: number } {
 export const RESULT = /^(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.]+$/;
 
 export interface PhraseAddress { record: string | null; at: string }
+/** A phrase link a re-import retired: the date, and the nearest current phrase (null when none). */
+export interface RetiredAddress { retired: string; nearest: string | null }
 let phrases: Record<string, PhraseAddress> = {};
+let retiredLinks: Record<string, RetiredAddress> = {};
+/**
+ * Each numbered result's canonical target in the main document: the place of the tie at its statement
+ * block, and the block itself (`theorem-1.1` → ["b4521-4600", "b4521-5120"]). Either place, or none,
+ * is the result's own address.
+ */
+let resultTargets: Record<string, readonly [tie: string, block: string]> = {};
 const byPlace = new Map<string, string>();
 
 export const LIBRARY = site.library ?? null;
@@ -32,14 +41,19 @@ export async function loadLibraryAddresses(base: string): Promise<void> {
   if (!LIBRARY) return;
   try {
     const response = await fetch(`${base}/addresses.json`);
-    if (response.ok) setLibraryAddresses((await response.json()).phrases ?? {});
+    if (response.ok) {
+      const table = await response.json();
+      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {});
+    }
   } catch {
     // The paper still opens; a phrase address then lands at the top of the paper.
   }
 }
 
-export function setLibraryAddresses(table: Record<string, PhraseAddress>): void {
+export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string]> = {}): void {
   phrases = table;
+  retiredLinks = retired;
+  resultTargets = results;
   byPlace.clear();
   for (const [id, row] of Object.entries(table)) byPlace.set(`${row.record ?? `phrase:${id}`}|${row.at}`, id);
 }
@@ -58,20 +72,36 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   if (tie) {
     const id = decodeURIComponent(tie[1]);
     const row = phrases[id];
-    return row ? { ...common, node: row.record ?? `phrase:${id}`, at: row.at } : { ...common, node: `phrase:${id}` };
+    if (row) return { ...common, node: row.record ?? `phrase:${id}`, at: row.at };
+    // A retired link opens the paper with its notice; it never lands on a neighbouring phrase.
+    if (retiredLinks[id]) return { ...common, retired: id };
+    return { ...common, node: `phrase:${id}` };
   }
   const lean = path.match(/^\/lean\/(.+)$/);
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
   const page = path.match(/^\/([a-z0-9-]+)$/);
   if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]] };
   const result = path.match(/^\/([a-z]+-[0-9a-z.]+)$/);
-  if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}` };
+  // A numbered result lands on its canonical target, the statement block, never an earlier mention.
+  if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] };
   return null;
 }
 
 /** The library address of a read route of the main document, or null to keep the reader's own. */
+/** A numbered result's canonical place in the main document, or undefined. */
+export function resultTarget(address: string): readonly [tie: string, block: string] | undefined {
+  return resultTargets[address];
+}
+
+/** The retirement of a phrase link, or null for a link that is current or unknown. */
+export function retiredLink(id: string | undefined): RetiredAddress | null {
+  return id ? (retiredLinks[id] ?? null) : null;
+}
+
 export function libraryHref(route: Read, base: string, lib = LIBRARY): string | null {
   if (!lib || route.beside) return null;
+  // A retired link keeps its own address while its notice shows.
+  if (route.retired && !route.node && !route.decl && route.stage === lib.main) return `${base}/@${encodeURIComponent(route.retired)}`;
   if (route.stage !== lib.main) {
     // A companion page of the paper: its slug, with the reader's own parameters.
     const slug = Object.entries(lib.pages ?? {}).find(([, stage]) => stage === route.stage)?.[0];
@@ -92,17 +122,19 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     if (route.pdf && route.page) q.set("page", String(route.page));
     return q.size ? `?${q}` : "";
   };
+  // A numbered result at its canonical target (or at no place) keeps the result's own address.
+  const prefix = `${lib.paper}.`;
+  const resultId = route.node?.startsWith(prefix) && RESULT.test(route.node.slice(prefix.length)) ? route.node.slice(prefix.length) : null;
+  if (resultId && (!route.at || resultTargets[resultId]?.includes(route.at))) {
+    if (view) q.set("v", view);
+    if (route.decl) q.set("d", route.decl);
+    return `${base}/${resultId}/${query()}${tail}`;
+  }
   const phrase = route.node && route.at ? byPlace.get(`${route.node}|${route.at}`) : route.node?.startsWith("phrase:") ? route.node.slice(7) : undefined;
   if (phrase) {
     if (view) q.set("v", view);
     if (route.decl) q.set("d", route.decl);
     return `${base}/@${encodeURIComponent(phrase)}${query()}${tail}`;
-  }
-  const prefix = `${lib.paper}.`;
-  if (route.node?.startsWith(prefix) && RESULT.test(route.node.slice(prefix.length)) && !route.at) {
-    if (view) q.set("v", view);
-    if (route.decl) q.set("d", route.decl);
-    return `${base}/${route.node.slice(prefix.length)}/${query()}${tail}`;
   }
   // The reader adds the place the declaration is stated (l=) as it follows it; the address stays the declaration's.
   if (route.decl && !route.node) {

@@ -42,6 +42,8 @@ export type Route =
       /** The authors' PDF in place of the typeset text (`view=pdf`), opened at this page. */
       pdf?: boolean;
       page?: number;
+      /** A retired phrase link (`/@<id>` of a library paper): the paper opens with a notice, at no phrase. */
+      retired?: string;
     }
   | { view: "checks"; node?: string }
   | {
@@ -293,6 +295,15 @@ const listeners = new Set<() => void>();
 function emit() {
   current = parseRoute(new URL(window.location.href));
   listeners.forEach((l) => l());
+}
+
+/**
+ * Parse the address again once a library paper's address table has loaded. The first parse runs
+ * when this module loads, before the table is there, so a phrase, a retired link or a result's
+ * canonical place would otherwise be read without it.
+ */
+export function reparseRoute(): void {
+  emit();
 }
 
 window.addEventListener("popstate", () => {
