@@ -1,0 +1,583 @@
+/* The library index's own rules. The tokens (tokens.css), the reader's base (base.css) and the
+   family lockup (family.css) come before this file in the built stylesheet, so the index wears
+   the reader's header, type and colours in both schemes. */
+
+html,
+body {
+  height: auto;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --wrap: 76rem;
+  --gutter: var(--space-5);
+}
+
+.wrap,
+.topbar__inner,
+main > section,
+.foot {
+  width: 100%;
+  max-width: calc(var(--wrap) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ------------------------------------------------------------------ header (the reader's bar) */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--topbar-h);
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+}
+
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  height: 100%;
+}
+
+.topbar .fam-lockup {
+  flex: none;
+  min-width: 0;
+}
+
+.wordmark__mark {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.wordmark__mark path {
+  stroke: var(--ink);
+}
+
+.wordmark__mark circle {
+  fill: var(--lit);
+}
+
+.topbar__tools {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.scheme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color var(--t-press) var(--ease-out), transform var(--t-press) var(--ease-out);
+}
+
+.scheme-toggle:hover {
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.scheme-toggle:active {
+  transform: scale(0.97);
+}
+
+.scheme-toggle__sun {
+  display: none;
+}
+
+:root[data-theme="dark"] .scheme-toggle__sun {
+  display: block;
+}
+
+:root[data-theme="dark"] .scheme-toggle__moon {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .scheme-toggle__sun {
+    display: block;
+  }
+  :root:not([data-theme="light"]) .scheme-toggle__moon {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ introduction and search */
+
+main {
+  flex: 1;
+  outline: none;
+}
+
+.intro {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-5);
+}
+
+.notice {
+  margin-bottom: var(--space-4);
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+}
+
+.intro h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.012em;
+}
+
+.lede {
+  max-width: 44rem;
+  margin-top: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.search {
+  max-width: 48rem;
+  margin-top: var(--space-5);
+}
+
+.search__label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.search__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 52px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+  color: var(--ink-2);
+  transition: border-color var(--t-hover) var(--ease-out);
+}
+
+.search__field:focus-within {
+  border-color: var(--lit);
+  box-shadow: 0 0 0 1px var(--lit);
+}
+
+.search__field svg {
+  flex: none;
+}
+
+.search__field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.0625rem;
+  outline: none;
+}
+
+.search__field input::placeholder {
+  color: var(--ink-3);
+}
+
+/* The field draws the focus ring for its input (amber border and ring, :focus-within), so the
+   input's own outline would double it. */
+.search__field input:focus-visible {
+  outline: none;
+}
+
+.search__field input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.search__status:empty {
+  display: none;
+}
+
+.search__status {
+  margin-top: var(--space-2);
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+
+.caveat {
+  max-width: 48rem;
+  margin-top: var(--space-3);
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+
+/* Results: grouped by paper, in the order of the list below. */
+.results {
+  margin-top: var(--space-1);
+  border-top: 1px solid var(--rule);
+}
+
+.results__paper {
+  padding: var(--space-4) 0 var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.results__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.results__head a {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.results__head a:hover {
+  text-decoration: underline;
+}
+
+.results__where {
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+
+.results__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.results__list a {
+  display: block;
+  padding: 6px var(--space-2);
+  margin-inline: calc(-1 * var(--space-2));
+  border-radius: var(--radius-s);
+  text-decoration: none;
+}
+
+.results__list a:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.results__label {
+  display: block;
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+}
+
+.results__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--ink-2);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.results__lean {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+.results__plain {
+  display: block;
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+}
+
+.results__kind {
+  margin: var(--space-2) 0 2px;
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+
+.results__more {
+  margin-top: var(--space-1);
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.results__more:hover {
+  color: var(--ink);
+}
+
+mark {
+  background: var(--lit-wash);
+  color: inherit;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ the papers */
+
+.papers {
+  padding-bottom: var(--space-8);
+}
+
+.papers h2 {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule-strong);
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  font-weight: 500;
+}
+
+.paper-list {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+.paper {
+  display: grid;
+  /* The reading column keeps its measure; the facts column takes the rest, so the two never
+     part by a dead gap on a wide screen. */
+  grid-template-columns: minmax(0, 46rem) minmax(0, 1fr);
+  column-gap: clamp(32px, 4vw, 64px);
+  row-gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: calc(var(--topbar-h) + 16px);
+}
+
+.paper:first-child {
+  border-top: 0;
+}
+
+.paper__title {
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.006em;
+}
+
+.paper__title a {
+  text-decoration: none;
+}
+
+.paper__title a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-decoration-thickness: 1px;
+}
+
+.out {
+  display: inline-block;
+  margin-left: 0.25em;
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+  font-size: 0.75em;
+  font-weight: 400;
+  vertical-align: 0.12em;
+}
+
+.paper__by {
+  margin-top: var(--space-2);
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+.paper__what {
+  max-width: 36rem;
+  margin-top: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--fs-read);
+  line-height: 1.55;
+}
+
+.paper__pages {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  font-size: var(--fs-ui);
+}
+
+.paper__pages-label {
+  flex: none;
+  color: var(--ink-3);
+}
+
+.paper__pages ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paper__pages a {
+  color: var(--ink);
+}
+
+.paper__meta {
+  max-width: 32rem;
+  padding-top: 6px;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+}
+
+.paper__meta > p + p {
+  margin-top: var(--space-2);
+}
+
+.strip {
+  display: flex;
+  gap: 2px;
+  height: 8px;
+  margin-bottom: var(--space-4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strip i {
+  flex-basis: 0;
+  min-width: 3px;
+  background: var(--c-l);
+}
+
+:root[data-theme="dark"] .strip i {
+  background: var(--c-d);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .strip i {
+    background: var(--c-d);
+  }
+}
+
+@media (forced-colors: active) {
+  .strip {
+    border: 1px solid CanvasText;
+  }
+}
+
+.paper__counts {
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.paper__comparator {
+  color: var(--ink);
+  font-size: 0.9375rem;
+}
+
+.paper__credit {
+  color: var(--ink-2);
+}
+
+.paper__where {
+  color: var(--ink-3);
+}
+
+/* ------------------------------------------------------------------ footer */
+
+.foot {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-6);
+  border-top: 1px solid var(--rule);
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+}
+
+.foot p {
+  max-width: 48rem;
+}
+
+/* ------------------------------------------------------------------ narrow screens */
+
+@media (max-width: 60em) {
+  .paper {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .paper__meta {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 40em) {
+  :root {
+    --gutter: var(--space-4);
+  }
+  .topbar__inner {
+    gap: var(--space-3);
+  }
+  .intro {
+    padding-top: var(--space-6);
+  }
+  .lede {
+    font-size: 1.125rem;
+  }
+  .search__field .kbd {
+    display: none;
+  }
+  .paper {
+    padding: var(--space-5) 0;
+  }
+  .paper__title {
+    font-size: 1.375rem;
+  }
+  .paper__what {
+    font-size: 1.0625rem;
+  }
+  .paper__pages {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+}
+
+@media (min-width: 120em) {
+  :root {
+    --wrap: 84rem;
+  }
+}
+
+/* A 1440p monitor reads the page from further away: everything set in rem grows a step. */
+@media (min-width: 150em) {
+  html {
+    font-size: 112.5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
