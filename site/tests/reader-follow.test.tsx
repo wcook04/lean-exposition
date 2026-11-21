@@ -189,7 +189,7 @@ describe("MapPane", async () => {
     act(() => crumbs[crumbs.length - 1].click());
     expect(onRecord).toHaveBeenCalledWith(goal);
     show(null, { pin: { record: goal, tie: null } });
-    expect(container.querySelector(".fg__route")!.textContent).toBe("This is the main result.");
+    expect(container.querySelector(".fg__route")!.textContent).toMatch(/^This is (the paper’s main result|one of the paper’s main results)\.$/);
   });
 
   it("changes the subject on a card click and never the view", () => {

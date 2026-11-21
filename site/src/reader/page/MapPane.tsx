@@ -119,6 +119,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- The paper's argument and its main result ----------------------------------------
 
   const home = useMemo(() => mainGoal(edition), [edition]);
+  const selected = useMemo(() => edition.overview?.papers.find((p) => p.stage === stage)?.paper_scope.selected_goal_ids ?? [], [edition, stage]);
   const reaches = useMemo(() => new Map<string, Set<string>>(), [graph]);
   const reachOf = useCallback(
     (goal: string) => {
@@ -144,10 +145,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const readAt = follow.tie !== null ? startOf(ties.index.ties[follow.tie].at) : passageStart(ties, anchor);
   const [loaded, setLoaded] = useState(0);
   const input = useMemo(
-    () => ({ graph, stage, home, onMap: (id: string) => reachOf(home).has(id), alignment, shell, module: (name: string) => moduleIfLoaded(name), places, readAt }),
+    () => ({ graph, stage, home, selected, onMap: (id: string) => reachOf(home).has(id), alignment, shell, module: (name: string) => moduleIfLoaded(name), places, readAt }),
     // `loaded` changes when a module arrives: moduleIfLoaded then answers.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [graph, stage, home, reachOf, alignment, shell, places, readAt, loaded],
+    [graph, stage, home, selected, reachOf, alignment, shell, places, readAt, loaded],
   );
   const tools = useMemo(() => makeFocus(input), [input]);
 

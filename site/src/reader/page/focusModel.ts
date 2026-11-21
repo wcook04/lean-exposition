@@ -34,6 +34,8 @@ export interface FocusInput {
   stage: Stage;
   /** The main result of the paper's argument. */
   home: string;
+  /** This paper's selected goals, its own main result first. */
+  selected?: readonly string[];
   /** Whether the paper's argument (the map) draws a record. */
   onMap(id: string): boolean;
   alignment: Alignment | null;
@@ -390,8 +392,12 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     }
     if (route) for (const r of route) put(r);
     if (route && route.length === 0) {
-      const main = subjects.includes(input.home);
-      routeNote = subjects.length > 1 ? `${main ? "The main result" : "A main result"} is stated here.` : main ? "This is the main result." : "This is a main result.";
+      // The paper's own main result is its first selected goal; the others are among its main results.
+      const first = input.selected?.[0] ?? input.home;
+      const main = subjects.includes(first);
+      routeNote = subjects.length > 1
+        ? `${main ? "The paper’s main result" : "One of the paper’s main results"} is stated here.`
+        : main ? "This is the paper’s main result." : "This is one of the paper’s main results.";
       route = null;
     } else if (!route && subjects.length) {
       const main = tools.card(input.home)?.title ?? "the main result";
