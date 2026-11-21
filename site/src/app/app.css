@@ -275,6 +275,15 @@ html[data-view="map"] .app {
   .topbar__scheme {
     display: none;
   }
+  /* Search and Menu are the bar's only ways on, so they never shrink or leave the screen:
+     the lockup gives way instead, its site name ending in an ellipsis (family.css). At
+     390px a fixed-width lockup pushed Search to x=389 and Menu to x=437. */
+  .topbar .fam-lockup {
+    flex: 0 1 auto;
+  }
+  .topbar__tools {
+    flex: none;
+  }
   .menu-toggle {
     display: inline-flex;
     min-width: var(--target);

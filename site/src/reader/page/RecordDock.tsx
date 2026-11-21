@@ -374,6 +374,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                   topic={open.tie !== null ? topicOf(ties, open.tie) : null}
                   note={part?.notes[row.name]}
                   quote={quote}
+                  merged={open.tie !== null ? ties.index.ties[open.tie]?.merged : undefined}
                 />
               )}
               <LazyLeanBlock

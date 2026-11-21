@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import type { TieIndex } from "../src/api/lean";
 import type { PaperStructure, Stage } from "../src/api/types";
 import { prepareDocument } from "../src/reader/engine";
-import { leanTruth, markSource, passageTopics, sameWords, segmentsIn, statementFor, statementOf, stepFrom, tieCounts, tieModel, wrapTies, openMark, closeMark } from "../src/reader/ties";
+import { leanTruth, markSource, passageTopics, sameWords, segmentsIn, statementFor, statementOf, statementPlace, stepFrom, tieCounts, tieModel, wrapTies, openMark, closeMark } from "../src/reader/ties";
 import { documentFixture, fixture, structureFixture } from "./fixtures";
 
 const PATHS: Record<Stage, string> = { long: "long/reasoning-record.md", short: "short/paper.md", expository: "expository/main.md" };
@@ -217,6 +217,29 @@ describe("the model", () => {
     expect(statementFor(model, "b", "b6-12")).toBe(1);
     expect(statementFor(model, "a")).toBe(0);
     expect(statementFor(model, "nothing")).toBeNull();
+  });
+
+  it("opens a record at its canonical target, the statement block, before an earlier introduction", () => {
+    const tie = (at: string, role: "statement" | "explanation") => ({ record: "r", role, lean: true, name: "A", module: "M", lines: [1, 1] as [number, number], anchor: "p", at });
+    const canonical: TieIndex = {
+      meaning: "",
+      segments: [[0, 10, [0]], [20, 30, [1]], [40, 50, [2]]],
+      // An introduction stated before the result is the record's first statement tie.
+      ties: [tie("b0-10", "statement"), tie("b20-30", "statement"), tie("b40-50", "statement")],
+      passages: [],
+      canonical: { r: [1, 20, 45] },
+    };
+    expect(statementFor(tieModel(canonical), "r")).toBe(1);
+    // An exact place still wins.
+    expect(statementFor(tieModel(canonical), "r", "b40-50")).toBe(2);
+    // With no tie at the block, no other tie stands in for it.
+    expect(statementFor(tieModel({ ...canonical, canonical: { r: [null, 20, 45] } }), "r")).toBeNull();
+    // Without a canonical entry (an older edition), the first statement as before.
+    expect(statementFor(tieModel({ ...canonical, canonical: undefined }), "r")).toBe(0);
+    // Where a record opens: its canonical tie's place, else the statement block itself.
+    expect(statementPlace(tieModel(canonical), "r")).toBe("b20-30");
+    expect(statementPlace(tieModel({ ...canonical, canonical: { r: [null, 20, 45] } }), "r")).toBe("b20-45");
+    expect(statementPlace(tieModel(canonical), "nothing")).toBeUndefined();
   });
 
   it("keeps record links usable when earlier prose changes their old byte offsets", () => {

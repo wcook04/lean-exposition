@@ -109,6 +109,13 @@ export interface SiteInstance {
    */
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
+   * The `supports` links ("from→to", node ids) the edition derived from the Lean's dependencies
+   * rather than from the paper's own statements. Labels and counts call these "derived from the
+   * Lean", never the paper's argument. Absent: every `supports` link is the paper's (or its
+   * warrant says otherwise).
+   */
+  leanDerivedSupports?: ReadonlySet<string>;
+  /**
    * A paper whose argument for the main theorem is its own record (the #257 exposition proves
    * Theorem A.1 at base two as its Theorem 1): the levels band draws that record's argument at
    * that paper's level. Null draws the main theorem's argument at every level.

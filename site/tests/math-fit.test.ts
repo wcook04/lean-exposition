@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { groupRelationRuns, joinBracketedPieces, markWideMaths } from "../src/reader/page/PaperBody";
+import { formulaExtent, groupRelationRuns, joinBracketedPieces, markWideMaths } from "../src/reader/page/PaperBody";
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -206,5 +206,76 @@ describe("a breaking display's runs", () => {
     html.children[2].before(br);
     groupRelationRuns(math, 0);
     expect(Array.from(html.children).map((c) => c.className)).toEqual(["katex-base", "katex-base", "katex-newline", "katex-base", "katex-base"]);
+  });
+});
+
+// A numbered display at 1440px: formula and number fit the 680px column, but KaTeX's 2px strut past
+// the number's edge (.vlist-s) made the box report scrollWidth 682, and the display offered to scroll.
+describe("a numbered display that fits", () => {
+  const rect = (left: number, width: number) => ({ left, right: left + width, width, top: 0, bottom: 20, height: 20, x: left, y: 0 }) as DOMRect;
+  function numbered(formula: number, column: number, scrollWidth: number): HTMLElement {
+    const root = document.createElement("div");
+    root.innerHTML =
+      '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html">' +
+      '<span class="katex-base">u(t) = v</span><span class="katex-tag"><span class="vlist-t vlist-t2">(1.2)</span></span>' +
+      "</span></span></span></div>";
+    const box = root.firstElementChild as HTMLElement;
+    const tag = box.querySelector<HTMLElement>(".katex-tag")!;
+    const piece = box.querySelector<HTMLElement>(".katex-base")!;
+    Object.defineProperty(box, "clientWidth", { get: () => column });
+    Object.defineProperty(box, "scrollWidth", { get: () => scrollWidth });
+    box.getBoundingClientRect = () => rect(0, column);
+    piece.getBoundingClientRect = () => rect((column - formula) / 2, formula);
+    tag.getBoundingClientRect = () => rect(column - 38.88, 38.88);
+    return root;
+  }
+
+  it("measures the formula and its number, not the strut past the number's edge", () => {
+    const box = numbered(460.47, 680, 682).firstElementChild as HTMLElement;
+    expect(formulaExtent(box)).toBe(680);
+  });
+
+  it("gets no scroll row and is not marked as overflowing", () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+    const root = numbered(460.47, 680, 682);
+    const box = root.firstElementChild as HTMLElement;
+    const stop = markWideMaths(root);
+    expect(box.dataset.overflow).toBe("false");
+    expect(root.querySelector(".math-cue")).toBeNull();
+    expect(box.hasAttribute("tabindex")).toBe(false);
+    stop();
+  });
+
+  // (1.1) at 390px: an aligned block 460px wide beside its number in a 350px column keeps its
+  // shape at 80% and scrolls; the number, pinned to the edge, was drawn over the formula's end.
+  it("sets the number under a numbered display that keeps its shape and scrolls", () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+    const root = numbered(460, 350, 370);
+    const box = root.firstElementChild as HTMLElement;
+    box.querySelector(".katex-base")!.innerHTML = '<span class="mtable">u</span>';
+    const stop = markWideMaths(root);
+    expect(box.dataset.fit).toBe("scaled");
+    expect(box.dataset.tag).toBe("below");
+    stop();
+    const fits = numbered(300, 680, 682);
+    markWideMaths(fits)();
+    expect((fits.firstElementChild as HTMLElement).dataset.tag).toBeUndefined();
+  });
+
+  it("still offers the scroll row when the formula itself is wider than the column", () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+    const root = document.createElement("div");
+    root.innerHTML = '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html"><span class="katex-base"><span class="mtable">x</span></span></span></span></span></div>';
+    const box = root.firstElementChild as HTMLElement;
+    const piece = box.querySelector<HTMLElement>(".katex-base")!;
+    Object.defineProperty(box, "clientWidth", { get: () => 300 });
+    Object.defineProperty(box, "scrollWidth", { get: () => 420 });
+    Object.defineProperty(box.querySelector(".katex"), "scrollWidth", { get: () => 420 });
+    box.getBoundingClientRect = () => rect(0, 300);
+    piece.getBoundingClientRect = () => rect(0, 420);
+    const stop = markWideMaths(root);
+    expect(box.dataset.overflow).toBe("true");
+    expect(root.querySelector(".math-cue")).not.toBeNull();
+    stop();
   });
 });

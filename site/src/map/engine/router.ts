@@ -48,6 +48,11 @@ export interface PlanEdge {
   chain: string[];
   /** Track per gap, indexed by gap - rankFrom; null runs straight. */
   tracks: (number | null)[];
+  /**
+   * The consumer does not sit above its prerequisite (the graph had a cycle), so the edge has no gap
+   * to run through. It is drawn as a straight dashed line between the two cards and counted.
+   */
+  unroutable?: boolean;
 }
 
 export interface PlanBus {
@@ -68,6 +73,18 @@ export interface Plan {
   trackCount: number[];
   /** Gaps whose lane preferences formed a cycle, so one preference had to give way. */
   brokenChannels: number[];
+  /** Keys of edges whose consumer does not sit above their prerequisite, drawn straight and dashed. */
+  unroutable: string[];
+}
+
+const warned = new Set<string>();
+/** Say once per edge in the console that it could not be laid out between rows. */
+function warnUnroutable(pe: PlanEdge) {
+  if (warned.has(pe.key)) return;
+  warned.add(pe.key);
+  console.warn(
+    `Map edge ${pe.key} (${pe.kind}, ${pe.from} uses ${pe.to}) cannot be routed: its consumer is on row ${pe.rankFrom} and its prerequisite on row ${pe.rankTo}, so it is drawn as a dashed straight line.`,
+  );
 }
 
 const EPS = 0.75;
@@ -104,22 +121,33 @@ export function plan(layout: Layout): Plan {
   const edges = new Map<string, PlanEdge>();
   const buses = new Map<string, PlanBus>();
 
+  const unroutable: string[] = [];
   for (const e of layout.edges) {
-    const bus = e.kind === "supports";
+    const rankFrom = rank.get(e.from)!;
+    const rankTo = rank.get(e.to)!;
+    // A layered route runs down from the consumer's row to the prerequisite's; without a row
+    // between them going down there is no route, and the edge is shown as unroutable rather than dropped.
+    const stuck = rankTo <= rankFrom;
+    const bus = e.kind === "supports" && !stuck;
     edges.set(e.key, {
       key: e.key,
       kind: e.kind,
       from: e.from,
       to: e.to,
       bus,
-      arrow: e.kind !== "formalizes",
+      arrow: e.kind !== "formalizes" && !stuck,
       childPort: 0.5,
       parentPort: 0.5,
-      rankFrom: rank.get(e.from)!,
-      rankTo: rank.get(e.to)!,
+      rankFrom,
+      rankTo,
       chain: layout.chains.get(e.key) ?? [],
       tracks: [],
+      ...(stuck ? { unroutable: true } : {}),
     });
+    if (stuck) {
+      unroutable.push(e.key);
+      warnUnroutable(edges.get(e.key)!);
+    }
     if (bus) {
       if (!buses.has(e.from)) buses.set(e.from, { parent: e.from, edges: [], stem: 0.5, rank: rank.get(e.from)!, track: null });
       buses.get(e.from)!.edges.push(e.key);
@@ -139,6 +167,8 @@ export function plan(layout: Layout): Plan {
   const tops = new Map<string, string[]>();
   const bottoms = new Map<string, string[]>();
   for (const pe of edges.values()) {
+    // An unroutable edge meets its cards at their centres and takes no port.
+    if (pe.unroutable) continue;
     if (!tops.has(pe.to)) tops.set(pe.to, []);
     tops.get(pe.to)!.push(pe.key);
     const bk = pe.bus ? `bus:${pe.from}` : pe.key;
@@ -252,6 +282,7 @@ export function plan(layout: Layout): Plan {
   const busObj = new Map<string, Obj>();
   const pieceObj = new Map<string, Obj>();
   for (const pe of edges.values()) {
+    if (pe.unroutable) continue;
     pe.tracks = new Array(pe.rankTo - pe.rankFrom).fill(null);
     let xb = topX.get(pe.key)!;
     for (let g = pe.rankTo - 1; g >= pe.rankFrom; g--) {
@@ -374,6 +405,7 @@ export function plan(layout: Layout): Plan {
   const legsOf = (): Leg[][] => {
     const out: Leg[][] = Array.from({ length: Math.max(0, depth - 1) }, () => []);
     for (const pe of edges.values()) {
+      if (pe.unroutable) continue;
       const line = pe.bus ? `bus:${pe.from}` : pe.key;
       let xb = topX.get(pe.key)!;
       for (let g = pe.rankTo - 1; g >= pe.rankFrom; g--) {
@@ -432,7 +464,7 @@ export function plan(layout: Layout): Plan {
   setPorts();
 
   const rows: string[][] = layout.layers.map((layer) => layer.filter((id) => !id.startsWith("§")));
-  return { metrics: m, edges, buses, rank, rows, trackCount, brokenChannels };
+  return { metrics: m, edges, buses, rank, rows, trackCount, brokenChannels, unroutable };
 }
 
 // ---- Per frame ------------------------------------------------------------------------
@@ -526,6 +558,14 @@ export function route(p: Plan, frame: Frame): Routed {
     const child = boxes.get(pe.to);
     const parent = boxes.get(pe.from);
     if (!child || !parent) continue;
+    if (pe.unroutable) {
+      // No row runs between the two cards: one straight line from centre to centre, which the
+      // drawing marks as unroutable.
+      const a = { x: child.x + child.w / 2, y: child.y + child.h / 2 };
+      const z = { x: parent.x + parent.w / 2, y: parent.y + parent.h / 2 };
+      edges.set(pe.key, { key: pe.key, points: [a, z], junction: { x: (a.x + z.x) / 2, y: (a.y + z.y) / 2 }, own: [a, z] });
+      continue;
+    }
     const pts: Pt[] = [{ x: child.x + pe.childPort * child.w, y: child.y }];
     let junction: Pt = pts[0];
     let ownEnd = 1;

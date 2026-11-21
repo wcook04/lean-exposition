@@ -214,7 +214,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             </p>
           ) : null}
           <Pane id="quote" title="Statement">
-            <Quote aligned={aligned} first={account} compact={compact} recorded={node.kind === "declaration" ? null : recordedStatement} body={goalBody} />
+            <Quote aligned={aligned} first={account} compact={compact} recorded={node.kind === "declaration" ? null : recordedStatement} body={goalBody} record={nodeId} />
           </Pane>
 
           <Pane id="statement" title="In Lean">
@@ -423,7 +423,7 @@ function NoLean({ nodeId, onSelect, onEcho }: { nodeId: string; onSelect(id: str
 const QUOTE_ORDER: Stage[] = ["short", "long", "expository"];
 
 /** The record's statement as a paper gives it, quoted, with the way into the paper. */
-function Quote({ aligned, first, compact, recorded, body }: { aligned: RecordAlignment | null; first?: Stage; compact?: boolean; recorded: string | null; body?: React.ReactNode }) {
+function Quote({ aligned, first, compact, recorded, body, record }: { aligned: RecordAlignment | null; first?: Stage; compact?: boolean; recorded: string | null; body?: React.ReactNode; record?: string }) {
   const order = first ? [first, ...QUOTE_ORDER.filter((s) => s !== first)] : QUOTE_ORDER;
   const slices = aligned?.statements ?? [];
   const rank = (slice: AlignedStatement) => ROLE_ORDER.indexOf(slice.role) * 10 + order.indexOf(slice.paper);
@@ -435,7 +435,7 @@ function Quote({ aligned, first, compact, recorded, body }: { aligned: RecordAli
           <span>
             {PAPER_NAMES[best.paper].short}, {best.section}
           </span>
-          <a href={statementHref(best)}>Read in context</a>
+          <a href={statementHref(best, ownStatement(best, record))}>Read in context</a>
         </p>
         <LazyStatementSlice statement={best} compact={compact} />
       </div>
@@ -458,6 +458,10 @@ const ROLE_WORDS: Record<AlignedStatement["role"], string> = {
 const ROLE_ORDER: AlignedStatement["role"][] = ["statement", "definition", "derivation", "explanation", "example", "mention"];
 
 /** One tab per paper, each with that paper's exact slices, strongest first. */
+/** The record a slice states, so its link opens the record's canonical target; none for other roles. */
+const ownStatement = (slice: AlignedStatement, record: string | undefined) =>
+  slice.role === "statement" || slice.role === "definition" ? record : undefined;
+
 function PaperSlices({
   aligned,
   first,
@@ -499,7 +503,7 @@ function PaperSlices({
               <span>
                 {ROLE_WORDS[slice.role]}, in {slice.section}
               </span>
-              <a href={statementHref(slice)}>Read in context</a>
+              <a href={statementHref(slice, ownStatement(slice, resetKey))}>Read in context</a>
             </p>
             <LazyStatementSlice statement={slice} compact={compact} />
           </div>

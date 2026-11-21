@@ -3,10 +3,19 @@
 // only where the data carries the fields: an edition without them looks as before.
 
 import type { FidelityFields, TieOrigin } from "../api/lean";
-import { fidelitySentence, fidelitySourceWords, isFidelity, originWords } from "./fidelityWords";
+import { fidelitySentence, fidelitySourceWords, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, originWords } from "./fidelityWords";
 
 export function FidelityLine({ row }: { row: FidelityFields | null | undefined }) {
-  if (!row || !isFidelity(row.fidelity)) return null;
+  if (!row?.fidelity) return null;
+  // No comparison recorded: said as such, never as a verdict.
+  if (row.fidelity === "unassessed") {
+    return (
+      <p className="fidelity fidelity--unassessed" data-fidelity="unassessed">
+        <strong className="fidelity__verdict">{NOT_ASSESSED}.</strong> {NOT_ASSESSED_DETAIL}
+      </p>
+    );
+  }
+  if (!isFidelity(row.fidelity)) return null;
   return (
     <p className={`fidelity fidelity--${row.fidelity}`} data-fidelity={row.fidelity}>
       <strong className="fidelity__verdict">{fidelitySentence(row.fidelity)}</strong>
