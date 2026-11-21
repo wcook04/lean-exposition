@@ -1,5 +1,5 @@
 {
- "meaning": "The paper's own stated logic between its results, beside Lean's dependencies. Theorem 1.1 is the main result: Sections 2 to 6 prove it from a profile (route 1, from Lean). Section 7 supplies its hypothesis: a certificate gives a profile (Theorem 7.1), so the conclusions of Theorem 1.1 hold (Corollary 7.2) (route 2). Appendix B shows that cell data satisfying its conditions are a certificate (Proposition B.14, from B.1 to B.13); the cell-layer theorem after its proof states the whole chain in Lean (route 3).",
+ "meaning": "The paper's own stated logic between its results, beside Lean's dependencies. Edges run in the direction of use (a result to what it uses). Theorem 1.1 is the main result, and three routes lead into it. Route 1: Sections 2 to 6 prove it from a profile (Lean's dependencies). Route 2: Corollary 7.2 obtains its hypothesis, a profile, from a certificate by Theorem 7.1, and draws its conclusions (Lean's dependencies). Route 3: the cell-layer theorem after Proposition B.14's proof gives those conclusions from cell data, through Proposition B.14 (which rests on B.1 to B.13), Theorem 7.1 and Corollary 7.2.",
  "labels": {
   "corollary-7.2": "Corollary 7.2: how the profile is obtained"
  },
@@ -16,9 +16,9 @@
  ],
  "edges": [
   {
-   "from": "theorem-1.1",
-   "to": "corollary-7.2",
-   "why": "Section 7 supplies Theorem 1.1's hypothesis; Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold."
+   "from": "corollary-7.2",
+   "to": "theorem-1.1",
+   "why": "Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold; Section 7 supplies Theorem 1.1's hypothesis, a profile."
   },
   {
    "from": "corollary-7.2",
@@ -26,24 +26,19 @@
    "why": "Corollary 7.2 follows from Theorem 7.1, which gives a profile from a certificate."
   },
   {
-   "from": "theorem-7.1",
+   "from": "cell-layer-theorem",
    "to": "proposition-b.14",
-   "why": "Proposition B.14: data that satisfy the conditions of Appendix B are a certificate."
-  },
-  {
-   "from": "corollary-7.2",
-   "to": "proposition-b.14",
-   "why": "The certificate of Corollary 7.2 is obtained from cell data by Proposition B.14."
-  },
-  {
-   "from": "theorem-1.1",
-   "to": "cell-layer-theorem",
-   "why": "The sentence after Proposition B.14's proof states the conclusions of Theorem 1.1 from the cell conditions."
+   "why": "By Proposition B.14, data that satisfy the conditions of Appendix B are a certificate."
   },
   {
    "from": "cell-layer-theorem",
-   "to": "proposition-b.14",
-   "why": "The cell-layer theorem goes through Proposition B.14."
+   "to": "theorem-7.1",
+   "why": "By Theorem 7.1 and Corollary 7.2, data as in Proposition B.14 therefore give a profile, and the conclusions of Theorem 1.1."
+  },
+  {
+   "from": "cell-layer-theorem",
+   "to": "corollary-7.2",
+   "why": "By Theorem 7.1 and Corollary 7.2, data as in Proposition B.14 therefore give a profile, and the conclusions of Theorem 1.1."
   },
   {
    "from": "proposition-b.14",

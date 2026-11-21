@@ -134,6 +134,7 @@ function enrich(graph: ArgGraph, core: Core, stored: Stored): void {
     const source = byKey.get(edge.key);
     if (!source) continue;
     if (source.warrant) edge.warrant = source.warrant;
+    if (source.evidenceIds) edge.evidenceIds = source.evidenceIds;
     if (source.application) edge.application = source.application;
   }
   graph.cites.splice(0, graph.cites.length, ...full.cites);

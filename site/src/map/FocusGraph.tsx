@@ -673,7 +673,7 @@ export function FocusGraph(props: FocusGraphProps) {
     items.map((it) => {
       if (it.type === "node") return renderCard(it.id, side, rels.get(it.id)?.kind);
       const kinds = new Set(it.ids.map((id) => rels.get(id)?.kind ?? "proof"));
-      const kind = kinds.has("argument") ? "argument" : kinds.size === 1 && kinds.has("statement") ? "statement" : "proof";
+      const kind = kinds.has("argument") ? "argument" : kinds.has("paper") ? "paper" : kinds.size === 1 && kinds.has("statement") ? "statement" : "proof";
       return (
         <div key={`g:${it.key}`} className={`fg__group${it.open ? " is-open" : ""}`} data-group={it.key} style={it.tone ? ({ "--fg-tone": it.tone } as React.CSSProperties) : undefined}>
           <button

@@ -107,9 +107,9 @@ with sync_playwright() as pw:
         page.wait_for_timeout(1500)
         check(f"{tag} click in text opens card", "AI-assessed" in page.locator(".phrase-card").first.inner_text(), page.url)
         page.screenshot(path=str(a.shots / f"click-{tag}.png"))
-        # The graph at the main result: the uses the paper's text states are dashed, keyed, and answer
+        # The graph at Proposition B.14 (route 3): the uses the paper's text states are dashed, keyed, and answer
         # the pointer with their sentence.
-        page.goto(base + "theorem-1.1/?v=graph", wait_until="domcontentloaded")
+        page.goto(base + "proposition-b.14/?v=graph", wait_until="domcontentloaded")
         page.wait_for_selector(".fg__card", timeout=60000)
         page.wait_for_timeout(2500)
         dashed = page.eval_on_selector_all(".fg__edge--paper", "els => els.length")
@@ -144,6 +144,23 @@ with sync_playwright() as pw:
             n = page.eval_on_selector_all(".paper .tie", "els => els.length")
             check(f"{tag} companion {slot}", n > 20 and "thanks Anthropic" not in text, f"{n} ties; anthropic={'thanks Anthropic' in text}")
             page.screenshot(path=str(a.shots / f"companion-{slot}-{tag}.png"))
+        # The whole proof map, as its own page and from the graph pane's button: it draws, with no page error.
+        before = len(errors)
+        page.goto(base + "map/", wait_until="domcontentloaded")
+        page.wait_for_timeout(6000)
+        drawn = page.evaluate("() => document.querySelectorAll('canvas, svg, .tree, .map').length")
+        check(f"{tag} map page", drawn > 0 and len(errors) == before, f"{drawn} drawn; errors: {errors[before:][:2]}")
+        page.screenshot(path=str(a.shots / f"map-{tag}.png"))
+        before = len(errors)
+        page.goto(base + "theorem-1.1/?v=graph", wait_until="domcontentloaded")
+        page.wait_for_selector(".fg__card", timeout=60000)
+        whole = page.locator("button", has_text="Whole proof map")
+        found = whole.count() > 0
+        if found:
+            whole.first.click()
+            page.wait_for_timeout(5000)
+        check(f"{tag} whole proof map", found and len(errors) == before, f"errors: {errors[before:][:2]}")
+        page.screenshot(path=str(a.shots / f"whole-map-{tag}.png"))
         check(f"{tag} no page errors", not errors, "; ".join(errors[:3]))
         ctx.close()
     browser.close()

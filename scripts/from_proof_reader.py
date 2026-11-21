@@ -445,11 +445,15 @@ def main() -> None:
         tie_of[t["id"]] = t["id"]
         for old in t.get("replaces", []):
             tie_of[old] = t["id"]
+    relabel = json.loads(args.paper_logic.read_text()).get("labels", {}) if args.paper_logic else {}
     results, claims = {}, []
     for c in links.get("claims", []):
         address = slug_of(c["title"])
         if not address or address in results:
             continue
+        # The paper's stated logic may name a result by its role ("Corollary 7.2: how the profile is obtained").
+        if address in relabel:
+            c = dict(c, title=relabel[address])
         results[address] = {"claim": c["id"], "title": c["title"], "section": c.get("section"),
                             "tie": tie_of.get(c.get("passage")), "lean": c.get("lean", [])}
         claims.append((address, c))

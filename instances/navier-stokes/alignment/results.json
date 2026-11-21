@@ -253,7 +253,7 @@
   },
   "corollary-7.2": {
    "claim": "claim-theorem-7-2",
-   "title": "Corollary 7.2: A certificate gives blow-up",
+   "title": "Corollary 7.2: how the profile is obtained",
    "section": "7.4",
    "tie": "pdf-item-theorem-7-2",
    "lean": [

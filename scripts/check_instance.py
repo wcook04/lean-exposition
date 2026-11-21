@@ -53,6 +53,24 @@ def main() -> int:
             if n not in seen:
                 seen.add(n)
                 frontier.append(n)
+    # A route into the main result joins too: a result used by anything that itself uses the main result
+    # (Corollary 7.2 draws Theorem 1.1's conclusions; what it, or what leads to it, uses is on that route).
+    into, back, frontier = {goal}, {}, [goal]
+    for e in graph["edges"]:
+        if e["kind"] != "formalizes":
+            back.setdefault(e["to"], set()).add(e["from"])
+    while frontier:
+        for n in back.get(frontier.pop(), ()):
+            if n not in into:
+                into.add(n)
+                frontier.append(n)
+    frontier = [n for n in into if n not in seen]
+    seen |= into
+    while frontier:
+        for n in out.get(frontier.pop(), ()):
+            if n not in seen:
+                seen.add(n)
+                frontier.append(n)
     seen |= {r for d in list(seen) for r in formal.get(d, ())}
     results = [n["id"] for n in graph["nodes"] if n["kind"] in ("claim", "goal") and n["id"].startswith(f"{paper}.")]
     # A result may be known to stand apart, with the reason recorded in authored/check.json.

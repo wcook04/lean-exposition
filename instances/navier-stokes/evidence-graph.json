@@ -1971,10 +1971,10 @@
   },
   {
    "id": "cite.navier-stokes.corollary-7.2",
-   "title": "Finite-time blow-up for the Navier–Stokes equations, Corollary 7.2: A certificate gives blow-up",
+   "title": "Finite-time blow-up for the Navier–Stokes equations, Corollary 7.2: how the profile is obtained",
    "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/paper/finite-time-blow-up-navier-stokes.pdf",
    "source_id": "paper",
-   "locator": "Corollary 7.2: A certificate gives blow-up, Section 7.4"
+   "locator": "Corollary 7.2: how the profile is obtained, Section 7.4"
   },
   {
    "id": "cite.navier-stokes.lemma-2.3",
@@ -4696,7 +4696,7 @@
     "cite.navier-stokes.corollary-7.2"
    ],
    "source_id": "paper",
-   "locator": "Corollary 7.2: A certificate gives blow-up, Section 7.4",
+   "locator": "Corollary 7.2: how the profile is obtained, Section 7.4",
    "statement": "**Corollary 7.2.** If there exists a certificate, then the conclusions of Theorem 1.1 hold, on $\\mathbb R^3$ and on $\\mathbb T^3$, with the profile $(W,q)$ of Theorem 7.1, the period $S(\\alpha)$ and the isometry $I$.",
    "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
   },
@@ -9438,10 +9438,26 @@
   },
   {
    "from": "navier-stokes.cell-layer-theorem",
+   "to": "navier-stokes.corollary-7.2",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic.cell-layer-theorem.corollary-7.2"
+   ]
+  },
+  {
+   "from": "navier-stokes.cell-layer-theorem",
    "to": "navier-stokes.proposition-b.14",
    "kind": "supports",
    "evidence_ids": [
     "paper_logic.cell-layer-theorem.proposition-b.14"
+   ]
+  },
+  {
+   "from": "navier-stokes.cell-layer-theorem",
+   "to": "navier-stokes.theorem-7.1",
+   "kind": "supports",
+   "evidence_ids": [
+    "paper_logic.cell-layer-theorem.theorem-7.1"
    ]
   },
   {
@@ -9550,18 +9566,11 @@
   },
   {
    "from": "navier-stokes.corollary-7.2",
-   "to": "navier-stokes.proposition-b.14",
-   "kind": "supports",
-   "evidence_ids": [
-    "paper_logic.corollary-7.2.proposition-b.14"
-   ]
-  },
-  {
-   "from": "navier-stokes.corollary-7.2",
    "to": "navier-stokes.theorem-1.1",
    "kind": "supports",
    "evidence_ids": [
-    "lean_dependencies"
+    "lean_dependencies",
+    "paper_logic.corollary-7.2.theorem-1.1"
    ]
   },
   {
@@ -12034,22 +12043,6 @@
   },
   {
    "from": "navier-stokes.theorem-1.1",
-   "to": "navier-stokes.cell-layer-theorem",
-   "kind": "supports",
-   "evidence_ids": [
-    "paper_logic.theorem-1.1.cell-layer-theorem"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-1.1",
-   "to": "navier-stokes.corollary-7.2",
-   "kind": "supports",
-   "evidence_ids": [
-    "paper_logic.theorem-1.1.corollary-7.2"
-   ]
-  },
-  {
-   "from": "navier-stokes.theorem-1.1",
    "to": "navier-stokes.lemma-2.3",
    "kind": "supports",
    "evidence_ids": [
@@ -12383,14 +12376,6 @@
    "evidence_ids": [
     "lean_dependencies"
    ]
-  },
-  {
-   "from": "navier-stokes.theorem-7.1",
-   "to": "navier-stokes.proposition-b.14",
-   "kind": "supports",
-   "evidence_ids": [
-    "paper_logic.theorem-7.1.proposition-b.14"
-   ]
   }
  ],
  "evidence": [
@@ -12631,7 +12616,7 @@
     "lean.Breakdown.extended_certificate_breakdown_on_space",
     "navier-stokes.corollary-7.2"
    ],
-   "details": "Proof Reader's links.json at 3858afbe00b2 names these Lean declarations for Corollary 7.2: A certificate gives blow-up. The links were made with AI and have not been reviewed by the authors."
+   "details": "Proof Reader's links.json at 3858afbe00b2 names these Lean declarations for Corollary 7.2: how the profile is obtained. The links were made with AI and have not been reviewed by the authors."
   },
   {
    "id": "link.navier-stokes.lemma-2.3",
@@ -13439,6 +13424,21 @@
    "details": "Proof Reader's links.json at 3858afbe00b2 names these Lean declarations for Theorem 7.1: A certificate gives a profile. The links were made with AI and have not been reviewed by the authors."
   },
   {
+   "id": "paper_logic.cell-layer-theorem.corollary-7.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.cell-layer-theorem",
+    "navier-stokes.corollary-7.2"
+   ],
+   "details": "By Theorem 7.1 and Corollary 7.2, data as in Proposition B.14 therefore give a profile, and the conclusions of Theorem 1.1."
+  },
+  {
    "id": "paper_logic.cell-layer-theorem.proposition-b.14",
    "kind": "semantic_review",
    "status": "not_run",
@@ -13451,10 +13451,25 @@
     "navier-stokes.cell-layer-theorem",
     "navier-stokes.proposition-b.14"
    ],
-   "details": "The cell-layer theorem goes through Proposition B.14."
+   "details": "By Proposition B.14, data that satisfy the conditions of Appendix B are a certificate."
   },
   {
-   "id": "paper_logic.corollary-7.2.proposition-b.14",
+   "id": "paper_logic.cell-layer-theorem.theorem-7.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.cell-layer-theorem",
+    "navier-stokes.theorem-7.1"
+   ],
+   "details": "By Theorem 7.1 and Corollary 7.2, data as in Proposition B.14 therefore give a profile, and the conclusions of Theorem 1.1."
+  },
+  {
+   "id": "paper_logic.corollary-7.2.theorem-1.1",
    "kind": "semantic_review",
    "status": "not_run",
    "command": [],
@@ -13464,9 +13479,9 @@
    ],
    "subject_ids": [
     "navier-stokes.corollary-7.2",
-    "navier-stokes.proposition-b.14"
+    "navier-stokes.theorem-1.1"
    ],
-   "details": "The certificate of Corollary 7.2 is obtained from cell data by Proposition B.14."
+   "details": "Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold; Section 7 supplies Theorem 1.1's hypothesis, a profile."
   },
   {
    "id": "paper_logic.corollary-7.2.theorem-7.1",
@@ -13677,51 +13692,6 @@
     "navier-stokes.proposition-b.8"
    ],
    "details": "The proof of Proposition B.14 names Proposition B.8."
-  },
-  {
-   "id": "paper_logic.theorem-1.1.cell-layer-theorem",
-   "kind": "semantic_review",
-   "status": "not_run",
-   "command": [],
-   "tool": "The paper's own statement of how its results join; transcribed with AI",
-   "source_ids": [
-    "paper"
-   ],
-   "subject_ids": [
-    "navier-stokes.cell-layer-theorem",
-    "navier-stokes.theorem-1.1"
-   ],
-   "details": "The sentence after Proposition B.14's proof states the conclusions of Theorem 1.1 from the cell conditions."
-  },
-  {
-   "id": "paper_logic.theorem-1.1.corollary-7.2",
-   "kind": "semantic_review",
-   "status": "not_run",
-   "command": [],
-   "tool": "The paper's own statement of how its results join; transcribed with AI",
-   "source_ids": [
-    "paper"
-   ],
-   "subject_ids": [
-    "navier-stokes.corollary-7.2",
-    "navier-stokes.theorem-1.1"
-   ],
-   "details": "Section 7 supplies Theorem 1.1's hypothesis; Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold."
-  },
-  {
-   "id": "paper_logic.theorem-7.1.proposition-b.14",
-   "kind": "semantic_review",
-   "status": "not_run",
-   "command": [],
-   "tool": "The paper's own statement of how its results join; transcribed with AI",
-   "source_ids": [
-    "paper"
-   ],
-   "subject_ids": [
-    "navier-stokes.proposition-b.14",
-    "navier-stokes.theorem-7.1"
-   ],
-   "details": "Proposition B.14: data that satisfy the conditions of Appendix B are a certificate."
   }
  ],
  "scope": "Finite-time blow-up for the Navier–Stokes equations, by Levent Alpöge, Tristan Buckmaster, with their Lean at https://github.com/tristanbuckmaster/navier-stokes ad53419de079eb8f95f60313473374624a348546, as read for Proof Reader (wcook04/proof-reader 3858afbe00b23dd8bba13ffa41409310b712723d). The numbered results are the authors'; their links to the Lean were made with AI.",
