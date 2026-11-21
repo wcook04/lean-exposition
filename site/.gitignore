@@ -6,3 +6,4 @@ playwright-report/
 public/edition
 src/instances/library/current.json
 public/addresses.json
+public/pdf-marks

@@ -57,6 +57,13 @@ describe("library addresses", () => {
     expect(href).toBe(`${BASE}/lean/TorusEuler.EulerSingularityWitness`);
   });
 
+  it("the PDF view and its page travel with any address", () => {
+    const { route, href } = roundTrip(`${BASE}/@r2.prop54.endpoint-citation?v=lean&view=pdf&page=32`);
+    expect(route).toMatchObject({ pdf: true, page: 32, lean: true, node: "euler.proposition-5.4" });
+    expect(href).toBe(`${BASE}/@r2.prop54.endpoint-citation?v=lean&view=pdf&page=32`);
+    expect(roundTrip(`${BASE}/theorem-1.1/?view=pdf&page=3`).href).toBe(`${BASE}/theorem-1.1/?view=pdf&page=3`);
+  });
+
   it("any other reading state keeps the reader's own parameters at the paper's top", () => {
     const route = { view: "read" as const, stage: "short" as const, at: "120-134" };
     expect(libraryHref(route, BASE, lib)).toBe(`${BASE}/?l=120-134`);

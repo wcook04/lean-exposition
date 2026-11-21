@@ -13,6 +13,13 @@ rm -rf "build/$paper-edition"
   --paper long $(pair long | cut -d' ' -f1) --paper short $(pair short | cut -d' ' -f1) --paper expository $(pair expository | cut -d' ' -f1) > "build/$paper-alignment.json"
 "$LX" assemble "$I/evidence-graph.json" --long $(pair long) --short $(pair short) --expository $(pair expository) --out "build/$paper-edition" > /dev/null
 "$PY" site/scripts/export-static.py "build/$paper-edition" --lean-tree "$I/upstream/lean" --alignment "$I/alignment"
+# The phrases placed on the authors' PDF, for the reader's PDF view (needs poppler's pdftotext).
+rm -rf site/public/pdf-marks
+for slot in long short expository; do
+  if [ -f "$I/papers/$slot/paper.pdf" ] && [ -f "$I/papers/$slot/paper.md" ]; then
+    "$PY" scripts/pdf_marks.py "$I/papers/$slot/paper.pdf" "$I/papers/$slot/paper.md" "site/public/edition/ties/$slot.json" "site/public/pdf-marks/$slot.json"
+  fi
+done
 cd site
 node scripts/library-instance.mjs "$paper"
 LX_INSTANCE=library VITE_STATIC_EDITION=true VITE_BASE_PATH="/library/$paper/" LX_SITE_URL="https://wcook04.github.io/library/$paper/" npm run build

@@ -11,6 +11,13 @@
 import site from "@instance/site";
 import type { Route } from "./router";
 
+/** `view=pdf` and `page=N`: the PDF view of a paper and its page. */
+export function pdfParams(q: URLSearchParams): { pdf?: true; page?: number } {
+  if (q.get("view") !== "pdf") return {};
+  const page = Number(q.get("page"));
+  return Number.isInteger(page) && page >= 1 ? { pdf: true, page } : { pdf: true };
+}
+
 /** A numbered result's address: kind and number, in lower case. */
 export const RESULT = /^(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.]+$/;
 
@@ -45,7 +52,7 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   const stage = lib.main;
   const v = q.get("v");
   const common = { view: "read" as const, stage, anchor: hash, lean: v === "lean" || undefined, graph: v === "graph" || undefined,
-    decl: q.get("d") ?? undefined, declModule: q.get("dm") ?? undefined };
+    decl: q.get("d") ?? undefined, declModule: q.get("dm") ?? undefined, ...pdfParams(q) };
   if (path === "/") return { ...common, node: q.get("n") ?? undefined, at: q.get("l") ?? undefined };
   const tie = path.match(/^\/@([^/]+)$/);
   if (tie) {
@@ -66,7 +73,11 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
   const q = new URLSearchParams();
   const view = route.lean ? "lean" : route.graph && (route.node || route.decl) ? "graph" : null;
   const tail = route.anchor ? `#${encodeURIComponent(route.anchor)}` : "";
-  const query = () => (q.size ? `?${q}` : "");
+  const query = () => {
+    if (route.pdf) q.set("view", "pdf");
+    if (route.pdf && route.page) q.set("page", String(route.page));
+    return q.size ? `?${q}` : "";
+  };
   const phrase = route.node && route.at ? byPlace.get(`${route.node}|${route.at}`) : route.node?.startsWith("phrase:") ? route.node.slice(7) : undefined;
   if (phrase) {
     if (view) q.set("v", view);

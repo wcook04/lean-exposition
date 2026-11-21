@@ -106,6 +106,23 @@ def main() -> int:
                 with urllib.request.urlopen(url.split("#")[0]) as response:
                     ctype = response.headers.get("Content-Type", "")
                     check(f"{tag} pdf served", response.status == 200 and "pdf" in ctype, f"{response.status} {ctype}")
+            # The PDF/typeset toggle keeps the selected phrase and the place.
+            if page.locator(".view-toggle").count():
+                page.goto(base + f"@{args.phrase}?v=lean")
+                page.wait_for_selector(".phrase-card", timeout=60000)
+                page.get_by_role("button", name="PDF", exact=True).click()
+                page.wait_for_selector(".pdf-view__mark.is-selected", timeout=30000)
+                page.wait_for_timeout(1500)
+                sel = page.locator(".pdf-view__mark.is-selected").first.bounding_box()
+                kept = "view=pdf" in page.url and f"@{args.phrase}" in page.url and "v=lean" in page.url
+                check(f"{tag} toggle to pdf", kept and sel is not None and 0 <= sel["y"] <= height, f"{page.url} mark y={sel and round(sel['y'])}")
+                if args.shots:
+                    page.screenshot(path=str(args.shots / f"pdf-{tag}.png"))
+                page.get_by_role("button", name="Text", exact=True).click()
+                page.wait_for_timeout(2000)
+                el = page.locator(".paper .tie[data-tone]").filter(has_text="").first
+                back = "view=pdf" not in page.url and f"@{args.phrase}" in page.url
+                check(f"{tag} toggle to text", back and page.locator(".phrase-card").count() > 0, page.url)
             check(f"{tag} no page errors", not errors, "; ".join(errors[:3]))
             context.close()
         browser.close()
