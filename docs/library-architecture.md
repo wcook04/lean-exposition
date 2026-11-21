@@ -303,3 +303,26 @@ Each step goes live only after its browser check at 1440×900 and 2560×1440.
 - Proof Reader Euler and NS pages redirect after their check (§1.4), against the earlier brief's "leave them up".
 - Which PCP page is the paper (`pcp-full-argument` or `pcp-specialist`).
 - The repo name `wcook04/library` and the address `/library/`.
+
+## Status, 21 November 2026 (branch claude/euler-ns-readers-20261121, PR #88)
+
+Built and checked:
+- **The `library` instance.** It reads one paper from `instances/<paper>/instance.json`.
+- **Addresses.** `/`, `/#<section>`, `/<result>/`, `/@<tie>`, `/lean/<name>`, `/<page>/` and `view=pdf&page=N` all work, and Copy link round-trips them (`site/tests/library-address.test.ts`).
+- **PDF toggle.** The Text | PDF toggle uses pdf.js. Phrases are placed on the PDF by `scripts/pdf_marks.py`.
+- **Open PDF.** The link opens the PDF and carries `#page=N`.
+- **Reading notes.** Notes on any Lean card come from `lean-notes.json`.
+- **Supplementary checks.** They are listed in About.
+- **Converter.** `scripts/from_proof_reader.py` has `--reimport` (it keeps every old tie id as an address), `--guide` and `--pdf`, and it carries Comparator folders.
+- **Publishing.** The private-source guard runs before every publish. `library.yml` handles per-paper builds, browser checks and deploys.
+
+Changed from the plan:
+- **Engine bundle.** Each paper is still its own Vite build, about 10 seconds, deployed only when it changes. Splitting out one shared engine bundle is deferred: it does not change what a reader sees or what a deploy costs.
+- **Encoding guide.** The guide to how the Lean encodes the paper is an instance document, a companion page at `/<paper>/how-the-lean-encodes-it/`, rather than an About section. It keeps its own addresses and phrases.
+
+Not yet built:
+- the library index search;
+- the settings menu;
+- the redirect stubs;
+- a Comparator pane, which waits for the receipt at the authors' final commit;
+- topic filter addresses (`/topic/<id>/`).
