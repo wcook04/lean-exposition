@@ -226,6 +226,14 @@ report["selection"] = (report.get("selection", "") + " Rows of the other Navierâ
 toml = (a.page / "paper.toml").read_text()
 toml = toml.replace('[paper]\n', '[paper]\nmarkdown = "paper.md"\n', 1)
 (a.out / "paper.toml").write_text(toml)
+if a.sentences:
+    # Optional reading aids, carried unchanged for the reader's later design pass: what the Lean does
+    # in each section and statement file, the conventions, and the cards to start from.
+    (a.out / "notes").mkdir(exist_ok=True)
+    for source, name in (("reading_aids.json", "section-aids.json"), ("glossary.json", "glossary.json"),
+                         ("showcase.json", "showcase.json")):
+        if (a.sentences / source).is_file():
+            shutil.copyfile(a.sentences / source, a.out / "notes" / name)
 if a.sentences and (a.sentences / "ENCODING.md").is_file():
     # The guide to how the Lean encodes the paper's objects, published as it stands.
     (a.out / "guide.md").write_text((a.sentences / "ENCODING.md").read_text())
