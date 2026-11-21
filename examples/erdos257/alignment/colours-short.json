@@ -7,19 +7,19 @@
    "key": "05f42a990c6bad32",
    "shared_by": 1,
    "lightness": {
-    "light": 0.49,
-    "dark": 0.68
+    "light": 0.5,
+    "dark": 0.695
    },
    "chroma": {
-    "light": 0.089,
-    "dark": 0.125
+    "light": 0.093,
+    "dark": 0.127
    },
    "families": [
     {
      "id": "family-setup",
      "name": "The series and its displacement · Weighted summability",
      "named": false,
-     "hue": 7.5,
+     "hue": 11.5,
      "topics": [
       "setup",
       "weighted"
@@ -39,7 +39,7 @@
      "id": "family-membership",
      "name": "Greedy remainders and membership · Finite approximations to rational values",
      "named": false,
-     "hue": 142.5,
+     "hue": 133.5,
      "topics": [
       "membership",
       "approximation"
@@ -49,7 +49,7 @@
      "id": "family-boundaries",
      "name": "Limits of small displacements",
      "named": false,
-     "hue": 202.5,
+     "hue": 192.5,
      "topics": [
       "boundaries"
      ]
@@ -58,7 +58,7 @@
      "id": "family-finite-period",
      "name": "Finite sums and denominator periods",
      "named": false,
-     "hue": 256.5,
+     "hue": 252.5,
      "topics": [
       "finite-period"
      ]
@@ -77,56 +77,56 @@
     "setup": {
      "index": 0,
      "family": "family-setup",
-     "light": "oklch(0.408 0.094 3.9)",
-     "dark": "oklch(0.598 0.133 3.9)"
+     "light": "oklch(0.427 0.099 7.9)",
+     "dark": "oklch(0.622 0.135 7.9)"
     },
     "weighted": {
      "index": 1,
      "family": "family-setup",
-     "light": "oklch(0.492 0.084 11.1)",
-     "dark": "oklch(0.682 0.117 11.1)"
+     "light": "oklch(0.512 0.087 15.1)",
+     "dark": "oklch(0.707 0.119 15.1)"
     },
     "comparison": {
      "index": 2,
      "family": "family-cover",
-     "light": "oklch(0.448 0.094 75.4)",
-     "dark": "oklch(0.638 0.133 75.4)"
+     "light": "oklch(0.468 0.099 75.4)",
+     "dark": "oklch(0.662 0.135 75.4)"
     },
     "cover": {
      "index": 3,
      "family": "family-cover",
-     "light": "oklch(0.532 0.084 82.6)",
-     "dark": "oklch(0.723 0.117 82.6)"
+     "light": "oklch(0.552 0.087 82.6)",
+     "dark": "oklch(0.747 0.119 82.6)"
     },
     "membership": {
      "index": 4,
      "family": "family-membership",
-     "light": "oklch(0.448 0.094 138.9)",
-     "dark": "oklch(0.638 0.133 138.9)"
+     "light": "oklch(0.368 0.099 129.9)",
+     "dark": "oklch(0.563 0.135 129.9)"
     },
     "approximation": {
      "index": 5,
      "family": "family-membership",
-     "light": "oklch(0.532 0.084 146.1)",
-     "dark": "oklch(0.723 0.118 146.1)"
+     "light": "oklch(0.453 0.087 137.1)",
+     "dark": "oklch(0.647 0.119 137.1)"
     },
     "boundaries": {
      "index": 6,
      "family": "family-boundaries",
-     "light": "oklch(0.545 0.089 202.5)",
-     "dark": "oklch(0.735 0.125 202.5)"
+     "light": "oklch(0.550 0.093 192.5)",
+     "dark": "oklch(0.745 0.127 192.5)"
     },
     "finite-period": {
      "index": 7,
      "family": "family-finite-period",
-     "light": "oklch(0.555 0.089 256.5)",
-     "dark": "oklch(0.745 0.125 256.5)"
+     "light": "oklch(0.555 0.093 252.5)",
+     "dark": "oklch(0.750 0.127 252.5)"
     },
     "mixed": {
      "index": 8,
      "family": "family-mixed",
-     "light": "oklch(0.485 0.089 307.5)",
-     "dark": "oklch(0.675 0.125 307.5)"
+     "light": "oklch(0.480 0.093 307.5)",
+     "dark": "oklch(0.675 0.127 307.5)"
     }
    }
   }
