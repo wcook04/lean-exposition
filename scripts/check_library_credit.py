@@ -107,6 +107,21 @@ with sync_playwright() as pw:
         page.wait_for_timeout(1500)
         check(f"{tag} click in text opens card", "AI-assessed" in page.locator(".phrase-card").first.inner_text(), page.url)
         page.screenshot(path=str(a.shots / f"click-{tag}.png"))
+        # The graph at the main result: the uses the paper's text states are dashed, keyed, and answer
+        # the pointer with their sentence.
+        page.goto(base + "theorem-1.1/?v=graph", wait_until="domcontentloaded")
+        page.wait_for_selector(".fg__card", timeout=60000)
+        page.wait_for_timeout(2500)
+        dashed = page.eval_on_selector_all(".fg__edge--paper", "els => els.length")
+        key = page.evaluate("() => (document.querySelector('.fg__key') || {}).innerText || ''")
+        why = ""
+        if page.locator(".fg__edge-hit").count():
+            page.locator(".fg__edge-hit").first.dispatch_event("click")
+            page.wait_for_timeout(500)
+            why = page.evaluate("() => (document.querySelector('.fg__edge-why') || {}).innerText || ''")
+        check(f"{tag} paper-logic edges", dashed > 0 and "the paper's proof uses this" in key and "Read it in the paper" in why,
+              f"{dashed} dashed; key: {key[:80]}; why: {why[:120]}")
+        page.screenshot(path=str(a.shots / f"graph-routes-{tag}.png"))
         # PDF view.
         page.goto(base + "?view=pdf&page=1", wait_until="domcontentloaded")
         page.wait_for_timeout(5000)

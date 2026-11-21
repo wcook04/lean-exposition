@@ -9441,7 +9441,7 @@
    "to": "navier-stokes.proposition-b.14",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.cell-layer-theorem.proposition-b.14"
    ]
   },
   {
@@ -9553,7 +9553,7 @@
    "to": "navier-stokes.proposition-b.14",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.corollary-7.2.proposition-b.14"
    ]
   },
   {
@@ -9570,7 +9570,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.corollary-7.2.theorem-7.1"
    ]
   },
   {
@@ -11763,7 +11763,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.10"
    ]
   },
   {
@@ -11771,7 +11771,7 @@
    "to": "navier-stokes.lemma-b.11",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.11"
    ]
   },
   {
@@ -11780,7 +11780,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.12"
    ]
   },
   {
@@ -11789,7 +11789,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.13"
    ]
   },
   {
@@ -11798,7 +11798,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.2"
    ]
   },
   {
@@ -11807,7 +11807,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.3"
    ]
   },
   {
@@ -11816,7 +11816,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.5"
    ]
   },
   {
@@ -11825,7 +11825,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.6"
    ]
   },
   {
@@ -11834,7 +11834,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.7"
    ]
   },
   {
@@ -11843,7 +11843,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.lemma-b.9"
    ]
   },
   {
@@ -11851,7 +11851,7 @@
    "to": "navier-stokes.proposition-b.1",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.proposition-b.14.proposition-b.1"
    ]
   },
   {
@@ -11860,7 +11860,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.proposition-b.4"
    ]
   },
   {
@@ -11869,7 +11869,7 @@
    "kind": "supports",
    "evidence_ids": [
     "lean_dependencies",
-    "paper_logic"
+    "paper_logic.proposition-b.14.proposition-b.8"
    ]
   },
   {
@@ -12037,7 +12037,7 @@
    "to": "navier-stokes.cell-layer-theorem",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.theorem-1.1.cell-layer-theorem"
    ]
   },
   {
@@ -12045,7 +12045,7 @@
    "to": "navier-stokes.corollary-7.2",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.theorem-1.1.corollary-7.2"
    ]
   },
   {
@@ -12389,7 +12389,7 @@
    "to": "navier-stokes.proposition-b.14",
    "kind": "supports",
    "evidence_ids": [
-    "paper_logic"
+    "paper_logic.theorem-7.1.proposition-b.14"
    ]
   }
  ],
@@ -13439,35 +13439,289 @@
    "details": "Proof Reader's links.json at 3858afbe00b2 names these Lean declarations for Theorem 7.1: A certificate gives a profile. The links were made with AI and have not been reviewed by the authors."
   },
   {
-   "id": "paper_logic",
+   "id": "paper_logic.cell-layer-theorem.proposition-b.14",
    "kind": "semantic_review",
    "status": "not_run",
    "command": [],
-   "tool": "The paper's own statements of how its results join; transcribed with AI",
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
    "source_ids": [
     "paper"
    ],
    "subject_ids": [
     "navier-stokes.cell-layer-theorem",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The cell-layer theorem goes through Proposition B.14."
+  },
+  {
+   "id": "paper_logic.corollary-7.2.proposition-b.14",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
     "navier-stokes.corollary-7.2",
-    "navier-stokes.lemma-b.10",
-    "navier-stokes.lemma-b.11",
-    "navier-stokes.lemma-b.12",
-    "navier-stokes.lemma-b.13",
-    "navier-stokes.lemma-b.2",
-    "navier-stokes.lemma-b.3",
-    "navier-stokes.lemma-b.5",
-    "navier-stokes.lemma-b.6",
-    "navier-stokes.lemma-b.7",
-    "navier-stokes.lemma-b.9",
-    "navier-stokes.proposition-b.1",
-    "navier-stokes.proposition-b.14",
-    "navier-stokes.proposition-b.4",
-    "navier-stokes.proposition-b.8",
-    "navier-stokes.theorem-1.1",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The certificate of Corollary 7.2 is obtained from cell data by Proposition B.14."
+  },
+  {
+   "id": "paper_logic.corollary-7.2.theorem-7.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.corollary-7.2",
     "navier-stokes.theorem-7.1"
    ],
-   "details": "theorem-1.1 uses corollary-7.2: Section 7 supplies Theorem 1.1's hypothesis; Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold. corollary-7.2 uses theorem-7.1: Corollary 7.2 follows from Theorem 7.1, which gives a profile from a certificate. theorem-7.1 uses proposition-b.14: Proposition B.14: data that satisfy the conditions of Appendix B are a certificate. corollary-7.2 uses proposition-b.14: The certificate of Corollary 7.2 is obtained from cell data by Proposition B.14. theorem-1.1 uses cell-layer-theorem: The sentence after Proposition B.14's proof states the conclusions of Theorem 1.1 from the cell conditions. cell-layer-theorem uses proposition-b.14: The cell-layer theorem goes through Proposition B.14. proposition-b.14 uses lemma-b.10: The proof of Proposition B.14 names Lemma B.10. proposition-b.14 uses lemma-b.11: Proposition B.14 rests on Lemma B.11 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.12: The proof of Proposition B.14 names Lemma B.12. proposition-b.14 uses lemma-b.13: The proof of Proposition B.14 names Lemma B.13. proposition-b.14 uses lemma-b.2: The proof of Proposition B.14 names Lemma B.2. proposition-b.14 uses lemma-b.3: Proposition B.14 rests on Lemma B.3 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.5: Proposition B.14 rests on Lemma B.5 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.6: Proposition B.14 rests on Lemma B.6 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.7: Proposition B.14 rests on Lemma B.7 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses lemma-b.9: The proof of Proposition B.14 names Lemma B.9. proposition-b.14 uses proposition-b.1: Proposition B.14 rests on Proposition B.1 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses proposition-b.4: Proposition B.14 rests on Proposition B.4 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4). proposition-b.14 uses proposition-b.8: The proof of Proposition B.14 names Proposition B.8."
+   "details": "Corollary 7.2 follows from Theorem 7.1, which gives a profile from a certificate."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.10",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.10",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The proof of Proposition B.14 names Lemma B.10."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.11",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.11",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "Proposition B.14 rests on Lemma B.11 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.12",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.12",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The proof of Proposition B.14 names Lemma B.12."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.13",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.13",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The proof of Proposition B.14 names Lemma B.13."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.2",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The proof of Proposition B.14 names Lemma B.2."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.3",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "Proposition B.14 rests on Lemma B.3 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.5",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.5",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "Proposition B.14 rests on Lemma B.5 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.6",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.6",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "Proposition B.14 rests on Lemma B.6 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.7",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.7",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "Proposition B.14 rests on Lemma B.7 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.lemma-b.9",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.lemma-b.9",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "The proof of Proposition B.14 names Lemma B.9."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.proposition-b.1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.proposition-b.1",
+    "navier-stokes.proposition-b.14"
+   ],
+   "details": "Proposition B.14 rests on Proposition B.1 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.proposition-b.4",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.proposition-b.14",
+    "navier-stokes.proposition-b.4"
+   ],
+   "details": "Proposition B.14 rests on Proposition B.4 through the results its proof names (Appendix B, introduction and Subsections B.2 to B.4)."
+  },
+  {
+   "id": "paper_logic.proposition-b.14.proposition-b.8",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.proposition-b.14",
+    "navier-stokes.proposition-b.8"
+   ],
+   "details": "The proof of Proposition B.14 names Proposition B.8."
+  },
+  {
+   "id": "paper_logic.theorem-1.1.cell-layer-theorem",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.cell-layer-theorem",
+    "navier-stokes.theorem-1.1"
+   ],
+   "details": "The sentence after Proposition B.14's proof states the conclusions of Theorem 1.1 from the cell conditions."
+  },
+  {
+   "id": "paper_logic.theorem-1.1.corollary-7.2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.corollary-7.2",
+    "navier-stokes.theorem-1.1"
+   ],
+   "details": "Section 7 supplies Theorem 1.1's hypothesis; Corollary 7.2: if there exists a certificate, then the conclusions of Theorem 1.1 hold."
+  },
+  {
+   "id": "paper_logic.theorem-7.1.proposition-b.14",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "The paper's own statement of how its results join; transcribed with AI",
+   "source_ids": [
+    "paper"
+   ],
+   "subject_ids": [
+    "navier-stokes.proposition-b.14",
+    "navier-stokes.theorem-7.1"
+   ],
+   "details": "Proposition B.14: data that satisfy the conditions of Appendix B are a certificate."
   }
  ],
  "scope": "Finite-time blow-up for the Navier–Stokes equations, by Levent Alpöge, Tristan Buckmaster, with their Lean at https://github.com/tristanbuckmaster/navier-stokes ad53419de079eb8f95f60313473374624a348546, as read for Proof Reader (wcook04/proof-reader 3858afbe00b23dd8bba13ffa41409310b712723d). The numbered results are the authors'; their links to the Lean were made with AI.",

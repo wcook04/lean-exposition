@@ -183,3 +183,11 @@
   .fg__key, .fg__mini { display: none; }
   .fg__tools { bottom: 10px; }
 }
+
+/* A use the paper's own text states, with no Lean dependency between its ends: dashed and heavy. */
+.fg__edge--paper { stroke: color-mix(in srgb, var(--fg-ink) 70%, transparent); stroke-width: 2; stroke-dasharray: 6 4; }
+.fg__keyline--paper { border-top-width: 2px; border-top-style: dashed; border-top-color: var(--fg-ink); }
+.fg__edge-hit { fill: none; stroke: transparent; stroke-width: 12; pointer-events: stroke; cursor: pointer; }
+.fg__edge-why { margin: 0; padding: 6px 10px; font-size: 0.82rem; line-height: 1.4; color: var(--fg-ink); background: var(--fg-card, transparent); border-top: 1px solid var(--rule, #ddd); }
+.fg__edge-why-label { font-weight: 600; }
+.fg__edge-why-close { margin-left: 6px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }

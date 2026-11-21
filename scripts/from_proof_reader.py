@@ -624,21 +624,20 @@ def main() -> None:
                 edges.append({"from": nid, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
         for address, label in logic.get("labels", {}).items():
             nodes[f"{args.paper}.{address}"]["label"] = label
-        if logic.get("edges"):
-            evidence["paper_logic"] = {"id": "paper_logic", "kind": "semantic_review", "status": "not_run", "command": [],
-                                       "tool": "The paper's own statements of how its results join; transcribed with AI",
-                                       "source_ids": ["paper"], "subject_ids": [],
-                                       "details": " ".join(f"{e['from']} uses {e['to']}: {e['why']}" for e in logic["edges"])}
+        # Each edge carries its own evidence (paper_logic.<from>.<to>): the sentence that states it.
         for e in logic.get("edges", []):
             a, b = f"{args.paper}.{e['from']}", f"{args.paper}.{e['to']}"
             if a not in nodes or b not in nodes:
                 raise SystemExit(f"--paper-logic: {e['from']} or {e['to']} is not a result on the map")
+            eid = f"paper_logic.{e['from']}.{e['to']}"
+            evidence[eid] = {"id": eid, "kind": "semantic_review", "status": "not_run", "command": [],
+                             "tool": "The paper's own statement of how its results join; transcribed with AI",
+                             "source_ids": ["paper"], "subject_ids": sorted({a, b}), "details": e["why"]}
             same = next((x for x in edges if x["from"] == a and x["to"] == b and x["kind"] == "supports"), None)
             if same:
-                same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {"paper_logic"})
+                same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {eid})
             else:
-                edges.append({"from": a, "to": b, "kind": "supports", "evidence_ids": ["paper_logic"]})
-            evidence["paper_logic"]["subject_ids"] = sorted(set(evidence["paper_logic"]["subject_ids"]) | {a, b})
+                edges.append({"from": a, "to": b, "kind": "supports", "evidence_ids": [eid]})
     on_map = {n[len("lean."):] for n in nodes if n.startswith("lean.")}
     if facts and on_map:
         evidence["lean_dependencies"] = {

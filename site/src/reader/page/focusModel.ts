@@ -18,7 +18,8 @@ import type { FGCard, FGEdge, FGRole, FGRoleWords } from "../../map/FocusGraph";
 import type { LeanShell } from "../../lean/data";
 import { findDecl } from "../../lean/resolve";
 import { declTitle } from "../../model/declTitle";
-import type { ArgGraph, ArgNode } from "../../model/graph";
+import { onlyPaperLogic, type ArgEdge, type ArgGraph, type ArgNode } from "../../model/graph";
+import { routeHref } from "../../app/router";
 import { namedIn } from "../../model/leanGraph";
 import { shortTitle } from "../../compare/useAlignment";
 import { isPhraseRecord, type TieModel } from "../ties";
@@ -305,6 +306,15 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
   const cards = new Map<string, FGCard>();
   const edges: FGEdge[] = [];
   const missing = new Set<string>();
+  /**
+   * An edge of the paper's argument. One that rests only on the paper's own stated logic is drawn
+   * dashed, with the sentence that states it and a link to where the using result is stated.
+   */
+  const argumentEdge = (edge: ArgEdge, from: string, to: string): FGEdge => {
+    if (edge.kind === "assumes") return { from, to, kind: "statement" };
+    if (!onlyPaperLogic(edge)) return { from, to, kind: "argument" };
+    return { from, to, kind: "paper", why: edge.warrant?.details ?? edge.warrant?.text, href: routeHref({ view: "read", stage: input.stage, node: from }) };
+  };
   const put = (id: string) => {
     if (cards.has(id)) return true;
     const c = tools.card(id);
@@ -367,11 +377,11 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     for (const s of subjects) {
       for (const edge of graph.out.get(s) ?? []) {
         if (edge.kind !== "supports" && edge.kind !== "assumes") continue;
-        if (put(edge.to)) edges.push({ from: s, to: edge.to, kind: edge.kind === "assumes" ? "statement" : "argument" });
+        if (put(edge.to)) edges.push(argumentEdge(edge, s, edge.to));
       }
       for (const edge of graph.in.get(s) ?? []) {
         if (edge.kind !== "supports" && edge.kind !== "assumes") continue;
-        if (put(edge.from)) edges.push({ from: edge.from, to: s, kind: edge.kind === "assumes" ? "statement" : "argument" });
+        if (put(edge.from)) edges.push(argumentEdge(edge, edge.from, s));
       }
     }
     // What the subjects' own declarations use in the Lean, beside what the paper's argument uses.

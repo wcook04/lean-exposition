@@ -134,6 +134,14 @@ out_links = {"schema": 1, "claims": claims, "passages": passages, "redirects": r
 if sent:
     out_links["families"] = sent["families_topics"]["families"]
     out_links["topics"] = sent["families_topics"]["topics"]
+    # Notes set displays as $$...$$; the cards typeset $...$ only, so a display becomes $\displaystyle ...$.
+    def inline(text):
+        return re.sub(r"\$\$(.+?)\$\$", lambda m: "$\\displaystyle " + " ".join(m.group(1).split()) + "$", text, flags=re.S)
+    for source in ("paper_declarations", "statement_file_declarations"):
+        for row in sent[source].values():
+            for key in ("note", "summary"):
+                if row.get(key):
+                    row[key] = inline(row[key])
     # Titles and notes: the paper's 632 linked declarations first, then the readable statement files'.
     for source in ("paper_declarations", "statement_file_declarations"):
         for name, row in sent[source].items():
