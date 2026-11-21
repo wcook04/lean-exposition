@@ -49,7 +49,10 @@ def main() -> None:
         pages = [d for d in p["documents"] if not d.get("main")]
         extra = (f'<p class="pages">Also: ' + ", ".join(
             f'<a href="{html.escape(p["id"])}/{html.escape(d["slug"])}/">{html.escape(d["title"])}</a>' for d in pages) + "</p>") if pages else ""
-        credit = "".join(f'<p class="credit">{html.escape(line)}</p>' for line in p.get("credit_lines", []))
+        # The full credit (which names Anthropic where the paper does) stays on the paper's own page;
+        # the index credits the authors and their repository only.
+        short = p.get("companion_credit") or ""
+        credit = f'<p class="credit">{html.escape(short)}</p>' if short else ""
         items.append(f'<li class="paper"><h2><a href="{html.escape(p["id"])}/">{html.escape(p["title"])}</a></h2>'
                      f'<p class="by">By {html.escape(names(p["authors"]))}.</p>{credit}{extra}</li>')
     page = f"""<!doctype html>
