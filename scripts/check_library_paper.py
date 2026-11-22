@@ -103,7 +103,9 @@ def selection_checks(browser, base, args, check) -> None:
                 page.screenshot(path=str(args.shots / f"selection-{scheme}-{kind}.png"))
             words, displays = got["words"], got["displays"]
             low = min((w["contrast"] for w in words), default=None)
-            check(f"{tag} contrast", low is not None and low >= floor, f"lowest {low and round(low, 2)}:1 (floor {floor}:1) over {len(words)} selected runs")
+            # A selection may be a display alone (a formula has no run of words to measure).
+            check(f"{tag} contrast", (low is None and displays) or (low is not None and low >= floor),
+                  f"lowest {low and round(low, 2)}:1 (floor {floor}:1) over {len(words)} selected runs and {len(displays)} displays")
             heavy = [w for w in words if w["wash"] > wash + 0.005]
             check(f"{tag} faint wash", not heavy, f"wash above {wash:.0%}: {heavy[:2]}")
             thick = [w for w in words if w["line"] > 2]
