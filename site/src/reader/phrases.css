@@ -155,8 +155,8 @@
 
 .phrase-key {
   margin: 0 0 var(--space-3);
-  padding: var(--space-2) 0 var(--space-3);
-  border-bottom: 1px solid var(--rule);
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--rule);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   line-height: 1.35;
@@ -210,6 +210,21 @@
 .phrase-key__note {
   margin: 6px 0 0;
   color: var(--ink-3);
+}
+
+/* What the colours mean: one disclosure under the key, closed until asked for. */
+.phrase-key__about {
+  margin-top: var(--space-2);
+}
+
+.phrase-key__about summary {
+  min-height: 24px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.phrase-key__about summary:hover {
+  color: var(--ink);
 }
 
 /* Beside a section in the contents: the topics its phrases belong to. */
