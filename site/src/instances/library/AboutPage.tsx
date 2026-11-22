@@ -16,7 +16,6 @@ const ADAPTED_DOWNLOADS = ADAPTED
       { entry: ADAPTED.reading_pdf, pdf: true, label: "PDF without change marks" },
       { entry: ADAPTED.aux_reading_pdf, pdf: true, label: "Auxiliary note, PDF without change marks" },
       { entry: ADAPTED.source_overlay, pdf: false, label: "TeX revisions against the authors’ source (ZIP)" },
-      { entry: ADAPTED.result_comparison?.reading, pdf: false, label: "Result-by-result comparison" },
       { entry: ADAPTED.result_comparison?.data, pdf: false, label: "Comparison data" },
     ]
       .filter((d) => !!d.entry)
@@ -103,7 +102,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           )}
           {ADAPTED.result_comparison?.reading && (
             <p>
-              <a href={routeHref({ view: "about", anchor: COMPARISON_ANCHOR })}>The result-by-result comparison</a> below opens each numbered
+              <a href={routeHref({ view: "about", anchor: COMPARISON_ANCHOR })}>Read the result-by-result comparison</a> to open each numbered
               statement in the authors’ paper and in the adapted edition.
             </p>
           )}
