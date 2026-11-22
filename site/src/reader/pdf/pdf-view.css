@@ -14,7 +14,7 @@
 :root[data-tones="off"] .pdf-view__mark { --pdf-mark-ink: #706c76; }
 .pdf-view__mark:hover, .pdf-view__mark:focus-visible { background: color-mix(in oklab, var(--pdf-mark-ink) 21%, transparent); border-bottom: 2px solid color-mix(in oklab, var(--pdf-mark-ink) 55%, transparent); }
 .pdf-view__mark.is-selected { background: color-mix(in oklab, var(--pdf-mark-ink) 25%, transparent); border-bottom: 2px solid var(--pdf-mark-ink); }
-.pdf-view__mark:focus-visible { outline: 2px solid var(--tone, #365fa9); outline-offset: 1px; }
+.pdf-view__mark:focus-visible { outline: 2px solid var(--pdf-mark-ink); outline-offset: 1px; }
 .pdf-view__failed { color: var(--muted); }
 .view-toggle { display: inline-flex; border: 1px solid var(--rule, #ccc); border-radius: 6px; overflow: hidden; }
 .view-toggle button { border: 0; background: none; color: inherit; font: inherit; font-size: 0.85rem; padding: 2px 10px; cursor: pointer; }

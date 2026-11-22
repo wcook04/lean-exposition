@@ -31,7 +31,7 @@
 /* The rail takes its colour from the same marked words as the tint. Paragraph selection
    keeps its keyboard and pointer target in this column. */
 .paper .tick[data-tone] {
-  background-color: var(--tone);
+  background-color: var(--tone, var(--ink-3));
 }
 
 :root[data-tones="off"] .paper .tick[data-tone] {
