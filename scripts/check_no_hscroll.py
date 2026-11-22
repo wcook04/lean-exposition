@@ -191,7 +191,10 @@ def main() -> int:
                     inside = page.evaluate("""() => { const d = document.querySelector('dialog.modal--formula[open]'); const m = d.querySelector('.math-display');
                       const sideways = [...d.querySelectorAll('*')].filter(e => ['auto', 'scroll'].includes(getComputedStyle(e).overflowX) && e.scrollWidth > e.clientWidth + 1).length;
                       const parts = [...m.querySelectorAll('.katex-html > .katex-base, .katex-tag, .tag')].map(p => p.getBoundingClientRect().right);
-                      return { sideways, out: Math.max(0, ...parts) - m.getBoundingClientRect().right, wide: d.getBoundingClientRect().width / innerWidth }; }""")
+                      const mr = m.getBoundingClientRect(); const n = m.querySelector(':scope > .math-number'); const k = m.querySelector(':scope > .katex-display');
+                      return { sideways, out: +(Math.max(0, ...parts) - mr.right).toFixed(1), wide: +(d.getBoundingClientRect().width / innerWidth).toFixed(3),
+                        box: Math.round(mr.width), fit: m.dataset.fit || '', form: m.dataset.form || '', number: n ? Math.round(n.getBoundingClientRect().width) : 0,
+                        katex: k ? Math.round(k.getBoundingClientRect().width) : 0, align: m.dataset.align || '', font: k ? getComputedStyle(k.querySelector('.katex')).fontSize : '' }; }""")
                     if args.shots:
                         args.shots.mkdir(parents=True, exist_ok=True)
                         page.screenshot(path=str(args.shots / f"{slot}-expand-{width}.png"))

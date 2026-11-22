@@ -602,8 +602,11 @@ function fitDisplay(box: HTMLElement): void {
   setScale(box, choice.size, scale);
   // What is drawn must lie inside the column: if KaTeX's spacing still reaches past it, shrink
   // the formula by what remains, once.
-  const extent = formulaExtent(box);
-  if (extent > box.clientWidth + 0.5 && extent > 0) {
+  // Font sizes round to whole device pixels and KaTeX's spacing does not scale exactly, so check
+  // again after each step, a few times at most.
+  for (let step = 0; step < 4; step++) {
+    const extent = formulaExtent(box);
+    if (!(extent > box.clientWidth + 0.5 && extent > 0)) break;
     const tagPart = choice.size.tag ? choice.size.tag + TAG_GAP : 0;
     scale = Math.floor(scale * Math.max(0, box.clientWidth - tagPart) / Math.max(1, extent - tagPart) * 0.99 * 1000) / 1000;
     setScale(box, choice.size, scale);
