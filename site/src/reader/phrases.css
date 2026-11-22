@@ -695,3 +695,22 @@
    left most of the pane empty and squeezed the comparison. */
 .map-pane .phrase-card, .map-pane .lean-page__body { min-width: 0; max-width: 100%; }
 
+
+/* The pane's explanations read like the paper beside them: its serif, mathematics at the
+   text's own size, a measure of about 68 characters and open leading. */
+.map-pane .phrase-card :is(.phrase-card__compare, .phrase-card__notes > div) {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  max-width: 68ch;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.map-pane .phrase-card :is(.phrase-card__compare, .phrase-card__notes > div) .katex {
+  font-size: 1.02em;
+}
+
+.map-pane .phrase-card :is(.phrase-card__compare, .phrase-card__notes > div) p + p {
+  margin-top: 0.6em;
+}
