@@ -15,6 +15,15 @@ describe("shared reader fragments", () => {
     });
   });
 
+  it("preserves the chosen pane at an unpinned slice and at the top of the paper", () => {
+    for (const at of [undefined, "b189009-189343"]) {
+      const route = { view: "read" as const, stage: "short" as const, graph: true, at };
+      const url = new URL(routeHref(route), "https://example.test");
+      expect(url.searchParams.get("v")).toBe("graph");
+      expect(parseRoute(url)).toMatchObject(route);
+    }
+  });
+
   it("treats an empty fragment as no anchor", () => {
     expect(parseRoute(new URL("https://example.test/read/long#"))).toMatchObject({
       view: "read", stage: "long", anchor: undefined,

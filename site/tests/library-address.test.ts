@@ -151,6 +151,13 @@ describe("library addresses", () => {
     { accounts: { to: "how-the-lean-encodes-it", phrases: { "p2.coercive": "part-2" } } });
   });
 
+  it("keeps an explicitly chosen graph view at an unpinned byte slice", () => {
+    const address = `${BASE}/?l=b189009-189343&v=graph`;
+    const { route, href } = roundTrip(address);
+    expect(route).toMatchObject({ at: "b189009-189343", graph: true, node: undefined });
+    expect(href).toBe(address);
+  });
+
   it("any other reading state keeps the reader's own parameters at the paper's top", () => {
     const route = { view: "read" as const, stage: "short" as const, at: "120-134" };
     expect(libraryHref(route, BASE, lib)).toBe(`${BASE}/?l=120-134`);
