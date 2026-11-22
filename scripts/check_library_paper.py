@@ -87,12 +87,17 @@ def selection_checks(browser, base, args, check) -> None:
         for kind, path in ((("result", f"{args.result}/"),) if args.result else ()) + (("phrase", f"@{args.phrase}"),):
             tag = f"selection {scheme} {kind}"
             page.goto(base + path)
-            try:
-                page.wait_for_selector(".paper .tie[data-pin]", timeout=60000)
-            except Exception:
-                check(f"{tag} selected", False, f"nothing selected at {path}")
-                continue
+            page.wait_for_selector(".paper .tie", timeout=60000)
+            if kind == "phrase":
+                try:
+                    page.wait_for_selector(".paper .tie[data-pin]", timeout=15000)
+                except Exception:
+                    pass
             page.wait_for_timeout(2500)
+            if not page.locator(".paper .tie[data-pin]").count():
+                # A numbered result may open on its statement with no phrase of its own to select (quartic).
+                check(f"{tag} selected", kind == "result", f"nothing selected at {path}")
+                continue
             got = page.evaluate(SELECTION)
             if args.shots:
                 page.screenshot(path=str(args.shots / f"selection-{scheme}-{kind}.png"))
