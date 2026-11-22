@@ -21,6 +21,7 @@ import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
 import { declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
+import { OurStatements } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
 
@@ -377,6 +378,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                   merged={open.tie !== null ? ties.index.ties[open.tie]?.merged : undefined}
                 />
               )}
+              {phrase && open.tie !== null && <OurStatements phrase={ties.index.ties[open.tie]?.phrase} />}
               <LazyLeanBlock
                 key={`${row?.module ?? open.declModule ?? ""}:${name}`}
                 name={name}

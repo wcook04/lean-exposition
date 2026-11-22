@@ -6,7 +6,8 @@
 
 import type { SiteFacts } from "../home/siteFacts.ts";
 
-export type InstanceStage = "long" | "short" | "expository";
+/** A document slot: one of the three accounts, or (a library paper's) a companion page. */
+export type InstanceStage = string;
 
 /** A record of the graph in a paper's terms (recordKind). */
 export type RecordKind = "result" | "step" | "cited" | "open" | "declaration";
@@ -117,7 +118,16 @@ export interface SiteInstance {
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
-  library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
+  /**
+   * A library paper: its id, its main document, its page slugs (page -> document), and its companion
+   * documents in reading order, grouped (each a document of its own, answered from its own edition).
+   */
+  library?: {
+    paper: string;
+    main: InstanceStage;
+    pages?: Record<string, string>;
+    companions?: { slot: string; title: string; group: string; group_title: string; order: number }[];
+  };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
    * The `supports` links ("from→to", node ids) the edition derived from the Lean's dependencies

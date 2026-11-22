@@ -371,7 +371,7 @@ def _phrase_record(row, names, start_byte, end_byte, records, stage, by_name):
 def _phrase_lean(item, names, where, errors):
     """One Lean row of a phrase tie, resolved to what the reader receives, or None."""
     if not _check_keys(item, {"name", "file", "relation", "fidelity"},
-                       {"lines", "fidelity_note", "link_note", "assessments"}, where, errors):
+                       {"lines", "fidelity_note", "link_note", "assessments", "matters"}, where, errors):
         return None
     if item["relation"] not in RELATIONS:
         errors.append(f"{where}: unknown relation {item['relation']!r}")
@@ -410,7 +410,9 @@ def _phrase_lean(item, names, where, errors):
             "exact_lines": lines is not None, **_proof_lines(target), "relation": item["relation"],
             "note": link, "fidelity": item["fidelity"],
             **({"fidelity_note": note} if note else {}), "fidelity_source": "ai",
-            **({"assessments": assessments} if assessments else {})}
+            **({"assessments": assessments} if assessments else {}),
+            # Whether the difference bears on the paper's main result, as the paper's data says.
+            **({"matters": item["matters"]} if isinstance(item.get("matters"), dict) else {})}
 
 
 def resolve_phrases(directory, prepared, names, records, errors):
@@ -451,7 +453,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
         for n, part in enumerate(data.get("parts") or ()):
             at = f"{where}:parts[{n}]"
             if not _check_keys(part, {"name", "lines", "topics", "titles", "notes"},
-                               {"packet", "source_commit", "partial"}, at, errors):
+                               {"packet", "source_commit", "partial", "title_words"}, at, errors):
                 continue
             first, last = part["lines"]
             begin = line_starts[first - 1] if 0 < first <= len(line_starts) else 0
@@ -472,7 +474,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
                                       **({"family": t["family"]} if t.get("family") else {})}
                                      for t in part["topics"] if t.get("id") in ids],
                           "titles": {}, "notes": {}, "_titles": part["titles"], "_notes": part["notes"],
-                          **{key: part[key] for key in ("packet", "source_commit", "partial") if key in part}})
+                          **{key: part[key] for key in ("packet", "source_commit", "partial", "title_words") if key in part}})
         if not parts:
             errors.append(f"{where}: no parts")
             continue
@@ -480,7 +482,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
         for n, row in enumerate(data.get("ties") or ()):
             at = f"{where}:ties[{n}]"
             if not _check_keys(row, {"id", "from", "to", "role", "topic", "status", "lean"},
-                               {"after", "replaces", "reason", "merged"}, at, errors):
+                               {"after", "replaces", "reason", "merged", "explanation"}, at, errors):
                 continue
             merged = []
             for k, one in enumerate(row.get("merged") or ()):
@@ -529,7 +531,9 @@ def resolve_phrases(directory, prepared, names, records, errors):
                          "at": f"b{start_byte}-{end_byte}", **located,
                          "record": _phrase_record(row, {item["name"] for item in lean}, start_byte, end_byte,
                                                   records, stage, by_name),
-                         "lean": lean, **({"merged": merged} if merged else {})})
+                         "lean": lean, **({"merged": merged} if merged else {}),
+                         # What the words say, with the sources it rests on, where the paper's data gives it.
+                         **({"explanation": row["explanation"]} if isinstance(row.get("explanation"), dict) else {})})
         taken.sort()
         for (a, b, one), (c, d, other) in zip(taken, taken[1:]):
             if c < b:
@@ -542,8 +546,11 @@ def resolve_phrases(directory, prepared, names, records, errors):
                 # A part marked `partial: true` may leave a declaration without a title or a note (the
                 # card then shows the Lean name alone); what it does give must still be well formed.
                 partial = part.get("partial") is True
-                if (title is not None or not partial) and (not 2 <= words <= 6 or title != title.strip()):
-                    errors.append(f"{where}: {name} needs a trimmed title of two to six words in {part['name'] or 'its part'}")
+                # A part may widen the title length (`title_words`: [fewest, most]) when its source
+                # writes titles in the paper's own words, as the quartic reader does; two to six otherwise.
+                fewest, most = part.get("title_words") or (2, 6)
+                if (title is not None or not partial) and (not fewest <= words <= most or title != title.strip()):
+                    errors.append(f"{where}: {name} needs a trimmed title of {fewest} to {most} words in {part['name'] or 'its part'}")
                 if (note is None and partial):
                     pass
                 elif type(note) is not str or not note.strip():
@@ -554,7 +561,8 @@ def resolve_phrases(directory, prepared, names, records, errors):
             part["notes"] = dict(sorted(part["notes"].items()))
             del part["_titles"], part["_notes"]
         ties.sort(key=lambda tie: tie["start_byte"])
-        out[stage] = {"parts": parts, "ties": ties}
+        out[stage] = {"parts": parts, "ties": ties,
+                      **({"main_result": data["main_result"]} if isinstance(data.get("main_result"), str) else {})}
         colours = _stored_colours(path.with_name(f"colours-{stage}.json"), parts, errors)
         if colours is not None:
             out[stage]["colours"] = colours
@@ -951,7 +959,7 @@ def _phrase_tie(row, part, tone, titles):
     first = row["lean"][0] if row["lean"] else None
     rows = [{key: item[key] for key in ("name", "module", "line", "end_line", "lines", "exact_lines", "relation",
                                          "fidelity", "fidelity_note", "fidelity_source", "assessments", "note",
-                                         "proof_lines")
+                                         "proof_lines", "matters")
              if key in item} | ({"plain": titles[item["name"]]} if item["name"] in titles else {})
             for item in row["lean"]]
     # The comparison of each row travels in `rows`; the tie's own fields name the first row only.
@@ -962,7 +970,8 @@ def _phrase_tie(row, part, tone, titles):
             "module": first["module"] if first else None, "lines": first["lines"] if first else None,
             "anchor": row["anchor"], "at": row["at"], "origin": "ai",
             "topic": row["topic"], "part": part, "tone": tone, "rows": rows,
-            **({"merged": row["merged"]} if row.get("merged") else {})}
+            **({"merged": row["merged"]} if row.get("merged") else {}),
+            **({"explanation": row["explanation"]} if "explanation" in row else {})}
 
 
 def tie_index(content, records, stage, passages=(), names=(), phrases=None):
@@ -1025,6 +1034,8 @@ def tie_index(content, records, stage, passages=(), names=(), phrases=None):
         index["canonical"] = canonical
     if phrases is not None:
         index["layer"] = "phrases"
+        if phrases.get("main_result"):
+            index["main_result"] = phrases["main_result"]
         index["topics"] = topic_rows
         if families:
             index["families"] = families

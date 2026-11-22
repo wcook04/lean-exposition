@@ -46,16 +46,24 @@ export const MIN_CONTRAST = 3;
  * with the full-strength colours (21 November 2026); every list in use clears them.
  */
 export const FAMILY_FLOOR = { normal: 15, dichromat: 3.5 };
-/** CIEDE2000 between any two shades of one family, in both themes and every vision. */
-export const SHADE_FLOOR = 6.7;
+/**
+ * CIEDE2000 between any two shades of one family, in both themes and every vision. At 7 the two
+ * shades of a family read as one colour at reading size; 10.5 is what the shade step below buys
+ * inside the 3:1 band, mostly in lightness, so it holds for dichromats too.
+ */
+export const SHADE_FLOOR = 10.5;
 
 /** The two pages a colour is drawn on (styles/tokens.css `--ground`). */
 export const GROUNDS = { light: "#f8f0e2", dark: "#1c1526" } as const;
 export type ThemeName = keyof typeof GROUNDS;
 export const THEMES: ThemeName[] = ["light", "dark"];
 
-/** A shade's step either side of its family, in OKLCH lightness, as a share of the chroma cap, and in hue (share of the spacing). */
-export const SHADE_STEP = { lightness: 0.085, chroma: 0.12, hue: 0.12 };
+/**
+ * A shade's step from its neighbour, in OKLCH lightness, as a share of the chroma cap, and in hue
+ * (share of the spacing). Lightness carries the step: CIEDE2000 weighs lightness less away from
+ * mid-grey, and the dark theme's colours sit high, so 0.12 is what keeps neighbours 10.5 apart.
+ */
+export const SHADE_STEP = { lightness: 0.12, chroma: 0.12, hue: 0.16 };
 
 // ---- Colour arithmetic ------------------------------------------------------------------------
 

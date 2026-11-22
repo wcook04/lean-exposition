@@ -87,12 +87,16 @@ def slug_of(title: str) -> str | None:
 
 
 def section_number(heading: str) -> str | None:
-    """`5.5.1 The equations at each level` -> `5.5.1`; `Appendix A ...` -> `appendix-a`."""
-    m = re.match(r"^(\d+(?:\.\d+)*)\s", heading)
+    """`5.5.1 The equations at each level` -> `5.5.1`; `Appendix A ...` -> `appendix-a`.
+
+    A number may end in a full stop, as papers set with Pandoc print them (`3.1. The promise`,
+    `Appendix A. The upper bound`, `A.2. The adversary bound` -> `appendix-a.2`).
+    """
+    m = re.match(r"^(\d+(?:\.\d+)*)\.?\s", heading)
     if m:
         return m.group(1)
-    m = re.match(r"^(?:Appendix\s+)?([A-Z])(?:\.(\d+(?:\.\d+)*))?\s", heading)
-    if m and heading.startswith("Appendix"):
+    m = re.match(r"^(?:Appendix\s+)?([A-Z])(?:\.(\d+(?:\.\d+)*))?\.?\s", heading)
+    if m and (heading.startswith("Appendix") or m.group(2)):
         return "appendix-" + m.group(1).lower() + (f".{m.group(2)}" if m.group(2) else "")
     return None
 
@@ -226,6 +230,9 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
                 row = {"name": target, "file": path, "relation": ROLE[p["role"]][1], "fidelity": c["fidelity"]}
                 if note:
                     row["fidelity_note"] = note
+                matters = (comparisons.get(name) or {}).get("matters")
+                if isinstance(matters, dict):
+                    row["matters"] = matters
                 row["assessments"] = [one]
                 by_target[target] = row
                 rows.append(row)
@@ -243,6 +250,8 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
         if role in {"statement", "definition"} and not rows:
             tie["role"] = "explanation"
             report["statement_without_lean"].append(first["id"])
+        if isinstance(first.get("explanation"), dict):
+            tie["explanation"] = first["explanation"]
         if len(group) > 1:
             tie["replaces"] = [p["id"] for p in group[1:]]
             # The merge, recorded: each phrase the tie holds, with its own words, role and topic.
@@ -393,6 +402,7 @@ def main() -> None:
                     help="replace the ties, comparisons and notes of an existing instance, keeping every old tie id as an address")
     ap.add_argument("--retired-on", default=__import__("datetime").date.today().isoformat(),
                     help="the date a re-import records for the phrase links it retires (YYYY-MM-DD; default today)")
+    ap.add_argument("--start-here", type=Path, help="a long Markdown 'Start here' for the paper, read as a page of its own")
     ap.add_argument("--guide", type=Path, help="a Markdown guide to how the Lean encodes the paper's objects, read as a page of its own")
     ap.add_argument("--hold-comparisons", action="store_true",
                     help="keep the page's comparisons hidden: every comparison is replaced by the page's held text (fidelity_held)")
@@ -405,6 +415,13 @@ def main() -> None:
     ap.add_argument("--paper-logic", type=Path,
                     help="authored JSON: the paper's own stated logic between its results, as supports edges sourced to the "
                          "paper, and unnumbered results it states (nodes with their phrase and Lean)")
+    ap.add_argument("--lean-index", type=Path,
+                    help="a prebuilt Lean index (with uses) of another instance's vendored Lean, read instead of "
+                         "vendoring and indexing the page's project (a companion read beside its paper's Lean)")
+    ap.add_argument("--lean-lock", type=Path, help="with --lean-index: the source lock of that instance's Lean")
+    ap.add_argument("--companions-index", type=Path,
+                    help="index.json of companion pages (<slug>/document.md, <slug>/links.json beside it), each read as a "
+                         "document of its own at its library_page, beside the same Lean")
     ap.add_argument("--credit", help="the credit line, exactly, in place of paper.toml's [credit] text")
     args = ap.parse_args()
     page, out, slot = args.page, args.out, args.slot
@@ -424,6 +441,9 @@ def main() -> None:
         if (out / "alignment/aliases.json").is_file():
             old_table = json.loads((out / "alignment/aliases.json").read_text())
             old_aliases, old_retired = old_table.get("passages", {}), old_table.get("retired", {})
+    # Pages that moved keep their addresses across conversions (instance.json moved_pages, kept as it was).
+    moved_pages = (json.loads((out / "instance.json").read_text()).get("moved_pages")
+                   if (out / "instance.json").is_file() else None)
     if out.exists():
         for child in ("papers", "alignment", "upstream", "generated", "evidence-graph.json", "instance.json"):
             target = out / child
@@ -431,10 +451,10 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
 
     # ---- Lean: vendor the project's sources unchanged and index them.
-    project = (page / toml["lean"]["project"]).resolve()
+    project = (page / toml["lean"]["project"]).resolve() if not args.lean_index else None
     lean_out = out / "upstream/lean"
     locked = []
-    for path in sorted(project.rglob("*")):
+    for path in (sorted(project.rglob("*")) if project else []):
         rel = path.relative_to(project)
         if path.is_file() and (path.suffix == ".lean" or rel.name in {"lean-toolchain", "lakefile.toml", "lake-manifest.json"}) \
                 and ".lake" not in rel.parts:
@@ -450,12 +470,20 @@ def main() -> None:
         "license": "NOASSERTION", "files": locked,
         # The modules the page reads: their top-level directories, and top-level module files such as Solution.
         **({"lean_roots": sorted({m.split(".")[0] for m in toml["lean"]["modules"]})} if toml["lean"].get("modules") else {})}))
-    index_path = out / "generated/lean-index.json"
-    index_path.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run([args.lean_exposition, "lean-index", str(lean_out), "--out", str(index_path)], check=True,
-                   stdout=subprocess.DEVNULL)
-    lean = Lean(json.loads(index_path.read_text()))
-    index_path.unlink()  # the site builds its own index from upstream/lean
+    if args.lean_index:
+        # A companion reads its paper's Lean: the index names the files, and their locked hashes come
+        # from the paper's own source lock beside it.
+        shared = json.loads(args.lean_index.read_text())
+        lean = Lean(shared)
+        lock = json.loads(args.lean_lock.read_text()) if args.lean_lock else {"files": []}
+        locked = lock["files"]
+    else:
+        index_path = out / "generated/lean-index.json"
+        index_path.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run([args.lean_exposition, "lean-index", str(lean_out), "--out", str(index_path)], check=True,
+                       stdout=subprocess.DEVNULL)
+        lean = Lean(json.loads(index_path.read_text()))
+        index_path.unlink()  # the site builds its own index from upstream/lean
     # Lean's own dependencies, from Proof Reader's report of the compiled modules: what each
     # declaration's type uses, what its value uses (recorded for definitions) and its axioms.
     facts = {}
@@ -474,9 +502,12 @@ def main() -> None:
     write(out / "generated/lean-facts.json", json.dumps({"schema": 1, "source": f"wcook04/proof-reader {args.source_commit[:12]} papers/{page.name}",
                                                         "facts": dict(sorted(facts.items()))}, ensure_ascii=False, separators=(",", ":")))
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from enrich_lean_index import enrich
-    enriched = enrich(lean_out, facts)
-    uses_of = {d["name"]: d["uses"] for m in enriched["modules"] for d in m["declarations"]}
+    if args.lean_index:
+        uses_of = {d["name"]: d.get("uses", []) for m in shared["modules"] for d in m["declarations"]}
+    else:
+        from enrich_lean_index import enrich
+        enriched = enrich(lean_out, facts)
+        uses_of = {d["name"]: d["uses"] for m in enriched["modules"] for d in m["declarations"]}
 
     # ---- the reading copy
     text, sections, section_anchors = reading_copy(md, links["passages"])
@@ -537,6 +568,7 @@ def main() -> None:
                     f"Proof Reader (wcook04/proof-reader {args.source_commit[:12]}, papers/{page.name}). Titles, reading "
                     "notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them."),
         "families": links.get("families", []),
+        **({"main_result": links["main_result"]} if isinstance(links.get("main_result"), str) else {}),
         "topic_order": topic_order,
         "parts": [{"name": "", "lines": [first_line, last_line], "source_commit": args.source_commit,
                    "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""),
@@ -913,13 +945,29 @@ def main() -> None:
                          "rationale": f"{sec['heading']}: " + ("states or proves the listed results." if ids else "context with no numbered result.")})
     write(paper_dir / "correspondence.json", dumps(mapping(slot, paper_md, passages)))
     companion_docs = []
+    # Companion documents: --companion fills one of the reader's three fixed slots; --companions-index
+    # adds any number of documents, each in a slot of its own named by its page (digest, library-07),
+    # grouped and ordered as the index says.
+    specs = []
     for spec in args.companion:
         cslot, pages_spec = spec.split("=", 1)
         pages_spec, cslug, ctitle_given = (pages_spec.split("|") + ["", ""])[:3]
-        if cslot == slot or cslot not in SLOTS or cslot in {d["slot"] for d in companion_docs}:
+        if cslot == slot or cslot not in SLOTS:
             raise SystemExit(f"--companion {spec}: the slot must be a free one of {SLOTS}")
-        cpages = [Path(x) for x in pages_spec.split("+")]
-        ctomls = [tomllib.loads((cp / "paper.toml").read_text()) for cp in cpages]
+        specs.append((cslot, [Path(x) for x in pages_spec.split("+")], cslug, ctitle_given, {}))
+    if args.companions_index:
+        cindex = json.loads(args.companions_index.read_text())
+        for d in sorted(cindex["documents"], key=lambda d: d["order"]):
+            if d["library_page"] in SLOTS or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", d["library_page"]):
+                raise SystemExit(f"companion page {d['library_page']!r} is not a page name")
+            specs.append((d["library_page"], [args.companions_index.parent / d["slug"]], d["library_page"], d["title"],
+                          {"group": d["group"], "group_title": d["group_title"], "order": d["order"],
+                           "credit": d.get("credit", ""), "authors": d.get("authors", []), "kind": "companion"}))
+    for cslot, cpages, cslug, ctitle_given, cmeta in specs:
+        if cslot in {d["slot"] for d in companion_docs}:
+            raise SystemExit(f"companion slot {cslot} is used twice")
+        ctomls = [tomllib.loads((cp / "paper.toml").read_text()) if (cp / "paper.toml").is_file()
+                  else {"paper": {"title": ctitle_given or cp.name, "markdown": "document.md", "noun": "companion"}} for cp in cpages]
         clinks = [json.loads((cp / "links.json").read_text()) for cp in cpages]
         cmd = "\n\n".join((cp / t["paper"].get("markdown", "paper.md")).read_text().rstrip("\n")
                             for cp, t in zip(cpages, ctomls)) + "\n"
@@ -987,10 +1035,10 @@ def main() -> None:
         companion_docs.append({"id": "+".join(cp.name for cp in cpages), "slot": cslot,
                                "slug": cslug or (cpages[0].name.removeprefix(f"{page.name.split('-paper')[0]}-") if len(cpages) == 1 else "accounts"),
                                "title": ctitle_given or (t0["title"] if len(cpages) == 1 else " · ".join(t["paper"]["short_title"] for t in ctomls)),
-                               "noun": t0.get("noun", "account")})
+                               "noun": t0.get("noun", "account"), **cmeta})
         summary_c = {k: (len(v) if isinstance(v, list) else v) for k, v in creport.items()}
         report.setdefault("companions", {})["+".join(cp.name for cp in cpages)] = {**summary_c, "ties": len(cties), "titled": len(ctitles), "noted": len(cnote_rows)}
-    if args.companion:
+    if specs:
         write(out / "alignment/names.json", dumps({"schema": 1, "names": dict(sorted(plain.items()))}))
         write(out / "alignment/aliases.json", dumps({"schema": 1, "passages": aliases,
                                                      "claims": {c["id"]: a for a, c in claims}}))
@@ -1013,12 +1061,15 @@ def main() -> None:
         receipt = json.loads((folder / "receipt.json").read_text()) if (folder / "receipt.json").is_file() else None
         comparator = {"files": files, "receipt": "receipt.json" if receipt else None}
 
-    # ---- the guide to how the Lean encodes the paper, as a page of its own (the exposition slot)
-    guide = None
-    if args.guide:
-        gslot = next(s for s in ("expository", "long") if s != slot)
-        gtext = args.guide.read_text()
-        gtext, gsections, _ = reading_copy(gtext, [])
+    # ---- companion pages read as documents of their own, in the free document slots: the guide to how
+    # the Lean encodes the paper (--guide) and the long "Start here" (--start-here).
+    def companion(path, doc_id, slug, title, why):
+        free = [x for x in ("expository", "long") if x != slot and x not in taken]
+        if not free:
+            raise SystemExit(f"no free document slot for {title}")
+        gslot = free[0]
+        taken.add(gslot)
+        gtext, gsections, _ = reading_copy(path.read_text(), [])
         gbytes = gtext.encode("utf-8")
         write(out / "papers" / gslot / "paper.md", gtext)
         (out / "papers" / gslot / "absent.md").unlink(missing_ok=True)
@@ -1026,13 +1077,13 @@ def main() -> None:
         gpassages, cursor = [], 0
         for sec in gsections:
             marker, end = f"<!-- passage:{sec['anchor']} -->", f"<!-- /passage:{sec['anchor']} -->"
-            start = gtext.index(marker, cursor) + len(marker)
-            stop = gtext.index(end, start)
+            begin = gtext.index(marker, cursor) + len(marker)
+            stop = gtext.index(end, begin)
             cursor = stop
-            gpassages.append({"anchor": sec["anchor"], "text_sha256": sha(gtext[start:stop].encode("utf-8")), "claim_ids": [],
+            gpassages.append({"anchor": sec["anchor"], "text_sha256": sha(gtext[begin:stop].encode("utf-8")), "claim_ids": [],
                               "citation_ids": [], "assumption_ids": [], "evidence_class": "context",
-                              "rationale": f"{sec['heading']}: how the formalisation encodes the paper's objects."})
-        # The guide explains how the main result is encoded; its opening section carries that result.
+                              "rationale": f"{sec['heading']}: {why}"})
+        # The page is about the main result; its opening section carries that result.
         if gpassages:
             gpassages[0].update(claim_ids=[goal], citation_ids=sorted(required_citation_ids(graph, [goal])),
                                 evidence_class="source_argument")
@@ -1040,7 +1091,17 @@ def main() -> None:
         mapped["state"] = "draft"
         write(out / "papers" / gslot / "correspondence.json", dumps(mapped))
         write(out / f"alignment/references-{gslot}.json", dumps(references(gtext, gslot)))
-        guide = {"id": "encoding", "slot": gslot, "slug": "how-the-lean-encodes-it", "title": "How the Lean encodes it", "noun": "guide"}
+        return {"id": doc_id, "slot": gslot, "slug": slug, "title": title, "noun": "guide"}
+
+    taken = {d["slot"] for d in companion_docs}
+    companions = []
+    if args.guide:
+        companions.append(companion(args.guide, "encoding", "how-the-lean-encodes-it", "How the Lean encodes it",
+                                    "how the formalisation encodes the paper's objects."))
+    if args.start_here:
+        companions.append(companion(args.start_here, "start-here", "start-here", "Start here",
+                                    "an orientation to the paper and its Lean."))
+    guide = companions[0] if companions else None
 
     # ---- supplementary checks and the declarations no sentence names
     if (page / "generated/checks.json").is_file():
@@ -1059,7 +1120,8 @@ def main() -> None:
     # kept with the instance until the reader shows them.
     # Optional reading aids the reader does not draw yet: the paper's glossary of conventions, section
     # aids and showcase cards. Carried unchanged so a later design pass can render them.
-    for aid in ("glossary.json", "section-aids.json", "showcase.json"):
+    for aid in ("glossary.json", "section-aids.json", "showcase.json", "route.json", "start-here-summary.md",
+                "start-here.md", "differences-summary.md", "ours.json"):
         if (page / "notes" / aid).is_file():
             write(out / "generated" / aid, (page / "notes" / aid).read_bytes())
     if (page / "notes/paragraph-dispositions.json").is_file():
@@ -1087,7 +1149,8 @@ def main() -> None:
                    "upstream": {"repository": upstream_repo, "commit": upstream_rev, "paper": toml["paper"].get("url")},
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
-                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + ([guide] if guide else []),
+                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + companions,
+        **({"moved_pages": moved_pages} if moved_pages else {}),
         **({"comparator": comparator} if comparator else {}),
         **({"comparisons_hidden": True, "comparisons_held_text": held} if held else {}),
         "families": links.get("families", []),

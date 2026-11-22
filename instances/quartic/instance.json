@@ -1,0 +1,134 @@
+{
+ "schema": "library-instance/1",
+ "id": "quartic",
+ "title": "Reconstructing OpenAI’s nearly quartic query separation",
+ "short_title": "Quartic query separation",
+ "authors": [
+  "AI systems under the direction of Will Cook"
+ ],
+ "venue": "The quartic reader's three accounts of OpenAI's nearly quartic separation, from wcook04/quartic-query-lean at 56ac62f",
+ "credit_lines": [
+  "The theorem and construction are OpenAI’s, published with no Lean formalization. The three accounts and the Lean development were written by AI systems under Will Cook’s direction. No human expert has reviewed them.",
+  "Lean reports each declaration’s statement, dependencies and axioms. The links between paper passages and Lean, and the judgments that a statement matches exactly, more strongly or only in part, were written and reviewed by AI agents; no person has checked them."
+ ],
+ "companion_credit": "The theorem and its proof are OpenAI’s. AI systems wrote the three accounts, the Lean and the links between them, under Will Cook’s direction.",
+ "licence": "Apache-2.0",
+ "host": "Hosted by Will Cook in his reading library.",
+ "review": "The links from the text to the Lean, the titles, the reading notes and the comparisons were made with AI. No mathematician has reviewed them.",
+ "source": {
+  "quartic": {
+   "repository": "https://github.com/wcook04/quartic-query-lean",
+   "commit": "56ac62feece77bdfd44a211ca2ae92f0916053ca"
+  },
+  "upstream": {
+   "repository": "https://github.com/wcook04/quartic-query-lean",
+   "commit": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "paper": "https://github.com/openai/math/tree/main/preprints/A-Nearly-Quartic-Separation-Between-Randomized-and-Quantum-Query-Complexity-October-5-2026"
+  },
+  "lean_scope": "The Quartic project’s Lean, at 56ac62f: the QuarticQuery development and the QuarticCorpus statement files. Each declaration’s dependencies shown here are Lean’s own report from the compiled modules."
+ },
+ "documents": [
+  {
+   "id": "paper",
+   "slot": "short",
+   "slug": "",
+   "title": "Reconstructing OpenAI’s nearly quartic query separation",
+   "noun": "companion",
+   "main": true
+  },
+  {
+   "id": "exposition",
+   "slot": "expository",
+   "slug": "exposition",
+   "title": "How many bits must an algorithm read?",
+   "noun": "exposition"
+  },
+  {
+   "id": "reconstruction",
+   "slot": "long",
+   "slug": "reconstruction",
+   "title": "OpenAI’s nearly quartic query separation: a complete proof reconstruction",
+   "noun": "reconstruction"
+  }
+ ],
+ "families": [
+  {
+   "id": "family-query",
+   "name": "Query complexity and the quartic exponent · Forrelation and address decoding"
+  },
+  {
+   "id": "family-construction",
+   "name": "Columns and certificates · Verifying a candidate"
+  },
+  {
+   "id": "family-comparison",
+   "name": "Pairwise comparisons · Weighted tournament and amplification · Predicting the hidden address"
+  },
+  {
+   "id": "family-planted",
+   "name": "The planted input and erased zero"
+  }
+ ],
+ "topics": [
+  {
+   "id": "query",
+   "name": "Query complexity and the quartic exponent",
+   "description": "The query model, the two complexity bounds and the order in which their parameters are chosen.",
+   "family": "family-query"
+  },
+  {
+   "id": "forrelation",
+   "name": "Forrelation and address decoding",
+   "description": "The partial function that makes addresses cheap to decode quantumly and expensive to predict classically.",
+   "family": "family-query"
+  },
+  {
+   "id": "construction",
+   "name": "Columns and certificates",
+   "description": "The input bits, the winning conditions and the local tests of a proposed certificate.",
+   "family": "family-construction"
+  },
+  {
+   "id": "comparison",
+   "name": "Pairwise comparisons",
+   "description": "How two columns are compared when only a genuine winner has a reliable address.",
+   "family": "family-comparison"
+  },
+  {
+   "id": "tournament",
+   "name": "Weighted tournament and amplification",
+   "description": "How weighted sampling finds a short candidate list despite arbitrary comparisons between losers.",
+   "family": "family-comparison"
+  },
+  {
+   "id": "verification",
+   "name": "Verifying a candidate",
+   "description": "How exact local tests turn the candidate list into a bounded-error algorithm on every input.",
+   "family": "family-construction"
+  },
+  {
+   "id": "planted",
+   "name": "The planted input and erased zero",
+   "description": "The two coupled input distributions and the cost of finding their changed zero.",
+   "family": "family-planted"
+  },
+  {
+   "id": "prediction",
+   "name": "Predicting the hidden address",
+   "description": "The independent hard values, separate query caps and capped simulation behind the classical lower bound.",
+   "family": "family-comparison"
+  }
+ ],
+ "topic_order": [
+  "query",
+  "forrelation",
+  "construction",
+  "comparison",
+  "tournament",
+  "verification",
+  "planted",
+  "prediction"
+ ],
+ "goal": "quartic.theorem-1",
+ "main_lean": "QuarticQuery.theorem_1_1_unconditional"
+}

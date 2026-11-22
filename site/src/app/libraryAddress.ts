@@ -28,6 +28,22 @@ export interface RetiredAddress { retired: string; nearest: string | null }
 let phrases: Record<string, PhraseAddress> = {};
 let retiredLinks: Record<string, RetiredAddress> = {};
 /**
+ * A page that moved (instance.json `moved_pages`): the page it now opens, and the page each of its
+ * phrases stands on where that is another one. /accounts/@<id> opens the phrase on its new page.
+ */
+export interface MovedPage { to: string; phrases?: Record<string, string> }
+let movedPages: Record<string, MovedPage> = {};
+/**
+ * A later check readers may ask about (a library paper's ours.json `checks`): the Lean constant it
+ * concerns (its last name), the question and its answer, and the runs and pull request behind it.
+ */
+export interface LaterCheck { constant: string; question: string; answer: string; runs?: string[]; pr?: string; merge?: string }
+let laterChecks: LaterCheck[] = [];
+/** The later checks of this paper. */
+export function libraryChecks(): readonly LaterCheck[] {
+  return laterChecks;
+}
+/**
  * Each numbered result's canonical target in the main document: the place of the tie at its statement
  * block, and the block itself (`theorem-1.1` → ["b4521-4600", "b4521-5120"]). Either place, or none,
  * is the result's own address.
@@ -46,15 +62,17 @@ export async function loadLibraryAddresses(base: string): Promise<void> {
     const response = await fetch(`${base}/addresses.json`);
     if (response.ok) {
       const table = await response.json();
-      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {});
+      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {}, table.moved ?? {});
+      laterChecks = table.checks ?? [];
     }
   } catch {
     // The paper still opens; a phrase address then lands at the top of the paper.
   }
 }
 
-export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string, string?]> = {}): void {
+export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string, string?]> = {}, moved: Record<string, MovedPage> = {}): void {
   phrases = table;
+  movedPages = moved;
   retiredLinks = retired;
   resultTargets = results;
   resultOfRecord.clear();
@@ -65,6 +83,21 @@ export function setLibraryAddresses(table: Record<string, PhraseAddress>, retire
 }
 
 type Read = Extract<Route, { view: "read" }>;
+
+/**
+ * The current address of a moved page's address (relative to the paper's base, no trailing slash),
+ * or null when the page did not move: /accounts → /digest, /accounts/@<id> → /<its page>/@<id>,
+ * /accounts/lean/<name> → /digest/lean/<name>.
+ */
+export function movedLibraryPath(path: string): string | null {
+  const m = path.match(/^\/([a-z0-9-]+)(\/.*)?$/);
+  const moved = m ? movedPages[m[1]] : undefined;
+  if (!m || !moved) return null;
+  const rest = m[2] ?? "";
+  const tie = rest.match(/^\/@([^/]+)$/);
+  const page = tie ? (moved.phrases?.[decodeURIComponent(tie[1])] ?? moved.to) : moved.to;
+  return `/${page}${rest}`;
+}
 
 /** The route a library address names, or null when the path is one of the reader's own. */
 export function parseLibraryPath(path: string, q: URLSearchParams, hash: string | undefined, lib = LIBRARY): Read | null {
@@ -85,9 +118,17 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   }
   const lean = path.match(/^\/lean\/(.+)$/);
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
+  const moved = movedLibraryPath(path);
+  if (moved && moved !== path) return parseLibraryPath(moved, q, hash, lib);
   const page = path.match(/^\/([a-z0-9-]+)$/);
-  // A companion page keeps its record and place (n=, l=), as Copy link writes them.
   if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]], node: q.get("n") ?? undefined, at: q.get("l") ?? undefined };
+  // Inside a companion page: /<page>/@<phrase> and /<page>/lean/<full.name>, as in the paper itself.
+  const inPage = path.match(/^\/([a-z0-9-]+)\/(@[^/]+|lean\/.+)$/);
+  if (inPage && lib.pages?.[inPage[1]]) {
+    const stage = lib.pages[inPage[1]];
+    if (inPage[2].startsWith("@")) return { ...common, stage, node: `phrase:${decodeURIComponent(inPage[2].slice(1))}`, at: q.get("l") ?? undefined };
+    return { ...common, stage, decl: decodeURIComponent(inPage[2].slice(5)), lean: v === "graph" ? undefined : true };
+  }
   const result = path.match(/^\/([a-z]+-[0-9a-z.]+)$/);
   // A numbered result lands on its canonical target, the statement block, never an earlier mention.
   if (result && RESULT.test(result[1])) return { ...common, node: resultTargets[result[1]]?.[2] ?? `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] || undefined };
@@ -114,6 +155,16 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     const slug = Object.entries(lib.pages ?? {}).find(([, stage]) => stage === route.stage)?.[0];
     if (!slug) return null;
     const q = new URLSearchParams();
+    const pageTail = route.anchor ? `#${encodeURIComponent(route.anchor)}` : "";
+    if (route.lean) q.set("v", "lean");
+    else if (route.graph) q.set("v", "graph");
+    // A phrase of the page, and a Lean declaration read beside it, have addresses of their own.
+    if (route.node?.startsWith("phrase:")) {
+      if (route.decl) q.set("d", route.decl);
+      return `${base}/${slug}/@${encodeURIComponent(route.node.slice(7))}${q.size ? `?${q}` : ""}${pageTail}`;
+    }
+    if (route.decl && route.lean && !route.node) return `${base}/${slug}/lean/${encodeURIComponent(route.decl)}${pageTail}`;
+    q.delete("v");
     if (route.node) q.set("n", route.node);
     if (route.at) q.set("l", route.at);
     if (route.lean) q.set("v", "lean");

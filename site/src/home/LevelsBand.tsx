@@ -9,7 +9,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import site from "@instance/site";
 import { SITE_FACTS } from "virtual:site-facts";
-import type { Stage } from "../api/types";
+import type { Account as Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { prefersReducedMotion } from "../app/theme";
 import { routeHref } from "../app/router";

@@ -14,6 +14,7 @@ Lean tree). Fails, naming each problem, when:
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -124,6 +125,17 @@ def main() -> int:
              and not scanned_only and rows[n]["kind"] not in ("axiom", "inductive", "structure", "class")]
     if empty:
         problems.append(f"{len(empty)} declaration(s) a phrase names show no uses and carry no Lean report: {', '.join(empty[:6])}")
+    # Page slugs (/<paper>/<page>/) may not take a reserved word or a numbered result's address.
+    reserved = {"lean", "topic", "map", "compare", "checks", "source", "about", "search", "read", "edition", "pdf"}
+    result_slug = re.compile(r"^(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.]+$")
+    slugs = [d.get("slug") for d in instance["documents"] if d.get("slug")]
+    clash = sorted({s for s in slugs if s in reserved or result_slug.match(s)} | {s for s in slugs if slugs.count(s) > 1})
+    if clash:
+        problems.append(f"page slugs that collide with a reserved word, a result address or each other: {', '.join(clash)}")
+    # A moved page's old slug keeps its address, so it may not be taken again, and it moves to a page.
+    for old, row in instance.get("moved_pages", {}).items():
+        if old in slugs or old in reserved or result_slug.match(old) or row.get("to") not in slugs:
+            problems.append(f"moved page {old}: its old slug is taken, or it moves to {row.get('to')}, which is no page")
     for p in problems:
         print(f"instance {paper}: {p}", file=sys.stderr)
     if not problems:

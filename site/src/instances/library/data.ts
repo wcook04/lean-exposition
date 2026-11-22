@@ -4,13 +4,20 @@ import current from "./current.json";
 
 export interface LibraryDocument {
   id: string;
-  slot: "long" | "short" | "expository";
+  /** One of the three accounts (long, short, expository), or a companion's own page name (digest, library-07). */
+  slot: string;
   slug: string;
   title: string;
   noun: string;
   main?: boolean;
   /** The authors' PDF. `name` and `alias` publish it under pdf/ by those names (a reader that moved into the library keeps its PDF addresses). */
   pdf?: { file: string; sha256?: string; bytes?: number; url?: string; name?: string; alias?: string };
+  /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
+  kind?: "companion";
+  group?: string;
+  group_title?: string;
+  order?: number;
+  credit?: string;
   /** What the document does and who it is written for, in place of the reader's default account line. */
   job?: string;
   reader?: string;
