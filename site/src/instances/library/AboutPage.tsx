@@ -6,7 +6,10 @@ import { routeHref } from "../../app/router";
 import { Out } from "../../app/Out";
 import { Rich } from "../../figures/tex";
 import { AboutKey, AboutUsing } from "../../reader/aboutParts";
-import { PAPER, MAIN, LIBRARY_ROOT } from "./data";
+import { PAPER, MAIN, BUILT, LIBRARY_ROOT } from "./data";
+
+const ADAPTED = BUILT.find((d) => d.adapted);
+const AUTHORS = (ADAPTED && BUILT.find((d) => d.id === ADAPTED.of)) || MAIN;
 import { SupplementaryChecks } from "./Checks";
 import { ComparatorSection } from "./Comparator";
 import { DifferencesSection } from "./Differences";
@@ -56,6 +59,26 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         {PAPER.source.lean_scope ? <p>{PAPER.source.lean_scope}</p> : null}
         <p>{PAPER.host} <a href={LIBRARY_ROOT}>The library</a> lists every paper it holds.</p>
       </section>
+      {ADAPTED && (
+        <section aria-labelledby="about-adapted">
+          <h2 id="about-adapted">The adapted edition</h2>
+          <p>{ADAPTED.credit}</p>
+          <p>
+            <a href={routeHref({ view: "read", stage: ADAPTED.slot })}>Read the adapted edition</a>, where each change is marked in the margin and
+            “Show changes” lists all of them, or <a href={routeHref({ view: "read", stage: AUTHORS.slot })}>read the authors’ paper</a>, which keeps
+            the authors’ own credit above. The switch “Authors’ paper / Adapted edition” keeps your place by paragraph.
+          </p>
+          <p>
+            {[ADAPTED.pdf, ADAPTED.aux_pdf].filter((p) => !!p).map((p, i) => (
+              <span key={p!.file}>
+                {i ? " · " : ""}
+                <a className="pdf-link" href={`${import.meta.env.BASE_URL}pdf/${p!.name ?? p!.file}`} target="_blank" rel="noopener">{p!.label ?? "PDF"}</a>
+              </span>
+            ))}
+            . Each PDF marks every change with a bar in the margin and its id, and lists every change at its end.
+          </p>
+        </section>
+      )}
       <section aria-labelledby="about-review">
         <h2 id="about-review">How the links were made</h2>
         <p>{PAPER.review}</p>

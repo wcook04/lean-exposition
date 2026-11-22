@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Place each phrase tie of a paper on the authors' PDF, for the reader's PDF view.
 
-    pdf_marks.py PAPER.pdf PAPER.md TIES.json OUT.json
+    pdf_marks.py PAPER.pdf PAPER.md TIES.json OUT.json [CHANGES.json]
 
 TIES.json is the exported edition's `/ties/<stage>` file. The whole paper's plain words (formulas
 and markup removed) are aligned once, in reading order, with the PDF's words (`pdftotext -bbox`);
@@ -9,6 +9,11 @@ a tie's mark is the boxes of the PDF words its own words align to, one per line.
 numbered display is found by its tag, "(1.2)", after the last aligned word before it. A tie with
 too few aligned words gets no mark and is listed in `unplaced`. Rerunning on the same files gives
 the same output. Needs poppler's pdftotext.
+
+With CHANGES.json (an adapted edition's alignment/changes-<slot>.json), the PDF is the edition's
+PDF with changes marked, which prints each change's id beside its bar in the margin. Each change's
+mark is, page by page, the margin strip from its first label to its last; a change whose id is
+printed in no margin is listed in `changes_unplaced`.
 """
 from __future__ import annotations
 
@@ -143,10 +148,29 @@ def main() -> None:
             continue
         key = tie.get("phrase") or tie["at"]
         marks[key] = {"at": tie["at"], "tone": tie.get("tone"), "record": tie.get("record"), "boxes": lines(matched)}
+    result = {"schema": "pdf-marks/1", "pages": sizes, "marks": marks, "unplaced": unplaced}
+    if len(sys.argv) > 5:
+        result["changes"], result["changes_unplaced"] = change_marks(every, sizes, json.loads(Path(sys.argv[5]).read_text()))
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"schema": "pdf-marks/1", "pages": sizes, "marks": marks, "unplaced": unplaced},
-                              ensure_ascii=False, separators=(",", ":")))
-    print(f"pdf marks: {len(marks)} placed, {len(unplaced)} unplaced, {len(sizes)} pages")
+    out.write_text(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+    extra = f", {len(result['changes'])} changes placed, {len(result['changes_unplaced'])} not" if "changes" in result else ""
+    print(f"pdf marks: {len(marks)} placed, {len(unplaced)} unplaced, {len(sizes)} pages{extra}")
+
+
+def change_marks(every: list[dict], sizes: list[tuple[float, float]], table: dict) -> tuple[dict, list[str]]:
+    """Each change's bar on the marked PDF, from the id printed beside it in the margin (the
+    appendix that lists the changes prints the ids in the text column, and is not a bar)."""
+    ids = {c["id"] for c in table["changes"]}
+    found: dict[str, dict[int, list[float]]] = {}
+    for w in every:
+        width = sizes[w["page"] - 1][0]
+        x0, y0, x1, y1 = w["box"]
+        if w["text"] in ids and (x1 < 0.15 * width or x0 > 0.85 * width):
+            page = found.setdefault(w["text"], {}).setdefault(w["page"], [x0, y0, x1, y1])
+            page[0], page[1], page[2], page[3] = min(page[0], x0), min(page[1], y0), max(page[2], x1), max(page[3], y1)
+    changes = {cid: {"boxes": [[p, *(round(v, 1) for v in box)] for p, box in sorted(pages.items())]}
+               for cid, pages in sorted(found.items())}
+    return changes, sorted(ids - set(changes))
 
 
 if __name__ == "__main__":

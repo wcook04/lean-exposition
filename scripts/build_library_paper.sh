@@ -8,6 +8,16 @@ PY=${PYTHON:-python3}
 I=instances/$paper
 pair() { if [ -f "$I/papers/$1/paper.md" ]; then echo "$I/papers/$1/paper.md $I/papers/$1/correspondence.json"; else echo "$I/papers/$1/absent.md $I/papers/$1/absent.json"; fi; }
 rm -rf "build/$paper-edition"
+# An adapted edition (instances/<paper>/adapted/, scripts/adapted_edition.py) is built only when its
+# edition.json says published, or for a local preview with LX_PREVIEW_ADAPTED=1. It is put into its
+# document slot for the build and taken out again afterwards, whatever the build's outcome.
+LX_ADAPTED=0
+if "$PY" scripts/adapted_edition.py enabled "$paper"; then
+  LX_ADAPTED=1
+  "$PY" scripts/adapted_edition.py stage "$paper"
+  trap '"$PY" scripts/adapted_edition.py unstage "$paper"' EXIT
+fi
+export LX_ADAPTED
 # Topic colours are computed once per shared topic list over every paper that uses it, and stored
 # beside each phrases file (alignment/colours-<slot>.json); this keeps them current.
 node site/scripts/topic-colours.ts
@@ -34,7 +44,7 @@ if [ -f "$I/generated/lean-facts.json" ]; then
 fi
 "$PY" scripts/check_instance.py "$paper" "$LEAN_TREE"
 "$PY" site/scripts/export-static.py "build/$paper-edition" --lean-tree "$LEAN_TREE" --alignment "$A"
-if grep -q '"kind": "companion"' "$I/instance.json"; then
+if grep -q '"kind": "companion"' "$I/instance.json" || [ "$LX_ADAPTED" = 1 ]; then
   # Companion editions are kept between builds (build/<paper>-companion-editions) and rebuilt only when
   # their inputs change; the export above starts site/public/edition afresh, so they are copied in.
   "$PY" scripts/build_companion_editions.py "$paper" "$LEAN_TREE" "build/$paper-companion-editions" --jobs "${COMPANION_JOBS:-3}"
@@ -42,9 +52,16 @@ if grep -q '"kind": "companion"' "$I/instance.json"; then
 fi
 # The phrases placed on the authors' PDF, for the reader's PDF view (needs poppler's pdftotext).
 rm -rf site/public/pdf-marks
-for slot in long short expository; do
+for slot in long short expository $([ "$LX_ADAPTED" = 1 ] && "$PY" -c "import json; print(json.load(open('$I/adapted/edition.json'))['document']['slot'])"); do
   if [ -f "$I/papers/$slot/paper.pdf" ] && [ -f "$I/papers/$slot/paper.md" ]; then
-    "$PY" scripts/pdf_marks.py "$I/papers/$slot/paper.pdf" "$I/papers/$slot/paper.md" "site/public/edition/ties/$slot.json" "site/public/pdf-marks/$slot.json"
+    # An adapted edition's PDF marks its changes; its change map places them (scripts/adapted_edition.py).
+    changes=""; [ -f "$I/alignment/changes-$slot.json" ] && changes="$I/alignment/changes-$slot.json"
+    # A companion's ties are in its own edition (edition/docs/<page>/, the file its index names for /ties/short).
+    ties="site/public/edition/ties/$slot.json"
+    if [ -f "site/public/edition/docs/$slot/index.json" ]; then
+      ties="site/public/edition/$("$PY" -c "import json,sys; print(json.load(open(sys.argv[1]))['responses']['/ties/short'])" "site/public/edition/docs/$slot/index.json")"
+    fi
+    "$PY" scripts/pdf_marks.py "$I/papers/$slot/paper.pdf" "$I/papers/$slot/paper.md" "$ties" "site/public/pdf-marks/$slot.json" $changes
   fi
 done
 cd site
@@ -62,6 +79,9 @@ import json, shutil, sys
 from pathlib import Path
 paper = sys.argv[1]
 inst = json.loads(Path(f"instances/{paper}/instance.json").read_text())
+import os
+if os.environ.get("LX_ADAPTED") == "1":
+    inst["documents"].append(json.loads(Path(f"instances/{paper}/adapted/edition.json").read_text())["document"])
 main = next(d for d in inst["documents"] if d.get("main"))
 dist = Path("site/dist")
 shell = (dist / "read" / main["slot"] / "index.html").read_text()
@@ -76,6 +96,12 @@ for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
     shell_of = dist / "read" / doc["slot"] / "index.html"
     (dist / doc["slug"] / "index.html").write_text((shell_of if shell_of.is_file() else dist / "404.html").read_text())
+# An adapted edition's other files: the auxiliary note's PDF with changes marked.
+for doc in pages:
+    aux = doc.get("aux_pdf")
+    if aux:
+        (dist / "pdf").mkdir(exist_ok=True)
+        shutil.copy(Path(f"instances/{paper}/adapted/{aux['file']}"), dist / "pdf" / aux["name"])
 # A page that moved (moved_pages) is served as its new page's shell; the reader then shows the new address.
 slugs = {doc["slug"] for doc in pages}
 for old, row in inst.get("moved_pages", {}).items():

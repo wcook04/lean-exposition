@@ -28,7 +28,7 @@ ap.add_argument("--section", help="the section that states --statement, opened b
 ap.add_argument("--our-tie", help="a phrase whose card shows our own Lean statement beside the authors'")
 ap.add_argument("--companion-phrase", nargs=2, metavar=("PAGE", "ID"), help="a phrase of a companion page: /<page>/@<id> opens its card")
 ap.add_argument("--companion-lean", nargs=2, metavar=("PAGE", "NAME"), help="/<page>/lean/<name> opens that Lean card")
-ap.add_argument("--moved", nargs=3, metavar=("OLD", "ID", "NEW"), help="a moved page: /<old>/ shows /<new>/, and /<old>/@<id> opens the phrase at /<new>/@<id>")
+ap.add_argument("--moved", nargs=4, metavar=("OLD", "NEW", "ID", "HOLDER"), help="a moved page: /<old>/ shows /<new>/, and /<old>/@<id> opens the phrase on the page that holds it, /<holder>/@<id>")
 ap.add_argument("--later-check", nargs=2, metavar=("PAGE", "PASSAGE"), help="a passage that mentions a later check shows it after the passage")
 ap.add_argument("--premise-tie", help="a phrase whose card shows our statement conditional on a premise, with the forms not yet formalized")
 ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
@@ -150,7 +150,7 @@ with sync_playwright() as pw:
             page.locator(".fg__edge-hit").first.dispatch_event("click")
             page.wait_for_timeout(500)
             why = page.evaluate("() => (document.querySelector('.fg__edge-why') || {}).innerText || ''")
-        check(f"{tag} paper-logic edges", dashed > 0 and "the paper's proof uses this" in key and "Read it in the paper" in why,
+        check(f"{tag} paper-logic edges", dashed > 0 and ("the paper's proof uses this" in key or "the paper's proof states" in key) and "Read it in the paper" in why,
               f"{dashed} dashed; key: {key[:80]}; why: {why[:120]}")
         page.screenshot(path=str(a.shots / f"graph-routes-{tag}.png"))
         # PDF view.
@@ -172,7 +172,7 @@ with sync_playwright() as pw:
             page.goto(base + f"@{a.our_tie}?v=lean", wait_until="domcontentloaded")
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(4000)
-            ours = page.evaluate("() => [...document.querySelectorAll('.ours')].map(e => e.innerText).join(' | ')")
+            ours = page.evaluate("() => [...document.querySelectorAll('.ours')].map(e => e.textContent).join(' | ')")
             check(f"{tag} our statement", "Our statement, proved from the authors' Lean library" in ours and "Not the authors' Lean" in ours, ours[:200])
             badge = page.evaluate("() => [...document.querySelectorAll('.ours__checked a')].map(e => e.href)")
             check(f"{tag} our statement's Comparator badge", "pending" not in ours and any("/actions/runs/" in h for h in badge), badge)
@@ -182,7 +182,7 @@ with sync_playwright() as pw:
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(4000)
             seen = page.evaluate("() => ({cond: [...document.querySelectorAll('.ours__condition')].filter(e => e.offsetParent).map(e => e.innerText), "
-                                 "open: [...document.querySelectorAll('.ours--open li')].length, badge: [...document.querySelectorAll('.ours__badge')].map(e => e.innerText)})")
+                                 "open: [...document.querySelectorAll('.ours--open li')].length, badge: [...document.querySelectorAll('.ours__badge')].map(e => e.textContent)})")
             check(f"{tag} our conditional statement", any("Conditional on the profile premise" in c for c in seen["cond"]) and seen["open"] == 3
                   and any("Not the authors' Lean" in b for b in seen["badge"]), seen)
             page.screenshot(path=str(a.shots / f"premise-{tag}.png"))
@@ -203,7 +203,7 @@ with sync_playwright() as pw:
             short = name.rsplit(".", 1)[-1]
             check(f"{tag} companion lean address", short in pane, f"{page.url} {pane[:120]}")
         if a.moved:
-            old, mid, new = a.moved
+            old, new, mid, holder = a.moved
             page.goto(base + f"{old}/", wait_until="domcontentloaded")
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(1500)
@@ -212,7 +212,7 @@ with sync_playwright() as pw:
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(4000)
             card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
-            check(f"{tag} moved phrase address", page.url.split("?")[0].endswith(f"/{new}/@{mid}") and ("AI-assessed" in card or "Topic" in card),
+            check(f"{tag} moved phrase address", page.url.split("?")[0].endswith(f"/{holder}/@{mid}") and ("AI-assessed" in card or "Topic" in card),
                   f"{page.url} {card[:120]}")
         if a.later_check:
             cp, anchor = a.later_check

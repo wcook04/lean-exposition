@@ -108,6 +108,12 @@ describe("library addresses", () => {
     expect(href).toBe(`${BASE}/how-the-lean-encodes-it/`);
   });
 
+  it("a companion page keeps its place, selection, view and PDF page in its address", () => {
+    const { route, href } = roundTrip(`${BASE}/how-the-lean-encodes-it/?n=euler.theorem-1.1&l=120&v=lean&view=pdf&page=4`);
+    expect(route).toMatchObject({ stage: "expository", node: "euler.theorem-1.1", at: "120", lean: true, pdf: true, page: 4 });
+    expect(href).toBe(`${BASE}/how-the-lean-encodes-it/?n=euler.theorem-1.1&l=120&v=lean&view=pdf&page=4`);
+  });
+
   it("a page that moved opens its new page, and each of its phrases on the page that now holds it", () => {
     expect(movedLibraryPath("/accounts")).toBe("/how-the-lean-encodes-it");
     expect(movedLibraryPath("/accounts/@p2.coercive")).toBe("/part-2/@p2.coercive");
