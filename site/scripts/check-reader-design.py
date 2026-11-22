@@ -278,6 +278,24 @@ def mode(page: Page) -> str | None:
     )
 
 
+def settle_band(page: Page) -> None:
+    """Wait for the subject band's switch, which comes with the pane, however slow the machine."""
+    try:
+        page.wait_for_selector(".map-pane .subject-band .mode-switch", timeout=60000)
+        page.wait_for_timeout(800)
+    except Exception:
+        pass
+
+
+def settle_title(page: Page) -> None:
+    """Wait for the selection's column to arrive in the pane."""
+    try:
+        page.wait_for_selector(".map-pane .lean-page__title", timeout=30000)
+        page.wait_for_timeout(500)
+    except Exception:
+        pass
+
+
 def pane_subject(page: Page) -> str | None:
     return page.evaluate("document.querySelector('.map-pane .lean-page__title')?.textContent ?? null")
 
@@ -297,13 +315,15 @@ def scroll_until_new(page: Page, before: str | None, steps: int = 8) -> str | No
 def auto_manual(browser: Browser, base: str) -> None:
     """12: the Auto | Manual switch, rule by rule (docs/reader-design.md, States)."""
     page = open_page(browser, base, 1440, 900)
+    settle_band(page)
     check(mode(page) == "Auto", "12 a first visit is Auto", f"mode {mode(page)}")
     scroll_by(page, 1200)
     page.wait_for_timeout(1000)
     # Clicking linked words selects them and turns the switch to Manual.
     if check(click_tie(page) is not None, "12 a linked phrase is in view to click"):
         check(mode(page) == "Manual", "12 a click on words turns the switch to Manual", f"mode {mode(page)}")
-        # In Manual scrolling never changes the pane.
+        # In Manual scrolling never changes the pane (once its column has arrived).
+        settle_title(page)
         held = pane_subject(page)
         for _ in range(4):
             scroll_by(page, 700)
@@ -344,6 +364,7 @@ def auto_manual(browser: Browser, base: str) -> None:
     page.context.close()
     # A deep link to a numbered result opens in Manual.
     page = open_page(browser, base + "theorem-1.1/", 1440, 900)
+    settle_band(page)
     check(mode(page) == "Manual", "12 a deep link opens in Manual", f"mode {mode(page)}, state {state(page)}")
     page.context.close()
 
