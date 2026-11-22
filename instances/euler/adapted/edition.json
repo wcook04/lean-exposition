@@ -57,6 +57,22 @@
     "The revision follows the shear from one wave to the next and explains how the pressure bound enters the endpoint correction.",
     "The final estimates distinguish growth at launch times from control between launches. Appendix A identifies the real Hilbert space used for the endpoint inverse."
    ]
+  },
+  "result_comparison": {
+   "reading": {
+    "file": "result-comparison.md",
+    "name": "result-comparison.md",
+    "label": "Result-by-result comparison",
+    "bytes": 109431,
+    "sha256": "58863ab11b1fb71bd3e4aa90fb48def5a3071a5d4ff6b5e266d6794f46c4f4b7"
+   },
+   "data": {
+    "file": "result-comparison.json",
+    "name": "result-comparison.json",
+    "label": "Comparison data",
+    "bytes": 138484,
+    "sha256": "f196511d034a69138d78e7116f594e8a1b8fa3c8a0c140ebadfa22897ef7369c"
+   }
   }
  }
 }

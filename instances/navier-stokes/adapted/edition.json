@@ -35,6 +35,22 @@
     "The similarity-variable calculation explains the exponent in the physical gradient rate. The whole-space argument cuts off the initial data. The torus argument also controls the residual throughout the evolution.",
     "The certificate construction identifies where the auxiliary force vanishes. The comparison gives the strengthened hypotheses of the checked whole-space theorem and records which quantities it estimates."
    ]
+  },
+  "result_comparison": {
+   "reading": {
+    "file": "result-comparison.md",
+    "name": "result-comparison.md",
+    "label": "Result-by-result comparison",
+    "bytes": 55505,
+    "sha256": "e4c1c3d44c95ac03d38a058d8aaf476914354c34401581dc194b2922f5bbd712"
+   },
+   "data": {
+    "file": "result-comparison.json",
+    "name": "result-comparison.json",
+    "label": "Comparison data",
+    "bytes": 108500,
+    "sha256": "abc9f701f1e884ad0cad23ab26ad05a750a19dbbd147ddde1741716b2f77a2b7"
+   }
   }
  }
 }
