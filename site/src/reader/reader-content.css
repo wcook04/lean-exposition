@@ -553,6 +553,10 @@
 }
 
 /* Joined to an adapted edition's own credit note: the same words in the sans, inside that one note. */
+.paper.prose .front-credit--edition {
+  margin: 0 0 var(--space-5);
+}
+
 .paper.prose .front-credit--note {
   display: inline;
   max-width: none;

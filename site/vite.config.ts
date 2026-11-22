@@ -545,9 +545,12 @@ function figureSizes(stages: string[]): Record<string, [number, number]> {
   return sizes;
 }
 
-/** The paper figures shipped as image files (papers/<name>/<stage>/figures/), served and copied under paper-figures/<stage>/. */
+/** The paper figures shipped as image files (papers/<name>/<slot>/figures/), served and copied under paper-figures/<slot>/. */
 function paperFigures(build = false): Plugin {
-  const stages = ["long", "short", "expository"].filter((stage) => existsSync(resolve(PAPERS_DIR, stage, "figures")));
+  // Every document slot with a figures folder: long, short, expository, an adapted edition, a companion.
+  const stages = existsSync(PAPERS_DIR)
+    ? readdirSync(PAPERS_DIR).filter((stage) => /^[\w-]+$/.test(stage) && existsSync(resolve(PAPERS_DIR, stage, "figures")))
+    : [];
   const types: Record<string, string> = { svg: "image/svg+xml", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" };
   const id = "virtual:paper-figure-sizes";
   return {
@@ -558,7 +561,7 @@ function paperFigures(build = false): Plugin {
     load: (resolved) => (resolved === `\0${id}` ? `export const FIGURE_SIZES = ${JSON.stringify(figureSizes(stages))};` : null),
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const m = req.url?.split("?", 1)[0].match(/\/paper-figures\/(long|short|expository)\/([\w.-]+\.(svg|png|jpe?g|webp))$/);
+        const m = req.url?.split("?", 1)[0].match(/\/paper-figures\/([\w-]+)\/([\w.-]+\.(svg|png|jpe?g|webp))$/);
         const file = m && resolve(PAPERS_DIR, m[1], "figures", m[2]);
         if (!m || !file || !existsSync(file)) return next();
         res.setHeader("Content-Type", types[m[3]]);

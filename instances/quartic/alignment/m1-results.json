@@ -21,6 +21,13 @@
      "from": "**Lemma 2** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Lemma 2.1)). *Fix $k\\ge2$.",
      "to": "ts are the domain bit of $P$ and, on the domain, its value.*",
      "origin": "ai"
+    },
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "1. For all sufficiently large $t$ (depending on $k$), $R(P_{k,4^t})>L_{k,4^t}$, ",
+     "to": "$b(x)=P_{k,m}(x)$ on that domain, by [Appendix G.3](#forr_circuit).",
+     "origin": "ai"
     }
    ]
   },
@@ -42,6 +49,14 @@
      "role": "statement",
      "from": "**Lemma 4** (bounded amplification ([OpenAI 2026](#cite-OpenAI2026), Lemma 3.1);",
      "to": "h probability at most $\\eta$, and if $p=0$ it always fails.*",
+     "origin": "ai"
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "There is one procedure, depending only on these choices and using $A,A^{-1}$ as black boxe",
+     "to": "h the following guarantees for every unitary preparation $A$ and every fixed input oracle.",
+     "after": "<!-- quartic-passage upper-amplification-statement -->",
      "origin": "ai"
     }
    ]
@@ -73,6 +88,13 @@
      "from": "**Lemma 5** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Lemma 4.1); @Shaltiel2003;",
      "to": "e additional information independent of $(U_1,\\ldots,U_r)$.*",
      "origin": "ai"
+    },
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "\\[\n\\Pr\\!\\left[\\mathcal A(U_1,\\ldots,U_r)\n       =\\bigl(P(U_1),\\ldots,P(U_r)\\bigr",
+     "to": "l(P(U_1),\\ldots,P(U_r)\\bigr)\\right]\\leq\\beta^r.\n\\tag{6.3}\n\\]",
+     "origin": "ai"
     }
    ]
   },
@@ -95,6 +117,14 @@
      "from": "**Proposition 3** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Proposition 3.2)). *",
      "to": "$i^\\star$ with probability at least $1-2m2^{-T}-T\\varepsilon$.*",
      "origin": "ai"
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "The chance of stopping on failure before listing the winner is at most $T\\varepsilon$ over the $T$ stages, so the winner is omitted with probability at most $1/500+T\\varepsilon$.",
+     "to": "The chance of stopping on failure before listing the winner is at most $T\\varepsilon$ over the $T$ stages, so the winner is omitted with probability at most $1/500+T\\varepsilon$.",
+     "after": "# 4. A tournament with probabilistic comparisons",
+     "origin": "ai"
     }
    ]
   },
@@ -116,6 +146,20 @@
      "role": "statement",
      "from": "**Theorem 1** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Theorem 1.1)). *For ever",
      "to": "ently the critical exponent of $R$ relative to $Q$ is four.*",
+     "origin": "ai"
+    },
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Theorem 1.1 (OpenAI).** The optimal power is $\\alpha_{\\mathrm{tot}}=4$. By the",
+     "to": "stant $C>0$ such that every total Boolean function satisfies",
+     "origin": "ai"
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "total Boolean functions whose bounded-error randomized query complexity is almost the fourth power of their quantum query complexity",
+     "to": "total Boolean functions whose bounded-error randomized query complexity is almost the fourth power of their quantum query complexity",
      "origin": "ai"
     }
    ]

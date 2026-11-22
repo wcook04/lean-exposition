@@ -3,7 +3,7 @@
 // reading copy, and the short credit line built from the instance's own sentences.
 import { describe, expect, it } from "vitest";
 import { prepareDocument } from "../src/reader/engine";
-import { frontCreditLine } from "../src/instances/library/site";
+import { editionCreditLine, frontCreditLine } from "../src/instances/library/site";
 
 const paths = { long: "long/reasoning-record.md", short: "short/paper.md", expository: "expository/main.md" };
 
@@ -76,29 +76,31 @@ describe("an adapted edition's credit", () => {
 </div>
 
 ## Contents`);
-  it("joins the reader's line to the edition's own note, once, and nothing goes under the authors", () => {
+  it("puts the edition's one short line in place of its long note, and nothing under the authors", () => {
     const bytes = new TextEncoder().encode(EDITION);
-    const doc = prepareDocument({ stage: "adapted", bytes, documentPath: paths.short, documentPaths: paths, frontCredit: "Links made with AI.", frontCreditNote: "An adapted edition of" });
+    const doc = prepareDocument({ stage: "adapted", bytes, documentPath: paths.short, documentPaths: paths, frontCredit: "An adapted edition; every change is marked.", frontCreditNote: "An adapted edition of" });
     expect(doc.creditPart).toBe(0);
     const html = doc.renderAll().map((part) => part.html).join("");
-    expect(html.match(/front-credit/g)).toHaveLength(2); // one span: "front-credit front-credit--note"
-    expect(html).toMatch(/Every change is marked\.<\/em> <span class="front-credit front-credit--note">Links made with AI\.<\/span><\/p>/);
+    expect(html).toContain('<p class="front-credit front-credit--edition">An adapted edition; every change is marked.</p>');
+    expect(html).not.toContain("prepared with AI assistance");
+    expect(html.match(/class="front-credit/g)).toHaveLength(1);
     expect(html.indexOf("front-credit")).toBeGreaterThan(html.indexOf("</ul>"));
-    expect(html).not.toContain('<p class="front-credit">');
   });
 });
 
-describe("the short credit line", () => {
+describe("the short credit lines", () => {
   it("does not end a sentence at an author's initial", () => {
-    expect(frontCreditLine("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. More.", "Made with AI.")).toBe("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. Made with AI.");
+    expect(frontCreditLine("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. More.")).toBe("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. Links, titles and notes made with AI.");
   });
 
-  it("takes the credit's first sentence and the review, whole", () => {
+  it("keeps the authors, repository and commit, and leaves Anthropic and the review to About", () => {
     const credit = "Paper and Lean by A and B, from their repository a/b at abc1234; their paper thanks Anthropic. The reading copy is set from their TeX.";
-    const review = "The links were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.";
-    expect(frontCreditLine(credit, review)).toBe(
-      "Paper and Lean by A and B, from their repository a/b at abc1234; their paper thanks Anthropic. The links were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
-    );
+    expect(frontCreditLine(credit)).toBe("Paper and Lean by A and B, from their repository a/b at abc1234. Links, titles and notes made with AI.");
+  });
+
+  it("says an edition in one line", () => {
+    const credit = "An adapted edition of A and B's paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the authors'. Every change is marked.";
+    expect(editionCreditLine(credit)).toBe("An adapted edition of A and B's paper, prepared by Will Cook with AI assistance; every change is marked.");
   });
 });
 

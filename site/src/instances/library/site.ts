@@ -35,15 +35,23 @@ export function creditWithoutReview(credit: readonly string[], review: string): 
     .join(" ");
 }
 const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
+// A sentence ends at a stop after a word, not after an initial ("Matei P. Coiculescu").
+const firstSentence = (text: string) => text.split(/(?<=[a-z0-9)\]'’][.!?])\s+(?=[A-Z])/)[0]?.trim() ?? "";
+
 /**
- * The paper's credit as one short line under its authors: the first sentence of the credit (the authors,
- * their repository and commit, and Anthropic where the paper thanks it), then the review sentence. About
- * carries the whole credit.
+ * The paper's credit as one short line under its authors: who wrote the paper and its Lean and where they
+ * are from (the credit's first clause), and that the links were made with AI. The reader adds "Full credit
+ * in About" and the PDF; About carries the whole credit, the Anthropic sentence and the review.
  */
-export function frontCreditLine(credit: string, review: string): string {
-  // A sentence ends at a stop after a word, not after an initial ("Matei P. Coiculescu").
-  const first = credit.split(/(?<=[a-z0-9)\]][.!?])\s+(?=[A-Z])/)[0]?.trim() ?? "";
-  return [first, review.trim()].filter(Boolean).join(" ");
+export function frontCreditLine(credit: string): string {
+  const clause = firstSentence(credit).split(";")[0].replace(/[.!?]$/, "").trim();
+  return clause ? `${clause}. Links, titles and notes made with AI.` : "Links, titles and notes made with AI.";
+}
+
+/** An adapted edition's line: "An adapted edition of …'s paper, prepared by … with AI assistance; every change is marked." */
+export function editionCreditLine(credit: string): string {
+  const first = firstSentence(credit).replace(/[.!?]$/, "").trim();
+  return `${first}; every change is marked.`;
 }
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
@@ -155,11 +163,11 @@ const site = {
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
   stages: BUILT.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
-  // The authors' paper: one line under the authors. An adapted edition: its own credit note, verbatim in
-  // its text, then the review sentence joined to that note; the edition has no account line.
+  // One short line each: under the authors on the authors' paper; in place of its own credit note on an
+  // adapted edition. The full credit and the review sentences are in About.
   frontCredit: {
-    [MAIN.slot]: frontCreditLine(CREDIT, PAPER.review),
-    ...(ADAPTED ? { [ADAPTED.slot]: PAPER.review.trim() } : {}),
+    [MAIN.slot]: frontCreditLine(CREDIT),
+    ...(ADAPTED?.credit ? { [ADAPTED.slot]: editionCreditLine(ADAPTED.credit) } : {}),
   },
   frontCreditNote: ADAPTED?.credit ? { [ADAPTED.slot]: ADAPTED.credit.split(/\s+/).slice(0, 4).join(" ") } : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
@@ -194,6 +202,8 @@ const site = {
   mainGoal: PAPER.goal,
   leanLevelWho: R.lean_level_who ?? `Statements and proofs by ${BY}`,
   levelsLeanSnippet: R.levels_lean_snippet ?? null,
+  ...(PAPER.levels?.length ? { compareLevels: ["lean", ...PAPER.levels] as ("lean" | "long" | "short" | "expository")[] } : {}),
+  ...(PAPER.level_names ? { levelNames: PAPER.level_names as Partial<Record<"lean" | "long" | "short" | "expository", string>> } : {}),
   words: {
     argumentFor: "Argument for",
     stepTerms: "A step is one record of the argument: a result as the authors number it, or a Lean declaration linked to it.",

@@ -780,7 +780,10 @@ function renderTokens(
       const src = figureImageSrc(env.stage, path.replace(/&amp;/g, "&"));
       if (!src) return whole;
       const key = esc(`img:${src.split("/").pop()}`);
-      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div><figcaption>${title ?? alt}</figcaption></figure>`;
+      // A bare label ("Figure 1") as alt text is not a caption: the paper's own caption paragraph
+      // follows the image, so repeating the label under the picture would show it twice.
+      const caption = title ?? (/^(?:figure|fig\.?)\s*[\w.-]+\.?$/i.test(alt.trim()) ? "" : alt);
+      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
     });
   }
   html = sanitizeHtml(html);
@@ -1008,9 +1011,12 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     if (index !== creditPart || !input.frontCredit) return html;
     if (!note) return html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n<p class="front-credit">${input.frontCredit}</p>`);
     const at = fold(html).indexOf(note) >= 0 ? html.search(new RegExp(note.split(" ").map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+").replace(/'/g, "['’‘]"))) : -1;
+    const open = at >= 0 ? html.lastIndexOf("<p", at) : -1;
     const close = at >= 0 ? html.indexOf("</p>", at) : -1;
-    // Where the note's words cannot be found in the drawn paragraph, the line still stands, after the part.
-    return close < 0 ? `${html}\n<p class="front-credit">${input.frontCredit}</p>` : `${html.slice(0, close)} <span class="front-credit front-credit--note">${input.frontCredit}</span>${html.slice(close)}`;
+    // The edition's long note gives way to its one short line (the whole credit is in About). Where the
+    // note's words cannot be found in the drawn paragraph, the line still stands, after the part.
+    if (open < 0 || close < 0) return `${html}\n<p class="front-credit">${input.frontCredit}</p>`;
+    return `${html.slice(0, open)}<p class="front-credit front-credit--edition">${input.frontCredit}</p>${html.slice(close + 4)}`;
   };
 
   const anchorIndex = registry.entries();

@@ -35,6 +35,10 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
     title: "Platform label",
     question: "What an outside platform reports about a statement. This is that platform’s label, and no proof was run for these steps.",
   },
+  platform_observation: {
+    title: "Outside runs",
+    question: "Runs made outside this edition and carried with their own receipts, listed run by run above. Each outcome is its receipt’s; this edition ran nothing itself.",
+  },
 };
 
 export const STATUS_WORDS: Record<string, string> = {
@@ -129,6 +133,7 @@ const HEADLINE_NAMES: Record<string, string> = {
   extraction: "Dependency extraction",
   semantic_review: "Correspondence review",
   platform: "Platform label",
+  platform_observation: "Outside runs",
 };
 
 function headlineName(kind: string): string {
@@ -371,6 +376,7 @@ const KIND_NOUNS: Record<string, string> = {
   extraction: "dependency extraction records",
   semantic_review: "correspondence reviews",
   platform: "platform records",
+  platform_observation: "records of outside runs",
 };
 
 const KIND_RUN: Record<string, string> = { lean_build: "Lean build", comparator: "Comparator" };
