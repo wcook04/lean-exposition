@@ -51,9 +51,33 @@ Four independent things describe the reader. Each has one owner in the code.
 | Thing | Values | Changed by |
 | --- | --- | --- |
 | Reading place | the block under the reading line | scrolling; an explicit jump |
-| Attention | Following, Selected | a click or Enter on linked words, a paragraph's margin control, a graph card or a Lean name selects; "Resume here" or Escape follows again |
+| Attention | Following (Auto), Selected (Manual) | a click or Enter on linked words, a paragraph's margin control, a graph card or a Lean name selects; the Auto | Manual switch or Escape changes it |
 | View | Lean, Graph | the two tabs; a control that names a view ("Open its Lean") |
 | Presentation | open, collapsed | opening and closing the pane; on a phone, "Back to paper" |
+
+### Auto and Manual
+
+The two states of attention are one visible control: a two-sided switch, **Auto | Manual**, at the
+left of the subject band in both views, outside the graph's canvas. The side in force is lit, a
+filled amber-tinted pill with a soft, still glow; a change the reader makes plays one 300ms glow,
+none under reduced motion. Each side says what it does under the pointer and to assistive
+technology: "Auto: the pane follows the passage you are reading" and "Manual: the pane stays on
+what you selected".
+
+- A first visit is Auto. An address that names a phrase, a numbered result or a declaration opens
+  in Manual.
+- Clicking linked words, a paragraph's margin control, a graph card or a Lean name selects it and
+  turns the switch to Manual.
+- Auto, or Escape, follows the paper again. The paper does not move, and the pane takes the passage
+  at the reading line.
+- Manual, pressed while following, keeps what the pane shows now. With nothing linked under the
+  reading line there is nothing to keep, and Manual is dimmed.
+- In Manual scrolling never changes the pane, and "Return to selected words" is the one act that
+  scrolls back. In Auto the pane changes once a scroll has settled.
+- There is no third state: Auto is the only way to let a selection go.
+- The mode is not stored, so a new visit is Auto; it holds across Lean and Graph and across Text
+  and PDF.
+- On a phone the switch stands in the bar at the foot that keeps a selection.
 
 ### Following
 
@@ -73,10 +97,10 @@ quotation or comparison. Touch has no preview; a tap selects.
 ### Selected
 
 A click, tap or Enter on linked words selects exactly those words. The band says **Selected
-words** with their section, and the selection holds while the paper scrolls. Two actions sit in
+words** with their section, and the selection holds while the paper scrolls. Two controls sit in
 the band, and they are different acts:
 
-- **Resume here** lets go of the selection and follows the paper from where the reader now is.
+- **Auto** lets go of the selection and follows the paper from where the reader now is.
   The paper does not move. Escape does the same.
 - **Return to selected words** scrolls the paper back to the selection. The selection stays.
 
@@ -111,13 +135,13 @@ One strip under the pane's tabs, in both views, outside the graph's canvas. 56px
 line at pane widths from 520px; it may wrap to two lines below that, and its height then
 depends on the pane's width alone, never on the state, so a change of state reflows nothing.
 
-- Left: the state in the sans at 14px, semibold; then the place ("in §5.6", "in the opening")
-  as a control that returns to it.
-- Right: the state's actions as quiet buttons: "Return to selected words" and "Resume here" when
-  Selected; nothing when Following or in a Preview.
+- Left: the Auto | Manual switch; then the state in the sans at 14px, semibold; then the place
+  ("in §5.6", "in the opening") as a control that returns to it.
+- Right: "Return to selected words" as a quiet button when Selected; nothing when Following or in
+  a Preview.
 - A selection puts the selection's amber rule on the band's left edge, the same mark the selected
   words carry in the paper's margin. The band is not coloured by topic and carries no verdict.
-- The place control and both buttons show the amber focus ring when reached by keyboard.
+- The switch, the place control and the button show the amber focus ring when reached by keyboard.
 - Each change of state (Following, Preview, Selected words, Selected paragraph, Selected
   declaration) is said once through a polite live region in the band. A new subject within one
   state is not announced, so scrolling does not read every passage aloud.
@@ -371,7 +395,7 @@ right, nothing over the text. Widths are CSS pixels of the window.
    with the quotation first. Its head is one row: "Back to paper" and the two tabs.
 3. **Back to paper** (or Escape) closes it. The paper is exactly where it was. A bar stays at
    the foot: the selection's state and place, which returns to the words; "View", which
-   reopens the inspector; and "Resume", which lets the selection go. The paper reserves the
+   reopens the inspector; and the Auto | Manual switch, whose Auto lets the selection go. The paper reserves the
    bar's height so it covers no last line.
 4. Scrolling never reopens the inspector.
 
@@ -458,7 +482,7 @@ loops. Left alone, the page makes no change at all, and `check-idle.py` holds it
 | The pane at 1100 | 01: a sheet over the paper. 02: two true columns. | Two columns from 1024. A sheet covers the sentence the reader is checking. |
 | Paper type past 1920 | 02: hold 680px and 18px. 01, 04: keep the existing growth to 755px and 20px. | Keep the growth. It is bounded, deliberate and already held still by the first-screen checks. The inspector does not grow (04). |
 | Hover | 01: pointing never replaces the pane's content. 02, 03: a labelled preview that restores. | A labelled preview while following; while words are selected the paper's hover only lights. A card in the graph previews in the dock in both states. |
-| Escape | The engine went back through the browser's history, which moved the paper. 01: release in place. | Escape is "Resume here": the paper stays. Back is Back. |
+| Escape | The engine went back through the browser's history, which moved the paper. 01: release in place. | Escape is Auto: the paper stays. Back is Back. |
 | A group in the graph | The engine opened it in the drawing. 03: a bounded member list. | The list, for groups over eight. Opening 36 cards in place pushed the subject off the canvas. |
 | Fit | The engine and its check: Fit also folds opened groups. 03: camera only. | Camera only. Recovering the view must not cost the reader what they found. The check changes with it. |
 | Focus colour in the graph | 03: a blue ring. Others: the site's amber ring. | Amber, one focus colour across the site. |

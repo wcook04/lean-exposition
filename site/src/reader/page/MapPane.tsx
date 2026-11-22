@@ -89,7 +89,7 @@ interface Props {
   onRecord?(id: string): void;
   /** A declaration was chosen: it becomes the subject. */
   onDecl?(name: string, module?: string): void;
-  /** "Resume here": let go of what was selected and follow the paper from where the reader is. The paper does not move. */
+  /** Auto (or Escape): let go of what was selected and follow the paper from where the reader is. The paper does not move. */
   onRelease(): void;
   /** "Return to selected words": the paper goes back to the selection, which stays. */
   onReturn?(): void;
@@ -422,7 +422,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- The line over the drawing ----------------------------------------------------------
 
   const subjectTitle = focus?.subjects.length === 1 ? (focus.cards.get(focus.subjects[0])?.title ?? "") : "";
-  // Letting go is in the subject band ("Resume here"); the line over the drawing only says what is drawn.
+  // Letting go is in the subject band (Auto); the line over the drawing only says what is drawn.
   const again = null;
   const label = ((): ReactNode => {
     if (!current) return null;
@@ -690,7 +690,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           </button>
         </p>
       )}
-      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onReturn={(pin?.tie != null || held?.block) && onReturn ? onReturn : undefined} />}
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} onReturn={(pin?.tie != null || held?.block) && onReturn ? onReturn : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? asideSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />

@@ -689,8 +689,7 @@ html.is-reading {
   color: var(--ink-2);
 }
 
-.held-bar__view,
-.held-bar__resume {
+.held-bar__view {
   flex: none;
   min-width: 64px;
   min-height: 44px;
@@ -707,6 +706,10 @@ html.is-reading {
   border-color: var(--ink);
   background: var(--ink);
   color: var(--ground);
+}
+
+.held-bar__mode {
+  align-self: center;
 }
 
 .held-bar button:focus-visible {

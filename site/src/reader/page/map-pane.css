@@ -847,6 +847,84 @@ html[data-right-sheet] {
 
 /* ---- The subject band ---------------------------------------------------------------- */
 
+/* Auto | Manual: two sides of one control; the side in force is a lit amber pill with a soft,
+   still glow. A change the reader makes plays one 300ms pulse, none under reduced motion. */
+.mode-switch {
+  flex: none;
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--rule-control);
+  border-radius: 999px;
+  background: var(--sunk);
+  font-family: var(--font-sans);
+}
+
+.mode-switch__side {
+  position: relative;
+  min-height: 28px;
+  padding: 0 var(--space-3);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: var(--fs-ui);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+
+.mode-switch__side:hover:not(.is-on):not(:disabled) {
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.mode-switch__side:disabled {
+  color: var(--ink-3);
+  cursor: default;
+}
+
+.mode-switch__side.is-on {
+  border-color: color-mix(in srgb, var(--sel-ink) 55%, transparent);
+  background: var(--sel-wash);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--sel-ink) 20%, transparent), 0 0 10px color-mix(in srgb, var(--sel-ink) 35%, transparent);
+  cursor: default;
+}
+
+.mode-switch__side:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.mode-switch__pulse {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: mode-pulse 300ms var(--ease-out) 1 both;
+}
+
+@keyframes mode-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--sel-ink) 55%, transparent); }
+  100% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--sel-ink) 0%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-switch__pulse {
+    animation: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .mode-switch__side {
+    min-height: 40px;
+  }
+}
+
 .subject-band {
   flex: none;
   display: flex;

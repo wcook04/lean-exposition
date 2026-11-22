@@ -1,10 +1,12 @@
 // The subject band: one strip at the head of the right pane, the same in both views and outside
-// the graph's canvas. It says which state the reader is in (following the paper, a preview, or a
-// selection) and where in the paper the subject is, and it holds the two acts that end or revisit
-// a selection. They are different acts: "Resume here" lets go and never moves the paper; "Return to
-// selected words" moves the paper and keeps the selection. docs/reader-design.md specifies it.
+// the graph's canvas. At its left the Auto | Manual switch says whether the pane follows the paper
+// or stays on a selection, and switches between them; then come the state in words and where in the
+// paper the subject is, and the one act that revisits a selection. Auto lets go and never moves the
+// paper; "Return to selected words" moves the paper and keeps the selection. docs/reader-design.md
+// specifies it.
 
 import { useEffect, useRef, useState } from "react";
+import { ModeSwitch } from "./ModeSwitch";
 
 export type SubjectState = "following" | "preview" | "words" | "paragraph" | "declaration" | "step";
 
@@ -28,11 +30,14 @@ interface Props {
   place?: string;
   /** What the preview or selection is, in a few plain words, for the announcement. */
   title?: string;
+  /** Auto: let the selection go and follow the paper from where the reader is. */
   onResume?(): void;
+  /** Manual, while following: keep what the pane shows now. Absent when it shows nothing to keep. */
+  onManual?(): void;
   onReturn?(): void;
 }
 
-export function SubjectBand({ state, place, title, onResume, onReturn }: Props) {
+export function SubjectBand({ state, place, title, onResume, onManual, onReturn }: Props) {
   const selected = state !== "following" && state !== "preview";
   // A change of state is said once to assistive technology; a new subject within one state is not,
   // so scrolling does not read every passage aloud.
@@ -47,6 +52,7 @@ export function SubjectBand({ state, place, title, onResume, onReturn }: Props) 
   }, [state, selected, title]);
   return (
     <div className="subject-band" data-state={state}>
+      <ModeSwitch manual={selected} onAuto={onResume} onManual={onManual} />
       <p className="subject-band__state">
         <span className="subject-band__words">{WORDS[state]}</span>
         {state === "following" && <span className="subject-band__hint">Changes as you scroll</span>}
@@ -61,18 +67,11 @@ export function SubjectBand({ state, place, title, onResume, onReturn }: Props) 
             <span className="subject-band__hint">in {place}</span>
           ))}
       </p>
-      {selected && (
+      {selected && onReturn && (
         <div className="subject-band__acts">
-          {onReturn && (
-            <button type="button" className="subject-band__act" onClick={onReturn}>
-              {RETURN[state] ?? "Return to it in the paper"}
-            </button>
-          )}
-          {onResume && (
-            <button type="button" className="subject-band__act subject-band__act--resume" aria-keyshortcuts="Escape" onClick={onResume}>
-              Resume here
-            </button>
-          )}
+          <button type="button" className="subject-band__act" onClick={onReturn}>
+            {RETURN[state] ?? "Return to it in the paper"}
+          </button>
         </div>
       )}
       <span className="visually-hidden" role="status" aria-live="polite">

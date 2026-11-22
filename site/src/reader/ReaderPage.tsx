@@ -1145,7 +1145,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, []);
 
   /**
-   * "Resume here" and Escape: let go of what was selected and follow the paper from where the
+   * Auto and Escape: let go of what was selected and follow the paper from where the
    * reader now is. The paper does not move and the view stays; the browser's Back is the way to an
    * earlier place.
    */

@@ -207,18 +207,29 @@ describe("the subject band", async () => {
     }
   });
 
-  it("offers the two acts only for a selection, and calls their handlers", () => {
+  it("offers Return only for a selection, and Auto and Manual as one switch", () => {
     const onResume = vi.fn();
     const onReturn = vi.fn();
+    const onManual = vi.fn();
+    const side = (name: string) => [...container.querySelectorAll<HTMLButtonElement>(".mode-switch__side")].find((b) => b.textContent === name)!;
     for (const state of ["following", "preview"] as const) {
-      act(() => root.render(<SubjectBand state={state} place="§5.6" onResume={onResume} onReturn={onReturn} />));
+      act(() => root.render(<SubjectBand state={state} place="§5.6" onResume={onResume} onReturn={onReturn} onManual={onManual} />));
       expect(acts()).toHaveLength(0);
+      expect(side("Auto").getAttribute("aria-pressed")).toBe("true");
+      expect(side("Manual").getAttribute("aria-pressed")).toBe("false");
     }
+    act(() => side("Manual").click());
+    expect(onManual).toHaveBeenCalledTimes(1);
+    act(() => root.render(<SubjectBand state="following" place="§5.6" />));
+    expect(side("Manual").disabled).toBe(true);
     act(() => root.render(<SubjectBand state="words" place="§5.6" onResume={onResume} onReturn={onReturn} />));
-    const [back, resume] = acts();
+    const [back] = acts();
+    expect(acts()).toHaveLength(1);
     expect(back.textContent).toBe("Return to selected words");
-    expect(resume.textContent).toBe("Resume here");
-    act(() => resume.click());
+    expect(side("Manual").getAttribute("aria-pressed")).toBe("true");
+    expect(side("Auto").title).toBe("Auto: the pane follows the passage you are reading");
+    expect(side("Manual").title).toBe("Manual: the pane stays on what you selected");
+    act(() => side("Auto").click());
     expect(onResume).toHaveBeenCalledTimes(1);
     expect(onReturn).not.toHaveBeenCalled();
     act(() => back.click());

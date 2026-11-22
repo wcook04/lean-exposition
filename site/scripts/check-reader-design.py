@@ -8,7 +8,7 @@ It checks, each from a fresh browser with empty storage:
  2. a click on linked words selects them (`.subject-band[data-state="words"]`, `data-pin`, a 5px
     underline) and does not scroll the paper;
  3. Graph and back to Lean change neither the scroll, the subject nor the history;
- 4. "Resume here", and Escape, release the selection in place: no scroll, no history entry;
+ 4. Auto, and Escape, release the selection in place: no scroll, no history entry;
  5. "Return to selected words" brings the selection back into view and keeps it;
  6. a click on plain, unlinked words changes neither the state nor the address;
  7. a paragraph's margin control selects the paragraph, lists its linked passages, and choosing
@@ -16,11 +16,15 @@ It checks, each from a fresh browser with empty storage:
  8. at 1100x900 the paper and the pane stand side by side, nothing fixed over the paper;
  9. on a 390x844 touch phone: a tap opens the whole-screen sheet, "Back to paper" restores the
     place and leaves the held bar, scrolling never reopens the sheet, the bar's View reopens it
-    and its Resume ends the selection;
+    and its Auto ends the selection;
 10. in the Graph view Fit changes only the drawing: the band's words stay, an opened member
     list stays open, and the band does not move;
 11. under `prefers-reduced-motion: reduce` the selected marks have no transition and the sheet
-    and member list no running animation.
+    and member list no running animation;
+12. the band's Auto | Manual switch: a first visit is Auto, a deep link is Manual, a click on words
+    turns it to Manual, scrolling in Manual leaves the pane, Auto follows again without moving the
+    paper and the pane then changes as the paper scrolls, Manual while following keeps what the
+    pane shows, Escape is Auto, and the mode survives Graph and back to Lean.
 
 Controls in the sticky pane are clicked with the mouse at the centre of their box, never with
 Playwright's own `click()`, which scrolls the page first and would falsify every scroll check.
@@ -209,7 +213,7 @@ def select_and_views(browser: Browser, base: str) -> None:
 
     # 5: Return to selected words.
     scroll_by(page, 1500)
-    centre_click(page, ".subject-band__act:not(.subject-band__act--resume)")
+    centre_click(page, ".subject-band__act")
     page.wait_for_timeout(2000)
     inside = page.evaluate(
         """() => [...document.querySelectorAll('.part__text [data-t][data-pin]')].some(e => [...e.getClientRects()].some(r => r.bottom > 0 && r.top < innerHeight && r.width > 0))"""
@@ -217,8 +221,8 @@ def select_and_views(browser: Browser, base: str) -> None:
     check(inside, "5 Return to selected words brings a selected mark into view")
     check(state(page) == "words", "5 Return to selected words keeps the selection", f"state {state(page)}")
 
-    # 4: Resume here, then Escape.
-    for how in ("Resume here", "Escape"):
+    # 4: Auto, then Escape.
+    for how in ("Auto", "Escape"):
         if state(page) != "words":
             click_tie(page)
         if not check(state(page) == "words", f"4 words are selected before {how}", f"state {state(page)}"):
@@ -228,7 +232,7 @@ def select_and_views(browser: Browser, base: str) -> None:
         if how == "Escape":
             page.keyboard.press("Escape")
         else:
-            centre_click(page, ".subject-band__act--resume")
+            centre_click(page, AUTO)
         page.wait_for_timeout(1000)
         check(abs(scroll_y(page) - y2) <= 1, f"4 {how} does not move the paper", f"scrollY {y2} -> {scroll_y(page)}")
         check(state(page) == "following", f"4 {how} follows the paper again", f"state {state(page)}")
@@ -261,6 +265,87 @@ PLAIN_POINT = r"""
   return null;
 }
 """
+
+
+AUTO = ".map-pane .subject-band .mode-switch__side:first-child"
+MANUAL = ".map-pane .subject-band .mode-switch__side:last-child"
+
+
+def mode(page: Page) -> str | None:
+    """Which side of the band's Auto | Manual switch is pressed."""
+    return page.evaluate(
+        "(() => { const on = document.querySelector('.map-pane .subject-band .mode-switch__side[aria-pressed=\"true\"]'); return on ? on.textContent.trim() : null; })()"
+    )
+
+
+def pane_subject(page: Page) -> str | None:
+    return page.evaluate("document.querySelector('.map-pane .lean-page__title')?.textContent ?? null")
+
+
+def scroll_until_new(page: Page, before: str | None, steps: int = 8) -> str | None:
+    """Scroll on until the pane shows another subject, or give up; returns what it shows."""
+    now = pane_subject(page)
+    for _ in range(steps):
+        scroll_by(page, 700)
+        page.wait_for_timeout(900)
+        now = pane_subject(page)
+        if now and now != before:
+            break
+    return now
+
+
+def auto_manual(browser: Browser, base: str) -> None:
+    """12: the Auto | Manual switch, rule by rule (docs/reader-design.md, States)."""
+    page = open_page(browser, base, 1440, 900)
+    check(mode(page) == "Auto", "12 a first visit is Auto", f"mode {mode(page)}")
+    scroll_by(page, 1200)
+    page.wait_for_timeout(1000)
+    # Clicking linked words selects them and turns the switch to Manual.
+    if check(click_tie(page) is not None, "12 a linked phrase is in view to click"):
+        check(mode(page) == "Manual", "12 a click on words turns the switch to Manual", f"mode {mode(page)}")
+        # In Manual scrolling never changes the pane.
+        held = pane_subject(page)
+        for _ in range(4):
+            scroll_by(page, 700)
+            page.wait_for_timeout(700)
+        check(pane_subject(page) == held and mode(page) == "Manual", "12 scrolling in Manual leaves the pane as it was", f"{held!r} -> {pane_subject(page)!r}")
+        # Auto lets go where the reader is, without moving the paper, and the pane then follows.
+        y = scroll_y(page)
+        centre_click(page, AUTO)
+        page.wait_for_timeout(900)
+        check(mode(page) == "Auto" and state(page) == "following", "12 Auto follows the paper again", f"mode {mode(page)}, state {state(page)}")
+        check(abs(scroll_y(page) - y) <= 1, "12 Auto does not move the paper", f"scrollY {y} -> {scroll_y(page)}")
+        before = pane_subject(page)
+        after = scroll_until_new(page, before)
+        check(mode(page) == "Auto" and after is not None and after != before, "12 after Auto, scrolling changes the pane", f"{before!r} -> {after!r}")
+        # Manual, pressed while following, keeps what the pane shows.
+        shown = pane_subject(page)
+        if centre_click(page, MANUAL):
+            page.wait_for_timeout(900)
+            check(mode(page) == "Manual" and state(page) == "words", "12 Manual pins what the pane shows", f"mode {mode(page)}, state {state(page)}")
+            check(pane_subject(page) == shown, "12 Manual keeps the same subject", f"{shown!r} -> {pane_subject(page)!r}")
+            for _ in range(3):
+                scroll_by(page, 700)
+                page.wait_for_timeout(700)
+            check(pane_subject(page) == shown, "12 after Manual, scrolling leaves the pane as it was", f"{shown!r} -> {pane_subject(page)!r}")
+            # Escape is Auto.
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(800)
+            check(mode(page) == "Auto", "12 Escape turns the switch to Auto", f"mode {mode(page)}")
+        else:
+            check(False, "12 Manual is there to press while following")
+        # The mode survives switching between Lean and Graph.
+        click_tie(page)
+        pane_tab(page, "Graph")
+        page.wait_for_timeout(1200)
+        pane_tab(page, "Lean")
+        page.wait_for_timeout(900)
+        check(mode(page) == "Manual", "12 Manual survives Graph and back to Lean", f"mode {mode(page)}")
+    page.context.close()
+    # A deep link to a numbered result opens in Manual.
+    page = open_page(browser, base + "theorem-1.1/", 1440, 900)
+    check(mode(page) == "Manual", "12 a deep link opens in Manual", f"mode {mode(page)}, state {state(page)}")
+    page.context.close()
 
 
 def plain_words(browser: Browser, base: str) -> None:
@@ -381,12 +466,12 @@ def phone(browser: Browser, base: str) -> None:
         page.wait_for_timeout(900)
     else:
         check(False, "9 the held bar has View")
-    if centre_click(page, ".held-bar__resume"):
+    if centre_click(page, ".held-bar__mode .mode-switch__side:first-child"):
         page.wait_for_timeout(900)
-        check(page.locator(".held-bar").count() == 0, "9 the held bar's Resume removes the bar")
-        check(page.evaluate("document.querySelectorAll('[data-pin]').length") == 0, "9 the held bar's Resume ends the selection")
+        check(page.locator(".held-bar").count() == 0, "9 the held bar's Auto removes the bar")
+        check(page.evaluate("document.querySelectorAll('[data-pin]').length") == 0, "9 the held bar's Auto ends the selection")
     else:
-        check(False, "9 the held bar has Resume")
+        check(False, "9 the held bar has Auto")
     page.context.close()
 
 
@@ -522,7 +607,7 @@ def main() -> int:
     base = args.base if args.base.endswith("/") else args.base + "/"
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=not args.headed, ignore_default_args=["--hide-scrollbars"])
-        for step in (first_visit, select_and_views, plain_words, paragraph_pick, side_by_side, phone, graph_fit, reduced_motion):
+        for step in (first_visit, select_and_views, plain_words, paragraph_pick, side_by_side, phone, graph_fit, reduced_motion, auto_manual):
             try:
                 step(browser, base)
             except Exception as error:  # a step that cannot run is a failure, and the others still run
