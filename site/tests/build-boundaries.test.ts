@@ -5,6 +5,18 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { promisify } from "node:util";
 import { expect, it } from "vitest";
+import { recordIndex } from "../vite.config";
+import { recordLine, shortTitle } from "../src/compare/useAlignment";
+
+it("keeps the authored record lines and plain titles available synchronously", () => {
+  const lines = Object.entries(recordIndex());
+  expect(lines.length).toBeGreaterThan(0);
+  // Read titles before expanding title-only entries into full lines.
+  expect(lines.map(([id]) => shortTitle(id, id))).toEqual(lines.map(([id, line]) => line.short || id));
+  expect(lines.map(([id]) => recordLine(id))).toEqual(lines.map(([, line]) => line));
+  expect(recordLine("missing-record-index-test")).toBeUndefined();
+  expect(shortTitle("missing-record-index-test", "Graph label")).toBe("Graph label");
+});
 
 function outputTree(root: string): Record<string, { bytes: string; modified: number }> {
   const files: ReturnType<typeof outputTree> = {};

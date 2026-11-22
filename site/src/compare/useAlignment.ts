@@ -138,10 +138,15 @@ export function useRecordAlignment(id: string | null | undefined): RecordAlignme
 
 /** A record's short title for tiles. It ships in the bundle, so it is there at first paint. */
 export function shortTitle(id: string, label: string): string {
-  return RECORD_INDEX[id]?.short || label;
+  const line = RECORD_INDEX[id];
+  return (typeof line === "string" ? line : line?.short) || label;
 }
 
 /** What each level does with a record, for its marks. Also in the bundle. */
 export function recordLine(id: string): RecordLine | undefined {
-  return RECORD_INDEX[id];
+  const line = RECORD_INDEX[id];
+  if (typeof line !== "string") return line;
+  const expanded = { short: line, lean: 0, relations: [], levels: {} };
+  RECORD_INDEX[id] = expanded;
+  return expanded;
 }
