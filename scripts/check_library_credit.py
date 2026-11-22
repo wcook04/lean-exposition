@@ -28,6 +28,8 @@ ap.add_argument("--section", help="the section that states --statement, opened b
 ap.add_argument("--our-tie", help="a phrase whose card shows our own Lean statement beside the authors'")
 ap.add_argument("--companion-phrase", nargs=2, metavar=("PAGE", "ID"), help="a phrase of a companion page: /<page>/@<id> opens its card")
 ap.add_argument("--companion-lean", nargs=2, metavar=("PAGE", "NAME"), help="/<page>/lean/<name> opens that Lean card")
+ap.add_argument("--moved", nargs=3, metavar=("OLD", "ID", "NEW"), help="a moved page: /<old>/ shows /<new>/, and /<old>/@<id> opens the phrase at /<new>/@<id>")
+ap.add_argument("--later-check", nargs=2, metavar=("PAGE", "PASSAGE"), help="a passage that mentions a later check shows it after the passage")
 ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
@@ -164,6 +166,8 @@ with sync_playwright() as pw:
             page.wait_for_timeout(4000)
             ours = page.evaluate("() => [...document.querySelectorAll('.ours')].map(e => e.innerText).join(' | ')")
             check(f"{tag} our statement", "Our statement, proved from the authors' Lean library" in ours and "Not the authors' Lean" in ours, ours[:200])
+            badge = page.evaluate("() => [...document.querySelectorAll('.ours__checked a')].map(e => e.href)")
+            check(f"{tag} our statement's Comparator badge", "pending" not in ours and any("/actions/runs/" in h for h in badge), badge)
             page.screenshot(path=str(a.shots / f"ours-{tag}.png"))
         if a.companion_phrase:
             cp, cid = a.companion_phrase
@@ -181,6 +185,24 @@ with sync_playwright() as pw:
             pane = page.evaluate("() => (document.querySelector('.lean-page') || {}).innerText || ''")
             short = name.rsplit(".", 1)[-1]
             check(f"{tag} companion lean address", short in pane, f"{page.url} {pane[:120]}")
+        if a.moved:
+            old, mid, new = a.moved
+            page.goto(base + f"{old}/", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(1500)
+            check(f"{tag} moved page", page.url.split("?")[0].rstrip("/").endswith(f"/{new}"), page.url)
+            page.goto(base + f"{old}/@{mid}", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(4000)
+            card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
+            check(f"{tag} moved phrase address", page.url.split("?")[0].endswith(f"/{new}/@{mid}") and ("AI-assessed" in card or "Topic" in card),
+                  f"{page.url} {card[:120]}")
+        if a.later_check:
+            cp, anchor = a.later_check
+            page.goto(base + f"{cp}/", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            note = page.evaluate("(a) => (document.querySelector(`[data-passage=\"${a}\"] .later-check`) || {}).innerText || ''", anchor)
+            check(f"{tag} later check beside its passage", "1,923" in note and "No mathematical statement differs" in note, note[:160])
         for slot in a.companion:
             page.goto(base + f"{slot}/", wait_until="domcontentloaded")
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)

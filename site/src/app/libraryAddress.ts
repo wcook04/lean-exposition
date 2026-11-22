@@ -28,6 +28,22 @@ export interface RetiredAddress { retired: string; nearest: string | null }
 let phrases: Record<string, PhraseAddress> = {};
 let retiredLinks: Record<string, RetiredAddress> = {};
 /**
+ * A page that moved (instance.json `moved_pages`): the page it now opens, and the page each of its
+ * phrases stands on where that is another one. /accounts/@<id> opens the phrase on its new page.
+ */
+export interface MovedPage { to: string; phrases?: Record<string, string> }
+let movedPages: Record<string, MovedPage> = {};
+/**
+ * A later check readers may ask about (a library paper's ours.json `checks`): the Lean constant it
+ * concerns (its last name), the question and its answer, and the runs and pull request behind it.
+ */
+export interface LaterCheck { constant: string; question: string; answer: string; runs?: string[]; pr?: string; merge?: string }
+let laterChecks: LaterCheck[] = [];
+/** The later checks of this paper. */
+export function libraryChecks(): readonly LaterCheck[] {
+  return laterChecks;
+}
+/**
  * Each numbered result's canonical target in the main document: the place of the tie at its statement
  * block, and the block itself (`theorem-1.1` → ["b4521-4600", "b4521-5120"]). Either place, or none,
  * is the result's own address.
@@ -44,15 +60,17 @@ export async function loadLibraryAddresses(base: string): Promise<void> {
     const response = await fetch(`${base}/addresses.json`);
     if (response.ok) {
       const table = await response.json();
-      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {});
+      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {}, table.moved ?? {});
+      laterChecks = table.checks ?? [];
     }
   } catch {
     // The paper still opens; a phrase address then lands at the top of the paper.
   }
 }
 
-export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string]> = {}): void {
+export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string]> = {}, moved: Record<string, MovedPage> = {}): void {
   phrases = table;
+  movedPages = moved;
   retiredLinks = retired;
   resultTargets = results;
   byPlace.clear();
@@ -61,6 +79,21 @@ export function setLibraryAddresses(table: Record<string, PhraseAddress>, retire
 }
 
 type Read = Extract<Route, { view: "read" }>;
+
+/**
+ * The current address of a moved page's address (relative to the paper's base, no trailing slash),
+ * or null when the page did not move: /accounts → /digest, /accounts/@<id> → /<its page>/@<id>,
+ * /accounts/lean/<name> → /digest/lean/<name>.
+ */
+export function movedLibraryPath(path: string): string | null {
+  const m = path.match(/^\/([a-z0-9-]+)(\/.*)?$/);
+  const moved = m ? movedPages[m[1]] : undefined;
+  if (!m || !moved) return null;
+  const rest = m[2] ?? "";
+  const tie = rest.match(/^\/@([^/]+)$/);
+  const page = tie ? (moved.phrases?.[decodeURIComponent(tie[1])] ?? moved.to) : moved.to;
+  return `/${page}${rest}`;
+}
 
 /** The route a library address names, or null when the path is one of the reader's own. */
 export function parseLibraryPath(path: string, q: URLSearchParams, hash: string | undefined, lib = LIBRARY): Read | null {
@@ -81,6 +114,8 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   }
   const lean = path.match(/^\/lean\/(.+)$/);
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
+  const moved = movedLibraryPath(path);
+  if (moved && moved !== path) return parseLibraryPath(moved, q, hash, lib);
   const page = path.match(/^\/([a-z0-9-]+)$/);
   if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]], node: q.get("n") ?? undefined, at: q.get("l") ?? undefined };
   // Inside a companion page: /<page>/@<phrase> and /<page>/lean/<full.name>, as in the paper itself.

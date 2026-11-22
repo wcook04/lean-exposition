@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import site from "@instance/site";
 import { noteHtml } from "../reader/page/PhraseCard";
 import { isFidelity, phraseVerdict } from "../compare/fidelityWords";
+import { libraryChecks, type LaterCheck } from "../app/libraryAddress";
 import "./ours.css";
 
 interface OurDeclaration {
@@ -32,6 +33,19 @@ function loadOurs(): Promise<Ours | null> {
 }
 
 const REPOSITORY = "https://github.com/wcook04/proof-reader/blob/main/";
+const RUNS = "https://github.com/wcook04/proof-reader/actions/runs/";
+
+/** An accepted Comparator verdict ("accepted: … run 44961961637 …"): the run that judged it, or null. */
+function acceptedRun(comparator: string | undefined): string | null {
+  if (!comparator?.startsWith("accepted")) return null;
+  return comparator.match(/run (\d{6,})/)?.[1] ?? "";
+}
+
+/** A pull request named "owner/repo#N", as its address. */
+function pullHref(pr: string): string | null {
+  const m = pr.match(/^([\w.-]+\/[\w.-]+)#(\d+)$/);
+  return m ? `https://github.com/${m[1]}/pull/${m[2]}` : null;
+}
 
 /** Our statements compared with this phrase, each as a block of its own, under the authors' card. */
 export function OurStatements({ phrase }: { phrase: string | undefined }) {
@@ -50,12 +64,22 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
       {rows.map((row) => {
         const decl = ours!.declarations[row.lean];
         const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
+        const run = acceptedRun(decl?.status?.comparator);
         return (
           <section key={row.lean} className="ours" aria-label="Our statement, proved from the authors' Lean library">
             <p className="ours__badge">Our statement, proved from the authors' Lean library. Not the authors' Lean.</p>
             <h4 className="ours__title">
               {decl?.title ?? row.lean} <code className="ours__name">{row.lean}</code>
             </h4>
+            {run !== null && (
+              <p className="ours__checked">
+                {run ? (
+                  <a href={`${RUNS}${run}`} target="_blank" rel="noopener">Checked by Comparator against its statement</a>
+                ) : (
+                  "Checked by Comparator against its statement"
+                )}
+              </p>
+            )}
             {verdict && (
               <p className="ours__fidelity">
                 <strong>{verdict}</strong>: <span dangerouslySetInnerHTML={{ __html: noteHtml(row.note).html }} /> <span className="ours__who">AI-assessed</span>
@@ -71,7 +95,9 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
                   In <a href={`${REPOSITORY}${decl.file}`} target="_blank" rel="noopener">wcook04/proof-reader, {decl.file}</a>.
                   {decl.status?.compiled && <> Compiled on {decl.status.compiled}.</>}
                   {decl.status?.axioms?.length ? <> Axioms: {decl.status.axioms.join(", ")}.</> : null}
-                  {decl.status?.comparator && <> Comparator: {decl.status.comparator}.</>}
+                  {decl.status?.comparator && (run !== null
+                    ? <> Comparator: {decl.status.comparator.replace(/^accepted:\s*/, "")}.</>
+                    : <> Comparator: {decl.status.comparator}.</>)}
                 </p>
               </details>
             )}
@@ -80,4 +106,40 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
       })}
     </>
   );
+}
+
+/**
+ * A later check on a passage or a Lean card that mentions what it concerns: the question a reader
+ * may ask, our answer, and the runs and pull request behind it. Ours, not the authors'.
+ */
+export function LaterCheckNote({ check }: { check: LaterCheck }) {
+  const pr = check.pr ? pullHref(check.pr) : null;
+  return (
+    <aside className="later-check" data-check={check.constant}>
+      <p className="later-check__badge">Checked since</p>
+      <p className="later-check__question">{check.question}</p>
+      <p className="later-check__answer">{check.answer}</p>
+      {(check.runs?.length || pr) && (
+        <p className="later-check__runs">
+          {check.runs?.length ? <>Actions {check.runs.length > 1 ? "runs" : "run"}{" "}
+            {check.runs.map((id, i) => (
+              <span key={id}>{i ? (i === check.runs!.length - 1 ? " and " : ", ") : ""}<a href={`${RUNS}${id}`} target="_blank" rel="noopener">{id}</a></span>
+            ))}</> : null}
+          {pr && <>{check.runs?.length ? "; " : ""}<a href={pr} target="_blank" rel="noopener">{check.pr}</a></>}.
+        </p>
+      )}
+    </aside>
+  );
+}
+
+/** The later checks a passage's text mentions: it names the constant and Comparator. */
+export function checksMentionedBy(text: string): LaterCheck[] {
+  const checks = libraryChecks();
+  if (!checks.length || !text.includes("Comparator")) return [];
+  return checks.filter((c) => new RegExp(`(^|[^\\w])${c.constant.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\w])`).test(text));
+}
+
+/** The later checks on one Lean constant, by its full name. */
+export function checksOnConstant(name: string): LaterCheck[] {
+  return libraryChecks().filter((c) => name === c.constant || name.endsWith(`.${c.constant}`));
 }

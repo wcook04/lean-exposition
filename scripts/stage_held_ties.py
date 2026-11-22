@@ -245,7 +245,10 @@ if a.sentences:
             "schema": 1,
             "meaning": "Our own Lean statements, proved from the authors' Lean library; not the authors' Lean.",
             "declarations": json.loads((ours / "declarations.json").read_text()),
-            "comparisons": json.loads((ours / "ties.json").read_text())["comparisons"]}, ensure_ascii=False))
+            "comparisons": json.loads((ours / "ties.json").read_text())["comparisons"],
+            # Later checks readers may ask about, keyed by the Lean constant they concern.
+            **({"checks": json.loads((ours / "checks.json").read_text())} if (ours / "checks.json").is_file() else {})},
+            ensure_ascii=False))
 if a.sentences and (a.sentences / "ENCODING.md").is_file():
     # The guide to how the Lean encodes the paper's objects, published as it stands.
     (a.out / "guide.md").write_text((a.sentences / "ENCODING.md").read_text())

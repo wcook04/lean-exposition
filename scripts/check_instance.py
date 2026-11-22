@@ -114,6 +114,10 @@ def main() -> int:
     clash = sorted({s for s in slugs if s in reserved or result_slug.match(s)} | {s for s in slugs if slugs.count(s) > 1})
     if clash:
         problems.append(f"page slugs that collide with a reserved word, a result address or each other: {', '.join(clash)}")
+    # A moved page's old slug keeps its address, so it may not be taken again, and it moves to a page.
+    for old, row in instance.get("moved_pages", {}).items():
+        if old in slugs or old in reserved or result_slug.match(old) or row.get("to") not in slugs:
+            problems.append(f"moved page {old}: its old slug is taken, or it moves to {row.get('to')}, which is no page")
     for p in problems:
         print(f"instance {paper}: {p}", file=sys.stderr)
     if not problems:

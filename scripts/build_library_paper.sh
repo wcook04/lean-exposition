@@ -74,7 +74,12 @@ for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
     shell_of = dist / "read" / doc["slot"] / "index.html"
     (dist / doc["slug"] / "index.html").write_text((shell_of if shell_of.is_file() else dist / "404.html").read_text())
-print(f"static addresses: / and {len(results)} results and {len(pages)} pages")
+# A page that moved (moved_pages) is served as its new page's shell; the reader then shows the new address.
+slugs = {doc["slug"] for doc in pages}
+for old, row in inst.get("moved_pages", {}).items():
+    (dist / old).mkdir(exist_ok=True)
+    (dist / old / "index.html").write_text((dist / row["to"] / "index.html").read_text() if row["to"] in slugs else shell)
+print(f"static addresses: / and {len(results)} results and {len(pages)} pages and {len(inst.get('moved_pages', {}))} moved")
 PYEOF
 # Put back the tracked placeholder that library-instance.mjs replaced.
 git checkout -- site/src/instances/library/current.json 2>/dev/null || true

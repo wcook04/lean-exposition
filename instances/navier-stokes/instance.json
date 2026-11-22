@@ -696,6 +696,17 @@
    "noun": "guide"
   }
  ],
+ "moved_pages": {
+  "accounts": {
+   "to": "digest",
+   "phrases_from": [
+    "digest",
+    "part-1",
+    "part-2"
+   ],
+   "note": "The digest and Parts I and II were one page, /accounts/, until 22 Nov 2026."
+  }
+ },
  "families": [
   {
    "id": "theorems",

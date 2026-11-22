@@ -175,8 +175,50 @@
  },
  "0a0fe824d26ab452": {
   "used_by": [
-   "instances/navier-stokes/alignment/colours-long.json#0",
-   "instances/navier-stokes/alignment/colours-short.json#0"
+   "instances/navier-stokes/alignment/colours-appendix-b.json#0",
+   "instances/navier-stokes/alignment/colours-cell-fidelity.json#0",
+   "instances/navier-stokes/alignment/colours-cell-guide.json#0",
+   "instances/navier-stokes/alignment/colours-cell-reference.json#0",
+   "instances/navier-stokes/alignment/colours-certificate-checker.json#0",
+   "instances/navier-stokes/alignment/colours-digest.json#0",
+   "instances/navier-stokes/alignment/colours-index.json#0",
+   "instances/navier-stokes/alignment/colours-library-01.json#0",
+   "instances/navier-stokes/alignment/colours-library-02.json#0",
+   "instances/navier-stokes/alignment/colours-library-03.json#0",
+   "instances/navier-stokes/alignment/colours-library-04.json#0",
+   "instances/navier-stokes/alignment/colours-library-05.json#0",
+   "instances/navier-stokes/alignment/colours-library-06.json#0",
+   "instances/navier-stokes/alignment/colours-library-07.json#0",
+   "instances/navier-stokes/alignment/colours-library-08.json#0",
+   "instances/navier-stokes/alignment/colours-library-09.json#0",
+   "instances/navier-stokes/alignment/colours-library-10.json#0",
+   "instances/navier-stokes/alignment/colours-library-11.json#0",
+   "instances/navier-stokes/alignment/colours-library-12.json#0",
+   "instances/navier-stokes/alignment/colours-library-13.json#0",
+   "instances/navier-stokes/alignment/colours-library-14.json#0",
+   "instances/navier-stokes/alignment/colours-library-15.json#0",
+   "instances/navier-stokes/alignment/colours-library-16.json#0",
+   "instances/navier-stokes/alignment/colours-library-17.json#0",
+   "instances/navier-stokes/alignment/colours-library-18.json#0",
+   "instances/navier-stokes/alignment/colours-library-19.json#0",
+   "instances/navier-stokes/alignment/colours-library-20.json#0",
+   "instances/navier-stokes/alignment/colours-library-21.json#0",
+   "instances/navier-stokes/alignment/colours-library-22.json#0",
+   "instances/navier-stokes/alignment/colours-library-23.json#0",
+   "instances/navier-stokes/alignment/colours-library-24.json#0",
+   "instances/navier-stokes/alignment/colours-library-25.json#0",
+   "instances/navier-stokes/alignment/colours-library-26.json#0",
+   "instances/navier-stokes/alignment/colours-library-27.json#0",
+   "instances/navier-stokes/alignment/colours-library-28.json#0",
+   "instances/navier-stokes/alignment/colours-library-29.json#0",
+   "instances/navier-stokes/alignment/colours-library-30.json#0",
+   "instances/navier-stokes/alignment/colours-part-1.json#0",
+   "instances/navier-stokes/alignment/colours-part-2.json#0",
+   "instances/navier-stokes/alignment/colours-route-details.json#0",
+   "instances/navier-stokes/alignment/colours-routes.json#0",
+   "instances/navier-stokes/alignment/colours-short.json#0",
+   "instances/navier-stokes/alignment/colours-statement-files.json#0",
+   "instances/navier-stokes/alignment/colours-what-the-lean-states.json#0"
   ],
   "families": [
    [
@@ -198,8 +240,8 @@
     "profile-to-blowup",
     129.36,
     [
-     "monodromy",
      "mild",
+     "monodromy",
      "profile"
     ]
    ],
@@ -251,11 +293,11 @@
     "oklch(0.450 0.098 68.9)",
     "oklch(0.620 0.135 68.9)"
    ],
-   "monodromy": [
+   "mild": [
     "oklch(0.370 0.089 121.1)",
     "oklch(0.540 0.129 121.1)"
    ],
-   "mild": [
+   "monodromy": [
     "oklch(0.490 0.130 129.4)",
     "oklch(0.660 0.176 129.4)"
    ],

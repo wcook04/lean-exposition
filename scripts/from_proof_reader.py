@@ -437,6 +437,9 @@ def main() -> None:
         if (out / "alignment/aliases.json").is_file():
             old_table = json.loads((out / "alignment/aliases.json").read_text())
             old_aliases, old_retired = old_table.get("passages", {}), old_table.get("retired", {})
+    # Pages that moved keep their addresses across conversions (instance.json moved_pages, kept as it was).
+    moved_pages = (json.loads((out / "instance.json").read_text()).get("moved_pages")
+                   if (out / "instance.json").is_file() else None)
     if out.exists():
         for child in ("papers", "alignment", "upstream", "generated", "evidence-graph.json", "instance.json"):
             target = out / child
@@ -1143,6 +1146,7 @@ def main() -> None:
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
                        "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + companions,
+        **({"moved_pages": moved_pages} if moved_pages else {}),
         **({"comparator": comparator} if comparator else {}),
         **({"comparisons_hidden": True, "comparisons_held_text": held} if held else {}),
         "families": links.get("families", []),

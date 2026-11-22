@@ -5,7 +5,7 @@ import site from "@instance/site";
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
 import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
-import { libraryHref, parseLibraryPath, pdfParams } from "./libraryAddress";
+import { libraryHref, movedLibraryPath, parseLibraryPath, pdfParams } from "./libraryAddress";
 
 export type Trace = "rests" | "uses";
 
@@ -300,6 +300,14 @@ const listeners = new Set<() => void>();
  * can only treat it as a phrase alone, which would open no Lean.
  */
 export function reparseCurrentRoute(): void {
+  // A page that moved (a library paper's moved_pages) shows its new address once the table is read.
+  const url = new URL(window.location.href);
+  const inBase = BASE && url.pathname.startsWith(BASE) ? url.pathname.slice(BASE.length) : url.pathname;
+  const moved = movedLibraryPath(inBase.replace(/\/+$/, "") || "/");
+  if (moved) {
+    url.pathname = `${BASE}${moved}${/\/(?:@|lean\/)/.test(moved) ? "" : "/"}`;
+    replaceEntry(url);
+  }
   current = parseRoute(new URL(window.location.href));
 }
 
