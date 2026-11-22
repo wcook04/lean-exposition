@@ -17,6 +17,7 @@ import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { paperAlignmentResource, shortTitle } from "../../compare/useAlignment";
 import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
+import { READER_ACT_MS, sinceInput } from "../../app/readerInput";
 import { aidsArrived, loadAids } from "../aids";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
@@ -288,6 +289,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   useEffect(() => {
     if (!phrase) return;
     const bring = () => {
+      // Only in answer to the reader: an address opened on load leaves the column where it is.
+      if (sinceInput() > READER_ACT_MS) return true;
       const box = scroller.current;
       const lit = box?.querySelector<HTMLElement>(".lean-line.is-lit");
       if (!box || !lit) return false;

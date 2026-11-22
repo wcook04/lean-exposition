@@ -36,6 +36,7 @@ import { useAlignment } from "../compare/useAlignment";
 import { declTitle } from "../model/declTitle";
 import { collectLocals, findDecl, makeScope, resolveName, splitUses, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
 import { tokenize, type LeanToken } from "./tokenize";
+import { READER_ACT_MS, sinceInput } from "../app/readerInput";
 import type { LeanWalk } from "./walk";
 
 export type LineRange = readonly [first: number, last: number];
@@ -510,6 +511,8 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   // A range that changes is what the reader is now looking at; pointing and scrolling never reach here.
   useEffect(() => {
     if (!rangesKey || quietLines) return;
+    // Only in answer to the reader: an address opened on load leaves the column where it is.
+    if (sinceInput() > READER_ACT_MS) return;
     const first = root.current?.querySelector<HTMLElement>(".lean-line.is-lit");
     if (first) showLine(first);
   }, [rangesKey, proof, quietLines]);

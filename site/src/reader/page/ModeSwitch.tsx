@@ -4,15 +4,10 @@
 // without moving it; Manual keeps what the pane shows now. Selecting anything turns it to Manual.
 
 import { useEffect, useRef, useState } from "react";
+import { sinceInput } from "../../app/readerInput";
 
 export const AUTO_TITLE = "Auto: the pane follows the passage you are reading";
 export const MANUAL_TITLE = "Manual: the pane stays on what you selected";
-
-/** When the reader last pressed, tapped or typed: a mode change soon after it is the reader's own. */
-let inputAt = -Infinity;
-if (typeof window !== "undefined") {
-  for (const type of ["pointerdown", "keydown"]) window.addEventListener(type, () => (inputAt = performance.now()), { capture: true, passive: true });
-}
 
 interface Props {
   manual: boolean;
@@ -30,7 +25,7 @@ export function ModeSwitch({ manual, onAuto, onManual, className }: Props) {
   useEffect(() => {
     if (last.current === manual) return;
     last.current = manual;
-    if (performance.now() - inputAt < 1500) setPulse((n) => n + 1);
+    if (sinceInput() < 1500) setPulse((n) => n + 1);
   }, [manual]);
   const side = (isManual: boolean) => {
     const on = manual === isManual;
