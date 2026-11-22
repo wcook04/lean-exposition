@@ -55,7 +55,7 @@
    "name": "",
    "lines": [
     1,
-    2051
+    2108
    ],
    "source_commit": "3858afbe00b23dd8bba13ffa41409310b712723d",
    "topics": [
@@ -2368,8 +2368,8 @@
   },
   {
    "id": "s1-unperturbed-rate",
-   "from": "The rate follows from $\\|\\nabla u_T^*(t)\\|_{L^2}=(T-t)^{-1/4}\\|\\nabla W(s)\\|_{L^2}$. The function $s\\mapsto\\|\\nabla W(s)\\|_{L^2}$ is continuous, positive and $S$-periodic (Lemma 4.2), so its minimum and maximum over a period bound it at every time.",
-   "to": "The rate follows from $\\|\\nabla u_T^*(t)\\|_{L^2}=(T-t)^{-1/4}\\|\\nabla W(s)\\|_{L^2}$. The function $s\\mapsto\\|\\nabla W(s)\\|_{L^2}$ is continuous, positive and $S$-periodic (Lemma 4.2), so its minimum and maximum over a period bound it at every time.",
+   "from": "The change of variables gives $\\|\\nabla u_T^*(t)\\|_{L^2}=(T-t)^{-1/4}\\|\\nabla W(s)\\|_{L^2}$. The function $s\\mapsto\\|\\nabla W(s)\\|_{L^2}$ is continuous, positive and $S$-periodic (Lemma 4.2).",
+   "to": "The change of variables gives $\\|\\nabla u_T^*(t)\\|_{L^2}=(T-t)^{-1/4}\\|\\nabla W(s)\\|_{L^2}$. The function $s\\mapsto\\|\\nabla W(s)\\|_{L^2}$ is continuous, positive and $S$-periodic (Lemma 4.2).",
    "role": "explanation",
    "topic": "profile",
    "status": "new",
@@ -2416,8 +2416,8 @@
   },
   {
    "id": "s1-nearby-data",
-   "from": "There exist $\\varepsilon_0>0$ and a finite-dimensional space $E$ of smooth, compactly supported, divergence-free fields such that every divergence-free $w_0\\in C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ with $\\|\\nabla(w_0-W(0,\\cdot))\\|_{L^2}\\le\\varepsilon_0$ becomes, after the addition of an element of $E$, the datum of a smooth solution of finite energy on $[0,1)\\times\\mathbb R^3$ which satisfies (1.6) (Proposition 2.1 and Lemma 2.3); the datum $u_0$ is of this form.",
-   "to": "There exist $\\varepsilon_0>0$ and a finite-dimensional space $E$ of smooth, compactly supported, divergence-free fields such that every divergence-free $w_0\\in C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ with $\\|\\nabla(w_0-W(0,\\cdot))\\|_{L^2}\\le\\varepsilon_0$ becomes, after the addition of an element of $E$, the datum of a smooth solution of finite energy on $[0,1)\\times\\mathbb R^3$ which satisfies (1.6) (Proposition 2.1 and Lemma 2.3); the datum $u_0$ is of this form.",
+   "from": "There exist $\\varepsilon_0>0$ and a fixed finite-dimensional space $E$ of smooth, compactly supported, divergence-free fields with the following property. Given any divergence-free $w_0\\in C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ with $\\|\\nabla(w_0-W(0,\\cdot))\\|_{L^2}\\le\\varepsilon_0$, one can choose $\\gamma\\in E$ so that the datum $w_0+\\gamma$ gives a smooth finite-energy solution on $[0,1)$ satisfying (1.6) (Proposition 2.1 and Lemma 2.3).",
+   "to": "There exist $\\varepsilon_0>0$ and a fixed finite-dimensional space $E$ of smooth, compactly supported, divergence-free fields with the following property. Given any divergence-free $w_0\\in C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ with $\\|\\nabla(w_0-W(0,\\cdot))\\|_{L^2}\\le\\varepsilon_0$, one can choose $\\gamma\\in E$ so that the datum $w_0+\\gamma$ gives a smooth finite-energy solution on $[0,1)$ satisfying (1.6) (Proposition 2.1 and Lemma 2.3).",
    "role": "statement",
    "topic": "monodromy",
    "status": "new",
@@ -3245,8 +3245,8 @@
   },
   {
    "id": "s1-conventions-projection",
-   "from": "The Leray projection $\\mathbb P$ multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
-   "to": "The Leray projection $\\mathbb P$ multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
+   "from": "It multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
+   "to": "It multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
    "role": "definition",
    "topic": "torus",
    "status": "new",
@@ -5337,8 +5337,8 @@
   },
   {
    "id": "ns-s3-compact-monodromy",
-   "from": "The next lemma is the property of $K$ that makes the monodromy operator of Subsection 4.3 a compact perturbation of a contraction.",
-   "to": "The next lemma is the property of $K$ that makes the monodromy operator of Subsection 4.3 a compact perturbation of a contraction.",
+   "from": "This makes the monodromy operator of Subsection 4.3 a compact perturbation of a contraction.",
+   "to": "This makes the monodromy operator of Subsection 4.3 a compact perturbation of a contraction.",
    "role": "explanation",
    "topic": "mild",
    "status": "new",
@@ -6970,8 +6970,8 @@
   },
   {
    "id": "ns-s4-017",
-   "from": "We write $t_n=1-\\lambda^n$ for $n\\ge0$, so that the intervals $[t_n,t_{n+1}]$ are the periods of $u^*$. The next lemma expresses $u^*$ on each period through its restriction to the first, and it gives the rate of $u^*$.",
-   "to": "We write $t_n=1-\\lambda^n$ for $n\\ge0$, so that the intervals $[t_n,t_{n+1}]$ are the periods of $u^*$. The next lemma expresses $u^*$ on each period through its restriction to the first, and it gives the rate of $u^*$.",
+   "from": "We write $t_n=1-\\lambda^n$ for $n\\ge0$, so that $[t_n,t_{n+1}]$ is the physical interval corresponding to $nS\\le s\\le(n+1)S$. Its length is $\\lambda^n(1-\\lambda)$, and the background returns to its earlier form after undoing the dilation and isometry in (4.2).",
+   "to": "We write $t_n=1-\\lambda^n$ for $n\\ge0$, so that $[t_n,t_{n+1}]$ is the physical interval corresponding to $nS\\le s\\le(n+1)S$. Its length is $\\lambda^n(1-\\lambda)$, and the background returns to its earlier form after undoing the dilation and isometry in (4.2).",
    "role": "definition",
    "topic": "profile",
    "status": "new",
@@ -9076,8 +9076,8 @@
   },
   {
    "id": "ns5.cutoff.solenoidal",
-   "from": "We multiply a vector potential of $u^*(t)$ by a cutoff and take its curl. This localizes the velocity while preserving zero divergence.",
-   "to": "We multiply a vector potential of $u^*(t)$ by a cutoff and take its curl. This localizes the velocity while preserving zero divergence.",
+   "from": "We cut off a vector potential and take its curl, which keeps the velocity divergence-free.",
+   "to": "We cut off a vector potential and take its curl, which keeps the velocity divergence-free.",
    "role": "explanation",
    "topic": "torus",
    "status": "new",
@@ -11352,65 +11352,20 @@
    ]
   },
   {
-   "id": "adapted.N4-01.1",
-   "from": "Inequality (7.28) excludes the zero field.",
-   "to": "Inequality (7.28) excludes the zero field.",
+   "id": "adapted.N6-38.1",
+   "from": "If the approximate family satisfies the certificate conditions, one member can be corrected",
+   "to": "If the approximate family satisfies the certificate conditions, one member can be corrected",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
    "lean": [
     {
-     "name": "Breakdown.Cert.heldNonzeroHolds_of",
-     "file": "Breakdown/Cert/HeldNonzero.lean",
+     "name": "Breakdown.extended_certificate_orbit_proved",
+     "file": "Breakdown/Cert/ExtendedMain.lean",
      "relation": "part",
      "fidelity": "unassessed",
-     "fidelity_note": "Breakdown/Cert/HeldNonzero.lean compares the approximate profile gradient against the budget for the correction.",
-     "link_note": "Breakdown/Cert/HeldNonzero.lean compares the approximate profile gradient against the budget for the correction."
-    }
-   ]
-  },
-  {
-   "id": "ns7-data-s004",
-   "from": "Others, in particular (7.18), (7.19), (7.22), (7.32) and (7.33), hold for every perturbation in its stated class. Appendix B derives these estimates from conditions on represented fields, numbers and matrices, including the full cell conditions used in Proposition B.14.",
-   "to": "Others, in particular (7.18), (7.19), (7.22), (7.32) and (7.33), hold for every perturbation in its stated class. Appendix B derives these estimates from conditions on represented fields, numbers and matrices, including the full cell conditions used in Proposition B.14.",
-   "role": "explanation",
-   "topic": "certificate",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.IsExtendedCertificate.coercive",
-     "file": "Breakdown/Cert/ExtendedStatement.lean",
-     "relation": "part",
-     "fidelity": "same",
-     "fidelity_note": "The reference-profile a priori estimate is an assumption quantified over every admissible perturbation."
-    },
-    {
-     "name": "Breakdown.IsExtendedCertificate.gap_transfer",
-     "file": "Breakdown/Cert/ExtendedStatement.lean",
-     "relation": "part",
-     "fidelity": "same",
-     "fidelity_note": "The change-of-profile estimate is an assumption for every admissible invariant perturbation."
-    },
-    {
-     "name": "Breakdown.IsExtendedCertificate.adjoint_quadratic",
-     "file": "Breakdown/Cert/ExtendedStatement.lean",
-     "relation": "part",
-     "fidelity": "same",
-     "fidelity_note": "The quadratic adjoint bound is assumed for every admissible invariant perturbation."
-    },
-    {
-     "name": "Breakdown.IsExtendedCertificate.adjoint_defect",
-     "file": "Breakdown/Cert/ExtendedStatement.lean",
-     "relation": "part",
-     "fidelity": "same",
-     "fidelity_note": "The linear adjoint bound is assumed for every admissible perturbation and every square-integrable right-side representative."
-    },
-    {
-     "name": "Breakdown.IsExtendedCertificate.frozen_form",
-     "file": "Breakdown/Cert/ExtendedStatement.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "The formal certificate assumes the reference form bound and a separate transfer bound; their sum gives the approximate-profile bound (7.22)."
+     "fidelity_note": "The extended certificate constructs a periodic similarity profile from hypotheses on an approximate family, via the nonlinear correction and parameter selection.",
+     "link_note": "The extended certificate constructs a periodic similarity profile from hypotheses on an approximate family, via the nonlinear correction and parameter selection."
     }
    ]
   },
@@ -12595,8 +12550,8 @@
   },
   {
    "id": "ns7-data-s039",
-   "from": "All the following conditions hold for every $\\alpha\\in\\mathcal K$. The constants are uniform in $\\alpha$, apart from the residual bounds $\\delta(\\alpha)$ and $\\delta_0(\\alpha)$.",
-   "to": "All the following conditions hold for every $\\alpha\\in\\mathcal K$. The constants are uniform in $\\alpha$, apart from the residual bounds $\\delta(\\alpha)$ and $\\delta_0(\\alpha)$.",
+   "from": "The same constants work throughout $\\mathcal K$; the residual estimates $\\delta(\\alpha)$ and $\\delta_0(\\alpha)$ may depend on $\\alpha$.",
+   "to": "The same constants work throughout $\\mathcal K$; the residual estimates $\\delta(\\alpha)$ and $\\delta_0(\\alpha)$ may depend on $\\alpha$.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
@@ -12611,19 +12566,20 @@
    ]
   },
   {
-   "id": "ns7-data-s038",
-   "from": "The last conditions, (7.29)–(7.37), allow the parameter to be chosen so as to cancel the force.",
-   "to": "The last conditions, (7.29)–(7.37), allow the parameter to be chosen so as to cancel the force.",
+   "id": "adapted.N4-01.1",
+   "from": "The approximate field has more gradient energy over a period than a correction in this ball can cancel.",
+   "to": "The approximate field has more gradient energy over a period than a correction in this ball can cancel.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
    "lean": [
     {
-     "name": "Breakdown.extended_certificate_orbit_proved",
-     "file": "Breakdown/Cert/ExtendedMain.lean",
+     "name": "Breakdown.Cert.heldNonzeroHolds_of",
+     "file": "Breakdown/Cert/HeldNonzero.lean",
      "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "The endpoint proves weak-profile existence from certificate existence; the chosen parameter and force cancellation are hidden by its existential conclusion."
+     "fidelity": "unassessed",
+     "fidelity_note": "Breakdown/Cert/HeldNonzero.lean compares the approximate profile gradient against the budget for the correction.",
+     "link_note": "Breakdown/Cert/HeldNonzero.lean compares the approximate profile gradient against the budget for the correction."
     }
    ]
   },
@@ -16582,6 +16538,23 @@
    ]
   },
   {
+   "id": "ns7-data-s038",
+   "from": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
+   "to": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.extended_certificate_orbit_proved",
+     "file": "Breakdown/Cert/ExtendedMain.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "The endpoint proves weak-profile existence from certificate existence; the chosen parameter and force cancellation are hidden by its existential conclusion."
+    }
+   ]
+  },
+  {
    "id": "adapted.N4-37.1",
    "from": "where continuity is tested against each divergence-free",
    "to": "where continuity is tested against each divergence-free",
@@ -17461,8 +17434,8 @@
   },
   {
    "id": "adapted.N5-15.1",
-   "from": "Proposition B.1 tests its linearized equation against a multiplier.",
-   "to": "Proposition B.1 tests its linearized equation against a multiplier.",
+   "from": "Proposition B.1 tests the linearized equation against a multiplier built from $v$.",
+   "to": "Proposition B.1 tests the linearized equation against a multiplier built from $v$.",
    "role": "explanation",
    "topic": "coercive",
    "status": "new",
@@ -17491,6 +17464,51 @@
      "relation": "defines",
      "fidelity": "different",
      "fidelity_note": "The structure lists the full cell-system conditions supplied to the formal implication."
+    }
+   ]
+  },
+  {
+   "id": "ns7-data-s004",
+   "from": "Uniform enclosures for the multipliers supply the constants multiplying $\\|F\\|_{\\mathcal H}$ and $|\\ell(v)|$ in (7.18). The other clauses bound the change of reference field and the time-slice form (Lemma B.9), the adjoint quadratic terms and defects (Lemmas B.10–B.12)",
+   "to": "Uniform enclosures for the multipliers supply the constants multiplying $\\|F\\|_{\\mathcal H}$ and $|\\ell(v)|$ in (7.18). The other clauses bound the change of reference field and the time-slice form (Lemma B.9), the adjoint quadratic terms and defects (Lemmas B.10–B.12)",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.IsExtendedCertificate.coercive",
+     "file": "Breakdown/Cert/ExtendedStatement.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The reference-profile a priori estimate is an assumption quantified over every admissible perturbation."
+    },
+    {
+     "name": "Breakdown.IsExtendedCertificate.gap_transfer",
+     "file": "Breakdown/Cert/ExtendedStatement.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The change-of-profile estimate is an assumption for every admissible invariant perturbation."
+    },
+    {
+     "name": "Breakdown.IsExtendedCertificate.adjoint_quadratic",
+     "file": "Breakdown/Cert/ExtendedStatement.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The quadratic adjoint bound is assumed for every admissible invariant perturbation."
+    },
+    {
+     "name": "Breakdown.IsExtendedCertificate.adjoint_defect",
+     "file": "Breakdown/Cert/ExtendedStatement.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The linear adjoint bound is assumed for every admissible perturbation and every square-integrable right-side representative."
+    },
+    {
+     "name": "Breakdown.IsExtendedCertificate.frozen_form",
+     "file": "Breakdown/Cert/ExtendedStatement.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "The formal certificate assumes the reference form bound and a separate transfer bound; their sum gives the approximate-profile bound (7.22)."
     }
    ]
   },
@@ -17547,8 +17565,8 @@
   },
   {
    "id": "b12-order",
-   "from": "Let $\\varkappa\\geq3$ be an integer.",
-   "to": "Let $\\varkappa\\geq3$ be an integer.",
+   "from": "Let $k_{\\mathrm{rot}}\\geq3$ be the integer angular order.",
+   "to": "Let $k_{\\mathrm{rot}}\\geq3$ be the integer angular order.",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -17564,8 +17582,8 @@
   },
   {
    "id": "b12-two-generators",
-   "from": "The set $\\Gamma$ contains the two pairs $$\\begin{equation}\n \\bigl(R_{\\pi/\\varkappa},\\tfrac12\\bigr)\\qquad\\text{and}\\qquad(R_*,0),\n \\tag{B.1}\n\\end{equation}$$",
-   "to": "The set $\\Gamma$ contains the two pairs $$\\begin{equation}\n \\bigl(R_{\\pi/\\varkappa},\\tfrac12\\bigr)\\qquad\\text{and}\\qquad(R_*,0),\n \\tag{B.1}\n\\end{equation}$$",
+   "from": "The set $\\Gamma$ contains the two pairs $$\\begin{equation}\n \\bigl(R_{\\pi/k_{\\mathrm{rot}}},\\tfrac12\\bigr)\\qquad\\text{and}\\qquad(R_*,0),\n \\tag{B.1}\n\\end{equation}$$",
+   "to": "The set $\\Gamma$ contains the two pairs $$\\begin{equation}\n \\bigl(R_{\\pi/k_{\\mathrm{rot}}},\\tfrac12\\bigr)\\qquad\\text{and}\\qquad(R_*,0),\n \\tag{B.1}\n\\end{equation}$$",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -17638,8 +17656,8 @@
   },
   {
    "id": "b12-allowed-symmetries",
-   "from": "and each of its elements is of the form $(R_{\\phi_0},\\theta_0)$ or $(R_{\\phi_0}R_*,\\theta_0)$, where the angle $\\phi_0\\geq0$ is an integer multiple of $\\pi/\\varkappa$ and $\\theta_0-\\frac{\\varkappa\\phi_0}{2\\pi}\\in\\mathbb Z$.",
-   "to": "and each of its elements is of the form $(R_{\\phi_0},\\theta_0)$ or $(R_{\\phi_0}R_*,\\theta_0)$, where the angle $\\phi_0\\geq0$ is an integer multiple of $\\pi/\\varkappa$ and $\\theta_0-\\frac{\\varkappa\\phi_0}{2\\pi}\\in\\mathbb Z$.",
+   "from": "and each of its elements is of the form $(R_{\\phi_0},\\theta_0)$ or $(R_{\\phi_0}R_*,\\theta_0)$, where the angle $\\phi_0\\geq0$ is an integer multiple of $\\pi/k_{\\mathrm{rot}}$ and $\\theta_0-\\frac{k_{\\mathrm{rot}}\\phi_0}{2\\pi}\\in\\mathbb Z$.",
+   "to": "and each of its elements is of the form $(R_{\\phi_0},\\theta_0)$ or $(R_{\\phi_0}R_*,\\theta_0)$, where the angle $\\phi_0\\geq0$ is an integer multiple of $\\pi/k_{\\mathrm{rot}}$ and $\\theta_0-\\frac{k_{\\mathrm{rot}}\\phi_0}{2\\pi}\\in\\mathbb Z$.",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -17655,8 +17673,8 @@
   },
   {
    "id": "pdf-item-equation-B-2",
-   "from": "$$\\begin{equation}\n E_\\iota(\\theta,\\phi)=\\exp\\bigl(i\\,[\\,2\\pi(2\\iota_2-\\iota_1)\\,\\theta+\\varkappa\\,\\iota_1\\,\\phi\\,]\\bigr).\n \\tag{B.2}\n\\end{equation}$$",
-   "to": "$$\\begin{equation}\n E_\\iota(\\theta,\\phi)=\\exp\\bigl(i\\,[\\,2\\pi(2\\iota_2-\\iota_1)\\,\\theta+\\varkappa\\,\\iota_1\\,\\phi\\,]\\bigr).\n \\tag{B.2}\n\\end{equation}$$",
+   "from": "$$\\begin{equation}\n E_\\iota(\\theta,\\phi)=\\exp\\bigl(i\\,[\\,2\\pi(2\\iota_2-\\iota_1)\\,\\theta+k_{\\mathrm{rot}}\\,\\iota_1\\,\\phi\\,]\\bigr).\n \\tag{B.2}\n\\end{equation}$$",
+   "to": "$$\\begin{equation}\n E_\\iota(\\theta,\\phi)=\\exp\\bigl(i\\,[\\,2\\pi(2\\iota_2-\\iota_1)\\,\\theta+k_{\\mathrm{rot}}\\,\\iota_1\\,\\phi\\,]\\bigr).\n \\tag{B.2}\n\\end{equation}$$",
    "role": "statement",
    "topic": "encoding",
    "status": "new",
@@ -17701,8 +17719,8 @@
   },
   {
    "id": "b12-harmonic-parity",
-   "from": "These are the functions $e^{i(2\\pi j\\theta+j'\\phi)}$ with integers $j$ and $j'$ such that $\\varkappa$ divides $j'$ and $j-j'/\\varkappa$ is even, that is, those which do not change when $\\theta$ increases by $\\frac12$ and $\\phi$ by $\\pi/\\varkappa$.",
-   "to": "These are the functions $e^{i(2\\pi j\\theta+j'\\phi)}$ with integers $j$ and $j'$ such that $\\varkappa$ divides $j'$ and $j-j'/\\varkappa$ is even, that is, those which do not change when $\\theta$ increases by $\\frac12$ and $\\phi$ by $\\pi/\\varkappa$.",
+   "from": "These are the functions $e^{i(2\\pi j\\theta+j'\\phi)}$ with integers $j$ and $j'$ such that $k_{\\mathrm{rot}}$ divides $j'$ and $j-j'/k_{\\mathrm{rot}}$ is even, that is, those which do not change when $\\theta$ increases by $\\frac12$ and $\\phi$ by $\\pi/k_{\\mathrm{rot}}$.",
+   "to": "These are the functions $e^{i(2\\pi j\\theta+j'\\phi)}$ with integers $j$ and $j'$ such that $k_{\\mathrm{rot}}$ divides $j'$ and $j-j'/k_{\\mathrm{rot}}$ is even, that is, those which do not change when $\\theta$ increases by $\\frac12$ and $\\phi$ by $\\pi/k_{\\mathrm{rot}}$.",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -18124,8 +18142,8 @@
   },
   {
    "id": "pdf-item-equation-B-7",
-   "from": "$$\\begin{equation}\n \\begin{gathered}\n \\mathsf u_0=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf A,\\qquad\n \\mathsf u_1=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf B,\\\\\n \\mathsf u_2=\\frac{i}{\\varkappa\\,\\iota_1}\\Bigl[(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta\\bigl((1-\\eta^2)\\,\\mathsf u_1\\bigr)\\Bigr].\n \\end{gathered}\n \\tag{B.7}\n\\end{equation}$$",
-   "to": "$$\\begin{equation}\n \\begin{gathered}\n \\mathsf u_0=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf A,\\qquad\n \\mathsf u_1=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf B,\\\\\n \\mathsf u_2=\\frac{i}{\\varkappa\\,\\iota_1}\\Bigl[(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta\\bigl((1-\\eta^2)\\,\\mathsf u_1\\bigr)\\Bigr].\n \\end{gathered}\n \\tag{B.7}\n\\end{equation}$$",
+   "from": "$$\\begin{equation}\n \\begin{gathered}\n \\mathsf u_0=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf A,\\qquad\n \\mathsf u_1=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf B,\\\\\n \\mathsf u_2=\\frac{i}{k_{\\mathrm{rot}}\\,\\iota_1}\\Bigl[(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta\\bigl((1-\\eta^2)\\,\\mathsf u_1\\bigr)\\Bigr].\n \\end{gathered}\n \\tag{B.7}\n\\end{equation}$$",
+   "to": "$$\\begin{equation}\n \\begin{gathered}\n \\mathsf u_0=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf A,\\qquad\n \\mathsf u_1=\\sigma^{h_0}(1-\\sigma)^h(1-\\eta^2)^2\\mathsf B,\\\\\n \\mathsf u_2=\\frac{i}{k_{\\mathrm{rot}}\\,\\iota_1}\\Bigl[(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta\\bigl((1-\\eta^2)\\,\\mathsf u_1\\bigr)\\Bigr].\n \\end{gathered}\n \\tag{B.7}\n\\end{equation}$$",
    "role": "statement",
    "topic": "encoding",
    "status": "new",
@@ -18278,8 +18296,8 @@
   },
   {
    "id": "b12-zero-divergence",
-   "from": "In both cases the divergence of the term $(\\iota,l)$ of (B.6) is $|y|^{-1}E_{\\iota,l}$ times $(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta((1-\\eta^2)\\,\\mathsf u_1)+i\\,\\varkappa\\,\\iota_1\\,\\mathsf u_2$, which vanishes identically.",
-   "to": "In both cases the divergence of the term $(\\iota,l)$ of (B.6) is $|y|^{-1}E_{\\iota,l}$ times $(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta((1-\\eta^2)\\,\\mathsf u_1)+i\\,\\varkappa\\,\\iota_1\\,\\mathsf u_2$, which vanishes identically.",
+   "from": "In both cases the divergence of the term $(\\iota,l)$ of (B.6) is $|y|^{-1}E_{\\iota,l}$ times $(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta((1-\\eta^2)\\,\\mathsf u_1)+i\\,k_{\\mathrm{rot}}\\,\\iota_1\\,\\mathsf u_2$, which vanishes identically.",
+   "to": "In both cases the divergence of the term $(\\iota,l)$ of (B.6) is $|y|^{-1}E_{\\iota,l}$ times $(\\mathcal V_l+2)\\,\\mathsf u_0-\\partial_\\eta((1-\\eta^2)\\,\\mathsf u_1)+i\\,k_{\\mathrm{rot}}\\,\\iota_1\\,\\mathsf u_2$, which vanishes identically.",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -19045,8 +19063,8 @@
   },
   {
    "id": "b12-phi-representation",
-   "from": "whose components in the frame $(\\mathbf e_r,\\mathbf e_\\phi,\\mathbf e_z)$ are finite sums of harmonics of the form (B.2), with an integer of their own in <!-- source-page: 53 --> place of $\\varkappa$, times $r$ times piecewise polynomials in $(r,z)$ of the Hermite type above,",
-   "to": "whose components in the frame $(\\mathbf e_r,\\mathbf e_\\phi,\\mathbf e_z)$ are finite sums of harmonics of the form (B.2), with an integer of their own in <!-- source-page: 53 --> place of $\\varkappa$, times $r$ times piecewise polynomials in $(r,z)$ of the Hermite type above,",
+   "from": "whose components in the frame $(\\mathbf e_r,\\mathbf e_\\phi,\\mathbf e_z)$ are finite sums of harmonics of the form (B.2), with an integer of their own in <!-- source-page: 53 --> place of $k_{\\mathrm{rot}}$, times $r$ times piecewise polynomials in $(r,z)$ of the Hermite type above,",
+   "to": "whose components in the frame $(\\mathbf e_r,\\mathbf e_\\phi,\\mathbf e_z)$ are finite sums of harmonics of the form (B.2), with an integer of their own in <!-- source-page: 53 --> place of $k_{\\mathrm{rot}}$, times $r$ times piecewise polynomials in $(r,z)$ of the Hermite type above,",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -19096,8 +19114,8 @@
   },
   {
    "id": "b12-row-divergence",
-   "from": "which satisfy $r\\,\\partial_r\\varphi_r+\\varphi_r+i\\,\\varkappa\\,\\iota_1\\,\\varphi_\\phi+r\\,\\partial_z\\varphi_z=0$, the equation of a divergence-free field with the harmonic $E_\\iota$, and $\\varphi_r=\\varphi_\\phi=0$ on the axis if the cell meets it.",
-   "to": "which satisfy $r\\,\\partial_r\\varphi_r+\\varphi_r+i\\,\\varkappa\\,\\iota_1\\,\\varphi_\\phi+r\\,\\partial_z\\varphi_z=0$, the equation of a divergence-free field with the harmonic $E_\\iota$, and $\\varphi_r=\\varphi_\\phi=0$ on the axis if the cell meets it.",
+   "from": "which satisfy $r\\,\\partial_r\\varphi_r+\\varphi_r+i\\,k_{\\mathrm{rot}}\\,\\iota_1\\,\\varphi_\\phi+r\\,\\partial_z\\varphi_z=0$, the equation of a divergence-free field with the harmonic $E_\\iota$, and $\\varphi_r=\\varphi_\\phi=0$ on the axis if the cell meets it.",
+   "to": "which satisfy $r\\,\\partial_r\\varphi_r+\\varphi_r+i\\,k_{\\mathrm{rot}}\\,\\iota_1\\,\\varphi_\\phi+r\\,\\partial_z\\varphi_z=0$, the equation of a divergence-free field with the harmonic $E_\\iota$, and $\\varphi_r=\\varphi_\\phi=0$ on the axis if the cell meets it.",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -19448,8 +19466,8 @@
   },
   {
    "id": "pdf-item-equation-B-15",
-   "from": "$$\\begin{equation}\n \\Omega_p(\\iota)=\\frac{2\\pi(2\\iota_2-\\iota_1)}{S(\\alpha)}+\\nu_p(\\alpha)\\,\\varkappa\\,\\iota_1\n \\tag{B.15}\n\\end{equation}$$",
-   "to": "$$\\begin{equation}\n \\Omega_p(\\iota)=\\frac{2\\pi(2\\iota_2-\\iota_1)}{S(\\alpha)}+\\nu_p(\\alpha)\\,\\varkappa\\,\\iota_1\n \\tag{B.15}\n\\end{equation}$$",
+   "from": "$$\\begin{equation}\n \\Omega_p(\\iota)=\\frac{2\\pi(2\\iota_2-\\iota_1)}{S(\\alpha)}+\\nu_p(\\alpha)\\,k_{\\mathrm{rot}}\\,\\iota_1\n \\tag{B.15}\n\\end{equation}$$",
+   "to": "$$\\begin{equation}\n \\Omega_p(\\iota)=\\frac{2\\pi(2\\iota_2-\\iota_1)}{S(\\alpha)}+\\nu_p(\\alpha)\\,k_{\\mathrm{rot}}\\,\\iota_1\n \\tag{B.15}\n\\end{equation}$$",
    "role": "statement",
    "topic": "coercive",
    "status": "new",
@@ -19849,8 +19867,8 @@
   },
   {
    "id": "adapted.N5-37.1",
-   "from": "Approximate a weak perturbation by smooth periodic solenoidal",
-   "to": "Approximate a weak perturbation by smooth periodic solenoidal",
+   "from": "Convolution preserves period and divergence; changing variables $z\\mapsto Rz$ in (7.5) preserves $\\Gamma$-invariance.",
+   "to": "Convolution preserves period and divergence; changing variables $z\\mapsto Rz$ in (7.5) preserves $\\Gamma$-invariance.",
    "role": "explanation",
    "topic": "coercive",
    "status": "new",
@@ -20752,8 +20770,8 @@
   },
   {
    "id": "ns-b3-b27",
-   "from": "The component of a resolved mode that is orthogonal to the polynomials of degree at most $\\mathsf d$ is controlled by $\\underline{\\mathsf I}_2$: the terms that it has to absorb are at most $$\\begin{equation}\n \\underline{\\mathsf I}_2\\Bigl[r_1\\min\\bigl(\\Lambda^r_{\\mathsf d+1},\\Lambda^z_{\\mathsf d+1}\\bigr)+\\frac{(|\\varkappa\\,\\iota_1|-2)_+^2}{r_2}\\Bigr],\n \\tag{B.27}\n\\end{equation}$$",
-   "to": "The component of a resolved mode that is orthogonal to the polynomials of degree at most $\\mathsf d$ is controlled by $\\underline{\\mathsf I}_2$: the terms that it has to absorb are at most $$\\begin{equation}\n \\underline{\\mathsf I}_2\\Bigl[r_1\\min\\bigl(\\Lambda^r_{\\mathsf d+1},\\Lambda^z_{\\mathsf d+1}\\bigr)+\\frac{(|\\varkappa\\,\\iota_1|-2)_+^2}{r_2}\\Bigr],\n \\tag{B.27}\n\\end{equation}$$",
+   "from": "The component of a resolved mode that is orthogonal to the polynomials of degree at most $\\mathsf d$ is controlled by $\\underline{\\mathsf I}_2$: the terms that it has to absorb are at most $$\\begin{equation}\n \\underline{\\mathsf I}_2\\Bigl[r_1\\min\\bigl(\\Lambda^r_{\\mathsf d+1},\\Lambda^z_{\\mathsf d+1}\\bigr)+\\frac{(|k_{\\mathrm{rot}}\\,\\iota_1|-2)_+^2}{r_2}\\Bigr],\n \\tag{B.27}\n\\end{equation}$$",
+   "to": "The component of a resolved mode that is orthogonal to the polynomials of degree at most $\\mathsf d$ is controlled by $\\underline{\\mathsf I}_2$: the terms that it has to absorb are at most $$\\begin{equation}\n \\underline{\\mathsf I}_2\\Bigl[r_1\\min\\bigl(\\Lambda^r_{\\mathsf d+1},\\Lambda^z_{\\mathsf d+1}\\bigr)+\\frac{(|k_{\\mathrm{rot}}\\,\\iota_1|-2)_+^2}{r_2}\\Bigr],\n \\tag{B.27}\n\\end{equation}$$",
    "role": "statement",
    "topic": "cells-tails",
    "status": "new",
@@ -20982,8 +21000,8 @@
   },
   {
    "id": "ns-b3-region-coefficient-data",
-   "from": "For each cell and each harmonic that is not resolved in it, and for each harmonic on the complement of the cells, we are given finitely many regions of the quarter plane, each with a set of harmonics, possibly infinite, which contains the harmonic for which the region is given, with a number $k_0$ such that $|\\varkappa\\iota_1|\\geq k_0$ on this set, with lower bounds $\\underline{\\mathsf I}_2$, $\\underline{\\mathsf I}'_2$, $\\underline{\\mathsf I}'_1$, $\\underline{\\mathsf I}_1$ and $\\underline{\\mathsf I}_0$ for the five coefficients of $\\mathcal I_\\iota$ which hold on the region for all the harmonics of the set, and with a function $\\mathsf t\\geq0$ or, if the region reaches infinity, with the four numbers of (B.30).",
-   "to": "For each cell and each harmonic that is not resolved in it, and for each harmonic on the complement of the cells, we are given finitely many regions of the quarter plane, each with a set of harmonics, possibly infinite, which contains the harmonic for which the region is given, with a number $k_0$ such that $|\\varkappa\\iota_1|\\geq k_0$ on this set, with lower bounds $\\underline{\\mathsf I}_2$, $\\underline{\\mathsf I}'_2$, $\\underline{\\mathsf I}'_1$, $\\underline{\\mathsf I}_1$ and $\\underline{\\mathsf I}_0$ for the five coefficients of $\\mathcal I_\\iota$ which hold on the region for all the harmonics of the set, and with a function $\\mathsf t\\geq0$ or, if the region reaches infinity, with the four numbers of (B.30).",
+   "from": "For each cell and each harmonic that is not resolved in it, and for each harmonic on the complement of the cells, we are given finitely many regions of the quarter plane, each with a set of harmonics, possibly infinite, which contains the harmonic for which the region is given, with a number $k_0$ such that $|k_{\\mathrm{rot}}\\iota_1|\\geq k_0$ on this set, with lower bounds $\\underline{\\mathsf I}_2$, $\\underline{\\mathsf I}'_2$, $\\underline{\\mathsf I}'_1$, $\\underline{\\mathsf I}_1$ and $\\underline{\\mathsf I}_0$ for the five coefficients of $\\mathcal I_\\iota$ which hold on the region for all the harmonics of the set, and with a function $\\mathsf t\\geq0$ or, if the region reaches infinity, with the four numbers of (B.30).",
+   "to": "For each cell and each harmonic that is not resolved in it, and for each harmonic on the complement of the cells, we are given finitely many regions of the quarter plane, each with a set of harmonics, possibly infinite, which contains the harmonic for which the region is given, with a number $k_0$ such that $|k_{\\mathrm{rot}}\\iota_1|\\geq k_0$ on this set, with lower bounds $\\underline{\\mathsf I}_2$, $\\underline{\\mathsf I}'_2$, $\\underline{\\mathsf I}'_1$, $\\underline{\\mathsf I}_1$ and $\\underline{\\mathsf I}_0$ for the five coefficients of $\\mathcal I_\\iota$ which hold on the region for all the harmonics of the set, and with a function $\\mathsf t\\geq0$ or, if the region reaches infinity, with the four numbers of (B.30).",
    "role": "definition",
    "topic": "angular",
    "status": "new",
@@ -21814,8 +21832,8 @@
   },
   {
    "id": "ns-b3-b35",
-   "from": "Let $u=\\hat v_\\iota$ and $k=\\varkappa\\iota_1$. At almost every point of the quarter plane, $$\\begin{equation}\n\\begin{gathered}\n|\\operatorname{curl}u|^2\\le2\\,|\\nabla u|^2,\\qquad (|k|-1)_+\\,|u|\\le r\\,|\\nabla u|,\\\\\n(|k|-2)_+\\,|\\nabla u|\\le r\\,|\\nabla^2u|,\\quad (|k|-1)_+\\,|\\operatorname{curl}u|\\le r\\,|\\nabla\\operatorname{curl}u|.\n\\end{gathered}\\tag{B.35}\n\\end{equation}$$",
-   "to": "Let $u=\\hat v_\\iota$ and $k=\\varkappa\\iota_1$. At almost every point of the quarter plane, $$\\begin{equation}\n\\begin{gathered}\n|\\operatorname{curl}u|^2\\le2\\,|\\nabla u|^2,\\qquad (|k|-1)_+\\,|u|\\le r\\,|\\nabla u|,\\\\\n(|k|-2)_+\\,|\\nabla u|\\le r\\,|\\nabla^2u|,\\quad (|k|-1)_+\\,|\\operatorname{curl}u|\\le r\\,|\\nabla\\operatorname{curl}u|.\n\\end{gathered}\\tag{B.35}\n\\end{equation}$$",
+   "from": "Let $u=\\hat v_\\iota$ and $k=k_{\\mathrm{rot}}\\iota_1$. At almost every point of the quarter plane, $$\\begin{equation}\n\\begin{gathered}\n|\\operatorname{curl}u|^2\\le2\\,|\\nabla u|^2,\\qquad (|k|-1)_+\\,|u|\\le r\\,|\\nabla u|,\\\\\n(|k|-2)_+\\,|\\nabla u|\\le r\\,|\\nabla^2u|,\\quad (|k|-1)_+\\,|\\operatorname{curl}u|\\le r\\,|\\nabla\\operatorname{curl}u|.\n\\end{gathered}\\tag{B.35}\n\\end{equation}$$",
+   "to": "Let $u=\\hat v_\\iota$ and $k=k_{\\mathrm{rot}}\\iota_1$. At almost every point of the quarter plane, $$\\begin{equation}\n\\begin{gathered}\n|\\operatorname{curl}u|^2\\le2\\,|\\nabla u|^2,\\qquad (|k|-1)_+\\,|u|\\le r\\,|\\nabla u|,\\\\\n(|k|-2)_+\\,|\\nabla u|\\le r\\,|\\nabla^2u|,\\quad (|k|-1)_+\\,|\\operatorname{curl}u|\\le r\\,|\\nabla\\operatorname{curl}u|.\n\\end{gathered}\\tag{B.35}\n\\end{equation}$$",
    "role": "statement",
    "topic": "angular",
    "status": "new",
@@ -22153,8 +22171,8 @@
   },
   {
    "id": "ns-b3-ray-density-class",
-   "from": "We write $u=\\hat v_\\iota$, $k=\\varkappa\\iota_1$ and $\\rho=|(r,z)|=|y|$. The real and the imaginary part of $u$ belong to the completion of $C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ in the norm $\\|\\nabla\\,\\cdot\\,\\|_{L^2}$, because $v(\\theta)\\in X$ and (B.12) is a mean of rotated fields, and the integrals in (B.31) are those over the set of the points $y$ with $y_3>0$ and $(r,y_3)\\in Z$, divided by $2\\pi$.",
-   "to": "We write $u=\\hat v_\\iota$, $k=\\varkappa\\iota_1$ and $\\rho=|(r,z)|=|y|$. The real and the imaginary part of $u$ belong to the completion of $C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ in the norm $\\|\\nabla\\,\\cdot\\,\\|_{L^2}$, because $v(\\theta)\\in X$ and (B.12) is a mean of rotated fields, and the integrals in (B.31) are those over the set of the points $y$ with $y_3>0$ and $(r,y_3)\\in Z$, divided by $2\\pi$.",
+   "from": "We write $u=\\hat v_\\iota$, $k=k_{\\mathrm{rot}}\\iota_1$ and $\\rho=|(r,z)|=|y|$. The real and the imaginary part of $u$ belong to the completion of $C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ in the norm $\\|\\nabla\\,\\cdot\\,\\|_{L^2}$, because $v(\\theta)\\in X$ and (B.12) is a mean of rotated fields, and the integrals in (B.31) are those over the set of the points $y$ with $y_3>0$ and $(r,y_3)\\in Z$, divided by $2\\pi$.",
+   "to": "We write $u=\\hat v_\\iota$, $k=k_{\\mathrm{rot}}\\iota_1$ and $\\rho=|(r,z)|=|y|$. The real and the imaginary part of $u$ belong to the completion of $C_c^\\infty(\\mathbb R^3;\\mathbb R^3)$ in the norm $\\|\\nabla\\,\\cdot\\,\\|_{L^2}$, because $v(\\theta)\\in X$ and (B.12) is a mean of rotated fields, and the integrals in (B.31) are those over the set of the points $y$ with $y_3>0$ and $(r,y_3)\\in Z$, divided by $2\\pi$.",
    "role": "explanation",
    "topic": "angular",
    "status": "new",
@@ -23048,7 +23066,8 @@
      "fidelity_note": "Breakdown/CertCell/CertPivotCount.lean constructs the kernel of the column pairings and uses rank–nullity and the column count to bound its dimension from below.",
      "link_note": "Breakdown/CertCell/CertPivotCount.lean constructs the kernel of the column pairings and uses rank–nullity and the column count to bound its dimension from below."
     }
-   ]
+   ],
+   "after": ". In the full space $E$ "
   },
   {
    "id": "ns-b3-final-nonnegativity",
@@ -25474,24 +25493,6 @@
    ]
   },
   {
-   "id": "adapted.N6-38.1",
-   "from": "corrects one member of that family to an exact profile.",
-   "to": "corrects one member of that family to an exact profile.",
-   "role": "explanation",
-   "topic": "certificate",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.extended_certificate_orbit_proved",
-     "file": "Breakdown/Cert/ExtendedMain.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The extended certificate constructs a periodic similarity profile from hypotheses on an approximate family, via the nonlinear correction and parameter selection.",
-     "link_note": "The extended certificate constructs a periodic similarity profile from hypotheses on an approximate family, via the nonlinear correction and parameter selection."
-    }
-   ]
-  },
-  {
    "id": "adapted.N6-39.1",
    "from": "the field has the form (B.6).",
    "to": "the field has the form (B.6).",
@@ -25528,8 +25529,8 @@
   },
   {
    "id": "adapted.N6-42.1",
-   "from": "The decay orders in that estimate follow from $h=1$ in (B.7)–(B.8) and the radial phase conditions of Subsection B.1.",
-   "to": "The decay orders in that estimate follow from $h=1$ in (B.7)–(B.8) and the radial phase conditions of Subsection B.1.",
+   "from": "The decay powers themselves follow from $h=1$ in (B.7)–(B.8) and the radial phase conditions.",
+   "to": "The decay powers themselves follow from $h=1$ in (B.7)–(B.8) and the radial phase conditions.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
