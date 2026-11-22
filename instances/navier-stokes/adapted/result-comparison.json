@@ -21,8 +21,8 @@
   "adapted": {
    "slot": "adapted",
    "file": "paper.md",
-   "sha256": "dd393b6ed375fd9f721ab1ba8f0d4e0a8f5ded0ea9f9934213c598cfe51e2d62",
-   "bytes": 389402
+   "sha256": "8dac0a4a320dab40ad2d7f652268eb0a4825b12552d33b688af8b198bebe7030",
+   "bytes": 359925
   }
  },
  "edition_note": "The adapted edition preserves the wording of all numbered statements.",
@@ -45,9 +45,9 @@
     "sha256": "7befc1a2cb7bb8811cee866418675109e5b6c56a8ceb8f347880501d493df12b"
    },
    "adapted": {
-    "start_byte": 8114,
-    "end_byte": 9407,
-    "href": "adapted/?l=b8114-9407",
+    "start_byte": 8047,
+    "end_byte": 9340,
+    "href": "adapted/?l=b8047-9340",
     "sha256": "7befc1a2cb7bb8811cee866418675109e5b6c56a8ceb8f347880501d493df12b"
    },
    "wording": "identical",
@@ -86,7 +86,7 @@
     "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/MainTheorems.lean#L47",
     "status": "proved",
     "comparator_checked": true,
-    "note": "The whole-space statement gives the physical error (1.6) and two-sided rate for one solution, with uniqueness and noncontinuation. It assumes additional Hessian and pressure-gradient decay. The quantitative torus conclusion remains open."
+    "note": "The companion constructs one smooth finite-energy whole-space solution with the two-sided rate and the physical error in (1.6), together with uniqueness and noncontinuation. Its profile premise explicitly requires velocity derivative decay through order two and pressure-gradient decay. The quantitative torus trajectory remains open."
    }
   },
   {
@@ -99,9 +99,9 @@
     "sha256": "ff7c36cf8cc51b6a20085a1bc67fdc40ed85d36f046f537c5864503634bbb966"
    },
    "adapted": {
-    "start_byte": 11967,
-    "end_byte": 12740,
-    "href": "adapted/?l=b11967-12740",
+    "start_byte": 10781,
+    "end_byte": 11554,
+    "href": "adapted/?l=b10781-11554",
     "sha256": "ff7c36cf8cc51b6a20085a1bc67fdc40ed85d36f046f537c5864503634bbb966"
    },
    "wording": "identical",
@@ -123,9 +123,9 @@
     "sha256": "ea86beb69b4f172dd85614802a437b09f23fc7641b58aae6aecb694cbfe68508"
    },
    "adapted": {
-    "start_byte": 50479,
-    "end_byte": 51229,
-    "href": "adapted/?l=b50479-51229",
+    "start_byte": 46984,
+    "end_byte": 47734,
+    "href": "adapted/?l=b46984-47734",
     "sha256": "ea86beb69b4f172dd85614802a437b09f23fc7641b58aae6aecb694cbfe68508"
    },
    "wording": "identical",
@@ -177,9 +177,9 @@
     "sha256": "fa4e5596e1e7c7519d5383493bcc9c56ae87d45b6f025d97277b9f9de9cfb0a6"
    },
    "adapted": {
-    "start_byte": 51670,
-    "end_byte": 52192,
-    "href": "adapted/?l=b51670-52192",
+    "start_byte": 48175,
+    "end_byte": 48697,
+    "href": "adapted/?l=b48175-48697",
     "sha256": "fa4e5596e1e7c7519d5383493bcc9c56ae87d45b6f025d97277b9f9de9cfb0a6"
    },
    "wording": "identical",
@@ -231,9 +231,9 @@
     "sha256": "285623440ee56aa8d3b7945595677ce05044099d34fb6495b2a25b3199c3d168"
    },
    "adapted": {
-    "start_byte": 53033,
-    "end_byte": 53441,
-    "href": "adapted/?l=b53033-53441",
+    "start_byte": 49441,
+    "end_byte": 49849,
+    "href": "adapted/?l=b49441-49849",
     "sha256": "285623440ee56aa8d3b7945595677ce05044099d34fb6495b2a25b3199c3d168"
    },
    "wording": "identical",
@@ -285,9 +285,9 @@
     "sha256": "7c3630691f4e8ec82f0c26621de104ede5e8f1b9a32c9bffe0f417b0ebbe09ef"
    },
    "adapted": {
-    "start_byte": 58790,
-    "end_byte": 59519,
-    "href": "adapted/?l=b58790-59519",
+    "start_byte": 54904,
+    "end_byte": 55633,
+    "href": "adapted/?l=b54904-55633",
     "sha256": "7c3630691f4e8ec82f0c26621de104ede5e8f1b9a32c9bffe0f417b0ebbe09ef"
    },
    "wording": "identical",
@@ -339,9 +339,9 @@
     "sha256": "19332aa0b7680e7d3bc306b7d8da6e8eae350c6575040c95ee5c0209d7e9a5c0"
    },
    "adapted": {
-    "start_byte": 63568,
-    "end_byte": 63681,
-    "href": "adapted/?l=b63568-63681",
+    "start_byte": 59218,
+    "end_byte": 59331,
+    "href": "adapted/?l=b59218-59331",
     "sha256": "19332aa0b7680e7d3bc306b7d8da6e8eae350c6575040c95ee5c0209d7e9a5c0"
    },
    "wording": "identical",
@@ -393,9 +393,9 @@
     "sha256": "34fddace5aa27118f0bf6e04f1e0e578976861ad6c9e3541ba11e5f47e2833cf"
    },
    "adapted": {
-    "start_byte": 66965,
-    "end_byte": 67223,
-    "href": "adapted/?l=b66965-67223",
+    "start_byte": 62173,
+    "end_byte": 62431,
+    "href": "adapted/?l=b62173-62431",
     "sha256": "34fddace5aa27118f0bf6e04f1e0e578976861ad6c9e3541ba11e5f47e2833cf"
    },
    "wording": "identical",
@@ -447,9 +447,9 @@
     "sha256": "05669ebadb705d6acd12aa91a060436c198e31879d305c34ed335e364b7cb3bb"
    },
    "adapted": {
-    "start_byte": 67383,
-    "end_byte": 67707,
-    "href": "adapted/?l=b67383-67707",
+    "start_byte": 62591,
+    "end_byte": 62915,
+    "href": "adapted/?l=b62591-62915",
     "sha256": "05669ebadb705d6acd12aa91a060436c198e31879d305c34ed335e364b7cb3bb"
    },
    "wording": "identical",
@@ -501,9 +501,9 @@
     "sha256": "5a77ea5fd3843326cb3839ef8f7b4781686a33360050399f5f91a58ad4050a15"
    },
    "adapted": {
-    "start_byte": 67845,
-    "end_byte": 68215,
-    "href": "adapted/?l=b67845-68215",
+    "start_byte": 63053,
+    "end_byte": 63423,
+    "href": "adapted/?l=b63053-63423",
     "sha256": "5a77ea5fd3843326cb3839ef8f7b4781686a33360050399f5f91a58ad4050a15"
    },
    "wording": "identical",
@@ -583,9 +583,9 @@
     "sha256": "dd5c2b1388be45f19f639a5232326d063fe4425d938231e63aeda3753a065516"
    },
    "adapted": {
-    "start_byte": 69373,
-    "end_byte": 69961,
-    "href": "adapted/?l=b69373-69961",
+    "start_byte": 64581,
+    "end_byte": 65169,
+    "href": "adapted/?l=b64581-65169",
     "sha256": "dd5c2b1388be45f19f639a5232326d063fe4425d938231e63aeda3753a065516"
    },
    "wording": "identical",
@@ -637,9 +637,9 @@
     "sha256": "bb0a4f800c7ffcc9c0fb2c482ea6fd3729ce65c073cb84842add96f7d1c6a237"
    },
    "adapted": {
-    "start_byte": 74064,
-    "end_byte": 75452,
-    "href": "adapted/?l=b74064-75452",
+    "start_byte": 68525,
+    "end_byte": 69913,
+    "href": "adapted/?l=b68525-69913",
     "sha256": "bb0a4f800c7ffcc9c0fb2c482ea6fd3729ce65c073cb84842add96f7d1c6a237"
    },
    "wording": "identical",
@@ -691,9 +691,9 @@
     "sha256": "86c1de5590cabc3b4a5b68a4327e3b9f51cefa0373ceccc7b03bcd64d4823e35"
    },
    "adapted": {
-    "start_byte": 78362,
-    "end_byte": 78763,
-    "href": "adapted/?l=b78362-78763",
+    "start_byte": 72282,
+    "end_byte": 72683,
+    "href": "adapted/?l=b72282-72683",
     "sha256": "86c1de5590cabc3b4a5b68a4327e3b9f51cefa0373ceccc7b03bcd64d4823e35"
    },
    "wording": "identical",
@@ -773,9 +773,9 @@
     "sha256": "d7a49e82688ea40e1cd6e71d6967514f9a25bb40ab9689437eb7ad00355952be"
    },
    "adapted": {
-    "start_byte": 80176,
-    "end_byte": 80502,
-    "href": "adapted/?l=b80176-80502",
+    "start_byte": 74096,
+    "end_byte": 74422,
+    "href": "adapted/?l=b74096-74422",
     "sha256": "d7a49e82688ea40e1cd6e71d6967514f9a25bb40ab9689437eb7ad00355952be"
    },
    "wording": "identical",
@@ -827,9 +827,9 @@
     "sha256": "61e739c7ddf4846cd07ad257bf1cf84405b8b7b7fd2a450f813ed0793bc91308"
    },
    "adapted": {
-    "start_byte": 84530,
-    "end_byte": 85016,
-    "href": "adapted/?l=b84530-85016",
+    "start_byte": 77572,
+    "end_byte": 78058,
+    "href": "adapted/?l=b77572-78058",
     "sha256": "61e739c7ddf4846cd07ad257bf1cf84405b8b7b7fd2a450f813ed0793bc91308"
    },
    "wording": "identical",
@@ -937,9 +937,9 @@
     "sha256": "5f503af4b62bfab2f29812196d278895dc178fbfcbb2d904f036a58cfd34df84"
    },
    "adapted": {
-    "start_byte": 86525,
-    "end_byte": 86695,
-    "href": "adapted/?l=b86525-86695",
+    "start_byte": 79181,
+    "end_byte": 79351,
+    "href": "adapted/?l=b79181-79351",
     "sha256": "5f503af4b62bfab2f29812196d278895dc178fbfcbb2d904f036a58cfd34df84"
    },
    "wording": "identical",
@@ -991,9 +991,9 @@
     "sha256": "184b40b7e64951cccf59d5079998d7442e69b2f17428a98bf0676a66ce740e1d"
    },
    "adapted": {
-    "start_byte": 87871,
-    "end_byte": 88372,
-    "href": "adapted/?l=b87871-88372",
+    "start_byte": 80527,
+    "end_byte": 81028,
+    "href": "adapted/?l=b80527-81028",
     "sha256": "184b40b7e64951cccf59d5079998d7442e69b2f17428a98bf0676a66ce740e1d"
    },
    "wording": "identical",
@@ -1045,9 +1045,9 @@
     "sha256": "77fb539025d114ab43e5a4d15a24e4dd930443a1755b02177c7a613afce84759"
    },
    "adapted": {
-    "start_byte": 91150,
-    "end_byte": 92150,
-    "href": "adapted/?l=b91150-92150",
+    "start_byte": 83806,
+    "end_byte": 84806,
+    "href": "adapted/?l=b83806-84806",
     "sha256": "77fb539025d114ab43e5a4d15a24e4dd930443a1755b02177c7a613afce84759"
    },
    "wording": "identical",
@@ -1085,9 +1085,9 @@
     "sha256": "a8bbce9d826d48f54f01501d24e1316bbbcd891bb9a54d58f58c5fba078cb0dc"
    },
    "adapted": {
-    "start_byte": 100168,
-    "end_byte": 100881,
-    "href": "adapted/?l=b100168-100881",
+    "start_byte": 92784,
+    "end_byte": 93497,
+    "href": "adapted/?l=b92784-93497",
     "sha256": "a8bbce9d826d48f54f01501d24e1316bbbcd891bb9a54d58f58c5fba078cb0dc"
    },
    "wording": "identical",
@@ -1139,9 +1139,9 @@
     "sha256": "543a92f4c8eeeca075a8edf1f4a113e08243fd92482e498dceba5037f89b52cf"
    },
    "adapted": {
-    "start_byte": 101525,
-    "end_byte": 102761,
-    "href": "adapted/?l=b101525-102761",
+    "start_byte": 94141,
+    "end_byte": 95377,
+    "href": "adapted/?l=b94141-95377",
     "sha256": "543a92f4c8eeeca075a8edf1f4a113e08243fd92482e498dceba5037f89b52cf"
    },
    "wording": "identical",
@@ -1193,9 +1193,9 @@
     "sha256": "be74ee3d63d17acd473e9d7d2791a706dd0e9b4f26cc4ebfa82722f9579bf509"
    },
    "adapted": {
-    "start_byte": 105440,
-    "end_byte": 105871,
-    "href": "adapted/?l=b105440-105871",
+    "start_byte": 97578,
+    "end_byte": 98009,
+    "href": "adapted/?l=b97578-98009",
     "sha256": "be74ee3d63d17acd473e9d7d2791a706dd0e9b4f26cc4ebfa82722f9579bf509"
    },
    "wording": "identical",
@@ -1247,9 +1247,9 @@
     "sha256": "111619b07409b0469bae83b732950fcee7c554bedb84ea36dd822cb4a5fc2399"
    },
    "adapted": {
-    "start_byte": 114314,
-    "end_byte": 114748,
-    "href": "adapted/?l=b114314-114748",
+    "start_byte": 104484,
+    "end_byte": 104918,
+    "href": "adapted/?l=b104484-104918",
     "sha256": "111619b07409b0469bae83b732950fcee7c554bedb84ea36dd822cb4a5fc2399"
    },
    "wording": "identical",
@@ -1301,9 +1301,9 @@
     "sha256": "e8c14ee7ccda53c51a26961588fc6eae6a41aa5e9324681b01edf588157aba70"
    },
    "adapted": {
-    "start_byte": 119002,
-    "end_byte": 119447,
-    "href": "adapted/?l=b119002-119447",
+    "start_byte": 108510,
+    "end_byte": 108955,
+    "href": "adapted/?l=b108510-108955",
     "sha256": "e8c14ee7ccda53c51a26961588fc6eae6a41aa5e9324681b01edf588157aba70"
    },
    "wording": "identical",
@@ -1383,9 +1383,9 @@
     "sha256": "6ea68de4036731a5609e3fb49bb453808a970a538011f7b870aae555516255cd"
    },
    "adapted": {
-    "start_byte": 128547,
-    "end_byte": 129043,
-    "href": "adapted/?l=b128547-129043",
+    "start_byte": 117654,
+    "end_byte": 118150,
+    "href": "adapted/?l=b117654-118150",
     "sha256": "6ea68de4036731a5609e3fb49bb453808a970a538011f7b870aae555516255cd"
    },
    "wording": "identical",
@@ -1465,9 +1465,9 @@
     "sha256": "d75518ae4a810e843b0c17bd9bb5c8b6d1f35a5343592dbc13c07c55ab5c9d34"
    },
    "adapted": {
-    "start_byte": 162871,
-    "end_byte": 163580,
-    "href": "adapted/?l=b162871-163580",
+    "start_byte": 149705,
+    "end_byte": 150414,
+    "href": "adapted/?l=b149705-150414",
     "sha256": "d75518ae4a810e843b0c17bd9bb5c8b6d1f35a5343592dbc13c07c55ab5c9d34"
    },
    "wording": "identical",
@@ -1492,7 +1492,7 @@
     "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L29",
     "status": "proved",
     "comparator_checked": false,
-    "note": "The output keeps the chosen parameter, profile, correction, bounds and symmetries. It assumes a formal extended certificate and concludes extra Hessian and pressure-gradient decay."
+    "note": "The proof assumes the full formal extended certificate, including its approximate-profile regularity and decay requirements. It retains the chosen parameter, smooth profile, correction, bounds and symmetries in (7.38)–(7.39), and gives Hessian and pressure-gradient decay for that profile."
    }
   },
   {
@@ -1505,9 +1505,9 @@
     "sha256": "6ea15d37ac91b333c592e0984ab243144c5690f9c57aa9bd8c00855eb707a050"
    },
    "adapted": {
-    "start_byte": 164513,
-    "end_byte": 164730,
-    "href": "adapted/?l=b164513-164730",
+    "start_byte": 150415,
+    "end_byte": 150632,
+    "href": "adapted/?l=b150415-150632",
     "sha256": "6ea15d37ac91b333c592e0984ab243144c5690f9c57aa9bd8c00855eb707a050"
    },
    "wording": "identical",
@@ -1532,7 +1532,7 @@
     "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L45",
     "status": "proved",
     "comparator_checked": false,
-    "note": "The construction retains the certificate profile, proves quantitative whole-space blow-up and gives both nonexistence conclusions. The quantitative torus trajectory remains open."
+    "note": "The companion retains the profile from Theorem 7.1 and constructs the quantitative whole-space trajectory with the error bound (1.6). Its torus conclusion is qualitative nonexistence of a global smooth solution with periodic velocity. The trajectory and convergence estimates in (1.7) remain open."
    }
   },
   {
@@ -1545,9 +1545,9 @@
     "sha256": "2476f4ace3665e33f249000eec42210a4eed51898acbb6121ddf84c927441219"
    },
    "adapted": {
-    "start_byte": 166428,
-    "end_byte": 166900,
-    "href": "adapted/?l=b166428-166900",
+    "start_byte": 150633,
+    "end_byte": 151105,
+    "href": "adapted/?l=b150633-151105",
     "sha256": "2476f4ace3665e33f249000eec42210a4eed51898acbb6121ddf84c927441219"
    },
    "wording": "identical",
@@ -1569,9 +1569,9 @@
     "sha256": "13fc181dafd80d7a737928f6db38ce33aeccef90d847341e7afa2be696bd6458"
    },
    "adapted": {
-    "start_byte": 171642,
-    "end_byte": 172425,
-    "href": "adapted/?l=b171642-172425",
+    "start_byte": 155847,
+    "end_byte": 156630,
+    "href": "adapted/?l=b155847-156630",
     "sha256": "13fc181dafd80d7a737928f6db38ce33aeccef90d847341e7afa2be696bd6458"
    },
    "wording": "identical",
@@ -1609,9 +1609,9 @@
     "sha256": "1dd5221281db54766dc25e6d847e3f089f28143eeacbd32c9bd5cafaccdfeff0"
    },
    "adapted": {
-    "start_byte": 176235,
-    "end_byte": 176731,
-    "href": "adapted/?l=b176235-176731",
+    "start_byte": 160440,
+    "end_byte": 160936,
+    "href": "adapted/?l=b160440-160936",
     "sha256": "1dd5221281db54766dc25e6d847e3f089f28143eeacbd32c9bd5cafaccdfeff0"
    },
    "wording": "identical",
@@ -1649,9 +1649,9 @@
     "sha256": "bc192bfd680e6984ad4f724d936d07896294514a5f7f651c223a1cc9c8c497e2"
    },
    "adapted": {
-    "start_byte": 181862,
-    "end_byte": 182342,
-    "href": "adapted/?l=b181862-182342",
+    "start_byte": 165506,
+    "end_byte": 165986,
+    "href": "adapted/?l=b165506-165986",
     "sha256": "bc192bfd680e6984ad4f724d936d07896294514a5f7f651c223a1cc9c8c497e2"
    },
    "wording": "identical",
@@ -1689,9 +1689,9 @@
     "sha256": "56b909741c4bb952257bb2bb483bcda69c32485f3ff5f8e1cd8f96a5b704997b"
    },
    "adapted": {
-    "start_byte": 183909,
-    "end_byte": 184434,
-    "href": "adapted/?l=b183909-184434",
+    "start_byte": 167238,
+    "end_byte": 167763,
+    "href": "adapted/?l=b167238-167763",
     "sha256": "56b909741c4bb952257bb2bb483bcda69c32485f3ff5f8e1cd8f96a5b704997b"
    },
    "wording": "identical",
@@ -1729,9 +1729,9 @@
     "sha256": "953ea76a91b1ebe5a897ad90fc0e4f0528922d65d2c4de6724c6c50b8c57974b"
    },
    "adapted": {
-    "start_byte": 188098,
-    "end_byte": 188783,
-    "href": "adapted/?l=b188098-188783",
+    "start_byte": 171185,
+    "end_byte": 171870,
+    "href": "adapted/?l=b171185-171870",
     "sha256": "953ea76a91b1ebe5a897ad90fc0e4f0528922d65d2c4de6724c6c50b8c57974b"
    },
    "wording": "identical",
@@ -1769,9 +1769,9 @@
     "sha256": "fd1a15b946d77d25afb71768b7b802854106e27d96d275e1f937a250fc352e9a"
    },
    "adapted": {
-    "start_byte": 191450,
-    "end_byte": 191897,
-    "href": "adapted/?l=b191450-191897",
+    "start_byte": 174346,
+    "end_byte": 174793,
+    "href": "adapted/?l=b174346-174793",
     "sha256": "fd1a15b946d77d25afb71768b7b802854106e27d96d275e1f937a250fc352e9a"
    },
    "wording": "identical",
@@ -1809,9 +1809,9 @@
     "sha256": "fd2770fbf2daa09b80f13c7565951edcf73bc6ae7af5ac90bbd8805cc9f809a1"
    },
    "adapted": {
-    "start_byte": 198278,
-    "end_byte": 198692,
-    "href": "adapted/?l=b198278-198692",
+    "start_byte": 180203,
+    "end_byte": 180617,
+    "href": "adapted/?l=b180203-180617",
     "sha256": "fd2770fbf2daa09b80f13c7565951edcf73bc6ae7af5ac90bbd8805cc9f809a1"
    },
    "wording": "identical",
@@ -1849,9 +1849,9 @@
     "sha256": "b0224fee88a0e3ace296dfefca319bde2abebf524ea5b3b23ab09eab10e04b99"
    },
    "adapted": {
-    "start_byte": 208954,
-    "end_byte": 209820,
-    "href": "adapted/?l=b208954-209820",
+    "start_byte": 190879,
+    "end_byte": 191745,
+    "href": "adapted/?l=b190879-191745",
     "sha256": "b0224fee88a0e3ace296dfefca319bde2abebf524ea5b3b23ab09eab10e04b99"
    },
    "wording": "identical",
@@ -1889,9 +1889,9 @@
     "sha256": "3bf16f8ee852c7a61a6287303d522e5cc5101d0fa4f757da78b87b1b59857cd4"
    },
    "adapted": {
-    "start_byte": 262843,
-    "end_byte": 263871,
-    "href": "adapted/?l=b262843-263871",
+    "start_byte": 239209,
+    "end_byte": 240237,
+    "href": "adapted/?l=b239209-240237",
     "sha256": "3bf16f8ee852c7a61a6287303d522e5cc5101d0fa4f757da78b87b1b59857cd4"
    },
    "wording": "identical",
@@ -1943,9 +1943,9 @@
     "sha256": "b94f7b5b436e86950032b07b14582bded012e2fb853f9d7dcdaa864d6c922587"
    },
    "adapted": {
-    "start_byte": 268415,
-    "end_byte": 268633,
-    "href": "adapted/?l=b268415-268633",
+    "start_byte": 244166,
+    "end_byte": 244384,
+    "href": "adapted/?l=b244166-244384",
     "sha256": "b94f7b5b436e86950032b07b14582bded012e2fb853f9d7dcdaa864d6c922587"
    },
    "wording": "identical",
@@ -1997,9 +1997,9 @@
     "sha256": "c8ef46f552561d4643e24677a9f45a1b6ca8269ca63a858563415866c56173e1"
    },
    "adapted": {
-    "start_byte": 271528,
-    "end_byte": 271995,
-    "href": "adapted/?l=b271528-271995",
+    "start_byte": 246502,
+    "end_byte": 246969,
+    "href": "adapted/?l=b246502-246969",
     "sha256": "c8ef46f552561d4643e24677a9f45a1b6ca8269ca63a858563415866c56173e1"
    },
    "wording": "identical",
@@ -2051,9 +2051,9 @@
     "sha256": "e99527e02b90fe172a5f3c2fe748f917beb303a479734414141b91a17888ca57"
    },
    "adapted": {
-    "start_byte": 285656,
-    "end_byte": 287658,
-    "href": "adapted/?l=b285656-287658",
+    "start_byte": 259978,
+    "end_byte": 261980,
+    "href": "adapted/?l=b259978-261980",
     "sha256": "e99527e02b90fe172a5f3c2fe748f917beb303a479734414141b91a17888ca57"
    },
    "wording": "identical",
@@ -2119,9 +2119,9 @@
     "sha256": "1e9bf1ef918e8c15aad773d7583a7f9e7d8a2b676d5d351e6768dadfcea1107f"
    },
    "adapted": {
-    "start_byte": 292503,
-    "end_byte": 293471,
-    "href": "adapted/?l=b292503-293471",
+    "start_byte": 266709,
+    "end_byte": 267677,
+    "href": "adapted/?l=b266709-267677",
     "sha256": "1e9bf1ef918e8c15aad773d7583a7f9e7d8a2b676d5d351e6768dadfcea1107f"
    },
    "wording": "identical",
@@ -2187,9 +2187,9 @@
     "sha256": "3b60f88af4abbffca05f18691c41225901cc099bab8b8f9f392a6366f79a442e"
    },
    "adapted": {
-    "start_byte": 295912,
-    "end_byte": 296419,
-    "href": "adapted/?l=b295912-296419",
+    "start_byte": 270118,
+    "end_byte": 270625,
+    "href": "adapted/?l=b270118-270625",
     "sha256": "3b60f88af4abbffca05f18691c41225901cc099bab8b8f9f392a6366f79a442e"
    },
    "wording": "identical",
@@ -2241,9 +2241,9 @@
     "sha256": "3df540bb369c066dacb0713740a4f6439debcd194b58b9061ba2c7d7045622bf"
    },
    "adapted": {
-    "start_byte": 304575,
-    "end_byte": 305040,
-    "href": "adapted/?l=b304575-305040",
+    "start_byte": 278472,
+    "end_byte": 278937,
+    "href": "adapted/?l=b278472-278937",
     "sha256": "3df540bb369c066dacb0713740a4f6439debcd194b58b9061ba2c7d7045622bf"
    },
    "wording": "identical",
@@ -2295,9 +2295,9 @@
     "sha256": "20f1c6b170d1df8b447c5e59d8ae7d74009bd34cc4f7ac9ce6b8be7d6855f79c"
    },
    "adapted": {
-    "start_byte": 308084,
-    "end_byte": 308298,
-    "href": "adapted/?l=b308084-308298",
+    "start_byte": 281981,
+    "end_byte": 282195,
+    "href": "adapted/?l=b281981-282195",
     "sha256": "20f1c6b170d1df8b447c5e59d8ae7d74009bd34cc4f7ac9ce6b8be7d6855f79c"
    },
    "wording": "identical",
@@ -2349,9 +2349,9 @@
     "sha256": "f5259562143ea9cfb75e9472e94c72c51337859c00915910881a1d92c1596c5d"
    },
    "adapted": {
-    "start_byte": 313898,
-    "end_byte": 315788,
-    "href": "adapted/?l=b313898-315788",
+    "start_byte": 287559,
+    "end_byte": 289449,
+    "href": "adapted/?l=b287559-289449",
     "sha256": "f5259562143ea9cfb75e9472e94c72c51337859c00915910881a1d92c1596c5d"
    },
    "wording": "identical",
@@ -2417,9 +2417,9 @@
     "sha256": "d3d4d6cfe49bbe030a9aff9774951d5848da1e1a6c0279174e725225318f98da"
    },
    "adapted": {
-    "start_byte": 319638,
-    "end_byte": 320037,
-    "href": "adapted/?l=b319638-320037",
+    "start_byte": 293299,
+    "end_byte": 293698,
+    "href": "adapted/?l=b293299-293698",
     "sha256": "d3d4d6cfe49bbe030a9aff9774951d5848da1e1a6c0279174e725225318f98da"
    },
    "wording": "identical",
@@ -2471,9 +2471,9 @@
     "sha256": "f6afc0546a15bee4edce467713689c014fccb8d0e2350c2b26359025d5c9e0e0"
    },
    "adapted": {
-    "start_byte": 321900,
-    "end_byte": 322187,
-    "href": "adapted/?l=b321900-322187",
+    "start_byte": 295561,
+    "end_byte": 295848,
+    "href": "adapted/?l=b295561-295848",
     "sha256": "f6afc0546a15bee4edce467713689c014fccb8d0e2350c2b26359025d5c9e0e0"
    },
    "wording": "identical",
@@ -2539,9 +2539,9 @@
     "sha256": "abbdbc3d2227ea3d7437c22095a9554c5a09c0fc8a95f423bbf734bd785ba9ae"
    },
    "adapted": {
-    "start_byte": 330620,
-    "end_byte": 331398,
-    "href": "adapted/?l=b330620-331398",
+    "start_byte": 303850,
+    "end_byte": 304628,
+    "href": "adapted/?l=b303850-304628",
     "sha256": "abbdbc3d2227ea3d7437c22095a9554c5a09c0fc8a95f423bbf734bd785ba9ae"
    },
    "wording": "identical",
@@ -2579,9 +2579,9 @@
     "sha256": "d20e626239e463cb3dc285790c108fa52bd041efdddca207dc11ebc7089fd7af"
    },
    "adapted": {
-    "start_byte": 338014,
-    "end_byte": 339447,
-    "href": "adapted/?l=b338014-339447",
+    "start_byte": 311244,
+    "end_byte": 312677,
+    "href": "adapted/?l=b311244-312677",
     "sha256": "d20e626239e463cb3dc285790c108fa52bd041efdddca207dc11ebc7089fd7af"
    },
    "wording": "identical",
@@ -2633,9 +2633,9 @@
     "sha256": "af5d5408c5aa52716359ef62cdc02087de6a745fb871e0f1d40130de886cc796"
    },
    "adapted": {
-    "start_byte": 342291,
-    "end_byte": 342874,
-    "href": "adapted/?l=b342291-342874",
+    "start_byte": 315521,
+    "end_byte": 316104,
+    "href": "adapted/?l=b315521-316104",
     "sha256": "af5d5408c5aa52716359ef62cdc02087de6a745fb871e0f1d40130de886cc796"
    },
    "wording": "identical",
@@ -2660,7 +2660,7 @@
     "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L394",
     "status": "proved",
     "comparator_checked": false,
-    "note": "The proof produces an extended certificate after choosing a decay constant. It retains the full formal cell hypotheses."
+    "note": "The proof chooses a decay constant and builds an extended certificate under all fifteen groups of formal cell hypotheses. A separate Comparator run accepted the three statements in `CellLayerTheorems` against `Solution`, proving conditional whole-space and torus nonexistence separately and together. The authors report a separate interval-arithmetic evaluation of their numerical data, whose files and checker are absent from the pinned release. [Cell hypotheses](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/StatementDefs.lean#L6223-L6242) · [Conditional Comparator run](https://github.com/wcook04/proof-reader/actions/runs/44819023135)."
    }
   }
  ]

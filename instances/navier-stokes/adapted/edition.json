@@ -13,20 +13,14 @@
   "group": "edition",
   "group_title": "Adapted edition",
   "order": 0,
-  "credit": "An adapted edition of Alpöge and Buckmaster's paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the authors'. Every change is marked, and no change has been reviewed by the authors.",
+  "credit": "Adapted from the paper by Alpöge and Buckmaster. Prepared by Will Cook with AI assistance.",
   "published": true,
   "pdf": {
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with changes marked",
-   "sha256": "318915b23ccef5b5d3cd085b03f91f3b18121c8b19fa7b279270e4273804ecb3",
-   "bytes": 1243421
-  },
-  "reading_pdf": {
-   "file": "reading.pdf",
-   "name": "navier-stokes-adapted-v1.pdf",
-   "bytes": 1158802,
-   "sha256": "6dbaa21266a7be9810534a3843b7b6183a632f5efdb7a0e55a19990972d22789"
+   "sha256": "664f0c84a049eb8e412d47a5f3cc475c07ea6128fdf5cab1bf9dc69461618f46",
+   "bytes": 1181767
   },
   "release": {
    "version": 1,
@@ -36,20 +30,27 @@
     "The certificate construction identifies where the auxiliary force vanishes. The comparison gives the strengthened hypotheses of the checked whole-space theorem and records which quantities it estimates."
    ]
   },
+  "reading_pdf": {
+   "file": "reading.pdf",
+   "name": "navier-stokes-adapted-v1.pdf",
+   "label": "Reading copy",
+   "bytes": 1117121,
+   "sha256": "71647f9d45eae24c0fae2bf4c34b317d76865fef08432192d98a6707c600e704"
+  },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 55505,
-    "sha256": "e4c1c3d44c95ac03d38a058d8aaf476914354c34401581dc194b2922f5bbd712"
+    "bytes": 56337,
+    "sha256": "d460704f3223f2907f6cd0b2c1b9b951b84b3167e10c61fa5fe48cd8aa463e78"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 108500,
-    "sha256": "abc9f701f1e884ad0cad23ab26ad05a750a19dbbd147ddde1741716b2f77a2b7"
+    "bytes": 109412,
+    "sha256": "af069ff62c70f65ebdb090aba415d03bac794da6f0fad15a58b31a07678f52e6"
    }
   }
  }
