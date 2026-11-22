@@ -1,0 +1,112 @@
+{
+ "schema": "topic-colours/1",
+ "paper": "short",
+ "meaning": "The quartic reader's stored topic colours, carried unchanged: each family one hue, each topic one shade of it.",
+ "stored_from": "https://github.com/wcook04/quartic-query-lean 56ac62feece7 docs/reading_phrases/colours-expert.json",
+ "parts": [
+  {
+   "key": "1dd263c9777b0f60",
+   "shared_by": 1,
+   "lightness": {
+    "light": 0.455,
+    "dark": 0.695
+   },
+   "chroma": {
+    "light": 0.081,
+    "dark": 0.126
+   },
+   "families": [
+    {
+     "id": "family-query",
+     "name": "Query complexity and the quartic exponent · Forrelation and address decoding",
+     "named": false,
+     "hue": 84,
+     "topics": [
+      "query",
+      "forrelation"
+     ]
+    },
+    {
+     "id": "family-construction",
+     "name": "Columns and certificates · Verifying a candidate",
+     "named": false,
+     "hue": 171,
+     "topics": [
+      "verification",
+      "construction"
+     ]
+    },
+    {
+     "id": "family-comparison",
+     "name": "Pairwise comparisons · Weighted tournament and amplification · Predicting the hidden address",
+     "named": false,
+     "hue": 254.5,
+     "topics": [
+      "comparison",
+      "tournament",
+      "prediction"
+     ]
+    },
+    {
+     "id": "family-planted",
+     "name": "The planted input and erased zero",
+     "named": false,
+     "hue": 343,
+     "topics": [
+      "planted"
+     ]
+    }
+   ],
+   "topics": {
+    "query": {
+     "index": 0,
+     "family": "family-query",
+     "light": "oklch(0.413 0.086 78.6)",
+     "dark": "oklch(0.652 0.134 78.6)"
+    },
+    "forrelation": {
+     "index": 1,
+     "family": "family-query",
+     "light": "oklch(0.497 0.076 89.4)",
+     "dark": "oklch(0.737 0.118 89.4)"
+    },
+    "verification": {
+     "index": 2,
+     "family": "family-construction",
+     "light": "oklch(0.413 0.086 165.6)",
+     "dark": "oklch(0.652 0.134 165.6)"
+    },
+    "construction": {
+     "index": 3,
+     "family": "family-construction",
+     "light": "oklch(0.497 0.076 176.4)",
+     "dark": "oklch(0.737 0.118 176.4)"
+    },
+    "comparison": {
+     "index": 4,
+     "family": "family-comparison",
+     "light": "oklch(0.370 0.091 243.7)",
+     "dark": "oklch(0.610 0.141 243.7)"
+    },
+    "tournament": {
+     "index": 5,
+     "family": "family-comparison",
+     "light": "oklch(0.455 0.081 254.5)",
+     "dark": "oklch(0.695 0.126 254.5)"
+    },
+    "prediction": {
+     "index": 6,
+     "family": "family-comparison",
+     "light": "oklch(0.540 0.071 265.3)",
+     "dark": "oklch(0.780 0.111 265.3)"
+    },
+    "planted": {
+     "index": 7,
+     "family": "family-planted",
+     "light": "oklch(0.355 0.081 343.0)",
+     "dark": "oklch(0.595 0.126 343.0)"
+    }
+   }
+  }
+ ]
+}

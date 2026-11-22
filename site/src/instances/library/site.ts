@@ -6,7 +6,7 @@ import type { SiteFacts } from "../../home/siteFacts.ts";
 import type { RecordKind, SiteInstance } from "../types.ts";
 import { PAPER, MAIN, LIBRARY_ROOT } from "./data.ts";
 
-const ADAPTED = PAPER.documents.find((d) => d.kind === "adapted");
+const ADAPTED = PAPER.documents.find((d) => d.adapted);
 
 const n = (value: number) => value.toLocaleString("en-GB");
 const plain = (text: string) => text.replace(/\$([^$]+)\$/g, "$1");
@@ -39,7 +39,7 @@ const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
 for (const doc of PAPER.documents)
-  paperNames[doc.slot] = doc.kind === "adapted"
+  paperNames[doc.slot] = doc.adapted
     ? // The adapted edition's header carries its own credit, whole; the authors' paper keeps theirs.
       { short: "Adapted edition", job: sentence(`${doc.title}, an adapted edition`), reader: doc.credit ?? "" }
     : doc.main
@@ -127,10 +127,19 @@ const site = {
   },
   regionTitles: {},
   paperNames,
-  stages: PAPER.documents.map((d) => d.slot),
+  // The reader's accounts; companion documents are listed apart (library.companions), by group.
+  stages: PAPER.documents.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
-  library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
+  library: {
+    paper: PAPER.id,
+    main: MAIN.slot,
+    pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
+    companions: PAPER.documents
+      .filter((d) => d.kind === "companion")
+      .map((d) => ({ slot: d.slot, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
+      .sort((a, b) => a.order - b.order),
+  },
   adapted: ADAPTED
     ? {
         slot: ADAPTED.slot,

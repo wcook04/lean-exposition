@@ -5,16 +5,23 @@ import current from "./current.json";
 export interface LibraryPdf { file: string; sha256: string; bytes: number; url?: string; name?: string; label?: string }
 export interface LibraryDocument {
   id: string;
-  slot: "long" | "short" | "expository";
+  /** One of the three accounts (long, short, expository), or a companion's own page name (digest, library-07). */
+  slot: string;
   slug: string;
   title: string;
   noun: string;
   main?: boolean;
   pdf?: LibraryPdf;
-  /** An adapted edition of another document (`of`, its id), with its own credit and a second PDF. */
-  kind?: "adapted";
-  of?: string;
+  /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
+  kind?: "companion";
+  group?: string;
+  group_title?: string;
+  order?: number;
   credit?: string;
+  /** An adapted edition of another document (`of`, its id): a companion page with its own credit, a
+   *  change map and its PDF with changes marked; read only when `published` (or in a local preview). */
+  adapted?: boolean;
+  of?: string;
   published?: boolean;
   aux_pdf?: LibraryPdf;
 }

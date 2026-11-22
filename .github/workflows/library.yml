@@ -116,7 +116,10 @@ jobs:
           git clone --depth 1 git@github.com:wcook04/library.git pub
           for dir in built/library-*; do
             paper=${dir#built/library-}
+            # A paper's frozen editions (<paper>/editions/) are published once by their own script and kept.
+            if [ -d "pub/$paper/editions" ]; then mv "pub/$paper/editions" "editions-$paper"; fi
             rm -rf "pub/$paper" && cp -R "$dir/site/dist" "pub/$paper"
+            if [ -d "editions-$paper" ]; then mv "editions-$paper" "pub/$paper/editions"; fi
           done
           python3 scripts/build_library_index.py pub $(cd pub && ls -d */ | tr -d /)
           python3 scripts/private_guard.py pub

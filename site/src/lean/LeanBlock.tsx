@@ -25,6 +25,7 @@ import {
 import "./lean.css";
 import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
 import { LeanReadingNote } from "./libraryNotes";
+import { checksOnConstant, LaterCheckNote } from "./ours";
 import { ComparatorMark } from "./comparatorMark";
 import { SITE_FACTS } from "virtual:site-facts";
 import { MODELS_STEP } from "../app/caveat";
@@ -517,6 +518,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
         </div>
       )}
       <ComparatorMark name={decl.name} />
+      {checksOnConstant(decl.name).map((check) => <LaterCheckNote key={check.constant} check={check} />)}
       {!relation && !note && <LeanReadingNote name={decl.name} />}
       {!relation && fidelity?.fidelity && (
         <div className="lean-block__link">

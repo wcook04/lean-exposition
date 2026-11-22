@@ -1,0 +1,69 @@
+{
+ "schema": 1,
+ "results": {
+  "theorem-1": {
+   "claim": "theorem-1",
+   "title": "Theorem 1",
+   "section": "1",
+   "tie": null,
+   "lean": [
+    "QuarticQuery.theorem_1_1_unconditional"
+   ]
+  },
+  "lemma-2": {
+   "claim": "lemma-2",
+   "title": "Lemma 2",
+   "section": "2",
+   "tie": null,
+   "lean": [
+    "QuarticQuery.Paper.construction_lemma_2_1_complete"
+   ]
+  },
+  "proposition-3": {
+   "claim": "proposition-3",
+   "title": "Proposition 3",
+   "section": "4.2",
+   "tie": null,
+   "lean": [
+    "QuarticQuery.Paper.quantumTournament"
+   ]
+  },
+  "lemma-4": {
+   "claim": "lemma-4",
+   "title": "Lemma 4",
+   "section": "4.2",
+   "tie": null,
+   "lean": [
+    "QuarticQuery.Amplification.bounded_amplification"
+   ]
+  },
+  "lemma-5": {
+   "claim": "lemma-5",
+   "title": "Lemma 5",
+   "section": "5.3",
+   "tie": null,
+   "lean": [
+    "QuarticQuery.direct_product_average",
+    "QuarticQuery.direct_product_randomized"
+   ]
+  }
+ },
+ "sections": {
+  "1": "1. Introduction",
+  "1.1": "1.1 Overview of techniques",
+  "2": "2. Preliminaries",
+  "3": "3. The function",
+  "4": "4. The quantum upper bound",
+  "4.1": "4.1 Comparing two columns",
+  "4.2": "4.2 A tournament for probabilistic comparisons",
+  "4.3": "4.3 Verifying the listed columns",
+  "5": "5. The randomized lower bound",
+  "5.1": "5.1 The hard distribution",
+  "5.2": "5.2 Searching for the erased zero",
+  "5.3": "5.3 Predicting the cell address",
+  "5.4": "5.4 The randomized bound",
+  "6": "6. The optimal exponent",
+  "7": "7. Further results in the reconstruction",
+  "8": "8. Verification and reproducibility"
+ }
+}

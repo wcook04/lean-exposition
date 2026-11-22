@@ -339,7 +339,7 @@ def convert(args) -> None:
     instance = json.loads((inst / "instance.json").read_text())
     main_doc = next(d for d in instance["documents"] if d.get("main"))
     slot = args.slot
-    if slot in {d["slot"] for d in instance["documents"]}:
+    if slot in {d["slot"] for d in instance["documents"]} or args.slug in {d.get("slug") for d in instance["documents"]}:
         raise SystemExit(f"slot {slot} is taken by another document of {args.paper}")
     rows_in = json.loads((args.edition / "CHANGES.json").read_text())
     changes = [{k: r[k] for k in PUBLIC_FIELDS} for r in rows_in]
@@ -432,8 +432,11 @@ def convert(args) -> None:
 
     pdf = args.pdf.read_bytes()
     shutil.copy(args.pdf, out / "paper.pdf")
-    document = {"id": "adapted", "slot": slot, "slug": args.slug, "kind": "adapted", "of": main_doc["id"],
+    # Read as a companion document of the paper (its own page and slot, docs/library-architecture.md),
+    # marked as the adapted edition of the main document.
+    document = {"id": "adapted", "slot": slot, "slug": args.slug, "kind": "companion", "adapted": True, "of": main_doc["id"],
                 "title": main_doc["title"], "noun": "adapted edition",
+                "group": "edition", "group_title": "Adapted edition", "order": 0,
                 "credit": args.credit, "published": bool(args.published),
                 "pdf": {"file": "paper.pdf", "name": "adapted-edition-marked.pdf", "label": "PDF with changes marked",
                         "sha256": sha(pdf), "bytes": len(pdf)}}
@@ -528,7 +531,7 @@ def main() -> None:
     c.add_argument("--reading-copy", type=Path, required=True, help="Proof Reader's papers/<page>/tools/reading_copy.py")
     c.add_argument("--pdf", type=Path, required=True, help="the edition's PDF with changes marked")
     c.add_argument("--aux-pdf", type=Path)
-    c.add_argument("--slot", default="long")
+    c.add_argument("--slot", default="adapted", help="the edition's own document slot (a companion page name)")
     c.add_argument("--slug", default="adapted")
     c.add_argument("--credit", required=True, help="the edition's credit sentence, verbatim")
     c.add_argument("--published", action="store_true", help="build and publish the edition (off: a build leaves it out)")

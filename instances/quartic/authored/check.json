@@ -1,0 +1,8 @@
+{
+ "not_joined": {
+  "quartic.lemma-2": "Lean's recorded dependencies of theorem_1_1_unconditional (corpus/reading_dependencies.json at 56ac62f) do not reach Paper.construction_lemma_2_1_complete, the Lean compared with the OpenAI statement that Lemma 2 restates: the main theorem's Lean proves what it needs by its own route, and this theorem states the result separately.",
+  "quartic.proposition-3": "Lean's recorded dependencies of theorem_1_1_unconditional (corpus/reading_dependencies.json at 56ac62f) do not reach Paper.quantumTournament, the Lean compared with the OpenAI statement that Proposition 3 restates: the main theorem's Lean proves what it needs by its own route, and this theorem states the result separately.",
+  "quartic.lemma-4": "Lean's recorded dependencies of theorem_1_1_unconditional (corpus/reading_dependencies.json at 56ac62f) do not reach Amplification.bounded_amplification, the Lean compared with the OpenAI statement that Lemma 4 restates: the main theorem's Lean proves what it needs by its own route, and this theorem states the result separately.",
+  "quartic.lemma-5": "Lean's recorded dependencies of theorem_1_1_unconditional (corpus/reading_dependencies.json at 56ac62f) do not reach direct_product_average and direct_product_randomized, the Lean compared with the OpenAI statement that Lemma 5 restates: the main theorem's Lean proves what it needs by its own route, and this theorem states the result separately."
+ }
+}

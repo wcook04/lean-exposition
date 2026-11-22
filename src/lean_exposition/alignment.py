@@ -453,7 +453,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
         for n, part in enumerate(data.get("parts") or ()):
             at = f"{where}:parts[{n}]"
             if not _check_keys(part, {"name", "lines", "topics", "titles", "notes"},
-                               {"packet", "source_commit", "partial"}, at, errors):
+                               {"packet", "source_commit", "partial", "title_words"}, at, errors):
                 continue
             first, last = part["lines"]
             begin = line_starts[first - 1] if 0 < first <= len(line_starts) else 0
@@ -474,7 +474,7 @@ def resolve_phrases(directory, prepared, names, records, errors):
                                       **({"family": t["family"]} if t.get("family") else {})}
                                      for t in part["topics"] if t.get("id") in ids],
                           "titles": {}, "notes": {}, "_titles": part["titles"], "_notes": part["notes"],
-                          **{key: part[key] for key in ("packet", "source_commit", "partial") if key in part}})
+                          **{key: part[key] for key in ("packet", "source_commit", "partial", "title_words") if key in part}})
         if not parts:
             errors.append(f"{where}: no parts")
             continue
@@ -546,8 +546,11 @@ def resolve_phrases(directory, prepared, names, records, errors):
                 # A part marked `partial: true` may leave a declaration without a title or a note (the
                 # card then shows the Lean name alone); what it does give must still be well formed.
                 partial = part.get("partial") is True
-                if (title is not None or not partial) and (not 2 <= words <= 6 or title != title.strip()):
-                    errors.append(f"{where}: {name} needs a trimmed title of two to six words in {part['name'] or 'its part'}")
+                # A part may widen the title length (`title_words`: [fewest, most]) when its source
+                # writes titles in the paper's own words, as the quartic reader does; two to six otherwise.
+                fewest, most = part.get("title_words") or (2, 6)
+                if (title is not None or not partial) and (not fewest <= words <= most or title != title.strip()):
+                    errors.append(f"{where}: {name} needs a trimmed title of {fewest} to {most} words in {part['name'] or 'its part'}")
                 if (note is None and partial):
                     pass
                 elif type(note) is not str or not note.strip():

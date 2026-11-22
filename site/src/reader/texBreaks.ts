@@ -264,3 +264,15 @@ export function breakForms(tex: string, { number = true }: { number?: boolean } 
   add(formulas.map((f) => formulaRows(f, true, 3)));
   return forms;
 }
+
+/**
+ * A display's single equation number as it is printed ("(1.2)"; a starred \tag* as written),
+ * when the TeX has exactly one plain \tag. Null otherwise: no number, several, or one with markup.
+ */
+export function plainNumber(tex: string): string | null {
+  if ((tex.match(/\\tag\b/g) ?? []).length !== 1) return null;
+  const { tag } = splitDisplay(tex);
+  const m = tag ? /^\\tag(\*?)\s*\{([^{}\\$]*)\}$/.exec(tag) : null;
+  if (!m || !m[2].trim()) return null;
+  return m[1] ? m[2].trim() : `(${m[2].trim()})`;
+}

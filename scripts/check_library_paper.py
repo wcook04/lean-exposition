@@ -58,6 +58,7 @@ def main() -> int:
     ap.add_argument("--section", default="5.6")
     ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
     ap.add_argument("--notice", default="made with AI", help="words of the AI notice the front matter must show at every width")
+    ap.add_argument("--no-pdf", action="store_true", help="the main document has no PDF: expect no Open PDF link and no toggle")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
     args = ap.parse_args()
@@ -101,7 +102,10 @@ def main() -> int:
             # Clicking a phrase opens its card and its Lean.
             tie = page.locator(".paper .tie[data-tone]").nth(1)
             tie.scroll_into_view_if_needed()
-            tie.click()
+            # A phrase that wraps over lines has a bounding box whose centre can fall between its
+            # lines; click its first line, where a reader would.
+            first = tie.evaluate("e => { const r = e.getClientRects()[0]; return {x: r.left + Math.min(8, r.width / 2), y: r.top + r.height / 2}; }")
+            page.mouse.click(first["x"], first["y"])
             page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
             card = page.locator(".phrase-card").first
             card.wait_for(timeout=15000)
@@ -173,7 +177,11 @@ def main() -> int:
             link = page.locator("a", has_text="Open PDF").first
             href = link.get_attribute("href") if link.count() else None
             target = link.get_attribute("target") if link.count() else None
-            check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and target == "_blank"), f"href={href} target={target}")
+            if args.no_pdf:
+                # The main document has no PDF: the reader offers no Open PDF link.
+                check(f"{tag} no open pdf link", href is None, f"href={href}")
+            else:
+                check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and target == "_blank"), f"href={href} target={target}")
             if href:
                 url = href if href.startswith("http") else page.url.split("/library/")[0] + href
                 with urllib.request.urlopen(url.split("#")[0]) as response:
@@ -308,7 +316,13 @@ def main() -> int:
             context = browser.new_context(viewport={"width": width, "height": height})
             page = context.new_page()
             page.goto(base + "?view=pdf&page=1")
-            page.wait_for_selector(".reader-strip .view-toggle", timeout=60000)
+            page.wait_for_selector(".paper .tie, .reader-strip .view-toggle", timeout=60000)
+            page.wait_for_timeout(1500)
+            if not page.locator(".reader-strip .view-toggle").count():
+                # A main document with no PDF has no toggle and no PDF view to check.
+                report[f"{tag} strip"] = {"ok": True, "detail": "no PDF: no Text | PDF toggle"}
+                context.close()
+                continue
             page.wait_for_timeout(1500)
             clash = page.evaluate("""() => {
                 const els = [...document.querySelectorAll('.reader-strip .crumbs li, .reader-strip .reader-strip__hint, .reader-strip .view-toggle, .reader-strip > button, .reader-strip .reader-strip__steps, .reader-strip .sections-toggle')]

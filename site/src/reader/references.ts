@@ -72,11 +72,13 @@ export interface RefIndex {
 }
 
 export function loadReferenceTable(stage: Stage): Promise<ReferenceTable | null> {
-  const load = {
+  // The three accounts' reference tables are built in; a companion page has none of its own.
+  const load = ({
     short: () => import("virtual:paper-references/short"),
     long: () => import("virtual:paper-references/long"),
     expository: () => import("virtual:paper-references/expository"),
-  }[stage];
+  } as Record<string, (() => Promise<{ default: unknown }>) | undefined>)[stage];
+  if (!load) return Promise.resolve(null);
   return load().then(
     (module) => module.default as ReferenceTable,
     () => null,

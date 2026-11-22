@@ -3,7 +3,7 @@
 // network, so they are tested directly.
 
 import type { AlignedStatement, RecordAlignment } from "../api/lean";
-import type { Stage } from "../api/types";
+import type { Account as Stage } from "../api/types";
 import { LEVELS, type Level } from "../app/router";
 import { defaultColumns, statementsOf } from "./model";
 

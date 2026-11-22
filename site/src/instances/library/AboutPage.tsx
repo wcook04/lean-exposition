@@ -7,7 +7,7 @@ import { Out } from "../../app/Out";
 import { AboutKey, AboutUsing } from "../../reader/aboutParts";
 import { PAPER, MAIN, LIBRARY_ROOT } from "./data";
 
-const ADAPTED = PAPER.documents.find((d) => d.kind === "adapted");
+const ADAPTED = PAPER.documents.find((d) => d.adapted);
 const AUTHORS = (ADAPTED && PAPER.documents.find((d) => d.id === ADAPTED.of)) || MAIN;
 import { SupplementaryChecks } from "./Checks";
 import { ComparatorSection } from "./Comparator";

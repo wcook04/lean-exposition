@@ -1,10 +1,11 @@
 // Every navigational state lives in the URL, so Back, reload and shared links
 // return to the same view, selection and reading position.
 
+import site from "@instance/site";
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
 import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
-import { libraryHref, parseLibraryPath, pdfParams } from "./libraryAddress";
+import { libraryHref, movedLibraryPath, parseLibraryPath, pdfParams } from "./libraryAddress";
 
 export type Trace = "rests" | "uses";
 
@@ -96,7 +97,8 @@ function isSearchType(value: string | null): value is SearchType {
   return !!value && (SEARCH_TYPES as readonly string[]).includes(value);
 }
 
-const STAGE_SET = new Set(["long", "short", "expository"]);
+// The three accounts, and a library paper's companion documents, each read at /read/<page>/.
+const STAGE_SET = new Set(["long", "short", "expository", ...(site.library?.companions ?? []).map((c) => c.slot)]);
 const BASE = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "");
 
 function isStage(value: string | null | undefined): value is Stage {
@@ -298,6 +300,14 @@ const listeners = new Set<() => void>();
  * can only treat it as a phrase alone, which would open no Lean.
  */
 export function reparseCurrentRoute(): void {
+  // A page that moved (a library paper's moved_pages) shows its new address once the table is read.
+  const url = new URL(window.location.href);
+  const inBase = BASE && url.pathname.startsWith(BASE) ? url.pathname.slice(BASE.length) : url.pathname;
+  const moved = movedLibraryPath(inBase.replace(/\/+$/, "") || "/");
+  if (moved) {
+    url.pathname = `${BASE}${moved}${/\/(?:@|lean\/)/.test(moved) ? "" : "/"}`;
+    replaceEntry(url);
+  }
   current = parseRoute(new URL(window.location.href));
 }
 
@@ -359,7 +369,7 @@ export function placeOf(route: Route): string {
     case "map":
       return "the map";
     case "read":
-      return route.decl?.split(".").pop() ?? { long: "the long record", short: "the short paper", expository: "the exposition" }[route.stage];
+      return route.decl?.split(".").pop() ?? ({ long: "the long record", short: "the short paper", expository: "the exposition" } as Record<string, string>)[route.stage] ?? "the paper";
     case "checks":
       return "What ran";
     case "compare":

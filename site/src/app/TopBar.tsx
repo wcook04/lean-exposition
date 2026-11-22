@@ -4,6 +4,7 @@
 // does, then the front page's shelf of papers and PDFs. On phones the same items
 // sit behind one menu button so the bar never clips.
 
+import site from "@instance/site";
 import { useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { Stage } from "../api/types";
 import { BackControl } from "./BackControl";
@@ -19,6 +20,22 @@ interface Props {
   route: Route;
   onSearch: () => void;
 }
+
+/** A library paper's companion documents, by group in reading order, as the Read menu lists them. */
+const COMPANION_GROUPS = (() => {
+  const groups: { id: string; title: string; start: number; docs: { slot: string; title: string }[] }[] = [];
+  let at = 0;
+  for (const c of site.library?.companions ?? []) {
+    let group = groups.find((g) => g.id === c.group);
+    if (!group) groups.push((group = { id: c.group, title: c.group_title, start: 0, docs: [] }));
+    group.docs.push({ slot: c.slot, title: c.title });
+  }
+  for (const group of groups) {
+    group.start = at;
+    at += group.docs.length;
+  }
+  return groups;
+})();
 
 /** One line on what each account is for, as the Read menu says it. */
 export const ACCOUNT_JOBS: Record<Stage, string> = {
@@ -249,6 +266,27 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
             </span>
             <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
           </a>
+        ))}
+        {COMPANION_GROUPS.map((group, g) => (
+          <div key={group.id} className="readmenu__group" role="group" aria-label={group.title}>
+            <p className="readmenu__grouphead" aria-hidden="true">{group.title}</p>
+            {group.docs.map((c, k) => (
+              <a
+                key={c.slot}
+                ref={(el) => {
+                  itemsRef.current[STAGE_ORDER.length + group.start + k] = el;
+                }}
+                role="menuitem"
+                tabIndex={-1}
+                href={routeHref({ view: "read", stage: c.slot })}
+                className="readmenu__item readmenu__item--companion"
+                aria-current={stage === c.slot ? "page" : undefined}
+                data-group={g}
+              >
+                <span className="readmenu__name">{c.title}</span>
+              </a>
+            ))}
+          </div>
         ))}
         <PapersLink className="readmenu__item readmenu__item--all" route={route} menu />
       </div>

@@ -19,8 +19,13 @@ git -C "$pub" fetch -q origin 2>/dev/null || true
 git -C "$pub" checkout -q main 2>/dev/null || git -C "$pub" checkout -q -b main
 git -C "$pub" reset -q --hard origin/main 2>/dev/null || true
 if [ "$paper" != "--index" ]; then
+  # A paper's frozen editions (<paper>/editions/, published once by their own script, such as
+  # scripts/quartic_editions.py) are kept across its republishes.
+  kept=""
+  if [ -d "$pub/$paper/editions" ]; then kept=$(mktemp -d); mv "$pub/$paper/editions" "$kept/editions"; fi
   rm -rf "${pub:?}/$paper"
   cp -R site/dist "$pub/$paper"
+  if [ -n "$kept" ]; then mv "$kept/editions" "$pub/$paper/editions"; rmdir "$kept"; fi
 fi
 # Papers are the top-level folders; _index/ holds the index's own files.
 published=$(cd "$pub" && ls -d */ 2>/dev/null | tr -d / | { grep -v '^_' || true; } | tr '\n' ' ')
