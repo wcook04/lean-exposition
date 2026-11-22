@@ -1,0 +1,117 @@
+{
+ "schema": "library-redirects/1",
+ "meaning": "Every address of the old reader site https://wcook04.github.io/lean-exposition-site/ and the library address it opens: the old reading routes become the paper and its pages, the views keep their names, the PDFs and run receipts stay as files, and any other path keeps its place under the library paper. scripts/redirect_stubs.py writes the stubs from this table and tests the examples.",
+ "title": "SK Reader",
+ "site": "https://wcook04.github.io/lean-exposition-site/",
+ "repository": "wcook04/lean-exposition-site",
+ "branch": "main",
+ "old_base": "/lean-exposition-site/",
+ "new": "https://wcook04.github.io/library/qaoa-sk/",
+ "pages": {
+  "short": "",
+  "long": "record/",
+  "expository": "exposition/"
+ },
+ "views": [
+  "map",
+  "compare",
+  "lean",
+  "checks",
+  "about",
+  "search"
+ ],
+ "files": [
+  "pdf",
+  "verification",
+  "short/paper.pdf",
+  "long/reasoning-record.pdf",
+  "expository/main.pdf",
+  "favicon.svg"
+ ],
+ "examples": [
+  [
+   "https://wcook04.github.io/lean-exposition-site/",
+   "https://wcook04.github.io/library/qaoa-sk/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/?g=short.res-reciprocal-support&n=x",
+   "https://wcook04.github.io/library/qaoa-sk/map/?g=short.res-reciprocal-support&n=x"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/#front-asked",
+   "https://wcook04.github.io/library/qaoa-sk/about/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/short/",
+   "https://wcook04.github.io/library/qaoa-sk/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/short/?n=a.b&l=b10-20&v=lean#3.1",
+   "https://wcook04.github.io/library/qaoa-sk/?n=a.b&l=b10-20&v=lean#3.1"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/long/",
+   "https://wcook04.github.io/library/qaoa-sk/record/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/long/?n=long.x&l=b1-2#part-1",
+   "https://wcook04.github.io/library/qaoa-sk/record/?n=long.x&l=b1-2#part-1"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/expository/?v=graph&n=exp.y",
+   "https://wcook04.github.io/library/qaoa-sk/exposition/?v=graph&n=exp.y"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/short/?beside=long:sec-2&l=b5-9",
+   "https://wcook04.github.io/library/qaoa-sk/read/short/?beside=long:sec-2&l=b5-9"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/map/",
+   "https://wcook04.github.io/library/qaoa-sk/map/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/map/?n=step.rational_gap&t=uses",
+   "https://wcook04.github.io/library/qaoa-sk/map/?n=step.rational_gap&t=uses"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/compare/?n=x&levels=short,long",
+   "https://wcook04.github.io/library/qaoa-sk/compare/?n=x&levels=short,long"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/lean/?d=Some.Decl&m=Some",
+   "https://wcook04.github.io/library/qaoa-sk/lean/?d=Some.Decl&m=Some"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/lean/?list=papers",
+   "https://wcook04.github.io/library/qaoa-sk/lean/?list=papers"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/checks/",
+   "https://wcook04.github.io/library/qaoa-sk/checks/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/about/#made-by",
+   "https://wcook04.github.io/library/qaoa-sk/about/#made-by"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/search/?q=lcm",
+   "https://wcook04.github.io/library/qaoa-sk/search/?q=lcm"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/edition/index.json",
+   "https://wcook04.github.io/library/qaoa-sk/edition/index.json"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/llms.txt",
+   "https://wcook04.github.io/library/qaoa-sk/llms.txt"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/lean/",
+   "https://wcook04.github.io/library/qaoa-sk/lean/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/expository/#app:lean",
+   "https://wcook04.github.io/library/qaoa-sk/exposition/#app:lean"
+  ]
+ ]
+}

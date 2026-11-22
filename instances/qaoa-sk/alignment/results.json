@@ -1,0 +1,5 @@
+{
+ "schema": 1,
+ "meaning": "Each numbered result of the short paper, by its address in the paper's own numbering, with its record in the evidence graph and the Lean that formalises it. Written by scripts/from_lean_exposition.py from examples/qaoa-sk.",
+ "results": {}
+}

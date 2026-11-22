@@ -1,0 +1,114 @@
+{
+ "schema": 1,
+ "meaning": "Each numbered result of the short paper, by its address in the paper's own numbering, with its record in the evidence graph and the Lean that formalises it. Written by scripts/from_lean_exposition.py from examples/erdos257.",
+ "results": {
+  "theorem-1.2": {
+   "record": "short.res-weighted-support",
+   "title": "Theorem 1.2",
+   "lean": [
+    "ErdosProblems.Erdos257.PaperCompleteR7.DivisibilityWeightedClaim",
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim",
+    "ErdosProblems.Erdos257.PaperCompleteR8.finitePrimeWeighted_fixedBase_hereditary"
+   ]
+  },
+  "theorem-3.1": {
+   "record": "short.thm-variable-fractional-cover",
+   "title": "Theorem 3.1",
+   "lean": [
+    "ErdosProblems.Erdos257.PaperCompleteR7.StrengthenedPositiveCoverClaim",
+    "ErdosProblems.Erdos257.PaperCompleteR8.strengthenedPositiveCoverClaim"
+   ]
+  },
+  "theorem-4.1": {
+   "record": "short.res-mixed-supports",
+   "title": "Theorem 4.1",
+   "lean": [
+    "ErdosProblems.Erdos257.PaperCompleteR7.MixedSupportClaim",
+    "ErdosProblems.Erdos257.PaperCompleteR8.arbitraryWeightMixedSupport_allBase_hereditary",
+    "ErdosProblems.Erdos257.PaperCompleteR8.mixedSupportClaim"
+   ]
+  },
+  "proposition-5.1": {
+   "record": "short.res-weighted-cover-incomparability",
+   "title": "Proposition 5.1",
+   "lean": [
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_strengthened_not_old_or_weighted_host",
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_weighted_not_strengthened_host"
+   ]
+  },
+  "corollary-5.2": {
+   "record": "short.res-strict-mixed-supports",
+   "title": "Corollary 5.2",
+   "lean": []
+  },
+  "theorem-a.1": {
+   "record": "short.res-reciprocal-support",
+   "title": "Theorem A.1",
+   "lean": [
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal"
+   ]
+  },
+  "theorem-b.1": {
+   "record": "short.res-period",
+   "title": "Theorem B.1",
+   "lean": [
+    "Erdos249257.coprime_base_den_finiteErdosSum",
+    "Erdos249257.finite_period_noncollapse_rat_den",
+    "Erdos249257.lcm_lt_den_finiteErdosSum"
+   ]
+  },
+  "theorem-c.1": {
+   "record": "short.res-general-repair",
+   "title": "Theorem C.1",
+   "lean": [
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_general_repair_criteria"
+   ]
+  },
+  "theorem-d.1": {
+   "record": "short.res-one-over-twenty-one-frontier",
+   "title": "Theorem D.1",
+   "lean": [
+    "Erdos249257.TwentyOneCofinalEvenQuotientGreedyDecay",
+    "Erdos249257.one_div_twenty_one_mem_iff_not_fatalAlignedBranch",
+    "Erdos249257.one_div_twenty_one_mem_mersenneAchievementSet_of_cofinalGreedyDecay",
+    "Erdos249257.twentyOneCofinalEvenQuotientGreedyDecay_of_closedRows",
+    "Erdos249257.twentyOneFatalAlignedBranch_eventually_affine_supercapacity",
+    "Erdos249257.twentyOneFatalAlignedBranch_eventually_strict_supercapacity"
+   ]
+  },
+  "theorem-d.2": {
+   "record": "short.res-terminalhalf",
+   "title": "Theorem D.2",
+   "lean": [
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_terminalhalf_iff"
+   ]
+  },
+  "theorem-d.3": {
+   "record": "short.res-cylinderhalf",
+   "title": "Theorem D.3",
+   "lean": [
+    "Erdos249257.SuffixCylinderTerminalOnlyBridge.exists_infinite_positive_support_half_of_cofinalCylinderStages"
+   ]
+  },
+  "problem-d.4": {
+   "record": "short.prob-one-over-twenty-one-membership",
+   "title": "Problem D.4",
+   "lean": []
+  },
+  "problem-d.5": {
+   "record": "short.prob-scaled-return",
+   "title": "Problem D.5",
+   "lean": []
+  },
+  "problem-d.6": {
+   "record": "short.prob-actual-invariant",
+   "title": "Problem D.6",
+   "lean": []
+  },
+  "problem-d.7": {
+   "record": "short.prob-fatal-interval",
+   "title": "Problem D.7",
+   "lean": []
+  }
+ }
+}

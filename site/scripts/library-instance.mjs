@@ -47,9 +47,20 @@ for (const doc of instance.documents.filter((d) => d.main)) {
     if (tie.phrase) phrases[tie.phrase] = { record: tie.record ?? null, at: tie.at };
   }
   if (doc === main) {
-    for (const [record, [t, start, end]] of Object.entries(index.canonical ?? {})) {
+    const place = ([t, start, end]) => [t !== null && index.ties[t] ? index.ties[t].at : `b${start}-${end}`, `b${start}-${end}`];
+    for (const [record, target] of Object.entries(index.canonical ?? {})) {
       // With no tie at the statement block, the block's own place is the target.
-      if (record.startsWith(`${paper}.`)) results[record.slice(paper.length + 1)] = [t !== null && index.ties[t] ? index.ties[t].at : `b${start}-${end}`, `b${start}-${end}`];
+      if (record.startsWith(`${paper}.`)) results[record.slice(paper.length + 1)] = place(target);
+    }
+    // A paper whose records keep other ids (a reader that moved into the library) names each
+    // result's record in alignment/results.json; the address then carries the record too.
+    const table = resolve(import.meta.dirname, "../../instances", paper, "alignment/results.json");
+    if (existsSync(table)) {
+      for (const [address, row] of Object.entries(JSON.parse(readFileSync(table, "utf8")).results ?? {})) {
+        if (!row.record || row.record.startsWith(`${paper}.`)) continue;
+        // A result with no statement slice in the main document opens at its record, with no place.
+        results[address] = index.canonical?.[row.record] ? [...place(index.canonical[row.record]), row.record] : ["", "", row.record];
+      }
     }
   }
 }
@@ -95,7 +106,7 @@ const laterChecks = [];
       if (!phrases[host]) throw new Error(`ours.json: card ${row.card} names no phrase of the paper`);
       (byPhrase[host] ??= []).push({ lean: row.lean, fidelity: row.fidelity, note: row.note });
     }
-    writeFileSync(target, JSON.stringify({ declarations: ours.declarations, byPhrase }));
+    writeFileSync(target, JSON.stringify({ declarations: ours.declarations, byPhrase, openTargets: ours.open_targets ?? {} }));
     // Later checks readers may ask about (ours.checks, keyed by the Lean constant's last name): read
     // before the first render with the addresses, so a passage that mentions one shows it in place.
     for (const [constant, row] of Object.entries(ours.checks ?? {})) laterChecks.push({ constant, ...row });

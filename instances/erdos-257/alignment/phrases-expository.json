@@ -1,0 +1,2250 @@
+{
+ "schema": "phrase-ties/1",
+ "paper": "expository",
+ "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as an AI agent read them side by side. Titles, reading notes, topics and comparisons are AI-drafted; no mathematician has reviewed them.",
+ "parts": [
+  {
+   "name": "",
+   "packet": "05_erdos257_expository",
+   "source_commit": "e56b3797597158fa518456937607a4609e129b8b",
+   "lines": [
+    1,
+    769
+   ],
+   "topics": [
+    {
+     "id": "series",
+     "name": "The chosen exponents and their sums",
+     "description": "Distinguish the reciprocal Mersenne series from the reciprocal-exponent hypothesis and state the irrationality theorem."
+    },
+    {
+     "id": "rational-gap",
+     "name": "A rational number’s fixed gap",
+     "description": "A nonzero integer multiple of a fraction differs from an integer by at least a fixed positive amount."
+    },
+    {
+     "id": "remainders",
+     "name": "Multiplication and fractional parts",
+     "description": "Calculate each selected term’s leftover contribution and add the contributions to obtain the total remainder."
+    },
+    {
+     "id": "doubling",
+     "name": "The doubling exponents",
+     "description": "Use exponents 2, 4, 8 and so on to see earlier terms disappear and the remaining total become small."
+    },
+    {
+     "id": "cycle-averages",
+     "name": "Averaging complete cycles",
+     "description": "Average complete attempts, understand the sampled residue cycles and obtain a small column from a small mean."
+    },
+    {
+     "id": "incomplete-cycles",
+     "name": "Unfinished cycles",
+     "description": "Control row averages when the chosen number of samples does not complete a cycle."
+    },
+    {
+     "id": "combining-estimates",
+     "name": "Combining the estimates",
+     "description": "Use initial zeros and small later contributions while preserving the order of the choices."
+    },
+    {
+     "id": "scope",
+     "name": "Consequences and other bases",
+     "description": "Explain the extension to other integer bases, the consequences for selected series and the limits of the result."
+    }
+   ],
+   "titles": {
+    "Erdos249257.HasRationalValue": "A positive denominator representation",
+    "Erdos249257.TotientTailPeriodKiller.dvd_periodLcm": "Initial exponents divide the common multiple",
+    "Erdos249257.TotientTailPeriodKiller.periodLcm": "A common multiple of initial exponents",
+    "Erdos249257.binaryCoeffTail_supportCoeff_zero_strictMinimum": "Infinite sets give positive remainders",
+    "Erdos249257.blockRemainder_le_blockSum": "Partial cycles have no larger sums",
+    "Erdos249257.cesaroMean_shiftedMersenneAtom_mul_le": "A bound for every averaging length",
+    "Erdos249257.erdosSupportSeries": "The selected reciprocal series",
+    "Erdos249257.erdosSupportSeries_finset_eq_cast_finiteErdosSum": "Finite selections have rational sums",
+    "Erdos249257.exists_shiftedSupportAtom_closeReturn_of_summable_reciprocal": "A positive exponent with small remainder",
+    "Erdos249257.finiteErdosSum": "A finite selected sum",
+    "Erdos249257.geom_sum_half": "Finite sums of powers of ½",
+    "Erdos249257.hasRationalValue_iff_not_irrational": "Rationality and positive denominators",
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Irrationality from summable exponent reciprocals",
+    "Erdos249257.irrational_erdosSupportSeries_univ": "The full series is irrational",
+    "Erdos249257.irrational_of_int_mul_near_int": "Integer multiples near integers",
+    "Erdos249257.reciprocalSupportTerm": "Reciprocals of selected exponents",
+    "Erdos249257.shiftedRadixAtom_sub_zero_le_two_mul_binary_sub_zero": "Other bases bounded by base two",
+    "Erdos249257.shiftedRadixSupportAtom_zero_strictMinimum": "Every positive shift increases the sum",
+    "Erdos249257.shiftedSupportAtom_zero_lt_of_mem_of_lt": "A later exponent contributes positively",
+    "Erdos249257.shiftedSupportOrbitMean_eq_zero_of_dvd": "Divisibility fixes the shifted mean",
+    "Erdos249257.shiftedSupportOrbitMean_le_reciprocalSupportTerm": "Cycle means have reciprocal bounds",
+    "Erdos249257.sum_range_eq_mul_blockSum_add_blockRemainder": "Complete cycles and a remainder",
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "Sum of shifted cycle values",
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit_block": "Repeating shifted cycle values",
+    "Erdos249257.sum_shiftedMersenneAtom_mul_le_inv_pow_gap_of_lt": "Before reaching the selected exponent",
+    "Erdos249257.summable_erdosSupport_indicator": "Convergence of every selected series",
+    "Erdos249257.tendsto_cesaroMean_of_constant_blocks": "An unfinished cycle vanishes in average",
+    "Erdos249257.tendsto_cesaroMean_shiftedSupportAtom_mul": "Row averages approach cycle means",
+    "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul": "The limit passes through the sum",
+    "Erdos249257.tsum_cesaroMean_shiftedSupportAtom_mul": "Sum rows or average columns",
+    "Erdos249257.tsum_half_nat_add_succ": "Geometric sums and their tails",
+    "Erdos249257.tsum_shiftedSupportAtom_zero": "The original sum at zero shift",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement": "The total remainder",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "One fractional contribution",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_le_amplified": "A bound by the multiplied term",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "Each fractional contribution is nonnegative",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "The sum of fractional contributions",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Divisible exponents contribute zero",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_future_eq": "Remainder beyond the chosen exponent",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos": "Infinite selections give positive remainders",
+    "ErdosProblems.Erdos257.PaperCompleteR7.exists_lt_of_mean_lt": "One column below a threshold",
+    "ErdosProblems.Erdos257.PaperCompleteR7.sum_cycle_weight_eq": "Geometric sum over consecutive remainders",
+    "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom": "Convergence of the total remainder",
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "Mean of equally spaced samples",
+    "ErdosProblems.Erdos257.PaperCompleteR8.tsum_progressionMean": "Interchanging rows and column averages"
+   },
+   "notes": {
+    "Erdos249257.HasRationalValue": "A representation of the real number $x$ as $p/v$, with an integer numerator and a positive natural denominator. The symbols `∃ p : ℤ, ∃ v : ℕ` mean that some such $p$ and $v$ exist, and `0 < v` excludes a zero denominator. The paper calls the denominator $q$. Fractions need not be in lowest terms for this definition or for the positive-gap argument.",
+    "Erdos249257.TotientTailPeriodKiller.dvd_periodLcm": "Every positive integer $h\\le t$ divides the least common multiple of $1,\\ldots,t$. The hypotheses are `h1 : 1 ≤ h` and `ht : h ≤ t`; Lean writes divisibility as `h ∣ periodLcm t`. In the paper’s notation, set $h=n$ and $Q=\\operatorname{lcm}(1,\\ldots,t)$. Then a selected exponent $n\\le t$ has remainder zero at every multiple of $Q$, which is why the initial fractional rows disappear.",
+    "Erdos249257.TotientTailPeriodKiller.periodLcm": "The least common multiple of the positive integers $1,\\ldots,t$. Lean defines `periodLcm` recursively: it starts at $1$ when $t=0$ and then takes the least common multiple with the next integer. Thus `periodLcm t` is positive and divisible by every positive exponent at most $t$, as the following lemmas state. This is the particular sampling step used by the formal proof. The exposition allows any positive common multiple of the selected initial exponents.",
+    "Erdos249257.binaryCoeffTail_supportCoeff_zero_strictMinimum": "An infinite set of exponents gives a strictly positive total remainder at every positive shift. In Lean, `hA : A.Infinite` and `hN : 0 < N` imply that the shifted coefficient tail exceeds its value at $0$. For this support the difference is $R(N)$. The displayed proof line `hA.exists_gt N` selects some $n\\in A$ with $n>N$; its contribution increases strictly, while every other contribution is nonnegative. This explains exactly where infinitude enters.",
+    "Erdos249257.blockRemainder_le_blockSum": "A beginning portion of a nonnegative block has sum no larger than the whole block. Lean assumes a positive block length `hh : 0 < h`, nonnegative terms `hx0`, and a common sum for every complete block, `hblock`. The final unfinished block contains only its first $N\\bmod h$ entries. The proof compares this smaller index set with the full block and uses nonnegativity for the omitted terms. This is the same removal principle used in the paper; the bound on all $MQ$ consecutive entries is a separate argument.",
+    "Erdos249257.cesaroMean_shiftedMersenneAtom_mul_le": "Every finite average of shifted terms sampled at $Q,2Q,\\ldots,KQ$ is at most $2(Q+1)/d$. The assumptions are `hQ : 0 < Q` and `hK : 0 < K`; the bound is independent of $K$. These are shifted terms, not the paper’s $\\ell_d(k)$, so for $d>0$ subtracting $1/(2^d-1)$ gives a still smaller fractional-part average. This proves the bound quoted in Appendix A.6. It does not prove the sharper $2Q/d$ bound used in the exposition’s finite argument.",
+    "Erdos249257.erdosSupportSeries": "The sum of $1/(b^n-1)$ over the selected exponents $n\\in A$. Set `b = 2` to obtain the paper’s $S_A$. In Lean, `Set.indicator A f` is $f(n)$ on $A$ and $0$ outside $A$, while `∑'` denotes an infinite sum. The definition allows exponent $0$, whose contribution is $0$ by Lean’s division convention. Convergence for `hb : 2 ≤ b` is a separate theorem; defining a sum alone does not assert convergence.",
+    "Erdos249257.erdosSupportSeries_finset_eq_cast_finiteErdosSum": "A finite base-$2$ selection has exactly the value of a rational finite sum. The argument `F : Finset ℕ` is any finite set of exponents, and `↑F : Set ℕ` regards it as a set for the infinite-series notation. Lean’s `((finiteErdosSum F 2 : ℚ) : ℝ)` takes a rational number and views it as real. This establishes the finite branch of the square-exponent example; it does not establish the infinite branch or the all-base version of that corollary.",
+    "Erdos249257.exists_shiftedSupportAtom_closeReturn_of_summable_reciprocal": "For every tolerance $\\varepsilon>0$, there is a positive multiplier exponent $N$ whose shifted sum is less than $S_A+\\varepsilon$. The assumptions are `hsum : Summable (reciprocalSupportTerm A)` and `hε : 0 < ε`. Subtracting $S_A$ gives $R(N)<\\varepsilon$. This theorem does not assume that $A$ is infinite, so it does not by itself prove $R(N)>0$. Its proof first chooses a least-common-multiple step, then a sufficiently long finite average, and finally an entry no larger than that average.",
+    "Erdos249257.finiteErdosSum": "A finite sum of selected terms, $\\sum_{n\\in F}1/(b^n-1)$, evaluated as a rational number. The parameter `F : Finset Nat` is a finite set of exponents, so an exponent appears at most once. For a partial sum in the exposition, use `b = 2` and let $F$ contain the selected exponents already reached. The codomain `Rat` is Lean’s type of rational numbers; this definition makes no assertion about an infinite limit.",
+    "Erdos249257.geom_sum_half": "The first $N$ positive powers of $1/2$ add up to $1-2^{-N}$. Lean uses the parameter `K` for the paper’s $N$ and writes `Finset.Icc 1 K` for the integers from $1$ through $K$, including both endpoints. The statement also allows `K = 0`, when the sum is empty and both sides are zero. The supplied proof establishes the formula by induction on `K`.",
+    "Erdos249257.hasRationalValue_iff_not_irrational": "A real number is rational exactly when it has an integer numerator and a positive integer denominator. The left side, `HasRationalValue x`, means that such a representation exists; the right side, `¬ Irrational x`, is the negation of Lean’s usual irrationality predicate. Consequently the paper’s requirement that no $p/q$ with $q>0$ equals $S_A$ is precisely irrationality. The denominator is stored as a natural number, with positivity stated separately.",
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The selected reciprocal series is irrational if the selected exponents are infinite in number and their reciprocals have a finite sum. These assumptions are `hA : A.Infinite` and `hsum : Summable (reciprocalSupportTerm A)`. The base satisfies `hb : 2 ≤ b`; setting $b=2$ gives Theorem 1 after replacing the increasing sequence by its range $A$. Lean permits exponent $0$, but its contribution to both series is $0$. No coprimality assumption appears in the statement.",
+    "Erdos249257.irrational_erdosSupportSeries_univ": "The series containing every positive exponent is irrational at each integer base $b\\ge2$. The only hypothesis is `hb : 2 ≤ b`; reciprocal summability is not assumed. In Lean, `Set.univ` selects every natural number, and the exponent $0$ contributes zero. Thus the case $b=2$ is the full sum discussed here. This theorem supplies the mathematical result; its statement does not contain the historical attribution to Erdős or the publication date.",
+    "Erdos249257.irrational_of_int_mul_near_int": "A real number $\\xi$ is irrational if every positive integer $q$ admits integers $m,z$ with $0<|m\\xi-z|<1/q$. This is the hypothesis `h`; the paper uses $m=u$, $z=j$ and positive errors, so the absolute value can be removed there. In the proof, `r.num` and `r.den` are the reduced numerator and positive denominator $d$ of a hypothetical rational value. The difference then has the form $N/d$ for an integer $N$. If $N\\ne0$, then $|N|\\ge1$, contradicting the witness for $q=d$.",
+    "Erdos249257.reciprocalSupportTerm": "The term $1/n$ when the exponent $n$ belongs to $A$, and $0$ otherwise. `Set.indicator` performs that selection. This is the summand in the theorem’s hypothesis $\\sum_{n\\in A}1/n<\\infty$, not the summand $1/(2^n-1)$ in $S_A$. The definition takes a natural exponent `a`; at `a = 0` Lean’s division convention again gives $0$. The separate hypothesis `Summable (reciprocalSupportTerm A)` asserts convergence.",
+    "Erdos249257.shiftedRadixAtom_sub_zero_le_two_mul_binary_sub_zero": "For each exponent, the base-$b$ fractional contribution is at most twice the base-$2$ contribution. The assumption is `hb : 2 ≤ b`, with `N` the multiplier exponent and `d` the selected exponent. For $d>0$, the inequality is $(b^{N\\bmod d}-1)/(b^d-1)\\le2(2^{N\\bmod d}-1)/(2^d-1)$. Each subtraction removes a shifted term’s value at $N=0$. This is the formal proof’s comparison between bases; it does not state the all-base finite-cycle estimates of Appendix A.5.",
+    "Erdos249257.shiftedRadixSupportAtom_zero_strictMinimum": "The shifted sum at every positive exponent exceeds its value at zero. Lean assumes `hb : 2 ≤ b`, `hA : A.Infinite`, and `hN : 0 < N`. The proof begins with `hA.exists_gt N`, which supplies a selected exponent larger than $N$. That term strictly increases, and all others do not decrease. At base $2$, subtracting the initial value $S_A$ yields $R(N)>0$. Reciprocal summability is not needed for this strict inequality.",
+    "Erdos249257.shiftedSupportAtom_zero_lt_of_mem_of_lt": "A selected exponent beyond the positive shift makes a strictly positive contribution to the remainder. The assumptions `hdA : d ∈ A`, `hN : 0 < N` and `hNd : N < d` say that the paper’s $n=d$ is selected and lies beyond $k=N$. Then $N\\bmod d=N$, so subtracting the value at shift $0$ gives $(2^N-1)/(2^d-1)>0$. The declaration states this as a strict comparison of the two shifted atoms.",
+    "Erdos249257.shiftedSupportOrbitMean_eq_zero_of_dvd": "If a positive exponent $d$ divides $Q$, its shifted cycle mean equals its value at shift zero. Lean assumes `hd : 0 < d` and `hdiv : d ∣ Q`. For $d\\in A$, that common value is $1/(2^d-1)$; for $d\\notin A$, both sides are zero. Subtracting the baseline gives zero for the corresponding fractional-part mean. Despite the declaration’s name ending in `eq_zero_of_dvd`, the displayed equality is to the zero-shift value, not generally to the number zero.",
+    "Erdos249257.shiftedSupportOrbitMean_le_reciprocalSupportTerm": "Each selected shifted cycle mean is at most $1/d$, independently of the sampling step $Q$. Lean’s `reciprocalSupportTerm A d` is $1/d$ for a selected exponent and zero otherwise. The statement has no positivity assumptions: the definitions handle exponent zero, and it applies to every `Q d : ℕ`. For a selected positive exponent, subtracting the nonnegative baseline $1/(2^d-1)$ gives the paper’s bound on the fractional-part mean. The independence from $Q$ is what permits the later least-common-multiple limit.",
+    "Erdos249257.sum_range_eq_mul_blockSum_add_blockRemainder": "A finite sum is the sum of its complete blocks plus its unfinished final block. The hypothesis `hblock` says that every aligned block of length $h$ has the same sum `blockSum`. For the consecutive cycles in the paper take $h=n$, $N=MQ$ and $x(j)=\\ell_n(j+1)$. Natural-number division `N / h` counts the complete blocks; `N % h` counts the remaining entries. This identity accounts for every entry once. Bounds on the block sum and the unfinished part must still be supplied separately.",
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The shifted values in one complete sampled cycle sum to $1/(2^g-1)$, where $g=\\gcd(Q,n)$. Lean assumes `hQ : 0 < Q` and `hd : 0 < d`, with $d=n$. Its local `h=d/g` is the paper’s $c$, and `q=Q/g`; this `q` is unrelated to the proposed rational denominator. The proof’s bijection `e` and identity `hresidue` show that the $c$ samples visit $0,g,\\ldots,n-g$ once each. Each `shiftedMersenneAtom` is $\\ell_n(k)+1/(2^n-1)$; subtracting that constant from every sampled value recovers the paper’s fractional parts.",
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit_block": "Every complete sampled cycle has shifted sum $1/(2^g-1)$, where $g=\\gcd(Q,n)$, even after the first cycle. Lean uses `d=n` and assumes `hQ : 0 < Q` and `hd : 0 < d`. Its local `h=d/g` is the cycle length $c$, while `b` counts the whole cycles already passed; this `b` is not a numerical base. The local fact `hperiod` proves $n\\mid cQ$. The proof removes $bcQ$ modulo $n$, showing that each later cycle repeats the first one term by term. Each shifted term still includes the baseline $1/(2^n-1)$.",
+    "Erdos249257.sum_shiftedMersenneAtom_mul_le_inv_pow_gap_of_lt": "When $MQ<n$, the sum of the sampled shifted values is at most $2^{-(n-MQ-1)}$. Lean uses `d=n`, `K=M` and the hypothesis `hnowrap : K * Q < d`, together with `hQ : 0 < Q` and `hd : 0 < d`. Every sampled exponent is then smaller than $n$, so no reduction modulo $n$ changes it. The remaining power of two in the denominator gives the bound. The shifted values include $1/(2^n-1)$ beyond each fractional part; this is not the paper’s $2Q/n$ average estimate.",
+    "Erdos249257.summable_erdosSupport_indicator": "Every selected reciprocal series converges when `hb : 2 ≤ b`; no infinitude or reciprocal-exponent summability is needed. At $b=2$ this is convergence of $S_A$ for any set $A$. The proof compares the nonnegative summands with $2b^{-n}$, a convergent geometric series. `Summable` asserts that the family has a finite sum. This is the convergence of the series in the conclusion, not the extra hypothesis $\\sum_{n\\in A}1/n<\\infty$.",
+    "Erdos249257.tendsto_cesaroMean_of_constant_blocks": "A sequence with a fixed sum on every complete block has average tending to that block sum divided by its length. Lean requires `hh : 0 < h`, nonnegative entries `hx0`, entries at most one `hx1`, and `hblock`, the equal-sum rule for every aligned block. The unfinished block contributes at most $h$ to the sum; after division by the growing number of entries, its contribution tends to zero. This general lemma is applied to the shifted rows in the formal proof.",
+    "Erdos249257.tendsto_cesaroMean_shiftedSupportAtom_mul": "For a fixed positive step $Q$, the averages of one selected shifted row approach its complete-cycle mean. Lean assumes `hQ : 0 < Q`; the selected set `A` and exponent `d` are otherwise arbitrary. `Tendsto ... atTop (nhds ...)` means convergence as the number of sampled entries tends to infinity. The statement averages shifted terms, whose baseline is $1/(2^d-1)$ for selected positive $d$. Subtracting that constant from both the average and its limit gives the corresponding statement for $\\ell_d(k)$.",
+    "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul": "For a fixed positive step $Q$, the averages of the full shifted sums converge to the sum of their row-cycle means. The assumptions are `hsum : Summable (reciprocalSupportTerm A)` and `hQ : 0 < Q`. The source proof bounds each row average by $2(Q+1)$ times its selected reciprocal term, a summable bound with $Q$ fixed. This controls the infinitely many rows while the averaging length grows. Subtracting $S_A$ translates the result from shifted sums to the paper’s column totals $R(k)$.",
+    "Erdos249257.tsum_cesaroMean_shiftedSupportAtom_mul": "Summing the row averages equals averaging the column sums for the shifted terms. The parameters `Q K : ℕ` are the sampling step and the number of columns; `((k + 1) * Q)` gives the positive multiples of $Q$. No reciprocal-summability assumption is needed because each fixed column is already summable. For $K>0$, subtracting the constant baseline $S_A$ on both sides gives equation (4) for the paper’s $R(k)$. The statement also permits $K=0$ under Lean’s division convention.",
+    "Erdos249257.tsum_half_nat_add_succ": "The powers of $1/2$ beyond a cutoff $n$ sum to $2^{-n}$. In the source, `∑' k` starts with $k=0$, so the first exponent is $n+1$. At `n = 0` this reads $1/2+1/4+1/8+\\cdots=1$, the opening example and the sum of the reciprocals of the doubling exponents. Here the source parameter `n` is the cutoff, not an element of the support set $A$.",
+    "Erdos249257.tsum_shiftedSupportAtom_zero": "At multiplier exponent $0$, the sum of the selected shifted terms is the original series $S_A$. The parameter `A : Set ℕ` is arbitrary. Since $0\\bmod d=0$, a positive selected exponent contributes $1/(2^d-1)$, and exponent $0$ contributes zero by definition. This is the baseline that must be subtracted before a shifted-term result becomes a statement about $R(k)$. The theorem does not require the reciprocal-sum hypothesis or infinitude.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement": "The total change in the shifted support sum from its value at shift $0$. For positive selected exponents and $b=2$, this is $R(k)=\\sum_{n\\in A}(2^{k\\bmod n}-1)/(2^n-1)$. In Lean it is written as a difference of sums; `displacement_eq_tsum` gives the equivalent sum of differences. This is the sum of the individual fractional contributions. It need not be less than $1$, and is not defined as the fractional part of the whole product.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "One residue contribution, obtained by subtracting the value at shift $0$ from the shifted term. For $n>0$, unfolding the definition gives $\\operatorname{displacementAtom}(b,k,n)=(b^{k\\bmod n}-1)/(b^n-1)$. Thus `displacementAtom 2 k n` is the rightmost expression in the paper’s formula for $\\ell_n(k)$. This definition itself does not state the equality with a fractional part; that arithmetic argument is supplied in the exposition. The zero-exponent branch is defined as $0$.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_le_amplified": "One fractional contribution is at most the original summand multiplied by $b^N-1$. Under `hb : 2 ≤ b`, the conclusion is $(b^{N\\bmod d}-1)/(b^d-1)\\le(b^N-1)/(b^d-1)$ for $d>0$. The proof uses $N\\bmod d\\le N$. At $b=2$, `N` is the paper’s $k$ and `d` is its $n$. The inequality also covers the zero-exponent convention and requires no condition on the selected set.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "Each residue contribution is nonnegative for `hb : 2 ≤ b`. For a positive exponent $n$, `displacementAtom b k n` equals $(b^{k\\bmod n}-1)/(b^n-1)$; at $b=2$ this is the paper’s $\\ell_n(k)$. The numerator is nonnegative because a nonnegative power of $b$ is at least $1$. The source states the same fact by subtracting the atom’s value at shift $0$ from its value at shift $k$.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "The total remainder is the sum of its separate residue contributions. With `hb : 2 ≤ b`, the declaration rewrites the difference of two infinite sums as $\\sum_{n\\in A}(b^{k\\bmod n}-1)/(b^n-1)$. At $b=2$ this is $R(k)$. The two families are summable, which justifies subtracting their sums term by term. `Set.indicator A` keeps only the chosen exponents. No reciprocal-exponent summability or infinitude assumption is needed.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "A finite set of selected exponents contributes zero remainder when every exponent divides the multiplier exponent $N$. The assumptions are `hb : 2 ≤ b` and `hdiv : ∀ d ∈ F, d ∣ N`. Each remainder $N\\bmod d$ is then $0$, so each numerator $b^{N\\bmod d}-1$ vanishes. Set $b=2$ and $F=\\{n\\}$ for the one-exponent claim. This theorem proves this implication; it does not state its converse.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_future_eq": "If every selected exponent exceeds $k$, the total remainder is $(b^k-1)\\sum_{n\\in A}1/(b^n-1)$. Lean writes `N` for $k$ and assumes `hb : 2 ≤ b` and `hfuture : ∀ d ∈ A, N < d`. The latter condition makes each remainder $N\\bmod d$ equal to $N$. For a single row, take $A=\\{n\\}$ and $b=2$ to obtain $\\ell_n(k)=(2^k-1)/(2^n-1)$. This declaration supplies that equality; the two strict inequalities in the doubling example are separate estimates.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos": "An infinite selection has a strictly positive total remainder at every positive multiplier exponent. The hypotheses are `hb : 2 ≤ b`, `hA : A.Infinite`, and `hN : 0 < N`. At base $2$, the conclusion `0 < displacement b A N` is $0<R(N)$. There is a selected exponent $n>N$; its contribution is positive, and all other contributions are nonnegative. Convergence of $\\sum_{n\\in A}1/n$ is not required for this positivity statement.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.exists_lt_of_mean_lt": "If a finite average is below a threshold, one of the values in that same average is below it. Lean requires `hs : s.Nonempty` and `hmean`, which says that the sum of the values divided by the number of samples is less than $c$. For the paper, let $s=\\{0,\\ldots,M-1\\}$, $f(m)=R((m+1)Q)$ and $c=1/q$. The conclusion chooses one whole column, so its rows still share a single multiplier. Despite the source docstring, the theorem needs no nonnegativity assumption on $f$.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.sum_cycle_weight_eq": "The powers in one complete consecutive cycle have normalized sum $1/(B-1)$: $\\sum_{r=0}^{n-1}B^r/(B^n-1)=1/(B-1)$. The assumptions `hB : 1 < B` and `hd : 0 < d` make both denominators positive; Lean uses $d$ for $n$. At $B=2$ the sum is exactly $1$. These terms have numerator $2^r$, whereas the paper’s fractional parts have numerator $2^r-1$. Subtracting $1$ from every numerator is the paper’s next step, which produces its strict cycle bound.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom": "The series of separate residue contributions converges for every support set $A$ and every shift $N$, under `hb : 2 ≤ b`. At $b=2$ the summands are the paper’s $\\ell_n(N)$ on $A$, so this supplies convergence of $R(N)$. The proof subtracts two already summable shifted families. This convergence does not use the theorem’s extra assumption that the reciprocals of the selected exponents have a finite sum.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "The mean of $T$ values sampled at $L,2L,\\ldots,TL$. In the paper, use $L=Q$, $T=M$ and $f(k)=R(k)$ for the column average, or $f(k)=\\ell_n(k)$ for one row. Lean’s index `m` runs from $0$ to $T-1$, so `((m + 1) * L)` starts at the first positive multiple when $L>0$. The definition divides the finite sum by $T$; it also assigns the value zero when $T=0$, a case the paper does not use.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.tsum_progressionMean": "Adding the row averages gives the average of the column sums. The hypothesis `hu : ∀ N, Summable (fun i => u i N)` says that each column is summable. For (4), set $u(n,k)=\\mathbf1_A(n)\\ell_n(k)$, with `displacementAtom 2 k n` encoding $\\ell_n(k)$, and take $L=Q$, $T=M$. The displacement summability lemma supplies `hu`, and `displacement_eq_tsum` identifies each column total with $R(k)$. Lean prints the two sides in the reverse order from the paper. No reciprocal-summability assumption is needed for this finite averaging identity."
+   }
+  }
+ ],
+ "corrections": [],
+ "ties": [
+  {
+   "id": "exp.series.geometric-example",
+   "from": "$$\n\\frac12+\\frac14+\\frac18+\\dots=1.\n$$",
+   "to": "$$\n\\frac12+\\frac14+\\frac18+\\dots=1.\n$$",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Second source pass located a direct geometric-series declaration for this claim.",
+   "lean": [
+    {
+     "name": "Erdos249257.tsum_half_nat_add_succ",
+     "file": "Erdos249257/GreedyAchievementSet.lean",
+     "lines": [
+      285,
+      286
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean gives the exact geometric tail after every natural-number cutoff n; the paper uses the case n = 0.",
+     "link_note": "Set the source cutoff n = 0."
+    }
+   ]
+  },
+  {
+   "id": "exp.opening.integer-error",
+   "from": "multiplying by an integer and subtracting an integer leaves an integer multiple of $1/q$",
+   "to": "multiplying by an integer and subtracting an integer leaves an integer multiple of $1/q$",
+   "role": "derivation",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_of_int_mul_near_int",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      6127,
+      6131
+     ],
+     "relation": "proof",
+     "fidelity": "weaker",
+     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here.",
+     "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
+    }
+   ]
+  },
+  {
+   "id": "exp.opening.positive-gap",
+   "from": "a positive remainder must be at least $1/q$",
+   "to": "a positive remainder must be at least $1/q$",
+   "role": "derivation",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_of_int_mul_near_int",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      6132,
+      6143
+     ],
+     "relation": "proof",
+     "fidelity": "weaker",
+     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here. The local lower bound is for the absolute error, and specializes to a positive error as in the paper.",
+     "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
+    }
+   ]
+  },
+  {
+   "id": "exp.def.series",
+   "from": "$$\nS_A=\\sum_{n\\in A}\\frac1{2^n-1}\n$$",
+   "to": "$$\nS_A=\\sum_{n\\in A}\\frac1{2^n-1}\n$$",
+   "role": "definition",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.erdosSupportSeries",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      8897,
+      8898
+     ],
+     "relation": "defines",
+     "fidelity": "same",
+     "link_note": "Set b = 2; the indicator keeps precisely the selected exponents."
+    }
+   ]
+  },
+  {
+   "id": "exp.def.partial-sum",
+   "from": "A *partial sum* stops after finitely many selected terms",
+   "to": "A *partial sum* stops after finitely many selected terms",
+   "role": "definition",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.finiteErdosSum",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      5129,
+      5130
+     ],
+     "relation": "defines",
+     "fidelity": "same",
+     "link_note": "Take F to be the finitely many selected exponents already read, and b = 2."
+    }
+   ]
+  },
+  {
+   "id": "exp.def.irrational",
+   "from": "to say that $S_A$ is *irrational* is to say that $S_A\\ne p/q$ for all integers $p,q$ with $q>0$",
+   "to": "to say that $S_A$ is *irrational* is to say that $S_A\\ne p/q$ for all integers $p,q$ with $q>0$",
+   "role": "definition",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.hasRationalValue_iff_not_irrational",
+     "file": "Erdos249257/GenericTailOrbitRigidity.lean",
+     "lines": [
+      52,
+      53
+     ],
+     "relation": "states",
+     "fidelity": "same"
+    }
+   ]
+  },
+  {
+   "id": "exp.series.geometric-partial",
+   "from": "the partial sum is $1-2^{-N}$",
+   "to": "the partial sum is $1-2^{-N}$",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Second source pass located a direct geometric-series declaration for this claim.",
+   "lean": [
+    {
+     "name": "Erdos249257.geom_sum_half",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      1157,
+      1158
+     ],
+     "relation": "states",
+     "fidelity": "same"
+    }
+   ]
+  },
+  {
+   "id": "exp.series.convergence",
+   "from": "Every series $S_A$ converges",
+   "to": "Every series $S_A$ converges",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.summable_erdosSupport_indicator",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      8902,
+      8904
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+    }
+   ]
+  },
+  {
+   "id": "exp.thm-main.infinite",
+   "from": "Let $n_1<n_2<\\dots$ be an infinite sequence of positive integers.",
+   "to": "Let $n_1<n_2<\\dots$ be an infinite sequence of positive integers.",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Split the original theorem block at its infinitude hypothesis.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      396,
+      396
+     ],
+     "relation": "part",
+     "fidelity": "same",
+     "link_note": "The increasing sequence is represented by its infinite range A."
+    }
+   ],
+   "replaces": [
+    "exp.thm-main#1"
+   ]
+  },
+  {
+   "id": "exp.thm-main.summability",
+   "from": "If $\\sum_{k=1}^{\\infty}1/n_k<\\infty$",
+   "to": "If $\\sum_{k=1}^{\\infty}1/n_k<\\infty$",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Separate the summability assumption from the series and the irrationality conclusion.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      397,
+      397
+     ],
+     "relation": "part",
+     "fidelity": "same",
+     "link_note": "hsum is convergence of the reciprocal-exponent series on the range A."
+    }
+   ],
+   "replaces": [
+    "exp.thm-main#1"
+   ]
+  },
+  {
+   "id": "exp.thm-main.series",
+   "from": "$$\n\\sum_{k=1}^{\\infty}\\frac1{2^{n_k}-1}\n$$",
+   "to": "$$\n\\sum_{k=1}^{\\infty}\\frac1{2^{n_k}-1}\n$$",
+   "role": "definition",
+   "topic": "series",
+   "status": "new",
+   "reason": "Give the displayed series its own definition link without crossing the display boundary.",
+   "lean": [
+    {
+     "name": "Erdos249257.erdosSupportSeries",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      8897,
+      8898
+     ],
+     "relation": "defines",
+     "fidelity": "same",
+     "link_note": "Use b = 2 and A = {n₁, n₂, …}."
+    }
+   ],
+   "replaces": [
+    "exp.thm-main#1"
+   ]
+  },
+  {
+   "id": "exp.thm-main#1",
+   "from": "*is irrational.*",
+   "to": "*is irrational.*",
+   "role": "statement",
+   "topic": "series",
+   "status": "revised",
+   "reason": "Keep the seed id on the conclusion and separate its assumptions and displayed series into adjacent nonoverlapping ties.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      395,
+      398
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean allows every integer base b ≥ 2, not only 2, and an infinite set A ⊆ ℕ. The paper uses the increasing enumeration of A with exponent 0 excluded; Lean normalizes the 0 term to 0."
+    }
+   ]
+  },
+  {
+   "id": "exp.hypothesis.set-form",
+   "from": "$\\sum_{n\\in A}1/n<\\infty$",
+   "to": "$\\sum_{n\\in A}1/n<\\infty$",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      397,
+      397
+     ],
+     "relation": "part",
+     "fidelity": "same"
+    }
+   ],
+   "after": "With $A=\\{n_1,n_2,\\dots\\}$ this series is $S_A$, and the hypothesis says that"
+  },
+  {
+   "id": "exp.hypothesis.exponents",
+   "from": "the reciprocals of the *exponents*",
+   "to": "the reciprocals of the *exponents*",
+   "role": "definition",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.reciprocalSupportTerm",
+     "file": "Erdos249257/RationalSupportCarrySkeleton.lean",
+     "lines": [
+      789,
+      790
+     ],
+     "relation": "defines",
+     "fidelity": "same"
+    }
+   ]
+  },
+  {
+   "id": "exp.hypothesis.doubling-reciprocals",
+   "from": "The second row sums to $1$",
+   "to": "The second row sums to $1$",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Second source pass located a direct geometric-series declaration for this claim.",
+   "lean": [
+    {
+     "name": "Erdos249257.tsum_half_nat_add_succ",
+     "file": "Erdos249257/GreedyAchievementSet.lean",
+     "lines": [
+      285,
+      286
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean gives the exact geometric tail after every natural-number cutoff n; the paper uses the case n = 0.",
+     "link_note": "The row is 1/2 + 1/4 + 1/8 + …; set the source cutoff n = 0."
+    }
+   ]
+  },
+  {
+   "id": "exp.series.convergence-reminder",
+   "from": "Every $S_A$ converges",
+   "to": "Every $S_A$ converges",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.summable_erdosSupport_indicator",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      8902,
+      8904
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+    }
+   ]
+  },
+  {
+   "id": "exp.assume.rational",
+   "from": "$S=p/q$, where $p\\in\\mathbb Z$ and $q$ is a positive integer",
+   "to": "$S=p/q$, where $p\\in\\mathbb Z$ and $q$ is a positive integer",
+   "role": "definition",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.HasRationalValue",
+     "file": "Erdos249257/GenericTailOrbitRigidity.lean",
+     "lines": [
+      47,
+      48
+     ],
+     "relation": "defines",
+     "fidelity": "same"
+    }
+   ]
+  },
+  {
+   "id": "exp.gap.integer-numerator",
+   "from": "$$\nuS-j=\\frac{up-jq}{q}.\n$$",
+   "to": "$$\nuS-j=\\frac{up-jq}{q}.\n$$",
+   "role": "derivation",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_of_int_mul_near_int",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      6127,
+      6131
+     ],
+     "relation": "proof",
+     "fidelity": "weaker",
+     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here.",
+     "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
+    }
+   ]
+  },
+  {
+   "id": "exp.gap.lower-bound",
+   "from": "$$\nuS-j\\ge\\frac1q.\n$$",
+   "to": "$$\nuS-j\\ge\\frac1q.\n$$",
+   "role": "derivation",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_of_int_mul_near_int",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      6132,
+      6143
+     ],
+     "relation": "proof",
+     "fidelity": "weaker",
+     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here. The local lower bound is for the absolute error, and specializes to a positive error as in the paper.",
+     "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
+    }
+   ]
+  },
+  {
+   "id": "exp.step.gap#1",
+   "from": "$$\n 0<uS-j<\\frac1q.\n\\tag{1}\n$$",
+   "to": "$$\n 0<uS-j<\\frac1q.\n\\tag{1}\n$$",
+   "role": "statement",
+   "topic": "rational-gap",
+   "status": "revised",
+   "reason": "Replace the empty target with the integer-multiple irrationality criterion; expose its quantifier and absolute-value generalization.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_of_int_mul_near_int",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      6120,
+      6123
+     ],
+     "relation": "part",
+     "fidelity": "stronger",
+     "fidelity_note": "The hypothesis h requires such witnesses for every positive q and permits 0 < |mξ − z| < 1/q. The paper uses the special case mξ − z > 0. The theorem is a criterion for irrationality, not a claim that arbitrary integers u,j satisfy this display."
+    }
+   ]
+  },
+  {
+   "id": "exp.remainders.nonnegative",
+   "from": "Subtracting integer parts in this way keeps every contribution nonnegative.",
+   "to": "Subtracting integer parts in this way keeps every contribution nonnegative.",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      32,
+      33
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2.",
+     "link_note": "At b = 2, displacementAtom 2 k n is the residue formula for ℓₙ(k)."
+    }
+   ]
+  },
+  {
+   "id": "exp.step.fractional_part#1",
+   "from": "$$\n \\ell_n(k):=\\left\\{\\frac{2^k-1}{2^n-1}\\right\\}\n =\\frac{2^{k\\bmod n}-1}{2^n-1}.\n\\tag{2}\n$$",
+   "to": "$$\n \\ell_n(k):=\\left\\{\\frac{2^k-1}{2^n-1}\\right\\}\n =\\frac{2^{k\\bmod n}-1}{2^n-1}.\n\\tag{2}\n$$",
+   "role": "explanation",
+   "topic": "remainders",
+   "status": "revised",
+   "reason": "Retain the display as exposition: no supplied declaration was found asserting the exact fractional-part identity. The residue expression has a separate definition link immediately below.",
+   "lean": []
+  },
+  {
+   "id": "exp.def.fractional-contribution",
+   "from": "$\\ell_n(k)$",
+   "to": "$\\ell_n(k)$",
+   "role": "definition",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      25,
+      26
+     ],
+     "relation": "defines",
+     "fidelity": "same",
+     "link_note": "For n > 0, unfold at b = 2 to obtain (2^(k mod n) − 1)/(2^n − 1)."
+    }
+   ],
+   "after": "Here $k\\bmod n$ denotes the remainder $r$ on division by $n$, which lies between $0$ and $n-1$, and"
+  },
+  {
+   "id": "exp.def.sum-contributions",
+   "from": "summing these fractional parts will give $R(k)$",
+   "to": "summing these fractional parts will give $R(k)$",
+   "role": "definition",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      47,
+      48
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2.",
+     "link_note": "The paper’s R(k) is displacement 2 A k."
+    }
+   ]
+  },
+  {
+   "id": "exp.remainders.divides-zero",
+   "from": "The fractional part vanishes when $n$ divides $k$",
+   "to": "The fractional part vanishes when $n$ divides $k$",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The source handles the sum over any finite set F and every integer base b ≥ 2. Set b = 2 and F = {n} for this one-exponent implication; the following words “and only then” are outside this tie."
+    }
+   ]
+  },
+  {
+   "id": "exp.remainders.common-multiple",
+   "from": "by taking $k$ divisible by some selected exponents, we make their contributions vanish.",
+   "to": "by taking $k$ divisible by some selected exponents, we make their contributions vanish.",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Attach exactly the finite-prefix cancellation claim; do not imply the separate converse divisibility claim is in this declaration.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+    }
+   ]
+  },
+  {
+   "id": "exp.step.split#1",
+   "from": "$$\n (2^k-1)S=J(k)+R(k).\n\\tag{3}\n$$",
+   "to": "$$\n (2^k-1)S=J(k)+R(k).\n\\tag{3}\n$$",
+   "role": "explanation",
+   "topic": "remainders",
+   "status": "revised",
+   "reason": "Retain the displayed floor-sum decomposition as exposition: no named J(k) definition or exact infinite floor-sum identity was found in the supplied Lean.",
+   "lean": []
+  },
+  {
+   "id": "exp.remainders.convergence",
+   "from": "The series defining $R(k)$ converges",
+   "to": "The series defining $R(k)$ converges",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      37,
+      38
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+    }
+   ]
+  },
+  {
+   "id": "exp.def.total-remainder",
+   "from": "$R(k)$",
+   "to": "$R(k)$",
+   "role": "definition",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Define only the named total remainder; do not label the following claim about exceeding 1 as a theorem in this declaration.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      29,
+      30
+     ],
+     "relation": "defines",
+     "fidelity": "same",
+     "link_note": "The displacement is the total of the separate fractional contributions, which can exceed 1."
+    }
+   ],
+   "after": "The series defining $R(k)$ converges by comparison with $(2^k-1)S$, and Appendix [A.2](#app:split) justifies the identity using partial sums."
+  },
+  {
+   "id": "exp.remainders.infinite-witness",
+   "from": "if $A$ is infinite, there is always a selected exponent $n>k$",
+   "to": "if $A$ is infinite, there is always a selected exponent $n>k$",
+   "role": "derivation",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.binaryCoeffTail_supportCoeff_zero_strictMinimum",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      875,
+      875
+     ],
+     "relation": "proof",
+     "fidelity": "same"
+    }
+   ]
+  },
+  {
+   "id": "exp.remainders.positive-contribution",
+   "from": "it makes a positive contribution to $R(k)$",
+   "to": "it makes a positive contribution to $R(k)$",
+   "role": "derivation",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "Erdos249257.shiftedSupportAtom_zero_lt_of_mem_of_lt",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      862,
+      864
+     ],
+     "relation": "states",
+     "fidelity": "same",
+     "link_note": "Subtract the value at shift 0; hdA, hN and hNd mean n ∈ A, 0 < k and k < n."
+    }
+   ]
+  },
+  {
+   "id": "exp.remainders.other-contributions",
+   "from": "all other contributions are nonnegative",
+   "to": "all other contributions are nonnegative",
+   "role": "derivation",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Add a short phrase tied to the corresponding declaration or proof step in the supplied source.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      32,
+      33
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+    }
+   ]
+  },
+  {
+   "id": "exp.doubling-zero-prefix",
+   "from": "contribute zero",
+   "to": "contribute zero",
+   "role": "derivation",
+   "topic": "doubling",
+   "status": "new",
+   "reason": "Colour only the zero-contribution implication; the doubling-specific divisibility remains part of the paper proof.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      128
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The proof gives zero for each selected atom whenever hdiv : ∀ d ∈ F, d ∣ N holds, for every finite F and integer base b≥2. Here the preceding unlinked clause supplies divisibility for the doubling exponents.",
+     "link_note": "Supplies the zero contribution once the divisibility in the paper has been established."
+    }
+   ],
+   "after": "For any doubling exponent $k$, all selected $n\\le k$ divide $k$ and "
+  },
+  {
+   "id": "exp.doubling-future-row",
+   "from": "$$\n0<\\ell_n(k)=\\frac{2^k-1}{2^n-1}\n <\\frac{2^k}{2^{n-1}}=\\frac2{2^{n-k}}.\n$$",
+   "to": "$$\n0<\\ell_n(k)=\\frac{2^k-1}{2^n-1}\n <\\frac{2^k}{2^{n-1}}=\\frac2{2^{n-k}}.\n$$",
+   "role": "derivation",
+   "topic": "doubling",
+   "status": "new",
+   "reason": "Tie the no-wrap equality to its general source without assigning the separate upper estimate to it.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_future_eq",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      154,
+      156
+     ],
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "For b=2, N=k and A={n}, hfuture is k<n and the theorem gives the equality ell_n(k)=(2^k−1)/(2^n−1). It does not state either strict inequality in this display.",
+     "link_note": "For the singleton support {n}, gives the middle equality only."
+    }
+   ]
+  },
+  {
+   "id": "exp.mean-sampling",
+   "from": "candidate exponents spaced $Q$ apart, $k=Q,2Q,\\dots,MQ$",
+   "to": "candidate exponents spaced $Q$ apart, $k=Q,2Q,\\dots,MQ$",
+   "role": "explanation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Show the exact positive sampling convention rather than an unrelated zero-based orbit.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR8/FiniteMeans.lean",
+     "lines": [
+      21,
+      22
+     ],
+     "relation": "contains",
+     "fidelity": "same",
+     "link_note": "The arguments ((m + 1) * L) are Q, 2Q, …, MQ when L=Q and T=M."
+    }
+   ]
+  },
+  {
+   "id": "exp.mean-zero-rows",
+   "from": "We take $Q$ divisible by an initial group of selected exponents, so that those rows stay zero in every column.",
+   "to": "We take $Q$ divisible by an initial group of selected exponents, so that those rows stay zero in every column.",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Connect the persistent zero rows to the common-multiple hypothesis.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean applies to every finite F and every integer base b≥2 at any N divisible by all d∈F. Here take b=2 and N=mQ; d∣Q implies d∣mQ.",
+     "link_note": "The same initial finite set has zero remainder at every candidate mQ."
+    }
+   ]
+  },
+  {
+   "id": "exp.mean-definition",
+   "from": "average of the complete column totals",
+   "to": "average of the complete column totals",
+   "role": "definition",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Give the central average its exact Lean definition in the paper’s notation.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR8/FiniteMeans.lean",
+     "lines": [
+      21,
+      22
+     ],
+     "relation": "defines",
+     "fidelity": "same",
+     "link_note": "Read f as R, L as Q and T as M."
+    }
+   ]
+  },
+  {
+   "id": "exp.step.average#1",
+   "from": "$$\n \\frac1M\\sum_{m=1}^{M}R(mQ)",
+   "to": "\\tag{4}\n$$",
+   "after": "<a id=\"eq:average-main\"></a>",
+   "role": "statement",
+   "topic": "cycle-averages",
+   "status": "revised",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR8.tsum_progressionMean",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR8/CountableMeans.lean",
+     "lines": [
+      50,
+      53
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The theorem covers any real family u i N whose columns satisfy hu : ∀ N, Summable (fun i => u i N). Take u n k = indicator A (displacementAtom 2 k) n, L=Q and T=M. The packet separately supplies hu and R(k)=∑ell_n(k).",
+     "link_note": "Specialize to the fractional-part rows; the equality is printed in the opposite direction."
+    }
+   ],
+   "reason": "Replace the empty target with the general summable-family interchange; specialize to the actual displacement atoms."
+  },
+  {
+   "id": "exp.mean-small-column",
+   "from": "If this average is below $1/q$, then at least one whole column has total below $1/q$",
+   "to": "If this average is below $1/q$, then at least one whole column has total below $1/q$",
+   "role": "statement",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Attach the exact common-column selection principle, with its nonempty-range hypothesis.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.exists_lt_of_mean_lt",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/CoverKernel.lean",
+     "lines": [
+      309,
+      311
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean allows any real values f on any nonempty finite set s and any real threshold c; it does not require nonnegativity. Take s=range M, f m=R((m+1)Q), c=1/q.",
+     "link_note": "One candidate from the same average lies below the chosen threshold."
+    }
+   ]
+  },
+  {
+   "id": "exp.mean-zero-preview",
+   "from": "An initial finite group stays zero.",
+   "to": "An initial finite group stays zero.",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Keep the three-group preview connected to the condition that makes its first group zero.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean allows all b≥2 and all finite F. In this paragraph the earlier choice d∣Q supplies hdiv at each N=mQ; the lemma does not make an arbitrary finite group vanish.",
+     "link_note": "Uses the divisibility requirement on Q stated above."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-geometric-sum",
+   "from": "The powers $2^0,2^1,\\dots,2^{n-1}$ add up to $2^n-1$",
+   "to": "The powers $2^0,2^1,\\dots,2^{n-1}$ add up to $2^n-1$",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Link the geometric identity, without presenting the subsequent strict fractional-part bound as the same declaration.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.sum_cycle_weight_eq",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/CoverKernel.lean",
+     "lines": [
+      150,
+      159
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves the normalized geometric identity for every real B>1 and d>0. With B=2 and d=n, multiplying by 2^n−1 gives the paper’s sum of powers.",
+     "link_note": "This is the geometric identity before subtracting one from each numerator."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-gcd-definition",
+   "from": "$g=\\gcd(n,Q)$",
+   "to": "$g=\\gcd(n,Q)$",
+   "role": "definition",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Locate the local gcd definition used by the finite residue permutation.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      159,
+      161
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The proof uses d for n and writes gcd Q d; gcd is symmetric."
+    }
+   ],
+   "after": "### 6.2 Complete cycles give small averages"
+  },
+  {
+   "id": "exp.cycle-length-definition",
+   "from": "$c=n/g$",
+   "to": "$c=n/g$",
+   "role": "definition",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Explain the name change from the paper’s c to Lean’s h.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      159,
+      161
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The local h=d/g is the paper’s number c of samples in a cycle."
+    }
+   ],
+   "after": "### 6.2 Complete cycles give small averages"
+  },
+  {
+   "id": "exp.cycle-residue-enumeration",
+   "from": "one cycle has $c$ samples, which visit $0,g,2g,\\dots,n-g$ once each in some order",
+   "to": "one cycle has $c$ samples, which visit $0,g,2g,\\dots,n-g$ once each in some order",
+   "role": "statement",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Find the actual finite permutation inside the proof, rather than only the orbit-mean limit.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      173,
+      201
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The bijection e and hresidue identify the c sampled remainders with 0,g,…,n−g."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-period",
+   "from": "taking another $c$ steps adds a multiple of $n$ and leaves the remainder unchanged.",
+   "to": "taking another $c$ steps adds a multiple of $n$ and leaves the remainder unchanged.",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Point at the modular period argument used to repeat the first sampled cycle.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit_block",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      246,
+      280
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "hperiod gives n∣cQ, and hbperiod removes any whole number of these cycles modulo n."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-coprime",
+   "from": "The integers $n/g$ and $Q/g$ have no common divisor greater than $1$, that is, they are *coprime*",
+   "to": "The integers $n/g$ and $Q/g$ have no common divisor greater than $1$, that is, they are *coprime*",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Attach the coprime quotients, including their local definitions.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      159,
+      172
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "hcop states Nat.Coprime q h, where q=Q/g and h=n/g."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-cancellation",
+   "from": "this lets us cancel $Q/g$",
+   "to": "this lets us cancel $Q/g$",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Expose the exact cancellation step instead of claiming that the enclosing theorem is a general divisibility statement.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      175,
+      181
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "hcancel removes the coprime multiplier q=Q/g from the congruence modulo h=n/g."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-distinct",
+   "from": "The first $c$ remainders are distinct",
+   "to": "The first $c$ remainders are distinct",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Use the first-cycle claim whose exact finite index range appears in Lean.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      173,
+      195
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "heinj proves distinct reduced residues; hresidue multiplies them by the positive g."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-exhaustion",
+   "from": "every possible remainder occurs once in each cycle.",
+   "to": "every possible remainder occurs once in each cycle.",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Separate exhaustion of the finite residue set from repetition of the cycle.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      187,
+      201
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "hebij gives all possible remainders in the first cycle."
+    },
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit_block",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      258,
+      280
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The pointwise modular equality repeats that first cycle in each later block."
+    }
+   ]
+  },
+  {
+   "id": "exp.cycle-reordering",
+   "from": "Sorting the sampled remainders $4,2,0$ as $0,2,4$ leaves the sampled mean unchanged",
+   "to": "Sorting the sampled remainders $4,2,0$ as $0,2,4$ leaves the sampled mean unchanged",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Distinguish a permutation used in the comparison from the chronological sampling order.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      196,
+      201
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The proof reindexes the powers over every complete sampled orbit for arbitrary positive Q,n. For Q=4,n=6 it is the displayed permutation; subtracting the common constant per term and dividing by the unchanged count preserves the fractional-part mean.",
+     "link_note": "The argument reorders values for comparison; it does not change the candidate exponents."
+    }
+   ]
+  },
+  {
+   "id": "exp.step.cycle_bound#1",
+   "from": "$$\n \\frac1M\\sum_{m=1}^{M}\\ell_n(mQ)<\\frac1n.",
+   "to": "\\tag{5}\n$$",
+   "after": "<a id=\"eq:cycle-main\"></a>",
+   "role": "explanation",
+   "topic": "cycle-averages",
+   "status": "revised",
+   "lean": [],
+   "reason": "Retain (5) as a paper-proof anchor: the packet has an exact shifted-cycle sum and a non-strict orbit-mean bound, but no declaration stating this strict fractional-part estimate for every positive multiple M of c."
+  },
+  {
+   "id": "exp.incomplete-before-cycle",
+   "from": "if $n>MQ$, the last sample has not even reached the first positive multiple of $n$.",
+   "to": "if $n>MQ$, the last sample has not even reached the first positive multiple of $n$.",
+   "role": "explanation",
+   "topic": "incomplete-cycles",
+   "status": "new",
+   "reason": "Make the no-completed-cycle condition readable in the corresponding formal estimate.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_mul_le_inv_pow_gap_of_lt",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      422,
+      425
+     ],
+     "relation": "part",
+     "fidelity": "same",
+     "link_note": "The hypothesis hnowrap : K*Q<d is precisely MQ<n."
+    }
+   ]
+  },
+  {
+   "id": "exp.step.uniform_bound#1",
+   "from": "$$\n \\frac1M\\sum_{m=1}^{M}\\ell_n(mQ)\\le\\frac{2Q}{n}.",
+   "to": "\\tag{6}\n$$",
+   "after": "<a id=\"eq:uniform-main\"></a>",
+   "role": "explanation",
+   "topic": "incomplete-cycles",
+   "status": "revised",
+   "lean": [],
+   "reason": "Retain (6) as a paper-proof anchor: the available finite mean theorem bounds shifted values by 2(Q+1)/n, not fractional parts by 2Q/n."
+  },
+  {
+   "id": "exp.incomplete-decomposition",
+   "from": "The first $MQ$ entries consist of complete blocks followed, possibly, by a beginning portion of the positive list",
+   "to": "The first $MQ$ entries consist of complete blocks followed, possibly, by a beginning portion of the positive list",
+   "role": "derivation",
+   "topic": "incomplete-cycles",
+   "status": "new",
+   "reason": "Attach the exact complete-block and remainder bookkeeping, without claiming it proves the 2/n bound on each piece.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_range_eq_mul_blockSum_add_blockRemainder",
+     "file": "Erdos249257/RationalSupportCarrySkeleton.lean",
+     "lines": [
+      1139,
+      1145
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean gives this sum decomposition for any real sequence whose aligned length-h blocks all have the same sum hblock. Here h=n, N=MQ and x j=ell_n(j+1); periodicity supplies hblock.",
+     "link_note": "Natural division counts the complete blocks and natural remainder counts the unfinished entries."
+    }
+   ]
+  },
+  {
+   "id": "exp.incomplete-unit-row",
+   "from": "For $n=1$ all entries are zero",
+   "to": "For $n=1$ all entries are zero",
+   "role": "derivation",
+   "topic": "incomplete-cycles",
+   "status": "new",
+   "reason": "Record the exceptional modulus explicitly instead of hiding it in a denominator estimate for n≥2.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      128
+     ],
+     "relation": "part",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean handles all finite sets of divisors at every b≥2. Specialize F={1}, b=2 and N=k; 1 divides every k, so its single remainder is zero.",
+     "link_note": "The special n=1 row is zero for every candidate."
+    }
+   ]
+  },
+  {
+   "id": "exp.incomplete-remove-entries",
+   "from": "Removing nonnegative entries cannot increase the sum",
+   "to": "Removing nonnegative entries cannot increase the sum",
+   "role": "derivation",
+   "topic": "incomplete-cycles",
+   "status": "new",
+   "reason": "Link the actual nonnegative-subset-sum step, separating it from the unformalized sampled bound that follows.",
+   "lean": [
+    {
+     "name": "Erdos249257.blockRemainder_le_blockSum",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      363,
+      368
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The proof uses the same removal principle; it does not establish the paper’s 2Q/n estimate."
+    }
+   ]
+  },
+  {
+   "id": "exp.combine.numeric-prefix-zero",
+   "from": "every candidate $k=16m$ gives zero in these four rows.",
+   "to": "every candidate $k=16m$ gives zero in these four rows.",
+   "role": "derivation",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Connect the initial zero group to the actual finite-selection cancellation lemma, without certifying the numerical tail estimates.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean lemma applies to every finite set F of exponents and every integer base b ≥ 2, provided each d ∈ F divides N; this passage applies it to the stated base-2 prefix."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.combine.prefix-zero",
+   "from": "These exponents divide every candidate $mQ$, so their rows are zero.",
+   "to": "These exponents divide every candidate $mQ$, so their rows are zero.",
+   "role": "derivation",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Supply the formal common-multiple step for the initial finite group.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean lemma applies to every finite set F of exponents and every integer base b ≥ 2, provided each d ∈ F divides N; this passage applies it to the stated base-2 prefix."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.combine.conclusion",
+   "from": "Theorem [1](#thm:main)",
+   "to": "Theorem [1](#thm:main)",
+   "role": "mention",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Link the repeated theorem conclusion while keeping the preceding finite proof distinct from the formal route.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      395,
+      398
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero.",
+     "link_note": "Opens the same conclusion, reached by the separate formal proof."
+    }
+   ],
+   "after": "<a id=\"sec:allchoices\"></a>"
+  },
+  {
+   "id": "exp.combine.positivity-role",
+   "from": "infinitude supplied the positivity of the remainders",
+   "to": "infinitude supplied the positivity of the remainders",
+   "role": "explanation",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Make the role of infinitude accessible through a theorem that does not require reciprocal summability.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      64,
+      66
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.scope.all-bases",
+   "from": "$$\nA\\text{ infinite},\\quad\\sum_{n\\in A}\\frac1n<\\infty\n \\quad\\Longrightarrow\\quad\n \\sum_{n\\in A}\\frac1{b^n-1}\\text{ is irrational}.\n$$",
+   "to": "$$\nA\\text{ infinite},\\quad\\sum_{n\\in A}\\frac1n<\\infty\n \\quad\\Longrightarrow\\quad\n \\sum_{n\\in A}\\frac1{b^n-1}\\text{ is irrational}.\n$$",
+   "role": "statement",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Tie the complete all-base implication to its exact formal theorem.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      395,
+      398
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The paper selects positive exponents. Lean additionally permits exponent 0, normalized to zero in both series; all other hypotheses and the all-base conclusion agree."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.scope.radix-fraction",
+   "from": "$(b^{k\\bmod n}-1)/(b^n-1)$",
+   "to": "$(b^{k\\bmod n}-1)/(b^n-1)$",
+   "role": "definition",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Expose the displacement definition whose expansion is the all-base fractional-part expression.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      25,
+      26
+     ],
+     "relation": "defines",
+     "fidelity": "same"
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.scope.finite-selection",
+   "from": "if only finitely many remain, their sum is rational.",
+   "to": "if only finitely many remain, their sum is rational.",
+   "role": "statement",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Attach the finite branch to the direct equality with a rational finite sum.",
+   "lean": [
+    {
+     "name": "Erdos249257.erdosSupportSeries_finset_eq_cast_finiteErdosSum",
+     "file": "Erdos249257/DyadicPrefixCompression.lean",
+     "lines": [
+      1539,
+      1540
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean proves rationality of every finite base-2 selection, not only a selection of square exponents. It does not contain the later all-base corollary."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.scope.full-series-irrational",
+   "from": "the full sum is irrational",
+   "to": "the full sum is irrational",
+   "role": "statement",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Link the mathematical full-series result without attaching its historical attribution.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_univ",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      9045,
+      9046
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The cited declaration proves irrationality of the full series for every integer base b ≥ 2; this phrase concerns base 2."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.geometric-sum",
+   "from": "$\\sum_{j=1}^{\\infty}2^{-j}=1$",
+   "to": "$\\sum_{j=1}^{\\infty}2^{-j}=1$",
+   "after": "<a id=\"app:sums\"></a>",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Reuse the exact geometric-tail theorem for the appendix’s repeated sum, with cutoff zero.",
+   "lean": [
+    {
+     "name": "Erdos249257.tsum_half_nat_add_succ",
+     "file": "Erdos249257/GreedyAchievementSet.lean",
+     "lines": [
+      285,
+      286
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean states the exact geometric tail after every natural cutoff; set its n=0 for this sum.",
+     "link_note": "The source index k starts at zero, so its exponent k+1 is the paper’s j."
+    }
+   ]
+  },
+  {
+   "id": "exp.appendix.convergence",
+   "from": "$S_A$ converges for every set $A$, whether or not $\\sum_{n\\in A}1/n$ converges.",
+   "to": "$S_A$ converges for every set $A$, whether or not $\\sum_{n\\in A}1/n$ converges.",
+   "role": "statement",
+   "topic": "series",
+   "status": "new",
+   "reason": "Distinguish automatic convergence of the Mersenne series from the theorem’s reciprocal-sum assumption.",
+   "lean": [
+    {
+     "name": "Erdos249257.summable_erdosSupport_indicator",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      8902,
+      8904
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.nonnegative-terms",
+   "from": "Each $\\ell_n(k)$ is nonnegative",
+   "to": "Each $\\ell_n(k)$ is nonnegative",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Use the actual fractional-contribution lemma, not positivity of the shifted atom.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      32,
+      33
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.term-bound",
+   "from": "at most $(2^k-1)/(2^n-1)$",
+   "to": "at most $(2^k-1)/(2^n-1)$",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Separate the amplified-term bound from the preceding nonnegativity claim.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_le_amplified",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      131,
+      133
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.remainder-converges",
+   "from": "$R(k)$ converges",
+   "to": "$R(k)$ converges",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Attach summability of the fractional-contribution series without claiming the same comparison proof.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      37,
+      38
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "<a id=\"app:split\"></a>"
+  },
+  {
+   "id": "exp.appendix.reduced-coprime",
+   "from": "The integers $c,u$ are coprime",
+   "to": "The integers $c,u$ are coprime",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Point to the coprimality fact inside the cycle-sum proof, with the change of variable names made explicit.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      171,
+      172
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The source uses q = Q/g and h = n/g for the paper’s u and c."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.distinct-remainders",
+   "from": "the first $c$ sampled remainders are distinct",
+   "to": "the first $c$ sampled remainders are distinct",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Show the finite permutation argument actually used in the source.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      173,
+      188
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The residue map is injective, hence bijective on the finite cycle."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.every-cycle-remainder",
+   "from": "Every remainder is divisible by $g$, since both $mQ$ and $n$ are, and there are only the $c$ possibilities $0,g,\\dots,n-g$, so each occurs once.",
+   "to": "Every remainder is divisible by $g$, since both $mQ$ and $n$ are, and there are only the $c$ possibilities $0,g,\\dots,n-g$, so each occurs once.",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Tie the exhaustion of the sampled residue classes to the source permutation and residue identity.",
+   "lean": [
+    {
+     "name": "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      187,
+      201
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The bijective map gives each residue g times an index exactly once."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.appendix.add-row-averages",
+   "from": "This proves [(4)](#eq:average-main)",
+   "to": "This proves [(4)](#eq:average-main)",
+   "role": "mention",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Provide the formal sum–average identity without claiming that the source uses this finite-cutoff exposition.",
+   "lean": [
+    {
+     "name": "Erdos249257.tsum_cesaroMean_shiftedSupportAtom_mul",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      701,
+      707
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean theorem gives the equality for the full sum directly, for every set A and every Q,K, including zero under its conventions. Subtract S_A from its shifted sums when K > 0 to obtain the paper’s equality."
+    }
+   ],
+   "after": "<a id=\"app:proof\"></a>"
+  },
+  {
+   "id": "exp.appendix.radix-geometric-sum",
+   "from": "$1+b+\\dots+b^{n-1}=(b^n-1)/(b-1)$",
+   "to": "$1+b+\\dots+b^{n-1}=(b^n-1)/(b-1)$",
+   "after": "<a id=\"app:bases\"></a>",
+   "role": "derivation",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Link the all-base geometric identity itself while leaving the separate strict fractional-part bound outside the span.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.sum_cycle_weight_eq",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/CoverKernel.lean",
+     "lines": [
+      150,
+      151
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean gives the normalized identity for every real B>1 and positive d. Set B=b and d=n, then multiply by the positive denominator b^n−1.",
+     "link_note": "The source divides both sides of this geometric identity by b^n−1."
+    }
+   ]
+  },
+  {
+   "id": "exp.appendix.other-bases-conclusion",
+   "from": "$\\sum_{n\\in A}1/(b^n-1)$ is irrational whenever $A$ is infinite and $\\sum_{n\\in A}1/n<\\infty$",
+   "to": "$\\sum_{n\\in A}1/(b^n-1)$ is irrational whenever $A$ is infinite and $\\sum_{n\\in A}1/n<\\infty$",
+   "role": "statement",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Link the all-base conclusion separately from the ordinary estimates preceding it.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      395,
+      398
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The statement agrees for positive exponents at all integer bases b ≥ 2. Lean also allows exponent 0, which contributes zero; this link supports the conclusion, not the finite proof just described."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.theorem-statement",
+   "from": "For every natural number $b\\ge2$ and every infinite set $A$ of natural numbers whose sequence of terms $1/n$ for $n\\in A$ (and $0$ otherwise) is summable, it states that the sum of $1/(b^n-1)$ over $A$ is irrational.",
+   "to": "For every natural number $b\\ge2$ and every infinite set $A$ of natural numbers whose sequence of terms $1/n$ for $n\\in A$ (and $0$ otherwise) is summable, it states that the sum of $1/(b^n-1)$ over $A$ is irrational.",
+   "role": "statement",
+   "topic": "scope",
+   "status": "new",
+   "reason": "This prose sentence already states the theorem with Lean’s exact natural-number and indicator conventions.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      395,
+      398
+     ],
+     "relation": "states",
+     "fidelity": "same"
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.zero-convention",
+   "from": "the exponent $0$ contributes $0$ to both sums",
+   "to": "the exponent $0$ contributes $0$ to both sums",
+   "role": "explanation",
+   "topic": "series",
+   "status": "new",
+   "reason": "Show the two definitions whose zero-index convention the paper explains.",
+   "lean": [
+    {
+     "name": "Erdos249257.erdosSupportSeries",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      8897,
+      8898
+     ],
+     "relation": "part",
+     "fidelity": "same"
+    },
+    {
+     "name": "Erdos249257.reciprocalSupportTerm",
+     "file": "Erdos249257/RationalSupportCarrySkeleton.lean",
+     "lines": [
+      789,
+      790
+     ],
+     "relation": "part",
+     "fidelity": "same"
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.base-transfer",
+   "from": "comparing each base-$b$ fractional part with twice the base-$2$ one",
+   "to": "comparing each base-$b$ fractional part with twice the base-$2$ one",
+   "role": "derivation",
+   "topic": "scope",
+   "status": "new",
+   "reason": "Point directly to the formal proof’s between-base inequality rather than the exposition’s alternative cycle argument.",
+   "lean": [
+    {
+     "name": "Erdos249257.shiftedRadixAtom_sub_zero_le_two_mul_binary_sub_zero",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      270,
+      273
+     ],
+     "relation": "states",
+     "fidelity": "same"
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.shifted-bridge",
+   "from": "$$\n\\sum_{n\\in A}\\frac{2^{k\\bmod n}}{2^n-1}=S_A+R(k),\n$$",
+   "to": "$$\n\\sum_{n\\in A}\\frac{2^{k\\bmod n}}{2^n-1}=S_A+R(k),\n$$",
+   "role": "derivation",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Expose the exact shifted-sum versus remainder bridge at the display that introduces it.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      47,
+      48
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.initial-value",
+   "from": "whose value at $k=0$ is $S_A$",
+   "to": "whose value at $k=0$ is $S_A$",
+   "role": "statement",
+   "topic": "remainders",
+   "status": "new",
+   "reason": "Keep the zero-shift identity distinct from positivity and return claims.",
+   "lean": [
+    {
+     "name": "Erdos249257.tsum_shiftedSupportAtom_zero",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      764,
+      765
+     ],
+     "relation": "states",
+     "fidelity": "same"
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.row-limit",
+   "from": "Each row average then tends to its cycle mean",
+   "to": "Each row average then tends to its cycle mean",
+   "role": "statement",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Expose the formal row limit while explaining the constant subtraction needed for the paper’s fractional parts.",
+   "lean": [
+    {
+     "name": "Erdos249257.tendsto_cesaroMean_shiftedSupportAtom_mul",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      618,
+      623
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "Subtract the fixed baseline from both sides of the displayed shifted-row convergence."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.last-cycle",
+   "from": "since the unfinished last cycle has bounded length",
+   "to": "since the unfinished last cycle has bounded length",
+   "role": "explanation",
+   "topic": "incomplete-cycles",
+   "status": "new",
+   "reason": "Locate the bounded unfinished-block argument in the general source lemma.",
+   "lean": [
+    {
+     "name": "Erdos249257.tendsto_cesaroMean_of_constant_blocks",
+     "file": "Erdos249257/RationalSupportCarrySkeleton.lean",
+     "lines": [
+      1196,
+      1209
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The unfinished block divided by the total length tends to zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.uniform-bound",
+   "from": "the row averages are bounded by $2(Q+1)/n$",
+   "to": "the row averages are bounded by $2(Q+1)/n$",
+   "role": "statement",
+   "topic": "incomplete-cycles",
+   "status": "new",
+   "reason": "Use the exact formal bound quoted here, not the sharper bound of the finite reconstruction.",
+   "lean": [
+    {
+     "name": "Erdos249257.cesaroMean_shiftedMersenneAtom_mul_le",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      494,
+      497
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Lean bounds the average of ell_n(mQ) + 1/(2^n−1) by 2(Q+1)/n, for Q,K > 0; subtracting its nonnegative baseline gives the paper’s fractional-part bound."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.interchange-limit",
+   "from": "Because $Q$ is fixed and $\\sum_{n\\in A}1/n$ converges, these bounds have small tails, which justifies passing the limit through the sum.",
+   "to": "Because $Q$ is fixed and $\\sum_{n\\in A}1/n$ converges, these bounds have small tails, which justifies passing the limit through the sum.",
+   "role": "derivation",
+   "topic": "cycle-averages",
+   "status": "new",
+   "reason": "Tie the justification to the source’s actual dominated-convergence argument.",
+   "lean": [
+    {
+     "name": "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      724,
+      733
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The fixed-Q reciprocal bound supplies dominated convergence for the infinite sum."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.lcm-choice",
+   "from": "$Q=\\operatorname{lcm}(1,\\dots,t)$",
+   "to": "$Q=\\operatorname{lcm}(1,\\dots,t)$",
+   "role": "definition",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Link the chosen least common multiple to its recursive definition.",
+   "lean": [
+    {
+     "name": "Erdos249257.TotientTailPeriodKiller.periodLcm",
+     "file": "Erdos249257/CarrySurvivorExtinction.lean",
+     "lines": [
+      515,
+      517
+     ],
+     "relation": "defines",
+     "fidelity": "same"
+    }
+   ],
+   "after": "<a id=\"app:lean\"></a>"
+  },
+  {
+   "id": "exp.formal.initial-means-zero",
+   "from": "every limiting row average with $n\\le t$ is zero",
+   "to": "every limiting row average with $n\\le t$ is zero",
+   "role": "derivation",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Show both divisibility and the baseline equality needed to obtain a zero fractional-part mean.",
+   "lean": [
+    {
+     "name": "Erdos249257.TotientTailPeriodKiller.dvd_periodLcm",
+     "file": "Erdos249257/CarrySurvivorExtinction.lean",
+     "lines": [
+      525,
+      525
+     ],
+     "relation": "proof",
+     "fidelity": "same"
+    },
+    {
+     "name": "Erdos249257.shiftedSupportOrbitMean_eq_zero_of_dvd",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      142,
+      144
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The shifted mean equals its baseline; subtracting it gives zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.other-means-bound",
+   "from": "every other one is at most $1/n$, independently of $t$",
+   "to": "every other one is at most $1/n$, independently of $t$",
+   "role": "statement",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Display the sampling-step-independent bound, with its slightly stronger shifted-mean statement.",
+   "lean": [
+    {
+     "name": "Erdos249257.shiftedSupportOrbitMean_le_reciprocalSupportTerm",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The source bounds the shifted mean itself by the selected reciprocal term for every Q,d. Subtracting its nonnegative baseline bounds the fractional-part mean, for the paper’s n > t."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.choose-witness",
+   "from": "To obtain one witness it chooses a suitable $Q$ first and a sufficiently long average second.",
+   "to": "To obtain one witness it chooses a suitable $Q$ first and a sufficiently long average second.",
+   "role": "explanation",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Connect the stated choice order to the two successive limit applications in the proof.",
+   "lean": [
+    {
+     "name": "Erdos249257.exists_shiftedSupportAtom_closeReturn_of_summable_reciprocal",
+     "file": "Erdos249257/ReciprocalSupportIrrationality.lean",
+     "lines": [
+      965,
+      983
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The proof chooses the LCM step before choosing the averaging length."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.formal.integer-gap",
+   "from": "the integer $qR(k)$ lie strictly between $0$ and $1$",
+   "to": "the integer $qR(k)$ lie strictly between $0$ and $1$",
+   "role": "derivation",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Show the exact final integer contradiction without asserting that Lean follows the finite reconstruction.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      441,
+      455
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The proof obtains 0 < u N − u 0 < 1 for every base b ≥ 2. Its identity u N − u 0 = v(T N − T 0) is vR_b(N); the paper writes qR(k) at base 2.",
+     "link_note": "The denominator is v in Lean; the integer difference is v times the total remainder."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.answers.positive-witness",
+   "from": "Infinitude supplies a selected $n>k$",
+   "to": "Infinitude supplies a selected $n>k$",
+   "role": "explanation",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Point to the actual use of infinitude inside the strict-positivity proof.",
+   "lean": [
+    {
+     "name": "Erdos249257.shiftedRadixSupportAtom_zero_strictMinimum",
+     "file": "Erdos249257/AllBaseReciprocalSupportIrrationality.lean",
+     "lines": [
+      251,
+      251
+     ],
+     "relation": "proof",
+     "fidelity": "same",
+     "link_note": "The source’s hA.exists_gt N supplies exactly the selected exponent beyond N."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.answers.nonnegative-others",
+   "from": "while the other contributions are nonnegative.",
+   "to": "while the other contributions are nonnegative.",
+   "role": "statement",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Link the separate nonnegativity premise used to turn one positive summand into a positive total.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      32,
+      33
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  },
+  {
+   "id": "exp.answers.sqrt-test",
+   "from": "the test",
+   "to": "the test",
+   "role": "mention",
+   "topic": "rational-gap",
+   "status": "new",
+   "reason": "Link only the general irrationality test; the square-root exercise’s explicit construction remains a paper calculation.",
+   "lean": [
+    {
+     "name": "Erdos249257.irrational_of_int_mul_near_int",
+     "file": "Erdos249257/CertificateKernel.lean",
+     "lines": [
+      6120,
+      6123
+     ],
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "The source permits signed integer witnesses and uses absolute error, so the paper’s positive-gap test is a special case. The square-root recurrence that supplies the witnesses here is not formalized in the packet."
+    }
+   ],
+   "after": "<a id=\"app:answers\"></a>"
+  },
+  {
+   "id": "exp.answers.other-multiples",
+   "from": "Other multiples of $P_j$ preserve the same initial zeros",
+   "to": "Other multiples of $P_j$ preserve the same initial zeros",
+   "role": "derivation",
+   "topic": "combining-estimates",
+   "status": "new",
+   "reason": "Link the general prefix-preservation step without claiming a source theorem for the Sylvester-sequence calculations.",
+   "lean": [
+    {
+     "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero",
+     "file": "ErdosProblems/Erdos257/PaperCompleteR7/Displacement.lean",
+     "lines": [
+      116,
+      118
+     ],
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The Lean lemma applies to every finite set F of exponents and every integer base b ≥ 2, provided each d ∈ F divides N; this passage applies it to the stated base-2 prefix."
+    }
+   ],
+   "after": "## 7. Combining the estimates"
+  }
+ ],
+ "removed": []
+}

@@ -146,8 +146,16 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
     if core.exists():
         core_data = json.loads(core.read_text())
         plain_titles = core_data.get("names", {}) or {}
+        # A paper that moved in from its own reader keeps its records' ids; its numbered results are
+        # the records alignment/results.json names, at their addresses.
+        named = ROOT / "instances" / paper / "alignment" / "results.json"
+        by_record = {}
+        if named.exists():
+            by_record = {row["record"]: address for address, row in json.loads(named.read_text())["results"].items() if row.get("record")}
         for rid, record in core_data.get("records", {}).items():
-            slug = rid.split(".", 1)[1] if "." in rid else rid
+            if by_record and rid not in by_record:
+                continue
+            slug = by_record.get(rid) or (rid.split(".", 1)[1] if "." in rid else rid)
             # The excerpt is the result's canonical target, its statement block: a "statement" slice
             # first, then a "definition", and only then another non-mention. An introduction before
             # the result is never offered as the result's words.

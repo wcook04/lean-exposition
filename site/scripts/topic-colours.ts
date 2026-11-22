@@ -182,8 +182,8 @@ export function report(c: Computed): string {
   return lines.join("\n");
 }
 
-// Run as a script: compared as URLs, so a path with a space (percent-encoded in the URL) still matches.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+// Run as a command: compared as URLs, so a checkout whose path has a space (encoded in the URL) still runs.
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const check = process.argv.includes("--check");
   const c = compute();
   let stale = 0;

@@ -3,8 +3,8 @@
   "stage": "expository",
   "state": "draft",
   "path": "papers/expository.md",
-  "content_sha256": "71083856306374c63ea8277fd72b934364ef30186261add8b961bdd03dd68476",
-  "graph_sha256": "264b08973a5f23b2f98ad989b0c1708096513d86929f19048623a2a9fe18092c",
+  "content_sha256": "cc58622bd4560e61899f8d0b845de5a6d8485eb59e2e03a3cf5121b2bbed527f",
+  "graph_sha256": "57133a32273c39019ea3f4ba3de79281b7177858848a9345731e250a68a8c176",
   "selected_goal_ids": [
     "exp.thm-main"
   ],
@@ -115,7 +115,7 @@
     },
     {
       "anchor": "sec-general",
-      "text_sha256": "a87c66888ac9b52eff6ff89df1e522247b61933646b1f7171c907a86d6f40ee9",
+      "text_sha256": "9a567fe7da77c1331339449b34dbbc17352aa212ebb9f4d8c5942cf6505a6e98",
       "claim_ids": [
         "exp.step.average",
         "exp.step.cycle_bound",

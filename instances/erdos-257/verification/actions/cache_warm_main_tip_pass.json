@@ -1,0 +1,28 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Warm the main Lean cache",
+  "repository": "wcook04/plectis-erdos",
+  "run_id": 43910511985,
+  "run_attempt": 1,
+  "url": "https://github.com/wcook04/plectis-erdos/actions/runs/43910511985",
+  "commit": "3368d1e69467aec111eb3244843ad3542171ff96",
+  "branch": "main",
+  "event": "push",
+  "started_at": "2026-11-16T16:42:46Z",
+  "completed_at": "2026-11-16T18:42:55Z",
+  "conclusion": "success",
+  "shows": "The main tip 3368d1e built its supported roots and saved the Lean cache.",
+  "does_not_show": "It prints no axioms and runs no Comparator.",
+  "description": "Warm the main Lean cache (main tip 3368d1e)",
+  "jobs": [
+    {
+      "job_id": "133450822607",
+      "name": "warm",
+      "conclusion": "success",
+      "started_at": "2026-11-16T16:42:50Z",
+      "completed_at": "2026-11-16T18:42:54Z",
+      "seconds": 7204,
+      "failed_or_cancelled_steps": ""
+    }
+  ]
+}

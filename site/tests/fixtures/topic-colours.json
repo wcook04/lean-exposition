@@ -1,7 +1,8 @@
 {
  "05f42a990c6bad32": {
   "used_by": [
-   "examples/erdos257/alignment/colours-short.json#0"
+   "examples/erdos257/alignment/colours-short.json#0",
+   "instances/erdos-257/alignment/colours-short.json#0"
   ],
   "families": [
    [
@@ -91,7 +92,8 @@
  },
  "0740139f71c4ab95": {
   "used_by": [
-   "examples/qaoa-sk/alignment/colours-expository.json#0"
+   "examples/qaoa-sk/alignment/colours-expository.json#0",
+   "instances/qaoa-sk/alignment/colours-expository.json#0"
   ],
   "families": [
    [
@@ -349,7 +351,8 @@
  },
  "0d805052b50983fb": {
   "used_by": [
-   "examples/erdos257/alignment/colours-expository.json#0"
+   "examples/erdos257/alignment/colours-expository.json#0",
+   "instances/erdos-257/alignment/colours-expository.json#0"
   ],
   "families": [
    [
@@ -854,7 +857,8 @@
  },
  "7ed4708c74e4b821": {
   "used_by": [
-   "examples/erdos257/alignment/colours-long.json#1"
+   "examples/erdos257/alignment/colours-long.json#1",
+   "instances/erdos-257/alignment/colours-long.json#1"
   ],
   "families": [
    [
@@ -1115,7 +1119,8 @@
  },
  "f2cafbbf690e654d": {
   "used_by": [
-   "examples/qaoa-sk/alignment/colours-long.json#0"
+   "examples/qaoa-sk/alignment/colours-long.json#0",
+   "instances/qaoa-sk/alignment/colours-long.json#0"
   ],
   "families": [
    [
@@ -1182,7 +1187,8 @@
  },
  "f3c5d51eefaaf881": {
   "used_by": [
-   "examples/qaoa-sk/alignment/colours-short.json#0"
+   "examples/qaoa-sk/alignment/colours-short.json#0",
+   "instances/qaoa-sk/alignment/colours-short.json#0"
   ],
   "families": [
    [
@@ -1255,7 +1261,8 @@
  },
  "f6987931a7ccfe84": {
   "used_by": [
-   "examples/erdos257/alignment/colours-long.json#0"
+   "examples/erdos257/alignment/colours-long.json#0",
+   "instances/erdos-257/alignment/colours-long.json#0"
   ],
   "families": [
    [

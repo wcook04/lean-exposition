@@ -284,11 +284,12 @@ def check_links(paper, md, all_md):
             target = next((p for p in convert.PAPERS if "../" + p["out"] == path), None)
             if target is None or anchor not in anchors_of(all_md[target["level"]]):
                 fail(f"{paper['level']}: unresolved cross-paper link {url}")
-        elif re.match(r"https?://", url):
+        elif url == convert.FIGURE_SVG:
             ext += 1
-        elif url == "figures/cycle-mean.svg":
             if not (Path(paper["_out_dir"]) / "expository/figures/cycle-mean.svg").exists():
                 fail("missing figure SVG")
+        elif re.match(r"https?://", url):
+            ext += 1
         else:
             fail(f"{paper['level']}: unexpected link {url}")
     return frag, cross, ext

@@ -1,0 +1,204 @@
+/* Styles a library paper loads (theme.ts): the parts of the reader that only some papers use,
+   carried from the Erdős #257 reader when it moved into the library. A comparison and who made
+   a tie, the paper's own image figures, the table of runs (for a paper that publishes its run
+   receipts), a long Lean name in the Lean panel's head, Compare's goal menu. Each rule styles
+   elements only those features draw, so a paper without them is unchanged. */
+
+.runwords {
+  padding-left: 1.2em;
+}
+
+/* A comparison of the Lean with the paper, and who made a tie. */
+.fidelity,
+.tie-origin {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+.fidelity__verdict {
+  color: var(--ink);
+}
+.fidelity--stronger .fidelity__verdict,
+.fidelity--weaker .fidelity__verdict {
+  border-bottom: 1px solid var(--rule-strong);
+}
+.fidelity__who {
+  display: block;
+  color: var(--ink-3);
+}
+
+/* A figure that is the paper's own image file. */
+.paper-figure__image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* Every run, where and when it ran. Wider than the text, as tables are on the later readers. */
+.runs__wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.runs__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+}
+.runs__table th,
+.runs__table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.runs__table thead th {
+  font-weight: 600;
+  color: var(--ink-2);
+  border-bottom-color: var(--rule-strong);
+}
+.runs__group th {
+  padding-top: var(--space-4);
+  font-weight: 600;
+  color: var(--ink);
+}
+.runs__counts,
+.runs__sub,
+.runs__outcome {
+  display: block;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+.runs__what {
+  font-weight: 500;
+  min-width: 12em;
+}
+.runs__receipt {
+  display: block;
+  font-weight: 400;
+}
+.runs__commit,
+.runs__date {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.runs__status {
+  font-weight: 600;
+}
+.runs__status--failed {
+  color: var(--fail);
+}
+.runs__none {
+  color: var(--ink-3);
+}
+.runs__list > summary,
+.runs__theorems > summary {
+  cursor: pointer;
+}
+.runs__inner {
+  width: 100%;
+  margin-top: var(--space-2);
+  border-collapse: collapse;
+}
+
+/* A figure drawn in black ink on a transparent ground keeps a paper ground in the dark scheme. */
+.paper-figure__image--ink {
+  width: min(100%, 40rem);
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+:root[data-theme="dark"] .paper-figure__image--ink {
+  background: #f6f1e7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .paper-figure__image--ink {
+    background: #f6f1e7;
+  }
+}
+
+/* A long Lean name in the Lean panel's head wraps instead of running under its buttons. */
+.lean-page__raw {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* On a phone each run is a card: its cells stack, each under the column's name. */
+@media (max-width: 37.5em) {
+  .runs__table,
+  .runs__table > tbody,
+  .runs__table > tbody > tr,
+  .runs__table > tbody > tr > th,
+  .runs__table > tbody > tr > td {
+    display: block;
+    width: auto;
+  }
+  .runs__table > thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .runs__table > tbody > tr {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .runs__table > tbody > tr > th,
+  .runs__table > tbody > tr > td {
+    padding: 2px 0;
+    border: 0;
+  }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td::before {
+    display: block;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(2)::before { content: "Where"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(3)::before { content: "Commit"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(4)::before { content: "Date"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(5)::before { content: "Outcome"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(6)::before { content: "What it shows"; }
+  .runs__table > tbody > tr.runs__row:not(.runs__row--summary) > td:nth-child(7)::before { content: "What it does not show"; }
+}
+
+/* Compare's goal menu: a long goal title ("Theorem A.1 (reciprocal-summable supports)") wraps
+   inside the side column instead of running over the step's head. */
+.pick--goal {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+}
+.pick--goal .pick__button {
+  white-space: normal;
+}
+
+/* A run's receipt link and its long code (a command, a hash) wrap inside their cell instead of
+   pushing the table past the window. */
+.runs__table code,
+.runs__table a {
+  overflow-wrap: anywhere;
+}
+.runs__inner {
+  table-layout: fixed;
+}
+
+/* No part of a paper pushes the page sideways. A formula not yet typeset (a part still on its way)
+   is its TeX source, which may wrap; once typeset it keeps its own rules. */
+.prose .math-nobreak:has(> .math-pending) {
+  white-space: normal;
+}
+.prose .math-pending {
+  overflow-wrap: anywhere;
+}
+
+/* On a phone the strip's statement count gives way to its arrows, as it does beside a named Back,
+   so the strip keeps to the window with the Text and PDF toggle in it. */
+@media (max-width: 479px) {
+  .reader-strip__steps > .num {
+    display: none;
+  }
+}

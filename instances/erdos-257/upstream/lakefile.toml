@@ -1,0 +1,154 @@
+# The package name is historical: this library began as two problems and the
+# module namespace `Erdos249257` is imported by every downstream file. Renaming
+# it to match the current eight-problem scope would rewrite the import graph of
+# the whole repository for cosmetic gain, so the name stays and the description
+# carries the current scope instead.
+name = "erdos249257"
+version = "0.10.0"
+description = "Lean 4 formalisation across eight Erdős problem programmes. The degree-seven counterexample found by the erdosproblems.com contributor ani refutes the total-variation formulation of Erdős #1041; this repository formalises it in Lean. The other seven target problems are not resolved here. Independent human review of correspondence with the historical curve-length formulation has not been recorded. Comparator checks only its selected exact statements, configured axioms and kernel acceptance; it does not assess novelty or historical correspondence."
+homepage = "https://github.com/wcook04/plectis-erdos"
+license = "Apache-2.0"
+licenseFiles = ["LICENSE"]
+readmeFile = "README.md"
+# Keywords are navigation, not claims. They name the mathematical territory the
+# eight problems actually occupy, which the previous list -- two problem numbers
+# from the original scope -- no longer did.
+keywords = [
+  "erdos-problems",
+  "number-theory",
+  "irrationality",
+  "series",
+  "prime-gaps",
+  "totient",
+  "lean4",
+  "mathlib",
+  "formalized-mathematics",
+]
+defaultTargets = ["Erdos249257", "ErdosProblems"]
+
+[leanOptions]
+pp.unicode.fun = true
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.29.1"
+
+[[lean_lib]]
+name = "Erdos249257"
+srcDir = "lean"
+
+# Problem-centric statements, built on the shared machinery in Erdos249257.
+[[lean_lib]]
+name = "ErdosProblems"
+srcDir = "lean"
+# FactorialZeroPlateau's exact gcd certificates exceed Lean's default
+# interpreter stack on the public Linux runner.  This is a compile-time
+# resource bound only, so keep it weak rather than invalidating proof traces.
+weakLeanArgs = ["--tstack=65536"]
+
+# Restartable #251 large finite certificate (250 kernel chunks + printed-floor
+# transport). Not a default target: CI builds it by naming
+# ErdosProblems.Erdos251.PaperLargeAuditR7, which imports the whole chain.
+# Its modules are named ErdosProblems.Erdos251.*, and Lake assigns a module to
+# the last declared library that claims it, so the globs below claim them for
+# this library and this block must stay after the ErdosProblems block.
+[[lean_lib]]
+name = "Erdos251LargeCertificate"
+srcDir = "verification/Erdos251LargeCertificate"
+globs = [
+  "ErdosProblems.Erdos251.GcdPrimality",
+  "ErdosProblems.Erdos251.PaperStreamingCertificateV5",
+  "ErdosProblems.Erdos251.StreamingChunksV5.+",
+  "ErdosProblems.Erdos251.PaperLargeStreamingV5",
+  "ErdosProblems.Erdos251.PaperLargeCertificateR7",
+  "ErdosProblems.Erdos251.PaperLargeAuditR7",
+]
+weakLeanArgs = ["--tstack=262144"]
+
+# Downstream consumer example (examples/Examples.lean). Not a default target:
+# CI builds it explicitly with `lake build Examples` after the library.
+[[lean_lib]]
+name = "Examples"
+srcDir = "research/examples"
+
+# Statement-isolated modules used by the external Comparator packet.  This is
+# intentionally not a default target: Challenge contains the trusted statement
+# holes, while CI asks Comparator to check Solution against them explicitly.
+[[lean_lib]]
+name = "ExternalVerification"
+srcDir = "verification"
+
+# A programme-local packet for one exact #1049 numerical certificate. It is
+# separate from the nineteen-interface headline packet so adding a focused
+# reviewer handle does not silently change the reviewed headline count.
+[[lean_lib]]
+name = "ExternalVerification1049"
+srcDir = "verification"
+
+# Statement forms belonging to other formal corpora, restated verbatim here and
+# derived from this library, so that an external `formal_proof` link resolves to
+# the exact proposition that corpus carries rather than a nearby one.  Not a
+# default target and not part of the mathematical corpus: these modules add no
+# mathematics, so counting their declarations among this library's own would
+# overstate it.  CI builds this explicitly after Erdos249257.
+[[lean_lib]]
+name = "FormalConjecturesAdapter"
+srcDir = "research/adapters"
+# `FormalConjecturesVariants` is the other direction: statements upstream does
+# not carry at all, offered as new `variants.*` declarations rather than as
+# proofs of existing holes. Same reason it is not a default target and not
+# counted as this library's own mathematics.
+globs = ["FormalConjecturesAdapter", "FormalConjecturesVariants", "FC1049HeightRegion", "FC1041SharpGap"]
+
+# Exact zero-indexed cubic-rate #243 statement bridge for Formal Conjectures.
+# CI builds this focused non-default target explicitly.
+[[lean_lib]]
+name = "FC243CubicRate"
+srcDir = "research/adapters"
+
+# Ground-truth fixtures for semantic residual evaluation.  Eight labelled proof
+# sketches over two elementary targets, including deliberate target-restatement
+# and false-residual specimens, used by `scripts/residual_evaluator.py` to check
+# that the evaluator vetoes what it should and abstains where it must.  Not a
+# default target and not part of the mathematical corpus: these are test
+# specimens, so counting their declarations among this library's own would
+# overstate it.  CI builds this explicitly.
+[[lean_lib]]
+name = "ResidualBench"
+srcDir = "research/residualbench"
+
+# Three solved polynomial families beneath the open Erdos #1041 problem: the
+# sharp collinear Chebyshev comparison kernel, the primitive quintic two-tail
+# energy selector, and the translated cubic quotient-fibre spoke.  The checked
+# kernels support, but are strictly weaker than, the ordinary analytic
+# theorems the paper assembles from them.  Not a default target.
+[[lean_lib]]
+name = "ExternalVerification1041SolvedFamilies"
+srcDir = "verification"
+globs = ["ExternalVerification1041SolvedFamilies.*"]
+
+# Statement-isolated interface for the checked Erdős #249 all-base totient
+# kernel basis and relation-module theorem.  Challenge carries the independent
+# statements; the proof-bearing and deliberate-negative modules are separate
+# libraries so Comparator can compare them without widening a default build.
+[[lean_lib]]
+name = "ExternalVerification249TotientKernelBasis"
+srcDir = "verification"
+globs = ["ExternalVerification249TotientKernelBasis.+"]
+
+[[lean_lib]]
+name = "Solutions"
+srcDir = "verification"
+globs = ["Solutions.+"]
+
+[[lean_lib]]
+name = "NegativeSolutions"
+srcDir = "verification"
+globs = ["NegativeSolutions.+"]
+
+# Non-default #243 density-validation library. Selected by
+# verification/erdos243-density-validation.json, not by the compact roots.
+[[lean_lib]]
+name = "Erdos243V5"
+srcDir = "research"
