@@ -1,0 +1,175 @@
+{
+ "schema_version": "1.2",
+ "stage": "short",
+ "state": "draft",
+ "path": "papers/short.md",
+ "content_sha256": "62ba85c0268de6b2c3c184bdaa0f57be2fe0e4a4de54a371d1db80fabd64829a",
+ "graph_sha256": "64b4bff49f4a37d69616e0b90f4914305cfb20c7c3287b1bc972500c7b211f5d",
+ "selected_goal_ids": [
+  "quartic.theorem-1"
+ ],
+ "claim_ids": [
+  "quartic.theorem-1",
+  "quartic.lemma-2",
+  "quartic.proposition-3",
+  "quartic.lemma-4",
+  "quartic.lemma-5"
+ ],
+ "citation_ids": [
+  "cite.lean.QuarticQuery.Amplification.bounded_amplification",
+  "cite.lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+  "cite.lean.QuarticQuery.Paper.quantumTournament",
+  "cite.lean.QuarticQuery.direct_product_average",
+  "cite.lean.QuarticQuery.direct_product_randomized",
+  "cite.lean.QuarticQuery.theorem_1_1_unconditional",
+  "cite.quartic.lemma-2",
+  "cite.quartic.lemma-4",
+  "cite.quartic.lemma-5",
+  "cite.quartic.proposition-3",
+  "cite.quartic.theorem-1"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "lean.QuarticQuery.Amplification.bounded_amplification",
+  "lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+  "lean.QuarticQuery.Paper.quantumTournament",
+  "lean.QuarticQuery.direct_product_average",
+  "lean.QuarticQuery.direct_product_randomized",
+  "lean.QuarticQuery.theorem_1_1_unconditional",
+  "quartic.lemma-2",
+  "quartic.lemma-4",
+  "quartic.lemma-5",
+  "quartic.proposition-3",
+  "quartic.theorem-1"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "7dcfe0f992093b56b2290717748ee1f1160e99d1aa7b48135292fc7585640cff",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: context with no numbered result."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "b14f9d983a770c7dc5aba580d92893da586b97b3f5b1ee832734361632937949",
+   "claim_ids": [
+    "quartic.theorem-1"
+   ],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.theorem_1_1_unconditional",
+    "cite.quartic.theorem-1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "1. Introduction: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "af417bb282523f013b887736d1927571ea921d7ba6604de106c197f0794fc0d7",
+   "claim_ids": [
+    "quartic.lemma-2"
+   ],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+    "cite.quartic.lemma-2"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "2. Preliminaries: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "d3595774cdb50c93f7cd31a7a0e3e425343d055800245207585b3070f89e4c97",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "3. The function: context with no numbered result."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "eb6c5a39b9ad55077b23457d941ebf31e463141ef692a8cd75f24dd93c2c33c8",
+   "claim_ids": [
+    "quartic.proposition-3",
+    "quartic.lemma-4"
+   ],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.Amplification.bounded_amplification",
+    "cite.lean.QuarticQuery.Paper.quantumTournament",
+    "cite.quartic.lemma-4",
+    "cite.quartic.proposition-3"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "4. The quantum upper bound: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "97aa964583bff7ae30b64848f5384e741645c47d447af3cff56e77dd42c65dc8",
+   "claim_ids": [
+    "quartic.lemma-5"
+   ],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.direct_product_average",
+    "cite.lean.QuarticQuery.direct_product_randomized",
+    "cite.quartic.lemma-5"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "5. The randomized lower bound: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "10b1f47aabd59d09e6e858b8e56b4f5405a47ee9f6f6bb9e67bef08a7b28919c",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "6. The optimal exponent: context with no numbered result."
+  },
+  {
+   "anchor": "sec-7",
+   "text_sha256": "31d01dbf3cc23342a80fe1e14b91838bdf4027d957cbfa8fd26edf3453c06fd9",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "7. Further results in the reconstruction: context with no numbered result."
+  },
+  {
+   "anchor": "sec-8",
+   "text_sha256": "6e3b4392c6b7626b2d7d5c077e474f32138ee3fd80f1f9b704438012e462834f",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "8. Verification and reproducibility: context with no numbered result."
+  },
+  {
+   "anchor": "sec-references",
+   "text_sha256": "1a552d55750f37ccda8ccd4e41b611167d1653ecbd0bd9f670802185b182b8b8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "References: context with no numbered result."
+  },
+  {
+   "anchor": "sec-notes",
+   "text_sha256": "3d9b6b03b3997f9035dfd5ca71afe9058d29b7974f87e2293c485dcd0f238db2",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Notes: context with no numbered result."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}

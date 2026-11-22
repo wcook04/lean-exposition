@@ -1,0 +1,11 @@
+{
+ "schema": 1,
+ "passages": {},
+ "claims": {
+  "theorem-1": "theorem-1",
+  "lemma-2": "lemma-2",
+  "proposition-3": "proposition-3",
+  "lemma-4": "lemma-4",
+  "lemma-5": "lemma-5"
+ }
+}

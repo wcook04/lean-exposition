@@ -822,6 +822,14 @@ html.is-reading {
   .reader-strip {
     top: 0;
     transition: transform var(--t-state) var(--ease-out);
+    /* Its controls need more than a phone's width (Graph and Lean, Sections, Text and PDF,
+       "Statement 8 of 999"): the statement steps take a second row, flush right, instead of
+       pushing the page sideways. */
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .reader-strip__steps {
+    margin-left: auto;
   }
   .reader-strip[data-away] {
     transform: translateY(-100%);
@@ -1550,8 +1558,10 @@ html.is-reading {
   font-weight: 600;
 }
 
+/* Expand: the formula across the window, fitted to it; it never scrolls (PaperBody.tsx). */
 .modal--formula {
-  width: min(1200px, calc(100vw - 32px));
+  width: calc(100vw - 32px);
+  max-width: none;
 }
 
 .modal__body.formula-full {
@@ -1922,13 +1932,13 @@ html.is-reading {
 
 /* A numbered display (\tag) needs the full width of its box, or the number
    is drawn over the formula. */
-.prose .math-display > .katex-display:has(.katex-tag, .tag) > .katex {
+.prose .math-display:not([data-number]) > .katex-display:has(.katex-tag, .tag) > .katex {
   display: block;
 }
 
 .math-cue {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: var(--space-3);
   margin: calc(-1 * var(--space-3)) 0 var(--space-4);

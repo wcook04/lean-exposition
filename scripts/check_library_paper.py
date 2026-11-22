@@ -7,8 +7,8 @@ For each window size, from a cold browser: the paper's top opens and its first u
 appears within the load budget; clicking a phrase opens its card with the comparison and note,
 and the address names the phrase; topic colours show (several distinct tones); the Graph view
 draws; each kind of address (numbered result, phrase, Lean declaration, section) opens what it
-names; the Open PDF link opens the PDF in a new tab and the file is a PDF; display formulas that fit
-do not scroll; the front matter carries the AI notice (--notice). Then at 800, 1000, 390, 360 and
+names; the Open PDF link opens the PDF in a new tab and the file is a PDF; display formulas lie
+inside their columns and never scroll; the front matter carries the AI notice (--notice). Then at 800, 1000, 390, 360 and
 320 px: the header's controls do not overlap and Search and Menu stay inside the window.
 Needs Playwright for Python with Chromium. Exits 1 if any check fails.
 """
@@ -27,18 +27,18 @@ from playwright.sync_api import sync_playwright
 SIZES = [(1440, 900), (2560, 1440)]
 
 
-# Every fitted display formula: one whose formula and equation number fit its column (measured
-# from KaTeX's pieces and number, not from scrollWidth, which counts KaTeX's 2px strut past a
-# number's edge) neither scrolls nor offers the "Scroll formula" row; one that does not fit offers it.
-MATHS = """() => [...document.querySelectorAll('.prose .math-display[data-overflow]')].map((box, i) => {
+# Every display formula near the screen (fitted as it comes within 900px): its formula and
+# equation number lie inside its column (measured from KaTeX's pieces and number, not from
+# scrollWidth, which counts KaTeX's 2px strut past a number's edge), it does not scroll, and no
+# "Scroll formula" control exists. A display shrunk below its floor offers Expand instead.
+MATHS = """() => [...document.querySelectorAll('.prose .math-display')].filter(box => box.getClientRects().length && box.getBoundingClientRect().top < innerHeight + 600).map((box, i) => {
   const html = box.querySelector(':scope > .katex-display > .katex > .katex-html');
-  const parts = html ? [...html.querySelectorAll(':scope > .katex-base, :scope > .math-seg > .katex-base, :scope > .katex-tag, :scope > .tag')] : [];
+  const parts = html ? [...html.querySelectorAll(':scope > .katex-base, :scope > .katex-tag, :scope > .tag')] : [];
   const start = box.getBoundingClientRect().left + box.clientLeft - box.scrollLeft;
   const extent = parts.length ? Math.max(...parts.map(p => p.getBoundingClientRect().right - start)) : box.scrollWidth;
-  const cue = box.nextElementSibling && box.nextElementSibling.classList.contains('math-cue') && !box.nextElementSibling.hidden;
-  const fits = extent <= box.clientWidth + 1;
-  const ok = fits ? box.scrollWidth <= box.clientWidth && !cue && box.dataset.overflow === 'false' : cue && box.dataset.overflow === 'true';
-  return ok ? null : `#${i} ${box.textContent.slice(-12)}: extent ${extent.toFixed(1)}, scrollWidth ${box.scrollWidth}, clientWidth ${box.clientWidth}, cue ${cue}`;
+  const scroller = ['auto', 'scroll'].includes(getComputedStyle(box).overflowX) && box.scrollWidth > box.clientWidth + 1;
+  const ok = extent <= box.clientWidth + 1 && !scroller && !document.querySelector('.math-cue__scroll');
+  return ok ? null : `#${i} ${box.textContent.slice(-12)}: extent ${extent.toFixed(1)}, scrollWidth ${box.scrollWidth}, clientWidth ${box.clientWidth}`;
 }).filter(Boolean)"""
 
 # The front matter's line naming who made what, wherever this width puts it.
@@ -58,6 +58,7 @@ def main() -> int:
     ap.add_argument("--section", default="5.6")
     ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
     ap.add_argument("--notice", default="made with AI", help="words of the AI notice the front matter must show at every width")
+    ap.add_argument("--no-pdf", action="store_true", help="the main document has no PDF: expect no Open PDF link and no toggle")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
     args = ap.parse_args()
@@ -101,7 +102,10 @@ def main() -> int:
             # Clicking a phrase opens its card and its Lean.
             tie = page.locator(".paper .tie[data-tone]").nth(1)
             tie.scroll_into_view_if_needed()
-            tie.click()
+            # A phrase that wraps over lines has a bounding box whose centre can fall between its
+            # lines; click its first line, where a reader would.
+            first = tie.evaluate("e => { const r = e.getClientRects()[0]; return {x: r.left + Math.min(8, r.width / 2), y: r.top + r.height / 2}; }")
+            page.mouse.click(first["x"], first["y"])
             page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
             card = page.locator(".phrase-card").first
             card.wait_for(timeout=15000)
@@ -175,7 +179,11 @@ def main() -> int:
             link = page.locator("a", has_text="Open PDF").first
             href = link.get_attribute("href") if link.count() else None
             target = link.get_attribute("target") if link.count() else None
-            check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and target == "_blank"), f"href={href} target={target}")
+            if args.no_pdf:
+                # The main document has no PDF: the reader offers no Open PDF link.
+                check(f"{tag} no open pdf link", href is None, f"href={href}")
+            else:
+                check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and target == "_blank"), f"href={href} target={target}")
             if href:
                 url = href if href.startswith("http") else page.url.split("/library/")[0] + href
                 with urllib.request.urlopen(url.split("#")[0]) as response:
@@ -310,7 +318,13 @@ def main() -> int:
             context = browser.new_context(viewport={"width": width, "height": height})
             page = context.new_page()
             page.goto(base + "?view=pdf&page=1")
-            page.wait_for_selector(".reader-strip .view-toggle", timeout=60000)
+            page.wait_for_selector(".paper .tie, .reader-strip .view-toggle", timeout=60000)
+            page.wait_for_timeout(1500)
+            if not page.locator(".reader-strip .view-toggle").count():
+                # A main document with no PDF has no toggle and no PDF view to check.
+                report[f"{tag} strip"] = {"ok": True, "detail": "no PDF: no Text | PDF toggle"}
+                context.close()
+                continue
             page.wait_for_timeout(1500)
             clash = page.evaluate("""() => {
                 const els = [...document.querySelectorAll('.reader-strip .crumbs li, .reader-strip .reader-strip__hint, .reader-strip .view-toggle, .reader-strip > button, .reader-strip .reader-strip__steps, .reader-strip .sections-toggle')]

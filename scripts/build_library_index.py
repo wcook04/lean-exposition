@@ -419,6 +419,8 @@ def main() -> None:
             pdf = (main_doc.get("pdf") or {}).get("url")
             if pdf:
                 pages.append({"title": "The authors’ PDF", "href": pdf})
+            # Further pages the index entry names itself (papers.json `pages`), after the instance's own.
+            pages += item.get("pages", [])
             counts, search = library_facts(out, inst) if (out / paper / "edition").exists() else ({}, None)
             entry = {
                 "id": paper, "title": inst["title"], "authors": inst["authors"], "href": f"{BASE}{paper}/",

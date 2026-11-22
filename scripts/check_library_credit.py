@@ -28,6 +28,9 @@ ap.add_argument("--section", help="the section that states --statement, opened b
 ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
+ap.add_argument("--licence", default="none stated by the authors; hosted with credit to them, to Anthropic and to their repository",
+                help="words of the licence line About must show")
+ap.add_argument("--no-pdf", action="store_true", help="the paper has no PDF: expect no Open PDF link and skip the PDF view")
 a = ap.parse_args()
 base = a.base.rstrip("/") + "/"
 credit = a.credit_file.read_text().strip()
@@ -82,13 +85,16 @@ with sync_playwright() as pw:
             seen |= set(page.eval_on_selector_all(".paper .tie[data-tone]", "els => els.map(e => getComputedStyle(e).textDecorationColor + '|' + e.dataset.tone)"))
         tones = len({x.split("|")[1] for x in seen})
         check(f"{tag} topic colours", tones >= 6, f"{tones} distinct tones")
-        # Open PDF.
+        # Open PDF (or, for a paper with no PDF, no such link).
         link = page.locator("a", has_text="Open PDF").first
-        href, target = link.get_attribute("href"), link.get_attribute("target")
-        url = href if href.startswith("http") else base.split("/library/")[0] + href
-        with urllib.request.urlopen(url.split("#")[0]) as r:
-            check(f"{tag} open pdf", target == "_blank" and r.status == 200 and r.headers.get("Content-Type", "").startswith("application/pdf"),
-                  f"{href} target={target} {r.status} {r.headers.get('Content-Type')}")
+        if a.no_pdf:
+            check(f"{tag} no open pdf", not link.count(), "an Open PDF link on a paper with no PDF")
+        else:
+            href, target = link.get_attribute("href"), link.get_attribute("target")
+            url = href if href.startswith("http") else base.split("/library/")[0] + href
+            with urllib.request.urlopen(url.split("#")[0]) as r:
+                check(f"{tag} open pdf", target == "_blank" and r.status == 200 and r.headers.get("Content-Type", "").startswith("application/pdf"),
+                      f"{href} target={target} {r.status} {r.headers.get('Content-Type')}")
         # A statement click opens its card, comparison and Lean. The reader renders the text near the
         # reader, so the check opens the paper at the statement's section first.
         page.goto(base + (f"#{a.section}" if a.section else ""), wait_until="domcontentloaded")
@@ -142,17 +148,18 @@ with sync_playwright() as pw:
               f"{dashed} dashed; key: {key[:80]}; why: {why[:120]}")
         page.screenshot(path=str(a.shots / f"graph-routes-{tag}.png"))
         # PDF view.
-        page.goto(base + "?view=pdf&page=1", wait_until="domcontentloaded")
-        page.wait_for_timeout(5000)
-        canv = page.eval_on_selector_all("canvas", "els => els.length")
-        check(f"{tag} pdf view", canv > 0, f"{canv} canvases")
-        page.screenshot(path=str(a.shots / f"pdf-view-{tag}.png"))
+        if not a.no_pdf:
+            page.goto(base + "?view=pdf&page=1", wait_until="domcontentloaded")
+            page.wait_for_timeout(5000)
+            canv = page.eval_on_selector_all("canvas", "els => els.length")
+            check(f"{tag} pdf view", canv > 0, f"{canv} canvases")
+            page.screenshot(path=str(a.shots / f"pdf-view-{tag}.png"))
         # About.
         page.goto(base + "about/", wait_until="domcontentloaded")
         page.wait_for_timeout(2500)
         about = page.inner_text("body")
         check(f"{tag} about credit once", about.count(credit) == 1, f"{about.count(credit)} times")
-        check(f"{tag} about licence", "none stated by the authors; hosted with credit to them, to Anthropic and to their repository" in about, "")
+        check(f"{tag} about licence", a.licence in about, a.licence)
         check(f"{tag} about AI", "AI-assessed" in about and "AI-drafted" in about and "No mathematician has reviewed" in about, "")
         page.screenshot(path=str(a.shots / f"about-{tag}.png"), full_page=True)
         for slot in a.companion:

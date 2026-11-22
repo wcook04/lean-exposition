@@ -421,10 +421,15 @@ unrelated text.
   "Uses" and "Used by" walk the argument in either direction. On a phone the levels stack,
   with tabs to jump between them.
 
-Going between the two keeps the step. Pressing a level keeps the row in view. A formula that
-is too wide shrinks, then breaks at a relation sign; a cases or aligned block never breaks,
-because its rows and brace would come apart, so it keeps its shape and scrolls in its own box
-with a cue and Expand.
+Going between the two keeps the step. Pressing a level keeps the row in view. Nothing in the
+reader scrolls sideways. A display formula that is too wide shrinks, to 88% of its size at
+most, its equation number keeping its own size; then it breaks at its top level only, never
+inside brackets or an environment: first between independent formulas joined by a comma and a
+quad, then before each relation sign as aligned lines, then at a plus or minus with a hanging
+indent, its number on the last line (`texBreaks.ts`). A display with no such break (a cases or
+aligned block) shrinks until it fits and offers Expand, a dialog across the window that shows
+it as large as the window allows and closes with Escape. Tables wrap their cells and code wraps
+in its block.
 
 ## The Lean index
 

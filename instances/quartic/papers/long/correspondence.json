@@ -1,0 +1,224 @@
+{
+ "schema_version": "1.2",
+ "stage": "long",
+ "state": "draft",
+ "path": "papers/long.md",
+ "content_sha256": "806053e019b394fdff0c88914564f8211e037c58b65d06b8bf0cea131d4863c0",
+ "graph_sha256": "64b4bff49f4a37d69616e0b90f4914305cfb20c7c3287b1bc972500c7b211f5d",
+ "selected_goal_ids": [
+  "quartic.theorem-1"
+ ],
+ "claim_ids": [
+  "quartic.theorem-1"
+ ],
+ "citation_ids": [
+  "cite.lean.QuarticQuery.theorem_1_1_unconditional",
+  "cite.quartic.theorem-1"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "lean.QuarticQuery.theorem_1_1_unconditional",
+  "quartic.theorem-1"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "be41f9be2a0e6d988ec0f7de60e7ddfbcf3230cf66c35fa11dd0e644ca660153",
+   "claim_ids": [
+    "quartic.theorem-1"
+   ],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.theorem_1_1_unconditional",
+    "cite.quartic.theorem-1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "d5c3ce9231e8508f778bb7022635a0cd314d920bf3759ddfbaaf0d211fc4b773",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "1. The theorem and the construction: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "61746aa71df85d80023c51421715ae1a23c482b65effcaadf651d404eef89e8f",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "2. The query model and the address bits: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "b04d1e89fb688ffcee10059521eecebb39b1111bd6eaabfd5b9b551e03f23071",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "3. The partial function defining the addresses: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "41d26f9259b1c309c7767ac18bee3703f5f1ccba512b66198ae38563a6586c8c",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "4. Transcripts, addressed certificates, and the total function: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "eff4124d7ee05b326caaa84b77e9f9990994c23f660913591ad6366882741d90",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "5. Choosing a candidate before verifying it: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "b1a8ed3d34593568ddee76c242cacba8adc04d1d26afc00ed725bd63525b6ce8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "6. The classical lower bound: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-7",
+   "text_sha256": "f1537f9bfd783d65ee4eeb28fef281ad24aa2b2a225161bb74c283d558543cb9",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "7. The optimal exponent: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-8",
+   "text_sha256": "b36748c607a3771d358ad35e087afe39aa075a459ca75271b2b56c290c6ea012",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "8. Why Forrelation is hard: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-conclusion",
+   "text_sha256": "c6ca44daa1a235abd2474fd2b5c87863d0506f7e1bdb90374b5aa972fd5dd239",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Conclusion: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-a",
+   "text_sha256": "1d7b1a8e9ec34346c764340637c45c8115cd0d31c08c1fff0533d7d437c3823e",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix A. The universal quartic bound: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-b",
+   "text_sha256": "8d17754a7e7758c7b82dec1c7e519336321d6c9ea245e4acc3fae128e2bd8682",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix B. Alternative classical arguments: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-c",
+   "text_sha256": "4d59cddadf8508d0b1beedf36292ea7552bea28523d14beb2f33a3acb25c9064",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix C. Quantitative refinements: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-d",
+   "text_sha256": "78fda111e6c6464b63055154825ef887835e1265093e9bb1bbee8cb73648f12f",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix D. Antecedents and comparisons: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-e",
+   "text_sha256": "d8f36000490fee52234050e0afeb462f9486fbdba8697e5857ed8951cb8c8a99",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix E. Supporting quantum proofs: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-f",
+   "text_sha256": "4bb6250b8c387af6b120c215e54829cc06856de6bce1b2b80162dfb73b800392",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix F. Finite query models and changes of convention: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-appendix-g",
+   "text_sha256": "f78d2f3c7a5255adbfea327473d73810adcc94e869bd9e4480f11e4297cf4372",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix G. Computing and certifying the Walsh promise: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-correspondence-with-openai-s-preprint",
+   "text_sha256": "2bc302b177f40dec87ba2de36f0a4e8b0b7926155afeb3b1255c094720d1ee6b",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Correspondence with OpenAI’s preprint: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-relation-to-the-formal-proofs",
+   "text_sha256": "4be5a15a7e3fd07d7c6c585f8533433c638a7c205607d61477e7cd3783907542",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Relation to the formal proofs: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-use-of-ai-tools",
+   "text_sha256": "fa60832c0c8d2bddb878dd80b3d8e20dc04ddb68d00af9a8987364866d24915e",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Use of AI tools: a companion account of the paper; its links to the Lean are its phrase ties."
+  },
+  {
+   "anchor": "sec-references",
+   "text_sha256": "8155f8916217bc96dd149a6fa491e31086572c1a3a2603bbc2aa25e50f1c5fdf",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "References: a companion account of the paper; its links to the Lean are its phrase ties."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}
