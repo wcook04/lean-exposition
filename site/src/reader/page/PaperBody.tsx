@@ -939,7 +939,9 @@ function expandFormula(box: HTMLElement, opener: HTMLElement): void {
   dialog.append(inner);
   // Inside the page's theme and type, next to the formula's own styles.
   (box.closest(".reader, .panel, .pane") ?? document.body).append(dialog);
+  let unfit = () => {};
   const close = () => {
+    unfit();
     dialog.close();
     dialog.remove();
     if (opener.isConnected) opener.focus({ preventScroll: true });
@@ -951,7 +953,8 @@ function expandFormula(box: HTMLElement, opener: HTMLElement): void {
   dialog.addEventListener("click", (event) => event.target === dialog && close());
   inner.querySelector<HTMLButtonElement>(".modal__close")!.addEventListener("click", close);
   dialog.showModal();
-  fitDisplay(copy);
+  // Fitted like the paper's displays, and again if the dialog settles at another width.
+  unfit = markWideMaths(body);
   inner.querySelector<HTMLElement>(".modal__title")!.focus({ preventScroll: true });
 }
 
