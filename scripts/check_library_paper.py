@@ -101,7 +101,9 @@ def main() -> int:
             # Clicking a phrase opens its card and its Lean.
             tie = page.locator(".paper .tie[data-tone]").nth(1)
             tie.scroll_into_view_if_needed()
-            tie.click()
+            # A phrase that wraps over lines has its box's centre between them: click inside its first line.
+            box = tie.evaluate("el => { const r = el.getClientRects()[0]; return { x: r.left + Math.min(r.width / 2, 20), y: r.top + r.height / 2 }; }")
+            page.mouse.click(box["x"], box["y"])
             page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
             card = page.locator(".phrase-card").first
             card.wait_for(timeout=15000)
