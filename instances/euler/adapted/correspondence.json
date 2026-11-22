@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "389e720c02ad84ba87de2869027c432d923e3796de37b78170642c05a6a4afe9",
+ "content_sha256": "903b9389d5182a6080f1474ca4fc22570857c8fe00a5d4364d20fac9e84a323b",
  "graph_sha256": "db48fdd5ba2604749972848ed79e43c2768fdab18b46be5a44ed5375dec0afe1",
  "selected_goal_ids": [
   "euler.theorem-1.1"
@@ -336,7 +336,7 @@
   },
   {
    "anchor": "sec-finite-time-singularity-formation-for-the-three-dimensional-euler-equations",
-   "text_sha256": "8b659e809310413e63eadab95a79ab7b952c6152163e637c3f180ee6c4f36632",
+   "text_sha256": "e68500796c23ae16187a87904e4e443ef50efca5b5b34cccb5c1c617ae0dcd0f",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -345,7 +345,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "93813b3544c923281f047837e11ef3ed43aaa955111d2a33fc9bd60fcb1ac5ae",
+   "text_sha256": "e1b5549dbf5f6efee94ae20ca70dd2dc3c733cc3db56cf692b9a4438f9c5e71e",
    "claim_ids": [
     "euler.theorem-1.1",
     "euler.remark-1.2",
@@ -493,7 +493,7 @@
   },
   {
    "anchor": "sec-2",
-   "text_sha256": "7e6f0d95571d0df539d1562753191c7b3329cee44647b827fd14b068f282b793",
+   "text_sha256": "c89a2ad053fbba52d9c734bb5bc48a82ab8e6ba6b4158696e68e80d44b4592c5",
    "claim_ids": [
     "euler.lemma-2.1",
     "euler.lemma-2.2",
@@ -573,7 +573,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "8292de2e9fa674ca4028a86004abd0f43ecedceed40de861dad268cb4d8b8cd1",
+   "text_sha256": "6361b4b680e15ea1cf9a65744f09344f5b769a8a7b9e1d6544dece6d60e25979",
    "claim_ids": [
     "euler.proposition-5.1",
     "euler.proposition-5.2",
@@ -799,7 +799,7 @@
   },
   {
    "anchor": "sec-8",
-   "text_sha256": "755f0958b9b2334f1e00a5659eaeb624c2c08d694dc24c078a1123a8073c08aa",
+   "text_sha256": "470713c9dc0eb40862e8f3972185582951b422425ae3ac1d520a9cc5f05bd485",
    "claim_ids": [
     "euler.proposition-8.1",
     "euler.proposition-8.2",
@@ -1022,7 +1022,7 @@
   },
   {
    "anchor": "sec-references",
-   "text_sha256": "481d1c901a7d8f91766f190f25938f959e649e10be8ac863a1fcae6ba4696846",
+   "text_sha256": "95727138f3ce1fd310bbaa6688f49d8b7cfbacdde2c404cbb50164254d83ba59",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

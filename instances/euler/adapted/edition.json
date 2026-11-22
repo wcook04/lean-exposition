@@ -19,8 +19,8 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "sha256": "55f27c96dbbafc6016e9ddcbe290e2fdda90cb002b4d0d2ffcbe20c0378b5915",
-   "bytes": 821178
+   "sha256": "3fd3257862a38fe98735b77d8e5ed1f58ed7b4a0ae2ab941e4c963b413ffaee2",
+   "bytes": 828271
   },
   "aux_pdf": {
    "file": "aux.pdf",
@@ -30,33 +30,33 @@
    "bytes": 139966
   },
   "release": {
-   "version": 5,
+   "version": 6,
    "date": "2026-11-22",
    "notes": [
-    "Explains how the wave turns after its amplitude peak and which shear is available for the next launch.",
-    "Corrects the level-by-level forcing description and derives the terminal spatial Hölder bound."
+    "Distinguishes the reference amplitude peak from the successor crossing and identifies the gradient used at each step.",
+    "Gives the terminal vorticity and global spatial Hölder conclusions a separate subsection and provides a full citation for the latter."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "euler-adapted-v5.pdf",
+   "name": "euler-adapted-v6.pdf",
    "label": "Reading copy",
-   "sha256": "fd93dd08d460a5d2599993c15ca37debac75f757bbfd17b9069e7e84a751f199",
-   "bytes": 570843
+   "sha256": "2930cf14010ae99936e409deeb6dcbb95f0dd0875f7b2d99dc74421c81897bd5",
+   "bytes": 576148
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "sha256": "f0907c67160358c15599c1708ae6835b0709cb70fff37ec60feaeffe30ee5e57",
+    "sha256": "72a798bcfd2c7042dde2a2d28ff0669462afe4c49f880ae6a5e03554e0f0230c",
     "bytes": 110323
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "sha256": "d31ec85bf42341324f011b47fd8a7299f68c039be670840fbd4faa1fcc28110c",
+    "sha256": "e51478fc52cce228d4013ef1a7f07537b7bd5ad1590ac2f01767a92a62570c7c",
     "bytes": 139462
    }
   },
@@ -64,15 +64,15 @@
    "file": "aux-reading.pdf",
    "name": "euler-adapted-auxiliary-v5.pdf",
    "label": "Auxiliary note",
-   "sha256": "2d1938d2a9d58b34a8a94d3eeaec6bb82fffa6cd86ef262b7623b59acf09ea7e",
+   "sha256": "3f62659895e1b38fefe3fbb8804df8dff357d5ccf4278ee9c007da264a65e378",
    "bytes": 108998
   },
   "source_overlay": {
    "file": "source-overlay.zip",
    "name": "euler-adapted-v5-source-overlay.zip",
    "label": "TeX revisions against the authors’ source",
-   "sha256": "cb626ff46545c28dad963db639307a46c1f425ac5861cf9a79c24ea32d5cb47d",
-   "bytes": 73264
+   "sha256": "0d67af71edb2a9fd0bdaf87f99671bbfdaf84bd8a6a9f843ae2206d2d2da4b49",
+   "bytes": 74325
   }
  }
 }

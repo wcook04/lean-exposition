@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "9db458383f733a4fe57ee2bb6ea9c975087429706fb905b5c20e3592ea87038a",
+ "content_sha256": "3c0a7135ba9a377316b0295055b5e28b1feec4ba56245a3baec3942cf812b56d",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -470,7 +470,7 @@
   },
   {
    "anchor": "sec-finite-time-blow-up-for-the-navier-stokes-equations",
-   "text_sha256": "7a928a6c62d1ffd46f04a5d42c4cf4b8ed73a8749bbb38862443a6cabdfc0772",
+   "text_sha256": "1eaf9634e18a630cf0f02d10da83e48f94458009aecd7bbe4f3849ad4501dd5a",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -488,7 +488,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "18b0edf17bd2ec82f492aac0ed1252d51ca662ed6c4f9e0ab38b05f707cfb07d",
+   "text_sha256": "7beef5c63ce54fb1c2a62a9395eb1d69e8afef3fa60a27013307e2e32d44e49e",
    "claim_ids": [
     "navier-stokes.theorem-1.1"
    ],
@@ -783,7 +783,7 @@
   },
   {
    "anchor": "sec-4",
-   "text_sha256": "b69e17522694ff0ec4779c630e7c549936ad43994eb974cdb5ef593f2bf853f3",
+   "text_sha256": "232bed49a45fa2b85c0ecaabcd20aa8ca09d91013e684438255c547ce060c55c",
    "claim_ids": [
     "navier-stokes.proposition-4.1",
     "navier-stokes.lemma-4.2",
@@ -983,7 +983,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "1600e0068cc7db52d88b3d8367be8e83e2fcbc3ff9667f6af957554de16c46c9",
+   "text_sha256": "b8b4e5ba90119439560ae39606ca502c8d38de8c372ad0a487b88966998eb941",
    "claim_ids": [
     "navier-stokes.theorem-7.1",
     "navier-stokes.corollary-7.2",
@@ -1152,7 +1152,7 @@
   },
   {
    "anchor": "sec-appendix-b",
-   "text_sha256": "74e8b80ab871913ee09c846c6e7d9580633f638a5fbd90a52e530a492a53886a",
+   "text_sha256": "d5ef999c253380449c30ea35f74ee6ec15b59a0397812e87c35cfe225b6f89dc",
    "claim_ids": [
     "navier-stokes.proposition-b.1",
     "navier-stokes.lemma-b.2",
@@ -1328,7 +1328,7 @@
   },
   {
    "anchor": "sec-appendix-c",
-   "text_sha256": "9918218dd7534009636a9c846bb4968a731738f5ffd94b75dca209e90bd66ca8",
+   "text_sha256": "5db73fc875f1f711c3c054ed67d5c302536cfdbc11e400b115f16b5f41635438",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

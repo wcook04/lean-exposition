@@ -55,7 +55,7 @@
    "name": "",
    "lines": [
     1,
-    2118
+    2166
    ],
    "source_commit": "3858afbe00b23dd8bba13ffa41409310b712723d",
    "topics": [
@@ -1913,8 +1913,8 @@
   },
   {
    "id": "adapted.N1-04.1",
-   "from": "Advancing $s$ by $S$ multiplies the remaining time by $e^{-S}$ and the spatial scale by $e^{-S/2}$.",
-   "to": "Advancing $s$ by $S$ multiplies the remaining time by $e^{-S}$ and the spatial scale by $e^{-S/2}$.",
+   "from": "From one return to the next, the remaining time shrinks by $e^{-S}$, lengths shrink by $e^{-S/2}$ and speeds grow by $e^{S/2}$.",
+   "to": "From one return to the next, the remaining time shrinks by $e^{-S}$, lengths shrink by $e^{-S/2}$ and speeds grow by $e^{S/2}$.",
    "role": "explanation",
    "topic": "profile",
    "status": "new",

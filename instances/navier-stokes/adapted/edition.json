@@ -19,37 +19,37 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "sha256": "f6ddb259bddeb50494af6f4975ec541d73ab05299d27ce9d24db574cf82ea462",
-   "bytes": 1208319
+   "sha256": "be54ef47b75d359f9de108a45810b6f4a6a0bc06b4884fd88791d0d66c3213fd",
+   "bytes": 1220170
   },
   "release": {
-   "version": 4,
+   "version": 5,
    "date": "2026-11-22",
    "notes": [
-    "Introduces the scalar recurrence before the spectral argument.",
-    "Works through the cell flux moment and the weighted Fourier estimate in Appendix B."
+    "Shows how recurrence in similarity variables shrinks the physical length scale and increases the velocity.",
+    "Distinguishes the initial-data correction from the periodic-profile correction and identifies how the logarithmic phase enters both the domain and the far field."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "navier-stokes-adapted-v4.pdf",
+   "name": "navier-stokes-adapted-v5.pdf",
    "label": "Reading copy",
-   "sha256": "3481157269c104087941cfbe8c168b347bb875f062b12e74bd1d8b7e5c59236a",
-   "bytes": 1148901
+   "sha256": "ba1707cd6055c39e660b023c547da89ca6766e97226cc944ca38b4203555b086",
+   "bytes": 1158661
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "sha256": "6976a72d97a3332b447c1665076b7bb90d11270024b8f56ec494e8fbda0a6606",
+    "sha256": "d34e60fa85ac8933c3e6936cbf5074f3a2c8256c314faeefe5187d66dcafbefc",
     "bytes": 56499
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "sha256": "24391101c1320d1b4743875c86f9fb873159f85786940b946ce80014c4bffaab",
+    "sha256": "5c319b03dac0bc58ae573fce75932d82b9858b04f70c9fa6fd23818027ae497c",
     "bytes": 109572
    }
   }
