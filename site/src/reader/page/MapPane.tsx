@@ -328,7 +328,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   };
   // The Lean view with nothing to show, or the graph with no subject of its own: the whole map, in
   // the view the reader chose, until a linked paragraph or a click gives it a subject again.
-  const unlinked = !leanSlot && (mode === "lean" ? !preview && !hasLean(leanOpen) : !fresh);
+  // Only a paragraph actually open (read at the line, clicked or pinned) can be unlinked; with
+  // nothing open the graph keeps its opening neighbourhood.
+  const opened = !!(pin || decl || held || anchor);
+  const unlinked = !leanSlot && opened && (mode === "lean" ? !preview && !hasLean(leanOpen) : !fresh);
 
   // ---- The whole proof map, one button away ------------------------------------------------
 

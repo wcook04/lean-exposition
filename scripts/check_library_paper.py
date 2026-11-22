@@ -244,6 +244,28 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
         check(f"unlinked {doc or 'paper'} opening, cold", ok, detail)
         shoot(page, f"unlinked-cold-{doc.strip('/') or 'paper'}")
         context.close()
+    # An exact address of a paragraph with nothing tied, opened cold on the Lean view: the whole map,
+    # and the address and the map stay so with no reader action, never a neighbouring paragraph's Lean.
+    for spec in args.unlinked_address:
+        doc, at = spec.split("|")
+        doc = doc.strip("/") + "/" if doc.strip("/") else ""
+        name = f"unlinked {doc or 'paper'} address {at}"
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        if not open_page(page, base + doc + f"?l={at}&v=lean"):
+            report_skip(name)
+            context.close()
+            continue
+        first, detail = unlinked_ok(pane(page, True))
+        # Past the follow's hold and the address timer: nothing may move it on.
+        page.wait_for_timeout(5000)
+        later, later_detail = unlinked_ok(page.evaluate(PANE))
+        kept = f"l={at}" in page.url
+        explained = "Explained here" in page.evaluate("() => document.querySelector('.map-pane')?.textContent ?? ''")
+        check(name, first and later and kept and not explained,
+              f"at once: {detail}; after 5 s: {later_detail}; address {page.url.split('?', 1)[-1]!r}; 'Explained here' {explained}")
+        shoot(page, f"unlinked-address-{doc.strip('/') or 'paper'}-{at}")
+        context.close()
     # A numbered display clicked on the Lean view (its equation number, "1.1"): its declaration.
     for spec in args.linked_equation:
         doc, tag, *source = spec.split("|")
@@ -402,6 +424,8 @@ def main() -> int:
                     help="a paragraph linked to Lean: clicked, and its address opened cold, the Lean view shows its declaration")
     ap.add_argument("--unlinked-cold", action="append", default=[], metavar="PAGE",
                     help="a page (empty for the paper) whose opening has nothing tied: opened cold on the Lean view, it shows the whole proof map; skipped where PAGE is not served")
+    ap.add_argument("--unlinked-address", action="append", default=[], metavar="PAGE|bSTART-END",
+                    help="the exact address of a paragraph with nothing tied (\"b24558-26853\"): opened cold on the Lean view it shows the whole proof map and keeps its address; skipped where PAGE is not served")
     ap.add_argument("--linked-equation", action="append", default=[], metavar="PAGE|NUMBER[|SOURCE]",
                     help="a numbered display (\"1.1\") tied to Lean, optionally with its file and lines (\"Defs.lean, lines 26 to 33\"): clicked on the Lean view, it shows that declaration; skipped where PAGE is not served")
     ap.add_argument("--lean-addresses", action="store_true", help="the phrase and result addresses, opened on the Lean view, show a declaration")
@@ -732,7 +756,7 @@ def main() -> int:
             context.close()
         if not args.pdf_only:
             selection_checks(browser, base, args, check)
-        if args.unlinked or args.linked or args.unlinked_cold or args.linked_equation or args.lean_addresses:
+        if args.unlinked or args.linked or args.unlinked_cold or args.unlinked_address or args.linked_equation or args.lean_addresses:
             unlinked_checks(browser, base, args, check, lambda name: report.__setitem__(name, {"ok": True, "detail": "page not served in this build"}))
         # Each companion named opens its own text with its phrases, from its own edition, never the
         # edition error; a phrase address on one also opens that phrase's card.
