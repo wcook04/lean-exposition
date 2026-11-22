@@ -1433,6 +1433,18 @@ html.is-reading {
   max-width: none;
 }
 
+/* On a phone, keep more width for the expanded equation than it had in the paper. */
+@media (max-width: 700px) {
+  .modal--formula {
+    width: calc(100% - var(--space-2));
+  }
+
+  .modal__body.formula-full {
+    padding-inline: var(--space-2);
+    scrollbar-gutter: auto;
+  }
+}
+
 .formula-full .math-display {
   margin: var(--space-3) 0;
   font-size: var(--fs-read);
