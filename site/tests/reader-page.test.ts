@@ -22,6 +22,7 @@ import {
   sectionTitleIn,
   selectionSpan,
   statusWords,
+  subjectPlace,
   withoutIds,
   type Structures,
 } from "../src/reader/page/model";
@@ -92,6 +93,15 @@ describe("naming places", () => {
     expect(title).toMatch(/^4\.1 /);
     expect(placeName(structures, "expository", "long", "curvature")).toBe(`Long record, §4.1 ${title!.replace(/^4\.1 /, "")}`);
     expect(placeName(structures, "long", "long", "curvature")).toMatch(/^§4\.1 /);
+  });
+
+  it("names selected words by their printed subsection within a shared passage", () => {
+    const paper = structures.long;
+    const text = doc("long");
+    expect(subjectPlace(paper, text, "curvature")).toBe("§4.1");
+    expect(subjectPlace(paper, text, "curvature", "b48800-48820")).toBe("§4.2");
+    expect(subjectPlace(paper, text, "curvature", "1076-1082")).toBe("§4.3");
+    expect(subjectPlace(paper, text, undefined, "b0-1")).toBe("the opening");
   });
 
   it("never names a passage by the document title", () => {
