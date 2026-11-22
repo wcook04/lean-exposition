@@ -124,6 +124,32 @@ describe("library addresses", () => {
     expect(roundTrip(`${BASE}/accounts/lean/Foo.bar`).href).toBe(`${BASE}/how-the-lean-encodes-it/lean/Foo.bar`);
   });
 
+  it("a companion page keeps its record and place", () => {
+    const { route, href } = roundTrip(`${BASE}/how-the-lean-encodes-it/?n=euler.lemma-2.1&l=b10-20&v=lean`);
+    expect(route).toMatchObject({ stage: "expository", node: "euler.lemma-2.1", at: "b10-20", lean: true });
+    expect(href).toBe(`${BASE}/how-the-lean-encodes-it/?n=euler.lemma-2.1&l=b10-20&v=lean`);
+  });
+
+  it("a result whose record keeps another id (a reader that moved in) opens that record, and Copy link names the result", () => {
+    const moved = { paper: "erdos-257", main: "short" as const, pages: { record: "long" as const } };
+    const base = "/library/erdos-257";
+    setLibraryAddresses({}, {}, { "theorem-a.1": ["b100-200", "b100-300", "short.res-reciprocal-support"], "problem-d.4": ["", "", "short.prob-x"] });
+    const route = parseLibraryPath("/theorem-a.1", new URLSearchParams("v=lean"), undefined, moved);
+    expect(route).toMatchObject({ node: "short.res-reciprocal-support", at: "b100-200", lean: true });
+    expect(libraryHref(route!, base, moved)).toBe(`${base}/theorem-a.1/?v=lean`);
+    const open = parseLibraryPath("/problem-d.4", new URLSearchParams(), undefined, moved);
+    expect(open).toMatchObject({ node: "short.prob-x" });
+    expect(open!.at).toBeUndefined();
+    expect(libraryHref(open!, base, moved)).toBe(`${base}/problem-d.4/`);
+    setLibraryAddresses({
+      "e01.abstract.bounded-velocity": { record: null, at: "b536-564" },
+      "r2.prop54.endpoint-citation": { record: "euler.proposition-5.4", at: "b9000-9050" },
+      "old.merged-phrase": { record: null, at: "b536-564", host: "e01.abstract.bounded-velocity" },
+    }, { "r2-s7-pressure-input": { retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" } },
+    { "theorem-1.1": ["b4441-5169", "b4441-5200"] },
+    { accounts: { to: "how-the-lean-encodes-it", phrases: { "p2.coercive": "part-2" } } });
+  });
+
   it("any other reading state keeps the reader's own parameters at the paper's top", () => {
     const route = { view: "read" as const, stage: "short" as const, at: "120-134" };
     expect(libraryHref(route, BASE, lib)).toBe(`${BASE}/?l=120-134`);

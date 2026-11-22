@@ -1,0 +1,18 @@
+{
+ "meaning": "Numbered results of the short paper that the main result (Theorem A.1, the case Erdős stated in 1968) does not use, each with why. scripts/check_instance.py reads this.",
+ "not_joined": {
+  "short.thm-variable-fractional-cover": "Theorem 3.1 (the summable divisor-cover criterion) is a second sufficient condition, proved separately from the weighted one. Theorem A.1 is a case of Theorem 1.2 and does not use it; the evidence graph joins them only through shared proof steps, which the map draws in the direction of use.",
+  "short.res-mixed-supports": "Theorem 4.1 combines the weighted and cover conditions for a union of two sets. It is a separate goal of the evidence graph; Theorem A.1 does not use it.",
+  "short.res-weighted-cover-incomparability": "Proposition 5.1 shows that neither the weighted nor the cover condition implies the other. It compares the classes and is not used by Theorem A.1.",
+  "short.res-strict-mixed-supports": "Corollary 5.2 exhibits a set that needs the combined Theorem 4.1; it uses Theorem 4.1 and Proposition 5.1, not Theorem A.1, and has no Lean proof at the pinned revision.",
+  "short.res-period": "Theorem B.1 (the exact denominator period of a finite sum) begins Appendix B on rational values. It is a separate goal of the evidence graph and is not used by Theorem A.1.",
+  "short.res-general-repair": "Theorem C.1 (membership and nonincreasing integer remainders) belongs to Appendix C on which rational numbers are sums; it is not used by Theorem A.1.",
+  "short.res-one-over-twenty-one-frontier": "Theorem D.1 gives integer-quotient tests for 1/21 in Appendix D, on membership questions; the evidence graph records no use between it and Theorem A.1.",
+  "short.res-terminalhalf": "Theorem D.2 (finite approximations with vanishing scaled error) belongs to Appendix D, on membership questions; the evidence graph records no use between it and Theorem A.1.",
+  "short.res-cylinderhalf": "Theorem D.3 (unbounded shared-prefix families represent one half) belongs to Appendix D, on membership questions; the evidence graph records no use between it and Theorem A.1.",
+  "short.prob-one-over-twenty-one-membership": "Problem D.4 is an open problem the paper states (whether 1/21 is a sum), not a result; nothing proves it.",
+  "short.prob-scaled-return": "Problem D.5 is an open problem the paper states, not a result; nothing proves it.",
+  "short.prob-actual-invariant": "Problem D.6 is an open problem the paper states, not a result; nothing proves it.",
+  "short.prob-fatal-interval": "Problem D.7 is an open problem the paper states, not a result; nothing proves it."
+ }
+}

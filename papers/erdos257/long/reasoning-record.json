@@ -4,7 +4,7 @@
   "state": "draft",
   "path": "papers/long.md",
   "content_sha256": "f7c2487ba172be55e583becc143742c2d34c576d0d1339fd730197a0c97bb374",
-  "graph_sha256": "264b08973a5f23b2f98ad989b0c1708096513d86929f19048623a2a9fe18092c",
+  "graph_sha256": "57133a32273c39019ea3f4ba3de79281b7177858848a9345731e250a68a8c176",
   "selected_goal_ids": [
     "short.res-mixed-supports",
     "short.thm-variable-fractional-cover"

@@ -247,7 +247,10 @@ if a.sentences:
             "declarations": json.loads((ours / "declarations.json").read_text()),
             "comparisons": json.loads((ours / "ties.json").read_text())["comparisons"],
             # Later checks readers may ask about, keyed by the Lean constant they concern.
-            **({"checks": json.loads((ours / "checks.json").read_text())} if (ours / "checks.json").is_file() else {})},
+            **({"checks": json.loads((ours / "checks.json").read_text())} if (ours / "checks.json").is_file() else {}),
+            # Forms stated but not yet proved, each with what a proof still needs.
+            **({"open_targets": json.loads((ours / "open_targets.json").read_text())["open_targets"]}
+               if (ours / "open_targets.json").is_file() else {})},
             ensure_ascii=False))
 if a.sentences and (a.sentences / "ENCODING.md").is_file():
     # The guide to how the Lean encodes the paper's objects, published as it stands.
