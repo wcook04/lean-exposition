@@ -66,8 +66,8 @@ def check(name, ok, detail=""):
         failures.append(name)
 
 
-def settle(page):
-    page.wait_for_selector(".paper .part__text [data-line]", state="attached", timeout=60000)
+def settle(page, ready=".paper .part__text [data-line]"):
+    page.wait_for_selector(ready, state="attached", timeout=60000)
     page.wait_for_load_state("networkidle")
     page.wait_for_timeout(800)
 
@@ -133,7 +133,7 @@ with sync_playwright() as pw:
 
         # About carries the edition's whole credit, verbatim.
         page.goto(base + "about/", wait_until="domcontentloaded")
-        settle(page)
+        settle(page, "#about-adapted")
         about = page.evaluate("() => document.getElementById('about-adapted')?.closest('section')?.innerText ?? ''").replace("\u2019", "'")
         check("1440 About carries the credit verbatim", a.credit in about, about[:300])
 
