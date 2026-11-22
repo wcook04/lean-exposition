@@ -232,6 +232,10 @@ def relink(md: str, own: dict[str, str], companions: dict[str, dict[str, str]], 
             return f"]({path}{'#' + companions[path].get(frag, frag) if frag else ''})"
         if re.match(r"^[a-z][a-z0-9+.-]*:", path) or path.startswith("/") or not base_url:
             return m.group(0)
+        # Only a file path is a link: TeX such as `\bigr](\theta,y)` is not, and a figure the page
+        # carries (figures/figure-1.png) is published beside it.
+        if not re.fullmatch(r"[\w./~%-]+", path) or re.search(r"\.(png|jpe?g|gif|svg|webp)$", path, re.I):
+            return m.group(0)
         return f"]({urljoin(base_url, href)})"
     return LINK.sub(one, md)
 

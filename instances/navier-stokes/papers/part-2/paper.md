@@ -11,9 +11,11 @@ The input to this part is a certificate: approximate periodic fields, a finite-d
 We first solve the nonlinear equation for each fixed parameter by contraction. We then choose the parameter by a finite-dimensional fixed-point theorem. This follows the extended-certificate route in Lean and explains the purpose of (7.26). Section 9.4 also gives the paper's simultaneous Schauder–Tychonoff construction. For regularity we write out the paper's argument with the precise external results it uses, then explain the different formal route. The comparisons distinguish a proof of an analytic step from a theorem whose conclusion retains every requested witness.
 <!-- /passage:front -->
 
+<a id="1"></a>
+
 ## 1. The result and its notation
 
-<!-- passage:sec-1-the-result-and-its-notation -->
+<!-- passage:sec-1 -->
 
 <a id="1.1"></a>
 
@@ -116,11 +118,13 @@ The pin translation is $\bar\ell_i(\alpha)=d.\mathrm{target}(\alpha)_i-\ell_i(W^
 The authors' declaration `Breakdown.extended_certificate_orbit_proved` proves that an extended certificate yields an existential weak periodic profile. Its conclusion does not retain the chosen parameter, the correction, or the full inequality (II.1). The argument inside the library supplies much of that information before the final existential packaging.
 
 Our [Theorem 7.1 wrapper](https://github.com/wcook04/proof-reader/tree/main/lean-wrappers/navier-stokes-theorem71) keeps those witnesses through regularity and states (II.1) for the actual smooth-profile difference. It compiles against the authors' package, with a small patch that adds keeping variants of three existential lemmas, and `Breakdown.theorem71_extended` and `Breakdown.theorem71_cell` use only the standard axioms ([run 44844164476](https://github.com/wcook04/proof-reader/actions/runs/44844164476)). Its declarations are not shown beside this account, which links only the authors' Lean. The mathematical transport proof in §12 is written out independently.
-<!-- /passage:sec-1-the-result-and-its-notation -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. The complete analytic certificate
 
-<!-- passage:sec-2-the-complete-analytic-certificate -->
+<!-- passage:sec-2 -->
 
 <a id="2.1"></a>
 
@@ -378,11 +382,13 @@ $$
 Then $\sum_i\widetilde\beta_i\widetilde b_i=\sum_i\beta_i b_i$ and $|\widetilde\beta|^2=\omega^2|\beta|^2$. Moreover $\widetilde V^{\mathsf T}(\widetilde\beta^a+\widetilde\beta)=V^{\mathsf T}(\beta^a+\beta)$, so the raw parameter map is identical. The actuator-pairing error scales by $1/\omega$; the adjoint fields, their linear and quadratic defect constants, and the affine offsets stay unchanged. `Breakdown.Cert.extendedUnitWeightHolds` proves this transformation. We retain $\omega$ in the mathematics so the final multiplier term remains visible.
 
 The second normalisation replaces the reference field by the approximate field after absorbing $\vartheta$. Divide $c_1$, $c_2$ and $c_0$ by $1-\vartheta$, divide the row weights by $(1-\vartheta)^2$, set the reference gap to zero, and use the transferred frozen-form bound. This is `Breakdown.Cert.extendedAtProfileHolds`. Section 5 proves the absorption directly. Neither normalisation selects a different approximate field, parameter, period or pin target.
-<!-- /passage:sec-2-the-complete-analytic-certificate -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. The free time-periodic equation
 
-<!-- passage:sec-3-the-free-time-periodic-equation -->
+<!-- passage:sec-3 -->
 
 <a id="3.1"></a>
 
@@ -514,11 +520,13 @@ $$
 is bounded in local space-time $L^2$. The factor $y$ is bounded there. Thus $v_j$ is bounded in $H^1$ on each fixed space-time cylinder. The Rellich compactness theorem used here is the compact inclusion $H^1(\Omega)\hookrightarrow L^2(\Omega)$ on bounded Lipschitz domains $\Omega\subset\mathbb R^4$. Apply it on an exhaustion and take a diagonal subsequence. This gives strong local $L^2$ convergence and weak convergence of the two spatial derivative arrays.
 
 The limiting distributional equation is $T_S\widetilde v=f$. The limit lies in $D_S$, and injectivity from Proposition II.4 identifies it with $v$. Every subsequence has a further subsequence with this same limit, so the stated convergence holds for the entire sequence. This proves the last assertion of Proposition 7.5. The formal route separates period continuity from local compactness in `Breakdown.Cert.periodContinuityHolds_of` and `Breakdown.Cert.localCompactnessHolds_of`.
-<!-- /passage:sec-3-the-free-time-periodic-equation -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. The two convection estimates
 
-<!-- passage:sec-4-the-two-convection-estimates -->
+<!-- passage:sec-4 -->
 
 <a id="4.1"></a>
 
@@ -595,11 +603,13 @@ $$
 $$
 
 Both right-hand terms tend to zero: the local $L^2$ norm of $v_j$ tends to zero, and the relevant derivative norms remain bounded. Thus gradients also converge strongly on bounded cylinders. The bounded local coefficients imply $C_\alpha v_j\to0$ locally in $L^2$. First make the tail uniformly small by choosing $R$ in (II.28), then make the bounded-cylinder norm small by choosing $j$. This proves convergence in $H$, and hence compactness. This is Lemma 7.7, pp.39–40. The corresponding formal steps are `Breakdown.Cert.extendedConvectionHolds_of` and `Breakdown.Cert.extendedConvectionCompactHolds_of`.
-<!-- /passage:sec-4-the-two-convection-estimates -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. Why the bordered inverse exists
 
-<!-- passage:sec-5-why-the-bordered-inverse-exists -->
+<!-- passage:sec-5 -->
 
 <a id="5.1"></a>
 
@@ -666,11 +676,13 @@ Therefore $Q$ is compact. The finite-dimensional negative identity in its second
 Here is the precise Fredholm argument. Let $A_0=I+Q$ be injective on a Hilbert space. It is bounded below: otherwise there are unit vectors $x_j$ with $A_0x_j\to0$. Compactness gives a subsequence for which $Qx_j$ converges; then $x_j=A_0x_j-Qx_j$ converges to a unit vector in the kernel, a contradiction. Every power $A_0^r$ therefore has closed range. If $A_0$ were not onto, these ranges would descend strictly: equality of consecutive ranges, cancelled through the injective $A_0^r$, would imply surjectivity. Choose a unit vector $e_r\in A_0^{r-1}\mathcal H_0\cap(A_0^r\mathcal H_0)^\perp$. For $j>r$, the vectors $e_j$, $A_0e_j$ and $A_0e_r$ belong to $A_0^r\mathcal H_0$, so $Qe_j-Qe_r=A_0e_j-e_j-A_0e_r+e_r$ has component one along $e_r$. Thus $\|Qe_j-Qe_r\|\ge1$, contradicting compactness. Hence $A_0$ is onto.
 
 Applying this argument to (II.32) proves Proposition II.9, the paper's Proposition 7.8. The formal compact-operator step is `Breakdown.Cert.Internal.BorderedInvertible.exists_inverse_of_compact_bordered`; `Breakdown.Cert.extendedBorderedInvertibleHolds_of` supplies its hypotheses for this problem. [P, (7.53)–(7.54), p.40.]
-<!-- /passage:sec-5-why-the-bordered-inverse-exists -->
+<!-- /passage:sec-5 -->
+
+<a id="6"></a>
 
 ## 6. The frozen form controls the worst time
 
-<!-- passage:sec-6-the-frozen-form-controls-the-worst-time -->
+<!-- passage:sec-6 -->
 
 <a id="6.1"></a>
 
@@ -726,11 +738,13 @@ $$
 Every value of $E$ is attained in this shorter interval. Combining this estimate with (II.34) proves (II.33). Only the scalar energy was given a shorter period; the chosen forcing representative and $\Lambda$ may have period one alone. This distinction explains the factor $1/m$ without adding a symmetry assumption.
 
 The formal bridge from the reference frozen form is `Breakdown.Cert.extendedFrozenBridgeHolds_of`. The resulting supremum estimate is `Breakdown.Cert.extendedSupBoundHolds_of`. Its `twist` is one or two; the nineteenfold spatial rotation in the proposed certificate is not the value of $m$.
-<!-- /passage:sec-6-the-frozen-form-controls-the-worst-time -->
+<!-- /passage:sec-6 -->
+
+<a id="7"></a>
 
 ## 7. Solve the nonlinear equation at a fixed parameter
 
-<!-- passage:sec-7-solve-the-nonlinear-equation-at-a-fixed-parameter -->
+<!-- passage:sec-7 -->
 
 <a id="7.1"></a>
 
@@ -875,11 +889,13 @@ $$
 Completeness from Lemma II.11 supplies a limit $z_*$. The contraction estimate makes $\mathcal F_\alpha z_r$ converge to $\mathcal F_\alpha z_*$; the shifted sequence also converges to $z_*$, proving the fixed-point identity. If $z_*'$ were another fixed point, (II.43) would give $d(z_*,z_*')\le\kappa_{\rm ctr}d(z_*,z_*')$, forcing equality of the points. For $\varepsilon=0$, the self-map property directly forces the singleton zero pair to solve the equation. It does not force the arbitrary raw residual representative to vanish; a gradient representative can remain.
 
 The fixed point solves (II.5), belongs to $D_{S(\alpha)}^\Gamma$, has the prescribed pins, and satisfies both bounds. Uniqueness is within this held class at a fixed parameter. No assertion of uniqueness of all periodic solutions, or of the parameter eventually selected, is made. The formal steps are `Breakdown.Cert.extendedHeldContractsHolds_of`, `Breakdown.Cert.contractionFixedPointHolds_proof` and `Breakdown.Cert.extendedHeldExistsUniqueHolds_of`.
-<!-- /passage:sec-7-solve-the-nonlinear-equation-at-a-fixed-parameter -->
+<!-- /passage:sec-7 -->
+
+<a id="8"></a>
 
 ## 8. Continuity of the remaining finite-dimensional problem
 
-<!-- passage:sec-8-continuity-of-the-remaining-finite-dimensional-problem -->
+<!-- passage:sec-8 -->
 
 <a id="8.1"></a>
 
@@ -917,11 +933,13 @@ $$
 $$
 
 is continuous. The approximate adjoints and their coupling matrices enter no definition of this map; their possible discontinuity is harmless. The formal counterparts are `Breakdown.Cert.extendedDataContinuityHolds_of`, `Breakdown.Cert.extendedHeldLimitHolds_of` and `Breakdown.Cert.extendedMultiplierContinuityHolds_of`.
-<!-- /passage:sec-8-continuity-of-the-remaining-finite-dimensional-problem -->
+<!-- /passage:sec-8 -->
+
+<a id="9"></a>
 
 ## 9. Choose the parameter and cancel the force
 
-<!-- passage:sec-9-choose-the-parameter-and-cancel-the-force -->
+<!-- passage:sec-9 -->
 
 <a id="9.1"></a>
 
@@ -1023,11 +1041,13 @@ To prove continuity, take $\alpha_j\to\alpha$ and $g_j\rightharpoonup g$. The li
 The Schauder–Tychonoff theorem used here states that a continuous self-map of a nonempty compact convex subset of a Hausdorff locally convex topological vector space has a fixed point. At a fixed point, $g=N(v)$, so the nonlinear equation holds. The raw membership proof (II.47)–(II.48) then shows that the projection in the first component is inactive. Hence $\alpha$ is a fixed point of the raw update, and (II.49) follows.
 
 This proof needs the self-map estimates and compactness, while the main proof also establishes fixed-parameter uniqueness using (7.26). The main exposition follows the latter route because it is the route actually assembled by the extended-certificate Lean proof. The simultaneous route explains the paper's explicit statement that (7.26) is unused there. Neither comparison establishes equivalence of the complete paper and formal certificate predicates.
-<!-- /passage:sec-9-choose-the-parameter-and-cancel-the-force -->
+<!-- /passage:sec-9 -->
+
+<a id="10"></a>
 
 ## 10. The selected weak profile
 
-<!-- passage:sec-10-the-selected-weak-profile -->
+<!-- passage:sec-10 -->
 
 <a id="10.1"></a>
 
@@ -1064,11 +1084,13 @@ w_*\|\nabla W^a_{\alpha_*}\|_H^2
 $$
 
 This contradicts (II.14). The strict profile-separation inequality, rather than residual smallness alone, supplies nontriviality. The formal steps are `Breakdown.Cert.extendedHeldWeakEquationHolds_of` and `Breakdown.Cert.extendedHeldNonzeroHolds_of`. [P, proof of Theorem 7.1, pp.44–45.]
-<!-- /passage:sec-10-the-selected-weak-profile -->
+<!-- /passage:sec-10 -->
+
+<a id="11"></a>
 
 ## 11. Regularity of the selected orbit
 
-<!-- passage:sec-11-regularity-of-the-selected-orbit -->
+<!-- passage:sec-11 -->
 
 <a id="11.1"></a>
 
@@ -1223,11 +1245,13 @@ The formal regularity route proves the necessary analytic results inside the lib
 `Breakdown.FarField.integralEquationOfOrbit_holds` derives an Oseen integral equation extending into the past. `Breakdown.FarField.farFieldDecay_holds` then proves spatial decay by weighted integral estimates and a small-tail inverse argument. It also supplies stronger derivative and pressure-gradient decay than the two velocity bounds required in the paper's profile definition. Those extra conclusions do not, by themselves, retain a certificate parameter or its correction.
 
 The public theorem `Breakdown.FarField.periodicLerayProfileExists_of_weak` packages this route as weak-to-smooth profile existence. That existential interface is insufficient as a direct statement of (II.1). The proof in the next section retains the relation to the originally constructed orbit throughout.
-<!-- /passage:sec-11-regularity-of-the-selected-orbit -->
+<!-- /passage:sec-11 -->
+
+<a id="12"></a>
 
 ## 12. Keep the same witness through regularity
 
-<!-- passage:sec-12-keep-the-same-witness-through-regularity -->
+<!-- passage:sec-12 -->
 
 <a id="12.1"></a>
 
@@ -1323,11 +1347,13 @@ The public declaration `Breakdown.extended_certificate_breakdown_on_space` gives
 ### 12.4 Remark II.19: a prescribed shorter recurrence
 
 If $(R,\theta_0)\in\Gamma$ with $\theta_0>0$, equation (II.2) makes the same velocity a profile with recurrence time $S\theta_0$ and isometry $R$. The differential equation and decay bounds do not depend on the choice of recurrence. In particular, a half-period symmetry gives recurrence time $S/2$. This is Remark 7.3, p.35. It supplies an additional recurrence description of the same velocity; it makes no claim about a least period.
-<!-- /passage:sec-12-keep-the-same-witness-through-regularity -->
+<!-- /passage:sec-12 -->
+
+<a id="13"></a>
 
 ## 13. Constants, comparisons and the conditional boundary
 
-<!-- passage:sec-13-constants-comparisons-and-the-conditional-boundary -->
+<!-- passage:sec-13 -->
 
 <a id="13.1"></a>
 
@@ -1386,7 +1412,7 @@ Intermediate results establish one analytic step from previously proved estimate
 ### 13.3 What this argument does and what remains external
 
 The implications proved here are: the analytic certificate gives a nonzero smooth periodic profile with (II.1)–(II.2); that profile gives the two breakdown constructions through Part I. The authors' repository explicitly separates these implications from the existence and verification of their concrete certificate. The supplied repository contains neither that numerical data set nor its 128-bit Arb computation. A hash or a stated numerical precision does not establish the missing inequalities.
-<!-- /passage:sec-13-constants-comparisons-and-the-conditional-boundary -->
+<!-- /passage:sec-13 -->
 
 ## Source keys
 

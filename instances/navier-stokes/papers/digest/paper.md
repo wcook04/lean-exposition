@@ -35,9 +35,11 @@ It also constructs smooth data on $\mathbb T^3$ with the analogous $H^1$ rate an
 The symbol $\lesssim$ allows constants fixed by the profile and chosen analytic parameters; such constants are independent of time and, in the torus comparison, of a sufficiently large period $L$. Numerical certificate constants are displayed explicitly. We write $\mathcal M$ for the monodromy operator, reserving $M$ for the certificate's correction bound.
 <!-- /passage:sec-the-argument -->
 
+<a id="1"></a>
+
 ## 1. The input orbit and the actual conclusion
 
-<!-- passage:sec-1-the-input-orbit-and-the-actual-conclusion -->
+<!-- passage:sec-1 -->
 
 The analytic half of the argument starts with a profile; it does not construct one. Let $S>0$, $R\in O(3)$ and let $(W,q)$ be a smooth, nonzero solution on $\mathbb R\times\mathbb R^3$ of
 
@@ -75,11 +77,13 @@ $$
 These error bounds allow the physical error to grow. Multiplication by $(T-t)^{1/4}$ shows that its size relative to the profile tends to zero. In similarity variables the convergence is exponential, at rate $e^{-\kappa s}$. The torus comparison is local in physical space; that fixed physical ball expands to exhaust $\mathbb R^3$ in similarity coordinates.
 
 **Paper:** §1.1, (1.2)–(1.7), pp. 2–3. **Formal anchor:** `Breakdown.profileOrbit_holds`, [`Profile/Orbit.lean:39–41`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Profile/Orbit.lean#L39-L41), constructs the abstract recurrent orbit from the formal smooth-profile premise. The public conclusions `Breakdown.breakdown_on_space` and `Breakdown.breakdown_on_torus` in [`Solution.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Solution.lean) exclude global smooth solutions in specified classes: uniformly finite-energy solutions on the whole space, and solutions with periodic velocity on the torus. They do not themselves state the displayed quantitative bundle. The formal profile premise writes additional second-derivative and pressure-gradient decay assumptions. Remark 1.2 supplies the higher spatial derivative bound. A pressure-normalization argument gives the gradient bound: the difference from the Riesz-transform pressure is harmonic, and testing in time makes it decay at infinity without assuming a bound on the time derivative. This is an analytic bridge, not yet a Lean declaration.
-<!-- /passage:sec-1-the-input-orbit-and-the-actual-conclusion -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. Why the space is homogeneous $H^1$
 
-<!-- passage:sec-2-why-the-space-is-homogeneous-h-1 -->
+<!-- passage:sec-2 -->
 
 Set
 
@@ -126,11 +130,13 @@ This supplies local mild existence, uniqueness and bounded linearized evolution 
 **Hard point:** the proof needs the exact homogeneous space, not an informal homogeneous norm on arbitrary fields. On a bounded ball its $L^6$ control gives an $L^2$ bound; this is what permits local Rellich compactness in the next step.
 
 **Paper:** §§2.1, 3.1–3.5, pp. 10–15; Lemmas 3.1 and 3.3–3.6; Appendix A.1, pp. 47–48. **Formal anchors:** `Breakdown.Freq.bilin_holds`, [`FreqTr/Realization.lean:95–96`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/FreqTr/Realization.lean#L95-L96); `Breakdown.Freq.testDense_holds`, lines 68–71; `Breakdown.physicalMild_unconditional`, [`Profile/Orbit.lean:22–30`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Profile/Orbit.lean#L22-L30). [`Base/Framework.lean:9–29`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Base/Framework.lean#L9-L29) records the abstract heat, dilation, bilinear and compactness properties, subsequently instantiated by the Fourier realization.
-<!-- /passage:sec-2-why-the-space-is-homogeneous-h-1 -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. A spectral split without a numerical spectrum
 
-<!-- passage:sec-3-a-spectral-split-without-a-numerical-spectrum -->
+<!-- passage:sec-3 -->
 
 Normalize $T=1$, set $t_1=1-\lambda$, and let $h_\chi$ solve the linearized equation about $u^*=u_1^*$ on the first physical period:
 
@@ -167,11 +173,13 @@ $$
 No eigenvalues have been calculated. The finite exceptional space includes every direction that obstructs the selected decay rate, including neutral and slowly decaying directions; calling it simply the growing eigenspace would be misleading. Jordan blocks cause no additional hypothesis because the spectral gaps give the displayed summability. The exported Lean dichotomy gives power bounds at two separated radii and surjectivity on the exceptional range; the weighted sums follow from those bounds.
 
 **Paper:** Lemma 3.2, p. 14; §§4.3–4.4, Lemmas 4.4–4.5, pp. 18–20. **Formal anchors:** `Breakdown.Freq.bilinCompact_holds`, [`FreqTr/Realization.lean:116–119`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/FreqTr/Realization.lean#L116-L119); `Breakdown.monodromy`, [`Transfer/Exports.lean:47`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/Exports.lean#L47), whose type `MonodromyStatement` records compact perturbation and the free bound in [`StatementsFrame.lean:71–88`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/StatementsFrame.lean#L71-L88); `Breakdown.dichotomyHolds`, [`Spectral/RealDichotomy.lean:151`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Spectral/RealDichotomy.lean#L151). The source uses subdivided time periods and an abstract dichotomy; these are supporting formal declarations, not a claim that the revised paper follows their proof line for line.
-<!-- /passage:sec-3-a-spectral-split-without-a-numerical-spectrum -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. Compact corrections and the infinite-time boundary condition
 
-<!-- passage:sec-4-compact-corrections-and-the-infinite-time-boundary-condition -->
+<!-- passage:sec-4 -->
 
 Let $\Theta=e^{-\kappa S}$, so $0<\kappa<1/4$, and define
 
@@ -233,11 +241,13 @@ The exceptional directions are removed by choosing data. The proof neither assum
 **Our inference: a translation check.** Spatial translations already force at least three exceptional directions. Differentiating the recurrence for $h_a=(a\cdot\nabla)u^*$ gives $\mathcal M h_a(0)=e^{S/2}h_{R^{-1}a}(0)$. If $h_a(0)=0$ for a nonzero $a$, the slice is constant on every line parallel to $a$. A nonzero field with that property cannot belong to $L^6(\mathbb R^3)$, so $a\mapsto h_a(0)$ is injective. These three multipliers have modulus $e^{S/2}>1$, hence $\dim E\ge3$. This short deduction does not compute the remaining codimension or add a hypothesis to the proof. [Paper (4.2), (4.10).]
 
 **Paper:** Proposition 4.3 and its proof, pp. 18, 20–21; Lemmas 4.6–4.8, pp. 19–22; Proposition 2.1, p. 11. **Formal anchors:** `Breakdown.exists_section`, [`Transfer/Section.lean:31`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/Section.lean#L31); `Breakdown.periodicInverse`, [`Transfer/Exports.lean:49`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/Exports.lean#L49); `Breakdown.stepData`, lines 51–52; `Breakdown.contraction`, [`Transfer/Contraction.lean:45`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/Contraction.lean#L45); `Breakdown.transferHolds_of_dichotomy`, [`Transfer/Exports.lean:54–55`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/Exports.lean#L54-L55). Its conclusion `TransferHolds`, [`Base/Framework.lean:66–73`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Base/Framework.lean#L66-L73), retains a compact-data orbit and quantitative rescaled convergence. The paper's full corrected-data family has not been identified as one fully matching exported theorem.
-<!-- /passage:sec-4-compact-corrections-and-the-infinite-time-boundary-condition -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. Finite energy and the lower blow-up bound
 
-<!-- passage:sec-5-finite-energy-and-the-lower-blow-up-bound -->
+<!-- passage:sec-5 -->
 
 To produce compact data explicitly, cut off a vector potential, rather than multiplying the velocity by a scalar cutoff. With $\eta=1$ on $B_{1/2}$ and supported in $B_1$, put
 
@@ -260,11 +270,13 @@ Only the initial datum is truncated in this whole-space construction. The exact 
 For the lower rate, nonzero recurrence supplies a positive lower bound for the orbit norm, not just an upper bound. If one slice vanished, mild uniqueness would force all later slices to vanish, and recurrence would force the entire orbit to vanish. Continuity on one compact period therefore gives $\inf_s\|W(s)\|_X>0$. Dilation gives $\|u^*(t)\|_X\asymp(1-t)^{-1/4}$; choosing the perturbation smaller than half its lower coefficient gives the same two-sided rate for $u$. Squared, that rate is $(1-t)^{-1/2}$, which is integrable in time, so there is no conflict with finite total energy dissipation.
 
 **Paper:** Lemma 4.2, p. 17; Lemma 5.1 and §5.2, pp. 23–24; Lemma 2.3, pp. 11–12, and Appendix A.2, pp. 48–49. **Formal anchors:** `Breakdown.orbitBound` and `Breakdown.orbitNorm`, [`Transfer/OrbitNorm.lean:60`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/OrbitNorm.lean#L60) and [`Transfer/Exports.lean:41`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Transfer/Exports.lean#L41); `Breakdown.mildRegular_realization`, [`Uniqueness/Space.lean:19–22`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Uniqueness/Space.lean#L19-L22); `Breakdown.breakdownOnSpace_of_profile`, lines 24–26. The abstract transfer and regularity library contain substantial construction data. Our [Theorem 1.1 wrapper](https://github.com/wcook04/proof-reader/tree/claude/navier-stokes-20261120/lean-wrappers/navier-stokes/theorem11) states the whole printed result in physical terms and proves, with only the standard axioms, the two-sided rate and the rescaled convergence for one fixed compact datum on every compact time interval before blow-up; one solution on all of $[0,1)$ with one energy bound is still to be proved.
-<!-- /passage:sec-5-finite-energy-and-the-lower-blow-up-bound -->
+<!-- /passage:sec-5 -->
+
+<a id="6"></a>
 
 ## 6. The torus: make the localization error disappear
 
-<!-- passage:sec-6-the-torus-make-the-localization-error-disappear -->
+<!-- passage:sec-6 -->
 
 A large torus is convenient because the blow-up core can be kept far from its periodic copies. Let $L\gg1$, truncate the evolving profile at $r=L/8$ by the vector-potential construction, and periodize:
 
@@ -321,11 +333,13 @@ is an exact bounded right inverse. The same nonlinear contraction now removes $F
 Finally, $u_{\mathrm{per}}(t,x)=L u(L^2t,Lx)$ scales the period to one and gives $T=L^{-2}$. The gradient norm gains $L^{1/2}$, exactly cancelling the time-scale factor: $L^{1/2}(1-L^2t)^{-1/4}=(T-t)^{-1/4}$. The comparison region becomes $B_{1/16}$. Smoothness and periodic pressure follow from the periodic local theory.
 
 **Paper:** §6, pp. 24–29; Lemmas 6.1–6.3; (6.12)–(6.18). **Formal anchors:** `Breakdown.Periodic.heatDivFreeComparison` and `freeHeatComparison`, [`Torus/HeatComparison.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/HeatComparison.lean):[18](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/HeatComparison.lean#L18), [24](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/HeatComparison.lean#L24); `Breakdown.Periodic.rightInversePerturb`, [`Torus/InverseAlgebra.lean:41`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/InverseAlgebra.lean#L41); the full assembly `Breakdown.Periodic.breakdownOnTorus_of_profile`, [`Torus/Main.lean:69–112`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Torus/Main.lean#L69-L112). The printed transfer proof is a revised analytic argument; the formal route uses its own discrete inverse, comparison and gluing machinery. Its heat comparisons prove convergence below a sufficiently small scale, using Fourier integrals and lattice sums; they do not state the displayed powers of $L$ as their conclusion. The exported periodic endpoint permits arbitrary smooth pressure with periodic velocity, using an additional moving-frame reduction. It should not be confused with the narrower periodic-pressure class in which the constructed solution first appears.
-<!-- /passage:sec-6-the-torus-make-the-localization-error-disappear -->
+<!-- /passage:sec-6 -->
+
+<a id="7"></a>
 
 ## 7. What the certificate has to construct
 
-<!-- passage:sec-7-what-the-certificate-has-to-construct -->
+<!-- passage:sec-7 -->
 
 The second implication starts afresh: its approximate profiles are input data, not the singular finite-energy trajectories constructed above. Theorem 7.1 is an a posteriori existence theorem. Its input is a family of approximate profiles, together with estimates strong enough to correct one member to a genuine, nonzero periodic solution. Normalize time by $\theta=s/S$ and set
 
@@ -368,11 +382,13 @@ $$
 The target is a solution with $\|(v,\beta)\|_{w,\omega}\le2\varepsilon$, $\sup_\theta\|\nabla v(\theta)\|_2\le M$, and $\beta^a(\alpha)+\beta=0$. Theorem 7.1 then returns the **same** $\alpha$, period and corrected field, with the pinning identities, both bounds and all prescribed space-time symmetries. After force cancellation, its first quantitative bound contains $|\beta^a(\alpha)|$, because $\beta=-\beta^a(\alpha)$.
 
 **Paper:** §§7.1–7.4, pp.30–35; (7.4), (7.10)–(7.18), (7.38)–(7.39). **Lean:** `Breakdown.IsExtendedCertificate` in [`Breakdown/Cert/ExtendedStatement.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedStatement.lean); the assembled conditional result is `Breakdown.extended_certificate_orbit_proved` in [`Breakdown/Cert/ExtendedMain.lean:56`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedMain.lean#L56). The public result is existential weak-profile existence; it does not expose the paper's complete same-witness quantitative bundle.
-<!-- /passage:sec-7-what-the-certificate-has-to-construct -->
+<!-- /passage:sec-7 -->
+
+<a id="8"></a>
 
 ## 8. Why the bordered linear problem is solvable
 
-<!-- passage:sec-8-why-the-bordered-linear-problem-is-solvable -->
+<!-- passage:sec-8 -->
 
 The free equation is controlled by an enstrophy identity, not a finite-kinetic-energy estimate:
 
@@ -404,11 +420,13 @@ For differences of solutions with the same pin, $\ell(v)=0$, so the inverse cons
 This estimate proves injectivity; surjectivity still needs an argument. After composing the velocity coordinate with $T_S^{-1}$, the bordered operator on $H^\Gamma_{\mathrm{div}}\times\mathbb R^n$ is identity plus a compact operator: convection is compact, and the pin/force blocks are finite rank. The finite-dimensional identity block may be added and subtracted inside that compact perturbation, so its Fredholm index is zero. Injectivity therefore supplies the unique linear solve used by the nonlinear construction.
 
 **Paper:** Lemmas 7.4 and 7.7; Propositions 7.5 and 7.8; (7.42)–(7.54), pp.36–40. **Lean:** `Breakdown.Cert.exists_gradInvSpec`, `freeInvHolds_of`, `extendedConvectionCompactHolds_of` and `extendedBorderedInvertibleHolds_of`, in the correspondingly named modules; the last is at [`Breakdown/Cert/ExtendedBorderedInvertible.lean:101`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedBorderedInvertible.lean#L101). Coercivity is a certificate premise at this stage; the Fredholm step is proved.
-<!-- /passage:sec-8-why-the-bordered-linear-problem-is-solvable -->
+<!-- /passage:sec-8 -->
+
+<a id="9"></a>
 
 ## 9. Closing the nonlinear bounds: two routes
 
-<!-- passage:sec-9-closing-the-nonlinear-bounds-two-routes -->
+<!-- passage:sec-9 -->
 
 The weighted norm controls an average in time, whereas the quadratic term needs a time supremum. The key product estimate is
 
@@ -454,11 +472,13 @@ Two continuity points matter. The certificate does not assume that the chosen re
 Equation (7.26) is explicitly unused in the paper's proof. Its role in Lean is therefore substantive, not an unexplained extra test and not evidence of a gap. The two proofs should be read as different constructions with overlapping analytic ingredients. The ordinary and extended formal certificate predicates also differ; the anchors here follow the extended route, without asserting that either written predicate is equivalent to the paper definition.
 
 **Paper:** Lemma 7.6, Proposition 7.9 and Proposition 7.10, pp.38–44; (7.24)–(7.27). **Lean:** `Breakdown.Cert.extendedHeldMapsToHolds_of`, `extendedHeldContractsHolds_of` and `extendedHeldExistsUniqueHolds_of` in [`ExtendedHeldMapsTo.lean:179`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedHeldMapsTo.lean#L179), [`ExtendedHeldContracts.lean:185`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedHeldContracts.lean#L185) and [`ExtendedHeldExistsUnique.lean:135`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedHeldExistsUnique.lean#L135), under `Breakdown/Cert/`. The contraction uses `IsExtendedCertificate.small_second`, the counterpart of (7.26).
-<!-- /passage:sec-9-closing-the-nonlinear-bounds-two-routes -->
+<!-- /passage:sec-9 -->
+
+<a id="10"></a>
 
 ## 10. The parameter argument removes the force exactly
 
-<!-- passage:sec-10-the-parameter-argument-removes-the-force-exactly -->
+<!-- passage:sec-10 -->
 
 The parameter domain is a product of a box and a weighted ball:
 
@@ -498,11 +518,13 @@ $$
 If $\mathcal W=0$, the correction bound would give the reverse inequality. Thus neither residual smallness nor a Newton heuristic substitutes for the force-zero and nonzero-profile steps.
 
 **Paper:** (7.29)–(7.37), Proposition 7.10 and §7.9, pp.33–35 and 42–45. **Lean:** `Breakdown.Cert.extendedAdjointEnclosureHolds_of`, `extendedStiffEnclosureHolds`, `extendedExistsZeroHeldHolds_of`, `extendedHeldWeakEquationHolds_of` and `extendedHeldNonzeroHolds_of`; `Breakdown.Held.testSetZero_of` is at [`Breakdown/Held/TestSetZero.lean:92`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Held/TestSetZero.lean#L92). Its compact-convex input is supplied by `convexCompactFixedPoint` and the proved `Breakdown.exists_fixedPoint_box`.
-<!-- /passage:sec-10-the-parameter-argument-removes-the-force-exactly -->
+<!-- /passage:sec-10 -->
+
+<a id="11"></a>
 
 ## 11. Regularity is recovered from the constructed solution
 
-<!-- passage:sec-11-regularity-is-recovered-from-the-constructed-solution -->
+<!-- passage:sec-11 -->
 
 The corrected field is continuous into $X$, periodic, and solves the similarity equation modulo gradients. The next estimates describe the paper's proof of Proposition 7.11; the formal proof uses a different smoothing and decay argument, identified below. The proposition assumes the constructed profile and, after returning to physical variables, already has
 
@@ -531,11 +553,13 @@ Scaling back gives the required profile decay, and interior estimates give deriv
 With its analytic inputs supplied, the formal weak-profile bridge gives a continuous mild orbit. For each chosen mild orbit, the formal smoothing statement returns smooth velocity and pressure together with equality to that orbit's velocity almost everywhere in space at every time. For a smooth orbit satisfying the profile integral equation, the formal decay theorem bounds the velocity and its first two spatial derivatives by $C(1+|y|)^{-1-j}$, and the pressure gradient by $C(1+|y|)^{-3}$.
 
 **Paper:** Proposition 7.11, pp.45–47; Lemma 3.6 and Appendix A; Remark 1.2. The paper uses Koch–Nadirashvili–Seregin–Šverák, Proposition 4.1 (2009), and Chae–Wolf, Theorem 1.1 (2017); their hypotheses are met here, as [the statement comparison](paper.md) explains. **Lean:** With the weak-to-mild analytic prerequisites supplied by the assembled proof, `Breakdown.WeakProfile.weakOrbitOfParts_holds`, `Breakdown.FarField.smoothFieldOfOrbit_holds` and `farFieldDecay_holds` supply the weak-to-mild, smoothing and decay steps through a different proof organization. `Breakdown.FarField.periodicLerayProfileExists_of_weak` at [`Breakdown/CertTorus/Main.lean:8`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertTorus/Main.lean#L8) closes weak-to-smooth existence. The authors' existential interfaces hide the correspondence to the originally selected correction; our [Theorem 7.1 wrapper](https://github.com/wcook04/proof-reader/tree/claude/navier-stokes-20261120/lean-wrappers/navier-stokes-theorem71) exposes it, and `Breakdown.theorem71_extended` and `theorem71_cell` prove the full same-witness conclusion with only the standard axioms.
-<!-- /passage:sec-11-regularity-is-recovered-from-the-constructed-solution -->
+<!-- /passage:sec-11 -->
+
+<a id="12"></a>
 
 ## 12. Appendix B: why finite data can control every perturbation
 
-<!-- passage:sec-12-appendix-b-why-finite-data-can-control-every-perturbation -->
+<!-- passage:sec-12 -->
 
 The certificate is more than a finely resolved approximate solution. It must certify an inverse estimate **for every admissible perturbation**, including modes and spatial regions omitted from the numerical representation.
 
@@ -594,11 +618,13 @@ one gets $P^2\le c_M\|F\|_H P+Q^2$, hence $P\le c_M\|F\|_H+Q$. Lemma B.2 obtains
 The published choice $w_*=39/50$ and the stated scalar inequalities imply $c_1\ge50/3$, $c_0>81.64$, $c_2>129$, $c_L>98.3$, $M<0.01695$ and $\varepsilon<0.0075$. These numerical bounds are deductions from the paper's constants. These are necessary constraints on any satisfying data, not measured margins of the absent instance. The small number is the correction after the stabilized inverse has been applied, not the size of $W^a_\alpha$ itself. A profile with large gradient can therefore coexist with a small correction radius. Whether the required residual and coercive margins actually coexist in one data set remains a numerical question; compatibility of the scalar inequalities alone cannot settle it.
 
 **Paper:** Appendix B.1–B.4, pp.49–70; especially Propositions B.1, B.4, B.8 and B.14, Lemmas B.2 and B.7. **Lean:** `Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof`; `Breakdown.CertCell.cellLayerParts_closed` and `rowRestClause_closed` in [`Breakdown/CertCell/CellLayerClosed.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/CellLayerClosed.lean); `Breakdown.CertCell.Certificate.signedTreeLowerBound` in [`CertTreeLowerBound.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/CertTreeLowerBound.lean); `Breakdown.CellLayerSystem.isExtendedCertificate_of_parts` in [`Breakdown/CellReduction/CellLayerBreakdownCompose.lean:171`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CellReduction/CellLayerBreakdownCompose.lean#L171).
-<!-- /passage:sec-12-appendix-b-why-finite-data-can-control-every-perturbation -->
+<!-- /passage:sec-12 -->
+
+<a id="13"></a>
 
 ## 13. What remains to be supplied by computation
 
-<!-- passage:sec-13-what-remains-to-be-supplied-by-computation -->
+<!-- passage:sec-13 -->
 
 “Finite certificate” means finitely represented data plus a sound reduction of all universal conditions. Appendix B still requires uniform bounds over $K$, every point of specified regions, all relevant harmonics and the unbounded exterior. The exact checker must connect bytes to these mathematical objects and discharge those quantifiers. A small numerical residual at selected points is insufficient. The final paragraph of Appendix B explicitly leaves several coefficient expressions and side conditions unwritten. For those clauses the readable Lean definitions and the complete decoding rules must supply the specification; the appendix alone is not a standalone executable checker.
 
@@ -615,7 +641,7 @@ The decoded instance then enters proved conditional space and torus results, inc
 **Paper:** p.4; the paragraph following Proposition B.14, p.70. **Source:** [the certificate-checker page](certificate-checker.md). **Lean:** [`Breakdown/CertTorus/CertificateCorollary.lean:28`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertTorus/CertificateCorollary.lean#L28) and public wrappers at [`Solution.lean:338–350`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Solution.lean#L338-L350).
 
 For a released instance, three tasks remain distinct: establish that the decoded objects satisfy every field of the formal premise; check the conditional theorem against those definitions; and relate its output to the desired physical statement. The public whole-space endpoint excludes a global smooth solution with uniformly bounded energy, and the torus endpoint excludes a global smooth solution with periodic velocity even when pressure is not assumed periodic. These are substantive nonexistence conclusions, but their signatures do not retain all the displayed rates, trajectory identities or family quantifiers. The internal transfer and smoothing results deserve their full credit without silently strengthening those signatures.
-<!-- /passage:sec-13-what-remains-to-be-supplied-by-computation -->
+<!-- /passage:sec-13 -->
 
 # Where the weight sits
 

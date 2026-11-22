@@ -261,9 +261,11 @@ Active model harmonics can be covered conservatively by taking the union of the 
 The [certificate-checker page](../navier-stokes/certificate-checker.md), with its obligation map, decoder contract and finite reductions, provides the record-level expansion. They are useful alongside this account because they retain quantified domains, shared existential witnesses and the distinction between an implication's premises and its conclusion.
 <!-- /passage:sec-reading-the-encoded-data -->
 
+<a id="appendix-b.1"></a>
+
 ## B.1 The multiplier and its lower bound
 
-<!-- passage:sec-b-1-the-multiplier-and-its-lower-bound -->
+<!-- passage:sec-appendix-b.1 -->
 
 ### Notation and the weak domain
 
@@ -540,11 +542,13 @@ $$
 Thus $I^-<\infty$ forces $I^+<\infty$, and subtracting the two finite negative-part quantities gives $I^+-I^-\le G_M$. This proves (B.20), including its finiteness assertion. The forcing modes are excluded from all signed multiplier sets, so their skew pairings vanish and $\langle b_i,Mv\rangle_H=\langle\nabla b_i,\nabla v\rangle_H$.
 
 The formal closure allows general symmetry sets and explicitly supplied weak Hessians, and states the density comparison in extended nonnegative reals. Its specialization and the finite-negative-part conversion above give the proposition in the paper's notation. No certificate values are supplied by this theorem.
-<!-- /passage:sec-b-1-the-multiplier-and-its-lower-bound -->
+<!-- /passage:sec-appendix-b.1 -->
+
+<a id="appendix-b.2"></a>
 
 ## B.2 From the multiplier to the a priori estimate
 
-<!-- passage:sec-b-2-from-the-multiplier-to-the-a-priori-estimate -->
+<!-- passage:sec-appendix-b.2 -->
 
 **Lemma B.2, rewritten from printed page 56.** Assume Proposition B.1 and the lower bound (B.21), with $t=1000$. Then the following a priori estimate holds.
 
@@ -571,11 +575,13 @@ $$
 $$
 
 Since $\sqrt c\|(v,\beta)\|_{w,\omega}\le P$, division by $\sqrt c$ proves the claim. The independent requirement $c_0^2\ge(50/3)400(1+2^{-18})$ controls the norms of the orthogonal row fields; it is not used in this scalar completion of the square.
-<!-- /passage:sec-b-2-from-the-multiplier-to-the-a-priori-estimate -->
+<!-- /passage:sec-appendix-b.2 -->
+
+<a id="appendix-b.3"></a>
 
 ## B.3 Reduction to the quarter plane
 
-<!-- passage:sec-b-3-reduction-to-the-quarter-plane -->
+<!-- passage:sec-appendix-b.3 -->
 
 **Lemma B.3, rewritten from printed pages 56–57.** Under the flip symmetry of the coefficients and $I^-<\infty$, the full density integral equals the following quarter-plane expression.
 
@@ -596,11 +602,13 @@ $$
 This involution leaves $2\iota_2-\iota_1$ unchanged and reverses $\kappa\iota_1$. Mode covariance under $R_*$ and the coefficient symmetry give $I_\iota(r,-z)=I_{\iota^\flat}(r,z)$ almost everywhere. Relabelling the countable sum shows that its upper and lower half-space integrals agree. The rotation $R_*$ has determinant one, so gradients, curl and cross products transform covariantly; hence the full stretching expression is invariant, and its time-angle mean is even in $z$. This gives the second factor two.
 
 Apply this argument to positive and negative parts before subtraction. Tonelli's theorem permits the nonnegative mode sums. Finiteness of the negative integral then makes the displayed extended difference meaningful. In the source, `labelFlip` acts on paper labels, whereas `flipLabel` acts on generic frequencies by $(n,k)\mapsto(n,-k)$; the bridge also proves that modes outside the symmetry lattice vanish.
-<!-- /passage:sec-b-3-reduction-to-the-quarter-plane -->
+<!-- /passage:sec-appendix-b.3 -->
+
+<a id="appendix-b.4"></a>
 
 ## B.4 Cells, traces, tails and the exterior estimate
 
-<!-- passage:sec-b-4-cells-traces-tails-and-the-exterior-estimate -->
+<!-- passage:sec-appendix-b.4 -->
 
 **Proposition B.4, rewritten from printed pages 59–60.** Assume all cell, weight, charge, trace, row and assembly conditions of the appendix. Then $I^-<\infty$. On the complement of the cells,
 
@@ -863,11 +871,13 @@ $$
 the transverse $r^{-2}$ terms are exactly the cylindrical contributions to the Cartesian gradient norm. Symmetry-preserving approximation and the finite gradient and inverse-square energies extend the result to the perturbation modes. This proves the last assertion.
 
 The implementation establishes these components through the cell assembly, pressure, gauge, row, credit and exterior closures. The closed component package has additional structured entry hypotheses and no single declaration with the paper's literal B.4 statement. The proof above specializes those components and supplies the explicit corrections; it does not produce the unreleased numerical entries that must satisfy their conditions.
-<!-- /passage:sec-b-4-cells-traces-tails-and-the-exterior-estimate -->
+<!-- /passage:sec-appendix-b.4 -->
+
+<a id="appendix-b.5"></a>
 
 ## B.5 Angular inequalities and the pointwise test
 
-<!-- passage:sec-b-5-angular-inequalities-and-the-pointwise-test -->
+<!-- passage:sec-appendix-b.5 -->
 
 **Lemma B.5, rewritten from printed pages 60–61.** For $u=u_\iota$ and $k=\kappa\iota_1$, the following four inequalities hold almost everywhere in the quarter plane.
 
@@ -918,11 +928,13 @@ A X^2+B Y^2-CXY,
 $$
 
 If $A=0$, the condition $C^2\le4AB$ gives $C=0$. If $A>0$, multiply by $4A$ to obtain $(2AX-CY)^2+(4AB-C^2)Y^2\ge0$. This proves the pointwise test without excluding zero boundary cases.
-<!-- /passage:sec-b-5-angular-inequalities-and-the-pointwise-test -->
+<!-- /passage:sec-appendix-b.5 -->
+
+<a id="appendix-b.6"></a>
 
 ## B.6 Ray exteriors and the integrated test
 
-<!-- passage:sec-b-6-ray-exteriors-and-the-integrated-test -->
+<!-- passage:sec-appendix-b.6 -->
 
 **Lemma B.6, rewritten from printed page 61.** Let $Z$ be a radial exterior in the quarter plane. In the formal conditions its directional radius is measurable, constant on positive rays, and bounded between positive finite constants. Every mode of azimuth $k$ satisfies the following inverse-square estimate.
 
@@ -979,11 +991,13 @@ $$
 $$
 
 The coefficient condition also makes the preceding gradient coefficient nonnegative, so all comparisons retain their direction. The same integrated argument applies to a zero-azimuth square exterior with the value $\Lambda_0=2$ proved in B.4.
-<!-- /passage:sec-b-6-ray-exteriors-and-the-integrated-test -->
+<!-- /passage:sec-appendix-b.6 -->
+
+<a id="appendix-b.7"></a>
 
 ## B.7 The matrix tree lower bound
 
-<!-- passage:sec-b-7-the-matrix-tree-lower-bound -->
+<!-- passage:sec-appendix-b.7 -->
 
 **Lemma B.7, rewritten from printed pages 62–63.** Suppose the real or complex node enclosure conditions, positive pivot coverage and nonnegative root-front condition hold. If $N$ is the sum of the attached leaf matrices, including cancelling signed pairs, then the following lower bound holds for every real global vector $x$.
 
@@ -1042,11 +1056,13 @@ $$
 The two real columns on the right are included as separate indexed columns of $Y_\xi$. They need not be linearly independent. This distinction preserves the column count used later. The complex node therefore also satisfies (B.42).
 
 Finally sum (B.42) over the finite nodes. Each nonroot front occurs once as an output and once as a child input; these contributions cancel exactly. The root front remains on the right and is nonnegative. The signed auxiliary leaves cancel in the total attached matrix, leaving the matrix $N$ of (B.38). This proves (B.41). If all loss-column pairings vanish and $x\ne0$, choose a nonzero coordinate $x_j$. Some node pivots that coordinate with $p_{\xi,j}>0$, so the remaining sum of pivot squares is strictly positive. The bound on the total number of loss columns is used in B.8. The last positivity argument uses pivot coverage.
-<!-- /passage:sec-b-7-the-matrix-tree-lower-bound -->
+<!-- /passage:sec-appendix-b.7 -->
+
+<a id="appendix-b.8"></a>
 
 ## B.8 From all cells to the global inequality
 
-<!-- passage:sec-b-8-from-all-cells-to-the-global-inequality -->
+<!-- passage:sec-appendix-b.8 -->
 
 **Result and scope.** Assume the shape, cell, exterior, coupling, error, global-matrix and tree conditions of Appendix B. For every admissible parameter $\alpha$, perturbation $v$, multiplier vector $\beta$ and forcing representative $F$ in (7.18), the negative part $I^-$ is finite, and
 
@@ -1111,11 +1127,13 @@ Together with the trivial intersection this proves $P+F_0$ is the whole global-c
 The source terminal argument also permits slaved coordinates that change by a fixed linear map of the free variables and pressure coordinates that the quadratic form ignores. Its state therefore has the form $(z_0(v)+Lu,u)$, considered after dropping the ignored coordinates. The map from a positive-subspace vector and a free vector to their difference in this quotient is injective: equality would put a positive vector at the value of the nonpositive free graph. The same dimension count makes this map surjective and produces the required $u$. This explains why the declaration `stateTerminalTest` has a more elaborate interface than the notation $(x_p,x_f)$ in the paper. The conclusion still concerns the same state data and the same perturbation.
 
 **Declaration route.** `cellJunctions_of_parts` assembles the cell interfaces; `halfPlaneFormBound_of_hypothesis` and `rowRestClause_of_halfPlane` pass from the meridional form to the global row estimate. `signedTreeLowerBound`, `pivotCountPositive` and `stateTerminalTest` give the finite-dimensional conclusion, assembled by `signedCertificateTerminal` and `stateEnclosureCertificateNonneg_holds`. These are proof declarations, rather than the placeholder assertions in the challenge file. The full finite hypothesis is the source's explicit replacement for the paper's partly unwritten conditions; literal equivalence of two fully written condition lists cannot be asserted when one list is absent from the paper. [Authors' numbering: Proposition B.8, pp.63–64.]
-<!-- /passage:sec-b-8-from-all-cells-to-the-global-inequality -->
+<!-- /passage:sec-appendix-b.8 -->
+
+<a id="appendix-b.9"></a>
 
 ## B.9 Bounds for changing the profile
 
-<!-- passage:sec-b-9-bounds-for-changing-the-profile -->
+<!-- passage:sec-appendix-b.9 -->
 
 Write $w_*=39/50$, let $w\geq w_*$, and put
 
@@ -1219,11 +1237,13 @@ The positive terms $\|\Delta u\|_2^2+\frac14\|\nabla u\|_2^2$ can be discarded f
 To replace $W^r$ by $W_\alpha^a$, pair the three discrepancy terms above with $-\Delta u$. The transport and $L^3$-gradient terms involve $\|\nabla u\|_2\|\Delta u\|_2$, so their coefficients receive the factor $1/(2\sqrt{w_*})$. The $L^2$-gradient term is bounded by $c_wn_0^{(2)}|u|_w\|\Delta u\|_2$, which costs $c_wn_0^{(2)}|u|_w^2$. Their sum is $C|u|_w^2$. Combining the reference lower bound and this absolute error gives the asserted $c_3$.
 
 The proof declarations `gapTransferBridge_of`, `frozenFormBridge_of` and `formShiftBridge_of` implement these three estimates. `convectionIdentity_holds` supplies the integration-by-parts identity at the weak regularity needed here. The cell assembly instantiates the abstract finite list of discrepancy pieces with exactly $Z_0,Z_1$, with their two different gradient exponents. [Authors' numbering: Lemma B.9, pp.64–65.]
-<!-- /passage:sec-b-9-bounds-for-changing-the-profile -->
+<!-- /passage:sec-appendix-b.9 -->
+
+<a id="appendix-b.10"></a>
 
 ## B.10 Bounding the quadratic adjoint pairing
 
-<!-- passage:sec-b-10-bounding-the-quadratic-adjoint-pairing -->
+<!-- passage:sec-appendix-b.10 -->
 
 **Result.** Fix $j\in J$. Either of the following sufficient conditions yields (7.32):
 
@@ -1259,11 +1279,13 @@ $$
 $$
 
 Integrate the chosen bound over one period. Finiteness of the energy proves absolute integrability before the signed pairing is used. `adjointQuadTerm_of` proves the slice estimate with the relevant Sobolev and matrix facts; `adjointQuadraticBridge_of` integrates it and supplies the certificate clause. Its abstract interface allows the adjoint to depend on the parameter; the shape data in Appendix B select the fixed field $\psi_j$. [Authors' numbering: Lemma B.10, p.65.]
-<!-- /passage:sec-b-10-bounding-the-quadratic-adjoint-pairing -->
+<!-- /passage:sec-appendix-b.10 -->
+
+<a id="appendix-b.11"></a>
 
 ## B.11 A dual norm that uses azimuthal order
 
-<!-- passage:sec-b-11-a-dual-norm-that-uses-azimuthal-order -->
+<!-- passage:sec-appendix-b.11 -->
 
 **What the finite data assert.** A periodic measurable real vector field $R$ has dual bound $n$ if it splits into $R_{\mathrm{plain}}+R_{\mathrm{modes}}$, with nonnegative budgets $n_{\mathrm{plain}}+n_{\mathrm{modes}}\leq n$, such that
 
@@ -1363,11 +1385,13 @@ $$
 $$
 
 The finite mode representation also has finite $\|\,|y|R_{\mathrm{modes}}\|_H$, so ordinary Hardy proves absolute integrability of that pairing. Indeed, every coefficient in (B.11-D) is positive, so every weighted amplitude norm is finite, and the squared norm of a sum of $N$ amplitudes is at most $N$ times their squared-norm sum. Its sharper signed bound is the orthogonality estimate just established. Add the two bounds and use the budget inequality. `dualBoundedBound_of_parts` supplies the final dual-pairing theorem from the plain and azimuthal estimates. Its endpoint predicate `RemainderDualBound` records spatial integrability at almost every time and integrability of the resulting scalar time integrand. The stronger packaging as joint absolute integrability follows from the weighted-norm argument above, with `weightedPairingIntegrable_proof` providing the corresponding source lemma. [Authors' numbering: Lemma B.11, p.66.]
-<!-- /passage:sec-b-11-a-dual-norm-that-uses-azimuthal-order -->
+<!-- /passage:sec-appendix-b.11 -->
+
+<a id="appendix-b.12"></a>
 
 ## B.12 The linear adjoint error, including potentials and pins
 
-<!-- passage:sec-b-12-the-linear-adjoint-error-including-potentials-and-pins -->
+<!-- passage:sec-appendix-b.12 -->
 
 This lemma turns the error in an approximate adjoint equation into the number $a_j$ in (7.33). Fix $j\in J$ and abbreviate $\psi_j$ to $\psi$. The shape condition $h\geq3$ gives a divergence-free periodic field with $\psi,\partial_\theta\psi=O((1+|y|)^{-3})$, first spatial derivative $O((1+|y|)^{-4})$ and second spatial derivative $O((1+|y|)^{-5})$, with the latter understood almost everywhere across spline interfaces.
 
@@ -1520,11 +1544,13 @@ It bounds the first sum of pairings by $(\sum_i\bar\rho_i^2/\varpi_i)^{1/2}n_vb$
 The last line is at most $n_\Phi a+n_Yc_\Xi b$. The second term follows by applying (B.12-P) to the entire row $(Y_{jl})_l$. Thus it costs $(n_\Phi+n_Yc_\Xi/\sqrt{w_*})\|v\|_w$. Adding the three bounds proves (B.12-R). The declarations `potentialBoundHolds_proof`, `freeShiftBoundHolds_proof` and `pinChargeHolds_proof` give these respective bounds, assembled by `adjointDefectBridge_of_pieces`.
 
 **How to read the source data.** The source fields `PotentialData.theta`, `phi`, `flux` and `pressure` represent $G_j,U_j,F_j^T,q_j$ in coordinate matrices, respectively; `theta` here names a potential field, rather than a time variable. Its derivative is a linear map with output-component rows and differentiation-direction columns. The paper's derivative matrix convention is transposed, which explains `matrixDivergence flux` in the source where the paper writes $\operatorname{div}F_j^T$. The source defines its pin flux as $D\psi-\sum_lY_{jl}(D\widetilde\Phi_l-(D\widetilde\Phi_l)^*)$. Taking the divergence gives the same pin Laplacians when the generators are divergence-free; the additional term in the general interface is a gradient and pairs to zero against $v$. The general adjoint entry also has a set of fitted parameter directions, while `AdjointEntryLinks.fitted_empty` requires that set to be empty for these cell data. Consequently its `defectSum` plus `pinCharge` reduces exactly to (B.12-A). [Authors' numbering: Lemma B.12, pp.67–68.]
-<!-- /passage:sec-b-12-the-linear-adjoint-error-including-potentials-and-pins -->
+<!-- /passage:sec-appendix-b.12 -->
+
+<a id="appendix-b.13"></a>
 
 ## B.13 Enclosing the constant, linear and quadratic offset
 
-<!-- passage:sec-b-13-enclosing-the-constant-linear-and-quadratic-offset -->
+<!-- passage:sec-appendix-b.13 -->
 
 The approximate profile has parameter-dependent radial phase outside the matching ball. Inside $B_{r_\chi}$, the phase perturbation and all derivatives needed below vanish. Hence the profile pieces agree there with the pieces at the central phase. Write these fixed fields as $W_i=W_0^i$, including $W_0=W_0^0$, and write $q_i$ for the pressure-potential pieces at that phase. Put $f_0=S(0)^{-1}$ and $f_i=\varsigma_i$.
 
@@ -1636,11 +1662,13 @@ $$
 Split the pairing into the ball and its exterior. In the ball insert (B.13-E), and expand the affine multiplier. The constant discrepancy is within $\widetilde C_{0j}$ of $C_{0j}$. Each linear discrepancy is within $\widetilde C_{1ji}$ of $C_{1ji}$, with the additional subtraction $d_j$ when $i=j$. Each quadratic coefficient is within $\widetilde C_{2jil}$ of $C_{2jil}$, with its sign already incorporated in (B.13-C). Apply the triangle inequality and the coordinate bounds. Cauchy–Schwarz bounds the remaining exterior pairing by $n_F^{\mathrm{out}}n_j^{\mathrm{out}}$. This gives exactly (B.13-O).
 
 The source uses a closed ball, whereas the paper uses an open ball. Their integrals agree because the sphere is a null set; the tail in both formulations is $|y|>r_\chi$. The source's `offsetClause_holds_of` combines the expansion, coefficient enclosures, coordinate bound and tail estimate. Its frame product is written $\sum_l\mathrm{frame}_{lj}\beta_l$, corresponding to the paper's $V_j\cdot\beta$; a decoder must respect this index order. To identify its conclusion with (7.34), use the cell shape condition equating the certificate target with the profile's pin values, which makes the target gap $\bar\ell$ zero. The general certificate framework does not require that gap to vanish. [Authors' numbering: Lemma B.13, pp.68–69.]
-<!-- /passage:sec-b-13-enclosing-the-constant-linear-and-quadratic-offset -->
+<!-- /passage:sec-appendix-b.13 -->
+
+<a id="appendix-b.14"></a>
 
 ## B.14 The same finite data give a certificate
 
-<!-- passage:sec-b-14-the-same-finite-data-give-a-certificate -->
+<!-- passage:sec-appendix-b.14 -->
 
 **Result.** Suppose data in the representation of B.1 satisfy the full cell, tree, bound and compatibility conditions. The sets $\Gamma,K$, periods, profile family, reference field, actuators, residuals, pins, row fields, adjoints, multiplier map, weight, matrices and numerical budgets then satisfy the certificate conditions of Section 7. This is a conditional construction from the given data. It supplies no concrete tuple satisfying those conditions.
 
@@ -1657,13 +1685,15 @@ Several certificate conditions are carried as numerical hypotheses rather than d
 Continuity is also part of the construction. The multiplier is affine in the parameter, and the reciprocal period is affine with nonvanishing denominator on the parameter set. The profile-to-pin pairing gives the continuous target map and the zero target gap for this cell representation. The shape-decay proof supplies the common bound $b$. Combining these facts with the universal estimates and the directly assumed numerical clauses fills every field of the extended-certificate structure.
 
 The theorem `spaceBreakdown_of_cell_system_condition` supplies the bridge proofs from their closed source declarations and applies the certificate implication. `Solution.lean` exposes the conditional consequences on $\mathbb R^3$, on $\mathbb T^3$, and jointly. Their hypothesis remains a proof of `CellSystemCondition` for the selected data. The inspected declarations establish this implication; this rewrite neither constructs the unpublished certificate nor reruns its external numerical checker. [Authors' numbering: Proposition B.14, pp.69–70.]
-<!-- /passage:sec-b-14-the-same-finite-data-give-a-certificate -->
+<!-- /passage:sec-appendix-b.14 -->
 
 ## The fifteen fields of CellSystemCondition
 
 <!-- passage:sec-the-fifteen-fields-of-cellsystemcondition -->
 
 The following is a reading of the canonical definition in `Breakdown/CertCell/StatementDefs.lean`. Each field is a premise of the conditional theorem. A named analytic producer explains what that premise yields; it does not assert that the unpublished data satisfy the premise.
+
+<a id="1"></a>
 
 ### 1. cell: the cell problem and its common constants
 
@@ -1687,6 +1717,8 @@ This field serves Propositions B.1 and B.4, the tree lemma B.7, and their assemb
 
 **Lean anchors:** `Breakdown.CertCell.CellHypothesis`; `Breakdown.CertCell.IsBoxUniform`; `Breakdown.CertCell.CoefficientConditions`; `Breakdown.CertCell.CellCalculus.IsLeafValues`.
 
+<a id="2"></a>
+
 ### 2. shape_valueSets: the values needed by the shape-to-analysis bridge
 
 The `shape_valueSets` field requires a positive period and constant positive weight, together with harmonic sets closed under the stated symmetries. Its seven clauses also require the zero harmonic and every reference-field harmonic to be present in the bound support. These facts let the finite shape representation feed the harmonic multiplier estimates without losing a required mode.
@@ -1694,6 +1726,8 @@ The `shape_valueSets` field requires a positive period and constant positive wei
 The paper counterpart is the representation and harmonic symmetry of B.1 and the weights in B.2, pp.50-54. Exact finite-set closure checks suffice when those bound supports have been decoded as finite sets. The positive-period condition is uniform on the whole parameter set. An affine formula for its reciprocal can be checked with the support-function formula above, after proving the formula and its nonzero denominator conditions. The field does not follow just from choosing a positive period at the central parameter.
 
 **Lean anchor:** `Breakdown.CertCell.GivenShape.ShapeValuesFacts`.
+
+<a id="3"></a>
 
 ### 3. entry_conditions: the meaning of the assembled matrices
 
@@ -1707,6 +1741,8 @@ This is a detailed formal specification where the printed paper gives only part 
 
 **Lean anchors:** `Breakdown.CertCell.CellLayerEntryConditions`; `Breakdown.CertCell.Assembly.InRowRange`; `Breakdown.CertCell.Assembly.IsExteriorCover`.
 
+<a id="4"></a>
+
 ### 4. enclosure_numbers: bind the multiplier bounds to this instance
 
 The `enclosure_numbers` field requires the same three numerical multiplier bounds to hold for every parameter in the certificate set. For each parameter it instantiates `EnclosureAdmissibleClauses` using the actual period, weights, bound fields, reference field and reference Hessian.
@@ -1716,6 +1752,8 @@ The clauses enclose each reference harmonic's velocity, gradient, vorticity and 
 The `cell` premise already contains an existential enclosure route. This fourth field binds the particular numbers in $N$ that will be inserted into the final coercive constant. A checker must therefore transport a common witness or compare the chosen bounds in the direction that the formula needs. All mode-set frequency margins and spatial enclosures remain uniform assertions.
 
 **Lean anchor:** `Breakdown.CertCell.InstanceSplit.EnclosureAdmissibleClauses`.
+
+<a id="5"></a>
 
 ### 5. coerciveL2_ge: the coefficient of the forcing norm
 
@@ -1731,6 +1769,8 @@ This is the first bound in (B.22). Lemma B.2 supplies its use after the global l
 
 **Lean anchor:** `Breakdown.CellLayerSystem.CellSystemCondition.coerciveL2_ge`.
 
+<a id="6"></a>
+
 ### 6. coercivePin_ge: the coefficient of the pinning error
 
 The `coercivePin_ge` field requires the certificate's pinning coefficient to be at least $\sqrt{1000/(3/50)}$. This is the second inequality in (B.22), arising from the pinning penalty in the global lower bound. The checker needs a rigorous one-sided comparison and the same exact pin weight and coercivity as in `cell`.
@@ -1738,6 +1778,8 @@ The `coercivePin_ge` field requires the certificate's pinning coefficient to be 
 The coefficient survives in the generic extended-certificate interface. In the present specialised construction the prescribed target equals the pins of the approximate profile, so `instantiation` makes the target gap zero. Retaining the coefficient is consistent with that specialisation and does not permit a different target.
 
 **Lean anchor:** `Breakdown.CellLayerSystem.CellSystemCondition.coercivePin_ge`.
+
+<a id="7"></a>
 
 ### 7. certificate: the numerical hypotheses used after coercivity
 
@@ -1767,6 +1809,8 @@ The norm here is the sum of squares of the derivative entries. The right side is
 
 **Lean anchor:** `Breakdown.CellLayerSystem.CertificateClauses`.
 
+<a id="8"></a>
+
 ### 8. instantiation: identify the actual profile, pressure and adjoints
 
 The `instantiation` field identifies the certificate's profile, second derivatives, pressure gradient and adjoints with the specified shape constructions. It validates the centre, tangent and origin data, moving step phase and azimuthal order; fixes the target to the pin values of the approximate profile; gives the pressure gradient its Bernoulli correction; and identifies each active adjoint with a fixed shape field of decay order at least 3.
@@ -1776,6 +1820,8 @@ These are the formal versions of (B.6)-(B.9) and the pressure and adjoint data o
 The target equality makes `targetGap` identically zero for this cell route. This is stronger information than reading the generic extended-certificate record in isolation.
 
 **Lean anchors:** `Breakdown.CellReduction.Instantiation.InstantiationBounded`; `Breakdown.CellReduction.Instantiation.IsProfileShapeEntry`; `Breakdown.CellReduction.Instantiation.IsPressureShapeEntry`; `Breakdown.CellReduction.Instantiation.IsAdjointShapeEntry`.
+
+<a id="9"></a>
 
 ### 9. offset_expansion: certify the parameter polynomial and its tail
 
@@ -1787,6 +1833,8 @@ Separate exterior $L^2$ bounds on the residual and adjoint supply their product.
 
 **Lean anchors:** `Breakdown.CellReduction.Instantiation.IsOffsetExpansionEntry`; `Breakdown.CellReduction.Instantiation.OffsetExpansionEntry.quadraticCoefficient`; `Breakdown.CellReduction.Instantiation.offsetSum`.
 
+<a id="10"></a>
+
 ### 10. shift_numbers: move estimates from the reference field
 
 The `shift_numbers` field bounds the change from the frozen reference profile to the central approximate profile and then across the parameter set. It supplies four nonnegative numbers: a uniform central difference, a central $L^2$ gradient difference, a uniform parameter displacement and a parameter-displacement $L^3$ gradient bound. Two explicit weighted sums must fit within the certificate's gap and form-shift budgets.
@@ -1794,6 +1842,8 @@ The `shift_numbers` field bounds the change from the frozen reference profile to
 These are the two stages of Lemma B.9 and (B.47)-(B.48). The checker must use the $L^2$ norm for the central gradient term and the $L^3$ norm for the parameter gradient term, and preserve the exact coefficients assigned to those different estimates. Every spatial bound is global and every parameter displacement is uniform on $K$. A central collocation residual does not establish these comparison norms.
 
 **Lean anchor:** `Breakdown.CellLayerSystem.ShiftNumbersBounded`.
+
+<a id="11"></a>
 
 ### 11. frozen_form: control the frozen quadratic form
 
@@ -1807,6 +1857,8 @@ This is the frozen-model ingredient used together with Lemma B.9 to obtain the f
 
 **Lean anchor:** `Breakdown.CertReduction.FrozenFormBounded`.
 
+<a id="12"></a>
+
 ### 12. adjoint_quadratic: bound the nonlinear adjoint pairing
 
 The `adjoint_quadratic` field turns an adjoint size bound into the coefficient of the quadratic perturbation term. For each active adjoint, the representation chooses either an $L^3$ or an $L^2$ spatial norm, proves that bound at every time and parameter, and multiplies it by the corresponding weight-dependent coefficient before comparing with the stored adjoint quadratic constant.
@@ -1815,6 +1867,8 @@ Lemma B.10 gives the two estimates. This disjunction belongs to the data: the ch
 
 **Lean anchors:** `Breakdown.CertReduction.AdjointQuadraticBounded`; `Breakdown.CertReduction.AdjointSizeBound`; `Breakdown.CertReduction.adjointQuadCoeff`.
 
+<a id="13"></a>
+
 ### 13. adjoint_links: use the same fields in the defect calculation
 
 The `adjoint_links` field identifies the adjoint-defect calculation with the profile, adjoints, coupling matrix and reciprocal-period expansion already chosen. It fixes the adjoint field, pin coefficients, central profile, tangent family, central reciprocal period and its parameter derivative. It also makes the generic fitted tangent set empty.
@@ -1822,6 +1876,8 @@ The `adjoint_links` field identifies the adjoint-defect calculation with the pro
 These identities are the binding assumptions for Lemma B.12. The free-family identity is stated for all parameter vectors; the coupling identity is restricted to $K$. The empty fitted set makes its fitted-potential subconditions vacuous on this route; all parameter tangents are handled by the free-family estimates. A checker must still verify the free-family bounds and their shared weights. It cannot infer them from the absence of fitted data or choose different tangent fields for different checks.
 
 **Lean anchor:** `Breakdown.CellReduction.Instantiation.AdjointEntryLinks`.
+
+<a id="14"></a>
 
 ### 14. potential_entries: construct admissible integration-by-parts fields
 
@@ -1832,6 +1888,8 @@ This is the formal coefficient-level implementation of the fields preceding Lemm
 The source's pressure, flux and spline predicates are more explicit than the printed coefficient specification. These facts permit a precise Lean-side account, but they do not identify the authors' unreleased serialisation or prove that its program implements the same fields.
 
 **Lean anchors:** `Breakdown.CellLayerSystem.PotentialEntriesBounded`; `Breakdown.PotentialShape.IsPotentialSeries`; `Breakdown.PotentialShape.IsPinShapeEntry`; `Breakdown.PotentialShape.potentialData_of_series`.
+
+<a id="15"></a>
 
 ### 15. adjoint_defect: close the adjoint error budget
 
@@ -1844,9 +1902,11 @@ The pin-rounding clause is an operator bound for every real coefficient vector, 
 **Lean anchors:** `Breakdown.AdjointDefect.AdjointDefectBounded`; `Breakdown.AdjointDefect.PotentialNorms`; `Breakdown.AdjointDefect.DualBounded`; `Breakdown.AdjointDefect.AzimuthalBounded`.
 <!-- /passage:sec-the-fifteen-fields-of-cellsystemcondition -->
 
+<a id="appendix-c"></a>
+
 ## Appendix C. How the approximate data were found
 
-<!-- passage:sec-appendix-c-how-the-approximate-data-were-found -->
+<!-- passage:sec-appendix-c -->
 
 Appendix C describes the authors' numerical discovery and preparation of inputs. The following is context from that account, rather than a replay of its computation or a proof that its proposed certificate satisfies the finite conditions.
 
@@ -1864,7 +1924,7 @@ The computed equation is tested against divergence-free fields, which remove the
 The computation follows a continuation path through modified scaling, viscosity and forcing parameters, then returns to the desired unforced equation and refines the discretisation. Sensitive directions are extracted using a Lanczos calculation. They guide the actuator choices, the pin constraints and the parameter directions. Cutoffs and smoothing produce fields with the required support and divergence properties, and finite coefficients are rounded to the representation used by the proposed checker. Approximate adjoints and parameter directions help reduce the defect and the bounds required in B.10–B.13. The pin-rounding error $c_\Xi$ and the other finite error allowances are where the later certificate accounts for these representation changes.
 
 Appendix C therefore explains why one might expect the finite conditions to be attainable and how candidate data are generated. The Lean route in B.14 starts after those candidates have been decoded into the specified objects and every required bound has been supplied with a proof. No cited declaration proves that the reported Newton, Krylov, quadrature or Lanczos computations produced a valid concrete certificate. [Authors' account: Appendix C, pp.70–75.]
-<!-- /passage:sec-appendix-c-how-the-approximate-data-were-found -->
+<!-- /passage:sec-appendix-c -->
 
 ## What a numerical check must establish
 

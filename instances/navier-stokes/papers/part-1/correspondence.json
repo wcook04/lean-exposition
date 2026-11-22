@@ -3,8 +3,8 @@
  "stage": "part-1",
  "state": "draft",
  "path": "papers/part-1.md",
- "content_sha256": "63c82f6a58b3df23aa8958a0da840328e9314f47899d8ebab33a2eced345acde",
- "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
+ "content_sha256": "fdf88785fa99dcbe6f2fa669b49809c3334a374198aa75354b55c5f51934a6bd",
+ "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
@@ -336,7 +336,7 @@
    "rationale": "Notation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-the-conditional-theorem-and-its-proof",
+   "anchor": "sec-1",
    "text_sha256": "2a5c725cbfda8137e832fc1aaea8f58df6d9c51c99bd48128df26ce922439885",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "1. The conditional theorem and its proof: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-the-analytic-space-and-the-mild-equation",
+   "anchor": "sec-2",
    "text_sha256": "322965060b9fca917ffb03436a1e76ac51c8b06372e3823a8bcb3feb17e61bef",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "2. The analytic space and the mild equation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-the-profile-in-physical-variables",
+   "anchor": "sec-3",
    "text_sha256": "b1e7b0da1ff17c4a2e78590e513e3c55eca390fb581c4e4fb721c1f659eadc42",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "3. The profile in physical variables: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-the-monodromy-and-the-exceptional-directions",
+   "anchor": "sec-4",
    "text_sha256": "c366c14038a3024ce70240aac63c400f7c67488ef556046a0de0825a8515eaaf",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "4. The monodromy and the exceptional directions: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-a-right-inverse-with-compact-initial-corrections",
+   "anchor": "sec-5",
    "text_sha256": "14d84345075eabbef4d935436c02df73cf65b64ef9f50901abc6d51f4ab35a13",
    "claim_ids": [],
    "citation_ids": [],
@@ -381,7 +381,7 @@
    "rationale": "5. A right inverse with compact initial corrections: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-the-nonlinear-correction-on-whole-space",
+   "anchor": "sec-6",
    "text_sha256": "3967bbd04713eec19292ae5f33c861fe27cf74505b9a2af22c522019d0327494",
    "claim_ids": [],
    "citation_ids": [],
@@ -390,7 +390,7 @@
    "rationale": "6. The nonlinear correction on whole space: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-7-smoothness-energy-and-the-whole-space-conclusion",
+   "anchor": "sec-7",
    "text_sha256": "fb10b6de92bce5694bf733bcfee32defba784d63f877a643a9b584dcf09f06e6",
    "claim_ids": [],
    "citation_ids": [],
@@ -399,8 +399,8 @@
    "rationale": "7. Smoothness, energy and the whole-space conclusion: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-8-the-construction-on-a-large-torus",
-   "text_sha256": "095cb0e6e7e82ebff72bba91da803f55cb762ba4e5fb8ed8e434b8e07a8e15f8",
+   "anchor": "sec-8",
+   "text_sha256": "ac9022f59318f68a74a3f939a039f8373ea0e4cede67d194a3f831e6bfde4f8d",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -408,8 +408,8 @@
    "rationale": "8. The construction on a large torus: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-9-the-unit-torus-and-the-theorem",
-   "text_sha256": "3018b14ae4916be826dc58c8719d27eb86bb249b8a8333967e4d0e12fe8a8dfa",
+   "anchor": "sec-9",
+   "text_sha256": "e75b1a263bffb8183a3cc660ccff0f80cd6d86881eac1a2d1cc877286d764954",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -417,7 +417,7 @@
    "rationale": "9. The unit torus and the theorem: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-appendix-a-the-analytic-results-used-above",
+   "anchor": "sec-appendix-a",
    "text_sha256": "b40240730d437b2585d1d3f462a0aa6719ed345b16b1db88493c08cc4b7aec68",
    "claim_ids": [],
    "citation_ids": [],

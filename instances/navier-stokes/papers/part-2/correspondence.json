@@ -3,8 +3,8 @@
  "stage": "part-2",
  "state": "draft",
  "path": "papers/part-2.md",
- "content_sha256": "6d59dcb8d2cadcc89eb6d8f18271836b71fa6dd7878b8247f69feb1c7aa5e26f",
- "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
+ "content_sha256": "d1228e2c1670d5cdff6b6f71e3d172dd8ce6ad80d13028fc4d579e64e4b3778f",
+ "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
@@ -327,7 +327,7 @@
    "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-the-result-and-its-notation",
+   "anchor": "sec-1",
    "text_sha256": "3ade48d8ee405d8334aec550c0d29422579788906ac60ec6cb7b36d4e4db5c63",
    "claim_ids": [],
    "citation_ids": [],
@@ -336,7 +336,7 @@
    "rationale": "1. The result and its notation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-the-complete-analytic-certificate",
+   "anchor": "sec-2",
    "text_sha256": "beb10f8bb59903f0bddce14ec4fa7bd9ffbaaf10b3900811d0c59f4a63be95ae",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "2. The complete analytic certificate: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-the-free-time-periodic-equation",
+   "anchor": "sec-3",
    "text_sha256": "81fc57422d3252cfe7b86df366d522f53086cd29a936d0c741861878f08d8855",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "3. The free time-periodic equation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-the-two-convection-estimates",
+   "anchor": "sec-4",
    "text_sha256": "073ffea2c9f1463ac0c1f3647479d89cbcb2cc583d30ec6d5922785f77b4da80",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "4. The two convection estimates: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-why-the-bordered-inverse-exists",
+   "anchor": "sec-5",
    "text_sha256": "05b77163571ef783908987bd8fbd072f3e16f927f9dcd7f9d80ec0ce876a048f",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "5. Why the bordered inverse exists: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-the-frozen-form-controls-the-worst-time",
+   "anchor": "sec-6",
    "text_sha256": "5a85c622c8d8e69baff9fb6e2f82e89cdb8ef5be766f9c8d3006e9ff1cccc66d",
    "claim_ids": [],
    "citation_ids": [],
@@ -381,7 +381,7 @@
    "rationale": "6. The frozen form controls the worst time: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-7-solve-the-nonlinear-equation-at-a-fixed-parameter",
+   "anchor": "sec-7",
    "text_sha256": "a3553d471b80d55ae6cc0a7e7ac73a5d801eb1370fdf0ac7dfced2de8ffa460e",
    "claim_ids": [],
    "citation_ids": [],
@@ -390,7 +390,7 @@
    "rationale": "7. Solve the nonlinear equation at a fixed parameter: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-8-continuity-of-the-remaining-finite-dimensional-problem",
+   "anchor": "sec-8",
    "text_sha256": "68b75a71b337c66c22857d4406f5e281244e46d6346a729298d0df5d31638299",
    "claim_ids": [],
    "citation_ids": [],
@@ -399,7 +399,7 @@
    "rationale": "8. Continuity of the remaining finite-dimensional problem: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-9-choose-the-parameter-and-cancel-the-force",
+   "anchor": "sec-9",
    "text_sha256": "21178cea366e99d9884a17645b57b1e709afe3bbe5e7002ca4a673b2da391a22",
    "claim_ids": [],
    "citation_ids": [],
@@ -408,7 +408,7 @@
    "rationale": "9. Choose the parameter and cancel the force: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-10-the-selected-weak-profile",
+   "anchor": "sec-10",
    "text_sha256": "6708efc8a180535afc17da4ba24c091bbaa52e28ade80cc3eac3f7fc4a2491e9",
    "claim_ids": [],
    "citation_ids": [],
@@ -417,7 +417,7 @@
    "rationale": "10. The selected weak profile: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-11-regularity-of-the-selected-orbit",
+   "anchor": "sec-11",
    "text_sha256": "0b1ef22ad1688d66f6b9e6c2ab302faea2e7961c98b95c671adad16122baba31",
    "claim_ids": [],
    "citation_ids": [],
@@ -426,7 +426,7 @@
    "rationale": "11. Regularity of the selected orbit: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-12-keep-the-same-witness-through-regularity",
+   "anchor": "sec-12",
    "text_sha256": "72e1a8dc8726f0c0e5b652e2b12d396f9dcf1d40d35411a98ddfad7fd56a5354",
    "claim_ids": [],
    "citation_ids": [],
@@ -435,7 +435,7 @@
    "rationale": "12. Keep the same witness through regularity: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-13-constants-comparisons-and-the-conditional-boundary",
+   "anchor": "sec-13",
    "text_sha256": "b4e61570c68aef99122bdd9fe452475ef46f95d00c55081c18d57a9da085027c",
    "claim_ids": [],
    "citation_ids": [],

@@ -3,8 +3,8 @@
  "stage": "what-the-lean-states",
  "state": "draft",
  "path": "papers/what-the-lean-states.md",
- "content_sha256": "bf42f69eab4ba186ad57256131c5874c11f0cb3c9fc0d0d2b16e112220506495",
- "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
+ "content_sha256": "8435d71358fee903f5b2faa01857d107fb35c29a7e308f23a45e9ce4cbb892e2",
+ "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
@@ -327,7 +327,7 @@
    "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-the-equations-and-the-clay-conclusions",
+   "anchor": "sec-1",
    "text_sha256": "4bd2610f7f48be35691698f4b028ed174db44a657298e5412062e629aeae745e",
    "claim_ids": [],
    "citation_ids": [],
@@ -336,7 +336,7 @@
    "rationale": "1. The equations and the Clay conclusions: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-a-profile-gives-breakdown",
+   "anchor": "sec-2",
    "text_sha256": "8750b8d91a0ca8364016f537133fb23fc11b89952588f2e50d91c3db01cea012",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "2. A profile gives breakdown: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-a-certificate-gives-a-profile",
+   "anchor": "sec-3",
    "text_sha256": "a2a575b7bc26325a810014bb2fd4cd0f2b1c5a89af0e9f42bd0c7485320781eb",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "3. A certificate gives a profile: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-the-outstanding-certificate-bridge",
+   "anchor": "sec-4",
    "text_sha256": "febf19f678e71cede8f7542307c1f64d0ca4f50fd64f235036f705bbaacccf76",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "4. The outstanding certificate bridge: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-checking-workflow-and-status",
+   "anchor": "sec-5",
    "text_sha256": "ae3c5e2e115a963c95be025347ef119d632d9a858db0b3a1946135057f5a74f8",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "5. Checking workflow and status: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-historical-scope",
+   "anchor": "sec-6",
    "text_sha256": "f711d2f1be41f67a2a6e265e717498790e98e44d5a05bf06e0a05f401a5695c2",
    "claim_ids": [],
    "citation_ids": [],

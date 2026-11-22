@@ -3,8 +3,8 @@
  "stage": "index",
  "state": "draft",
  "path": "papers/index.md",
- "content_sha256": "76641e6bb89a8153aa18dd237fd27c7a137894688f5c2242b05be8596b5227b0",
- "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
+ "content_sha256": "78e328a3d14fe85f35f5c47b0a4927a34a9275f9efae54974526316948914891",
+ "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
@@ -327,7 +327,7 @@
    "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-introduction",
+   "anchor": "sec-1",
    "text_sha256": "e9401ae69ffda9ec23fd6c5ab10a6cee131d0501035f32b93e6751bd43316c6a",
    "claim_ids": [],
    "citation_ids": [],
@@ -336,7 +336,7 @@
    "rationale": "1. Introduction: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-outline-of-the-proof",
+   "anchor": "sec-2",
    "text_sha256": "a66f44907ea89bc84e541ade5d76a746a543332532e58fa9380385d13a65d2bc",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "2. Outline of the proof: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-preliminaries",
+   "anchor": "sec-3",
    "text_sha256": "94b9ee0c570fe6a3b93881fcd8ab5b217854a2680809de5c258722ffe6681a9f",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "3. Preliminaries: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-the-linearised-equation",
+   "anchor": "sec-4",
    "text_sha256": "aeb03d0cce52e581382fd8a80d0f41d8ab08b85431a69cdec9ac43d5b379a6cf",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "4. The linearised equation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-blow-up-on-space",
+   "anchor": "sec-5",
    "text_sha256": "d444a31fe75c6bd44f7235081943e65618231fbfa3cf95d950f15920fec9983f",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "5. Blow-up on space: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-blow-up-on-the-torus",
+   "anchor": "sec-6",
    "text_sha256": "7b4bf57ffd7b270c586c8665648280dde137f255aaf7a79cfedcb148d27f4856",
    "claim_ids": [],
    "citation_ids": [],
@@ -381,7 +381,7 @@
    "rationale": "6. Blow-up on the torus: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-7-from-a-certificate-to-a-profile",
+   "anchor": "sec-7",
    "text_sha256": "3d6ba00742706e1bf3ac68283b726509df9564c85532e9c11a30dbec9131a23d",
    "claim_ids": [],
    "citation_ids": [],
@@ -390,7 +390,7 @@
    "rationale": "7. From a certificate to a profile: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-appendix-b-certificate-conditions",
+   "anchor": "sec-appendix-b",
    "text_sha256": "3e734834bd14d74224a09d32f1ce2a3d810051ff0b8c49a566bb7175f4f2f874",
    "claim_ids": [],
    "citation_ids": [],
@@ -399,7 +399,7 @@
    "rationale": "Appendix B. Certificate conditions: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-appendix-c-computation",
+   "anchor": "sec-appendix-c",
    "text_sha256": "44374147b8248a358d846a67a4be807a6e8ade9778df8fecfe36fe78d52ba0c4",
    "claim_ids": [],
    "citation_ids": [],
@@ -408,7 +408,7 @@
    "rationale": "Appendix C. Computation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-appendix-a-proofs-attached-to-earlier-numbers",
+   "anchor": "sec-appendix-a",
    "text_sha256": "aa1e52cc7166ade79683499cb228de05a5bcf392e66315ada1cab11543ad3bf9",
    "claim_ids": [],
    "citation_ids": [],

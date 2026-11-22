@@ -13,9 +13,11 @@ A comparison describes the listed correspondence at its stated scope. `same` con
 The uses and used-by links combine paper references and explicitly marked editorial dependencies. They are separate from a compiled Lean dependency graph.
 <!-- /passage:front -->
 
+<a id="1"></a>
+
 ## 1. Introduction
 
-<!-- passage:sec-1-introduction -->
+<!-- passage:sec-1 -->
 
 ### (1.1)
 
@@ -178,11 +180,13 @@ Two vorticity-magnitude surfaces of the computed approximate profile at similari
 **Uses.** No item-level link recorded.
 
 **Used by.** No item-level link recorded.
-<!-- /passage:sec-1-introduction -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. Outline of the proof
 
-<!-- passage:sec-2-outline-of-the-proof -->
+<!-- passage:sec-2 -->
 
 ### (2.1)
 
@@ -333,11 +337,13 @@ Mild solutions with compact smooth whole-space data or smooth mean-zero periodic
 **Uses.** Lemma 3.3, Lemma 3.5, (3.16), Lemma 3.7.
 
 **Used by.** Theorem 1.1.
-<!-- /passage:sec-2-outline-of-the-proof -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. Preliminaries
 
-<!-- passage:sec-3-preliminaries -->
+<!-- passage:sec-3 -->
 
 ### (3.1)
 
@@ -798,11 +804,13 @@ Dilation changes the torus period and preserves the quarter-power norm scaling a
 **Uses.** (3.4), (3.5), (3.8).
 
 **Used by.** Proposition 2.2, (2.6).
-<!-- /passage:sec-3-preliminaries -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. The linearised equation
 
-<!-- passage:sec-4-the-linearised-equation -->
+<!-- passage:sec-4 -->
 
 ### (4.1)
 
@@ -1331,11 +1339,13 @@ The nonlinear correction has weighted norm at most twice the inverse bound times
 **Uses.** (4.22), (4.23).
 
 **Used by.** (2.5), (6.17).
-<!-- /passage:sec-4-the-linearised-equation -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. Blow-up on space
 
-<!-- passage:sec-5-blow-up-on-space -->
+<!-- passage:sec-5 -->
 
 ### (5.1)
 
@@ -1386,11 +1396,13 @@ The cutoff error in homogeneous H1 is O(r^(-1/2)), while the cutoff’s L2 norm 
 **Uses.** (4.1), (5.1).
 
 **Used by.** (6.4).
-<!-- /passage:sec-5-blow-up-on-space -->
+<!-- /passage:sec-5 -->
+
+<a id="6"></a>
 
 ## 6. Blow-up on the torus
 
-<!-- passage:sec-6-blow-up-on-the-torus -->
+<!-- passage:sec-6 -->
 
 ### (6.1)
 
@@ -1733,11 +1745,13 @@ The resulting large-torus solution has homogeneous H1 norm between positive mult
 **Uses.** (6.5), (6.16), (6.17).
 
 **Used by.** (2.6).
-<!-- /passage:sec-6-blow-up-on-the-torus -->
+<!-- /passage:sec-6 -->
+
+<a id="7"></a>
 
 ## 7. From a certificate to a profile
 
-<!-- passage:sec-7-from-a-certificate-to-a-profile -->
+<!-- passage:sec-7 -->
 
 ### (7.1)
 
@@ -2970,11 +2984,13 @@ The physical solution decays like the reciprocal of the sum of the diffusion len
 **Uses.** (1.5), (7.65).
 
 **Used by.** Proposition 7.11.
-<!-- /passage:sec-7-from-a-certificate-to-a-profile -->
+<!-- /passage:sec-7 -->
+
+<a id="appendix-b"></a>
 
 ## Appendix B. Certificate conditions
 
-<!-- passage:sec-appendix-b-certificate-conditions -->
+<!-- passage:sec-appendix-b -->
 
 ### (B.1)
 
@@ -4143,11 +4159,13 @@ Data satisfying the Appendix B representation and validation conditions furnish 
 **Uses.** (7.9), (7.17), (7.21), (7.23), (7.24), (7.25), (7.26), (7.27), (7.28), (7.29), (7.35), (7.36), (7.37), Proposition B.1, (B.22), Lemma B.2, Proposition B.4, Lemma B.7, Proposition B.8, Lemma B.9, Lemma B.10, Lemma B.11, Lemma B.12, Lemma B.13.
 
 **Used by.** No item-level link recorded.
-<!-- /passage:sec-appendix-b-certificate-conditions -->
+<!-- /passage:sec-appendix-b -->
+
+<a id="appendix-c"></a>
 
 ## Appendix C. Computation
 
-<!-- passage:sec-appendix-c-computation -->
+<!-- passage:sec-appendix-c -->
 
 ### Figure 2
 
@@ -4228,14 +4246,16 @@ Newton corrections use the linearisation of the curl-cross self-similar operator
 **Uses.** (C.1).
 
 **Used by.** No item-level link recorded.
-<!-- /passage:sec-appendix-c-computation -->
+<!-- /passage:sec-appendix-c -->
+
+<a id="appendix-a"></a>
 
 ## Appendix A. Proofs attached to earlier numbers
 
-<!-- passage:sec-appendix-a-proofs-attached-to-earlier-numbers -->
+<!-- passage:sec-appendix-a -->
 
 Appendix A introduces no new numbered results or equations. Its proofs are attached to the existing lemma entries through their proof-page fields, so the same result is not counted twice.
-<!-- /passage:sec-appendix-a-proofs-attached-to-earlier-numbers -->
+<!-- /passage:sec-appendix-a -->
 
 ## Formal routes beyond the paper’s numbering
 
