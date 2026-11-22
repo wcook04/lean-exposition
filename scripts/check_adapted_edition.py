@@ -186,10 +186,6 @@ with sync_playwright() as pw:
         page.wait_for_timeout(800)
         notice = page.locator(".reader-notice").all_inner_texts()
         check("1440 an added paragraph says it has no counterpart", any("no counterpart in the authors’ paper" in n for n in notice), f"{notice} from {at_added!r}, the change at {added['adapted_lines']}")
-        # The authors' paper offers its changed paragraphs in the edition.
-        offers = page.locator("[data-counterpart-line]").count()
-        check("1440 the authors' paper offers changed paragraphs in the edition", offers > 0, offers)
-
         # Find in page reaches the edition's words far down.
         page.goto(edition, wait_until="domcontentloaded")
         settle(page)

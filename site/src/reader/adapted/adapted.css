@@ -9,10 +9,11 @@
   --change-gutter: 22px;
 }
 
-/* Both texts of a paper with an adapted edition keep a right gutter on every block from the first
-   paint, so a mark or a square arriving with its part never moves a line. */
-.reader--edition .paper.prose .part__text > [data-line] {
-  box-sizing: border-box;
+/* Both texts of a paper with an adapted edition keep a right gutter beside every part from the first
+   paint, so a mark or a square arriving with its part never moves a line. The gutter is the text box's
+   own padding: formulas are fitted to the narrower column, and the marks stand in the gutter, inside
+   the box that clips them (.part__text, content-visibility). */
+.reader--edition .paper.prose .part__text {
   padding-right: var(--change-gutter);
 }
 
@@ -28,7 +29,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
+  right: calc(-1 * var(--change-gutter) + 9px);
   border-right: 2px dotted var(--change-rule);
   pointer-events: none;
 }
@@ -39,7 +40,7 @@
 .change-counterpart {
   position: absolute;
   top: 0;
-  right: 0;
+  right: calc(-1 * var(--change-gutter));
   display: grid;
   place-items: center;
   width: 20px;

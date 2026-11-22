@@ -1,7 +1,7 @@
 // The changes layer on the page. In the adapted edition every paragraph that shows a change gets
 // a light wash and, in the right margin, a dotted rule in ink headed by a small open square: the
-// button "See what changed here". In the authors' paper nothing is marked; a paragraph the
-// edition changes offers, in the same margin, "See this paragraph in the adapted edition".
+// button "See what changed here". The authors' paper carries no marks at all; the switch keeps the
+// place between the two texts.
 // The reader renders each part's HTML once (PaperBody, lazily), so the marks are put on its
 // blocks (by their source line, data-line) as the parts arrive, and put back if a part redraws.
 
@@ -26,7 +26,7 @@ export function useChangeMarks(
 ) {
   useEffect(() => {
     const el = root.current;
-    if (!el || !map || !side) return;
+    if (!el || !map || side !== "adapted") return;
     // line ranges -> change id, on this side
     const ranges: { a: number; b: number; id: string }[] = [];
     for (const c of map.changes) {
@@ -55,16 +55,6 @@ export function useChangeMarks(
             button.innerHTML = SQUARE;
             block.prepend(button);
           }
-        } else if (first && !block.querySelector(":scope > .change-counterpart")) {
-          block.dataset.changedInEdition = "";
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "change-counterpart";
-          button.dataset.counterpartLine = String(line);
-          button.setAttribute("aria-label", "See this paragraph in the adapted edition");
-          button.title = "See this paragraph in the adapted edition";
-          button.innerHTML = SQUARE;
-          block.prepend(button);
         }
       }
     };
