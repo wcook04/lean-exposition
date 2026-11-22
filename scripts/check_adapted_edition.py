@@ -18,14 +18,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import urllib.request
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-CREDIT = ("An adapted edition of Alpöge, Buckmaster and Coiculescu's paper, prepared by Will Cook with AI assistance. "
-          "The mathematics and the original text are the authors'. Every change is marked, and no change has been reviewed by the authors.")
 WIDTHS = [(390, 844), (800, 800), (1024, 800), (1100, 900), (1440, 900), (2000, 1200), (2560, 1440)]
 
 ap = argparse.ArgumentParser()
@@ -33,13 +32,18 @@ ap.add_argument("base")
 ap.add_argument("--shots", type=Path, required=True)
 ap.add_argument("--slug", default="adapted")
 ap.add_argument("--slot", default="adapted", help="the edition's document slot")
-ap.add_argument("--credit", default=CREDIT)
+ap.add_argument("--paper", help="the library paper (default: read from the address, /library/<paper>/)")
+ap.add_argument("--credit", help="the edition's credit (default: its document.credit in instances/<paper>/adapted/edition.json)")
 ap.add_argument("--far", help="words of the edition far down its page, for find (default: the first words of its last change)")
 ap.add_argument("--widths", type=int, nargs="*", help="only these window widths (default: all seven)")
 a = ap.parse_args()
 if a.widths:
     WIDTHS = [(w, h) for w, h in WIDTHS if w in a.widths]
 base = a.base.rstrip("/") + "/"
+if not a.credit:
+    # The paper's own credit line, as its adapted edition declares it.
+    paper = a.paper or base.split("/library/", 1)[1].strip("/")
+    a.credit = json.loads((Path(__file__).resolve().parents[1] / "instances" / paper / "adapted/edition.json").read_text())["document"]["credit"]
 edition = base + a.slug + "/"
 origin = base.split("/library/")[0]
 a.shots.mkdir(parents=True, exist_ok=True)
@@ -78,6 +82,10 @@ AT_LINE = """() => { const css = (n) => parseFloat(getComputedStyle(document.doc
     return b.dataset.line + '|' + b.textContent.trim().slice(0, 60); } return ''; }"""
 HEAD = """() => [...document.querySelectorAll('.account-line, .outline__account')]
   .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1).map(e => e.innerText).join(' ')"""
+TEXT = """() => (document.querySelector('main') || document.body).innerText"""
+# The reader's one-line edition credit (site.ts editionCreditLine): the credit's first sentence, then this.
+first = re.split(r"(?<=[a-z0-9)\]'’][.!?])\s+(?=[A-Z])", a.credit)[0].strip().rstrip(".!?")
+short_credit = f"{first}; every change is marked."
 
 with sync_playwright() as pw:
     browser = pw.chromium.launch()
@@ -90,7 +98,11 @@ with sync_playwright() as pw:
         page.goto(edition, wait_until="domcontentloaded")
         settle(page)
         head = page.evaluate(HEAD)
-        check(f"{tag} credit verbatim in the header", a.credit in head, head[:300])
+        # The header says the edition's credit in one line (its first sentence, and that every change is
+        # marked); the edition's text carries the whole credit, verbatim, once.
+        check(f"{tag} the edition's one-line credit in the header", short_credit in head, head[:300])
+        text = page.evaluate(TEXT).replace("\u2019", "'")
+        check(f"{tag} credit verbatim in the edition's text", text.count(a.credit) == 1, text.count(a.credit))
         check(f"{tag} link to the authors' paper beside it", page.locator("a", has_text="Read the authors’ paper").count() >= 1)
         switch = page.locator(".edition-switch")
         check(f"{tag} switch in the strip", switch.count() == 1 and switch.locator("button[aria-pressed=true]").inner_text() == "Adapted edition",

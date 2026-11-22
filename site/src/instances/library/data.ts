@@ -33,6 +33,14 @@ export interface LibraryDocument {
   of?: string;
   published?: boolean;
   aux_pdf?: LibraryPdf;
+  /** An adapted edition's other downloads, each {file, name, label?, bytes, sha256} in its edition.json
+   *  and copied by the build after its digest is checked: the ordinary PDFs of the edition and its
+   *  auxiliary note (no change marks) to pdf/<name>, and the TeX overlay and the result-by-result
+   *  comparison (Markdown and data) to the edition's own folder, <slug>/<name>. */
+  reading_pdf?: LibraryPdf;
+  aux_reading_pdf?: LibraryPdf;
+  source_overlay?: LibraryPdf;
+  result_comparison?: { reading?: LibraryPdf; data?: LibraryPdf };
   /** What the document does and who it is written for, in place of the reader's default account line. */
   job?: string;
   reader?: string;

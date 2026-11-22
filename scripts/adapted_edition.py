@@ -58,6 +58,29 @@ STAGED = (("paper.md", "papers/{slot}/paper.md"), ("correspondence.json", "paper
           ("colours.json", "alignment/colours-{slot}.json"))
 
 
+# Words of a private build that must never reach a public change map: transcription paragraph ids,
+# review-card ids, local file names of the literature, and dotted names from the Lean (a Lean file's
+# path, as a source, is the authors' own place and may stand).
+PRIVATE_WORDS = (("a transcription paragraph id", re.compile(r"\bp[0-9]{4}\b")),
+                 ("a local file name", re.compile(r"(?<![/\w.-])(?:[\w.-]+\.pdf:|\d+\.pdf\b)")),
+                 ("a review-card id", re.compile(r"\bac-[0-9]|p::")),
+                 ("a dotted Lean name", re.compile(r"\b[A-Z][A-Za-z0-9_']*\.(?!(?:lean|md|json|toml|tex|py)\b)[A-Za-z_][A-Za-z0-9_']*\b")))
+
+
+def private_words(changes: list[dict]) -> list[str]:
+    """The change map's sources and notes, read for words that belong to the private build."""
+    problems = []
+    for c in changes:
+        texts = [("note", c.get("note") or "")] + [("source", " ".join(str(s.get(k) or "") for k in ("ref", "where", "title")))
+                                                    for s in c.get("sources", [])]
+        for field, text in texts:
+            for what, pattern in PRIVATE_WORDS:
+                m = pattern.search(text)
+                if m:
+                    problems.append(f"{c['id']}: its {field} has {what} ({m.group(0)!r})")
+    return problems
+
+
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -343,7 +366,7 @@ def convert(args) -> None:
         raise SystemExit(f"slot {slot} is taken by another document of {args.paper}")
     rows_in = json.loads((args.edition / "CHANGES.json").read_text())
     changes = [{k: r[k] for k in PUBLIC_FIELDS} for r in rows_in]
-    problems = []
+    problems = private_words(changes)
     marks = marks_in(args.edition)
     mark_ids = [m[2] for m in marks]
     ids = [c["id"] for c in changes]
