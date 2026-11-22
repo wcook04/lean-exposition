@@ -106,7 +106,7 @@ export function ChangeList({ map, current, onGo, onClose }: { map: ChangeMap; cu
         </div>
       </header>
       <p className="change-card__note">
-        {map.changes.length} changes, in the order of the text. Each is marked in the margin of the edition; none has been reviewed by the authors.
+        {map.changes.length} changes, in the order of the text. None has been reviewed by the authors.
       </p>
       <ol className="change-list__rows">
         {map.changes.map((c) => (
