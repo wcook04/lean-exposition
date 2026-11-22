@@ -34,6 +34,20 @@ SIDEWAYS = """() => {
     }
   }
   for (const cue of document.querySelectorAll('.math-cue__scroll')) if (cue.getClientRects().length) out.push('a "Scroll formula" control is shown');
+  // A display that does not scroll must still fit: the rendered formula (.katex-html and each
+  // piece of it) and its number lie inside the column's content box, never cut off by the clip.
+  for (const box of document.querySelectorAll('.prose .math-display')) {
+    if (!box.getClientRects().length) continue;
+    const html = box.querySelector(':scope > .katex-display > .katex > .katex-html');
+    if (!html) continue;
+    const parts = [html, ...html.querySelectorAll(':scope > .katex-base, :scope > .katex-tag, :scope > .tag'), ...box.querySelectorAll(':scope > .math-number')].filter(p => p.getClientRects().length);
+    const left = box.getBoundingClientRect().left + box.clientLeft;
+    const extent = Math.max(0, ...parts.map(p => p.getBoundingClientRect().right - left));
+    if (extent > box.clientWidth + 1) {
+      const t = box.closest('[data-t]') || box;
+      out.push(`math-display${t.dataset.t ? ' data-t=' + t.dataset.t : ''} reaches ${extent.toFixed(0)} in a ${box.clientWidth}px column: ${(box.querySelector('.math-number, .katex-tag') || {}).textContent || ''} ${box.textContent.replace(/\\s+/g, ' ').slice(0, 50)}`);
+    }
+  }
   const page = document.documentElement.scrollWidth - document.documentElement.clientWidth;
   if (page > 1) out.push(`the page is ${page}px wider than the window`);
   return out;
