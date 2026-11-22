@@ -2019,3 +2019,10 @@ html.is-reading {
     text-overflow: ellipsis;
   }
 }
+
+/* A section title that is one long Lean name (a library guide's Breakdown.Cert.… headings) breaks
+   inside its column, so the outline never scrolls sideways. */
+.outline__item a,
+.outline__item a > * {
+  overflow-wrap: anywhere;
+}
