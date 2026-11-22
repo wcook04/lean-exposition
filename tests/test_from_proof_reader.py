@@ -131,6 +131,22 @@ class FromProofReader(unittest.TestCase):
             table = json.loads((out / "alignment/aliases.json").read_text())
             self.assertEqual(table["retired"]["p.roll"]["retired"], "2026-11-21")
 
+    def test_pinned_source_root_reaches_the_index(self):
+        from lean_exposition.lean_index import build_index
+
+        revision = "0" * 40
+        for suffix in ("", "/lean", "/formalization/lean/"):
+            with self.subTest(suffix=suffix), tempfile.TemporaryDirectory() as scratch:
+                root = Path(scratch)
+                folder = page(root, ALL)
+                toml = folder / "paper.toml"
+                toml.write_text(toml.read_text().replace(revision + "/lean", revision + suffix))
+                out = self.convert(root, folder)
+                tree = out / "upstream/lean"
+                index = build_index(tree)
+                link = index["base_url"] + index["modules"][0]["path"]
+                self.assertEqual(link, f"https://github.com/example/demo/blob/{revision}{suffix.rstrip('/')}/Demo/Basic.lean")
+
     def test_an_old_alias_no_merge_explains_is_retired(self):
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)

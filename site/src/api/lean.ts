@@ -29,7 +29,7 @@ export interface LeanFolder {
 
 export interface LeanModules {
   revision: string;
-  /** Prefix of a line link: append `<path>#L<a>-L<b>`. */
+  /** Prefix for a repository line link, or the DOI of an archived source. */
   base_url: string;
   toolchain: string;
   /** How `uses` and `used_by` were obtained; the site says so wherever it shows them. */
@@ -391,7 +391,8 @@ export function withPapers<T extends AlignmentCore>(core: T, papers: readonly Al
   return { ...core, records };
 }
 
-/** A line link into OpenAI's repository at the pinned revision. */
-export function leanSourceUrl(modules: Pick<LeanModules, "base_url">, path: string, line: number, endLine?: number): string {
+/** The pinned repository lines or the authors’ archived source record. */
+export function leanSourceUrl(modules: Pick<LeanModules, "base_url" | "revision">, path: string, line: number, endLine?: number): string {
+  if (modules.revision.startsWith("https://doi.org/")) return modules.revision;
   return `${modules.base_url}${path}#L${line}${endLine && endLine !== line ? `-L${endLine}` : ""}`;
 }

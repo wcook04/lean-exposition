@@ -82,6 +82,7 @@ instances/<paper>/
 
 **`scripts/from_proof_reader.py`.** This converter turns a Proof Reader page (`paper.toml`, `links.json`, paper source, `generated/lean.json(.gz)`, `checks/`) into this format:
 
+- **Lean source.** A pinned GitHub tree in `[lean].source` supplies the repository, revision and `upstream_lean_root` in the source lock. The root is the path after the revision, or an empty string at the repository root. An archived Lean project keeps its record DOI.
 - **Passages.** Each passage becomes a tie, and its id is kept.
 - **Claims.** Each claim becomes a result slug. For example, `result-1.1` with the title "Theorem 1.1" becomes `theorem-1.1`.
 - **Titles and notes.** `plain` becomes `names.json` and `notes` becomes `notes.json`.

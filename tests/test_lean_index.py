@@ -460,6 +460,15 @@ class Roots(unittest.TestCase):
         self.assertEqual(index["toolchain"], "leanprover/lean4:v4.29.1")
         self.assertEqual(index["base_url"], "https://github.com/example/r/blob/" + "0" * 40 + "/lean/")
 
+    def test_archived_source_keeps_its_doi(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tree = self.tree(directory, {"A/N.lean": "def a := 1\n"})
+            record = "https://doi.org/10.5281/zenodo.19081887"
+            (tree.parent / "source-lock.json").write_text(json.dumps({"repository": record, "revision": record}))
+            index = lean_index.build_index(tree)
+        self.assertEqual(index["base_url"], record)
+        self.assertEqual(lean_index.modules_view(index)["base_url"], record)
+
     def test_rejects_malformed_lock_roots(self):
         with tempfile.TemporaryDirectory() as directory:
             tree = self.tree(directory, {"B/M.lean": "def a := 1\n"})

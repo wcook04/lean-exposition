@@ -600,7 +600,7 @@ function FileView({ module, shell, slot, file, scroller }: { module: LeanModule;
           <PathText path={path} />
         </h1>
         <p>
-          The whole file, {count(shell.paths.get(module.module)?.lines ?? code.lines.length)} lines, at commit {shell.modules.revision.slice(0, 7)} of OpenAI's repository.
+          The whole file, {count(shell.paths.get(module.module)?.lines ?? code.lines.length)} lines, {shell.modules.revision.startsWith("https://doi.org/") ? "from the source archive" : `at commit ${shell.modules.revision.slice(0, 7)}`}.
         </p>
         <ModuleViews module={module.module} file />
       </header>

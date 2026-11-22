@@ -3,6 +3,7 @@
  "id": "navier-stokes",
  "repository": "https://github.com/tristanbuckmaster/navier-stokes",
  "revision": "ad53419de079eb8f95f60313473374624a348546",
+ "upstream_lean_root": "lean",
  "via": "wcook04/proof-reader 3858afbe00b23dd8bba13ffa41409310b712723d, papers/navier-stokes-paper/lean",
  "license": "NOASSERTION",
  "files": [

@@ -643,12 +643,13 @@ def main() -> None:
             write(lean_out / rel, data)
             locked.append({"path": f"upstream/lean/{rel}", "sha256": sha(data), "bytes": len(data)})
     src = toml["lean"].get("source", "")
-    m = re.match(r"https://github.com/([^/]+/[^/]+)/tree/([0-9a-f]{40})", src)
-    upstream_repo, upstream_rev = (f"https://github.com/{m.group(1)}", m.group(2)) if m else (src, "")
+    m = re.fullmatch(r"(https://github\.com/[^/?#]+/[^/?#]+)/tree/([0-9a-f]{40})(?:/([^?#]*))?(?:[?#].*)?", src)
+    upstream_repo, upstream_rev = m.group(1, 2) if m else (src, "")
     # A source that is not a pinned git tree (an archive DOI) is its own revision.
     revision = upstream_rev or src
     write(out / "upstream/source-lock.json", dumps({
         "schema_version": "1.0", "id": args.paper, "repository": upstream_repo, "revision": revision,
+        **({"upstream_lean_root": (m.group(3) or "").rstrip("/")} if m else {}),
         "via": f"wcook04/proof-reader {args.source_commit}, papers/{page.name}/{toml['lean']['project']}",
         "license": "NOASSERTION", "files": locked,
         # The modules the page reads: their top-level directories, and top-level module files such as Solution.
