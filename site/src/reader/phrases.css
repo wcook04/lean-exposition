@@ -30,11 +30,33 @@
 
 /* The rail takes its colour from the same marked words as the tint. Paragraph selection
    keeps its keyboard and pointer target in this column. */
+.paper .tick[data-joins-above] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.paper .tick[data-joins-below] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.paper .tick--bands {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.paper .tick--bands > span {
+  flex: 1 1 0;
+  background-color: var(--tone, var(--ink-3));
+}
+
 .paper .tick[data-tone] {
   background-color: var(--tone, var(--ink-3));
 }
 
-:root[data-tones="off"] .paper .tick[data-tone] {
+:root[data-tones="off"] .paper .tick[data-tone],
+:root[data-tones="off"] .paper .tick--bands > span {
   background-color: var(--ink-3);
 }
 
@@ -100,7 +122,8 @@
     text-decoration-color: LinkText;
     text-underline-offset: 0.15em;
   }
-  .paper .tick[data-tone] {
+  .paper .tick[data-tone],
+  .paper .tick--bands > span {
     background-color: LinkText;
     forced-color-adjust: none;
   }

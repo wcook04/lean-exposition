@@ -19,6 +19,10 @@ const parts = [
   { span: { start: 50, end: 200 } },
 ] as PreparedPart[];
 
+function rectList(...rects: DOMRect[]): DOMRectList {
+  return Object.assign(rects, { item: (i: number) => rects[i] ?? null });
+}
+
 function section(part: number, spans: [segment: number, top: number, bottom: number][]) {
   const el = document.createElement("section");
   el.dataset.part = String(part);
@@ -28,7 +32,9 @@ function section(part: number, spans: [segment: number, top: number, bottom: num
     const span = document.createElement("span");
     span.className = "tie";
     span.dataset.t = String(segment);
-    vi.spyOn(span, "getBoundingClientRect").mockReturnValue({ top, bottom, height: bottom - top, left: 0, right: 10, width: 10, x: 0, y: top, toJSON() {} });
+    const rect = DOMRect.fromRect({ x: 0, y: top, width: 10, height: bottom - top });
+    vi.spyOn(span, "getBoundingClientRect").mockReturnValue(rect);
+    vi.spyOn(span, "getClientRects").mockReturnValue(rectList(rect));
     text.append(span);
   }
   el.append(text);
@@ -99,6 +105,54 @@ describe("statements on the page", () => {
     expect(topics(".tick")).toEqual(["0", "0", "7"]);
     expect(topics(".tick")).toEqual(topics(".tie"));
     reader.dispose();
+  });
+
+  it("bands each physical line in the phrases’ left-to-right order, including wrapped and repeated topics", () => {
+    const model = tieModel({ ...index, ties: [2, 7, 4].map(tone => ({ ...index.ties[0], tone })), segments: [
+      [0, 1, [0]], [1, 2, [1]], [2, 3, [2]], [3, 4, [0]],
+    ] });
+    const reader = new Statements(model, parts);
+    const page = section(0, [[0, 0, 1], [1, 0, 1], [2, 0, 1], [3, 0, 1]]);
+    const marks = [...page.querySelectorAll<HTMLElement>(".tie")];
+    const rect = (x: number, y: number, h = 20) => DOMRect.fromRect({ x, y, width: 30, height: h });
+    const boxes = [
+      [rect(30, 100), rect(0, 127)], [rect(0, 99, 22)], [rect(70, 101)], [rect(110, 100), rect(35, 127)],
+    ];
+    marks.forEach((el, i) => vi.mocked(el.getClientRects).mockImplementation(() => rectList(...boxes[i])));
+    reader.adopt(0, page);
+    const draw = () => (reader as unknown as { drawTicks(part: number): void }).drawTicks(0);
+    const ticks = () => [...page.querySelectorAll<HTMLElement>(".tick")];
+    const tones = () => ticks().map(t => t.dataset.tone ?? [...t.children].map(b => (b as HTMLElement).dataset.tone).join(","));
+    draw();
+    expect(tones()).toEqual(["7,2,4", "2"]);
+    expect(ticks().map(t => [t.style.top, t.style.height])).toEqual([["99px", "22px"], ["127px", "20px"]]);
+    reader.light("pin", 2);
+    expect(ticks().map(t => t.hasAttribute("data-pin"))).toEqual([true, false]);
+    // A reflow moves topic 4 onto the second line. The active mark moves with its words.
+    boxes[2] = [rect(85, 127)];
+    draw();
+    expect(tones()).toEqual(["7,2", "2,4"]);
+    expect(ticks().map(t => t.hasAttribute("data-pin"))).toEqual([false, true]);
+    reader.dispose();
+  });
+
+  it("joins adjacent marked lines within a block, keeping an unlinked line and another paragraph separate", () => {
+    const page = section(0, [[0, 100, 120], [0, 128, 148], [0, 184, 204], [1, 212, 232]]);
+    const text = page.querySelector(".part__text")!;
+    const [a, b, c, d] = [...text.querySelectorAll<HTMLElement>(".tie")];
+    const p1 = document.createElement("p"), p2 = document.createElement("p");
+    p1.style.lineHeight = p2.style.lineHeight = "28px";
+    p1.append(a, b, c);
+    p2.append(d);
+    text.replaceChildren(p1, p2);
+    statements.adopt(0, page);
+    (statements as unknown as { drawTicks(part: number): void }).drawTicks(0);
+    const ticks = [...page.querySelectorAll<HTMLElement>(".tick")];
+    expect(ticks.map(t => [t.style.top, t.style.height])).toEqual([
+      ["100px", "24px"], ["124px", "24px"], ["184px", "20px"], ["212px", "20px"],
+    ]);
+    expect(ticks.filter(t => t.hasAttribute("data-joins-below"))).toEqual([ticks[0]]);
+    expect(ticks.filter(t => t.hasAttribute("data-joins-above"))).toEqual([ticks[1]]);
   });
 
   it("marks a selection across paragraphs as a block, with one margin rule, and clears both", () => {
