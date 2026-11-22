@@ -403,7 +403,7 @@ async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record
     for (const stage of Object.keys(index.documents).filter((s) => !INSTANCE.stages || INSTANCE.stages.includes(s as never))) {
       const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
       const { account, parts } = firstScreen(stage, edition(index.documents[stage]), body(index.responses[`/papers/${stage}/structure?representation=reader`]), body(index.responses[`/ties/${stage}`]), references);
-      screens[stage] = readerFirstScreenHtml(account, parts);
+      screens[stage] = readerFirstScreenHtml(account, parts, base);
     }
     return screens;
   } finally {
