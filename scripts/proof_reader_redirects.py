@@ -2,7 +2,7 @@
 """Write the Proof Reader redirect table: every Proof Reader page now read in the library, and how
 each of its old hash addresses maps to its library address (docs/library-architecture.md, section 6).
 
-    proof_reader_redirects.py PROOF_READER_CHECKOUT OUT.json [--js OUT.js] [--ns-table REDIRECTS.json] [--offline]
+    proof_reader_redirects.py PROOF_READER_CHECKOUT OUT.json [--js OUT.js] [--instance ID] [--ns-table REDIRECTS.json] [--offline]
 
 Pages come from the library instances (instances/*/instance.json: the main document's Proof Reader
 page, and each companion document read from a single page) and, for Navier–Stokes, from the table of
@@ -14,6 +14,7 @@ For each page the table holds:
   root      its paper's library address (the Lean index lives there)
   claims    old claim id -> the address after `to` (a numbered result "theorem-1.1/", or the
             claim's passage "@<id>" on a companion page)
+  retired   true for a removed companion whose old addresses open the original paper
   headings  old heading id (and each alias) -> the library's section anchor ("" for an unnumbered
             heading, which opens the page at its top); read from the live Proof Reader edition
 The JS file holds the table and the mapping the stub runs before Proof Reader's own code.
@@ -77,8 +78,10 @@ JS = r"""// Proof Reader pages now read in the library: each old hash address go
   function target(hash) {
     var m = /^#\/?([^\/#]+)(?:#([^#]+)|\/([^\/]*)(?:\/.*)?)?$/.exec(hash);
     if (!m) return null;
-    var e = T[dec(m[1])];
-    if (!e) return null;
+    var slug = dec(m[1]);
+    if (!Object.prototype.hasOwnProperty.call(T, slug)) return null;
+    var e = T[slug];
+    if (e.retired) return e.to;
     var rec = m[2] !== undefined ? "@" + dec(m[2]) : m[3] ? dec(m[3]) : "";
     if (!rec) return e.to;
     if (rec.charAt(0) === "@") {
@@ -96,17 +99,21 @@ JS = r"""// Proof Reader pages now read in the library: each old hash address go
     return e.to + "lean/" + encodeURIComponent(rec).replace(/%2E/g, ".");
   }
   window.__libraryTarget = target;
-  // A page's own static address (/proof-reader/<slug>/) and the not-found page read the slug from the path.
-  var hash = location.hash;
-  if (!/^#\/[^\/]/.test(hash)) {
-    var pm = /\/proof-reader\/([^\/]+)\/?$/.exec(location.pathname);
-    if (pm) hash = "#/" + pm[1];
+  function forward() {
+    // A static /proof-reader/<slug>/ address may still carry an old heading fragment.
+    var hash = location.hash;
+    if (!/^#\//.test(hash)) {
+      var page = /\/proof-reader\/([^\/]+)\/?$/.exec(location.pathname);
+      if (page) hash = "#/" + page[1] + hash;
+    }
+    var to = target(hash);
+    if (to) {
+      document.documentElement.style.visibility = "hidden";
+      location.replace(to);
+    }
   }
-  var to = target(hash);
-  if (to) {
-    document.documentElement.style.visibility = "hidden";
-    location.replace(to);
-  }
+  window.addEventListener("hashchange", forward);
+  forward();
 })();
 """
 
@@ -116,6 +123,7 @@ def main() -> int:
     ap.add_argument("proof_reader", type=Path, help="a checkout of wcook04/proof-reader (its papers/*/links.json)")
     ap.add_argument("out", type=Path)
     ap.add_argument("--js", type=Path)
+    ap.add_argument("--instance", action="append", help="only include the selected library instance; repeat to select several")
     ap.add_argument("--ns-table", type=Path, help="the Navier–Stokes companion pages' table (paper, pages)")
     ap.add_argument("--offline", action="store_true", help="write every page without checking that its library address is live")
     args = ap.parse_args()
@@ -131,6 +139,8 @@ def main() -> int:
     for path in sorted((ROOT / "instances").glob("*/instance.json")):
         inst = json.loads(path.read_text())
         source = (inst.get("source") or {}).get("proof_reader") or {}
+        if args.instance and inst["id"] not in args.instance:
+            continue
         at = inst.get("path") or inst["id"]
         root = f"{LIB}{at}/"  # the build's own Lean index
         if source.get("page"):
@@ -142,29 +152,39 @@ def main() -> int:
                 continue
             if (papers / doc["id"] / "links.json").is_file():
                 pages[doc["id"]] = {"to": f"{LIB}{at}/{doc['slug']}/", "root": root, "claims": claim_passages(doc["id"])}
-    if args.ns_table and args.ns_table.is_file():
+        for removed in inst.get("removed_pages", []):
+            slug = f"{inst['id']}-{removed}"
+            if inst["id"] == "navier-stokes" and removed == "what-the-lean-states":
+                slug = inst["id"]
+            if (papers / slug / "paper.toml").is_file():
+                pages[slug] = {"to": root, "root": root, "claims": {}, "retired": True}
+    if args.ns_table and args.ns_table.is_file() and (not args.instance or "navier-stokes" in args.instance):
         table = json.loads(args.ns_table.read_text())
         ns = json.loads((ROOT / "instances/navier-stokes/instance.json").read_text())
         removed = set(ns.get("removed_pages", []))
         for slug, row in (table.get("pages") or {}).items():
             # A companion the library no longer publishes sends its old Proof Reader address to the paper.
             if row["page"] in removed:
-                pages[slug] = {"to": f"{LIB}navier-stokes/", "root": f"{LIB}navier-stokes/", "claims": {}}
+                pages[slug] = {"to": f"{LIB}navier-stokes/", "root": f"{LIB}navier-stokes/", "claims": {}, "retired": True}
             else:
                 pages[slug] = {"to": f"{LIB}navier-stokes/{row['page']}/", "root": f"{LIB}navier-stokes/", "claims": claim_passages(slug)}
     out, held = {}, []
+    live_by_url: dict[str, bool] = {}
     for slug in sorted(pages):
         row = pages[slug]
-        if not args.offline and not live(row["to"]):
-            held.append(slug)
-            continue
-        row["headings"] = headings(slug)
+        if not args.offline:
+            url = row["to"]
+            if url not in live_by_url:
+                live_by_url[url] = live(url)
+            if not live_by_url[url]:
+                held.append(slug)
+                continue
+        row["headings"] = {} if row.get("retired") else headings(slug)
         out[slug] = row
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps({"schema": 1, "from": PR, "pages": out, "held": held}, indent=1, ensure_ascii=False) + "\n")
     if args.js:
-        compact = {s: {k: r[k] for k in ("to", "root", "claims", "headings")} for s, r in out.items()}
-        args.js.write_text(JS.replace("__TABLE__", json.dumps(compact, ensure_ascii=False, separators=(",", ":"))))
+        args.js.write_text(JS.replace("__TABLE__", json.dumps(out, ensure_ascii=False, separators=(",", ":"))))
     print(f"proof-reader redirects: {len(out)} page(s) live in the library; held on Proof Reader: {', '.join(held) or 'none'}")
     return 0
 
