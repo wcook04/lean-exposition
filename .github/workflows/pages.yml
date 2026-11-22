@@ -1,7 +1,9 @@
 name: Publish reading website
+# The SK reader now lives in the library (https://wcook04.github.io/library/qaoa-sk/), and
+# wcook04/lean-exposition-site holds redirect stubs to it (scripts/redirect_stubs.py qaoa-sk on the
+# library branch). A push to main no longer republishes the old site over the stubs; run this by
+# hand only to restore the old reader.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
