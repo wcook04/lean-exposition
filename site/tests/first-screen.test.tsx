@@ -52,6 +52,15 @@ describe("a paper's first screen in its HTML", () => {
     expect(openedFirstScreen(document)).toBeNull();
   });
 
+  it("gives way at an address whose path names a place, and stays at the root and the read pages", () => {
+    const html = readerFirstScreenHtml("", "<section class='part'><div class='part__text'><h1>Title</h1></div></section>", "/lib/euler/");
+    for (const [path, stays] of [["/lib/euler/", true], ["/lib/euler/read/short/", true], ["/lib/euler/theorem-1.1/", false]] as const) {
+      window.history.replaceState(null, "", path);
+      open(html);
+      expect(!!document.querySelector(".prose"), path).toBe(stays);
+    }
+  });
+
   it("gives way on a reload or Back, which restores a place from the history entry", () => {
     window.history.replaceState({ key: "kept" }, "", "/read/short");
     open(readerFirstScreenHtml("", "<section class='part'><div class='part__text'><h1>Title</h1></div></section>"));

@@ -1876,3 +1876,15 @@ html.is-reading {
 .outline__item a > * {
   overflow-wrap: anywhere;
 }
+
+/* The Lean page waits, undrawn but in place in its sheet, until the alignment has named its rows
+   (RecordDock.tsx), so its title, buttons, list and body never move after they are shown. */
+.lean-page[data-waiting] {
+  visibility: hidden;
+}
+
+/* A cold address further down holds the paper undrawn, in place, until it has landed there
+   (ReaderPage.tsx), so the top of the paper never shows and then jumps. */
+html.landing .paper {
+  visibility: hidden;
+}
