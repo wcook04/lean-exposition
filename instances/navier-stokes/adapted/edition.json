@@ -19,23 +19,24 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with changes marked",
-   "sha256": "664f0c84a049eb8e412d47a5f3cc475c07ea6128fdf5cab1bf9dc69461618f46",
-   "bytes": 1181767
+   "sha256": "fb5194c627bf8e347abf7d9ea8948f744543ce729e4d61d28bb677f90292cd17",
+   "bytes": 1188505
   },
   "release": {
-   "version": 1,
+   "version": 2,
    "date": "2026-11-22",
    "notes": [
-    "The similarity-variable calculation explains the exponent in the physical gradient rate. The whole-space argument cuts off the initial data. The torus argument also controls the residual throughout the evolution.",
-    "The certificate construction identifies where the auxiliary force vanishes. The comparison gives the strengthened hypotheses of the checked whole-space theorem and records which quantities it estimates."
+    "The introduction follows the whole-space and periodic constructions from the similarity profile, the finite-dimensional correction and the cutoff to the two gradient estimates.",
+    "Section 7 groups the certificate inequalities by their use in the proof and explains how the parameter choice cancels the added force. Appendix C distinguishes the computed profile, the approximate family and the exact profile.",
+    "The Lean comparison records the assumptions of the checked results and identifies the quantitative torus statement as open in the linked formalization."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "navier-stokes-adapted-v1.pdf",
+   "name": "navier-stokes-adapted-v2.pdf",
    "label": "Reading copy",
-   "bytes": 1117121,
-   "sha256": "71647f9d45eae24c0fae2bf4c34b317d76865fef08432192d98a6707c600e704"
+   "bytes": 1124837,
+   "sha256": "9698fa069e95106844cf66f761889c4c2bce813f31565c025895a1125d7c762a"
   },
   "result_comparison": {
    "reading": {
@@ -43,14 +44,14 @@
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
     "bytes": 56337,
-    "sha256": "d460704f3223f2907f6cd0b2c1b9b951b84b3167e10c61fa5fe48cd8aa463e78"
+    "sha256": "0c865b9e398dc324cea5790c1c643a4743b4b37cf7d652b33297dd03e544483a"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
     "bytes": 109412,
-    "sha256": "af069ff62c70f65ebdb090aba415d03bac794da6f0fad15a58b31a07678f52e6"
+    "sha256": "1fe1327a9c6df8f45960f57002a59ad06f8956dce8923f00ff6e3101b7f81dd4"
    }
   }
  }
