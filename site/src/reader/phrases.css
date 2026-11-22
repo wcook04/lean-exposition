@@ -7,93 +7,137 @@
    two. A colour never says how the Lean compares with the phrase; the card says that in words.
    tests/topic-colours.test.ts checks the floors, the contrast and that the stored colours are current. */
 
-/* The phrase at rest: a one-pixel line (--tie-rule) in its topic's colour at full strength, drawn under each of
-   its lines, and nothing behind the words, so that a paragraph linked sentence by sentence still
-   reads as text with the colour as a quiet guide to where the links run. The line sits at the foot
-   of the line box, below the descenders, so it never crosses a letter; it is a background rather
-   than text-decoration so that it can stop 3px short of the phrase's end and run under typeset
-   mathematics as one line. palette.ts fits the colours to keep 3:1 against the page. */
-.paper .tie[data-tone] {
-  background-image: linear-gradient(var(--tone), var(--tone));
+/* Keep the paper readable when every sentence is linked. Both the underline and tint use
+   the topic colour, with a neutral fallback for readers without a topic palette. */
+.paper .tie {
+  --tie-color: var(--tone, var(--ink-2));
+  --tie-line: color-mix(in oklab, var(--tie-color) var(--tie-rest-line-opacity), transparent);
+  background-color: color-mix(in oklab, var(--tie-color) var(--tie-rest-fill-opacity), transparent);
+  background-image: linear-gradient(var(--tie-line), var(--tie-line));
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: calc(100% - 3px) var(--tie-rule);
   padding-bottom: 1px;
 }
 
-/* Words in a line: the line sits 3px below the line box's foot, clear of g, y and inline formulas.
-   Padding on an inline box does not move the lines, so the text keeps its spacing; a display is a
-   block, whose padding would, so it keeps its 1px. */
-.paper .tie[data-tone]:not(.math-display) {
+.paper .tie:not(.math-display) {
   padding-bottom: 3px;
 }
 
-/* A display is marked by a thin rule beside it. */
-.paper .math-display.tie[data-tone] {
+:root[data-tones="off"] .paper .tie {
+  --tie-color: var(--ink-3);
+}
+
+/* The rail takes its colour from the same marked words as the tint. Paragraph selection
+   keeps its keyboard and pointer target in this column. */
+.paper .tick[data-joins-above] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.paper .tick[data-joins-below] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.paper .tick--bands {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.paper .tick--bands > span {
+  flex: 1 1 0;
+  background-color: var(--tone, var(--ink-3));
+}
+
+.paper .tick[data-tone] {
+  background-color: var(--tone, var(--ink-3));
+}
+
+:root[data-tones="off"] .paper .tick[data-tone],
+:root[data-tones="off"] .paper .tick--bands > span {
+  background-color: var(--ink-3);
+}
+
+.paper .para-pick {
+  left: calc(-1 * var(--mark-x) - 10px);
+  width: 20px;
+  border-radius: 2px;
+}
+
+.paper .para-pick::before {
+  content: none;
+}
+
+/* Keep the full width of a display available to its mathematics. */
+.paper .math-display.tie {
   background-image: none;
-  box-shadow: inset 2px 0 0 var(--tone);
 }
 
-/* Pointed at (hover, keyboard focus, or the graph pointing here): a slightly heavier line and a
-   faint wash of the topic colour behind this phrase only. */
-.paper .tie[data-tone][data-point],
-.paper .tie[data-tone]:hover,
-.paper .tie[data-tone]:focus-visible {
-  background-color: color-mix(in oklab, var(--tone) 10%, transparent);
+.paper .tie[data-point],
+.paper .tie:hover,
+.paper .tie:focus-visible,
+.paper .tie[data-decl] {
+  --tie-line: color-mix(in oklab, var(--tie-color) 55%, transparent);
+  background-color: color-mix(in oklab, var(--tie-color) 21%, transparent);
   background-size: calc(100% - 3px) 2px;
 }
 
-.paper .math-display.tie[data-tone][data-point],
-.paper .math-display.tie[data-tone]:hover,
-.paper .math-display.tie[data-tone]:focus-visible {
-  box-shadow: inset 3px 0 0 var(--tone);
+.paper .math-display.tie:is([data-point], :hover, :focus-visible) {
+  box-shadow: inset 2px 0 0 var(--tie-color);
 }
 
-/* The phrases of the declaration the Lean pane shows: as pointed at. This follows the reading as
-   it scrolls, so it stays as light as a hover. */
-.paper .tie[data-tone][data-decl] {
-  background-color: color-mix(in oklab, var(--tone) 10%, transparent);
-  background-size: calc(100% - 3px) 2px;
-}
-
-/* Selected (pinned) stays amber, never a topic colour, and stays quiet: the words are read while
-   they are selected. A phrase or a sentence takes the resting line's mechanism in amber, 2px and
-   stopping 3px short of its end, over a faint amber wash (--pin-wash) that leaves the words their
-   full contrast; the amber rule in the margin (.tick[data-pin]) says the same beside it. */
-.paper .tie[data-tone][data-pin] {
+.paper .tie[data-pin] {
   background-color: var(--pin-wash);
   background-image: linear-gradient(var(--lit-line), var(--lit-line));
   background-size: calc(100% - 3px) 2px;
 }
 
-/* A whole statement or paragraph (data-pin-block, set by reader/page/statements.ts): no amber line
-   under every phrase. Its phrases keep their resting topic lines, the wash lies under the words,
-   and one amber rule runs down the margin beside the block (.tick-run). */
-.paper .tie[data-tone][data-pin][data-pin-block] {
-  background-image: linear-gradient(var(--tone), var(--tone));
+/* A whole selected statement has one amber rule in the margin. */
+.paper .tie[data-pin][data-pin-block] {
+  --tie-line: color-mix(in oklab, var(--tie-color) var(--tie-rest-line-opacity), transparent);
+  background-image: linear-gradient(var(--tie-line), var(--tie-line));
   background-size: calc(100% - 3px) var(--tie-rule);
 }
 
-/* A phrase pointed at inside a selected block still answers as at rest: a 2px line in its colour. */
-.paper .tie[data-tone][data-pin][data-pin-block]:hover,
-.paper .tie[data-tone][data-pin][data-pin-block]:focus-visible {
+.paper .tie[data-pin][data-pin-block]:is(:hover, :focus-visible) {
+  --tie-line: color-mix(in oklab, var(--tie-color) 55%, transparent);
   background-size: calc(100% - 3px) 2px;
 }
 
-/* A display: a thin amber rule beside it and nothing else, no fill and no line under it. Inside a
-   selected block the margin rule marks it, so it keeps its resting topic rule. */
-.paper .math-display.tie[data-tone][data-pin] {
-  background-color: transparent;
+.paper .math-display.tie[data-pin] {
   background-image: none;
   box-shadow: inset 2px 0 0 var(--lit-line);
 }
 
-.paper .math-display.tie[data-tone][data-pin][data-pin-block] {
-  box-shadow: inset 2px 0 0 var(--tone);
+.paper .math-display.tie[data-pin][data-pin-block] {
+  background-image: none;
+  box-shadow: none;
+}
+
+@media (forced-colors: active) {
+  .paper .tie:not(.math-display) {
+    text-decoration: underline;
+    text-decoration-color: LinkText;
+    text-underline-offset: 0.15em;
+  }
+  .paper .tick[data-tone],
+  .paper .tick--bands > span {
+    background-color: LinkText;
+    forced-color-adjust: none;
+  }
+  .paper .math-display.tie {
+    border-inline-start: 2px solid LinkText;
+  }
+  .paper .tie[data-pin],
+  .paper .tie:focus-visible {
+    outline: 2px solid Highlight;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .paper .tie[data-tone] {
+  .paper .tie {
     transition: none;
   }
 }

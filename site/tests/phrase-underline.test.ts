@@ -25,28 +25,38 @@ describe("phrase underline", () => {
   });
 
   it("sets the line of a phrase in running text 3px below its words, and leaves a display's padding alone", () => {
-    expect(rule(".paper .tie[data-tone]:not(.math-display)")).toMatch(/padding-bottom:\s*3px;/);
-    expect(rule(".paper .tie[data-tone]")).toMatch(/padding-bottom:\s*1px;/);
+    expect(rule(".paper .tie:not(.math-display)")).toMatch(/padding-bottom:\s*3px;/);
+    expect(rule(".paper .tie")).toMatch(/padding-bottom:\s*1px;/);
+  });
+
+  it("uses the same faint ink and tint for text and PDF phrase links", () => {
+    const pdf = read("../src/reader/pdf/pdf-view.css");
+    expect(tokens).toMatch(/--tie-rest-line-opacity:\s*8%;/);
+    expect(tokens).toMatch(/--tie-rest-fill-opacity:\s*10%;/);
+    for (const css of [rule(".paper .tie"), pdf]) {
+      expect(css).toContain("var(--tie-rest-line-opacity)");
+      expect(css).toContain("var(--tie-rest-fill-opacity)");
+    }
   });
 
   it("draws a phrase at rest with the token", () => {
-    expect(lineOf(rule(".paper .tie[data-tone]"))).toBe("var(--tie-rule)");
+    expect(lineOf(rule(".paper .tie"))).toBe("var(--tie-rule)");
   });
 
   it("keeps hover, keyboard focus and a pointed-at phrase at 2px over a faint tint", () => {
-    for (const selector of [".paper .tie[data-tone]:hover", ".paper .tie[data-tone]:focus-visible", ".paper .tie[data-tone][data-point]"]) {
+    for (const selector of [".paper .tie:hover", ".paper .tie:focus-visible", ".paper .tie[data-point]"]) {
       const body = rule(selector);
       expect(lineOf(body), selector).toBe("2px");
-      expect(body, selector).toMatch(/background-color:\s*color-mix\(in oklab, var\(--tone\) 10%, transparent\)/);
+      expect(body, selector).toMatch(/background-color:\s*color-mix\(in oklab, var\(--tie-color\) 21%, transparent\)/);
     }
   });
 
   it("keeps the 1px resting line under the prose of a selected whole statement", () => {
-    expect(lineOf(rule(".paper .tie[data-tone][data-pin][data-pin-block]"))).toBe("var(--tie-rule)");
+    expect(lineOf(rule(".paper .tie[data-pin][data-pin-block]"))).toBe("var(--tie-rule)");
   });
 
   it("keeps a selected phrase at 2px in amber", () => {
-    const body = rule(".paper .tie[data-tone][data-pin]");
+    const body = rule(".paper .tie[data-pin]");
     expect(lineOf(body)).toBe("2px");
     expect(body).toMatch(/var\(--lit-line\)/);
   });
