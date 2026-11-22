@@ -80,5 +80,42 @@ if (existsSync(aliases)) {
   for (const page of Object.values(pages))
     for (const [old, host] of Object.entries(table.passages ?? {})) if (page[host] && !page[old]) page[old] = { ...page[host], host };
 }
-writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, pages }));
-console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets)`);
+const laterChecks = [];
+// Our own Lean statements beside the authors' (generated/ours.json): each comparison is filed under
+// the phrase that now carries its card (p::<passage>, tie::<key>, through the aliases).
+{
+  const source = resolve(import.meta.dirname, "../../instances", paper, "generated/ours.json");
+  const target = resolve(import.meta.dirname, "../public/ours.json");
+  if (existsSync(source)) {
+    const ours = JSON.parse(readFileSync(source, "utf8"));
+    const byPhrase = {};
+    for (const row of ours.comparisons ?? []) {
+      const id = row.card.replace(/^(p|tie)::/, "");
+      const host = phrases[id]?.host ?? id;
+      if (!phrases[host]) throw new Error(`ours.json: card ${row.card} names no phrase of the paper`);
+      (byPhrase[host] ??= []).push({ lean: row.lean, fidelity: row.fidelity, note: row.note });
+    }
+    writeFileSync(target, JSON.stringify({ declarations: ours.declarations, byPhrase }));
+    // Later checks readers may ask about (ours.checks, keyed by the Lean constant's last name): read
+    // before the first render with the addresses, so a passage that mentions one shows it in place.
+    for (const [constant, row] of Object.entries(ours.checks ?? {})) laterChecks.push({ constant, ...row });
+  } else if (existsSync(target)) rmSync(target);
+}
+// Pages that moved (instance.json moved_pages): /<old>/ opens its new page, and /<old>/@<id> opens the
+// phrase on whichever of the listed pages now holds it (only those off the new page are written).
+const moved = {};
+for (const [from, row] of Object.entries(instance.moved_pages ?? {})) {
+  const slot = (slug) => instance.documents.find((d) => d.slug === slug)?.slot;
+  if (!slot(row.to)) throw new Error(`moved_pages: ${from} moves to ${row.to}, which is no page of the paper`);
+  if (slot(from)) throw new Error(`moved_pages: ${from} is still a page of the paper`);
+  const onPage = {};
+  for (const page of row.phrases_from ?? []) {
+    if (!slot(page)) throw new Error(`moved_pages: ${from} lists ${page}, which is no page of the paper`);
+    if (page === row.to) continue;
+    const ties = JSON.parse(readFileSync(resolve(import.meta.dirname, "../../instances", paper, "alignment", `phrases-${slot(page)}.json`), "utf8")).ties ?? [];
+    for (const tie of ties) onPage[tie.id] ??= page;
+  }
+  moved[from] = { to: row.to, phrases: onPage };
+}
+writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, pages, moved, checks: laterChecks }));
+console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets, ${Object.keys(moved).length} moved pages)`);

@@ -1,0 +1,986 @@
+{
+ "schema": "phrase-ties/1",
+ "paper": "routes",
+ "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as read side by side for Proof Reader (wcook04/proof-reader 3858afbe00b2, papers/navier-stokes-routes). Titles, reading notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them.",
+ "families": [
+  {
+   "id": "theorems",
+   "name": "The theorems"
+  },
+  {
+   "id": "profile-to-blowup",
+   "name": "From a profile to blow-up"
+  },
+  {
+   "id": "torus",
+   "name": "Passing to the torus"
+  },
+  {
+   "id": "certificate-to-profile",
+   "name": "From a certificate to a profile"
+  },
+  {
+   "id": "cell-data",
+   "name": "Cell data"
+  },
+  {
+   "id": "cell-estimates",
+   "name": "Cell estimates"
+  },
+  {
+   "id": "cell-certificate",
+   "name": "From cell data to the certificate"
+  }
+ ],
+ "topic_order": [
+  "statement",
+  "fractional",
+  "mild",
+  "profile",
+  "monodromy",
+  "torus",
+  "certificate",
+  "coercive",
+  "encoding",
+  "quarter-plane",
+  "cells-tails",
+  "angular",
+  "tree",
+  "profile-change",
+  "adjoint",
+  "offset-certificate"
+ ],
+ "parts": [
+  {
+   "name": "",
+   "lines": [
+    1,
+    119
+   ],
+   "source_commit": "3858afbe00b23dd8bba13ffa41409310b712723d",
+   "topics": [
+    {
+     "id": "statement",
+     "name": "The blow-up statements",
+     "description": "Smooth solutions, breakdown on space and on the torus, and the theorems that state them (Theorem 1.1, Theorem 7.1).",
+     "family": "theorems"
+    },
+    {
+     "id": "fractional",
+     "name": "The fractional extension",
+     "description": "The authors' separate extension with dissipation exponent between 1 and 5/4, outside the classical paper.",
+     "family": "theorems"
+    },
+    {
+     "id": "mild",
+     "name": "Heat flow and mild solutions",
+     "description": "The heat semigroup, the bilinear Duhamel term, mild solutions, restarting and uniqueness (§3).",
+     "family": "profile-to-blowup"
+    },
+    {
+     "id": "profile",
+     "name": "Recurrent profiles",
+     "description": "Self-similar time-periodic profiles, their slices and orbits, and weak profiles read as physical fields (§2, §4.1, §7.11).",
+     "family": "profile-to-blowup"
+    },
+    {
+     "id": "monodromy",
+     "name": "Monodromy and the correction",
+     "description": "The period map, its compact-plus-small splitting, the spectral projection and the fixed point that corrects a profile to an exact solution (§4).",
+     "family": "profile-to-blowup"
+    },
+    {
+     "id": "torus",
+     "name": "Passing to the torus",
+     "description": "The solenoidal cutoff, periodization and the periodic right inverse that move the construction onto the torus (§5–6).",
+     "family": "torus"
+    },
+    {
+     "id": "certificate",
+     "name": "From certificate to profile",
+     "description": "Certificate data, the free operator, convection, held solutions and the smoothing of the weak profile they produce (§7).",
+     "family": "certificate-to-profile"
+    },
+    {
+     "id": "coercive",
+     "name": "The coercive multiplier estimate",
+     "description": "The multiplier, its five density coefficients and lower bound, and the a priori estimate it gives (Appendix B.1 and B.2).",
+     "family": "certificate-to-profile"
+    },
+    {
+     "id": "encoding",
+     "name": "Encoded cell data",
+     "description": "The finitely represented inputs: coordinates and harmonics, the profile representation, splines and jets, physical cells, rows, weights and potentials.",
+     "family": "cell-data"
+    },
+    {
+     "id": "quarter-plane",
+     "name": "Reduction to the quarter plane",
+     "description": "Symmetry reduction of the density to the meridian quarter plane (B.3).",
+     "family": "cell-data"
+    },
+    {
+     "id": "cells-tails",
+     "name": "Cells, traces and tails",
+     "description": "Integrability, the common vector of unknowns, resolved modes, the tail budget and the exterior estimate (B.4).",
+     "family": "cell-data"
+    },
+    {
+     "id": "angular",
+     "name": "Angular and ray-exterior tests",
+     "description": "The angular inequalities, the pointwise test and the integrated test on ray exteriors (B.5 and B.6).",
+     "family": "cell-estimates"
+    },
+    {
+     "id": "tree",
+     "name": "The matrix tree lower bound",
+     "description": "The tree conditions on the cell matrices and the passage from all cells to the global inequality (B.7 and B.8).",
+     "family": "cell-estimates"
+    },
+    {
+     "id": "profile-change",
+     "name": "Changing the profile",
+     "description": "Bounds for moving estimates from the reference field to the actual profile (B.9).",
+     "family": "cell-estimates"
+    },
+    {
+     "id": "adjoint",
+     "name": "The adjoint pairing and its error",
+     "description": "The quadratic adjoint pairing, the azimuthal dual norm and the linear adjoint error with potentials and pins (B.10 to B.12).",
+     "family": "cell-certificate"
+    },
+    {
+     "id": "offset-certificate",
+     "name": "The offset and the certificate",
+     "description": "Enclosing the constant, linear and quadratic offset, and the fifteen fields of CellSystemCondition that make the data a certificate (B.13 and B.14).",
+     "family": "cell-certificate"
+    }
+   ],
+   "titles": {
+    "Breakdown.BreakdownOnSpace": "Whole-space breakdown condition",
+    "Breakdown.BreakdownOnTorus": "Periodic breakdown condition",
+    "Breakdown.CellCert.CellSystem.CellSystemCondition": "The fractional cell condition",
+    "Breakdown.CellCert.CellSystem.fractional_breakdown_of_cell_system": "Fractional cell conditions to breakdown",
+    "Breakdown.CellLayerSystem.CellSystemCondition": "The fifteen cell conditions",
+    "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition": "Obtain both conditional conclusions",
+    "Breakdown.CellLayerSystem.breakdownOnSpace_of_cell_system_condition": "Obtain conditional blow-up on space",
+    "Breakdown.CellLayerSystem.breakdownOnTorus_of_cell_system_condition": "Obtain conditional blow-up on the torus",
+    "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts": "Build the extended certificate",
+    "Breakdown.CellLayerSystem.spaceBreakdown_of_cell_system_condition": "Close the conditional cell route",
+    "Breakdown.Cert.ExtendedSigmaProfileOfHeldHolds": "A corrected weak similarity profile",
+    "Breakdown.Cert.GraphClosedHolds": "Closed graph identifies derivatives",
+    "Breakdown.Cert.ReadingEnergyHolds": "Physical and graph energies agree",
+    "Breakdown.Cert.extendedExistsZeroHeldHolds_of": "Choose a force-free parameter",
+    "Breakdown.Cert.extendedHeldExistsUniqueHolds_of": "Unique correction at each parameter",
+    "Breakdown.Cert.extendedSigmaProfileOfHeldHolds_of": "Construct the corrected weak profile",
+    "Breakdown.Cert.extended_certificate_orbit_of_nodes": "Assemble the extended route",
+    "Breakdown.Cert.halfSsp_of_xbar": "Derivatives of a graph element",
+    "Breakdown.Cert.readingEnergyHolds_of": "Physical and graph energies agree",
+    "Breakdown.CertCell.cellLayerParts_closed": "Closed analytic cell components",
+    "Breakdown.DichotomyHolds": "Finite-rank spectral splitting",
+    "Breakdown.ExtendedCertificateData.toCertificateData": "Earlier certificate coordinates",
+    "Breakdown.FarField.SmoothFieldOfOrbit": "Smooth representative of an orbit",
+    "Breakdown.FarField.periodicLerayProfileExists_of_weak": "Weak profile gives a smooth profile",
+    "Breakdown.FarField.smoothFieldOfOrbit_holds": "Smooth field for a specified orbit",
+    "Breakdown.FieldReading": "Identify abstract and physical fields",
+    "Breakdown.Freq.EmbedLinear": "Linearity of the embedding",
+    "Breakdown.Freq.EmbedNorm": "The physical gradient norm",
+    "Breakdown.Freq.embedNormLinear_holds": "Gradient norm and linear embedding",
+    "Breakdown.Freq.realization": "The physical Fourier realization",
+    "Breakdown.Held.testSetZero": "Finite-dimensional force zero",
+    "Breakdown.MildRegular": "Smooth representatives of mild flow",
+    "Breakdown.Periodic.MovingFrameReduction": "Remove the pressure’s nonperiodic part",
+    "Breakdown.Periodic.TorusBlowup": "A torus mild solution is unbounded",
+    "Breakdown.Periodic.breakdownOnTorus_of_profile": "A profile gives torus breakdown",
+    "Breakdown.Periodic.movingFrameReduction": "Choose a periodic pressure frame",
+    "Breakdown.Periodic.torusBlowup_of_parts": "Assemble the torus mild solution",
+    "Breakdown.PeriodicSimilarityProfileExists": "A nonzero recurrent profile",
+    "Breakdown.SteadyCert.fracCertificate_profile": "Fractional certificate to profile",
+    "Breakdown.TransferHolds": "Dense data approaching the profile",
+    "Breakdown.WeakProfile.WeakOrbitOfParts": "A weak profile supplies an orbit",
+    "Breakdown.breakdownOnSpace_of_weak": "The weak-profile implication",
+    "Breakdown.breakdown_on_space": "Conditional whole-space breakdown",
+    "Breakdown.breakdown_on_space_of_weak": "Weak profile gives breakdown",
+    "Breakdown.breakdown_on_torus": "Conditional periodic breakdown",
+    "Breakdown.certificate_orbit": "Earlier certificate gives a profile",
+    "Breakdown.dichotomyHolds": "Prove the real spectral splitting",
+    "Breakdown.exists_blowup_datum": "Choose compact initial data",
+    "Breakdown.extended_certificate_orbit": "A certificate gives a weak profile",
+    "Breakdown.extended_certificate_orbit_proved": "Extended certificate gives weak profile",
+    "Breakdown.fieldReading_realization": "Read the Fourier flow physically",
+    "Breakdown.fractional_breakdown_on_space": "Fractional breakdown on space",
+    "Breakdown.fractional_breakdown_on_torus": "Fractional breakdown on the torus",
+    "Breakdown.mildRegular_realization": "Smooth whole-space mild flow",
+    "Breakdown.transferHolds_of": "Assemble transfer to dense data",
+    "Breakdown.transferHolds_of_dichotomy": "Transfer from spectral splitting"
+   },
+   "notes": {
+    "Breakdown.BreakdownOnSpace": "One energy bound must hold for the excluded global smooth solution at every nonnegative time.",
+    "Breakdown.BreakdownOnTorus": "The periodic obstruction concerns unit-periodic velocity on Euclidean space and contains no quantitative convergence rate.",
+    "Breakdown.CellCert.CellSystem.CellSystemCondition": "The fractional cell condition has twelve clauses at α=501/500, separate from the classical fifteen-clause condition.",
+    "Breakdown.CellCert.CellSystem.fractional_breakdown_of_cell_system": "The fractional cell result fixes α=501/500 and uses its separate twelve-clause condition.",
+    "Breakdown.CellLayerSystem.CellSystemCondition": "All fifteen conditions refer to the same seven groups of data and remain hypotheses of the conditional breakdown theorem.",
+    "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition": "The theorem combines the two conditional breakdown conclusions. It does not construct numerical data satisfying the cell conditions.",
+    "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts": "A suitable decay constant is chosen existentially; all the other certificate data are retained.",
+    "Breakdown.CellLayerSystem.spaceBreakdown_of_cell_system_condition": "The completed whole-space argument supplies the analytic estimates and retains all fifteen cell conditions on the given data.",
+    "Breakdown.Cert.ExtendedSigmaProfileOfHeldHolds": "The existence conclusion omits equations identifying the output profile with the selected parameter and correction.",
+    "Breakdown.Cert.GraphClosedHolds": "Each element of the closed graph has the required relation between its gradient and second-derivative components.",
+    "Breakdown.Cert.ReadingEnergyHolds": "The physical representation identifies the weighted energy, gradient norm and pin pairings with the corresponding Fourier quantities.",
+    "Breakdown.Cert.extendedExistsZeroHeldHolds_of": "The zero-multiplier argument chooses a parameter after the fixed-parameter nonlinear correction has been constructed.",
+    "Breakdown.Cert.extendedHeldExistsUniqueHolds_of": "Uniqueness holds within the set of allowed corrections at a fixed parameter. It makes no uniqueness claim about arbitrary Navier–Stokes solutions.",
+    "Breakdown.Cert.extendedSigmaProfileOfHeldHolds_of": "The proof constructs the profile from the selected parameter and correction, while the displayed existence conclusion omits those equalities.",
+    "Breakdown.Cert.extended_certificate_orbit_of_nodes": "Normalization of multiplier weight and absorption of the model-to-profile gap prepare the extended certificate for the fixed-point argument.",
+    "Breakdown.Cert.halfSsp_of_xbar": "Membership in the closed graph implies the half-order Fourier derivative relation used to identify the physical energy.",
+    "Breakdown.Cert.readingEnergyHolds_of": "The energy and pin identities follow from the derivative relation for every element of the closed Fourier graph.",
+    "Breakdown.CertCell.cellLayerParts_closed": "The theorem supplies the analytic cell estimates and retains the numerical entry conditions in their hypotheses.",
+    "Breakdown.DichotomyHolds": "The spectral splitting has a finite-dimensional exceptional range, forward decay, backward bounds and surjectivity on that range.",
+    "Breakdown.ExtendedCertificateData.toCertificateData": "The conversion reuses earlier operator coordinates and sets several unused quantities to zero. It supplies no assertion that the converted data meet the earlier certificate conditions.",
+    "Breakdown.FarField.SmoothFieldOfOrbit": "The input period and isometry are retained, and the smooth field agrees with the orbit almost everywhere in space at every time.",
+    "Breakdown.FarField.periodicLerayProfileExists_of_weak": "The final existence statement omits the selected weak-to-smooth field correspondence; the internal smoothing theorem retains it.",
+    "Breakdown.FarField.smoothFieldOfOrbit_holds": "The smooth representative has the same period and isometry as the orbit and represents it almost everywhere in space at each time.",
+    "Breakdown.FieldReading": "The recovered L⁶ velocity is injective as a representation of the Fourier state and respects rotations and dilations.",
+    "Breakdown.Freq.EmbedLinear": "The embedding preserves addition, subtraction and real scalar multiplication on smooth decaying fields.",
+    "Breakdown.Freq.EmbedNorm": "For smooth decaying fields, the squared Fourier-space norm equals the sum of the squared L² norms of the three physical coordinate derivatives.",
+    "Breakdown.Freq.embedNormLinear_holds": "The theorem contains both the norm identity and linearity; the first conclusion supplies the norm identification.",
+    "Breakdown.Freq.realization": "The construction realizes the evolution through gradient-weighted Fourier fields and supplies their physical interpretation.",
+    "Breakdown.Held.testSetZero": "Compactness and convexity of the parameter set, together with the specified boundary conditions, support the finite-dimensional zero argument.",
+    "Breakdown.MildRegular": "On every fixed closed time interval, a suitable mild flow has smooth physical velocity and pressure with the stated energy and gradient bounds.",
+    "Breakdown.Periodic.MovingFrameReduction": "A moving frame removes the affine nonperiodic pressure part while preserving the initial datum.",
+    "Breakdown.Periodic.TorusBlowup": "The internal result retains a mild torus trajectory whose norm is unbounded before the terminal time.",
+    "Breakdown.Periodic.breakdownOnTorus_of_profile": "The smooth recurrent-profile hypothesis is carried through the torus construction and the smooth-versus-mild uniqueness comparison.",
+    "Breakdown.Periodic.movingFrameReduction": "The pressure drift is integrated twice, with zero initial frame shift and velocity, so the transformed datum stays unchanged.",
+    "Breakdown.Periodic.torusBlowup_of_parts": "The construction combines approximation, right-inverse transfer, perturbation and gluing, retaining the stated analytic hypotheses.",
+    "Breakdown.PeriodicSimilarityProfileExists": "The recurrent profile has spatial derivative bounds through order two and cubic pressure-gradient decay, in addition to smoothness, recurrence and nonzero velocity.",
+    "Breakdown.SteadyCert.fracCertificate_profile": "The fractional certificate supplies a rotating fractional profile through its own regularity and decay argument.",
+    "Breakdown.TransferHolds": "For data in any prescribed dense subspace, the statement keeps a positive power-law rate of convergence to the recurrent profile in similarity variables.",
+    "Breakdown.WeakProfile.WeakOrbitOfParts": "The output asserts existence of an orbit, period and twist. It does not state the full correspondence with the originally supplied weak field.",
+    "Breakdown.WeakProfile.weakOrbitOfParts_holds": "The construction uses the original period and twist and a continuous representative of the weak field; the final existence statement hides that correspondence.",
+    "Breakdown.breakdownOnSpace_of_weak": "The weak profile first gives a recurrent mild orbit, to which the common whole-space transfer argument is applied.",
+    "Breakdown.dichotomyHolds": "The theorem establishes the compact-perturbation spectral splitting used in the transfer construction.",
+    "Breakdown.exists_blowup_datum": "This intermediate theorem retains the mild trajectory, recurrent orbit and convergence rate that the final obstruction does not state.",
+    "Breakdown.extended_certificate_orbit_proved": "The completed extended-certificate argument supplies the analytic estimates and returns existence of a weak recurrent profile.",
+    "Breakdown.fieldReading_realization": "The theorem establishes injectivity and rotational and dilation covariance for the physical velocity of the Fourier evolution.",
+    "Breakdown.fractional_breakdown_on_space": "The fractional implication assumes a rotating profile with dissipation exponent strictly between one and five quarters.",
+    "Breakdown.fractional_breakdown_on_torus": "The periodic fractional implication has the same open exponent range and belongs to the separate fractional equation family.",
+    "Breakdown.mildRegular_realization": "The proof uses the heat, bilinear and H¹ identities to construct the smooth physical representative.",
+    "Breakdown.transferHolds_of": "The transfer argument chooses initial data in the prescribed dense subspace and retains the power-law convergence estimate.",
+    "Breakdown.transferHolds_of_dichotomy": "This transfer proof supplies the intermediate evolution estimates while retaining the spectral dichotomy as an explicit hypothesis."
+   },
+   "partial": true
+  }
+ ],
+ "ties": [
+  {
+   "id": "condition-boundary",
+   "from": "The classical cell theorem takes a complete cell-system condition as an input and concludes the two breakdown statements. The numerical certificate that would supply a particular instance is absent from the supplied repository.",
+   "to": "The classical cell theorem takes a complete cell-system condition as an input and concludes the two breakdown statements. The numerical certificate that would supply a particular instance is absent from the supplied repository.",
+   "role": "explanation",
+   "topic": "offset-certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.CellSystemCondition",
+     "file": "Breakdown/CertCell/StatementDefs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The condition requires all fifteen clauses on the same seven groups of cell data. The guide correctly retains that complete hypothesis before drawing the two conclusions."
+    },
+    {
+     "name": "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+     "file": "Solution.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem has the complete cell condition as its hypothesis and concludes both breakdown statements, exactly as the guide says."
+    }
+   ]
+  },
+  {
+   "id": "space-claim",
+   "from": "If a smooth recurrent similarity profile satisfying the formal derivative and pressure bounds exists, then for every positive viscosity there is a smooth compactly supported divergence-free datum with no global smooth solution of uniformly bounded energy.",
+   "to": "If a smooth recurrent similarity profile satisfying the formal derivative and pressure bounds exists, then for every positive viscosity there is a smooth compactly supported divergence-free datum with no global smooth solution of uniformly bounded energy.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.breakdown_on_space",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "For every positive viscosity, the formal conclusion gives smooth compactly supported divergence-free initial data with no global smooth solution having one energy bound for all nonnegative times. The smooth recurrent-profile hypothesis is retained."
+    }
+   ]
+  },
+  {
+   "id": "space-contract",
+   "from": "The formal profile premise includes spatial derivative bounds through order two and a bound on the pressure gradient. The public space predicate quantifies over a global competitor and one energy bound for all nonnegative times. It does not retain the constructed trajectory, its blow-up rate or its convergence to a chosen profile.",
+   "to": "The formal profile premise includes spatial derivative bounds through order two and a bound on the pressure gradient. The public space predicate quantifies over a global competitor and one energy bound for all nonnegative times. It does not retain the constructed trajectory, its blow-up rate or its convergence to a chosen profile.",
+   "role": "explanation",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.BreakdownOnSpace",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The formal obstruction quantifies over every global smooth competitor and excludes a single energy bound valid at every nonnegative time; it omits the constructed trajectory and its rate."
+    },
+    {
+     "name": "Breakdown.PeriodicSimilarityProfileExists",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The smooth recurrent profile has velocity derivative bounds through order two and cubic pressure-gradient decay, with a positive period, a rotational recurrence and a nonzero field."
+    }
+   ]
+  },
+  {
+   "id": "transfer",
+   "from": "The quantitative construction is visible earlier: the transfer interface builds a mild trajectory from a dense data subspace and records convergence in similarity variables. Its listed proof still takes the dichotomy result as an input; the concrete assembly supplies that result.",
+   "to": "The quantitative construction is visible earlier: the transfer interface builds a mild trajectory from a dense data subspace and records convergence in similarity variables. Its listed proof still takes the dichotomy result as an input; the concrete assembly supplies that result.",
+   "role": "explanation",
+   "topic": "monodromy",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.TransferHolds",
+     "file": "Breakdown/Base/Framework.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The transfer statement produces a mild solution starting in any prescribed dense subspace and converging to the recurrent profile after rescaling, with a positive power-law rate."
+    },
+    {
+     "name": "Breakdown.transferHolds_of_dichotomy",
+     "file": "Breakdown/Transfer/Exports.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "This theorem proves the quantitative transfer implication from the spectral dichotomy; that spectral result remains an explicit input, as the passage states."
+    },
+    {
+     "name": "Breakdown.DichotomyHolds",
+     "file": "Breakdown/Base/Framework.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The spectral statement supplies the finite-dimensional exceptional part, forward decay, backward estimates and surjectivity needed by the transfer construction."
+    },
+    {
+     "name": "Breakdown.dichotomyHolds",
+     "file": "Breakdown/Spectral/RealDichotomy.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem establishes the spectral splitting from the compact-perturbation hypotheses and supplies the remaining input to the transfer argument."
+    },
+    {
+     "name": "Breakdown.exists_blowup_datum",
+     "file": "Breakdown/Uniqueness/Restrict.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem chooses smooth compactly supported solenoidal initial data and retains a mild trajectory, a recurrent orbit and their positive power-law convergence in similarity variables."
+    }
+   ]
+  },
+  {
+   "id": "realization",
+   "from": "The Fourier realization supplies the abstract evolution with a concrete interpretation as physical velocity fields. Its energy, reconstruction and regularity statements are the joins needed to interpret the abstract trajectory as a PDE solution.",
+   "to": "The Fourier realization supplies the abstract evolution with a concrete interpretation as physical velocity fields. Its energy, reconstruction and regularity statements are the joins needed to interpret the abstract trajectory as a PDE solution.",
+   "role": "explanation",
+   "topic": "mild",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Freq.realization",
+     "file": "Breakdown/FreqTr/Realization.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The construction realizes the evolution by gradient-weighted Fourier fields, with physical embeddings, rotations, dilations and a dense compact-test subspace."
+    },
+    {
+     "name": "Breakdown.FieldReading",
+     "file": "Breakdown/Uniqueness/Basic.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The physical velocity map is injective and respects rotations and dilations. These are the field identifications required to interpret the rescaled trajectory."
+    },
+    {
+     "name": "Breakdown.fieldReading_realization",
+     "file": "Breakdown/Uniqueness/Space.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem proves injectivity and the rotation and dilation identities for the concrete Fourier velocity map."
+    },
+    {
+     "name": "Breakdown.MildRegular",
+     "file": "Breakdown/Uniqueness/Basic.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "On each fixed closed interval, the mild solution with suitable initial data has a smooth physical velocity and pressure representative with the stated energy and gradient bounds."
+    },
+    {
+     "name": "Breakdown.mildRegular_realization",
+     "file": "Breakdown/Uniqueness/Space.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem supplies this physical regularity for the Fourier evolution from the heat, bilinear and H¹ identities."
+    }
+   ]
+  },
+  {
+   "id": "torus-claim",
+   "from": "If a smooth recurrent similarity profile satisfying the formal bounds exists, then for every positive viscosity there is a smooth divergence-free periodic datum with no global smooth solution whose velocity remains periodic.",
+   "to": "If a smooth recurrent similarity profile satisfying the formal bounds exists, then for every positive viscosity there is a smooth divergence-free periodic datum with no global smooth solution whose velocity remains periodic.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.breakdown_on_torus",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The formal implication retains the smooth recurrent-profile hypothesis and excludes a global smooth solution with periodic velocity for suitable smooth periodic solenoidal data, at every positive viscosity."
+    }
+   ]
+  },
+  {
+   "id": "torus-pressure",
+   "from": "The exported periodic obstruction allows arbitrary smooth pressure in the excluded competitor. The moving-frame reduction preserves its original datum and makes the pressure periodic as well; it does not assert that the velocity has zero mean.",
+   "to": "The exported periodic obstruction allows arbitrary smooth pressure in the excluded competitor. The moving-frame reduction preserves its original datum and makes the pressure periodic as well; it does not assert that the velocity has zero mean.",
+   "role": "explanation",
+   "topic": "torus",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.BreakdownOnTorus",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The excluded global competitor is required to have periodic velocity; its pressure is only required to satisfy the smooth solution equations."
+    },
+    {
+     "name": "Breakdown.Periodic.MovingFrameReduction",
+     "file": "Breakdown/Torus/StatementsSmooth.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The moving-frame statement keeps the same initial datum and produces periodic velocity and pressure. It imposes no zero-mean requirement on velocity."
+    },
+    {
+     "name": "Breakdown.Periodic.movingFrameReduction",
+     "file": "Breakdown/Torus/MovingFrame.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The proof chooses a moving frame with zero initial shift and velocity, removing the nonperiodic affine part of pressure while preserving the original datum."
+    }
+   ]
+  },
+  {
+   "id": "torus-assembly",
+   "from": "The torus construction combines localization, a right-inverse comparison, perturbation and gluing. The abstract torus assembly still names the analytic inputs it needs; the final provider supplies those inputs for the concrete realization.",
+   "to": "The torus construction combines localization, a right-inverse comparison, perturbation and gluing. The abstract torus assembly still names the analytic inputs it needs; the final provider supplies those inputs for the concrete realization.",
+   "role": "explanation",
+   "topic": "torus",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Periodic.TorusBlowup",
+     "file": "Breakdown/Torus/StatementsSmooth.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The internal conclusion is an unbounded mild trajectory on the torus from smooth divergence-free data before a finite terminal time."
+    },
+    {
+     "name": "Breakdown.Periodic.torusBlowup_of_parts",
+     "file": "Breakdown/Torus/Assembly.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The formal theorem constructs that trajectory using localization, approximation, comparison, inverse transfer, perturbation and gluing as explicit analytic inputs."
+    },
+    {
+     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
+     "file": "Breakdown/Torus/Main.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The completed argument supplies the torus construction and uniqueness comparison from the given smooth recurrent profile, yielding periodic breakdown."
+    }
+   ]
+  },
+  {
+   "id": "weak-claim",
+   "from": "If a weak recurrent similarity profile satisfying the formal integrability, nonzero and recurrence conditions exists, then the formal whole-space breakdown statement follows.",
+   "to": "If a weak recurrent similarity profile satisfying the formal integrability, nonzero and recurrence conditions exists, then the formal whole-space breakdown statement follows.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.breakdown_on_space_of_weak",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The formal implication starts with the weak recurrent-profile existence condition and concludes whole-space breakdown. The stated integrability, nonzero and recurrence assumptions remain part of that input."
+    }
+   ]
+  },
+  {
+   "id": "weak-route",
+   "from": "The direct whole-space proof turns the weak field into a mild recurrent orbit. The separate torus route first constructs a smooth decaying profile and then uses the smooth-profile periodic theorem.",
+   "to": "The direct whole-space proof turns the weak field into a mild recurrent orbit. The separate torus route first constructs a smooth decaying profile and then uses the smooth-profile periodic theorem.",
+   "role": "explanation",
+   "topic": "profile",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.WeakProfile.WeakOrbitOfParts",
+     "file": "Breakdown/Weak/StatementsOrbit.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The direct route constructs a continuous recurrent mild orbit from the weak-profile conditions and the listed physical pairing and time-evolution facts."
+    },
+    {
+     "name": "Breakdown.WeakProfile.weakOrbitOfParts_holds",
+     "file": "Breakdown/Weak/OrbitOfParts.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The proof assembles those physical and time-evolution facts to obtain the recurrent mild orbit, retaining them as the hypotheses of the implication."
+    },
+    {
+     "name": "Breakdown.breakdownOnSpace_of_weak",
+     "file": "Breakdown/Weak/Main.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The completed weak-profile argument constructs the orbit and applies the whole-space transfer argument."
+    },
+    {
+     "name": "Breakdown.FarField.periodicLerayProfileExists_of_weak",
+     "file": "Breakdown/CertTorus/Main.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The alternate route obtains a smooth decaying recurrent profile from the weak profile, which is the input used by the periodic argument."
+    }
+   ]
+  },
+  {
+   "id": "smooth-identity",
+   "from": "The internal smoothing interface preserves the input period and isometry and represents the supplied orbit almost everywhere in space at each time. The later existential profile export hides that relationship, so a reader seeking estimates for the same selected profile should open the internal interface.",
+   "to": "The internal smoothing interface preserves the input period and isometry and represents the supplied orbit almost everywhere in space at each time. The later existential profile export hides that relationship, so a reader seeking estimates for the same selected profile should open the internal interface.",
+   "role": "explanation",
+   "topic": "profile",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.FarField.SmoothFieldOfOrbit",
+     "file": "Breakdown/CertTorus/Defs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The smoothing statement keeps the input period and isometry and identifies the smooth field with the orbit almost everywhere in space at every time."
+    },
+    {
+     "name": "Breakdown.FarField.smoothFieldOfOrbit_holds",
+     "file": "Breakdown/CertTorus/SmoothFieldClosed.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem establishes that representative for the specified orbit with the same period and isometry."
+    },
+    {
+     "name": "Breakdown.FarField.periodicLerayProfileExists_of_weak",
+     "file": "Breakdown/CertTorus/Main.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The final implication returns existence of a smooth recurrent profile without stating its equality to the selected weak field, exactly the loss of correspondence identified here."
+    }
+   ]
+  },
+  {
+   "id": "ordinary-certificate-claim",
+   "from": "If the earlier formal certificate hypothesis holds, then a weak recurrent similarity profile exists.",
+   "to": "If the earlier formal certificate hypothesis holds, then a weak recurrent similarity profile exists.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.certificate_orbit",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The theorem concludes existence of a weak recurrent similarity profile from the earlier certificate hypothesis, with that numerical hypothesis retained."
+    }
+   ]
+  },
+  {
+   "id": "extended-certificate-claim",
+   "from": "If the extended formal certificate hypothesis holds, then a weak recurrent similarity profile exists.",
+   "to": "If the extended formal certificate hypothesis holds, then a weak recurrent similarity profile exists.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.extended_certificate_orbit",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The theorem concludes existence of a weak recurrent similarity profile from the extended certificate hypothesis, with that numerical hypothesis retained."
+    }
+   ]
+  },
+  {
+   "id": "certificate-closure",
+   "from": "The closed extended construction supplies the named analytic nodes to the certificate assembly. For each admissible parameter it obtains a correction by contraction, proves the needed continuity, and then finds a parameter at which the total multiplier vanishes.",
+   "to": "The closed extended construction supplies the named analytic nodes to the certificate assembly. For each admissible parameter it obtains a correction by contraction, proves the needed continuity, and then finds a parameter at which the total multiplier vanishes.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.extended_certificate_orbit_proved",
+     "file": "Breakdown/Cert/ExtendedMain.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The completed proof supplies the analytic facts needed to pass from the extended certificate to existence of a weak recurrent profile."
+    },
+    {
+     "name": "Breakdown.Cert.extended_certificate_orbit_of_nodes",
+     "file": "Breakdown/Cert/ExtendedAssembly.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The assembly takes the analytic estimates and normalization results as explicit inputs and combines them into the extended-certificate implication."
+    },
+    {
+     "name": "Breakdown.Cert.extendedHeldExistsUniqueHolds_of",
+     "file": "Breakdown/Cert/ExtendedHeldExistsUnique.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "For each admissible parameter, the fixed-point argument supplies the unique correction within the held class; its metric, invariance and bordered-inverse inputs are retained."
+    },
+    {
+     "name": "Breakdown.Cert.extendedExistsZeroHeldHolds_of",
+     "file": "Breakdown/Cert/ExtendedExistsZeroHeld.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The formal theorem uses held-solution existence, multiplier continuity and the adjoint and stiff-coordinate enclosures to find a parameter with total multiplier zero."
+    },
+    {
+     "name": "Breakdown.Held.testSetZero",
+     "file": "Breakdown/Held/Exports.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The finite-dimensional result finds a zero on the specified compact convex parameter set under its continuity and boundary conditions."
+    }
+   ]
+  },
+  {
+   "id": "certificate-witness",
+   "from": "The weak-profile export from a held correction existentially returns a period and fields without retaining their identity with the selected parameter and correction. Its proof constructs those witnesses, but the exported proposition does not state the equalities needed by the full near-candidate conclusion of Theorem 7.1.",
+   "to": "The weak-profile export from a held correction existentially returns a period and fields without retaining their identity with the selected parameter and correction. Its proof constructs those witnesses, but the exported proposition does not state the equalities needed by the full near-candidate conclusion of Theorem 7.1.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Cert.ExtendedSigmaProfileOfHeldHolds",
+     "file": "Breakdown/Cert/ExtendedNodes.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The conclusion returns an existential period and weak profile without equations identifying them with the supplied parameter and correction."
+    },
+    {
+     "name": "Breakdown.Cert.extendedSigmaProfileOfHeldHolds_of",
+     "file": "Breakdown/Cert/ExtendedSigmaProfileOfHeld.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The proof constructs the profile from the chosen parameter and correction, but the theorem’s conclusion only asserts existence and omits those identifying equations."
+    }
+   ]
+  },
+  {
+   "id": "carrier",
+   "from": "The conversion to the earlier certificate data type reuses an operator carrier and fills several older fields with zero. It supplies no theorem that those converted data satisfy the earlier certificate predicate.",
+   "to": "The conversion to the earlier certificate data type reuses an operator carrier and fills several older fields with zero. It supplies no theorem that those converted data satisfy the earlier certificate predicate.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.ExtendedCertificateData.toCertificateData",
+     "file": "Breakdown/Cert/ExtendedNodes.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The conversion reuses the earlier operator coordinates and sets several unused earlier quantities to zero. It does not assert that the resulting data satisfy the earlier certificate conditions."
+    }
+   ]
+  },
+  {
+   "id": "cell-space-claim",
+   "from": "For any seven classical cell-data arguments satisfying the fifteen-field cell-system condition, the formal whole-space breakdown statement follows.",
+   "to": "For any seven classical cell-data arguments satisfying the fifteen-field cell-system condition, the formal whole-space breakdown statement follows.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.breakdownOnSpace_of_cell_system_condition",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The theorem assumes the full fifteen conditions on the seven shared cell-data groups and concludes the stated whole-space obstruction."
+    }
+   ]
+  },
+  {
+   "id": "cell-torus-claim",
+   "from": "For the same seven classical cell-data arguments, the same fifteen-field condition also implies the formal periodic breakdown statement.",
+   "to": "For the same seven classical cell-data arguments, the same fifteen-field condition also implies the formal periodic breakdown statement.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.breakdownOnTorus_of_cell_system_condition",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The theorem assumes the same full fifteen conditions on the seven shared cell-data groups and concludes the periodic obstruction."
+    }
+   ]
+  },
+  {
+   "id": "cell-joint-claim",
+   "from": "The combined classical cell theorem returns both breakdown statements under the full cell-system condition.",
+   "to": "The combined classical cell theorem returns both breakdown statements under the full cell-system condition.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.breakdownOnSpaceAndTorus_of_cell_system_condition",
+     "file": "Solution.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The theorem concludes the conjunction of whole-space and periodic breakdown under the full cell-system hypothesis."
+    }
+   ]
+  },
+  {
+   "id": "cell-closed",
+   "from": "The closed cell analysis supplies general analytic interfaces for cells, traces, rows and tree estimates. The full input condition still contains structural, functional and quantitative obligations for the particular cell system.",
+   "to": "The closed cell analysis supplies general analytic interfaces for cells, traces, rows and tree estimates. The full input condition still contains structural, functional and quantitative obligations for the particular cell system.",
+   "role": "explanation",
+   "topic": "offset-certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CertCell.cellLayerParts_closed",
+     "file": "Breakdown/CertCell/CellLayerClosed.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem supplies the general analytic estimates for cells, traces, rows, tails and the matrix tree, with the numerical cell-entry conditions still required in their applications."
+    },
+    {
+     "name": "Breakdown.CellLayerSystem.CellSystemCondition",
+     "file": "Breakdown/CertCell/StatementDefs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The condition retains the structural, functional and numerical requirements for the particular shared cell data. The analytic estimates do not themselves supply those data."
+    },
+    {
+     "name": "Breakdown.CellLayerSystem.spaceBreakdown_of_cell_system_condition",
+     "file": "Breakdown/CellReduction/CellLayerBreakdownClosed.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The completed whole-space cell argument supplies the analytic implications and retains the full cell-system condition as its input."
+    }
+   ]
+  },
+  {
+   "id": "decay-update",
+   "from": "The composition theorem produces an extended certificate after replacing its decay constant by a suitable real bound. A wrapper that promises a conclusion for the original certificate must justify transporting that conclusion across the change.",
+   "to": "The composition theorem produces an extended certificate after replacing its decay constant by a suitable real bound. A wrapper that promises a conclusion for the original certificate must justify transporting that conclusion across the change.",
+   "role": "explanation",
+   "topic": "offset-certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
+     "file": "Breakdown/CellReduction/CellLayerBreakdownCompose.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The conclusion is an extended certificate after replacing only the decay constant by a suitable real bound. The passage correctly identifies the need to transport any later conclusion that refers to the original decay value."
+    }
+   ]
+  },
+  {
+   "id": "two-conditions",
+   "from": "The classical condition lives in CellLayerSystem and has fifteen fields. The fractional condition lives in CellCert.CellSystem, has twelve fields and uses exponent 501/500. The two full names identify different hypotheses.",
+   "to": "The classical condition lives in CellLayerSystem and has fifteen fields. The fractional condition lives in CellCert.CellSystem, has twelve fields and uses exponent 501/500. The two full names identify different hypotheses.",
+   "role": "explanation",
+   "topic": "offset-certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CellLayerSystem.CellSystemCondition",
+     "file": "Breakdown/CertCell/StatementDefs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The classical condition has fifteen clauses on the common cell data. It is a different hypothesis from the twelve-clause fractional condition discussed alongside it."
+    },
+    {
+     "name": "Breakdown.CellCert.CellSystem.CellSystemCondition",
+     "file": "Breakdown/FracCell/StatementDefs.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The fractional condition has twelve clauses and fixes the exponent to 501/500. It is distinct from the classical fifteen-clause cell condition."
+    }
+   ]
+  },
+  {
+   "id": "statement-pattern",
+   "from": "A proposition definition records a statement. It does not record a later theorem that proves it. For the transfer step, the reader needs the statement, the conditional construction and the assembly that supplies the intermediate steps as separate selectable declarations.",
+   "to": "A proposition definition records a statement. It does not record a later theorem that proves it. For the transfer step, the reader needs the statement, the conditional construction and the assembly that supplies the intermediate steps as separate selectable declarations.",
+   "role": "explanation",
+   "topic": "monodromy",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.TransferHolds",
+     "file": "Breakdown/Base/Framework.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "This row specifies the quantitative transfer statement. The later conditional arguments and their supplied analytic proofs are separate rows."
+    },
+    {
+     "name": "Breakdown.transferHolds_of",
+     "file": "Breakdown/Transfer/Main.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem derives transfer from the step-data solver, contraction, perturbation, profile-piece and gluing facts, retaining those five analytic inputs."
+    },
+    {
+     "name": "Breakdown.transferHolds_of_dichotomy",
+     "file": "Breakdown/Transfer/Exports.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem supplies the intermediate transfer ingredients and retains the spectral dichotomy as its remaining analytic input."
+    }
+   ]
+  },
+  {
+   "id": "graph-join",
+   "from": "The closed-graph interface says that each element has the required half-order derivative relation. The main certificate assembly supplies it pointwise with halfSsp_of_xbar. The physical-energy provider then takes this closed-graph interface as its premise.",
+   "to": "The closed-graph interface says that each element has the required half-order derivative relation. The main certificate assembly supplies it pointwise with halfSsp_of_xbar. The physical-energy provider then takes this closed-graph interface as its premise.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Cert.GraphClosedHolds",
+     "file": "Breakdown/Cert/Nodes.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "Every element of the closed Fourier graph has the required relation between its gradient and second-derivative components."
+    },
+    {
+     "name": "Breakdown.Cert.halfSsp_of_xbar",
+     "file": "Breakdown/Cert/HalfOrderGraphMem.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "For each element of the graph, this theorem establishes that relation directly from membership in the closed graph."
+    },
+    {
+     "name": "Breakdown.Cert.ReadingEnergyHolds",
+     "file": "Breakdown/Cert/Nodes.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The physical representative has the same weighted energy, gradient norm and pin pairings as the Fourier graph element."
+    },
+    {
+     "name": "Breakdown.Cert.readingEnergyHolds_of",
+     "file": "Breakdown/Cert/ReadingEnergy.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem obtains those physical energy and pin identities using the derivative relation for every graph element as its hypothesis."
+    }
+   ]
+  },
+  {
+   "id": "provider-projections",
+   "from": "A supplying theorem can return a conjunction. The embedding-norm and embedding-linearity statements use different components of the same theorem; a navigation link to that provider should keep the chosen component visible.",
+   "to": "A supplying theorem can return a conjunction. The embedding-norm and embedding-linearity statements use different components of the same theorem; a navigation link to that provider should keep the chosen component visible.",
+   "role": "explanation",
+   "topic": "mild",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Freq.EmbedNorm",
+     "file": "Breakdown/FreqTr/Statements.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "For a smooth decaying field, the squared Fourier-space norm equals the sum of the three physical squared derivative L² norms."
+    },
+    {
+     "name": "Breakdown.Freq.EmbedLinear",
+     "file": "Breakdown/FreqTr/Statements.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The embedding preserves addition, subtraction and real scalar multiplication on smooth decaying fields, which is the linearity component named in the passage."
+    },
+    {
+     "name": "Breakdown.Freq.embedNormLinear_holds",
+     "file": "Breakdown/FreqTr/Realization.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem proves both the norm identity and linearity. A link to one component should retain which of those two conclusions is intended."
+    }
+   ]
+  },
+  {
+   "id": "fractional-profiles",
+   "from": "The fractional profile exports concern dissipation exponents strictly between one and five quarters. Their whole-space and torus conclusions belong to a separate equation family from the classical paper route.",
+   "to": "The fractional profile exports concern dissipation exponents strictly between one and five quarters. Their whole-space and torus conclusions belong to a separate equation family from the classical paper route.",
+   "role": "explanation",
+   "topic": "fractional",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.fractional_breakdown_on_space",
+     "file": "Solution.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "For 1<α<5/4, a rotating fractional similarity profile implies the corresponding whole-space fractional breakdown statement."
+    },
+    {
+     "name": "Breakdown.fractional_breakdown_on_torus",
+     "file": "Solution.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "For 1<α<5/4, a rotating fractional similarity profile implies the corresponding periodic fractional breakdown statement."
+    }
+   ]
+  },
+  {
+   "id": "fractional-certificate",
+   "from": "The fractional certificate and fractional cell-system exports are additional selected targets. Solution imports their providers alongside the classical providers, so its combined import closure should be distinguished from the import closure of an individual classical provider.",
+   "to": "The fractional certificate and fractional cell-system exports are additional selected targets. Solution imports their providers alongside the classical providers, so its combined import closure should be distinguished from the import closure of an individual classical provider.",
+   "role": "explanation",
+   "topic": "fractional",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.SteadyCert.fracCertificate_profile",
+     "file": "Solution.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem obtains a rotating fractional profile from the fractional certificate for 1<α<5/4. This is the separate fractional implication named by the passage."
+    },
+    {
+     "name": "Breakdown.CellCert.CellSystem.fractional_breakdown_of_cell_system",
+     "file": "Solution.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The theorem concludes both fractional breakdown statements at α=501/500 from its separate twelve-clause fractional cell condition."
+    }
+   ]
+  }
+ ],
+ "removed": []
+}

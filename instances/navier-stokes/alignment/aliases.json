@@ -349,7 +349,9 @@
   "name-extendedcertificatedata-adjointoffset": "name-extendedcertificatedata-adjointdefect",
   "name-extendedcertificatedata-adjointquad": "name-extendedcertificatedata-adjointdefect",
   "name-extendedcertificatedata-stiffoffset": "name-extendedcertificatedata-stiffnorm",
-  "name-cert-supgrad": "name-cert-sizez"
+  "name-cert-supgrad": "name-cert-sizez",
+  "app-b6-radius": "app-b6-ray-statement",
+  "app-b7-realification": "app-b7-complex"
  },
  "claims": {
   "claim-theorem-1-1": "theorem-1.1",

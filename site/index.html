@@ -28,7 +28,28 @@
           if (stored === "light" || stored === "dark") document.documentElement.setAttribute("data-theme", stored);
         } catch (e) {}
       })();
+      // The paper's text waits, hidden but laid out, until its fonts (preloaded below) are in, or
+      // 100 ms at most, so a formula never paints in a fallback face and then shifts.
+      (function () {
+        var root = document.documentElement;
+        if (!document.fonts || !document.fonts.load) return;
+        root.classList.add("fonts-wait");
+        var done = function () {
+          root.classList.remove("fonts-wait");
+        };
+        setTimeout(done, 100);
+        document.addEventListener("DOMContentLoaded", function () {
+          Promise.all(["1em KaTeX_Main", "italic 1em KaTeX_Math", "1em 'STIX Two Text'"].map(function (face) {
+            return document.fonts.load(face);
+          })).then(done, done);
+        });
+      })();
     </script>
+    <style>
+      html.fonts-wait .paper {
+        visibility: hidden;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

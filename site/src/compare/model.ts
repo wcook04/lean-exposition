@@ -4,7 +4,7 @@
 
 import site from "@instance/site";
 import type { RecordAlignment, StatementRole } from "../api/lean";
-import type { Stage } from "../api/types";
+import type { Account as Stage } from "../api/types";
 import type { ArgGraph } from "../model/graph";
 import { LEVELS, type Level } from "../app/router";
 import { usesOf } from "../map/treeModel";

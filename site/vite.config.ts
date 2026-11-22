@@ -369,14 +369,6 @@ function routeData(route: string, base: string): string[] {
   return files.filter(Boolean).map((file) => `<link rel="preload" href="${base}edition/${file}" as="fetch" crossorigin />`);
 }
 
-/** The maths on a paper's first screen is drawn in these, and hidden until they arrive. */
-function routeFonts(route: string, base: string): string[] {
-  if (!route.startsWith("read/")) return [];
-  return readdirSync(resolve("dist/assets"))
-    .filter((name) => /^KaTeX_(Main-Regular|Math-Italic)-.*\.woff2$/.test(name))
-    .map((name) => `<link rel="preload" href="${base}assets/${name}" as="font" type="font/woff2" crossorigin />`);
-}
-
 /**
  * Each paper's first screen, through the page's own engine. It needs a DOM to sanitise, and the
  * bundler's handling of `import.meta.env` and the virtual modules, so it runs in a dev server
@@ -440,8 +432,11 @@ function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
     transformIndexHtml: {
       order: "post",
       handler(html, context) {
-        // Keep the fonts of the first screen from swapping in late.
-        const fonts = Object.keys(context.bundle ?? {}).filter((name) => /stix-two-text-latin-(400|500)-normal.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$/.test(name));
+        // Keep the fonts of the first screen from swapping in late: the text faces, and the KaTeX
+        // faces most formulas are drawn in (every route and address, 404.html included, starts here).
+        const fonts = Object.keys(context.bundle ?? {}).filter((name) =>
+          /stix-two-text-latin-(400|500)-normal.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$|KaTeX_(Main-Regular|Math-Italic|Size1-Regular|Size2-Regular)-.*\.woff2$/.test(name),
+        );
         const preload = [
           ...fonts.map((name) => `<link rel="preload" href="${base}${name}" as="font" type="font/woff2" crossorigin />`),
           // Every page starts from the edition's index.
@@ -574,7 +569,7 @@ export default defineConfig(({ mode, command }) => {
         const screens = await paperFirstScreens(base, facts);
         for (const route of ["map", "compare", "lean", "checks", "about", "search", ...(INSTANCE.stages ?? ["long", "short", "expository"]).map((stage) => `read/${stage}`)]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          const preload = [...routeFonts(route, base), ...routeCode(route, base), ...routeData(route, base)].join("");
+          const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
           // A paper's first paint is already its text, in the shape of the page, so nothing moves when the page arrives.
           const stage = route.match(/^read\/(.+)$/)?.[1];
           const page = stage

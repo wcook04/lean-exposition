@@ -3,11 +3,28 @@
 import current from "./current.json";
 
 /**
- * One document of the paper. A document in this build has a slot; a document of the same paper read in
- * another build (a fourth document, or the page a guide belongs to) has no slot and an `href`, its
- * address under the library root ("pcp/reading-guide/").
+ * One document of the paper. A document in this build has a slot: one of the three accounts (long,
+ * short, expository) or a companion's own page name (digest, library-07). A document of the same paper
+ * read in another build (a fourth document, or the page a guide belongs to) has no slot and an `href`,
+ * its address under the library root ("pcp/reading-guide/").
  */
-export interface LibraryDocument { id: string; slot?: "long" | "short" | "expository"; href?: string; slug: string; title: string; noun: string; main?: boolean; pdf_only?: boolean; pdf?: { file: string; sha256: string; bytes: number; url: string } }
+export interface LibraryDocument {
+  id: string;
+  slot?: string;
+  href?: string;
+  slug: string;
+  title: string;
+  noun: string;
+  main?: boolean;
+  pdf_only?: boolean;
+  pdf?: { file: string; sha256: string; bytes: number; url: string };
+  /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
+  kind?: "companion";
+  group?: string;
+  group_title?: string;
+  order?: number;
+  credit?: string;
+}
 export interface LibraryInstance {
   schema: string;
   id: string;

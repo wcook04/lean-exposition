@@ -2,16 +2,18 @@
 // reader on what it names, and the address the reader writes for that state (Copy link) is the
 // same address. Runs under every instance: the library settings are passed in.
 import { describe, expect, it } from "vitest";
-import { libraryHref, parseLibraryPath, retiredLink, setLibraryAddresses } from "../src/app/libraryAddress";
+import { libraryHref, movedLibraryPath, parseLibraryPath, retiredLink, setLibraryAddresses } from "../src/app/libraryAddress";
 
-const lib = { paper: "euler", main: "short" as const, pages: { "how-the-lean-encodes-it": "expository" as const } };
+const lib = { paper: "euler", main: "short" as const, pages: { "how-the-lean-encodes-it": "expository" as const, "part-2": "long" as const } };
 const BASE = "/library/euler";
 setLibraryAddresses({
   "e01.abstract.bounded-velocity": { record: null, at: "b536-564" },
   "r2.prop54.endpoint-citation": { record: "euler.proposition-5.4", at: "b9000-9050" },
   "old.merged-phrase": { record: null, at: "b536-564", host: "e01.abstract.bounded-velocity" },
 }, { "r2-s7-pressure-input": { retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" } },
-{ "theorem-1.1": ["b4441-5169", "b4441-5200"] });
+{ "theorem-1.1": ["b4441-5169", "b4441-5200"] },
+{ accounts: { to: "how-the-lean-encodes-it", phrases: { "p2.coercive": "part-2" } } },
+{ "part-2": { "p2.coercive": { record: null, at: "b1-2" } }, "how-the-lean-encodes-it": { "e01.digest-phrase": { record: null, at: "b3-4" } } });
 
 function roundTrip(address: string) {
   const url = new URL(address, "https://wcook04.github.io");
@@ -106,6 +108,17 @@ describe("library addresses", () => {
     expect(href).toBe(`${BASE}/how-the-lean-encodes-it/`);
   });
 
+  it("a page that moved opens its new page, and each of its phrases on the page that now holds it", () => {
+    expect(movedLibraryPath("/accounts")).toBe("/how-the-lean-encodes-it");
+    expect(movedLibraryPath("/accounts/@p2.coercive")).toBe("/part-2/@p2.coercive");
+    expect(movedLibraryPath("/accounts/@e01.digest-phrase")).toBe("/how-the-lean-encodes-it/@e01.digest-phrase");
+    expect(movedLibraryPath("/accounts/lean/Foo.bar")).toBe("/how-the-lean-encodes-it/lean/Foo.bar");
+    expect(movedLibraryPath("/how-the-lean-encodes-it")).toBeNull();
+    expect(roundTrip(`${BASE}/accounts/`).href).toBe(`${BASE}/how-the-lean-encodes-it/`);
+    expect(roundTrip(`${BASE}/accounts/@p2.coercive`).href).toBe(`${BASE}/part-2/@p2.coercive`);
+    expect(roundTrip(`${BASE}/accounts/lean/Foo.bar`).href).toBe(`${BASE}/how-the-lean-encodes-it/lean/Foo.bar`);
+  });
+
   it("any other reading state keeps the reader's own parameters at the paper's top", () => {
     const route = { view: "read" as const, stage: "short" as const, at: "120-134" };
     expect(libraryHref(route, BASE, lib)).toBe(`${BASE}/?l=120-134`);
@@ -120,7 +133,7 @@ describe("library addresses", () => {
   });
 
   it("a companion page's phrase and declaration have their own addresses", () => {
-    setLibraryAddresses({}, {}, {}, { "how-the-lean-encodes-it": { "g.first": { record: null, at: "b10-40" } } });
+    setLibraryAddresses({}, {}, {}, {}, { "how-the-lean-encodes-it": { "g.first": { record: null, at: "b10-40" } } });
     const phrase = roundTrip(`${BASE}/how-the-lean-encodes-it/@g.first?v=lean`);
     expect(phrase.route).toMatchObject({ stage: "expository", node: "phrase:g.first", at: "b10-40", lean: true });
     expect(phrase.href).toBe(`${BASE}/how-the-lean-encodes-it/@g.first?v=lean`);
