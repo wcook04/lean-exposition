@@ -805,11 +805,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     }
   }, [pin, pinWithoutLean, statements]);
 
-  /** Let go here, for a step on to something else in the paper. */
-  const releaseInPlace = useCallback(() => {
+  /**
+   * Let go here, for a step on to something else in the paper. The view stays as it is. A step
+   * names where it goes (followingAt), so the one replaced entry already holds the new place.
+   */
+  const releaseInPlace = useCallback((followingAt?: string) => {
     const here = hereRef.current;
     writeEntry(OPENED, undefined);
-    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined, graph: undefined }, { replace: true });
+    if (here.node || here.at || here.decl) {
+      if (followingAt) selfAt.current = followingAt;
+      navigate({ ...here, node: undefined, at: followingAt, decl: undefined, declModule: undefined }, { replace: true });
+    }
   }, []);
 
   /**
@@ -1285,11 +1291,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const step = useCallback(
     (by: 1 | -1) => {
       // Between statements the step starts from where the reader is, not from the paper's start.
+      // A selected phrase is where the reader is, wherever the reading line has scrolled to.
       const at = signals.part.get();
-      const from = currentSegment.current;
+      const pinned = pinRef.current?.tie;
+      const from = pinned == null ? currentSegment.current : ties.segmentsOf[pinned][0];
       const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.stops.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.stops].reverse().find((t) => statements.partOf(t) < at) ?? null);
       if (next === null) return;
-      if (pinRef.current) releaseInPlace();
+      if (pinRef.current) releaseInPlace(ties.index.ties[next].at);
       stepped.current = true;
       current.current = next;
       currentSegment.current = ties.segmentsOf[next][0];
@@ -1899,7 +1907,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
             </span>
           )}
-          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
+          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {mid && (
             <button
               type="button"
@@ -2145,8 +2153,8 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
           {phone ? "Tap" : "Click"} an underlined phrase to see the Lean that states it.
         </span>
       ) : (
-        <span className="reader-strip__hint" title="A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean. j and k step through them.">
-          {phone ? "Tap" : "Click"} a statement with a dark tick to see its Lean.
+        <span className="reader-strip__hint" title="Faint highlights mark linked statements. Use j and k to move between them.">
+          {phone ? "Tap" : "Click"} a highlighted statement to see its proof step.
         </span>
       ))}
       {/* Where the reader is, as the section's number only ("§1.2"), and only where no contents
@@ -2173,9 +2181,13 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
   );
 }
 
-/** "12 of 86" between two arrows: the tied statements, one at a time. j and k do the same. */
-function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties: TieModel; onStep(by: 1 | -1): void }) {
-  const { tie } = useSignal(signals.follow);
+/**
+ * "12 of 86" between two arrows: the tied statements, one at a time. j and k do the same. A
+ * selected phrase is the one counted; with nothing selected, the one at the reading line.
+ */
+function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignals; ties: TieModel; pinned?: number | null; onStep(by: 1 | -1): void }) {
+  const followed = useSignal(signals.follow);
+  const tie = pinned ?? followed.tie;
   const place = tie === null ? -1 : ties.place[tie];
   const arrow = (d: string) => (
     <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
