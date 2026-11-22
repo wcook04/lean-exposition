@@ -59,13 +59,13 @@ const FIRST_ATTRIBUTE = "data-first-paper";
  * A paper's first screen. A page that opens anywhere but the top (an address with a place in it,
  * or a reload or Back that restores one) swaps it for the empty shape before anything paints.
  * With `base`, an address whose path names a place (a numbered result such as theorem-1.1/,
- * which is served this same page) opens further down too: only the site's root and its read/
- * pages are the top. Otherwise the top of the paper painted first and the page jumped to the
- * place once it loaded.
+ * which is served this same page) opens further down too. The site root, its read/ routes and
+ * an optional public document opening are the top.
  */
-export function readerFirstScreenHtml(account: string, parts: string, base?: string): string {
+export function readerFirstScreenHtml(account: string, parts: string, base?: string, openingPath?: string): string {
+  const opening = openingPath ? `||p===${JSON.stringify(openingPath)}||p===${JSON.stringify(openingPath + "index.html")}` : "";
   const top = base
-    ? `var p=location.pathname,b=${JSON.stringify(base)};if(p===b||p===b+"index.html"||p.indexOf(b+"read/")===0)`
+    ? `var p=location.pathname,b=${JSON.stringify(base)};if(p===b||p===b+"index.html"||p.indexOf(b+"read/")===0${opening})`
     : "";
   const swap = `(function(){${top}if(!location.hash&&!location.search&&!history.state)return;var f=document.querySelector("[${FIRST_ATTRIBUTE}]");f.replaceWith(f.nextElementSibling.content)})()`;
   return `<div ${FIRST_ATTRIBUTE} style="display:contents"><style>${STYLE}</style>${shape(`${account}<div class="paper prose">${parts}</div>`, "")}</div><template>${readerSkeletonHtml()}</template><script>${swap}</script>`;

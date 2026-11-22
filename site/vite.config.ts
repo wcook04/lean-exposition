@@ -318,10 +318,6 @@ const ROUTE_CODE: Record<string, string[]> = {
   lean: ["LeanPage"],
   checks: ["ChecksPage"],
   about: ["AboutPage"],
-  // Each paper's reference table is its own chunk, named for the paper, and the paper waits for it.
-  "read/long": ["ReaderPage", "long"],
-  "read/short": ["ReaderPage", "short"],
-  "read/expository": ["ReaderPage", "expository"],
 };
 
 interface BuiltChunk {
@@ -347,7 +343,10 @@ function routeCode(route: string, base: string): string[] {
     chunk.css.forEach((file) => css.add(file));
     chunk.imports.forEach((file) => visit(chunksByFile.get(file)));
   };
-  (ROUTE_CODE[route] ?? []).forEach((name) => visit(chunksByName.get(name)));
+  // Each document waits for its own reference-table chunk.
+  const stage = route.match(/^read\/(.+)$/)?.[1];
+  const chunks = stage ? ["ReaderPage", stage] : ROUTE_CODE[route] ?? [];
+  chunks.forEach((name) => visit(chunksByName.get(name)));
   // A chunk that holds only CSS loses its script when the bundle is written. Its stylesheet stays.
   const scripts = [...seen].filter((chunk) => existsSync(resolve("dist", chunk.file)));
   return [
@@ -356,8 +355,37 @@ function routeCode(route: string, base: string): string[] {
   ];
 }
 
+interface ReadingIndex {
+  documents: Record<string, string>;
+  responses: Record<string, string>;
+}
+
+interface AdaptedOpening {
+  stage: string;
+  slug: string;
+  indexFile: string;
+  index: ReadingIndex;
+}
+
+function adaptedOpening(): AdaptedOpening | undefined {
+  const stage = INSTANCE.adapted?.slot;
+  if (!stage) return undefined;
+  const slug = Object.entries(INSTANCE.library?.pages ?? {}).find(([, slot]) => slot === stage)?.[0];
+  if (!slug) throw new Error(`The adapted edition (${stage}) has no public page.`);
+  const indexFile = `docs/${stage}/index.json`;
+  const index: ReadingIndex = JSON.parse(readFileSync(resolve("public/edition", indexFile), "utf8"));
+  if (openingFiles(index, "short").some((file) => !file || !existsSync(resolve("public/edition", file)))) {
+    throw new Error(`The adapted edition (${stage}) is missing its staged opening files.`);
+  }
+  return { stage, slug, indexFile, index };
+}
+
+function openingFiles(index: ReadingIndex, stage: string) {
+  return [index.documents?.[stage], index.responses[`/papers/${stage}/structure?representation=reader`], index.responses[`/ties/${stage}`]] as const;
+}
+
 /** The edition files a route asks for first, named by the edition's own index. */
-function routeData(route: string, base: string): string[] {
+function routeData(route: string, base: string, adapted: AdaptedOpening | undefined): string[] {
   const path = resolve("public/edition/index.json");
   if (!existsSync(path)) return [];
   const index = JSON.parse(readFileSync(path, "utf8"));
@@ -370,7 +398,9 @@ function routeData(route: string, base: string): string[] {
     graph && responses[graph],
     index.summaries_by_table?.nodes,
     ...(stage ? ["nodes", "sources"] : ["nodes", "sources", "edges", "evidence"]).map((table) => index.records_by_table?.[table]),
-    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
+    ...(adapted && stage === adapted.stage
+      ? [adapted.indexFile, ...openingFiles(adapted.index, "short")]
+      : stage ? openingFiles(index, stage) : []),
     ...(route === "compare" ? [responses["/alignment"]] : []),
     ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
   ];
@@ -382,9 +412,12 @@ function routeData(route: string, base: string): string[] {
  * bundler's handling of `import.meta.env` and the virtual modules, so it runs in a dev server
  * of its own. An edition that is not there leaves the empty shape.
  */
-async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record<string, string>> {
+async function paperFirstScreens(base: string, facts: SiteFacts, adapted: AdaptedOpening | undefined): Promise<Record<string, string>> {
   const path = resolve("public/edition/index.json");
-  if (!existsSync(path)) return {};
+  if (!existsSync(path)) {
+    if (adapted) throw new Error(missingInput(path, "the library paper's edition index"));
+    return {};
+  }
   const index = JSON.parse(readFileSync(path, "utf8"));
   const edition = (name: string) => readFileSync(resolve("public/edition", name));
   const body = (name: string | undefined) => (name ? JSON.parse(edition(name).toString("utf8")) : null);
@@ -408,11 +441,18 @@ async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record
   try {
     const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
     const screens: Record<string, string> = {};
-    for (const stage of Object.keys(index.documents).filter((s) => !INSTANCE.stages || INSTANCE.stages.includes(s as never))) {
+    const renderOpening = (stage: string, data: ReadingIndex, slot: string) => {
       const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
-      const { account, parts } = firstScreen(stage, edition(index.documents[stage]), body(index.responses[`/papers/${stage}/structure?representation=reader`]), body(index.responses[`/ties/${stage}`]), references);
-      screens[stage] = readerFirstScreenHtml(account, parts, base);
+      const [document, structure, ties] = openingFiles(data, slot);
+      const { account, parts } = firstScreen(stage, edition(document), body(structure), body(ties), references);
+      const openingPath = adapted?.stage === stage ? `${base}${adapted.slug}/` : undefined;
+      screens[stage] = readerFirstScreenHtml(account, parts, base, openingPath);
+    };
+    for (const stage of Object.keys(index.documents).filter((s) => !INSTANCE.stages || INSTANCE.stages.includes(s as never))) {
+      renderOpening(stage, index, stage);
     }
+    // A companion is exported as the short slot, but rendered with its own paths and credit.
+    if (adapted) renderOpening(adapted.stage, adapted.index, "short");
     return screens;
   } finally {
     await server.close();
@@ -484,11 +524,25 @@ const SITE_URL = process.env.LX_SITE_URL ?? INSTANCE.defaultSiteUrl ?? "";
 const SITE_PAGES = INSTANCE.sitePages;
 /** What a browser tab says before the page's script takes over, the same words as PageTitle. */
 const ROUTE_TITLES = INSTANCE.routeTitles;
-const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · ${INSTANCE.siteName}</title>`);
+const escapeHtml = (text: string) => text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, () => `<title>${escapeHtml(title)} · ${escapeHtml(INSTANCE.siteName)}</title>`);
+
+function adaptedHead(html: string, opening: AdaptedOpening, base: string): string {
+  const { stage, slug } = opening;
+  const url = `${SITE_URL || base}${slug}/`;
+  const names = INSTANCE.paperNames[stage];
+  const description = INSTANCE.frontCredit?.[stage] ?? names.reader;
+  const socialTitle = `${INSTANCE.editionTitle} (${names.short.toLowerCase()})`;
+  return html
+    .replace(/(<meta\s+name="description"\s+content=")[^"]*/, (_match, tag) => tag + escapeHtml(description))
+    .replace(/(<meta\s+property="og:title"\s+content=")[^"]*/, (_match, tag) => tag + escapeHtml(socialTitle))
+    .replace(/(<meta\s+property="og:description"\s+content=")[^"]*/, (_match, tag) => tag + escapeHtml(description))
+    .replace(/(<meta\s+property="og:url"\s+content=")[^"]*/, (_match, tag) => tag + escapeHtml(url))
+    .replace("</head>", () => `<link rel="canonical" href="${escapeHtml(url)}" /></head>`);
+}
 
 /** index.html's head and noscript, from the instance: the SK values are the page's words before instances. */
 function instanceHtml(): Plugin {
-  const escape = (text: string) => text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
   return {
     name: "instance-html",
     transformIndexHtml: {
@@ -498,10 +552,10 @@ function instanceHtml(): Plugin {
           ? `<meta property="og:url" content="${SITE_URL}" />${INSTANCE.html.ogImage ? `\n    <meta property="og:image" content="${SITE_URL}og.png" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />` : ""}`
           : "";
         return html
-          .replace("%LX_TITLE%", escape(INSTANCE.editionTitle))
-          .replace("%LX_DESCRIPTION%", escape(INSTANCE.html.description))
-          .replace("%LX_OG_TITLE%", escape(INSTANCE.html.ogTitle))
-          .replace("%LX_OG_DESCRIPTION%", escape(INSTANCE.html.ogDescription))
+          .replace("%LX_TITLE%", escapeHtml(INSTANCE.editionTitle))
+          .replace("%LX_DESCRIPTION%", escapeHtml(INSTANCE.html.description))
+          .replace("%LX_OG_TITLE%", escapeHtml(INSTANCE.html.ogTitle))
+          .replace("%LX_OG_DESCRIPTION%", escapeHtml(INSTANCE.html.ogDescription))
           .replace("%LX_OG_URL%", og)
           .replace("%LX_NOSCRIPT%", INSTANCE.html.noscript);
       },
@@ -633,16 +687,22 @@ export default defineConfig(({ mode, command }) => {
       async closeBundle() {
         const out = resolve("dist");
         const shell = resolve(out, ".route-shell.html");
-        const screens = await paperFirstScreens(base, facts);
-        for (const route of ["map", "compare", "lean", "checks", "about", "search", ...(INSTANCE.stages ?? ["long", "short", "expository"]).map((stage) => `read/${stage}`)]) {
+        const adapted = adaptedOpening();
+        const screens = await paperFirstScreens(base, facts, adapted);
+        const stages = [...(INSTANCE.stages ?? ["long", "short", "expository"])];
+        if (adapted) stages.push(adapted.stage);
+        for (const route of ["map", "compare", "lean", "checks", "about", "search", ...new Set(stages.map((stage) => `read/${stage}`))]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
+          const preload = [...routeCode(route, base), ...routeData(route, base, adapted)].join("");
           // A paper's first paint is already its text, in the shape of the page, so nothing moves when the page arrives.
           const stage = route.match(/^read\/(.+)$/)?.[1];
           const page = stage
             ? readFileSync(shell, "utf8").replace("<html ", '<html data-view="read" ').replace('class="app__main"></main>', () => `class="app__main">${screens[stage] ?? readerSkeletonHtml()}</main>`)
             : readFileSync(shell, "utf8");
-          writeFileSync(resolve(out, route, "index.html"), titled(page, ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
+          const isAdapted = adapted && stage === adapted.stage;
+          const title = isAdapted ? INSTANCE.paperNames[adapted.stage].short : ROUTE_TITLES[route];
+          const head = isAdapted ? adaptedHead(page, adapted, base) : page;
+          writeFileSync(resolve(out, route, "index.html"), titled(head, title).replace("</head>", `${preload}</head>`));
         }
         writeFileSync(resolve(out, "404.html"), titled(readFileSync(shell, "utf8"), "Page not found"));
         rmSync(shell);

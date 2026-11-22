@@ -23,6 +23,7 @@ import re
 import sys
 import urllib.request
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from playwright.sync_api import sync_playwright
 
@@ -89,6 +90,20 @@ short_credit = f"{first}; every change is marked."
 
 with sync_playwright() as pw:
     browser = pw.chromium.launch()
+    # A successful status alone can hide a copied 404 shell. The canonical document must
+    # keep its opening and authors' link while the app's modules are still unavailable.
+    with browser.new_context() as first_paint:
+        first_paint.route("**/*.js", lambda route: route.abort())
+        opening = first_paint.new_page()
+        response = opening.goto(edition, wait_until="domcontentloaded")
+        check("adapted first screen is a real document", response is not None and response.ok
+              and opening.locator(".paper .part__text").count() > 0 and "Page not found" not in opening.title())
+        check("adapted first screen links to the authors' paper",
+              opening.get_by_role("link", name="Read the authors’ paper").count() == 1)
+        canonical = opening.locator('link[rel="canonical"]')
+        href = canonical.get_attribute("href") if canonical.count() == 1 else None
+        check("the adapted edition has its own canonical address",
+              urlsplit(href or "").path == urlsplit(edition).path)
     for w, h in WIDTHS:
         tag = f"{w}"
         ctx = browser.new_context(viewport={"width": w, "height": h})

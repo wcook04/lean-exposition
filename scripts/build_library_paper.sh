@@ -95,6 +95,8 @@ pages = [d for d in inst["documents"] if not d.get("main") and d.get("slug") and
 for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
     shell_of = dist / "read" / doc["slot"] / "index.html"
+    if doc.get("adapted") and not shell_of.is_file():
+        raise SystemExit(f"{doc['slug']}: missing the adapted edition's pre-rendered opening ({shell_of})")
     (dist / doc["slug"] / "index.html").write_text((shell_of if shell_of.is_file() else dist / "404.html").read_text())
 # An adapted edition's other files, each declared in its edition.json as {file, name, label?, bytes,
 # sha256} and copied byte for byte after its size and digest are checked: the PDFs (the auxiliary
