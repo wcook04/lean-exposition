@@ -936,8 +936,6 @@
 /* The ground reaches a little past the text's edges, so an equation's number does not touch
    the frame; the mathematics keeps the column's full width. */
 .paper .math-display.tie {
-  margin-inline: -6px;
-  padding: 7px 6px 5px;
   border-radius: 6px;
 }
 
@@ -1019,4 +1017,9 @@
 
 .outline .phrase-key li {
   line-height: 1.35;
+}
+
+/* A display quoted in a pane card never reaches past the quotation's own measure. */
+.phrase-card--lean blockquote.phrase-card__quote :is(.math-display, .math-cue) {
+  max-inline-size: 100%;
 }
