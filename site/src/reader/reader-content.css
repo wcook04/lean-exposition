@@ -447,3 +447,68 @@
     margin-top: var(--space-6);
   }
 }
+
+/* The authors, as the paper sets them: one line under the title, joined with "and". The reading
+   copy carries them as a list (ul.authors); its words are not changed. */
+.paper.prose ul.authors {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  list-style: none;
+  font-size: 1.0625em;
+}
+
+.paper.prose ul.authors > li {
+  margin: 0;
+  padding: 0;
+}
+
+.paper.prose ul.authors > li::before {
+  content: none;
+}
+
+/* As flex items the names stand with no stray space before a comma; the joiners keep their own. */
+.paper.prose ul.authors > li + li::before {
+  content: ", ";
+  white-space: pre;
+}
+
+.paper.prose ul.authors > li + li:last-child::before {
+  content: " and ";
+  white-space: pre;
+}
+
+/* The credit, once, under the authors: who wrote the paper and its Lean, where they are from, and
+   who made the links. The reader's words, in the sans, so they never read as the authors' text. */
+.paper.prose .front-credit {
+  max-width: var(--evidence-measure, 38rem);
+  margin: calc(-1 * var(--space-3)) 0 var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+  color: var(--ink-3);
+  text-wrap: pretty;
+  hyphens: manual;
+  text-align: start;
+}
+
+/* Joined to an adapted edition's own credit note: the same words in the sans, inside that one note. */
+.paper.prose .front-credit--note {
+  display: inline;
+  max-width: none;
+  margin: 0;
+  font-style: normal;
+}
+
+.paper.prose .front-credit a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+}
+
+.paper.prose .front-credit a:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
