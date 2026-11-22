@@ -716,14 +716,14 @@ def _module_name(relative):
     return ".".join(relative.with_suffix("").parts)
 
 
+def _lock_path(tree):
+    return next((parent / "source-lock.json" for parent in tree.resolve().parents[:4]
+                 if (parent / "source-lock.json").is_file()), None)
+
+
 def _lock(tree, explicit=None):
-    if explicit is not None:
-        return read_json(explicit)
-    for parent in tree.resolve().parents[:4]:
-        candidate = parent / "source-lock.json"
-        if candidate.is_file():
-            return read_json(candidate)
-    return None
+    path = explicit if explicit is not None else _lock_path(tree)
+    return read_json(path) if path is not None else None
 
 
 def lean_roots(tree, lock=None):
@@ -743,10 +743,15 @@ def lean_roots(tree, lock=None):
                         and any(path.rglob("*.lean"))))
 
 
-def _source_details(tree, lock):
+def _toolchain_path(tree):
     toolchain = tree / "lean-toolchain"
     if not toolchain.is_file() and (tree.parent / "lean-toolchain").is_file():
-        toolchain = tree.parent / "lean-toolchain"  # a package whose sources sit in lean/
+        return tree.parent / "lean-toolchain"
+    return toolchain
+
+
+def _source_details(tree, lock):
+    toolchain = _toolchain_path(tree)
     details = {"revision": None, "base_url": None,
                "toolchain": toolchain.read_text().strip() if toolchain.is_file() else None}
     if lock:
@@ -762,6 +767,32 @@ def _source_details(tree, lock):
     return details
 
 
+def _source_files(tree, source_lock):
+    roots = lean_roots(tree, source_lock)
+    # Top-level module files are read only when the lock names their roots.
+    named_files = bool((source_lock or {}).get("lean_roots"))
+    for root in roots:
+        if (tree / root).is_dir():
+            yield from sorted((tree / root).rglob("*.lean"))
+        if named_files and (tree / f"{root}.lean").is_file():
+            yield tree / f"{root}.lean"
+
+
+def index_inputs(path):
+    """The files read to load a prebuilt index or to build one from a Lean tree."""
+    path = Path(path)
+    if not path.is_dir():
+        yield path
+        return
+    lock = _lock_path(path)
+    if lock is not None:
+        yield lock
+    toolchain = _toolchain_path(path)
+    if toolchain.is_file():
+        yield toolchain
+    yield from _source_files(path, read_json(lock) if lock is not None else None)
+
+
 def build_index(tree, *, lock=None, extraction=()):
     """Build the sidecar for one Lean tree; the result is deterministic for its bytes."""
     tree = Path(tree)
@@ -769,22 +800,15 @@ def build_index(tree, *, lock=None, extraction=()):
         raise ContractError(f"Lean tree is not a directory: {tree}")
     modules = []
     source_lock = _lock(tree, lock)
-    roots = lean_roots(tree, source_lock)
-    # Top-level module files are read only when the lock names their roots.
-    named_files = bool((source_lock or {}).get("lean_roots"))
-    for root in roots:
-        # A root names a top-level directory, or a top-level module file of that name (Solution.lean).
-        files = (sorted((tree / root).rglob("*.lean")) if (tree / root).is_dir() else []) + \
-            ([tree / f"{root}.lean"] if named_files and (tree / f"{root}.lean").is_file() else [])
-        for file in files:
-            relative = file.relative_to(tree)
-            raw = file.read_bytes()
-            module = parse_module(raw.decode("utf-8"), _module_name(relative), relative.as_posix())
-            module.update(sha256=digest(raw), source=raw.decode("utf-8"),
-                          lines=raw.count(b"\n") + (not raw.endswith(b"\n") and bool(raw)))
-            modules.append(module)
+    for file in _source_files(tree, source_lock):
+        relative = file.relative_to(tree)
+        raw = file.read_bytes()
+        module = parse_module(raw.decode("utf-8"), _module_name(relative), relative.as_posix())
+        module.update(sha256=digest(raw), source=raw.decode("utf-8"),
+                      lines=raw.count(b"\n") + (not raw.endswith(b"\n") and bool(raw)))
+        modules.append(module)
     if not modules:
-        raise ContractError(f"Lean tree has no modules under {' or '.join(roots) or 'any directory'}: {tree}")
+        raise ContractError(f"Lean tree has no modules under {' or '.join(lean_roots(tree, source_lock)) or 'any directory'}: {tree}")
     resolver = _Resolver(modules)
     edges, reverse = 0, {}
     for module in modules:

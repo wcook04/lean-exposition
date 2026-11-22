@@ -15,6 +15,7 @@ Usage: build_companion_editions.py <paper> <lean-index> <edition-out> [--only PA
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -22,6 +23,10 @@ import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+
+# Run with the same source checkout as the build tools.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from lean_exposition.lean_index import index_inputs
 
 ap = argparse.ArgumentParser()
 ap.add_argument("paper")
@@ -45,9 +50,7 @@ def scaffold() -> tuple[dict, str]:
     made the way scripts/from_proof_reader.py makes them (a paper whose three slots are all in use)."""
     if (I / "papers/long/absent.json").is_file():
         return json.loads((I / "papers/long/absent.json").read_text()), (I / "papers/long/absent.md").read_text()
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
     from lean_exposition.contracts import closure, required_citation_ids
-    import hashlib
     empty = ("<!-- EMPTY SCAFFOLD: this paper has no document in this slot. No result or review is "
              "asserted here, and the reader does not show it. -->\n")
     graph_bytes = (I / "evidence-graph.json").read_bytes()
@@ -82,20 +85,39 @@ def prefix(value, pre: str):
     return value
 
 
-def build(doc: dict) -> str:
+def shared_alignment_files():
+    for f in sorted((I / "alignment").iterdir()):
+        if f.name.startswith(("phrases-", "references-", "colours-", "m1-")) or f.name == "results.json":
+            continue
+        yield f
+
+
+def input_digest(paths, shared_digest=""):
+    """Hash paths and bytes so additions, removals and edits with preserved mtimes are visible."""
+    key = hashlib.sha256(shared_digest.encode())
+    for path in sorted(paths):
+        if path.is_file():
+            with path.open("rb") as stream:
+                digest = hashlib.file_digest(stream, "sha256").hexdigest()
+            key.update(json.dumps([path.as_posix(), digest]).encode())
+    return key.hexdigest()
+
+
+def build(doc: dict, shared_digest: str) -> str:
     page = doc["slot"]
-    # An edition newer than everything it is made from is kept.
     done = a.edition / "docs" / page / "index.json"
-    inputs = [I / f"papers/{page}/paper.md", I / f"alignment/phrases-{page}.json", I / "evidence-graph.json",
-              I / "alignment/names.json"]
-    if done.is_file() and all(done.stat().st_mtime > f.stat().st_mtime for f in inputs if f.is_file()):
+    # Only docs/ is published. This private receipt is written after the complete export.
+    receipt = a.edition / f".{page}.inputs-sha256"
+    key = input_digest([
+        I / f"papers/{page}/paper.md", I / f"papers/{page}/correspondence.json",
+        *(I / f"alignment/{kind}-{page}.json" for kind in ("phrases", "references", "colours")),
+    ], shared_digest)
+    if done.is_file() and receipt.is_file() and receipt.read_text() == key:
         return f"{page}: current"
     tmp = Path("build") / f"{a.paper}-companions" / page
     shutil.rmtree(tmp, ignore_errors=True)
     (tmp / "alignment").mkdir(parents=True)
-    for f in (I / "alignment").iterdir():
-        if f.name.startswith(("phrases-", "references-", "colours-", "m1-")) or f.name == "results.json":
-            continue
+    for f in shared_alignment_files():
         shutil.copyfile(f, tmp / "alignment" / f.name)
     put = lambda name, data: (tmp / name).write_text(json.dumps(data, ensure_ascii=False))
     put("alignment/phrases-short.json", restage(json.loads((I / f"alignment/phrases-{page}.json").read_text()), page, "short"))
@@ -124,6 +146,7 @@ def build(doc: dict) -> str:
     # File the export's own document responses under docs/<page>/, every name prefixed; the rest of the
     # export (the graph, the records, the Lean, the search) is the paper's own and is not repeated.
     out = a.edition / "docs" / page
+    receipt.unlink(missing_ok=True)
     shutil.rmtree(out, ignore_errors=True)
     out.mkdir(parents=True)
     pre = f"docs/{page}/"
@@ -146,12 +169,22 @@ def build(doc: dict) -> str:
         (out / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src / name, out / name)
     (out / "index.json").write_text(json.dumps(kept, ensure_ascii=False))
+    receipt.write_text(key)
     shutil.rmtree(tmp / "edition", ignore_errors=True)
     shutil.rmtree(tmp / "bundle", ignore_errors=True)
     return f"{page}: ok"
 
 
-with ThreadPoolExecutor(a.jobs) as pool:
-    results = list(pool.map(build, docs))
+results = []
+if docs:
+    shared_digest = input_digest([
+        Path(__file__), Path("site/scripts/export-static.py"),
+        I / "instance.json", I / "evidence-graph.json",
+        I / "papers/long/absent.json", I / "papers/long/absent.md",
+        I / "alignment/references-long.json",
+        *shared_alignment_files(), *index_inputs(a.lean_index),
+    ])
+    with ThreadPoolExecutor(a.jobs) as pool:
+        results = list(pool.map(lambda doc: build(doc, shared_digest), docs))
 print("\n".join(results))
 sys.exit(1 if any("FAILED" in r for r in results) else 0)
