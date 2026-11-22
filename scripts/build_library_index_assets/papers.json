@@ -51,21 +51,13 @@
   },
   {
    "id": "quartic",
-   "title": "A nearly quartic separation between randomized and quantum query complexity",
-   "authors": ["OpenAI"],
-   "sentence": "For every power below four there is a total Boolean function whose randomized query complexity exceeds that power of its quantum query complexity, and four is the best possible exponent; Lean checks the optimal exponent with no hypothesis.",
-   "credit": "The theorem and its proof are OpenAI’s. AI systems wrote the three accounts, the Lean and the links between them, under Will Cook’s direction.",
-   "where": "On its current site, Quartic Reader.",
-   "href": "https://wcook04.github.io/quartic-query-lean/",
-   "counts": {"phrases": 350, "statements": 121, "lean": 472},
-   "counts_sentence": "Links 121 statements of OpenAI’s paper and 350 passages of the three accounts to 472 Lean declarations.",
-   "comparator": "Comparator accepted each statement bundle in local runs.",
-   "counted_from": "wcook04/quartic-query-lean 12c9f34, corpus/ties.json and the site's front page (300, 16 and 34 linked passages)",
+   "library": true,
+   "sentence": "For every power below four there is a total Boolean function whose randomized query complexity exceeds that power of its quantum query complexity, and four is the best possible exponent. Three accounts of OpenAI’s proof, each linked phrase by phrase to the Lean, which checks the optimal exponent with no hypothesis.",
    "pages": [
-    {"title": "OpenAI’s paper", "href": "https://wcook04.github.io/quartic-query-lean/#/read/original"},
-    {"title": "Full proof reconstruction", "href": "https://wcook04.github.io/quartic-query-lean/#/read/reconstruction"},
-    {"title": "Expert companion", "href": "https://wcook04.github.io/quartic-query-lean/#/read/expert"},
-    {"title": "Worked exposition", "href": "https://wcook04.github.io/quartic-query-lean/#/read/exposition"}
+    {
+     "title": "OpenAI’s paper and the verification details, in the old reader’s last edition",
+     "href": "https://wcook04.github.io/library/quartic/editions/dbbf1f08240a1b016e41182c308366a452c348bc42e7beb7ba2cbd803587e350/#/read/original"
+    }
    ]
   },
   {

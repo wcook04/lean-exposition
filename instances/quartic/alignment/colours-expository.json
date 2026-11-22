@@ -1,0 +1,135 @@
+{
+ "schema": "topic-colours/1",
+ "paper": "expository",
+ "meaning": "The quartic reader's stored topic colours, carried unchanged: each family one hue, each topic one shade of it.",
+ "stored_from": "https://github.com/wcook04/quartic-query-lean 56ac62feece7 docs/reading_phrases/colours-exposition.json",
+ "parts": [
+  {
+   "key": "c2d3d00bdbb517fd",
+   "shared_by": 1,
+   "lightness": {
+    "light": 0.49,
+    "dark": 0.7
+   },
+   "chroma": {
+    "light": 0.093,
+    "dark": 0.137
+   },
+   "families": [
+    {
+     "id": "family-query-costs",
+     "name": "Quantum and classical queries · The exponent four",
+     "named": false,
+     "hue": 49.5,
+     "topics": [
+      "query-costs",
+      "quartic-exponent"
+     ]
+    },
+    {
+     "id": "family-board-and-certificates",
+     "name": "The board and its certificates",
+     "named": false,
+     "hue": 100.5,
+     "topics": [
+      "board-and-certificates"
+     ]
+    },
+    {
+     "id": "family-forrelation-addresses",
+     "name": "Forrelation addresses · Checking a proposed winner",
+     "named": false,
+     "hue": 165,
+     "topics": [
+      "exact-checking",
+      "forrelation-addresses"
+     ]
+    },
+    {
+     "id": "family-classical-lower-bound",
+     "name": "The classical lower bound",
+     "named": false,
+     "hue": 229.5,
+     "topics": [
+      "classical-lower-bound"
+     ]
+    },
+    {
+     "id": "family-comparisons",
+     "name": "Comparing two columns",
+     "named": false,
+     "hue": 274.5,
+     "topics": [
+      "comparisons"
+     ]
+    },
+    {
+     "id": "family-tournament",
+     "name": "Finding a winning column · Amplifying success",
+     "named": false,
+     "hue": 344.5,
+     "topics": [
+      "tournament",
+      "amplification"
+     ]
+    }
+   ],
+   "topics": {
+    "query-costs": {
+     "index": 0,
+     "family": "family-query-costs",
+     "light": "oklch(0.398 0.099 45.9)",
+     "dark": "oklch(0.607 0.145 45.9)"
+    },
+    "quartic-exponent": {
+     "index": 1,
+     "family": "family-query-costs",
+     "light": "oklch(0.482 0.087 53.1)",
+     "dark": "oklch(0.692 0.129 53.1)"
+    },
+    "board-and-certificates": {
+     "index": 2,
+     "family": "family-board-and-certificates",
+     "light": "oklch(0.450 0.093 100.5)",
+     "dark": "oklch(0.660 0.137 100.5)"
+    },
+    "exact-checking": {
+     "index": 3,
+     "family": "family-forrelation-addresses",
+     "light": "oklch(0.448 0.099 161.4)",
+     "dark": "oklch(0.657 0.145 161.4)"
+    },
+    "forrelation-addresses": {
+     "index": 4,
+     "family": "family-forrelation-addresses",
+     "light": "oklch(0.532 0.087 168.6)",
+     "dark": "oklch(0.742 0.129 168.6)"
+    },
+    "classical-lower-bound": {
+     "index": 5,
+     "family": "family-classical-lower-bound",
+     "light": "oklch(0.540 0.093 229.5)",
+     "dark": "oklch(0.750 0.137 229.5)"
+    },
+    "comparisons": {
+     "index": 6,
+     "family": "family-comparisons",
+     "light": "oklch(0.445 0.093 274.5)",
+     "dark": "oklch(0.655 0.137 274.5)"
+    },
+    "tournament": {
+     "index": 7,
+     "family": "family-tournament",
+     "light": "oklch(0.422 0.099 340.9)",
+     "dark": "oklch(0.632 0.145 340.9)"
+    },
+    "amplification": {
+     "index": 8,
+     "family": "family-tournament",
+     "light": "oklch(0.507 0.087 348.1)",
+     "dark": "oklch(0.717 0.129 348.1)"
+    }
+   }
+  }
+ ]
+}

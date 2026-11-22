@@ -1,0 +1,17 @@
+name = "QuarticQuery"
+version = "0.1.0"
+defaultTargets = ["QuarticQuery"]
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "complexitylib"
+git = "https://github.com/cslib-community/complexitylib.git"
+rev = "62ca5c21461b2482e8bd12b7cb9b4937d887a33a"
+
+[[lean_lib]]
+name = "QuarticQuery"
+
+[[lean_lib]]
+name = "QuarticCorpus"

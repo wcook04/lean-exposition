@@ -1,0 +1,104 @@
+{
+ "schema": "topic-colours/1",
+ "paper": "long",
+ "meaning": "The quartic reader's stored topic colours, carried unchanged: each family one hue, each topic one shade of it.",
+ "stored_from": "https://github.com/wcook04/quartic-query-lean 56ac62feece7 docs/reading_phrases/colours-reconstruction.json",
+ "parts": [
+  {
+   "key": "ae00d61d675433e7",
+   "shared_by": 1,
+   "lightness": {
+    "light": 0.45,
+    "dark": 0.665
+   },
+   "chroma": {
+    "light": 0.072,
+    "dark": 0.11
+   },
+   "families": [
+    {
+     "id": "family-query-models",
+     "name": "Query models and promises · Quantum comparisons and verification · The optimal exponent",
+     "named": false,
+     "hue": 354.5,
+     "topics": [
+      "quartic-exponent",
+      "query-models",
+      "quantum-search"
+     ]
+    },
+    {
+     "id": "family-walsh-promise",
+     "name": "The Forrelation address bit · Columns and addressed certificates · The Forrelation lower bound",
+     "named": false,
+     "hue": 126,
+     "topics": [
+      "addressed-certificates",
+      "walsh-promise",
+      "forrelation-hardness"
+     ]
+    },
+    {
+     "id": "family-classical-lower-bound",
+     "name": "The classical planting argument · Prediction with a separate cap",
+     "named": false,
+     "hue": 231,
+     "topics": [
+      "separate-cap-direct-product",
+      "classical-lower-bound"
+     ]
+    }
+   ],
+   "topics": {
+    "quartic-exponent": {
+     "index": 0,
+     "family": "family-query-models",
+     "light": "oklch(0.380 0.081 340.1)",
+     "dark": "oklch(0.595 0.123 340.1)"
+    },
+    "query-models": {
+     "index": 1,
+     "family": "family-query-models",
+     "light": "oklch(0.465 0.072 354.5)",
+     "dark": "oklch(0.680 0.110 354.5)"
+    },
+    "quantum-search": {
+     "index": 2,
+     "family": "family-query-models",
+     "light": "oklch(0.550 0.063 8.9)",
+     "dark": "oklch(0.765 0.097 8.9)"
+    },
+    "addressed-certificates": {
+     "index": 3,
+     "family": "family-walsh-promise",
+     "light": "oklch(0.365 0.081 111.6)",
+     "dark": "oklch(0.580 0.123 111.6)"
+    },
+    "walsh-promise": {
+     "index": 4,
+     "family": "family-walsh-promise",
+     "light": "oklch(0.450 0.072 126.0)",
+     "dark": "oklch(0.665 0.110 126.0)"
+    },
+    "forrelation-hardness": {
+     "index": 5,
+     "family": "family-walsh-promise",
+     "light": "oklch(0.535 0.063 140.4)",
+     "dark": "oklch(0.750 0.097 140.4)"
+    },
+    "separate-cap-direct-product": {
+     "index": 6,
+     "family": "family-classical-lower-bound",
+     "light": "oklch(0.408 0.076 223.8)",
+     "dark": "oklch(0.623 0.117 223.8)"
+    },
+    "classical-lower-bound": {
+     "index": 7,
+     "family": "family-classical-lower-bound",
+     "light": "oklch(0.492 0.068 238.2)",
+     "dark": "oklch(0.708 0.103 238.2)"
+    }
+   }
+  }
+ ]
+}

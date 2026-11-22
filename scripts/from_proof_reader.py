@@ -115,12 +115,16 @@ def printed_label(claim: dict, quote: str, text: str) -> str | None:
 
 
 def section_number(heading: str) -> str | None:
-    """`5.5.1 The equations at each level` -> `5.5.1`; `Appendix A ...` -> `appendix-a`."""
+    """`5.5.1 The equations at each level` -> `5.5.1`; `Appendix A ...` -> `appendix-a`.
+
+    A number may end in a full stop, as papers set with Pandoc print them (`3.1. The promise`,
+    `Appendix A. The upper bound`, `A.2. The adversary bound` -> `appendix-a.2`).
+    """
     m = re.match(r"^(\d+(?:\.\d+)*)\.?\s", heading)
     if m:
         return m.group(1)
     m = re.match(r"^(?:Appendix\s+)?([A-Z])(?:\.(\d+(?:\.\d+)*))?\.?\s", heading)
-    if m and heading.startswith("Appendix"):
+    if m and (heading.startswith("Appendix") or m.group(2)):
         return "appendix-" + m.group(1).lower() + (f".{m.group(2)}" if m.group(2) else "")
     return None
 

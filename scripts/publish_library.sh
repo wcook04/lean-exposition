@@ -20,10 +20,11 @@ git -C "$pub" checkout -q main 2>/dev/null || git -C "$pub" checkout -q -b main
 git -C "$pub" reset -q --hard origin/main 2>/dev/null || true
 if [ "$paper" != "--index" ]; then
   # Served at its id, or at its instance's own path (a document of another paper: pcp/reading-guide).
-  # Replacing a paper's folder keeps the folders of the papers served inside it (marked .library-paper).
+  # Kept across a republish: the folders of papers served inside this one (marked .library-paper) and
+  # its frozen editions (<paper>/editions/, published once by their own script, such as scripts/quartic_editions.py).
   at=$("$PY" -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "instances/$paper/instance.json")
   keep=$(mktemp -d)
-  if [ -d "$pub/$at" ]; then for d in "$pub/$at"/*/; do [ -f "$d.library-paper" ] && mv "$d" "$keep/"; done; fi
+  if [ -d "$pub/$at" ]; then for d in "$pub/$at"/*/; do if [ -f "$d.library-paper" ] || [ "$(basename "$d")" = editions ]; then mv "$d" "$keep/"; fi; done; fi
   rm -rf "${pub:?}/$at"
   mkdir -p "$(dirname "$pub/$at")"
   cp -R site/dist "$pub/$at"

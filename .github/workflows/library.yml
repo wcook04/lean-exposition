@@ -122,8 +122,10 @@ jobs:
           for dir in $(ls -d built/library-* | while read d; do p=${d#built/library-}; at=$(python3 -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "instances/$p/instance.json"); echo "$(echo "$at" | tr -cd / | wc -c) $d"; done | sort -n | cut -d' ' -f2); do
             paper=${dir#built/library-}
             at=$(python3 -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "instances/$paper/instance.json")
+            # Kept across a republish: the folders of papers served inside this one (marked .library-paper)
+            # and its frozen editions (<paper>/editions/, published once by their own script).
             keep=$(mktemp -d)
-            if [ -d "pub/$at" ]; then for d in "pub/$at"/*/; do [ -f "$d.library-paper" ] && mv "$d" "$keep/"; done; fi
+            if [ -d "pub/$at" ]; then for d in "pub/$at"/*/; do if [ -f "$d.library-paper" ] || [ "$(basename "$d")" = editions ]; then mv "$d" "$keep/"; fi; done; fi
             rm -rf "pub/$at" && mkdir -p "$(dirname "pub/$at")" && cp -R "$dir/site/dist" "pub/$at" && echo "$paper" > "pub/$at/.library-paper"
             for d in "$keep"/*/; do [ -d "$d" ] && mv "$d" "pub/$at/"; done
           done
