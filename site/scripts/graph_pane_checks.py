@@ -194,20 +194,28 @@ def _check_list(page: Page, label: str, head, name: str, count: int) -> list[str
             # Back to the whole list, as the reader found it.
             box.fill("")
             page.wait_for_timeout(100)
-    # Fit moves the camera only: the list stays open.
-    _fit(page)
-    if page.locator(".fg__list").count() == 0:
-        bad.append(f"{label}: Fit closed the list of {name}")
-    after_fit = page.evaluate(SUBJECT_BOX)
+    covered = panel.evaluate("(el) => el.classList.contains('fg__list--narrow')")
+    if covered:
+        if not page.locator(".fg__tools[inert]").count():
+            bad.append(f"{label}: the graph toolbar under the list of {name} still takes keyboard focus")
+    else:
+        _fit(page)
+        if not panel.count():
+            bad.append(f"{label}: Fit closed the list of {name}")
+    before_close = page.evaluate(SUBJECT_BOX)
     back = page.locator(".fg__listback")
     if back.count():
         back.click()
         page.wait_for_timeout(300)
-    if page.locator(".fg__list").count():
-        bad.append(f"{label}: \"Back to the graph\" did not close the list of {name}")
-    moved = _moved(after_fit, page.evaluate(SUBJECT_BOX))
+    if panel.count():
+        bad.append(f"{label}: Back did not close the list of {name}")
+    if not head.evaluate("(el) => el === document.activeElement"):
+        bad.append(f"{label}: Back did not return focus to the group {name}")
+    moved = _moved(before_close, page.evaluate(SUBJECT_BOX))
     if moved > 1:
         bad.append(f"{label}: closing the list of {name} moved the subject by {moved:.1f}px")
+    if covered and not panel.count():
+        _fit(page)
     if not bad:
         print(f"ok  {label}: the group {name} lists its {count} members, pages and searches them, and the subject stays still")
     return bad
