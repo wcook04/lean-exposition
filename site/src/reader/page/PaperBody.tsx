@@ -724,7 +724,8 @@ function katexReady(): Promise<void> {
 /**
  * Parts laid out whole whatever their distance from the window, as rules of a stylesheet of their
  * own rather than marks on the page, so that laying a part out changes nothing a reader (or a
- * check for stillness) could see in the document.
+ * check for stillness) could see in the document. They keep the containment content-visibility
+ * gives every other part, so nothing in them reaches past the column and widens the page.
  */
 let wholeSheet: CSSStyleSheet | null = null;
 const laidWhole = new Set<string>();
@@ -736,7 +737,7 @@ function layOutWhole(stage: string, index: number): void {
     document.adoptedStyleSheets = [...document.adoptedStyleSheets, wholeSheet];
   }
   laidWhole.add(key);
-  wholeSheet.insertRule(`.paper[data-stage="${CSS.escape(stage)}"] .part[data-part="${index}"] > .part__text { content-visibility: visible; }`);
+  wholeSheet.insertRule(`.paper[data-stage="${CSS.escape(stage)}"] .part[data-part="${index}"] > .part__text { content-visibility: visible; contain: layout style paint; }`);
 }
 
 /** How far from the window idle time fits a part's formulas ahead of the reader, in pixels. */
