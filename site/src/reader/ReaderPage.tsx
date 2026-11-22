@@ -87,8 +87,7 @@ import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
 import { useTopicColours } from "./topicColours";
-import { ADAPTED, carryPlace, clearPlace, counterpart, editionSide, loadChanges, takePlace, type Change, type ChangeMap } from "./adapted/changes";
-import { lineInView, useChangeMarks } from "./adapted/marks";
+import { lineInView, ADAPTED, carryPlace, clearPlace, counterpart, editionSide, loadChanges, takePlace, type Change, type ChangeMap } from "./adapted/changes";
 import { ChangeCard, ChangeList } from "./adapted/ChangePane";
 import "./adapted/adapted.css";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
@@ -1548,17 +1547,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     });
     navigate({ view: "read", stage: target, lean: route.lean, graph: route.graph, pdf: route.pdf, page: undefined });
   };
-  const openChange = useCallback((id: string) => setChangePane({ kind: "change", id }), []);
-  const toEditionAt = useCallback(
-    (line: number) => {
-      if (!changeMap || !ADAPTED) return;
-      const place = counterpart(changeMap, "authors", line);
-      carryPlace({ stage: ADAPTED.slot, line: place?.line ?? 1, notice: null });
-      navigate({ view: "read", stage: ADAPTED.slot, lean: hereRef.current.lean, graph: hereRef.current.graph });
-    },
-    [changeMap],
-  );
-  useChangeMarks(paperRef, side, changeMap, openChange, toEditionAt);
   const goToChange = (change: Change) => {
     setChangePane({ kind: "change", id: change.id });
     if (route.pdf) return;
@@ -1860,7 +1848,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   return (
     <div
-      className={`reader${side === "adapted" ? " reader--edition" : ""} reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}${paneOn ? " reader--follow" : ""}`}
+      className={`reader reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}${paneOn ? " reader--follow" : ""}`}
       onClick={(event) => {
         if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");

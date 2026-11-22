@@ -337,17 +337,11 @@ belong to the text being left.
 subject band names the text as well as the state while the adapted edition is open: "Selected
 words in §5.6, adapted edition".
 
-**A changes layer with its own mark.** Topic colour says topic and amber says selection, so a
-change is marked by neither. Each changed passage of the adapted edition carries a mark in the
-right margin, the one margin the other marks do not use: a short dotted rule in ink the height
-of the passage, headed by a small open square. Dotted and on the right is the whole of the
-encoding; the kind of change is said in words, never by a colour. The mark is a button named
-"See what changed here". It opens the change in the pane as a **Selected change**: the authors'
-text, the adapted text, the kind (correction, added justification, clarification, restatement,
-or cut) and the reason with its source. A cut is marked where the text was. **Show changes**, a
-button beside the switch, lists every change in the order of the text, each opening its passage.
-The authors' paper carries no change marks; from it, a paragraph's margin control offers "See
-this paragraph in the adapted edition" where the two differ.
+**Read changes separately.** Both texts keep their manuscript layout and topic marks. In the
+adapted edition, **Show changes** lists every change in the order of the text. Choosing one opens
+its passage and the **Selected change** pane with both texts, the kind of change, its explanation
+and its sources. From that pane, the reader can open the corresponding passage in the authors'
+paper when one exists.
 
 **Links for both texts.** The adapted edition's words link to the adapted statements. The
 inspector for such a link shows two formal statements in order: the adapted statement, then

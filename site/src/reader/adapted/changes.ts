@@ -117,3 +117,22 @@ export function takePlace(stage: Stage) {
 export function clearPlace() {
   pending = null;
 }
+
+/**
+ * The source line of the paragraph at the reading line: the block under a point in the middle of
+ * the paper's column, just below the reading line, else the first one a little further down.
+ */
+export function lineInView(root: HTMLElement | null, readingTop: number): number | null {
+  if (!root) return null;
+  const column = (root.querySelector(".paper") ?? root).getBoundingClientRect();
+  const x = column.left + Math.min(column.width / 2, 200);
+  for (let y = readingTop + 24; y < window.innerHeight; y += 12) {
+    const hit = document.elementFromPoint(x, y);
+    const block = hit?.closest<HTMLElement>(".part__text [data-line]");
+    if (!block || !root.contains(block)) continue;
+    let top: HTMLElement = block;
+    for (let up = top.parentElement?.closest<HTMLElement>(".part__text [data-line]"); up; up = up.parentElement?.closest<HTMLElement>(".part__text [data-line]")) top = up;
+    return Number(top.dataset.line);
+  }
+  return null;
+}

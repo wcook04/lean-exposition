@@ -6,13 +6,12 @@
 At 390, 800, 1024, 1100, 1440, 2000 and 2560 px wide: the edition opens with its one-line credit (the
 credit's first sentence and that every change is marked) beside a link to the authors' paper, and About
 carries the whole credit (the paper's own document.credit, or --credit); the switch "Authors' paper / Adapted edition" stands in the strip, the
-page never scrolls sideways, and a change mark opens a Selected change with the authors' text, the
-edition's, the kind, the note and the sources. At 1440: every change of the change map shows as a
-mark on the page (the page is read top to bottom), "Show changes" lists every change, the switch
-keeps the place by paragraph in both directions and says when a paragraph has no counterpart, the
-authors' paper carries no change marks, the PDF with changes marked opens and its bars are marks
+page never scrolls sideways, and the manuscript carries no editorial marks. "Show changes" opens
+a Selected change with both texts, the kind, the note and the sources. At 1440: "Show changes"
+lists every change, the switch keeps the place by paragraph in both directions and says when a
+paragraph has no counterpart, the authors' Text carries no editorial marks, the PDF with changes marked opens and its bars are marks
 in the PDF view, and the browser's find reaches the edition's own words far down the page.
-Screenshots of the switch, an opened mark, Show changes and the credit go to --shots.
+Screenshots of the switch, a selected change, Show changes and the credit go to --shots.
 Exits 1 if any check fails.
 """
 from __future__ import annotations
@@ -73,6 +72,9 @@ def settle(page, ready=".paper .part__text [data-line]"):
     page.wait_for_timeout(800)
 
 
+TEXT_CHANGE_MARKS = (".paper [data-change], .paper [data-change-open], "
+                     ".paper [data-changed-in-edition], .paper [data-counterpart-line], "
+                     ".paper .change-mark, .paper .change-counterpart")
 OVERFLOW = "() => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth"
 # The paragraph at the reading line (under the top bar and the strip), by its words.
 # The reader's reading line: under the top bar and the strip (ReaderPage's readingTop), as the switch reads it.
@@ -122,25 +124,20 @@ with sync_playwright() as pw:
               switch.inner_text() if switch.count() else "absent")
         check(f"{tag} no sideways scroll at the top", page.evaluate(OVERFLOW) <= 0, page.evaluate(OVERFLOW))
         page.screenshot(path=str(a.shots / f"credit-switch-{tag}.png"))
-        # A marked paragraph, opened.
-        page.goto(edition + "#1.1", wait_until="domcontentloaded")
-        settle(page)
-        mark = page.locator("[data-change-open]").first
-        mark.wait_for(timeout=30000)
-        mark.scroll_into_view_if_needed()
-        page.wait_for_timeout(300)
-        cid = mark.get_attribute("data-change-open")
-        check(f"{tag} no sideways scroll beside a mark", page.evaluate(OVERFLOW) <= 0, page.evaluate(OVERFLOW))
-        mark.click()
+        check(f"{tag} adapted Text has no editorial marks", page.locator(TEXT_CHANGE_MARKS).count() == 0)
+        page.get_by_role("button", name="Show changes").click()
+        page.locator(".change-list").wait_for(timeout=15000)
+        page.locator(".change-list__row").first.click()
         card = page.locator(".change-card")
         card.wait_for(timeout=15000)
         text = card.inner_text()
-        row = next(c for c in changes["changes"] if c["id"] == cid)
-        check(f"{tag} opened mark shows both texts, kind, note, sources",
+        row = changes["changes"][0]
+        check(f"{tag} selected change shows both texts, kind, note, sources",
               "In the authors’ paper" in text and "In the adapted edition" in text and row["note"].split("$")[0][:40] in text
-              and "Kind" in text and ("Source" in text) and cid in text, text[:300])
+              and "Kind" in text and ("Source" in text) and row["id"] in text, text[:300])
         check(f"{tag} no sideways scroll with the change open", page.evaluate(OVERFLOW) <= 0, page.evaluate(OVERFLOW))
-        page.screenshot(path=str(a.shots / f"mark-opened-{tag}.png"))
+        check(f"{tag} the selected change stays out of the manuscript", page.locator(TEXT_CHANGE_MARKS).count() == 0)
+        page.screenshot(path=str(a.shots / f"change-opened-{tag}.png"))
         check(f"{tag} no page errors", not errors, errors[:3])
         if w != 1440:
             ctx.close()
@@ -152,21 +149,6 @@ with sync_playwright() as pw:
         about = page.evaluate("() => document.getElementById('about-adapted')?.closest('section')?.innerText ?? ''").replace("\u2019", "'")
         check("1440 About carries the credit verbatim", a.credit in about, about[:300])
 
-        # Every change shows as a mark: read the page top to bottom.
-        page.goto(edition, wait_until="domcontentloaded")
-        settle(page)
-        seen, height, y = set(), page.evaluate("document.body.scrollHeight"), 0
-        while y < height:
-            page.evaluate("(y) => window.scrollTo(0, y)", y)
-            page.wait_for_timeout(120)
-            seen |= set(page.eval_on_selector_all("[data-change-open]", "els => els.map(e => e.dataset.changeOpen)"))
-            y += 700
-            height = page.evaluate("document.body.scrollHeight")
-        # The credit note's paragraph gives way to the one-line credit in the front matter (engine.ts), so
-        # the edition-credit change is said by that line rather than by a mark.
-        credit_ids = {c["id"] for c in changes["changes"] if c["kind"] == "edition-credit"}
-        check("1440 every change is a visible mark", set(ids) - credit_ids <= seen, sorted(set(ids) - credit_ids - seen))
-        check("1440 no mark without a change", seen <= set(ids), sorted(seen - set(ids)))
         # Show changes lists every change.
         page.goto(edition, wait_until="domcontentloaded")
         settle(page)
@@ -195,7 +177,7 @@ with sync_playwright() as pw:
         after = page.evaluate(AT_LINE)
         check("1440 switch to the authors' paper keeps the paragraph", after.split("|")[0] == str(want["authors_lines"][0][0]),
               f"{before!r} -> {after!r}, wanted line {want['authors_lines'][0][0]}")
-        check("1440 the authors' paper carries no change marks", page.locator("[data-change], [data-change-open]").count() == 0)
+        check("1440 the authors' Text has no editorial marks", page.locator(TEXT_CHANGE_MARKS).count() == 0)
         authors_head = page.evaluate(HEAD).replace("\u2019", "'")
         check("1440 the authors' paper keeps its own credit", short_credit not in authors_head and a.credit not in authors_head
               and "Paper and Lean by" in authors_head, authors_head[:300])
