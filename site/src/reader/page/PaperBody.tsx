@@ -83,6 +83,8 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const { stage, doc, structures, initial, topInset, inspected, statements, onReferenceLean } = props;
   const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
+  // The first render's parts, fixed for the life of the paper.
+  const [firstParts] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
   const renderedRef = useRef(rendered);
@@ -365,6 +367,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           stage={stage}
           doc={doc}
           rendered={rendered.has(part.index)}
+          placedLater={!firstParts.has(part.index)}
           structures={structures}
           lit={!!part.anchor && part.anchor === inspected}
           statements={statements}
@@ -414,13 +417,15 @@ interface PartProps {
   stage: Stage;
   doc: PreparedDocument;
   rendered: boolean;
+  /** Typeset after the first render: its formulas are fitted as it is placed. */
+  placedLater: boolean;
   structures: Structures;
   lit: boolean;
   statements?: Statements;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, placedLater, structures, lit, statements, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   // Tones, hints and bracket-joined formula pieces go into the markup before it is placed, so a part
   // arriving on the page is written once and then left still.
@@ -445,17 +450,18 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
     if (!html || !rendered || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
-    // Its formulas are fitted as the part is placed, wherever it is, in the frame it first paints:
-    // a part typeset after the reader has passed it, or far ahead of them, would otherwise wait for
-    // the reader to come back, or change later while the page is meant to be still.
-    fitNow(textRef.current);
+    // A part typeset after the first render has its formulas fitted as it is placed, wherever it
+    // is, in the frame it first paints: one typeset after the reader has passed it would otherwise
+    // wait for the reader to come back. The first render's parts are fitted as they come near and
+    // in idle time, which keeps the first render light.
+    if (placedLater) fitNow(textRef.current);
     statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
       statements?.adopt(part.index, null);
       unmount();
       unmark();
     };
-  }, [html, rendered, statements, part.index]);
+  }, [html, rendered, placedLater, statements, part.index]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
   // The same height before and after the text arrives, so rendering a part far away moves nothing.
