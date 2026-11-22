@@ -1844,3 +1844,9 @@ html.is-reading {
 .outline__item a > * {
   overflow-wrap: anywhere;
 }
+
+/* The Lean column waits, undrawn but in place, until the alignment has named its rows
+   (RecordDock.tsx), so its list and body never move after they are shown. */
+.lean-page__scroll[data-waiting] {
+  visibility: hidden;
+}
