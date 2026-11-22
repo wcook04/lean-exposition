@@ -745,6 +745,12 @@ export function quoteOfDisplay(box: HTMLElement): string {
   return `<div class="math-display"${number ? ' data-number=""' : ""}>${display}${number}</div>`;
 }
 
+/** A display drawn, as it stands, past its column's edge (formula or number). */
+function overflowsColumn(box: HTMLElement): boolean {
+  const math = mathOf(box);
+  return Math.max(formulaExtent(box), math ? math.scrollWidth : 0) > box.clientWidth + 1;
+}
+
 /** Displays fitted at least once, across mounts. */
 const widthsSeen = new WeakSet<HTMLElement>();
 
@@ -773,7 +779,11 @@ export function markWideMaths(root: HTMLElement): () => void {
   if (!boxes.length) return () => {};
   // Until it is first fitted a display is hidden, so a formula wider than its column is never
   // seen cut off by the column's edge before the fitter has shrunk or broken it.
-  for (const box of boxes) if (!widthsSeen.has(box) && box.dataset.unfitted === undefined) box.dataset.unfitted = "";
+  // Only a display wider than its column is hidden: one that already fits is shown as it is, and
+  // fitting it later writes nothing, so a display that needs no change never changes the page.
+  // (All the widths are read before any is written, in one layout.)
+  const wide = boxes.filter((box) => !widthsSeen.has(box) && box.dataset.unfitted === undefined && overflowsColumn(box));
+  for (const box of wide) box.dataset.unfitted = "";
   const cues = new Map<HTMLElement, HTMLElement>();
   const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
   let live = true;
@@ -862,7 +872,18 @@ export function markWideMaths(root: HTMLElement): () => void {
           // scrollMargin reaches the same way through a scrolling column or sheet.
           { rootMargin: FIT_MARGIN, scrollMargin: FIT_MARGIN },
         );
-  boxes.forEach((box) => (near ? near.observe(box) : fit(box)));
+  // The displays on the first screen are fitted now, before the page paints (this runs in a layout
+  // effect), so nothing about them changes once it is shown; the rest are fitted as they come near.
+  const screen = typeof window === "undefined" ? 0 : window.innerHeight;
+  for (const box of boxes) {
+    if (!near) {
+      fit(box);
+      continue;
+    }
+    const r = box.getBoundingClientRect();
+    if (r.height > 0 && r.bottom > 0 && r.top < screen) fit(box);
+    else near.observe(box);
+  }
   fitters.set(root, (more) => {
     for (const box of boxes) {
       if (fitted.has(box)) continue;

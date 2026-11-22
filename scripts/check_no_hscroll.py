@@ -187,6 +187,7 @@ def main() -> int:
                     expand.scroll_into_view_if_needed()
                     expand.click()
                     page.wait_for_selector("dialog.modal--formula[open]", timeout=5000)
+                    page.wait_for_timeout(400)
                     inside = page.evaluate("""() => { const d = document.querySelector('dialog.modal--formula[open]'); const m = d.querySelector('.math-display');
                       const sideways = [...d.querySelectorAll('*')].filter(e => ['auto', 'scroll'].includes(getComputedStyle(e).overflowX) && e.scrollWidth > e.clientWidth + 1).length;
                       const parts = [...m.querySelectorAll('.katex-html > .katex-base, .katex-tag, .tag')].map(p => p.getBoundingClientRect().right);
