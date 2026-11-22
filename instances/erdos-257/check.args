@@ -1,1 +1,1 @@
---phrase short.w.series --result theorem-a.1 --decl Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal --section 3.2
+--phrase short.w.convergence --result theorem-a.1 --decl Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal --section a-finite-mean-for-shifted-divisor-tails
