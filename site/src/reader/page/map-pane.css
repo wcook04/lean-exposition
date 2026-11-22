@@ -28,15 +28,6 @@
   grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
 }
 
-/* On a very wide window the pair stands in the middle, with a sidecar its graph can fill. */
-@media (min-width: 2100px) {
-  .reader.reader--follow,
-  .reader.reader--follow.reader--outlined {
-    grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1040px);
-    justify-content: center;
-  }
-}
-
 .reader__map {
   position: sticky;
   top: var(--topbar-h);
