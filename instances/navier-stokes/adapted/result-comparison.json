@@ -1,0 +1,2667 @@
+{
+ "schema": "adapted-result-comparison/2",
+ "paper": "navier-stokes",
+ "library_path": "/library/navier-stokes/",
+ "scope": "Each verdict describes the mathematical scope of its linked Lean declaration relative to the authors’ claim or to the part identified in the note. Verification status describes the formal statement named by that link.",
+ "sources": {
+  "authors": {
+   "repository": "https://github.com/tristanbuckmaster/navier-stokes",
+   "commit": "ad53419de079eb8f95f60313473374624a348546",
+   "paper": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/paper/finite-time-blow-up-navier-stokes.pdf"
+  },
+  "comparison": "The library’s existing per-declaration AI assessments, supplemented by edition review and the cited verification evidence."
+ },
+ "documents": {
+  "authors": {
+   "slot": "short",
+   "file": "../papers/short/paper.md",
+   "sha256": "5d25e1a5e18a3eac1e838410e4a1a6f640735375f4c26972bd1fddf844360e91",
+   "bytes": 354323
+  },
+  "adapted": {
+   "slot": "adapted",
+   "file": "paper.md",
+   "sha256": "8dac0a4a320dab40ad2d7f652268eb0a4825b12552d33b688af8b198bebe7030",
+   "bytes": 359925
+  }
+ },
+ "edition_note": "The adapted edition preserves the wording of all numbered statements.",
+ "additional_formalization": {
+  "verification_href": "https://github.com/wcook04/proof-reader/actions/runs/45023118802",
+  "supporting_comparator": {
+   "declaration": "NavierStokes.conditional_main",
+   "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/MainTheorems.lean#L100",
+   "note": "The formal profile premise or the certificate conditions imply the whole-space and torus nonexistence conclusions."
+  }
+ },
+ "results": [
+  {
+   "key": "theorem-1.1",
+   "title": "Theorem 1.1",
+   "authors": {
+    "start_byte": 7477,
+    "end_byte": 8770,
+    "href": "./?l=b7477-8770",
+    "sha256": "7befc1a2cb7bb8811cee866418675109e5b6c56a8ceb8f347880501d493df12b"
+   },
+   "adapted": {
+    "start_byte": 8047,
+    "end_byte": 9340,
+    "href": "adapted/?l=b8047-9340",
+    "sha256": "7befc1a2cb7bb8811cee866418675109e5b6c56a8ceb8f347880501d493df12b"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The paper constructs a smooth finite-time trajectory with (1.6); the formal conclusion instead gives, for every positive viscosity, compact smooth solenoidal data admitting no global smooth solution with one uniform kinetic-energy bound. The premise includes second-derivative and pressure-gradient decay, and the trajectory and its rate are absent from this conclusion.",
+     "lean": [
+      {
+       "declaration": "Breakdown.breakdownOnSpace_of_profile",
+       "module": "Breakdown.Uniqueness.Space",
+       "kind": "theorem",
+       "start_line": 24,
+       "end_line": 26,
+       "href": "lean/?m=Breakdown.Uniqueness.Space&d=Breakdown.breakdownOnSpace_of_profile"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The paper constructs the periodic trajectory and estimates (1.7); the formal conclusion gives, for every positive viscosity, smooth periodic solenoidal data admitting no global smooth solution with periodic velocity, with no periodicity restriction on its pressure. The premise includes additional profile decay, while the rate and the local comparison on B₁/₁₆ are absent from this conclusion.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.breakdownOnTorus_of_profile",
+       "module": "Breakdown.Torus.Main",
+       "kind": "theorem",
+       "start_line": 69,
+       "end_line": 112,
+       "href": "lean/?m=Breakdown.Torus.Main&d=Breakdown.Periodic.breakdownOnTorus_of_profile"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.theorem_1_1_space",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/MainTheorems.lean#L47",
+    "status": "proved",
+    "comparator_checked": true,
+    "note": "The companion constructs one smooth finite-energy whole-space solution with the two-sided rate and the physical error in (1.6), together with uniqueness and noncontinuation. Its profile premise explicitly requires velocity derivative decay through order two and pressure-gradient decay. The quantitative torus trajectory remains open."
+   }
+  },
+  {
+   "key": "remark-1.2",
+   "title": "Remark 1.2",
+   "authors": {
+    "start_byte": 10202,
+    "end_byte": 10975,
+    "href": "./?l=b10202-10975",
+    "sha256": "ff7c36cf8cc51b6a20085a1bc67fdc40ed85d36f046f537c5864503634bbb966"
+   },
+   "adapted": {
+    "start_byte": 10781,
+    "end_byte": 11554,
+    "href": "adapted/?l=b10781-11554",
+    "sha256": "ff7c36cf8cc51b6a20085a1bc67fdc40ed85d36f046f537c5864503634bbb966"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "unknown",
+     "note": "The paper derives first and second derivative decay from the velocity bound and the smooth equations by local parabolic estimates. The library’s pinned Lean profile predicate assumes derivative decay. The comparison has no checked declaration deriving these bounds from the paper’s weaker premise.",
+     "lean": []
+    }
+   ]
+  },
+  {
+   "key": "proposition-2.1",
+   "title": "Proposition 2.1",
+   "authors": {
+    "start_byte": 44471,
+    "end_byte": 45221,
+    "href": "./?l=b44471-45221",
+    "sha256": "ea86beb69b4f172dd85614802a437b09f23fc7641b58aae6aecb694cbfe68508"
+   },
+   "adapted": {
+    "start_byte": 46984,
+    "end_byte": 47734,
+    "href": "adapted/?l=b46984-47734",
+    "sha256": "ea86beb69b4f172dd85614802a437b09f23fc7641b58aae6aecb694cbfe68508"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "weaker",
+     "note": "For every prescribed dense class of initial data and every ε>0, the formal conclusion chooses one mild solution whose datum is within ε of W(0) and whose dilated error is at most C(1−t)^κ for some κ>0. Proposition 2.1 also chooses a fixed finite-dimensional correction space and treats every sufficiently close datum; that whole family is absent from this conclusion.",
+     "lean": [
+      {
+       "declaration": "Breakdown.TransferHolds",
+       "module": "Breakdown.Base.Framework",
+       "kind": "def",
+       "start_line": 66,
+       "end_line": 73,
+       "href": "lean/?m=Breakdown.Base.Framework&d=Breakdown.TransferHolds"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "For every prescribed dense class of initial data and every ε>0, the formal conclusion chooses one mild solution whose datum is within ε of W(0) and whose dilated error is at most C(1−t)^κ for some κ>0. Proposition 2.1 also chooses a fixed finite-dimensional correction space and treats every sufficiently close datum; that whole family is absent from this conclusion.",
+     "lean": [
+      {
+       "declaration": "Breakdown.transferHolds_of_dichotomy",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 54,
+       "end_line": 55,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.transferHolds_of_dichotomy"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_2_1_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L72",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target requires a single finite-dimensional correction space that works for each prescribed nearby datum."
+   }
+  },
+  {
+   "key": "proposition-2.2",
+   "title": "Proposition 2.2",
+   "authors": {
+    "start_byte": 45429,
+    "end_byte": 45951,
+    "href": "./?l=b45429-45951",
+    "sha256": "fa4e5596e1e7c7519d5383493bcc9c56ae87d45b6f025d97277b9f9de9cfb0a6"
+   },
+   "adapted": {
+    "start_byte": 48175,
+    "end_byte": 48697,
+    "href": "adapted/?l=b48175-48697",
+    "sha256": "fa4e5596e1e7c7519d5383493bcc9c56ae87d45b6f025d97277b9f9de9cfb0a6"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "weaker",
+     "note": "The conclusion supplies a smooth periodic solenoidal datum and a mild trajectory whose inhomogeneous H¹ norm is unbounded on [0,T), for some T>0. Proposition 2.2 additionally gives T≤1, the two-sided rate, and local convergence to the profile.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.TorusBlowup",
+       "module": "Breakdown.Torus.StatementsSmooth",
+       "kind": "def",
+       "start_line": 44,
+       "end_line": 47,
+       "href": "lean/?m=Breakdown.Torus.StatementsSmooth&d=Breakdown.Periodic.TorusBlowup"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "The conclusion supplies a smooth periodic solenoidal datum and a mild trajectory whose inhomogeneous H¹ norm is unbounded on [0,T), for some T>0. Proposition 2.2 additionally gives T≤1, the two-sided rate, and local convergence to the profile.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.torusBlowup_of_parts",
+       "module": "Breakdown.Torus.Assembly",
+       "kind": "theorem",
+       "start_line": 188,
+       "end_line": 432,
+       "href": "lean/?m=Breakdown.Torus.Assembly&d=Breakdown.Periodic.torusBlowup_of_parts"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_2_2_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L95",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target keeps the finite time, both rate bounds and the local profile comparison on the unit torus."
+   }
+  },
+  {
+   "key": "lemma-2.3",
+   "title": "Lemma 2.3",
+   "authors": {
+    "start_byte": 46358,
+    "end_byte": 46766,
+    "href": "./?l=b46358-46766",
+    "sha256": "285623440ee56aa8d3b7945595677ce05044099d34fb6495b2a25b3199c3d168"
+   },
+   "adapted": {
+    "start_byte": 49441,
+    "end_byte": 49849,
+    "href": "adapted/?l=b49441-49849",
+    "sha256": "285623440ee56aa8d3b7945595677ce05044099d34fb6495b2a25b3199c3d168"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "weaker",
+     "note": "From compact smooth solenoidal initial data, a mild curve on [0,T] has smooth velocity and pressure representatives, with bounded kinetic energy and gradient norm on that interval. Lemma 2.3 additionally states energy nonincrease throughout the lifespan and a periodic assertion.",
+     "lean": [
+      {
+       "declaration": "Breakdown.MildRegular",
+       "module": "Breakdown.Uniqueness.Basic",
+       "kind": "def",
+       "start_line": 37,
+       "end_line": 42,
+       "href": "lean/?m=Breakdown.Uniqueness.Basic&d=Breakdown.MildRegular"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "From compact smooth solenoidal initial data, a mild curve on [0,T] has smooth velocity and pressure representatives, with bounded kinetic energy and gradient norm on that interval. Lemma 2.3 additionally states energy nonincrease throughout the lifespan and a periodic assertion.",
+     "lean": [
+      {
+       "declaration": "Breakdown.mildRegular_realization",
+       "module": "Breakdown.Uniqueness.Space",
+       "kind": "theorem",
+       "start_line": 19,
+       "end_line": 22,
+       "href": "lean/?m=Breakdown.Uniqueness.Space&d=Breakdown.mildRegular_realization"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_2_3_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L121",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target covers both domains and requires energy nonincrease and one smooth representative on the whole interval."
+   }
+  },
+  {
+   "key": "lemma-3.1",
+   "title": "Lemma 3.1",
+   "authors": {
+    "start_byte": 50925,
+    "end_byte": 51654,
+    "href": "./?l=b50925-51654",
+    "sha256": "7c3630691f4e8ec82f0c26621de104ede5e8f1b9a32c9bffe0f417b0ebbe09ef"
+   },
+   "adapted": {
+    "start_byte": 54904,
+    "end_byte": 55633,
+    "href": "adapted/?l=b54904-55633",
+    "sha256": "7c3630691f4e8ec82f0c26621de104ede5e8f1b9a32c9bffe0f417b0ebbe09ef"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "weaker",
+     "note": "For all τ>0 and u,v∈X, the symmetric bilinear term is bounded by Cτ⁻³⁄⁴‖u‖X‖v‖X. This is (3.7), while Lemma 3.1 also states a projected-heat estimate for arbitrary L³⁄² forcing.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Freq.BilinBound",
+       "module": "Breakdown.FreqTr.Statements",
+       "kind": "def",
+       "start_line": 100,
+       "end_line": 101,
+       "href": "lean/?m=Breakdown.FreqTr.Statements&d=Breakdown.Freq.BilinBound"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "The symmetric bilinear term exists for every positive heat time and satisfies Cτ⁻³⁄⁴‖u‖X‖v‖X. This gives the bilinear conclusion of Lemma 3.1 and the full inequality (3.7).",
+     "lean": [
+      {
+       "declaration": "Breakdown.Freq.bilin_holds",
+       "module": "Breakdown.FreqTr.Realization",
+       "kind": "theorem",
+       "start_line": 95,
+       "end_line": 95,
+       "href": "lean/?m=Breakdown.FreqTr.Realization&d=Breakdown.Freq.bilin_holds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_1_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L149",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target includes the projected heat response to general forcing in $L^{3/2}$."
+   }
+  },
+  {
+   "key": "lemma-3.2",
+   "title": "Lemma 3.2",
+   "authors": {
+    "start_byte": 55230,
+    "end_byte": 55343,
+    "href": "./?l=b55230-55343",
+    "sha256": "19332aa0b7680e7d3bc306b7d8da6e8eae350c6575040c95ee5c0209d7e9a5c0"
+   },
+   "adapted": {
+    "start_byte": 59218,
+    "end_byte": 59331,
+    "href": "adapted/?l=b59218-59331",
+    "sha256": "19332aa0b7680e7d3bc306b7d8da6e8eae350c6575040c95ee5c0209d7e9a5c0"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "For positive heat time, the operator in the second input is compact when its first input is a compact smooth solenoidal field in the dense test class. Lemma 3.2 allows every first input in X; extending to that class uses density and continuity in operator norm.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Freq.BilinCompact",
+       "module": "Breakdown.FreqTr.Statements",
+       "kind": "def",
+       "start_line": 115,
+       "end_line": 116,
+       "href": "lean/?m=Breakdown.FreqTr.Statements&d=Breakdown.Freq.BilinCompact"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "For positive heat time, the operator in the second input is compact when its first input is a compact smooth solenoidal field in the dense test class. Lemma 3.2 allows every first input in X; extending to that class uses density and continuity in operator norm.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Freq.bilinCompact_holds",
+       "module": "Breakdown.FreqTr.Realization",
+       "kind": "theorem",
+       "start_line": 116,
+       "end_line": 119,
+       "href": "lean/?m=Breakdown.FreqTr.Realization&d=Breakdown.Freq.bilinCompact_holds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_2",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L33",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "Compactness is proved for the represented bilinear operator."
+   }
+  },
+  {
+   "key": "lemma-3.3",
+   "title": "Lemma 3.3",
+   "authors": {
+    "start_byte": 58232,
+    "end_byte": 58490,
+    "href": "./?l=b58232-58490",
+    "sha256": "34fddace5aa27118f0bf6e04f1e0e578976861ad6c9e3541ba11e5f47e2833cf"
+   },
+   "adapted": {
+    "start_byte": 62173,
+    "end_byte": 62431,
+    "href": "adapted/?l=b62173-62431",
+    "sha256": "34fddace5aa27118f0bf6e04f1e0e578976861ad6c9e3541ba11e5f47e2833cf"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "stronger",
+     "note": "For two continuous curves on any compact interval, the Duhamel integral exists and is continuous up to both endpoints. The formal statement adds the estimate 4C_K(t−a)¹⁄⁴MN when t−a≤1, with M and N bounds for the input curves.",
+     "lean": [
+      {
+       "declaration": "Breakdown.VarConstIntegralStatement",
+       "module": "Breakdown.Transfer.StatementsLocal",
+       "kind": "def",
+       "start_line": 9,
+       "end_line": 16,
+       "href": "lean/?m=Breakdown.Transfer.StatementsLocal&d=Breakdown.VarConstIntegralStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "stronger",
+     "note": "For two continuous curves on any compact interval, the Duhamel integral exists and is continuous up to both endpoints. The formal statement adds the estimate 4C_K(t−a)¹⁄⁴MN when t−a≤1, with M and N bounds for the input curves.",
+     "lean": [
+      {
+       "declaration": "Breakdown.varConstIntegral",
+       "module": "Breakdown.Transfer.VarConstIntegral",
+       "kind": "theorem",
+       "start_line": 168,
+       "end_line": 232,
+       "href": "lean/?m=Breakdown.Transfer.VarConstIntegral&d=Breakdown.varConstIntegral"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_3",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L50",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof obtains the required suprema from the abstract heat and bilinear hypotheses."
+   }
+  },
+  {
+   "key": "lemma-3.4",
+   "title": "Lemma 3.4",
+   "authors": {
+    "start_byte": 58650,
+    "end_byte": 58974,
+    "href": "./?l=b58650-58974",
+    "sha256": "05669ebadb705d6acd12aa91a060436c198e31879d305c34ed335e364b7cb3bb"
+   },
+   "adapted": {
+    "start_byte": 62591,
+    "end_byte": 62915,
+    "href": "adapted/?l=b62591-62915",
+    "sha256": "05669ebadb705d6acd12aa91a060436c198e31879d305c34ed335e364b7cb3bb"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "lean": [
+      {
+       "declaration": "Breakdown.MonodromyStatement",
+       "module": "Breakdown.Transfer.StatementsFrame",
+       "kind": "def",
+       "start_line": 71,
+       "end_line": 88,
+       "href": "lean/?m=Breakdown.Transfer.StatementsFrame&d=Breakdown.MonodromyStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "lean": [
+      {
+       "declaration": "Breakdown.monodromy",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 47,
+       "end_line": 47,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.monodromy"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_4_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L168",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target asks for inversion over every finite interval, without a smallness hypothesis on the operator norm."
+   }
+  },
+  {
+   "key": "lemma-3.5",
+   "title": "Lemma 3.5",
+   "authors": {
+    "start_byte": 59112,
+    "end_byte": 59482,
+    "href": "./?l=b59112-59482",
+    "sha256": "5a77ea5fd3843326cb3839ef8f7b4781686a33360050399f5f91a58ad4050a15"
+   },
+   "adapted": {
+    "start_byte": 63053,
+    "end_byte": 63423,
+    "href": "adapted/?l=b63053-63423",
+    "sha256": "5a77ea5fd3843326cb3839ef8f7b4781686a33360050399f5f91a58ad4050a15"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The quadratic mild equation can be restarted from any intermediate time by the heat semigroup law and adjacent-interval integration. Lemma 3.5 and (3.13) allow independent continuous factors f and h in the forcing, a larger class than the quadratic choice f=h=u.",
+     "lean": [
+      {
+       "declaration": "Breakdown.RestrictStatement",
+       "module": "Breakdown.Transfer.StatementsLocal",
+       "kind": "def",
+       "start_line": 27,
+       "end_line": 30,
+       "href": "lean/?m=Breakdown.Transfer.StatementsLocal&d=Breakdown.RestrictStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The quadratic mild equation can be restarted from any intermediate time by the heat semigroup law and adjacent-interval integration. Lemma 3.5 and (3.13) allow independent continuous factors f and h in the forcing, a larger class than the quadratic choice f=h=u.",
+     "lean": [
+      {
+       "declaration": "Breakdown.restrict",
+       "module": "Breakdown.Transfer.Restrict",
+       "kind": "theorem",
+       "start_line": 28,
+       "end_line": 36,
+       "href": "lean/?m=Breakdown.Transfer.Restrict&d=Breakdown.restrict"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "Two mild solutions with the same initial value agree on their entire common interval, whether that interval is closed or half-open. This is the uniqueness part of Lemma 3.5; restarting is proved separately.",
+     "lean": [
+      {
+       "declaration": "Breakdown.UniqueStatement",
+       "module": "Breakdown.Transfer.StatementsLocal",
+       "kind": "def",
+       "start_line": 41,
+       "end_line": 45,
+       "href": "lean/?m=Breakdown.Transfer.StatementsLocal&d=Breakdown.UniqueStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "Two mild solutions with the same initial value agree on their entire common interval, whether that interval is closed or half-open. This is the uniqueness part of Lemma 3.5; restarting is proved separately.",
+     "lean": [
+      {
+       "declaration": "Breakdown.mildUnique",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 26,
+       "end_line": 26,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.mildUnique"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_5",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L65",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof gives the restriction identity with independent inputs and uniqueness for the quadratic mild problem."
+   }
+  },
+  {
+   "key": "lemma-3.6",
+   "title": "Lemma 3.6",
+   "authors": {
+    "start_byte": 60231,
+    "end_byte": 60819,
+    "href": "./?l=b60231-60819",
+    "sha256": "dd5c2b1388be45f19f639a5232326d063fe4425d938231e63aeda3753a065516"
+   },
+   "adapted": {
+    "start_byte": 64581,
+    "end_byte": 65169,
+    "href": "adapted/?l=b64581-65169",
+    "sha256": "dd5c2b1388be45f19f639a5232326d063fe4425d938231e63aeda3753a065516"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The formal weak-to-mild implication assumes smooth decaying slices, continuity in X, and L²-continuous slice differences in addition to the weak test identity. Lemma 3.6 assumes only a continuous X-valued curve and the stated differentiability of its test pairings.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Freq.MildOfWeak",
+       "module": "Breakdown.FreqTr.Statements",
+       "kind": "def",
+       "start_line": 151,
+       "end_line": 152,
+       "href": "lean/?m=Breakdown.FreqTr.Statements&d=Breakdown.Freq.MildOfWeak"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The formal weak-to-mild implication assumes smooth decaying slices, continuity in X, and L²-continuous slice differences in addition to the weak test identity. Lemma 3.6 assumes only a continuous X-valued curve and the stated differentiability of its test pairings.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Freq.mild_holds",
+       "module": "Breakdown.FreqTr.Realization",
+       "kind": "theorem",
+       "start_line": 125,
+       "end_line": 128,
+       "href": "lean/?m=Breakdown.FreqTr.Realization&d=Breakdown.Freq.mild_holds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_6_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L185",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target uses the paper’s continuous homogeneous $H^1$ weak-solution class."
+   }
+  },
+  {
+   "key": "lemma-3.7",
+   "title": "Lemma 3.7",
+   "authors": {
+    "start_byte": 64066,
+    "end_byte": 65454,
+    "href": "./?l=b64066-65454",
+    "sha256": "bb0a4f800c7ffcc9c0fb2c482ea6fd3729ce65c073cb84842add96f7d1c6a237"
+   },
+   "adapted": {
+    "start_byte": 68525,
+    "end_byte": 69913,
+    "href": "adapted/?l=b68525-69913",
+    "sha256": "bb0a4f800c7ffcc9c0fb2c482ea6fd3729ce65c073cb84842add96f7d1c6a237"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The bilinear smoothing bound is Cτ⁻³⁄⁴ in the inhomogeneous unit-torus norm, for 0<τ≤1. Lemma 3.7 and (3.20) use mean-zero homogeneous spaces at every spatial period and all positive times.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.KernelSharpBound",
+       "module": "Breakdown.Torus.StatementsAnalysis",
+       "kind": "def",
+       "start_line": 9,
+       "end_line": 10,
+       "href": "lean/?m=Breakdown.Torus.StatementsAnalysis&d=Breakdown.Periodic.KernelSharpBound"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The bilinear smoothing bound is Cτ⁻³⁄⁴ in the inhomogeneous unit-torus norm, for 0<τ≤1. Lemma 3.7 and (3.20) use mean-zero homogeneous spaces at every spatial period and all positive times.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.kernelSharpBound",
+       "module": "Breakdown.Torus.KernelBound",
+       "kind": "theorem",
+       "start_line": 364,
+       "end_line": 371,
+       "href": "lean/?m=Breakdown.Torus.KernelBound&d=Breakdown.Periodic.kernelSharpBound"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_3_7_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L204",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target includes all periods and lags, using the mean-zero homogeneous norm."
+   }
+  },
+  {
+   "key": "proposition-4.1",
+   "title": "Proposition 4.1",
+   "authors": {
+    "start_byte": 67560,
+    "end_byte": 67961,
+    "href": "./?l=b67560-67961",
+    "sha256": "86c1de5590cabc3b4a5b68a4327e3b9f51cefa0373ceccc7b03bcd64d4823e35"
+   },
+   "adapted": {
+    "start_byte": 72282,
+    "end_byte": 72683,
+    "href": "adapted/?l=b72282-72683",
+    "sha256": "86c1de5590cabc3b4a5b68a4327e3b9f51cefa0373ceccc7b03bcd64d4823e35"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "A smooth nonzero twisted-periodic profile, with the additional second-derivative and pressure-gradient decay, determines a continuous nonzero recurrent orbit in the energy space. Proposition 4.1 states the resulting properties directly for the physical velocity on [0,1).",
+     "lean": [
+      {
+       "declaration": "Breakdown.EmbeddedProfileOrbit",
+       "module": "Breakdown.Profile.StatementsEmbed",
+       "kind": "def",
+       "start_line": 10,
+       "end_line": 16,
+       "href": "lean/?m=Breakdown.Profile.StatementsEmbed&d=Breakdown.EmbeddedProfileOrbit"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "A smooth nonzero twisted-periodic profile, with the additional second-derivative and pressure-gradient decay, determines a continuous nonzero recurrent orbit in the energy space. Proposition 4.1 states the resulting properties directly for the physical velocity on [0,1).",
+     "lean": [
+      {
+       "declaration": "Breakdown.embeddedProfileOrbit_holds",
+       "module": "Breakdown.Profile.Orbit",
+       "kind": "theorem",
+       "start_line": 35,
+       "end_line": 37,
+       "href": "lean/?m=Breakdown.Profile.Orbit&d=Breakdown.embeddedProfileOrbit_holds"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "A smooth profile with the additional derivative and pressure-gradient decay and continuous energy-space slices gives a mild physical curve on each compact interval [0,T], 0<T<1. Proposition 4.1 also bundles nonvanishing and discrete self-similarity on [0,1).",
+     "lean": [
+      {
+       "declaration": "Breakdown.PhysicalMild",
+       "module": "Breakdown.Profile.StatementsPhysical",
+       "kind": "def",
+       "start_line": 66,
+       "end_line": 71,
+       "href": "lean/?m=Breakdown.Profile.StatementsPhysical&d=Breakdown.PhysicalMild"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "A smooth profile with the additional derivative and pressure-gradient decay and continuous energy-space slices gives a mild physical curve on each compact interval [0,T], 0<T<1. Proposition 4.1 also bundles nonvanishing and discrete self-similarity on [0,1).",
+     "lean": [
+      {
+       "declaration": "Breakdown.physicalMild_unconditional",
+       "module": "Breakdown.Profile.Orbit",
+       "kind": "theorem",
+       "start_line": 22,
+       "end_line": 30,
+       "href": "lean/?m=Breakdown.Profile.Orbit&d=Breakdown.physicalMild_unconditional"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_4_1_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L234",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target asks for the velocity with the recurrence specified by the printed profile."
+   }
+  },
+  {
+   "key": "lemma-4.2",
+   "title": "Lemma 4.2",
+   "authors": {
+    "start_byte": 69363,
+    "end_byte": 69689,
+    "href": "./?l=b69363-69689",
+    "sha256": "d7a49e82688ea40e1cd6e71d6967514f9a25bb40ab9689437eb7ad00355952be"
+   },
+   "adapted": {
+    "start_byte": 74096,
+    "end_byte": 74422,
+    "href": "adapted/?l=b74096-74422",
+    "sha256": "d7a49e82688ea40e1cd6e71d6967514f9a25bb40ab9689437eb7ad00355952be"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The rescaled profile intervals are mild, have matching dilated endpoints, recur under the twist every k intervals, and have a uniform upper bound inherited from the similarity orbit. The two-sided physical rate in Lemma 4.2 also uses the lower orbit bound and dilation law.",
+     "lean": [
+      {
+       "declaration": "Breakdown.ProfilePieceStatement",
+       "module": "Breakdown.Transfer.StatementsFrame",
+       "kind": "def",
+       "start_line": 33,
+       "end_line": 44,
+       "href": "lean/?m=Breakdown.Transfer.StatementsFrame&d=Breakdown.ProfilePieceStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The rescaled profile intervals are mild, have matching dilated endpoints, recur under the twist every k intervals, and have a uniform upper bound inherited from the similarity orbit. The two-sided physical rate in Lemma 4.2 also uses the lower orbit bound and dilation law.",
+     "lean": [
+      {
+       "declaration": "Breakdown.profilePiece",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 43,
+       "end_line": 43,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.profilePiece"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_4_2_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L248",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target keeps the physical recurrence and both sides of the physical norm estimate."
+   }
+  },
+  {
+   "key": "proposition-4.3",
+   "title": "Proposition 4.3",
+   "authors": {
+    "start_byte": 72658,
+    "end_byte": 73144,
+    "href": "./?l=b72658-73144",
+    "sha256": "61e739c7ddf4846cd07ad257bf1cf84405b8b7b7fd2a450f813ed0793bc91308"
+   },
+   "adapted": {
+    "start_byte": 77572,
+    "end_byte": 78058,
+    "href": "adapted/?l=b77572-78058",
+    "sha256": "61e739c7ddf4846cd07ad257bf1cf84405b8b7b7fd2a450f813ed0793bc91308"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The right inverse acts on bounded sequences of short rescaled time intervals, returns an exceptional coordinate in a fixed finite-dimensional space, and lifts its initial correction into the chosen dense class. Proposition 4.3 writes the corresponding problem as one trajectory in Cκ([0,1);X).",
+     "lean": [
+      {
+       "declaration": "Breakdown.StepDataStatement",
+       "module": "Breakdown.Transfer.StatementsFrame",
+       "kind": "def",
+       "start_line": 55,
+       "end_line": 69,
+       "href": "lean/?m=Breakdown.Transfer.StatementsFrame&d=Breakdown.StepDataStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The right inverse acts on bounded sequences of short rescaled time intervals, returns an exceptional coordinate in a fixed finite-dimensional space, and lifts its initial correction into the chosen dense class. Proposition 4.3 writes the corresponding problem as one trajectory in Cκ([0,1);X).",
+     "lean": [
+      {
+       "declaration": "Breakdown.stepData",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 51,
+       "end_line": 52,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.stepData"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "Under a finite-dimensional spectral splitting, invertibility of each short-interval operator, and a lift preserving the exceptional projection, a bounded right inverse solves the weighted sequence equations. Proposition 4.3 presents the result on the global Cκ trajectory space.",
+     "lean": [
+      {
+       "declaration": "Breakdown.PeriodicInverseStatement",
+       "module": "Breakdown.Transfer.StatementsAbstract",
+       "kind": "def",
+       "start_line": 19,
+       "end_line": 42,
+       "href": "lean/?m=Breakdown.Transfer.StatementsAbstract&d=Breakdown.PeriodicInverseStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "Under a finite-dimensional spectral splitting, invertibility of each short-interval operator, and a lift preserving the exceptional projection, a bounded right inverse solves the weighted sequence equations. Proposition 4.3 presents the result on the global Cκ trajectory space.",
+     "lean": [
+      {
+       "declaration": "Breakdown.periodicInverse",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 49,
+       "end_line": 49,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.periodicInverse"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For a finite-rank projection and a dense linear class, there is a bounded lift J into that class with PᵤJ=Pᵤ. Restricting J to the exceptional range gives the compact-data correction space used in Proposition 4.3.",
+     "lean": [
+      {
+       "declaration": "Breakdown.SectionStatement",
+       "module": "Breakdown.Transfer.StatementsAbstract",
+       "kind": "def",
+       "start_line": 56,
+       "end_line": 60,
+       "href": "lean/?m=Breakdown.Transfer.StatementsAbstract&d=Breakdown.SectionStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For a finite-rank projection and a dense linear class, there is a bounded lift J into that class with PᵤJ=Pᵤ. Restricting J to the exceptional range gives the compact-data correction space used in Proposition 4.3.",
+     "lean": [
+      {
+       "declaration": "Breakdown.exists_section",
+       "module": "Breakdown.Transfer.Section",
+       "kind": "theorem",
+       "start_line": 31,
+       "end_line": 59,
+       "href": "lean/?m=Breakdown.Transfer.Section&d=Breakdown.exists_section"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_4_3_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L264",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target is a bounded inverse on a single weighted time trajectory."
+   }
+  },
+  {
+   "key": "lemma-4.4",
+   "title": "Lemma 4.4",
+   "authors": {
+    "start_byte": 74267,
+    "end_byte": 74437,
+    "href": "./?l=b74267-74437",
+    "sha256": "5f503af4b62bfab2f29812196d278895dc178fbfcbb2d904f036a58cfd34df84"
+   },
+   "adapted": {
+    "start_byte": 79181,
+    "end_byte": 79351,
+    "href": "adapted/?l=b79181-79351",
+    "sha256": "5f503af4b62bfab2f29812196d278895dc178fbfcbb2d904f036a58cfd34df84"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "lean": [
+      {
+       "declaration": "Breakdown.MonodromyStatement",
+       "module": "Breakdown.Transfer.StatementsFrame",
+       "kind": "def",
+       "start_line": 71,
+       "end_line": 88,
+       "href": "lean/?m=Breakdown.Transfer.StatementsFrame&d=Breakdown.MonodromyStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "lean": [
+      {
+       "declaration": "Breakdown.monodromy",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 47,
+       "end_line": 47,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.monodromy"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_4_4_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L286",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The open statement uses the paper’s Volterra operator over one full period."
+   }
+  },
+  {
+   "key": "lemma-4.5",
+   "title": "Lemma 4.5",
+   "authors": {
+    "start_byte": 75594,
+    "end_byte": 76095,
+    "href": "./?l=b75594-76095",
+    "sha256": "184b40b7e64951cccf59d5079998d7442e69b2f17428a98bf0676a66ce740e1d"
+   },
+   "adapted": {
+    "start_byte": 80527,
+    "end_byte": 81028,
+    "href": "adapted/?l=b80527-81028",
+    "sha256": "184b40b7e64951cccf59d5079998d7442e69b2f17428a98bf0676a66ce740e1d"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "stronger",
+     "note": "For a compact perturbation of an operator of norm at most b≤α<β, the spectral conclusion gives a commuting finite-rank projection and geometric bounds with α<r₁<r₂<β, together with surjectivity on the exceptional range. Taking α=b=exp(−S/4), β=1 and r₁<Θ<r₂ gives the two convergent series in (4.11).",
+     "lean": [
+      {
+       "declaration": "Breakdown.DichotomyHolds",
+       "module": "Breakdown.Base.Framework",
+       "kind": "def",
+       "start_line": 75,
+       "end_line": 85,
+       "href": "lean/?m=Breakdown.Base.Framework&d=Breakdown.DichotomyHolds"
+      }
+     ]
+    },
+    {
+     "verdict": "stronger",
+     "note": "For a compact perturbation of an operator of norm at most b≤α<β, the spectral conclusion gives a commuting finite-rank projection and geometric bounds with α<r₁<r₂<β, together with surjectivity on the exceptional range. Taking α=b=exp(−S/4), β=1 and r₁<Θ<r₂ gives the two convergent series in (4.11).",
+     "lean": [
+      {
+       "declaration": "Breakdown.dichotomyHolds",
+       "module": "Breakdown.Spectral.RealDichotomy",
+       "kind": "theorem",
+       "start_line": 151,
+       "end_line": 153,
+       "href": "lean/?m=Breakdown.Spectral.RealDichotomy&d=Breakdown.dichotomyHolds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_4_5",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L193",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The formal conclusion gives geometric bounds for the split operator. The paper expresses them as convergence of two series at an intermediate weight."
+   }
+  },
+  {
+   "key": "lemma-4.6",
+   "title": "Lemma 4.6",
+   "authors": {
+    "start_byte": 78181,
+    "end_byte": 79181,
+    "href": "./?l=b78181-79181",
+    "sha256": "77fb539025d114ab43e5a4d15a24e4dd930443a1755b02177c7a613afce84759"
+   },
+   "adapted": {
+    "start_byte": 83806,
+    "end_byte": 84806,
+    "href": "adapted/?l=b83806-84806",
+    "sha256": "77fb539025d114ab43e5a4d15a24e4dd930443a1755b02177c7a613afce84759"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The weighted recurrence is xₙ₊₁=θ⁻¹(Mxₙ+cₙ). Display (4.14) writes the corresponding unweighted recurrence and also identifies its continuous-time trajectory and forcing.",
+     "lean": [
+      {
+       "declaration": "Breakdown.orbitSeq",
+       "module": "Breakdown.Transfer.StatementsDefs",
+       "kind": "def",
+       "start_line": 100,
+       "end_line": 103,
+       "href": "lean/?m=Breakdown.Transfer.StatementsDefs&d=Breakdown.orbitSeq"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_4_6_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L304",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target includes the passage to discrete time, forcing linearity and the weighted estimate."
+   }
+  },
+  {
+   "key": "lemma-4.7",
+   "title": "Lemma 4.7",
+   "authors": {
+    "start_byte": 86966,
+    "end_byte": 87679,
+    "href": "./?l=b86966-87679",
+    "sha256": "a8bbce9d826d48f54f01501d24e1316bbbcd891bb9a54d58f58c5fba078cb0dc"
+   },
+   "adapted": {
+    "start_byte": 92784,
+    "end_byte": 93497,
+    "href": "adapted/?l=b92784-93497",
+    "sha256": "a8bbce9d826d48f54f01501d24e1316bbbcd891bb9a54d58f58c5fba078cb0dc"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "On [0,T], the bilinear Duhamel operator is bounded by 4C_K T¹⁄⁴ for T≤1, and the free heat-evolution operator has norm at most one. Lemma 4.7 expresses different, global Cκ estimates on [0,1).",
+     "lean": [
+      {
+       "declaration": "Breakdown.PieceOperatorStatement",
+       "module": "Breakdown.Transfer.StatementsLocal",
+       "kind": "def",
+       "start_line": 18,
+       "end_line": 25,
+       "href": "lean/?m=Breakdown.Transfer.StatementsLocal&d=Breakdown.PieceOperatorStatement"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "On [0,T], the bilinear Duhamel operator is bounded by 4C_K T¹⁄⁴ for T≤1, and the free heat-evolution operator has norm at most one. Lemma 4.7 expresses different, global Cκ estimates on [0,1).",
+     "lean": [
+      {
+       "declaration": "Breakdown.pieceOperator",
+       "module": "Breakdown.Transfer.Exports",
+       "kind": "theorem",
+       "start_line": 24,
+       "end_line": 24,
+       "href": "lean/?m=Breakdown.Transfer.Exports&d=Breakdown.pieceOperator"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_4_7_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L340",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target keeps all three weighted estimates with the constant uniform in the underlying space and operators."
+   }
+  },
+  {
+   "key": "lemma-4.8",
+   "title": "Lemma 4.8",
+   "authors": {
+    "start_byte": 88323,
+    "end_byte": 89559,
+    "href": "./?l=b88323-89559",
+    "sha256": "543a92f4c8eeeca075a8edf1f4a113e08243fd92482e498dceba5037f89b52cf"
+   },
+   "adapted": {
+    "start_byte": 94141,
+    "end_byte": 95377,
+    "href": "adapted/?l=b94141-95377",
+    "sha256": "543a92f4c8eeeca075a8edf1f4a113e08243fd92482e498dceba5037f89b52cf"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "For normalized time intervals, a right inverse and 64‖R‖²C_K L¹⁄⁴(ρ+‖ξ‖)≤1 give exact mild intervals with matching endpoints. Both the datum correction and each normalized error are bounded by 2‖R‖(ρ+‖ξ‖), while Lemma 4.8 uses the Cκ norm of the combined forcing e^{tΔ}χ−Fᵃ.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.SeqPerturbation",
+       "module": "Breakdown.Torus.StatementsSteps",
+       "kind": "def",
+       "start_line": 91,
+       "end_line": 108,
+       "href": "lean/?m=Breakdown.Torus.StatementsSteps&d=Breakdown.Periodic.SeqPerturbation"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For normalized time intervals, a right inverse and 64‖R‖²C_K L¹⁄⁴(ρ+‖ξ‖)≤1 give exact mild intervals with matching endpoints. Both the datum correction and each normalized error are bounded by 2‖R‖(ρ+‖ξ‖), while Lemma 4.8 uses the Cκ norm of the combined forcing e^{tΔ}χ−Fᵃ.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.seqPerturbation",
+       "module": "Breakdown.Torus.SeqPerturbation",
+       "kind": "theorem",
+       "start_line": 140,
+       "end_line": 299,
+       "href": "lean/?m=Breakdown.Torus.SeqPerturbation&d=Breakdown.Periodic.seqPerturbation"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_4_8_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L361",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target is for a general small weighted residual on the full time interval."
+   }
+  },
+  {
+   "key": "lemma-5.1",
+   "title": "Lemma 5.1",
+   "authors": {
+    "start_byte": 91525,
+    "end_byte": 91956,
+    "href": "./?l=b91525-91956",
+    "sha256": "be74ee3d63d17acd473e9d7d2791a706dd0e9b4f26cc4ebfa82722f9579bf509"
+   },
+   "adapted": {
+    "start_byte": 97578,
+    "end_byte": 98009,
+    "href": "adapted/?l=b97578-98009",
+    "sha256": "be74ee3d63d17acd473e9d7d2791a706dd0e9b4f26cc4ebfa82722f9579bf509"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The smooth solenoidal cutoff has fixed support around the centre of the unit torus and agrees exactly with the physical profile on a fixed inner ball. Lemma 5.1 uses an arbitrary radius r and additionally gives explicit gradient-error and mass estimates.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.ApproxFieldProperties",
+       "module": "Breakdown.Torus.StatementsApprox",
+       "kind": "def",
+       "start_line": 51,
+       "end_line": 57,
+       "href": "lean/?m=Breakdown.Torus.StatementsApprox&d=Breakdown.Periodic.ApproxFieldProperties"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The smooth solenoidal cutoff has fixed support around the centre of the unit torus and agrees exactly with the physical profile on a fixed inner ball. Lemma 5.1 uses an arbitrary radius r and additionally gives explicit gradient-error and mass estimates.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.approxFieldProperties_holds",
+       "module": "Breakdown.Torus.Main",
+       "kind": "theorem",
+       "start_line": 51,
+       "end_line": 52,
+       "href": "lean/?m=Breakdown.Torus.Main&d=Breakdown.Periodic.approxFieldProperties_holds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_5_1_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L391",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target varies the cutoff radius and keeps the constants uniform in radius and time."
+   }
+  },
+  {
+   "key": "lemma-6.1",
+   "title": "Lemma 6.1",
+   "authors": {
+    "start_byte": 98078,
+    "end_byte": 98512,
+    "href": "./?l=b98078-98512",
+    "sha256": "111619b07409b0469bae83b732950fcee7c554bedb84ea36dd822cb4a5fc2399"
+   },
+   "adapted": {
+    "start_byte": 104484,
+    "end_byte": 104918,
+    "href": "adapted/?l=b104484-104918",
+    "sha256": "111619b07409b0469bae83b732950fcee7c554bedb84ea36dd822cb4a5fc2399"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "Compactly supported L² forcing has arbitrarily small local projected-heat discrepancy, measured by δ times its L³⁄² norm, at sufficiently small scale and on a compact positive-time window. Lemma 6.1 gives an all-time CL⁻⁷⁄² estimate for the divergence of a W¹,¹ tensor, in terms of that tensor’s L¹ norm.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.HeatDivFreeComparison",
+       "module": "Breakdown.Torus.StatementsShell",
+       "kind": "def",
+       "start_line": 52,
+       "end_line": 56,
+       "href": "lean/?m=Breakdown.Torus.StatementsShell&d=Breakdown.Periodic.HeatDivFreeComparison"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "Compactly supported L² forcing has arbitrarily small local projected-heat discrepancy, measured by δ times its L³⁄² norm, at sufficiently small scale and on a compact positive-time window. Lemma 6.1 gives an all-time CL⁻⁷⁄² estimate for the divergence of a W¹,¹ tensor, in terms of that tensor’s L¹ norm.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.heatDivFreeComparison",
+       "module": "Breakdown.Torus.HeatComparison",
+       "kind": "theorem",
+       "start_line": 18,
+       "end_line": 22,
+       "href": "lean/?m=Breakdown.Torus.HeatComparison&d=Breakdown.Periodic.heatDivFreeComparison"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_6_1_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L442",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target gives the explicit large-period rate for compactly supported tensor forcing and every positive lag."
+   }
+  },
+  {
+   "key": "lemma-6.2",
+   "title": "Lemma 6.2",
+   "authors": {
+    "start_byte": 102327,
+    "end_byte": 102772,
+    "href": "./?l=b102327-102772",
+    "sha256": "e8c14ee7ccda53c51a26961588fc6eae6a41aa5e9324681b01edf588157aba70"
+   },
+   "adapted": {
+    "start_byte": 108510,
+    "end_byte": 108955,
+    "href": "adapted/?l=b108510-108955",
+    "sha256": "e8c14ee7ccda53c51a26961588fc6eae6a41aa5e9324681b01edf588157aba70"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "For sufficiently small positive final time, the normalized approximate intervals have a uniform upper bound and pointwise lower norm bound c/2. This does not itself assert a norm identity under periodization or a rate for the corrected trajectory.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.ApproxSizes",
+       "module": "Breakdown.Torus.StatementsApproxSteps",
+       "kind": "def",
+       "start_line": 44,
+       "end_line": 48,
+       "href": "lean/?m=Breakdown.Torus.StatementsApproxSteps&d=Breakdown.Periodic.ApproxSizes"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For sufficiently small positive final time, the normalized approximate intervals have a uniform upper bound and pointwise lower norm bound c/2. This does not itself assert a norm identity under periodization or a rate for the corrected trajectory.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.approxSizes",
+       "module": "Breakdown.Torus.ApproxSizes",
+       "kind": "theorem",
+       "start_line": 914,
+       "end_line": 1007,
+       "href": "lean/?m=Breakdown.Torus.ApproxSizes&d=Breakdown.Periodic.approxSizes"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For the normalized nth approximate interval, the residual is bounded by θⁿKT¹⁄⁴, assuming the profile bounds and λ¹⁄⁴<θ. Lemma 6.2 instead states a global Cκ residual bound of order L⁻¹⁄² on the large torus.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.ApproxResidualSmall",
+       "module": "Breakdown.Torus.StatementsApproxSteps",
+       "kind": "def",
+       "start_line": 24,
+       "end_line": 34,
+       "href": "lean/?m=Breakdown.Torus.StatementsApproxSteps&d=Breakdown.Periodic.ApproxResidualSmall"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For the normalized nth approximate interval, the residual is bounded by θⁿKT¹⁄⁴, assuming the profile bounds and λ¹⁄⁴<θ. Lemma 6.2 instead states a global Cκ residual bound of order L⁻¹⁄² on the large torus.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.approxResidualSmall",
+       "module": "Breakdown.Torus.ApproxResidual",
+       "kind": "theorem",
+       "start_line": 373,
+       "end_line": 442,
+       "href": "lean/?m=Breakdown.Torus.ApproxResidual&d=Breakdown.Periodic.approxResidualSmall"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_6_2_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L414",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target keeps the physical norms and the explicit large-period residual rate."
+   }
+  },
+  {
+   "key": "lemma-6.3",
+   "title": "Lemma 6.3",
+   "authors": {
+    "start_byte": 111914,
+    "end_byte": 112410,
+    "href": "./?l=b111914-112410",
+    "sha256": "6ea68de4036731a5609e3fb49bb453808a970a538011f7b870aae555516255cd"
+   },
+   "adapted": {
+    "start_byte": 117654,
+    "end_byte": 118150,
+    "href": "adapted/?l=b117654-118150",
+    "sha256": "6ea68de4036731a5609e3fb49bb453808a970a538011f7b870aae555516255cd"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "For any δ>0, the localized interaction and initial-data maps on the unit torus are within δ of their whole-space counterparts when the scale is sufficiently small. The statement gives no explicit power of the large period L in (6.11) or (6.15).",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.ComparisonSmall",
+       "module": "Breakdown.Torus.StatementsInverse",
+       "kind": "def",
+       "start_line": 76,
+       "end_line": 92,
+       "href": "lean/?m=Breakdown.Torus.StatementsInverse&d=Breakdown.Periodic.ComparisonSmall"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "For any δ>0, the localized interaction and initial-data maps on the unit torus are within δ of their whole-space counterparts when the scale is sufficiently small. The statement gives no explicit power of the large period L in (6.11) or (6.15).",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.comparisonSmall",
+       "module": "Breakdown.Torus.CompareFinal",
+       "kind": "theorem",
+       "start_line": 32,
+       "end_line": 50,
+       "href": "lean/?m=Breakdown.Torus.CompareFinal&d=Breakdown.Periodic.comparisonSmall"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "Two localized comparisons within δ and an explicit smallness inequality transfer a bounded whole-space right inverse to an exact periodic right inverse. Lemma 6.3 first constructs a particular approximate inverse with a defect of order L⁻¹⁄².",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.ShellInverseTransfer",
+       "module": "Breakdown.Torus.StatementsSeqOps",
+       "kind": "def",
+       "start_line": 23,
+       "end_line": 37,
+       "href": "lean/?m=Breakdown.Torus.StatementsSeqOps&d=Breakdown.Periodic.ShellInverseTransfer"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "Two localized comparisons within δ and an explicit smallness inequality transfer a bounded whole-space right inverse to an exact periodic right inverse. Lemma 6.3 first constructs a particular approximate inverse with a defect of order L⁻¹⁄².",
+     "lean": [
+      {
+       "declaration": "Breakdown.Periodic.shellInverseTransfer",
+       "module": "Breakdown.Torus.InverseAlgebra",
+       "kind": "theorem",
+       "start_line": 69,
+       "end_line": 252,
+       "href": "lean/?m=Breakdown.Torus.InverseAlgebra&d=Breakdown.Periodic.shellInverseTransfer"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_6_3_target",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L468",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "The target retains the prescribed approximate inverse and the explicit large-period defect bound."
+   }
+  },
+  {
+   "key": "theorem-7.1",
+   "title": "Theorem 7.1",
+   "authors": {
+    "start_byte": 143264,
+    "end_byte": 143973,
+    "href": "./?l=b143264-143973",
+    "sha256": "d75518ae4a810e843b0c17bd9bb5c8b6d1f35a5343592dbc13c07c55ab5c9d34"
+   },
+   "adapted": {
+    "start_byte": 149705,
+    "end_byte": 150414,
+    "href": "adapted/?l=b149705-150414",
+    "sha256": "d75518ae4a810e843b0c17bd9bb5c8b6d1f35a5343592dbc13c07c55ab5c9d34"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "Theorem 7.1 returns α, its period, a smooth profile and the bounds and symmetries of that same profile. This implication assumes the more restrictive certificate conditions and concludes only existence of a weak recurrent profile; its conclusion does not retain α or the bounds (7.38).",
+     "lean": [
+      {
+       "declaration": "Breakdown.extended_certificate_orbit_proved",
+       "module": "Breakdown.Cert.ExtendedMain",
+       "kind": "theorem",
+       "start_line": 56,
+       "end_line": 93,
+       "href": "lean/?m=Breakdown.Cert.ExtendedMain&d=Breakdown.extended_certificate_orbit_proved"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.theorem_7_1",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L29",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof assumes the full formal extended certificate, including its approximate-profile regularity and decay requirements. It retains the chosen parameter, smooth profile, correction, bounds and symmetries in (7.38)–(7.39), and gives Hessian and pressure-gradient decay for that profile."
+   }
+  },
+  {
+   "key": "corollary-7.2",
+   "title": "Corollary 7.2",
+   "authors": {
+    "start_byte": 143974,
+    "end_byte": 144191,
+    "href": "./?l=b143974-144191",
+    "sha256": "6ea15d37ac91b333c592e0984ab243144c5690f9c57aa9bd8c00855eb707a050"
+   },
+   "adapted": {
+    "start_byte": 150415,
+    "end_byte": 150632,
+    "href": "adapted/?l=b150415-150632",
+    "sha256": "6ea15d37ac91b333c592e0984ab243144c5690f9c57aa9bd8c00855eb707a050"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The conclusion excludes a global smooth bounded-energy whole-space solution for suitable compactly supported data at every positive viscosity. Corollary 7.2 also asserts the torus conclusion and retains the constructed trajectories, rates and chosen profile from Theorems 1.1 and 7.1.",
+     "lean": [
+      {
+       "declaration": "Breakdown.extended_certificate_breakdown_on_space",
+       "module": "Solution",
+       "kind": "theorem",
+       "start_line": 298,
+       "end_line": 299,
+       "href": "lean/?m=Solution&d=Breakdown.extended_certificate_breakdown_on_space"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.corollary_7_2",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L45",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The companion retains the profile from Theorem 7.1 and constructs the quantitative whole-space trajectory with the error bound (1.6). Its torus conclusion is qualitative nonexistence of a global smooth solution with periodic velocity. The trajectory and convergence estimates in (1.7) remain open."
+   }
+  },
+  {
+   "key": "remark-7.3",
+   "title": "Remark 7.3",
+   "authors": {
+    "start_byte": 144192,
+    "end_byte": 144664,
+    "href": "./?l=b144192-144664",
+    "sha256": "2476f4ace3665e33f249000eec42210a4eed51898acbb6121ddf84c927441219"
+   },
+   "adapted": {
+    "start_byte": 150633,
+    "end_byte": 151105,
+    "href": "adapted/?l=b150633-151105",
+    "sha256": "2476f4ace3665e33f249000eec42210a4eed51898acbb6121ddf84c927441219"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "paper-only",
+     "note": "This is a consequence in the paper of the chosen profile’s twist identity. Replacing the period by the positive shift in that identity leaves the profile equations and decay bounds in force. The pinned Lean library has a separate result for half-periodicity of a gradient-energy representative.",
+     "lean": []
+    }
+   ]
+  },
+  {
+   "key": "lemma-7.4",
+   "title": "Lemma 7.4",
+   "authors": {
+    "start_byte": 149507,
+    "end_byte": 150290,
+    "href": "./?l=b149507-150290",
+    "sha256": "13fc181dafd80d7a737928f6db38ce33aeccef90d847341e7afa2be696bd6458"
+   },
+   "adapted": {
+    "start_byte": 155847,
+    "end_byte": 156630,
+    "href": "adapted/?l=b155847-156630",
+    "sha256": "13fc181dafd80d7a737928f6db38ce33aeccef90d847341e7afa2be696bd6458"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "For the constructed free solution, the result supplies a continuous periodic scalar representative of the gradient energy and an interval-integrated identity. Equation (7.42) is the almost-everywhere differential identity for arbitrary v ∈ D_S; (7.45) is its physical-time counterpart.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.freeEnergyLocalHolds_of",
+       "module": "Breakdown.Cert.FreeEnergyLocal",
+       "kind": "theorem",
+       "start_line": 625,
+       "end_line": 627,
+       "href": "lean/?m=Breakdown.Cert.FreeEnergyLocal&d=Breakdown.Cert.freeEnergyLocalHolds_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_7_4",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L75",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The estimate concerns the constructed inverse. It gives the integrated energy identity, with the differentiated identity and period pairing outside the stated conclusion."
+   }
+  },
+  {
+   "key": "proposition-7.5",
+   "title": "Proposition 7.5",
+   "authors": {
+    "start_byte": 153443,
+    "end_byte": 153939,
+    "href": "./?l=b153443-153939",
+    "sha256": "1dd5221281db54766dc25e6d847e3f089f28143eeacbd32c9bd5cafaccdfeff0"
+   },
+   "adapted": {
+    "start_byte": 160440,
+    "end_byte": 160936,
+    "href": "adapted/?l=b160440-160936",
+    "sha256": "1dd5221281db54766dc25e6d847e3f089f28143eeacbd32c9bd5cafaccdfeff0"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "This result constructs the time-integral operator giving the gradient part of the free solution. Proposition 7.5 additionally states bijectivity on D_S, symmetry preservation and weak and local strong convergence; those conclusions require separate results.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.exists_gradInvSpec",
+       "module": "Breakdown.Cert.GradInvSpec",
+       "kind": "theorem",
+       "start_line": 374,
+       "end_line": 375,
+       "href": "lean/?m=Breakdown.Cert.GradInvSpec&d=Breakdown.Cert.exists_gradInvSpec"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_7_5",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L94",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof gives a symmetry-preserving inverse and weak graph convergence. The statement leaves open the full domain identification and local strong convergence of the full sequence."
+   }
+  },
+  {
+   "key": "lemma-7.6",
+   "title": "Lemma 7.6",
+   "authors": {
+    "start_byte": 158955,
+    "end_byte": 159435,
+    "href": "./?l=b158955-159435",
+    "sha256": "bc192bfd680e6984ad4f724d936d07896294514a5f7f651c223a1cc9c8c497e2"
+   },
+   "adapted": {
+    "start_byte": 165506,
+    "end_byte": 165986,
+    "href": "adapted/?l=b165506-165986",
+    "sha256": "bc192bfd680e6984ad4f724d936d07896294514a5f7f651c223a1cc9c8c497e2"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "weaker",
+     "note": "Lemma 7.6 includes a spatial supremum bound and a quadratic estimate over a period. This theorem proves the spatial product inequality, which implies the weighted bound; the period estimate is a separate theorem.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.sliceSupBoundHolds_of",
+       "module": "Breakdown.Cert.SliceSupBound",
+       "kind": "theorem",
+       "start_line": 10,
+       "end_line": 11,
+       "href": "lean/?m=Breakdown.Cert.SliceSupBound&d=Breakdown.Cert.sliceSupBoundHolds_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_7_6",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L115",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The estimate uses graph norms and an essential gradient supremum. The time-dependent bound accommodates two fields."
+   }
+  },
+  {
+   "key": "lemma-7.7",
+   "title": "Lemma 7.7",
+   "authors": {
+    "start_byte": 160680,
+    "end_byte": 161205,
+    "href": "./?l=b160680-161205",
+    "sha256": "56b909741c4bb952257bb2bb483bcda69c32485f3ff5f8e1cd8f96a5b704997b"
+   },
+   "adapted": {
+    "start_byte": 167238,
+    "end_byte": 167763,
+    "href": "adapted/?l=b167238-167763",
+    "sha256": "56b909741c4bb952257bb2bb483bcda69c32485f3ff5f8e1cd8f96a5b704997b"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "weaker",
+     "note": "The conclusion gives a bounded projected convection operator and identifies its pairing with the physical convection terms. The symmetry and compactness conclusions of Lemma 7.7 are supplied by other results.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.extendedConvectionHolds_of",
+       "module": "Breakdown.Cert.ExtendedConvection",
+       "kind": "theorem",
+       "start_line": 272,
+       "end_line": 301,
+       "href": "lean/?m=Breakdown.Cert.ExtendedConvection&d=Breakdown.Cert.extendedConvectionHolds_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_7_7",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L141",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "Compactness is proved after applying the solenoidal projection, on the graph domain."
+   }
+  },
+  {
+   "key": "proposition-7.8",
+   "title": "Proposition 7.8",
+   "authors": {
+    "start_byte": 164640,
+    "end_byte": 165325,
+    "href": "./?l=b164640-165325",
+    "sha256": "953ea76a91b1ebe5a897ad90fc0e4f0528922d65d2c4de6724c6c50b8c57974b"
+   },
+   "adapted": {
+    "start_byte": 171185,
+    "end_byte": 171870,
+    "href": "adapted/?l=b171185-171870",
+    "sha256": "953ea76a91b1ebe5a897ad90fc0e4f0528922d65d2c4de6724c6c50b8c57974b"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "For a certificate reduced to unit forcing weight and coincident reference and approximate profiles, the constrained linear problem has an inverse and is injective on the invariant subspace. This is the unique solve of Proposition 7.8 in the variable f = T_S v, with the compactness and coercivity results supplied as hypotheses.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.extendedBorderedInvertibleHolds_of",
+       "module": "Breakdown.Cert.ExtendedBorderedInvertible",
+       "kind": "theorem",
+       "start_line": 101,
+       "end_line": 113,
+       "href": "lean/?m=Breakdown.Cert.ExtendedBorderedInvertible&d=Breakdown.Cert.extendedBorderedInvertibleHolds_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_7_8",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L158",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "Existence and uniqueness are expressed in forcing coordinates for the constructed inverse, with the four normalization equations explicit."
+   }
+  },
+  {
+   "key": "proposition-7.9",
+   "title": "Proposition 7.9",
+   "authors": {
+    "start_byte": 167536,
+    "end_byte": 167983,
+    "href": "./?l=b167536-167983",
+    "sha256": "fd1a15b946d77d25afb71768b7b802854106e27d96d275e1f937a250fc352e9a"
+   },
+   "adapted": {
+    "start_byte": 174346,
+    "end_byte": 174793,
+    "href": "adapted/?l=b174346-174793",
+    "sha256": "fd1a15b946d77d25afb71768b7b802854106e27d96d275e1f937a250fc352e9a"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "The estimate has the coefficients 1/w_* + 2S c₃/m and 2S/m of (7.55), initially for the essential supremum of the gradient norm of the constructed free solution. A continuous energy representative gives the pointwise supremum used in the paper.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.extendedSupBoundHolds_of",
+       "module": "Breakdown.Cert.ExtendedSupBound",
+       "kind": "theorem",
+       "start_line": 15,
+       "end_line": 46,
+       "href": "lean/?m=Breakdown.Cert.ExtendedSupBound&d=Breakdown.Cert.extendedSupBoundHolds_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_7_9",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L181",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The bound concerns the constructed inverse and the projected residual, with an essential gradient supremum."
+   }
+  },
+  {
+   "key": "proposition-7.10",
+   "title": "Proposition 7.10",
+   "authors": {
+    "start_byte": 173785,
+    "end_byte": 174199,
+    "href": "./?l=b173785-174199",
+    "sha256": "fd2770fbf2daa09b80f13c7565951edcf73bc6ae7af5ac90bbd8805cc9f809a1"
+   },
+   "adapted": {
+    "start_byte": 180203,
+    "end_byte": 180617,
+    "href": "adapted/?l=b180203-180617",
+    "sha256": "fd2770fbf2daa09b80f13c7565951edcf73bc6ae7af5ac90bbd8805cc9f809a1"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "Proposition 7.10 selects a parameter and a bounded correction with zero total force by a joint weak-topology fixed point. This result reaches that conclusion for a reduced certificate by a unique solve at each parameter followed by a finite-dimensional zero.",
+     "lean": [
+      {
+       "declaration": "Breakdown.Cert.extendedExistsZeroHeldHolds_of",
+       "module": "Breakdown.Cert.ExtendedExistsZeroHeld",
+       "kind": "theorem",
+       "start_line": 102,
+       "end_line": 118,
+       "href": "lean/?m=Breakdown.Cert.ExtendedExistsZeroHeld&d=Breakdown.Cert.extendedExistsZeroHeldHolds_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_7_10",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L198",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The solution is given after the certificate's reductions, with the relation between reduced and original multipliers explicit."
+   }
+  },
+  {
+   "key": "proposition-7.11",
+   "title": "Proposition 7.11",
+   "authors": {
+    "start_byte": 185393,
+    "end_byte": 186259,
+    "href": "./?l=b185393-186259",
+    "sha256": "b0224fee88a0e3ace296dfefca319bde2abebf524ea5b3b23ab09eab10e04b99"
+   },
+   "adapted": {
+    "start_byte": 190879,
+    "end_byte": 191745,
+    "href": "adapted/?l=b190879-191745",
+    "sha256": "b0224fee88a0e3ace296dfefca319bde2abebf524ea5b3b23ab09eab10e04b99"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "Proposition 7.11 preserves a specified weak field at every time while producing a smooth profile. This implication only asserts that existence of a weak recurrent field gives existence of a smooth recurrent profile; it permits an orthogonal twist and does not identify the output with the original field.",
+     "lean": [
+      {
+       "declaration": "Breakdown.FarField.periodicLerayProfileExists_of_weak",
+       "module": "Breakdown.CertTorus.Main",
+       "kind": "theorem",
+       "start_line": 8,
+       "end_line": 11,
+       "href": "lean/?m=Breakdown.CertTorus.Main&d=Breakdown.FarField.periodicLerayProfileExists_of_weak"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_7_11",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L215",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof retains the same input profile at every time. It assumes a square-integrable weak Hessian and a specified continuous representative, and concludes extra decay."
+   }
+  },
+  {
+   "key": "proposition-b.1",
+   "title": "Proposition B.1",
+   "authors": {
+    "start_byte": 235285,
+    "end_byte": 236313,
+    "href": "./?l=b235285-236313",
+    "sha256": "3bf16f8ee852c7a61a6287303d522e5cc5101d0fa4f757da78b87b1b59857cd4"
+   },
+   "adapted": {
+    "start_byte": 239209,
+    "end_byte": 240237,
+    "href": "adapted/?l=b239209-240237",
+    "sha256": "3bf16f8ee852c7a61a6287303d522e5cc5101d0fa4f757da78b87b1b59857cd4"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The multiplier theorem gives existence, finite μ-seminorm, the stated norm bound and a comparison of positive and negative density integrals under explicit weak derivative and coefficient assumptions. Finite negative density converts that comparison into (B.20); the paper leaves some admissibility conditions implicit.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof",
+       "module": "Breakdown.Cert.ExtendedCoerciveMain",
+       "kind": "theorem",
+       "start_line": 51,
+       "end_line": 70,
+       "href": "lean/?m=Breakdown.Cert.ExtendedCoerciveMain&d=Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "This is the full multiplier assertion for weak perturbations, with positive and negative density integrals kept separate. It yields the real signed inequality of Proposition B.1 once the negative part is finite and the full coefficient assumptions hold.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CoerciveWeak.PieceMultiplierDensityWeakHolds",
+       "module": "Breakdown.Cert.ExtendedCoerciveDefs",
+       "kind": "def",
+       "start_line": 321,
+       "end_line": 344,
+       "href": "lean/?m=Breakdown.Cert.ExtendedCoerciveDefs&d=Breakdown.CoerciveWeak.PieceMultiplierDensityWeakHolds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_B_1",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L26",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The weak-form estimate permits general admissible weights and states the density inequality through positive and negative integrals."
+   }
+  },
+  {
+   "key": "lemma-b.2",
+   "title": "Lemma B.2",
+   "authors": {
+    "start_byte": 239970,
+    "end_byte": 240188,
+    "href": "./?l=b239970-240188",
+    "sha256": "b94f7b5b436e86950032b07b14582bded012e2fb853f9d7dcdaa864d6c922587"
+   },
+   "adapted": {
+    "start_byte": 244166,
+    "end_byte": 244384,
+    "href": "adapted/?l=b244166-244384",
+    "sha256": "b94f7b5b436e86950032b07b14582bded012e2fb853f9d7dcdaa864d6c922587"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "The two density inequalities and the bounds c_M/√c≤c₁ and √(t/c)≤c₂ imply the a priori certificate estimate. With c=3/50 and t=1000, this is Lemma B.2 for the admitted weak perturbations.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CoerciveWeak.extendedCoerciveClause_of_pieceData_proved",
+       "module": "Breakdown.Cert.ExtendedCoerciveMain",
+       "kind": "theorem",
+       "start_line": 76,
+       "end_line": 97,
+       "href": "lean/?m=Breakdown.Cert.ExtendedCoerciveMain&d=Breakdown.CoerciveWeak.extendedCoerciveClause_of_pieceData_proved"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "This combines the two density comparisons into the intermediate quadratic multiplier inequality. The final estimate (7.18) also uses the scalar bounds for c₁ and c₂ in (B.22), supplied in the subsequent coercive estimate.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity",
+       "module": "Breakdown.Cert.ExtendedCoerciveDefs",
+       "kind": "theorem",
+       "start_line": 547,
+       "end_line": 584,
+       "href": "lean/?m=Breakdown.Cert.ExtendedCoerciveDefs&d=Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_2",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L57",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The statement makes analytic hypotheses explicit and assumes the parameter-wise row lower bound. The constants are symbolic."
+   }
+  },
+  {
+   "key": "lemma-b.3",
+   "title": "Lemma B.3",
+   "authors": {
+    "start_byte": 242329,
+    "end_byte": 242796,
+    "href": "./?l=b242329-242796",
+    "sha256": "c8ef46f552561d4643e24677a9f45a1b6ca8269ca63a858563415866c56173e1"
+   },
+   "adapted": {
+    "start_byte": 246502,
+    "end_byte": 246969,
+    "href": "adapted/?l=b246502-246969",
+    "sha256": "c8ef46f552561d4643e24677a9f45a1b6ca8269ca63a858563415866c56173e1"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "stronger",
+     "note": "The proof gives the positive- and negative-part identities separately, each with factor 4π. They imply (B.23) when its signed integral is defined and remain meaningful even before either part is known to be finite.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.modeDensityBridge_closed",
+       "module": "Breakdown.CertCell.CellLayerJunctions",
+       "kind": "theorem",
+       "start_line": 165,
+       "end_line": 170,
+       "href": "lean/?m=Breakdown.CertCell.CellLayerJunctions&d=Breakdown.CertCell.modeDensityBridge_closed"
+      }
+     ]
+    },
+    {
+     "verdict": "stronger",
+     "note": "The assertion equates each nonnegative part of the space-time density integral to 4π times its quarter-plane counterpart. Subtracting when the negative part is finite recovers (B.23).",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.DensityIdentity",
+       "module": "Breakdown.CertCell.TopStatements",
+       "kind": "def",
+       "start_line": 121,
+       "end_line": 126,
+       "href": "lean/?m=Breakdown.CertCell.TopStatements&d=Breakdown.CertCell.DensityIdentity"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_3",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L90",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The two nonnegative identities are proved separately, including infinite values. The printed signed identity uses a finiteness assumption."
+   }
+  },
+  {
+   "key": "proposition-b.4",
+   "title": "Proposition B.4",
+   "authors": {
+    "start_byte": 255480,
+    "end_byte": 257482,
+    "href": "./?l=b255480-257482",
+    "sha256": "e99527e02b90fe172a5f3c2fe748f917beb303a479734414141b91a17888ca57"
+   },
+   "adapted": {
+    "start_byte": 259978,
+    "end_byte": 261980,
+    "href": "adapted/?l=b259978-261980",
+    "sha256": "e99527e02b90fe172a5f3c2fe748f917beb303a479734414141b91a17888ca57"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The result assembles compatible local and global unknowns and the cell estimates from the full finite-data conditions. The paper's four existential error numbers are replaced by explicit row, pairing, slack and credit contributions.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.cellJunctions_closed",
+       "module": "Breakdown.CertCell.CellLayerClosed",
+       "kind": "theorem",
+       "start_line": 120,
+       "end_line": 124,
+       "href": "lean/?m=Breakdown.CertCell.CellLayerClosed&d=Breakdown.CertCell.cellJunctions_closed"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The theorem combines the resolved-mode energy estimate with an assumed residual-form bound to obtain the local cell inequality. Its conclusion uses explicit error contributions and signed parts, rather than the four existential numbers of (B.33).",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.cellFormAssembly_closed",
+       "module": "Breakdown.CertCell.CellLayerPartProofs",
+       "kind": "theorem",
+       "start_line": 55,
+       "end_line": 60,
+       "href": "lean/?m=Breakdown.CertCell.CellLayerPartProofs&d=Breakdown.CertCell.cellFormAssembly_closed"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The conclusion is finiteness of the negative quarter-plane density for weak perturbations under coefficient lower bounds and reference-field regularity, without requiring the forcing equation. The 4π identity transfers it to I⁻; the remaining conclusions of Proposition B.4 are separate.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.formNegFinite",
+       "module": "Breakdown.CertCell.FormNegativeFinite",
+       "kind": "theorem",
+       "start_line": 323,
+       "end_line": 331,
+       "href": "lean/?m=Breakdown.CertCell.FormNegativeFinite&d=Breakdown.CertCell.formNegFinite"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_B_4",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L115",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof uses the full formal cell conditions and their separate positive and negative density accounts. The printed remainder numbers are outside the conclusion."
+   }
+  },
+  {
+   "key": "lemma-b.5",
+   "title": "Lemma B.5",
+   "authors": {
+    "start_byte": 261621,
+    "end_byte": 262589,
+    "href": "./?l=b261621-262589",
+    "sha256": "1e9bf1ef918e8c15aad773d7583a7f9e7d8a2b676d5d351e6768dadfcea1107f"
+   },
+   "adapted": {
+    "start_byte": 266709,
+    "end_byte": 267677,
+    "href": "adapted/?l=b266709-267677",
+    "sha256": "1e9bf1ef918e8c15aad773d7583a7f9e7d8a2b676d5d351e6768dadfcea1107f"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "All four inequalities in (B.35) are proved almost everywhere for weak projected modes: the curl bound and the three angular gains. The paper already includes the curl and curl-gradient inequalities.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.TailBand.angularModeBounds",
+       "module": "Breakdown.CertCell.TailAngularPlane",
+       "kind": "theorem",
+       "start_line": 172,
+       "end_line": 172,
+       "href": "lean/?m=Breakdown.CertCell.TailAngularPlane&d=Breakdown.CertCell.TailBand.angularModeBounds"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "This is the scalar positivity argument for five nonnegative derivative sizes satisfying the four angular inequalities and the coefficient test. Substituting the actual mode norms gives the last conclusion of Lemma B.5.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.TailBand.pointwiseQuadraticTest",
+       "module": "Breakdown.CertCell.TailPointwise",
+       "kind": "theorem",
+       "start_line": 58,
+       "end_line": 99,
+       "href": "lean/?m=Breakdown.CertCell.TailPointwise&d=Breakdown.CertCell.TailBand.pointwiseQuadraticTest"
+      }
+     ]
+    },
+    {
+     "verdict": "same",
+     "note": "Under the admissible coefficient and scalar tests, the unresolved-mode density is nonnegative almost everywhere on its region. This is the final assertion of Lemma B.5; the four angular inequalities are separate inputs to its proof.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.Assembly.offModeConditionSound_holds",
+       "module": "Breakdown.CertCell.AssemblyOffModes",
+       "kind": "theorem",
+       "start_line": 107,
+       "end_line": 109,
+       "href": "lean/?m=Breakdown.CertCell.AssemblyOffModes&d=Breakdown.CertCell.Assembly.offModeConditionSound_holds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_5",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L142",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The result gives the angular bounds and final nonnegativity. Equation (B.36) is absent as a separate conclusion."
+   }
+  },
+  {
+   "key": "lemma-b.6",
+   "title": "Lemma B.6",
+   "authors": {
+    "start_byte": 264858,
+    "end_byte": 265365,
+    "href": "./?l=b264858-265365",
+    "sha256": "3b60f88af4abbffca05f18691c41225901cc099bab8b8f9f392a6366f79a442e"
+   },
+   "adapted": {
+    "start_byte": 270118,
+    "end_byte": 270625,
+    "href": "adapted/?l=b270118-270625",
+    "sha256": "3b60f88af4abbffca05f18691c41225901cc099bab8b8f9f392a6366f79a442e"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The ray-exterior inequality uses the constant 1/4+(|κι₁|−1)₊² and the admitted weak modes. Its radius must be measurable, homogeneous, bounded above and bounded away from zero, assumptions absent from the printed geometric description.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.TailBand.modeRayInverseSquare",
+       "module": "Breakdown.CertCell.TailRayModes",
+       "kind": "theorem",
+       "start_line": 491,
+       "end_line": 689,
+       "href": "lean/?m=Breakdown.CertCell.TailRayModes&d=Breakdown.CertCell.TailBand.modeRayInverseSquare"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The theorem proves integrability of the negative exterior density and nonnegativity of its integral under the full exterior conditions. These include the bounded positive directional radius or the zero-mode square exterior, together with their coefficient budgets.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.exteriorConditionSound_closed",
+       "module": "Breakdown.CertCell.CellLayerPartProofs",
+       "kind": "theorem",
+       "start_line": 73,
+       "end_line": 75,
+       "href": "lean/?m=Breakdown.CertCell.CellLayerPartProofs&d=Breakdown.CertCell.exteriorConditionSound_closed"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_6",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixBTail.lean#L165",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The formal ray geometry adds explicit regularity and bounds. The conclusion includes finiteness of the negative part."
+   }
+  },
+  {
+   "key": "lemma-b.7",
+   "title": "Lemma B.7",
+   "authors": {
+    "start_byte": 272644,
+    "end_byte": 273109,
+    "href": "./?l=b272644-273109",
+    "sha256": "3df540bb369c066dacb0713740a4f6439debcd194b58b9061ba2c7d7045622bf"
+   },
+   "adapted": {
+    "start_byte": 278472,
+    "end_byte": 278937,
+    "href": "adapted/?l=b278472-278937",
+    "sha256": "3df540bb369c066dacb0713740a4f6439debcd194b58b9061ba2c7d7045622bf"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "stronger",
+     "note": "The lower bound retains the quadratic form passed by the root, as well as the pivot gains and negative-column losses. The paper's (B.41) follows after dropping that nonnegative root contribution.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.Certificate.signedTreeLowerBound",
+       "module": "Breakdown.CertCell.CertTreeLowerBound",
+       "kind": "theorem",
+       "start_line": 34,
+       "end_line": 93,
+       "href": "lean/?m=Breakdown.CertCell.CertTreeLowerBound&d=Breakdown.CertCell.Certificate.signedTreeLowerBound"
+      }
+     ]
+    },
+    {
+     "verdict": "different",
+     "note": "The conclusion gives a positive subspace of the root form with dimension at least the number of physical coordinates. The proof chooses the common kernel of negative-column pairings, while the printed lemma states positivity of the total form explicitly on that kernel.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.Certificate.pivotCountPositive",
+       "module": "Breakdown.CertCell.CertPivotCount",
+       "kind": "theorem",
+       "start_line": 36,
+       "end_line": 80,
+       "href": "lean/?m=Breakdown.CertCell.CertPivotCount&d=Breakdown.CertCell.Certificate.pivotCountPositive"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_7",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L205",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The lower bound keeps the nonnegative root contribution and the result makes strict positivity explicit."
+   }
+  },
+  {
+   "key": "proposition-b.8",
+   "title": "Proposition B.8",
+   "authors": {
+    "start_byte": 275971,
+    "end_byte": 276185,
+    "href": "./?l=b275971-276185",
+    "sha256": "20f1c6b170d1df8b447c5e59d8ae7d74009bd34cc4f7ac9ce6b8be7d6855f79c"
+   },
+   "adapted": {
+    "start_byte": 281981,
+    "end_byte": 282195,
+    "href": "adapted/?l=b281981-282195",
+    "sha256": "20f1c6b170d1df8b447c5e59d8ae7d74009bd34cc4f7ac9ce6b8be7d6855f79c"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The theorem derives the lower bound (B.21) and negative-part finiteness from the complete cell, shape and matrix conditions. Its assumptions include coefficient, gauge and error requirements that the paper explicitly leaves unwritten.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertCell.rowRestClause_closed",
+       "module": "Breakdown.CertCell.CellLayerClosed",
+       "kind": "theorem",
+       "start_line": 126,
+       "end_line": 130,
+       "href": "lean/?m=Breakdown.CertCell.CellLayerClosed&d=Breakdown.CertCell.rowRestClause_closed"
+      }
+     ]
+    },
+    {
+     "verdict": "same",
+     "note": "The condition states finiteness of negative density and the lower bound (B.21), with c and the pinning weight as parameters. Taking c=3/50 and the pinning weight 1000 gives the printed constants, after subtracting the finite negative integral.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CoerciveWeak.RowRestClause",
+       "module": "Breakdown.Cert.ExtendedCoerciveDefs",
+       "kind": "def",
+       "start_line": 525,
+       "end_line": 545,
+       "href": "lean/?m=Breakdown.Cert.ExtendedCoerciveDefs&d=Breakdown.CoerciveWeak.RowRestClause"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_B_8",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L253",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The estimate is stated as a comparison of nonnegative extended integrals for periodic weak perturbations under all formal cell conditions."
+   }
+  },
+  {
+   "key": "lemma-b.9",
+   "title": "Lemma B.9",
+   "authors": {
+    "start_byte": 280764,
+    "end_byte": 282654,
+    "href": "./?l=b280764-282654",
+    "sha256": "f5259562143ea9cfb75e9472e94c72c51337859c00915910881a1d92c1596c5d"
+   },
+   "adapted": {
+    "start_byte": 287559,
+    "end_byte": 289449,
+    "href": "adapted/?l=b287559-289449",
+    "sha256": "f5259562143ea9cfb75e9472e94c72c51337859c00915910881a1d92c1596c5d"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "The central and parameter-shift bounds imply the operator difference estimate (7.19), using the first scalar budget in (B.48). This is the first conclusion of Lemma B.9.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertReduction.gapTransferBridgeHolds_proof",
+       "module": "Breakdown.CellReduction.ReductionClosed",
+       "kind": "theorem",
+       "start_line": 53,
+       "end_line": 54,
+       "href": "lean/?m=Breakdown.CellReduction.ReductionClosed&d=Breakdown.CertReduction.gapTransferBridgeHolds_proof"
+      }
+     ]
+    },
+    {
+     "verdict": "same",
+     "note": "The central and parameter-shift norms control the change in the quadratic convection form by c₃″‖u‖w². This supplies the second profile contribution to the lower bound in Lemma B.9.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertReduction.formShiftBridgeHolds_proof",
+       "module": "Breakdown.CellReduction.ReductionClosed",
+       "kind": "theorem",
+       "start_line": 56,
+       "end_line": 58,
+       "href": "lean/?m=Breakdown.CellReduction.ReductionClosed&d=Breakdown.CertReduction.formShiftBridgeHolds_proof"
+      }
+     ]
+    },
+    {
+     "verdict": "same",
+     "note": "The reference strain lower bound and L³ gradient norm give the reference quadratic-form lower bound with c₃′ from (B.48). Combining it with the profile-shift estimate gives (7.22).",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertReduction.frozenFormBridgeHolds_of_convection",
+       "module": "Breakdown.CellReduction.ReductionClosed",
+       "kind": "theorem",
+       "start_line": 63,
+       "end_line": 66,
+       "href": "lean/?m=Breakdown.CellReduction.ReductionClosed&d=Breakdown.CertReduction.frozenFormBridgeHolds_of_convection"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_9",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L273",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof uses an arbitrary finite decomposition with explicit hypotheses for derivative identification."
+   }
+  },
+  {
+   "key": "lemma-b.10",
+   "title": "Lemma B.10",
+   "authors": {
+    "start_byte": 286225,
+    "end_byte": 286624,
+    "href": "./?l=b286225-286624",
+    "sha256": "d3d4d6cfe49bbe030a9aff9774951d5848da1e1a6c0279174e725225318f98da"
+   },
+   "adapted": {
+    "start_byte": 293299,
+    "end_byte": 293698,
+    "href": "adapted/?l=b293299-293698",
+    "sha256": "d3d4d6cfe49bbe030a9aff9774951d5848da1e1a6c0279174e725225318f98da"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "Integrating the quadratic adjoint slice estimate over one period gives (7.32) with either norm choice of Lemma B.10. The formulation also permits the adjoint to depend on the parameter.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertReduction.adjointQuadraticBridge_of",
+       "module": "Breakdown.CellReduction.AdjointQuadraticBridge",
+       "kind": "theorem",
+       "start_line": 19,
+       "end_line": 32,
+       "href": "lean/?m=Breakdown.CellReduction.AdjointQuadraticBridge&d=Breakdown.CertReduction.adjointQuadraticBridge_of"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "The theorem gives the almost-everywhere time-slice estimate for (v·∇)v paired with ψ, using either its L² or L³ norm. The period-integrated conclusion of Lemma B.10 is supplied by a separate integration step.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CertReduction.adjointQuadTerm_of",
+       "module": "Breakdown.CellReduction.AdjointQuadTerm",
+       "kind": "theorem",
+       "start_line": 133,
+       "end_line": 279,
+       "href": "lean/?m=Breakdown.CellReduction.AdjointQuadTerm&d=Breakdown.CertReduction.adjointQuadTerm_of"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_10",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L303",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The bound on the integral of the product of norms implies the printed pairing estimate."
+   }
+  },
+  {
+   "key": "lemma-b.11",
+   "title": "Lemma B.11",
+   "authors": {
+    "start_byte": 288370,
+    "end_byte": 288657,
+    "href": "./?l=b288370-288657",
+    "sha256": "f6afc0546a15bee4edce467713689c014fccb8d0e2350c2b26359025d5c9e0e0"
+   },
+   "adapted": {
+    "start_byte": 295561,
+    "end_byte": 295848,
+    "href": "adapted/?l=b295561-295848",
+    "sha256": "f6afc0546a15bee4edce467713689c014fccb8d0e2350c2b26359025d5c9e0e0"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The two parts of the dual decomposition imply the absolute pairing bound and spatial integrability at almost every time, with integrability of the time integral. The statement permits tests without time periodicity and does not itself assert the joint absolute integrability printed in Lemma B.11.",
+     "lean": [
+      {
+       "declaration": "Breakdown.AdjointDefect.dualBoundedBound_of_parts",
+       "module": "Breakdown.CellReduction.AdjointDualBounded",
+       "kind": "theorem",
+       "start_line": 12,
+       "end_line": 51,
+       "href": "lean/?m=Breakdown.CellReduction.AdjointDualBounded&d=Breakdown.AdjointDefect.dualBoundedBound_of_parts"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "The weighted Hardy bound 2‖|y|R′‖H≤n′ gives the dual estimate for the plain remainder. The finite harmonic remainder and their sum are separate parts of Lemma B.11.",
+     "lean": [
+      {
+       "declaration": "Breakdown.AdjointDefect.remainderPlainHolds_proof",
+       "module": "Breakdown.CellReduction.AdjointRemainderPlain",
+       "kind": "theorem",
+       "start_line": 41,
+       "end_line": 121,
+       "href": "lean/?m=Breakdown.CellReduction.AdjointRemainderPlain&d=Breakdown.AdjointDefect.remainderPlainHolds_proof"
+      }
+     ]
+    },
+    {
+     "verdict": "weaker",
+     "note": "This proves the dual estimate for the finite harmonic remainder with coefficient (|k|+1/2)⁻² and the component weights 1/2,1/2,1. The plain remainder is combined with it in the full estimate of Lemma B.11.",
+     "lean": [
+      {
+       "declaration": "Breakdown.AdjointDefect.remainderAzimuthalHolds_proof",
+       "module": "Breakdown.CellReduction.AdjointRemainderAzimuthal",
+       "kind": "theorem",
+       "start_line": 198,
+       "end_line": 202,
+       "href": "lean/?m=Breakdown.CellReduction.AdjointRemainderAzimuthal&d=Breakdown.AdjointDefect.remainderAzimuthalHolds_proof"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_11",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L598",
+    "status": "open",
+    "comparator_checked": false,
+    "note": "Joint absolute integrability remains open. A companion theorem gives slice integrability and a time-integrable signed spatial pairing."
+   }
+  },
+  {
+   "key": "lemma-b.12",
+   "title": "Lemma B.12",
+   "authors": {
+    "start_byte": 296453,
+    "end_byte": 297231,
+    "href": "./?l=b296453-297231",
+    "sha256": "abbdbc3d2227ea3d7437c22095a9554c5a09c0fc8a95f423bbf734bd785ba9ae"
+   },
+   "adapted": {
+    "start_byte": 303850,
+    "end_byte": 304628,
+    "href": "adapted/?l=b303850-304628",
+    "sha256": "abbdbc3d2227ea3d7437c22095a9554c5a09c0fc8a95f423bbf734bd785ba9ae"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The linear adjoint estimate follows from the representation, potential, dual, pin-error and parameter-shift estimates, under explicit potential and curl-potential hypotheses. For the cell construction these are supplied by the finite shape conditions, and the empty fitted set recovers Lemma B.12.",
+     "lean": [
+      {
+       "declaration": "Breakdown.AdjointDefect.adjointDefectBridge_of_pieces",
+       "module": "Breakdown.CellReduction.AdjointAssembly",
+       "kind": "theorem",
+       "start_line": 305,
+       "end_line": 307,
+       "href": "lean/?m=Breakdown.CellReduction.AdjointAssembly&d=Breakdown.AdjointDefect.adjointDefectBridge_of_pieces"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_12",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L344",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The formal statement exposes regularity and decomposition premises and records the coefficient budget through its data fields."
+   }
+  },
+  {
+   "key": "lemma-b.13",
+   "title": "Lemma B.13",
+   "authors": {
+    "start_byte": 303479,
+    "end_byte": 304912,
+    "href": "./?l=b303479-304912",
+    "sha256": "d20e626239e463cb3dc285790c108fa52bd041efdddca207dc11ebc7089fd7af"
+   },
+   "adapted": {
+    "start_byte": 311244,
+    "end_byte": 312677,
+    "href": "adapted/?l=b311244-312677",
+    "sha256": "d20e626239e463cb3dc285790c108fa52bd041efdddca207dc11ebc7089fd7af"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "same",
+     "note": "The local quadratic expansion, absolute coefficient enclosures and exterior Cauchy–Schwarz bound imply the offset estimate (7.34). The specified profile construction makes the target pinning gap zero, as in Lemma B.13.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CellReduction.Instantiation.offsetClause_holds_of",
+       "module": "Breakdown.CellReduction.InstOffsetClause",
+       "kind": "theorem",
+       "start_line": 297,
+       "end_line": 335,
+       "href": "lean/?m=Breakdown.CellReduction.InstOffsetClause&d=Breakdown.CellReduction.Instantiation.offsetClause_holds_of"
+      }
+     ]
+    },
+    {
+     "verdict": "same",
+     "note": "Inside the matching ball, the residual is the central coefficient plus the linear and upper-triangular quadratic parameter sums, almost everywhere. This is the local expansion used in the proof of Lemma B.13.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CellReduction.Instantiation.offsetBallIdentity_holds",
+       "module": "Breakdown.CellReduction.InstOffsetIdentity",
+       "kind": "theorem",
+       "start_line": 786,
+       "end_line": 787,
+       "href": "lean/?m=Breakdown.CellReduction.InstOffsetIdentity&d=Breakdown.CellReduction.Instantiation.offsetBallIdentity_holds"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.lemma_B_13",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L372",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The statement assumes the cell and pressure representation explicitly and records the error budget in the offset data."
+   }
+  },
+  {
+   "key": "proposition-b.14",
+   "title": "Proposition B.14",
+   "authors": {
+    "start_byte": 307737,
+    "end_byte": 308320,
+    "href": "./?l=b307737-308320",
+    "sha256": "af5d5408c5aa52716359ef62cdc02087de6a745fb871e0f1d40130de886cc796"
+   },
+   "adapted": {
+    "start_byte": 315521,
+    "end_byte": 316104,
+    "href": "adapted/?l=b315521-316104",
+    "sha256": "af5d5408c5aa52716359ef62cdc02087de6a745fb871e0f1d40130de886cc796"
+   },
+   "wording": "identical",
+   "comparisons": [
+    {
+     "verdict": "different",
+     "note": "The construction produces a certificate after choosing a sufficiently large decay constant, from the full fifteen groups of cell assumptions and the analytic estimates. The paper omits some finite-data hypotheses, so equivalence of the complete condition lists cannot be checked from Proposition B.14 alone.",
+     "lean": [
+      {
+       "declaration": "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
+       "module": "Breakdown.CellReduction.CellLayerBreakdownCompose",
+       "kind": "theorem",
+       "start_line": 171,
+       "end_line": 290,
+       "href": "lean/?m=Breakdown.CellReduction.CellLayerBreakdownCompose&d=Breakdown.CellLayerSystem.isExtendedCertificate_of_parts"
+      }
+     ]
+    }
+   ],
+   "formalization": {
+    "declaration": "NavierStokes.proposition_B_14",
+    "href": "https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L394",
+    "status": "proved",
+    "comparator_checked": false,
+    "note": "The proof chooses a decay constant and builds an extended certificate under all fifteen groups of formal cell hypotheses. A separate Comparator run accepted the three statements in `CellLayerTheorems` against `Solution`, proving conditional whole-space and torus nonexistence separately and together. The authors report a separate interval-arithmetic evaluation of their numerical data, whose files and checker are absent from the pinned release. [Cell hypotheses](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/StatementDefs.lean#L6223-L6242) · [Conditional Comparator run](https://github.com/wcook04/proof-reader/actions/runs/44819023135)."
+   }
+  }
+ ]
+}
