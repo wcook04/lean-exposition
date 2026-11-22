@@ -266,6 +266,18 @@ describe("rendering the papers", () => {
     expect(leads.has("proof")).toBe(true);
   });
 
+  it("shows an image figure once: a bare 'Figure N' alt is no caption, a real one is kept", () => {
+    const md = "Intro.\n\n![Figure 1](figures/figure-1.svg)\n\n**Figure 1.** The real caption.\n\n![A sketch of the flow](figures/figure-2.svg)\n";
+    const doc = prepareDocument({ stage: "adapted", bytes: new TextEncoder().encode(md), documentPath: "adapted/paper.md", documentPaths: DOCUMENT_PATHS });
+    const el = dom(doc.parts.map((_, i) => doc.render(i).html).join(""));
+    const figs = [...el.querySelectorAll("figure.paper-figure--image")];
+    expect(figs.length).toBe(2);
+    expect(figs[0].querySelector("figcaption")).toBeNull();
+    expect(figs[0].querySelector("[data-figure-image]")!.getAttribute("data-figure-image")).toMatch(/paper-figures\/adapted\/figure-1\.svg$/);
+    expect(figs[1].querySelector("figcaption")!.textContent).toBe("A sketch of the flow");
+    expect(el.textContent!.match(/Figure 1/g)!.length).toBe(1);
+  });
+
   it("extracts figures with stable keys and typeset captions", () => {
     for (const name of ["expository", "architecture"]) {
       const figures = docs[name].parts.flatMap((p) => p.figures);
