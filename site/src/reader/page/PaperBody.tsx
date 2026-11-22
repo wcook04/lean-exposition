@@ -448,7 +448,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
     // Its formulas are fitted as the part is placed, wherever it is, in the frame it first paints:
     // a part typeset after the reader has passed it, or far ahead of them, would otherwise wait for
     // the reader to come back, or change later while the page is meant to be still.
-    fitters.get(textRef.current)?.(() => true, true);
+    fitNow(textRef.current);
     statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
       statements?.adopt(part.index, null);
@@ -855,6 +855,11 @@ function katexFacesLoaded(): Promise<unknown> {
   const fonts = document.fonts;
   if (typeof fonts?.load !== "function") return fonts?.ready ?? Promise.resolve();
   return Promise.all([fonts.load("1em KaTeX_Main"), fonts.load("italic 1em KaTeX_Math")]).catch(() => undefined);
+}
+
+/** Fit every display under a root markWideMaths has set up, now, wherever it is. */
+export function fitNow(root: HTMLElement): void {
+  fitters.get(root)?.(() => true, true);
 }
 
 export function markWideMaths(root: HTMLElement): () => void {

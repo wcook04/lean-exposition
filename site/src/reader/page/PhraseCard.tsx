@@ -9,7 +9,7 @@ import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
 import { renderTex } from "../math";
-import { markWideMaths } from "./PaperBody";
+import { fitNow, markWideMaths } from "./PaperBody";
 import site from "@instance/site";
 import { Signal } from "./signal";
 import { useLeanNote } from "../../lean/noteSummaries";
@@ -17,6 +17,20 @@ import { useLeanNote } from "../../lean/noteSummaries";
 const cache = new Map<Stage, Promise<PhraseNotes | null>>();
 /** Each paper's notes once they have arrived, so a card mounted later has them in its first render. */
 const arrived = new Map<Stage, PhraseNotes | null>();
+
+/** Start loading a paper's phrase notes, so a card opened later has them at once. */
+export function prefetchPhraseNotes(stage: Stage): void {
+  if (cache.has(stage)) return;
+  cache.set(
+    stage,
+    loadPhraseNotes(stage)
+      .catch(() => null)
+      .then((found) => {
+        arrived.set(stage, found);
+        return found;
+      }),
+  );
+}
 
 /**
  * Each part's titles and notes for one paper, loaded once; null for a paper without them, and
@@ -31,17 +45,8 @@ export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | nul
       return;
     }
     let live = true;
-    let pending = cache.get(stage);
-    if (!pending) {
-      pending = loadPhraseNotes(stage)
-        .catch(() => null)
-        .then((found) => {
-          arrived.set(stage, found);
-          return found;
-        });
-      cache.set(stage, pending);
-    }
-    void pending.then((found) => live && setNotes(found));
+    prefetchPhraseNotes(stage);
+    void cache.get(stage)!.then((found) => live && setNotes(found));
     return () => {
       live = false;
     };
@@ -336,7 +341,13 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
   const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
   // A quoted display formula is fitted to the card like one in the paper: it never scrolls sideways.
   const quoteRef = useRef<HTMLQuoteElement>(null);
-  useLayoutEffect(() => (quoteRef.current ? markWideMaths(quoteRef.current) : undefined), [quote]);
+  useLayoutEffect(() => {
+    if (!quoteRef.current) return undefined;
+    const stop = markWideMaths(quoteRef.current);
+    // Fitted in the frame the quotation first paints, as a part of the paper is.
+    fitNow(quoteRef.current);
+    return stop;
+  }, [quote]);
   return (
     <section className="phrase-card" aria-label="These words and how the Lean compares with them">
       {quote && <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />}

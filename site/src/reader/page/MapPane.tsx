@@ -36,7 +36,10 @@ import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./p
 import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
-import { dockDecl, noteHtml } from "./PhraseCard";
+import { dockDecl, noteHtml, prefetchPhraseNotes } from "./PhraseCard";
+import { loadComparator } from "../../lean/comparatorMark";
+import { loadLeanNotes } from "../../lean/noteSummaries";
+import { loadOurs } from "../../lean/ours";
 import "../../map/focus-graph.css";
 import "./map-pane.css";
 
@@ -505,6 +508,17 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const [aside, setAside] = useState<"start" | "guide" | "route" | null>(null);
   // A guide is read with nothing else in mind: a new selection takes its place.
   useEffect(() => setAside(null), [pin?.record, pin?.tie, decl, held]);
+  // What a selection's card and Lean read from is fetched once the page has settled, so the first
+  // selection's column, which waits for all of it to arrive together, comes at once.
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      prefetchPhraseNotes(stage);
+      void loadComparator();
+      void loadLeanNotes();
+      void loadOurs();
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [stage]);
   const holding = !!pin || !!decl || !!held;
   const bandState: SubjectState = decl
     ? "declaration"
