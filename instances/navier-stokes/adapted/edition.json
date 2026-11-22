@@ -19,38 +19,40 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "sha256": "be54ef47b75d359f9de108a45810b6f4a6a0bc06b4884fd88791d0d66c3213fd",
-   "bytes": 1220170
+   "bytes": 1225574,
+   "sha256": "3f822e7aa870e85fd9aa1092f6b95e14be3960f7e5b5970315ea1e5e60cbf457"
   },
   "release": {
-   "version": 5,
+   "version": 6,
    "date": "2026-11-22",
    "notes": [
-    "Shows how recurrence in similarity variables shrinks the physical length scale and increases the velocity.",
-    "Distinguishes the initial-data correction from the periodic-profile correction and identifies how the logarithmic phase enters both the domain and the far field."
+    "Reorganized the introduction around the recurrent reference flow, the obstruction posed by its tail, and the construction of finite-energy solutions on the whole space and torus.",
+    "Separated the finite-dimensional choice of initial velocity from the parameter correction that constructs a periodic profile.",
+    "Made explicit which conditions on the represented certificate data yield each analytic estimate, and how the radial phase enters the far-field residual.",
+    "Kept the numbered results and displayed equations in place and aligned the revised prose with the original paper and Lean source."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "navier-stokes-adapted-v5.pdf",
+   "name": "navier-stokes-adapted-v6.pdf",
    "label": "Reading copy",
-   "sha256": "ba1707cd6055c39e660b023c547da89ca6766e97226cc944ca38b4203555b086",
-   "bytes": 1158661
+   "bytes": 1161613,
+   "sha256": "1c48eababb3864465673d4ccd4f373f0b12478c42cfde3921d81fef5d8cefac5"
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "sha256": "d34e60fa85ac8933c3e6936cbf5074f3a2c8256c314faeefe5187d66dcafbefc",
-    "bytes": 56499
+    "bytes": 56497,
+    "sha256": "6bb9587e08f81dd019327a57a6806ee44650029051714c4eff4205ddb7dba434"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "sha256": "5c319b03dac0bc58ae573fce75932d82b9858b04f70c9fa6fd23818027ae497c",
-    "bytes": 109572
+    "bytes": 109568,
+    "sha256": "f21a7fd70771683d7900870b78f0058f1fcd41067d69c4d61c3a40e35a4395db"
    }
   }
  }
