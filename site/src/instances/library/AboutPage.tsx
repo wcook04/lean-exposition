@@ -11,6 +11,7 @@ const ADAPTED = PAPER.documents.find((d) => d.kind === "adapted");
 const AUTHORS = (ADAPTED && PAPER.documents.find((d) => d.id === ADAPTED.of)) || MAIN;
 import { SupplementaryChecks } from "./Checks";
 import { ComparatorSection } from "./Comparator";
+import { DifferencesSection } from "./Differences";
 import "../../reader/reader-content.css";
 import "../../reader/about.css";
 
@@ -61,6 +62,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <p>{PAPER.review}</p>
         <p>Comparisons are marked AI-assessed; plain titles and reading notes are marked AI-drafted. Topics are AI-assigned.</p>
       </section>
+      <DifferencesSection />
       <ComparatorSection />
       <SupplementaryChecks />
       <AboutUsing />
