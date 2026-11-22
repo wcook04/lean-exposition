@@ -7,16 +7,16 @@
    "key": "18934a8261a3f4a3",
    "shared_by": 1,
    "lightness": {
-    "light": 0.505,
+    "light": 0.495,
     "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.106,
+     0.101,
      0.201
     ],
     "dark": [
-     0.131,
+     0.129,
      0.213
     ]
    },
@@ -25,7 +25,7 @@
      "id": "solution",
      "name": "The singular solution",
      "named": true,
-     "hue": 14.5,
+     "hue": 19.5,
      "chroma": {
       "light": 0.19,
       "dark": 0.213
@@ -40,10 +40,10 @@
      "id": "induction",
      "name": "The inductive sequence",
      "named": true,
-     "hue": 62.93,
+     "hue": 66.43,
      "chroma": {
-      "light": 0.106,
-      "dark": 0.141
+      "light": 0.101,
+      "dark": 0.137
      },
      "topics": [
       "induction"
@@ -53,10 +53,10 @@
      "id": "waves",
      "name": "Waves and their amplification",
      "named": true,
-     "hue": 121.86,
+     "hue": 128.36,
      "chroma": {
       "light": 0.167,
-      "dark": 0.167
+      "dark": 0.173
      },
      "topics": [
       "amplification",
@@ -68,10 +68,10 @@
      "id": "endpoint",
      "name": "The endpoint problem",
      "named": true,
-     "hue": 163.29,
+     "hue": 169.29,
      "chroma": {
-      "light": 0.13,
-      "dark": 0.163
+      "light": 0.108,
+      "dark": 0.141
      },
      "topics": [
       "endpoint-inverse"
@@ -81,10 +81,10 @@
      "id": "approximate",
      "name": "The approximate solution",
      "named": true,
-     "hue": 226.71,
+     "hue": 227.71,
      "chroma": {
-      "light": 0.132,
-      "dark": 0.131
+      "light": 0.131,
+      "dark": 0.129
      },
      "topics": [
       "pressure-flow",
@@ -96,7 +96,7 @@
      "id": "expansion",
      "name": "The finite expansion and the mean",
      "named": true,
-     "hue": 275.14,
+     "hue": 280.14,
      "chroma": {
       "light": 0.201,
       "dark": 0.201
@@ -110,7 +110,7 @@
      "id": "supporting",
      "name": "Cutoff and finite norms",
      "named": true,
-     "hue": 329.57,
+     "hue": 335.57,
      "chroma": {
       "light": 0.19,
       "dark": 0.19
@@ -124,86 +124,86 @@
     "auxiliary-smoothness": {
      "index": 0,
      "family": "solution",
-     "light": "oklch(0.390 0.156 6.3)",
-     "dark": "oklch(0.545 0.213 6.3)"
+     "light": "oklch(0.413 0.165 11.8)",
+     "dark": "oklch(0.578 0.213 11.8)"
     },
     "terminal": {
      "index": 1,
      "family": "solution",
-     "light": "oklch(0.510 0.190 14.5)",
-     "dark": "oklch(0.665 0.190 14.5)"
+     "light": "oklch(0.535 0.190 19.5)",
+     "dark": "oklch(0.700 0.190 19.5)"
     },
     "singularity": {
      "index": 2,
      "family": "solution",
-     "light": "oklch(0.630 0.167 22.7)",
-     "dark": "oklch(0.785 0.124 22.7)"
+     "light": "oklch(0.657 0.167 27.2)",
+     "dark": "oklch(0.822 0.099 27.2)"
     },
     "induction": {
      "index": 3,
      "family": "induction",
-     "light": "oklch(0.465 0.106 62.9)",
-     "dark": "oklch(0.620 0.141 62.9)"
+     "light": "oklch(0.455 0.101 66.4)",
+     "dark": "oklch(0.620 0.137 66.4)"
     },
     "amplification": {
      "index": 4,
      "family": "waves",
-     "light": "oklch(0.385 0.086 113.6)",
-     "dark": "oklch(0.540 0.121 113.6)"
+     "light": "oklch(0.373 0.089 120.6)",
+     "dark": "oklch(0.538 0.128 120.6)"
     },
     "affine-wave": {
      "index": 5,
      "family": "waves",
-     "light": "oklch(0.505 0.122 121.9)",
-     "dark": "oklch(0.660 0.159 121.9)"
+     "light": "oklch(0.495 0.130 128.4)",
+     "dark": "oklch(0.660 0.173 128.4)"
     },
     "localized-wave": {
      "index": 6,
      "family": "waves",
-     "light": "oklch(0.625 0.167 130.1)",
-     "dark": "oklch(0.780 0.167 130.1)"
+     "light": "oklch(0.617 0.167 136.1)",
+     "dark": "oklch(0.782 0.167 136.1)"
     },
     "endpoint-inverse": {
      "index": 7,
      "family": "endpoint",
-     "light": "oklch(0.605 0.130 163.3)",
-     "dark": "oklch(0.760 0.163 163.3)"
+     "light": "oklch(0.545 0.108 169.3)",
+     "dark": "oklch(0.710 0.141 169.3)"
     },
     "pressure-flow": {
      "index": 8,
      "family": "approximate",
-     "light": "oklch(0.385 0.069 218.5)",
-     "dark": "oklch(0.540 0.097 218.5)"
+     "light": "oklch(0.373 0.068 220.0)",
+     "dark": "oklch(0.538 0.098 220.0)"
     },
     "approximate": {
      "index": 9,
      "family": "approximate",
-     "light": "oklch(0.505 0.097 226.7)",
-     "dark": "oklch(0.660 0.127 226.7)"
+     "light": "oklch(0.495 0.096 227.7)",
+     "dark": "oklch(0.660 0.128 227.7)"
     },
     "parent-step": {
      "index": 10,
      "family": "approximate",
-     "light": "oklch(0.625 0.132 234.9)",
-     "dark": "oklch(0.780 0.131 234.9)"
+     "light": "oklch(0.617 0.131 235.4)",
+     "dark": "oklch(0.782 0.129 235.4)"
     },
     "hierarchy": {
      "index": 11,
      "family": "expansion",
-     "light": "oklch(0.430 0.201 271.0)",
-     "dark": "oklch(0.585 0.201 271.0)"
+     "light": "oklch(0.459 0.201 276.3)",
+     "dark": "oklch(0.624 0.201 276.3)"
     },
     "mean-estimates": {
      "index": 12,
      "family": "expansion",
-     "light": "oklch(0.550 0.179 279.3)",
-     "dark": "oklch(0.705 0.156 279.3)"
+     "light": "oklch(0.581 0.179 284.0)",
+     "dark": "oklch(0.746 0.135 284.0)"
     },
     "supporting-estimates": {
      "index": 13,
      "family": "supporting",
-     "light": "oklch(0.565 0.190 329.6)",
-     "dark": "oklch(0.720 0.190 329.6)"
+     "light": "oklch(0.595 0.190 335.6)",
+     "dark": "oklch(0.760 0.190 335.6)"
     }
    }
   }

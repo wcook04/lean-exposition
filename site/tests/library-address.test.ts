@@ -114,7 +114,8 @@ describe("library addresses", () => {
 
   it("an address that names no phrase opens the paper with its notice, at no phrase", () => {
     const { route, href } = roundTrip(`${BASE}/@no-such-phrase`);
-    expect(route).toMatchObject({ stage: "short", missing: "no-such-phrase", node: undefined });
+    expect(route).toMatchObject({ stage: "short", missing: "no-such-phrase" });
+    expect(route.node).toBeUndefined();
     expect(href).toBe(`${BASE}/@no-such-phrase`);
   });
 

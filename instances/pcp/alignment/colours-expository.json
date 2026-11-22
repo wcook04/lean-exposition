@@ -7,16 +7,16 @@
    "key": "4981a2460fc5b874",
    "shared_by": 4,
    "lightness": {
-    "light": 0.55,
-    "dark": 0.66
+    "light": 0.455,
+    "dark": 0.68
    },
    "chroma": {
     "light": [
-     0.112,
-     0.213
+     0.09,
+     0.193
     ],
     "dark": [
-     0.131,
+     0.13,
      0.213
     ]
    },
@@ -25,7 +25,7 @@
      "id": "np-and-pcp",
      "name": "NP and PCP",
      "named": true,
-     "hue": 24.5,
+     "hue": 25.5,
      "chroma": {
       "light": 0.19,
       "dark": 0.213
@@ -40,9 +40,9 @@
      "id": "polynomials-and-grids",
      "name": "Polynomials and grids",
      "named": true,
-     "hue": 69.5,
+     "hue": 72,
      "chroma": {
-      "light": 0.135,
+      "light": 0.111,
       "dark": 0.158
      },
      "topics": [
@@ -55,9 +55,9 @@
      "id": "three-colouring-verifier",
      "name": "Three-colouring verifier",
      "named": true,
-     "hue": 124,
+     "hue": 119,
      "chroma": {
-      "light": 0.166,
+      "light": 0.146,
       "dark": 0.167
      },
      "topics": [
@@ -70,10 +70,10 @@
      "id": "local-correction-and-grid-testing",
      "name": "Local correction and grid testing",
      "named": true,
-     "hue": 159.5,
+     "hue": 157,
      "chroma": {
-      "light": 0.129,
-      "dark": 0.152
+      "light": 0.123,
+      "dark": 0.167
      },
      "topics": [
       "zero-on-grid-test",
@@ -85,10 +85,10 @@
      "id": "binary-low-degree-testing",
      "name": "Binary low-degree testing",
      "named": true,
-     "hue": 213.5,
+     "hue": 207,
      "chroma": {
-      "light": 0.112,
-      "dark": 0.131
+      "light": 0.09,
+      "dark": 0.13
      },
      "topics": [
       "binary-low-degree-test",
@@ -100,10 +100,10 @@
      "id": "field-low-degree-testing",
      "name": "Low-degree testing over fields",
      "named": true,
-     "hue": 257.5,
+     "hue": 250.5,
      "chroma": {
-      "light": 0.19,
-      "dark": 0.188
+      "light": 0.167,
+      "dark": 0.148
      },
      "topics": [
       "point-line-test",
@@ -115,9 +115,9 @@
      "id": "hadamard-encoding",
      "name": "Hadamard encoding",
      "named": true,
-     "hue": 304.5,
+     "hue": 293,
      "chroma": {
-      "light": 0.213,
+      "light": 0.193,
       "dark": 0.213
      },
      "topics": [
@@ -130,9 +130,9 @@
      "id": "verifier-model-and-resources",
      "name": "Verifier model and resources",
      "named": true,
-     "hue": 344,
+     "hue": 343.5,
      "chroma": {
-      "light": 0.212,
+      "light": 0.19,
       "dark": 0.213
      },
      "topics": [
@@ -146,146 +146,146 @@
     "pcp-characterization": {
      "index": 0,
      "family": "np-and-pcp",
-     "light": "oklch(0.425 0.170 19.1)",
-     "dark": "oklch(0.535 0.213 19.1)"
+     "light": "oklch(0.378 0.151 18.8)",
+     "dark": "oklch(0.603 0.213 18.8)"
     },
     "np-witnesses": {
      "index": 1,
      "family": "np-and-pcp",
-     "light": "oklch(0.510 0.190 24.5)",
-     "dark": "oklch(0.620 0.190 24.5)"
+     "light": "oklch(0.500 0.190 25.5)",
+     "dark": "oklch(0.725 0.170 25.5)"
     },
     "np-reduction": {
      "index": 2,
      "family": "np-and-pcp",
-     "light": "oklch(0.595 0.167 29.9)",
-     "dark": "oklch(0.705 0.167 29.9)"
+     "light": "oklch(0.622 0.167 32.3)",
+     "dark": "oklch(0.847 0.084 32.3)"
     },
     "polynomial-distance": {
      "index": 3,
      "family": "polynomials-and-grids",
-     "light": "oklch(0.470 0.106 64.1)",
-     "dark": "oklch(0.580 0.131 64.1)"
+     "light": "oklch(0.293 0.065 65.3)",
+     "dark": "oklch(0.518 0.116 65.3)"
     },
     "grid-interpolation": {
      "index": 4,
      "family": "polynomials-and-grids",
-     "light": "oklch(0.555 0.120 69.5)",
-     "dark": "oklch(0.665 0.144 69.5)"
+     "light": "oklch(0.415 0.089 72.0)",
+     "dark": "oklch(0.640 0.137 72.0)"
     },
     "vanishing-certificates": {
      "index": 5,
      "family": "polynomials-and-grids",
-     "light": "oklch(0.640 0.135 74.9)",
-     "dark": "oklch(0.750 0.158 74.9)"
+     "light": "oklch(0.537 0.111 78.8)",
+     "dark": "oklch(0.762 0.158 78.8)"
     },
     "colouring-constraints": {
      "index": 6,
      "family": "three-colouring-verifier",
-     "light": "oklch(0.455 0.106 118.6)",
-     "dark": "oklch(0.565 0.132 118.6)"
+     "light": "oklch(0.333 0.074 112.3)",
+     "dark": "oklch(0.558 0.123 112.3)"
     },
     "proof-tables-checks": {
      "index": 7,
      "family": "three-colouring-verifier",
-     "light": "oklch(0.540 0.134 124.0)",
-     "dark": "oklch(0.650 0.161 124.0)"
+     "light": "oklch(0.455 0.107 119.0)",
+     "dark": "oklch(0.680 0.159 119.0)"
     },
     "colouring-guarantees": {
      "index": 8,
      "family": "three-colouring-verifier",
-     "light": "oklch(0.625 0.166 129.4)",
-     "dark": "oklch(0.735 0.167 129.4)"
+     "light": "oklch(0.577 0.146 125.8)",
+     "dark": "oklch(0.802 0.167 125.8)"
     },
     "zero-on-grid-test": {
      "index": 9,
      "family": "local-correction-and-grid-testing",
-     "light": "oklch(0.445 0.112 154.1)",
-     "dark": "oklch(0.555 0.139 154.1)"
+     "light": "oklch(0.333 0.091 150.3)",
+     "dark": "oklch(0.558 0.152 150.3)"
     },
     "field-local-correction": {
      "index": 10,
      "family": "local-correction-and-grid-testing",
-     "light": "oklch(0.530 0.120 159.5)",
-     "dark": "oklch(0.640 0.146 159.5)"
+     "light": "oklch(0.455 0.108 157.0)",
+     "dark": "oklch(0.680 0.161 157.0)"
     },
     "binary-local-correction": {
      "index": 11,
      "family": "local-correction-and-grid-testing",
-     "light": "oklch(0.615 0.129 164.9)",
-     "dark": "oklch(0.725 0.152 164.9)"
+     "light": "oklch(0.577 0.123 163.8)",
+     "dark": "oklch(0.802 0.167 163.8)"
     },
     "binary-low-degree-test": {
      "index": 12,
      "family": "binary-low-degree-testing",
-     "light": "oklch(0.450 0.077 208.1)",
-     "dark": "oklch(0.560 0.096 208.1)"
+     "light": "oklch(0.273 0.046 200.3)",
+     "dark": "oklch(0.498 0.084 200.3)"
     },
     "inner-low-degree-test": {
      "index": 13,
      "family": "binary-low-degree-testing",
-     "light": "oklch(0.535 0.093 213.5)",
-     "dark": "oklch(0.645 0.113 213.5)"
+     "light": "oklch(0.395 0.067 207.0)",
+     "dark": "oklch(0.620 0.106 207.0)"
     },
     "set-multilinear-encoding": {
      "index": 14,
      "family": "binary-low-degree-testing",
-     "light": "oklch(0.620 0.112 218.9)",
-     "dark": "oklch(0.730 0.131 218.9)"
+     "light": "oklch(0.517 0.090 213.8)",
+     "dark": "oklch(0.742 0.130 213.8)"
     },
     "point-line-test": {
      "index": 15,
      "family": "field-low-degree-testing",
-     "light": "oklch(0.455 0.136 252.1)",
-     "dark": "oklch(0.565 0.169 252.1)"
+     "light": "oklch(0.378 0.092 243.8)",
+     "dark": "oklch(0.603 0.148 243.8)"
     },
     "standard-low-degree-test": {
      "index": 16,
      "family": "field-low-degree-testing",
-     "light": "oklch(0.540 0.190 257.5)",
-     "dark": "oklch(0.650 0.188 257.5)"
+     "light": "oklch(0.500 0.143 250.5)",
+     "dark": "oklch(0.725 0.148 250.5)"
     },
     "bivariate-agreement": {
      "index": 17,
      "family": "field-low-degree-testing",
-     "light": "oklch(0.625 0.167 262.9)",
-     "dark": "oklch(0.735 0.136 262.9)"
+     "light": "oklch(0.622 0.167 257.3)",
+     "dark": "oklch(0.847 0.076 257.3)"
     },
     "hadamard-labels": {
      "index": 18,
      "family": "hadamard-encoding",
-     "light": "oklch(0.475 0.213 299.1)",
-     "dark": "oklch(0.585 0.213 299.1)"
+     "light": "oklch(0.333 0.193 286.3)",
+     "dark": "oklch(0.558 0.213 286.3)"
     },
     "hadamard-testing": {
      "index": 19,
      "family": "hadamard-encoding",
-     "light": "oklch(0.560 0.190 304.5)",
-     "dark": "oklch(0.670 0.190 304.5)"
+     "light": "oklch(0.455 0.190 293.0)",
+     "dark": "oklch(0.680 0.186 293.0)"
     },
     "linearity-self-correction": {
      "index": 20,
      "family": "hadamard-encoding",
-     "light": "oklch(0.645 0.167 309.9)",
-     "dark": "oklch(0.755 0.167 309.9)"
+     "light": "oklch(0.577 0.167 299.8)",
+     "dark": "oklch(0.802 0.117 299.8)"
     },
     "machine-implementation": {
      "index": 21,
      "family": "verifier-model-and-resources",
-     "light": "oklch(0.485 0.212 338.6)",
-     "dark": "oklch(0.595 0.213 338.6)"
+     "light": "oklch(0.413 0.182 336.8)",
+     "dark": "oklch(0.638 0.213 336.8)"
     },
     "verifier-model": {
      "index": 22,
      "family": "verifier-model-and-resources",
-     "light": "oklch(0.570 0.190 344.0)",
-     "dark": "oklch(0.680 0.190 344.0)"
+     "light": "oklch(0.535 0.190 343.5)",
+     "dark": "oklch(0.760 0.185 343.5)"
     },
     "resource-bounds": {
      "index": 23,
      "family": "verifier-model-and-resources",
-     "light": "oklch(0.655 0.167 349.4)",
-     "dark": "oklch(0.765 0.167 349.4)"
+     "light": "oklch(0.657 0.167 350.3)",
+     "dark": "oklch(0.882 0.073 350.3)"
     }
    }
   }

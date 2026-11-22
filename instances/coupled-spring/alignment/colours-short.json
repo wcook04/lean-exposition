@@ -7,7 +7,7 @@
    "key": "e17dcf5d5eb36783",
    "shared_by": 1,
    "lightness": {
-    "light": 0.535,
+    "light": 0.5,
     "dark": 0.66
    },
    "chroma": {
@@ -16,7 +16,7 @@
      0.201
     ],
     "dark": [
-     0.161,
+     0.169,
      0.201
     ]
    },
@@ -27,8 +27,8 @@
      "named": true,
      "hue": 61,
      "chroma": {
-      "light": 0.142,
-      "dark": 0.17
+      "light": 0.14,
+      "dark": 0.169
      },
      "topics": [
       "potential-and-minimum",
@@ -39,10 +39,10 @@
      "id": "second-derivative-test",
      "name": "The second derivative test",
      "named": true,
-     "hue": 160,
+     "hue": 155,
      "chroma": {
       "light": 0.126,
-      "dark": 0.161
+      "dark": 0.179
      },
      "topics": [
       "analytic-minimum-test",
@@ -54,7 +54,7 @@
      "id": "cubic-perturbation",
      "name": "The cubic perturbation",
      "named": true,
-     "hue": 255.5,
+     "hue": 263,
      "chroma": {
       "light": 0.179,
       "dark": 0.183
@@ -68,7 +68,7 @@
      "id": "smoothness-and-symmetry",
      "name": "Smoothness and symmetry",
      "named": true,
-     "hue": 348.5,
+     "hue": 346,
      "chroma": {
       "light": 0.201,
       "dark": 0.201
@@ -83,56 +83,56 @@
     "potential-and-minimum": {
      "index": 0,
      "family": "the-potential",
-     "light": "oklch(0.558 0.137 55.6)",
-     "dark": "oklch(0.683 0.167 55.6)"
+     "light": "oklch(0.519 0.129 54.3)",
+     "dark": "oklch(0.679 0.169 54.3)"
     },
     "potential-derivatives": {
      "index": 1,
      "family": "the-potential",
-     "light": "oklch(0.643 0.142 66.4)",
-     "dark": "oklch(0.768 0.170 66.4)"
+     "light": "oklch(0.641 0.140 67.8)",
+     "dark": "oklch(0.801 0.155 67.8)"
     },
     "analytic-minimum-test": {
      "index": 2,
      "family": "second-derivative-test",
-     "light": "oklch(0.450 0.126 149.2)",
-     "dark": "oklch(0.575 0.161 149.2)"
+     "light": "oklch(0.378 0.126 141.5)",
+     "dark": "oklch(0.538 0.179 141.5)"
     },
     "quadratic-lower-bound": {
      "index": 3,
      "family": "second-derivative-test",
-     "light": "oklch(0.535 0.121 160.0)",
-     "dark": "oklch(0.660 0.149 160.0)"
+     "light": "oklch(0.500 0.123 155.0)",
+     "dark": "oklch(0.660 0.163 155.0)"
     },
     "taylor-remainder": {
      "index": 4,
      "family": "second-derivative-test",
-     "light": "oklch(0.620 0.121 170.8)",
-     "dark": "oklch(0.745 0.146 170.8)"
+     "light": "oklch(0.622 0.125 168.5)",
+     "dark": "oklch(0.782 0.157 168.5)"
     },
     "cubic-local-minimum": {
      "index": 5,
      "family": "cubic-perturbation",
-     "light": "oklch(0.543 0.154 250.1)",
-     "dark": "oklch(0.668 0.183 250.1)"
+     "light": "oklch(0.499 0.172 256.3)",
+     "dark": "oklch(0.659 0.183 256.3)"
     },
     "failure-of-global-minimality": {
      "index": 6,
      "family": "cubic-perturbation",
-     "light": "oklch(0.628 0.179 260.9)",
-     "dark": "oklch(0.753 0.126 260.9)"
+     "light": "oklch(0.621 0.179 269.8)",
+     "dark": "oklch(0.781 0.110 269.8)"
     },
     "smoothness-assumption": {
      "index": 7,
      "family": "smoothness-and-symmetry",
-     "light": "oklch(0.573 0.201 343.1)",
-     "dark": "oklch(0.698 0.201 343.1)"
+     "light": "oklch(0.519 0.201 339.3)",
+     "dark": "oklch(0.679 0.201 339.3)"
     },
     "polar-form": {
      "index": 8,
      "family": "smoothness-and-symmetry",
-     "light": "oklch(0.658 0.179 353.9)",
-     "dark": "oklch(0.783 0.145 353.9)"
+     "light": "oklch(0.641 0.179 352.8)",
+     "dark": "oklch(0.801 0.131 352.8)"
     }
    }
   }

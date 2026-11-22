@@ -7,16 +7,16 @@
    "key": "660f5ae3f23e3eae",
    "shared_by": 1,
    "lightness": {
-    "light": 0.535,
-    "dark": 0.67
+    "light": 0.5,
+    "dark": 0.675
    },
    "chroma": {
     "light": [
-     0.116,
+     0.123,
      0.201
     ],
     "dark": [
-     0.142,
+     0.123,
      0.201
     ]
    },
@@ -39,10 +39,10 @@
      "id": "lexical-tokens",
      "name": "Lexical tokens",
      "named": true,
-     "hue": 69.43,
+     "hue": 66.43,
      "chroma": {
-      "light": 0.134,
-      "dark": 0.163
+      "light": 0.123,
+      "dark": 0.16
      },
      "topics": [
       "symbols-keywords",
@@ -54,10 +54,10 @@
      "id": "terms",
      "name": "Terms",
      "named": true,
-     "hue": 132.86,
+     "hue": 109.86,
      "chroma": {
-      "light": 0.167,
-      "dark": 0.188
+      "light": 0.145,
+      "dark": 0.167
      },
      "topics": [
       "pattern-matching",
@@ -69,10 +69,10 @@
      "id": "attributes",
      "name": "Attributes",
      "named": true,
-     "hue": 172.29,
+     "hue": 160.29,
      "chroma": {
-      "light": 0.116,
-      "dark": 0.142
+      "light": 0.132,
+      "dark": 0.169
      },
      "topics": [
       "term-annotations",
@@ -83,10 +83,10 @@
      "id": "commands-scripts",
      "name": "Commands and scripts",
      "named": true,
-     "hue": 235.71,
+     "hue": 221.71,
      "chroma": {
-      "light": 0.149,
-      "dark": 0.145
+      "light": 0.123,
+      "dark": 0.129
      },
      "topics": [
       "command-syntax-options",
@@ -98,10 +98,10 @@
      "id": "sexpressions",
      "name": "S-expressions",
      "named": true,
-     "hue": 285.64,
+     "hue": 275.14,
      "chroma": {
       "light": 0.19,
-      "dark": 0.158
+      "dark": 0.123
      },
      "topics": [
       "sexpressions-constants"
@@ -111,7 +111,7 @@
      "id": "identifiers-sorts",
      "name": "Identifiers and sorts",
      "named": true,
-     "hue": 338.57,
+     "hue": 326.57,
      "chroma": {
       "light": 0.201,
       "dark": 0.201
@@ -126,98 +126,98 @@
     "source-text-tokenization": {
      "index": 0,
      "family": "source-text",
-     "light": "oklch(0.418 0.167 14.9)",
-     "dark": "oklch(0.553 0.201 14.9)"
+     "light": "oklch(0.434 0.173 14.1)",
+     "dark": "oklch(0.609 0.201 14.1)"
     },
     "character-classes": {
      "index": 1,
      "family": "source-text",
-     "light": "oklch(0.503 0.179 21.1)",
-     "dark": "oklch(0.638 0.179 21.1)"
+     "light": "oklch(0.556 0.179 21.9)",
+     "dark": "oklch(0.731 0.165 21.9)"
     },
     "symbols-keywords": {
      "index": 2,
      "family": "lexical-tokens",
-     "light": "oklch(0.470 0.107 63.3)",
-     "dark": "oklch(0.605 0.137 63.3)"
+     "light": "oklch(0.338 0.080 58.7)",
+     "dark": "oklch(0.513 0.121 58.7)"
     },
     "numeric-literals": {
      "index": 3,
      "family": "lexical-tokens",
-     "light": "oklch(0.555 0.120 69.4)",
-     "dark": "oklch(0.690 0.150 69.4)"
+     "light": "oklch(0.460 0.102 66.4)",
+     "dark": "oklch(0.635 0.140 66.4)"
     },
     "string-literals": {
      "index": 4,
      "family": "lexical-tokens",
-     "light": "oklch(0.640 0.134 75.6)",
-     "dark": "oklch(0.775 0.163 75.6)"
+     "light": "oklch(0.582 0.123 74.1)",
+     "dark": "oklch(0.757 0.160 74.1)"
     },
     "pattern-matching": {
      "index": 5,
      "family": "terms",
-     "light": "oklch(0.450 0.115 126.7)",
-     "dark": "oklch(0.585 0.150 126.7)"
+     "light": "oklch(0.383 0.080 102.2)",
+     "dark": "oklch(0.558 0.117 102.2)"
     },
     "term-grammar": {
      "index": 6,
      "family": "terms",
-     "light": "oklch(0.535 0.150 132.9)",
-     "dark": "oklch(0.670 0.188 132.9)"
+     "light": "oklch(0.505 0.110 109.9)",
+     "dark": "oklch(0.680 0.148 109.9)"
     },
     "variables-scope": {
      "index": 7,
      "family": "terms",
-     "light": "oklch(0.620 0.167 139.0)",
-     "dark": "oklch(0.755 0.167 139.0)"
+     "light": "oklch(0.627 0.145 117.6)",
+     "dark": "oklch(0.802 0.167 117.6)"
     },
     "term-annotations": {
      "index": 8,
      "family": "attributes",
-     "light": "oklch(0.538 0.107 169.2)",
-     "dark": "oklch(0.673 0.134 169.2)"
+     "light": "oklch(0.499 0.120 156.4)",
+     "dark": "oklch(0.674 0.162 156.4)"
     },
     "attribute-syntax": {
      "index": 9,
      "family": "attributes",
-     "light": "oklch(0.622 0.116 175.4)",
-     "dark": "oklch(0.758 0.142 175.4)"
+     "light": "oklch(0.621 0.132 164.1)",
+     "dark": "oklch(0.796 0.169 164.1)"
     },
     "command-syntax-options": {
      "index": 10,
      "family": "commands-scripts",
-     "light": "oklch(0.460 0.091 229.5)",
-     "dark": "oklch(0.595 0.117 229.5)"
+     "light": "oklch(0.378 0.066 214.0)",
+     "dark": "oklch(0.553 0.097 214.0)"
     },
     "scripts-interaction": {
      "index": 11,
      "family": "commands-scripts",
-     "light": "oklch(0.545 0.116 235.7)",
-     "dark": "oklch(0.680 0.145 235.7)"
+     "light": "oklch(0.500 0.092 221.7)",
+     "dark": "oklch(0.675 0.124 221.7)"
     },
     "declarations-definitions": {
      "index": 12,
      "family": "commands-scripts",
-     "light": "oklch(0.630 0.149 241.9)",
-     "dark": "oklch(0.765 0.132 241.9)"
+     "light": "oklch(0.622 0.123 229.4)",
+     "dark": "oklch(0.797 0.129 229.4)"
     },
     "sexpressions-constants": {
      "index": 13,
      "family": "sexpressions",
-     "light": "oklch(0.575 0.190 285.6)",
-     "dark": "oklch(0.710 0.158 285.6)"
+     "light": "oklch(0.585 0.190 275.1)",
+     "dark": "oklch(0.760 0.123 275.1)"
     },
     "indexed-identifiers": {
      "index": 14,
      "family": "identifiers-sorts",
-     "light": "oklch(0.508 0.201 335.5)",
-     "dark": "oklch(0.643 0.201 335.5)"
+     "light": "oklch(0.439 0.201 322.7)",
+     "dark": "oklch(0.614 0.201 322.7)"
     },
     "sort-expressions": {
      "index": 15,
      "family": "identifiers-sorts",
-     "light": "oklch(0.593 0.179 341.7)",
-     "dark": "oklch(0.728 0.179 341.7)"
+     "light": "oklch(0.561 0.179 330.4)",
+     "dark": "oklch(0.736 0.179 330.4)"
     }
    }
   }

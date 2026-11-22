@@ -7,17 +7,17 @@
    "key": "f3c5d51eefaaf881",
    "shared_by": 1,
    "lightness": {
-    "light": 0.56,
-    "dark": 0.68
+    "light": 0.52,
+    "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.137,
+     0.14,
      0.19
     ],
     "dark": [
-     0.139,
-     0.199
+     0.167,
+     0.191
     ]
    },
    "families": [
@@ -25,10 +25,10 @@
      "id": "family-model",
      "name": "The SK model and Parisi functional · Full support and variational conditions · Excluding gaps in the support",
      "named": false,
-     "hue": 56.5,
+     "hue": 55,
      "chroma": {
-      "light": 0.137,
-      "dark": 0.163
+      "light": 0.14,
+      "dark": 0.167
      },
      "topics": [
       "support",
@@ -40,10 +40,10 @@
      "id": "family-shape",
      "name": "Heat equations and shape inequalities · The rational identity and coercive inequality",
      "named": false,
-     "hue": 151.5,
+     "hue": 153.5,
      "chroma": {
-      "light": 0.16,
-      "dark": 0.199
+      "light": 0.149,
+      "dark": 0.191
      },
      "topics": [
       "certificate",
@@ -54,10 +54,10 @@
      "id": "family-energy",
      "name": "Ground-state energy and Gaussian approximation · QAOA and optimisation consequences",
      "named": false,
-     "hue": 246,
+     "hue": 256.5,
      "chroma": {
       "light": 0.179,
-      "dark": 0.139
+      "dark": 0.168
      },
      "topics": [
       "energy",
@@ -68,7 +68,7 @@
      "id": "family-density",
      "name": "Smoothness and positive density",
      "named": false,
-     "hue": 325,
+     "hue": 341,
      "chroma": {
       "light": 0.19,
       "dark": 0.19
@@ -82,50 +82,50 @@
     "support": {
      "index": 0,
      "family": "family-model",
-     "light": "oklch(0.400 0.120 42.1)",
-     "dark": "oklch(0.520 0.156 42.1)"
+     "light": "oklch(0.398 0.121 41.5)",
+     "dark": "oklch(0.538 0.164 41.5)"
     },
     "gap": {
      "index": 1,
      "family": "family-model",
-     "light": "oklch(0.520 0.126 56.5)",
-     "dark": "oklch(0.640 0.155 56.5)"
+     "light": "oklch(0.520 0.128 55.0)",
+     "dark": "oklch(0.660 0.163 55.0)"
     },
     "model": {
      "index": 2,
      "family": "family-model",
-     "light": "oklch(0.640 0.137 70.9)",
-     "dark": "oklch(0.760 0.163 70.9)"
+     "light": "oklch(0.642 0.140 68.5)",
+     "dark": "oklch(0.782 0.167 68.5)"
     },
     "certificate": {
      "index": 3,
      "family": "family-shape",
-     "light": "oklch(0.500 0.160 144.3)",
-     "dark": "oklch(0.620 0.199 144.3)"
+     "light": "oklch(0.499 0.149 146.8)",
+     "dark": "oklch(0.639 0.191 146.8)"
     },
     "shape": {
      "index": 4,
      "family": "family-shape",
-     "light": "oklch(0.620 0.143 158.7)",
-     "dark": "oklch(0.740 0.171 158.7)"
+     "light": "oklch(0.621 0.139 160.3)",
+     "dark": "oklch(0.761 0.171 160.3)"
     },
     "energy": {
      "index": 5,
      "family": "family-energy",
-     "light": "oklch(0.500 0.112 238.8)",
-     "dark": "oklch(0.620 0.139 238.8)"
+     "light": "oklch(0.459 0.129 249.7)",
+     "dark": "oklch(0.599 0.168 249.7)"
     },
     "qaoa": {
      "index": 6,
      "family": "family-energy",
-     "light": "oklch(0.620 0.179 253.2)",
-     "dark": "oklch(0.740 0.137 253.2)"
+     "light": "oklch(0.581 0.179 263.3)",
+     "dark": "oklch(0.721 0.144 263.3)"
     },
     "density": {
      "index": 7,
      "family": "family-density",
-     "light": "oklch(0.555 0.190 325.0)",
-     "dark": "oklch(0.675 0.190 325.0)"
+     "light": "oklch(0.440 0.190 341.0)",
+     "dark": "oklch(0.580 0.190 341.0)"
     }
    }
   }

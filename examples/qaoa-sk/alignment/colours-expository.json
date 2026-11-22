@@ -7,17 +7,17 @@
    "key": "0740139f71c4ab95",
    "shared_by": 1,
    "lightness": {
-    "light": 0.49,
+    "light": 0.485,
     "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.125,
+     0.124,
      0.201
     ],
     "dark": [
-     0.126,
-     0.191
+     0.125,
+     0.192
     ]
    },
    "families": [
@@ -25,7 +25,7 @@
      "id": "family-spins",
      "name": "Spins, couplings and overlap",
      "named": false,
-     "hue": 358,
+     "hue": 359,
      "chroma": {
       "light": 0.19,
       "dark": 0.19
@@ -40,7 +40,7 @@
      "named": false,
      "hue": 66,
      "chroma": {
-      "light": 0.131,
+      "light": 0.13,
       "dark": 0.169
      },
      "topics": [
@@ -51,10 +51,10 @@
      "id": "family-full-support",
      "name": "Full support and moment identities · Curvature and gap contradictions · Ground-state value and consequences",
      "named": false,
-     "hue": 152.5,
+     "hue": 151.5,
      "chroma": {
-      "light": 0.132,
-      "dark": 0.18
+      "light": 0.134,
+      "dark": 0.179
      },
      "topics": [
       "spin-consequences",
@@ -66,10 +66,10 @@
      "id": "family-control-value",
      "name": "Control value and Parisi functional · Feedback and moment curves",
      "named": false,
-     "hue": 224,
+     "hue": 224.5,
      "chroma": {
-      "light": 0.125,
-      "dark": 0.126
+      "light": 0.124,
+      "dark": 0.125
      },
      "topics": [
       "control-value",
@@ -83,7 +83,7 @@
      "hue": 282,
      "chroma": {
       "light": 0.201,
-      "dark": 0.191
+      "dark": 0.192
      },
      "topics": [
       "first-variation",
@@ -95,56 +95,56 @@
     "spins": {
      "index": 0,
      "family": "family-spins",
-     "light": "oklch(0.490 0.190 358.0)",
-     "dark": "oklch(0.660 0.190 358.0)"
+     "light": "oklch(0.505 0.190 359.0)",
+     "dark": "oklch(0.680 0.190 359.0)"
     },
     "order-parameter": {
      "index": 1,
      "family": "family-order-parameter",
-     "light": "oklch(0.590 0.131 66.0)",
+     "light": "oklch(0.585 0.130 66.0)",
      "dark": "oklch(0.760 0.169 66.0)"
     },
     "spin-consequences": {
      "index": 2,
      "family": "family-full-support",
-     "light": "oklch(0.380 0.125 141.0)",
-     "dark": "oklch(0.550 0.180 141.0)"
+     "light": "oklch(0.373 0.122 140.7)",
+     "dark": "oklch(0.548 0.179 140.7)"
     },
     "curvature": {
      "index": 3,
      "family": "family-full-support",
-     "light": "oklch(0.500 0.130 152.5)",
-     "dark": "oklch(0.670 0.174 152.5)"
+     "light": "oklch(0.495 0.131 151.5)",
+     "dark": "oklch(0.670 0.178 151.5)"
     },
     "full-support": {
      "index": 4,
      "family": "family-full-support",
-     "light": "oklch(0.620 0.132 164.0)",
-     "dark": "oklch(0.790 0.167 164.0)"
+     "light": "oklch(0.617 0.134 162.3)",
+     "dark": "oklch(0.792 0.167 162.3)"
     },
     "control-value": {
      "index": 5,
      "family": "family-control-value",
-     "light": "oklch(0.510 0.091 218.2)",
-     "dark": "oklch(0.680 0.122 218.2)"
+     "light": "oklch(0.504 0.091 219.1)",
+     "dark": "oklch(0.679 0.122 219.1)"
     },
     "response-process": {
      "index": 6,
      "family": "family-control-value",
-     "light": "oklch(0.630 0.125 229.8)",
-     "dark": "oklch(0.800 0.126 229.8)"
+     "light": "oklch(0.626 0.124 229.9)",
+     "dark": "oklch(0.801 0.125 229.9)"
     },
     "first-variation": {
      "index": 7,
      "family": "family-first-variation",
-     "light": "oklch(0.475 0.201 276.2)",
-     "dark": "oklch(0.645 0.191 276.2)"
+     "light": "oklch(0.469 0.201 276.6)",
+     "dark": "oklch(0.644 0.192 276.6)"
     },
     "contact": {
      "index": 8,
      "family": "family-first-variation",
-     "light": "oklch(0.595 0.179 287.8)",
-     "dark": "oklch(0.765 0.127 287.8)"
+     "light": "oklch(0.591 0.179 287.4)",
+     "dark": "oklch(0.766 0.126 287.4)"
     }
    }
   }
