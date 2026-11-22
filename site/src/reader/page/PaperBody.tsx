@@ -952,6 +952,7 @@ export function markWideMaths(root: HTMLElement): () => void {
           { rootMargin: FIT_MARGIN, scrollMargin: FIT_MARGIN },
         );
   boxes.forEach((box) => (near ? near.observe(box) : fit(box)));
+  let refitting = false;
   fitters.set(root, (more, everywhere) => {
     for (const box of boxes) {
       if (fitted.has(box)) continue;
@@ -962,6 +963,17 @@ export function markWideMaths(root: HTMLElement): () => void {
       if (!more()) return false;
       near?.unobserve(box);
       fit(box);
+    }
+    // Measuring may have asked for a KaTeX face not yet loaded (a large brace, a script letter):
+    // what was fitted in its stand-in is fitted again once it is in.
+    if (katexLoading() && !refitting) {
+      refitting = true;
+      void katexReady().then(() => {
+        refitting = false;
+        if (!live) return;
+        fitted.forEach(forgetSizes);
+        fitted.forEach((box) => update(box, true));
+      });
     }
     return true;
   });
