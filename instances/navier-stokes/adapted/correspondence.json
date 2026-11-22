@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "8dac0a4a320dab40ad2d7f652268eb0a4825b12552d33b688af8b198bebe7030",
+ "content_sha256": "e8d422a62c6fb53729d8395b5f2af197052273c5750c4beb6478323d14a2b82d",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -470,7 +470,7 @@
   },
   {
    "anchor": "sec-finite-time-blow-up-for-the-navier-stokes-equations",
-   "text_sha256": "26b40fa978b7d416d42572f063c4f5333bb13fdb2bb6491bc6cdfb17be9c82e6",
+   "text_sha256": "b06b46643342b2383ca94bc826e8bec76e984380047a2e09a84aa68142a6d77f",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -479,7 +479,7 @@
   },
   {
    "anchor": "sec-contents",
-   "text_sha256": "73874f3729f4540506eaaaeb58505df2e498141b1e12c3405b38d8ea7bb9ad0b",
+   "text_sha256": "d2d291be08e0c0e2617a00fac68c0b14e65403682f4b695c108df4007d9c359b",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -488,7 +488,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "d21b5303009b197406575d72688900054d459e807f4794b9ffe7d5b17929d9b2",
+   "text_sha256": "61946debda08ef8fec8b1ea220284d051d96f0f3823b01140d3e2547cb1572e8",
    "claim_ids": [
     "navier-stokes.theorem-1.1"
    ],
@@ -599,7 +599,7 @@
   },
   {
    "anchor": "sec-2",
-   "text_sha256": "c358cbefdcb810273bddf8d43e60a886921d564477928976bdb4f1ab806e48a7",
+   "text_sha256": "7ffe45d56378878b1ab33da92cc2e8abac501244b5005ba2f6263940edcb3fb2",
    "claim_ids": [
     "navier-stokes.proposition-2.1",
     "navier-stokes.proposition-2.2",
@@ -709,7 +709,7 @@
   },
   {
    "anchor": "sec-3",
-   "text_sha256": "66a7609d72a6aa7b2e1e0e55aa5c11d30d5f3d54c63b3c3fbb9c9baff157238e",
+   "text_sha256": "63e45dfd7822dd05f5be343423b681587805b4c97c7b92b98e80f1dbf62721c8",
    "claim_ids": [
     "navier-stokes.lemma-3.1",
     "navier-stokes.lemma-3.2",
@@ -783,7 +783,7 @@
   },
   {
    "anchor": "sec-4",
-   "text_sha256": "bcf7276361fc3de29a034de3f91ea068c57926fbdb5f7b0e6bdf0f94ced4f65f",
+   "text_sha256": "59c283fdcd737c3f4112d5058d795dc2a978dc1769f47fd4faf0bebc5d9322b0",
    "claim_ids": [
     "navier-stokes.proposition-4.1",
     "navier-stokes.lemma-4.2",
@@ -849,7 +849,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "1a1fab0b5a996a6614e8bf4f4e6c826088e243637a06fd2bbf0c74fe09eeb67e",
+   "text_sha256": "b30460a8b3c51aad6f69a27132535fb8d731ccb2d7ac9f00ad03c330159934e9",
    "claim_ids": [
     "navier-stokes.lemma-5.1"
    ],
@@ -894,7 +894,7 @@
   },
   {
    "anchor": "sec-6",
-   "text_sha256": "d219310ae386e0725f30d7b84079ac42ec9ae54cb154e2353d72ca801f670c66",
+   "text_sha256": "9fffd738401cbe7cd9d9c3d4a3be00bd9aa6c60908a8e10a5daba45163f22656",
    "claim_ids": [
     "navier-stokes.lemma-6.1",
     "navier-stokes.lemma-6.2",
@@ -983,7 +983,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "61d5d2bba73559c7cbea34b8e2fb1f2bee3743e08a077bb9aad92f282b863b03",
+   "text_sha256": "cce6df348014ad21ae0abef4906cb95e9f58430be2b4dc0263e524ea137267b0",
    "claim_ids": [
     "navier-stokes.theorem-7.1",
     "navier-stokes.corollary-7.2",
@@ -1143,7 +1143,7 @@
   },
   {
    "anchor": "sec-appendix-a",
-   "text_sha256": "8b3b1390961541e2daf12af4d96d37472ec56f0f806ff86de4845566501e1d11",
+   "text_sha256": "5b8092e1f0e81a897c24dafa7db1a6f44263c1e5ce22193efb3f3bc964a0a93d",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1152,7 +1152,7 @@
   },
   {
    "anchor": "sec-appendix-b",
-   "text_sha256": "ee398734f87c81edc70ce272e6970395a74c6ea8303e098944e7cd3986e4f4e3",
+   "text_sha256": "55532861398619c21f0cdeac343ed79015f553842548c91ea11d33980430ce6e",
    "claim_ids": [
     "navier-stokes.proposition-b.1",
     "navier-stokes.lemma-b.2",
@@ -1328,7 +1328,7 @@
   },
   {
    "anchor": "sec-appendix-c",
-   "text_sha256": "5943659a4ba3c0f6f036c88186aef6b977efd2bb6caf9a9ce5cf62884128d721",
+   "text_sha256": "645e215ef2aac5f051485fc660bb9eb43094e9d904f7e35495510b34b8e83a21",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1346,7 +1346,7 @@
   },
   {
    "anchor": "sec-references",
-   "text_sha256": "b2304fd711474a6af652d97d8cc0e192e9cdb860e55e40237c2ff9a05b8bad9b",
+   "text_sha256": "226943d23885447fc8494cb121a45109b7a9f103c0b5257cb35b9824a6dd20ef",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
