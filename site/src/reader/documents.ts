@@ -20,7 +20,7 @@ export function frontCreditHtml(stage: Stage): string | null {
   if (!words) return null;
   const pdf = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
   const pdfLink = pdf
-    ? ` <a class="pdf-link" href="${escapeHtml(`${import.meta.env.BASE_URL}${pdf.path}`)}" target="_blank" rel="noopener">Open the authors’ PDF, ${pdf.pages} ${pdf.pages === 1 ? "page" : "pages"}</a>.`
+    ? ` <a class="pdf-link" href="${escapeHtml(`${import.meta.env.BASE_URL}${pdf.path}`)}" target="_blank" rel="noopener">Open PDF, ${pdf.pages} ${pdf.pages === 1 ? "page" : "pages"}</a>.`
     : "";
   return `${escapeHtml(words)} <a href="${escapeHtml(`${import.meta.env.BASE_URL}about/`)}">Full credit in About</a>.${pdfLink}`;
 }
