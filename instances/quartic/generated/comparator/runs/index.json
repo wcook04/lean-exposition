@@ -1,0 +1,19 @@
+{
+ "record_type": "receipt_index",
+ "receipts": [
+  "Construction.json",
+  "Foundations.json",
+  "Separation.json",
+  "Tournament.json",
+  "Unconditional.json",
+  "round3-construction-support.json",
+  "round3-eq19-direct.json",
+  "round3-eq19-independent.json",
+  "round4-decoder-sharp.json",
+  "round4-degree-conventions.json",
+  "round4-model-zero.json",
+  "round4-real-leaves.json",
+  "round4-realized-caps-external.json",
+  "round4-uniform-amplifier.json"
+ ]
+}

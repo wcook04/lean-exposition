@@ -498,6 +498,27 @@
     "quartic.theorem-1"
    ],
    "details": "Proof Reader's links.json at 56ac62feece7 names these Lean declarations for Theorem 1. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "comparator_runs",
+   "kind": "platform_observation",
+   "status": "not_run",
+   "command": [
+    "lake",
+    "comparator",
+    "--config",
+    "<each configuration>"
+   ],
+   "tool": "lake comparator, sandboxed GitHub Actions run",
+   "source_ids": [
+    "upstream"
+   ],
+   "subject_ids": [
+    "quartic.theorem-1"
+   ],
+   "details": "14 Comparator configurations accepted; their receipts are listed one by one in What ran.",
+   "receipt_path": "generated/comparator/runs/index.json",
+   "receipt_sha256": "8ecb3e10a68ab355fc84d534ae23a3ab62a55ed0d37c7b1b674c229e316257da"
   }
  ],
  "scope": "Reconstructing OpenAI’s nearly quartic query separation, by AI systems under the direction of Will Cook, with their Lean at https://github.com/wcook04/quartic-query-lean 56ac62feece77bdfd44a211ca2ae92f0916053ca, as read for Proof Reader (wcook04/proof-reader 56ac62feece77bdfd44a211ca2ae92f0916053ca). The numbered results are the authors'; their links to the Lean were made with AI.",

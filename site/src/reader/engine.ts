@@ -66,6 +66,8 @@ export interface PreparedDocument {
   renderAll(): RenderedPart[];
   /** Every block's words with its source line, for searching text that has not rendered yet. */
   textBlocks(): TextBlock[];
+  /** The part whose front matter carries the credit line (frontCredit), or null when none does. */
+  creditPart: number | null;
 }
 
 export interface TextBlock {
@@ -90,6 +92,18 @@ export interface PrepareInput {
   referenceTable?: ReferenceTable | null;
   /** The paper's tied segments, by byte range; their spans come out in the rendered HTML. */
   ties?: readonly TieSegment[];
+  /**
+   * The paper's credit, as HTML: one short line set in the front matter, under the authors (ul.authors).
+   * It is the reader's, not the authors' text, and says who wrote the paper and its Lean, where they
+   * are from, and who made the links.
+   */
+  frontCredit?: string | null;
+  /**
+   * The first words of a credit note the document's own text carries (an adapted edition's "An adapted
+   * edition of …"). With it, frontCredit joins the end of that note's paragraph instead of standing under
+   * the authors, so the credit is said once.
+   */
+  frontCreditNote?: string | null;
 }
 
 // ---------------------------------------------------------------- markdown-it
@@ -565,9 +579,11 @@ function preprocess(text: string, atStart: boolean, frontMatter: { value: Record
       src = src.slice(fm[0].length);
     }
   }
-  // Whole-line comments (passage markers, editorial notes) vanish with their line.
-  src = src.replace(/^[ \t]*<!--[\s\S]*?-->[ \t]*(?:\r?\n|$)/gm, "");
-  src = src.replace(/<!--[\s\S]*?-->/g, "");
+  // Match each comment through its first closer. Drop the line only if the
+  // comment occupies it entirely, so a page marker followed by prose keeps it.
+  src = src.replace(/(^[ \t]*)?<!--[\s\S]*?-->([ \t]*(?:\r?\n|$))?/gm,
+    (_comment, indent: string | undefined, tail: string | undefined) =>
+      indent !== undefined && tail !== undefined ? "" : (indent ?? "") + (tail ?? ""));
   // PDF-only wrappers around companion links: keep the inner Markdown link.
   src = src.replace(/<span\s+class="pdf-companion"[^>]*>([\s\S]*?)<\/span>/g, "$1");
   // Explicit bookmarks.
@@ -576,6 +592,38 @@ function preprocess(text: string, atStart: boolean, frontMatter: { value: Record
 }
 
 const REF_DEF = /^ {0,3}\[(?:[^\]\\\n]|\\.)+\]:[ \t]*\S.*$/gm;
+
+/**
+ * A paper's own table of contents ("Contents", with its table of sections and pages) is left out of
+ * the reading copy: the contents column beside the paper lists the same sections, live. Only the
+ * heading and the tables under it go; an anchor or anything else before the next heading stays.
+ */
+function dropContents(states: PartState[]): void {
+  let dropping = false;
+  for (const st of states) {
+    const kept: Token[] = [];
+    for (let i = 0; i < st.tokens.length; i++) {
+      const t = st.tokens[i];
+      if (t.type === "heading_open") {
+        const title = t.tag === "h1" || t.tag === "h2" ? inlineText(st.tokens[i + 1]?.children ?? [], st.spans).trim() : "";
+        if (/^(table of )?contents$/i.test(title) && st.tokens[i + 2]?.type === "heading_close") {
+          dropping = true;
+          i += 2;
+          continue;
+        }
+        dropping = false;
+      } else if (dropping) {
+        if (t.type === "table_open") {
+          while (i < st.tokens.length && st.tokens[i].type !== "table_close") i++;
+          continue;
+        }
+        if (!(t.type === "html_block" && /^\s*<!--[\s\S]*?-->\s*$/.test(t.content))) dropping = false;
+      }
+      kept.push(t);
+    }
+    if (kept.length !== st.tokens.length) st.tokens = kept;
+  }
+}
 
 function inlineText(children: Token[], spans: MathSpan[]): string {
   let s = "";
@@ -670,7 +718,10 @@ function renderTokens(
       const src = figureImageSrc(env.stage, path.replace(/&amp;/g, "&"));
       if (!src) return whole;
       const key = esc(`img:${src.split("/").pop()}`);
-      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div><figcaption>${title ?? alt}</figcaption></figure>`;
+      // A bare label ("Figure 1") as alt text is not a caption: the paper's own caption paragraph
+      // follows the image, so repeating the label under the picture would show it twice.
+      const caption = title ?? (/^(?:figure|fig\.?)\s*[\w.-]+\.?$/i.test(alt.trim()) ? "" : alt);
+      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
     });
   }
   html = sanitizeHtml(html);
@@ -848,6 +899,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     });
   });
 
+  dropContents(states);
+
   // Pass 2: label and heading ids in document order.
   const labelId = labelIds();
   states.forEach((st, index) => {
@@ -886,6 +939,25 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     }
   });
 
+  // The credit line goes under the authors' names in the front matter, in the part that lists them.
+  // An adapted edition's own credit note takes the line at the end of its paragraph instead.
+  const fold = (text: string) => text.replace(/[’‘]/g, "'").replace(/\s+/g, " ");
+  const note = input.frontCredit && input.frontCreditNote ? fold(input.frontCreditNote) : null;
+  const authorsAt = input.frontCredit && !note ? raw.findIndex((text) => /<ul class="authors">[\s\S]*?<\/ul>/.test(text)) : -1;
+  const noteAt = note ? raw.findIndex((text) => fold(text).includes(note)) : -1;
+  const creditPart = authorsAt >= 0 ? authorsAt : noteAt >= 0 ? noteAt : null;
+  const withCredit = (index: number, html: string) => {
+    if (index !== creditPart || !input.frontCredit) return html;
+    if (!note) return html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n<p class="front-credit">${input.frontCredit}</p>`);
+    const at = fold(html).indexOf(note) >= 0 ? html.search(new RegExp(note.split(" ").map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+").replace(/'/g, "['’‘]"))) : -1;
+    const open = at >= 0 ? html.lastIndexOf("<p", at) : -1;
+    const close = at >= 0 ? html.indexOf("</p>", at) : -1;
+    // The edition's long note gives way to its one short line (the whole credit is in About). Where the
+    // note's words cannot be found in the drawn paragraph, the line still stands, after the part.
+    if (open < 0 || close < 0) return `${html}\n<p class="front-credit">${input.frontCredit}</p>`;
+    return `${html.slice(0, open)}<p class="front-credit front-credit--edition">${input.frontCredit}</p>${html.slice(close + 4)}`;
+  };
+
   const anchorIndex = registry.entries();
   const issues = registry.duplicates.map((d) => `duplicate explicit id "${d.id}" in parts ${d.parts[0]} and ${d.parts[1]}`);
 
@@ -915,7 +987,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       documentPaths: input.documentPaths,
       linkClose: [],
     };
-    st.rendered = { index, ...renderTokens(st, env, typesetSpan, { index: refs }) };
+    const made = renderTokens(st, env, typesetSpan, { index: refs });
+    st.rendered = { index, ...made, html: withCredit(index, made.html) };
     return st.rendered;
   };
 
@@ -930,7 +1003,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     let done = plainParts.get(index);
     if (!done) {
       const env: RenderEnv = { references, stage: input.stage, documentPath: input.documentPath, documentPaths: input.documentPaths, linkClose: [] };
-      done = { index, ...renderTokens(st, env, plainSpan, { index: refs }) };
+      const made = renderTokens(st, env, plainSpan, { index: refs });
+      done = { index, ...made, html: withCredit(index, made.html) };
       plainParts.set(index, done);
     }
     return done;
@@ -949,6 +1023,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     render,
     renderPlain,
     renderAll: () => parts.map((p) => render(p.index)),
+    creditPart,
     textBlocks: () =>
       (blocks ??= states.flatMap((st, part) =>
         st.tokens.flatMap((token, i) => {

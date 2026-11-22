@@ -121,6 +121,56 @@ describe("math", () => {
   });
 });
 
+it("retains prose, equations and headings between inline page comments and the passage closer", () => {
+  const tied = "There is a correction.";
+  const source = [
+    "<!-- passage:sec-7 -->",
+    "### 7.8 Cancellation",
+    "",
+    "<!-- source-page: 42 --> We choose a correction $v$.",
+    "",
+    `**Proposition 7.10.** ${tied}`,
+    "",
+    "$$\\begin{equation}",
+    "v = 0",
+    "\\tag{7.61}",
+    "\\end{equation}$$ <!-- source-page: 43 --> The force vanishes.",
+    "",
+    "### 7.9 Proof of Theorem 7.1",
+    "",
+    "The theorem follows.",
+    "",
+    "### 7.10 Proof of Proposition 7.11",
+    "",
+    "  <!-- An editorial comment",
+    "  across two lines. -->  ",
+    "The proof concludes.",
+    "<!-- /passage:sec-7 -->",
+  ].join("\r\n");
+  const bytes = new TextEncoder().encode(source);
+  const tiedAt = source.indexOf(tied);
+  const doc = prepareDocument({
+    stage: "short", bytes,
+    parts: [{ kind: "mapped_passage", span: { start_byte: 0, end_byte: bytes.length }, passageAnchor: "sec-7" }],
+    documentPath: DOCUMENT_PATHS.short, documentPaths: DOCUMENT_PATHS,
+    ties: [[tiedAt, tiedAt + tied.length, [0]]],
+  });
+
+  expect(doc.parts[0].headings.map((heading) => heading.title)).toEqual([
+    "7.8 Cancellation", "7.9 Proof of Theorem 7.1", "7.10 Proof of Proposition 7.11",
+  ]);
+  expect(doc.render(0).mathErrors).toEqual([]);
+  const rendered = dom(doc.render(0).html);
+  expect(rendered.querySelector('[id="prop-7.10"] .tie')?.textContent).toBe(tied);
+  expect(rendered.querySelector('[id="eq-7.61"] .katex-display annotation')?.textContent).toContain("\\tag{7.61}");
+  for (const [mode, html] of [["plain", doc.renderPlain(0).html], ["typeset", doc.render(0).html]]) {
+    expect(visibleText(html), mode).toContain("We choose a correction");
+    expect(visibleText(html), mode).toContain("The force vanishes.");
+    expect(visibleText(html), mode).toContain("The proof concludes.");
+    expect(html, mode).not.toContain("<!--");
+  }
+});
+
 describe("rendering the papers", () => {
   const rendered = Object.fromEntries(Object.entries(docs).map(([k, d]) => [k, d.renderAll()]));
 
@@ -264,6 +314,18 @@ describe("rendering the papers", () => {
     const leads = new Set([...el.querySelectorAll<HTMLElement>("p.run-in")].map((p) => p.dataset.runIn));
     expect(leads.has("theorem")).toBe(true);
     expect(leads.has("proof")).toBe(true);
+  });
+
+  it("shows an image figure once: a bare 'Figure N' alt is no caption, a real one is kept", () => {
+    const md = "Intro.\n\n![Figure 1](figures/figure-1.svg)\n\n**Figure 1.** The real caption.\n\n![A sketch of the flow](figures/figure-2.svg)\n";
+    const doc = prepareDocument({ stage: "adapted", bytes: new TextEncoder().encode(md), documentPath: "adapted/paper.md", documentPaths: DOCUMENT_PATHS });
+    const el = dom(doc.parts.map((_, i) => doc.render(i).html).join(""));
+    const figs = [...el.querySelectorAll("figure.paper-figure--image")];
+    expect(figs.length).toBe(2);
+    expect(figs[0].querySelector("figcaption")).toBeNull();
+    expect(figs[0].querySelector("[data-figure-image]")!.getAttribute("data-figure-image")).toMatch(/paper-figures\/adapted\/figure-1\.svg$/);
+    expect(figs[1].querySelector("figcaption")!.textContent).toBe("A sketch of the flow");
+    expect(el.textContent!.match(/Figure 1/g)!.length).toBe(1);
   });
 
   it("extracts figures with stable keys and typeset captions", () => {

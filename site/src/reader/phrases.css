@@ -49,16 +49,40 @@
   background-size: calc(100% - 3px) 2px;
 }
 
-/* Pinned stays amber, never a topic colour: the amber wash, a thick amber underline and the amber
-   rule in the margin (.tick[data-pin]) say what you are attending to. */
+/* Selected (pinned) stays amber, never a topic colour, and stays quiet: the words are read while
+   they are selected. A phrase or a sentence takes the resting line's mechanism in amber, 2px and
+   stopping 3px short of its end, over a faint amber wash (--pin-wash) that leaves the words their
+   full contrast; the amber rule in the margin (.tick[data-pin]) says the same beside it. */
 .paper .tie[data-tone][data-pin] {
-  background-color: var(--highlighter);
+  background-color: var(--pin-wash);
   background-image: linear-gradient(var(--lit-line), var(--lit-line));
-  background-size: calc(100% - 3px) 5px;
+  background-size: calc(100% - 3px) 2px;
 }
 
+/* A whole statement or paragraph (data-pin-block, set by reader/page/statements.ts): no amber line
+   under every phrase. Its phrases keep their resting topic lines, the wash lies under the words,
+   and one amber rule runs down the margin beside the block (.tick-run). */
+.paper .tie[data-tone][data-pin][data-pin-block] {
+  background-image: linear-gradient(var(--tone), var(--tone));
+  background-size: calc(100% - 3px) 1.5px;
+}
+
+/* A phrase pointed at inside a selected block still answers as at rest: a 2px line in its colour. */
+.paper .tie[data-tone][data-pin][data-pin-block]:hover,
+.paper .tie[data-tone][data-pin][data-pin-block]:focus-visible {
+  background-size: calc(100% - 3px) 2px;
+}
+
+/* A display: a thin amber rule beside it and nothing else, no fill and no line under it. Inside a
+   selected block the margin rule marks it, so it keeps its resting topic rule. */
 .paper .math-display.tie[data-tone][data-pin] {
-  box-shadow: inset 5px 0 0 var(--lit-line);
+  background-color: transparent;
+  background-image: none;
+  box-shadow: inset 2px 0 0 var(--lit-line);
+}
+
+.paper .math-display.tie[data-tone][data-pin][data-pin-block] {
+  box-shadow: inset 2px 0 0 var(--tone);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -155,8 +179,8 @@
 
 .phrase-key {
   margin: 0 0 var(--space-3);
-  padding: var(--space-2) 0 var(--space-3);
-  border-bottom: 1px solid var(--rule);
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--rule);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   line-height: 1.35;
@@ -210,6 +234,21 @@
 .phrase-key__note {
   margin: 6px 0 0;
   color: var(--ink-3);
+}
+
+/* What the colours mean: one disclosure under the key, closed until asked for. */
+.phrase-key__about {
+  margin-top: var(--space-2);
+}
+
+.phrase-key__about summary {
+  min-height: 24px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.phrase-key__about summary:hover {
+  color: var(--ink);
 }
 
 /* Beside a section in the contents: the topics its phrases belong to. */

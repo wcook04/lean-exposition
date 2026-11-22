@@ -7,7 +7,7 @@ import site from "@instance/site";
 import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type RefObject } from "react";
 import type { RecordAlignment } from "../api/lean";
 import { useEdition } from "../app/data";
-import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
+import { navigate, routeHref, type Level, type Route } from "../app/router";
 import { useEntryState } from "../app/trail";
 import { LINK_CAVEAT } from "../lean/data";
 import { sectionLabel, mainGoal } from "../map/TheoremPlate";
@@ -15,7 +15,7 @@ import { statementHref } from "../reader/links";
 import { onIdle } from "./idle";
 import { LazyStatementSlice, primeSlices } from "./lazy";
 import { ModeSwitch } from "./ModeSwitch";
-import { LEVEL_NAMES, STACK_BELOW, absentWords, filterOutline, roleWords, storeLevels, storedLevels, toggleLevel } from "./model";
+import { LEVEL_NAMES, STACK_BELOW, absentWords, filterOutline, roleWords, storeLevels, storedLevels, toggleLevel, SHOWN_LEVELS } from "./model";
 import { defaultLevels, holdHeight, orderWords, rowFor, rowsSentence, sayings, tableRows, type TableRow as Row } from "./table";
 import { fullAlignmentResource, shortTitle, useFullAlignment } from "./useAlignment";
 import { useWidth } from "./useWidth";
@@ -43,7 +43,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   const [stored] = useState(storedLevels);
   const chosen = route.levels ?? stored ?? defaultLevels(width);
-  const levels = useMemo(() => LEVELS.filter((level) => chosen.includes(level)), [chosen]);
+  const levels = useMemo(() => SHOWN_LEVELS.filter((level) => chosen.includes(level)), [chosen]);
   const levelsKey = levels.join(",");
 
   const every = useMemo(() => (steps ? tableRows(steps, levels, false, main) : []), [steps, levelsKey, main]);
@@ -181,7 +181,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
                 <input type="search" placeholder="Filter the steps" value={query} onChange={(e) => setQuery(e.target.value)} />
               </label>
               <div className="compare-words" role="group" aria-label="Levels shown">
-                {LEVELS.map((level) => (
+                {SHOWN_LEVELS.map((level) => (
                   <button key={level} type="button" aria-pressed={levels.includes(level)} onClick={() => toggle(level)}>
                     {LEVEL_NAMES[level]}
                   </button>

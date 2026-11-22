@@ -118,6 +118,18 @@ export interface SiteInstance {
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
   /**
+   * A library paper's credit as one short line under the authors in its front matter (the authors, their
+   * repository and commit, the Anthropic sentence where the paper has one, and that the links are AI-made
+   * and unreviewed), by document slot. The full credit is in About. Absent: the account line says it.
+   */
+  frontCredit?: Partial<Record<string, string>>;
+  /**
+   * Where a document's credit line goes when it is not under the authors: an adapted edition's text
+   * carries its own credit as a note (its first words here, "An adapted edition of"), and the reader's
+   * line joins that one note, so the credit is said once. By document slot.
+   */
+  frontCreditNote?: Partial<Record<string, string>>;
+  /**
    * A library paper: its id, its main document, its page slugs (page -> document), and its companion
    * documents in reading order, grouped (each a document of its own, answered from its own edition).
    */
@@ -166,6 +178,10 @@ export interface SiteInstance {
   mainGoal: string | null;
   /** The Lean the levels band shows when a paper has no first-page picture. */
   levelsLeanSnippet: string | null;
+  /** Compare's columns, when an instance declares them (always with the Lean); otherwise every level. */
+  compareLevels?: readonly ("lean" | "long" | "short" | "expository")[];
+  /** Compare's column names, when an instance names its own levels. */
+  levelNames?: Partial<Record<"lean" | "long" | "short" | "expository", string>>;
   /** The levels band's line on the Lean level: whose statements and proofs. */
   leanLevelWho: string;
   /** Sentences shared components say about this example. */

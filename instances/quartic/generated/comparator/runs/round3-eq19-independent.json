@@ -1,0 +1,26 @@
+{
+ "record_type": "comparator_receipt",
+ "entry_id": "round3-eq19-independent",
+ "run": {
+  "repository": "wcook04/quartic-query-lean",
+  "url": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+  "run_id": "44762028741",
+  "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+  "date": "2026-11-20"
+ },
+ "theorem_pairs": [
+  {
+   "challenge": "QuarticQuery.Independent.Eq19.checked_eq19"
+  }
+ ],
+ "kernels": [
+  "Lean’s default kernel"
+ ],
+ "axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ],
+ "outcome": "accepted",
+ "receipt": "receipts/comparator-round3-eq19-independent-2026-11-20T154501827718+0000.json"
+}

@@ -10,6 +10,30 @@ import { prepareDocument, type PreparedDocument } from "./engine";
 import type { TieIndex } from "../api/lean";
 import { loadReferenceTable, type ReferenceTable } from "./references";
 import { loadTies, tieModel, type TieModel } from "./ties";
+import { PAPER_PDFS } from "virtual:paper-pdfs";
+
+const escapeHtml = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/** The credit line under a paper's authors, as HTML: the site's words, then About and the authors' PDF. */
+export function frontCreditHtml(stage: Stage): string | null {
+  const words = site.frontCredit?.[stage];
+  if (!words) return null;
+  const pdf = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
+  const adapted = site.adapted?.slot === stage ? site.adapted : undefined;
+  const base = import.meta.env.BASE_URL;
+  if (adapted) {
+    // An adapted edition: its line, the authors' paper and the edition's marked PDFs.
+    const pdfs = [
+      ...(pdf ? [`<a class="pdf-link" href="${escapeHtml(`${base}${pdf.path}`)}" target="_blank" rel="noopener">${escapeHtml(adapted.pdfs[0]?.label ?? "Open PDF")}, ${pdf.pages} ${pdf.pages === 1 ? "page" : "pages"}</a>`] : []),
+      ...adapted.pdfs.slice(1).map((p) => `<a class="pdf-link" href="${escapeHtml(`${base}pdf/${p.name}`)}" target="_blank" rel="noopener">${escapeHtml(p.label)}</a>`),
+    ];
+    return `${escapeHtml(words)} <a href="${escapeHtml(`${base}${adapted.of === site.library?.main ? "" : `read/${adapted.of}/`}`)}">Read the authors’ paper</a>.${pdfs.length ? ` ${pdfs.join(" · ")}.` : ""}`;
+  }
+  const pdfLink = pdf
+    ? ` <a class="pdf-link" href="${escapeHtml(`${import.meta.env.BASE_URL}${pdf.path}`)}" target="_blank" rel="noopener">Open PDF, ${pdf.pages} ${pdf.pages === 1 ? "page" : "pages"}</a>.`
+    : "";
+  return `${escapeHtml(words)} <a href="${escapeHtml(`${import.meta.env.BASE_URL}about/`)}">Full credit in About</a>.${pdfLink}`;
+}
 
 export interface LoadedDocument {
   paper: PaperData;
@@ -47,7 +71,7 @@ export function preparePaper(paper: PaperData, index: TieIndex | null, reference
     span: { start_byte: part.span.start_byte, end_byte: part.span.end_byte },
     passageAnchor: part.passage_ref ? part.passage_ref.slice(part.passage_ref.lastIndexOf("/") + 1) : undefined,
   }));
-  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable });
+  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable, frontCredit: frontCreditHtml(stage), frontCreditNote: site.frontCreditNote?.[stage] ?? null });
 }
 
 export function loadDocument(stage: Stage): Promise<LoadedDocument> {
