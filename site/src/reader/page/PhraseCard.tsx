@@ -3,12 +3,13 @@
 // topic were all drafted by an AI agent, and the card says so; nothing here rests on colour.
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
 import { renderTex } from "../math";
+import { plainNumber } from "../texBreaks";
 import { fitNow, markWideMaths } from "./PaperBody";
 import site from "@instance/site";
 import { Signal } from "./signal";
@@ -139,6 +140,23 @@ export function phraseOpening(quote: string, most = 14): string {
   return open ? out.replace(/\$/g, "") : out;
 }
 
+/** Read the rendered words once. Each formula counts as one word, however much markup KaTeX used. */
+function longQuoteOpening(html: string): string | null {
+  const copy = document.createElement("template");
+  copy.innerHTML = html;
+  const displays = copy.content.querySelectorAll(".math-display");
+  for (const display of displays) display.replaceWith(" $$…$$ ");
+  for (const inline of copy.content.querySelectorAll(".katex")) {
+    const tex = inline.querySelector("annotation")?.textContent;
+    if (!tex) return null;
+    inline.replaceWith(`$${tex}$`);
+  }
+  const words = copy.content.textContent?.trim() ?? "";
+  if (displays.length < 2 && words.replace(/\$[^$]*\$/g, "x").split(/\s+/).length <= 42) return null;
+  const opening = phraseOpening(words);
+  return /[^\s.…]/.test(opening) ? opening : null;
+}
+
 /**
  * One comparison of the phrase with its Lean, in words: the verdict and every qualification the
  * source wrote, "Not assessed" where none is recorded, or the paper's held text. A note is shown
@@ -193,6 +211,66 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
   return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
 }
 
+/** Name a displayed formula by its printed number, or show the formula itself when it has none. */
+function comparisonScope(quote: string | undefined, words: string | null): ReactNode {
+  if (!words) return null;
+  const display = words === "…" && quote?.trim().match(/^\$\$([\s\S]+?)\$\$[.,;]?$/);
+  if (display) {
+    const tex = display[1].trim();
+    const number = plainNumber(tex);
+    return number ? `Equation ${number}` : <span dangerouslySetInnerHTML={{ __html: renderTex(tex, true).html }} />;
+  }
+  return <>For “<span dangerouslySetInnerHTML={{ __html: noteHtml(words).html }} />”</>;
+}
+
+/** Only the assessment of the selected phrase can lead for a group with a shared verdict. */
+function LeanComparisons({ row, merged, phrase, opening, quoteBytes }: { row: PhraseLean; merged?: readonly MergedPhrase[]; phrase?: string | null; opening: string | null; quoteBytes?: number }) {
+  const shown = assessmentsOf(row, merged);
+  const selected = row.assessments?.findIndex((assessment) => assessment.phrase === phrase) ?? -1;
+  const common = shown.length > 1 && selected >= 0 && selected < shown.length &&
+    isFidelity(shown[selected].assessment.fidelity) && shown.every(({ assessment, words }) => words && assessment.fidelity === shown[selected].assessment.fidelity);
+  const allAssessed = shown.every(({ assessment }) => isFidelity(assessment.fidelity));
+  function comparison(i: number, secondary = false) {
+    const { assessment, words } = shown[i];
+    const source = merged?.find((part) => part.id === row.assessments?.[i]?.phrase);
+    // Partially intersecting source ranges can also share a tie. The lead's words are redundant
+    // only when that constituent fills the whole selected byte range.
+    const ownPassage = i === selected && source && new TextEncoder().encode(source.quote).length === quoteBytes &&
+      (common || (opening !== null && words === opening));
+    const scope = !ownPassage && comparisonScope(source?.quote, words);
+    const { fidelity, fidelity_note: note } = assessment;
+    return (
+      <div key={source?.id ?? i} className="phrase-card__assessment" data-fidelity={fidelity}>
+        {scope && <p className="phrase-card__for">{scope}</p>}
+        {isFidelity(fidelity) ? (
+          <div className="phrase-card__fidelity" data-fidelity={fidelity}>
+            {(!secondary || !note) && <p className="phrase-card__judgment"><strong>{phraseVerdict(fidelity)}</strong>
+              {(!allAssessed || shown.length === 1 || (common && i === selected)) && <span className="phrase-card__who">AI-assessed</span>}
+            </p>}
+            {note && <p dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />}
+          </div>
+        ) : <Verdict assessment={assessment} />}
+      </div>
+    );
+  }
+  if (!common) return (
+    <>
+      {allAssessed && shown.length > 1 && <p className="phrase-card__label">Phrase comparisons <span>AI-assessed</span></p>}
+      {shown.map((_, i) => comparison(i))}
+    </>
+  );
+  const rest = shown.map((_, i) => i).filter((i) => i !== selected);
+  return (
+    <>
+      {comparison(selected)}
+      <details className="phrase-card__comparisons">
+        <summary>{rest.length} more phrase {rest.length === 1 ? "comparison" : "comparisons"}</summary>
+        {rest.map((i) => comparison(i, true))}
+      </details>
+    </>
+  );
+}
+
 /** What each comparison means, in one sentence of mathematical terms (docs/reader-design.md, "The legend"). */
 const FIDELITY_MEANING: Record<Fidelity, string> = {
   same: "The formal statement asserts what the quoted words assert, after the translation the note states.",
@@ -216,11 +294,11 @@ export const COMPARISON_LEGEND: readonly (readonly [string, string])[] = [
  * stands. Its words are written only once it is opened, so a closed legend never sets a verdict's
  * name ("same" among them) beside a comparison that is not that verdict.
  */
-export function ComparisonLegend() {
+export function ComparisonLegend({ label = "What do these words mean?" }: { label?: string } = {}) {
   const [open, setOpen] = useState(false);
   return (
     <details className="phrase-card__legend" onToggle={(e) => setOpen(e.currentTarget.open)}>
-      <summary>What do these words mean?</summary>
+      <summary>{label}</summary>
       {open && (
         <>
           <dl>
@@ -304,7 +382,7 @@ function Matters({ matters, mainResult }: { matters: ComparisonMatters; mainResu
 }
 
 /** What the quoted words say, in the paper's notation, with its sources; and what is not settled from them. */
-function Explanation({ explanation }: { explanation: PhraseExplanation }) {
+function Explanation({ explanation, showOpen = true }: { explanation: PhraseExplanation; showOpen?: boolean }) {
   const sources = explanation.citations ?? [];
   return (
     <div className="phrase-card__explanation">
@@ -312,7 +390,7 @@ function Explanation({ explanation }: { explanation: PhraseExplanation }) {
         What these words say <span>AI-drafted</span>
       </p>
       <p className="phrase-card__text" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.text).html }} />
-      {explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
+      {showOpen && explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
       {sources.length > 0 && (
         <details className="phrase-card__sources">
           <summary>{sources.length === 1 ? "The source this rests on" : `The ${sources.length} sources this rests on`}</summary>
@@ -335,10 +413,11 @@ function Explanation({ explanation }: { explanation: PhraseExplanation }) {
   );
 }
 
-export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string }) {
+export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
   const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
   const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
+  const opening = useMemo(() => inLean && quote && typeof document !== "undefined" ? longQuoteOpening(quote) : null, [inLean, quote]);
   // A quoted display formula is fitted to the card like one in the paper: it never scrolls sideways.
   const quoteRef = useRef<HTMLQuoteElement>(null);
   useLayoutEffect(() => {
@@ -347,35 +426,47 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
     // Fitted in the frame the quotation first paints, as a part of the paper is.
     fitNow(quoteRef.current);
     return stop;
-  }, [quote]);
+  }, [quote, opening]);
+  const passage = quote && <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />;
+  const readingNote = note && (
+    <div className="phrase-card__note">
+      <p className="phrase-card__label">Reading note <span>AI-drafted</span></p>
+      <NoteBody text={note} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
+    </div>
+  );
+  const foldNotes = inLean && Boolean(explanation?.text || note);
   return (
-    <section className="phrase-card" aria-label="These words and how the Lean compares with them">
-      {quote && <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />}
-      {explanation?.text && <Explanation explanation={explanation} />}
+    <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label="These words and how the Lean compares with them">
+      {opening ? (
+        <details className="phrase-card__passage" onToggle={(e) => { if (e.currentTarget.open && quoteRef.current) fitNow(quoteRef.current); }}>
+          <summary><span className="phrase-card__passage-label">Full passage in the paper</span><span className="phrase-card__quote phrase-card__opening" dangerouslySetInnerHTML={{ __html: noteHtml(opening).html }} /></summary>
+          {passage}
+        </details>
+      ) : passage}
+      {!inLean && explanation?.text && <Explanation explanation={explanation} />}
       <div className="phrase-card__compare">
-        <p className="phrase-card__label">
-          Comparison with these words
-        </p>
-        {merged && merged.length > 1 && (
+        {!inLean && <p className="phrase-card__label">Comparison with these words</p>}
+        {!inLean && merged && merged.length > 1 && (
           <p className="phrase-card__merged" data-merged={merged.length}>
             These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
           </p>
         )}
-        {shown.map(({ assessment, words }, i) => (
+        {inLean ? <LeanComparisons row={row} merged={merged} phrase={phrase} opening={opening} quoteBytes={quoteBytes} /> : shown.map(({ assessment, words }, i) => (
           <Verdict key={i} assessment={assessment} words={words} />
         ))}
         {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
-        <ComparisonLegend />
+        {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
+        <ComparisonLegend label={inLean ? "Comparison terms" : undefined} />
       </div>
-      {note && (
-        <div className="phrase-card__note">
-          <p className="phrase-card__label">
-            Reading note <span>AI-drafted</span>
-          </p>
-          <NoteBody text={note} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
-        </div>
-      )}
-      <Conventions keys={keys} />
+      {foldNotes ? (
+        <details className="phrase-card__notes">
+          <summary>{explanation?.citations?.length ? "Reading notes and sources" : "Reading notes"}</summary>
+          {explanation?.text && <Explanation explanation={explanation} showOpen={false} />}
+          {readingNote}
+          <Conventions keys={keys} />
+        </details>
+      ) : readingNote}
+      {!foldNotes && <Conventions keys={keys} />}
     </section>
   );
 }

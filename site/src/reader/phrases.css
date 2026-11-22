@@ -504,6 +504,88 @@
   border-radius: var(--radius-s);
 }
 
+/* The Lean tab keeps the current declaration and its comparison in view. */
+.lean-page__choices {
+  margin: 0 var(--space-4);
+}
+
+.lean-page__source,
+.lean-page__choices > summary,
+.phrase-card__passage > summary,
+.phrase-card__notes > summary,
+.phrase-card__comparisons > summary,
+.lean-block__dependencies > summary {
+  width: fit-content;
+  min-height: 24px;
+  color: var(--ink-2);
+  font: var(--fs-ui)/var(--lh-ui) var(--font-sans);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+:is(.lean-page__source, .lean-page__choices > summary, .phrase-card__passage > summary, .phrase-card__notes > summary, .phrase-card__comparisons > summary, .lean-block__dependencies > summary):hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+:is(.lean-page__source, .lean-page__choices > summary, .phrase-card__passage > summary, .phrase-card__notes > summary, .phrase-card__comparisons > summary, .lean-block__dependencies > summary):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.lean-page__choices .lean-page__rows {
+  padding-inline: 0;
+}
+
+.phrase-card__opening {
+  display: block;
+  margin-top: var(--space-1);
+}
+
+.phrase-card__passage > summary {
+  text-decoration: none;
+}
+
+.phrase-card__passage-label {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+}
+
+.phrase-card__passage > summary:hover .phrase-card__passage-label {
+  text-decoration-color: currentColor;
+}
+
+.phrase-card__passage[open] .phrase-card__opening {
+  display: none;
+}
+
+.phrase-card__assessment + .phrase-card__assessment,
+.phrase-card__comparisons > .phrase-card__assessment,
+.phrase-card__notes > div {
+  margin-top: var(--space-3);
+}
+
+.phrase-card__comparisons {
+  margin-top: var(--space-2);
+}
+
+.phrase-card--lean .phrase-card__judgment {
+  margin: 0 0 var(--space-1);
+}
+
+.phrase-card--lean .phrase-card__who {
+  margin-left: var(--space-1);
+  font-size: var(--fs-sm);
+}
+
+.phrase-card--lean .phrase-card__for {
+  font-size: var(--fs-sm);
+}
+
 .phrase-card__sources ul {
   display: grid;
   gap: var(--space-1);
@@ -524,4 +606,48 @@
   margin: 0;
   font-size: var(--fs-ui);
   line-height: 1.5;
+}
+
+/* The quotation's prose has a reading measure. Its typeset displays and any Expand control
+   use the full width available to the card, including when the inspector changes width. */
+.phrase-card--lean {
+  container-type: inline-size;
+}
+
+.phrase-card--lean blockquote.phrase-card__quote {
+  max-width: 82ch;
+}
+
+.phrase-card--lean blockquote.phrase-card__quote :is(.math-display, .math-cue) {
+  inline-size: calc(100cqi - var(--space-3) - var(--sel-rail));
+}
+
+/* The paper's button hangs into its margin. A dock display reaches the scroll edge. */
+.phrase-card--lean .math-cue__expand {
+  margin-inline-end: 0;
+}
+
+/* On a wide inspector, put the notes beside the comparison. The passage above them and
+   the source code below share the full measure. A narrow inspector keeps reading order. */
+@container right-page (min-width: 54rem) {
+  .phrase-card--lean:has(> .phrase-card__notes) {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: var(--space-5);
+    align-items: start;
+  }
+
+  .phrase-card--lean:has(> .phrase-card__notes) > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .phrase-card--lean:has(> .phrase-card__notes) > .phrase-card__compare {
+    grid-column: 1;
+    max-width: none;
+  }
+
+  .phrase-card--lean:has(> .phrase-card__notes) > .phrase-card__notes {
+    grid-column: 2;
+  }
 }

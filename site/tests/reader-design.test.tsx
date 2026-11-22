@@ -279,6 +279,58 @@ describe("the inspector's phrase card", async () => {
     expect([...card.querySelectorAll(".phrase-card__conventions summary")].map((s) => s.textContent)).toEqual(["Natural subtraction", "Real division"]);
   });
 
+  it("keeps the Lean comparison and unresolved qualifications visible beside a long passage", () => {
+    const quote = `Given every smooth velocity field, ${"the solution remains smooth ".repeat(12)}<em>on the common interval</em>.`;
+    act(() => root.render(<PhraseCard inLean row={row({ fidelity: "stronger", fidelity_note: "Only on the common interval." })}
+      quote={quote} note="The complete reading note."
+      explanation={{ text: "The paper's argument.", grounded: false, open: "The endpoint remains open." }} />));
+    const disclosure = container.querySelector<HTMLDetailsElement>(".phrase-card__passage")!;
+    expect(disclosure.open).toBe(false);
+    expect(disclosure.querySelector("summary")!.textContent).toContain("Given every smooth velocity field");
+    expect(disclosure.querySelector("blockquote")!.innerHTML).toBe(quote);
+    expect(container.querySelector(".phrase-card__fidelity")!.closest("details")).toBeNull();
+    expect(fidelityText()).toContain("Only on the common interval.");
+    expect(container.querySelector(".phrase-card__open")!.closest("details")).toBeNull();
+    expect(container.querySelector(".phrase-card__notes")!.textContent).toContain("The complete reading note.");
+  });
+
+  it("shows a short phrase in full and keeps a verdict on one of its parts attached to that part", () => {
+    const quote = "Every maximal solution agrees on the common interval.";
+    act(() => root.render(<PhraseCard inLean quote={quote} phrase="whole" note={undefined}
+      merged={[{ id: "whole", quote }, { id: "part", quote: "on the common interval" }]}
+      row={row({ assessments: [{ phrase: "part", fidelity: "weaker", fidelity_note: "Only for a shorter interval." }] })} />));
+    expect(container.querySelector("blockquote")!.textContent).toBe(quote);
+    expect(container.querySelector(".phrase-card__passage")).toBeNull();
+    expect(container.querySelector(".phrase-card__notes")).toBeNull();
+    expect(container.querySelector(".phrase-card__for")!.textContent).toBe("For “on the common interval”");
+    expect(fidelityText()).toContain("Only for a shorter interval.");
+  });
+
+  it("leads with the selected assessment and names the equations behind each further qualification", () => {
+    const merged = [{ id: "line", quote: "$$x=1\\tag{7.63}$$" }, { id: "whole", quote: "A rescaling and its bound." }];
+    const assessments = [
+      { phrase: "line", fidelity: "weaker" as const, fidelity_note: "The rescaling alone does not give equality." },
+      { phrase: "whole", fidelity: "weaker" as const, fidelity_note: "Boundedness uses continuity and periodicity." },
+    ];
+    const bytes = new TextEncoder().encode(merged[1].quote).length;
+    act(() => root.render(<PhraseCard inLean row={row({ assessments })} phrase="whole" merged={merged} quoteBytes={bytes} note={undefined} />));
+    const details = container.querySelector<HTMLDetailsElement>(".phrase-card__comparisons")!;
+    expect(details.open).toBe(false);
+    expect(fidelityText()).toContain("Boundedness uses continuity and periodicity.");
+    expect(details.textContent).toContain("Equation (7.63)");
+    expect(details.textContent).toContain("The rescaling alone does not give equality.");
+    expect(container.querySelectorAll(".phrase-card__who")).toHaveLength(1);
+    expect(container.querySelector(".phrase-card__assessment .phrase-card__for")).toBeNull();
+    act(() => root.render(<PhraseCard inLean row={row({ assessments })} phrase="whole" merged={merged} quoteBytes={bytes + 10} note={undefined} />));
+    expect(container.querySelector(".phrase-card__assessment .phrase-card__for")?.textContent).toContain(merged[1].quote);
+    act(() => root.render(<PhraseCard inLean row={row({ assessments: [assessments[0], { ...assessments[1], fidelity: "different" }] })}
+      phrase="whole" merged={merged} note={undefined} />));
+    expect(container.querySelector(".phrase-card__comparisons")).toBeNull();
+    expect(container.querySelectorAll(".phrase-card__assessment")).toHaveLength(2);
+    expect(container.querySelectorAll(".phrase-card__assessment [data-fidelity='weaker']")).toHaveLength(1);
+    expect(container.querySelectorAll(".phrase-card__assessment [data-fidelity='different']")).toHaveLength(1);
+  });
+
   it("shows a same verdict's note and says AI-assessed", () => {
     act(() => root.render(<PhraseCard row={row({ fidelity: "same", fidelity_note: "After reading $n$ as a natural number." })} note={undefined} />));
     expect(fidelityText()).toContain("Lean states the same as this phrase:");

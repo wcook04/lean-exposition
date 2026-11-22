@@ -63,6 +63,8 @@ export interface LeanBlockProps {
   depth?: number;
   /** Leave uses and used by to a column of their own. */
   noDependencies?: boolean;
+  /** In the phrase reader, open the full lists of used and dependent names on request. */
+  foldDependencies?: boolean;
   /** Leave "Names in this statement" to a column of its own. */
   noTerms?: boolean;
   /** An exact substring of the source to mark, here or in a definition shown under the statement. */
@@ -448,6 +450,7 @@ export interface DeclViewProps {
   /** A row in a module's list: a short header that links to the declaration's page. */
   row?: { href: string };
   noDependencies?: boolean;
+  foldDependencies?: boolean;
   noTerms?: boolean;
   clause?: string;
   below?: ReactNode;
@@ -462,7 +465,7 @@ export interface DeclViewProps {
   noHead?: boolean;
 }
 
-export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, fidelity, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
+export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, fidelity, proofOpen, compact, depth = 0, row, noDependencies, foldDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
   // Open or folded belongs to the history entry, so Back finds the proof as it was left.
   const [proofChosen, setShowProof] = useEntryState<boolean | null>(`lean-proof:${module.module}:${decl.name}`, null);
   const store = useMemo(readingStore, []);
@@ -524,6 +527,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   const showHead = !noHead;
   const term = shell.terms.get(decl.name);
 
+  const dependencies = !row && !noDependencies && !bare && <Dependencies decl={decl} module={module} shell={shell} onWalk={walk} />;
   const body = (
     <>
       {relation && (
@@ -578,7 +582,12 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
       {!bare && !row && <LeanFacts decl={decl} module={module} />}
       {!row && !noPapers && !bare && <PapersLine name={decl.name} shell={shell} />}
       {!row && !noTerms && !bare && <Terms targets={allTargets} onWalk={walk} />}
-      {!row && !noDependencies && !bare && <Dependencies decl={decl} module={module} shell={shell} onWalk={walk} />}
+      {foldDependencies && dependencies ? (
+        <details className="lean-block__dependencies">
+          <summary>Declaration dependencies</summary>
+          {dependencies}
+        </details>
+      ) : dependencies}
       {below}
     </>
   );
@@ -677,7 +686,7 @@ function useModulesSettled(names: readonly string[]): boolean {
 }
 
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
-export function LeanBlock({ name, module: moduleName, relation, note, fidelity, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
+export function LeanBlock({ name, module: moduleName, relation, note, fidelity, proofOpen, compact, depth, noDependencies, foldDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
@@ -693,5 +702,5 @@ export function LeanBlock({ name, module: moduleName, relation, note, fidelity, 
   if (!shell || loaded.status !== "ready" || !extras || !whereReady) return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return <p className="lean-note">No declaration named <code>{name}</code> in {loaded.module.module}.</p>;
-  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} fidelity={fidelity} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
+  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} fidelity={fidelity} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} foldDependencies={foldDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
 }

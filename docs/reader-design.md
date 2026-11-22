@@ -148,16 +148,21 @@ depends on the pane's width alone, never on the state, so a change of state refl
 
 ## The inspector
 
-The same component fills the Lean view and sits under the drawing in the Graph view. Its order
-is fixed, and is the order of the questions a reader asks.
+The same component fills the Lean view and sits under the drawing in the Graph view. In the
+Lean view the comparison and its qualifications come first after the quotation. The paper's
+explanation, sources, reading note and conventions open together. Wide inspectors place these
+notes beside the comparison. Narrow ones keep a single column. An unresolved point stays
+beside the comparison even when the notes are closed.
 
 1. **Title, kind and identity.** The plain title in the serif at 20px. Under it one quiet
    line: the kind in words ("Lean theorem", "Lean definition", "Paper result"), the exact Lean
    name in the mono, and the topic's name with its swatch. A definition is called a definition
    before anything is said about how it compares.
 2. **The exact quotation.** The selected words as the paper sets them, in the serif at 17px,
-   with an amber rule at their left: the same mark as in the paper's margin. Never clamped or
-   elided; a long quotation scrolls with the inspector, not inside a box of its own.
+   with the same margin rule as the selected words. In the Lean view a long passage shows its
+   opening words. “Full passage in the paper” opens its complete typeset quotation, including
+   display equations. Quoted displays and their Expand control use the available pane width
+   before fitting. The quotation scrolls with the inspector.
 3. **What these words say**, where the paper's data has it: three to five sentences in the
    paper's notation, labelled "AI-drafted", with the sources it rests on behind one disclosure.
    Where part of it is not settled from the sources, that part is said plainly under it ("Not
@@ -168,8 +173,10 @@ is fixed, and is the order of the questions a reader asks.
    main result, the verdict ends with that as a question and its answer: "Does this affect
    Theorem 1.1? No. This is a difference of convention." and the recorded line of why. An absent comparison says "Not assessed. No comparison of these
    words with this Lean is recorded."; a withheld one gives the recorded reason. A link that
-   holds several overlapping phrases shows each phrase's own comparison, each headed by that
-   phrase's opening words.
+   holds several overlapping phrases keeps each phrase's own comparison. In the Lean view,
+   when the verdicts agree, the assessment of the selected phrase leads and the others open
+   below it. Different verdicts stand together. Each comparison names its phrase by its
+   opening words or its printed equation number.
    Neither is drawn as agreement. One line under it opens the legend (below).
 5. **The reading note**, labelled "AI-drafted": what the formal statement says, in the
    paper's notation. Sans, 16px on a 24px line, at most 38rem wide however wide the pane.
@@ -181,8 +188,9 @@ is fixed, and is the order of the questions a reader asks.
 8. **The graph**: in the Lean view a link at the foot, "See what this uses, and what uses it,
    in the graph"; in the Graph view the drawing itself, above.
 
-Several declarations linked to the same words are a row of buttons between 1 and 2; choosing
-one changes 4 to 8 and never the quotation or what the words say.
+Several declarations linked to the same words are a row of buttons between 1 and 2. The Lean
+view puts the row under “linked declarations” and links the current name and line range to its
+source file. Choosing a declaration changes its comparison and source.
 
 ### The legend
 
@@ -374,7 +382,7 @@ right, nothing over the text. Widths are CSS pixels of the window.
 | 1100 | drawer | 550 | 479 | two columns from 1024; the graph is folded to a line at this pane width |
 | 1440 | drawer | 680 | 672 | |
 | 2000 | 208 | 689 | to the edge, at least 600 | |
-| 2560 | 208 | 755 | 1024, the pair centred | notes stay at 38rem; the Lean takes the rest |
+| 2560 | 208 | 755 | to the right edge | the comparison and notes sit side by side; equations and Lean can use the whole pane |
 
 - The pane is sticky under the top bar and has one vertical scroller per view. Its gutter is
   stable, so content arriving never changes a width.
@@ -407,8 +415,8 @@ Nothing on a phone scrolls sideways except a formula or the Lean inside its own 
 | --- | --- | --- | --- |
 | Paper prose | STIX Two Text | 18 / 29; 20 / 32 by 2560 | 680px, 755px by 2560 |
 | Inspector title | serif | 20 / 26 | whole, never elided |
-| Quotation | serif | 17 / 25.5 | 38rem |
-| Comparison and note | Source Sans 3 | 16 / 24 | 38rem |
+| Quotation | serif | 17 / 25.5 | 38rem under the graph; up to 82ch in the Lean pane, with full-width displays |
+| Comparison and note | Source Sans 3 | 16 / 24 | 38rem in one column; side by side in a wide Lean pane |
 | Lean | JetBrains Mono | 14 / 21 | scrolls in its own box |
 | Controls | sans | 14 / 20 | 44px targets on a phone |
 | Labels: state, "AI-assessed", kind | sans | 13 / 19.5 | never smaller, never for a sentence |
@@ -436,7 +444,7 @@ are aliases, so each mark's job is written down once.
 | `--sel-rail` | 3px | the selection's rule in the margin and beside its quotation |
 | `--follow-ink` | `var(--ink-2)` | the followed passage's tick |
 | `--evidence-fs`, `--evidence-lh` | 1rem, 1.5 | comparison and note |
-| `--evidence-measure` | 38rem | the widest a note or quotation runs |
+| `--evidence-measure` | 38rem | the default text measure for evidence |
 | `--quote-fs` | 1.0625rem | the quotation |
 | `--code-fs` | 0.875rem | Lean |
 | `--band-h` | 56px | the subject band |
