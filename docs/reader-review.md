@@ -29,10 +29,15 @@ previews can conceal an absent explanation. More signposting alone repairs neith
 
 Apply the [literature and language review](authoring.md#mathematical-register-and-literature-grounded-prose)
 to each paper. Compare passages doing the same explanatory job in the actual
-literature, and identify what their practice changes in this manuscript. Check
-that the field's terms remain stable, that unfamiliar operations are explained
-at the stated level, and that apparent fluency does not hide a missing subject
-or inference. Read the full revised text sequentially after a humanizer pass;
+literature. At the predicted hard step, say what this reader knows on arrival
+and try the inference using only that knowledge and the passage. At a passage
+devoted to familiar material, try removing it or giving its exact result and
+citation. What could the reader no longer understand, apply or reconstruct?
+Keep the explanation if the answer identifies a necessary condition, a delicate
+application or the very operation this paper promises to teach. Otherwise
+release the space to the harder step. Check that the field's terms remain stable
+and that fluency does not hide a missing inference. Read the full revised text
+sequentially after a humanizer pass;
 a phrase scan cannot establish natural mathematical prose. Check mathematical
 meaning again where wording changed. Keep this evidence outside the paper.
 
@@ -42,21 +47,36 @@ and ending against the [per-type deliverables](authoring.md#shared-structure-dif
 Record which earlier criticism no longer applies and why; do not merge
 incompatible recommendations or turn the manuscript into a response to reviewers.
 
-Test composition separately from the presence of explanations. At a difficult
-construction, can the reader identify the question it answers from the preceding
-text? After a central proof, can they state what has been established and use
-it in the next argument? Check whether a supporting derivation obscures that
-transition, or whether moving it would conceal the very mechanism this paper
-promises to explain. Read the revised transition in the delivered PDF, including
-its page break and any intervening figure. A source-level move alone does not
-establish a better reading sequence.
+On the first complete read of the rendered paper, mark where a result becomes
+available and where the reader next needs it. Read the pages between them.
+Identify the first place the reader loses the question, must redo a proof, or
+needs a premise that an earlier cut removed. Compare the two passages and try
+the concrete edit in order. Can the reader now use the result, with its
+conditions, without being told the answer? An intervening example earns its
+place if it equips this audience for that use. A short reminder can also
+restore the thread after a substantial proof. Record the passages and what
+the reader could recover. A successful test on an isolated choice covers only
+that choice.
 
-Choose the most consequential remaining obstacle and a concrete revision that
-would remove it. State what the reader should then be able to recover, and what
-must survive the edit. Reorder, replace or relocate before accumulating another
-layer of explanation. Re-read the complete affected route after editing, rather
-than inspecting only new sentences. Missing mathematics returns to research;
-clarity cannot certify an unsupported implication.
+When the proof turns on a choice, test what the preceding passage makes
+possible. Give the obstacle, available information and constraints. Withhold
+the proposed object, method name and formula. Ask what the reader would try
+and what it must preserve. Accept another choice if its justification meets
+the same requirements. A calculation done after revealing the choice supports
+a narrower judgment. If the reader has already seen it, use a changed problem
+that calls for a fresh choice, or record independent selection as unassessed.
+Choose a worked case in which the promised operation or improvement is visible.
+A case designed to exhibit failure answers a different question.
+
+When two orders both give the reader the necessary premises, try the same
+stretch in each order without saying which version is newer. Ask where the
+reader looked back and what was easier to recover in each. Keep the better
+sequence and restore a sentence from the other if it still does useful work
+at the join. A missing definition can be fixed directly. Check the final rendered
+edition in order, including the section after the last edited passage.
+Close the review when the promised reading task succeeds and the necessary
+proofs remain recoverable. Record a missing inference or an untested route
+at its actual scope.
 
 Close with a bounded judgment of the delivered work: which reader tasks are now
 supported, what evidence was inspected, and which consequential difficulty
@@ -97,12 +117,14 @@ assumptions and literature credit are recoverable from the short paper. Ask for
 the first unsupported transition and its source destination. Reading the short
 paper is not an audit of every source linked from it.
 
-For someone learning the subject, choose one section of the exposition. After
-reading, ask them to explain its result and argument in their own words with the
-text closed. Save that first account before giving hints or a checklist. Then
-offer one fresh example or changed hypothesis appropriate to what they read.
-Finally reopen the text and ask which passage resolves, or fails to resolve,
-their uncertainty. Record skipped sections as unassessed.
+Give a new learner the opening up to its first worked step. Before showing
+the next step or its answer, change a number or another feature of the example.
+Ask the learner to point to the number or mark they need, say what it represents
+and show how they use it. Use only the stated prerequisites in the question. Save the
+response and any hints. Record the first unfamiliar term the reader cannot
+match to the example and the sentence where they encountered it. If they
+can state the theorem but cannot make the move, revisit the first sentence
+that assumes it. Record which later sections, if any, the learner read.
 
 During a chronological reading, record the first point where the reader needs
 a missing definition, purpose or intermediate inference. Let them interrupt at
@@ -145,10 +167,9 @@ revision, keep useful tasks for unchanged steps and replace or supplement those
 that miss the new step. If an easy example makes distinct quantities equal,
 use a nearby case that separates them. Check the other hypotheses and the worked
 answer first; an arbitrary broken example may test a different failure.
-Distinguish executing a named operation from selecting it independently. When
-the latter is the question, withhold the method cue and include a case where
-the familiar argument may not apply. Record whether the reader identifies a
-false conclusion, insufficient information, or only the failure of that route.
+Use the [whole-paper review](#judge-the-whole-paper-against-its-purpose) to
+test selection when the passage promises it. Keep a changed case that separates
+a false conclusion, insufficient information and failure of the proposed route.
 
 ## Preserve the attempt, including assistance
 

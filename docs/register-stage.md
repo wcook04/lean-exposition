@@ -36,8 +36,8 @@ transition that owns it.
   inter-quartile range), naming the rules whose detector covers each feature and
   quoting the sentences that contribute most. It is a detector, never a gate.
 - **A critique contract**, [`critique-request.md`](../src/lean_exposition/resources/templates/critique-request.md).
-  Its first criterion is sentence- and paragraph-level writing against the rules
-  and the cited literature; evidence presentation is ranked last.
+  Reviewers judge the whole paper against its reader's task, then locate
+  consequential problems through paragraph review against the cited literature.
   `lean-exposition register packet` writes the rules, the profile, the
   measurement of every draft and the filled request into a packet directory, so
   every round carries them without anyone remembering to ask.
