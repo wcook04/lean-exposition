@@ -72,7 +72,7 @@ export function snapshotScroll(withWindow: boolean): KeptScroll {
  * it has settled. The reader's own input ends all of it, at any stage: scrolling
  * brings new fonts into use, and a refit then would pull the page out of their hand.
  */
-export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limit?: number; settle?: number; refit?: boolean } = {}): () => void {
+export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limit?: number; settle?: number; refit?: boolean; slack?: number } = {}): () => void {
   const limit = options.limit ?? LIMIT;
   const settle = options.settle ?? SETTLE;
   const fonts = options.refit ? document.fonts : undefined;
@@ -110,8 +110,9 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
         const room = document.documentElement.scrollHeight - window.innerHeight;
         if (y > room + 1) waiting = true;
         const wanted = Math.max(0, Math.min(y, room));
-        // Half a pixel: a looser test lets each save and restore creep by one.
-        if (Math.abs(window.scrollY - wanted) > 0.5) {
+        // Half a pixel: a looser test lets each save and restore creep by one. A jump to a place
+        // in the paper (not a saved position) can ask for more: a pixel either way is still there.
+        if (Math.abs(window.scrollY - wanted) > (options.slack ?? 0.5)) {
           window.scrollTo({ top: wanted, behavior: "instant" as ScrollBehavior });
           moved = true;
         }

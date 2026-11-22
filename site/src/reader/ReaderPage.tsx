@@ -560,7 +560,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         // Lazy parts, the phone sheet and late fonts can all change this geometry.
         // Reuse the saved-position restorer; any reader input stops it immediately.
         restoring.current?.();
-        restoring.current = restoreScroll({ window: landing }, { limit: 20000, settle: 3000, refit: true, onDone: () => body.hold(target!) });
+        restoring.current = restoreScroll({ window: landing }, { limit: 20000, settle: 3000, refit: true, slack: 2, onDone: () => body.hold(target!) });
       };
       if (smooth) {
         let done = false;
