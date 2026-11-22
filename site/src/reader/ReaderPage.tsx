@@ -584,18 +584,31 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // A record's address opened cold lands on its statement, with or without `l`.
     const named = statementAt(route.node, route.at);
     const at = named !== null ? ties.index.ties[named].at : route.at;
+    // An address further down keeps the paper undrawn, in place, until it has landed there, so the
+    // top of the paper never shows and then jumps (index.html holds it the same way for fonts).
+    let landed = false;
+    const land = (going: Promise<unknown>) => {
+      root.classList.add("landing");
+      const show = () => {
+        if (landed) return;
+        landed = true;
+        requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("landing")));
+      };
+      window.setTimeout(show, 1500);
+      void going.then(show, show);
+    };
     if (initial.saved) {
       void restorePosition(initial.saved);
       if (at) void landSlice(at, { scroll: false, node: route.node });
     } else if (at) {
-      void landSlice(at, { node: route.node }).then((ok) => {
-        if (!ok && route.anchor) void jumpTo(route.anchor);
-      });
-    } else if (route.anchor) void jumpTo(route.anchor);
+      land(landSlice(at, { node: route.node }).then((ok) => {
+        if (!ok && route.anchor) return jumpTo(route.anchor);
+      }));
+    } else if (route.anchor) land(jumpTo(route.anchor));
     else {
       // A record this paper discusses without an exact slice opens at its passage.
       const passage = route.node ? firstPassageFor(structure, [route.node]) : null;
-      if (passage) void jumpTo(passage);
+      if (passage) land(jumpTo(passage));
       else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     }
     if (restoreKey()) patchHistoryState({ lxRestore: undefined });

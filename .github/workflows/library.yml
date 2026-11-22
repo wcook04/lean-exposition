@@ -87,8 +87,7 @@ jobs:
           curl -sf -o /dev/null "http://127.0.0.1:47311/library/$AT/" || { python scripts/serve_library.py serve 47311 & sleep 2; }
           python site/scripts/check-idle.py "http://127.0.0.1:47311/library/$AT/" --sweep 1100 2600 300 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
           # A phone: still from 2 s after first paint, and once settled. A paper may name its own phone
-          # addresses (idle-phone.args); Navier–Stokes leaves out its numbered results (theorem-1.1/, proposition-b.14/) until their deep-link landing
-          # and Lean sheet settle before first paint (cap_quick_library_reader_deep_link_landing_and_lea_d34f9382ab34).
+          # addresses (idle-phone.args).
           phone=instances/${{ matrix.paper }}/idle-phone.args; [ -f "$phone" ] || phone=instances/${{ matrix.paper }}/idle.args
           python site/scripts/check-idle.py "http://127.0.0.1:47311/library/$AT/" --widths 390 $(cat "$phone" 2>/dev/null || true)
       - name: Check nothing in ${{ matrix.paper }} scrolls sideways, from a phone to 2560 pixels wide

@@ -320,7 +320,9 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
           {slot}
         </div>
       ) : (
-        <div ref={scroller} className="lean-page__scroll" data-keep>
+        // Until the alignment names this step's Lean, the list and body would rearrange as it
+        // arrives: the column keeps its place, undrawn, and is shown once, whole.
+        <div ref={scroller} className="lean-page__scroll" data-keep data-waiting={!alignment && !tie?.rows ? "" : undefined}>
           {record && !isPhraseRecord(record) && (
             <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
               {open.via === "pin" && graph.nodes.has(record) && (
