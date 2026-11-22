@@ -360,7 +360,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const start = savedPart ?? (named !== null ? statements.partOf(named) : undefined) ?? (lines ? partsOfLines(doc.parts, lines)[0] : undefined) ?? hit?.part ?? 0;
     const parts = new Set<number>();
     for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
-    if (start < 4) [0, 1, 2].forEach((i) => i < doc.parts.length && parts.add(i));
+    // Reading from the opening, every part the first screen can show is typeset in the first render,
+    // so none of them is filled in, and its margin drawn, after the page has painted.
+    if (start < 4) for (let i = 0; i < Math.min(7, doc.parts.length); i++) parts.add(i);
     return { parts: [...parts], saved: savedPart !== null ? saved : null };
     // Computed once per mounted paper.
     // eslint-disable-next-line react-hooks/exhaustive-deps
