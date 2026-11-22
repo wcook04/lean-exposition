@@ -56,6 +56,8 @@ export interface PreparedDocument {
   refs: RefIndex | null;
   /** The source line, from 1, that holds this byte of the document. */
   lineOfByte(byte: number): number;
+  /** The first byte on a 1-based source line. */
+  byteOfLine(line: number): number;
   render(index: number): RenderedPart;
   /**
    * The part's text with each formula left as its TeX source (not typeset): cheap, so every part's
@@ -1020,6 +1022,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     references,
     refs,
     lineOfByte,
+    byteOfLine: (line) => starts[Math.max(0, Math.min(starts.length - 1, line - 1))],
     render,
     renderPlain,
     renderAll: () => parts.map((p) => render(p.index)),
