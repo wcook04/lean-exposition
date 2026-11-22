@@ -1,0 +1,89 @@
+{
+ "summary": {
+  "quote_not_unique": 1,
+  "lean_not_in_index": 0,
+  "verdict_without_note": 0,
+  "statement_without_lean": 0,
+  "merged": 0,
+  "merged_assessments_differ": 0,
+  "unassessed": 2,
+  "result_label_not_found": 1,
+  "result_without_statement": 0,
+  "long_title_without_override": 0,
+  "quote_read_through_markup": 42,
+  "ties": 66,
+  "titled": 22,
+  "names": 22,
+  "results": 1,
+  "sections": 20,
+  "lean_files": 4,
+  "unnamed": 0
+ },
+ "quote_not_unique": [
+  "fig2-lam"
+ ],
+ "lean_not_in_index": [],
+ "verdict_without_note": [],
+ "statement_without_lean": [],
+ "merged": [],
+ "merged_assessments_differ": [],
+ "unassessed": [
+  [
+   "claim-isomorphism",
+   "isoL"
+  ],
+  [
+   "claim-isomorphism",
+   "isoR"
+  ]
+ ],
+ "result_label_not_found": [
+  "claim-isomorphism"
+ ],
+ "result_without_statement": [],
+ "long_title_without_override": [],
+ "quote_read_through_markup": [
+  "ty",
+  "ctx",
+  "index",
+  "stlc",
+  "proxytop",
+  "proxytop-only-top",
+  "reify-class",
+  "instance-refl",
+  "instance-step",
+  "snoc-pop",
+  "defer-snoc",
+  "contextual-embedding",
+  "cvar-case",
+  "lam-ignores",
+  "existential",
+  "workhorse",
+  "weaken",
+  "top-case",
+  "inject",
+  "proven",
+  "core",
+  "isoL-statement",
+  "indexIsoL",
+  "indexIsoR",
+  "closed-world",
+  "case-analysis",
+  "isoL-var",
+  "isoR-cvar",
+  "isoR-clam",
+  "code-pop",
+  "code-lam",
+  "code-app",
+  "code-proxytop",
+  "code-reify-class",
+  "code-refl",
+  "code-cvar",
+  "code-clam",
+  "code-capp",
+  "fig2-clam",
+  "fig2-capp",
+  "fig2-app",
+  "indexIsoL-intuition"
+ ]
+}

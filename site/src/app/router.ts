@@ -45,6 +45,8 @@ export type Route =
       page?: number;
       /** A retired phrase link (`/@<id>` of a library paper): the paper opens with a notice, at no phrase. */
       retired?: string;
+      /** A phrase address (`/@<id>`) that names no phrase of the paper: it opens at the top with a notice saying so. */
+      missing?: string;
     }
   | { view: "checks"; node?: string }
   | {

@@ -1,0 +1,45 @@
+{
+ "schema": 1,
+ "results": {
+  "claim-local-minimum": {
+   "claim": "local-minimum",
+   "title": "The coupled spring potential has a local minimum at the origin",
+   "section": "1",
+   "tie": "local-minimum",
+   "lean": [
+    "coupled_spring_potential"
+   ]
+  },
+  "claim-global-minimum": {
+   "claim": "global-minimum",
+   "title": "The origin is the unique global minimum",
+   "section": "5",
+   "tie": "global-minimum",
+   "lean": []
+  },
+  "claim-second-derivative-test": {
+   "claim": "second-derivative-test",
+   "title": "The analytic second-derivative test",
+   "section": "1",
+   "tie": "test-statement",
+   "lean": [
+    "second_derivative_test_analyticAt"
+   ]
+  },
+  "claim-cubic-local-not-global": {
+   "claim": "cubic-local-not-global",
+   "title": "Adding x₀³ keeps the local minimum, by the same test",
+   "section": "3",
+   "tie": "cubic-local-minimum",
+   "lean": []
+  }
+ },
+ "sections": {
+  "1": "1. What the test requires",
+  "2": "2. How the test turns a positive Hessian into a minimum",
+  "3": "3. A remainder that matters",
+  "4": "4. A hypothesis the proof does not need",
+  "5": "5. Where the three squares come from",
+  "6": "6. What the potential says about motion"
+ }
+}

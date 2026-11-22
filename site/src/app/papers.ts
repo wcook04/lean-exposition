@@ -8,6 +8,9 @@ export const PAPER_NAMES: Record<Stage, { short: string; job: string; reader: st
 
 export const STAGE_ORDER: Stage[] = site.stages ?? ["expository", "short", "long"];
 
+/** Documents of the same paper read in another build, which the Read menu links to after its own. */
+export const EXTERNAL_DOCUMENTS = site.library?.external ?? [];
+
 /** Each account as a sentence names it: "the short paper". */
 export const ACCOUNT_IN_PROSE: Record<Stage, string> = {
   expository: "the exposition",

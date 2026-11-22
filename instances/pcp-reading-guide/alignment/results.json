@@ -1,0 +1,26 @@
+{
+ "schema": 1,
+ "results": {
+  "claim-pcp-theorem": {
+   "claim": "pcp-theorem",
+   "title": "NP ⊆ PCP(O(log n), O(1))",
+   "section": "4",
+   "tie": "headline-statement",
+   "lean": [
+    "PCP.np_subset_pcp"
+   ]
+  }
+ },
+ "sections": {
+  "1": "1. What you have to read",
+  "2": "2. Reading a Lean statement",
+  "3": "3. The definitions",
+  "4": "4. The PCP theorem",
+  "5": "5. Checks on the definitions",
+  "6": "6. The explicit constants",
+  "7": "7. Low-degree testing statements",
+  "8": "8. Reading a proof",
+  "9": "9. Finding your way around",
+  "10": "10. Learning more Lean"
+ }
+}

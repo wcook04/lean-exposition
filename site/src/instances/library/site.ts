@@ -4,9 +4,9 @@
 
 import type { SiteFacts } from "../../home/siteFacts.ts";
 import type { RecordKind, SiteInstance } from "../types.ts";
-import { PAPER, MAIN, LIBRARY_ROOT } from "./data.ts";
+import { PAPER, MAIN, BUILT, LIBRARY_ROOT } from "./data.ts";
 
-const ADAPTED = PAPER.documents.find((d) => d.adapted);
+const ADAPTED = BUILT.find((d) => d.adapted);
 
 const n = (value: number) => value.toLocaleString("en-GB");
 const plain = (text: string) => text.replace(/\$([^$]+)\$/g, "$1");
@@ -39,7 +39,7 @@ const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
 // A document that says what it does and who it is for (doc.job, doc.reader) keeps its own words.
-for (const doc of PAPER.documents)
+for (const doc of BUILT)
   paperNames[doc.slot] = doc.adapted
     ? // The adapted edition's header carries its own credit, whole; the authors' paper keeps theirs.
       { short: "Adapted edition", job: sentence(`${doc.title}, an adapted edition`), reader: doc.credit ?? "" }
@@ -47,7 +47,7 @@ for (const doc of PAPER.documents)
     ? { short: doc.title, job: doc.job ?? sentence(`${doc.title}, by ${BY}`), reader: doc.reader ?? CREDIT }
     : {
         short: doc.title,
-        job: doc.job ?? sentence(`${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
+        job: doc.job ?? sentence(`${doc.title}: ${/^[aeiou]/i.test(doc.noun) ? "an" : "a"} ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
         reader: doc.reader ?? (PAPER.companion_credit ? sentence(PAPER.companion_credit) : ""),
       };
 
@@ -108,10 +108,10 @@ const site = {
     noscript: `The paper and its Lean are in the repository under <code>instances/${PAPER.id}/</code>.`,
     ogImage: false,
   },
-  defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.id}/`,
+  defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.path ?? PAPER.id}/`,
   pdfs: {
     ...Object.fromEntries(
-      PAPER.documents
+      BUILT
         .filter((d) => d.pdf)
         .map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.pdf!.name ?? (d.slug ? `${d.slug}.pdf` : "paper.pdf"), ...(d.pdf!.alias ? { alias: d.pdf!.alias } : {}) }]),
     ),
@@ -122,7 +122,7 @@ const site = {
   sitePages: [""],
   routeTitles: {
     map: "Argument map", compare: "Compare", lean: "Lean index", checks: "What ran", about: "About", search: "Search",
-    ...Object.fromEntries(PAPER.documents.map((d) => [`read/${d.slot}`, plain(d.title)])),
+    ...Object.fromEntries(BUILT.map((d) => [`read/${d.slot}`, plain(d.title)])),
   },
   readme,
   llms,
@@ -143,7 +143,7 @@ const site = {
   regionTitles: R.region_titles ?? {},
   paperNames,
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
-  stages: PAPER.documents.filter((d) => d.kind !== "companion").map((d) => d.slot),
+  stages: BUILT.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
@@ -151,8 +151,12 @@ const site = {
   library: {
     paper: PAPER.id,
     main: MAIN.slot,
-    pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
-    companions: PAPER.documents
+    pdfOnly: BUILT.filter((d) => d.pdf_only).map((d) => d.slot),
+    pages: Object.fromEntries(BUILT.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
+    external: PAPER.documents
+      .filter((d) => d.href && !d.slot)
+      .map((d) => ({ title: d.title, job: sentence(`${d.title}: the ${d.noun}`), href: `${LIBRARY_ROOT}${d.href}` })),
+    companions: BUILT
       .filter((d) => d.kind === "companion")
       .map((d) => ({ slot: d.slot, id: d.id, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
       .sort((a, b) => a.order - b.order),
@@ -161,9 +165,9 @@ const site = {
   adapted: ADAPTED
     ? {
         slot: ADAPTED.slot,
-        of: (PAPER.documents.find((d) => d.id === ADAPTED.of) ?? MAIN).slot,
+        of: (BUILT.find((d) => d.id === ADAPTED.of) ?? MAIN).slot!,
         credit: ADAPTED.credit ?? "",
-        authorsPaper: PAPER.source.upstream.paper,
+        authorsPaper: PAPER.source.upstream.paper ?? undefined,
         pdfs: [ADAPTED.pdf, ADAPTED.aux_pdf].filter((p): p is NonNullable<typeof p> => !!p).map((p) => ({ label: p.label ?? "PDF", name: p.name ?? p.file })),
       }
     : undefined,

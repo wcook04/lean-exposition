@@ -1,0 +1,7 @@
+{
+  "challenge_module": "PhyslibAlpha.Checked.Challenge",
+  "solution_module": "PhyslibAlpha.Checked.Solution",
+  "theorem_names": ["coupled_spring_potential"],
+  "definition_names": [],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+}

@@ -1,0 +1,33 @@
+{
+ "schema_version": "1.0",
+ "id": "contextual-embeddings",
+ "repository": "https://doi.org/10.5281/zenodo.19081887",
+ "revision": "https://doi.org/10.5281/zenodo.19081887",
+ "via": "wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139, papers/contextual-embeddings/lean",
+ "license": "NOASSERTION",
+ "files": [
+  {
+   "path": "upstream/lean/CE.lean",
+   "sha256": "413610454511548fedd68a73f2b0d7d4e1708e8d98a24cca6cdf8b31ee476ec4",
+   "bytes": 11237
+  },
+  {
+   "path": "upstream/lean/lake-manifest.json",
+   "sha256": "0f131e6cb0629f56b3104b2ac8683435aa08e5a4822283808e365918bffec351",
+   "bytes": 108
+  },
+  {
+   "path": "upstream/lean/lakefile.toml",
+   "sha256": "8ae93e7a7a6c5d33ffe1ffa1f48044b541a35e0f7f724f807c51e5cfd1849826",
+   "bytes": 80
+  },
+  {
+   "path": "upstream/lean/lean-toolchain",
+   "sha256": "56386b8140157238bec5b0c38ec89fba4e2512a3cbf8cee062c32a5d07b410c8",
+   "bytes": 24
+  }
+ ],
+ "lean_roots": [
+  "CE"
+ ]
+}

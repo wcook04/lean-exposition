@@ -136,6 +136,10 @@ export interface SiteInstance {
     companions?: { slot: string; id?: string; title: string; group: string; group_title: string; order: number }[];
     /** The paper's guide to its formal conventions, shown in the pane as "How to read the Lean". */
     guide?: InstanceStage;
+    /** Documents of the same paper read in another build (a fourth document, served at its own address); the Read menu links to them. */
+    external?: { title: string; job: string; href: string }[];
+    /** Documents read only in the authors' PDF: no reading copy, so no Text toggle. */
+    pdfOnly?: InstanceStage[];
   };
   /**
    * An adapted edition of the main document (instances/<paper>/adapted/, docs/reader-design.md

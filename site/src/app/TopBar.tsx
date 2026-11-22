@@ -10,7 +10,7 @@ import type { Stage } from "../api/types";
 import { BackControl } from "./BackControl";
 import { navigate, routeHref, type Route } from "./router";
 import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
-import { PAPER_NAMES, STAGE_ORDER } from "./papers";
+import { EXTERNAL_DOCUMENTS, PAPER_NAMES, STAGE_ORDER } from "./papers";
 import { useMaybeEdition } from "./data";
 import { FAMILY } from "./family";
 import { HAS_FILMS, VideoRows, VideosMenu } from "./VideosMenu";
@@ -288,6 +288,12 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
             ))}
           </div>
         ))}
+        {EXTERNAL_DOCUMENTS.map((d) => (
+          <a key={d.href} role="menuitem" tabIndex={-1} href={d.href} className="readmenu__item">
+            <span className="readmenu__name">{d.title}</span>
+            <span className="readmenu__job">{d.job}</span>
+          </a>
+        ))}
         <PapersLink className="readmenu__item readmenu__item--all" route={route} menu />
       </div>
     </div>
@@ -363,6 +369,14 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
                         {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
                       </span>
                       <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
+                    </a>
+                  </li>
+                ))}
+                {EXTERNAL_DOCUMENTS.map((d) => (
+                  <li key={d.href}>
+                    <a href={d.href} className="readmenu__item">
+                      <span className="readmenu__name">{d.title}</span>
+                      <span className="readmenu__job">{d.job}</span>
                     </a>
                   </li>
                 ))}

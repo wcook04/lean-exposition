@@ -1,0 +1,37 @@
+{
+ "schema": 1,
+ "results": {
+  "claim-isomorphism": {
+   "claim": "isomorphism",
+   "title": "unembed and contextualise form an isomorphism",
+   "section": "3.3",
+   "tie": "proven",
+   "lean": [
+    "isoL",
+    "isoR"
+   ]
+  }
+ },
+ "sections": {
+  "1": "1 Introduction",
+  "2": "2 Background: First-Order Embeddings",
+  "3": "3 Contextual Embeddings",
+  "3.1": "3.1 Towards an Ergonomic First-Order Embedding",
+  "3.2": "3.2 Contextual Embedding of the STLC",
+  "3.3": "3.3 Isomorphism to First-Order Embedding",
+  "3.4": "3.4 Assigning Semantics",
+  "3.5": "3.5 Scope of Contextual Embeddings",
+  "3.6": "3.6 Performance of Contextual Embeddings",
+  "3.7": "3.7 Usability of Contextual Embeddings",
+  "4": "4 Modal Example: Fitch-Style Modal Lambda Calculus",
+  "5": "5 Substructural Example: Linear $\\lambda$-Calculus (LLC)",
+  "6": "6 Contextual Embeddings, Levelled Up",
+  "6.1": "6.1 Contextual Embedding with Levels",
+  "6.2": "6.2 Contextual Embedding of the STLC with Levels",
+  "6.3": "6.3 Justification of Levels",
+  "7": "7 Substructural Example: LLC Levelled Up",
+  "8": "8 Further Examples",
+  "9": "9 Related Work",
+  "10": "10 Conclusion and Future Work"
+ }
+}

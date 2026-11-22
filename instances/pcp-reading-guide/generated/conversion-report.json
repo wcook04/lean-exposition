@@ -1,0 +1,33 @@
+{
+ "summary": {
+  "quote_not_unique": 0,
+  "lean_not_in_index": 0,
+  "verdict_without_note": 0,
+  "statement_without_lean": 0,
+  "merged": 0,
+  "merged_assessments_differ": 0,
+  "unassessed": 0,
+  "result_label_not_found": 1,
+  "result_without_statement": 0,
+  "long_title_without_override": 0,
+  "ties": 55,
+  "titled": 20,
+  "names": 27,
+  "results": 1,
+  "sections": 10,
+  "lean_files": 8,
+  "unnamed": 0
+ },
+ "quote_not_unique": [],
+ "lean_not_in_index": [],
+ "verdict_without_note": [],
+ "statement_without_lean": [],
+ "merged": [],
+ "merged_assessments_differ": [],
+ "unassessed": [],
+ "result_label_not_found": [
+  "claim-pcp-theorem"
+ ],
+ "result_without_statement": [],
+ "long_title_without_override": []
+}

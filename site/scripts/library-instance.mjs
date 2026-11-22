@@ -58,7 +58,15 @@ const phrases = {};
 // place of the tie at its statement block (the tie index's `canonical`), so /theorem-1.1/ lands on
 // the theorem itself.
 const results = {};
+// A companion page's phrases, by its slug: /<slug>/@<tie id> opens the phrase on that page.
+const pages = {};
 const main = instance.documents.find((doc) => doc.main) ?? instance.documents[0];
+for (const doc of instance.documents.filter((d) => !d.main && d.slot && d.slug)) {
+  const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
+  if (!existsSync(path)) continue;
+  const table = (pages[doc.slug] = {});
+  for (const tie of JSON.parse(readFileSync(path, "utf8")).ties ?? []) if (tie.phrase) table[tie.phrase] = { record: tie.record ?? null, at: tie.at };
+}
 for (const doc of instance.documents.filter((d) => d.main)) {
   const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
   if (!existsSync(path)) continue;
@@ -121,6 +129,12 @@ const aids = {
 const aidsPath = resolve(import.meta.dirname, "../public/aids.json");
 if (aids.glossary.length || aids.showcase.length || aids.summary || aids.route) writeFileSync(aidsPath, JSON.stringify(aids));
 else if (existsSync(aidsPath)) rmSync(aidsPath);
+// A companion phrase merged into another keeps its id as an address of the phrase that holds it.
+if (existsSync(aliases)) {
+  const table = JSON.parse(readFileSync(aliases, "utf8"));
+  for (const page of Object.values(pages))
+    for (const [old, host] of Object.entries(table.passages ?? {})) if (page[host] && !page[old]) page[old] = { ...page[host], host };
+}
 const laterChecks = [];
 // Our own Lean statements beside the authors' (generated/ours.json): each comparison is filed under
 // the phrase that now carries its card (p::<passage>, tie::<key>, through the aliases).
@@ -165,5 +179,5 @@ if (adapted) {
   mkdirSync(changesDir, { recursive: true });
   copyFileSync(resolve(import.meta.dirname, "../../instances", paper, `alignment/changes-${adapted.slot}.json`), resolve(changesDir, `${adapted.slot}.json`));
 }
-writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, moved, checks: laterChecks }));
+writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, pages, moved, checks: laterChecks }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets, ${Object.keys(moved).length} moved pages)`);

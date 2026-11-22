@@ -7,7 +7,7 @@
   "families": [
    [
     "family-setup",
-    22.5,
+    18.5,
     [
      "setup",
      "weighted"
@@ -15,7 +15,7 @@
    ],
    [
     "family-cover",
-    79.5,
+    76.5,
     [
      "comparison",
      "cover"
@@ -23,7 +23,7 @@
    ],
    [
     "family-membership",
-    153.5,
+    148.5,
     [
      "membership",
      "approximation"
@@ -31,21 +31,21 @@
    ],
    [
     "family-boundaries",
-    212.5,
+    210,
     [
      "boundaries"
     ]
    ],
    [
     "family-finite-period",
-    274,
+    270,
     [
      "finite-period"
     ]
    ],
    [
     "family-mixed",
-    323,
+    318,
     [
      "mixed"
     ]
@@ -53,40 +53,40 @@
   ],
   "colours": {
    "setup": [
-    "oklch(0.535 0.201 17.7)",
-    "oklch(0.635 0.201 17.7)"
+    "oklch(0.533 0.200 14.3)",
+    "oklch(0.608 0.200 14.3)"
    ],
    "weighted": [
-    "oklch(0.655 0.179 27.3)",
-    "oklch(0.755 0.146 27.3)"
+    "oklch(0.657 0.181 22.7)",
+    "oklch(0.732 0.164 22.7)"
    ],
    "comparison": [
-    "oklch(0.520 0.109 74.7)",
-    "oklch(0.620 0.131 74.7)"
+    "oklch(0.513 0.109 72.3)",
+    "oklch(0.588 0.125 72.3)"
    ],
    "cover": [
-    "oklch(0.640 0.131 84.3)",
-    "oklch(0.740 0.151 84.3)"
+    "oklch(0.637 0.131 80.7)",
+    "oklch(0.712 0.147 80.7)"
    ],
    "membership": [
-    "oklch(0.500 0.142 148.7)",
-    "oklch(0.600 0.170 148.7)"
+    "oklch(0.493 0.158 144.3)",
+    "oklch(0.568 0.182 144.3)"
    ],
    "approximation": [
-    "oklch(0.620 0.144 158.3)",
-    "oklch(0.720 0.167 158.3)"
+    "oklch(0.617 0.159 152.7)",
+    "oklch(0.692 0.179 152.7)"
    ],
    "boundaries": [
-    "oklch(0.625 0.109 212.5)",
-    "oklch(0.725 0.126 212.5)"
+    "oklch(0.625 0.108 210.0)",
+    "oklch(0.700 0.121 210.0)"
    ],
    "finite-period": [
-    "oklch(0.620 0.190 274.0)",
-    "oklch(0.720 0.145 274.0)"
+    "oklch(0.640 0.190 270.0)",
+    "oklch(0.715 0.147 270.0)"
    ],
    "mixed": [
-    "oklch(0.460 0.190 323.0)",
-    "oklch(0.560 0.190 323.0)"
+    "oklch(0.495 0.190 318.0)",
+    "oklch(0.570 0.190 318.0)"
    ]
   }
  },
@@ -98,7 +98,7 @@
   "families": [
    [
     "family-spins",
-    358,
+    359,
     [
      "spins"
     ]
@@ -112,7 +112,7 @@
    ],
    [
     "family-full-support",
-    152.5,
+    151,
     [
      "spin-consequences",
      "curvature",
@@ -121,7 +121,7 @@
    ],
    [
     "family-control-value",
-    224,
+    226,
     [
      "control-value",
      "response-process"
@@ -138,40 +138,40 @@
   ],
   "colours": {
    "spins": [
-    "oklch(0.490 0.190 358.0)",
-    "oklch(0.660 0.190 358.0)"
+    "oklch(0.485 0.190 359.0)",
+    "oklch(0.660 0.190 359.0)"
    ],
    "order-parameter": [
-    "oklch(0.590 0.131 66.0)",
+    "oklch(0.585 0.130 66.0)",
     "oklch(0.760 0.169 66.0)"
    ],
    "spin-consequences": [
-    "oklch(0.380 0.125 141.0)",
-    "oklch(0.550 0.180 141.0)"
+    "oklch(0.371 0.122 140.9)",
+    "oklch(0.546 0.179 140.9)"
    ],
    "curvature": [
-    "oklch(0.500 0.130 152.5)",
-    "oklch(0.670 0.174 152.5)"
+    "oklch(0.495 0.133 151.0)",
+    "oklch(0.670 0.180 151.0)"
    ],
    "full-support": [
-    "oklch(0.620 0.132 164.0)",
-    "oklch(0.790 0.167 164.0)"
+    "oklch(0.619 0.137 161.1)",
+    "oklch(0.794 0.171 161.1)"
    ],
    "control-value": [
-    "oklch(0.510 0.091 218.2)",
-    "oklch(0.680 0.122 218.2)"
+    "oklch(0.503 0.092 221.0)",
+    "oklch(0.678 0.124 221.0)"
    ],
    "response-process": [
-    "oklch(0.630 0.125 229.8)",
-    "oklch(0.800 0.126 229.8)"
+    "oklch(0.627 0.126 231.0)",
+    "oklch(0.802 0.123 231.0)"
    ],
    "first-variation": [
-    "oklch(0.475 0.201 276.2)",
-    "oklch(0.645 0.191 276.2)"
+    "oklch(0.468 0.200 277.0)",
+    "oklch(0.643 0.192 277.0)"
    ],
    "contact": [
-    "oklch(0.595 0.179 287.8)",
-    "oklch(0.765 0.127 287.8)"
+    "oklch(0.592 0.181 287.0)",
+    "oklch(0.767 0.125 287.0)"
    ]
   }
  },
@@ -233,14 +233,14 @@
    ],
    [
     "torus",
-    68.93,
+    67.43,
     [
      "torus"
     ]
    ],
    [
     "profile-to-blowup",
-    129.36,
+    129.86,
     [
      "mild",
      "monodromy",
@@ -257,7 +257,7 @@
    ],
    [
     "cell-data",
-    226.71,
+    232.71,
     [
      "encoding",
      "quarter-plane",
@@ -266,7 +266,7 @@
    ],
    [
     "cell-estimates",
-    276.14,
+    283.14,
     [
      "angular",
      "tree",
@@ -275,7 +275,7 @@
    ],
    [
     "cell-certificate",
-    325.57,
+    335.57,
     [
      "adjoint",
      "offset-certificate"
@@ -284,68 +284,68 @@
   ],
   "colours": {
    "fractional": [
-    "oklch(0.440 0.176 10.9)",
-    "oklch(0.610 0.201 10.9)"
+    "oklch(0.433 0.173 11.4)",
+    "oklch(0.613 0.200 11.4)"
    ],
    "statement": [
-    "oklch(0.560 0.179 19.1)",
-    "oklch(0.730 0.166 19.1)"
+    "oklch(0.557 0.181 18.6)",
+    "oklch(0.737 0.161 18.6)"
    ],
    "torus": [
-    "oklch(0.450 0.098 68.9)",
-    "oklch(0.620 0.135 68.9)"
+    "oklch(0.445 0.098 67.4)",
+    "oklch(0.625 0.137 67.4)"
    ],
    "mild": [
-    "oklch(0.370 0.089 121.1)",
-    "oklch(0.540 0.129 121.1)"
+    "oklch(0.361 0.088 122.7)",
+    "oklch(0.541 0.132 122.7)"
    ],
    "monodromy": [
-    "oklch(0.490 0.130 129.4)",
-    "oklch(0.660 0.176 129.4)"
+    "oklch(0.485 0.130 129.9)",
+    "oklch(0.665 0.178 129.9)"
    ],
    "profile": [
-    "oklch(0.610 0.167 137.6)",
-    "oklch(0.780 0.167 137.6)"
+    "oklch(0.609 0.171 137.1)",
+    "oklch(0.789 0.171 137.1)"
    ],
    "certificate": [
-    "oklch(0.500 0.104 165.7)",
-    "oklch(0.670 0.139 165.7)"
+    "oklch(0.498 0.103 166.2)",
+    "oklch(0.678 0.140 166.2)"
    ],
    "coercive": [
-    "oklch(0.620 0.118 173.9)",
-    "oklch(0.790 0.150 173.9)"
+    "oklch(0.622 0.119 173.4)",
+    "oklch(0.802 0.153 173.4)"
    ],
    "encoding": [
-    "oklch(0.330 0.059 218.5)",
-    "oklch(0.500 0.090 218.5)"
+    "oklch(0.331 0.063 225.5)",
+    "oklch(0.511 0.097 225.5)"
    ],
    "quarter-plane": [
-    "oklch(0.450 0.086 226.7)",
-    "oklch(0.620 0.119 226.7)"
+    "oklch(0.455 0.093 232.7)",
+    "oklch(0.635 0.130 232.7)"
    ],
    "cells-tails": [
-    "oklch(0.570 0.120 234.9)",
-    "oklch(0.740 0.156 234.9)"
+    "oklch(0.579 0.132 239.9)",
+    "oklch(0.759 0.138 239.9)"
    ],
    "angular": [
-    "oklch(0.410 0.213 267.9)",
-    "oklch(0.580 0.213 267.9)"
+    "oklch(0.401 0.209 275.9)",
+    "oklch(0.581 0.209 275.9)"
    ],
    "tree": [
-    "oklch(0.530 0.190 276.1)",
-    "oklch(0.700 0.158 276.1)"
+    "oklch(0.525 0.190 283.1)",
+    "oklch(0.705 0.159 283.1)"
    ],
    "profile-change": [
-    "oklch(0.650 0.167 284.4)",
-    "oklch(0.820 0.093 284.4)"
+    "oklch(0.649 0.171 290.3)",
+    "oklch(0.829 0.091 290.3)"
    ],
    "adjoint": [
-    "oklch(0.470 0.201 321.5)",
-    "oklch(0.640 0.201 321.5)"
+    "oklch(0.503 0.200 332.0)",
+    "oklch(0.683 0.200 332.0)"
    ],
    "offset-certificate": [
-    "oklch(0.590 0.179 329.7)",
-    "oklch(0.760 0.179 329.7)"
+    "oklch(0.627 0.181 339.2)",
+    "oklch(0.807 0.151 339.2)"
    ]
   }
  },
@@ -366,7 +366,7 @@
    ],
    [
     "family-remainders",
-    158,
+    155.5,
     [
      "combining-estimates",
      "remainders",
@@ -390,35 +390,35 @@
   ],
   "colours": {
    "series": [
-    "oklch(0.400 0.117 43.6)",
-    "oklch(0.560 0.164 43.6)"
+    "oklch(0.396 0.112 45.4)",
+    "oklch(0.561 0.159 45.4)"
    ],
    "rational-gap": [
     "oklch(0.520 0.124 58.0)",
-    "oklch(0.680 0.162 58.0)"
+    "oklch(0.685 0.164 58.0)"
    ],
    "scope": [
-    "oklch(0.640 0.136 72.4)",
-    "oklch(0.800 0.167 72.4)"
+    "oklch(0.644 0.139 70.6)",
+    "oklch(0.809 0.155 70.6)"
    ],
    "combining-estimates": [
-    "oklch(0.380 0.124 143.6)",
-    "oklch(0.540 0.177 143.6)"
+    "oklch(0.371 0.124 142.9)",
+    "oklch(0.536 0.180 142.9)"
    ],
    "remainders": [
-    "oklch(0.500 0.117 158.0)",
-    "oklch(0.660 0.154 158.0)"
+    "oklch(0.495 0.121 155.5)",
+    "oklch(0.660 0.161 155.5)"
    ],
    "cycle-averages": [
-    "oklch(0.620 0.119 172.4)",
-    "oklch(0.780 0.150 172.4)"
+    "oklch(0.619 0.125 168.1)",
+    "oklch(0.784 0.158 168.1)"
    ],
    "incomplete-cycles": [
-    "oklch(0.540 0.190 257.0)",
+    "oklch(0.535 0.190 257.0)",
     "oklch(0.700 0.158 257.0)"
    ],
    "doubling": [
-    "oklch(0.500 0.190 339.0)",
+    "oklch(0.495 0.190 339.0)",
     "oklch(0.660 0.190 339.0)"
    ]
   }
@@ -430,7 +430,7 @@
   "families": [
    [
     "solution",
-    14.5,
+    20.5,
     [
      "auxiliary-smoothness",
      "terminal",
@@ -439,14 +439,14 @@
    ],
    [
     "induction",
-    62.93,
+    66.43,
     [
      "induction"
     ]
    ],
    [
     "waves",
-    121.86,
+    129.36,
     [
      "amplification",
      "affine-wave",
@@ -455,14 +455,14 @@
    ],
    [
     "endpoint",
-    163.29,
+    169.29,
     [
      "endpoint-inverse"
     ]
    ],
    [
     "approximate",
-    226.71,
+    229.71,
     [
      "pressure-flow",
      "approximate",
@@ -471,7 +471,7 @@
    ],
    [
     "expansion",
-    275.14,
+    279.64,
     [
      "hierarchy",
      "mean-estimates"
@@ -479,7 +479,7 @@
    ],
    [
     "supporting",
-    329.57,
+    329.07,
     [
      "supporting-estimates"
     ]
@@ -487,60 +487,371 @@
   ],
   "colours": {
    "auxiliary-smoothness": [
-    "oklch(0.390 0.156 6.3)",
-    "oklch(0.545 0.213 6.3)"
+    "oklch(0.406 0.162 13.3)",
+    "oklch(0.571 0.209 13.3)"
    ],
    "terminal": [
-    "oklch(0.510 0.190 14.5)",
-    "oklch(0.665 0.190 14.5)"
+    "oklch(0.530 0.190 20.5)",
+    "oklch(0.695 0.190 20.5)"
    ],
    "singularity": [
-    "oklch(0.630 0.167 22.7)",
-    "oklch(0.785 0.124 22.7)"
+    "oklch(0.654 0.171 27.7)",
+    "oklch(0.819 0.101 27.7)"
    ],
    "induction": [
-    "oklch(0.465 0.106 62.9)",
-    "oklch(0.620 0.141 62.9)"
+    "oklch(0.455 0.101 66.4)",
+    "oklch(0.620 0.137 66.4)"
    ],
    "amplification": [
-    "oklch(0.385 0.086 113.6)",
-    "oklch(0.540 0.121 113.6)"
+    "oklch(0.371 0.090 122.2)",
+    "oklch(0.536 0.130 122.2)"
    ],
    "affine-wave": [
-    "oklch(0.505 0.122 121.9)",
-    "oklch(0.660 0.159 121.9)"
+    "oklch(0.495 0.132 129.4)",
+    "oklch(0.660 0.176 129.4)"
    ],
    "localized-wave": [
-    "oklch(0.625 0.167 130.1)",
-    "oklch(0.780 0.167 130.1)"
+    "oklch(0.619 0.171 136.6)",
+    "oklch(0.784 0.171 136.6)"
    ],
    "endpoint-inverse": [
-    "oklch(0.605 0.130 163.3)",
-    "oklch(0.760 0.163 163.3)"
+    "oklch(0.535 0.106 169.3)",
+    "oklch(0.700 0.139 169.3)"
    ],
    "pressure-flow": [
-    "oklch(0.385 0.069 218.5)",
-    "oklch(0.540 0.097 218.5)"
+    "oklch(0.371 0.068 222.5)",
+    "oklch(0.536 0.099 222.5)"
    ],
    "approximate": [
-    "oklch(0.505 0.097 226.7)",
-    "oklch(0.660 0.127 226.7)"
+    "oklch(0.495 0.098 229.7)",
+    "oklch(0.660 0.131 229.7)"
    ],
    "parent-step": [
-    "oklch(0.625 0.132 234.9)",
-    "oklch(0.780 0.131 234.9)"
+    "oklch(0.619 0.135 236.9)",
+    "oklch(0.784 0.126 236.9)"
    ],
    "hierarchy": [
-    "oklch(0.430 0.201 271.0)",
-    "oklch(0.585 0.201 271.0)"
+    "oklch(0.458 0.200 276.0)",
+    "oklch(0.623 0.200 276.0)"
    ],
    "mean-estimates": [
-    "oklch(0.550 0.179 279.3)",
-    "oklch(0.705 0.156 279.3)"
+    "oklch(0.582 0.181 283.2)",
+    "oklch(0.747 0.134 283.2)"
    ],
    "supporting-estimates": [
-    "oklch(0.565 0.190 329.6)",
-    "oklch(0.720 0.190 329.6)"
+    "oklch(0.415 0.190 329.1)",
+    "oklch(0.580 0.190 329.1)"
+   ]
+  }
+ },
+ "4981a2460fc5b874": {
+  "used_by": [
+   "instances/pcp/alignment/colours-expository.json#0",
+   "instances/pcp/alignment/colours-long.json#0",
+   "instances/pcp/alignment/colours-short.json#0",
+   "instances/pcp-reading-guide/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "np-and-pcp",
+    21.5,
+    [
+     "pcp-characterization",
+     "np-witnesses",
+     "np-reduction"
+    ]
+   ],
+   [
+    "polynomials-and-grids",
+    71,
+    [
+     "polynomial-distance",
+     "grid-interpolation",
+     "vanishing-certificates"
+    ]
+   ],
+   [
+    "three-colouring-verifier",
+    114,
+    [
+     "colouring-constraints",
+     "proof-tables-checks",
+     "colouring-guarantees"
+    ]
+   ],
+   [
+    "local-correction-and-grid-testing",
+    156.5,
+    [
+     "zero-on-grid-test",
+     "field-local-correction",
+     "binary-local-correction"
+    ]
+   ],
+   [
+    "binary-low-degree-testing",
+    207.5,
+    [
+     "binary-low-degree-test",
+     "inner-low-degree-test",
+     "set-multilinear-encoding"
+    ]
+   ],
+   [
+    "field-low-degree-testing",
+    256,
+    [
+     "point-line-test",
+     "standard-low-degree-test",
+     "bivariate-agreement"
+    ]
+   ],
+   [
+    "hadamard-encoding",
+    293,
+    [
+     "hadamard-labels",
+     "hadamard-testing",
+     "linearity-self-correction"
+    ]
+   ],
+   [
+    "verifier-model-and-resources",
+    342,
+    [
+     "machine-implementation",
+     "verifier-model",
+     "resource-bounds"
+    ]
+   ]
+  ],
+  "colours": {
+   "pcp-characterization": [
+    "oklch(0.406 0.162 15.2)",
+    "oklch(0.601 0.209 15.2)"
+   ],
+   "np-witnesses": [
+    "oklch(0.530 0.190 21.5)",
+    "oklch(0.725 0.170 21.5)"
+   ],
+   "np-reduction": [
+    "oklch(0.654 0.171 27.8)",
+    "oklch(0.849 0.082 27.8)"
+   ],
+   "polynomial-distance": [
+    "oklch(0.326 0.073 64.7)",
+    "oklch(0.521 0.117 64.7)"
+   ],
+   "grid-interpolation": [
+    "oklch(0.450 0.097 71.0)",
+    "oklch(0.645 0.138 71.0)"
+   ],
+   "vanishing-certificates": [
+    "oklch(0.574 0.120 77.3)",
+    "oklch(0.769 0.160 77.3)"
+   ],
+   "colouring-constraints": [
+    "oklch(0.371 0.080 107.7)",
+    "oklch(0.566 0.121 107.7)"
+   ],
+   "proof-tables-checks": [
+    "oklch(0.495 0.111 114.0)",
+    "oklch(0.690 0.155 114.0)"
+   ],
+   "colouring-guarantees": [
+    "oklch(0.619 0.147 120.3)",
+    "oklch(0.814 0.171 120.3)"
+   ],
+   "zero-on-grid-test": [
+    "oklch(0.371 0.101 150.2)",
+    "oklch(0.566 0.155 150.2)"
+   ],
+   "field-local-correction": [
+    "oklch(0.495 0.119 156.5)",
+    "oklch(0.690 0.165 156.5)"
+   ],
+   "binary-local-correction": [
+    "oklch(0.619 0.134 162.8)",
+    "oklch(0.814 0.171 162.8)"
+   ],
+   "binary-low-degree-test": [
+    "oklch(0.336 0.057 201.2)",
+    "oklch(0.531 0.090 201.2)"
+   ],
+   "inner-low-degree-test": [
+    "oklch(0.460 0.079 207.5)",
+    "oklch(0.655 0.112 207.5)"
+   ],
+   "set-multilinear-encoding": [
+    "oklch(0.584 0.102 213.8)",
+    "oklch(0.779 0.136 213.8)"
+   ],
+   "point-line-test": [
+    "oklch(0.376 0.105 249.7)",
+    "oklch(0.571 0.160 249.7)"
+   ],
+   "standard-low-degree-test": [
+    "oklch(0.500 0.170 256.0)",
+    "oklch(0.695 0.162 256.0)"
+   ],
+   "bivariate-agreement": [
+    "oklch(0.624 0.171 262.3)",
+    "oklch(0.819 0.090 262.3)"
+   ],
+   "hadamard-labels": [
+    "oklch(0.331 0.191 286.7)",
+    "oklch(0.526 0.209 286.7)"
+   ],
+   "hadamard-testing": [
+    "oklch(0.455 0.190 293.0)",
+    "oklch(0.650 0.190 293.0)"
+   ],
+   "linearity-self-correction": [
+    "oklch(0.579 0.171 299.3)",
+    "oklch(0.774 0.134 299.3)"
+   ],
+   "machine-implementation": [
+    "oklch(0.406 0.180 335.7)",
+    "oklch(0.601 0.209 335.7)"
+   ],
+   "verifier-model": [
+    "oklch(0.530 0.190 342.0)",
+    "oklch(0.725 0.190 342.0)"
+   ],
+   "resource-bounds": [
+    "oklch(0.654 0.171 348.3)",
+    "oklch(0.849 0.099 348.3)"
+   ]
+  }
+ },
+ "660f5ae3f23e3eae": {
+  "used_by": [
+   "instances/smtlib/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "source-text",
+    18,
+    [
+     "source-text-tokenization",
+     "character-classes"
+    ]
+   ],
+   [
+    "lexical-tokens",
+    65.93,
+    [
+     "symbols-keywords",
+     "numeric-literals",
+     "string-literals"
+    ]
+   ],
+   [
+    "terms",
+    109.86,
+    [
+     "pattern-matching",
+     "term-grammar",
+     "variables-scope"
+    ]
+   ],
+   [
+    "attributes",
+    160.29,
+    [
+     "term-annotations",
+     "attribute-syntax"
+    ]
+   ],
+   [
+    "commands-scripts",
+    221.21,
+    [
+     "command-syntax-options",
+     "scripts-interaction",
+     "declarations-definitions"
+    ]
+   ],
+   [
+    "sexpressions",
+    273.14,
+    [
+     "sexpressions-constants"
+    ]
+   ],
+   [
+    "identifiers-sorts",
+    321.07,
+    [
+     "indexed-identifiers",
+     "sort-expressions"
+    ]
+   ]
+  ],
+  "colours": {
+   "source-text-tokenization": [
+    "oklch(0.433 0.173 14.4)",
+    "oklch(0.613 0.200 14.4)"
+   ],
+   "character-classes": [
+    "oklch(0.557 0.181 21.6)",
+    "oklch(0.737 0.160 21.6)"
+   ],
+   "symbols-keywords": [
+    "oklch(0.336 0.080 58.7)",
+    "oklch(0.516 0.122 58.7)"
+   ],
+   "numeric-literals": [
+    "oklch(0.460 0.102 65.9)",
+    "oklch(0.640 0.142 65.9)"
+   ],
+   "string-literals": [
+    "oklch(0.584 0.124 73.1)",
+    "oklch(0.764 0.162 73.1)"
+   ],
+   "pattern-matching": [
+    "oklch(0.381 0.080 102.7)",
+    "oklch(0.561 0.117 102.7)"
+   ],
+   "term-grammar": [
+    "oklch(0.505 0.110 109.9)",
+    "oklch(0.685 0.149 109.9)"
+   ],
+   "variables-scope": [
+    "oklch(0.629 0.145 117.1)",
+    "oklch(0.809 0.171 117.1)"
+   ],
+   "term-annotations": [
+    "oklch(0.493 0.118 156.7)",
+    "oklch(0.673 0.161 156.7)"
+   ],
+   "attribute-syntax": [
+    "oklch(0.617 0.131 163.9)",
+    "oklch(0.797 0.170 163.9)"
+   ],
+   "command-syntax-options": [
+    "oklch(0.376 0.066 214.0)",
+    "oklch(0.556 0.097 214.0)"
+   ],
+   "scripts-interaction": [
+    "oklch(0.500 0.091 221.2)",
+    "oklch(0.680 0.124 221.2)"
+   ],
+   "declarations-definitions": [
+    "oklch(0.624 0.122 228.4)",
+    "oklch(0.804 0.126 228.4)"
+   ],
+   "sexpressions-constants": [
+    "oklch(0.590 0.190 273.1)",
+    "oklch(0.770 0.117 273.1)"
+   ],
+   "indexed-identifiers": [
+    "oklch(0.433 0.200 317.5)",
+    "oklch(0.613 0.200 317.5)"
+   ],
+   "sort-expressions": [
+    "oklch(0.557 0.181 324.7)",
+    "oklch(0.737 0.181 324.7)"
    ]
   }
  },
@@ -552,21 +863,21 @@
   "families": [
    [
     "family-p2-series-greedy",
-    25,
+    24.5,
     [
      "p2-series-greedy"
     ]
    ],
    [
     "family-p2-support-irrationality",
-    79.5,
+    80.5,
     [
      "p2-support-irrationality"
     ]
    ],
    [
     "family-p2-finite-approximations",
-    150,
+    150.5,
     [
      "p2-finite-approximations"
     ]
@@ -580,7 +891,7 @@
    ],
    [
     "family-p2-obstructions",
-    264,
+    263.5,
     [
      "p2-arithmetic-cost",
      "p2-obstructions"
@@ -588,7 +899,7 @@
    ],
    [
     "family-p2-integer-quotients",
-    322.5,
+    330.5,
     [
      "p2-dyadic-margins",
      "p2-integer-quotients",
@@ -598,40 +909,211 @@
   ],
   "colours": {
    "p2-series-greedy": [
-    "oklch(0.655 0.190 25.0)",
-    "oklch(0.775 0.131 25.0)"
+    "oklch(0.635 0.190 24.5)",
+    "oklch(0.760 0.143 24.5)"
    ],
    "p2-support-irrationality": [
-    "oklch(0.640 0.132 79.5)",
-    "oklch(0.760 0.157 79.5)"
+    "oklch(0.635 0.131 80.5)",
+    "oklch(0.760 0.157 80.5)"
    ],
    "p2-finite-approximations": [
-    "oklch(0.615 0.169 150.0)",
-    "oklch(0.735 0.190 150.0)"
+    "oklch(0.600 0.163 150.5)",
+    "oklch(0.725 0.190 150.5)"
    ],
    "p2-open-inputs": [
-    "oklch(0.615 0.108 214.5)",
-    "oklch(0.735 0.129 214.5)"
+    "oklch(0.625 0.110 214.5)",
+    "oklch(0.750 0.132 214.5)"
    ],
    "p2-arithmetic-cost": [
-    "oklch(0.520 0.201 259.2)",
-    "oklch(0.640 0.193 259.2)"
+    "oklch(0.508 0.200 259.3)",
+    "oklch(0.633 0.197 259.3)"
    ],
    "p2-obstructions": [
-    "oklch(0.640 0.179 268.8)",
-    "oklch(0.760 0.122 268.8)"
+    "oklch(0.632 0.181 267.7)",
+    "oklch(0.757 0.123 267.7)"
    ],
    "p2-dyadic-margins": [
-    "oklch(0.415 0.206 312.9)",
-    "oklch(0.535 0.213 312.9)"
+    "oklch(0.411 0.195 322.1)",
+    "oklch(0.536 0.209 322.1)"
    ],
    "p2-integer-quotients": [
-    "oklch(0.535 0.190 322.5)",
-    "oklch(0.655 0.190 322.5)"
+    "oklch(0.535 0.190 330.5)",
+    "oklch(0.660 0.190 330.5)"
    ],
    "p2-conditional-membership": [
-    "oklch(0.655 0.167 332.1)",
-    "oklch(0.775 0.167 332.1)"
+    "oklch(0.659 0.171 338.9)",
+    "oklch(0.784 0.171 338.9)"
+   ]
+  }
+ },
+ "cf08c635437e334b": {
+  "used_by": [
+   "instances/contextual-embeddings/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "first-order-representation",
+    18.5,
+    [
+     "types-contexts",
+     "de-bruijn-indices",
+     "first-order-terms"
+    ]
+   ],
+   [
+    "contextual-representation",
+    118.5,
+    [
+     "singleton-variables",
+     "context-extension",
+     "contextual-terms"
+    ]
+   ],
+   [
+    "conversion",
+    191,
+    [
+     "contextualisation",
+     "unembedding",
+     "variable-conversion"
+    ]
+   ],
+   [
+    "isomorphism",
+    277,
+    [
+     "term-round-trips",
+     "index-round-trips",
+     "closed-world-assumption"
+    ]
+   ]
+  ],
+  "colours": {
+   "types-contexts": [
+    "oklch(0.406 0.163 5.9)",
+    "oklch(0.566 0.209 5.9)"
+   ],
+   "de-bruijn-indices": [
+    "oklch(0.530 0.190 18.5)",
+    "oklch(0.690 0.190 18.5)"
+   ],
+   "first-order-terms": [
+    "oklch(0.654 0.171 31.1)",
+    "oklch(0.814 0.105 31.1)"
+   ],
+   "singleton-variables": [
+    "oklch(0.376 0.080 105.9)",
+    "oklch(0.536 0.114 105.9)"
+   ],
+   "context-extension": [
+    "oklch(0.500 0.117 118.5)",
+    "oklch(0.660 0.154 118.5)"
+   ],
+   "contextual-terms": [
+    "oklch(0.624 0.170 131.1)",
+    "oklch(0.784 0.171 131.1)"
+   ],
+   "contextualisation": [
+    "oklch(0.376 0.069 178.4)",
+    "oklch(0.536 0.098 178.4)"
+   ],
+   "unembedding": [
+    "oklch(0.500 0.086 191.0)",
+    "oklch(0.660 0.113 191.0)"
+   ],
+   "variable-conversion": [
+    "oklch(0.624 0.106 203.6)",
+    "oklch(0.784 0.133 203.6)"
+   ],
+   "term-round-trips": [
+    "oklch(0.401 0.209 264.4)",
+    "oklch(0.561 0.209 264.4)"
+   ],
+   "index-round-trips": [
+    "oklch(0.525 0.190 277.0)",
+    "oklch(0.685 0.167 277.0)"
+   ],
+   "closed-world-assumption": [
+    "oklch(0.649 0.171 289.6)",
+    "oklch(0.809 0.102 289.6)"
+   ]
+  }
+ },
+ "e17dcf5d5eb36783": {
+  "used_by": [
+   "instances/coupled-spring/alignment/colours-short.json#0"
+  ],
+  "families": [
+   [
+    "the-potential",
+    61.5,
+    [
+     "potential-and-minimum",
+     "potential-derivatives"
+    ]
+   ],
+   [
+    "second-derivative-test",
+    152.5,
+    [
+     "analytic-minimum-test",
+     "quadratic-lower-bound",
+     "taylor-remainder"
+    ]
+   ],
+   [
+    "cubic-perturbation",
+    263,
+    [
+     "cubic-local-minimum",
+     "failure-of-global-minimality"
+    ]
+   ],
+   [
+    "smoothness-and-symmetry",
+    348,
+    [
+     "smoothness-assumption",
+     "polar-form"
+    ]
+   ]
+  ],
+  "colours": {
+   "potential-and-minimum": [
+    "oklch(0.518 0.128 55.2)",
+    "oklch(0.683 0.168 55.2)"
+   ],
+   "potential-derivatives": [
+    "oklch(0.642 0.141 67.8)",
+    "oklch(0.807 0.150 67.8)"
+   ],
+   "analytic-minimum-test": [
+    "oklch(0.371 0.119 139.9)",
+    "oklch(0.536 0.172 139.9)"
+   ],
+   "quadratic-lower-bound": [
+    "oklch(0.495 0.128 152.5)",
+    "oklch(0.660 0.171 152.5)"
+   ],
+   "taylor-remainder": [
+    "oklch(0.619 0.130 165.1)",
+    "oklch(0.784 0.164 165.1)"
+   ],
+   "cubic-local-minimum": [
+    "oklch(0.493 0.173 256.7)",
+    "oklch(0.658 0.184 256.7)"
+   ],
+   "failure-of-global-minimality": [
+    "oklch(0.617 0.181 269.3)",
+    "oklch(0.782 0.109 269.3)"
+   ],
+   "smoothness-assumption": [
+    "oklch(0.513 0.200 341.7)",
+    "oklch(0.678 0.200 341.7)"
+   ],
+   "polar-form": [
+    "oklch(0.637 0.181 354.3)",
+    "oklch(0.802 0.129 354.3)"
    ]
   }
  },
@@ -643,7 +1125,7 @@
   "families": [
    [
     "family-model",
-    357,
+    42.5,
     [
      "curvature",
      "contact",
@@ -652,7 +1134,7 @@
    ],
    [
     "family-support",
-    129,
+    162.5,
     [
      "support",
      "consequences",
@@ -661,7 +1143,7 @@
    ],
    [
     "family-scalar",
-    252.5,
+    270,
     [
      "gaussian",
      "scalar"
@@ -670,36 +1152,36 @@
   ],
   "colours": {
    "curvature": [
-    "oklch(0.415 0.182 337.8)",
-    "oklch(0.575 0.213 337.8)"
+    "oklch(0.396 0.161 25.7)",
+    "oklch(0.561 0.209 25.7)"
    ],
    "contact": [
-    "oklch(0.535 0.190 357.0)",
-    "oklch(0.695 0.190 357.0)"
+    "oklch(0.520 0.155 42.5)",
+    "oklch(0.685 0.190 42.5)"
    ],
    "model": [
-    "oklch(0.655 0.167 16.2)",
-    "oklch(0.815 0.105 16.2)"
+    "oklch(0.644 0.152 59.3)",
+    "oklch(0.809 0.131 59.3)"
    ],
    "support": [
-    "oklch(0.380 0.083 109.8)",
-    "oklch(0.540 0.117 109.8)"
+    "oklch(0.371 0.114 145.7)",
+    "oklch(0.536 0.165 145.7)"
    ],
    "consequences": [
-    "oklch(0.500 0.132 129.0)",
-    "oklch(0.660 0.175 129.0)"
+    "oklch(0.495 0.107 162.5)",
+    "oklch(0.660 0.143 162.5)"
    ],
    "scope": [
-    "oklch(0.620 0.167 148.2)",
-    "oklch(0.780 0.167 148.2)"
+    "oklch(0.619 0.112 179.3)",
+    "oklch(0.784 0.142 179.3)"
    ],
    "gaussian": [
-    "oklch(0.440 0.106 242.9)",
-    "oklch(0.600 0.144 242.9)"
+    "oklch(0.493 0.200 261.6)",
+    "oklch(0.658 0.181 261.6)"
    ],
    "scalar": [
-    "oklch(0.560 0.179 262.1)",
-    "oklch(0.720 0.145 262.1)"
+    "oklch(0.617 0.181 278.4)",
+    "oklch(0.782 0.111 278.4)"
    ]
   }
  },
@@ -711,7 +1193,7 @@
   "families": [
    [
     "family-model",
-    56.5,
+    55,
     [
      "support",
      "gap",
@@ -720,7 +1202,7 @@
    ],
    [
     "family-shape",
-    151.5,
+    149.5,
     [
      "certificate",
      "shape"
@@ -728,7 +1210,7 @@
    ],
    [
     "family-energy",
-    246,
+    251,
     [
      "energy",
      "qaoa"
@@ -736,7 +1218,7 @@
    ],
    [
     "family-density",
-    325,
+    343,
     [
      "density"
     ]
@@ -744,36 +1226,36 @@
   ],
   "colours": {
    "support": [
-    "oklch(0.400 0.120 42.1)",
-    "oklch(0.520 0.156 42.1)"
+    "oklch(0.396 0.118 42.4)",
+    "oklch(0.531 0.159 42.4)"
    ],
    "gap": [
-    "oklch(0.520 0.126 56.5)",
-    "oklch(0.640 0.155 56.5)"
+    "oklch(0.520 0.128 55.0)",
+    "oklch(0.655 0.162 55.0)"
    ],
    "model": [
-    "oklch(0.640 0.137 70.9)",
-    "oklch(0.760 0.163 70.9)"
+    "oklch(0.644 0.141 67.6)",
+    "oklch(0.779 0.171 67.6)"
    ],
    "certificate": [
-    "oklch(0.500 0.160 144.3)",
-    "oklch(0.620 0.199 144.3)"
+    "oklch(0.493 0.164 143.2)",
+    "oklch(0.628 0.200 143.2)"
    ],
    "shape": [
-    "oklch(0.620 0.143 158.7)",
-    "oklch(0.740 0.171 158.7)"
+    "oklch(0.617 0.150 155.8)",
+    "oklch(0.752 0.181 155.8)"
    ],
    "energy": [
-    "oklch(0.500 0.112 238.8)",
-    "oklch(0.620 0.139 238.8)"
+    "oklch(0.483 0.120 244.7)",
+    "oklch(0.618 0.154 244.7)"
    ],
    "qaoa": [
-    "oklch(0.620 0.179 253.2)",
-    "oklch(0.740 0.137 253.2)"
+    "oklch(0.607 0.181 257.3)",
+    "oklch(0.742 0.134 257.3)"
    ],
    "density": [
-    "oklch(0.555 0.190 325.0)",
-    "oklch(0.675 0.190 325.0)"
+    "oklch(0.475 0.190 343.0)",
+    "oklch(0.610 0.190 343.0)"
    ]
   }
  },
@@ -785,7 +1267,7 @@
   "families": [
    [
     "family-p1-weighted",
-    15.5,
+    3,
     [
      "p1-weighted",
      "p1-average"
@@ -793,7 +1275,7 @@
    ],
    [
     "family-p1-cover",
-    96.5,
+    66,
     [
      "p1-cover",
      "p1-mixed"
@@ -801,14 +1283,14 @@
    ],
    [
     "family-p1-witness",
-    159,
+    148,
     [
      "p1-witness"
     ]
    ],
    [
     "family-p1-scope",
-    249,
+    228,
     [
      "p1-scope",
      "p1-inputs"
@@ -816,7 +1298,7 @@
    ],
    [
     "family-p1-geometry",
-    303,
+    282,
     [
      "p1-limits",
      "p1-geometry"
@@ -825,40 +1307,40 @@
   ],
   "colours": {
    "p1-weighted": [
-    "oklch(0.520 0.201 9.7)",
-    "oklch(0.600 0.201 9.7)"
+    "oklch(0.523 0.200 358.0)",
+    "oklch(0.658 0.200 358.0)"
    ],
    "p1-average": [
-    "oklch(0.640 0.179 21.3)",
-    "oklch(0.720 0.174 21.3)"
+    "oklch(0.647 0.181 8.0)",
+    "oklch(0.782 0.131 8.0)"
    ],
    "p1-cover": [
-    "oklch(0.515 0.105 90.7)",
-    "oklch(0.595 0.121 90.7)"
+    "oklch(0.518 0.120 61.0)",
+    "oklch(0.653 0.151 61.0)"
    ],
    "p1-mixed": [
-    "oklch(0.635 0.133 102.3)",
-    "oklch(0.715 0.149 102.3)"
+    "oklch(0.642 0.138 71.0)",
+    "oklch(0.777 0.167 71.0)"
    ],
    "p1-witness": [
-    "oklch(0.620 0.142 159.0)",
-    "oklch(0.700 0.161 159.0)"
+    "oklch(0.615 0.178 148.0)",
+    "oklch(0.750 0.190 148.0)"
    ],
    "p1-scope": [
-    "oklch(0.520 0.126 243.2)",
-    "oklch(0.600 0.145 243.2)"
+    "oklch(0.503 0.093 223.0)",
+    "oklch(0.638 0.118 223.0)"
    ],
    "p1-inputs": [
-    "oklch(0.640 0.179 254.8)",
-    "oklch(0.720 0.148 254.8)"
+    "oklch(0.627 0.129 233.0)",
+    "oklch(0.762 0.146 233.0)"
    ],
    "p1-limits": [
-    "oklch(0.465 0.201 297.2)",
-    "oklch(0.545 0.201 297.2)"
+    "oklch(0.468 0.200 277.0)",
+    "oklch(0.603 0.200 277.0)"
    ],
    "p1-geometry": [
-    "oklch(0.585 0.179 308.8)",
-    "oklch(0.665 0.179 308.8)"
+    "oklch(0.592 0.181 287.0)",
+    "oklch(0.727 0.149 287.0)"
    ]
   }
  }

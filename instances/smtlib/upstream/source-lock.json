@@ -1,0 +1,323 @@
+{
+ "schema_version": "1.0",
+ "id": "smtlib",
+ "repository": "https://github.com/onderjan/blazing-smtlib",
+ "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+ "via": "wcook04/proof-reader 1200c81bb5fedf6827cf4b616f9070ea95321fa9, papers/smtlib-2-7/lean",
+ "license": "NOASSERTION",
+ "files": [
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Grammar/Examples.lean",
+   "sha256": "742f47563342c22aae456a82b954e19b42274de4ca361bd52cb1c8a3756f8b9d",
+   "bytes": 21451
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Grammar.lean",
+   "sha256": "658edbe82401d79a703079516c419d5a3031e1d5d0f158f116438e9ae6510853",
+   "bytes": 10285
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Lexer.lean",
+   "sha256": "a8e325379d3852a890049ac604a564d43aee6324662431f4237d0837a71e09f8",
+   "bytes": 7176
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Lexicon/Examples.lean",
+   "sha256": "fb2afd87e5a74ea5e9f9936554799dd80354ca6dd0b350ce28d7dadc2df6143f",
+   "bytes": 7684
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Lexicon.lean",
+   "sha256": "4c73e4a2e698a36e8dabe6a59eed5beb80fb51e905d95fa7ee20b8aa75ad38f2",
+   "bytes": 10886
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Parser.lean",
+   "sha256": "ef5ad69cb912926431e32b60ab63e68132cf863fad92b05324d9925b49828df7",
+   "bytes": 10340
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Grammar/Files.lean",
+   "sha256": "7f2ea58a491c0be0f29fc8d48dcc5908a3ec2f322f96074c6006feee598ac089",
+   "bytes": 8018
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Grammar/OneToOne.lean",
+   "sha256": "ba4b426a23ea37929b24988bfd0d272fb336b44b74ab5dde969857d9a997cf98",
+   "bytes": 25931
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Grammar/Read.lean",
+   "sha256": "1b1501f2af236d7160b3a4dfe60e6a66f81ff8ac5cda1d95af15d933b95c3f37",
+   "bytes": 21782
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Grammar/RoundTrip.lean",
+   "sha256": "3427649d7a9a492f415e7c136128861b4b8f47c7347eb4cbee1123722d8481af",
+   "bytes": 21011
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexer/Consumers.lean",
+   "sha256": "0983d23eb158db13863f887c884f84a4a2efd082504c91e1a3666b91bcc30cd3",
+   "bytes": 5028
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexer/Streaming.lean",
+   "sha256": "c28c5f34a96c451e3cdc54eee409c24301155fdd4a0efe08471aee68e81eec64",
+   "bytes": 16033
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexer/StreamingFacts.lean",
+   "sha256": "6c6e4b3f6ee466a111c04e08c9233bc4f146c9332e8c0701c034d384a81ae5cb",
+   "bytes": 17176
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/Compose.lean",
+   "sha256": "43a7e7990fee7a27057e2cd4ee6c054c23afc003883d8dd1da84ff8311672de6",
+   "bytes": 10918
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/Lemmas.lean",
+   "sha256": "5e7d6dbe69612ef671274b32ad066b68a41bbf0b1c2006067b544cf6eb9f0551",
+   "bytes": 11136
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/Reserved.lean",
+   "sha256": "583dd19e475b80b5beec852cd27ec6ddd93d4995d509e63df06c86cd5140a174",
+   "bytes": 3606
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/RoundTrip/Lexical.lean",
+   "sha256": "f1eca6d8e05d654078e33bf10c83fbee7fe2f0e54aa7c61187027a8129838133",
+   "bytes": 17833
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/RoundTrip/Rewrite.lean",
+   "sha256": "7faaef77dea8c2f7ee59447cd5be5a2b6ef78c312b6b344a64ae4bc0481c12c7",
+   "bytes": 16303
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/RoundTrip/Tokens.lean",
+   "sha256": "c38378a42755bce8a70ceaa2d73708b9c1c40ca8d25f3566ed0eda2ffdba929d",
+   "bytes": 17906
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/RoundTrip.lean",
+   "sha256": "5754483c0147b7cec8f9f115f06d0fe8b8b04ce2e771967597ffba4921a5bea7",
+   "bytes": 3819
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Lexicon/Unique.lean",
+   "sha256": "b4a6ec67ee88459dea8887415cd16adcd543b6198887054e72b44ed71d6bd7aa",
+   "bytes": 40515
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Bridge.lean",
+   "sha256": "4f339af243bf91ae80be3027a6efff486db3ef0491d156cf5bb19f65f327e001",
+   "bytes": 28278
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Calls.lean",
+   "sha256": "ff8770549b50f67d56bbe0dcdc783277a150b44e1793accb3b3fc2b1dce09b35",
+   "bytes": 12252
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Equations.lean",
+   "sha256": "f1192a466cb7684103e2d42824829dd2b62bb960d05b831f4dad5975ce5b4240",
+   "bytes": 20232
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Parse.lean",
+   "sha256": "f14d501aaf8bc55d8e0327e1221c7757906b2f6d085cb88888a6da45df19c842",
+   "bytes": 23438
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Placement.lean",
+   "sha256": "7188fe663f65407b53efeb0381c03e0a48aba98d97ae1bca9a5a5b2e4ec52a7f",
+   "bytes": 7363
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Program.lean",
+   "sha256": "8d8cfce5b05f21ce3edc7ea8e5a820d12a8bf38311da3421fa39e12be124be77",
+   "bytes": 13504
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Rebuild.lean",
+   "sha256": "6870b37303e2ee7f9df5a3392bdea32c4d73c94bd7369e64a914cc64ff124ea8",
+   "bytes": 74469
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Recording.lean",
+   "sha256": "548c6bc6e527fdac34d1fcc71cbb5d75abb9aa29e9ef4d4e26efc4610c69a404",
+   "bytes": 9608
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Recovery.lean",
+   "sha256": "f3d9ec8a6ab6aa982e8d58747bfda4c20c620f61d97ec2b17c9bb0dc22351cf5",
+   "bytes": 14972
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Parser/Simulation.lean",
+   "sha256": "ccb30552ae55bb7fc002f17200b1b8d46ca0ecef862d8ab9c8f684b553acdbd9",
+   "bytes": 66147
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Commands.lean",
+   "sha256": "808fbf68f661bedee520ff3c860dc433a52842e54339e744a6128dfd10c5c889",
+   "bytes": 22305
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Consumer.lean",
+   "sha256": "5ac18c5f1431030374a43c210c186d158d020bcd2ef76f45683dd3eba499019d",
+   "bytes": 8979
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Files.lean",
+   "sha256": "fd2955f6182967ae38f895a023793238fa669380302b2c2f8a4ae13df77a3fbf",
+   "bytes": 28443
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Finishes.lean",
+   "sha256": "c456e32d90d56989cb9239dcd67a7695a4145fc11048e1d515b337ecd6212714",
+   "bytes": 36914
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Lexing.lean",
+   "sha256": "4324c76a30cd77451bdd21ab3daa5e93db4998d7d323280bf6fa58e54d847896",
+   "bytes": 10864
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Requests.lean",
+   "sha256": "8af44c96167b719e49a5d0036c6fe9d628024c59a2bd8568a53de4faee08e847",
+   "bytes": 31191
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Switches.lean",
+   "sha256": "0314dd4f54bf0b5ee204ce20855797110e5705ce67be77a5680fbb56ba52c221",
+   "bytes": 3684
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader/Words.lean",
+   "sha256": "e69dae349087b00a798bd5b74a83260fad4d0ccb1babf4576491caf13a42d782",
+   "bytes": 14101
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Proofs/Reader.lean",
+   "sha256": "039bddaedd2e7113c9d456b01951ca22b8aa884927ef51b89fa3760f0dce5b9d",
+   "bytes": 8093
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts/Reader.lean",
+   "sha256": "490a4804a1fb5344dc99ec44db92679e030e48ca7beef05db70dd490cd9239f9",
+   "bytes": 1993
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Facts.lean",
+   "sha256": "8d19864b0295149d352a1b56480b949893161ec17758f1add007f156dd8dbc0a",
+   "bytes": 1752
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Grammar/File.lean",
+   "sha256": "5fac4ebf3dd9f8fde89d71e9c9b6a85784baae1234bf1d69bb0207fcf33d0063",
+   "bytes": 5381
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Properties.lean",
+   "sha256": "1181090e8fd54803237a367eef52cebab1e6be24357f35cde3f15d5c2911b733",
+   "bytes": 4537
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Script.lean",
+   "sha256": "635e3a5f710627ee280989b9a4da46165ea5ac415277755b1e0b28e270bd86a9",
+   "bytes": 1175
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Syntax.lean",
+   "sha256": "30699d6b7854d649c121a7b6667db9e220a5cd4c1acb1dce3a1d1690a2d076ab",
+   "bytes": 24498
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Tree.lean",
+   "sha256": "276cdea13ba45dbdb7359e7d537acd01b0a676c6e7e8f64dd541fe0d38eb241d",
+   "bytes": 7016
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Grammar.lean",
+   "sha256": "df76b4952a22e23c60c7c18c29eaaf0d48e7c159f585c68241f4512ef248b91b",
+   "bytes": 3314
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Lexer.lean",
+   "sha256": "d6ac4d3d51f49220efc6a126380006b28ad4d857de2043c2d634c46cb07ca059",
+   "bytes": 39024
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Lexicon/Properties.lean",
+   "sha256": "4cbc6b203ef30fbf91d8d3bdc044a98b180fa41d7f2e88b6ec5d42bec8c4dd03",
+   "bytes": 2446
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Lexicon/Tokenization.lean",
+   "sha256": "0bd871c15604907f10130a03e88f64f86b197ca296b8f3c03a2b7d89b2f31c83",
+   "bytes": 2321
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Lexicon.lean",
+   "sha256": "5811a48cc684bd89852c5082ee89403eeb834153838fd3e384ffb2c45260ddae",
+   "bytes": 12273
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Parser/Properties.lean",
+   "sha256": "74c537e740c51b4c85b8c3d46a38e0438bcd1105ca096c4feb607744714d69a7",
+   "bytes": 15683
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Parser/Traversal.lean",
+   "sha256": "5d1624e4a13cafca831b75ccb5b567b5d32cfb49ae6eb494789a4dca7176f5fd",
+   "bytes": 38687
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Parser/VersionPolicy.lean",
+   "sha256": "0ddc9e04ebb7f8f806cf96dbaf99743f70922b9d1462f77101b7b04aee9bfacb",
+   "bytes": 2130
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Parser.lean",
+   "sha256": "df31aaa710f1cd7684acd7ede2c46f0dd4e41b20dbd98d2a640485406be32319",
+   "bytes": 499
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Reader.lean",
+   "sha256": "3d793f6c772b41a825e45b9c3eb45436d362f10f67877256f129b0a25b0afcc1",
+   "bytes": 7398
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec/Regex.lean",
+   "sha256": "54be34332b1170a59a73d44f7a72f242db63fda0ca532074a34414bd5035c73f",
+   "bytes": 2645
+  },
+  {
+   "path": "upstream/lean/BSmtLibSpec.lean",
+   "sha256": "da6a62b8295ce143778272905cbbf86ac59b9b9fa7dad8beb9c0ee997ecfdf18",
+   "bytes": 9314
+  },
+  {
+   "path": "upstream/lean/lake-manifest.json",
+   "sha256": "994c4ee8a420cde5c95817f20f1d1db2ef39b63ba6b38dbb24cc83ef9055a167",
+   "bytes": 139
+  },
+  {
+   "path": "upstream/lean/lakefile.toml",
+   "sha256": "9ce4677872975957b935cd9004c5e3d71e0e52a0edb3a1ac760026614cde8d7f",
+   "bytes": 2093
+  },
+  {
+   "path": "upstream/lean/lean-toolchain",
+   "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+   "bytes": 25
+  }
+ ],
+ "lean_roots": [
+  "BSmtLibSpec"
+ ]
+}

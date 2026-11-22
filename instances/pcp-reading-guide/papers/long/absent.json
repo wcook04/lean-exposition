@@ -1,0 +1,24 @@
+{
+ "schema_version": "1.2",
+ "stage": "long",
+ "state": "scaffold",
+ "path": "papers/long.md",
+ "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
+ "graph_sha256": "4f9b3505272050648bb61ab83f4692e97db56924f4f80098e9bfa2698ccafdb5",
+ "selected_goal_ids": [
+  "pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "claim_ids": [],
+ "citation_ids": [
+  "cite.lean.PCP.np_subset_pcp",
+  "cite.pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "lean.PCP.np_subset_pcp",
+  "pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "passages": [],
+ "review_state": "not_reviewed",
+ "review_notes": []
+}
