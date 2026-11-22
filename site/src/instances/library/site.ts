@@ -41,7 +41,8 @@ const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
  * carries the whole credit.
  */
 export function frontCreditLine(credit: string, review: string): string {
-  const first = credit.split(/(?<=[.!?])\s+(?=[A-Z])/)[0]?.trim() ?? "";
+  // A sentence ends at a stop after a word, not after an initial ("Matei P. Coiculescu").
+  const first = credit.split(/(?<=[a-z0-9)\]][.!?])\s+(?=[A-Z])/)[0]?.trim() ?? "";
   return [first, review.trim()].filter(Boolean).join(" ");
 }
 const isAdapted = (d: (typeof PAPER.documents)[number]) => !!d.adapted || d.kind === "adapted";

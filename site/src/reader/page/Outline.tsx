@@ -208,6 +208,26 @@ export function OutlineColumn(props: Props) {
   );
 }
 
+
+const DOUBLE: Record<string, string> = { R: "ℝ", T: "𝕋", Z: "ℤ", N: "ℕ", Q: "ℚ", C: "ℂ" };
+const SUP: Record<string, string> = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "*": "*", "+": "⁺", "-": "⁻", n: "ⁿ" };
+const SUB: Record<string, string> = { "0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉" };
+const SYMBOLS: Record<string, string> = { to: "→", in: "∈", le: "≤", leq: "≤", ge: "≥", geq: "≥", infty: "∞", times: "×", cdot: "·", nabla: "∇", partial: "∂", Delta: "Δ", Omega: "Ω", alpha: "α", beta: "β", gamma: "γ", lambda: "λ", mu: "μ", nu: "ν", omega: "ω", sigma: "σ", tau: "τ", varepsilon: "ε", epsilon: "ε" };
+const script = (body: string, table: Record<string, string>) => ([...body].every((c) => table[c]) ? [...body].map((c) => table[c]).join("") : null);
+
+/** A section's title as plain text for the contents: what a heading's formula says, without its TeX ("Blow-up on ℝ³"). */
+export function plainTitle(title: string): string {
+  return title
+    .replace(/\\mathbb\s*\{?\s*([A-Z])\s*\}?/g, (_m, letter: string) => DOUBLE[letter] ?? letter)
+    .replace(/\\(?:operatorname|mathrm|mathbf|mathcal|text|mathit)\s*\{([^{}]*)\}/g, "$1")
+    .replace(/\^\{([^{}]*)\}|\^(\S)/g, (_m, braced: string | undefined, one: string | undefined) => script(braced ?? one ?? "", SUP) ?? `^${braced ?? one}`)
+    .replace(/_\{([^{}]*)\}|_(\d)/g, (_m, braced: string | undefined, one: string | undefined) => script(braced ?? one ?? "", SUB) ?? `_${braced ?? one}`)
+    .replace(/\\([A-Za-z]+)/g, (_m, name: string) => SYMBOLS[name] ?? name)
+    .replace(/\\[,;!: ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 const Chevron = ({ open }: { open: boolean }) => (
   <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" className={`outline__chev${open ? " is-open" : ""}`}>
     <path d="M3.5 2l3 3-3 3" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -244,7 +264,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, topics
                 type="button"
                 className="outline__fold"
                 aria-expanded={open}
-                aria-label={`${open ? "Fold" : "Unfold"} the subsections of ${sectionLabel(entry.title)}`}
+                aria-label={`${open ? "Fold" : "Unfold"} the subsections of ${sectionLabel(plainTitle(entry.title))}`}
                 onClick={() => setChosen((was) => new Map(was).set(entry.id, !open))}
               >
                 <Chevron open={open} />
@@ -260,7 +280,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, topics
               }}
             >
               <span className="outline__name">
-                {sectionLabel(entry.title)}
+                {sectionLabel(plainTitle(entry.title))}
                 {!!count?.topics?.length && (
                   <span className="phrase-bars" title={`Topics here: ${count.topics.map((id) => byId.get(id)?.name ?? id).join(", ")}`}>
                     {count.topics.slice(0, 6).map((id) => (
