@@ -217,7 +217,7 @@
 /* KaTeX ends each vertical list with a 2px strut past its edge (.vlist-s). On an equation
    number pinned to the right edge that strut alone overflowed the box (scrollWidth 682 in a
    680 column). The strut holds no glyph. */
-.prose .math-display :is(.katex-tag, .tag) {
+.math-display :is(.katex-tag, .tag) {
   overflow-x: clip;
 }
 
