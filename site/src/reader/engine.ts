@@ -716,7 +716,10 @@ function renderTokens(
       const src = figureImageSrc(env.stage, path.replace(/&amp;/g, "&"));
       if (!src) return whole;
       const key = esc(`img:${src.split("/").pop()}`);
-      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div><figcaption>${title ?? alt}</figcaption></figure>`;
+      // A bare label ("Figure 1") as alt text is not a caption: the paper's own caption paragraph
+      // follows the image, so repeating the label under the picture would show it twice.
+      const caption = title ?? (/^(?:figure|fig\.?)\s*[\w.-]+\.?$/i.test(alt.trim()) ? "" : alt);
+      return `<figure class="paper-figure paper-figure--image"${line ?? ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}" data-figure-image="${esc(src)}" data-figure-alt="${alt}"></div>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
     });
   }
   html = sanitizeHtml(html);
