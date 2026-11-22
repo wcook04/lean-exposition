@@ -1250,6 +1250,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const b = layoutBounds(l);
       const box = { x0: b.x0 - 16, y0: b.y0 - 16, x1: b.x1 + 16, y1: b.y1 + 16 };
       // As large as fits, never below the 11px floor: what does not fit then pans.
+      // A caller that sets its own floor (the reader pane) sees the whole map at once; zoom reads the words.
+      if (props.minScale != null) return fitBounds(box, viewport(), { max: 1, min: props.minScale, top: true });
       if (denseRef.current) return frameBox(box, viewport(), { min: Math.min(DENSE_MIN_K, minKRef.current), max: 1.15, anchor: boxOf(l, goalRef.current), top: true });
       return fitBounds(box, viewport(), { max: 1, min: floorK(false, compact) });
     },

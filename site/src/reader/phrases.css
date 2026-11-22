@@ -691,27 +691,7 @@
   margin-inline-end: 0;
 }
 
-/* On a wide inspector, put the notes beside the comparison. The passage above them and
-   the source code below share the full measure. A narrow inspector keeps reading order. */
-@container right-page (min-width: 54rem) {
-  .phrase-card--lean:has(> .phrase-card__notes) {
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    column-gap: var(--space-5);
-    align-items: start;
-  }
+/* Reading notes stay below the comparison, folded, at every inspector width: a side column
+   left most of the pane empty and squeezed the comparison. */
+.map-pane .phrase-card, .map-pane .lean-page__body { min-width: 0; max-width: 100%; }
 
-  .phrase-card--lean:has(> .phrase-card__notes) > * {
-    grid-column: 1 / -1;
-    min-width: 0;
-  }
-
-  .phrase-card--lean:has(> .phrase-card__notes) > .phrase-card__compare {
-    grid-column: 1;
-    max-width: none;
-  }
-
-  .phrase-card--lean:has(> .phrase-card__notes) > .phrase-card__notes {
-    grid-column: 2;
-  }
-}

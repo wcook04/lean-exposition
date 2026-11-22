@@ -602,6 +602,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         insets={insets}
         persist={false}
         mode="overview"
+        minScale={0.12}
         tileWidth={PANE_TILE_W}
         tileHeight={PANE_TILE_H}
         statusOf={recordMark}
