@@ -40,14 +40,57 @@ export function TonesSwitch() {
   return null;
 }
 
+/** The topics a reader last pointed at, focused or selected in the paper, most recent first:
+ * the key lists them in that order, like the atlas's family list, so the one being read is on top. */
+function useRecentTones(): string[] {
+  const [recent, setRecent] = useState<string[]>([]);
+  useEffect(() => {
+    const bump = (tone?: string | null) => {
+      if (!tone) return;
+      setRecent((r) => (r[0] === tone ? r : [tone, ...r.filter((t) => t !== tone)]));
+    };
+    const fromEvent = (event: Event) => {
+      const target = event.target as Element | null;
+      const tie = target && typeof target.closest === "function" ? (target.closest(".paper .tie[data-tone]") as HTMLElement | null) : null;
+      bump(tie?.dataset.tone);
+    };
+    const pinned = () => bump((document.querySelector(".paper .tie[data-pin][data-tone]") as HTMLElement | null)?.dataset.tone);
+    document.addEventListener("pointerover", fromEvent, { passive: true });
+    document.addEventListener("focusin", fromEvent);
+    const watch = new MutationObserver(pinned);
+    watch.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["data-pin"] });
+    pinned();
+    return () => {
+      document.removeEventListener("pointerover", fromEvent);
+      document.removeEventListener("focusin", fromEvent);
+      watch.disconnect();
+    };
+  }, []);
+  return recent;
+}
+
 function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; families: PhraseFamily[]; parts: PhrasePart[]; part: number }) {
   const shown = topics.filter((topic) => topic.part === part);
   if (!shown.length) return null;
   const several = parts.length > 1;
   const byId = new Map(shown.map((topic) => [topic.id, topic]));
-  const groups = families.filter((family) => family.part === part);
+  const recent = useRecentTones();
+  const rank = (tone: number | string | undefined) => {
+    const at = tone == null ? -1 : recent.indexOf(String(tone));
+    return at < 0 ? Number.POSITIVE_INFINITY : at;
+  };
+  const familyRank = (family: PhraseFamily) => Math.min(...family.topics.map((id) => rank(byId.get(id)?.tone)));
+  // Most recently read first; untouched families and topics keep the paper's order (sort is stable).
+  const groups = families.filter((family) => family.part === part).sort((a, b) => familyRank(a) - familyRank(b));
+  const current = recent[0];
   const item = (topic: PhraseTopic) => (
-    <li key={topic.id} data-tone={topic.tone} title={topic.description || undefined}>
+    <li
+      key={topic.id}
+      data-tone={topic.tone}
+      data-current={current != null && String(topic.tone) === current ? "" : undefined}
+      style={current != null && String(topic.tone) === current ? { outline: "1.5px solid var(--tone)", outlineOffset: "2px", borderRadius: "4px" } : undefined}
+      title={topic.description || undefined}
+    >
       <span className="phrase-key__swatch" aria-hidden="true" />
       {topic.name}
     </li>
@@ -62,12 +105,12 @@ function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; f
           {groups.map((family) => (
             <div key={family.id} className="phrase-key__family">
               {family.named && family.topics.length > 1 && <p className="phrase-key__family-name">{family.name}</p>}
-              <ul>{family.topics.flatMap((id) => (byId.has(id) ? [item(byId.get(id)!)] : []))}</ul>
+              <ul>{[...family.topics].sort((a, b) => rank(byId.get(a)?.tone) - rank(byId.get(b)?.tone)).flatMap((id) => (byId.has(id) ? [item(byId.get(id)!)] : []))}</ul>
             </div>
           ))}
         </div>
       ) : (
-        <ul>{shown.map(item)}</ul>
+        <ul>{[...shown].sort((a, b) => rank(a.tone) - rank(b.tone)).map(item)}</ul>
       )}
       <details className="phrase-key__about">
         <summary>What the colours mean</summary>
