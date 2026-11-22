@@ -45,8 +45,8 @@ export function accountLineHtml(words: string, pdf: string | null, pages: number
   return `<p class="account-line">${words} <a class="pdf-link" href="${pdf}" target="_blank" rel="noopener">Open PDF, ${pages} ${pages === 1 ? "page" : "pages"}</a></p>`;
 }
 
-/** What the underlines are and what to do with them: one sentence, whole at every width, at the head of a paper with linked phrases. */
-export const READER_HINT = "Underlined words are linked to a Lean statement. Select them to see the statement and how it compares.";
+/** What to do with a linked phrase: one sentence, whole at every width, at the head of a paper with linked phrases. */
+export const READER_HINT = "Select a marked phrase to see its Lean statement and how the two compare.";
 
 /** The hint as the first screen sets it; the page renders the same element (ReaderPage). */
 export function readerHintHtml(): string {

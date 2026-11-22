@@ -39,7 +39,7 @@ export function AboutUsing() {
       <div>
         <h3>What the marks mean</h3>
         <ul>
-          <li>Linked text has a light tint. The line in the margin shows its topic colour. Select the text to open the corresponding step.</li>
+          <li>Linked text has a light tint. With topic colours on, the margin shows each line’s topics from top to bottom in phrase order.</li>
           <li>The highlighter marks the statement you are on, in the same ink as the Lean lines it maps to.</li>
           <li>On a graph, a green card is a step stated and proved in Lean, or defined there. A paler green card has some of that.</li>
         </ul>
@@ -47,7 +47,7 @@ export function AboutUsing() {
         <ul>
           <li>Scrolling needs no click. The statement about a third of the way down the window takes the highlighter, and the graph and the Lean beside the paper move to it.</li>
           <li>Pointing at a marked statement or a Lean name lights it everywhere and previews it. Nothing moves.</li>
-          <li>Clicking a statement keeps it open: its Lean opens at the exact lines and the paper stays where it is.</li>
+          <li>Select a statement to open its Lean at the exact lines. Select a margin mark to see the links in that paragraph.</li>
           <li>Clicking a reference opens it in place under the paragraph, with a link to go there.</li>
           <li>Every jump has a named Back, which is the browser’s own Back button.</li>
         </ul>

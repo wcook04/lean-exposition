@@ -206,25 +206,26 @@ statements agree, and a kernel check of a declaration is not a check of the comp
 
 | State | Words | Margin |
 | --- | --- | --- |
-| Linked, at rest | 1.5px underline in the topic's colour at full strength, nothing behind the words, stopping 3px short of the phrase's end so neighbours read as two | thin tick |
-| Pointed at | the same underline at 2px and a 10% wash of the topic's colour | tick in ink |
-| Followed | no change to the words | tick in ink, 2px |
-| Selected words | 2px amber line over a faint amber wash (9% by day, 7% by night), on every fragment of the exact recorded range; a whole statement takes no per-phrase amber and one 3px rule in the margin instead | 3px amber rule |
-| Selected paragraph | no change to the words | 3px amber rule down the paragraph, and its ring filled amber |
-| A paragraph with links | no change to the words | a 7px ring at its first line, between the ticks and the text; fills with ink under the pointer |
-| Keyboard focus | 2px amber outline at 2px offset, on top of any of the above | none |
-| Display formula | a rule at its left instead of an underline, in the same colours and weights | as above |
+| Linked, at rest | 1px underline at 8% and a 10% tint in the topic colour | one topic mark per printed line, continuous within a linked block |
+| Pointed at | 2px underline at 55% and a 21% tint | topic mark |
+| Followed | words retain their tint | topic mark |
+| Selected words | 2px amber line and a faint amber wash on the selected phrase | the topic mark gains weight |
+| Selected paragraph | linked words remain readable | topic colours with one amber edge |
+| A paragraph with links | each phrase opens its own Lean | selecting its margin mark opens the paragraph’s links |
+| Keyboard focus | the focused link has an outline | Tab reaches each marked paragraph once, and Enter selects it |
+| Display formula | the tint follows the display | its mark selects the linked passage |
 
 Amber appears on the paper for one reason only: the reader selected this. Following is neutral.
 The curved thread that used to join a selection to the pane is gone: the quotation at the head
 of the inspector now says which words are meant, and the thread was the one mark that moved
 whenever the paper scrolled.
 
-**Colour.** Underlines keep the colours of their topics, one hue per family of topics and one
-shade per topic, computed and stored with the paper as before. The colour key is in Sections
+**Colour.** Each marked line shows its topics from top to bottom in phrase order. Repeated topics
+appear once per line. The tints and marks use the paper’s stored colours, one hue per family
+and one shade per topic. The colour key is in Sections
 and says, once: "Colours group topics within this paper. They do not say whether a statement
-is proved or whether it matches the paper." A setting, "Colour underlines by topic", in the
-key and in the page's guide, switches every underline to one neutral ink for a reader who
+is proved or whether it matches the paper." A setting, "Show topic colours", in the
+key and in the page's guide, switches phrase and margin marks to one neutral ink for a reader who
 prefers it or cannot tell the hues apart; the choice is remembered. In forced-colours mode
 underlines are real text decorations in the system's link colour and the selection is the
 system's highlight.
@@ -235,8 +236,7 @@ system's highlight.
   Lean. The graph is one tab away. A view named in the address wins; then a view the reader
   chose before (stored as an explicit choice of `graph` or `lean`); then Lean.
 - One sentence, whole at every width including a phone, stands at the head of the paper above
-  its title: "Underlined words are linked to a Lean statement. Select them to see the statement
-  and how it compares." It is part of the page, so it wraps and scrolls away with the title, and
+  its title: "Select a marked phrase to see its Lean statement and how the two compare." It is part of the page, so it wraps and scrolls away with the title, and
   it is in the first screen's own HTML, so nothing shifts when the page starts.
 - Where the paper supplies them:
   - **Start here**: the paper's short list of places to start, each with the one line the

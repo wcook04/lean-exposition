@@ -136,6 +136,39 @@ describe("statements on the page", () => {
     reader.dispose();
   });
 
+  it("selects the painted lines of their paragraph or display and keeps the control focused on redraw", () => {
+    const page = section(0, [[0, 100, 120], [1, 150, 170], [2, 180, 214]]);
+    const text = page.querySelector(".part__text")!;
+    const [a, b, display] = [...text.querySelectorAll<HTMLElement>(".tie")];
+    const paragraph = document.createElement("p");
+    paragraph.append("A plain opening before the first linked line. ", a, b);
+    display.classList.add("math-display");
+    text.replaceChildren(paragraph, display);
+    document.body.append(page);
+    const reader = new Statements(tieModel(index), parts);
+    try {
+      reader.adopt(0, page);
+      (reader as unknown as { drawTicks(part: number): void }).drawTicks(0);
+      const buttons = () => [...page.querySelectorAll<HTMLButtonElement>(".para-pick")];
+      const [prose, formula] = buttons();
+      expect(buttons()).toHaveLength(2);
+      expect([prose.style.top, prose.style.height]).toEqual(["100px", "20px"]);
+      const continuation = prose.firstElementChild as HTMLElement;
+      expect([continuation.style.top, continuation.style.height]).toEqual(["50px", "20px"]);
+      expect([formula.style.top, formula.style.height]).toEqual(["180px", "34px"]);
+      expect(reader.blockOf(prose)).toBe(paragraph);
+      expect(reader.blockOf(formula)).toBe(display);
+      prose.focus();
+      reader.holdBlock(paragraph);
+      expect(document.activeElement).toBe(buttons()[0]);
+      expect(document.activeElement!.getAttribute("aria-pressed")).toBe("true");
+      expect(buttons()[1].hasAttribute("aria-pressed")).toBe(false);
+    } finally {
+      reader.dispose();
+      page.remove();
+    }
+  });
+
   it("joins adjacent marked lines within a block, keeping an unlinked line and another paragraph separate", () => {
     const page = section(0, [[0, 100, 120], [0, 128, 148], [0, 184, 204], [1, 212, 232]]);
     const text = page.querySelector(".part__text")!;

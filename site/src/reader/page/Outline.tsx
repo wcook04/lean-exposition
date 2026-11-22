@@ -35,7 +35,7 @@ interface Props {
  * authors named carry their name; families derived from how the topics co-occur are set apart
  * without one. A paper whose topics come in parts shows the topics of the part being read.
  */
-/** "Colour underlines by topic": on by default; off sets every underline in one neutral ink. Remembered. */
+/** Topic colours are on by default. Turning them off makes the phrase and margin marks neutral. */
 export function TonesSwitch() {
   const [on, setOn] = useState(readTones);
   return (
@@ -48,7 +48,7 @@ export function TonesSwitch() {
           saveTones(event.target.checked);
         }}
       />
-      Colour underlines by topic
+      Show topic colours
     </label>
   );
 }
