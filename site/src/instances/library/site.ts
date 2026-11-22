@@ -3,10 +3,23 @@
 // data's; the sentences here are about how the reader works. No browser API, no import.meta.
 
 import type { SiteFacts } from "../../home/siteFacts.ts";
-import type { RecordKind, SiteInstance } from "../types.ts";
-import { PAPER, MAIN, BUILT, LIBRARY_ROOT } from "./data.ts";
+import type { InstancePdf, RecordKind, SiteInstance } from "../types.ts";
+import { PAPER, MAIN, BUILT, LIBRARY_ROOT, type LibraryDocument } from "./data.ts";
 
 const ADAPTED = BUILT.find((d) => d.adapted);
+
+function documentPdf(doc: LibraryDocument): InstancePdf | null {
+  const folder = `instances/${PAPER.id}/papers/${doc.slot}`;
+  const original = doc.pdf && {
+    file: `${folder}/${doc.pdf.file}`,
+    name: doc.pdf.name ?? (doc.slug ? `${doc.slug}.pdf` : "paper.pdf"),
+    alias: doc.pdf.alias,
+  };
+  const reading = doc.adapted ? doc.reading_pdf : undefined;
+  return reading
+    ? { file: `${folder}/reading.pdf`, name: reading.name ?? reading.file, archive: original }
+    : original ?? null;
+}
 
 const n = (value: number) => value.toLocaleString("en-GB");
 const plain = (text: string) => text.replace(/\$([^$]+)\$/g, "$1");
@@ -129,9 +142,10 @@ const site = {
   defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.path ?? PAPER.id}/`,
   pdfs: {
     ...Object.fromEntries(
-      BUILT
-        .filter((d) => d.pdf)
-        .map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.pdf!.name ?? (d.slug ? `${d.slug}.pdf` : "paper.pdf"), ...(d.pdf!.alias ? { alias: d.pdf!.alias } : {}) }]),
+      BUILT.flatMap((d) => {
+        const pdf = documentPdf(d);
+        return pdf ? [[d.slot, pdf]] : [];
+      }),
     ),
     ...(R.extra_pdfs ?? {}),
   },
@@ -202,7 +216,11 @@ const site = {
         of: (BUILT.find((d) => d.id === ADAPTED.of) ?? MAIN).slot!,
         credit: ADAPTED.credit ?? "",
         authorsPaper: PAPER.source.upstream.paper ?? undefined,
-        pdfs: [ADAPTED.pdf, ADAPTED.aux_pdf].filter((p): p is NonNullable<typeof p> => !!p).map((p) => ({ label: p.label ?? "PDF", name: p.name ?? p.file })),
+        pdfs: [
+          { pdf: ADAPTED.reading_pdf, label: "Reading copy" },
+          { pdf: ADAPTED.pdf, label: "PDF with changes marked" },
+          { pdf: ADAPTED.aux_pdf, label: "Auxiliary note, PDF with changes marked" },
+        ].flatMap(({ pdf, label }) => pdf ? [{ label: pdf.label ?? label, name: pdf.name ?? pdf.file }] : []),
       }
     : undefined,
   recordKind,

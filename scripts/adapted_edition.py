@@ -50,7 +50,9 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 MARK = re.compile(r"^% CHANGE (\S+)\s*$")
 PUBLIC_FIELDS = ("id", "part", "kind", "authors", "ours", "sources", "note", "status")
+READING_PDF = ("reading.pdf", "papers/{slot}/reading.pdf")
 STAGED = (("paper.md", "papers/{slot}/paper.md"), ("correspondence.json", "papers/{slot}/correspondence.json"),
+          READING_PDF,
           ("paper.pdf", "papers/{slot}/paper.pdf"), ("figures", "papers/{slot}/figures"),
           ("phrases.json", "alignment/phrases-{slot}.json"), ("references.json", "alignment/references-{slot}.json"),
           ("changes.json", "alignment/changes-{slot}.json"),
@@ -500,9 +502,29 @@ def enabled(paper: str) -> bool:
     return bool(e and (e.get("published") or os.environ.get("LX_PREVIEW_ADAPTED") == "1"))
 
 
+def read_download(folder: Path, entry: dict) -> bytes:
+    """Read the bytes bound to a declared download in the adapted edition's manifest."""
+    folder = folder.resolve()
+    source = (folder / entry["file"]).resolve()
+    if folder not in source.parents or not source.is_file():
+        raise SystemExit(f"declared file {entry['file']!r} is not in {folder}")
+    if not entry["name"] or "/" in entry["name"] or entry["name"].startswith("."):
+        raise SystemExit(f"download name {entry['name']!r} is not a plain file name")
+    data = source.read_bytes()
+    if len(data) != entry["bytes"] or sha(data) != entry["sha256"]:
+        raise SystemExit(f"{source} does not match its declared bytes and sha256")
+    return data
+
+
 def stage(paper: str) -> None:
     inst = ROOT / "instances" / paper
-    slot = edition(paper)["document"]["slot"]
+    doc = edition(paper)["document"]
+    slot = doc["slot"]
+    reading = doc.get("reading_pdf")
+    marked = doc.get("pdf")
+    if reading and marked and reading["name"] in (marked.get("name") or f"{doc['slug']}.pdf", marked.get("alias")):
+        raise SystemExit("the reading and marked PDFs must have distinct download names")
+    ordinary = read_download(inst / "adapted", reading) if reading else None
     taken = {d["slot"]: d.get("id") for d in json.loads((inst / "instance.json").read_text())["documents"]}
     if slot in taken:
         # Never displace a document the paper already reads in this slot.
@@ -521,7 +543,11 @@ def stage(paper: str) -> None:
         if d.exists():
             backup = keep / dst.format(slot=slot).replace("/", "__")
             shutil.move(d, backup)
-        if s.is_dir():
+        if (src, dst) == READING_PDF:
+            if ordinary is not None:
+                d.parent.mkdir(parents=True, exist_ok=True)
+                d.write_bytes(ordinary)
+        elif s.is_dir():
             shutil.copytree(s, d)
         elif s.exists():
             d.parent.mkdir(parents=True, exist_ok=True)

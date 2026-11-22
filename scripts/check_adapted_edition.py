@@ -11,18 +11,22 @@ a Selected change with both texts, the kind, the note and the sources. At 1440: 
 lists every change, the switch keeps the place by paragraph in both directions and says when a
 paragraph has no counterpart, the authors' Text carries no editorial marks, the PDF with changes marked opens and its bars are marks
 in the PDF view, and the browser's find reaches the edition's own words far down the page.
+The inline PDF uses the manifest's reading copy if supplied, with phrase links.
+The marked download remains available, and a marked-only edition uses that file inline.
+No PDF has editorial change controls added by the viewer.
 Screenshots of the switch, a selected change, Show changes and the credit go to --shots.
 Exits 1 if any check fails.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
 import urllib.request
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 from playwright.sync_api import sync_playwright
 
@@ -41,12 +45,12 @@ a = ap.parse_args()
 if a.widths:
     WIDTHS = [(w, h) for w, h in WIDTHS if w in a.widths]
 base = a.base.rstrip("/") + "/"
+paper = a.paper or base.partition("/library/")[2].strip("/")
+manifest = Path(__file__).resolve().parents[1] / "instances" / paper / "adapted/edition.json"
+document = json.loads(manifest.read_text())["document"] if manifest.is_file() else {}
 if not a.credit:
-    # The paper's own credit line, as its adapted edition declares it.
-    paper = a.paper or base.split("/library/", 1)[1].strip("/")
-    a.credit = json.loads((Path(__file__).resolve().parents[1] / "instances" / paper / "adapted/edition.json").read_text())["document"]["credit"]
+    a.credit = document["credit"]
 edition = base + a.slug + "/"
-origin = base.split("/library/")[0]
 a.shots.mkdir(parents=True, exist_ok=True)
 # The edition's slot and page: its document in the paper's instance data.
 with urllib.request.urlopen(base + "changes/" + a.slot + ".json") as r:
@@ -242,20 +246,36 @@ with sync_playwright() as pw:
                   f"{before_line!r} at {before_y:.1f} -> {after_line!r} at {after_y:.1f}")
             check("1440 PDF round trip uses the same history entry", page.evaluate("history.length") == depth)
 
-        # The PDF with changes marked: its link, the file, and its bars as marks in the PDF view.
-        link = page.locator("a.pdf-link", has_text="PDF with changes marked").first
-        href = link.get_attribute("href")
-        with urllib.request.urlopen(origin + href.split("#")[0] if href.startswith("/") else href.split("#")[0]) as r:
-            check("1440 PDF with changes marked is served", r.status == 200 and r.headers.get("Content-Type", "").startswith("application/pdf")
-                  and link.get_attribute("target") == "_blank", href)
-        page.goto(edition + "?view=pdf&page=2", wait_until="domcontentloaded")
-        page.wait_for_selector(".pdf-view__page", timeout=60000)
-        page.wait_for_timeout(3000)
-        bars = page.locator(".pdf-view__change").count()
-        check("1440 change bars are marks in the PDF view", bars >= len(ids) - 6, f"{bars} bar marks")
-        page.locator(".pdf-view__change").first.click()
-        page.locator(".change-card").wait_for(timeout=15000)
-        page.screenshot(path=str(a.shots / "pdf-change-1440.png"))
+        reading, marked = document.get("reading_pdf"), document.get("pdf")
+        inline_href = None
+        if marked or not document:
+            label = (marked or {}).get("label", "PDF with changes marked")
+            link = page.locator("a.pdf-link", has_text=label).first
+            href = urljoin(page.url, link.get_attribute("href")).split("#")[0]
+            inline_href = href
+            with urllib.request.urlopen(href) as r:
+                check("1440 marked PDF download is served", r.status == 200 and r.headers.get("Content-Type", "").startswith("application/pdf")
+                      and link.get_attribute("target") == "_blank", href)
+                if marked:
+                    data = r.read()
+                    check("1440 marked PDF has the archive's declared bytes",
+                          len(data) == marked["bytes"] and hashlib.sha256(data).hexdigest() == marked["sha256"])
+        if reading:
+            inline_href = base + "pdf/" + reading["name"]
+            with urllib.request.urlopen(inline_href) as r:
+                data = r.read()
+                check("1440 reading PDF has the manifest's declared bytes",
+                      len(data) == reading["bytes"] and hashlib.sha256(data).hexdigest() == reading["sha256"], inline_href)
+        with page.expect_response(lambda response: response.url == inline_href, timeout=60000):
+            page.goto(edition + "?view=pdf&page=2", wait_until="domcontentloaded")
+        page.wait_for_selector(".pdf-view__page canvas", timeout=60000)
+        check("1440 inline PDF has no editorial controls", page.locator(".pdf-view__change,[data-change-mark]").count() == 0)
+        phrase = page.locator(".pdf-view__mark[data-mark]").first
+        phrase.wait_for(state="attached", timeout=60000)
+        phrase.focus()
+        check("1440 inline PDF phrase control takes keyboard focus",
+              phrase.evaluate("(el) => document.activeElement === el"))
+        page.screenshot(path=str(a.shots / "pdf-reading-1440.png"))
         ctx.close()
     browser.close()
 

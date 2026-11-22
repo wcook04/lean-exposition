@@ -9,6 +9,7 @@ import { frameHtml } from "./src/home/heroMarkup.ts";
 import { readerFirstScreenHtml, readerSkeletonHtml } from "./src/reader/skeleton.ts";
 import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
 import { copyTodos, selectInstance } from "./src/instances/registry.ts";
+import type { InstancePdf } from "./src/instances/types.ts";
 import { buildRunLedger, type EvidenceInput, type RunLedger } from "./src/checks/runLedger.ts";
 
 // The example this build is for: LX_INSTANCE, default qaoa-sk (src/instances/registry.ts).
@@ -22,9 +23,13 @@ const TESTING = Boolean(process.env.VITEST);
 
 // The accounts (and for SK the architectural companion), as the repository renders them.
 // Download links use page counts read from the same files at build time.
-export const PAPER_PDFS: Record<string, { file: string; name: string; alias?: string }> = Object.fromEntries(
-  Object.entries(INSTANCE.pdfs).map(([stage, pdf]) => [stage, { ...pdf, file: `${REPO}/${pdf.file}` }]),
+export const PAPER_PDFS: Record<string, InstancePdf> = Object.fromEntries(
+  Object.entries(INSTANCE.pdfs).map(([stage, pdf]) => [stage, {
+    ...pdf, file: `${REPO}/${pdf.file}`,
+    ...(pdf.archive ? { archive: { ...pdf.archive, file: `${REPO}/${pdf.archive.file}` } } : {}),
+  }]),
 );
+const PDF_DOWNLOADS = Object.values(PAPER_PDFS).flatMap((pdf) => pdf.archive ? [pdf, pdf.archive] : [pdf]);
 
 /** An input the site needs, or a clear stop naming it (a warning only while tests run). */
 function missingInput(path: string, what: string): string {
@@ -184,7 +189,7 @@ function paperPdfs(build = false): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const path = req.url?.split("?", 1)[0];
-        const pdf = Object.values(PAPER_PDFS).find((p) =>
+        const pdf = PDF_DOWNLOADS.find((p) =>
           path?.endsWith(`/pdf/${p.name}`) || (p.alias && path?.endsWith(`/${p.alias}`)));
         if (!pdf) return next();
         res.setHeader("Content-Type", "application/pdf");
@@ -194,7 +199,7 @@ function paperPdfs(build = false): Plugin {
     closeBundle() {
       if (!build) return;
       const out = resolve("dist");
-      for (const p of Object.values(PAPER_PDFS)) {
+      for (const p of PDF_DOWNLOADS) {
         // The aliases retain the papers' relative cross-PDF targets without
         // modifying their bytes or changing the site's existing download URLs.
         for (const publicPath of [`pdf/${p.name}`, ...(p.alias ? [p.alias] : [])]) {
@@ -569,7 +574,7 @@ function requireInputs(): void {
     [`${EXAMPLE}/evidence-graph.json`, "the evidence graph"],
     [ALIGNMENT, "the alignment folder"],
     ...["long", "short", "expository"].map((stage): [string, string] => [`${ALIGNMENT}/references-${stage}.json`, `the ${stage} paper's reference table`]),
-    ...Object.entries(PAPER_PDFS).map(([stage, pdf]): [string, string] => [pdf.file, `the ${stage} PDF`]),
+    ...PDF_DOWNLOADS.map((pdf): [string, string] => [pdf.file, `the PDF published as ${pdf.name}`]),
   ];
   const absent = needed.filter(([path]) => !existsSync(resolve(path)));
   if (absent.length) throw new Error(absent.map(([path, what]) => missingInput(path, what)).join("\n"));

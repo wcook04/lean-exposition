@@ -133,22 +133,6 @@
 
 .change-list__where { font-weight: 600; }
 
-/* The marked PDF: a change's mark is its bar's margin strip, outlined in dotted ink. */
-.pdf-view__change {
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  border: 2px dotted #4a4452;
-  background: rgb(74 68 82 / 0.06);
-  cursor: pointer;
-}
-
-.pdf-view__change:hover,
-.pdf-view__change:focus-visible {
-  background: rgb(74 68 82 / 0.16);
-  outline: none;
-}
-
 .adapted-credit-link { white-space: nowrap; }
 
 /* The two texts' switch and Show changes take a second row of the strip, so the strip never

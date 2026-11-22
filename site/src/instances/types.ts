@@ -12,13 +12,18 @@ export type InstanceStage = string;
 /** A record of the graph in a paper's terms (recordKind). */
 export type RecordKind = "result" | "step" | "cited" | "open" | "declaration";
 
-export interface InstancePdf {
+export interface PublishedPdf {
   /** Relative to the repository root. */
   file: string;
   /** The published name under pdf/. */
   name: string;
   /** A second published path, keeping the papers' relative links between PDFs. */
   alias?: string;
+}
+
+export interface InstancePdf extends PublishedPdf {
+  /** The marked download when the inline reader uses an ordinary copy. */
+  archive?: PublishedPdf;
 }
 
 export interface SiteInstance {

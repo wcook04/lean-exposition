@@ -50,18 +50,24 @@ if grep -q '"kind": "companion"' "$I/instance.json" || [ "$LX_ADAPTED" = 1 ]; th
   "$PY" scripts/build_companion_editions.py "$paper" "$LEAN_TREE" "build/$paper-companion-editions" --jobs "${COMPANION_JOBS:-3}"
   cp -R "build/$paper-companion-editions/docs" site/public/edition/
 fi
-# The phrases placed on the authors' PDF, for the reader's PDF view (needs poppler's pdftotext).
+# Place phrases on the same staged PDF the reader opens (needs poppler's pdftotext).
 rm -rf site/public/pdf-marks
-for slot in long short expository $([ "$LX_ADAPTED" = 1 ] && "$PY" -c "import json; print(json.load(open('$I/adapted/edition.json'))['document']['slot'])"); do
-  if [ -f "$I/papers/$slot/paper.pdf" ] && [ -f "$I/papers/$slot/paper.md" ]; then
-    # An adapted edition's PDF marks its changes; its change map places them (scripts/adapted_edition.py).
-    changes=""; [ -f "$I/alignment/changes-$slot.json" ] && changes="$I/alignment/changes-$slot.json"
+adapted_slot=""
+if [ "$LX_ADAPTED" = 1 ]; then
+  adapted_slot=$("$PY" -c "import json; print(json.load(open('$I/adapted/edition.json'))['document']['slot'])")
+fi
+for slot in long short expository $adapted_slot; do
+  pdf="$I/papers/$slot/paper.pdf"
+  if [ "$slot" = "$adapted_slot" ] && [ -f "$I/papers/$slot/reading.pdf" ]; then
+    pdf="$I/papers/$slot/reading.pdf"
+  fi
+  if [ -f "$pdf" ] && [ -f "$I/papers/$slot/paper.md" ]; then
     # A companion's ties are in its own edition (edition/docs/<page>/, the file its index names for /ties/short).
     ties="site/public/edition/ties/$slot.json"
     if [ -f "site/public/edition/docs/$slot/index.json" ]; then
       ties="site/public/edition/$("$PY" -c "import json,sys; print(json.load(open(sys.argv[1]))['responses']['/ties/short'])" "site/public/edition/docs/$slot/index.json")"
     fi
-    "$PY" scripts/pdf_marks.py "$I/papers/$slot/paper.pdf" "$I/papers/$slot/paper.md" "$ties" "site/public/pdf-marks/$slot.json" $changes
+    "$PY" scripts/pdf_marks.py "$pdf" "$I/papers/$slot/paper.md" "$ties" "site/public/pdf-marks/$slot.json"
   fi
 done
 cd site
@@ -99,35 +105,25 @@ for doc in pages:
         raise SystemExit(f"{doc['slug']}: missing the adapted edition's pre-rendered opening ({shell_of})")
     (dist / doc["slug"] / "index.html").write_text((shell_of if shell_of.is_file() else dist / "404.html").read_text())
 # An adapted edition's other files, each declared in its edition.json as {file, name, label?, bytes,
-# sha256} and copied byte for byte after its size and digest are checked: the PDFs (the auxiliary
-# note's with changes marked, and the ordinary reading copies of the edition and the note) to pdf/,
-# and the TeX overlay and the result-by-result comparison to the edition's own folder, one level
-# below the paper root, where the comparison's relative links resolve. The PDF with changes marked
-# stays the reader's PDF and the source of its marks (the Vite paperPdfs plugin copies it).
-import hashlib
-def supplement(doc, entry, where):
-    folder = Path(f"instances/{paper}/adapted").resolve()
-    source = (folder / entry["file"]).resolve()
-    if folder not in source.parents or not source.is_file():
-        raise SystemExit(f"{doc['slug']}: declared file {entry['file']!r} is not in {folder}")
-    if "/" in entry["name"] or entry["name"].startswith("."):
-        raise SystemExit(f"{doc['slug']}: download name {entry['name']!r} is not a plain file name")
-    data = source.read_bytes()
-    if len(data) != entry["bytes"] or hashlib.sha256(data).hexdigest() != entry["sha256"]:
-        raise SystemExit(f"{doc['slug']}: {entry['file']} does not match its declared bytes and sha256")
+# sha256} and copied byte for byte after verification: the auxiliary PDFs to pdf/, and the TeX
+# overlay and result-by-result comparison one level below the paper root, where the comparison's
+# relative links resolve. The Vite PDF plugin publishes the reading PDF and the marked archive.
+from scripts.adapted_edition import read_download
+def supplement(entry, where):
+    data = read_download(Path(f"instances/{paper}/adapted"), entry)
     where.mkdir(parents=True, exist_ok=True)
     (where / entry["name"]).write_bytes(data)
 for doc in pages:
     if not doc.get("adapted"):
         continue
-    for key in ("aux_pdf", "reading_pdf", "aux_reading_pdf"):
+    for key in ("aux_pdf", "aux_reading_pdf"):
         if doc.get(key):
-            supplement(doc, doc[key], dist / "pdf")
+            supplement(doc[key], dist / "pdf")
     if doc.get("source_overlay"):
-        supplement(doc, doc["source_overlay"], dist / doc["slug"])
+        supplement(doc["source_overlay"], dist / doc["slug"])
     for key in ("reading", "data"):
         if (doc.get("result_comparison") or {}).get(key):
-            supplement(doc, doc["result_comparison"][key], dist / doc["slug"])
+            supplement(doc["result_comparison"][key], dist / doc["slug"])
 # A page that moved (moved_pages) is served as its new page's shell; the reader then shows the new address.
 slugs = {doc["slug"] for doc in pages}
 for old, row in inst.get("moved_pages", {}).items():

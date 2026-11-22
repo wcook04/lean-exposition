@@ -2004,11 +2004,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {pdfOn && pdfMarks && (
           <PdfView
             url={pdfFile}
+            label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
             at={route.at}
             page={route.page}
             onPage={onPdfPage}
-            onChange={side === "adapted" ? (id) => setChangePane({ kind: "change", id }) : undefined}
             onPick={(id, mark, page) =>
               navigate({ ...route, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined })
             }
