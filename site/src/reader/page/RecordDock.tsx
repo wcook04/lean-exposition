@@ -23,6 +23,7 @@ import { isPhraseRecord, leanTruth, ROLE_WORDS, sameWords, statementFor, topicOf
 import { declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
 import { OurStatements } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
+import { quoteOfDisplay } from "./PaperBody";
 import { leanPage } from "./rightPage";
 
 /** What is open: a step, its statement here when it has one, or a declaration walked to. */
@@ -224,7 +225,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
     if (!segments?.length) return setQuote(null);
     const read = () => {
       const marks = segments.flatMap((segment) => [...document.querySelectorAll<HTMLElement>(`.paper [data-t="${segment}"]`)]);
-      if (marks.length) setQuote(marks.map((mark) => mark.innerHTML).join(" "));
+      // A display formula is quoted whole, as written, and fitted to the card (PhraseCard.tsx).
+      if (marks.length) setQuote(marks.map((mark) => (mark.classList.contains("math-display") ? quoteOfDisplay(mark) : mark.innerHTML)).join(" "));
     };
     read();
     const later = window.setTimeout(read, 400);

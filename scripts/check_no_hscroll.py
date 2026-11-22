@@ -159,6 +159,27 @@ def main() -> int:
                 for line in found[:8]:
                     print(f"     {line}")
                 failures += [f"{tag}: {line}" for line in found]
+                # A phrase card quoting a wide numbered display: open it by clicking that display,
+                # then the quote's formula must lie inside the card and nothing may scroll sideways.
+                picked = page.evaluate("""() => { const b = [...document.querySelectorAll('.prose .math-display.tie[data-number]')].find(b => b.dataset.form || b.dataset.fit);
+                    if (!b) return null; b.scrollIntoView({ block: 'center' }); return b.dataset.t || ''; }""")
+                if picked is not None:
+                    page.wait_for_timeout(600)
+                    page.locator(f'.prose .math-display.tie[data-t="{picked}"]').first.click(position={"x": 30, "y": 10})
+                    page.wait_for_timeout(1500)
+                    card = page.evaluate("""() => { const q = document.querySelector('.phrase-card__quote'); if (!q || !q.getClientRects().length) return null;
+                        const cs = getComputedStyle(q); const r = q.getBoundingClientRect(); const right = r.left + q.clientLeft + q.clientWidth - parseFloat(cs.paddingRight);
+                        const d = q.querySelector('.math-display'); const parts = d ? [d.querySelector('.katex-html'), ...d.querySelectorAll('.katex-html > .katex-base, :scope > .math-number')].filter(p => p && p.getClientRects().length) : [];
+                        return { overflowX: cs.overflowX, display: !!d, over: +Math.max(0, ...parts.map(p => p.getBoundingClientRect().right - right)).toFixed(1), number: d && (d.querySelector('.math-number') || {}).textContent, form: d && (d.dataset.form || ''), fit: d && (d.dataset.fit || '') }; }""")
+                    again = page.evaluate(SIDEWAYS)
+                    bad = card is None or not card["display"] or card["over"] > 1 or card["overflowX"] in ("auto", "scroll") or again
+                    print(f"{'FAIL' if bad else 'ok  '} {tag}: phrase card on data-t={picked} {card} {len(again)} sideways", flush=True)
+                    for line in again[:4]:
+                        print(f"     {line}")
+                    if bad:
+                        failures.append(f"{tag}: phrase card on data-t={picked}: {card}; {again[:3]}")
+                    page.keyboard.press("Escape")
+                    page.wait_for_timeout(300)
                 # Expand, where a display offers it: a dialog across the window whose formula
                 # fits without scrolling, and Escape closes it.
                 expand = page.locator(".math-cue:not([hidden]) .math-cue__expand").first

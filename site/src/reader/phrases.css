@@ -239,7 +239,9 @@
   line-height: 1.45;
   color: var(--ink);
   max-height: 9.5em;
-  overflow: auto;
+  /* A long quote scrolls down; nothing scrolls sideways (its displays are fitted, PaperBody.tsx). */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .phrase-card__quote .math-display,
