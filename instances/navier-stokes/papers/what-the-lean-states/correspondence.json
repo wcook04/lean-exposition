@@ -4,7 +4,7 @@
  "state": "draft",
  "path": "papers/what-the-lean-states.md",
  "content_sha256": "8435d71358fee903f5b2faa01857d107fb35c29a7e308f23a45e9ce4cbb892e2",
- "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
+ "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
