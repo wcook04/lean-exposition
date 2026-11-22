@@ -715,7 +715,7 @@ const laidOut = new WeakSet<HTMLElement>();
 /**
  * Do now what a part would otherwise need the moment it comes near. Reading a position inside
  * it lays it out, even while it is held off the screen. That first layout is also what asks for
- * any new KaTeX face, so its formulas are fitted on a later visit, once the fonts have settled:
+ * any new KaTeX face, so when it does, its formulas are fitted on a later visit, once the fonts have settled:
  * a width measured in a fallback font is wrong for good. Reading again leaves nothing to redo.
  * True when the part is finished.
  */
@@ -724,7 +724,8 @@ function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
   if (!laidOut.has(text)) {
     laidOut.add(text);
     first?.getBoundingClientRect();
-    return false;
+    // A layout that asked for no new KaTeX face can be fitted at once, in this same visit.
+    if (katexLoading()) return false;
   }
   if (katexLoading()) return false;
   const fitter = fitters.get(text);
