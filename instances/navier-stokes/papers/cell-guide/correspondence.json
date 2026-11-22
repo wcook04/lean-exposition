@@ -3,7 +3,7 @@
  "stage": "cell-guide",
  "state": "draft",
  "path": "papers/cell-guide.md",
- "content_sha256": "74e19502b1b1db65fdf3b2d065bb308f7d8b8afe607910f205cdcaf53cb46ca8",
+ "content_sha256": "9ac764bff474cd0aad6dcf52de3a69e4a812dd004ac075b9626d38d6e112a39e",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -327,7 +327,7 @@
    "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-what-the-final-condition-says",
+   "anchor": "sec-1",
    "text_sha256": "11a6950b0668e68ff95172f757bc71223f117076b93c49307efc393b9af04e3e",
    "claim_ids": [],
    "citation_ids": [],
@@ -336,7 +336,7 @@
    "rationale": "1. What the final condition says: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-the-notation-to-keep-separate",
+   "anchor": "sec-2",
    "text_sha256": "5fcfe6af14f3982c39b3d64290048328b0f853af222f5d805c83ccf537521d5e",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "2. The notation to keep separate: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-the-groups",
+   "anchor": "sec-3",
    "text_sha256": "94ae74b132fc4e331d882afd65cfc67b3d9f9e7bd056b17658ca78ccfd0178c1",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "3. The groups: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-five-decoder-decisions-to-make-explicit",
+   "anchor": "sec-4",
    "text_sha256": "4d78da6aa92ae32c4a8f3a0fa629cf3f97779f100d9a7aae822e78b969ee4f1e",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "4. Five decoder decisions to make explicit: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-how-the-annotations-were-checked",
+   "anchor": "sec-5",
    "text_sha256": "f33f18c4bf2047b083b27886c2b89a260df4f490e1380fa7de960ca5f4dc910d",
    "claim_ids": [],
    "citation_ids": [],

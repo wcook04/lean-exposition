@@ -3,7 +3,7 @@
  "stage": "certificate-checker",
  "state": "draft",
  "path": "papers/certificate-checker.md",
- "content_sha256": "6452da100227c6402579cbb11012789be3a4ce8ad9e4956431df07384fb20f22",
+ "content_sha256": "b684a9e3f5a19499b649388dedf6b0f937c8dbfc07ee633a4bd18fbf673b3c64",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -327,7 +327,7 @@
    "rationale": "Front matter: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-the-size-of-the-predicate",
+   "anchor": "sec-1",
    "text_sha256": "dcb77f7fcd54fba113447e4e1be9f7cf798dfc9e7957f618b685c489e9a2cce1",
    "claim_ids": [],
    "citation_ids": [],
@@ -336,7 +336,7 @@
    "rationale": "1. The size of the predicate: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-where-a-natural-implementation-checks-too-little",
+   "anchor": "sec-2",
    "text_sha256": "02dc9aaf7ca22a07cd1a6787cff9a204d53f7cf4fad4e6f2edc83d1c91966435",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "2. Where a natural implementation checks too little: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-what-the-library-already-proves-and-what-it-takes-as-input",
+   "anchor": "sec-3",
    "text_sha256": "fd4f10d1682390237ebd195e332141550b2985ff610cbaeafe392adee76ff9b2",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "3. What the library already proves, and what it takes as input: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-a-schema-before-the-release",
+   "anchor": "sec-4",
    "text_sha256": "2f322cc6b7d2b2cd34302d94159d335e3feb8b002f366d9e6cc3665c4b627e62",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "4. A schema before the release: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-three-ways-to-check-it",
+   "anchor": "sec-5",
    "text_sha256": "d713c029b176859cc2dae1064794d3e011c4466dc0e10a5125b3dbe26aea35bb",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "5. Three ways to check it: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-order-of-work",
+   "anchor": "sec-6",
    "text_sha256": "efefe859bbabd4b8a37d8e16e5cc9609492f77f6ce071bad410756c80a34f445",
    "claim_ids": [],
    "citation_ids": [],

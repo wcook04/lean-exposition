@@ -3,7 +3,7 @@
  "stage": "routes",
  "state": "draft",
  "path": "papers/routes.md",
- "content_sha256": "093defbe14945856b93d646cf00ecba89f7d74fc2d54d622981c03088537f2c5",
+ "content_sha256": "a0ebe7882a3618012c6b38752ca3021facba406f905d1f41fcd7f79e749fc812",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -336,7 +336,7 @@
    "rationale": "What this guide records: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-a-profile-gives-a-space-obstruction",
+   "anchor": "sec-1",
    "text_sha256": "59f1cab2fea6936a6bb814d228a678e4f6069ad96457cce8729ca511d6e8ae16",
    "claim_ids": [],
    "citation_ids": [],
@@ -345,7 +345,7 @@
    "rationale": "1. A profile gives a space obstruction: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-a-profile-gives-a-periodic-obstruction",
+   "anchor": "sec-2",
    "text_sha256": "625b9cfab2d1c1d33e7fec7b8e4204fb9ff0e16b48174704e04aaf1f7f0a8f4e",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "2. A profile gives a periodic obstruction: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-a-weak-profile-has-two-onward-routes",
+   "anchor": "sec-3",
    "text_sha256": "d35cf395b96e6ef4eda562f4c2d8a13a4159ac11fbe73712a85fabdb432a5a98",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "3. A weak profile has two onward routes: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-a-certificate-gives-a-weak-profile",
+   "anchor": "sec-4",
    "text_sha256": "a8997929b9a221ed92f9557d96eefa07fa3fa368ad21ace07c410bed6db0de2e",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "4. A certificate gives a weak profile: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-the-cell-condition-supplies-the-analytic-route",
+   "anchor": "sec-5",
    "text_sha256": "b449aa91e6e735bc6e001ee57983b7769eccb1138dff3f89990c346fc0641a9e",
    "claim_ids": [],
    "citation_ids": [],
@@ -381,7 +381,7 @@
    "rationale": "5. The cell condition supplies the analytic route: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-a-statement-node-needs-its-supplying-proof",
+   "anchor": "sec-6",
    "text_sha256": "41406e4ba3537039f1ad4406bf26c540bb93cdd710a48e318e880c7cc78f2df6",
    "claim_ids": [],
    "citation_ids": [],
@@ -390,7 +390,7 @@
    "rationale": "6. A statement node needs its supplying proof: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-7-fractional-extensions-have-separate-endpoints",
+   "anchor": "sec-7",
    "text_sha256": "262f68bc3af35c61419c49c94715a08647e1b5910f771c084c6f3fc23974505a",
    "claim_ids": [],
    "citation_ids": [],
@@ -399,7 +399,7 @@
    "rationale": "7. Fractional extensions have separate endpoints: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-8-what-these-records-establish",
+   "anchor": "sec-8",
    "text_sha256": "eea45c5c244d07eb9d9a9414f6dc316531ea3796f1efe740fc24fcd6b3fe199b",
    "claim_ids": [],
    "citation_ids": [],

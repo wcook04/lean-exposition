@@ -3,7 +3,7 @@
  "stage": "digest",
  "state": "draft",
  "path": "papers/digest.md",
- "content_sha256": "d0d38e73c932a2ee80dbf199f76132a4069cf616264ac996ad01b60bdd70f6a3",
+ "content_sha256": "2e62a370ba05d8be1c0d99769383ccd4a6148cc39fd7a20b6d0d364c68f73d46",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -345,7 +345,7 @@
    "rationale": "The argument: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-1-the-input-orbit-and-the-actual-conclusion",
+   "anchor": "sec-1",
    "text_sha256": "f5b77d9e0bc91dc2b575be33af8a4e1116f319b669e6099a873ed6a9ca766306",
    "claim_ids": [],
    "citation_ids": [],
@@ -354,7 +354,7 @@
    "rationale": "1. The input orbit and the actual conclusion: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-2-why-the-space-is-homogeneous-h-1",
+   "anchor": "sec-2",
    "text_sha256": "0f1275b978f658a180a10350b38ca84adbf099947c056ec4ff640892fc69cc41",
    "claim_ids": [],
    "citation_ids": [],
@@ -363,7 +363,7 @@
    "rationale": "2. Why the space is homogeneous $H^1$: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-3-a-spectral-split-without-a-numerical-spectrum",
+   "anchor": "sec-3",
    "text_sha256": "6506693b997d4ac8c8a99691c4049c6355a9c0649655b718efb3ce711a977cb6",
    "claim_ids": [],
    "citation_ids": [],
@@ -372,7 +372,7 @@
    "rationale": "3. A spectral split without a numerical spectrum: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-4-compact-corrections-and-the-infinite-time-boundary-condition",
+   "anchor": "sec-4",
    "text_sha256": "a5c3dbd56d4c508e63a991a44b1284126db9c62ddc5c1c19fe03696b245fd4f0",
    "claim_ids": [],
    "citation_ids": [],
@@ -381,7 +381,7 @@
    "rationale": "4. Compact corrections and the infinite-time boundary condition: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-5-finite-energy-and-the-lower-blow-up-bound",
+   "anchor": "sec-5",
    "text_sha256": "870ce54575a1365094be180f99bc2259f2531139066044cc716cc9b009e27b7a",
    "claim_ids": [],
    "citation_ids": [],
@@ -390,7 +390,7 @@
    "rationale": "5. Finite energy and the lower blow-up bound: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-6-the-torus-make-the-localization-error-disappear",
+   "anchor": "sec-6",
    "text_sha256": "5de80993e3239b483ef8e893772f5e7024064f20b358fae9da6a629caf067cb5",
    "claim_ids": [],
    "citation_ids": [],
@@ -399,7 +399,7 @@
    "rationale": "6. The torus: make the localization error disappear: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-7-what-the-certificate-has-to-construct",
+   "anchor": "sec-7",
    "text_sha256": "c32f4f3fb23603cf70e73ac365724d7c89ec059ad00c0d0dda1e8ebe00b91be1",
    "claim_ids": [],
    "citation_ids": [],
@@ -408,7 +408,7 @@
    "rationale": "7. What the certificate has to construct: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-8-why-the-bordered-linear-problem-is-solvable",
+   "anchor": "sec-8",
    "text_sha256": "106d4b1fccbc0a1cff223fe3ab7bd527eba27e562d113a69abd43fea6fbc8ea9",
    "claim_ids": [],
    "citation_ids": [],
@@ -417,7 +417,7 @@
    "rationale": "8. Why the bordered linear problem is solvable: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-9-closing-the-nonlinear-bounds-two-routes",
+   "anchor": "sec-9",
    "text_sha256": "0b0dacf93d4b9029b4cde817c51cfc593c79c0dbbfbd37a82def507385aa6232",
    "claim_ids": [],
    "citation_ids": [],
@@ -426,7 +426,7 @@
    "rationale": "9. Closing the nonlinear bounds: two routes: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-10-the-parameter-argument-removes-the-force-exactly",
+   "anchor": "sec-10",
    "text_sha256": "cf8f82e8debe221099e0eaf8994997be9a30fdd6a22bbb7f0e2dce778decfbdc",
    "claim_ids": [],
    "citation_ids": [],
@@ -435,7 +435,7 @@
    "rationale": "10. The parameter argument removes the force exactly: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-11-regularity-is-recovered-from-the-constructed-solution",
+   "anchor": "sec-11",
    "text_sha256": "d49fe5c10baa734127ee8cf2d4195590a7c5538d59f36aef8e4f83abdb5fbac8",
    "claim_ids": [],
    "citation_ids": [],
@@ -444,7 +444,7 @@
    "rationale": "11. Regularity is recovered from the constructed solution: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-12-appendix-b-why-finite-data-can-control-every-perturbation",
+   "anchor": "sec-12",
    "text_sha256": "fd093ee410c066970009a648bace8be860942029bc36bdcc74003a8b4be28f6c",
    "claim_ids": [],
    "citation_ids": [],
@@ -453,7 +453,7 @@
    "rationale": "12. Appendix B: why finite data can control every perturbation: a companion account of the paper; its links to the Lean are its phrase ties."
   },
   {
-   "anchor": "sec-13-what-remains-to-be-supplied-by-computation",
+   "anchor": "sec-13",
    "text_sha256": "0ef7aefc6e21d3164e91985058b1797d81216fb922ffa0c8da4fafb76c5daee9",
    "claim_ids": [],
    "citation_ids": [],

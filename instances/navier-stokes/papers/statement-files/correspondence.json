@@ -3,7 +3,7 @@
  "stage": "statement-files",
  "state": "draft",
  "path": "papers/statement-files.md",
- "content_sha256": "d1870ac71c783bcbbad53d0221a14d73006853d2f846988b849ec3eeddf98eb3",
+ "content_sha256": "379fa9a74f77cda3c13008fc9204914090f6f6e888fdf8894af437ba77be7d05",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -217,7 +217,7 @@
  "passages": [
   {
    "anchor": "front",
-   "text_sha256": "02074e60e39f50186bb88201b3fb10403fd6db58bce368117aa1a0559efd7db3",
+   "text_sha256": "47efe05069d60469f7908ea64d33506407318bad9a720b3abf6c91c9beb4d926",
    "claim_ids": [
     "navier-stokes.theorem-1.1"
    ],

@@ -13,9 +13,11 @@ The accompanying catalogue covers all 787 non-theorem declarations and the three
 [The cell declaration reference](../navier-stokes-cell-reference/paper.md) contains the same annotations as a reading document.
 <!-- /passage:front -->
 
+<a id="1"></a>
+
 ## 1. What the final condition says
 
-<!-- passage:sec-1-what-the-final-condition-says -->
+<!-- passage:sec-1 -->
 
 `CellSystemCondition` requires all fifteen fields for the same seven arguments: the certificate data, their concrete field instances, the cell-calculus data, the tree, the assembly entries, the coercivity numbers and the reduction entries. Existential witnesses inside one field retain their original scope. Rechecking an inequality with a fresh witness does not establish a conjunction that requires one shared witness.
 
@@ -51,11 +53,13 @@ Here `decode` must produce the actual functions, finite sets, matrices, paramete
 | `adjoint_defect` | The potential, remainder and pin errors give the adjoint defect bound for every selected index. | Lemmas B.11–B.12; (B.50)–(B.53) |
 
 This table describes roles. Each exact field, its local source span and its interpretation appears under `Breakdown.CellLayerSystem.CellSystemCondition` in the catalogue. The complete condition is finer than this table. [Source: lines 7030–7046; prior cell-layer fidelity table.]
-<!-- /passage:sec-1-what-the-final-condition-says -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. The notation to keep separate
 
-<!-- passage:sec-2-the-notation-to-keep-separate -->
+<!-- passage:sec-2 -->
 
 | In the paper | In the cell source | Reading rule |
 |---|---|---|
@@ -70,11 +74,13 @@ This table describes roles. Each exact field, its local source span and its inte
 | Global real unknowns \(x_g\) | Slaved and free coordinates of the tree | Cell rows are complex, with separate reality constraints on the two actuator blocks. |
 
 The label conventions implement (B.2), while the cell and chart conventions implement (B.3), (B.10) and the discussion preceding (B.26). [Source: lines 214–255, 331–337, 1700–1759 and 5589–5622; exact declarations are linked in the catalogue.]
-<!-- /passage:sec-2-the-notation-to-keep-separate -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. The groups
 
-<!-- passage:sec-3-the-groups -->
+<!-- passage:sec-3 -->
 
 ### Analytic interfaces
 
@@ -127,11 +133,13 @@ Finite lists of regions can represent conditions on infinitely many harmonics an
 ### The fifteen fields
 
 The final group collects the certificate clauses, the numerical constants, the profile and potential reductions, and their joint hypothesis. It is the entry point for assessing a candidate certificate. The generic extended-certificate interface permits some options that disappear after specialisation. For example, the cell instantiation fixes the pin target in a way that makes the specialised target gap zero; that cannot be inferred from `CertificateClauses` alone. [Sources: `CertificateClauses`, `ReductionEntries`, `CellSystemCondition`, `InstantiationBounded`; the existing cell-layer fidelity finding.]
-<!-- /passage:sec-3-the-groups -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. Five decoder decisions to make explicit
 
-<!-- passage:sec-4-five-decoder-decisions-to-make-explicit -->
+<!-- passage:sec-4 -->
 
 **Defaults are part of the definition.** The file contains eight declarations with literal `getD` calls. Their defaults include 0, 1 and a support radius. In `VanishesBeyond`, an out-of-range breakpoint is the support radius, so the support guard becomes true and forces the corresponding tail coefficients to vanish. In the scaled-jet conversion, the default scale is 1 and the default bubble normaliser is 0. A universal zero-fill rule changes these objects. [Source: default inventory in decoder_index.json; Lean's documented `List.getD` semantics, sources.md.]
 
@@ -144,14 +152,16 @@ The final group collects the certificate clauses, the numerical constants, the p
 **Merge repeated channels before using orthogonality.** `AzimuthalBounded` requires injective triples of component, temporal frequency and azimuthal order. Two identical amplitudes in one channel combine before squaring. For angular order \(n_p\), the bound uses \((|n_p|+1/2)^{-2}\); the circular components \(R_1+iR_2,R_1-iR_2,R_3\) have weights \(1/2,1/2,1\), and time has period one. Keeping duplicate rows in a sum of squares can undercount the norm. [Source: lines 3576–3585; p.66 and (B.50).]
 
 The declaration-specific cautions also cover strict versus non-strict inequalities, zero-slack branches, actual versus weak Hessians, inherited data, all-natural-index conditions, frame invertibility, offset conventions and the full exterior. These cautions identify what a checker must preserve. They are not accusations about an unavailable implementation and are not replacements for the complete predicate.
-<!-- /passage:sec-4-five-decoder-decisions-to-make-explicit -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. How the annotations were checked
 
-<!-- passage:sec-5-how-the-annotations-were-checked -->
+<!-- passage:sec-5 -->
 
 A namespace-and-section scanner independently recovered the 790 explicit commands and their direct field spans. Each non-theorem command was then compared with its implementation occurrence using the locations established in the earlier trust audit: all 787 command texts agree, including local `open ... in` prefixes. The three theorem signatures also agree with their proof-bearing wrappers in `Solution.lean`. This comparison does not establish imported-environment or elaborated-expression equivalence.
 
 The final validation checks exact name coverage, source positions, field coverage, line-tie containment, title lengths, group membership, pinned links, unique passage quotations, note references and statement comparisons. Paper-reference presence is checked separately from the judgement that a reference is mathematically appropriate. Printed pp.52, 58, 62 and 67 were also inspected visually to resolve prime marks, gradient blocks, complex-to-real tree conventions and potential formulas.
-<!-- /passage:sec-5-how-the-annotations-were-checked -->
+<!-- /passage:sec-5 -->
 

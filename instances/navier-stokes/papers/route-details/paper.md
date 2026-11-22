@@ -1013,6 +1013,8 @@ The cylindrical estimates live in shared FracCell files that are reached by the 
 
 <!-- passage:sec-certcell-foundations-from-weak-fields-to-finite-budgets -->
 
+<a id="1"></a>
+
 ### 1. From real fields to harmonic data
 
 The admissible harmonic lattice is an arithmetic restriction on the entire perturbation. For azimuthal order $m\geq1$, the label map is injective, respects reflection and negation, and has image exactly the integer pairs $(\nu,k)$ with $m\mid k$ and $\nu+k/m$ even. Combining that arithmetic with the mode exclusion interface makes every off-lattice velocity, gradient, and second derivative coefficient vanish almost everywhere in space-time. The support conclusion therefore applies to the derivative data used by the cell calculus, as well as to the velocity.
@@ -1031,6 +1033,8 @@ The scalar mode interface transports a weak spatial gradient into a weak derivat
 
 Compact support of the given shape is controlled by the compactified chart. Valid shape parameters, compact time-field data, and the edge-break condition force the assembled physical field to vanish whenever the spatial radius exceeds $\text{chartLength}\,t_b/(1-t_b)$. The proof shows that every finite key contribution is zero beyond that edge and then sums the contributions. The radius bound concerns this explicitly assembled field; it is not a general support theorem for arbitrary perturbations.
 
+<a id="2"></a>
+
 ### 2. Traces without pointwise representatives
 
 The upper and lower plane traces are integral functionals of a function and its weak height derivative. Reflection exchanges them, with the derivative changing sign. If the pair satisfies the weak derivative relation on a larger interval, the upper and lower traces agree, and the upper trace is independent of the positive height used in its integral formula. The source proves matching with smooth approximations to a tent test and dominated convergence; height independence is proved through a weak primitive representative. These results justify a common plane trace without assuming an arbitrary representative has a prescribed point value.
@@ -1045,6 +1049,8 @@ At the reflection plane, velocity strip and corner data inherit the component si
 
 Harmonic side data agree exactly with the segment moment formulas used by the cell layout. Velocity data use the velocity profile together with its radial and height derivatives. Gradient data select the radial or height derivative according to the segment orientation and use the corresponding second derivative profiles. The harmonic layout, periodic field structure, pressure interface, and parity condition are explicit inputs. This correspondence is what lets finite side-data coordinates represent weak field moments without requiring pointwise boundary samples.
 
+<a id="3"></a>
+
 ### 3. Turning plane traces into quantitative credit
 
 A patch trace obeys a weighted energy estimate on an annular meridian rectangle away from the axis. The squared trace norm is bounded by the product of the reflected velocity energy weighted by a positive charge $b$ and a test-gradient energy weighted by $1/b$, both with cylindrical radial measure. The test is Lipschitz, vanishes on the two radial sides and top, and the charge has positive lower and finite upper bounds. Its gradient energy includes the azimuthal frequency term. Reflection and weak-height-trace interfaces supply the integration identity before the Cauchy-type bound is applied.
@@ -1052,6 +1058,8 @@ A patch trace obeys a weighted energy estimate on an annular meridian rectangle 
 The inverse-Gram step converts all scalar testing inequalities into one vector credit. If a positive definite real matrix $G$ bounds $|c^*t|^2$ by $A\,c^*Gc$ for every complex coefficient vector, with $A\geq0$, then the inverse quadratic form of $t$ is at most $A$. Applied to finite combinations of patch tests, this turns the trace energy estimate into an inverse-Gram bound on their collected traces. The matrix is required to dominate the test-gradient energy for every complex combination, not merely for each test separately.
 
 A valid credit patch packages those tests, their trace-data map, a positive definite test matrix, and a credit matrix dominated by its inverse form. The bridge proves that the credit quadratic form evaluated on the actual field data is bounded by the charge-weighted reflected velocity energy on the patch region. The proof first identifies the matrix trace-data vector with the analytical patch traces, then applies the inverse-Gram estimate. Validity of the supplied patch data and the perturbation's reflection symmetry remain hypotheses.
+
+<a id="4"></a>
 
 ### 4. Shared keys and finite row compatibility
 
@@ -1069,6 +1077,8 @@ Row matching is proved by row kind with an explicit induction premise. A row may
 
 Once every relevant row agrees with the actual periodic field data, the row identity transfers to the true state of an admissible tuple. The provider substitutes the chosen recovered pressure into the field-level statement, using its periodicity and reflection properties. The conclusion is equality for every row whose reason is not unused. Pressure recovery and chosen-pressure symmetry are therefore part of the bridge from field equations to matrix state coordinates, rather than consequences of an arbitrary row matrix.
 
+<a id="5"></a>
+
 ### 5. Finiteness and allocation before inequalities
 
 Weak admissibility is assembled from two explicit collections of clauses. The weight collection supplies positivity, regularity, decay, axisymmetry, and the auxiliary convolution and share conditions. The remaining collection supplies period and weight bounds, harmonic expansion and amplitude bounds, one-sided frame-frequency controls, global share bounds, and the comparison with the convolution allowance. The provider fills the corresponding weak-admissibility record field by field. It combines established obligations; it does not infer those bounds from the existence of numerical arrays.
@@ -1085,6 +1095,8 @@ Absorption loss has two exact decompositions. The other-profile absorption equal
 
 The sharp-bound regularity package justifies the infinite harmonic operations locally. It gives almost everywhere summability of the squared other-profile norms and of the charge and stretching terms; the summed charge and stretching terms are integrable. It identifies the integrals of those two sums with the named charge amount and true stretching pairing, and supplies integrability of the resolved leaf, box, and absorption cores. These conclusions are conditional on the regularity, potential, and low-tail interfaces and are localized to each cell rectangle.
 
+<a id="6"></a>
+
 ### 6. Paying for the potential interactions
 
 The long harmonic model estimate separates frequency bands on the time-angle torus. It assumes integrable matrix coefficients, operator bounds on the symmetric stretching matrix and the gradient matrix, and vanishing low Fourier coefficients of the model matrix through the specified cutoff. The conclusion bounds the resolved self-pairing plus twice the resolved-tail pairing from below by the negative of the summed quadratic charges. The charge weights distinguish the low band from its complement through the chosen positive splitting parameter. This is a finite harmonic matrix estimate with torus facts as inputs, not the entire cell coercivity statement.
@@ -1096,6 +1108,8 @@ The charge stage compares the available charge surplus with a specific sum of de
 Potential assembly combines the previously separated expansion, leaf, sharp, model, cross-tail, group, charge, high-tail, resolved-error, and split identities. The resulting inequality controls the retained potential quadratic form, the band quadratic and linear terms, leakage, allowances, credits, and slack, while subtracting the explicit resolved tail costs. Its right-hand side is resolved energy plus off-charge contribution plus stretching, minus the energy budget and tail credit. The assembly theorem is conditional on those component stages; its value is a correctly signed aggregate inequality, not a replacement for checking the component hypotheses.
 
 The final tail stage uses a top-block estimate that bounds each velocity tail square by a finite quadratic form plus a strain tail square divided by the velocity-tail gain. Combined with the tail-absorption and gain interfaces, it bounds the negative top quadratic form by tail credit minus the total strain, velocity, and curl costs. Positivity and admissibility of the gains belong to the tail conditions. This is the precise point at which the remaining tail costs can be absorbed into the assembled cell inequality.
+
+<a id="7"></a>
 
 ### 7. The forcing row budget
 

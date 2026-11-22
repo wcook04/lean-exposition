@@ -3,7 +3,7 @@
  "stage": "cell-fidelity",
  "state": "draft",
  "path": "papers/cell-fidelity.md",
- "content_sha256": "0fa496f351bbe741326c6ca8a3b7c97aa77106765b575ab05d049f2f24a6bd42",
+ "content_sha256": "9a05072d2923da4e4c50ed178df927345f1ac425495f25cc1638d8b7a2b51ef9",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -355,7 +355,7 @@
   },
   {
    "anchor": "sec-details-that-resolve-earlier-uncertainties",
-   "text_sha256": "b6545b9e612746aba39d733dfafd367e122595ba925d3e20dcaaa49f55ab27cc",
+   "text_sha256": "79b1d5a265f3abecf9d66f07106c327c4e4684c44563fa5e2c7029bae15f074e",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

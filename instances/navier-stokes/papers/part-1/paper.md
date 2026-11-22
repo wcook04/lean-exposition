@@ -101,9 +101,11 @@ The table names the objects used in this account. A parent declaration followed 
 The symbols $C$, $C_1$, $C_2$ and their variants denote positive constants whose dependence is stated at use; their value may increase after an inequality. Constants in large-torus comparisons are independent of $L$ until $L$ is chosen. The notation $a\lesssim b$ abbreviates $a\le Cb$ with those dependencies. Vector, matrix and multilinear norms are Euclidean or the corresponding operator norms; changing between fixed-dimensional equivalent norms changes only $C$. All whole-space integrals use Lebesgue measure, and all vector-valued time integrals are Bochner integrals. Test fields are real, smooth, compactly supported and divergence-free unless another test class is specified.
 <!-- /passage:sec-notation -->
 
+<a id="1"></a>
+
 ## 1. The conditional theorem and its proof
 
-<!-- passage:sec-1-the-conditional-theorem-and-its-proof -->
+<!-- passage:sec-1 -->
 
 <a id="1.1"></a>
 
@@ -227,11 +229,13 @@ p^{(\nu)}(t,x)=\nu^2p(\nu t,x)
 $$
 
 carries a viscosity-one solution to viscosity $\nu$. Sections 7 and 9 give the precise exclusions and the pressure normalisation needed for them.
-<!-- /passage:sec-1-the-conditional-theorem-and-its-proof -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. The analytic space and the mild equation
 
-<!-- passage:sec-2-the-analytic-space-and-the-mild-equation -->
+<!-- passage:sec-2 -->
 
 The construction needs a norm in which the profile is finite, smooth compact data are dense, and the free evolution contracts after a similarity period. All three requirements are met by
 
@@ -477,11 +481,13 @@ whenever $f$ has mean zero. Consequently the periodic bilinear map $K_L$ satisfi
 The periodic Fourier construction provides the heat and bilinear operations used by the torus proof.
 
 Lemma A.4 proves the uniform bound. On the unit torus, $\|u\|_{X_1}\le\|u\|_{H^1}\le C\|u\|_{X_1}$. For other periods the first-order homogeneous norm is the scale-compatible one. Under $D_\mu$, the period becomes $L/\sqrt\mu$ and the gradient norm retains the factor $\mu^{1/4}$.
-<!-- /passage:sec-2-the-analytic-space-and-the-mild-equation -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. The profile in physical variables
 
-<!-- passage:sec-3-the-profile-in-physical-variables -->
+<!-- passage:sec-3 -->
 
 ### Proposition 3.1. A profile supplies a recurrent mild solution
 
@@ -567,11 +573,13 @@ $$
 The factor $(1-t)^{-1/4}$ comes from the dilation norm, while positivity of its lower coefficient comes from the recurrent orbit.
 
 The pointwise profile bound alone only supplies upper estimates. The lower estimate uses the equation through uniqueness, as the preceding proof makes explicit.
-<!-- /passage:sec-3-the-profile-in-physical-variables -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. The monodromy and the exceptional directions
 
-<!-- passage:sec-4-the-monodromy-and-the-exceptional-directions -->
+<!-- passage:sec-4 -->
 
 Fix the profile from Section 1, put $\lambda=e^{-S}$ and $t_1=1-\lambda$, and write $\rho=\rho_R$ for its action on vector fields. We use $G(t)=e^{t\Delta}$ and the bilinear map $K$ from Section 2. All operator norms in this section are taken on the indicated Banach spaces. The norm on $X$ is $\|\nabla u\|_2$.
 
@@ -788,11 +796,13 @@ The stable restricted spectrum is compact and contained in $\{|z|<\Theta\}$, so 
 The formal real dichotomy provides two radii and a finite-rank projection with geometric bounds. In `Breakdown.Spectral.exists_dichotomy` the inverse estimate is written as a lower bound for forward powers on the projection's range, together with surjectivity there. Injectivity follows by taking one forward power; applying the lower bound to the inverse gives (4.12). The exported declaration is `Breakdown.dichotomyHolds`.
 
 The exceptional space contains every mode outside the chosen circle. This includes any neutral modes and any decaying modes whose decay is slower than the chosen rate. The argument computes neither the dimension of this space nor its eigenvalues. Repeated eigenvalues and Jordan blocks are allowed, since the estimates use a strict gap between the chosen radii.
-<!-- /passage:sec-4-the-monodromy-and-the-exceptional-directions -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. A right inverse with compact initial corrections
 
-<!-- passage:sec-5-a-right-inverse-with-compact-initial-corrections -->
+<!-- passage:sec-5 -->
 
 Set
 
@@ -1049,11 +1059,13 @@ $$
 Since $P_uy_0=P_uJe=e$, the same forward and backward estimates used in Proposition 5.3 show that $y$ is bounded, with a bound linear in $\|g\|_\infty$. The remaining $k-1$ values inside each block are controlled by the finite recurrence (5.14). This proves boundedness of $x$, and then of $z$. All the formulas are linear in $g$ and all the displayed estimates are uniform, giving a bounded linear operator $\mathcal R_d$. $\square$
 
 The formal periodic inverse solves precisely the normalized sequence system (5.13), allowing general Banach spaces for both the endpoint and the interval variables. This is `Breakdown.periodicInverse`, with proposition `Breakdown.PeriodicInverseStatement`. The theorem `Breakdown.stepData` chooses the subdivision, the projection, the compact section and this right inverse from the profile and the dichotomy.
-<!-- /passage:sec-5-a-right-inverse-with-compact-initial-corrections -->
+<!-- /passage:sec-5 -->
+
+<a id="6"></a>
 
 ## 6. The nonlinear correction on whole space
 
-<!-- passage:sec-6-the-nonlinear-correction-on-whole-space -->
+<!-- passage:sec-6 -->
 
 The linear inverse is now fixed. The nonlinear step has two useful forms. The continuous form controls an approximate solution and will be used on the torus. The bounded-sequence form is the one assembled by the whole-space Lean proof.
 
@@ -1393,11 +1405,13 @@ $$
 The rescaled estimate is (6.11), and the mild equation follows from the gluing argument there. All uses of the physical space in the construction were through the stated framework properties, so the proof applies to the abstract Hilbert space as claimed. $\square$
 
 The formal transfer statement retains the dense-data quantifier and the rescaled error estimate. It is `Breakdown.TransferHolds`; `Breakdown.transferHolds_of_dichotomy` proves it from the dichotomy, and `Breakdown.dichotomyHolds` discharges that input. This theorem still requires a recurrent nonzero orbit. It supplies no concrete profile or numerical certificate.
-<!-- /passage:sec-6-the-nonlinear-correction-on-whole-space -->
+<!-- /passage:sec-6 -->
+
+<a id="7"></a>
 
 ## 7. Smoothness, energy and the whole-space conclusion
 
-<!-- passage:sec-7-smoothness-energy-and-the-whole-space-conclusion -->
+<!-- passage:sec-7 -->
 
 ### Proposition 7.1. A compact-data mild solution is a smooth finite-energy solution
 
@@ -1511,15 +1525,19 @@ would be a global unit-viscosity competitor for $u_0$ with bounded energy. This 
 The formal whole-space endpoint excludes global smooth bounded-energy solutions at every positive viscosity, conditional on a profile.
 
 Its statement is an implication. The existence of the concrete profile still belongs to the separate certificate part of the project. In this rewrite the extra written bounds in its premise are supplied analytically by Lemmas A.5 and A.6, with no claim of a new compiled wrapper.
-<!-- /passage:sec-7-smoothness-energy-and-the-whole-space-conclusion -->
+<!-- /passage:sec-7 -->
+
+<a id="8"></a>
 
 ## 8. The construction on a large torus
 
-<!-- passage:sec-8-the-construction-on-a-large-torus -->
+<!-- passage:sec-8 -->
 
 We keep the whole-space objects already constructed: the profile field $u^*=u_1^*$, its positive lower norm constant $c_*$, the exponent $0<\kappa<1/4$, the finite-dimensional space $E$ of smooth compactly supported solenoidal corrections, and the bounded right inverse $\mathcal R$ of Section 5. The parameter $L\ge1$ will be the spatial period. Every implicit constant in this section is independent of $L$ and of $0\le t<1$; it may depend on the fixed profile, $\kappa$, $E$ and the cutoff.
 
 The plan is to put a compact part of $u^*$ into one periodic cell, measure its failure to solve the equation, and remove that failure. The inverse is transferred through a ball on which the coefficient is supported. This avoids requiring any recurrence of the periodic approximate field.
+
+<a id="8.1"></a>
 
 ### 8.1. Periodic fields and the norm used by Lean
 
@@ -1588,6 +1606,8 @@ $$
 $$
 
 The extra $L^2$ term tends to zero as $\mu\downarrow0$. This formula explains how the formal unit-torus construction approaches the homogeneous whole-space norm.
+
+<a id="8.2"></a>
 
 ### 8.2. Comparing heat flows with pressure included
 
@@ -1727,6 +1747,8 @@ This is the paper's (6.3), p. 25.
 
 The formal heat-comparison declarations express a related limit in the unit-torus scaling parameter $\mu$. Their statements allow an arbitrarily small error after choosing $\mu$ sufficiently small; the source comparison keeps time away from zero. They do not state the explicit powers $L^{-7/2}$ and $L^{-5/2}$ just proved. The formal sequence argument deals separately with its short-time part.
 
+<a id="8.3"></a>
+
 ### 8.3. The periodic approximate solution and its residual
 
 Let $\bar u(t)$ be the solenoidal cutoff from Section 6 with radius $L/8$, and set
@@ -1809,6 +1831,8 @@ $$
 The support volume is at most $CL^3$. Cauchy–Schwarz and the cutoff $L^2$ estimate yield $\|\bar u(0)\|_1\le CL^2$, while $\|\bar u(s)\|_2^2\le CL$. The two errors are therefore bounded by $CL^{-1/2}$ and $CL^{-5/2}$, respectively. Since the weight $(1-t)^{1/4-\kappa}$ is at most one, the asserted weighted bound follows. Continuity and membership in $X_L$ follow from the periodic heat and bilinear estimates. At $t=0$ the residual vanishes.
 
 The formal residual estimate is written on rescaled time pieces: its size is bounded by $K T^{1/4}\theta^n$. The relation $T=L^{-2}$ explains the same small parameter, $T^{1/4}=L^{-1/2}$, while the formal construction also carries a pressure cutoff and a piecewise forcing identity.
+
+<a id="8.4"></a>
 
 ### 8.4. Restricting the interaction to one ball
 
@@ -1904,6 +1928,8 @@ $$
 The time weight is at most one, so this proves the weighted comparison.
 
 In the formal proof, restriction to this local region is represented by shell data. The interaction factors through restriction, and the whole-space and periodic factors have separate bounds. This is the role of the factorization and operator-norm declarations, rather than an assertion that the two ambient function spaces coincide.
+
+<a id="8.5"></a>
 
 ### 8.5. Building an exact right inverse on the torus
 
@@ -2070,6 +2096,8 @@ $$
 Using $\|z(t)\|\le(1-t)^{\kappa-1/4}\|z\|_\kappa
 \le(1-t)^{-1/4}\|z\|_\kappa$ and Proposition 8.5 proves the lower bound. The upper bound follows from the same triangle inequality. These three smallness choices serve separate purposes: inverse convergence, nonlinear contraction, and preservation of the positive lower norm.
 
+<a id="8.6"></a>
+
 ### 8.6. The inverse argument in the formal sequence spaces
 
 The continuous proof above displays the powers of $L$ used by the revised paper. The formal proof organizes time into geometric pieces on a fixed unit torus. The following two operator statements make its inverse transfer explicit.
@@ -2205,11 +2233,15 @@ u_n=u_n^a+\theta^n z_n,\qquad \sup_n\|z_n\|<\infty.
 $$
 
 Their endpoint conditions are part of the contraction conclusion. The gluing theorem uses those equalities to join the pieces into one mild solution; no jump in time is left at a junction. This is the formal route corresponding to the continuous correction in Proposition 8.8.
-<!-- /passage:sec-8-the-construction-on-a-large-torus -->
+<!-- /passage:sec-8 -->
+
+<a id="9"></a>
 
 ## 9. The unit torus and the theorem
 
-<!-- passage:sec-9-the-unit-torus-and-the-theorem -->
+<!-- passage:sec-9 -->
+
+<a id="9.1"></a>
 
 ### 9.1. Scaling the constructed solution
 
@@ -2308,6 +2340,8 @@ $$
 
 Every fixed ball eventually lies in this expanding region. Hölder then gives convergence in $H^1$ on each fixed ball, with a ball-dependent constant. This is an explicit consequence of the estimates just proved.
 
+<a id="9.2"></a>
+
 ### 9.2. Smooth velocity and periodic pressure before blow-up
 
 **Lemma 9.2 (upgrading the periodic mild solution).** The solution in Proposition 9.1 has a smooth periodic velocity and a smooth periodic pressure on $[0,T)\times\mathbb T^3$. It obeys the energy identity on every compact time interval before $T$. This is the periodic part of Lemma 2.3 and Appendix A.2, pp. 11 and 49.
@@ -2326,6 +2360,8 @@ $$
 The two-sided $H^1$ rate then rules out smooth continuation through $T$: smoothness on a compact time interval containing $T$ and a compact spatial torus would give a bounded $H^1$ norm.
 
 The formal endpoint uses a periodic Fourier mild trajectory whose norm is unbounded. The present lemma supplies the paper's smooth physical representative through the stated local theory; the top-level formal endpoint itself does not include that entire physical conclusion.
+
+<a id="9.3"></a>
 
 ### 9.3. Arbitrary periodic-velocity competitors and their pressure
 
@@ -2383,6 +2419,8 @@ with datum $u_0$. Substitution into the equation verifies the scaling term by te
 
 This is a conditional conclusion: the initial profile remains an assumption. The formal theorem obtains it from the formal profile premise and the complete torus construction.
 
+<a id="9.4"></a>
+
 ### 9.4. The final norm contradiction in the formal pieces
 
 The final norm argument can be read without the representation details.
@@ -2429,11 +2467,13 @@ $$
 This is an elementary deduction from the retained piece bounds and the gluing identity. The intermediate periodic mild-solution statement records unboundedness, and the final theorem records nonexistence of global smooth periodic-velocity solutions; neither states this two-sided formula or the local physical profile estimate of Proposition 9.1.
 
 Together with the whole-space construction in Section 7, Proposition 9.1 and Lemma 9.2 complete the analytic proof of Theorem A. Proposition 9.4 explains the broader periodic nonexistence formulation exported by Lean. The additional work needed for an unconditional blow-up result is the separate construction of a profile.
-<!-- /passage:sec-9-the-unit-torus-and-the-theorem -->
+<!-- /passage:sec-9 -->
+
+<a id="appendix-a"></a>
 
 ## Appendix A. The analytic results used above
 
-<!-- passage:sec-appendix-a-the-analytic-results-used-above -->
+<!-- passage:sec-appendix-a -->
 
 This appendix supplies the proofs deferred from §2 and makes explicit the two bounds added by the formal profile premise. Its numbered lemmas are ours. The paper's Appendix A has two subsections, A.1 and A.2; all paper correspondences below use that numbering.
 
@@ -2669,7 +2709,7 @@ This is an entire harmonic vector field with $|H_\psi(y)|\le C_\psi(1+|y|)^{-1}$
 The formal profile premise contains the pressure-gradient bound, while the preceding harmonic-remainder argument supplies its analytic justification.
 
 The elimination of the harmonic remainder is essential. Solving the pressure Poisson equation alone leaves a harmonic summand and does not justify identifying the prescribed $q$ with the normalised pressure.
-<!-- /passage:sec-appendix-a-the-analytic-results-used-above -->
+<!-- /passage:sec-appendix-a -->
 
 ## References
 
