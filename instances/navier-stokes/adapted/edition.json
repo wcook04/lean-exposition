@@ -1,0 +1,58 @@
+{
+ "schema": "adapted-edition/1",
+ "published": true,
+ "document": {
+  "id": "adapted",
+  "slot": "adapted",
+  "slug": "adapted",
+  "kind": "companion",
+  "adapted": true,
+  "of": "paper",
+  "title": "Finite-time blow-up for the Navier–Stokes equations",
+  "noun": "adapted edition",
+  "group": "edition",
+  "group_title": "Adapted edition",
+  "order": 0,
+  "credit": "Adapted from the paper by Alpöge and Buckmaster. Prepared by Will Cook with AI assistance.",
+  "published": true,
+  "pdf": {
+   "file": "paper.pdf",
+   "name": "adapted-edition-marked.pdf",
+   "label": "PDF with changes marked",
+   "sha256": "fb5194c627bf8e347abf7d9ea8948f744543ce729e4d61d28bb677f90292cd17",
+   "bytes": 1188505
+  },
+  "release": {
+   "version": 2,
+   "date": "2026-11-22",
+   "notes": [
+    "The introduction follows the whole-space and periodic constructions from the similarity profile, the finite-dimensional correction and the cutoff to the two gradient estimates.",
+    "Section 7 groups the certificate inequalities by their use in the proof and explains how the parameter choice cancels the added force. Appendix C distinguishes the computed profile, the approximate family and the exact profile.",
+    "The Lean comparison records the assumptions of the checked results and identifies the quantitative torus statement as open in the linked formalization."
+   ]
+  },
+  "reading_pdf": {
+   "file": "reading.pdf",
+   "name": "navier-stokes-adapted-v2.pdf",
+   "label": "Reading copy",
+   "bytes": 1124837,
+   "sha256": "9698fa069e95106844cf66f761889c4c2bce813f31565c025895a1125d7c762a"
+  },
+  "result_comparison": {
+   "reading": {
+    "file": "result-comparison.md",
+    "name": "result-comparison.md",
+    "label": "Result-by-result comparison",
+    "bytes": 56337,
+    "sha256": "0c865b9e398dc324cea5790c1c643a4743b4b37cf7d652b33297dd03e544483a"
+   },
+   "data": {
+    "file": "result-comparison.json",
+    "name": "result-comparison.json",
+    "label": "Comparison data",
+    "bytes": 109412,
+    "sha256": "1fe1327a9c6df8f45960f57002a59ad06f8956dce8923f00ff6e3101b7f81dd4"
+   }
+  }
+ }
+}
