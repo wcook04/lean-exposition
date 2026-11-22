@@ -81,7 +81,7 @@ const laterChecks = [];
       if (!phrases[host]) throw new Error(`ours.json: card ${row.card} names no phrase of the paper`);
       (byPhrase[host] ??= []).push({ lean: row.lean, fidelity: row.fidelity, note: row.note });
     }
-    writeFileSync(target, JSON.stringify({ declarations: ours.declarations, byPhrase }));
+    writeFileSync(target, JSON.stringify({ declarations: ours.declarations, byPhrase, openTargets: ours.open_targets ?? {} }));
     // Later checks readers may ask about (ours.checks, keyed by the Lean constant's last name): read
     // before the first render with the addresses, so a passage that mentions one shows it in place.
     for (const [constant, row] of Object.entries(ours.checks ?? {})) laterChecks.push({ constant, ...row });
