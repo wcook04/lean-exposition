@@ -12,6 +12,7 @@
 // nodes after layout, so a title of any length, or one with typeset mathematics, is never cut.
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 import { graphWheel } from "./graphWheel";
 import "./focus-graph.css";
 
@@ -655,7 +656,8 @@ export function FocusGraph(props: FocusGraphProps) {
   /** Close the list of a large group and give the keyboard back to the group's own button, without moving the drawing. */
   const closeList = () => {
     const was = listed;
-    setListed(null);
+    // The opening button can receive focus once the list no longer covers the drawing.
+    flushSync(() => setListed(null));
     if (was) headOf(was.side, was.path)?.focus({ preventScroll: true });
   };
   // A large group is listed beside the drawing: the drawing, its groups and the camera stay exactly as they are.
@@ -801,6 +803,7 @@ export function FocusGraph(props: FocusGraphProps) {
     return null;
   };
   const listGroup = listed ? find(listed.side === "users" ? leftItems : rightItems, listed.path) : null;
+  const listCoversGraph = !!listGroup && size.w < 900;
   const listKey = listed ? `${listed.side}:${listed.path}` : "";
   const listState = lists[listKey] ?? { q: "", page: 0 };
   const setList = (next: Partial<{ q: string; page: number }>) => setLists((was) => ({ ...was, [listKey]: { ...(was[listKey] ?? { q: "", page: 0 }), ...next } }));
@@ -851,6 +854,7 @@ export function FocusGraph(props: FocusGraphProps) {
       <div className="fg__stage" data-list-side={listGroup ? listed!.side : undefined}>
       <div
         className="fg__scroll"
+        inert={listCoversGraph}
         ref={scroller}
         tabIndex={0}
         role="group"
@@ -900,7 +904,7 @@ export function FocusGraph(props: FocusGraphProps) {
             </>}
         </div>
       </div>
-      <div className="fg__tools" role="group" aria-label="Move the graph">
+      <div className="fg__tools" inert={listCoversGraph} role="group" aria-label="Move the graph">
         <button type="button" onClick={() => zoomBy(1 / 1.25)} aria-label="Zoom out" title="Zoom out (−)">−</button>
         <button type="button" onClick={() => zoomBy(1.25)} aria-label="Zoom in" title="Zoom in (+)">+</button>
         <button type="button" onClick={fit} title="Fit the whole graph in view (0)">Fit</button>
@@ -908,6 +912,7 @@ export function FocusGraph(props: FocusGraphProps) {
       {overflow && drawn && (
         <div
           className="fg__mini"
+          inert={listCoversGraph}
           style={{ width: drawn.w * miniX, height: drawn.h * mini }}
           role="img"
           aria-label="Overview of the whole drawing; drag to move the view"
@@ -923,7 +928,7 @@ export function FocusGraph(props: FocusGraphProps) {
       {listGroup && (
         <section
           // Beside the drawing only where the pane is wide enough to leave the subject in view; else over all of it.
-          className={`fg__list fg__list--${listed!.side}${narrow || size.w < 900 ? " fg__list--narrow" : ""}`}
+          className={`fg__list fg__list--${listed!.side}${listCoversGraph ? " fg__list--narrow" : ""}`}
           role="region"
           aria-label={`Members of ${listGroup.name}`}
           data-group={listGroup.key}
