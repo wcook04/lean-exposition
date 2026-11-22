@@ -361,10 +361,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const parts = new Set<number>();
     for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
     if (start < 4) [0, 1, 2].forEach((i) => i < doc.parts.length && parts.add(i));
-    // The first screen's HTML shows the paper's opening typeset; while the window is still there, the
-    // parts it shows are typeset from the start too, so the text under the reader is not first set as
-    // TeX source and then reflowed when its formulas arrive.
-    if (typeof window !== "undefined" && window.scrollY < 8) for (let i = 0; i < Math.min(6, doc.parts.length); i++) parts.add(i);
     return { parts: [...parts], saved: savedPart !== null ? saved : null };
     // Computed once per mounted paper.
     // eslint-disable-next-line react-hooks/exhaustive-deps
