@@ -11,6 +11,9 @@ names; the Open PDF link opens the PDF in a new tab and the file is a PDF; displ
 inside their columns and never scroll; the front matter carries the AI notice (--notice). Then at 800, 1000, 390, 360 and
 320 px: the header's controls do not overlap and Search and Menu stay inside the window. A selected
 result and a selected phrase, in both schemes, keep their words' contrast and a quiet amber mark.
+A phrase at rest has a 1px underline, and a heavier one when hovered, focused or selected, in both
+schemes. The statement counter and the next/previous controls (buttons, j, k) start from a selected
+phrase, and from the reading line when nothing is selected.
 Needs Playwright for Python with Chromium. Exits 1 if any check fails.
 """
 from __future__ import annotations
@@ -123,6 +126,239 @@ def selection_checks(browser, base, args, check) -> None:
             print(f"{tag}: lowest contrast {low and round(low, 2)}:1, wash {max((w['wash'] for w in words), default=0):.3f}, "
                   f"{len(words)} runs, {len(displays)} displays", file=sys.stderr)
         context.close()
+
+
+# Where the reader is, as the page shows it: the strip's counter, the statement each lit kind of
+# mark names (a statement's first mark carries "…, statement N of M" while it is the keys' stop),
+# the address, the pane's view and the scroll position.
+STEP_STATE = r"""() => {
+  const num = (el) => { const m = el && (el.getAttribute('aria-label') || '').match(/(\d+) of (\d+)/); return m ? Number(m[1]) : null; };
+  const counter = document.querySelector('.reader-strip__steps .num')?.textContent ?? '';
+  const m = counter.match(/(\d+) of (\d+)/);
+  const graph = [...document.querySelectorAll('button[aria-pressed]')].find(b => b.textContent.trim() === 'Graph');
+  return {
+    counter: m ? Number(m[1]) : null, total: m ? Number(m[2]) : null, text: counter,
+    pinned: num(document.querySelector('.paper .tie[data-pin][aria-label]')),
+    lit: num(document.querySelector('.paper .tie[data-on][aria-label]')),
+    anyPin: !!document.querySelector('.paper .tie[data-pin]'),
+    url: location.href, graph: graph ? graph.getAttribute('aria-pressed') === 'true' : null, y: Math.round(scrollY),
+  };
+}"""
+
+# A point on a mark's own words (not a Lean-name button or link inside it), on its first line.
+WORDS_POINT = """e => {
+    for (const r of e.getClientRects()) for (let x = r.left + 3; x < r.right - 2; x += 5) {
+        const y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
+        if (hit && e.contains(hit) && !hit.closest('button, a')) return {x, y};
+    }
+    return null;
+}"""
+
+
+def step_checks(browser, base, check) -> None:
+    """The counter and the next/previous controls (buttons, j and k) follow a selected phrase, not the
+    reading line, and both agree with the phrase the page lights at every step. Auto: nothing is
+    selected and the reading line chooses the start. Manual: the second tied statement that can be
+    clicked is selected and the page then scrolled away from it by hand, so that the reading line
+    names another statement. Stepping lets go of the selection, keeps the pane's Graph view and the
+    address of the statement stepped to, and leaves the page still once it has landed."""
+    for mode in ("auto", "manual"):
+        tag = f"steps {mode}"
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        try:
+            page.goto(base)
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_selector(".reader-strip__steps .num", timeout=30000)
+            page.wait_for_timeout(2000)
+            state = lambda: page.evaluate(STEP_STATE)
+            total = state()["total"]
+            if not total or total < 3:
+                report_skip = f"{total} tied statements: nothing to step between"
+                check(f"{tag} counter and selection agree", True, report_skip)
+                continue
+
+            def wait_counter(n):
+                try:
+                    page.wait_for_function("(n) => { const m = (document.querySelector('.reader-strip__steps .num')?.textContent ?? '').match(/(\\d+) of/); return m && Number(m[1]) === n; }", arg=n, timeout=8000)
+                except Exception:
+                    pass
+                page.wait_for_timeout(1500)
+                return state()
+
+            def landed(name, want, before_view):
+                got = wait_counter(want)
+                page.wait_for_timeout(1500)
+                still = state()
+                lit = page.evaluate("""() => { const e = document.querySelector('.paper .tie[data-on][aria-label]'); if (!e) return null; const r = e.getBoundingClientRect(); return [Math.round(r.top), Math.round(r.bottom)]; }""")
+                ok = (got["counter"] == want and got["lit"] == want and not got["anyPin"] and "/@" not in got["url"]
+                      and abs(still["y"] - got["y"]) <= 4 and lit is not None and 0 <= lit[0] and lit[1] <= 900
+                      and (before_view is not True or (got["graph"] is True and "v=graph" in got["url"])))
+                check(f"{tag} {name}", ok, f"want {want}: counter {got['counter']}, lit {got['lit']}, pinned {got['anyPin']}, "
+                      f"graph {got['graph']}, y {got['y']}->{still['y']}, lit at {lit}, {got['url']}")
+                return got
+
+            if mode == "auto":
+                # Scroll by hand into the paper until the reading line follows an interior statement.
+                start = None
+                for _ in range(12):
+                    page.mouse.wheel(0, 600)
+                    got = wait_counter(-1)
+                    if got["counter"] and 1 < got["counter"] < total:
+                        start = got["counter"]
+                        break
+                if start is None:
+                    check(f"{tag} counter and selection agree", False, f"no interior statement reached by scrolling: {state()}")
+                    continue
+                got = state()
+                check(f"{tag} start follows the reading line", got["lit"] == start and not got["anyPin"], f"counter {start}, lit {got['lit']}")
+                for name, act, want in (("next button", lambda: page.get_by_role("button", name="Next tied statement").click(), start + 1),
+                                        ("previous button", lambda: page.get_by_role("button", name="Previous tied statement").click(), start),
+                                        ("j", lambda: page.keyboard.press("j"), start + 1),
+                                        ("k", lambda: page.keyboard.press("k"), start)):
+                    act()
+                    landed(name, want, None)
+                continue
+
+            # Manual: click phrases in reading order until one selects an interior statement.
+            segments = page.eval_on_selector_all(".paper .tie[data-tone][data-t]:not(.math-display)", "els => [...new Set(els.map(e => e.dataset.t))]")
+            start, mark = None, None
+            for segment in segments[:80]:
+                candidate = page.locator(f'.paper .tie[data-tone][data-t="{segment}"]').first
+                candidate.evaluate("e => e.scrollIntoView({block: 'center'})")
+                page.wait_for_timeout(300)
+                point = candidate.evaluate(WORDS_POINT)
+                if not point:
+                    continue
+                page.mouse.click(point["x"], point["y"])
+                try:
+                    page.wait_for_selector(".paper .tie[data-pin][aria-label]", timeout=5000)
+                except Exception:
+                    continue
+                page.wait_for_timeout(800)
+                got = state()
+                if got["pinned"] and 1 < got["pinned"] < total:
+                    start, mark = got["pinned"], candidate
+                    break
+            if start is None:
+                check(f"{tag} counter and selection agree", False, "no interior statement could be selected")
+                continue
+            graph = page.get_by_role("button", name="Graph", exact=True)
+            if graph.count():
+                graph.first.click()
+                page.wait_for_timeout(800)
+            for name, act, want in (("next button", lambda: page.get_by_role("button", name="Next tied statement").click(), start + 1),
+                                    ("previous button", lambda: page.get_by_role("button", name="Previous tied statement").click(), start),
+                                    ("j", lambda: page.keyboard.press("j"), start + 1),
+                                    ("k", lambda: page.keyboard.press("k"), start)):
+                if not state()["anyPin"]:
+                    # Select the statement again before each step, so every step starts from a selection.
+                    cur = state()["lit"]
+                    target = mark if cur == start else page.locator(".paper .tie[data-on][aria-label]").first
+                    target.evaluate("e => e.scrollIntoView({block: 'center'})")
+                    page.wait_for_timeout(300)
+                    point = target.evaluate(WORDS_POINT)
+                    page.mouse.click(point["x"], point["y"])
+                    page.wait_for_selector(".paper .tie[data-pin][aria-label]", timeout=5000)
+                    page.wait_for_timeout(800)
+                selected = state()["pinned"]
+                # Read on by hand, away from the selection: the reading line now names another statement.
+                page.mouse.wheel(0, 1400)
+                page.wait_for_timeout(2000)
+                away = state()
+                check(f"{tag} counter keeps the selection before {name}", away["counter"] == selected and away["pinned"] == selected,
+                      f"selected {selected}, counter {away['counter']} after scrolling to y {away['y']}")
+                view = away["graph"]
+                act()
+                landed(name, want, view)
+        except Exception as error:  # noqa: BLE001 - a check, reported with its cause
+            check(f"{tag} counter and selection agree", False, f"{type(error).__name__}: {error}")
+        finally:
+            context.close()
+
+
+# A phrase's drawn underline: the line's height (background-size), whether a tint lies behind it,
+# and the state it is in.
+UNDERLINE = r"""(e) => {
+  const s = getComputedStyle(e);
+  const ctx = Object.assign(document.createElement('canvas'), { width: 1, height: 1 }).getContext('2d', { willReadFrequently: true });
+  ctx.clearRect(0, 0, 1, 1); ctx.fillStyle = '#000'; ctx.fillStyle = s.backgroundColor; ctx.fillRect(0, 0, 1, 1);
+  return { line: parseFloat(s.backgroundSize.split(' ').pop()) || 0, size: s.backgroundSize, tint: ctx.getImageData(0, 0, 1, 1).data[3] / 255,
+           image: s.backgroundImage, focus: e.matches(':focus-visible'), hover: e.matches(':hover') };
+}"""
+
+
+def underline_checks(browser, base, args, check) -> None:
+    """In both schemes at 1440x900, measured as drawn: a phrase at rest has a 1px underline and no tint;
+    pointed at, keyboard-focused or selected it is heavier (hover and focus 2px over a light tint, a
+    selected phrase 2px in amber, a selected whole statement its margin rule). Inside a selected whole
+    statement the prose phrases keep the 1px resting line."""
+    for scheme in ("dark", "light"):
+        tag = f"underline {scheme}"
+        context = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme=scheme)
+        page = context.new_page()
+        try:
+            page.goto(base)
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(2500)
+            resting = ".paper .tie[data-tone]:not(.math-display):not([data-pin]):not([data-decl]):not([data-point]):not([data-on])"
+            el = page.locator(resting).nth(2)
+            el.evaluate("e => e.scrollIntoView({block: 'center'})")
+            page.mouse.move(2, 450)
+            page.wait_for_timeout(600)
+            rest = el.evaluate(UNDERLINE)
+            check(f"{tag} rest 1px", rest["line"] == 1 and rest["tint"] == 0 and not rest["hover"], str(rest))
+            if args.shots:
+                box = el.bounding_box()
+                if box:
+                    page.screenshot(path=str(args.shots / f"underline-{scheme}-rest.png"),
+                                    clip={"x": max(0, box["x"] - 40), "y": max(0, box["y"] - 24), "width": min(520, box["width"] + 80), "height": box["height"] + 48})
+            point = el.evaluate(WORDS_POINT)
+            page.mouse.move(point["x"], point["y"])
+            page.wait_for_timeout(300)
+            hover = el.evaluate(UNDERLINE)
+            check(f"{tag} hover stronger", hover["hover"] and hover["line"] == 2 and 0 < hover["tint"] <= 0.2, str(hover))
+            page.mouse.move(2, 450)
+            # Keyboard focus: a key first, so that the focus that follows is shown as keyboard focus.
+            page.keyboard.press("Shift")
+            el.evaluate("e => { if (!e.hasAttribute('tabindex')) e.setAttribute('tabindex', '-1'); e.focus({ preventScroll: true }); }")
+            page.wait_for_timeout(300)
+            focus = el.evaluate(UNDERLINE)
+            check(f"{tag} focus stronger", focus["focus"] and focus["line"] == 2 and focus["tint"] > 0, str(focus))
+            el.evaluate("e => e.blur()")
+            # Selected: the phrase the address names.
+            page.goto(base + f"@{args.phrase}")
+            page.wait_for_selector(".paper .tie[data-pin]", timeout=30000)
+            page.mouse.move(2, 450)
+            page.wait_for_timeout(1500)
+            sel = page.evaluate("""(f) => { const fn = eval(f); const els = [...document.querySelectorAll('.paper .tie[data-pin]:not(.math-display)')];
+                return { marks: els.map(fn), block: els.some(e => e.hasAttribute('data-pin-block')), runs: document.querySelectorAll('.part__ticks .tick-run').length }; }""", UNDERLINE)
+            if sel["block"]:
+                ok = sel["runs"] >= 1
+            else:
+                ok = bool(sel["marks"]) and all(m["line"] == 2 for m in sel["marks"])
+            check(f"{tag} selected stronger", ok, f"block {sel['block']}, runs {sel['runs']}, lines {sorted({m['line'] for m in sel['marks']})}")
+            if args.shots:
+                page.screenshot(path=str(args.shots / f"underline-{scheme}-selected.png"))
+            # A selected whole statement (a numbered result): its prose phrases keep the 1px resting line
+            # under the faint wash, and one margin rule marks the selection.
+            if args.result:
+                page.goto(base + f"{args.result}/")
+                page.wait_for_selector(".paper .tie", timeout=60000)
+                page.mouse.move(2, 450)
+                page.wait_for_timeout(2500)
+                block = page.evaluate("""(f) => { const fn = eval(f); const els = [...document.querySelectorAll('.paper .tie[data-pin][data-pin-block]:not(.math-display)')];
+                    return { marks: els.map(fn), runs: document.querySelectorAll('.part__ticks .tick-run').length }; }""", UNDERLINE)
+                if block["marks"]:
+                    check(f"{tag} selected statement keeps 1px lines", block["runs"] >= 1 and all(m["line"] == 1 for m in block["marks"]),
+                          f"runs {block['runs']}, lines {sorted({m['line'] for m in block['marks']})}")
+                else:
+                    report_note = "the result opens with no whole statement selected"
+                    check(f"{tag} selected statement keeps 1px lines", True, report_note)
+        except Exception as error:  # noqa: BLE001
+            check(f"{tag} rest 1px", False, f"{type(error).__name__}: {error}")
+        finally:
+            context.close()
 
 
 def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
@@ -509,6 +745,8 @@ def main() -> int:
             context.close()
         if not args.pdf_only:
             selection_checks(browser, base, args, check)
+            underline_checks(browser, base, args, check)
+            step_checks(browser, base, check)
         # Each companion named opens its own text with its phrases, from its own edition, never the
         # edition error; a phrase address on one also opens that phrase's card.
         for width, height in SIZES:
