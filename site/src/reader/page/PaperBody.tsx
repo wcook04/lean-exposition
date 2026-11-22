@@ -866,6 +866,14 @@ export function markWideMaths(root: HTMLElement): () => void {
   const cues = new Map<HTMLElement, HTMLElement>();
   const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
   let live = true;
+  /** Displays last measured while a KaTeX face was loading: the only ones a font's arrival refits. */
+  const stale = new Set<HTMLElement>();
+  const refitStale = () => {
+    const boxes = [...stale];
+    stale.clear();
+    boxes.forEach(forgetSizes);
+    boxes.forEach((box) => update(box, true));
+  };
   const update = (box: HTMLElement, force = false) => {
     const width = box.clientWidth;
     // Fitting can change a display's height, which the observer reports back, and a height can
@@ -877,6 +885,9 @@ export function markWideMaths(root: HTMLElement): () => void {
     const flipBack = !!seen && seen.before !== null && Math.abs(seen.before - width) <= 1 && performance.now() - seen.at < 1000;
     if (force || (changed && !flipBack)) {
       fitDisplay(box);
+      // Measured while a KaTeX face was still on its way: fitted again once it is in.
+      if (katexLoading()) stale.add(box);
+      else stale.delete(box);
       widths.set(box, { now: width, before: seen?.now ?? null, at: performance.now() });
       // Shown from its first fit on, never before (reader-content.css).
       widthsSeen.add(box);
@@ -913,6 +924,7 @@ export function markWideMaths(root: HTMLElement): () => void {
     // load waits for them, hidden (data-unfitted), and is fitted the moment they arrive.
     if (!katexFacesReady()) {
       waiting.add(box);
+      stale.add(box);
       return;
     }
     update(box);
@@ -970,9 +982,7 @@ export function markWideMaths(root: HTMLElement): () => void {
       refitting = true;
       void katexReady().then(() => {
         refitting = false;
-        if (!live) return;
-        fitted.forEach(forgetSizes);
-        fitted.forEach((box) => update(box, true));
+        if (live) refitStale();
       });
     }
     return true;
@@ -990,9 +1000,7 @@ export function markWideMaths(root: HTMLElement): () => void {
   // Other faces (the Lean's mono, the serif's italic) change no formula's width and are not awaited.
   if (katexLoading()) {
     void katexReady().then(() => {
-      if (!live) return;
-      fitted.forEach(forgetSizes);
-      fitted.forEach((box) => update(box, true));
+      if (live) refitStale();
     });
   }
   return () => {
