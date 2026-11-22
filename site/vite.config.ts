@@ -513,12 +513,49 @@ function requireInputs(): void {
   if (absent.length) throw new Error(absent.map(([path, what]) => missingInput(path, what)).join("\n"));
 }
 
+/** An image file's width and height in CSS pixels, read from an SVG's attributes or viewBox, or a PNG's header. */
+function imageSize(file: string): [number, number] | null {
+  if (file.endsWith(".png")) {
+    const head = readFileSync(file).subarray(16, 24);
+    return head.length === 8 ? [head.readUInt32BE(0), head.readUInt32BE(4)] : null;
+  }
+  if (!file.endsWith(".svg")) return null;
+  const tag = readFileSync(file, "utf8").match(/<svg\b[^>]*>/)?.[0] ?? "";
+  const number = (name: string) => {
+    const m = tag.match(new RegExp(`\\s${name}="([\\d.]+)(px|pt)?"`));
+    return m ? Number(m[1]) * (m[2] === "pt" ? 4 / 3 : 1) : null;
+  };
+  const w = number("width");
+  const h = number("height");
+  if (w && h) return [w, h];
+  const box = tag.match(/viewBox="[\d.-]+[ ,]+[\d.-]+[ ,]+([\d.]+)[ ,]+([\d.]+)"/);
+  return box ? [Number(box[1]), Number(box[2])] : null;
+}
+
+/** "<stage>/<file>" to its size, for every figure image a paper ships. */
+function figureSizes(stages: string[]): Record<string, [number, number]> {
+  const sizes: Record<string, [number, number]> = {};
+  for (const stage of stages) {
+    const from = resolve(PAPERS_DIR, stage, "figures");
+    for (const name of readdirSync(from)) {
+      const size = /\.(svg|png)$/.test(name) ? imageSize(resolve(from, name)) : null;
+      if (size) sizes[`${stage}/${name}`] = size;
+    }
+  }
+  return sizes;
+}
+
 /** The paper figures shipped as image files (papers/<name>/<stage>/figures/), served and copied under paper-figures/<stage>/. */
 function paperFigures(build = false): Plugin {
   const stages = ["long", "short", "expository"].filter((stage) => existsSync(resolve(PAPERS_DIR, stage, "figures")));
   const types: Record<string, string> = { svg: "image/svg+xml", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" };
+  const id = "virtual:paper-figure-sizes";
   return {
     name: "paper-figures",
+    // Each image's own width and height, so its box is reserved before it loads and the text
+    // under it never moves when it arrives (mount.tsx sets them on the <img>).
+    resolveId: (source) => (source === id ? `\0${id}` : null),
+    load: (resolved) => (resolved === `\0${id}` ? `export const FIGURE_SIZES = ${JSON.stringify(figureSizes(stages))};` : null),
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const m = req.url?.split("?", 1)[0].match(/\/paper-figures\/(long|short|expository)\/([\w.-]+\.(svg|png|jpe?g|webp))$/);
