@@ -61,6 +61,8 @@ def main() -> int:
     ap.add_argument("--no-pdf", action="store_true", help="the main document has no PDF: expect no Open PDF link and no toggle")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
+    ap.add_argument("--companion", action="append", default=[], metavar="PAGE[/@ID]",
+                    help="a companion page (or a phrase address on it) that must open its own text, never the edition error")
     args = ap.parse_args()
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
@@ -340,6 +342,18 @@ def main() -> int:
             check(f"{tag} strip", not clash, f"overlapping: {clash[:3]}")
             if args.shots:
                 page.screenshot(path=str(args.shots / f"pdf-strip-{width}x{height}.png"))
+            # Each companion named opens its own text with its phrases, from its own edition.
+            for address in args.companion:
+                page.goto(base + (address if "/@" in address else address.rstrip("/") + "/"), wait_until="domcontentloaded")
+                try:
+                    page.wait_for_selector(".paper .tie[data-tone]", timeout=45000)
+                except Exception:
+                    pass
+                body = page.inner_text("body")
+                ties = page.eval_on_selector_all(".paper .tie[data-tone]", "els => els.length")
+                card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''") if "/@" in address else "-"
+                check(f"{tag} companion {address}", ties > 0 and "different edition" not in body and bool(card),
+                      f"{ties} phrases; edition error={'different edition' in body}; card={card[:60]!r}")
             context.close()
         browser.close()
     print(json.dumps(report, indent=1))
