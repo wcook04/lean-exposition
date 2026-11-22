@@ -689,7 +689,8 @@ function renderTokens(
   const display = (n: string) => {
     const html = typeset(n);
     const number = plainNumber(st.spans[Number(n)]?.tex ?? "");
-    if (!number || (html.match(/class="tag"/g) ?? []).length !== 1) return { attr: "", html };
+    // KaTeX marks a display's one number katex-tag (and each row's number in an environment, tag).
+    if (!number || (html.match(/class="(katex-tag|tag)"/g) ?? []).length !== 1) return { attr: "", html };
     return { attr: ' data-number=""', html: `${html}<span class="katex math-number">${esc(number)}</span>` };
   };
   html = html.replace(
