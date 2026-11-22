@@ -690,7 +690,7 @@ function katexReady(): Promise<void> {
   return Promise.allSettled(loading.map((face) => face.loaded)).then(() => (katexLoading() ? katexReady() : undefined));
 }
 
-/** How far from the window idle time fits a part's formulas ahead of the reader, in pixels. */
+/** How far below the window idle time fits a part's formulas ahead of the reader, in pixels. */
 const AHEAD_REACH = 2400;
 
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
@@ -837,10 +837,11 @@ export function markWideMaths(root: HTMLElement): () => void {
   fitters.set(root, (more) => {
     for (const box of boxes) {
       if (fitted.has(box)) continue;
-      // A formula far from the window is left to the observer, which fits it as it comes near:
-      // fitting it now would change the page, unseen, while the reader has only just arrived.
+      // A formula far below the window is left to the observer, which fits it as it comes near:
+      // fitting it now would change the page, unseen, while the reader has only just arrived. One
+      // above the window is left to it too, since its new height would move the text being read.
       const r = box.getBoundingClientRect();
-      if (r.bottom < -AHEAD_REACH || r.top > window.innerHeight + AHEAD_REACH) continue;
+      if (r.bottom < 0 || r.top > window.innerHeight + AHEAD_REACH) continue;
       if (!more()) return false;
       near?.unobserve(box);
       fit(box);
