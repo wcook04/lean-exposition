@@ -207,9 +207,15 @@ with sync_playwright() as pw:
             before_line = page.evaluate(AT_LINE)
             before_y = figure.bounding_box()["y"]
             depth = page.evaluate("history.length")
-            page.get_by_role("button", name="PDF", exact=True).click()
+            # Locator.click() can scroll the paper to center a sticky button before
+            # dispatching input. A reader clicks where the button already is.
+            def click_view(name):
+                box = page.get_by_role("button", name=name, exact=True).bounding_box()
+                page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+
+            click_view("PDF")
             page.locator(".pdf-view__page canvas").first.wait_for(state="attached", timeout=60000)
-            page.get_by_role("button", name="Text", exact=True).click()
+            click_view("Text")
             page.wait_for_timeout(1200)
             after_line = page.evaluate(AT_LINE)
             after_y = figure.bounding_box()["y"]

@@ -678,6 +678,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const currentSegment = useRef<number | null>(null);
   /** Stepped to by keys: the line leaves it alone until the reader scrolls by hand. */
   const stepped = useRef(false);
+  const scrolledPdf = useRef(false);
   const pointed = useRef<number | null>(null);
   const pointAtRef = useRef<(t: number | null, record?: string) => void>(() => undefined);
   const movedAt = useRef(0);
@@ -919,6 +920,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     /** The reader's own hand on the page gives the line back to the reader. */
     const onHand = () => {
       stepped.current = false;
+      if (hereRef.current.pdf) scrolledPdf.current = true;
     };
     const onKeyScroll = (event: KeyboardEvent) => {
       if (SCROLL_KEYS.has(event.key)) onHand();
@@ -1667,7 +1669,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     navigate({ ...route, page: carriedPdfPage }, { replace: true });
   }, [carried, carriedPdfPage, route]);
 
-  const pageInView = () => pdfPage.current ?? route.page ?? carriedPdfPage ?? 1;
+  // A mark near the edge of a page can put the neighboring page under the observer
+  // when the PDF centers it. Only the reader's own scroll chooses a different page.
+  const pageInView = () => (scrolledPdf.current ? pdfPage.current : null) ?? route.page ?? carriedPdfPage ?? 1;
   const samePdfOrigin = () => {
     const origin = readEntry<PdfOrigin>("pdfOrigin");
     return origin && origin.page === pageInView() && origin.at === route.at ? origin : null;
@@ -1692,6 +1696,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const at = markPage === page ? route.at : undefined;
       writeEntry("pdfOrigin", { page, at, textAt: route.at, position: measurePosition(), line } satisfies PdfOrigin);
       pdfPage.current = page;
+      scrolledPdf.current = false;
       navigate({ ...route, at, pdf: true, page }, { replace: true });
     } else {
       const origin = samePdfOrigin();
