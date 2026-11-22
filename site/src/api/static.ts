@@ -177,9 +177,18 @@ export async function staticRequest(url: string): Promise<Response> {
   if (!page) return serve("index.json", url);
   asked.pathname = asked.pathname.replace(STAGED_ROUTE, (whole, api = "", kind, stage) => (stage === page ? `${api}/${kind}/short` : whole));
   if (asked.searchParams.get("paper") === page) asked.searchParams.set("paper", "short");
+  // A companion's edition is built with the paper's, but its own export has its own manifest: the
+  // reader's pin names the paper's edition, so it is checked against that and the answer carries it.
+  const pin = asked.searchParams.get("manifest");
+  asked.searchParams.delete("manifest");
+  const main = await load<StaticIndex>("index.json");
+  if (pin && pin !== main.snapshot.manifest_sha256) {
+    return Response.json({ error: { code: "edition_mismatch", message: "Reload to open the published edition." } }, { status: 409 });
+  }
   const response = await serve(`docs/${page}/index.json`, asked.pathname + asked.search);
   if (!(response.headers.get("content-type") ?? "").includes("json")) return response;
   const body = await response.json();
+  if (body && typeof body === "object" && "snapshot" in body) body.snapshot = main.snapshot;
   return Response.json(restage(body, page), { status: response.status });
 }
 
