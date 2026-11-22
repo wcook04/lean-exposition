@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
       - id: plan
         env:
-          BEFORE: ${{ github.event.before || github.event.pull_request.base.sha }}
+          BEFORE: ${{ github.event.pull_request.base.sha || github.event.before }}
           ASKED: ${{ github.event.inputs.papers }}
         run: |
           all=$(ls instances | tr '\n' ' ')
