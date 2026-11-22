@@ -144,8 +144,14 @@ def main() -> int:
                 pages[doc["id"]] = {"to": f"{LIB}{at}/{doc['slug']}/", "root": root, "claims": claim_passages(doc["id"])}
     if args.ns_table and args.ns_table.is_file():
         table = json.loads(args.ns_table.read_text())
+        ns = json.loads((ROOT / "instances/navier-stokes/instance.json").read_text())
+        removed = set(ns.get("removed_pages", []))
         for slug, row in (table.get("pages") or {}).items():
-            pages[slug] = {"to": f"{LIB}navier-stokes/{row['page']}/", "root": f"{LIB}navier-stokes/", "claims": claim_passages(slug)}
+            # A companion the library no longer publishes sends its old Proof Reader address to the paper.
+            if row["page"] in removed:
+                pages[slug] = {"to": f"{LIB}navier-stokes/", "root": f"{LIB}navier-stokes/", "claims": {}}
+            else:
+                pages[slug] = {"to": f"{LIB}navier-stokes/{row['page']}/", "root": f"{LIB}navier-stokes/", "claims": claim_passages(slug)}
     out, held = {}, []
     for slug in sorted(pages):
         row = pages[slug]

@@ -188,8 +188,8 @@ def main() -> int:
     ap.add_argument("--pdf-only", action="store_true", help="the paper is read only in its PDF: no Text toggle, the PDF view opens at its top")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
-    ap.add_argument("--companion", action="append", default=[], metavar="PAGE[/@ID]",
-                    help="a companion page (or a phrase address on it) that must open its own text, never the edition error")
+    ap.add_argument("--removed", action="append", default=[], metavar="PAGE[/@ID]",
+                    help="a guide or companion page the library no longer publishes (or an address on it): it must land on the paper, never its former text")
     args = ap.parse_args()
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
@@ -509,25 +509,31 @@ def main() -> int:
             context.close()
         if not args.pdf_only:
             selection_checks(browser, base, args, check)
-        # Each companion named opens its own text with its phrases, from its own edition, never the
-        # edition error; a phrase address on one also opens that phrase's card.
+        # Each page the library no longer publishes (--removed, a page or an address on it) lands on the
+        # paper (or the edition it sat under) and never shows its former text: the reader then stands at
+        # the paper's own address, with its title and its phrases.
+        title = page_title = None
         for width, height in SIZES:
             tag = f"{width}x{height}"
             context = browser.new_context(viewport={"width": width, "height": height})
             page = context.new_page()
-            for address in args.companion:
+            if page_title is None:
+                page.goto(base, wait_until="domcontentloaded")
+                page.wait_for_selector(".paper h1", timeout=45000)
+                page_title = page.inner_text(".paper h1").strip()
+            for address in args.removed:
                 page.goto(base + (address if "/@" in address else address.rstrip("/") + "/"), wait_until="domcontentloaded")
                 try:
                     page.wait_for_selector(".paper .tie[data-tone]", timeout=45000)
-                    if "/@" in address:
-                        page.wait_for_selector(".phrase-card", timeout=15000)
                 except Exception:
                     pass
-                body = page.inner_text("body")
+                page.wait_for_timeout(1500)
+                here = page.url.split("?")[0].split("#")[0]
+                lands = here.rstrip("/") + "/" in {base, base + "adapted/"}
+                title = page.evaluate("() => document.querySelector('.paper h1')?.textContent?.trim() ?? ''")
                 ties = page.eval_on_selector_all(".paper .tie[data-tone]", "els => els.length")
-                card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).textContent || ''") if "/@" in address else "-"
-                check(f"{tag} companion {address}", ties > 0 and "different edition" not in body and bool(card.strip()),
-                      f"{ties} phrases; edition error={'different edition' in body}; card={card[:60]!r}")
+                check(f"{tag} removed {address} opens the paper", lands and title == page_title and ties > 0,
+                      f"at {here}; title {title[:60]!r}; {ties} phrases")
             context.close()
         browser.close()
     print(json.dumps(report, indent=1))

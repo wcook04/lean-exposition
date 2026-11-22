@@ -306,7 +306,13 @@ export function reparseCurrentRoute(): void {
   const url = new URL(window.location.href);
   const inBase = BASE && url.pathname.startsWith(BASE) ? url.pathname.slice(BASE.length) : url.pathname;
   const moved = movedLibraryPath(inBase.replace(/\/+$/, "") || "/");
-  if (moved) {
+  if (moved === "/") {
+    // A page no longer published: the paper's own address, with nothing of the old page's place kept.
+    url.pathname = `${BASE}/`;
+    url.search = "";
+    url.hash = "";
+    replaceEntry(url);
+  } else if (moved) {
     url.pathname = `${BASE}${moved}${/\/(?:@|lean\/)/.test(moved) ? "" : "/"}`;
     replaceEntry(url);
   }

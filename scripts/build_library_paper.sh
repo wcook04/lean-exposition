@@ -107,7 +107,19 @@ slugs = {doc["slug"] for doc in pages}
 for old, row in inst.get("moved_pages", {}).items():
     (dist / old).mkdir(exist_ok=True)
     (dist / old / "index.html").write_text((dist / row["to"] / "index.html").read_text() if row["to"] in slugs else shell)
-print(f"static addresses: / and {len(results)} results and {len(pages)} pages and {len(inst.get('moved_pages', {}))} moved")
+# A guide or companion page the library no longer publishes (removed_pages) answers with a stub that
+# sends the reader to the paper: it holds none of the page's former text. Its deeper addresses
+# (/<old>/@id, /<old>/lean/...) fall to 404.html, whose reader sends them to the paper too.
+for old in inst.get("removed_pages", []):
+    if old in slugs:
+        raise SystemExit(f"removed_pages: {old} is still a page of the paper")
+    (dist / old).mkdir(exist_ok=True)
+    (dist / old / "index.html").write_text(
+        '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">'
+        f'<link rel="canonical" href="../"><meta http-equiv="refresh" content="0; url=../">'
+        f'<title>{inst["title"]}</title><script>location.replace("../")</script>'
+        f'<p><a href="../">{inst["title"]}</a></p>\n')
+print(f"static addresses: / and {len(results)} results and {len(pages)} pages and {len(inst.get('moved_pages', {}))} moved and {len(inst.get('removed_pages', []))} removed")
 PYEOF
 # Every figure the paper's documents reference (an adapted edition's included, while it is staged) is in the build.
 "$PY" scripts/check_figures.py "$paper" site/dist

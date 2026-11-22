@@ -1,1 +1,1 @@
---raw-check TorusEuler.Paper.proposition_8_4 --raw-check TorusEuler.BoundedSpatialJet
+--raw-check TorusEuler.Paper.proposition_8_4 --raw-check TorusEuler.BoundedSpatialJet --removed start-here --removed how-the-lean-encodes-it --removed adapted/start-here
