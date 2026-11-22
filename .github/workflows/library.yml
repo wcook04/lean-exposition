@@ -83,6 +83,12 @@ jobs:
         run: |
           curl -sf -o /dev/null http://127.0.0.1:47311/library/${{ matrix.paper }}/ || { python scripts/serve_library.py serve 47311 & sleep 2; }
           python site/scripts/check-idle.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --sweep 1100 2600 300 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
+          # A phone: still from 2 s after first paint, and once settled.
+          python site/scripts/check-idle.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --widths 390 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
+      - name: Check nothing in ${{ matrix.paper }} scrolls sideways, from a phone to 2560 pixels wide
+        run: |
+          curl -sf -o /dev/null http://127.0.0.1:47311/library/${{ matrix.paper }}/ || { python scripts/serve_library.py serve 47311 & sleep 2; }
+          python scripts/check_no_hscroll.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --widths 390 1024 1440 2560
       - uses: actions/upload-artifact@v4
         with:
           name: library-${{ matrix.paper }}
