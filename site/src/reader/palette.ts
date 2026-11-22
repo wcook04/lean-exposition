@@ -7,7 +7,7 @@
 // 2. Their hues are evenly spaced, then nudged (each by at most an eighth of the spacing) to raise
 //    the least CIEDE2000 distance between any two colours of different families.
 // 3. Each theme has one OKLCH lightness, searched together with the hues, that keeps every shade at
-//    3:1 against the page as an underline draws it (at full strength).
+//    3:1 against the page when the topic colour is shown at full strength.
 // 4. A family's shades step evenly in lightness (one step either side of the family's lightness)
 //    and by a hue offset that stays inside the family's arc. Each shade takes the largest chroma
 //    its own lightness and hue allow in sRGB, up to CHROMA_CAP (less a step for lighter shades).
@@ -32,7 +32,7 @@ const RAD = Math.PI / 180;
 
 export const MAX_FAMILIES = 8;
 export const MAX_SHADES = 3;
-/** The opacity at which an underline draws the topic colour over the page (phrases.css: full). */
+/** Fit the full-strength ink used by topic keys and active display marks. */
 export const UNDERLINE = 1;
 /** The most chroma a family's middle shade takes (a darker shade a step more, a lighter a step less): past it the strongest hues (red, blue, magenta) shout over the rest. */
 export const CHROMA_CAP = 0.19;
@@ -153,8 +153,7 @@ const decode = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) 
 const GROUND_LINEAR = { light: hexToLinear(GROUNDS.light), dark: hexToLinear(GROUNDS.dark) };
 
 /**
- * A colour as an underline draws it: the tone at UNDERLINE opacity (phrases.css draws it at full
- * strength), composited over the page in gamma-encoded sRGB as the browser does.
+ * The reference ink for the palette, composited over the page in gamma-encoded sRGB.
  */
 export function drawnLinear(tone: Vec, theme: ThemeName): Vec {
   const t = clip(oklabToLinear(tone));

@@ -2115,8 +2115,8 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
           Underlined words are linked to a Lean statement. {phone ? "Tap" : "Click"} them to see the statement and how it compares.
         </span>
       ) : (
-        <span className="reader-strip__hint" title="A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean. j and k step through them.">
-          {phone ? "Tap" : "Click"} a statement with a dark tick to see its Lean.
+        <span className="reader-strip__hint" title="Faint highlights mark linked statements. Use j and k to move between them.">
+          {phone ? "Tap" : "Click"} a highlighted statement to see its proof step.
         </span>
       ))}
       {/* Where the reader is, as the section's number only ("§1.2"), and only where no contents

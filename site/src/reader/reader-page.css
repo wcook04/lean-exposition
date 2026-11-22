@@ -472,8 +472,7 @@ html.is-reading {
   background: var(--lit-line);
 }
 
-/* A tied statement. At rest the paper reads as a paper: a thin tick in the margin, darker
-   where the step has Lean, and nothing on the words. */
+/* Ink shared by the paper and its linked Lean lines. */
 :root {
   /* The highlighter: a pinned statement, and the Lean lines it maps to. Reading is calmer. */
   --highlighter: color-mix(in oklab, var(--lit-line) 22%, transparent);
@@ -495,13 +494,8 @@ html.is-reading {
   left: 0;
   width: 2px;
   border-radius: 1px;
-  background: var(--rule-strong);
+  background: transparent;
   transition: background-color var(--t-hover) var(--ease-out);
-}
-
-/* Lean is what a reader looks for: plain at a glance, and still only a hairline. */
-.tick[data-lean] {
-  background: color-mix(in oklab, var(--ink-3) 82%, var(--rule-strong));
 }
 
 .tick[data-point] {
