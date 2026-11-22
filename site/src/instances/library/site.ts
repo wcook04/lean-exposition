@@ -176,6 +176,8 @@ const site = {
     main: MAIN.slot,
     pdfOnly: BUILT.filter((d) => d.pdf_only).map((d) => d.slot),
     pages: Object.fromEntries(BUILT.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
+    // Addresses of guides and companion pages the library no longer publishes: each opens the paper.
+    removed: PAPER.removed_pages ?? [],
     external: PAPER.documents
       .filter((d) => d.href && !d.slot)
       .map((d) => ({ title: d.title, job: sentence(`${d.title}: the ${d.noun}`), href: `${LIBRARY_ROOT}${d.href}` })),
