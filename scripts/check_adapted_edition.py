@@ -3,8 +3,9 @@
 
     python scripts/check_adapted_edition.py http://127.0.0.1:47311/library/euler/ --shots DIR [--credit TEXT]
 
-At 390, 800, 1024, 1100, 1440, 2000 and 2560 px wide: the edition opens with its credit, verbatim, beside a
-link to the authors' paper; the switch "Authors' paper / Adapted edition" stands in the strip, the
+At 390, 800, 1024, 1100, 1440, 2000 and 2560 px wide: the edition opens with its one-line credit (the
+credit's first sentence and that every change is marked) beside a link to the authors' paper, and About
+carries the whole credit (the paper's own document.credit, or --credit); the switch "Authors' paper / Adapted edition" stands in the strip, the
 page never scrolls sideways, and a change mark opens a Selected change with the authors' text, the
 edition's, the kind, the note and the sources. At 1440: every change of the change map shows as a
 mark on the page (the page is read top to bottom), "Show changes" lists every change, the switch
@@ -80,9 +81,8 @@ AT_LINE = """() => { const css = (n) => parseFloat(getComputedStyle(document.doc
   for (let y = t; y < innerHeight; y += 12) { let b = document.elementFromPoint(x, y)?.closest('.part__text [data-line]');
     if (!b) continue; for (let u = b.parentElement.closest('.part__text [data-line]'); u; u = u.parentElement.closest('.part__text [data-line]')) b = u;
     return b.dataset.line + '|' + b.textContent.trim().slice(0, 60); } return ''; }"""
-HEAD = """() => [...document.querySelectorAll('.account-line, .outline__account')]
+HEAD = """() => [...document.querySelectorAll('.front-credit')]
   .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1).map(e => e.innerText).join(' ')"""
-TEXT = """() => (document.querySelector('main') || document.body).innerText"""
 # The reader's one-line edition credit (site.ts editionCreditLine): the credit's first sentence, then this.
 first = re.split(r"(?<=[a-z0-9)\]'’][.!?])\s+(?=[A-Z])", a.credit)[0].strip().rstrip(".!?")
 short_credit = f"{first}; every change is marked."
@@ -97,12 +97,10 @@ with sync_playwright() as pw:
         page.on("pageerror", lambda e: errors.append(str(e)))
         page.goto(edition, wait_until="domcontentloaded")
         settle(page)
-        head = page.evaluate(HEAD)
-        # The header says the edition's credit in one line (its first sentence, and that every change is
-        # marked); the edition's text carries the whole credit, verbatim, once.
-        check(f"{tag} the edition's one-line credit in the header", short_credit in head, head[:300])
-        text = page.evaluate(TEXT).replace("\u2019", "'")
-        check(f"{tag} credit verbatim in the edition's text", text.count(a.credit) == 1, text.count(a.credit))
+        head = page.evaluate(HEAD).replace("\u2019", "'")
+        # The front matter says the edition's credit in one line (its first sentence, and that every
+        # change is marked), in place of the credit note; About carries the whole credit.
+        check(f"{tag} the edition's one-line credit in the front matter", short_credit in head, head[:300])
         check(f"{tag} link to the authors' paper beside it", page.locator("a", has_text="Read the authors’ paper").count() >= 1)
         switch = page.locator(".edition-switch")
         check(f"{tag} switch in the strip", switch.count() == 1 and switch.locator("button[aria-pressed=true]").inner_text() == "Adapted edition",
@@ -133,6 +131,12 @@ with sync_playwright() as pw:
             ctx.close()
             continue
 
+        # About carries the edition's whole credit, verbatim.
+        page.goto(base + "about/", wait_until="domcontentloaded")
+        settle(page)
+        about = page.evaluate("() => document.getElementById('about-adapted')?.closest('section')?.innerText ?? ''").replace("\u2019", "'")
+        check("1440 About carries the credit verbatim", a.credit in about, about[:300])
+
         # Every change shows as a mark: read the page top to bottom.
         page.goto(edition, wait_until="domcontentloaded")
         settle(page)
@@ -143,7 +147,10 @@ with sync_playwright() as pw:
             seen |= set(page.eval_on_selector_all("[data-change-open]", "els => els.map(e => e.dataset.changeOpen)"))
             y += 700
             height = page.evaluate("document.body.scrollHeight")
-        check("1440 every change is a visible mark", set(ids) <= seen, sorted(set(ids) - seen))
+        # The credit note's paragraph gives way to the one-line credit in the front matter (engine.ts), so
+        # the edition-credit change is said by that line rather than by a mark.
+        credit_ids = {c["id"] for c in changes["changes"] if c["kind"] == "edition-credit"}
+        check("1440 every change is a visible mark", set(ids) - credit_ids <= seen, sorted(set(ids) - credit_ids - seen))
         check("1440 no mark without a change", seen <= set(ids), sorted(seen - set(ids)))
         # Show changes lists every change.
         page.goto(edition, wait_until="domcontentloaded")
@@ -174,7 +181,9 @@ with sync_playwright() as pw:
         check("1440 switch to the authors' paper keeps the paragraph", after.split("|")[0] == str(want["authors_lines"][0][0]),
               f"{before!r} -> {after!r}, wanted line {want['authors_lines'][0][0]}")
         check("1440 the authors' paper carries no change marks", page.locator("[data-change], [data-change-open]").count() == 0)
-        check("1440 the authors' paper keeps its own credit", a.credit not in page.evaluate(HEAD) and "Paper and Lean by" in page.evaluate(HEAD))
+        authors_head = page.evaluate(HEAD).replace("\u2019", "'")
+        check("1440 the authors' paper keeps its own credit", short_credit not in authors_head and a.credit not in authors_head
+              and "Paper and Lean by" in authors_head, authors_head[:300])
         page.screenshot(path=str(a.shots / "switched-to-authors-1440.png"))
         page.locator(".edition-switch button", has_text="Adapted edition").click()
         page.wait_for_url(lambda u: "/adapted/" in u, timeout=15000)
