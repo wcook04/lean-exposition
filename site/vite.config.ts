@@ -432,10 +432,12 @@ function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
     transformIndexHtml: {
       order: "post",
       handler(html, context) {
-        // Keep the fonts of the first screen from swapping in late: the text faces, and the KaTeX
-        // faces most formulas are drawn in (every route and address, 404.html included, starts here).
+        // Keep the fonts of the first screen from swapping in late: the text faces, the serif's
+        // italic, and the KaTeX faces formulas are drawn in, large brackets, script and blackboard
+        // letters included, so none arrives after the page has painted and moves the text (every
+        // route and address, 404.html included, starts here).
         const fonts = Object.keys(context.bundle ?? {}).filter((name) =>
-          /stix-two-text-latin-(400|500)-normal.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$|KaTeX_(Main-Regular|Math-Italic|Size1-Regular|Size2-Regular)-.*\.woff2$/.test(name),
+          /stix-two-text-latin-(400|500)-normal.*\.woff2$|stix-two-text-latin-400-italic.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$|KaTeX_(Main-Regular|Main-Italic|Main-Bold|Math-Italic|AMS-Regular|Caligraphic-Regular|Size1-Regular|Size2-Regular|Size3-Regular)-.*\.woff2$/.test(name),
         );
         const preload = [
           ...fonts.map((name) => `<link rel="preload" href="${base}${name}" as="font" type="font/woff2" crossorigin />`),

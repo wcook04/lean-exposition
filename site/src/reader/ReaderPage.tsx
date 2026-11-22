@@ -521,11 +521,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       let landing: () => number;
       if (statement !== null) {
         const part = statements.partOf(statement);
-        await body.ensure([part - 1, part, part + 1]);
-        body.settle([part - 1, part, part + 1]);
+        await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : [part - 2, part - 1, part, part + 1, part + 2]);
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll === false) return true;
+        // Only a jump that moves the paper lays out and fits where it lands: the parts the window
+        // can show around it, so none of them changes height once the paper is there.
+        body.settle([part - 2, part - 1, part, part + 1, part + 2]);
         stepped.current = true;
         current.current = statement;
         currentSegment.current = ties.segmentsOf[statement][0];
@@ -538,12 +540,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const lines = at ? resolveAt(doc, at) : null;
         const parts = lines ? partsOfLines(doc.parts, lines) : [];
         if (!lines || !parts.length) return false;
-        await body.ensure([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
-        body.settle([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
+        await body.ensure(options.scroll === false ? [parts[0] - 1, ...parts, parts[parts.length - 1] + 1] : [parts[0] - 2, parts[0] - 1, ...parts, parts[parts.length - 1] + 1, parts[parts.length - 1] + 2]);
         const blocks = parts.flatMap((part) => blocksOf(body.partElement(part), part === parts[parts.length - 1] ? doc.parts[part].lines.end : doc.parts[part + 1]?.lines.start - 1, lines));
         if (!blocks.length) return false;
         blocks.forEach((el) => el.setAttribute("data-slice", ""));
         if (options.scroll === false) return true;
+        body.settle([parts[0] - 2, parts[0] - 1, ...parts, parts[parts.length - 1] + 1, parts[parts.length - 1] + 2]);
         target = blocks[0];
         landing = () => target!.getBoundingClientRect().top + window.scrollY - readingTop() - 16;
       }
