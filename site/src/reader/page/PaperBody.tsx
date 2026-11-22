@@ -474,7 +474,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, placedLater, struc
   }, [part, doc.stage]);
   const textSize = useMemo(() => ({ "--part-h": `${reserved}px` }) as React.CSSProperties, [reserved]);
 
-  if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
+  if (part.blank) return <div ref={setRef} data-part={part.index} data-passage={anchor} className="part part--blank" />;
 
   return (
     <section
