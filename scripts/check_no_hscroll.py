@@ -214,7 +214,12 @@ def main() -> int:
                         name = re.sub(r"[^\w.-]", "_", f"{slot}-{label}-{width}{'-dark' if args.dark else ''}.png")
                         # The display with its column around it: the shot shows its fit against the column's edge.
                         column = page.evaluate("""(label) => { const b = document.querySelector(`[data-shot="${label}"]`); const r = b.getBoundingClientRect(); const p = (b.closest('.paper') || b).getBoundingClientRect(); return {x: Math.max(0, p.left - 8), y: Math.max(0, r.top - 60), width: Math.min(innerWidth - Math.max(0, p.left - 8), p.width + 16), height: Math.min(r.height + 120, innerHeight - Math.max(0, r.top - 60))}; }""", label)
-                        page.screenshot(path=str(args.shots / name), clip=column)
+                        # A picture is evidence for a reader, never a check: one that cannot be taken is skipped.
+                        if column["width"] > 0 and column["height"] > 0:
+                            try:
+                                page.screenshot(path=str(args.shots / name), clip=column)
+                            except Exception as error:
+                                print(f"     (no picture of {name}: {error})", flush=True)
                 context.close()
         browser.close()
     if failures:
