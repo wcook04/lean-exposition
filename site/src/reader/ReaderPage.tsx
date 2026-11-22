@@ -2111,8 +2111,8 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
     <nav className="crumbs" aria-label="Where you are in this paper">
       {/* The first screen says what to do; it goes as soon as there is a section to name. */}
       {hint && !chain.length && (phrases ? (
-        <span className="reader-strip__hint" title="Each phrase a Lean declaration states is underlined in the colour of its topic; Sections lists the colours. j and k step through them.">
-          Underlined words are linked to a Lean statement. {phone ? "Tap" : "Click"} them to see the statement and how it compares.
+        <span className="reader-strip__hint" title="The margin shows topic colours in phrase order. Sections lists the topics. Use j and k to step through linked phrases.">
+          {READER_HINT}
         </span>
       ) : (
         <span className="reader-strip__hint" title="Faint highlights mark linked statements. Use j and k to move between them.">
