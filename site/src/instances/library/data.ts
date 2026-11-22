@@ -2,6 +2,8 @@
 // current.json by scripts/library-instance.mjs before a build. No code here is a paper's own.
 import current from "./current.json";
 
+/** A PDF of a document; `label` names it in the header ("PDF with changes marked"). */
+export interface LibraryPdf { file: string; sha256?: string; bytes?: number; url?: string; name?: string; alias?: string; label?: string }
 export interface LibraryDocument {
   id: string;
   /** One of the three accounts (long, short, expository), or a companion's own page name (digest, library-07). */
@@ -11,13 +13,19 @@ export interface LibraryDocument {
   noun: string;
   main?: boolean;
   /** The authors' PDF. `name` and `alias` publish it under pdf/ by those names (a reader that moved into the library keeps its PDF addresses). */
-  pdf?: { file: string; sha256?: string; bytes?: number; url?: string; name?: string; alias?: string };
+  pdf?: LibraryPdf;
   /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
   kind?: "companion";
   group?: string;
   group_title?: string;
   order?: number;
   credit?: string;
+  /** An adapted edition of another document (`of`, its id): a companion page with its own credit, a
+   *  change map and its PDF with changes marked; read only when `published` (or in a local preview). */
+  adapted?: boolean;
+  of?: string;
+  published?: boolean;
+  aux_pdf?: LibraryPdf;
   /** What the document does and who it is written for, in place of the reader's default account line. */
   job?: string;
   reader?: string;

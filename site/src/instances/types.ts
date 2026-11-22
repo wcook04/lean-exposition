@@ -124,7 +124,6 @@ export interface SiteInstance {
   sectionAids?: Partial<Record<string, Record<string, string>>>;
   /** Which of a paper's guides exist, so their links stand from the first paint. */
   readingAids?: { showcase: boolean; route: boolean };
-  /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
   /**
    * A library paper: its id, its main document, its page slugs (page -> document), and its companion
    * documents in reading order, grouped (each a document of its own, answered from its own edition).
@@ -133,9 +132,26 @@ export interface SiteInstance {
     paper: string;
     main: InstanceStage;
     pages?: Record<string, string>;
-    companions?: { slot: string; title: string; group: string; group_title: string; order: number }[];
+    /** `id` names the companion's folder in its source (`<id>/paper.md`), so links between companions resolve. */
+    companions?: { slot: string; id?: string; title: string; group: string; group_title: string; order: number }[];
     /** The paper's guide to its formal conventions, shown in the pane as "How to read the Lean". */
     guide?: InstanceStage;
+  };
+  /**
+   * An adapted edition of the main document (instances/<paper>/adapted/, docs/reader-design.md
+   * "Adapted editions"): a changed version of the authors' text in its own slot, read beside the
+   * authors' own, with every change marked. Absent: the paper has none, or its flag is off.
+   */
+  adapted?: {
+    slot: string;
+    /** The authors' document it adapts. */
+    of: InstanceStage;
+    /** The edition's credit, verbatim, for its header and About. */
+    credit: string;
+    /** The authors' paper online, linked beside the credit. */
+    authorsPaper?: string;
+    /** The edition's PDFs, each with its label ("PDF with changes marked"). */
+    pdfs: { label: string; name: string }[];
   };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**

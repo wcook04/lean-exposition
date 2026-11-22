@@ -4,12 +4,12 @@
 import { useEffect, useState } from "react";
 import type { Stage } from "../api/types";
 import { discoveryInfo } from "../api/client";
+import site from "@instance/site";
 import { loadPaper, type PaperData } from "../app/data";
 import { prepareDocument, type PreparedDocument } from "./engine";
 import type { TieIndex } from "../api/lean";
 import { loadReferenceTable, type ReferenceTable } from "./references";
 import { loadTies, tieModel, type TieModel } from "./ties";
-import site from "@instance/site";
 
 export interface LoadedDocument {
   paper: PaperData;
@@ -24,10 +24,16 @@ const DEFAULT_PATHS: Record<Stage, string> = {
   expository: "expository/main.md",
 };
 
+// A library paper's companion documents, each at <id>/paper.md as in its source, so a link from one
+// companion to another (../<id>/paper.md) opens that companion.
+const COMPANION_PATHS: Record<string, string> = Object.fromEntries(
+  (site.library?.companions ?? []).map((c) => [c.slot, `${c.id ?? c.slot}/paper.md`]),
+);
+
 export function documentPaths(): Record<string, string> {
   const configured = discoveryInfo()?.companion_resolution;
-  if (configured?.configured) return { ...DEFAULT_PATHS, ...configured.document_paths } as Record<string, string>;
-  return DEFAULT_PATHS;
+  if (configured?.configured) return { ...DEFAULT_PATHS, ...COMPANION_PATHS, ...configured.document_paths } as Record<string, string>;
+  return { ...DEFAULT_PATHS, ...COMPANION_PATHS };
 }
 
 const prepared = new Map<Stage, Promise<LoadedDocument>>();

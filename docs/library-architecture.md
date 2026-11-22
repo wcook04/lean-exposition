@@ -326,3 +326,13 @@ Not yet built:
 - the redirect stubs;
 - a Comparator pane, which waits for the receipt at the authors' final commit;
 - topic filter addresses (`/topic/<id>/`).
+
+## Adapted editions (built 22 November 2026, off for every paper)
+
+The design is docs/reader-design.md, "Adapted editions". What is built:
+
+- **Converter.** `scripts/adapted_edition.py convert` sets an edition's reading copy from its TeX with the same route as the authors' (Proof Reader's `reading_copy.py`; it first checks that this route reproduces the authors' reading copy byte for byte). It aligns the two texts paragraph by paragraph, by Proof Reader's paragraph ids (`<heading>#<block>`, `site/scripts/source-blocks.mjs`), and gives each differing paragraph its change from the public change map (`CHANGES.json`). It carries every phrase tie whose paragraph is the authors' unchanged. It stops unless every `% CHANGE` mark has its row, every differing paragraph has a change, every change shows in a paragraph, and no TeX line differs from the authors' source outside a marked paragraph. It writes `instances/<paper>/adapted/` (`edition.json` holds the flag `published`).
+- **The flag.** A build includes the edition only when `published` is true, or for a local preview with `LX_PREVIEW_ADAPTED=1`; `scripts/build_library_paper.sh` stages it into a free document slot and takes it out again. With the flag off, or with no `adapted/` folder, a paper builds exactly as before.
+- **Reader.** The switch "Authors' paper / Adapted edition" in the strip keeps the place by paragraph and says when a paragraph has no counterpart. In the edition each changed paragraph has a faint ink wash and a dotted ink rule in its right margin, headed by an open square that opens the change (both texts, kind, note, sources) in the pane; "Show changes" lists every change. The authors' paper carries no marks, only a quiet square on a paragraph the edition changes. The edition's header and About carry its credit, verbatim, beside a link to the authors' paper. Its PDF with changes marked is the PDF view's file, and each change's bar is a mark there (`scripts/pdf_marks.py` with the change map).
+- **Checks.** `tests/test_adapted_edition.py`, `site/tests/adapted-changes.test.ts`, and `scripts/check_adapted_edition.py` in a browser at 390, 1100, 1440, 2000 and 2560.
+- **Publishing**, once agreed: `scripts/publish_adapted_edition.sh <paper> <library checkout>`.

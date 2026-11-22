@@ -170,6 +170,8 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     if (route.lean) q.set("v", "lean");
     else if (route.graph) q.set("v", "graph");
     if (route.decl) q.set("d", route.decl);
+    if (route.pdf) q.set("view", "pdf");
+    if (route.pdf && route.page) q.set("page", String(route.page));
     return `${base}/${slug}/${q.size ? `?${q}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
   }
   const q = new URLSearchParams();

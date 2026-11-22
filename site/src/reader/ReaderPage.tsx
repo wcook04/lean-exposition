@@ -90,6 +90,10 @@ import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
 import { useTopicColours } from "./topicColours";
+import { ADAPTED, carryPlace, clearPlace, counterpart, editionSide, loadChanges, takePlace, type Change, type ChangeMap } from "./adapted/changes";
+import { lineInView, useChangeMarks } from "./adapted/marks";
+import { ChangeCard, ChangeList } from "./adapted/ChangePane";
+import "./adapted/adapted.css";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
 import "./page/map-pane.css";
 
@@ -329,6 +333,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [sectionsOpen, setSectionsOpen] = useState(false);
   /** Below 1680px the sections stand on the right page, where they cover no text. */
   const [sectionsSide, setSectionsSide] = useState(false);
+  // ---- An adapted edition: the switch between the two texts and the changes layer.
+  const side = editionSide(stage);
+  const [changeMap, setChangeMap] = useState<ChangeMap | null>(null);
+  const [changePane, setChangePane] = useState<{ kind: "change"; id: string } | { kind: "list" } | null>(null);
+  const [carried] = useState(() => takePlace(stage));
+  const editionNotice = carried?.notice ?? null;
+  useEffect(() => {
+    if (!side) return;
+    let live = true;
+    void loadChanges().then((map) => live && setChangeMap(map));
+    return () => {
+      live = false;
+    };
+  }, [side]);
   const [visit, setVisit] = useState<VisitOrigin | null>(() => visitOrigin());
   const visitRef = useRef(visit);
   visitRef.current = visit;
@@ -1432,6 +1450,107 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     go({ ...here, at: String(line), node: undefined, beside: undefined });
   };
 
+  /**
+   * The switch between the authors' paper and the adapted edition. It keeps the reader's place by
+   * paragraph (the change map's alignment), keeps the view and the pane, and lets a selection go,
+   * because its words belong to the text being left.
+   */
+  /**
+   * Put the paragraph at a source line under the reading line: its part is rendered, the page is
+   * scrolled to it, and held there while late parts and fonts settle, until the reader scrolls.
+   */
+  const landAtLine = useCallback(
+    async (line: number) => {
+      const body = bodyRef.current;
+      if (!body) return;
+      const part = doc.parts.findIndex((p) => !p.blank && p.lines.start <= line && p.lines.end >= line);
+      if (part < 0) return;
+      await body.ensure([part - 1, part, part + 1].filter((k) => k >= 0 && k < doc.parts.length));
+      const find = () => {
+        const blocks = Array.from(body.partElement(part)?.querySelectorAll<HTMLElement>(".part__text [data-line]") ?? []).filter(
+          (el) => !el.parentElement?.closest(".part__text [data-line]"),
+        );
+        return blocks.filter((el) => Number(el.dataset.line) <= line).pop() ?? blocks[0] ?? null;
+      };
+      let touched = false;
+      const touch = () => (touched = true);
+      for (const type of ["wheel", "keydown", "touchstart", "pointerdown"]) window.addEventListener(type, touch, { once: true, passive: true });
+      const land = () => {
+        const el = find();
+        if (!el || touched) return;
+        // scrollIntoView lays the text out first (parts far from the window are not laid out), then
+        // the reading line is made room for.
+        const off = el.getBoundingClientRect().top - (readingTop() + 16);
+        if (Math.abs(off) <= 4) return;
+        el.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior });
+        window.scrollBy({ top: el.getBoundingClientRect().top - (readingTop() + 16), behavior: "instant" as ScrollBehavior });
+        body.hold(el);
+      };
+      land();
+      for (const ms of [120, 400, 900, 1600, 2600]) window.setTimeout(land, ms);
+    },
+    [doc, readingTop],
+  );
+  useEffect(() => {
+    if (!carried) return;
+    let live = true;
+    // Let go of the place once this reader has held it a moment (a reader that unmounts at once leaves it for the next).
+    const done = window.setTimeout(() => live && clearPlace(), 1200);
+    void landAtLine(carried.line);
+    return () => {
+      live = false;
+      window.clearTimeout(done);
+    };
+    // Once, when the switch opened this text.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const switchEdition = (to: "authors" | "adapted", fromLine?: number) => {
+    if (!ADAPTED || !changeMap || !side || to === side) return;
+    const line = fromLine ?? lineInView(paperRef.current, readingTop());
+    const place = line !== null ? counterpart(changeMap, side, line) : null;
+    const target = to === "adapted" ? ADAPTED.slot : ADAPTED.of;
+    carryPlace({
+      stage: target,
+      line: place?.line ?? 1,
+      notice: place && !place.exact ? (side === "adapted" ? "This paragraph has no counterpart in the authors’ paper." : "This paragraph has no counterpart in the adapted edition.") : null,
+    });
+    navigate({ view: "read", stage: target, lean: route.lean, graph: route.graph, pdf: route.pdf, page: undefined });
+  };
+  const openChange = useCallback((id: string) => setChangePane({ kind: "change", id }), []);
+  const toEditionAt = useCallback(
+    (line: number) => {
+      if (!changeMap || !ADAPTED) return;
+      const place = counterpart(changeMap, "authors", line);
+      carryPlace({ stage: ADAPTED.slot, line: place?.line ?? 1, notice: null });
+      navigate({ view: "read", stage: ADAPTED.slot, lean: hereRef.current.lean, graph: hereRef.current.graph });
+    },
+    [changeMap],
+  );
+  useChangeMarks(paperRef, side, changeMap, openChange, toEditionAt);
+  const goToChange = (change: Change) => {
+    setChangePane({ kind: "change", id: change.id });
+    if (route.pdf) return;
+    void landAtLine(change.adapted_lines[0][0]);
+  };
+  const changeView =
+    changePane && changeMap && side === "adapted"
+      ? changePane.kind === "list"
+        ? <ChangeList map={changeMap} current={null} onGo={goToChange} onClose={() => setChangePane(null)} />
+        : (() => {
+            const change = changeMap.changes.find((c) => c.id === changePane.id);
+            return change ? (
+              <ChangeCard
+                change={change}
+                map={changeMap}
+                onClose={() => setChangePane(null)}
+                onList={() => setChangePane({ kind: "list" })}
+                onGo={goToChange}
+                onAuthors={(c) => switchEdition("authors", c.adapted_lines[0][0])}
+              />
+            ) : null;
+          })()
+      : null;
+
   /** From the map: the paper goes to the statement, and the graph stays where it is. */
   const openFromMap = useCallback(
     (id: string) => {
@@ -1552,16 +1671,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const status = statusWords(structure.state, structure.review_state);
   const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
   const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
-  const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages } : undefined;
+  const pdfLabel = side === "adapted" ? ADAPTED?.pdfs[0]?.label : undefined;
+  const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages, label: pdfLabel } : undefined;
   // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
   const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
   useEffect(() => {
     let live = true;
+    // Only a document with the authors' PDF has its phrases placed on one.
+    if (!pdfOwn) {
+      setPdfMarks(null);
+      return;
+    }
     void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
     return () => {
       live = false;
     };
-  }, [stage]);
+  }, [stage, pdfOwn]);
   const pdfOn = !!route.pdf && !!pdfMarks;
   const pdfPage = useRef<number | null>(null);
   const onPdfPage = useCallback((page: number) => {
@@ -1580,7 +1705,21 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       navigate({ ...route, pdf: undefined, page: undefined, at }, { replace: true });
     }
   };
-  const head = { name: names.short, job: names.job, reader: names.reader, status, pdf };
+  // The adapted edition's credit stands beside a link to the authors' paper (and the auxiliary note's marked PDF).
+  const after =
+    side === "adapted" && ADAPTED ? (
+      <a className="adapted-credit-link" href={routeHref({ view: "read", stage: ADAPTED.of })}>Read the authors’ paper.</a>
+    ) : undefined;
+  const pdfAfter =
+    side === "adapted" && ADAPTED
+      ? ADAPTED.pdfs.slice(1).map((p) => (
+          <span key={p.name}>
+            {" · "}
+            <a className="pdf-link" href={`${import.meta.env.BASE_URL}pdf/${p.name}`} target="_blank" rel="noopener">{p.label}</a>
+          </span>
+        ))
+      : undefined;
+  const head = { name: names.short, job: names.job, reader: names.reader, status, pdf, after, pdfAfter };
   const inspecting = !!inspect;
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
@@ -1646,7 +1785,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   return (
     <div
-      className={`reader reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}${paneOn ? " reader--follow" : ""}`}
+      className={`reader${side === "adapted" ? " reader--edition" : ""} reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}${paneOn ? " reader--follow" : ""}`}
       onClick={(event) => {
         if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
@@ -1725,6 +1864,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          {side && <span className="edition-break" aria-hidden="true" />}
+          {side && (
+            <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
+              <button type="button" aria-pressed={side === "authors"} onClick={() => switchEdition("authors")}>Authors’ paper</button>
+              <button type="button" aria-pressed={side === "adapted"} onClick={() => switchEdition("adapted")}>Adapted edition</button>
+            </span>
+          )}
+          {side === "adapted" && (
+            <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
+              Show changes
+            </button>
+          )}
           {pdfMarks && (
             <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
               <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
@@ -1769,7 +1920,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {!outlineColumn && (
           <p className="account-line">
             {names.job} {names.reader}
+            {after && <> {after}</>}
             {status && <> {status}</>} {pdf && <PdfLink pdf={pdf} />}
+            {pdfAfter}
+          </p>
+        )}
+        {editionNotice && (
+          <p className="reader-notice" role="status">
+            {editionNotice}
           </p>
         )}
         {isPhraseLayer(ties) && ties.stops.length > 0 && !pdfOn && <p className="reader-hint">{READER_HINT}</p>}
@@ -1785,6 +1943,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             at={route.at}
             page={route.page}
             onPage={onPdfPage}
+            onChange={side === "adapted" ? (id) => setChangePane({ kind: "change", id }) : undefined}
             onPick={(id, mark, page) =>
               navigate({ ...route, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined })
             }
@@ -1833,7 +1992,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 inert={!!route.beside}
                 onHide={hideMap}
                 leanSlot={
-                  inspecting ? (
+                  changeView ? (
+                    changeView
+                  ) : inspecting ? (
                     inspector
                   ) : sectionsSide ? (
                     <section className="sections-side" aria-label="Sections of this paper">
@@ -1887,6 +2048,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           onView={() => setSheetCollapsed(false)}
           onResume={closeLean}
         />
+      )}
+      {changeView && !paneOn && (
+        <Modal title={changePane?.kind === "list" ? "Show changes" : "Selected change"} placement={phone ? "sheet" : "side-end"} className="modal--inspector" onClose={() => setChangePane(null)}>
+          {changeView}
+        </Modal>
       )}
 
       {!mid && inspect && (

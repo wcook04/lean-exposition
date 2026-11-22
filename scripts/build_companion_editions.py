@@ -34,7 +34,32 @@ LX = os.environ.get("LEAN_EXPOSITION", "lean-exposition")
 PY = os.environ.get("PYTHON", sys.executable)
 I = Path("instances") / a.paper
 inst = json.loads((I / "instance.json").read_text())
+# An adapted edition is built as a companion when the build staged it (LX_ADAPTED=1; scripts/adapted_edition.py).
+if os.environ.get("LX_ADAPTED") == "1" and (I / "adapted/edition.json").is_file():
+    inst["documents"].append(json.loads((I / "adapted/edition.json").read_text())["document"])
 docs = [d for d in inst["documents"] if d.get("kind") == "companion" and (not a.only or d["slot"] in a.only)]
+
+
+def scaffold() -> tuple[dict, str]:
+    """An empty slot's mapping and text: the paper's own papers/long/absent.* when it has them, else
+    made the way scripts/from_proof_reader.py makes them (a paper whose three slots are all in use)."""
+    if (I / "papers/long/absent.json").is_file():
+        return json.loads((I / "papers/long/absent.json").read_text()), (I / "papers/long/absent.md").read_text()
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from lean_exposition.contracts import closure, required_citation_ids
+    import hashlib
+    empty = ("<!-- EMPTY SCAFFOLD: this paper has no document in this slot. No result or review is "
+             "asserted here, and the reader does not show it. -->\n")
+    graph_bytes = (I / "evidence-graph.json").read_bytes()
+    graph = json.loads(graph_bytes)
+    nodes = {n["id"]: n for n in graph["nodes"]}
+    goal = f"{a.paper}.{inst['goal']}" if f"{a.paper}.{inst['goal']}" in nodes else inst["goal"]
+    sha = lambda b: hashlib.sha256(b).hexdigest()
+    return ({"schema_version": "1.2", "stage": "long", "state": "scaffold", "path": "papers/long.md",
+             "content_sha256": sha(empty.encode()), "graph_sha256": sha(graph_bytes), "selected_goal_ids": [goal],
+             "claim_ids": [], "citation_ids": sorted(required_citation_ids(graph, [goal])), "assumption_ids": [],
+             "unresolved_ids": sorted(n for n in closure(graph, [goal]) if nodes[n]["status"] in {"open", "unverified", "external", "conditional"}),
+             "passages": [], "review_state": "not_reviewed", "review_notes": []}, empty)
 
 
 def restage(data: dict, old: str, new: str) -> dict:
@@ -75,8 +100,7 @@ def build(doc: dict) -> str:
     put = lambda name, data: (tmp / name).write_text(json.dumps(data, ensure_ascii=False))
     put("alignment/phrases-short.json", restage(json.loads((I / f"alignment/phrases-{page}.json").read_text()), page, "short"))
     put("alignment/references-short.json", restage(json.loads((I / f"alignment/references-{page}.json").read_text()), page, "short"))
-    absent = json.loads((I / "papers/long/absent.json").read_text())
-    empty = (I / "papers/long/absent.md").read_text()
+    absent, empty = scaffold()
     for s in ("long", "expository"):
         refs = restage(json.loads((I / "alignment/references-long.json").read_text()), "long", s)
         put(f"alignment/references-{s}.json", {**refs, "references": [], "sources": {}})

@@ -50,7 +50,9 @@ export function normalizePosix(path: string): string | null {
   return out.join("/");
 }
 
-function dirOf(path: string): string {
+function dirOf(path: string | undefined): string {
+  // A document with no recorded path resolves its relative links from the root.
+  if (!path) return "";
   const i = path.lastIndexOf("/");
   return i < 0 ? "" : path.slice(0, i + 1);
 }

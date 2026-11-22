@@ -6,6 +6,8 @@ import type { SiteFacts } from "../../home/siteFacts.ts";
 import type { RecordKind, SiteInstance } from "../types.ts";
 import { PAPER, MAIN, LIBRARY_ROOT } from "./data.ts";
 
+const ADAPTED = PAPER.documents.find((d) => d.adapted);
+
 const n = (value: number) => value.toLocaleString("en-GB");
 const plain = (text: string) => text.replace(/\$([^$]+)\$/g, "$1");
 const authors = (list: string[]) => (list.length < 2 ? list.join("") : `${list.slice(0, -1).join(", ")} and ${list[list.length - 1]}`);
@@ -38,7 +40,10 @@ const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
 // repository only (companion_credit).
 // A document that says what it does and who it is for (doc.job, doc.reader) keeps its own words.
 for (const doc of PAPER.documents)
-  paperNames[doc.slot] = doc.main
+  paperNames[doc.slot] = doc.adapted
+    ? // The adapted edition's header carries its own credit, whole; the authors' paper keeps theirs.
+      { short: "Adapted edition", job: sentence(`${doc.title}, an adapted edition`), reader: doc.credit ?? "" }
+    : doc.main
     ? { short: doc.title, job: doc.job ?? sentence(`${doc.title}, by ${BY}`), reader: doc.reader ?? CREDIT }
     : {
         short: doc.title,
@@ -149,10 +154,19 @@ const site = {
     pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
     companions: PAPER.documents
       .filter((d) => d.kind === "companion")
-      .map((d) => ({ slot: d.slot, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
+      .map((d) => ({ slot: d.slot, id: d.id, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
       .sort((a, b) => a.order - b.order),
     guide: PAPER.documents.find((d) => !d.main && d.noun === "guide")?.slot,
   },
+  adapted: ADAPTED
+    ? {
+        slot: ADAPTED.slot,
+        of: (PAPER.documents.find((d) => d.id === ADAPTED.of) ?? MAIN).slot,
+        credit: ADAPTED.credit ?? "",
+        authorsPaper: PAPER.source.upstream.paper,
+        pdfs: [ADAPTED.pdf, ADAPTED.aux_pdf].filter((p): p is NonNullable<typeof p> => !!p).map((p) => ({ label: p.label ?? "PDF", name: p.name ?? p.file })),
+      }
+    : undefined,
   recordKind,
   leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
   levelGoals: R.level_goals ?? null,

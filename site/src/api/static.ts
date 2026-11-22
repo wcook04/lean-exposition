@@ -177,14 +177,18 @@ export async function staticRequest(url: string): Promise<Response> {
   if (!page) return serve("index.json", url);
   asked.pathname = asked.pathname.replace(STAGED_ROUTE, (whole, api = "", kind, stage) => (stage === page ? `${api}/${kind}/short` : whole));
   if (asked.searchParams.get("paper") === page) asked.searchParams.set("paper", "short");
-  const response = await serve(`docs/${page}/index.json`, asked.pathname + asked.search);
+  // A companion's own edition is part of the paper's published edition: its answers carry the paper's
+  // snapshot, so the reader's pin (the paper's manifest) is the one they are checked against.
+  const edition = (await load<StaticIndex>("index.json")).snapshot;
+  const response = await serve(`docs/${page}/index.json`, asked.pathname + asked.search, edition);
   if (!(response.headers.get("content-type") ?? "").includes("json")) return response;
   const body = await response.json();
   return Response.json(restage(body, page), { status: response.status });
 }
 
-async function serve(indexName: string, url: string): Promise<Response> {
-  const index = await load<StaticIndex>(indexName);
+async function serve(indexName: string, url: string, edition?: Snapshot): Promise<Response> {
+  const loaded = await load<StaticIndex>(indexName);
+  const index = edition ? { ...loaded, snapshot: edition } : loaded;
   if (index.version !== 1 && index.version !== 2) throw new Error("Unsupported captured-edition format.");
   const request = new URL(url, window.location.origin);
   const route = request.pathname.replace(/^\/api\/v1/, "");

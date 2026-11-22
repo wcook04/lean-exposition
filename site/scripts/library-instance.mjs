@@ -4,7 +4,7 @@
 // public/addresses.json, the table of phrase addresses (/@<tie id>) read from the exported
 // edition (public/edition/ties/<slot>.json). Run after export-static.py.
 // Usage: library-instance.mjs <paper>
-import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const paper = process.argv[2] ?? process.env.LX_PAPER;
@@ -27,6 +27,11 @@ const sectionAids = (() => {
   if (Array.isArray(table)) return Object.fromEntries(table.filter((row) => row && (row.section ?? row.key) && (row.aid ?? row.text)).map((row) => [String(row.section ?? row.key), String(row.aid ?? row.text)]));
   return Object.fromEntries(Object.entries(table).filter(([, text]) => typeof text === "string"));
 })();
+// An adapted edition joins the documents only when the build staged it (LX_ADAPTED=1, set by
+// scripts/build_library_paper.sh from the edition's `published` flag); otherwise the paper builds as before.
+const adaptedPath = resolve(import.meta.dirname, "../../instances", paper, "adapted/edition.json");
+const adapted = process.env.LX_ADAPTED === "1" && existsSync(adaptedPath) ? JSON.parse(readFileSync(adaptedPath, "utf8")).document : null;
+if (adapted) instance.documents = [...instance.documents.filter((d) => d.id !== adapted.id), adapted];
 // The supports links whose only evidence is the Lean's dependencies (the converter's
 // "lean_dependencies" record), so the reader calls them derived from the Lean and never the
 // paper's own argument. Links the paper states carry other evidence.
@@ -152,6 +157,13 @@ for (const [from, row] of Object.entries(instance.moved_pages ?? {})) {
     for (const tie of ties) onPage[tie.id] ??= page;
   }
   moved[from] = { to: row.to, phrases: onPage };
+}
+// The adapted edition's changes, read by the reader's changes layer.
+const changesDir = resolve(import.meta.dirname, "../public/changes");
+rmSync(changesDir, { recursive: true, force: true });
+if (adapted) {
+  mkdirSync(changesDir, { recursive: true });
+  copyFileSync(resolve(import.meta.dirname, "../../instances", paper, `alignment/changes-${adapted.slot}.json`), resolve(changesDir, `${adapted.slot}.json`));
 }
 writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, moved, checks: laterChecks }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets, ${Object.keys(moved).length} moved pages)`);
