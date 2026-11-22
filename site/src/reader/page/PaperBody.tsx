@@ -445,6 +445,10 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
     if (!html || !rendered || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
+    // Its formulas are fitted as the part is placed, wherever it is, in the frame it first paints:
+    // a part typeset after the reader has passed it, or far ahead of them, would otherwise wait for
+    // the reader to come back, or change later while the page is meant to be still.
+    fitters.get(textRef.current)?.(() => true, true);
     statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
       statements?.adopt(part.index, null);
