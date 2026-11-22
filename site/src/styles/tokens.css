@@ -90,6 +90,8 @@
   --reader-gap: 32px;
   /* The reader's marks: a linked phrase's underline at rest. */
   --tie-rule: 1px;
+  --tie-rest-line-opacity: 8%;
+  --tie-rest-fill-opacity: 14%;
 
   /* Day: the family's warm paper and violet ink. */
   --ground: #f8f0e2;

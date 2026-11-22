@@ -289,7 +289,7 @@ UNDERLINE = r"""(e) => {
 
 
 def underline_checks(browser, base, args, check) -> None:
-    """In both schemes at 1440x900, measured as drawn: a phrase at rest has a 1px underline and no tint;
+    """In both schemes at 1440x900, measured as drawn: a phrase at rest has a faint 1px underline over a light tint;
     pointed at, keyboard-focused or selected it is heavier (hover and focus 2px over a light tint, a
     selected phrase 2px in amber, a selected whole statement its margin rule). Inside a selected whole
     statement the prose phrases keep the 1px resting line."""
@@ -313,7 +313,7 @@ def underline_checks(browser, base, args, check) -> None:
             el.evaluate("e => e.scrollIntoView({block: 'center'})")
             page.wait_for_timeout(400)
             rest = el.evaluate(UNDERLINE)
-            check(f"{tag} rest 1px", rest["line"] == 1 and rest["tint"] == 0 and not rest["hover"], str(rest))
+            check(f"{tag} rest 1px", rest["line"] == 1 and 0.13 <= rest["tint"] <= 0.15 and not rest["hover"], str(rest))
             if args.shots:
                 box = el.bounding_box()
                 if box:
@@ -323,7 +323,7 @@ def underline_checks(browser, base, args, check) -> None:
             page.mouse.move(point["x"], point["y"])
             page.wait_for_timeout(300)
             hover = el.evaluate(UNDERLINE)
-            check(f"{tag} hover stronger", hover["hover"] and hover["line"] == 2 and 0 < hover["tint"] <= 0.2, str(hover))
+            check(f"{tag} hover stronger", hover["hover"] and hover["line"] == 2 and rest["tint"] < hover["tint"] <= 0.23, str(hover))
             page.mouse.move(2, 450)
             # Keyboard focus: a key first, so that the focus that follows is shown as keyboard focus.
             page.keyboard.press("Shift")
