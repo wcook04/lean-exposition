@@ -102,7 +102,13 @@ type Read = Extract<Route, { view: "read" }>;
  * or null when the page did not move: /accounts → /digest, /accounts/@<id> → /<its page>/@<id>,
  * /accounts/lean/<name> → /digest/lean/<name>.
  */
-export function movedLibraryPath(path: string): string | null {
+export function movedLibraryPath(path: string, lib = LIBRARY): string | null {
+  // A guide or companion page the library no longer publishes opens the paper (or the edition it was
+  // read under, /adapted/<old page>/), never its former text: /start-here/@id → /.
+  const removed = new Set(lib?.removed ?? []);
+  const gone = path.match(/^\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?(?:\/.*)?$/);
+  if (gone && removed.has(gone[1])) return "/";
+  if (gone && gone[2] && removed.has(gone[2]) && lib?.pages?.[gone[1]]) return `/${gone[1]}`;
   const m = path.match(/^\/([a-z0-9-]+)(\/.*)?$/);
   const moved = m ? movedPages[m[1]] : undefined;
   if (!m || !moved) return null;

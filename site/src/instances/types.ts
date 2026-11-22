@@ -137,6 +137,8 @@ export interface SiteInstance {
     paper: string;
     main: InstanceStage;
     pages?: Record<string, string>;
+    /** Slugs of pages no longer published (removed guides and companions): their addresses open the paper. */
+    removed?: string[];
     /** `id` names the companion's folder in its source (`<id>/paper.md`), so links between companions resolve. */
     companions?: { slot: string; id?: string; title: string; group: string; group_title: string; order: number }[];
     /** Documents of the same paper read in another build (a fourth document, served at its own address); the Read menu links to them. */

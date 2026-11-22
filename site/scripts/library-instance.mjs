@@ -140,5 +140,9 @@ if (adapted) {
   mkdirSync(changesDir, { recursive: true });
   copyFileSync(resolve(import.meta.dirname, "../../instances", paper, `alignment/changes-${adapted.slot}.json`), resolve(changesDir, `${adapted.slot}.json`));
 }
+// Pages the library no longer publishes (instance.json removed_pages) open the paper; none may still be a page.
+for (const slug of instance.removed_pages ?? []) {
+  if (instance.documents.some((d) => d.slug === slug)) throw new Error(`removed_pages: ${slug} is still a page of the paper`);
+}
 writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, pages, moved, checks: laterChecks }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets, ${Object.keys(moved).length} moved pages)`);

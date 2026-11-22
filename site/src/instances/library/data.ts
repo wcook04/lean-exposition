@@ -126,6 +126,8 @@ export interface LibraryInstance {
   reader?: ReaderSettings;
   /** Written by scripts/library-instance.mjs: supports links ("from→to") whose only evidence is the Lean's dependencies. */
   lean_derived_supports?: string[];
+  /** Slugs of guide and companion pages the library no longer publishes; each address opens the paper. */
+  removed_pages?: string[];
 }
 
 export const PAPER = current as LibraryInstance;
