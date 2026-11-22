@@ -450,11 +450,10 @@ const Part = memo(function Part({ part, stage, doc, rendered, placedLater, struc
     if (!html || !rendered || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
-    // A part typeset after the first render has its formulas fitted as it is placed, wherever it
-    // is, in the frame it first paints: one typeset after the reader has passed it would otherwise
-    // wait for the reader to come back. The first render's parts are fitted as they come near and
-    // in idle time, which keeps the first render light.
-    if (placedLater) fitNow(textRef.current);
+    // A part typeset only after the reader has passed it has its formulas fitted as it is placed,
+    // in the frame it first paints; they would otherwise wait for the reader to come back. Every
+    // other part's formulas are fitted as they come near and in idle time, a few at a time.
+    if (placedLater && textRef.current.getBoundingClientRect().bottom < 0) fitNow(textRef.current);
     statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
       statements?.adopt(part.index, null);
