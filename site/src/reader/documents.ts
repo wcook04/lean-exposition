@@ -22,7 +22,7 @@ export function frontCreditHtml(stage: Stage): string | null {
   const adapted = site.adapted?.slot === stage ? site.adapted : undefined;
   const base = import.meta.env.BASE_URL;
   if (adapted) {
-    // An adapted edition: the authors' paper and the edition's marked PDFs, after the review sentence.
+    // An adapted edition: its line, the authors' paper and the edition's marked PDFs.
     const pdfs = [
       ...(pdf ? [`<a class="pdf-link" href="${escapeHtml(`${base}${pdf.path}`)}" target="_blank" rel="noopener">${escapeHtml(adapted.pdfs[0]?.label ?? "Open PDF")}, ${pdf.pages} ${pdf.pages === 1 ? "page" : "pages"}</a>`] : []),
       ...adapted.pdfs.slice(1).map((p) => `<a class="pdf-link" href="${escapeHtml(`${base}pdf/${p.name}`)}" target="_blank" rel="noopener">${escapeHtml(p.label)}</a>`),
