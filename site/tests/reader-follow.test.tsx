@@ -474,23 +474,42 @@ describe("opening a card", async () => {
     cleanup = null;
   });
 
-  it("pans when scrolled, and zooms about the pointer on a pinch or with Ctrl or Cmd", async () => {
+  it("zooms vertical wheel and pinch gestures about the pointer, and pans horizontal gestures", async () => {
     const { ref } = await draw();
     const scene = () => ref.current!.getScene().camera;
     const before = scene();
     const tree = container.querySelector(".tree")!;
-    const wheel = (init: WheelEventInit) => act(() => tree.dispatchEvent(new WheelEvent("wheel", { bubbles: true, cancelable: true, clientX: 300, clientY: 200, ...init })));
-    wheel({ deltaY: 120 });
-    expect(scene().k).toBe(before.k);
-    expect(scene().y).toBeCloseTo(before.y - 120, 0);
+    const wheel = (init: WheelEventInit, target = tree) => {
+      const event = new WheelEvent("wheel", { bubbles: true, cancelable: true, clientX: 300, clientY: 200, ...init });
+      act(() => { target.dispatchEvent(event); });
+      return event.defaultPrevented;
+    };
+    expect(wheel({ deltaY: -10.5, deltaX: 0.4 })).toBe(true);
+    const zoomed = scene();
+    expect(zoomed.k).toBeGreaterThan(before.k);
+    expect((300 - zoomed.x) / zoomed.k).toBeCloseTo((300 - before.x) / before.k);
+    expect((200 - zoomed.y) / zoomed.k).toBeCloseTo((200 - before.y) / before.k);
+    wheel({ deltaY: 10.5 });
+    expect(scene().k).toBeCloseTo(before.k);
     wheel({ deltaX: 60 });
+    expect(scene().k).toBeCloseTo(before.k);
     expect(scene().x).toBeCloseTo(before.x - 60, 0);
-    const k = scene().k;
     wheel({ deltaY: -40, ctrlKey: true });
-    expect(scene().k).toBeGreaterThan(k);
-    const zoomed = scene().k;
+    expect(scene().k).toBeGreaterThan(before.k);
     wheel({ deltaY: 40, metaKey: true });
-    expect(scene().k).toBeLessThan(zoomed);
+    expect(scene().k).toBeCloseTo(before.k);
+    const after = scene();
+    expect(wheel({ deltaY: 100 }, tree.querySelector(".tree__ui")!)).toBe(false);
+    expect(scene()).toEqual(after);
+    // Browsers can report wheel deltas in lines or whole pages. The camera still enforces its bounds.
+    for (const deltaMode of [WheelEvent.DOM_DELTA_LINE, WheelEvent.DOM_DELTA_PAGE]) {
+      const startScale = scene().k;
+      wheel({ deltaMode, deltaY: -1 });
+      const increased = scene().k;
+      expect(increased).toBeGreaterThan(startScale);
+      wheel({ deltaMode, deltaY: 1 });
+      expect(scene().k).toBeLessThan(increased);
+    }
   });
 
   it("selects on a click without unfolding or zooming, and hover draws nothing new", async () => {
