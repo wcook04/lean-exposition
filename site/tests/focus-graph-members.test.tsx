@@ -20,6 +20,7 @@ afterEach(() => {
   act(() => root.unmount());
   container.remove();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 // One subject that uses 36 definitions: too many for the column, so they are drawn as one group.
@@ -87,6 +88,20 @@ describe("a large group opens as a list of its members", () => {
     expect(head().getAttribute("aria-expanded")).toBe("true");
     expect($(".fg__listname")!.textContent).toMatch(/, 36$/);
     expect(document.activeElement).toBe($(".fg__listsearch"));
+  });
+
+  it.each([[668, true], [908, false]] as const)("at %ipx the canvas is inert only under a full-width member list", (width, covered) => {
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(width);
+    draw();
+    click(head());
+    expect($(".fg__list")!.classList.contains("fg__list--narrow")).toBe(covered);
+    expect($(".fg__scroll")!.hasAttribute("inert")).toBe(covered);
+    expect($(".fg__tools")!.hasAttribute("inert")).toBe(covered);
+    expect(document.activeElement).toBe($(".fg__listsearch"));
+    click(button("Back to the graph"));
+    expect($(".fg__scroll")!.hasAttribute("inert")).toBe(false);
+    expect($(".fg__tools")!.hasAttribute("inert")).toBe(false);
+    expect(document.activeElement).toBe(head());
   });
 
   it("zooms over the drawing and leaves wheel events over the member list and toolbar alone", () => {
