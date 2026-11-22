@@ -7,7 +7,7 @@
    two. A colour never says how the Lean compares with the phrase; the card says that in words.
    tests/topic-colours.test.ts checks the floors, the contrast and that the stored colours are current. */
 
-/* The phrase at rest: a thin underline in its topic's colour at full strength, drawn under each of
+/* The phrase at rest: a one-pixel line (--tie-rule) in its topic's colour at full strength, drawn under each of
    its lines, and nothing behind the words, so that a paragraph linked sentence by sentence still
    reads as text with the colour as a quiet guide to where the links run. The line sits at the foot
    of the line box, below the descenders, so it never crosses a letter; it is a background rather
@@ -17,8 +17,15 @@
   background-image: linear-gradient(var(--tone), var(--tone));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: calc(100% - 3px) 1.5px;
+  background-size: calc(100% - 3px) var(--tie-rule);
   padding-bottom: 1px;
+}
+
+/* Words in a line: the line sits 3px below the line box's foot, clear of g, y and inline formulas.
+   Padding on an inline box does not move the lines, so the text keeps its spacing; a display is a
+   block, whose padding would, so it keeps its 1px. */
+.paper .tie[data-tone]:not(.math-display) {
+  padding-bottom: 3px;
 }
 
 /* A display is marked by a thin rule beside it. */
@@ -64,7 +71,7 @@
    and one amber rule runs down the margin beside the block (.tick-run). */
 .paper .tie[data-tone][data-pin][data-pin-block] {
   background-image: linear-gradient(var(--tone), var(--tone));
-  background-size: calc(100% - 3px) 1.5px;
+  background-size: calc(100% - 3px) var(--tie-rule);
 }
 
 /* A phrase pointed at inside a selected block still answers as at rest: a 2px line in its colour. */
