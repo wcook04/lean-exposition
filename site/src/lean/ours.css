@@ -40,3 +40,11 @@
 .later-check__badge { color: var(--ink-3); font-size: 0.85em; text-transform: none; }
 .later-check__question { font-weight: 600; }
 .later-check__runs { color: var(--ink-3); font-size: 0.9em; }
+
+/* The premise a statement of ours is conditional on: on the card itself, never only behind "more". */
+.ours__condition { margin: 0 0 var(--space-2); font-weight: 600; color: var(--ink-1, inherit); }
+
+/* Forms stated but not yet proved. */
+.ours--open { border-style: dotted; }
+.ours__open { margin: 0; padding-left: 1.2em; }
+.ours__open li { margin: 0 0 var(--space-1); }

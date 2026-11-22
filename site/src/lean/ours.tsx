@@ -21,6 +21,17 @@ interface OurDeclaration {
 interface Ours {
   declarations: Record<string, OurDeclaration>;
   byPhrase: Record<string, { lean: string; fidelity: string; note: string }[]>;
+  /** Forms stated but not yet proved, each with what a proof still needs (open_targets.json). */
+  openTargets?: Record<string, { title: string; missing: string }>;
+}
+
+/** The namespace a Lean name sits in, its first segment: Theorem11 for Theorem11.theorem11Space. */
+const namespaceOf = (name: string) => name.split(".")[0];
+
+/** The premise a statement is conditional on, when its own words say so ("Conditional on the profile premise"). */
+function conditionOf(decl: OurDeclaration | undefined): string | null {
+  const m = `${decl?.summary ?? ""} ${decl?.source ?? ""}`.match(/Conditional on the ([a-z ]+? premise)/);
+  return m ? `Conditional on the ${m[1]}` : null;
 }
 
 let loading: Promise<Ours | null> | null = null;
@@ -59,12 +70,16 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
   }, [phrase]);
   const rows = phrase ? (ours?.byPhrase[phrase] ?? []) : [];
   if (!rows.length) return null;
+  // The forms of the same results that are stated but not yet proved, once, after our statements.
+  const spaces = new Set(rows.map((row) => namespaceOf(row.lean)));
+  const open = Object.entries(ours?.openTargets ?? {}).filter(([name]) => spaces.has(namespaceOf(name)));
   return (
     <>
       {rows.map((row) => {
         const decl = ours!.declarations[row.lean];
         const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
         const run = acceptedRun(decl?.status?.comparator);
+        const condition = conditionOf(decl);
         return (
           <section key={row.lean} className="ours" aria-label="Our statement, proved from the authors' Lean library">
             <p className="ours__badge">Our statement, proved from the authors' Lean library. Not the authors' Lean.</p>
@@ -80,6 +95,7 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
                 )}
               </p>
             )}
+            {condition && <p className="ours__condition">{condition}</p>}
             {verdict && (
               <p className="ours__fidelity">
                 <strong>{verdict}</strong>: <span dangerouslySetInnerHTML={{ __html: noteHtml(row.note).html }} /> <span className="ours__who">AI-assessed</span>
@@ -104,6 +120,19 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
           </section>
         );
       })}
+      {open.length > 0 && (
+        <section className="ours ours--open" aria-label="Not yet formalized">
+          <p className="ours__badge">Not yet formalized</p>
+          <ul className="ours__open">
+            {open.map(([name, target]) => (
+              <li key={name}>
+                <strong>{target.title.replace(/^Open:\s*/, "")}.</strong>{" "}
+                Missing: <span dangerouslySetInnerHTML={{ __html: noteHtml(target.missing).html }} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </>
   );
 }
