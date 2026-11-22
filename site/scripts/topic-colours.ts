@@ -9,6 +9,8 @@
 // up as a diff to review. The Python reader and the site read the stored colours; nothing is
 // computed while a page loads.
 //
+// A colours file with a `stored_from` field holds colours carried from the paper's source; it is
+// left unchanged.
 // Usage (from anywhere): node site/scripts/topic-colours.ts [--check] [--report]
 //   --check   write nothing; exit 1 when a stored file differs from what the data gives
 //   --report  print each list's floors
@@ -108,6 +110,9 @@ export function compute(): Computed {
     const section = text ? sectionAt(text) : () => "";
     const families: FamilyIn[] | undefined = data.families;
     const colours = resolve(path, "..", `colours-${slot}.json`);
+    // Colours carried from the paper's own source (an imported reader's stored palette) are kept as
+    // they are: the file names where they came from in `stored_from`, and nothing here recomputes it.
+    if (existsSync(colours) && JSON.parse(readFileSync(colours, "utf8")).stored_from) continue;
     const keys: string[] = [];
     (data.parts as { topics: TopicIn[] }[]).forEach((part, n) => {
       const topics = part.topics.map((t) => ({ id: t.id, name: t.name, ...(t.family ? { family: t.family } : {}) }));

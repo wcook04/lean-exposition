@@ -1,0 +1,31 @@
+module
+
+public import QuarticQuery.ForrelationLower.RealLeafExplicit
+public import QuarticCorpus.Independent.RealLeaves.Controls
+
+set_option pp.universes true
+
+#check @QuarticQuery.ForrelationLower.RealQueryTree.booleanTree_depth
+#check @QuarticQuery.ForrelationLower.RealQueryTree.weight_nonneg
+#check @QuarticQuery.ForrelationLower.RealQueryTree.sum_weight
+#check @QuarticQuery.ForrelationLower.RealQueryTree.eval_eq_convex_sum
+#check @QuarticQuery.ForrelationLower.RealQueryTree.linear_bound
+#check @QuarticQuery.ForrelationLower.RealQueryTree.sum_linear_bound
+#check @QuarticQuery.ForrelationLower.sum_abs_ext_Dl_le_real_leaves
+#check @QuarticQuery.ForrelationLower.advantage_le_sharp_real_leaves
+#check @QuarticQuery.ForrelationLower.sum_abs_ext_Dl_le_real_leaves_explicit
+#check @QuarticQuery.ForrelationLower.advantage_le_sharp_real_leaves_explicit
+#check @QuarticQuery.Independent.RealLeaves.threeValue_not_two_outputs
+#check @QuarticQuery.Independent.RealLeaves.unbounded_leaf_has_negative_weight
+#check @QuarticQuery.Independent.RealLeaves.no_global_zero_tree_for_identity
+
+#print axioms QuarticQuery.ForrelationLower.RealQueryTree.eval_eq_convex_sum
+#print axioms QuarticQuery.ForrelationLower.RealQueryTree.linear_bound
+#print axioms QuarticQuery.ForrelationLower.RealQueryTree.sum_linear_bound
+#print axioms QuarticQuery.ForrelationLower.sum_abs_ext_Dl_le_real_leaves
+#print axioms QuarticQuery.ForrelationLower.advantage_le_sharp_real_leaves
+#print axioms QuarticQuery.ForrelationLower.sum_abs_ext_Dl_le_real_leaves_explicit
+#print axioms QuarticQuery.ForrelationLower.advantage_le_sharp_real_leaves_explicit
+#print axioms QuarticQuery.Independent.RealLeaves.threeValue_not_two_outputs
+#print axioms QuarticQuery.Independent.RealLeaves.unbounded_leaf_has_negative_weight
+#print axioms QuarticQuery.Independent.RealLeaves.no_global_zero_tree_for_identity
