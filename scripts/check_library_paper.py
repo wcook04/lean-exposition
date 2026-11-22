@@ -302,10 +302,16 @@ def underline_checks(browser, base, args, check) -> None:
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(2500)
             resting = ".paper .tie[data-tone]:not(.math-display):not([data-pin]):not([data-decl]):not([data-point]):not([data-on])"
-            el = page.locator(resting).nth(2)
+            # A phrase that is drawn (not inside a folded or hidden part), so it can be pointed at and focused.
+            index = page.evaluate("""(sel) => { const els = [...document.querySelectorAll(sel)];
+                const shown = els.findIndex((e, i) => i >= 2 && e.getClientRects().length > 0 && (!e.checkVisibility || e.checkVisibility({ visibilityProperty: true })));
+                return shown < 0 ? 0 : shown; }""", resting)
+            el = page.locator(resting).nth(index)
             el.evaluate("e => e.scrollIntoView({block: 'center'})")
             page.mouse.move(2, 450)
-            page.wait_for_timeout(600)
+            page.wait_for_timeout(1200)
+            el.evaluate("e => e.scrollIntoView({block: 'center'})")
+            page.wait_for_timeout(400)
             rest = el.evaluate(UNDERLINE)
             check(f"{tag} rest 1px", rest["line"] == 1 and rest["tint"] == 0 and not rest["hover"], str(rest))
             if args.shots:
