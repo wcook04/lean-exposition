@@ -38,3 +38,9 @@ rm -rf "$STAGE" && mkdir -p "$STAGE"
   --credit "$CREDIT"
 # Topic colours are stored beside each phrases file; recompute them for the re-imported phrases.
 (cd site && node scripts/topic-colours.ts)
+# An adapted edition (instances/navier-stokes/adapted/) aligns its change map to the authors' reading
+# copy line by line, so a re-import must not move a line of it. Stop if it did.
+if [ -f instances/navier-stokes/adapted/changes.json ] && ! git diff --quiet -- instances/navier-stokes/papers/short/paper.md; then
+  echo "the authors' reading copy changed: realign instances/navier-stokes/adapted/ before keeping this re-import" >&2
+  exit 3
+fi

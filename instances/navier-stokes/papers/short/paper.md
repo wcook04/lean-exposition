@@ -1225,8 +1225,6 @@ $$ These functions are smooth, and $W(s,\cdot)=D_{e^{-s}}u(1-e^{-s})=\mathcal W(
 
 <!-- passage:sec-appendix-a -->
 
-<a id="appendix-a.1"></a>
-
 ### A.1 Proofs of the lemmas of Section 3
 
 *Proof of Lemma 3.3.* Since $K(\tau)$ is bilinear and continuous in $\tau$, the bound of (3.12) shows that the map $(\tau,\chi,\chi')\mapsto K(\tau)(\chi,\chi')$ is continuous on $(0,\infty)\times\mathcal X\times\mathcal X$. Hence the integrand is continuous in $t'\in[a,t)$, with norm at most $C_K\,(t-t')^{-3/4}\max_{[a,b]}\|u\|_{\mathcal X}\,\max_{[a,b]}\|v\|_{\mathcal X}$, and it is integrable. After the substitution $\tau=t-t'$ the continuity of the integral in $t$ follows by dominated convergence. $\square$
@@ -1255,8 +1253,6 @@ Let $u,v\in\dot H_{\mathrm{div}}^1(\mathbb T_L^3)$. By Hölder’s inequality an
  \|(u\cdot\nabla)v\|_{L^{3/2}(Q_L)}\leq\|u\|_{L^6(Q_L)}\|\nabla v\|_{L^2(Q_L)}\lesssim\|u\|_{\dot H^1(\mathbb T_L^3)}\|v\|_{\dot H^1(\mathbb T_L^3)},
 $$ and the same holds with $u$ and $v$ exchanged. The field $(u\cdot\nabla)v=\operatorname{div}(v\otimes u)$ has mean zero, and so has $(v\cdot\nabla)u$. The first part of the lemma, for $f=(u\cdot\nabla)v+(v\cdot\nabla)u$, therefore gives (3.20). $\square$
 
-<a id="appendix-a.2"></a>
-
 ### A.2 Proof of Lemma 2.3
 
 We deduce the lemma from the local theory in $H^1$, in the form given by Tao \[[84](#cite-ref84), Section 5\], which concerns solutions in a smaller class. An $H^1$ mild solution on $[0,b]$ in the sense of \[[84](#cite-ref84), p. 31\], without force and with a divergence-free datum $u_0\in H^1(\mathbb R^3)$, is a divergence-free field $\tilde u\in L^\infty([0,b];H^1(\mathbb R^3))\cap L^2([0,b];H^2(\mathbb R^3))$ which satisfies the integral equation \[[84](#cite-ref84), (11)\] with the datum $u_0$; its pressure $\tilde p$ is determined by $\tilde u(t)$ at each time $t$, through the formula \[[84](#cite-ref84), (9)\]. The periodic $H^1$ mild solutions of \[[84](#cite-ref84), p. 29\] are defined in the same way on the torus. We show that such a solution with the datum $u(0)$ coincides with $u$ as long as it exists, and that its norm in $H^1$ remains bounded. By the alternative of \[[84](#cite-ref84)\] between existence and blow-up in $H^1$, it then exists on $[0,b]$ for every $b<T$, and $u$ has the smoothness that \[[84](#cite-ref84)\] proves in this class.
@@ -1277,8 +1273,6 @@ Now let $u$ be as in the second assertion, with the smooth datum $u_0$, and let 
 <!-- passage:sec-appendix-b -->
 
 In this appendix we describe the form that the formalization (Subsection 1.5) prescribes for the data of a certificate, and we derive, from conditions on finitely many functions and numbers attached to data of this form, the estimates (7.18), (7.19) and (7.22) and the bounds (7.32) to (7.34). The result is Proposition B.14: data of this form that satisfy these conditions are a certificate in the sense of Section 7. We prove it here except for two statements, whose proofs are in the formalization and which we only describe: Proposition B.1, the inequality for a multiplier with which the a priori estimate (7.18) begins (Subsection B.2), and Proposition B.4, the inequalities for the cells of a mesh of the meridian plane, from which the rest of this estimate is assembled along a tree of matrices (Subsection B.3). In the formalization the two are stated for larger classes of perturbations and of right-hand sides. By the conditions of this appendix we mean those of Subsections B.1 to B.4 together with the further ones that are named after <!-- source-page: 50 --> Proposition B.14; together they are the hypothesis of the formal statement. The radial phase of Subsection B.1 and the weights of Subsection B.2 are explained in Appendix C.
-
-<a id="appendix-b.1"></a>
 
 ### B.1 The form of the data of a certificate
 
@@ -1342,8 +1336,6 @@ The fields $e_k$ are obtained by orthogonalization from fields with one harmonic
  e_k=\tau_k^{1/2}\sum_{k'=1}^N\bigl(G^{-1/2}\bigr)_{kk'}\,\tilde e_{k'},
  \tag{B.11}
 \end{equation}$$ where $\tau_k>0$ depends only on the cell and on the harmonic of $\tilde e_k$, and $\frac3{50}\,\tau_k\leq400\,(1+2^{-18})$. The fields $e_k$ are pairwise orthogonal, with $\|e_k\|_{\mathcal H}^2=\tau_k$.
-
-<a id="appendix-b.2"></a>
 
 ### B.2 The multiplier inequality
 
@@ -1424,8 +1416,6 @@ $$ with $P\geq0$ and $Q\geq0$. By the bound for $\mathsf Mv$ of Proposition B.1,
 $$ Since $\bigl(\frac3{50}\bigr)^{1/2}\|(v,\beta)\|_{w,\omega}\leq P$, division by $\bigl(\frac3{50}\bigr)^{1/2}$ gives (7.18) with $\bigl(\frac{50}3\bigr)^{1/2}c_{\mathsf M}$ in place of $c_1$ and $\bigl(1000\cdot\frac{50}3\bigr)^{1/2}$ in place of $c_2$, and hence with the numbers $c_1$ and $c_2$ of (B.22). $\square$
 
 Since $c_{\mathsf M}$ does not depend on $\alpha$, the same numbers $c_1$ and $c_2$ can be taken for every $\alpha\in\mathcal K$, as a certificate requires.
-
-<a id="appendix-b.3"></a>
 
 ### B.3 The cells, their complement and the tree
 
@@ -1580,8 +1570,6 @@ The last condition is a bound for $\mathsf A_0$: for every real vector $x_{\math
 
 Let $\mathcal Y^\perp$ be the space of the real vectors of global unknowns that are orthogonal to the columns of all the matrices $\mathsf Y_\xi$. For $v=0$, $\beta=0$ and $F=0$ we have $x_{\mathrm p}=0$, and the right-hand side of (B.44) is $-|\zeta|^2/1000$; hence $\langle\mathsf N\,x,x\rangle\le0$ for every vector $x=(0,x_{\mathrm f})$. By Lemma B.7, $\langle\mathsf N\,x,x\rangle>0$ for every $x\ne0$ in $\mathcal Y^\perp$. Therefore $\mathcal Y^\perp$ contains no vector $(0,x_{\mathrm f})$ other than zero. The codimension of $\mathcal Y^\perp$ is at most the number of the columns, which is at most the dimension of the space of the vectors $(0,x_{\mathrm f})$, so that the two spaces together span the space of all vectors of global unknowns. Returning to $v$, $\beta$ and $F$, we write $(x_{\mathrm p},0)$ as the sum of an element of $\mathcal Y^\perp$ and of a vector $(0,-x_{\mathrm f})$. Then $(x_{\mathrm p},x_{\mathrm f})\in\mathcal Y^\perp$, and $\langle\mathsf N\,x_{\mathrm g},x_{\mathrm g}\rangle\ge0$ for this $x_{\mathrm f}$. $\square$
 
-<a id="appendix-b.4"></a>
-
 ### B.4 The other conditions and the statement
 
 The other estimates that a certificate assumes for every perturbation follow from bounds for finitely many norms and pairings of the given fields. Their proofs use the Sobolev inequality (3.1) with a constant, $$\begin{equation}
@@ -1733,8 +1721,6 @@ The conditions fix few constants: the weight $w_*=\frac{39}{50}$, the numbers $\
 
 In this appendix we describe how the field from which the approximate profiles of the certificate of Subsection 1.1 are formed was found, and how further fields of this certificate were computed from it, and we show this field (Figures 1 to 4).
 
-<a id="appendix-c.1"></a>
-
 ### C.1 The approximate profile
 
 We write $\bar W$ for the computed approximate profile, as a field of the self-similar variables $(s,y)$, and $\bar S$ for its period in $s$. In the variable $\theta=s/\bar S$ it is a field of the form (B.6) of Subsection B.1, and the approximate profiles of the certificate are formed from it: in a ball about the origin they are the affine combinations of $\bar W$ with the fields of Subsection C.4, as in (B.9).
@@ -1769,8 +1755,6 @@ with a radius $r_c>0$, and the term with the harmonic $E_\iota$ has $l=\iota_1-2
 E_{\iota,l}(\theta,y)=e^{19i\iota_1\phi}\exp\Bigl(\frac{2\pi il}{\bar S}\Bigl[\log\Bigl(1+\frac{|y|^2}{r_c^2}\Bigr)-s\Bigr]\Bigr),\qquad s=\bar S\theta,
 $$ <!-- source-page: 73 --> and for large $|y|$ the bracket is $2\log|y|-s$ up to a constant and a term of order $|y|^{-2}$. In the Eulerian variables of (1.4) we have $2\log|y|-s=2\log|x|-\log T$. Hence a field of the form (B.6) with these functions $E_{\iota,l}$, whose coefficients are asymptotic, for large $|y|$, to functions of the angles divided by $|y|$, corresponds through (1.4) to a field that has a limit as $t\to T$ at every $x\ne0$. Without the radial phase the coefficients of such a field would oscillate in $\log|y|$, with frequencies proportional to $l$, in every ring of the partition out to infinity.
 
-<a id="appendix-c.2"></a>
-
 ### C.2 The discretization and Newton’s method
 
 The computation uses the first two equations of (1.2) in the form $$\begin{equation}
@@ -1783,8 +1767,6 @@ The discrete equations are solved by Newton’s method. The derivative of the eq
 v\mapsto\partial_sv+\tfrac12v+\tfrac12(y\cdot\nabla)v+\operatorname{curl}W\times v+\operatorname{curl}v\times W+\operatorname{curl}\operatorname{curl}v\tag{C.2}
 \end{equation}$$ at the current field $W$; its matrix is not formed, only applied to vectors. The linear system, bordered by the derivative with respect to the period and by the equation that fixes the translation in $s$, is solved by the flexible GMRES method. The preconditioner is a product of block solves, where a block is the linearized operator restricted to a group of neighbouring harmonics, in some blocks also to low degrees, and is factored by nested dissection over the rectangles of the partition. Newton’s iteration is stopped after at most five steps.
 
-<a id="appendix-c.3"></a>
-
 ### C.3 Continuation and refinement
 
 Newton’s method starts from a field that was reached by continuation, in other discretizations than that of Subsection C.2: finite differences, and <!-- source-page: 74 --> then spectral elements. The continuation takes place in the family of equations $$
@@ -1794,8 +1776,6 @@ $$ with a scaling parameter $g$, a viscosity $\nu>0$ and a force $F$; the first 
 From this starting field the approximate profile is computed in nine successive discretizations of the form of Subsection C.2, each of which starts from the field of the one before, transferred to the new degrees. In the first three the viscosity is an unknown beside the period, and a normalization of the mean swirl is imposed: for the equations themselves, the solutions for different viscosities are dilations of one another, and the normalization selects one of them. The viscosity is then brought to one along this family. In the fourth discretization the viscosity is one and the period is an unknown; the period found there is $\bar S$, and it is kept in the five discretizations that follow. The ninth field is $\bar W$.
 
 Between two discretizations the degrees are changed harmonic by harmonic and rectangle by rectangle, by one of two rules. In the first, the contribution of each harmonic on each rectangle to the residual, and the rate at which its coefficients decay with the degree, decide whether its degrees are raised or lowered, and harmonics are added on the rectangles on which the residual lies outside those that are present. In the second, the degrees are predicted from the decay of the coefficients alone, each weighted by estimates of the local rates of the terms of the equation. Far from the origin, where the radial phase has removed the oscillation of the spiral arms, the degrees in the radius are tied to the frequencies in $\log|y|$ that remain, and the degrees in $\eta$ are the same in all rings.
-
-<a id="appendix-c.4"></a>
 
 ### C.4 Further fields of the certificate
 

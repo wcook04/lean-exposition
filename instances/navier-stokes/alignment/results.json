@@ -520,17 +520,7 @@
   "7.9": "7.9 Proof of Theorem 7.1",
   "7.10": "7.10 Proof of Proposition 7.11",
   "appendix-a": "Appendix A Proofs of the lemmas of Sections 2 and 3",
-  "appendix-a.1": "A.1 Proofs of the lemmas of Section 3",
-  "appendix-a.2": "A.2 Proof of Lemma 2.3",
   "appendix-b": "Appendix B Certificates in the formalization",
-  "appendix-b.1": "B.1 The form of the data of a certificate",
-  "appendix-b.2": "B.2 The multiplier inequality",
-  "appendix-b.3": "B.3 The cells, their complement and the tree",
-  "appendix-b.4": "B.4 The other conditions and the statement",
-  "appendix-c": "Appendix C The computation of the approximate profile",
-  "appendix-c.1": "C.1 The approximate profile",
-  "appendix-c.2": "C.2 The discretization and Newton’s method",
-  "appendix-c.3": "C.3 Continuation and refinement",
-  "appendix-c.4": "C.4 Further fields of the certificate"
+  "appendix-c": "Appendix C The computation of the approximate profile"
  }
 }

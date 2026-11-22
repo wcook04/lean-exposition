@@ -3,7 +3,7 @@
  "stage": "short",
  "state": "draft",
  "path": "papers/short.md",
- "content_sha256": "ce43902c6ae2908e1c07fef6f36c904e40f925ac37cfff2898cb91921809e57e",
+ "content_sha256": "5d25e1a5e18a3eac1e838410e4a1a6f640735375f4c26972bd1fddf844360e91",
  "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -1143,7 +1143,7 @@
   },
   {
    "anchor": "sec-appendix-a",
-   "text_sha256": "5fe9e9ad6348f8c3df88ed9253b0ecb3df2de551b01632d45f2713dcab3a72d1",
+   "text_sha256": "13affdea28688a4a37e981d261073db486d427575b2534bcdff31e95666516bb",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1152,7 +1152,7 @@
   },
   {
    "anchor": "sec-appendix-b",
-   "text_sha256": "2d1fc4b8cb2d59d2386fd2250faedbfd6d94a512a37c536187765261851ad90d",
+   "text_sha256": "232f4254dfff2d33025d5faa2d612dafc7d46c2b94dc4a87ef504bdd2a07453a",
    "claim_ids": [
     "navier-stokes.proposition-b.1",
     "navier-stokes.lemma-b.2",
@@ -1328,7 +1328,7 @@
   },
   {
    "anchor": "sec-appendix-c",
-   "text_sha256": "b015de2f4daea39f2557140b02eca37f592fb8c0e4df568e9e695662aedb0f1d",
+   "text_sha256": "93b3ace7b6bee1dbdcd426b87f44fed42e449403eb2dcfeac1efb78ef7aa9e76",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
