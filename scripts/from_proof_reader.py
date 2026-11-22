@@ -226,6 +226,9 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
                 row = {"name": target, "file": path, "relation": ROLE[p["role"]][1], "fidelity": c["fidelity"]}
                 if note:
                     row["fidelity_note"] = note
+                matters = (comparisons.get(name) or {}).get("matters")
+                if isinstance(matters, dict):
+                    row["matters"] = matters
                 row["assessments"] = [one]
                 by_target[target] = row
                 rows.append(row)
@@ -243,6 +246,8 @@ def phrase_rows(text: str, passages: list[dict], lean: Lean, links: dict, report
         if role in {"statement", "definition"} and not rows:
             tie["role"] = "explanation"
             report["statement_without_lean"].append(first["id"])
+        if isinstance(first.get("explanation"), dict):
+            tie["explanation"] = first["explanation"]
         if len(group) > 1:
             tie["replaces"] = [p["id"] for p in group[1:]]
             # The merge, recorded: each phrase the tie holds, with its own words, role and topic.
@@ -537,6 +542,7 @@ def main() -> None:
                     f"Proof Reader (wcook04/proof-reader {args.source_commit[:12]}, papers/{page.name}). Titles, reading "
                     "notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them."),
         "families": links.get("families", []),
+        **({"main_result": links["main_result"]} if isinstance(links.get("main_result"), str) else {}),
         "topic_order": topic_order,
         "parts": [{"name": "", "lines": [first_line, last_line], "source_commit": args.source_commit,
                    "topics": [{"id": t["id"], "name": t["name"], "description": t.get("description", ""),
@@ -1059,7 +1065,8 @@ def main() -> None:
     # kept with the instance until the reader shows them.
     # Optional reading aids the reader does not draw yet: the paper's glossary of conventions, section
     # aids and showcase cards. Carried unchanged so a later design pass can render them.
-    for aid in ("glossary.json", "section-aids.json", "showcase.json"):
+    for aid in ("glossary.json", "section-aids.json", "showcase.json", "route.json", "start-here-summary.md",
+                "start-here.md", "differences-summary.md"):
         if (page / "notes" / aid).is_file():
             write(out / "generated" / aid, (page / "notes" / aid).read_bytes())
     if (page / "notes/paragraph-dispositions.json").is_file():
