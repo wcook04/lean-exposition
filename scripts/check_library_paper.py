@@ -202,7 +202,12 @@ def main() -> int:
             ):
                 page.goto(base + path)
                 page.wait_for_selector(".paper .tie", timeout=60000)
-                page.wait_for_timeout(2000)
+                # The card's words load after the paper; wait for them rather than a fixed time.
+                try:
+                    page.wait_for_function("(w) => document.body.innerText.includes(w)", arg=expect, timeout=15000)
+                except Exception:
+                    pass
+                page.wait_for_timeout(500)
                 body = page.inner_text("body")
                 check(f"{tag} address {kind}", expect in body and page.url.rstrip("/").endswith(path.rstrip("/").split("?")[0]), page.url)
             page.goto(base + "#" + args.section)
