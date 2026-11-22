@@ -37,10 +37,9 @@
   --tie-fill: 8%;
 }
 
-/* A phrase with no topic colour, and every phrase when colours are off, has no fill at rest:
-   only the thin line. A display is not laid on a grey slab. */
-.paper .tie:not([data-tone]),
-:root[data-tones="off"] .paper .tie {
+/* Topic colours are always drawn. A phrase that has no topic has no fill at rest: only the
+   thin neutral line. A display is not laid on a grey slab. */
+.paper .tie:not([data-tone]) {
   --tie-color: var(--ink-3);
   --tie-fill: 0%;
   --tie-line-rest: 30%;
@@ -71,11 +70,6 @@
 
 .paper .tick[data-tone] {
   background-color: var(--tone, var(--ink-3));
-}
-
-:root[data-tones="off"] .paper .tick[data-tone],
-:root[data-tones="off"] .paper .tick--bands > span {
-  background-color: var(--ink-3);
 }
 
 /* The selected block keeps one amber edge in this column. Its topic bands paint above it. */
@@ -125,8 +119,7 @@
 }
 
 /* Without a topic colour, pointing gives a light wash of the ink, never a grey block. */
-.paper .tie:not([data-tone]):is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin]),
-:root[data-tones="off"] .paper .tie:is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin]) {
+.paper .tie:not([data-tone]):is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin]) {
   background-color: color-mix(in oklab, var(--ink) 6%, transparent);
 }
 
@@ -555,12 +548,6 @@
 .tones-switch input:focus-visible {
   outline: var(--focus-ring);
   outline-offset: 2px;
-}
-
-/* With colour off the key's swatches and the graph's topic edges go neutral with the underlines. */
-:root[data-tones="off"] .phrase-key__swatch,
-:root[data-tones="off"] .phrase-bars > span {
-  background: var(--ink-3);
 }
 
 /* What the quoted words say, between the quotation and the comparison; and the verdict's last line. */

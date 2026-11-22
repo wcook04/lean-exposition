@@ -1074,10 +1074,6 @@ html[data-right-sheet] {
   gap: 6px;
 }
 
-:root[data-tones="off"] .lean-page__topic .phrase-card__swatch {
-  display: none;
-}
-
 .lean-page__preview {
   margin: 0;
   font-family: var(--font-sans);
