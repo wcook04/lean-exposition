@@ -5,26 +5,706 @@
   "verdict_without_note": 0,
   "statement_without_lean": 0,
   "merged": 203,
+  "merged_assessments_differ": 153,
+  "unassessed": 0,
+  "result_label_not_found": 47,
+  "result_without_statement": 0,
   "long_title_without_override": 39,
   "companions": {
-   "navier-stokes-digest+navier-stokes-part-1+navier-stokes-part-2": {
-    "quote_not_unique": 1,
+   "navier-stokes": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 3,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "ties": 31,
+    "titled": 37,
+    "noted": 0
+   },
+   "navier-stokes-digest": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 4,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 253,
+    "titled": 185,
+    "noted": 78
+   },
+   "navier-stokes-index": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 555,
+    "titled": 428,
+    "noted": 93
+   },
+   "navier-stokes-part-1": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 440,
+    "titled": 187,
+    "noted": 52
+   },
+   "navier-stokes-part-2": {
+    "quote_not_unique": 0,
     "lean_not_in_index": 0,
     "verdict_without_note": 0,
     "statement_without_lean": 0,
     "merged": 17,
+    "merged_assessments_differ": 10,
+    "unassessed": 10,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
     "long_title_without_override": 0,
-    "ties": 1069,
-    "titled": 355,
-    "noted": 122
+    "companions": 0,
+    "ties": 377,
+    "titled": 99,
+    "noted": 8
+   },
+   "navier-stokes-appendix-b": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 2,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 615,
+    "titled": 282,
+    "noted": 26
+   },
+   "navier-stokes-routes": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 27,
+    "titled": 56,
+    "noted": 50
+   },
+   "navier-stokes-route-details": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 630,
+    "titled": 1254,
+    "noted": 0
+   },
+   "navier-stokes-statement-files": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 16,
+    "verdict_without_note": 0,
+    "statement_without_lean": 4,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1408,
+    "titled": 213,
+    "noted": 193
+   },
+   "navier-stokes-cell-guide": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 45,
+    "titled": 60,
+    "noted": 0
+   },
+   "navier-stokes-cell-fidelity": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 30,
+    "titled": 21,
+    "noted": 0
+   },
+   "navier-stokes-certificate-checker": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 12,
+    "titled": 15,
+    "noted": 0
+   },
+   "navier-stokes-cell-reference": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 0,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 2551,
+    "titled": 781,
+    "noted": 790
+   },
+   "navier-stokes-library-01": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 944,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 944,
+    "titled": 865,
+    "noted": 0
+   },
+   "navier-stokes-library-02": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 903,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 903,
+    "titled": 751,
+    "noted": 0
+   },
+   "navier-stokes-library-03": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1204,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1204,
+    "titled": 1111,
+    "noted": 0
+   },
+   "navier-stokes-library-04": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1220,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1220,
+    "titled": 1122,
+    "noted": 0
+   },
+   "navier-stokes-library-05": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 1,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1193,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1194,
+    "titled": 1098,
+    "noted": 4
+   },
+   "navier-stokes-library-06": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1202,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1202,
+    "titled": 1091,
+    "noted": 4
+   },
+   "navier-stokes-library-07": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 1,
+    "verdict_without_note": 0,
+    "statement_without_lean": 1,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1196,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1197,
+    "titled": 992,
+    "noted": 2
+   },
+   "navier-stokes-library-08": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1447,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1447,
+    "titled": 1292,
+    "noted": 0
+   },
+   "navier-stokes-library-09": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1443,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1443,
+    "titled": 1349,
+    "noted": 6
+   },
+   "navier-stokes-library-10": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 1,
+    "verdict_without_note": 0,
+    "statement_without_lean": 1,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1458,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1459,
+    "titled": 1395,
+    "noted": 8
+   },
+   "navier-stokes-library-11": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1435,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1435,
+    "titled": 1230,
+    "noted": 4
+   },
+   "navier-stokes-library-12": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 10,
+    "verdict_without_note": 0,
+    "statement_without_lean": 10,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1435,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1445,
+    "titled": 1269,
+    "noted": 7
+   },
+   "navier-stokes-library-13": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1012,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1012,
+    "titled": 981,
+    "noted": 2
+   },
+   "navier-stokes-library-14": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1004,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1004,
+    "titled": 967,
+    "noted": 3
+   },
+   "navier-stokes-library-15": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1009,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1009,
+    "titled": 966,
+    "noted": 14
+   },
+   "navier-stokes-library-16": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1456,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1456,
+    "titled": 1404,
+    "noted": 5
+   },
+   "navier-stokes-library-17": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1459,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1459,
+    "titled": 1305,
+    "noted": 7
+   },
+   "navier-stokes-library-18": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1489,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1489,
+    "titled": 1266,
+    "noted": 3
+   },
+   "navier-stokes-library-19": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1448,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1448,
+    "titled": 1302,
+    "noted": 8
+   },
+   "navier-stokes-library-20": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1439,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1439,
+    "titled": 1333,
+    "noted": 11
+   },
+   "navier-stokes-library-21": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1452,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1452,
+    "titled": 1322,
+    "noted": 4
+   },
+   "navier-stokes-library-22": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1471,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1471,
+    "titled": 1328,
+    "noted": 12
+   },
+   "navier-stokes-library-23": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1277,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1277,
+    "titled": 1164,
+    "noted": 6
+   },
+   "navier-stokes-library-24": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 1,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1262,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1263,
+    "titled": 1177,
+    "noted": 10
+   },
+   "navier-stokes-library-25": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 13,
+    "verdict_without_note": 0,
+    "statement_without_lean": 13,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1100,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1113,
+    "titled": 1021,
+    "noted": 10
+   },
+   "navier-stokes-library-26": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 786,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 786,
+    "titled": 772,
+    "noted": 35
+   },
+   "navier-stokes-library-27": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 2,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 933,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 935,
+    "titled": 893,
+    "noted": 42
+   },
+   "navier-stokes-library-28": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 1482,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 1482,
+    "titled": 1409,
+    "noted": 18
+   },
+   "navier-stokes-library-29": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 680,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 680,
+    "titled": 652,
+    "noted": 18
+   },
+   "navier-stokes-library-30": {
+    "quote_not_unique": 0,
+    "lean_not_in_index": 0,
+    "verdict_without_note": 0,
+    "statement_without_lean": 0,
+    "merged": 0,
+    "merged_assessments_differ": 0,
+    "unassessed": 520,
+    "result_label_not_found": 0,
+    "result_without_statement": 0,
+    "long_title_without_override": 0,
+    "companions": 0,
+    "ties": 520,
+    "titled": 510,
+    "noted": 0
    }
   },
   "ties": 1048,
   "titled": 592,
-  "names": 1569,
+  "names": 33782,
   "results": 47,
   "sections": 46,
-  "lean_files": 2260,
+  "lean_files": 2263,
   "unnamed": 0
  },
  "quote_not_unique": [],
@@ -959,6 +1639,2565 @@
    "ac-044"
   ]
  ],
+ "merged_assessments_differ": [
+  [
+   "pdf-item-equation-1-1",
+   "Breakdown.IsSmoothSolution",
+   [
+    [
+     "pdf-item-equation-1-1",
+     "same"
+    ],
+    [
+     "s1-equations",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-1-2",
+   "Breakdown.IsSimilarityProfile",
+   [
+    [
+     "pdf-item-equation-1-2",
+     "different"
+    ],
+    [
+     "s1-similarity-momentum",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-1-2",
+   "Breakdown.PeriodicSimilarityProfileExists",
+   [
+    [
+     "pdf-item-equation-1-2",
+     "different"
+    ],
+    [
+     "s1-recurrence",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-1-7",
+   "Breakdown.Periodic.TorusBlowup",
+   [
+    [
+     "pdf-item-equation-1-7",
+     "weaker"
+    ],
+    [
+     "s1-torus-rates",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-2-2",
+   "Breakdown.Freq.heatDivFree",
+   [
+    [
+     "pdf-item-equation-2-2",
+     "different"
+    ],
+    [
+     "s2-projected-heat",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s2-whole-space-proposition",
+   "Breakdown.TransferHolds",
+   [
+    [
+     "s2-whole-space-proposition",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-2-1",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-2-5",
+   "Breakdown.TransferHolds",
+   [
+    [
+     "pdf-item-equation-2-5",
+     "weaker"
+    ],
+    [
+     "s2-whole-space-rates",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "s2-periodic-proposition",
+   "Breakdown.Periodic.TorusBlowup",
+   [
+    [
+     "s2-periodic-proposition",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-2-2",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-2-6",
+   "Breakdown.Periodic.TorusBlowup",
+   [
+    [
+     "pdf-item-equation-2-6",
+     "weaker"
+    ],
+    [
+     "s2-periodic-rates",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "s2-smoothness-lemma",
+   "Breakdown.mildRegular_realization",
+   [
+    [
+     "s2-smoothness-lemma",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-2-3",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s2-smoothness-lemma",
+   "Breakdown.MildRegular",
+   [
+    [
+     "s2-smoothness-lemma",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-2-3",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-2",
+   "Breakdown.Freq.partial_holds",
+   [
+    [
+     "pdf-item-equation-3-2",
+     "different"
+    ],
+    [
+     "ns-s3-fourier-derivative",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-2",
+   "Breakdown.Freq.Sig",
+   [
+    [
+     "pdf-item-equation-3-2",
+     "different"
+    ],
+    [
+     "ns-s3-fourier-solenoidal",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-2",
+   "Breakdown.Freq.embedNormLinear_holds",
+   [
+    [
+     "pdf-item-equation-3-2",
+     "weaker"
+    ],
+    [
+     "ns-s3-fourier-energy",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-3",
+   "Breakdown.Freq.heatFactor",
+   [
+    [
+     "pdf-item-equation-3-3",
+     "weaker"
+    ],
+    [
+     "ns-s3-heat-multiplier",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-3",
+   "Breakdown.Freq.heat_holds",
+   [
+    [
+     "pdf-item-equation-3-3",
+     "same"
+    ],
+    [
+     "ns-s3-heat-multiplier",
+     "same"
+    ],
+    [
+     "ns-s3-heat-semigroup",
+     "same"
+    ],
+    [
+     "ns-s3-heat-contraction",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-4",
+   "Breakdown.dilateField",
+   [
+    [
+     "pdf-item-equation-3-4",
+     "weaker"
+    ],
+    [
+     "ns-s3-dilation-definition",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-4",
+   "Breakdown.pushForward",
+   [
+    [
+     "pdf-item-equation-3-4",
+     "weaker"
+    ],
+    [
+     "ns-s3-orthogonal-action",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-5",
+   "Breakdown.Freq.dilation_holds",
+   [
+    [
+     "pdf-item-equation-3-5",
+     "same"
+    ],
+    [
+     "ns-s3-dilation-norm",
+     "same"
+    ],
+    [
+     "ns-s3-dilation-composition",
+     "same"
+    ],
+    [
+     "ns-s3-dilation-heat",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-7",
+   "Breakdown.Freq.bilin_holds",
+   [
+    [
+     "pdf-item-equation-3-7",
+     "same"
+    ],
+    [
+     "ns-s3-bilinear-bound",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-8",
+   "Breakdown.Freq.bilinShift_holds",
+   [
+    [
+     "pdf-item-equation-3-8",
+     "weaker"
+    ],
+    [
+     "ns-s3-bilinear-shift",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-8",
+   "Breakdown.Freq.bilinDilate_holds",
+   [
+    [
+     "pdf-item-equation-3-8",
+     "weaker"
+    ],
+    [
+     "ns-s3-bilinear-dilation",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-8",
+   "Breakdown.Freq.bilinRotate_holds",
+   [
+    [
+     "pdf-item-equation-3-8",
+     "weaker"
+    ],
+    [
+     "ns-s3-bilinear-orthogonal",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-11",
+   "Breakdown.HeatBilinear",
+   [
+    [
+     "pdf-item-equation-3-11",
+     "same"
+    ],
+    [
+     "ns-3late-abstract-heat",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-12",
+   "Breakdown.HeatBilinear",
+   [
+    [
+     "pdf-item-equation-3-12",
+     "weaker"
+    ],
+    [
+     "ns-3late-abstract-shift",
+     "same"
+    ],
+    [
+     "ns-3late-abstract-bound",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns-3late-weak-assumptions",
+   "Breakdown.Freq.IsWeakSolution",
+   [
+    [
+     "ns-3late-weak-assumptions",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-3-6",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-3late-periodic-force-shift",
+   "Breakdown.Periodic.SourceCont.Internal.forceV_continuousOn",
+   [
+    [
+     "ns-3late-periodic-force-shift",
+     "different"
+    ],
+    [
+     "ns-3late-periodic-force-continuity",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-21",
+   "Breakdown.Periodic.TransplantNorm",
+   [
+    [
+     "pdf-item-equation-3-21",
+     "different"
+    ],
+    [
+     "ns-3late-periodic-dilation-norm",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-3-21",
+   "Breakdown.Periodic.stepFrame",
+   [
+    [
+     "pdf-item-equation-3-21",
+     "different"
+    ],
+    [
+     "ns-3late-periodic-dilation-heat",
+     "different"
+    ],
+    [
+     "ns-3late-periodic-dilation-bilinear",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-1",
+   "Breakdown.IsSimilarityProfile",
+   [
+    [
+     "pdf-item-equation-4-1",
+     "different"
+    ],
+    [
+     "ns-s4-005",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-2",
+   "Breakdown.MildFramework.IsOrbit",
+   [
+    [
+     "pdf-item-equation-4-2",
+     "different"
+    ],
+    [
+     "ns-s4-008",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-2",
+   "Breakdown.MildFramework.selfSimilar",
+   [
+    [
+     "pdf-item-equation-4-2",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-4-2",
+     "different"
+    ],
+    [
+     "ns-s4-008",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-s4-018",
+   "Breakdown.MildFramework.selfSimilar",
+   [
+    [
+     "ns-s4-018",
+     "different"
+    ],
+    [
+     "pdf-item-equation-4-3",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-s4-019",
+   "Breakdown.Freq.DilationAlgebra",
+   [
+    [
+     "ns-s4-019",
+     "different"
+    ],
+    [
+     "pdf-item-equation-4-4",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-s4-026",
+   "Breakdown.pieceOperator",
+   [
+    [
+     "ns-s4-026",
+     "different"
+    ],
+    [
+     "pdf-item-equation-4-6",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-8",
+   "Breakdown.StepDataStatement",
+   [
+    [
+     "pdf-item-equation-4-8",
+     "different"
+    ],
+    [
+     "ns-s4-033",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-9",
+   "Breakdown.MildFramework.stepOp",
+   [
+    [
+     "pdf-item-equation-4-9",
+     "weaker"
+    ],
+    [
+     "ns-s4-036",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-9",
+   "Breakdown.MonodromyStatement",
+   [
+    [
+     "pdf-item-equation-4-9",
+     "different"
+    ],
+    [
+     "ns-s4-036",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-20",
+   "Breakdown.HeatBilinear",
+   [
+    [
+     "pdf-item-equation-4-20",
+     "stronger"
+    ],
+    [
+     "ns-s4-085",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-4-22",
+   "Breakdown.PeriodicInverseStatement",
+   [
+    [
+     "pdf-item-equation-4-22",
+     "different"
+    ],
+    [
+     "ns-s4-091",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns5.lemma5.1.geometry",
+   "Breakdown.Periodic.approxFieldProperties_holds",
+   [
+    [
+     "ns5.lemma5.1.geometry",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-5-1",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-5-2",
+   "Breakdown.Periodic.cutoffGradientClose",
+   [
+    [
+     "pdf-item-equation-5-2",
+     "different"
+    ],
+    [
+     "ns5.lemma5.1.gradient",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-5-2",
+   "Breakdown.Periodic.cutoffMassBound",
+   [
+    [
+     "pdf-item-equation-5-2",
+     "different"
+    ],
+    [
+     "ns5.lemma5.1.mass",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns6.lemma-6-1",
+   "Breakdown.Periodic.heatDivFreeComparison",
+   [
+    [
+     "ns6.lemma-6-1",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-6-1",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-6-4",
+   "Breakdown.Periodic.cutoffGradientClose",
+   [
+    [
+     "pdf-item-equation-6-4",
+     "different"
+    ],
+    [
+     "ns6.eq-6-4",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-6-4",
+   "Breakdown.Periodic.cutoffMassBound",
+   [
+    [
+     "pdf-item-equation-6-4",
+     "different"
+    ],
+    [
+     "ns6.eq-6-4",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns6.lemma-6-3",
+   "Breakdown.Periodic.ShellInverseTransfer",
+   [
+    [
+     "ns6.lemma-6-3",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-6-3",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-6-15",
+   "Breakdown.Periodic.ShellInverseTransfer",
+   [
+    [
+     "pdf-item-equation-6-15",
+     "different"
+    ],
+    [
+     "ns6.eq-6-15",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s006",
+   "Breakdown.sigmaSimilarityIntegrand",
+   [
+    [
+     "ns7-data-s006",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-1",
+     "different"
+    ],
+    [
+     "ns7-data-eq-01",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s013",
+   "Breakdown.IsSpaceTimeTestField",
+   [
+    [
+     "ns7-data-s013",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-2",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-02",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s015",
+   "Breakdown.Cert.periodize",
+   [
+    [
+     "ns7-data-s015",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-3",
+     "different"
+    ],
+    [
+     "ns7-data-eq-03",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s015",
+   "Breakdown.Cert.testDenseHolds_proof",
+   [
+    [
+     "ns7-data-s015",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-3",
+     "different"
+    ],
+    [
+     "ns7-data-eq-03",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s017",
+   "Breakdown.IsPerturbation",
+   [
+    [
+     "ns7-data-s017",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-4",
+     "different"
+    ],
+    [
+     "ns7-data-eq-04",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s022",
+   "Breakdown.IsPerturbation.invariant",
+   [
+    [
+     "ns7-data-s022",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-5",
+     "same"
+    ],
+    [
+     "ns7-data-eq-05",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s031",
+   "Breakdown.IsExtendedCertificate.profile_invariant",
+   [
+    [
+     "ns7-data-s031",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-7",
+     "same"
+    ],
+    [
+     "ns7-data-eq-07",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s031",
+   "Breakdown.IsExtendedCertificate.profile_decay",
+   [
+    [
+     "ns7-data-s031",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-8",
+     "different"
+    ],
+    [
+     "ns7-data-eq-08",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s031",
+   "Breakdown.IsExtendedCertificate.actuator_norm",
+   [
+    [
+     "ns7-data-s031",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-9",
+     "same"
+    ],
+    [
+     "ns7-data-eq-09",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s031",
+   "Breakdown.ExtendedCertificateData.defect",
+   [
+    [
+     "ns7-data-s031",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-10",
+     "different"
+    ],
+    [
+     "ns7-data-eq-10",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s036",
+   "Breakdown.ExtendedCertificateData.IsHeldSolution",
+   [
+    [
+     "ns7-data-s036",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-12",
+     "different"
+    ],
+    [
+     "ns7-data-eq-12",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s036",
+   "Breakdown.Cert.sliceConvection",
+   [
+    [
+     "ns7-data-s036",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-13",
+     "same"
+    ],
+    [
+     "ns7-data-eq-13",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s042",
+   "Breakdown.weightedEnergy",
+   [
+    [
+     "ns7-data-s042",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-14",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-14",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s042",
+   "Breakdown.stationaryEnergy",
+   [
+    [
+     "ns7-data-s042",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-14",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-14",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s042",
+   "Breakdown.Cert.sizeZ",
+   [
+    [
+     "ns7-data-s042",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-14",
+     "different"
+    ],
+    [
+     "ns7-data-eq-14",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s042",
+   "Breakdown.supBoundFactor",
+   [
+    [
+     "ns7-data-s042",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-15",
+     "same"
+    ],
+    [
+     "ns7-data-eq-15",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s045",
+   "Breakdown.Cert.sliceConvection",
+   [
+    [
+     "ns7-data-s045",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-16",
+     "same"
+    ],
+    [
+     "ns7-data-eq-16",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s047",
+   "Breakdown.rowNorm",
+   [
+    [
+     "ns7-data-s047",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-17",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-17",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s047",
+   "Breakdown.Cert.rowNormHolds",
+   [
+    [
+     "ns7-data-s047",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-17",
+     "same"
+    ],
+    [
+     "ns7-data-eq-17",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s049",
+   "Breakdown.IsExtendedCertificate.coercive",
+   [
+    [
+     "ns7-data-s049",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-18",
+     "same"
+    ],
+    [
+     "ns7-data-eq-18",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s052",
+   "Breakdown.IsExtendedCertificate.gap_transfer",
+   [
+    [
+     "ns7-data-s052",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-19",
+     "same"
+    ],
+    [
+     "ns7-data-eq-19",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s052",
+   "Breakdown.ExtendedCertificateData.transferLoss",
+   [
+    [
+     "ns7-data-s052",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-20",
+     "same"
+    ],
+    [
+     "ns7-data-eq-20",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s052",
+   "Breakdown.IsExtendedCertificate.transfer_lt",
+   [
+    [
+     "ns7-data-s052",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-21",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-21",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s052",
+   "Breakdown.IsExtendedCertificate.coerciveTotal_ge",
+   [
+    [
+     "ns7-data-s052",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-21",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-21",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s055",
+   "Breakdown.Cert.Internal.ExtendedFrozenBridge.profile_form",
+   [
+    [
+     "ns7-data-s055",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-22",
+     "same"
+    ],
+    [
+     "ns7-data-eq-22",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s059",
+   "Breakdown.IsExtendedCertificate.defect_l2",
+   [
+    [
+     "ns7-data-s059",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-23",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-23",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s059",
+   "Breakdown.IsExtendedCertificate.defect_rows",
+   [
+    [
+     "ns7-data-s059",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-23",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-23",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s059",
+   "Breakdown.IsExtendedCertificate.defect_le",
+   [
+    [
+     "ns7-data-s059",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-23",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-23",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s059",
+   "Breakdown.IsExtendedCertificate.size",
+   [
+    [
+     "ns7-data-s059",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-24",
+     "same"
+    ],
+    [
+     "ns7-data-eq-24",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s060",
+   "Breakdown.IsExtendedCertificate.small_first",
+   [
+    [
+     "ns7-data-s060",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-25",
+     "same"
+    ],
+    [
+     "ns7-data-eq-25",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s060",
+   "Breakdown.IsExtendedCertificate.small_second",
+   [
+    [
+     "ns7-data-s060",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-26",
+     "same"
+    ],
+    [
+     "ns7-data-eq-26",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s060",
+   "Breakdown.IsExtendedCertificate.small_third",
+   [
+    [
+     "ns7-data-s060",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-27",
+     "same"
+    ],
+    [
+     "ns7-data-eq-27",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s062",
+   "Breakdown.IsExtendedCertificate.nontrivial",
+   [
+    [
+     "ns7-data-s062",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-28",
+     "same"
+    ],
+    [
+     "ns7-data-eq-28",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s064",
+   "Breakdown.ExtendedCertificateData.params",
+   [
+    [
+     "ns7-data-s064",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-29",
+     "same"
+    ],
+    [
+     "ns7-data-eq-29",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s066",
+   "Breakdown.Held.testSetZero_of",
+   [
+    [
+     "ns7-data-s066",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-30",
+     "different"
+    ],
+    [
+     "ns7-data-eq-30",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s071",
+   "Breakdown.periodPairing",
+   [
+    [
+     "ns7-data-s071",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-31",
+     "same"
+    ],
+    [
+     "ns7-data-eq-31",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s072",
+   "Breakdown.IsExtendedCertificate.adjoint_quadratic",
+   [
+    [
+     "ns7-data-s072",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-32",
+     "same"
+    ],
+    [
+     "ns7-data-eq-32",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s072",
+   "Breakdown.IsExtendedCertificate.adjoint_defect",
+   [
+    [
+     "ns7-data-s072",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-33",
+     "same"
+    ],
+    [
+     "ns7-data-eq-33",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s072",
+   "Breakdown.IsExtendedCertificate.adjoint_offset",
+   [
+    [
+     "ns7-data-s072",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-34",
+     "same"
+    ],
+    [
+     "ns7-data-eq-34",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s072",
+   "Breakdown.IsExtendedCertificate.adjoint_inclusion",
+   [
+    [
+     "ns7-data-s072",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-35",
+     "same"
+    ],
+    [
+     "ns7-data-eq-35",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s076",
+   "Breakdown.IsExtendedCertificate.stiff_norm",
+   [
+    [
+     "ns7-data-s076",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-36",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-36",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s076",
+   "Breakdown.IsExtendedCertificate.stiff_offset",
+   [
+    [
+     "ns7-data-s076",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-36",
+     "weaker"
+    ],
+    [
+     "ns7-data-eq-36",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns7-data-s076",
+   "Breakdown.IsExtendedCertificate.stiff_inclusion",
+   [
+    [
+     "ns7-data-s076",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-37",
+     "same"
+    ],
+    [
+     "ns7-data-eq-37",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-theorem-7-3",
+   "Breakdown.PeriodicSimilarityProfileExists",
+   [
+    [
+     "pdf-item-theorem-7-3",
+     "different"
+    ],
+    [
+     "s7-4-remark-recurrence",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p01-01",
+   "Breakdown.WeakProfile.physicalCurve",
+   [
+    [
+     "s7-linear-p01-01",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-40",
+     "different"
+    ],
+    [
+     "s7-equation-7-40",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p01-03",
+   "Breakdown.WeakProfile.physicalIdentity_of_parts",
+   [
+    [
+     "s7-linear-p01-03",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-41",
+     "different"
+    ],
+    [
+     "s7-equation-7-41",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p02-02",
+   "Breakdown.Cert.freeEnergyLocalHolds_of",
+   [
+    [
+     "s7-linear-p02-02",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-42",
+     "different"
+    ],
+    [
+     "s7-equation-7-42",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p02-03",
+   "Breakdown.Cert.Internal.FreeInv.period_identity",
+   [
+    [
+     "s7-linear-p02-03",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-43",
+     "different"
+    ],
+    [
+     "s7-equation-7-43",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p02-03",
+   "Breakdown.Cert.freeInvHolds_of",
+   [
+    [
+     "s7-linear-p02-03",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-43",
+     "weaker"
+    ],
+    [
+     "s7-equation-7-43",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p10-03",
+   "Breakdown.Cert.Internal.FreePerturbation.propagator_weak_derivative",
+   [
+    [
+     "s7-linear-p10-03",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-46",
+     "different"
+    ],
+    [
+     "s7-equation-7-46",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p10-04",
+   "Breakdown.Cert.Internal.DenseEnergyBand.norm_semigroupX_le",
+   [
+    [
+     "s7-linear-p10-04",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-47",
+     "weaker"
+    ],
+    [
+     "s7-equation-7-47",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p14-01",
+   "Breakdown.Cert.sliceSupBoundHolds_of",
+   [
+    [
+     "s7-linear-p14-01",
+     "stronger"
+    ],
+    [
+     "pdf-item-theorem-7-6",
+     "stronger"
+    ],
+    [
+     "pdf-item-equation-7-48",
+     "stronger"
+    ],
+    [
+     "s7-equation-7-48",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p14-01",
+   "Breakdown.supBoundFactor",
+   [
+    [
+     "s7-linear-p14-01",
+     "weaker"
+    ],
+    [
+     "pdf-item-theorem-7-6",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-48",
+     "weaker"
+    ],
+    [
+     "s7-equation-7-48",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p14-02",
+   "Breakdown.Cert.productBoundHolds_of",
+   [
+    [
+     "s7-linear-p14-02",
+     "stronger"
+    ],
+    [
+     "pdf-item-equation-7-49",
+     "stronger"
+    ],
+    [
+     "s7-equation-7-49",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p17-01",
+   "Breakdown.Cert.Internal.ConvectionFirstOrder.first_term",
+   [
+    [
+     "s7-linear-p17-01",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-50",
+     "different"
+    ],
+    [
+     "s7-equation-7-50",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p17-01",
+   "Breakdown.Cert.Internal.ConvectionFirstOrder.second_term",
+   [
+    [
+     "s7-linear-p17-01",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-50",
+     "different"
+    ],
+    [
+     "s7-equation-7-50",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p17-03",
+   "Breakdown.Cert.Internal.ExtendedConvectionCompact.slice_tail_first",
+   [
+    [
+     "s7-linear-p17-03",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-51",
+     "weaker"
+    ],
+    [
+     "s7-equation-7-51",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p20-01",
+   "Breakdown.Cert.Internal.AtProfile.coercive_at_profile",
+   [
+    [
+     "s7-linear-p20-01",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-52",
+     "same"
+    ],
+    [
+     "s7-equation-7-52",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p22-01",
+   "Breakdown.Cert.bordered",
+   [
+    [
+     "s7-linear-p22-01",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-7-8",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-53",
+     "different"
+    ],
+    [
+     "s7-equation-7-53",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p22-01",
+   "Breakdown.Cert.extendedBorderedInvertibleHolds_of",
+   [
+    [
+     "s7-linear-p22-01",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-7-8",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p23-03",
+   "Breakdown.Cert.bordered",
+   [
+    [
+     "s7-linear-p23-03",
+     "same"
+    ],
+    [
+     "pdf-item-equation-7-54",
+     "same"
+    ],
+    [
+     "s7-equation-7-54",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p26-01",
+   "Breakdown.Cert.extendedSupBoundHolds_of",
+   [
+    [
+     "s7-linear-p26-01",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-7-9",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-55",
+     "different"
+    ],
+    [
+     "s7-equation-7-55",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "s7-linear-p27-05",
+   "Breakdown.Cert.Internal.SupBound.core_bound",
+   [
+    [
+     "s7-linear-p27-05",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-56",
+     "different"
+    ],
+    [
+     "s7-equation-7-56",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-002",
+   "Breakdown.ExtendedCertificateData.heldRight",
+   [
+    [
+     "sec7-nonlinear-002",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-57",
+     "different"
+    ],
+    [
+     "sec7-equation-7-57",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-002",
+   "Breakdown.Cert.bordered",
+   [
+    [
+     "sec7-nonlinear-002",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-57",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-57",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-003",
+   "Breakdown.Cert.extendedInvarianceHolds_of",
+   [
+    [
+     "sec7-nonlinear-003",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-58",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-58",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-003",
+   "Breakdown.Cert.extendedDataContinuityHolds_of",
+   [
+    [
+     "sec7-nonlinear-003",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-58",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-58",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-008",
+   "Breakdown.Cert.extendedExistsZeroHeldHolds_of",
+   [
+    [
+     "sec7-nonlinear-008",
+     "different"
+    ],
+    [
+     "pdf-item-theorem-7-10",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-60",
+     "same"
+    ],
+    [
+     "sec7-equation-7-60",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-008",
+   "Breakdown.ExtendedCertificateData.IsHeldSolution",
+   [
+    [
+     "sec7-nonlinear-008",
+     "weaker"
+    ],
+    [
+     "pdf-item-theorem-7-10",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-59",
+     "different"
+    ],
+    [
+     "sec7-equation-7-59",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-031",
+   "Breakdown.Cert.Internal.ExtendedExistsZeroHeld.box_part",
+   [
+    [
+     "sec7-nonlinear-031",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-61",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-61",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-031",
+   "Breakdown.Cert.Internal.ExtendedExistsZeroHeld.stiff_part",
+   [
+    [
+     "sec7-nonlinear-031",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-61",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-61",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-045",
+   "Breakdown.WeakProfile.physicalCurve",
+   [
+    [
+     "sec7-nonlinear-045",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-63",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-63",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-048",
+   "Breakdown.WeakProfile.varConst",
+   [
+    [
+     "sec7-nonlinear-048",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-64",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-64",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-048",
+   "Breakdown.WeakProfile.mildFromGood_holds",
+   [
+    [
+     "sec7-nonlinear-048",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-64",
+     "different"
+    ],
+    [
+     "sec7-equation-7-64",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-050",
+   "Breakdown.FarField.smoothFieldOfOrbit_holds",
+   [
+    [
+     "sec7-nonlinear-050",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-65",
+     "different"
+    ],
+    [
+     "sec7-equation-7-65",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-050",
+   "Breakdown.FarField.lerayKernelBound_holds",
+   [
+    [
+     "sec7-nonlinear-050",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-7-65",
+     "weaker"
+    ],
+    [
+     "sec7-equation-7-65",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-056",
+   "Breakdown.FarField.farFieldDecay_holds",
+   [
+    [
+     "sec7-nonlinear-056",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-66",
+     "different"
+    ],
+    [
+     "sec7-equation-7-66",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "sec7-nonlinear-056",
+   "Breakdown.FarField.DecayBounds",
+   [
+    [
+     "sec7-nonlinear-056",
+     "different"
+    ],
+    [
+     "pdf-item-equation-7-66",
+     "stronger"
+    ],
+    [
+     "sec7-equation-7-66",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-2",
+   "Breakdown.CertCell.labelPhase",
+   [
+    [
+     "pdf-item-equation-B-2",
+     "same"
+    ],
+    [
+     "b12-harmonic-definition",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-4",
+   "Breakdown.CellCert.GivenFields.polarVecQ",
+   [
+    [
+     "pdf-item-equation-B-4",
+     "different"
+    ],
+    [
+     "b12-polar-formula",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-4",
+   "Breakdown.CellCert.GivenFields.azimVecQ",
+   [
+    [
+     "pdf-item-equation-B-4",
+     "different"
+    ],
+    [
+     "b12-azimuthal-formula",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-6",
+   "Breakdown.CertCell.GivenShape.shapeInfoField",
+   [
+    [
+     "pdf-item-equation-B-6",
+     "same"
+    ],
+    [
+     "b12-field-sum",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-8",
+   "Breakdown.CertCell.GivenShape.reducedComps",
+   [
+    [
+     "pdf-item-equation-B-8",
+     "same"
+    ],
+    [
+     "b12-zero-amplitudes",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "b12-multiplier-definition",
+   "Breakdown.PieceWeights.IsMultiplierField",
+   [
+    [
+     "b12-multiplier-definition",
+     "same"
+    ],
+    [
+     "pdf-item-equation-B-14",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-16",
+   "Breakdown.PieceWeights.modeTerm",
+   [
+    [
+     "pdf-item-equation-B-16",
+     "same"
+    ],
+    [
+     "b12-five-term-density",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "b12-prop-b1-hypotheses",
+   "Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof",
+   [
+    [
+     "b12-prop-b1-hypotheses",
+     "stronger"
+    ],
+    [
+     "pdf-item-theorem-B-1",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-20",
+   "Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof",
+   [
+    [
+     "pdf-item-equation-B-20",
+     "same"
+    ],
+    [
+     "b12-prop-b1-density",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-22",
+   "Breakdown.CertCell.Instance.IsRowInstance",
+   [
+    [
+     "pdf-item-equation-B-22",
+     "weaker"
+    ],
+    [
+     "b12-constant-budgets",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b37",
+   "Breakdown.CellCert.Exterior.rayLine",
+   [
+    [
+     "ns-b3-b37",
+     "different"
+    ],
+    [
+     "pdf-item-equation-B-37",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b38",
+   "Breakdown.CertCell.Assembly.TreeStateInternal.quadValue_totalForm_eq",
+   [
+    [
+     "ns-b3-b38",
+     "same"
+    ],
+    [
+     "pdf-item-equation-B-38",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b39",
+   "Breakdown.CertCell.Certificate.PassesRealNodeEnclosure",
+   [
+    [
+     "ns-b3-b39",
+     "stronger"
+    ],
+    [
+     "pdf-item-equation-B-39",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b40",
+   "Breakdown.CertCell.Certificate.PassesRealNodeEnclosure",
+   [
+    [
+     "ns-b3-b40",
+     "stronger"
+    ],
+    [
+     "pdf-item-equation-B-40",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b41",
+   "Breakdown.CertCell.Certificate.signedTreeLowerBound",
+   [
+    [
+     "ns-b3-b41",
+     "stronger"
+    ],
+    [
+     "pdf-item-equation-B-41",
+     "stronger"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b42",
+   "Breakdown.CertCell.Certificate.realNodeEnclosureBound_of_slackBound",
+   [
+    [
+     "ns-b3-b42",
+     "same"
+    ],
+    [
+     "pdf-item-equation-B-42",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b42",
+   "Breakdown.CertCell.Certificate.complexNodeEnclosureBound_of_parts",
+   [
+    [
+     "ns-b3-b42",
+     "same"
+    ],
+    [
+     "pdf-item-equation-B-42",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "ns-b3-b43",
+   "Breakdown.CertCell.globalForm",
+   [
+    [
+     "ns-b3-b43",
+     "weaker"
+    ],
+    [
+     "pdf-item-equation-B-43",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-44",
+   "Breakdown.CertCell.initialState_closed",
+   [
+    [
+     "pdf-item-equation-B-44",
+     "different"
+    ],
+    [
+     "ns-b3-b44",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-44",
+   "Breakdown.CertCell.Assembly.TreeStateInternal.quadValue_totalForm_eq",
+   [
+    [
+     "pdf-item-equation-B-44",
+     "weaker"
+    ],
+    [
+     "ns-b3-b44",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-theorem-B-9",
+   "Breakdown.CellLayerSystem.ShiftNumbersBounded",
+   [
+    [
+     "pdf-item-theorem-B-9",
+     "weaker"
+    ],
+    [
+     "ns-b4-004",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-49",
+   "Breakdown.CertReduction.gapSupTermHolds_proof",
+   [
+    [
+     "pdf-item-equation-B-49",
+     "different"
+    ],
+    [
+     "ns-b4-010",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-equation-B-51",
+   "Breakdown.AdjointDefect.IsPotentialData",
+   [
+    [
+     "pdf-item-equation-B-51",
+     "different"
+    ],
+    [
+     "ns-b4-045",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-b4-054",
+   "Breakdown.AdjointDefect.representationHolds_of_density",
+   [
+    [
+     "ns-b4-054",
+     "different"
+    ],
+    [
+     "pdf-item-equation-B-54",
+     "different"
+    ],
+    [
+     "ns-b4-055",
+     "different"
+    ]
+   ]
+  ],
+  [
+   "ns-b4-064",
+   "Breakdown.AdjointDefect.freeShiftBoundHolds_proof",
+   [
+    [
+     "ns-b4-064",
+     "weaker"
+    ],
+    [
+     "ns-b4-065",
+     "weaker"
+    ]
+   ]
+  ],
+  [
+   "pdf-item-theorem-B-13",
+   "Breakdown.CellReduction.Instantiation.IsOffsetExpansionEntry",
+   [
+    [
+     "pdf-item-theorem-B-13",
+     "same"
+    ],
+    [
+     "pdf-item-equation-B-58",
+     "same"
+    ],
+    [
+     "ns-b4-073",
+     "same"
+    ]
+   ]
+  ],
+  [
+   "b4-prop-b14",
+   "Breakdown.CellLayerSystem.isExtendedCertificate_of_parts",
+   [
+    [
+     "b4-prop-b14",
+     "weaker"
+    ],
+    [
+     "pdf-item-theorem-B-14",
+     "different"
+    ]
+   ]
+  ]
+ ],
+ "unassessed": [],
+ "result_label_not_found": [
+  "theorem-1.1",
+  "proposition-2.1",
+  "proposition-2.2",
+  "lemma-2.3",
+  "lemma-3.1",
+  "lemma-3.2",
+  "lemma-3.3",
+  "lemma-3.4",
+  "lemma-3.5",
+  "lemma-3.6",
+  "lemma-3.7",
+  "proposition-4.1",
+  "lemma-4.2",
+  "proposition-4.3",
+  "lemma-4.4",
+  "lemma-4.5",
+  "lemma-4.6",
+  "lemma-4.7",
+  "lemma-4.8",
+  "lemma-5.1",
+  "lemma-6.1",
+  "lemma-6.2",
+  "lemma-6.3",
+  "theorem-7.1",
+  "corollary-7.2",
+  "lemma-7.4",
+  "proposition-7.5",
+  "lemma-7.6",
+  "lemma-7.7",
+  "proposition-7.8",
+  "proposition-7.9",
+  "proposition-7.10",
+  "proposition-7.11",
+  "proposition-b.1",
+  "lemma-b.2",
+  "lemma-b.3",
+  "proposition-b.4",
+  "lemma-b.5",
+  "lemma-b.6",
+  "lemma-b.7",
+  "proposition-b.8",
+  "lemma-b.9",
+  "lemma-b.10",
+  "lemma-b.11",
+  "lemma-b.12",
+  "lemma-b.13",
+  "proposition-b.14"
+ ],
+ "result_without_statement": [],
  "long_title_without_override": [
   "Breakdown.AdjointDefect.AzimuthalBounded",
   "Breakdown.AdjointDefect.Internal.PotentialBound.pair_flux",
@@ -1001,16 +4240,692 @@
   "Breakdown.stepMap"
  ],
  "companions": {
-  "navier-stokes-digest+navier-stokes-part-1+navier-stokes-part-2": {
-   "quote_not_unique": 1,
+  "navier-stokes": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 3,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "ties": 31,
+   "titled": 37,
+   "noted": 0
+  },
+  "navier-stokes-digest": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 4,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 253,
+   "titled": 185,
+   "noted": 78
+  },
+  "navier-stokes-index": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 555,
+   "titled": 428,
+   "noted": 93
+  },
+  "navier-stokes-part-1": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 440,
+   "titled": 187,
+   "noted": 52
+  },
+  "navier-stokes-part-2": {
+   "quote_not_unique": 0,
    "lean_not_in_index": 0,
    "verdict_without_note": 0,
    "statement_without_lean": 0,
    "merged": 17,
+   "merged_assessments_differ": 10,
+   "unassessed": 10,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
    "long_title_without_override": 0,
-   "ties": 1069,
-   "titled": 355,
-   "noted": 122
+   "companions": 0,
+   "ties": 377,
+   "titled": 99,
+   "noted": 8
+  },
+  "navier-stokes-appendix-b": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 2,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 615,
+   "titled": 282,
+   "noted": 26
+  },
+  "navier-stokes-routes": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 27,
+   "titled": 56,
+   "noted": 50
+  },
+  "navier-stokes-route-details": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 630,
+   "titled": 1254,
+   "noted": 0
+  },
+  "navier-stokes-statement-files": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 16,
+   "verdict_without_note": 0,
+   "statement_without_lean": 4,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1408,
+   "titled": 213,
+   "noted": 193
+  },
+  "navier-stokes-cell-guide": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 45,
+   "titled": 60,
+   "noted": 0
+  },
+  "navier-stokes-cell-fidelity": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 30,
+   "titled": 21,
+   "noted": 0
+  },
+  "navier-stokes-certificate-checker": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 12,
+   "titled": 15,
+   "noted": 0
+  },
+  "navier-stokes-cell-reference": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 0,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 2551,
+   "titled": 781,
+   "noted": 790
+  },
+  "navier-stokes-library-01": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 944,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 944,
+   "titled": 865,
+   "noted": 0
+  },
+  "navier-stokes-library-02": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 903,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 903,
+   "titled": 751,
+   "noted": 0
+  },
+  "navier-stokes-library-03": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1204,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1204,
+   "titled": 1111,
+   "noted": 0
+  },
+  "navier-stokes-library-04": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1220,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1220,
+   "titled": 1122,
+   "noted": 0
+  },
+  "navier-stokes-library-05": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 1,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1193,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1194,
+   "titled": 1098,
+   "noted": 4
+  },
+  "navier-stokes-library-06": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1202,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1202,
+   "titled": 1091,
+   "noted": 4
+  },
+  "navier-stokes-library-07": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 1,
+   "verdict_without_note": 0,
+   "statement_without_lean": 1,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1196,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1197,
+   "titled": 992,
+   "noted": 2
+  },
+  "navier-stokes-library-08": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1447,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1447,
+   "titled": 1292,
+   "noted": 0
+  },
+  "navier-stokes-library-09": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1443,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1443,
+   "titled": 1349,
+   "noted": 6
+  },
+  "navier-stokes-library-10": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 1,
+   "verdict_without_note": 0,
+   "statement_without_lean": 1,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1458,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1459,
+   "titled": 1395,
+   "noted": 8
+  },
+  "navier-stokes-library-11": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1435,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1435,
+   "titled": 1230,
+   "noted": 4
+  },
+  "navier-stokes-library-12": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 10,
+   "verdict_without_note": 0,
+   "statement_without_lean": 10,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1435,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1445,
+   "titled": 1269,
+   "noted": 7
+  },
+  "navier-stokes-library-13": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1012,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1012,
+   "titled": 981,
+   "noted": 2
+  },
+  "navier-stokes-library-14": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1004,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1004,
+   "titled": 967,
+   "noted": 3
+  },
+  "navier-stokes-library-15": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1009,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1009,
+   "titled": 966,
+   "noted": 14
+  },
+  "navier-stokes-library-16": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1456,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1456,
+   "titled": 1404,
+   "noted": 5
+  },
+  "navier-stokes-library-17": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1459,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1459,
+   "titled": 1305,
+   "noted": 7
+  },
+  "navier-stokes-library-18": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1489,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1489,
+   "titled": 1266,
+   "noted": 3
+  },
+  "navier-stokes-library-19": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1448,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1448,
+   "titled": 1302,
+   "noted": 8
+  },
+  "navier-stokes-library-20": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1439,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1439,
+   "titled": 1333,
+   "noted": 11
+  },
+  "navier-stokes-library-21": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1452,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1452,
+   "titled": 1322,
+   "noted": 4
+  },
+  "navier-stokes-library-22": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1471,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1471,
+   "titled": 1328,
+   "noted": 12
+  },
+  "navier-stokes-library-23": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1277,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1277,
+   "titled": 1164,
+   "noted": 6
+  },
+  "navier-stokes-library-24": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 1,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1262,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1263,
+   "titled": 1177,
+   "noted": 10
+  },
+  "navier-stokes-library-25": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 13,
+   "verdict_without_note": 0,
+   "statement_without_lean": 13,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1100,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1113,
+   "titled": 1021,
+   "noted": 10
+  },
+  "navier-stokes-library-26": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 786,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 786,
+   "titled": 772,
+   "noted": 35
+  },
+  "navier-stokes-library-27": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 2,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 933,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 935,
+   "titled": 893,
+   "noted": 42
+  },
+  "navier-stokes-library-28": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 1482,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 1482,
+   "titled": 1409,
+   "noted": 18
+  },
+  "navier-stokes-library-29": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 680,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 680,
+   "titled": 652,
+   "noted": 18
+  },
+  "navier-stokes-library-30": {
+   "quote_not_unique": 0,
+   "lean_not_in_index": 0,
+   "verdict_without_note": 0,
+   "statement_without_lean": 0,
+   "merged": 0,
+   "merged_assessments_differ": 0,
+   "unassessed": 520,
+   "result_label_not_found": 0,
+   "result_without_statement": 0,
+   "long_title_without_override": 0,
+   "companions": 0,
+   "ties": 520,
+   "titled": 510,
+   "noted": 0
   }
  }
 }
