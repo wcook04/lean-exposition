@@ -35,6 +35,16 @@ export function creditWithoutReview(credit: readonly string[], review: string): 
     .join(" ");
 }
 const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
+/**
+ * The paper's credit as one short line under its authors: the first sentence of the credit (the authors,
+ * their repository and commit, and Anthropic where the paper thanks it), then the review sentence. About
+ * carries the whole credit.
+ */
+export function frontCreditLine(credit: string, review: string): string {
+  // A sentence ends at a stop after a word, not after an initial ("Matei P. Coiculescu").
+  const first = credit.split(/(?<=[a-z0-9)\]][.!?])\s+(?=[A-Z])/)[0]?.trim() ?? "";
+  return [first, review.trim()].filter(Boolean).join(" ");
+}
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
@@ -145,6 +155,13 @@ const site = {
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
   stages: BUILT.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
+  // The authors' paper: one line under the authors. An adapted edition: its own credit note, verbatim in
+  // its text, then the review sentence joined to that note; the edition has no account line.
+  frontCredit: {
+    [MAIN.slot]: frontCreditLine(CREDIT, PAPER.review),
+    ...(ADAPTED ? { [ADAPTED.slot]: PAPER.review.trim() } : {}),
+  },
+  frontCreditNote: ADAPTED?.credit ? { [ADAPTED.slot]: ADAPTED.credit.split(/\s+/).slice(0, 4).join(" ") } : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
   readingAids: PAPER.reading_aids,

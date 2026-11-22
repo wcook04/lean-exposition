@@ -23,7 +23,7 @@ const STYLE = `.reader-shape{display:grid;grid-template-columns:minmax(0,var(--r
 .reader-shape__side{display:block;position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));border-left:1px solid var(--rule)}}
 @media (min-width:1280px){.reader-shape{column-gap:var(--reader-gap)}.reader-shape__side{margin-left:16px}}
 @media (min-width:1680px){.reader-shape{grid-template-columns:var(--reader-outline) minmax(0,var(--reader-measure)) minmax(600px,1fr)}
-.reader-shape__outline{display:block}.reader-shape__strip{margin-bottom:var(--space-6)}.reader-shape .account-line{display:none}}
+.reader-shape__outline{display:block}.reader-shape__strip{margin-bottom:var(--space-6)}}
 @media (min-width:1921px){.reader-shape{--fs-read:clamp(18px,calc(18px + (100vw - 1920px)/320),20px);--reader-measure:clamp(680px,calc(680px + (100vw - 1920px)*.117),755px)}}
 @media (min-width:2100px){.reader-shape{grid-template-columns:var(--reader-outline) minmax(0,var(--reader-measure)) minmax(600px,1040px);justify-content:center}}`;
 

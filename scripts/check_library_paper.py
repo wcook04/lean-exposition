@@ -42,7 +42,7 @@ MATHS = """() => [...document.querySelectorAll('.prose .math-display')].filter(b
 }).filter(Boolean)"""
 
 # The front matter's line naming who made what, wherever this width puts it.
-NOTICE = """() => [...document.querySelectorAll('.account-line, .outline__job')]
+NOTICE = """() => [...document.querySelectorAll('.account-line, .front-credit')]
   .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1 && e.getBoundingClientRect().left >= 0)
   .map(e => (e.closest('.outline') || e).textContent).join(' ')"""
 
@@ -146,7 +146,7 @@ def main() -> int:
             check(f"{tag} display maths fit without scrolling", not bad, "; ".join(bad[:3]))
             check(f"{tag} AI notice shown", args.notice in page.evaluate(NOTICE), f"no front-matter line containing {args.notice!r}")
             # The front matter says each sentence once, and says once that the links were made with AI.
-            line = page.evaluate("() => document.querySelector('.account-line')?.textContent ?? ''")
+            line = page.evaluate("() => [...document.querySelectorAll('.account-line, .front-credit')].map(e => e.textContent).join(' ')")
             said = [t.strip() for t in re.split(r"(?<=[.!?])\s+(?=[A-Z])", line.replace("Open PDF", ". Open PDF")) if t.strip()]
             repeated = sorted({t for t in said if said.count(t) > 1})
             ai = [t for t in said if re.search(r"\bwith AI\b", t)]

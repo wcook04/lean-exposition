@@ -82,10 +82,13 @@ function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; f
       ) : (
         <ul>{shown.map(item)}</ul>
       )}
-      <p className="phrase-key__note">
-        Colours group topics within this paper; topics of one family share a hue. They do not say whether a statement is proved or whether it matches the paper. Topics and links are AI-drafted.
-        {several ? " Each part of this paper has its own topics." : ""}
-      </p>
+      <details className="phrase-key__about">
+        <summary>What the colours mean</summary>
+        <p className="phrase-key__note">
+          Colours group topics within this paper; topics of one family share a hue. They do not say whether a statement is proved or whether it matches the paper. Topics and links are AI-drafted.
+          {several ? " Each part of this paper has its own topics." : ""}
+        </p>
+      </details>
       <TonesSwitch />
     </section>
   );
@@ -180,91 +183,123 @@ export function PdfLink({ pdf }: { pdf: NonNullable<AccountHead["pdf"]> }) {
   );
 }
 
-export function OutlineColumn(props: Props & { head: AccountHead }) {
-  const listRef = useRef<HTMLOListElement>(null);
+/**
+ * The left column: the paper's contents and nothing else. Top to bottom: search, the sections with
+ * their topic colours, then the colour key grouped by family. The whole column is sticky under the
+ * top bar and scrolls on its own, so the contents and the key stay reachable whatever their length.
+ * Who wrote the paper, and who made the links, is said once, under the paper's title.
+ */
+export function OutlineColumn(props: Props) {
+  const navRef = useRef<HTMLElement>(null);
   // Keep the current entry in view inside the column, without moving the page.
   useEffect(() => {
-    const list = listRef.current;
-    const item = list?.querySelector<HTMLElement>('[aria-current="location"]');
-    if (!list || !item) return;
-    const top = item.offsetTop - list.offsetTop;
-    if (top < list.scrollTop + 24 || top > list.scrollTop + list.clientHeight - 48) {
-      list.scrollTop = Math.max(0, top - list.clientHeight / 3);
+    const nav = navRef.current;
+    const item = nav?.querySelector<HTMLElement>('[aria-current="location"]');
+    if (!nav || !item) return;
+    const top = item.getBoundingClientRect().top - nav.getBoundingClientRect().top + nav.scrollTop;
+    if (top < nav.scrollTop + 24 || top > nav.scrollTop + nav.clientHeight - 48) {
+      nav.scrollTop = Math.max(0, top - nav.clientHeight / 3);
     }
   }, [props.current]);
-  const { head } = props;
   return (
-    <nav className="outline" aria-label="Sections of this paper">
-      <div className="outline__account">
-        <p className="caps">{head.name}</p>
-        <p className="outline__job">{head.job}</p>
-        <p className="outline__reader">
-          {head.reader}
-          {head.after && <> {head.after}</>}
-          {head.status && <> {head.status}</>}
-        </p>
-        {head.pdf && (
-          <p className="outline__pdf">
-            <PdfLink pdf={head.pdf} />
-            {head.pdfAfter}
-          </p>
-        )}
-      </div>
-      <Sections {...props} listRef={listRef} />
+    <nav className="outline" aria-label="Contents of this paper" ref={navRef}>
+      <Sections {...props} />
     </nav>
   );
 }
 
-export function Sections({ entries, current, counts, doc, onJump, onLine, listRef, topics, families, parts }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
-  const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
-  const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
+
+const DOUBLE: Record<string, string> = { R: "ℝ", T: "𝕋", Z: "ℤ", N: "ℕ", Q: "ℚ", C: "ℂ" };
+const SUP: Record<string, string> = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "*": "*", "+": "⁺", "-": "⁻", n: "ⁿ" };
+const SUB: Record<string, string> = { "0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉" };
+const SYMBOLS: Record<string, string> = { to: "→", in: "∈", le: "≤", leq: "≤", ge: "≥", geq: "≥", infty: "∞", times: "×", cdot: "·", nabla: "∇", partial: "∂", Delta: "Δ", Omega: "Ω", alpha: "α", beta: "β", gamma: "γ", lambda: "λ", mu: "μ", nu: "ν", omega: "ω", sigma: "σ", tau: "τ", varepsilon: "ε", epsilon: "ε" };
+const script = (body: string, table: Record<string, string>) => ([...body].every((c) => table[c]) ? [...body].map((c) => table[c]).join("") : null);
+
+/** A section's title as plain text for the contents: what a heading's formula says, without its TeX ("Blow-up on ℝ³"). */
+export function plainTitle(title: string): string {
+  return title
+    .replace(/\\mathbb\s*\{?\s*([A-Z])\s*\}?/g, (_m, letter: string) => DOUBLE[letter] ?? letter)
+    .replace(/\\(?:operatorname|mathrm|mathbf|mathcal|text|mathit)\s*\{([^{}]*)\}/g, "$1")
+    .replace(/\^\{([^{}]*)\}|\^(\S)/g, (_m, braced: string | undefined, one: string | undefined) => script(braced ?? one ?? "", SUP) ?? `^${braced ?? one}`)
+    .replace(/_\{([^{}]*)\}|_(\d)/g, (_m, braced: string | undefined, one: string | undefined) => script(braced ?? one ?? "", SUB) ?? `_${braced ?? one}`)
+    .replace(/\\([A-Za-z]+)/g, (_m, name: string) => SYMBOLS[name] ?? name)
+    .replace(/\\[,;!: ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const Chevron = ({ open }: { open: boolean }) => (
+  <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" className={`outline__chev${open ? " is-open" : ""}`}>
+    <path d="M3.5 2l3 3-3 3" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export function Sections({ entries, current, counts, doc, onJump, onLine, topics, families, parts }: Props) {
+  // A section's subsections are folded, except along the way to the place being read; a reader's
+  // own opening or closing of a section holds until they change it.
+  const chain = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
+  const [chosen, setChosen] = useState<ReadonlyMap<string, boolean>>(() => new Map());
+  const parents = useMemo(() => new Set(entries.flatMap((e) => (e.parent ? [e.parent] : []))), [entries]);
+  const byEntry = useMemo(() => new Map(entries.map((e) => [e.id, e])), [entries]);
+  const isOpen = (id: string) => chosen.get(id) ?? chain.has(id);
+  const shown = entries.filter((e) => {
+    for (let up = e.parent; up; up = byEntry.get(up)?.parent ?? null) if (!isOpen(up)) return false;
+    return true;
+  });
   const [searching, setSearching] = useState(false);
-  const any = !!counts && [...counts.values()].some((c) => c.lean);
   const byId = useMemo(() => new Map((topics ?? []).map((topic) => [topic.id, topic])), [topics]);
   const part = (current ? counts?.get(current)?.part : undefined) ?? 0;
   return (
     <>
     {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} />}
-    {!!topics?.length && !searching && <PhraseKey topics={topics} families={families ?? []} parts={parts ?? []} part={part} />}
-    <ol className="outline__list" ref={listRef} hidden={searching}>
-      {shown.map((entry) => (
-        <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
-          <a
-            href={`#${encodeURIComponent(entry.id)}`}
-            aria-current={entry.id === current ? "location" : undefined}
-            onClick={(event) => {
-              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-              event.preventDefault();
-              onJump(entry.id);
-            }}
-          >
-            <span className="outline__name">
-              {sectionLabel(entry.title)}
-              {!!counts?.get(entry.id)?.topics?.length && (
-                <span className="phrase-bars" title={`Topics here: ${counts.get(entry.id)!.topics!.map((id) => byId.get(id)?.name ?? id).join(", ")}`}>
-                  {counts.get(entry.id)!.topics!.slice(0, 6).map((id) => (
-                    <span key={id} data-tone={byId.get(id)?.tone ?? 0} />
-                  ))}
+    <ol className="outline__list" hidden={searching}>
+      {shown.map((entry) => {
+        const count = counts?.get(entry.id);
+        const folds = parents.has(entry.id);
+        const open = folds && isOpen(entry.id);
+        return (
+          <li key={entry.id} className={`outline__item outline__item--l${entry.level}${chain.has(entry.id) ? " outline__item--open" : ""}${folds ? " outline__item--folds" : ""}`}>
+            {folds && (
+              <button
+                type="button"
+                className="outline__fold"
+                aria-expanded={open}
+                aria-label={`${open ? "Fold" : "Unfold"} the subsections of ${sectionLabel(plainTitle(entry.title))}`}
+                onClick={() => setChosen((was) => new Map(was).set(entry.id, !open))}
+              >
+                <Chevron open={open} />
+              </button>
+            )}
+            <a
+              href={`#${encodeURIComponent(entry.id)}`}
+              aria-current={entry.id === current ? "location" : undefined}
+              onClick={(event) => {
+                if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                onJump(entry.id);
+              }}
+            >
+              <span className="outline__name">
+                {sectionLabel(plainTitle(entry.title))}
+                {!!count?.topics?.length && (
+                  <span className="phrase-bars" title={`Topics here: ${count.topics.map((id) => byId.get(id)?.name ?? id).join(", ")}`}>
+                    {count.topics.slice(0, 6).map((id) => (
+                      <span key={id} data-tone={byId.get(id)?.tone ?? 0} />
+                    ))}
+                  </span>
+                )}
+              </span>
+              {!!count?.lean && (
+                <span className="outline__ties num" title={`${count.lean} statements with Lean, of ${count.all} tied`}>
+                  {count.lean}
                 </span>
               )}
-            </span>
-            {!!counts?.get(entry.id)?.lean && (
-              <span className="outline__ties num" title={`${counts.get(entry.id)!.lean} statements with Lean, of ${counts.get(entry.id)!.all} tied`}>
-                {counts.get(entry.id)!.lean}
-              </span>
-            )}
-          </a>
-        </li>
-      ))}
+            </a>
+          </li>
+        );
+      })}
     </ol>
-    {any && !searching && (
-      <p className="outline__key">
-        Numbers count the statements with Lean in each section. j and k step through the statements.{" "}
-        <button type="button" onClick={() => document.body.dispatchEvent(new KeyboardEvent("keydown", { key: "?", bubbles: true }))}>
-          All the keys (?)
-        </button>
-      </p>
-    )}
+    {!!topics?.length && !searching && <PhraseKey topics={topics} families={families ?? []} parts={parts ?? []} part={part} />}
     </>
   );
 }

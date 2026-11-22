@@ -107,7 +107,6 @@ interface Props {
   onPoint(tie: number | null, record?: string): void;
   onName?(walk: LeanWalk): void;
   /** Open the steps and links of the passage being read. */
-  onPassage?(anchor: string | null, opener: HTMLElement): void;
   passageHref?(stage: Stage, anchor: string): string;
 }
 
@@ -121,7 +120,7 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, onMode, onPoint, onName, onPassage, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, onMode, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -648,11 +647,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         {narrow && unfolded && !whole && mode === "graph" && !fill && (
           <button type="button" className="map-pane__whole" onClick={() => setUnfolded(false)}>
             Fold the graph
-          </button>
-        )}
-        {anchor && onPassage && !fill && (
-          <button type="button" className="map-pane__whole" onClick={(event) => onPassage(anchor, event.currentTarget)}>
-            This passage
           </button>
         )}
         <span className="map-pane__guides">

@@ -13,7 +13,7 @@
 import site from "@instance/site";
 import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Alignment } from "../api/lean";
-import type { PaperStructure, Stage } from "../api/types";
+import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
 import { BackControl } from "../app/BackControl";
 import { navigate, routeHref, walkEntry, type Route } from "../app/router";
@@ -23,8 +23,6 @@ import { hostLean, type LeanWalk } from "../lean/walk";
 import { INPUT, restoreScroll } from "../app/restore";
 import { arrivedBy, entryKey, namePlace, onLeave, readEntry, writeEntry } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
-import type { ArgGraph } from "../model/graph";
-import type { PreparedDocument } from "./engine";
 import { paperAlignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
 import { loadDocument, useDocument, type LoadedDocument } from "./documents";
@@ -54,11 +52,8 @@ import {
   firstPassageFor,
   outlineOf,
   outlineTieCounts,
-  passageOf,
-  passageRecords,
   partsOfLines,
   passagesBetween,
-  recordTally,
   resolveAnchor,
   resolveAt,
   resolveBeside,
@@ -1040,10 +1035,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     });
   }, [inspect, signals, doc, readingTop]);
 
-  const openInspector = useCallback((anchor: string | null, opener: HTMLElement | null) => {
-    inspectOpener.current = opener;
-    setInspect((prev) => (prev?.kind === "passage" && prev.anchor === anchor ? null : { kind: "passage", anchor }));
-  }, []);
 
   const closeInspector = useCallback(() => {
     setInspect(null);
@@ -1593,11 +1584,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
   useEffect(() => statements.holdBlock(held?.block ?? null), [statements, held]);
 
-  const toTop = () => {
-    go({ ...here, anchor: undefined, at: undefined, node: undefined, beside: undefined });
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
-  };
-
   // ---- Selections ----------------------------------------------------------------------
 
   useEffect(() => {
@@ -1661,13 +1647,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
   }, [doc, readingTop]);
 
-  const askSelection = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!action) return;
-    inspectOpener.current = event.currentTarget.closest(".reader")?.querySelector<HTMLElement>(".reader__paper") ?? null;
-    setInspect({ kind: "selection", start: action.start, end: action.end, passages: action.passages });
-    setAction(null);
-  };
-
   // ---- Layout --------------------------------------------------------------------------
 
   const names = PAPER_NAMES[stage];
@@ -1725,7 +1704,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           </span>
         ))
       : undefined;
-  const head = { name: names.short, job: names.job, reader: names.reader, status, pdf, after, pdfAfter };
   const inspecting = !!inspect;
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
@@ -1764,8 +1742,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     onName: openDecl,
     passageHref: links.beside,
     onPoint: pointAt,
-    // A paper whose links are phrases has no steps per passage to list; its paragraphs have their own control.
-    onPassage: isPhraseLayer(ties) ? undefined : (anchor: string | null, opener: HTMLElement) => openInspector(anchor, opener),
     passagePart: (part: number) => (doc.parts[part]?.kind === "passage" ? doc.parts[part].anchor : undefined),
   };
 
@@ -1805,7 +1781,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     >
       {outlineColumn && (
         <aside className="reader__outline" inert={route.beside ? true : undefined}>
-          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} head={head} />}</Heading>
+          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} />}</Heading>
         </aside>
       )}
 
@@ -1869,7 +1845,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <span className="visually-hidden">Sections</span>
             </button>
           )}
-          <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          <Crumbs signals={signals} outline={outline} place={!outlineColumn} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onJump={(id) => jumpWithHistory(id, true)} />
           {side && <span className="edition-break" aria-hidden="true" />}
           {side && (
             <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
@@ -1923,7 +1899,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {/* Every width shows who made what, the phone too: the paper's own line, then the status
             sentence (in a library paper, that its links, titles, notes and comparisons were made
             with AI and not reviewed). Wide layouts carry it at the head of the outline column. */}
-        {!outlineColumn && (
+        {doc.creditPart === null && (
           <p className="account-line">
             {names.job} {names.reader}
             {after && <> {after}</>}
@@ -1969,17 +1945,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           onReferenceLean={openReferenceLean}
         />
         </div>
-        {action && (
-          <button
-            type="button"
-            className={`select-action${action.below ? " select-action--below" : ""}`}
-            style={{ left: action.x, top: action.y }}
-            onMouseDown={(event) => event.preventDefault()}
-            onClick={askSelection}
-          >
-            {action.passages === 1 ? "Steps linked to this passage" : `Steps linked to these ${action.passages} passages`}
-          </button>
-        )}
       </div>
 
       {columnInspector && (
@@ -2074,14 +2039,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
       {!mid && sectionsOpen && (
         <Modal title="Sections" placement={phone ? "sheet" : "side-start"} className="modal--sections" onClose={() => setSectionsOpen(false)}>
-          <p className="modal__account">
-            {names.short}
-            {status && <span className="faint">. {status}</span>}
-          </p>
-          <PassageDetails signals={signals} doc={doc} structure={structure} graph={graph} onOpen={(anchor, opener) => {
-            setSectionsOpen(false);
-            openInspector(anchor, opener);
-          }} />
           <Heading signals={signals}>
             {(current) => (
               <Sections
@@ -2146,8 +2103,9 @@ function Heading({ signals, children }: { signals: ReaderSignals; children(curre
   return <>{children(useSignal(signals.heading))}</>;
 }
 
-function Crumbs({ signals, outline, name, stage, phone, hint, phrases, onTop, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; name: string; stage: Stage; phone: boolean; hint: boolean; phrases?: boolean; onTop(): void; onJump(id: string): void }) {
+function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; place: boolean; phone: boolean; hint: boolean; phrases?: boolean; onJump(id: string): void }) {
   const chain = chainOf(outline, useSignal(signals.heading));
+  const here = chain[chain.length - 1];
   return (
     <nav className="crumbs" aria-label="Where you are in this paper">
       {/* The first screen says what to do; it goes as soon as there is a section to name. */}
@@ -2160,40 +2118,26 @@ function Crumbs({ signals, outline, name, stage, phone, hint, phrases, onTop, on
           {phone ? "Tap" : "Click"} a statement with a dark tick to see its Lean.
         </span>
       ))}
-      <ol>
-        <li>
-          <a
-            href={routeHref({ view: "read", stage })}
-            aria-current={chain.length ? undefined : "location"}
-            onClick={(event) => {
-              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-              event.preventDefault();
-              onTop();
-            }}
-          >
-            {name}
-          </a>
-        </li>
-        {chain.map((entry, i) => {
-          const last = i === chain.length - 1;
-          return (
-            <li key={entry.id} className={last ? "crumbs__here" : undefined}>
-              <a
-                href={`#${encodeURIComponent(entry.id)}`}
-                title={sectionLabel(entry.title)}
-                aria-current={last ? "location" : undefined}
-                onClick={(event) => {
-                  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                  event.preventDefault();
-                  onJump(entry.id);
-                }}
-              >
-                {last && !phone ? sectionLabel(entry.title) : sectionNumber(entry.title)}
-              </a>
-            </li>
-          );
-        })}
-      </ol>
+      {/* Where the reader is, as the section's number only ("§1.2"), and only where no contents
+          column stands beside the paper: a title cut short in the strip says nothing. */}
+      {place && here && stripNumber(here.title) && (
+        <ol>
+          <li className="crumbs__here">
+            <a
+              href={`#${encodeURIComponent(here.id)}`}
+              title={sectionLabel(here.title)}
+              aria-current="location"
+              onClick={(event) => {
+                if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                onJump(here.id);
+              }}
+            >
+              {stripNumber(here.title)}
+            </a>
+          </li>
+        </ol>
+      )}
     </nav>
   );
 }
@@ -2228,27 +2172,18 @@ function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties:
   );
 }
 
-function PassageDetails({ signals, doc, structure, graph, onOpen }: { signals: ReaderSignals; doc: PreparedDocument; structure: PaperStructure; graph: ArgGraph; onOpen(anchor: string | null, opener: HTMLElement | null): void }) {
-  const part = useSignal(signals.part);
-  const anchor = doc.parts[part]?.kind === "passage" ? doc.parts[part].anchor : undefined;
-  const records = anchor ? passageRecords(passageOf(structure, anchor)) : [];
-  return (
-    <button
-      type="button"
-      className="reader-bar__button"
-      aria-haspopup="dialog"
-      aria-label={records.length ? `This passage: ${recordTally(records, graph)}` : "This passage"}
-      onClick={(event) => onOpen(anchor ?? null, event.currentTarget)}
-    >
-      This passage
-    </button>
-  );
-}
-
 /** Back, in words that say what it does when the name of the place is where the reader already is. */
 function ReaderBack({ signals, outline, stage, open }: { signals: ReaderSignals; outline: OutlineEntry[]; stage: Stage; open: boolean }) {
   const chain = chainOf(outline, useSignal(signals.heading));
   const last = chain[chain.length - 1];
   const here = `${PAPER_NAMES[stage].short}${last ? ` ${sectionNumber(last.title)}` : ""}`;
   return <BackControl className="reader-strip__back" words={(label) => (label !== here ? `Back to ${label}` : open ? "Close statement" : "Back to your last place")} />;
+}
+
+/** A section's number as the strip shows it: "§1.2", "App. A", or nothing for a section with no number. */
+function stripNumber(title: string): string {
+  const numbered = title.match(/^(\d+(?:\.\d+)*)\.?\s/);
+  if (numbered) return `§${numbered[1]}`;
+  const appendix = title.match(/^Appendix\s+([A-Z](?:\.\d+)*)\b/);
+  return appendix ? `App. ${appendix[1]}` : "";
 }
