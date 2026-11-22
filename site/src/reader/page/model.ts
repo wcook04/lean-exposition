@@ -461,10 +461,19 @@ export function sectionNumber(title: string): string {
  * one long one. Calibrated on all three papers. The page keeps the reading position fixed when
  * the real height arrives.
  */
-export function estimateHeight(part: PreparedPart): number {
+export function estimateHeight(part: PreparedPart, aided = 0, measure = DESKTOP_MEASURE): number {
   if (part.blank) return 0;
-  return Math.round((part.lines.end - part.lines.start + 1) * 19 + part.headings.length * 20);
+  const text = (part.lines.end - part.lines.start + 1) * 19 + part.headings.length * 20;
+  // A column narrower than the desktop measure wraps the same words onto more lines; a section's
+  // aid stands under its head. Both are known before the text is laid out, so both are reserved.
+  const narrow = Math.min(2, Math.max(1, DESKTOP_MEASURE / Math.max(1, measure)));
+  return Math.round(text * narrow + aided * AID_ROOM);
 }
+
+/** The paper's measure on a desktop, which the reserved heights are calibrated at. */
+export const DESKTOP_MEASURE = 680;
+/** The height of a section aid's first sentence with its label: three lines of the sans and its margin. */
+const AID_ROOM = 78;
 
 /** Parts in order of how soon a reader will reach them, nearest first. */
 export function idleOrder(count: number, near: number): number[] {

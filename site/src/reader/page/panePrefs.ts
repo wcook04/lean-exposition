@@ -4,8 +4,8 @@
 
 const KEEP_KEY = "lx-reader-keep-lean";
 const DOCK_KEY = "lx-reader-graph-dock";
-/** The dock's height as a share of the Graph view: 30% until a reader draws the handle. */
-export const DOCK_DEFAULT = 0.3;
+/** The dock's height as a share of the Graph view: 40% until a reader draws the handle, so the comparison under the drawing can be read. */
+export const DOCK_DEFAULT = 0.4;
 export const DOCK_MIN = 0.15;
 export const DOCK_MAX = 0.7;
 
@@ -46,4 +46,55 @@ export function saveKeepLean(open: boolean) {
   } catch {
     /* storage unavailable: the choice lasts until the page closes */
   }
+}
+
+const VIEW_KEY = "lx-reader-view";
+
+/**
+ * The view this reader chose with the tabs, or null if they never chose. The older key could not
+ * tell "chose Graph" from "never chose" (it was removed for Graph), so only its Lean is read.
+ */
+export function readView(): "graph" | "lean" | null {
+  try {
+    const stored = localStorage.getItem(VIEW_KEY);
+    if (stored === "graph" || stored === "lean") return stored;
+    return localStorage.getItem(KEEP_KEY) === "open" ? "lean" : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveView(view: "graph" | "lean") {
+  try {
+    localStorage.setItem(VIEW_KEY, view);
+  } catch {
+    /* storage unavailable: the choice lasts until the page closes */
+  }
+}
+
+const TONES_KEY = "lx-reader-tones";
+
+/** Whether underlines carry their topics' colours. On unless the reader turned it off. */
+export function readTones(): boolean {
+  try {
+    return localStorage.getItem(TONES_KEY) !== "off";
+  } catch {
+    return true;
+  }
+}
+
+/** Set on the root, so the paper, the key and the graph's cards all follow one switch. */
+export function applyTones(on: boolean) {
+  if (on) document.documentElement.removeAttribute("data-tones");
+  else document.documentElement.setAttribute("data-tones", "off");
+}
+
+export function saveTones(on: boolean) {
+  try {
+    if (on) localStorage.removeItem(TONES_KEY);
+    else localStorage.setItem(TONES_KEY, "off");
+  } catch {
+    /* storage unavailable: the choice lasts until the page closes */
+  }
+  applyTones(on);
 }

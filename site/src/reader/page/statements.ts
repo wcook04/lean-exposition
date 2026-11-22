@@ -12,6 +12,14 @@ interface Mark {
   segment: number;
 }
 
+/**
+ * What a paragraph's margin control selects: the block of text that holds its links. A displayed
+ * formula set inside a paragraph belongs to that paragraph; one that stands alone is its own block.
+ */
+const PICK_PROSE = "p, li, figure, table, blockquote";
+const PICK_DISPLAY = ".math-display";
+const PICK_LABEL = "Select this paragraph’s links";
+
 /** How far from a part's edge a tick layer is laid out before it can be seen. */
 const NEAR = "900px 0px";
 
@@ -19,6 +27,9 @@ export class Statements {
   private sections = new Map<number, HTMLElement>();
   private marks = new Map<number, Mark[]>();
   private ticks = new Map<number, HTMLElement[]>();
+  /** Each paragraph's control in the margin, and the paragraph it selects. */
+  private picks = new WeakMap<HTMLElement, HTMLElement>();
+  private heldBlock: HTMLElement | null = null;
   private lit: Record<Light, number | null> = { on: null, point: null, pin: null };
   /** A declaration pointed at in the Lean pane: its phrases are lit. */
   private decl: string | null = null;
@@ -204,11 +215,81 @@ export class Statements {
       fragment.append(tick);
     }
     layer.replaceChildren(fragment);
+    this.drawPicks(section, marks, box);
     this.ticks.set(part, made);
     this.widths.set(part, box.width);
     for (const kind of ["on", "point", "pin"] as Light[]) {
       const t = this.lit[kind];
       if (t !== null) this.write(kind, t, true, part);
+    }
+  }
+
+  /**
+   * One control in the margin beside each paragraph that has links: it selects the paragraph, so
+   * that a click on the paragraph's plain words can stay what it is in any document. A real button
+   * in its own layer, at the paragraph's first line; the paper's own markup is not touched.
+   */
+  private drawPicks(section: HTMLElement, marks: readonly Mark[], box: DOMRect) {
+    // Each block of text and the links in it. A displayed formula that only continues a sentence
+    // (every link in it also has words in a paragraph) is reached through that paragraph's control.
+    const linksOf = new Map<HTMLElement, Set<number>>();
+    for (const { el, segment } of marks) {
+      const prose = el.closest<HTMLElement>(PICK_PROSE);
+      const block = prose && section.contains(prose) ? prose : el.closest<HTMLElement>(PICK_DISPLAY);
+      if (!block || !section.contains(block)) continue;
+      const t = this.model.index.segments[segment]?.[2][0];
+      if (t === undefined) continue;
+      if (!linksOf.has(block)) linksOf.set(block, new Set());
+      linksOf.get(block)!.add(t);
+    }
+    const inProse = new Set<number>();
+    for (const [block, links] of linksOf) if (!block.matches(".math-display")) links.forEach((t) => inProse.add(t));
+    const blocks = [...linksOf].filter(([block, links]) => !block.matches(".math-display") || [...links].some((t) => !inProse.has(t))).map(([block]) => block);
+    let layer = section.querySelector<HTMLElement>(":scope > .part__picks");
+    if (!layer) {
+      layer = document.createElement("div");
+      layer.className = "part__picks";
+      section.append(layer);
+    }
+    const fragment = document.createDocumentFragment();
+    for (const block of blocks) {
+      const top = block.getClientRects()[0] ?? block.getBoundingClientRect();
+      if (!top.height) continue;
+      const pick = document.createElement("button");
+      pick.type = "button";
+      pick.className = "para-pick";
+      pick.title = PICK_LABEL;
+      pick.setAttribute("aria-label", PICK_LABEL);
+      pick.style.top = `${Math.round(top.top - box.top)}px`;
+      this.picks.set(pick, block);
+      fragment.append(pick);
+      if (block !== this.heldBlock) continue;
+      // The selected paragraph: the selection's amber rule down its whole height, in the ticks' column.
+      pick.setAttribute("aria-pressed", "true");
+      const whole = block.getBoundingClientRect();
+      const rail = document.createElement("i");
+      rail.className = "para-rail";
+      rail.setAttribute("aria-hidden", "true");
+      rail.style.top = `${Math.round(whole.top - box.top)}px`;
+      rail.style.height = `${Math.round(whole.height)}px`;
+      fragment.append(rail);
+    }
+    layer.replaceChildren(fragment);
+  }
+
+  /** The paragraph a margin control selects. */
+  blockOf(pick: HTMLElement): HTMLElement | null {
+    return this.picks.get(pick) ?? null;
+  }
+
+  /** Mark one paragraph as the selected one, or none. */
+  holdBlock(block: HTMLElement | null) {
+    if (this.heldBlock === block) return;
+    const was = this.heldBlock;
+    this.heldBlock = block;
+    // Redraw the margin of the part that held the mark and of the part that takes it.
+    for (const [part, section] of this.sections) {
+      if ((was && section.contains(was)) || (block && section.contains(block))) this.drawTicks(part);
     }
   }
 

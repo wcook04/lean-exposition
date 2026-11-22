@@ -18,17 +18,24 @@ export interface ComparatorReceipt {
 }
 
 let loading: Promise<ComparatorReceipt | null> | null = null;
+/** The receipt once it has arrived (undefined until then), so a card mounted later shows it in its first render. */
+let arrived: ComparatorReceipt | null | undefined = site.library ? undefined : null;
+
+/** Whether the receipt has arrived (or there is none to wait for). */
+export const comparatorArrived = () => arrived !== undefined;
 export function loadComparator(): Promise<ComparatorReceipt | null> {
   if (!site.library) return Promise.resolve(null);
   loading ??= fetch(`${import.meta.env.BASE_URL}comparator.json`)
     .then((r) => (r.ok ? r.json() : null))
-    .catch(() => null);
+    .catch(() => null)
+    .then((r: ComparatorReceipt | null) => (arrived = r));
   return loading;
 }
 
 export function useComparator(): ComparatorReceipt | null {
-  const [receipt, setReceipt] = useState<ComparatorReceipt | null>(null);
+  const [receipt, setReceipt] = useState<ComparatorReceipt | null>(() => arrived ?? null);
   useEffect(() => {
+    if (arrived !== undefined) return;
     let live = true;
     void loadComparator().then((r) => live && setReceipt(r));
     return () => {

@@ -42,7 +42,7 @@ MATHS = """() => [...document.querySelectorAll('.prose .math-display')].filter(b
 }).filter(Boolean)"""
 
 # The front matter's line naming who made what, wherever this width puts it.
-NOTICE = """() => [...document.querySelectorAll('.account-line, .outline__job')]
+NOTICE = """() => [...document.querySelectorAll('.account-line, .front-credit')]
   .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1 && e.getBoundingClientRect().left >= 0)
   .map(e => (e.closest('.outline') || e).textContent).join(' ')"""
 
@@ -91,7 +91,7 @@ def main() -> int:
             check(f"{tag} display maths fit without scrolling", not bad, "; ".join(bad[:3]))
             check(f"{tag} AI notice shown", args.notice in page.evaluate(NOTICE), f"no front-matter line containing {args.notice!r}")
             # The front matter says each sentence once, and says once that the links were made with AI.
-            line = page.evaluate("() => document.querySelector('.account-line')?.textContent ?? ''")
+            line = page.evaluate("() => [...document.querySelectorAll('.account-line, .front-credit')].map(e => e.textContent).join(' ')")
             said = [t.strip() for t in re.split(r"(?<=[.!?])\s+(?=[A-Z])", line.replace("Open PDF", ". Open PDF")) if t.strip()]
             repeated = sorted({t for t in said if said.count(t) > 1})
             ai = [t for t in said if re.search(r"\bwith AI\b", t)]
@@ -125,9 +125,11 @@ def main() -> int:
             check(f"{tag} phrase Lean", "v=lean" in page.url, page.url)
             page.get_by_role("button", name="Graph", exact=True).first.click()
             page.wait_for_timeout(1500)
-            page.wait_for_selector(".map-pane__graphview .fg[data-cards]", timeout=15000)
-            nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0)
-            check(f"{tag} graph view", nodes > 0, f"{nodes} cards drawn")
+            # Four or more neighbours are drawn; fewer are named in one line over the Lean, with no canvas.
+            page.wait_for_selector(".map-pane__graphview .fg[data-cards], .map-pane__few", timeout=15000)
+            few = page.get_attribute(".map-pane__few", "data-neighbours") if page.locator(".map-pane__few").count() else None
+            nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0) if few is None else 0
+            check(f"{tag} graph view", nodes > 0 or few is not None, f"{nodes} cards drawn" if few is None else f"{few} neighbours, named without a drawing")
             if args.shots:
                 page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
             # Each kind of address.

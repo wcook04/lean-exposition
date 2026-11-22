@@ -98,6 +98,15 @@ def edition_files(out: Path, paper: str) -> dict:
     return json.loads(index.read_text()) if index.exists() else {}
 
 
+def listed_documents(inst: dict) -> list[dict]:
+    """The documents a reader is offered, as the reader's Read menu lists them: the authors' paper, its
+    own levels where it has several accounts of one argument, and an adapted edition. Guides and
+    companion pages keep their addresses and are not listed."""
+    levels = inst.get("levels") or []
+    return [d for d in inst["documents"]
+            if d.get("main") or d.get("adapted") or d.get("kind") == "adapted" or d.get("slot") in levels]
+
+
 def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
     """Counts and search rows for one published library paper, from its edition."""
     paper = inst["id"]
@@ -176,53 +185,28 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
     return counts, search
 
 
-def strip(colours_file: Path, phrases_file: Path | None) -> list[dict]:
-    """The paper's topic colours in their stored order, each weighted by its phrases."""
-    if not colours_file.exists():
-        return []
-    data = json.loads(colours_file.read_text())
-    weight: dict[str, int] = {}
-    if phrases_file and phrases_file.exists():
-        for tie in json.loads(phrases_file.read_text()).get("ties", []):
-            weight[tie.get("topic")] = weight.get(tie.get("topic"), 0) + 1
-    out = []
-    for part in data.get("parts", []):
-        family_names = {f["id"]: f["name"] for f in part.get("families", [])}
-        for topic, row in sorted(part.get("topics", {}).items(), key=lambda kv: kv[1]["index"]):
-            out.append({"topic": topic, "family": family_names.get(row["family"], ""), "light": row["light"], "dark": row["dark"],
-                        "weight": max(weight.get(topic, 0), 1)})
-    return out
-
-
-def main_slot(inst: dict) -> str:
-    return next(d for d in inst["documents"] if d.get("main"))["slot"]
-
-
 # ---------------------------------------------------------------------------- page
 
-def strip_html(segments: list[dict]) -> str:
-    if not segments:
-        return ""
-    families = []
-    for s in segments:
-        if s["family"] and s["family"] not in families:
-            families.append(s["family"])
-    label = "Topic colours of its underlined phrases: " + "; ".join(families) + "."
-    cells = "".join(
-        f'<i style="flex-grow:{s["weight"]};--c-l:{s["light"]};--c-d:{s["dark"]}" title="{esc(s["family"])}"></i>' for s in segments)
-    return f'<div class="strip" role="img" aria-label="{esc(label)}">{cells}</div>'
+def count_lines(entry: dict) -> list[str]:
+    """Each count with the noun of what it counts, one statement per line and none a share of another.
 
-
-def counts_sentence(entry: dict) -> str:
-    if entry.get("counts_sentence"):
-        return entry["counts_sentence"]
+    For a paper built here the counts come from its edition's ties (library_facts): "phrases" is the
+    number of distinct linked phrases, "lean" the number of distinct Lean declarations those links
+    name, and "statements" the number of linked phrases whose role is "statement" (the paper states
+    the result there; definitions and derivations are not counted). A paper on its current site may
+    give its own lines in papers.json as "count_lines" when its counts mean something else.
+    """
+    if entry.get("count_lines"):
+        return list(entry["count_lines"])
     c = entry.get("counts") or {}
     if not c.get("phrases"):
-        return ""
-    s = f"Links {n(c['phrases'])} phrases to {n(c['lean'])} Lean declarations"
+        return []
+    lines = [f"{n(c['phrases'])} linked passages"]
+    if c.get("lean"):
+        lines.append(f"{n(c['lean'])} linked Lean declarations")
     if c.get("statements"):
-        s += f"; {n(c['statements'])} of the phrases state a result"
-    return s + "."
+        lines.append(f"{n(c['statements'])} passages that state a result")
+    return lines
 
 
 def outbound(href: str) -> bool:
@@ -262,17 +246,21 @@ def entry_html(entry: dict) -> str:
     if pages:
         links = "".join(f'<li><a href="{esc(p["href"])}">{esc(p["title"])}</a></li>' for p in pages)
         pages_html = f'<div class="paper__pages"><span class="paper__pages-label">{esc(entry.get("pages_label", "Also"))}</span><ul>{links}</ul></div>'
-    facts = []
-    cs = counts_sentence(entry)
-    if cs:
-        facts.append(f'<p class="paper__counts">{esc(cs)}</p>')
+    groups = []
+    counts = count_lines(entry)
+    if counts:
+        groups.append(("Linked material", '<ul class="paper__counts">' + "".join(f"<li>{esc(line)}</li>" for line in counts) + "</ul>"))
     if entry.get("comparator"):
-        facts.append(f'<p class="paper__comparator">{esc(entry["comparator"])}</p>')
+        groups.append(("Recorded checks", f'<p class="paper__comparator">{esc(entry["comparator"])}</p>'))
+    credit = []
     if entry.get("credit"):
-        facts.append(f'<p class="paper__credit">{esc(entry["credit"])}</p>')
+        credit.append(f'<p class="paper__credit">{esc(entry["credit"])}</p>')
     if entry.get("where"):
-        facts.append(f'<p class="paper__where">{esc(entry["where"])}</p>')
-    meta = f'<div class="paper__meta">{strip_html(entry.get("strip") or [])}{"".join(facts)}</div>'
+        credit.append(f'<p class="paper__where">{esc(entry["where"])}</p>')
+    if credit:
+        groups.append(("Credit and source", "".join(credit)))
+    meta = '<div class="paper__meta">' + "".join(
+        f'<div class="paper__group"><h4 class="paper__label">{label}</h4>{body}</div>' for label, body in groups) + "</div>"
     return (f'<li class="paper" id="{esc(entry["id"])}"><div class="paper__main">{title}{by}{sentence}{pages_html}</div>{meta}</li>')
 
 
@@ -444,28 +432,23 @@ def main() -> None:
                 continue
             paper = inst["id"]
             main_doc = next(d for d in inst["documents"] if d.get("main"))
-            pages = [{"title": d["title"], "href": f"{BASE}{paper}/{d['slug']}/"} for d in inst["documents"] if not d.get("main") and d.get("slug")]
+            pages = [{"title": d["title"], "href": f"{BASE}{paper}/{d['slug']}/"} for d in listed_documents(inst) if not d.get("main") and d.get("slug")]
             pdf = (main_doc.get("pdf") or {}).get("url")
             if pdf:
                 pages.append({"title": "The authors’ PDF", "href": pdf})
             # Further pages the index entry names itself (papers.json `pages`), after the instance's own.
             pages += item.get("pages", [])
             counts, search = library_facts(out, inst) if (out / paper / "edition").exists() else ({}, None)
-            slot = main_slot(inst)
-            alignment = ROOT / "instances" / paper / "alignment"
             entry = {
                 "id": paper, "title": inst["title"], "authors": inst["authors"], "href": f"{BASE}{paper}/",
                 "sentence": item.get("sentence", ""), "credit": inst.get("companion_credit", ""),
                 "counts": counts, "pages": pages, "comparator": item.get("comparator") or comparator_line(paper),
-                "strip": strip(alignment / f"colours-{slot}.json", alignment / f"phrases-{slot}.json"),
             }
             if search:
                 (out / "_index" / "search" / f"{paper}.json").write_text(json.dumps(search, ensure_ascii=False, separators=(",", ":")))
                 shards[paper] = f"{BASE}_index/search/{paper}.json"
         else:
             entry = dict(item)
-            if item.get("colours"):
-                entry["strip"] = strip(ROOT / item["colours"], ROOT / item["colour_phrases"] if item.get("colour_phrases") else None)
         entries.append(entry)
         titles.append({"id": entry["id"], "title": entry["title"], "authors": names(entry["authors"]), "sentence": entry.get("sentence", ""),
                        "href": entry["href"], "here": not outbound(entry["href"]), "shard": shards.get(entry["id"]),

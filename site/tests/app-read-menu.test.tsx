@@ -1,4 +1,4 @@
-// The Read menu is a keyboard-complete menu button.
+// The Read menu is a keyboard-complete menu button, and no item says "draft".
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
@@ -36,7 +36,7 @@ describe("Read menu", () => {
     await act(async () => key(button, "ArrowDown"));
     const items = [...host.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]')];
     expect(button.getAttribute("aria-expanded")).toBe("true");
-    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long record, draft", "All papers and PDFs"]);
+    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long record", "All papers and PDFs"]);
     expect(items[1].getAttribute("aria-current")).toBe("page");
     expect(document.activeElement).toBe(items[0]);
 

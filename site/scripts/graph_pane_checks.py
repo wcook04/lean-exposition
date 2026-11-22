@@ -3,7 +3,8 @@
 The same file is kept in the Quartic Reader, lean-exposition and Proof Reader. A reader's own
 script drives its pages (which paper, which phrase, which card) and calls `check_graph_pane`
 in each state, and `check_groups` where the drawing has groups; each returns the list of
-failures, empty when the pane is right.
+failures, empty when the pane is right. `check_groups` leaves the pane as it found it: the
+list of a large group closed, a small group folded again.
 
     from graph_pane_checks import check_graph_pane, check_groups
     failures += check_graph_pane(page, "short paper, phrase 5 clicked", dock=".graph-dock")
@@ -98,24 +99,130 @@ def check_graph_pane(page: Page, label: str, dock: str | None = None, expect_sub
     return bad
 
 
+LIST_ABOVE = 8
+
+SUBJECT_BOX = "() => { const c = document.querySelector('.fg .fg__card[data-band=subject]'); if (!c) return null; const r = c.getBoundingClientRect(); return [r.left, r.top, r.width, r.height]; }"
+
+
+def _moved(a: list[float] | None, b: list[float] | None) -> float:
+    if a is None or b is None:
+        return 0.0 if a == b else float("inf")
+    return max(abs(x - y) for x, y in zip(a, b))
+
+
+def _fit(page: Page) -> None:
+    page.locator(".fg__tools button", has_text="Fit").click()
+    page.wait_for_timeout(500)
+
+
 def check_groups(page: Page, label: str) -> list[str]:
-    """A group opens in place into all its members, the drawing then pans if it must, and Fit folds it back."""
+    """The largest group opens all its members: a group of more than eight as a list beside the drawing that
+    leaves the drawing still, a smaller one in place. Fit only moves the camera and folds or closes nothing."""
     heads = page.locator(".fg__side > .fg__group > .fg__grouphead")
     if heads.count() == 0:
         return []
-    bad: list[str] = []
     # The largest group is the hardest case.
     counts = heads.evaluate_all("(els) => els.map((e) => +e.dataset.count)")
-    head = heads.nth(counts.index(max(counts)))
+    count = max(counts)
+    head = heads.nth(counts.index(count))
     name = head.get_attribute("data-group")
+    if count > LIST_ABOVE:
+        return _check_list(page, label, head, name, count)
+    return _check_in_place(page, label, head, name, count)
+
+
+def _check_list(page: Page, label: str, head, name: str, count: int) -> list[str]:
+    bad: list[str] = []
+    before = page.evaluate(SUBJECT_BOX)
+    opened_before = page.evaluate("() => document.querySelector('.fg').dataset.opened")
+    head.click()
+    page.wait_for_timeout(400)
+    panel = page.locator(".fg__list")
+    if panel.count() == 0:
+        return [f"{label}: clicking the group {name} of {count} did not list its members"]
+    if head.get_attribute("aria-expanded") != "true":
+        bad.append(f"{label}: the group {name} is listed but its button does not say it is expanded")
+    if page.evaluate("() => document.querySelector('.fg').dataset.opened") != opened_before:
+        bad.append(f"{label}: listing the group {name} opened groups in the drawing")
+    moved = _moved(before, page.evaluate(SUBJECT_BOX))
+    if moved > 1:
+        bad.append(f"{label}: listing the group {name} moved the subject by {moved:.1f}px")
+    status = page.locator(".fg__liststatus").inner_text().strip()
+    total = status.split(" of ")[-1].split(" ")[0] if " of " in status else ""
+    if total != str(count):
+        bad.append(f"{label}: the group {name} counts {count} but its list says \"{status}\"")
+    # Every member is reached by paging, and each is listed whole.
+    seen: list[str] = []
+    for _ in range(count + 1):
+        seen += page.locator(".fg__list .fg__member").evaluate_all("(els) => els.map((e) => e.dataset.card)")
+        cut = page.locator(".fg__list .fg__membertitle").evaluate_all(
+            "(els) => els.filter((e) => { const cs = getComputedStyle(e); return e.scrollWidth > e.clientWidth + 1 || cs.textOverflow === 'ellipsis' || (cs.webkitLineClamp && cs.webkitLineClamp !== 'none') || parseFloat(cs.fontSize) < 13; }).length"
+        )
+        if cut:
+            bad.append(f"{label}: {cut} member titles of {name} are cut or under 13px")
+        nxt = page.locator(".fg__listpages button", has_text="Next")
+        if nxt.is_disabled():
+            break
+        nxt.click()
+        page.wait_for_timeout(80)
+    if len(seen) != count or len(set(seen)) != count:
+        bad.append(f"{label}: paging through {name} reaches {len(set(seen))} members of {count} ({len(seen)} rows)")
+    # A search for the first member's first word finds at least that member, on any page.
+    box = page.locator(".fg__listsearch")
+    while not page.locator(".fg__listpages button", has_text="Previous").is_disabled():
+        page.locator(".fg__listpages button", has_text="Previous").click()
+        page.wait_for_timeout(40)
+    first_el = page.locator(".fg__list .fg__member").first
+    if first_el.count():
+        first = first_el.get_attribute("data-card")
+        text = first_el.locator(".fg__membertitle").inner_text().strip()
+        # The first plain word: typeset mathematics in a title reads differently on the page and in its plain text.
+        word = next((w for w in (x.strip(".,;:()") for x in text.split()) if len(w) >= 3 and w.isascii() and w.isalpha()), "")
+        if word:
+            box.fill(word)
+            page.wait_for_timeout(150)
+            found: list[str] = []
+            for _ in range(count + 1):
+                found += page.locator(".fg__list .fg__member").evaluate_all("(els) => els.map((e) => e.dataset.card)")
+                nxt = page.locator(".fg__listpages button", has_text="Next")
+                if nxt.is_disabled():
+                    break
+                nxt.click()
+                page.wait_for_timeout(40)
+            if first not in found:
+                bad.append(f"{label}: searching {name} for \"{word}\" does not find its first member {first}")
+            # Back to the whole list, as the reader found it.
+            box.fill("")
+            page.wait_for_timeout(100)
+    # Fit moves the camera only: the list stays open.
+    _fit(page)
+    if page.locator(".fg__list").count() == 0:
+        bad.append(f"{label}: Fit closed the list of {name}")
+    after_fit = page.evaluate(SUBJECT_BOX)
+    back = page.locator(".fg__listback")
+    if back.count():
+        back.click()
+        page.wait_for_timeout(300)
+    if page.locator(".fg__list").count():
+        bad.append(f"{label}: \"Back to the graph\" did not close the list of {name}")
+    moved = _moved(after_fit, page.evaluate(SUBJECT_BOX))
+    if moved > 1:
+        bad.append(f"{label}: closing the list of {name} moved the subject by {moved:.1f}px")
+    if not bad:
+        print(f"ok  {label}: the group {name} lists its {count} members, pages and searches them, and the subject stays still")
+    return bad
+
+
+def _check_in_place(page: Page, label: str, head, name: str, count: int) -> list[str]:
+    bad: list[str] = []
     head.click()
     page.wait_for_timeout(400)
     group = page.locator(".fg__side > .fg__group.is-open").first
     if group.count() == 0:
         return [f"{label}: clicking the group {name} did not open it"]
     inside = group.evaluate("(g) => [...g.querySelectorAll('.fg__members .fg__card')].length + [...g.querySelectorAll('.fg__members .fg__grouphead')].reduce((n, h) => n + (h.getAttribute('aria-expanded') === 'true' ? 0 : +h.dataset.count), 0)")
-    if inside != max(counts):
-        bad.append(f"{label}: the group {name} counts {max(counts)} but opens into {inside}")
+    if inside != count:
+        bad.append(f"{label}: the group {name} counts {count} but opens into {inside}")
     sc = page.locator(".fg__scroll")
     extra = sc.evaluate("(el) => { const v = el.getBoundingClientRect(), d = el.querySelector('.fg__world').getBoundingClientRect(); return Math.round(Math.max(0, v.top - d.top, d.bottom - v.bottom, v.left - d.left, d.right - v.right)); }")
     if extra > 4:
@@ -138,10 +245,12 @@ def check_groups(page: Page, label: str) -> list[str]:
         )
         if hidden:
             bad.append(f"{label}: cards that focusing cannot bring wholly into view: {', '.join(hidden[:5])}")
-    page.locator(".fg__tools button", has_text="Fit").click()
-    page.wait_for_timeout(400)
-    if page.locator(".fg__group.is-open").count():
-        bad.append(f"{label}: Fit did not fold the opened group")
+    # Fit only moves the camera: the group stays open, and folding it is the group's own button.
+    _fit(page)
+    if page.locator(".fg__side > .fg__group.is-open").count() == 0:
+        bad.append(f"{label}: Fit folded the opened group {name}")
+    head.click()
+    page.wait_for_timeout(300)
     if not bad:
-        print(f"ok  {label}: the group {name} opens into its {max(counts)}, pans {max(0, extra)}px, and Fit folds it")
+        print(f"ok  {label}: the group {name} opens into its {count}, pans {max(0, extra)}px, and Fit keeps it open")
     return bad

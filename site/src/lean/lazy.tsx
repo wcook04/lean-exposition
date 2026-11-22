@@ -15,7 +15,7 @@ export function LazyLeanBlock(props: LeanBlockProps) {
   return (
     <Suspense
       fallback={
-        <div style={{ minHeight: props.compact ? 200 : 260, padding: "12px 0", fontSize: "var(--fs-sm)", color: "var(--ink-3)" }}>
+        <div className={`lean-wait${props.compact ? " is-compact" : ""}`} style={{ padding: "12px 0", fontSize: "var(--fs-sm)", color: "var(--ink-3)" }}>
           Loading the Lean source
         </div>
       }

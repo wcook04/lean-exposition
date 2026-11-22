@@ -10,18 +10,20 @@ import { LEVELS, type Level } from "../app/router";
 import { usesOf } from "../map/treeModel";
 import { inLevel } from "../map/levels";
 
+const WORDS = site.levelWords ?? {};
+
 export const LEVEL_NAMES: Record<Level, string> = {
-  lean: "Lean",
-  long: "Long record",
-  short: "Short paper",
-  expository: "Exposition",
+  lean: WORDS.lean?.name ?? "Lean",
+  long: WORDS.long?.name ?? "Long record",
+  short: WORDS.short?.name ?? "Short paper",
+  expository: WORDS.expository?.name ?? "Exposition",
 };
 
 const IN_PROSE: Record<Level, string> = {
-  lean: "OpenAI's Lean",
-  long: "the long record",
-  short: "the short paper",
-  expository: "the exposition",
+  lean: WORDS.lean?.prose ?? "OpenAI's Lean",
+  long: WORDS.long?.prose ?? "the long record",
+  short: WORDS.short?.prose ?? "the short paper",
+  expository: WORDS.expository?.prose ?? "the exposition",
 };
 
 export interface OutlineRow {
@@ -66,11 +68,10 @@ export function walk<T extends { id: string }>(rows: readonly T[], id: string | 
 /** The whole argument, or the steps one paper discusses: that paper as a subgraph of the argument. */
 export type LevelFilter = "all" | Stage;
 
+/** "All", then each document level the paper has (never one it lacks). */
 export const LEVEL_FILTERS: { id: LevelFilter; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "long", label: "Long record" },
-  { id: "short", label: "Short paper" },
-  { id: "expository", label: "Exposition" },
+  ...(["long", "short", "expository"] as const).filter((level) => LEVELS.includes(level)).map((level) => ({ id: level, label: LEVEL_NAMES[level] })),
 ];
 
 export function filterByLevel<T extends { id: string }>(rows: readonly T[], filter: LevelFilter, graph: ArgGraph): T[] {

@@ -66,6 +66,8 @@ export interface PreparedDocument {
   renderAll(): RenderedPart[];
   /** Every block's words with its source line, for searching text that has not rendered yet. */
   textBlocks(): TextBlock[];
+  /** The part whose front matter carries the credit line (frontCredit), or null when none does. */
+  creditPart: number | null;
 }
 
 export interface TextBlock {
@@ -90,6 +92,76 @@ export interface PrepareInput {
   referenceTable?: ReferenceTable | null;
   /** The paper's tied segments, by byte range; their spans come out in the rendered HTML. */
   ties?: readonly TieSegment[];
+  /**
+   * What the formal development does in each section, by section number ("5.6") or heading. One is
+   * set under its section's head as a reader annotation; the authors' text is not changed.
+   */
+  sectionAids?: Readonly<Record<string, string>> | null;
+  /**
+   * The paper's credit, as HTML: one short line set in the front matter, under the authors (ul.authors).
+   * It is the reader's, not the authors' text, and says who wrote the paper and its Lean, where they
+   * are from, and who made the links.
+   */
+  frontCredit?: string | null;
+}
+
+// ------------------------------------------------------------- section aids
+
+const escapeText = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** An aid's words as HTML: `$…$` typeset, the rest as text. */
+function aidHtml(text: string): string {
+  return text
+    .split(/(\$[^$]+\$)/)
+    .map((piece) => (piece.length > 2 && piece.startsWith("$") && piece.endsWith("$") ? renderTex(piece.slice(1, -1), false).html : escapeText(piece)))
+    .join("");
+}
+
+/** Where an aid's first sentence ends: a full stop before a capital, outside any formula. */
+function firstSentenceEnd(text: string): number {
+  let math = false;
+  for (let i = 0; i < text.length - 2; i++) {
+    if (text[i] === "$") math = !math;
+    else if (!math && text[i] === "." && text[i + 1] === " " && /[A-Z$]/.test(text[i + 2]) && i > 40) return i + 1;
+  }
+  return text.length;
+}
+
+/** The aid for a heading: by its number, by its whole title, or by its title without its number. */
+export function sectionAidFor(aids: Readonly<Record<string, string>>, title: string): string | null {
+  const plain = stripMarks(title).replace(/\s+/g, " ").trim();
+  const number = plain.match(/^((?:\d+|[A-Z])(?:\.\d+)*)\.?(?:\s|$)/)?.[1];
+  return aids[plain] ?? (number ? aids[number] : undefined) ?? aids[plain.replace(/^((?:\d+|[A-Z])(?:\.\d+)*)\.?\s+/, "")] ?? null;
+}
+
+/**
+ * The annotation set under a section's head. Its first sentence shows; the rest opens in place.
+ * A `<details>`, so it needs no script and nothing moves unless the reader opens it.
+ */
+export function sectionAidHtml(text: string): string {
+  const cut = firstSentenceEnd(text);
+  const lead = `<span class="section-aid__label">Formal development in this section.</span> ${aidHtml(text.slice(0, cut))}`;
+  const who = `<span class="section-aid__who">Reader annotation, AI-drafted.</span>`;
+  if (cut >= text.length) return `<p class="section-aid" data-aid>${lead} ${who}</p>`;
+  return `<details class="section-aid" data-aid><summary>${lead} <span class="section-aid__more" aria-hidden="true"></span></summary><p>${aidHtml(text.slice(cut).trim())} ${who}</p></details>`;
+}
+
+/** A rendered part with each of its section heads followed by that section's aid. */
+function withSectionAids(html: string, headings: readonly { id: string; level: number; title: string }[], aids: Readonly<Record<string, string>>): string {
+  let out = html;
+  for (const heading of headings) {
+    // The paper's title is followed by its authors, not by a note; its aid opens the reader's "Start here".
+    if (heading.level < 2) continue;
+    const aid = sectionAidFor(aids, heading.title);
+    if (!aid) continue;
+    const at = out.indexOf(`id="${heading.id}"`);
+    if (at < 0) continue;
+    const close = out.slice(at).match(/<\/h[1-6]>/);
+    if (!close || close.index === undefined) continue;
+    const end = at + close.index + close[0].length;
+    out = out.slice(0, end) + sectionAidHtml(aid) + out.slice(end);
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------- markdown-it
@@ -577,6 +649,38 @@ function preprocess(text: string, atStart: boolean, frontMatter: { value: Record
 
 const REF_DEF = /^ {0,3}\[(?:[^\]\\\n]|\\.)+\]:[ \t]*\S.*$/gm;
 
+/**
+ * A paper's own table of contents ("Contents", with its table of sections and pages) is left out of
+ * the reading copy: the contents column beside the paper lists the same sections, live. Only the
+ * heading and the tables under it go; an anchor or anything else before the next heading stays.
+ */
+function dropContents(states: PartState[]): void {
+  let dropping = false;
+  for (const st of states) {
+    const kept: Token[] = [];
+    for (let i = 0; i < st.tokens.length; i++) {
+      const t = st.tokens[i];
+      if (t.type === "heading_open") {
+        const title = t.tag === "h1" || t.tag === "h2" ? inlineText(st.tokens[i + 1]?.children ?? [], st.spans).trim() : "";
+        if (/^(table of )?contents$/i.test(title) && st.tokens[i + 2]?.type === "heading_close") {
+          dropping = true;
+          i += 2;
+          continue;
+        }
+        dropping = false;
+      } else if (dropping) {
+        if (t.type === "table_open") {
+          while (i < st.tokens.length && st.tokens[i].type !== "table_close") i++;
+          continue;
+        }
+        if (!(t.type === "html_block" && /^\s*<!--[\s\S]*?-->\s*$/.test(t.content))) dropping = false;
+      }
+      kept.push(t);
+    }
+    if (kept.length !== st.tokens.length) st.tokens = kept;
+  }
+}
+
 function inlineText(children: Token[], spans: MathSpan[]): string {
   let s = "";
   for (const c of children) {
@@ -847,6 +951,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     });
   });
 
+  dropContents(states);
+
   // Pass 2: label and heading ids in document order.
   const labelId = labelIds();
   states.forEach((st, index) => {
@@ -885,6 +991,12 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     }
   });
 
+  // The credit line goes under the authors' names in the front matter, in the part that lists them.
+  const authorsAt = input.frontCredit ? raw.findIndex((text) => /<ul class="authors">[\s\S]*?<\/ul>/.test(text)) : -1;
+  const creditPart = authorsAt >= 0 ? authorsAt : null;
+  const withCredit = (index: number, html: string) =>
+    index === creditPart && input.frontCredit ? html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n<p class="front-credit">${input.frontCredit}</p>`) : html;
+
   const anchorIndex = registry.entries();
   const issues = registry.duplicates.map((d) => `duplicate explicit id "${d.id}" in parts ${d.parts[0]} and ${d.parts[1]}`);
 
@@ -914,7 +1026,10 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       documentPaths: input.documentPaths,
       linkClose: [],
     };
-    st.rendered = { index, ...renderTokens(st, env, typesetSpan, { index: refs }) };
+    const made = renderTokens(st, env, typesetSpan, { index: refs });
+    const headings = parts[index]?.headings ?? [];
+    const html = input.sectionAids && headings.length ? withSectionAids(made.html, headings, input.sectionAids) : made.html;
+    st.rendered = { index, ...made, html: withCredit(index, html) };
     return st.rendered;
   };
 
@@ -929,7 +1044,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     let done = plainParts.get(index);
     if (!done) {
       const env: RenderEnv = { references, stage: input.stage, documentPath: input.documentPath, documentPaths: input.documentPaths, linkClose: [] };
-      done = { index, ...renderTokens(st, env, plainSpan, { index: refs }) };
+      const made = renderTokens(st, env, plainSpan, { index: refs });
+      done = { index, ...made, html: withCredit(index, made.html) };
       plainParts.set(index, done);
     }
     return done;
@@ -948,6 +1064,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     render,
     renderPlain,
     renderAll: () => parts.map((p) => render(p.index)),
+    creditPart,
     textBlocks: () =>
       (blocks ??= states.flatMap((st, part) =>
         st.tokens.flatMap((token, i) => {

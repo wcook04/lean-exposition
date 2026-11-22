@@ -81,9 +81,14 @@ export type Route =
     }
   | { view: "missing"; path: string };
 
-/** The levels of the funnel, from the Lean down to the exposition. */
-export const LEVELS = ["lean", "long", "short", "expository"] as const;
-export type Level = (typeof LEVELS)[number];
+/** Every level a paper may have, from the Lean down to the exposition. */
+const ALL_LEVELS = ["lean", "long", "short", "expository"] as const;
+export type Level = (typeof ALL_LEVELS)[number];
+/**
+ * The levels of the funnel this paper has, in that order: Compare never offers one it lacks. A paper
+ * with one document has the Lean and that document; SK and #257 have all four.
+ */
+export const LEVELS: readonly Level[] = site.compareLevels ? ALL_LEVELS.filter((level) => site.compareLevels!.includes(level)) : ALL_LEVELS;
 
 function isLevel(value: string): value is Level {
   return (LEVELS as readonly string[]).includes(value);

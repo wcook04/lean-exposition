@@ -43,7 +43,11 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   const [stored] = useState(storedLevels);
   const chosen = route.levels ?? stored ?? defaultLevels(width);
-  const levels = useMemo(() => LEVELS.filter((level) => chosen.includes(level)), [chosen]);
+  const levels = useMemo(() => {
+    const shown = LEVELS.filter((level) => chosen.includes(level));
+    // An address or a stored choice naming only levels this paper lacks starts from the defaults.
+    return shown.length ? shown : defaultLevels(width);
+  }, [chosen, width]);
   const levelsKey = levels.join(",");
 
   const every = useMemo(() => (steps ? tableRows(steps, levels, false, main) : []), [steps, levelsKey, main]);

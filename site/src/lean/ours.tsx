@@ -35,11 +35,18 @@ function conditionOf(decl: OurDeclaration | undefined): string | null {
 }
 
 let loading: Promise<Ours | null> | null = null;
-function loadOurs(): Promise<Ours | null> {
+/** The statements once they have arrived (undefined until then), so a card mounted later has them in its first render. */
+let arrived: Ours | null | undefined = site.library ? undefined : null;
+
+/** Whether our statements have arrived (or there are none to wait for). */
+export const oursArrived = () => arrived !== undefined;
+
+export function loadOurs(): Promise<Ours | null> {
   if (!site.library) return Promise.resolve(null);
   loading ??= fetch(`${import.meta.env.BASE_URL}ours.json`)
     .then((r) => (r.ok ? (r.json() as Promise<Ours>) : null))
-    .catch(() => null);
+    .catch(() => null)
+    .then((data: Ours | null) => (arrived = data));
   return loading;
 }
 
@@ -60,8 +67,9 @@ function pullHref(pr: string): string | null {
 
 /** Our statements compared with this phrase, each as a block of its own, under the authors' card. */
 export function OurStatements({ phrase }: { phrase: string | undefined }) {
-  const [ours, setOurs] = useState<Ours | null>(null);
+  const [ours, setOurs] = useState<Ours | null>(() => arrived ?? null);
   useEffect(() => {
+    if (arrived !== undefined) return setOurs(arrived);
     let live = true;
     if (phrase) void loadOurs().then((data) => live && setOurs(data));
     return () => {
