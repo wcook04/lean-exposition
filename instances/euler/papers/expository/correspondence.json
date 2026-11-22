@@ -3,8 +3,8 @@
  "stage": "expository",
  "state": "draft",
  "path": "papers/expository.md",
- "content_sha256": "ac9916d1ac153686a97c543a0407fd5891500f4d75d0a51f0565cca6570236cf",
- "graph_sha256": "b6895856d9ff50e16496b37b717873bb085652575bcb8d1394efc1e2e75b460b",
+ "content_sha256": "da3dd2d8874c441510566744fcb4b93bcda04477bee2da2695fe54e3be79f53a",
+ "graph_sha256": "db48fdd5ba2604749972848ed79e43c2768fdab18b46be5a44ed5375dec0afe1",
  "selected_goal_ids": [
   "euler.theorem-1.1"
  ],
@@ -261,7 +261,7 @@
  "passages": [
   {
    "anchor": "front",
-   "text_sha256": "b9c3e40664adfb98bb35c3741d723395e0cf6ffb822f01ae24017c6b574a66d2",
+   "text_sha256": "283a0b973b2799b9ae9b9c75781741fec9252c568d02a6e317ba2057a9cf3ed9",
    "claim_ids": [
     "euler.theorem-1.1"
    ],
