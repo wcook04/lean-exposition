@@ -1850,3 +1850,9 @@ html.is-reading {
 .lean-page__scroll[data-waiting] {
   visibility: hidden;
 }
+
+/* A cold address further down holds the paper undrawn, in place, until it has landed there
+   (ReaderPage.tsx), so the top of the paper never shows and then jumps. */
+html.landing .paper {
+  visibility: hidden;
+}
