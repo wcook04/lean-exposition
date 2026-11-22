@@ -5,21 +5,31 @@
  "parts": [
   {
    "key": "f6987931a7ccfe84",
-   "shared_by": 1,
+   "shared_by": 2,
    "lightness": {
-    "light": 0.49,
-    "dark": 0.665
+    "light": 0.59,
+    "dark": 0.66
    },
    "chroma": {
-    "light": 0.085,
-    "dark": 0.115
+    "light": [
+     0.136,
+     0.201
+    ],
+    "dark": [
+     0.151,
+     0.201
+    ]
    },
    "families": [
     {
      "id": "family-p1-weighted",
      "name": "Reciprocal and weighted supports · Divisor counts and averaging",
      "named": false,
-     "hue": 78,
+     "hue": 15,
+     "chroma": {
+      "light": 0.201,
+      "dark": 0.201
+     },
      "topics": [
       "p1-weighted",
       "p1-average"
@@ -29,7 +39,11 @@
      "id": "family-p1-cover",
      "name": "Positive divisor majorants · Combining support criteria",
      "named": false,
-     "hue": 143,
+     "hue": 103,
+     "chroma": {
+      "light": 0.136,
+      "dark": 0.151
+     },
      "topics": [
       "p1-cover",
       "p1-mixed"
@@ -39,7 +53,11 @@
      "id": "family-p1-witness",
      "name": "Dependence on the chosen primes",
      "named": false,
-     "hue": 211,
+     "hue": 159,
+     "chroma": {
+      "light": 0.142,
+      "dark": 0.158
+     },
      "topics": [
       "p1-witness"
      ]
@@ -48,7 +66,11 @@
      "id": "family-p1-scope",
      "name": "Universal and half-value questions · Unproved inputs and further arguments",
      "named": false,
-     "hue": 276,
+     "hue": 245.5,
+     "chroma": {
+      "light": 0.178,
+      "dark": 0.161
+     },
      "topics": [
       "p1-scope",
       "p1-inputs"
@@ -58,7 +80,11 @@
      "id": "family-p1-geometry",
      "name": "Achievement sets and greedy survival · Carry bounds and finite certificates",
      "named": false,
-     "hue": 359.5,
+     "hue": 310.5,
+     "chroma": {
+      "light": 0.201,
+      "dark": 0.201
+     },
      "topics": [
       "p1-limits",
       "p1-geometry"
@@ -69,76 +95,86 @@
     "p1-weighted": {
      "index": 0,
      "family": "family-p1-weighted",
-     "light": "oklch(0.427 0.090 73.7)",
-     "dark": "oklch(0.603 0.122 73.7)"
+     "light": "oklch(0.513 0.201 10.7)",
+     "dark": "oklch(0.583 0.201 10.7)"
     },
     "p1-average": {
      "index": 1,
      "family": "family-p1-weighted",
-     "light": "oklch(0.512 0.080 82.3)",
-     "dark": "oklch(0.688 0.108 82.3)"
+     "light": "oklch(0.598 0.179 19.3)",
+     "dark": "oklch(0.668 0.179 19.3)"
     },
     "p1-cover": {
      "index": 2,
      "family": "family-p1-cover",
-     "light": "oklch(0.412 0.090 138.7)",
-     "dark": "oklch(0.588 0.122 138.7)"
+     "light": "oklch(0.548 0.113 98.7)",
+     "dark": "oklch(0.618 0.128 98.7)"
     },
     "p1-mixed": {
      "index": 3,
      "family": "family-p1-cover",
-     "light": "oklch(0.497 0.080 147.3)",
-     "dark": "oklch(0.672 0.108 147.3)"
+     "light": "oklch(0.633 0.136 107.3)",
+     "dark": "oklch(0.703 0.151 107.3)"
     },
     "p1-witness": {
      "index": 4,
      "family": "family-p1-witness",
-     "light": "oklch(0.490 0.085 211.0)",
-     "dark": "oklch(0.665 0.115 211.0)"
+     "light": "oklch(0.620 0.142 159.0)",
+     "dark": "oklch(0.690 0.158 159.0)"
     },
     "p1-scope": {
      "index": 5,
      "family": "family-p1-scope",
-     "light": "oklch(0.438 0.090 271.7)",
-     "dark": "oklch(0.613 0.122 271.7)"
+     "light": "oklch(0.548 0.128 241.2)",
+     "dark": "oklch(0.618 0.144 241.2)"
     },
     "p1-inputs": {
      "index": 6,
      "family": "family-p1-scope",
-     "light": "oklch(0.522 0.080 280.3)",
-     "dark": "oklch(0.698 0.108 280.3)"
+     "light": "oklch(0.633 0.178 249.8)",
+     "dark": "oklch(0.703 0.161 249.8)"
     },
     "p1-limits": {
      "index": 7,
      "family": "family-p1-geometry",
-     "light": "oklch(0.438 0.090 355.2)",
-     "dark": "oklch(0.613 0.122 355.2)"
+     "light": "oklch(0.508 0.201 306.2)",
+     "dark": "oklch(0.578 0.201 306.2)"
     },
     "p1-geometry": {
      "index": 8,
      "family": "family-p1-geometry",
-     "light": "oklch(0.522 0.080 3.8)",
-     "dark": "oklch(0.698 0.108 3.8)"
+     "light": "oklch(0.593 0.179 314.8)",
+     "dark": "oklch(0.663 0.179 314.8)"
     }
    }
   },
   {
    "key": "7ed4708c74e4b821",
-   "shared_by": 1,
+   "shared_by": 2,
    "lightness": {
-    "light": 0.475,
-    "dark": 0.685
+    "light": 0.565,
+    "dark": 0.675
    },
    "chroma": {
-    "light": 0.087,
-    "dark": 0.124
+    "light": [
+     0.11,
+     0.213
+    ],
+    "dark": [
+     0.129,
+     0.213
+    ]
    },
    "families": [
     {
      "id": "family-p2-series-greedy",
      "name": "Series and greedy expansions",
      "named": false,
-     "hue": 46.5,
+     "hue": 25,
+     "chroma": {
+      "light": 0.19,
+      "dark": 0.135
+     },
      "topics": [
       "p2-series-greedy"
      ]
@@ -147,7 +183,11 @@
      "id": "family-p2-support-irrationality",
      "name": "Irrationality of support classes",
      "named": false,
-     "hue": 91.5,
+     "hue": 79.5,
+     "chroma": {
+      "light": 0.132,
+      "dark": 0.155
+     },
      "topics": [
       "p2-support-irrationality"
      ]
@@ -156,7 +196,11 @@
      "id": "family-p2-finite-approximations",
      "name": "Finite approximations and exact sums",
      "named": false,
-     "hue": 155,
+     "hue": 149.5,
+     "chroma": {
+      "light": 0.171,
+      "dark": 0.19
+     },
      "topics": [
       "p2-finite-approximations"
      ]
@@ -165,7 +209,11 @@
      "id": "family-p2-open-inputs",
      "name": "Unproved estimates and obligations",
      "named": false,
-     "hue": 218,
+     "hue": 214.5,
+     "chroma": {
+      "light": 0.11,
+      "dark": 0.129
+     },
      "topics": [
       "p2-open-inputs"
      ]
@@ -174,7 +222,11 @@
      "id": "family-p2-obstructions",
      "name": "Obstructions and countermodels · Arithmetic sampling and logarithmic cost",
      "named": false,
-     "hue": 271.5,
+     "hue": 261,
+     "chroma": {
+      "light": 0.187,
+      "dark": 0.201
+     },
      "topics": [
       "p2-arithmetic-cost",
       "p2-obstructions"
@@ -184,7 +236,11 @@
      "id": "family-p2-integer-quotients",
      "name": "Integer quotients and remainders · Dyadic boundaries and omitted tails · Conditions for rational-target membership",
      "named": false,
-     "hue": 346.5,
+     "hue": 334.5,
+     "chroma": {
+      "light": 0.213,
+      "dark": 0.213
+     },
      "topics": [
       "p2-dyadic-margins",
       "p2-integer-quotients",
@@ -196,56 +252,56 @@
     "p2-series-greedy": {
      "index": 0,
      "family": "family-p2-series-greedy",
-     "light": "oklch(0.375 0.087 46.5)",
-     "dark": "oklch(0.585 0.124 46.5)"
+     "light": "oklch(0.660 0.190 25.0)",
+     "dark": "oklch(0.770 0.135 25.0)"
     },
     "p2-support-irrationality": {
      "index": 1,
      "family": "family-p2-support-irrationality",
-     "light": "oklch(0.550 0.087 91.5)",
-     "dark": "oklch(0.760 0.124 91.5)"
+     "light": "oklch(0.640 0.132 79.5)",
+     "dark": "oklch(0.750 0.155 79.5)"
     },
     "p2-finite-approximations": {
      "index": 2,
      "family": "family-p2-finite-approximations",
-     "light": "oklch(0.545 0.087 155.0)",
-     "dark": "oklch(0.755 0.124 155.0)"
+     "light": "oklch(0.615 0.171 149.5)",
+     "dark": "oklch(0.725 0.190 149.5)"
     },
     "p2-open-inputs": {
      "index": 3,
      "family": "family-p2-open-inputs",
-     "light": "oklch(0.485 0.087 218.0)",
-     "dark": "oklch(0.695 0.124 218.0)"
+     "light": "oklch(0.625 0.110 214.5)",
+     "dark": "oklch(0.735 0.129 214.5)"
     },
     "p2-arithmetic-cost": {
      "index": 4,
      "family": "family-p2-obstructions",
-     "light": "oklch(0.432 0.092 267.9)",
-     "dark": "oklch(0.643 0.131 267.9)"
+     "light": "oklch(0.518 0.187 257.4)",
+     "dark": "oklch(0.628 0.201 257.4)"
     },
     "p2-obstructions": {
      "index": 5,
      "family": "family-p2-obstructions",
-     "light": "oklch(0.517 0.082 275.1)",
-     "dark": "oklch(0.728 0.117 275.1)"
+     "light": "oklch(0.603 0.179 264.6)",
+     "dark": "oklch(0.713 0.148 264.6)"
     },
     "p2-dyadic-margins": {
      "index": 6,
      "family": "family-p2-integer-quotients",
-     "light": "oklch(0.390 0.097 339.3)",
-     "dark": "oklch(0.600 0.139 339.3)"
+     "light": "oklch(0.485 0.213 327.3)",
+     "dark": "oklch(0.595 0.213 327.3)"
     },
     "p2-integer-quotients": {
      "index": 7,
      "family": "family-p2-integer-quotients",
-     "light": "oklch(0.475 0.087 346.5)",
-     "dark": "oklch(0.685 0.124 346.5)"
+     "light": "oklch(0.570 0.190 334.5)",
+     "dark": "oklch(0.680 0.190 334.5)"
     },
     "p2-conditional-membership": {
      "index": 8,
      "family": "family-p2-integer-quotients",
-     "light": "oklch(0.560 0.077 353.7)",
-     "dark": "oklch(0.770 0.109 353.7)"
+     "light": "oklch(0.655 0.167 341.7)",
+     "dark": "oklch(0.765 0.167 341.7)"
     }
    }
   }
