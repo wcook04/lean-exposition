@@ -11,7 +11,6 @@ import { BackControl } from "./BackControl";
 import { navigate, routeHref, type Route } from "./router";
 import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
 import { PAPER_NAMES, STAGE_ORDER } from "./papers";
-import { useMaybeEdition } from "./data";
 import { FAMILY } from "./family";
 import { HAS_FILMS, VideoRows, VideosMenu } from "./VideosMenu";
 import { SITE_NAME } from "./siteName";
@@ -21,21 +20,14 @@ interface Props {
   onSearch: () => void;
 }
 
-/** A library paper's companion documents, by group in reading order, as the Read menu lists them. */
-const COMPANION_GROUPS = (() => {
-  const groups: { id: string; title: string; start: number; docs: { slot: string; title: string }[] }[] = [];
-  let at = 0;
-  for (const c of site.library?.companions ?? []) {
-    let group = groups.find((g) => g.id === c.group);
-    if (!group) groups.push((group = { id: c.group, title: c.group_title, start: 0, docs: [] }));
-    group.docs.push({ slot: c.slot, title: c.title });
-  }
-  for (const group of groups) {
-    group.start = at;
-    at += group.docs.length;
-  }
-  return groups;
-})();
+/**
+ * What the Read menu lists: the authors' paper and, where one exists, its adapted edition (or a paper's
+ * own levels). Every other document of the paper keeps its address, unlisted.
+ */
+const MENU: Stage[] = (site.readMenu as Stage[] | undefined) ?? STAGE_ORDER;
+
+/** The line under a menu item: the instance's own words where it gives them, else the account's job. */
+const menuJob = (s: Stage): string => site.readMenuJobs?.[s] ?? (site.readMenu ? "" : (ACCOUNT_JOBS[s] ?? ""));
 
 /** One line on what each account is for, as the Read menu says it. */
 export const ACCOUNT_JOBS: Record<Stage, string> = {
@@ -68,19 +60,10 @@ function jobOf(route: Route): Job {
   }
 }
 
-/** The status word for an account the edition marks as a draft, if any. */
-function useDraftWords(): Partial<Record<Stage, string>> {
-  const edition = useMaybeEdition();
-  const out: Partial<Record<Stage, string>> = {};
-  for (const paper of edition?.overview.papers ?? []) if (paper.state === "draft") out[paper.stage] = "draft";
-  return out;
-}
-
 export function TopBar({ route, onSearch }: Props) {
   const [scheme, setLocalScheme] = useState<Scheme>(currentScheme());
   useEffect(() => onSchemeChange(() => setLocalScheme(currentScheme())), []);
   const job = jobOf(route);
-  const drafts = useDraftWords();
   const readStage = route.view === "read" ? route.stage : null;
 
   return (
@@ -111,7 +94,7 @@ export function TopBar({ route, onSearch }: Props) {
         </a>
       </span>
       <nav className="topnav" aria-label="Main">
-        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} route={route} />
+        <ReadMenu current={job === "read"} stage={readStage} route={route} />
         <a className="topnav__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
           Map
         </a>
@@ -143,7 +126,7 @@ export function TopBar({ route, onSearch }: Props) {
           </kbd>
         </button>
         <SchemeToggle scheme={scheme} className="topbar__scheme" />
-        <PhoneMenu route={route} job={job} drafts={drafts} scheme={scheme} />
+        <PhoneMenu route={route} job={job} scheme={scheme} />
       </div>
     </header>
   );
@@ -156,7 +139,7 @@ export function TopBar({ route, onSearch }: Props) {
  * account, ↑ on the last; ↑ ↓ Home End move; a letter jumps to the account it
  * starts; Escape closes and returns focus to the button; Tab closes and moves on.
  */
-function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: Stage | null; drafts: Partial<Record<Stage, string>>; route: Route }) {
+function ReadMenu({ current, stage, route }: { current: boolean; stage: Stage | null; route: Route }) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -191,7 +174,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
       openAt(0);
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
-      openAt(STAGE_ORDER.length - 1);
+      openAt(MENU.length - 1);
     }
   };
 
@@ -213,8 +196,8 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
     } else if (event.key === "Tab") setOpen(false);
     else if (event.key.length === 1 && /\S/.test(event.key)) {
       const letter = event.key.toLowerCase();
-      const at = STAGE_ORDER.findIndex((s, i) => i > index && PAPER_NAMES[s].short.toLowerCase().startsWith(letter));
-      const first = STAGE_ORDER.findIndex((s) => PAPER_NAMES[s].short.toLowerCase().startsWith(letter));
+      const at = MENU.findIndex((s, i) => i > index && PAPER_NAMES[s].short.toLowerCase().startsWith(letter));
+      const first = MENU.findIndex((s) => PAPER_NAMES[s].short.toLowerCase().startsWith(letter));
       if (at >= 0) move(at);
       else if (first >= 0) move(first);
     }
@@ -231,7 +214,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
         aria-expanded={open}
         aria-controls={`${id}-menu`}
         aria-current={current ? "page" : undefined}
-        onClick={() => (open ? setOpen(false) : openAt(stage ? STAGE_ORDER.indexOf(stage) : 0))}
+        onClick={() => (open ? setOpen(false) : openAt(stage && MENU.includes(stage) ? MENU.indexOf(stage) : 0))}
         onKeyDown={onButtonKey}
       >
         Read
@@ -248,7 +231,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
         onKeyDown={onMenuKey}
         onClick={() => setOpen(false)}
       >
-        {STAGE_ORDER.map((s, i) => (
+        {MENU.map((s, i) => (
           <a
             key={s}
             ref={(el) => {
@@ -260,33 +243,9 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
             className="readmenu__item"
             aria-current={stage === s ? "page" : undefined}
           >
-            <span className="readmenu__name">
-              {PAPER_NAMES[s].short}
-              {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
-            </span>
-            <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
+            <span className="readmenu__name">{PAPER_NAMES[s].short}</span>
+            {menuJob(s) && <span className="readmenu__job">{menuJob(s)}</span>}
           </a>
-        ))}
-        {COMPANION_GROUPS.map((group, g) => (
-          <div key={group.id} className="readmenu__group" role="group" aria-label={group.title}>
-            <p className="readmenu__grouphead" aria-hidden="true">{group.title}</p>
-            {group.docs.map((c, k) => (
-              <a
-                key={c.slot}
-                ref={(el) => {
-                  itemsRef.current[STAGE_ORDER.length + group.start + k] = el;
-                }}
-                role="menuitem"
-                tabIndex={-1}
-                href={routeHref({ view: "read", stage: c.slot })}
-                className="readmenu__item readmenu__item--companion"
-                aria-current={stage === c.slot ? "page" : undefined}
-                data-group={g}
-              >
-                <span className="readmenu__name">{c.title}</span>
-              </a>
-            ))}
-          </div>
         ))}
         <PapersLink className="readmenu__item readmenu__item--all" route={route} menu />
       </div>
@@ -297,7 +256,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
 // ------------------------------------------------------------------- phones
 
 /** Below 68.75em (1100px at the default text size): a disclosure holding the same four jobs, the accounts and About. */
-function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; drafts: Partial<Record<Stage, string>>; scheme: Scheme }) {
+function PhoneMenu({ route, job, scheme }: { route: Route; job: Job; scheme: Scheme }) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -355,14 +314,11 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
                 Read
               </span>
               <ul className="phonemenu__accounts" aria-labelledby={`${id}-read`}>
-                {STAGE_ORDER.map((s) => (
+                {MENU.map((s) => (
                   <li key={s}>
                     <a href={routeHref({ view: "read", stage: s })} className="readmenu__item" aria-current={stage === s ? "page" : undefined}>
-                      <span className="readmenu__name">
-                        {PAPER_NAMES[s].short}
-                        {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
-                      </span>
-                      <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
+                      <span className="readmenu__name">{PAPER_NAMES[s].short}</span>
+                      {menuJob(s) && <span className="readmenu__job">{menuJob(s)}</span>}
                     </a>
                   </li>
                 ))}

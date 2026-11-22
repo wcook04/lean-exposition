@@ -35,6 +35,21 @@ export function creditWithoutReview(credit: readonly string[], review: string): 
     .join(" ");
 }
 const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
+/**
+ * The paper's credit as one short line under its authors: the first sentence of the credit (the authors,
+ * their repository and commit, and Anthropic where the paper thanks it), then the review sentence. About
+ * carries the whole credit.
+ */
+export function frontCreditLine(credit: string, review: string): string {
+  const first = credit.split(/(?<=[.!?])\s+(?=[A-Z])/)[0]?.trim() ?? "";
+  return [first, review.trim()].filter(Boolean).join(" ");
+}
+const isAdapted = (d: (typeof PAPER.documents)[number]) => !!d.adapted || d.kind === "adapted";
+/** The documents a reader opens from Read: the authors' paper, its own levels where it has them, and an adapted edition. */
+const READ_MENU = [MAIN, ...PAPER.documents.filter((d) => d !== MAIN && (isAdapted(d) || (PAPER.levels ?? []).includes(d.slot)))].map((d) => d.slot);
+/** Compare's levels: the Lean, then the paper's own documents in the three level slots, never one it lacks. */
+const LEVEL_SLOTS = ["long", "short", "expository"] as const;
+const COMPARE_LEVELS = ["lean" as const, ...LEVEL_SLOTS.filter((slot) => PAPER.documents.some((d) => d.slot === slot && !isAdapted(d) && (d.main || (PAPER.levels ?? []).includes(slot))))];
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
@@ -145,6 +160,17 @@ const site = {
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
   stages: PAPER.documents.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
+  frontCredit: { [MAIN.slot]: frontCreditLine(CREDIT, PAPER.review) },
+  readMenu: READ_MENU,
+  readMenuJobs: Object.fromEntries(
+    PAPER.documents.filter((d) => READ_MENU.includes(d.slot)).map((d) => [d.slot, isAdapted(d) ? "An adapted edition, every change marked" : d.main && !PAPER.levels?.length ? `By ${BY}` : ""]),
+  ),
+  compareLevels: COMPARE_LEVELS,
+  // A paper with one account calls it the authors' paper; with its own levels, their names stand.
+  levelWords: {
+    lean: { name: "Lean", prose: "the Lean" },
+    ...(PAPER.levels?.length ? {} : { [MAIN.slot]: { name: "Authors’ paper", prose: "the authors’ paper" } }),
+  },
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
   readingAids: PAPER.reading_aids,

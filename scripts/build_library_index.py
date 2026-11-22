@@ -98,6 +98,15 @@ def edition_files(out: Path, paper: str) -> dict:
     return json.loads(index.read_text()) if index.exists() else {}
 
 
+def listed_documents(inst: dict) -> list[dict]:
+    """The documents a reader is offered, as the reader's Read menu lists them: the authors' paper, its
+    own levels where it has several accounts of one argument, and an adapted edition. Guides and
+    companion pages keep their addresses and are not listed."""
+    levels = inst.get("levels") or []
+    return [d for d in inst["documents"]
+            if d.get("main") or d.get("adapted") or d.get("kind") == "adapted" or d.get("slot") in levels]
+
+
 def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
     """Counts and search rows for one published library paper, from its edition."""
     paper = inst["id"]
@@ -423,7 +432,7 @@ def main() -> None:
                 continue
             paper = inst["id"]
             main_doc = next(d for d in inst["documents"] if d.get("main"))
-            pages = [{"title": d["title"], "href": f"{BASE}{paper}/{d['slug']}/"} for d in inst["documents"] if not d.get("main") and d.get("slug")]
+            pages = [{"title": d["title"], "href": f"{BASE}{paper}/{d['slug']}/"} for d in listed_documents(inst) if not d.get("main") and d.get("slug")]
             pdf = (main_doc.get("pdf") or {}).get("url")
             if pdf:
                 pages.append({"title": "The authors’ PDF", "href": pdf})

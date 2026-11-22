@@ -38,5 +38,7 @@ export function firstScreen(stage: Stage, bytes: Uint8Array, structure: PaperStr
   const pdf = PAPER_PDFS[stage];
   const account = [names.job, names.reader, status].filter(Boolean).join(" ");
   const hint = ties?.layer === "phrases" && ties.ties.length ? readerHintHtml() : "";
-  return { account: accountLineHtml(account, pdf ? `${import.meta.env.BASE_URL}${pdf.path}` : null, pdf?.pages ?? 0) + hint, parts };
+  // A paper whose credit stands under its authors (frontCredit) has no account line above it.
+  const line = doc.creditPart === null ? accountLineHtml(account, pdf ? `${import.meta.env.BASE_URL}${pdf.path}` : null, pdf?.pages ?? 0) : "";
+  return { account: line + hint, parts };
 }

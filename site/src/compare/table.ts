@@ -2,6 +2,7 @@
 // cell is what that level says about that step. These are its rules, with no DOM and no
 // network, so they are tested directly.
 
+import site from "@instance/site";
 import type { AlignedStatement, RecordAlignment } from "../api/lean";
 import type { Account as Stage } from "../api/types";
 import { LEVELS, type Level } from "../app/router";
@@ -70,15 +71,17 @@ export function tableRows(records: Readonly<Record<string, RecordAlignment>>, le
 /** The levels a table starts with: the Lean first, then the levels furthest apart, as many as the width holds. */
 export function defaultLevels(width: number): Level[] {
   const columns = defaultColumns(width);
-  if (columns >= 4) return [...LEVELS];
-  return columns === 3 ? ["lean", "short", "expository"] : ["lean", "short"];
+  if (columns >= LEVELS.length) return [...LEVELS];
+  const wanted: Level[] = columns === 3 ? ["lean", "short", "expository"] : ["lean", "short"];
+  const have = LEVELS.filter((level) => wanted.includes(level));
+  return have.length >= Math.min(2, LEVELS.length) ? have : LEVELS.slice(0, Math.max(1, columns));
 }
 
 const IN_WORDS: Record<Level, string> = {
   lean: "the Lean",
-  long: "the long record",
-  short: "the short paper",
-  expository: "the exposition",
+  long: site.levelWords?.long?.prose ?? "the long record",
+  short: site.levelWords?.short?.prose ?? "the short paper",
+  expository: site.levelWords?.expository?.prose ?? "the exposition",
 };
 
 const COUNT_WORDS = ["", "one", "both", "all three", "all four"];

@@ -1719,7 +1719,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           </span>
         ))
       : undefined;
-  const head = { name: names.short, job: names.job, reader: names.reader, status, pdf, after, pdfAfter };
   const inspecting = !!inspect;
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
@@ -1799,7 +1798,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     >
       {outlineColumn && (
         <aside className="reader__outline" inert={route.beside ? true : undefined}>
-          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} head={head} />}</Heading>
+          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} />}</Heading>
         </aside>
       )}
 
@@ -1917,7 +1916,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {/* Every width shows who made what, the phone too: the paper's own line, then the status
             sentence (in a library paper, that its links, titles, notes and comparisons were made
             with AI and not reviewed). Wide layouts carry it at the head of the outline column. */}
-        {!outlineColumn && (
+        {doc.creditPart === null && (
           <p className="account-line">
             {names.job} {names.reader}
             {after && <> {after}</>}

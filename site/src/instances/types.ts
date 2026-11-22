@@ -118,6 +118,26 @@ export interface SiteInstance {
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
   /**
+   * A library paper's credit as one short line under the authors in its front matter (the authors, their
+   * repository and commit, the Anthropic sentence where the paper has one, and that the links are AI-made
+   * and unreviewed), by document slot. The full credit is in About. Absent: the account line says it.
+   */
+  frontCredit?: Partial<Record<string, string>>;
+  /**
+   * The documents the Read menu lists, in order: the authors' paper and, where one exists, its adapted
+   * edition (or a paper's own levels). Absent: every stage. Other documents keep their addresses, unlisted.
+   */
+  readMenu?: InstanceStage[];
+  /** The line under each document the Read menu lists, by slot; absent: none for a library paper. */
+  readMenuJobs?: Partial<Record<string, string>>;
+  /**
+   * The levels Compare offers, in its order: the Lean and the documents the paper has. Absent: all four
+   * (the Lean, the long record, the short paper and the exposition).
+   */
+  compareLevels?: ("lean" | "long" | "short" | "expository")[];
+  /** What Compare calls each level the paper has, when not the defaults: its name, and the same in a sentence. */
+  levelWords?: Partial<Record<"lean" | "long" | "short" | "expository", { name: string; prose: string }>>;
+  /**
    * What the formal development does in each section of a paper, by paper slot and then by section
    * number ("5.6") or heading. The reader sets one under each section head as a reader annotation.
    */

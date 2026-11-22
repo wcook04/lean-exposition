@@ -15,7 +15,7 @@ export interface LibraryDocument {
   /** The authors' PDF. `name` and `alias` publish it under pdf/ by those names (a reader that moved into the library keeps its PDF addresses). */
   pdf?: LibraryPdf;
   /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
-  kind?: "companion";
+  kind?: "companion" | "adapted";
   group?: string;
   group_title?: string;
   order?: number;
@@ -96,6 +96,8 @@ export interface LibraryInstance {
   topic_order: string[];
   goal: string;
   main_lean?: string | null;
+  /** The paper's own levels, in order (document slots), where it has several accounts of one argument (SK, #257). */
+  levels?: string[];
   comparisons_hidden?: boolean;
   /** What the formal development does in each section, by section number or title (generated/section-aids.json). */
   section_aids?: Record<string, string>;
