@@ -22,7 +22,7 @@ interface Ours {
   declarations: Record<string, OurDeclaration>;
   byPhrase: Record<string, { lean: string; fidelity: string; note: string }[]>;
   /** Forms stated but not yet proved, each with what a proof still needs (open_targets.json). */
-  openTargets?: Record<string, { title: string; missing: string }>;
+  openTargets?: Record<string, { title: string; missing: string; of?: string[] }>;
 }
 
 /** The namespace a Lean name sits in, its first segment: Theorem11 for Theorem11.theorem11Space. */
@@ -71,17 +71,20 @@ export function OurStatements({ phrase }: { phrase: string | undefined }) {
   const rows = phrase ? (ours?.byPhrase[phrase] ?? []) : [];
   if (!rows.length) return null;
   // The forms of the same results that are stated but not yet proved, once, after our statements.
+  // A target names the statements it would complete (`of`); one without that list goes with its namespace.
+  const leans = new Set(rows.map((row) => row.lean));
   const spaces = new Set(rows.map((row) => namespaceOf(row.lean)));
-  const open = Object.entries(ours?.openTargets ?? {}).filter(([name]) => spaces.has(namespaceOf(name)));
+  const open = Object.entries(ours?.openTargets ?? {}).filter(([name, target]) =>
+    target.of ? target.of.some((lean) => leans.has(lean)) : spaces.has(namespaceOf(name)));
   return (
     <>
-      {rows.map((row) => {
+      {rows.map((row, i) => {
         const decl = ours!.declarations[row.lean];
         const verdict = isFidelity(row.fidelity) ? phraseVerdict(row.fidelity) : null;
         const run = acceptedRun(decl?.status?.comparator);
         const condition = conditionOf(decl);
         return (
-          <section key={row.lean} className="ours" aria-label="Our statement, proved from the authors' Lean library">
+          <section key={`${row.lean}:${i}`} className="ours" aria-label="Our statement, proved from the authors' Lean library">
             <p className="ours__badge">Our statement, proved from the authors' Lean library. Not the authors' Lean.</p>
             <h4 className="ours__title">
               {decl?.title ?? row.lean} <code className="ours__name">{row.lean}</code>
