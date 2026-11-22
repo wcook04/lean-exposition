@@ -163,7 +163,7 @@ def first_visit(browser: Browser, base: str) -> None:
         page = open_page(browser, base, width, height, touch=width < 768)
         at = f"{width}x{height}"
         if width >= 768:
-            pressed = page.evaluate("[...document.querySelectorAll('.map-pane button[aria-pressed=\"true\"]')].map(b => b.textContent.trim())")
+            pressed = page.evaluate("[...document.querySelectorAll('.map-pane .mode-toggle button[aria-pressed=\"true\"]')].map(b => b.textContent.trim())")
             check(pressed == ["Lean"], f"1 first visit {at}: the pressed tab is Lean", f"pressed {pressed}")
         check("v=" not in page.url, f"1 first visit {at}: the address has no v=", page.url)
         hint = page.evaluate(
@@ -440,6 +440,10 @@ def phone(browser: Browser, base: str) -> None:
         page.context.close()
         return
     y0 = point["scroll_before"]
+    # The place is where the selected words stand in the window: the strip above the paper may take
+    # a second row for the selection's controls, and the page's anchoring then scrolls to hold them.
+    mark_top = "(() => { const m = document.querySelector('.part__text [data-pin]'); return m ? m.getClientRects()[0].top : null; })()"
+    at0 = page.evaluate(mark_top)
     sheet = page.evaluate(
         """() => { const s = document.querySelector('.right-sheet'); if (!s) return null; const r = s.getBoundingClientRect();
           const bar = document.querySelector('.topbar'); const top = Math.max(0, bar ? bar.getBoundingClientRect().bottom : 0);
@@ -454,7 +458,8 @@ def phone(browser: Browser, base: str) -> None:
         return
     page.wait_for_timeout(900)
     check(page.locator(".right-sheet").count() == 0, "9 Back to paper closes the sheet")
-    check(abs(scroll_y(page) - y0) <= 2, "9 Back to paper keeps the place", f"scrollY {y0} -> {scroll_y(page)}")
+    at1 = page.evaluate(mark_top)
+    check(at0 is not None and at1 is not None and abs(at1 - at0) <= 2, "9 Back to paper keeps the place", f"selected words at {at0} -> {at1} (scrollY {y0} -> {scroll_y(page)})")
     check(page.locator(".held-bar").count() > 0 and page.locator(".held-bar").first.is_visible(), "9 the held bar shows after Back to paper")
     scroll_by(page, 600)
     page.wait_for_timeout(600)
