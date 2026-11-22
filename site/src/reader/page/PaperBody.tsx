@@ -187,8 +187,8 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           // A part in the window is laid out at its real height already; one off it is held at its
           // reserved height until it comes near, which is what the jump must not measure.
           const r = text.getBoundingClientRect();
-          const inView = r.bottom > 0 && r.top < window.innerHeight;
-          if (!inView && text.dataset.near === undefined) text.dataset.near = "";
+          if (r.bottom > 0 && r.top < window.innerHeight) continue;
+          layOutWhole(stage, index);
           fitters.get(text)?.(() => true, true);
         }
       },
@@ -196,7 +196,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       handle.current = value;
       return value;
     },
-    [add, doc, reanchor],
+    [add, doc, reanchor, stage],
   );
   const references = useReferences(stage, doc, handle, useCallback(() => topRef.current, []), onReferenceLean ?? noLean);
 
@@ -705,6 +705,24 @@ function katexReady(): Promise<void> {
   const loading = [...document.fonts].filter((face) => face.status === "loading" && face.family.replace(/["']/g, "").startsWith("KaTeX"));
   if (!loading.length) return Promise.resolve();
   return Promise.allSettled(loading.map((face) => face.loaded)).then(() => (katexLoading() ? katexReady() : undefined));
+}
+
+/**
+ * Parts laid out whole whatever their distance from the window, as rules of a stylesheet of their
+ * own rather than marks on the page, so that laying a part out changes nothing a reader (or a
+ * check for stillness) could see in the document.
+ */
+let wholeSheet: CSSStyleSheet | null = null;
+const laidWhole = new Set<string>();
+function layOutWhole(stage: string, index: number): void {
+  const key = `${stage}:${index}`;
+  if (laidWhole.has(key) || typeof CSSStyleSheet === "undefined" || !("adoptedStyleSheets" in document)) return;
+  if (!wholeSheet) {
+    wholeSheet = new CSSStyleSheet();
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, wholeSheet];
+  }
+  laidWhole.add(key);
+  wholeSheet.insertRule(`.paper[data-stage="${CSS.escape(stage)}"] .part[data-part="${index}"] > .part__text { content-visibility: visible; }`);
 }
 
 /** How far below the window idle time fits a part's formulas ahead of the reader, in pixels. */
