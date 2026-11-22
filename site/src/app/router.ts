@@ -232,7 +232,7 @@ export function routeHref(route: Route): string {
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.lean) q.set("v", "lean");
-      else if (route.graph && (route.node || route.decl)) q.set("v", "graph");
+      else if (route.graph) q.set("v", "graph");
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);

@@ -516,7 +516,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
    * the target, under the strip.
    */
   const landSlice = useCallback(
-    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean; node?: string } = {}) => {
+    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean; follow?: boolean; node?: string } = {}) => {
       const body = bodyRef.current;
       const root = paperRef.current;
       if (!body || !root) return false;
@@ -529,14 +529,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : [part - 2, part - 1, part, part + 1, part + 2]);
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
+        if (options.scroll !== false) {
+          // Fit the parts the window can show before moving to the statement.
+          body.settle([part - 2, part - 1, part, part + 1, part + 2]);
+        }
+        if (options.scroll !== false || options.follow) {
+          stepped.current = true;
+          current.current = statement;
+          currentSegment.current = ties.segmentsOf[statement][0];
+          update.current();
+        }
         if (options.scroll === false) return true;
-        // Only a jump that moves the paper lays out and fits where it lands: the parts the window
-        // can show around it, so none of them changes height once the paper is there.
-        body.settle([part - 2, part - 1, part, part + 1, part + 2]);
-        stepped.current = true;
-        current.current = statement;
-        currentSegment.current = ties.segmentsOf[statement][0];
-        update.current();
         landing = () => {
           const extent = statements.extent(statement);
           return target!.getBoundingClientRect().top + window.scrollY - readingLine(extent ? extent.bottom - extent.top : target!.getBoundingClientRect().height);
@@ -629,7 +632,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
     if (initial.saved) {
       void restorePosition(initial.saved);
-      if (at) void landSlice(at, { scroll: false, node: route.node });
+      if (at) void landSlice(at, { scroll: false, follow: !route.node && !route.decl, node: route.node });
     } else if (at) {
       land(landSlice(at, { node: route.node }).then((ok) => {
         if (!ok && route.anchor) return jumpTo(route.anchor);
@@ -677,7 +680,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // A jump puts the reader somewhere new: the line is theirs again.
     if (!own) stepped.current = false;
     const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
-    if (atChanged || own) void landSlice(route.at, { scroll: paperMoves, smooth: !fromPop, node: route.node });
+    // Back restores the saved paper position and its exact followed slice independently.
+    const restoreFollow = !!saved && !!route.at && !route.node && !route.decl;
+    if (atChanged || own || restoreFollow) {
+      void landSlice(route.at, { scroll: paperMoves, smooth: !fromPop, follow: restoreFollow, node: route.node });
+    }
     if (saved) {
       void restorePosition(saved).then((ok) => {
         if (!ok && anchorChanged && route.anchor) void jumpTo(route.anchor);
@@ -867,7 +874,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       addressTimer = window.setTimeout(() => {
         const here = hereRef.current;
         const at = ties.index.ties[tie].at;
-        if (here.at === at || here.node || here.beside || here.pdf) return;
+        if (current.current !== tie || here.at === at || here.node || here.beside || here.pdf) return;
         selfAt.current = at;
         navigate({ ...here, at }, { replace: true });
       }, 1400);
@@ -1184,6 +1191,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     viewKept.current = mode;
     saveView(mode);
     if (mode === "lean" ? here.lean : here.graph) return;
+    // Changing panes keeps the current slice at the reading line until the reader scrolls.
+    if (here.at) selfAt.current = here.at;
     navigate({ ...here, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined }, { replace: true });
   }, []);
 
@@ -1820,6 +1829,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (land) void landSlice(ties.index.ties[t].at, { node: ties.index.ties[t].record, smooth: true });
     },
     onMode: setMode,
+    graphRequested: route.graph,
     mode,
     onName: openDecl,
     passageHref: links.beside,

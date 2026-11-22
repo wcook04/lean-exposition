@@ -207,7 +207,7 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     return `${base}/${slug}/${q.size ? `?${q}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
   }
   const q = new URLSearchParams();
-  const view = route.lean ? "lean" : route.graph && (route.node || route.decl) ? "graph" : null;
+  const view = route.lean ? "lean" : route.graph ? "graph" : null;
   const tail = route.anchor ? `#${encodeURIComponent(route.anchor)}` : "";
   const query = () => {
     if (route.pdf) q.set("view", "pdf");

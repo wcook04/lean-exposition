@@ -256,6 +256,25 @@ describe("MapPane", async () => {
     expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe("Lean");
   });
 
+  it("opens the drawing on a narrow pane when Graph is explicitly requested", () => {
+    const width = vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(579);
+    try {
+      const button = (label: string) => [...container.querySelectorAll("button")].find(b => b.textContent === label)!;
+      show("contact-and-gap");
+      expect(button("Show the graph")).toBeTruthy();
+      expect(container.querySelector(".fg__tools")).toBeNull();
+      show("contact-and-gap", { mode: "lean" });
+      show("contact-and-gap", { graphRequested: true });
+      expect(container.querySelector(".fg__tools")).not.toBeNull();
+      act(() => button("Fold the graph").click());
+      expect(container.querySelector(".fg__tools")).toBeNull();
+      act(() => container.querySelector<HTMLButtonElement>(".mode-toggle button:last-child")!.click());
+      expect(container.querySelector(".fg__tools")).not.toBeNull();
+    } finally {
+      width.mockRestore();
+    }
+  });
+
   it("lights the card of a statement under the pointer", () => {
     show(null);
     const id = drawn("uses")[0] ?? drawn("subject")[0];
