@@ -13,6 +13,7 @@ interface Mark {
 }
 
 interface Fragment {
+  block: HTMLElement | null;
   segment: number;
   tone?: string;
   top: number;
@@ -46,7 +47,35 @@ function visualLines(fragments: Fragment[]) {
     }
     line.push(f);
   }
-  return lines;
+  const placed = lines.map(words => {
+    words.sort((a, b) => a.left - b.left);
+    let top = Infinity, bottom = -Infinity;
+    for (const word of words) {
+      top = Math.min(top, word.top);
+      bottom = Math.max(bottom, word.bottom);
+    }
+    return { words, top, bottom, joinsAbove: false, joinsBelow: false };
+  });
+  const leading = new Map<HTMLElement, number>();
+  for (let i = 1; i < placed.length; i++) {
+    const above = placed[i - 1], below = placed[i];
+    const blocks = new Set(above.words.map(f => f.block));
+    const block = below.words.find(f => f.block && blocks.has(f.block))?.block;
+    if (!block) continue;
+    let lineHeight = leading.get(block);
+    if (lineHeight === undefined) {
+      lineHeight = parseFloat(getComputedStyle(block).lineHeight) || (below.bottom - below.top) * 1.25;
+      leading.set(block, lineHeight);
+    }
+    // getClientRects describes the ink box, without its leading. Share the intervening leading
+    // between two adjacent marked lines in the same block. A whole unmarked line stays clear.
+    const gap = below.top - above.bottom;
+    if (gap > Math.max(lineHeight * 0.45, lineHeight - Math.min(above.bottom - above.top, below.bottom - below.top) + 2)) continue;
+    const edge = (above.bottom + below.top) / 2;
+    above.bottom = below.top = edge;
+    above.joinsBelow = below.joinsAbove = true;
+  }
+  return placed;
 }
 
 /** The blocks a statement's words can stand in. */
@@ -253,10 +282,11 @@ export class Statements {
     const fragments: Fragment[] = [];
     const bySegment = new Map<number, SegmentTicks>();
     for (const { el, segment } of marks) {
+      const block = el.closest<HTMLElement>(BLOCKS);
       for (const rect of el.getClientRects()) {
         if (!rect.width || !rect.height) continue;
         const top = rect.top - sectionTop, bottom = rect.bottom - sectionTop;
-        fragments.push({ segment, tone: el.dataset.tone, top, bottom, left: rect.left });
+        fragments.push({ block, segment, tone: el.dataset.tone, top, bottom, left: rect.left });
         const bounds = bySegment.get(segment);
         if (bounds) {
           bounds.top = Math.min(bounds.top, top);
@@ -273,18 +303,16 @@ export class Statements {
     }
     const fragment = document.createDocumentFragment();
     for (const line of visualLines(fragments)) {
-      line.sort((a, b) => a.left - b.left);
       const tick = document.createElement("i");
       tick.className = "tick";
+      if (line.joinsAbove) tick.dataset.joinsAbove = "";
+      if (line.joinsBelow) tick.dataset.joinsBelow = "";
       const tones = new Set<string>();
-      let top = Infinity, bottom = -Infinity;
-      for (const f of line) {
+      for (const f of line.words) {
         const lines = bySegment.get(f.segment)!.lines;
         if (lines[lines.length - 1] !== tick) lines.push(tick);
         if (this.model.segmentLean[f.segment]) tick.dataset.lean = "";
         if (f.tone !== undefined) tones.add(f.tone);
-        top = Math.min(top, f.top);
-        bottom = Math.max(bottom, f.bottom);
       }
       if (tones.size === 1) {
         tick.dataset.tone = [...tones][0];
@@ -296,8 +324,8 @@ export class Statements {
           tick.append(band);
         }
       }
-      tick.style.top = `${Math.round(top)}px`;
-      tick.style.height = `${Math.round(bottom) - Math.round(top)}px`;
+      tick.style.top = `${Math.round(line.top)}px`;
+      tick.style.height = `${Math.round(line.bottom) - Math.round(line.top)}px`;
       fragment.append(tick);
     }
     layer.replaceChildren(fragment);

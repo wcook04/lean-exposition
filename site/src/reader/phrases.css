@@ -30,6 +30,16 @@
 
 /* The rail takes its colour from the same marked words as the tint. Paragraph selection
    keeps its keyboard and pointer target in this column. */
+.paper .tick[data-joins-above] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.paper .tick[data-joins-below] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .paper .tick--bands {
   display: flex;
   flex-direction: column;

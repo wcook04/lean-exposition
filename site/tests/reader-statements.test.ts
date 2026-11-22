@@ -136,6 +136,25 @@ describe("statements on the page", () => {
     reader.dispose();
   });
 
+  it("joins adjacent marked lines within a block, keeping an unlinked line and another paragraph separate", () => {
+    const page = section(0, [[0, 100, 120], [0, 128, 148], [0, 184, 204], [1, 212, 232]]);
+    const text = page.querySelector(".part__text")!;
+    const [a, b, c, d] = [...text.querySelectorAll<HTMLElement>(".tie")];
+    const p1 = document.createElement("p"), p2 = document.createElement("p");
+    p1.style.lineHeight = p2.style.lineHeight = "28px";
+    p1.append(a, b, c);
+    p2.append(d);
+    text.replaceChildren(p1, p2);
+    statements.adopt(0, page);
+    (statements as unknown as { drawTicks(part: number): void }).drawTicks(0);
+    const ticks = [...page.querySelectorAll<HTMLElement>(".tick")];
+    expect(ticks.map(t => [t.style.top, t.style.height])).toEqual([
+      ["100px", "24px"], ["124px", "24px"], ["184px", "20px"], ["212px", "20px"],
+    ]);
+    expect(ticks.filter(t => t.hasAttribute("data-joins-below"))).toEqual([ticks[0]]);
+    expect(ticks.filter(t => t.hasAttribute("data-joins-above"))).toEqual([ticks[1]]);
+  });
+
   it("marks a selection across paragraphs as a block, with one margin rule, and clears both", () => {
     const text = first.querySelector(".part__text")!;
     const [a, b] = [...first.querySelectorAll<HTMLElement>(".tie")];
