@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 import sys
 import time
 import urllib.request
@@ -73,6 +74,249 @@ SELECTION = r"""() => {
     }),
   };
 }"""
+
+
+# The right pane where nothing in the Lean is linked: the whole proof map, drawn and interactive,
+# with no dead-end notice; and where something is, its declaration at its lines.
+PANE = """() => {
+  const pane = document.querySelector('.map-pane');
+  const canvas = pane?.querySelector('.map-pane__canvas[data-unlinked]');
+  return {
+    unlinked: !!canvas,
+    cards: canvas ? canvas.querySelectorAll('.tree [data-card]').length : 0,
+    edges: canvas ? [...canvas.querySelectorAll('.tree__links path.link')].filter(p => (p.getAttribute('d') || '').length > 4).length : 0,
+    sources: pane ? [...pane.querySelectorAll('.map-pane__lean [title]')].map(e => e.getAttribute('title')).join(' | ') : '',
+    lines: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line').length : 0,
+    lit: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line.is-lit').length : 0,
+    raw: pane?.querySelector('.map-pane__lean .lean-page__raw')?.getAttribute('title') ?? '',
+    title: pane?.querySelector('.map-pane__lean .lean-page__title')?.textContent ?? '',
+    lean: pane?.querySelector('.mode-toggle button[aria-pressed="true"]')?.textContent?.trim() ?? '',
+    topics: pane ? pane.querySelectorAll('.lean-page__topics').length : 0,
+    text: pane?.innerText ?? '',
+  };
+}"""
+DEAD_ENDS = ("No Lean is linked to this paragraph", "names no step of the map", "Steps of the map in its passage")
+
+# The paragraph of the paper that starts with these words: a point on its words that is no link,
+# phrase or control, where a reader would click it, and its top.
+PARAGRAPH = """([words, linked]) => {
+  const norm = (t) => t.replace(/\\s+/g, ' ').trim();
+  // Linked words are clicked on their own phrase; an unlinked paragraph off every phrase.
+  const el = (linked ? [...document.querySelectorAll('.paper .tie')].find(e => norm(e.textContent).startsWith(words)) : null)
+    ?? [...document.querySelectorAll('.paper p, .paper li, .paper [data-line]')].find(e => norm(e.textContent).startsWith(words));
+  if (!el) return null;
+  el.scrollIntoView({block: 'center'});
+  for (const r of el.getClientRects()) for (let y = r.top + r.height / 2; y < r.bottom - 2; y += 8) for (let x = r.left + 6; x < r.right - 4; x += 10) {
+    const hit = document.elementFromPoint(x, y);
+    if (hit && el.contains(hit) && !hit.closest('a, button, .katex') && (linked || !hit.closest('.tie'))) return {x, y};
+  }
+  return null;
+}"""
+
+# Brings the paragraph to the reading line, as scrolling to it would: Auto follows it there.
+TO_LINE = """(words) => {
+  const norm = (t) => t.replace(/\\s+/g, ' ').trim();
+  const el = [...document.querySelectorAll('.paper p, .paper li, .paper [data-line]')].find(e => norm(e.textContent).startsWith(words));
+  if (!el) return false;
+  const strip = document.querySelector('.reader-strip')?.getBoundingClientRect().bottom ?? 56;
+  window.scrollBy(0, el.getBoundingClientRect().top - strip - 4);
+  return true;
+}"""
+
+
+def unlinked_checks(browser, base, args, check, report_skip) -> None:
+    """Every unlinked paragraph named (--unlinked PAGE|WORDS) shows the whole proof map in the Lean
+    view, in Auto (scrolled to) and Manual (clicked, and the clicked address loaded cold); every
+    linked one named (--linked PAGE|WORDS) and the phrase and result addresses show their declaration."""
+
+    def pane(page, want_unlinked, settle=15000):
+        test = "() => { const p = document.querySelector('.map-pane'); return !!p && " + (
+            "!!p.querySelector('.map-pane__canvas[data-unlinked] .tree [data-card]')" if want_unlinked
+            else "p.querySelectorAll('.map-pane__lean .lean-page .lean-line').length > 0") + "; }"
+        try:
+            page.wait_for_function(test, timeout=settle)
+        except Exception:
+            pass
+        page.wait_for_timeout(600)
+        return page.evaluate(PANE)
+
+    def unlinked_ok(state):
+        dead = [d for d in DEAD_ENDS if d in state["text"]]
+        return state["unlinked"] and state["cards"] > 0 and state["edges"] > 0 and not dead and not state["topics"] and state["lean"] == "Lean", \
+            f"canvas {state['unlinked']}, {state['cards']} cards, {state['edges']} lines, view {state['lean']!r}, dead ends {dead}, step lists {state['topics']}"
+
+    def linked_ok(state):
+        return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"]) and state["lean"] == "Lean",
+                f"{state['lines']} Lean lines ({state['lit']} lit), declaration {state['raw']!r}, title {state['title']!r}, canvas {state['unlinked']}")
+
+    def shoot(page, name):
+        if args.shots:
+            args.shots.mkdir(parents=True, exist_ok=True)
+            page.screenshot(path=str(args.shots / f"{name}.png"))
+
+    def open_page(page, where):
+        """Opens the page; False where it is not served (a document a later pull request adds)."""
+        response = page.goto(where)
+        if response is not None and response.status == 404:
+            return False
+        page.wait_for_selector(".paper .tie", timeout=90000)
+        page.wait_for_timeout(1500)
+        return True
+
+    def find_unlinked(doc):
+        """The first words of the first paragraph without phrases that, clicked, has nothing in the Lean linked."""
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        open_page(page, base + doc + "?v=lean")
+        candidates = page.evaluate("""() => [...document.querySelectorAll('.paper p')]
+            .filter(p => !p.querySelector('.tie') && p.textContent.trim().length > 80)
+            .slice(0, 12).map(p => p.textContent.replace(/\\s+/g, ' ').trim().slice(0, 48))""")
+        found = None
+        for words in candidates:
+            point = page.evaluate(PARAGRAPH, [words, False])
+            if not point:
+                continue
+            page.mouse.click(point["x"], point["y"])
+            if pane(page, True, 4000)["unlinked"]:
+                found = words
+                break
+        context.close()
+        return found
+
+    for kind, specs in (("unlinked", args.unlinked), ("linked", args.linked)):
+        for n, spec in enumerate(specs):
+            doc, words = spec.split("|", 1)
+            doc = doc.strip("/") + "/" if doc.strip("/") else ""
+            if kind == "unlinked" and words == "*":
+                words = find_unlinked(doc)
+                if not words:
+                    check(f"unlinked {doc or 'paper'} paragraph found", False, "no paragraph among the first ones without phrases shows the whole map")
+                    continue
+            name = f"{kind} {doc or 'paper'} {words[:32]!r}"
+            judge = unlinked_ok if kind == "unlinked" else linked_ok
+            context = browser.new_context(viewport={"width": 1440, "height": 900})
+            page = context.new_page()
+            errors = []
+            page.on("pageerror", lambda e: errors.append(str(e)))
+            # Auto: the paragraph brought to the reading line, nothing clicked.
+            open_page(page, base + doc + "?v=lean")
+            if kind == "unlinked":
+                found = page.evaluate(TO_LINE, words)
+                page.wait_for_timeout(2500)
+                ok, detail = judge(pane(page, True))
+                check(f"{name} auto", found and ok, detail if found else "paragraph not found")
+                shoot(page, f"{kind}-{n}-auto")
+            # Manual: the paragraph clicked.
+            point = page.evaluate(PARAGRAPH, [words, kind == "linked"])
+            if not point:
+                check(f"{name} manual", False, "paragraph not found")
+                context.close()
+                continue
+            page.mouse.click(point["x"], point["y"])
+            try:
+                page.wait_for_function("() => /[?&]l=b\\d+-\\d+|\\/@|[?&]n=/.test(location.href)", timeout=10000)
+            except Exception:
+                pass
+            ok, detail = judge(pane(page, kind == "unlinked"))
+            at = page.url
+            check(f"{name} manual", ok and "v=lean" in at, f"{at}: {detail}")
+            shoot(page, f"{kind}-{n}-manual")
+            # The address the click made, opened cold (for an unlinked paragraph, ?l=b<start>-<end>).
+            cold = browser.new_context(viewport={"width": 1440, "height": 900})
+            fresh = cold.new_page()
+            open_page(fresh, at)
+            ok, detail = judge(pane(fresh, kind == "unlinked"))
+            # An unlinked paragraph's address need carry no byte range: the whole map, drawn, with no
+            # dead end, is the requirement (judged above).
+            check(f"{name} cold address", ok, f"{at}: {detail}")
+            shoot(fresh, f"{kind}-{n}-cold")
+            cold.close()
+            check(f"{name} no page errors", not errors, "; ".join(errors[:3]))
+            context.close()
+    # A page opened cold on the Lean view whose opening has nothing tied: the whole map at once.
+    for doc in args.unlinked_cold:
+        doc = doc.strip("/") + "/" if doc.strip("/") else ""
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        if not open_page(page, base + doc + "?v=lean"):
+            report_skip(f"unlinked {doc or 'paper'} opening, cold")
+            context.close()
+            continue
+        ok, detail = unlinked_ok(pane(page, True))
+        check(f"unlinked {doc or 'paper'} opening, cold", ok, detail)
+        shoot(page, f"unlinked-cold-{doc.strip('/') or 'paper'}")
+        context.close()
+    # An exact address of a paragraph with nothing tied, opened cold on the Lean view: the whole map,
+    # and the address and the map stay so with no reader action, never a neighbouring paragraph's Lean.
+    for spec in args.unlinked_address:
+        doc, at = spec.split("|")
+        doc = doc.strip("/") + "/" if doc.strip("/") else ""
+        name = f"unlinked {doc or 'paper'} address {at}"
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        if not open_page(page, base + doc + f"?l={at}&v=lean"):
+            report_skip(name)
+            context.close()
+            continue
+        first, detail = unlinked_ok(pane(page, True))
+        # Past the follow's hold and the address timer: nothing may move it on.
+        page.wait_for_timeout(5000)
+        later, later_detail = unlinked_ok(page.evaluate(PANE))
+        kept = f"l={at}" in page.url
+        explained = "Explained here" in page.evaluate("() => document.querySelector('.map-pane')?.textContent ?? ''")
+        check(name, first and later and kept and not explained,
+              f"at once: {detail}; after 5 s: {later_detail}; address {page.url.split('?', 1)[-1]!r}; 'Explained here' {explained}")
+        shoot(page, f"unlinked-address-{doc.strip('/') or 'paper'}-{at}")
+        context.close()
+    # A numbered display clicked on the Lean view (its equation number, "1.1"): its declaration.
+    for spec in args.linked_equation:
+        doc, tag, *source = spec.split("|")
+        doc = doc.strip("/") + "/" if doc.strip("/") else ""
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        if not open_page(page, base + doc + "?v=lean"):
+            report_skip(f"linked {doc or 'paper'} equation ({tag})")
+            context.close()
+            continue
+        point = page.evaluate("""(tag) => {
+          const box = [...document.querySelectorAll('.paper .math-display')].find(d => d.textContent.replace(/\\s+/g, '').includes('(' + tag + ')'));
+          if (!box) return null;
+          box.scrollIntoView({block: 'center'});
+          const r = (box.querySelector('.tie') ?? box).getBoundingClientRect();
+          return {x: r.left + r.width / 2, y: r.top + r.height / 2};
+        }""", tag)
+        if point:
+            page.mouse.click(point["x"], point["y"])
+        state = pane(page, False, 30000)
+        ok, detail = linked_ok(state)
+        # Where named, the declaration's file and lines, as its source link states them ("Defs.lean, lines 26 to 33").
+        at_source = not source or source[0] in state["sources"]
+        check(f"linked {doc or 'paper'} equation ({tag})", bool(point) and ok and at_source,
+              (detail + ("" if at_source else f"; not at {source[0]!r}: {state['sources'][:200]}")) if point else f"no display numbered ({tag})")
+        shoot(page, f"linked-equation-{doc.strip('/') or 'paper'}-{tag}")
+        context.close()
+    # The stable linked addresses, opened on the Lean view: a phrase and a numbered result show a declaration.
+    if not args.lean_addresses:
+        return
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    for kind, path in ((("phrase", f"@{args.phrase}"),) + ((("result", f"{args.result}/"),) if args.result else ())):
+        # A phrase address is served by the 404 shell: wait for the paper whatever the status.
+        page.goto(base + path + "?v=lean")
+        page.wait_for_selector(".paper .tie", timeout=90000)
+        # The Lean source arrives after the declaration's heading ("Loading the Lean source…"):
+        # wait for its lines and the pinned line lit, then judge.
+        try:
+            page.wait_for_function("() => { const p = document.querySelector('.map-pane__lean .lean-page');"
+                                   " return !!p && p.querySelectorAll('.lean-line').length > 0 && !!p.querySelector('.lean-line.is-lit'); }",
+                                   timeout=60000)
+        except Exception:
+            pass
+        page.wait_for_timeout(300)
+        state = page.evaluate(PANE)
+        ok, detail = linked_ok(state)
+        check(f"lean view of the {kind} address", ok and state["lit"] > 0, f"{path}: {detail}")
+    context.close()
 
 
 def selection_checks(browser, base, args, check) -> None:
@@ -189,9 +433,26 @@ def main() -> int:
     ap.add_argument("--pdf-only", action="store_true", help="the paper is read only in its PDF: no Text toggle, the PDF view opens at its top")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
+    ap.add_argument("--unlinked", action="append", default=[], metavar="PAGE|WORDS",
+                    help="a paragraph (its first words, or * for the first such paragraph found; PAGE empty for the paper itself) linked to no Lean: the Lean view shows the whole proof map")
+    ap.add_argument("--linked", action="append", default=[], metavar="PAGE|WORDS",
+                    help="a paragraph linked to Lean: clicked, and its address opened cold, the Lean view shows its declaration")
+    ap.add_argument("--unlinked-cold", action="append", default=[], metavar="PAGE",
+                    help="a page (empty for the paper) whose opening has nothing tied: opened cold on the Lean view, it shows the whole proof map; skipped where PAGE is not served")
+    ap.add_argument("--unlinked-address", action="append", default=[], metavar="PAGE|bSTART-END",
+                    help="the exact address of a paragraph with nothing tied (\"b24558-26853\"): opened cold on the Lean view it shows the whole proof map and keeps its address; skipped where PAGE is not served")
+    ap.add_argument("--linked-equation", action="append", default=[], metavar="PAGE|NUMBER[|SOURCE]",
+                    help="a numbered display (\"1.1\") tied to Lean, optionally with its file and lines (\"Defs.lean, lines 26 to 33\"): clicked on the Lean view, it shows that declaration; skipped where PAGE is not served")
+    ap.add_argument("--lean-addresses", action="store_true", help="the phrase and result addresses, opened on the Lean view, show a declaration")
     ap.add_argument("--removed", action="append", default=[], metavar="PAGE[/@ID]",
                     help="a guide or companion page the library no longer publishes (or an address on it): it must land on the paper, never its former text")
-    args = ap.parse_args()
+    ap.add_argument("--args-file", metavar="FILE", help="more arguments, read as a shell would split them (instances/<paper>/check.args); a missing file adds none")
+    argv = sys.argv[1:]
+    if "--args-file" in argv:
+        i = argv.index("--args-file")
+        extra = Path(argv[i + 1]) if i + 1 < len(argv) else None
+        argv = argv[:i] + argv[i + 2:] + (shlex.split(extra.read_text()) if extra and extra.is_file() else [])
+    args = ap.parse_args(argv)
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
 
@@ -514,6 +775,8 @@ def main() -> int:
             context.close()
         if not args.pdf_only:
             selection_checks(browser, base, args, check)
+        if args.unlinked or args.linked or args.unlinked_cold or args.unlinked_address or args.linked_equation or args.lean_addresses:
+            unlinked_checks(browser, base, args, check, lambda name: report.__setitem__(name, {"ok": True, "detail": "page not served in this build"}))
         # Each page the library no longer publishes (--removed, a page or an address on it) lands on the
         # paper (or the edition it sat under) and never shows its former text: the reader then stands at
         # the paper's own address, with its title and its phrases.

@@ -81,7 +81,7 @@ jobs:
           python scripts/build_library_index.py serve/library ${{ matrix.paper }}
           python scripts/serve_library.py serve 47311 &
           sleep 2
-          python scripts/check_library_paper.py "http://127.0.0.1:47311/library/$at/" --shots shots --budget 10 $(cat instances/${{ matrix.paper }}/check.args 2>/dev/null || true)
+          python scripts/check_library_paper.py "http://127.0.0.1:47311/library/$at/" --shots shots --budget 10 --args-file instances/${{ matrix.paper }}/check.args
       - name: Check ${{ matrix.paper }} is still while left alone, graph open and closed, 1100 to 2600 pixels wide
         run: |
           curl -sf -o /dev/null "http://127.0.0.1:47311/library/$AT/" || { python scripts/serve_library.py serve 47311 & sleep 2; }

@@ -537,6 +537,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         if (!blocks.length) return false;
         blocks.forEach((el) => el.setAttribute("data-slice", ""));
         if (options.scroll === false) return true;
+        // An address with no statement holds the line on its own blocks: no statement near the
+        // reading line stands for it, and the address stays, until the reader moves the page.
+        stepped.current = true;
+        current.current = null;
+        currentSegment.current = null;
+        statements.light("on", null);
+        update.current();
         target = blocks[0];
         landing = () => target!.getBoundingClientRect().top + window.scrollY - readingTop() - 16;
       }
