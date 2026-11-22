@@ -395,7 +395,7 @@ async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record
     server: { middlewareMode: true, hmr: false, ws: false },
     optimizeDeps: { noDiscovery: true },
     resolve: { alias: [{ find: /^@instance\//, replacement: `${resolve("src/instances", INSTANCE.id)}/` }] },
-    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts)],
+    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts), paperFigureSizes()],
   });
   try {
     const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
@@ -532,6 +532,25 @@ function imageSize(file: string): [number, number] | null {
   return box ? [Number(box[1]), Number(box[2])] : null;
 }
 
+/**
+ * Each figure image's own width and height (virtual:paper-figure-sizes), so its box is reserved
+ * before it loads and the text under it never moves when it arrives (mount.tsx sets them on the
+ * <img>). Also given to the first screen's server, which loads mount.tsx too.
+ */
+function paperFigureSizes(stages = figureSlots()): Pick<Plugin, "name" | "resolveId" | "load"> & { resolveId: (source: string) => string | null; load: (resolved: string) => string | null } {
+  const id = "virtual:paper-figure-sizes";
+  return {
+    name: "paper-figure-sizes",
+    resolveId: (source: string) => (source === id ? `\0${id}` : null),
+    load: (resolved: string) => (resolved === `\0${id}` ? `export const FIGURE_SIZES = ${JSON.stringify(figureSizes(stages))};` : null),
+  };
+}
+
+/** Every document slot with a figures folder: long, short, expository, an adapted edition, a companion. */
+function figureSlots(): string[] {
+  return existsSync(PAPERS_DIR) ? readdirSync(PAPERS_DIR).filter((stage) => /^[\w-]+$/.test(stage) && existsSync(resolve(PAPERS_DIR, stage, "figures"))) : [];
+}
+
 /** "<stage>/<file>" to its size, for every figure image a paper ships. */
 function figureSizes(stages: string[]): Record<string, [number, number]> {
   const sizes: Record<string, [number, number]> = {};
@@ -552,13 +571,11 @@ function paperFigures(build = false): Plugin {
     ? readdirSync(PAPERS_DIR).filter((stage) => /^[\w-]+$/.test(stage) && existsSync(resolve(PAPERS_DIR, stage, "figures")))
     : [];
   const types: Record<string, string> = { svg: "image/svg+xml", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" };
-  const id = "virtual:paper-figure-sizes";
+  const { resolveId, load } = paperFigureSizes(stages);
   return {
     name: "paper-figures",
-    // Each image's own width and height, so its box is reserved before it loads and the text
-    // under it never moves when it arrives (mount.tsx sets them on the <img>).
-    resolveId: (source) => (source === id ? `\0${id}` : null),
-    load: (resolved) => (resolved === `\0${id}` ? `export const FIGURE_SIZES = ${JSON.stringify(figureSizes(stages))};` : null),
+    resolveId,
+    load,
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const m = req.url?.split("?", 1)[0].match(/\/paper-figures\/([\w-]+)\/([\w.-]+\.(svg|png|jpe?g|webp))$/);
