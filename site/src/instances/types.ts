@@ -113,6 +113,15 @@ export interface SiteInstance {
    * (exposition, short paper, long record); a library paper uses only the slots its data names.
    */
   stages?: InstanceStage[];
+  /**
+   * The documents the Read menu lists, in order: the authors' paper and, where one exists, its adapted
+   * edition (or a paper's own levels). Absent: every stage. Other documents keep their addresses, unlisted.
+   */
+  readMenu?: InstanceStage[];
+  /** Each listed document's name in the Read menu, by slot, where it differs from its title. */
+  readMenuNames?: Partial<Record<string, string>>;
+  /** The line under each document the Read menu lists, by slot. */
+  readMenuJobs?: Partial<Record<string, string>>;
   /** The reader's line on who made the document and its links, in place of the draft and review words; absent keeps them. */
   paperStatus?: string;
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */

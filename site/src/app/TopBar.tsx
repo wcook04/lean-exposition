@@ -21,6 +21,13 @@ interface Props {
   onSearch: () => void;
 }
 
+/**
+ * A paper whose library-made guides were retired (Euler, Navier–Stokes) lists only the authors' paper and its
+ * adapted edition (site.readMenu); every other reader lists its accounts and companion groups as before.
+ */
+const MENU: Stage[] = (site.readMenu as Stage[] | undefined) ?? STAGE_ORDER;
+const ONLY_EDITIONS = !!site.readMenu;
+
 /** A library paper's companion documents, by group in reading order, as the Read menu lists them. */
 const COMPANION_GROUPS = (() => {
   const groups: { id: string; title: string; start: number; docs: { slot: string; title: string }[] }[] = [];
@@ -36,6 +43,10 @@ const COMPANION_GROUPS = (() => {
   }
   return groups;
 })();
+
+/** A listed document's name and its line in the Read menu: the instance's own words where it gives them. */
+const menuName = (s: Stage): string => site.readMenuNames?.[s] ?? PAPER_NAMES[s].short;
+const menuJob = (s: Stage): string => site.readMenuJobs?.[s] ?? ACCOUNT_JOBS[s] ?? "";
 
 /** One line on what each account is for, as the Read menu says it. */
 export const ACCOUNT_JOBS: Record<Stage, string> = {
@@ -191,7 +202,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
       openAt(0);
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
-      openAt(STAGE_ORDER.length - 1);
+      openAt(MENU.length - 1);
     }
   };
 
@@ -213,8 +224,8 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
     } else if (event.key === "Tab") setOpen(false);
     else if (event.key.length === 1 && /\S/.test(event.key)) {
       const letter = event.key.toLowerCase();
-      const at = STAGE_ORDER.findIndex((s, i) => i > index && PAPER_NAMES[s].short.toLowerCase().startsWith(letter));
-      const first = STAGE_ORDER.findIndex((s) => PAPER_NAMES[s].short.toLowerCase().startsWith(letter));
+      const at = MENU.findIndex((s, i) => i > index && menuName(s).toLowerCase().startsWith(letter));
+      const first = MENU.findIndex((s) => menuName(s).toLowerCase().startsWith(letter));
       if (at >= 0) move(at);
       else if (first >= 0) move(first);
     }
@@ -231,7 +242,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
         aria-expanded={open}
         aria-controls={`${id}-menu`}
         aria-current={current ? "page" : undefined}
-        onClick={() => (open ? setOpen(false) : openAt(stage ? STAGE_ORDER.indexOf(stage) : 0))}
+        onClick={() => (open ? setOpen(false) : openAt(stage && MENU.includes(stage) ? MENU.indexOf(stage) : 0))}
         onKeyDown={onButtonKey}
       >
         Read
@@ -248,7 +259,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
         onKeyDown={onMenuKey}
         onClick={() => setOpen(false)}
       >
-        {STAGE_ORDER.map((s, i) => (
+        {MENU.map((s, i) => (
           <a
             key={s}
             ref={(el) => {
@@ -261,13 +272,13 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
             aria-current={stage === s ? "page" : undefined}
           >
             <span className="readmenu__name">
-              {PAPER_NAMES[s].short}
-              {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
+              {menuName(s)}
+              {!ONLY_EDITIONS && drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
             </span>
-            <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
+            {menuJob(s) && <span className="readmenu__job">{menuJob(s)}</span>}
           </a>
         ))}
-        {COMPANION_GROUPS.map((group, g) => (
+        {!ONLY_EDITIONS && COMPANION_GROUPS.map((group, g) => (
           <div key={group.id} className="readmenu__group" role="group" aria-label={group.title}>
             <p className="readmenu__grouphead" aria-hidden="true">{group.title}</p>
             {group.docs.map((c, k) => (
@@ -294,7 +305,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
             <span className="readmenu__job">{d.job}</span>
           </a>
         ))}
-        <PapersLink className="readmenu__item readmenu__item--all" route={route} menu />
+        {!ONLY_EDITIONS && <PapersLink className="readmenu__item readmenu__item--all" route={route} menu />}
       </div>
     </div>
   );
@@ -361,14 +372,14 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
                 Read
               </span>
               <ul className="phonemenu__accounts" aria-labelledby={`${id}-read`}>
-                {STAGE_ORDER.map((s) => (
+                {MENU.map((s) => (
                   <li key={s}>
                     <a href={routeHref({ view: "read", stage: s })} className="readmenu__item" aria-current={stage === s ? "page" : undefined}>
                       <span className="readmenu__name">
-                        {PAPER_NAMES[s].short}
-                        {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
+                        {menuName(s)}
+                        {!ONLY_EDITIONS && drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
                       </span>
-                      <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
+                      {menuJob(s) && <span className="readmenu__job">{menuJob(s)}</span>}
                     </a>
                   </li>
                 ))}

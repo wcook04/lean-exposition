@@ -162,6 +162,13 @@ const site = {
   paperNames,
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
   stages: BUILT.filter((d) => d.kind !== "companion").map((d) => d.slot),
+  // Only for a paper whose library-made guides were retired (removed_pages: Euler and Navier–Stokes); every
+  // other reader keeps its own Read menu, its levels, guides and links as they are.
+  readMenu: PAPER.removed_pages?.length ? [MAIN.slot, ...(ADAPTED ? [ADAPTED.slot] : [])] : undefined,
+  readMenuNames: PAPER.removed_pages?.length ? { [MAIN.slot]: "Authors’ paper", ...(ADAPTED ? { [ADAPTED.slot]: "Adapted edition" } : {}) } : undefined,
+  readMenuJobs: PAPER.removed_pages?.length
+    ? { [MAIN.slot]: `${MAIN.title}, by ${BY}`, ...(ADAPTED ? { [ADAPTED.slot]: "An adapted edition, every change marked" } : {}) }
+    : undefined,
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   // One short line each: under the authors on the authors' paper; in place of its own credit note on an
   // adapted edition. The full credit and the review sentences are in About.
