@@ -82,6 +82,34 @@ function flushFrames() {
 }
 
 describe("paper layout work", () => {
+  it("collapses removed print contents parts but keeps their passage and the surrounding text", () => {
+    const chunks = [
+      "Abstract ends here.\n\n",
+      "## Contents\n\n",
+      "| Section | Page |\n| --- | --- |\n| Introduction | 1 |\n\n",
+      "## 1 Introduction\n\nSome retained prose.\n\n",
+      "## Table of contents\n\n| Section | Page |\n| --- | --- |\n| End | 2 |\n\nLast paragraph.\n",
+    ];
+    const encoder = new TextEncoder();
+    let offset = 0;
+    const parts = chunks.map((chunk, index) => {
+      const start = offset;
+      offset += encoder.encode(chunk).length;
+      return { kind: index === 1 ? "mapped_passage" : "unmapped_text", span: { start_byte: start, end_byte: offset },
+        ...(index === 1 ? { passageAnchor: "sec-contents" } : {}) };
+    });
+    const doc = prepareDocument({ stage: "long", bytes: encoder.encode(chunks.join("")), parts,
+      documentPath: "long/reasoning-record.md", documentPaths: {} });
+    act(() => root.render(<PaperBody stage="long" doc={doc} structures={{}} graph={graph}
+      initial={[0, 1, 2, 3, 4]} topInset={56} inspected={null} />));
+
+    expect([...container.querySelectorAll(".part--blank")].map((el) => el.getAttribute("data-part"))).toEqual(["1", "2"]);
+    expect(container.querySelector('[data-passage="sec-contents"]')?.getAttribute("data-part")).toBe("1");
+    expect(container.querySelector(".part__placeholder")).toBeNull();
+    expect(container.querySelector('[data-part="3"] h2')?.textContent).toBe("1 Introduction");
+    expect(container.querySelector('[data-part="4"]')?.textContent).toContain("Last paragraph.");
+  });
+
   it("finds the nearest idle-rendering part in logarithmic geometry reads, including gaps and blank parts", () => {
     const geometry: { top: number; bottom: number }[] = [];
     const elements = new Map<number, HTMLElement>();

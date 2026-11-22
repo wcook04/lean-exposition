@@ -660,9 +660,9 @@ const REF_DEF = /^ {0,3}\[(?:[^\]\\\n]|\\.)+\]:[ \t]*\S.*$/gm;
  * the reading copy: the contents column beside the paper lists the same sections, live. Only the
  * heading and the tables under it go; an anchor or anything else before the next heading stays.
  */
-function dropContents(states: PartState[]): void {
+function dropContents(states: PartState[], parts: PreparedPart[]): void {
   let dropping = false;
-  for (const st of states) {
+  for (const [index, st] of states.entries()) {
     const kept: Token[] = [];
     for (let i = 0; i < st.tokens.length; i++) {
       const t = st.tokens[i];
@@ -683,7 +683,12 @@ function dropContents(states: PartState[]): void {
       }
       kept.push(t);
     }
-    if (kept.length !== st.tokens.length) st.tokens = kept;
+    if (kept.length !== st.tokens.length) {
+      st.tokens = kept;
+      // A removed heading or table can occupy a whole source part. Keep its
+      // source position, but reserve no space when nothing remains to display.
+      if (kept.length === 0) parts[index].blank = true;
+    }
   }
 }
 
@@ -961,7 +966,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     });
   });
 
-  dropContents(states);
+  dropContents(states, parts);
 
   // Pass 2: label and heading ids in document order.
   const labelId = labelIds();
