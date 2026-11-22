@@ -12,6 +12,7 @@
 // nodes after layout, so a title of any length, or one with typeset mathematics, is never cut.
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { graphWheel } from "./graphWheel";
 import "./focus-graph.css";
 
 /** What a card is, for the reader: this decides its look and, on a crowded side, its group. */
@@ -597,18 +598,17 @@ export function FocusGraph(props: FocusGraphProps) {
       scroller.current!.classList.remove("is-panning");
     }
   };
-  // The wheel and the trackpad: a pinch (which browsers send as the wheel with Ctrl) or a mouse wheel's
-  // notches zoom about the pointer; a trackpad's two-finger scroll pans. Nothing scrolls the page from here.
+  // This listener belongs to the drawing. The member list, annotations and toolbar handle their own input.
   useEffect(() => {
     const el = scroller.current;
     if (!el) return;
     const wheel = (e: WheelEvent) => {
       e.preventDefault();
-      const p = local(e);
-      const notched = e.deltaMode !== 0 || (e.deltaX === 0 && Math.abs(e.deltaY) >= 50 && Number.isInteger(e.deltaY));
-      if (e.ctrlKey || e.metaKey) zoomBy(Math.exp(-e.deltaY * (e.deltaMode ? 0.05 : 0.01)), p.x, p.y);
-      else if (notched && !e.shiftKey) zoomBy(e.deltaY < 0 ? 1.15 : 1 / 1.15, p.x, p.y);
-      else panBy(-(e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX), e.shiftKey && !e.deltaX ? 0 : -e.deltaY);
+      const gesture = graphWheel(e, el);
+      if ("zoom" in gesture) {
+        const p = local(e);
+        zoomBy(gesture.zoom, p.x, p.y);
+      } else panBy(gesture.panX, 0);
     };
     el.addEventListener("wheel", wheel, { passive: false });
     return () => el.removeEventListener("wheel", wheel);

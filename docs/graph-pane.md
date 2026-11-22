@@ -1,6 +1,6 @@
 # The graph pane
 
-This page specifies the right-hand pane of three reading sites: the Quartic Reader, the SK and Erdős #257 readers built from lean-exposition, and Proof Reader. The same text is kept in each repository at `docs/graph-pane.md`. The drawing itself is one component, `FocusGraph.tsx` with `focus-graph.css`, and the browser checks are one module, `graph_pane_checks.py`. A change to any of the four files should be copied to the other two repositories.
+This page specifies the right-hand pane of three reading sites: the Quartic Reader, the SK and Erdős #257 readers built from lean-exposition, and Proof Reader. The same text is kept in each repository at `docs/graph-pane.md`. The drawing itself is one component, `FocusGraph.tsx` with `focus-graph.css` and the shared wheel gestures in `graphWheel.ts`, and the browser checks are one module, `graph_pane_checks.py`. A change to any of these files should be copied to the other two repositories.
 
 ## What the graph shows and why
 
@@ -63,7 +63,7 @@ No view is ever blank. A paragraph with nothing tied to it says "No Lean is link
 
 ### Moving about
 
-- The drawing's area is a canvas with no scroll bars: it never scrolls. Dragging pans it; a trackpad's two-finger scroll pans it; a pinch, Ctrl or ⌘ with the wheel, or a mouse wheel's notches zoom about the pointer; a double click on the drawing zooms in there. On the keyboard the arrows pan, + and − zoom and 0 fits. A pan always leaves part of the drawing in view, and focusing a card brings it into view.
+- The drawing's area is a canvas with no scroll bars: it never scrolls. Dragging or scrolling sideways pans the drawing. Scrolling up zooms in at the pointer and scrolling down zooms out, with a mouse or trackpad. A pinch, Ctrl or ⌘ with the wheel, and a double click also zoom at the pointer. A wheel over the paper or the member list scrolls that content. On the keyboard the arrows pan, + and − zoom and 0 fits. A pan always leaves part of the drawing in view, and focusing a card brings it into view.
 - An overview over the corner of the area, shown whenever part of the drawing is out of view, shows the whole drawing and the part in view; clicking or dragging in it moves the view.
 - The buttons −, + and Fit change the zoom. Fit frames the drawing as it is and changes nothing else: an opened group stays open, and a panel of members stays open with its search and page.
 - The drawing is fitted when it opens, when the subject changes, on Fit, and when the pane itself changes size while the view is still the fitted one. The camera never changes the layout and the layout never moves the camera except by such a fit, so the drawing is completely still while nobody touches it. After the reader pans, zooms or opens a small group, the view is kept until the subject changes or Fit is pressed. Opening or closing a panel of members never moves the view.

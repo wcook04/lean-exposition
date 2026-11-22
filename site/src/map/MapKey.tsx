@@ -104,7 +104,7 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
           </ul>
           <p className="map-keypop__h">Moving around</p>
           <ul className="map-keypop__channels">
-            <li>Scroll to pan, or drag from anywhere. Pinch, or Ctrl or ⌘ with the wheel, zooms. The + and − keys zoom too, Shift with an arrow key pans, and 0 fits the whole map.</li>
+            <li>Scroll up to zoom in at the pointer, and down to zoom out. Drag to pan, or scroll sideways. Pinching also zooms. The + and − keys zoom too, Shift with an arrow key pans, and 0 fits the whole map.</li>
             <li>↑ goes to the result that uses this one, ↓ to its first input, ← and → to the inputs beside it. Enter opens its inputs and Esc clears the selection.</li>
             <li>With a paper chosen, [ and ] step through its passages.</li>
           </ul>

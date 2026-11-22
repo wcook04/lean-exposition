@@ -89,6 +89,25 @@ describe("a large group opens as a list of its members", () => {
     expect(document.activeElement).toBe($(".fg__listsearch"));
   });
 
+  it("zooms over the drawing and leaves wheel events over the member list and toolbar alone", () => {
+    draw();
+    const wheel = (el: Element, deltaY: number) => {
+      const e = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY, clientX: 12, clientY: 8 });
+      act(() => { el.dispatchEvent(e); });
+      return e.defaultPrevented;
+    };
+    const scale = () => Number($(".fg__world")!.style.transform.match(/scale\(([^)]+)\)/)?.[1] ?? 1);
+    const before = scale();
+    expect(wheel($(".fg__scroll")!, -4.5)).toBe(true);
+    expect(scale()).toBeGreaterThan(before);
+    expect(wheel($(".fg__scroll")!, 4.5)).toBe(true);
+    expect(scale()).toBeCloseTo(before);
+    click(head());
+    expect(wheel($(".fg__list")!, 60)).toBe(false);
+    expect(wheel(button("Fit"), 60)).toBe(false);
+    expect(scale()).toBeCloseTo(before);
+  });
+
   it("pages twenty members at a time and reaches every one", () => {
     draw();
     click(head());
