@@ -50,6 +50,13 @@
    "slug": "how-the-lean-encodes-it",
    "title": "How the Lean encodes it",
    "noun": "guide"
+  },
+  {
+   "id": "start-here",
+   "slot": "long",
+   "slug": "start-here",
+   "title": "Start here",
+   "noun": "guide"
   }
  ],
  "comparator": {
