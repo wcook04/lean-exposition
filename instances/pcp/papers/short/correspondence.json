@@ -1,0 +1,319 @@
+{
+ "schema_version": "1.2",
+ "stage": "short",
+ "state": "draft",
+ "path": "papers/short.md",
+ "content_sha256": "a65094c08b7fb151c3fafa730ab0eb4fd614d5308dbb0d2e2466e668130e13b4",
+ "graph_sha256": "0544eb2e356b797914aa8df20ae92a44b0ba8dc80a1f381430efc8a71213a44d",
+ "selected_goal_ids": [
+  "pcp.theorem-1.1"
+ ],
+ "claim_ids": [
+  "pcp.theorem-1.1",
+  "pcp.lemma-2.1",
+  "pcp.claim-vanishing-certificate",
+  "pcp.lemma-4.1",
+  "pcp.lemma-4.3",
+  "pcp.theorem-4.6",
+  "pcp.theorem-4.5",
+  "pcp.theorem-5.1",
+  "pcp.lemma-5.2",
+  "pcp.claim-derived-zero",
+  "pcp.claim-source-11",
+  "pcp.claim-source-12",
+  "pcp.claim-10",
+  "pcp.claim-source-13",
+  "pcp.claim-reference-np-equivalence"
+ ],
+ "citation_ids": [
+  "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+  "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+  "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+  "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+  "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+  "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+  "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+  "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+  "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+  "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+  "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+  "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+  "cite.lean.PCP.ReferenceNP.inNP_iff_mem",
+  "cite.lean.PCP.np_subset_pcp",
+  "cite.lean.PCP.pcp_subset_np_concrete",
+  "cite.pcp.claim-10",
+  "cite.pcp.claim-derived-zero",
+  "cite.pcp.claim-reference-np-equivalence",
+  "cite.pcp.claim-source-11",
+  "cite.pcp.claim-source-12",
+  "cite.pcp.claim-source-13",
+  "cite.pcp.claim-vanishing-certificate",
+  "cite.pcp.lemma-2.1",
+  "cite.pcp.lemma-4.1",
+  "cite.pcp.lemma-4.3",
+  "cite.pcp.lemma-5.2",
+  "cite.pcp.theorem-1.1",
+  "cite.pcp.theorem-4.5",
+  "cite.pcp.theorem-4.6",
+  "cite.pcp.theorem-5.1"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+  "lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+  "lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+  "lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+  "lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+  "lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+  "lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+  "lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+  "lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+  "lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+  "lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+  "lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+  "lean.PCP.ReferenceNP.inNP_iff_mem",
+  "lean.PCP.np_subset_pcp",
+  "lean.PCP.pcp_subset_np_concrete",
+  "pcp.claim-10",
+  "pcp.claim-derived-zero",
+  "pcp.claim-reference-np-equivalence",
+  "pcp.claim-source-11",
+  "pcp.claim-source-12",
+  "pcp.claim-source-13",
+  "pcp.claim-vanishing-certificate",
+  "pcp.lemma-2.1",
+  "pcp.lemma-4.1",
+  "pcp.lemma-4.3",
+  "pcp.lemma-5.2",
+  "pcp.theorem-1.1",
+  "pcp.theorem-4.5",
+  "pcp.theorem-4.6",
+  "pcp.theorem-5.1"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "41d3ad64898debd6a3f374902e2e34f0e6a4567b81cf169513fe392e5811a338",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: context with no numbered result."
+  },
+  {
+   "anchor": "sec-abstract",
+   "text_sha256": "4bd4c2190ffe4cd3f3d0d49c1973a19230a2f2ade63cb14670e9b4de22d8cf4c",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Abstract: context with no numbered result."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "95966ade0cba29694d76d8637bac61727c1f600524f8b1f280b73dc0e998dac8",
+   "claim_ids": [
+    "pcp.theorem-1.1"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+    "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+    "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "cite.lean.PCP.np_subset_pcp",
+    "cite.pcp.claim-10",
+    "cite.pcp.claim-derived-zero",
+    "cite.pcp.claim-source-11",
+    "cite.pcp.claim-source-12",
+    "cite.pcp.claim-vanishing-certificate",
+    "cite.pcp.lemma-2.1",
+    "cite.pcp.lemma-4.1",
+    "cite.pcp.lemma-4.3",
+    "cite.pcp.lemma-5.2",
+    "cite.pcp.theorem-1.1",
+    "cite.pcp.theorem-4.5",
+    "cite.pcp.theorem-4.6",
+    "cite.pcp.theorem-5.1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "1. Introduction: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "f423ae947c646558e90edd780a3c5daf9924d65f2cb71581da174d44277eca42",
+   "claim_ids": [
+    "pcp.lemma-2.1",
+    "pcp.claim-vanishing-certificate"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "cite.pcp.claim-vanishing-certificate",
+    "cite.pcp.lemma-2.1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "2. Preliminaries: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "82047142223dc57e97c564d99d31ad5d608154a2216ee73838c3a7cfc84e961b",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "3. Set-multilinear and Hadamard encodings: context with no numbered result."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "ba301cf0f6756f986985c466f55ba4c1f1f6d85d360fe3c25ee554f2bbd95d7a",
+   "claim_ids": [
+    "pcp.lemma-4.1",
+    "pcp.lemma-4.3",
+    "pcp.theorem-4.6",
+    "pcp.theorem-4.5"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "cite.pcp.lemma-4.1",
+    "cite.pcp.lemma-4.3",
+    "cite.pcp.theorem-4.5",
+    "cite.pcp.theorem-4.6"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "4. Low-degree tests over the binary alphabet: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "dbe33a64f467400fa350b6d00265cb951f59cf1ae1bc9ca4d5f0271ad5b0bb82",
+   "claim_ids": [
+    "pcp.theorem-5.1",
+    "pcp.lemma-5.2",
+    "pcp.claim-derived-zero"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "cite.pcp.claim-derived-zero",
+    "cite.pcp.lemma-4.1",
+    "cite.pcp.lemma-4.3",
+    "cite.pcp.lemma-5.2",
+    "cite.pcp.theorem-5.1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "5. Local correction and the zero-on-grid test: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "844333af2d46e563561898145fa2822851f4e2f45b1c54f3feaaeba0629c0c8e",
+   "claim_ids": [
+    "pcp.claim-source-11"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+    "cite.pcp.claim-source-11",
+    "cite.pcp.claim-vanishing-certificate",
+    "cite.pcp.lemma-2.1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "6. Soundness of the verifier: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-7",
+   "text_sha256": "35091597864a4cc4fd4b5b0535ecd6a89a13bb732c42f7bd99dc3a37640d24f4",
+   "claim_ids": [
+    "pcp.claim-source-12",
+    "pcp.claim-10",
+    "pcp.claim-source-13"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "cite.lean.PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+    "cite.lean.PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+    "cite.lean.PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "cite.lean.PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "cite.lean.PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+    "cite.lean.PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+    "cite.lean.PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+    "cite.lean.PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+    "cite.lean.PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "cite.lean.PCP.pcp_subset_np_concrete",
+    "cite.pcp.claim-10",
+    "cite.pcp.claim-derived-zero",
+    "cite.pcp.claim-source-11",
+    "cite.pcp.claim-source-12",
+    "cite.pcp.claim-source-13",
+    "cite.pcp.claim-vanishing-certificate",
+    "cite.pcp.lemma-2.1",
+    "cite.pcp.lemma-4.1",
+    "cite.pcp.lemma-4.3",
+    "cite.pcp.lemma-5.2",
+    "cite.pcp.theorem-4.5",
+    "cite.pcp.theorem-4.6",
+    "cite.pcp.theorem-5.1"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "7. Resources, implementation and the reverse inclusion: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-formalization-and-sources",
+   "text_sha256": "20f5f36d7772df0e348a8601de0e1c95db04917853168759ec2161a159d34a91",
+   "claim_ids": [
+    "pcp.claim-reference-np-equivalence"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.ReferenceNP.inNP_iff_mem",
+    "cite.pcp.claim-reference-np-equivalence"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "Formalization and sources: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-appendix-a",
+   "text_sha256": "17d093f4488b35847a39c83b9f5acf7a31bae61ccb5ee064941f996fff7f5cdf",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Appendix A. The version-1 low-degree test: context with no numbered result."
+  },
+  {
+   "anchor": "sec-references",
+   "text_sha256": "6dc5004ace8564d21eb19091069fca9c377c6ee09cc641c6984a0decd9f256a8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "References: context with no numbered result."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}

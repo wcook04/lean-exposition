@@ -7,12 +7,12 @@
    "key": "0d805052b50983fb",
    "shared_by": 2,
    "lightness": {
-    "light": 0.5,
+    "light": 0.495,
     "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.124,
+     0.125,
      0.19
     ],
     "dark": [
@@ -27,8 +27,8 @@
      "named": false,
      "hue": 58,
      "chroma": {
-      "light": 0.136,
-      "dark": 0.167
+      "light": 0.139,
+      "dark": 0.164
      },
      "topics": [
       "series",
@@ -40,10 +40,10 @@
      "id": "family-remainders",
      "name": "Multiplication and fractional parts · Averaging complete cycles · Combining the estimates",
      "named": false,
-     "hue": 158,
+     "hue": 155.5,
      "chroma": {
-      "light": 0.124,
-      "dark": 0.177
+      "light": 0.125,
+      "dark": 0.18
      },
      "topics": [
       "combining-estimates",
@@ -82,49 +82,49 @@
     "series": {
      "index": 0,
      "family": "family-series",
-     "light": "oklch(0.400 0.117 43.6)",
-     "dark": "oklch(0.560 0.164 43.6)"
+     "light": "oklch(0.396 0.112 45.4)",
+     "dark": "oklch(0.561 0.159 45.4)"
     },
     "rational-gap": {
      "index": 1,
      "family": "family-series",
      "light": "oklch(0.520 0.124 58.0)",
-     "dark": "oklch(0.680 0.162 58.0)"
+     "dark": "oklch(0.685 0.164 58.0)"
     },
     "scope": {
      "index": 2,
      "family": "family-series",
-     "light": "oklch(0.640 0.136 72.4)",
-     "dark": "oklch(0.800 0.167 72.4)"
+     "light": "oklch(0.644 0.139 70.6)",
+     "dark": "oklch(0.809 0.155 70.6)"
     },
     "combining-estimates": {
      "index": 3,
      "family": "family-remainders",
-     "light": "oklch(0.380 0.124 143.6)",
-     "dark": "oklch(0.540 0.177 143.6)"
+     "light": "oklch(0.371 0.124 142.9)",
+     "dark": "oklch(0.536 0.180 142.9)"
     },
     "remainders": {
      "index": 4,
      "family": "family-remainders",
-     "light": "oklch(0.500 0.117 158.0)",
-     "dark": "oklch(0.660 0.154 158.0)"
+     "light": "oklch(0.495 0.121 155.5)",
+     "dark": "oklch(0.660 0.161 155.5)"
     },
     "cycle-averages": {
      "index": 5,
      "family": "family-remainders",
-     "light": "oklch(0.620 0.119 172.4)",
-     "dark": "oklch(0.780 0.150 172.4)"
+     "light": "oklch(0.619 0.125 168.1)",
+     "dark": "oklch(0.784 0.158 168.1)"
     },
     "incomplete-cycles": {
      "index": 6,
      "family": "family-incomplete-cycles",
-     "light": "oklch(0.540 0.190 257.0)",
+     "light": "oklch(0.535 0.190 257.0)",
      "dark": "oklch(0.700 0.158 257.0)"
     },
     "doubling": {
      "index": 7,
      "family": "family-doubling",
-     "light": "oklch(0.500 0.190 339.0)",
+     "light": "oklch(0.495 0.190 339.0)",
      "dark": "oklch(0.660 0.190 339.0)"
     }
    }

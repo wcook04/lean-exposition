@@ -1,0 +1,5013 @@
+{
+ "schema_version": "1.2",
+ "id": "smtlib-library-edition",
+ "title": "The SMT-LIB Standard: Version 2.7",
+ "selected_goals": [
+  "smtlib.document"
+ ],
+ "sources": [
+  {
+   "id": "lean:BSmtLibSpec/Grammar/Script.lean",
+   "kind": "file",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Script.lean",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "635e3a5f710627ee280989b9a4da46165ea5ac415277755b1e0b28e270bd86a9",
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Script.lean"
+  },
+  {
+   "id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "kind": "file",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "30699d6b7854d649c121a7b6667db9e220a5cd4c1acb1dce3a1d1690a2d076ab",
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Syntax.lean"
+  },
+  {
+   "id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "kind": "file",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "276cdea13ba45dbdb7359e7d537acd01b0a676c6e7e8f64dd541fe0d38eb241d",
+   "path": "upstream/lean/BSmtLibSpec/Grammar/Tree.lean"
+  },
+  {
+   "id": "lean:BSmtLibSpec/Lexicon.lean",
+   "kind": "file",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "5811a48cc684bd89852c5082ee89403eeb834153838fd3e384ffb2c45260ddae",
+   "path": "upstream/lean/BSmtLibSpec/Lexicon.lean"
+  },
+  {
+   "id": "lean:BSmtLibSpec/Lexicon/Tokenization.lean",
+   "kind": "file",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon/Tokenization.lean",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "0bd871c15604907f10130a03e88f64f86b197ca296b8f3c03a2b7d89b2f31c83",
+   "path": "upstream/lean/BSmtLibSpec/Lexicon/Tokenization.lean"
+  },
+  {
+   "id": "lean:BSmtLibSpec/Parser/Traversal.lean",
+   "kind": "file",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Parser/Traversal.lean",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "5d1624e4a13cafca831b75ccb5b567b5d32cfb49ae6eb494789a4dca7176f5fd",
+   "path": "upstream/lean/BSmtLibSpec/Parser/Traversal.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://smt-lib.org/papers/smt-lib-reference-v2.7-r2026-09-09.pdf",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "88eedf2f08181574b4c5f2894140b7f60928debcddd93291772f271cb787b9f7"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "1200c81bb5fedf6827cf4b616f9070ea95321fa9",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://github.com/onderjan/blazing-smtlib",
+   "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Script",
+   "title": "BSmtLibSpec.Grammar.Script",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Script.lean#L26",
+   "source_id": "lean:BSmtLibSpec/Grammar/Script.lean",
+   "locator": "BSmtLibSpec/Grammar/Script.lean, line 26"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "title": "BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L618",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 618"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "title": "BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L646",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 646"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "title": "BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L608",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 608"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+   "title": "BSmtLibSpec.Grammar.Syntax.IsSort",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L627",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 627"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "title": "BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L636",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 636"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "title": "BSmtLibSpec.Grammar.Tree.Attribute",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L99",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 99"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L410",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 410"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L121",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 121"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "title": "BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L89",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 89"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L401",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 401"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L111",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 111"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Command",
+   "title": "BSmtLibSpec.Grammar.Tree.Command",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L242",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 242"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L553",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 553"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L291",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 291"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "title": "BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L186",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 186"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L506",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 506"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L243",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 243"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "title": "BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L195",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 195"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L515",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 515"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L252",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 252"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "title": "BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L204",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 204"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L523",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 523"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L264",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 264"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "title": "BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L214",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 214"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L532",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 532"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L273",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 273"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "title": "BSmtLibSpec.Grammar.Tree.Identifier",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L72",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 72"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L376",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 376"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L83",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 83"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Index",
+   "title": "BSmtLibSpec.Grammar.Tree.Index",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L63",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 63"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L367",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 367"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L74",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 74"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "title": "BSmtLibSpec.Grammar.Tree.Pattern",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L135",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 135"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L445",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 445"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L157",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 157"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "title": "BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L108",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 108"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L419",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 419"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L131",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 131"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Quantifier.word",
+   "title": "BSmtLibSpec.Grammar.Tree.Quantifier.word",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L163",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 163"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "title": "BSmtLibSpec.Grammar.Tree.SExpr",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L51",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 51"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L348",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 348"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L55",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 55"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "title": "BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L177",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 177"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L498",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 498"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L235",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 235"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "title": "BSmtLibSpec.Grammar.Tree.Sort",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L81",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 81"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L386",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 386"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L94",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 94"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "title": "BSmtLibSpec.Grammar.Tree.SortDec",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L168",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 168"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L227",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 227"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "title": "BSmtLibSpec.Grammar.Tree.SortedVar",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L117",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 117"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L428",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 428"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L140",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 140"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "title": "BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L39",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 39"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "title": "BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L40",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 40"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "title": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L126",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 126"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L436",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 436"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "title": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L148",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 148"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term",
+   "title": "BSmtLibSpec.Grammar.Tree.Term",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Tree.lean#L153",
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 153"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "title": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L457",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 457"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "title": "BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L481",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 481"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "title": "BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L486",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 486"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L207",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 207"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L216",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 216"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "title": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Grammar/Syntax.lean#L174",
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 174"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.SourceFile",
+   "title": "BSmtLibSpec.Lexicon.SourceFile",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L47",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 47"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.Token.content",
+   "title": "BSmtLibSpec.Lexicon.Token.content",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L360",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 360"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.Tokenization",
+   "title": "BSmtLibSpec.Lexicon.Tokenization",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon/Tokenization.lean#L49",
+   "source_id": "lean:BSmtLibSpec/Lexicon/Tokenization.lean",
+   "locator": "BSmtLibSpec/Lexicon/Tokenization.lean, line 49"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "title": "BSmtLibSpec.Lexicon.Tokenization.From",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon/Tokenization.lean#L37",
+   "source_id": "lean:BSmtLibSpec/Lexicon/Tokenization.lean",
+   "locator": "BSmtLibSpec/Lexicon/Tokenization.lean, line 37"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "title": "BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L208",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 208"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.addedCommandNames",
+   "title": "BSmtLibSpec.Lexicon.addedCommandNames",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L230",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 230"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.basicReservedWords",
+   "title": "BSmtLibSpec.Lexicon.basicReservedWords",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L219",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 219"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.binary",
+   "title": "BSmtLibSpec.Lexicon.binary",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L154",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 154"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "title": "BSmtLibSpec.Lexicon.categoryRegex",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L321",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 321"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.commandNames",
+   "title": "BSmtLibSpec.Lexicon.commandNames",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L246",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 246"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.comment",
+   "title": "BSmtLibSpec.Lexicon.comment",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L101",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 101"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.decimal",
+   "title": "BSmtLibSpec.Lexicon.decimal",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L139",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 139"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.digit",
+   "title": "BSmtLibSpec.Lexicon.digit",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L74",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 74"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.hexadecimal",
+   "title": "BSmtLibSpec.Lexicon.hexadecimal",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L147",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 147"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.keyword",
+   "title": "BSmtLibSpec.Lexicon.keyword",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L294",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 294"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.letter",
+   "title": "BSmtLibSpec.Lexicon.letter",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L84",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 84"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.lineBreak",
+   "title": "BSmtLibSpec.Lexicon.lineBreak",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L91",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 91"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.numeral",
+   "title": "BSmtLibSpec.Lexicon.numeral",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L132",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 132"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.printableChar",
+   "title": "BSmtLibSpec.Lexicon.printableChar",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L67",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 67"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.quotedSymbol",
+   "title": "BSmtLibSpec.Lexicon.quotedSymbol",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L281",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 281"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.reserved",
+   "title": "BSmtLibSpec.Lexicon.reserved",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L254",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 254"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "title": "BSmtLibSpec.Lexicon.simpleSymbol",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L271",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 271"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.string",
+   "title": "BSmtLibSpec.Lexicon.string",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L162",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 162"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+   "title": "BSmtLibSpec.Lexicon.symbolPunctuation",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L262",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 262"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.unescape",
+   "title": "BSmtLibSpec.Lexicon.unescape",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L172",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 172"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "title": "BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L58",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 58"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Lexicon.whitespace",
+   "title": "BSmtLibSpec.Lexicon.whitespace",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Lexicon.lean#L116",
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 116"
+  },
+  {
+   "id": "cite.lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "title": "BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "url": "https://github.com/onderjan/blazing-smtlib/blob/42b45c20b0045495a40b9eaf0a717e0f1c976bed/lean/BSmtLibSpec/Parser/Traversal.lean#L249",
+   "source_id": "lean:BSmtLibSpec/Parser/Traversal.lean",
+   "locator": "BSmtLibSpec/Parser/Traversal.lean, line 249"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Script",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Script",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Script"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Script.lean",
+   "declaration": "BSmtLibSpec.Grammar.Script",
+   "statement": "Commands with reading-mode changes",
+   "locator": "BSmtLibSpec/Grammar/Script.lean, line 26",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Syntax.IsAttribute"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "statement": "Matching attributes to their tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 618",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Syntax.IsCommand"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "statement": "Matching commands to their tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 646",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Syntax.IsSExpr"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "statement": "Matching S-expressions to their tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 608",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Syntax.IsSort",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Syntax.IsSort"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Syntax.IsSort",
+   "statement": "Matching sorts to their tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 627",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Syntax.IsTerm"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "statement": "Matching terms to their tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 636",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Attribute",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Attribute"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Attribute",
+   "statement": "Keyword with an optional value",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 99",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "statement": "Conditions on attribute contents",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 410",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "statement": "Writing a keyword and optional value",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 121",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.AttributeValue"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "statement": "Constants, symbols or S-expression lists",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 89",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "statement": "Conditions on attribute values",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 401",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "statement": "Writing an attribute's value",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 111",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Command",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Command"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Command",
+   "statement": "Concrete forms of script commands",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 242",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Command.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "statement": "Version and command grammar conditions",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 553",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Command.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "statement": "Writing complete command token sequences",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 291",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.ConstructorDec"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "statement": "Constructor name with selectors",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 186",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "statement": "Conditions on constructor selectors",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 506",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "statement": "Writing a constructor and selectors",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 243",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.DatatypeDec"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "statement": "Datatype parameters and constructors",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 195",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "statement": "Datatype grammar requires a constructor",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 515",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "statement": "Writing datatype declarations",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 252",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDec"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "statement": "Function parameters and result sort",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 204",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "statement": "Conditions on function signatures",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 523",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "statement": "Writing a function's declared signature",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 264",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDef"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "statement": "Function signature with a defining term",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 214",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "statement": "Conditions on function definitions",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 532",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "statement": "Writing a function's signature and body",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 273",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Identifier",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Identifier"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Identifier",
+   "statement": "Symbol with optional indices",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 72",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "statement": "Allowed indices within an identifier",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 376",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "statement": "Writing simple and indexed identifiers",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 83",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Index",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Index"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Index",
+   "statement": "Numerals or symbols as indices",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 63",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Index.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "statement": "Versions allowing symbolic indices",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 367",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Index.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "statement": "Writing a numeral or symbol index",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 74",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Pattern",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Pattern"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Pattern",
+   "statement": "Single or constructor match patterns",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 135",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "statement": "Grammatical conditions on match patterns",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 445",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "statement": "Writing a flat match pattern",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 157",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.QualIdentifier"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "statement": "Identifier with optional sort",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 108",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "statement": "Conditions on qualified identifiers",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 419",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "statement": "Writing a sort-qualified identifier",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 131",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Quantifier.word",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Quantifier.word",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Quantifier.word"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Quantifier.word",
+   "statement": "Universal or existential keyword",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 163",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SExpr",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SExpr"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SExpr",
+   "statement": "Atoms and parenthesised expressions",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 51",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "statement": "Version limits on S-expression syntax",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 348",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "statement": "Writing an S-expression as tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 55",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SelectorDec"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "statement": "Selector name with result sort",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 177",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "statement": "Grammatical conditions on selector sorts",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 498",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "statement": "Writing a selector with its sort",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 235",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Sort",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Sort"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Sort",
+   "statement": "Sort identifiers with sort arguments",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 81",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Sort.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "statement": "Grammatical conditions within a sort",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 386",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Sort.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "statement": "Writing a sort as tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 94",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SortDec",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SortDec"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SortDec",
+   "statement": "Sort name with declared arity",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 168",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "statement": "Writing a sort name and arity",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 227",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SortedVar",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SortedVar"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SortedVar",
+   "statement": "Variable name paired with sort",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 117",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "statement": "Grammatical conditions on variable sorts",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 428",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "statement": "Writing a variable with its sort",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 140",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SpecConstant"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "statement": "Five forms of literal token",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 39",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "statement": "Single token for a literal",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 40",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "statement": "Named symbols or match wildcards",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 126",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "statement": "Versions allowing match wildcards",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 436",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "statement": "Writing a symbol or wildcard",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 148",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Tree.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term",
+   "statement": "Concrete forms of term syntax",
+   "locator": "BSmtLibSpec/Grammar/Tree.lean, line 153",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term.Valid"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "statement": "Grammatical conditions on term forms",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 457",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "statement": "Conditions on let definitions",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 481",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "statement": "Grammatical conditions on match cases",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 486",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "statement": "Writing variable definitions in let",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 207",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "statement": "Writing patterns with their case bodies",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 216",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Grammar.Tree.Term.tokens"
+   ],
+   "source_id": "lean:BSmtLibSpec/Grammar/Syntax.lean",
+   "declaration": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "statement": "Writing a term as tokens",
+   "locator": "BSmtLibSpec/Grammar/Syntax.lean, line 174",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.SourceFile",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.SourceFile",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.SourceFile"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.SourceFile",
+   "statement": "Source characters allowed per version",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 47",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.Token.content",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.Token.content",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.Token.content"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.Token.content",
+   "statement": "Decoding the contents of tokens",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 360",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.Tokenization",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.Tokenization",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.Tokenization"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon/Tokenization.lean",
+   "declaration": "BSmtLibSpec.Lexicon.Tokenization",
+   "statement": "Splitting input into lexical tokens",
+   "locator": "BSmtLibSpec/Lexicon/Tokenization.lean, line 49",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.Tokenization.From",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.Tokenization.From"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon/Tokenization.lean",
+   "declaration": "BSmtLibSpec.Lexicon.Tokenization.From",
+   "statement": "Tokenisation from a specified offset",
+   "locator": "BSmtLibSpec/Lexicon/Tokenization.lean, line 37",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.addedBasicReservedWords"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "statement": "New reserved words by version",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 208",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.addedCommandNames",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.addedCommandNames",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.addedCommandNames"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.addedCommandNames",
+   "statement": "New command names by version",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 230",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.basicReservedWords",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.basicReservedWords"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.basicReservedWords",
+   "statement": "General reserved words by version",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 219",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.binary",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.binary",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.binary"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.binary",
+   "statement": "Binary literal token syntax",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 154",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.categoryRegex",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.categoryRegex"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.categoryRegex",
+   "statement": "Token spelling rules by category",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 321",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.commandNames",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.commandNames",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.commandNames"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.commandNames",
+   "statement": "Available command names by version",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 246",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.comment",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.comment",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.comment"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.comment",
+   "statement": "Semicolon comment ending with newline",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 101",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.decimal",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.decimal",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.decimal"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.decimal",
+   "statement": "Decimal point token syntax",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 139",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.digit",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.digit",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.digit"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.digit",
+   "statement": "Decimal digit characters",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 74",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.hexadecimal",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.hexadecimal",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.hexadecimal"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.hexadecimal",
+   "statement": "Hexadecimal literal token syntax",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 147",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.keyword",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.keyword",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.keyword"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.keyword",
+   "statement": "Colon-prefixed attribute, option names",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 294",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.letter",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.letter",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.letter"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.letter",
+   "statement": "Uppercase and lowercase ASCII letters",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 84",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.lineBreak",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.lineBreak",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.lineBreak"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.lineBreak",
+   "statement": "Line feed or carriage return",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 91",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.numeral",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.numeral",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.numeral"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.numeral",
+   "statement": "Nonnegative integer token syntax",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 132",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.printableChar",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.printableChar",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.printableChar"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.printableChar",
+   "statement": "Printable bytes in the grammar",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 67",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.quotedSymbol",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.quotedSymbol"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.quotedSymbol",
+   "statement": "Names enclosed in vertical bars",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 281",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.reserved",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.reserved",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.reserved"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.reserved",
+   "statement": "Matching a reserved word",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 254",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.simpleSymbol",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.simpleSymbol"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.simpleSymbol",
+   "statement": "Unquoted names excluding reserved words",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 271",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.string",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.string",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.string"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.string",
+   "statement": "Quoted strings with doubled quotes",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 162",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.symbolPunctuation",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.symbolPunctuation"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.symbolPunctuation",
+   "statement": "Punctuation permitted in simple symbols",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 262",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.unescape",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.unescape",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.unescape"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.unescape",
+   "statement": "Decode doubled quotation marks",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 172",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.whiteSpaceChar"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "statement": "Tab, newline, carriage return, space",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 58",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Lexicon.whitespace",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Lexicon.whitespace",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Lexicon.whitespace"
+   ],
+   "source_id": "lean:BSmtLibSpec/Lexicon.lean",
+   "declaration": "BSmtLibSpec.Lexicon.whitespace",
+   "statement": "Repeated spaces and complete comments",
+   "locator": "BSmtLibSpec/Lexicon.lean, line 116",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "kind": "declaration",
+   "label": "BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion"
+   ],
+   "source_id": "lean:BSmtLibSpec/Parser/Traversal.lean",
+   "declaration": "BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "statement": "Reserved tokens allowed by a version",
+   "locator": "BSmtLibSpec/Parser/Traversal.lean, line 249",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "smtlib.document",
+   "kind": "goal",
+   "label": "The SMT-LIB Standard: Version 2.7",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.smtlib.document"
+   ],
+   "citation_ids": [],
+   "source_id": "paper",
+   "locator": "The SMT-LIB Standard: Version 2.7",
+   "statement": "The SMT-LIB Standard: Version 2.7: the document as a whole. It numbers no results; each passage links the Lean that states it.",
+   "boundary": "The document itself, as the map's root. Its links to the Lean were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "edges": [
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Script",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Script",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Script",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.Token.content",
+   "to": "lean.BSmtLibSpec.Lexicon.unescape",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.Tokenization",
+   "to": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "to": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "to": "lean.BSmtLibSpec.Lexicon.lineBreak",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "to": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "to": "lean.BSmtLibSpec.Lexicon.whitespace",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+   "to": "lean.BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.binary",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.decimal",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.hexadecimal",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.keyword",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.numeral",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.printableChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.reserved",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.string",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "to": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.commandNames",
+   "to": "lean.BSmtLibSpec.Lexicon.addedCommandNames",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.comment",
+   "to": "lean.BSmtLibSpec.Lexicon.lineBreak",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.decimal",
+   "to": "lean.BSmtLibSpec.Lexicon.numeral",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.hexadecimal",
+   "to": "lean.BSmtLibSpec.Lexicon.digit",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.keyword",
+   "to": "lean.BSmtLibSpec.Lexicon.digit",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.keyword",
+   "to": "lean.BSmtLibSpec.Lexicon.letter",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.keyword",
+   "to": "lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.numeral",
+   "to": "lean.BSmtLibSpec.Lexicon.digit",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+   "to": "lean.BSmtLibSpec.Lexicon.printableChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+   "to": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.reserved",
+   "to": "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.reserved",
+   "to": "lean.BSmtLibSpec.Lexicon.commandNames",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "to": "lean.BSmtLibSpec.Lexicon.digit",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "to": "lean.BSmtLibSpec.Lexicon.letter",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "to": "lean.BSmtLibSpec.Lexicon.reserved",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "to": "lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.string",
+   "to": "lean.BSmtLibSpec.Lexicon.printableChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.string",
+   "to": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.whitespace",
+   "to": "lean.BSmtLibSpec.Lexicon.comment",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Lexicon.whitespace",
+   "to": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "to": "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "to": "lean.BSmtLibSpec.Lexicon.commandNames",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Script",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Quantifier.word",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.SourceFile",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.Token.content",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.Tokenization",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.addedBasicReservedWords",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.addedCommandNames",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.binary",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.categoryRegex",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.commandNames",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.comment",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.decimal",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.digit",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.hexadecimal",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.keyword",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.letter",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.lineBreak",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.numeral",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.printableChar",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.reserved",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.string",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.unescape",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Lexicon.whitespace",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  },
+  {
+   "from": "smtlib.document",
+   "to": "lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.smtlib.document"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "lean.BSmtLibSpec.Grammar.Script",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+    "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+    "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+    "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Command",
+    "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+    "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+    "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+    "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Index",
+    "lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+    "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+    "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Quantifier.word",
+    "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+    "lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+    "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Sort",
+    "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+    "lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+    "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+    "lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+    "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+    "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+    "lean.BSmtLibSpec.Grammar.Tree.Term",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+    "lean.BSmtLibSpec.Lexicon.SourceFile",
+    "lean.BSmtLibSpec.Lexicon.Token.content",
+    "lean.BSmtLibSpec.Lexicon.Tokenization",
+    "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+    "lean.BSmtLibSpec.Lexicon.addedBasicReservedWords",
+    "lean.BSmtLibSpec.Lexicon.addedCommandNames",
+    "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+    "lean.BSmtLibSpec.Lexicon.binary",
+    "lean.BSmtLibSpec.Lexicon.categoryRegex",
+    "lean.BSmtLibSpec.Lexicon.commandNames",
+    "lean.BSmtLibSpec.Lexicon.comment",
+    "lean.BSmtLibSpec.Lexicon.decimal",
+    "lean.BSmtLibSpec.Lexicon.digit",
+    "lean.BSmtLibSpec.Lexicon.hexadecimal",
+    "lean.BSmtLibSpec.Lexicon.keyword",
+    "lean.BSmtLibSpec.Lexicon.letter",
+    "lean.BSmtLibSpec.Lexicon.lineBreak",
+    "lean.BSmtLibSpec.Lexicon.numeral",
+    "lean.BSmtLibSpec.Lexicon.printableChar",
+    "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+    "lean.BSmtLibSpec.Lexicon.reserved",
+    "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+    "lean.BSmtLibSpec.Lexicon.string",
+    "lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+    "lean.BSmtLibSpec.Lexicon.unescape",
+    "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+    "lean.BSmtLibSpec.Lexicon.whitespace",
+    "lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.smtlib.document",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.BSmtLibSpec.Grammar.Script",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsAttribute",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsCommand",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsSExpr",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsSort",
+    "lean.BSmtLibSpec.Grammar.Syntax.IsTerm",
+    "lean.BSmtLibSpec.Grammar.Tree.Attribute",
+    "lean.BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.AttributeValue",
+    "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Command",
+    "lean.BSmtLibSpec.Grammar.Tree.Command.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Command.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec",
+    "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec",
+    "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDec",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDef",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Identifier",
+    "lean.BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Index",
+    "lean.BSmtLibSpec.Grammar.Tree.Index.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Index.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Pattern",
+    "lean.BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier",
+    "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Quantifier.word",
+    "lean.BSmtLibSpec.Grammar.Tree.SExpr",
+    "lean.BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SelectorDec",
+    "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Sort",
+    "lean.BSmtLibSpec.Grammar.Tree.Sort.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Sort.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SortDec",
+    "lean.BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SortedVar",
+    "lean.BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+    "lean.BSmtLibSpec.Grammar.Tree.SpecConstant",
+    "lean.BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+    "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+    "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+    "lean.BSmtLibSpec.Grammar.Tree.Term",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.Valid",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+    "lean.BSmtLibSpec.Grammar.Tree.Term.tokens",
+    "lean.BSmtLibSpec.Lexicon.SourceFile",
+    "lean.BSmtLibSpec.Lexicon.Token.content",
+    "lean.BSmtLibSpec.Lexicon.Tokenization",
+    "lean.BSmtLibSpec.Lexicon.Tokenization.From",
+    "lean.BSmtLibSpec.Lexicon.addedBasicReservedWords",
+    "lean.BSmtLibSpec.Lexicon.addedCommandNames",
+    "lean.BSmtLibSpec.Lexicon.basicReservedWords",
+    "lean.BSmtLibSpec.Lexicon.binary",
+    "lean.BSmtLibSpec.Lexicon.categoryRegex",
+    "lean.BSmtLibSpec.Lexicon.commandNames",
+    "lean.BSmtLibSpec.Lexicon.comment",
+    "lean.BSmtLibSpec.Lexicon.decimal",
+    "lean.BSmtLibSpec.Lexicon.digit",
+    "lean.BSmtLibSpec.Lexicon.hexadecimal",
+    "lean.BSmtLibSpec.Lexicon.keyword",
+    "lean.BSmtLibSpec.Lexicon.letter",
+    "lean.BSmtLibSpec.Lexicon.lineBreak",
+    "lean.BSmtLibSpec.Lexicon.numeral",
+    "lean.BSmtLibSpec.Lexicon.printableChar",
+    "lean.BSmtLibSpec.Lexicon.quotedSymbol",
+    "lean.BSmtLibSpec.Lexicon.reserved",
+    "lean.BSmtLibSpec.Lexicon.simpleSymbol",
+    "lean.BSmtLibSpec.Lexicon.string",
+    "lean.BSmtLibSpec.Lexicon.symbolPunctuation",
+    "lean.BSmtLibSpec.Lexicon.unescape",
+    "lean.BSmtLibSpec.Lexicon.whiteSpaceChar",
+    "lean.BSmtLibSpec.Lexicon.whitespace",
+    "lean.BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+    "smtlib.document"
+   ],
+   "details": "The Lean the document's passages define or state, as Proof Reader links them. Made with AI; not reviewed by the authors."
+  }
+ ],
+ "scope": "The SMT-LIB Standard: Version 2.7, by Clark Barrett, Pascal Fontaine, Cesare Tinelli, with their Lean at https://github.com/onderjan/blazing-smtlib 42b45c20b0045495a40b9eaf0a717e0f1c976bed, as read for Proof Reader (wcook04/proof-reader 1200c81bb5fedf6827cf4b616f9070ea95321fa9). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

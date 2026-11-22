@@ -1,0 +1,134 @@
+{
+ "schema_version": "1.2",
+ "stage": "short",
+ "state": "draft",
+ "path": "papers/short.md",
+ "content_sha256": "b508f1874c9f50630ac7a077957360bc7650b8eea2c6234c9e96f78d1d627e6f",
+ "graph_sha256": "4f9b3505272050648bb61ab83f4692e97db56924f4f80098e9bfa2698ccafdb5",
+ "selected_goal_ids": [
+  "pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "claim_ids": [
+  "pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "citation_ids": [
+  "cite.lean.PCP.np_subset_pcp",
+  "cite.pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "lean.PCP.np_subset_pcp",
+  "pcp-reading-guide.claim-pcp-theorem"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "ac773532d7353aad4673343a8c37672b83ec63e95328352c1e9e5c1c5285b2f8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: context with no numbered result."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "c33566d1023935c3a05eda2361c0b46be9e6605f71e2da6a25fc1367f2ac9e8d",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "1. What you have to read: context with no numbered result."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "933d53748af9ec26aec14c50cabb1ddf4b0020d06393e899027230e1c61c6440",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "2. Reading a Lean statement: context with no numbered result."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "fcff7fecfc5b1136a1f508d13709f1a000ec04e6ffeaed069b4b0c4b4f678aba",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "3. The definitions: context with no numbered result."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "63c4545b2d622b98daddee327b6c6b9eb76e09cb0a15fd9b8875effebf50d24a",
+   "claim_ids": [
+    "pcp-reading-guide.claim-pcp-theorem"
+   ],
+   "citation_ids": [
+    "cite.lean.PCP.np_subset_pcp",
+    "cite.pcp-reading-guide.claim-pcp-theorem"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "4. The PCP theorem: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "479d1a171b59ffc43492e1ebda5e38ac56b50798595d25c2ec80343424166258",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "5. Checks on the definitions: context with no numbered result."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "b4e3e4bfe50feff6199ef3158e418a12724ae581bd1e6b987f9802ecb8b23296",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "6. The explicit constants: context with no numbered result."
+  },
+  {
+   "anchor": "sec-7",
+   "text_sha256": "147b2bc9eafeb79d0e52a241f8a5b0b27b5e8251dc6ab97222b4d0871f86ddd8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "7. Low-degree testing statements: context with no numbered result."
+  },
+  {
+   "anchor": "sec-8",
+   "text_sha256": "dace56d1a5170cda06fcbe5d6eb2dadeb588b2cf4db5656447f0d1e5293dfd49",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "8. Reading a proof: context with no numbered result."
+  },
+  {
+   "anchor": "sec-9",
+   "text_sha256": "34197e5f12fcd16174fd567517145b22bf9a7d33c8be493a95a294c6820d0524",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "9. Finding your way around: context with no numbered result."
+  },
+  {
+   "anchor": "sec-10",
+   "text_sha256": "6047f8393c356ec0a84b00871ffbafad1bd55f99b37d70780608114f8c4ffd8c",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "10. Learning more Lean: context with no numbered result."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}

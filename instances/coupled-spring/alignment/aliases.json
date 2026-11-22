@@ -1,0 +1,10 @@
+{
+ "schema": 1,
+ "passages": {},
+ "claims": {
+  "local-minimum": "claim-local-minimum",
+  "global-minimum": "claim-global-minimum",
+  "second-derivative-test": "claim-second-derivative-test",
+  "cubic-local-not-global": "claim-cubic-local-not-global"
+ }
+}

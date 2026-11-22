@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "what": "Comparator judged the authors' proofs of three statements against a challenge file that imports only definitions.",
+  "run": "https://github.com/wcook04/proof-reader/actions/runs/43868208176",
+  "date": "2026-11-16",
+  "commit": "027be095d4715b0d9bbd243debf08b8d5ad6907c",
+  "lake": "Lake version 5.0.0-src+11acb17 (Lean version 4.35.0-rc2)",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "sandbox": "bubblewrap 0.9.0",
+  "mode": "standard (Lean's default kernel); sandboxed with bubblewrap; --paranoid was not completed",
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "accepted": {
+    "config": "comparator.json",
+    "theorem_names": [
+      "PCP.np_subset_pcp",
+      "PCP.pcp_subset_np_concrete",
+      "PCP.ReferenceNP.inNP_iff_mem"
+    ],
+    "exit": 0,
+    "output": [
+      "Build completed successfully (2089 jobs).",
+      "Build completed successfully (4042 jobs).",
+      "Running Lean default kernel on solution",
+      "Lean default kernel accepts the solution",
+      "Your solution is okay!"
+    ]
+  },
+  "rejected_control": {
+    "config": "negative/comparator.json",
+    "change": "soundness 1/3 in place of 1/2 in PCP.np_subset_pcp",
+    "exit": 1,
+    "output": [
+      "Build completed successfully (2089 jobs).",
+      "Build completed successfully (4042 jobs).",
+      "error: Challenge and solution theorem statement do not match: 'PCP.np_subset_pcp'"
+    ]
+  },
+  "sha256": {
+    "Challenge.lean": "5a3a21f36f3332098a64d62754de680e0f9607fb9d89783a6c4aef60264b5a50",
+    "Solution.lean": "ed29999d68b77e882636f5a4cbe9b94de01fb45c7828d4e8f2597501426633f3",
+    "comparator.json": "46e5d339f8aa13b28a6d5c2ba18aee716912f0a26527705bd7d1df9f75d9b75a",
+    "negative/Challenge.lean": "04bff4952768847ce734c606c6dd753a0705ec436a99b376a2afadcce48f41dc"
+  },
+  "limits": "Comparator establishes that the solution proves exactly the challenge's statements using only the permitted axioms. The definitions the statements use are imported from the authors' modules, not restated. It does not say that the statements mean what the papers say."
+}

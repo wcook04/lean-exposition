@@ -1,0 +1,200 @@
+{
+ "schema_version": "1.2",
+ "stage": "short",
+ "state": "draft",
+ "path": "papers/short.md",
+ "content_sha256": "dd4ef7bee6fd085e9cc66291a4488f69f1a308ed77409570f1cdd8acf8df3a8d",
+ "graph_sha256": "6e23f60691d74842d1bc9f196768fe526e9838a3c873c5ce428cd02ab9805c9d",
+ "selected_goal_ids": [
+  "contextual-embeddings.claim-isomorphism"
+ ],
+ "claim_ids": [
+  "contextual-embeddings.claim-isomorphism"
+ ],
+ "citation_ids": [
+  "cite.contextual-embeddings.claim-isomorphism",
+  "cite.lean.isoL",
+  "cite.lean.isoR"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "contextual-embeddings.claim-isomorphism",
+  "lean.isoL",
+  "lean.isoR"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "28c33216aa54fa90a36224bfb3db746d8a5939df62f09835c1731e7509dbbd30",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: context with no numbered result."
+  },
+  {
+   "anchor": "sec-contextual-embeddings-implementing-bound-variables-through-instance-resolution",
+   "text_sha256": "c1a50a70549850aa37a6b53b6d7ad7674f7f24ef0c1610d30850c63710b883f8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution: context with no numbered result."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "be65166983bd5a99ff158a4b11c303fb03db8fefa57bb626745d0395f80e79d8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "1 Introduction: context with no numbered result."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "609f0dc8787b32e009b9bd50c5c68b4a0b8c6c09899cba02905f4ae96d4f2dba",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "2 Background: First-Order Embeddings: context with no numbered result."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "7e89082c6d4be2755b55feaba0b5658eb8acb3af1087c54da86ca56c56c7c1d8",
+   "claim_ids": [
+    "contextual-embeddings.claim-isomorphism"
+   ],
+   "citation_ids": [
+    "cite.contextual-embeddings.claim-isomorphism",
+    "cite.lean.isoL",
+    "cite.lean.isoR"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "3 Contextual Embeddings: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "6b0c5e6ae9fff218f9333b1210c99e1519714933a62adc666b2b7aca4b02858d",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "4 Modal Example: Fitch-Style Modal Lambda Calculus: context with no numbered result."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "785d083a0e78335f27720b155e7bcc7514f106559496b517bee3a088cfa0b3ca",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "5 Substructural Example: Linear $\\lambda$-Calculus (LLC): context with no numbered result."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "d028caf10a99c57f453d56bebb645c68687624b9ac8ef868e692c7e2808ca373",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "6 Contextual Embeddings, Levelled Up: context with no numbered result."
+  },
+  {
+   "anchor": "sec-7",
+   "text_sha256": "c6e4c49306145e08ab6c4511ac9dab64e8cd1bb79b6e55608b6f555262a1b9c8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "7 Substructural Example: LLC Levelled Up: context with no numbered result."
+  },
+  {
+   "anchor": "sec-8",
+   "text_sha256": "c683a74227a1943ac9bf58b431e855de9ba7aeb02f56922a374fea61bd97f173",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "8 Further Examples: context with no numbered result."
+  },
+  {
+   "anchor": "sec-9",
+   "text_sha256": "3948898af0673947f5c6b6f566b9465c71e4e50f8bd2c8ab3c8c426e8f61b2c8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "9 Related Work: context with no numbered result."
+  },
+  {
+   "anchor": "sec-10",
+   "text_sha256": "a25fdb5e93bdab266a62ed2bb99c1db25becf940fabfd36572fbb12ad6a97748",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "10 Conclusion and Future Work: context with no numbered result."
+  },
+  {
+   "anchor": "sec-data-availability-statement",
+   "text_sha256": "9b6f0651954e8579119319676509c41165c47f98e77fd447009dd818390e3e31",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Data Availability Statement: context with no numbered result."
+  },
+  {
+   "anchor": "sec-acknowledgments",
+   "text_sha256": "cf72197a8577f1f049dea75fe67db2665f172be35cecd2bc484e5da3e815b716",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Acknowledgments: context with no numbered result."
+  },
+  {
+   "anchor": "sec-a-assigning-semantics",
+   "text_sha256": "4d0c5afdd3cc8e47f18a85af7e7635bf99b036b2fcd5c649627830bf83ce1bf5",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "A Assigning Semantics: context with no numbered result."
+  },
+  {
+   "anchor": "sec-b-runtime-cost",
+   "text_sha256": "c81cd6130fcce8900203a17c166da7599786945ac636ab35b9b6f6effbd15705",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "B Runtime Cost: context with no numbered result."
+  },
+  {
+   "anchor": "sec-c-alternative-solution-to-levels-for-llc",
+   "text_sha256": "390c92f4ef3f6abaefe3a641d42736c4ae40bf2d3de573671dd127112eaab809",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "C Alternative Solution to Levels for LLC: context with no numbered result."
+  },
+  {
+   "anchor": "sec-references",
+   "text_sha256": "22be64aef317e13d35f1aad6a07a11b2b346bbad2c7f310a08897fbd190a8418",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "References: context with no numbered result."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}

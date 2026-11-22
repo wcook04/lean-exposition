@@ -1,0 +1,138 @@
+{
+ "schema": "library-instance/1",
+ "id": "coupled-spring",
+ "title": "The minimum of the coupled spring potential",
+ "short_title": "The minimum of the coupled spring potential",
+ "authors": [
+  "Bjørn Kjos-Hanssen (the Lean)",
+  "AI agents under Will Cook’s direction (the page)"
+ ],
+ "venue": "Companion to Bjørn Kjos-Hanssen’s PhyslibAlpha formalization",
+ "credit_lines": [
+  "Lean formalization: Bjørn Kjos-Hanssen, PhyslibAlpha in Physlib at be0a9ee. Page written by AI agents under Will Cook's direction; not reviewed by the author of the Lean or by a physicist"
+ ],
+ "companion_credit": "Paper and Lean by Bjørn Kjos-Hanssen (the Lean) and AI agents under Will Cook’s direction (the page), from their repository leanprover-community/physlib at be0a9ee.",
+ "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
+ "review": "The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
+ "source": {
+  "proof_reader": {
+   "repository": "https://github.com/wcook04/proof-reader",
+   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "page": "coupled-spring"
+  },
+  "upstream": {
+   "repository": "https://github.com/leanprover-community/physlib",
+   "commit": "be0a9eef7dac78da524bfbde91c812340b194610",
+   "paper": null
+  },
+  "lean_scope": "Lean 4.35.0 compiled two unchanged PhyslibAlpha modules at be0a9ee. The supplementary proofs were compiled against those modules."
+ },
+ "documents": [
+  {
+   "id": "paper",
+   "slot": "short",
+   "slug": "",
+   "title": "The minimum of the coupled spring potential",
+   "noun": "page",
+   "main": true
+  }
+ ],
+ "comparator": {
+  "files": {
+   "Challenge.lean": "2c6ac53b79d2a6baf6ec525c6ce5dcaedd0a8324511eb1214660a07c8e8b991a",
+   "Solution.lean": "6b6c074b46493179f80c97b599b8b25ae99ec213049f0fa371cd5a35ed66c15b",
+   "comparator.json": "653d28755169ffa69f6f3e922a7c3c0354d69569768c11c399646d47fe96c3f2",
+   "negative/Challenge.lean": "af04bf644ea611f706967af4bcb68ef1a52b3479275bed68318e6a55fee5a6a8",
+   "negative/comparator.json": "353ce30b9861d7ad8e7c52e44abfe21ad6b2a7c334ba72df2ed3c3e7f8070450",
+   "receipt.json": "f82b2d80d74d70696db7a45c6787393428fa6892a8585e93a0259e73db6779ce"
+  },
+  "receipt": "receipt.json"
+ },
+ "families": [
+  {
+   "id": "the-potential",
+   "name": "The potential"
+  },
+  {
+   "id": "second-derivative-test",
+   "name": "The second derivative test"
+  },
+  {
+   "id": "cubic-perturbation",
+   "name": "The cubic perturbation"
+  },
+  {
+   "id": "smoothness-and-symmetry",
+   "name": "Smoothness and symmetry"
+  }
+ ],
+ "topics": [
+  {
+   "id": "potential-and-minimum",
+   "name": "Potential and its minimum",
+   "description": "The potential $U(x)=x_0^2+x_0x_1+x_1^2$ is studied through local and global minimum arguments at the origin.",
+   "family": "the-potential"
+  },
+  {
+   "id": "analytic-minimum-test",
+   "name": "Analytic minimum test",
+   "description": "Analyticity, a zero gradient and a positive definite Hessian give a local minimum.",
+   "family": "second-derivative-test"
+  },
+  {
+   "id": "potential-derivatives",
+   "name": "Analyticity and derivatives",
+   "description": "The polynomial $U$ has a zero gradient at the origin and a constant positive definite Hessian.",
+   "family": "the-potential"
+  },
+  {
+   "id": "quadratic-lower-bound",
+   "name": "Quadratic lower bound",
+   "description": "Positive definiteness gives a positive lower bound proportional to the squared norm in finite dimensions.",
+   "family": "second-derivative-test"
+  },
+  {
+   "id": "taylor-remainder",
+   "name": "Taylor remainder",
+   "description": "The Taylor remainder becomes small enough for the quadratic term to control the change in the function.",
+   "family": "second-derivative-test"
+  },
+  {
+   "id": "cubic-local-minimum",
+   "name": "Cubic local minimum",
+   "description": "Adding $x_0^3$ preserves the gradient and Hessian at the origin, so the local minimum persists.",
+   "family": "cubic-perturbation"
+  },
+  {
+   "id": "failure-of-global-minimality",
+   "name": "Failure of global minimality",
+   "description": "The cubic perturbation takes values below its value at the origin away from the local minimum.",
+   "family": "cubic-perturbation"
+  },
+  {
+   "id": "smoothness-assumption",
+   "name": "The smoothness assumption",
+   "description": "The page identifies a use of smoothness that can be avoided by keeping an earlier quadratic lower bound.",
+   "family": "smoothness-and-symmetry"
+  },
+  {
+   "id": "polar-form",
+   "name": "Polar form and symmetry",
+   "description": "The polar form sums the second derivative in both orders, and symmetry makes half that sum equal to the Hessian.",
+   "family": "smoothness-and-symmetry"
+  }
+ ],
+ "topic_order": [
+  "potential-and-minimum",
+  "analytic-minimum-test",
+  "potential-derivatives",
+  "quadratic-lower-bound",
+  "taylor-remainder",
+  "cubic-local-minimum",
+  "failure-of-global-minimality",
+  "smoothness-assumption",
+  "polar-form"
+ ],
+ "goal": "coupled-spring.claim-local-minimum",
+ "main_lean": null
+}

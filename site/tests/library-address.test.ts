@@ -12,7 +12,8 @@ setLibraryAddresses({
   "old.merged-phrase": { record: null, at: "b536-564", host: "e01.abstract.bounded-velocity" },
 }, { "r2-s7-pressure-input": { retired: "2026-11-21", nearest: "r2.prop54.endpoint-citation" } },
 { "theorem-1.1": ["b4441-5169", "b4441-5200"] },
-{ accounts: { to: "how-the-lean-encodes-it", phrases: { "p2.coercive": "part-2" } } });
+{ accounts: { to: "how-the-lean-encodes-it", phrases: { "p2.coercive": "part-2" } } },
+{ "part-2": { "p2.coercive": { record: null, at: "b1-2" } }, "how-the-lean-encodes-it": { "e01.digest-phrase": { record: null, at: "b3-4" } } });
 
 function roundTrip(address: string) {
   const url = new URL(address, "https://wcook04.github.io");
@@ -154,6 +155,30 @@ describe("library addresses", () => {
     const route = { view: "read" as const, stage: "short" as const, at: "120-134" };
     expect(libraryHref(route, BASE, lib)).toBe(`${BASE}/?l=120-134`);
     expect(parseLibraryPath("/", new URLSearchParams("l=120-134"), undefined, lib)).toMatchObject({ at: "120-134" });
+  });
+
+  it("an address that names no phrase opens the paper with its notice, at no phrase", () => {
+    const { route, href } = roundTrip(`${BASE}/@no-such-phrase`);
+    expect(route).toMatchObject({ stage: "short", missing: "no-such-phrase" });
+    expect(route.node).toBeUndefined();
+    expect(href).toBe(`${BASE}/@no-such-phrase`);
+  });
+
+  it("a companion page's phrase and declaration have their own addresses", () => {
+    setLibraryAddresses({}, {}, {}, {}, { "how-the-lean-encodes-it": { "g.first": { record: null, at: "b10-40" } } });
+    const phrase = roundTrip(`${BASE}/how-the-lean-encodes-it/@g.first?v=lean`);
+    expect(phrase.route).toMatchObject({ stage: "expository", node: "phrase:g.first", at: "b10-40", lean: true });
+    expect(phrase.href).toBe(`${BASE}/how-the-lean-encodes-it/@g.first?v=lean`);
+    const decl = roundTrip(`${BASE}/how-the-lean-encodes-it/lean/TorusEuler.theorem11`);
+    expect(decl.route).toMatchObject({ stage: "expository", decl: "TorusEuler.theorem11", lean: true });
+    expect(decl.href).toBe(`${BASE}/how-the-lean-encodes-it/lean/TorusEuler.theorem11`);
+    const gone = roundTrip(`${BASE}/how-the-lean-encodes-it/@nothing-here`);
+    expect(gone.route).toMatchObject({ stage: "expository", missing: "nothing-here" });
+    expect(gone.href).toBe(`${BASE}/how-the-lean-encodes-it/@nothing-here`);
+  });
+
+  it("a result the paper states without a number keeps its claim id as its address", () => {
+    expect(parseLibraryPath("/claim-source-13", new URLSearchParams(), undefined, lib)).toMatchObject({ node: "euler.claim-source-13" });
   });
 
   it("leaves every path to the reader when the instance is not a library paper", () => {

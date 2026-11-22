@@ -1,0 +1,28 @@
+{
+ "schema_version": "1.0",
+ "id": "coupled-spring",
+ "repository": "https://github.com/leanprover-community/physlib",
+ "revision": "be0a9eef7dac78da524bfbde91c812340b194610",
+ "via": "wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139, papers/coupled-spring/lean",
+ "license": "NOASSERTION",
+ "files": [
+  {
+   "path": "upstream/lean/PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean",
+   "sha256": "fca87a30b0cfdd329c8446abacdaec2642194e014a24de0f8d3f380986391d31",
+   "bytes": 6252
+  },
+  {
+   "path": "upstream/lean/PhyslibAlpha/Mathematics/PartialDerivativeTest.lean",
+   "sha256": "57bf0cc39899cdde1d917b4da4a2c299dc9e319cfd1446d303f407af6ff721ee",
+   "bytes": 27067
+  },
+  {
+   "path": "upstream/lean/lean-toolchain",
+   "sha256": "ead308ab4fc749eb2389819903fd7baa11bf06e490827f6896a8cbfe622fa703",
+   "bytes": 24
+  }
+ ],
+ "lean_roots": [
+  "PhyslibAlpha"
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "meaning": "Short titles for the page's results that Proof Reader titles in more than six words; AI-drafted from those titles.",
+ "titles": {},
+ "results": {
+  "local-minimum": "A local minimum at the origin",
+  "global-minimum": "The unique global minimum",
+  "cubic-local-not-global": "A cubic term: local, not global"
+ }
+}

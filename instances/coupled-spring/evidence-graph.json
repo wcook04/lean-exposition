@@ -1,0 +1,286 @@
+{
+ "schema_version": "1.2",
+ "id": "coupled-spring-library-edition",
+ "title": "The minimum of the coupled spring potential",
+ "selected_goals": [
+  "coupled-spring.claim-local-minimum"
+ ],
+ "sources": [
+  {
+   "id": "lean:PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean",
+   "kind": "file",
+   "url": "https://github.com/leanprover-community/physlib/blob/be0a9eef7dac78da524bfbde91c812340b194610/lean/PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean",
+   "revision": "be0a9eef7dac78da524bfbde91c812340b194610",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "fca87a30b0cfdd329c8446abacdaec2642194e014a24de0f8d3f380986391d31",
+   "path": "upstream/lean/PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean"
+  },
+  {
+   "id": "lean:PhyslibAlpha/Mathematics/PartialDerivativeTest.lean",
+   "kind": "file",
+   "url": "https://github.com/leanprover-community/physlib/blob/be0a9eef7dac78da524bfbde91c812340b194610/lean/PhyslibAlpha/Mathematics/PartialDerivativeTest.lean",
+   "revision": "be0a9eef7dac78da524bfbde91c812340b194610",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "57bf0cc39899cdde1d917b4da4a2c299dc9e319cfd1446d303f407af6ff721ee",
+   "path": "upstream/lean/PhyslibAlpha/Mathematics/PartialDerivativeTest.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://github.com/leanprover-community/physlib",
+   "revision": "be0a9eef7dac78da524bfbde91c812340b194610",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "1f3040d96bc4fe8c1559b3c5840a5ee977566f85a8e17d7d839d20147c5807e9"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://github.com/leanprover-community/physlib",
+   "revision": "be0a9eef7dac78da524bfbde91c812340b194610",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.coupled-spring.claim-cubic-local-not-global",
+   "title": "The minimum of the coupled spring potential, Adding x₀³ keeps the local minimum, by the same test",
+   "url": "https://github.com/leanprover-community/physlib",
+   "source_id": "paper",
+   "locator": "Adding x₀³ keeps the local minimum, by the same test, Section 3"
+  },
+  {
+   "id": "cite.coupled-spring.claim-global-minimum",
+   "title": "The minimum of the coupled spring potential, The origin is the unique global minimum",
+   "url": "https://github.com/leanprover-community/physlib",
+   "source_id": "paper",
+   "locator": "The origin is the unique global minimum, Section 5"
+  },
+  {
+   "id": "cite.coupled-spring.claim-local-minimum",
+   "title": "The minimum of the coupled spring potential, The coupled spring potential has a local minimum at the origin",
+   "url": "https://github.com/leanprover-community/physlib",
+   "source_id": "paper",
+   "locator": "The coupled spring potential has a local minimum at the origin, Section 1"
+  },
+  {
+   "id": "cite.coupled-spring.claim-second-derivative-test",
+   "title": "The minimum of the coupled spring potential, The analytic second-derivative test",
+   "url": "https://github.com/leanprover-community/physlib",
+   "source_id": "paper",
+   "locator": "The analytic second-derivative test, Section 1"
+  },
+  {
+   "id": "cite.lean.coupled_spring_potential",
+   "title": "coupled_spring_potential",
+   "url": "https://github.com/leanprover-community/physlib/blob/be0a9eef7dac78da524bfbde91c812340b194610/lean/PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean#L153",
+   "source_id": "lean:PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean",
+   "locator": "PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean, line 153"
+  },
+  {
+   "id": "cite.lean.second_derivative_test_analyticAt",
+   "title": "second_derivative_test_analyticAt",
+   "url": "https://github.com/leanprover-community/physlib/blob/be0a9eef7dac78da524bfbde91c812340b194610/lean/PhyslibAlpha/Mathematics/PartialDerivativeTest.lean#L600",
+   "source_id": "lean:PhyslibAlpha/Mathematics/PartialDerivativeTest.lean",
+   "locator": "PhyslibAlpha/Mathematics/PartialDerivativeTest.lean, line 600"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "coupled-spring.claim-cubic-local-not-global",
+   "kind": "claim",
+   "label": "Adding x₀³ keeps the local minimum, by the same test",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.coupled-spring.claim-cubic-local-not-global"
+   ],
+   "source_id": "paper",
+   "locator": "Adding x₀³ keeps the local minimum, by the same test, Section 3",
+   "statement": "A supplementary Lean proof applies\nKjos-Hanssen's analytic test to $W$ unchanged. Its only new step shows\nthat the second derivative of $x_0^3$ vanishes at the origin.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "coupled-spring.claim-global-minimum",
+   "kind": "claim",
+   "label": "The origin is the unique global minimum",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.coupled-spring.claim-global-minimum"
+   ],
+   "source_id": "paper",
+   "locator": "The origin is the unique global minimum, Section 5",
+   "statement": "For every nonzero $x\\in\\mathbb R^2$, $U(x)>U(0)$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "coupled-spring.claim-local-minimum",
+   "kind": "goal",
+   "label": "The coupled spring potential has a local minimum at the origin",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.coupled-spring.claim-local-minimum"
+   ],
+   "citation_ids": [
+    "cite.coupled-spring.claim-local-minimum"
+   ],
+   "source_id": "paper",
+   "locator": "The coupled spring potential has a local minimum at the origin, Section 1",
+   "statement": "The coupled spring potential $U$ has a local minimum\nat the origin.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "coupled-spring.claim-second-derivative-test",
+   "kind": "claim",
+   "label": "The analytic second-derivative test",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.coupled-spring.claim-second-derivative-test"
+   ],
+   "citation_ids": [
+    "cite.coupled-spring.claim-second-derivative-test"
+   ],
+   "source_id": "paper",
+   "locator": "The analytic second-derivative test, Section 1",
+   "statement": "If $f$ is analytic at $a$, its\ngradient vanishes at $a$, and $D^2f(a)[h,h]>0$ for every $h\\ne0$, then $f$\nhas a local minimum at $a$.",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "lean.coupled_spring_potential",
+   "kind": "declaration",
+   "label": "coupled_spring_potential",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.coupled_spring_potential"
+   ],
+   "source_id": "lean:PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean",
+   "declaration": "coupled_spring_potential",
+   "statement": "Local minimum at the origin",
+   "locator": "PhyslibAlpha/ClassicalMechanics/CoupledSpringPotential.lean, line 153",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.second_derivative_test_analyticAt",
+   "kind": "declaration",
+   "label": "second_derivative_test_analyticAt",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.second_derivative_test_analyticAt"
+   ],
+   "source_id": "lean:PhyslibAlpha/Mathematics/PartialDerivativeTest.lean",
+   "declaration": "second_derivative_test_analyticAt",
+   "statement": "Analytic second derivative test",
+   "locator": "PhyslibAlpha/Mathematics/PartialDerivativeTest.lean, line 600",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  }
+ ],
+ "edges": [
+  {
+   "from": "coupled-spring.claim-local-minimum",
+   "to": "coupled-spring.claim-second-derivative-test",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "coupled-spring.claim-local-minimum",
+   "to": "lean.coupled_spring_potential",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.coupled-spring.claim-local-minimum"
+   ]
+  },
+  {
+   "from": "coupled-spring.claim-second-derivative-test",
+   "to": "lean.second_derivative_test_analyticAt",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.coupled-spring.claim-second-derivative-test"
+   ]
+  },
+  {
+   "from": "lean.coupled_spring_potential",
+   "to": "lean.second_derivative_test_analyticAt",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "coupled-spring.claim-local-minimum",
+    "coupled-spring.claim-second-derivative-test",
+    "lean.coupled_spring_potential",
+    "lean.second_derivative_test_analyticAt"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.coupled-spring.claim-local-minimum",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "coupled-spring.claim-local-minimum",
+    "lean.coupled_spring_potential"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for The coupled spring potential has a local minimum at the origin. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.coupled-spring.claim-second-derivative-test",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "coupled-spring.claim-second-derivative-test",
+    "lean.second_derivative_test_analyticAt"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for The analytic second-derivative test. The links were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "scope": "The minimum of the coupled spring potential, by Bjørn Kjos-Hanssen (the Lean), AI agents under Will Cook’s direction (the page), with their Lean at https://github.com/leanprover-community/physlib be0a9eef7dac78da524bfbde91c812340b194610, as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

@@ -107,12 +107,14 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
     phrases = statements = 0
     lean: set[str] = set()
     rows_statements: list[list[str]] = []
-    slot_slug = {d["slot"]: d.get("slug", "") for d in inst["documents"]}
+    # Documents read in another build (an `href` and no slot) are listed as pages, not counted here.
+    built = [d for d in inst["documents"] if d.get("slot")]
+    slot_slug = {d["slot"]: d.get("slug", "") for d in built}
     bodies: dict[str, bytes] = {}
-    for doc in inst["documents"]:
+    for doc in built:
         doc_file = index.get("documents", {}).get(doc["slot"])
         bodies[doc["slot"]] = (root / doc_file).read_bytes() if doc_file and (root / doc_file).exists() else b""
-    for doc in inst["documents"]:
+    for doc in built:
         ties_path = root / "ties" / f"{doc['slot']}.json"
         if not ties_path.exists():
             continue
@@ -421,12 +423,19 @@ def write_assets(out: Path) -> str:
 def main() -> None:
     out = Path(sys.argv[1])
     only = set(sys.argv[2:])
-    instances = {}
+    instances, mounts = {}, []
     for path in sorted((ROOT / "instances").glob("*/instance.json")):
         inst = json.loads(path.read_text())
+        # A paper served inside another's folder (a document of it, "pcp/reading-guide") is not listed
+        # on its own; its addresses are answered by its own shell when the folder is published.
+        if inst.get("path") and "/" in inst["path"]:
+            if (out / inst["path"] / "index.html").exists():
+                mounts.append(inst["path"])
+            continue
         if only and inst["id"] not in only:
             continue
         instances[inst["id"]] = inst
+        mounts.append(inst["id"])
     listing = json.loads((ASSETS / "papers.json").read_text())["papers"]
     listed = {p["id"] for p in listing if p.get("library")}
     # A library paper published but not yet in papers.json is listed after the others, without a sentence.
@@ -438,13 +447,17 @@ def main() -> None:
     shards: dict[str, str] = {}
     titles: list[dict] = []
     for item in listing:
+        if item.get("library") and not instances.get(item["id"]) and item.get("href"):
+            # A paper moving to the library that is not published yet keeps its entry on its current site.
+            item = {k: v for k, v in item.items() if k != "library"}
         if item.get("library"):
             inst = instances.get(item["id"])
             if not inst:
                 continue
             paper = inst["id"]
             main_doc = next(d for d in inst["documents"] if d.get("main"))
-            pages = [{"title": d["title"], "href": f"{BASE}{paper}/{d['slug']}/"} for d in inst["documents"] if not d.get("main") and d.get("slug")]
+            pages = [{"title": d["title"], "href": f"{BASE}{d['href']}" if d.get("href") else f"{BASE}{paper}/{d['slug']}/"}
+                     for d in inst["documents"] if not d.get("main") and (d.get("slug") or d.get("href"))]
             pdf = (main_doc.get("pdf") or {}).get("url")
             if pdf:
                 pages.append({"title": "The authors’ PDF", "href": pdf})
@@ -486,9 +499,11 @@ def main() -> None:
     # GitHub Pages answers every missing path with this one file. An address inside a paper
     # (a phrase /@id or a Lean name /lean/<name>) is that paper's reader: load the paper's own
     # shell in place, at the same address. Anything else gets the list of papers.
-    ids = json.dumps(sorted(instances))
-    boot = (f"<script>(function(){{var ids={ids};var m=location.pathname.match(/^\\/library\\/([a-z0-9-]+)\\//);"
-            "if(!m||ids.indexOf(m[1])<0)return;document.documentElement.style.visibility='hidden';"
+    # The longest mounted path that the address starts with names the paper ("pcp/reading-guide" before "pcp").
+    ids = json.dumps(sorted(mounts, key=lambda m: (-len(m), m)))
+    boot = (f"<script>(function(){{var ids={ids};var m=null;for(var i=0;i<ids.length;i++)"
+            "if(location.pathname.indexOf('/library/'+ids[i]+'/')===0){m=[0,ids[i]];break}"
+            "if(!m)return;document.documentElement.style.visibility='hidden';"
             "fetch('/library/'+m[1]+'/404.html').then(function(r){return r.ok?r.text():null}).then(function(t){"
             "if(!t){document.documentElement.style.visibility='';return}document.open();document.write(t);document.close();})"
             ".catch(function(){document.documentElement.style.visibility=''});})();</script>")

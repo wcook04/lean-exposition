@@ -61,9 +61,10 @@ export const THEMES: ThemeName[] = ["light", "dark"];
 /**
  * A shade's step from its neighbour, in OKLCH lightness, as a share of the chroma cap, and in hue
  * (share of the spacing). Lightness carries the step: CIEDE2000 weighs lightness less away from
- * mid-grey, and the dark theme's colours sit high, so 0.12 is what keeps neighbours 10.5 apart.
+ * mid-grey, and the dark theme's colours sit high, so 0.124 is what keeps neighbours 10.5 apart;
+ * with a hue step of 0.14 and a chroma step of 0.1 it also holds for the largest list in use, PCP's eight families of three.
  */
-export const SHADE_STEP = { lightness: 0.12, chroma: 0.12, hue: 0.16 };
+export const SHADE_STEP = { lightness: 0.124, chroma: 0.1, hue: 0.14 };
 
 // ---- Colour arithmetic ------------------------------------------------------------------------
 

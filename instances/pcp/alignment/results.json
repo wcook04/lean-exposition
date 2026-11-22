@@ -1,0 +1,150 @@
+{
+ "schema": 1,
+ "results": {
+  "theorem-1.1": {
+   "claim": "claim-1",
+   "title": "Theorem 1.1",
+   "section": "1",
+   "tie": "pcp-short-forward-statement",
+   "lean": [
+    "PCP.np_subset_pcp"
+   ]
+  },
+  "lemma-2.1": {
+   "claim": "claim-2",
+   "title": "Lemma 2.1",
+   "section": "2",
+   "tie": "pcp-short-colour-constraints",
+   "lean": [
+    "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
+   ]
+  },
+  "lemma-4.1": {
+   "claim": "claim-4",
+   "title": "Lemma 4.1",
+   "section": "4",
+   "tie": "pcp-short-weighted-test",
+   "lean": [
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
+   ]
+  },
+  "lemma-4.3": {
+   "claim": "claim-5",
+   "title": "Lemma 4.3",
+   "section": "4",
+   "tie": "pcp-short-binary-decoding",
+   "lean": [
+    "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+   ]
+  },
+  "theorem-4.6": {
+   "claim": "claim-6",
+   "title": "Theorem 4.6",
+   "section": "4",
+   "tie": "pcp-short-outer-decoding",
+   "lean": [
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close"
+   ]
+  },
+  "theorem-5.1": {
+   "claim": "claim-7",
+   "title": "Theorem 5.1",
+   "section": "5",
+   "tie": "pcp-short-outer-correction",
+   "lean": [
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le"
+   ]
+  },
+  "lemma-5.2": {
+   "claim": "claim-8",
+   "title": "Lemma 5.2",
+   "section": "5",
+   "tie": "pcp-short-zero",
+   "lean": [
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound"
+   ]
+  },
+  "claim-source-11": {
+   "claim": "source-11",
+   "title": "Perfect completeness",
+   "section": "6",
+   "tie": "linked-source-12",
+   "lean": [
+    "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
+   ]
+  },
+  "claim-source-12": {
+   "claim": "source-12",
+   "title": "Repetition on the same proof",
+   "section": "7",
+   "tie": "linked-source-13",
+   "lean": [
+    "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
+   ]
+  },
+  "claim-10": {
+   "claim": "claim-10",
+   "title": "Polynomial-time implementation",
+   "section": "7",
+   "tie": "pcp-short-complexity",
+   "lean": [
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
+   ]
+  },
+  "claim-source-13": {
+   "claim": "source-13",
+   "title": "The reverse inclusion",
+   "section": "7",
+   "tie": "linked-source-14",
+   "lean": [
+    "PCP.pcp_subset_np_concrete"
+   ]
+  },
+  "claim-reference-np-equivalence": {
+   "claim": "reference-np-equivalence",
+   "title": "Equivalence with the reference NP class",
+   "section": "Formalization and sources",
+   "tie": "pcp-short-reference-np",
+   "lean": [
+    "PCP.ReferenceNP.inNP_iff_mem"
+   ]
+  },
+  "claim-derived-zero": {
+   "claim": "derived-zero",
+   "title": "Grid test with self-corrected reads",
+   "section": "5",
+   "tie": "pcp-short-derived-zero",
+   "lean": [
+    "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
+   ]
+  },
+  "claim-vanishing-certificate": {
+   "claim": "vanishing-certificate",
+   "title": "Vanishing certificate",
+   "section": "2",
+   "tie": "pcp-short-vanishing-certificate",
+   "lean": [
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
+   ]
+  },
+  "theorem-4.5": {
+   "claim": "point-line",
+   "title": "Theorem 4.5",
+   "section": "4",
+   "tie": "pcp-short-point-line",
+   "lean": [
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection"
+   ]
+  }
+ },
+ "sections": {
+  "1": "1. Introduction",
+  "2": "2. Preliminaries",
+  "3": "3. Set-multilinear and Hadamard encodings",
+  "4": "4. Low-degree tests over the binary alphabet",
+  "5": "5. Local correction and the zero-on-grid test",
+  "6": "6. Soundness of the verifier",
+  "7": "7. Resources, implementation and the reverse inclusion",
+  "appendix-a": "Appendix A. The version-1 low-degree test"
+ }
+}
