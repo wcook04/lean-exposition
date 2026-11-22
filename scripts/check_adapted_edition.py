@@ -3,7 +3,7 @@
 
     python scripts/check_adapted_edition.py http://127.0.0.1:47311/library/euler/ --shots DIR [--credit TEXT]
 
-At 390, 1100, 1440, 2000 and 2560 px wide: the edition opens with its credit, verbatim, beside a
+At 390, 800, 1024, 1100, 1440, 2000 and 2560 px wide: the edition opens with its credit, verbatim, beside a
 link to the authors' paper; the switch "Authors' paper / Adapted edition" stands in the strip, the
 page never scrolls sideways, and a change mark opens a Selected change with the authors' text, the
 edition's, the kind, the note and the sources. At 1440: every change of the change map shows as a
@@ -26,15 +26,16 @@ from playwright.sync_api import sync_playwright
 
 CREDIT = ("An adapted edition of Alpöge, Buckmaster and Coiculescu's paper, prepared by Will Cook with AI assistance. "
           "The mathematics and the original text are the authors'. Every change is marked, and no change has been reviewed by the authors.")
-WIDTHS = [(390, 844), (1100, 900), (1440, 900), (2000, 1200), (2560, 1440)]
+WIDTHS = [(390, 844), (800, 800), (1024, 800), (1100, 900), (1440, 900), (2000, 1200), (2560, 1440)]
 
 ap = argparse.ArgumentParser()
 ap.add_argument("base")
 ap.add_argument("--shots", type=Path, required=True)
 ap.add_argument("--slug", default="adapted")
+ap.add_argument("--slot", default="adapted", help="the edition's document slot")
 ap.add_argument("--credit", default=CREDIT)
 ap.add_argument("--far", help="words of the edition far down its page, for find (default: the first words of its last change)")
-ap.add_argument("--widths", type=int, nargs="*", help="only these window widths (default: all five)")
+ap.add_argument("--widths", type=int, nargs="*", help="only these window widths (default: all seven)")
 a = ap.parse_args()
 if a.widths:
     WIDTHS = [(w, h) for w, h in WIDTHS if w in a.widths]
@@ -42,7 +43,8 @@ base = a.base.rstrip("/") + "/"
 edition = base + a.slug + "/"
 origin = base.split("/library/")[0]
 a.shots.mkdir(parents=True, exist_ok=True)
-with urllib.request.urlopen(base + "changes/long.json") as r:
+# The edition's slot and page: its document in the paper's instance data.
+with urllib.request.urlopen(base + "changes/" + a.slot + ".json") as r:
     changes = json.load(r)
 ids = [c["id"] for c in changes["changes"]]
 if not a.far:

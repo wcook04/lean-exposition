@@ -363,9 +363,22 @@ def convert(args) -> None:
         authors_plain, _ = reading_copy(args.reading_copy, args.authors_source, scratch, "authors")
         adapted_plain, figures = reading_copy(args.reading_copy, args.edition, scratch, "adapted")
         authors_md = (inst / "papers" / main_doc["slot"] / "paper.md").read_text(encoding="utf-8")
-        if library_copy(authors_plain, [])[0] != authors_md:
+        # The library's copy only adds passage markers and anchors between paragraphs, and how it adds
+        # them may have changed since the paper was converted; the words must be the same.
+        bare = lambda text: re.sub(r"\n{3,}", "\n\n", re.sub(r'^(<!-- /?passage:[^>]* -->|<a id="[^"]*"></a>)\n', "", text, flags=re.M)).strip()
+        if bare(library_copy(authors_plain, [])[0]) != bare(authors_md):
             raise SystemExit("the authors' reading copy is not reproduced from their TeX; the alignment would not hold")
         adapted_md, sections, _ = library_copy(adapted_plain, [])
+        # The sections are the authors', in the same order; their passages keep the authors' names, which
+        # the library's converter may since have spelled differently.
+        authors_order = re.findall(r"^<!-- passage:(\S+) -->$", authors_md, re.M)
+        if len(authors_order) != len(sections):
+            raise SystemExit(f"the edition has {len(sections)} sections, the authors' text {len(authors_order)}")
+        for sec, name in zip(sections, authors_order):
+            if sec["anchor"] != name:
+                adapted_md = adapted_md.replace(f"<!-- passage:{sec['anchor']} -->", f"<!-- passage:{name} -->", 1)
+                adapted_md = adapted_md.replace(f"<!-- /passage:{sec['anchor']} -->", f"<!-- /passage:{name} -->", 1)
+                sec["anchor"] = name
         authors_blocks = placed_blocks(authors_plain, authors_md, scratch)
         adapted_blocks = placed_blocks(adapted_plain, adapted_md, scratch)
         rows, shown, assign_problems = assign(changes, authors_blocks, adapted_blocks)
@@ -388,6 +401,7 @@ def convert(args) -> None:
     # The paper mapping: the authors' passages, section by section, over the edition's text.
     corr = json.loads((inst / "papers" / main_doc["slot"] / "correspondence.json").read_text())
     by_anchor = {p["anchor"]: p for p in corr["passages"]}
+    data = adapted_md.encode("utf-8")
     passages, cursor = [], 0
     for sec in sections:
         marker, end = f"<!-- passage:{sec['anchor']} -->", f"<!-- /passage:{sec['anchor']} -->"
