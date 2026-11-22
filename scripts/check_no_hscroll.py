@@ -187,10 +187,14 @@ def main() -> int:
                     expand.scroll_into_view_if_needed()
                     expand.click()
                     page.wait_for_selector("dialog.modal--formula[open]", timeout=5000)
+                    page.wait_for_timeout(400)
                     inside = page.evaluate("""() => { const d = document.querySelector('dialog.modal--formula[open]'); const m = d.querySelector('.math-display');
                       const sideways = [...d.querySelectorAll('*')].filter(e => ['auto', 'scroll'].includes(getComputedStyle(e).overflowX) && e.scrollWidth > e.clientWidth + 1).length;
                       const parts = [...m.querySelectorAll('.katex-html > .katex-base, .katex-tag, .tag')].map(p => p.getBoundingClientRect().right);
-                      return { sideways, out: Math.max(0, ...parts) - m.getBoundingClientRect().right, wide: d.getBoundingClientRect().width / innerWidth }; }""")
+                      const mr = m.getBoundingClientRect(); const n = m.querySelector(':scope > .math-number'); const k = m.querySelector(':scope > .katex-display');
+                      return { sideways, out: +(Math.max(0, ...parts) - mr.right).toFixed(1), wide: +(d.getBoundingClientRect().width / innerWidth).toFixed(3),
+                        box: Math.round(mr.width), fit: m.dataset.fit || '', form: m.dataset.form || '', number: n ? Math.round(n.getBoundingClientRect().width) : 0,
+                        katex: k ? Math.round(k.getBoundingClientRect().width) : 0, align: m.dataset.align || '', font: k ? getComputedStyle(k.querySelector('.katex')).fontSize : '' }; }""")
                     if args.shots:
                         args.shots.mkdir(parents=True, exist_ok=True)
                         page.screenshot(path=str(args.shots / f"{slot}-expand-{width}.png"))
@@ -210,7 +214,12 @@ def main() -> int:
                         name = re.sub(r"[^\w.-]", "_", f"{slot}-{label}-{width}{'-dark' if args.dark else ''}.png")
                         # The display with its column around it: the shot shows its fit against the column's edge.
                         column = page.evaluate("""(label) => { const b = document.querySelector(`[data-shot="${label}"]`); const r = b.getBoundingClientRect(); const p = (b.closest('.paper') || b).getBoundingClientRect(); return {x: Math.max(0, p.left - 8), y: Math.max(0, r.top - 60), width: Math.min(innerWidth - Math.max(0, p.left - 8), p.width + 16), height: Math.min(r.height + 120, innerHeight - Math.max(0, r.top - 60))}; }""", label)
-                        page.screenshot(path=str(args.shots / name), clip=column)
+                        # A picture is evidence for a reader, never a check: one that cannot be taken is skipped.
+                        if column["width"] > 0 and column["height"] > 0:
+                            try:
+                                page.screenshot(path=str(args.shots / name), clip=column)
+                            except Exception as error:
+                                print(f"     (no picture of {name}: {error})", flush=True)
                 context.close()
         browser.close()
     if failures:

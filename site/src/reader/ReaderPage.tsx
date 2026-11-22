@@ -1807,10 +1807,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               Show changes
             </button>
           )}
-          {pdfMarks && !pdfOnly && (
+          {/* Drawn from the paper's own metadata (it has the authors' PDF), so the strip has its final
+              shape from its first paint; PDF answers once the phrases' places on it have loaded. */}
+          {pdfOwn && !pdfOnly && (
             <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
               <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
-              <button type="button" aria-pressed={pdfOn} onClick={() => showPdf(true)}>PDF</button>
+              <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
             </span>
           )}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
