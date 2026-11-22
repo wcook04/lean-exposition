@@ -1032,7 +1032,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
         st.tokens.flatMap((token, i) => {
           if (token.type !== "inline") return [];
           const line = Number(st.tokens[i - 1]?.attrGet("data-line") ?? parts[part].lines.start);
-          const text = inlineText(token.children ?? [], st.spans).replace(/\s+/g, " ").trim();
+          const text = stripRefMarks(inlineText(token.children ?? [], st.spans)).replace(/\s+/g, " ").trim();
           return text ? [{ part, line, text }] : [];
         }),
       )),

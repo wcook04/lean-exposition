@@ -220,7 +220,9 @@ export function segments(m: Marked, cutStart: boolean, cutEnd: boolean): Segment
     let marks = part.marks;
     if (cutStart && out.length === 0) {
       const dollar = text.indexOf("$");
-      if (dollar >= 0 && (text.match(/\$/g) ?? []).length % 2 === 1) {
+      // When both ends are clipped, the lone dollar may open a formula at the right.
+      // Preserve the words the reader searched for on its left.
+      if (dollar >= 0 && (text.match(/\$/g) ?? []).length % 2 === 1 && !marks.slice(0, dollar + 1).some(Boolean)) {
         text = text.slice(dollar + 1);
         marks = marks.slice(dollar + 1);
       }

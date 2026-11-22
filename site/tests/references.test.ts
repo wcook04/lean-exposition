@@ -244,6 +244,15 @@ describe("marks", () => {
   const text = "By Lemma 2 and § (5) we are done";
   const index = referenceIndex(table, new TextEncoder().encode(text));
 
+  it("indexes the visible words across a linked reference for in-paper search", () => {
+    const doc = prepareDocument({
+      stage: "short", bytes: new TextEncoder().encode(text),
+      documentPath: PATHS.short, documentPaths: PATHS, referenceTable: table,
+    });
+    expect(doc.textBlocks().map((block) => block.text)).toEqual([text]);
+    expect(doc.render(0).html).toContain('href="#lem-2"');
+  });
+
   it("count bytes, not characters", () => {
     expect(index.rows).toHaveLength(2);
     const marked = markReferences(text, 0, index);
