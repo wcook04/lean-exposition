@@ -327,7 +327,7 @@ def selection_checks(browser, base, args, check) -> None:
     contrast (7:1 in the dark scheme, 4.5:1 in the light), the wash stays faint, a phrase's amber line
     is 2px, a whole statement is one margin rule with its phrases' own topic lines, and a display is
     a thin rule with no fill and no line under it."""
-    floors = {"dark": (7.0, 0.08), "light": (4.5, 0.10)}
+    floors = {"dark": (7.0, 0.30), "light": (4.5, 0.22)}  # the stronger amber selection (22 Nov)
     for scheme, (floor, wash) in floors.items():
         context = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme=scheme)
         page = context.new_page()
@@ -632,7 +632,7 @@ def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
     page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
     card = page.locator(".phrase-card").first
     card.wait_for(timeout=15000)
-    check(f"{tag} mark click", "AI-assessed" in card.inner_text(), page.url)
+    check(f"{tag} mark click", "ai-assessed" in card.inner_text().lower(), page.url)
     page.get_by_role("button", name="Graph", exact=True).first.click()
     # Four or more neighbours are drawn; fewer are named in one line over the Lean, with no canvas.
     page.wait_for_selector(".map-pane__graphview .fg[data-cards], .map-pane__few", timeout=15000)
@@ -768,11 +768,11 @@ def main() -> int:
             # The card's notes load after it opens: wait for the note before reading the card.
             if not args.notes_optional:
                 try:
-                    page.wait_for_function("() => (document.querySelector('.phrase-card') || {}).innerText?.includes('Reading note')", timeout=10000)
+                    page.wait_for_function("() => (document.querySelector('.phrase-card') || {}).innerText?.toLowerCase().includes('reading note')", timeout=10000)
                 except Exception:
                     pass
             text = card.inner_text()
-            check(f"{tag} phrase click", "AI-assessed" in text and (args.notes_optional or "Reading note" in text), page.url)
+            check(f"{tag} phrase click", "ai-assessed" in text.lower() and (args.notes_optional or "reading note" in text.lower()), page.url)
             page.get_by_role("button", name="Lean", exact=True).first.click()
             page.wait_for_selector(".phrase-card, .decl, pre, code", timeout=15000)
             check(f"{tag} phrase Lean", "v=lean" in page.url, page.url)
@@ -795,12 +795,12 @@ def main() -> int:
                 page.wait_for_selector(".paper .tie", timeout=60000)
                 # The card's words load after the paper; wait for them rather than a fixed time.
                 try:
-                    page.wait_for_function("(w) => document.body.innerText.includes(w)", arg=expect, timeout=15000)
+                    page.wait_for_function("(w) => document.body.innerText.toLowerCase().includes(w.toLowerCase())", arg=expect, timeout=15000)
                 except Exception:
                     pass
                 page.wait_for_timeout(500)
                 body = page.inner_text("body")
-                check(f"{tag} address {kind}", expect in body and page.url.rstrip("/").endswith(path.rstrip("/").split("?")[0]), page.url)
+                check(f"{tag} address {kind}", expect.lower() in body.lower() and page.url.rstrip("/").endswith(path.rstrip("/").split("?")[0]), page.url)
             page.goto(base + "#" + args.section)
             page.wait_for_selector(".paper .tie", timeout=60000)
             page.wait_for_timeout(2000)
