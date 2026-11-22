@@ -579,9 +579,11 @@ function preprocess(text: string, atStart: boolean, frontMatter: { value: Record
       src = src.slice(fm[0].length);
     }
   }
-  // Whole-line comments (passage markers, editorial notes) vanish with their line.
-  src = src.replace(/^[ \t]*<!--[\s\S]*?-->[ \t]*(?:\r?\n|$)/gm, "");
-  src = src.replace(/<!--[\s\S]*?-->/g, "");
+  // Match each comment through its first closer. Drop the line only if the
+  // comment occupies it entirely, so a page marker followed by prose keeps it.
+  src = src.replace(/(^[ \t]*)?<!--[\s\S]*?-->([ \t]*(?:\r?\n|$))?/gm,
+    (_comment, indent: string | undefined, tail: string | undefined) =>
+      indent !== undefined && tail !== undefined ? "" : (indent ?? "") + (tail ?? ""));
   // PDF-only wrappers around companion links: keep the inner Markdown link.
   src = src.replace(/<span\s+class="pdf-companion"[^>]*>([\s\S]*?)<\/span>/g, "$1");
   // Explicit bookmarks.

@@ -121,6 +121,56 @@ describe("math", () => {
   });
 });
 
+it("retains prose, equations and headings between inline page comments and the passage closer", () => {
+  const tied = "There is a correction.";
+  const source = [
+    "<!-- passage:sec-7 -->",
+    "### 7.8 Cancellation",
+    "",
+    "<!-- source-page: 42 --> We choose a correction $v$.",
+    "",
+    `**Proposition 7.10.** ${tied}`,
+    "",
+    "$$\\begin{equation}",
+    "v = 0",
+    "\\tag{7.61}",
+    "\\end{equation}$$ <!-- source-page: 43 --> The force vanishes.",
+    "",
+    "### 7.9 Proof of Theorem 7.1",
+    "",
+    "The theorem follows.",
+    "",
+    "### 7.10 Proof of Proposition 7.11",
+    "",
+    "  <!-- An editorial comment",
+    "  across two lines. -->  ",
+    "The proof concludes.",
+    "<!-- /passage:sec-7 -->",
+  ].join("\r\n");
+  const bytes = new TextEncoder().encode(source);
+  const tiedAt = source.indexOf(tied);
+  const doc = prepareDocument({
+    stage: "short", bytes,
+    parts: [{ kind: "mapped_passage", span: { start_byte: 0, end_byte: bytes.length }, passageAnchor: "sec-7" }],
+    documentPath: DOCUMENT_PATHS.short, documentPaths: DOCUMENT_PATHS,
+    ties: [[tiedAt, tiedAt + tied.length, [0]]],
+  });
+
+  expect(doc.parts[0].headings.map((heading) => heading.title)).toEqual([
+    "7.8 Cancellation", "7.9 Proof of Theorem 7.1", "7.10 Proof of Proposition 7.11",
+  ]);
+  expect(doc.render(0).mathErrors).toEqual([]);
+  const rendered = dom(doc.render(0).html);
+  expect(rendered.querySelector('[id="prop-7.10"] .tie')?.textContent).toBe(tied);
+  expect(rendered.querySelector('[id="eq-7.61"] .katex-display annotation')?.textContent).toContain("\\tag{7.61}");
+  for (const [mode, html] of [["plain", doc.renderPlain(0).html], ["typeset", doc.render(0).html]]) {
+    expect(visibleText(html), mode).toContain("We choose a correction");
+    expect(visibleText(html), mode).toContain("The force vanishes.");
+    expect(visibleText(html), mode).toContain("The proof concludes.");
+    expect(html, mode).not.toContain("<!--");
+  }
+});
+
 describe("rendering the papers", () => {
   const rendered = Object.fromEntries(Object.entries(docs).map(([k, d]) => [k, d.renderAll()]));
 
