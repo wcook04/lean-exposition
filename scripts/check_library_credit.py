@@ -28,6 +28,8 @@ ap.add_argument("--section", help="the section that states --statement, opened b
 ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
+ap.add_argument("--licence", default="none stated by the authors; hosted with credit to them, to Anthropic and to their repository",
+                help="words of the licence line About must show")
 ap.add_argument("--no-pdf", action="store_true", help="the paper has no PDF: expect no Open PDF link and skip the PDF view")
 a = ap.parse_args()
 base = a.base.rstrip("/") + "/"
@@ -157,7 +159,7 @@ with sync_playwright() as pw:
         page.wait_for_timeout(2500)
         about = page.inner_text("body")
         check(f"{tag} about credit once", about.count(credit) == 1, f"{about.count(credit)} times")
-        check(f"{tag} about licence", "none stated by the authors; hosted with credit to them, to Anthropic and to their repository" in about, "")
+        check(f"{tag} about licence", a.licence in about, a.licence)
         check(f"{tag} about AI", "AI-assessed" in about and "AI-drafted" in about and "No mathematician has reviewed" in about, "")
         page.screenshot(path=str(a.shots / f"about-{tag}.png"), full_page=True)
         for slot in a.companion:

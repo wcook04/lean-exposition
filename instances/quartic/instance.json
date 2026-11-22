@@ -8,12 +8,13 @@
  ],
  "venue": "The quartic reader's three accounts of OpenAI's nearly quartic separation, from wcook04/quartic-query-lean at 56ac62f",
  "credit_lines": [
-  "The theorem and construction are OpenAI’s, published with no Lean formalization. The three accounts and the Lean development were written by AI systems under Will Cook’s direction. No human expert has reviewed them."
+  "The theorem and construction are OpenAI’s, published with no Lean formalization. The three accounts and the Lean development were written by AI systems under Will Cook’s direction. No human expert has reviewed them.",
+  "Lean reports each declaration’s statement, dependencies and axioms. The links between paper passages and Lean, and the judgments that a statement matches exactly, more strongly or only in part, were written and reviewed by AI agents; no person has checked them."
  ],
  "companion_credit": "The theorem and its proof are OpenAI’s. AI systems wrote the three accounts, the Lean and the links between them, under Will Cook’s direction.",
  "licence": "Apache-2.0",
  "host": "Hosted by Will Cook in his reading library.",
- "review": "Lean reports each declaration’s statement, dependencies and axioms. The links between paper passages and Lean, and the judgments that a statement matches exactly, more strongly or only in part, were written and reviewed by AI agents; no person has checked them.",
+ "review": "The links from the text to the Lean, the titles, the reading notes and the comparisons were made with AI. No mathematician has reviewed them.",
  "source": {
   "quartic": {
    "repository": "https://github.com/wcook04/quartic-query-lean",

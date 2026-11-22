@@ -365,11 +365,13 @@ def main() -> int:
         "title": expert_title, "short_title": "Quartic query separation",
         "authors": ["AI systems under the direction of Will Cook"],
         "venue": f"The quartic reader's three accounts of OpenAI's nearly quartic separation, from {repo.removeprefix('https://github.com/')} at {commit[:7]}",
-        # The header and About carry the two credit paragraphs once each (credit line, then review);
-        # each companion page carries the home page's own one-line credit.
-        "credit_lines": CREDIT[:1], "companion_credit": COMPANION_CREDIT, "licence": "Apache-2.0",
+        # The header and About carry the quartic reader's two credit paragraphs, exactly, then the
+        # library's one sentence saying what was made with AI; each companion page carries the home
+        # page's own one-line credit.
+        "credit_lines": CREDIT, "companion_credit": COMPANION_CREDIT, "licence": "Apache-2.0",
         "host": "Hosted by Will Cook in his reading library.",
-        "review": CREDIT[1],
+        "review": ("The links from the text to the Lean, the titles, the reading notes and the comparisons were made with AI. "
+                   "No mathematician has reviewed them."),
         "families": families_all, "topics": topics_main, "topic_order": [tp["id"] for tp in topics_main],
         "main_lean": "QuarticQuery.theorem_1_1_unconditional",
     })
