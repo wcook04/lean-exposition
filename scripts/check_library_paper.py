@@ -152,11 +152,25 @@ def main() -> int:
             tie.scroll_into_view_if_needed()
             # A phrase that wraps over lines has a bounding box whose centre can fall between its
             # lines; click its first line, where a reader would.
-            first = tie.evaluate("e => { const r = e.getClientRects()[0]; return {x: r.left + Math.min(8, r.width / 2), y: r.top + r.height / 2}; }")
+            # A phrase may begin with a Lean name drawn as its own button, or a link; click its words,
+            # the first point on it that is the phrase itself and not a control inside it.
+            first = tie.evaluate("""e => {
+                for (const r of e.getClientRects()) for (let x = r.left + 4; x < r.right - 2; x += 6) {
+                    const y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
+                    if (hit && e.contains(hit) && !hit.closest('button, a')) return {x, y};
+                }
+                const r = e.getClientRects()[0]; return {x: r.left + Math.min(8, r.width / 2), y: r.top + r.height / 2};
+            }""")
             page.mouse.click(first["x"], first["y"])
             page.wait_for_function("() => /\\/@|[?&]n=|\\/(theorem|proposition|lemma|corollary|definition|remark|conjecture|problem|example|assumption|claim|step)-[0-9a-z.-]+\\//.test(location.href)", timeout=15000)
             card = page.locator(".phrase-card").first
-            card.wait_for(timeout=15000)
+            try:
+                card.wait_for(timeout=15000)
+            except Exception:
+                if args.shots:
+                    args.shots.mkdir(parents=True, exist_ok=True)
+                    page.screenshot(path=str(args.shots / f"click-no-card-{tag}.png"))
+                raise
             text = card.inner_text()
             # The card's notes load after it opens: wait for the note before reading the card.
             if not args.notes_optional:

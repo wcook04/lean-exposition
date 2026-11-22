@@ -86,7 +86,9 @@ jobs:
         run: |
           curl -sf -o /dev/null "http://127.0.0.1:47311/library/$AT/" || { python scripts/serve_library.py serve 47311 & sleep 2; }
           python site/scripts/check-idle.py "http://127.0.0.1:47311/library/$AT/" --sweep 1100 2600 300 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
+      # Kept when a check fails too, so its screenshots can be read.
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: library-${{ matrix.paper }}
           path: |
