@@ -19,8 +19,8 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "bytes": 829601,
-   "sha256": "0f0b9ee7a2f7c2d25b4abe3d5cba607b7b09ffbd16fae991be1764404ddae201"
+   "bytes": 825084,
+   "sha256": "b4478085906780a79b29542163c7d2c88aa2a8c39d2e35d53c9a90e31c138541"
   },
   "aux_pdf": {
    "file": "aux.pdf",
@@ -30,50 +30,50 @@
    "sha256": "6e51f1781e26e3002d23526b714c5ecf1d3467e3f3f45487ba8b5f8ad0860179"
   },
   "release": {
-   "version": 7,
+   "version": 8,
    "date": "2026-11-22",
    "notes": [
-    "The introduction follows one wave from its amplification to the orientation that allows it to launch its successor.",
-    "The proof separates the phase average corrected by selecting initial velocity from the oscillatory error removed at successive orders.",
-    "The terminal section groups the spatial convergence and fixed-particle estimates and traces them to the iteration bounds."
+    "Theorem 1.1 now appears on the first page. The introduction follows one wave through amplification and the later crossing that allows the next wave to start.",
+    "The account separates exact affine waves, the reference ordinary differential equation, and the localized periodic construction.",
+    "The terminal section derives a bound on material acceleration from the one-sided bound on the pressure Hessian."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "euler-adapted-v7.pdf",
+   "name": "euler-adapted-v8.pdf",
    "label": "Reading copy",
-   "bytes": 581518,
-   "sha256": "2f5cffe593931475b835479ddb6f2fe5c7a68a8679d0587d6077b25f81eb3256"
+   "bytes": 581058,
+   "sha256": "693b34248ecba4f5ecf335037f146a43b8570dd429ad8f42ae65c114e140e10f"
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 110325,
-    "sha256": "871f9ded5222e455455308f4b565b316f9dc12a9a43f79b0cdc336ba6b037798"
+    "bytes": 110323,
+    "sha256": "f6d523ef1d56ac0dfa049b6b9d0ee140a406d3320a7490bf7e0262bd1f7fe3a3"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 139466,
-    "sha256": "eeb7033464e7f32f7f2ee5ba6cdc1f4f03b2937bd118bb815de6e04b1215163d"
+    "bytes": 139462,
+    "sha256": "be095945e889947ccb2982b8880a28ceb81f4a0fc6756c36518250201daaec9e"
    }
   },
   "aux_reading_pdf": {
    "file": "aux-reading.pdf",
-   "name": "euler-adapted-auxiliary-v7.pdf",
+   "name": "euler-adapted-auxiliary-v8.pdf",
    "label": "Auxiliary note",
    "bytes": 108998,
-   "sha256": "a54d276f4cacea4d655ff9514b8e6fa80363a4ca4c089c3adb608ac7ecaff24b"
+   "sha256": "294edd88360aa78c778e2cf7485488cc1f27d07ecad4bb92647714230ec52a17"
   },
   "source_overlay": {
    "file": "source-overlay.zip",
-   "name": "euler-adapted-v7-source-overlay.zip",
+   "name": "euler-adapted-v8-source-overlay.zip",
    "label": "TeX revisions against the authors’ source",
-   "bytes": 75805,
-   "sha256": "72fcc1fc41fe2fbb2007a672bea0f1fee6cfd27045f68a178ce947db8eac0a12"
+   "bytes": 76923,
+   "sha256": "07b6ad01cd9e72dde5367ce31612d323cc07e2ecfcc876f40802d2436852e4f9"
   }
  }
 }

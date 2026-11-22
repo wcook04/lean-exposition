@@ -54,7 +54,7 @@
    "name": "",
    "lines": [
     1,
-    1962
+    1984
    ],
    "source_commit": "0a556ace755b1d2f7e94797267e2b1f9781dfec3",
    "topics": [
@@ -2924,8 +2924,8 @@
   },
   {
    "id": "intro.pressure-transversality",
-   "from": "The last formula follows by differentiating $k\\cdot\\mathbf a=0$",
-   "to": "The last formula follows by differentiating $k\\cdot\\mathbf a=0$",
+   "from": "Differentiating $k\\cdot\\mathbf a=0$ gives the pressure coefficient.",
+   "to": "Differentiating $k\\cdot\\mathbf a=0$ gives the pressure coefficient.",
    "role": "derivation",
    "topic": "affine-wave",
    "status": "new",
@@ -2959,8 +2959,8 @@
   },
   {
    "id": "intro.affine-pressure",
-   "from": "the added pressure is $-p_{\\rm w}P(k\\cdot x)$",
-   "to": "the added pressure is $-p_{\\rm w}P(k\\cdot x)$",
+   "from": "the wave pressure is $-p_{\\rm w}P(k\\cdot x)$",
+   "to": "the wave pressure is $-p_{\\rm w}P(k\\cdot x)$",
    "role": "definition",
    "topic": "affine-wave",
    "status": "new",
@@ -2996,8 +2996,8 @@
   },
   {
    "id": "intro.affine-euler",
-   "from": "$Dx+w$ solves the Euler equations exactly",
-   "to": "$Dx+w$ solves the Euler equations exactly",
+   "from": "$Dx+w$ is an exact Euler velocity.",
+   "to": "$Dx+w$ is an exact Euler velocity.",
    "role": "derivation",
    "topic": "affine-wave",
    "status": "new",
@@ -3123,8 +3123,8 @@
   },
   {
    "id": "e01.initial-shear.euler",
-   "from": "The periodic iteration starts with the stationary shear",
-   "to": "The periodic iteration starts with the stationary shear",
+   "from": "For the starting shear",
+   "to": "For the starting shear",
    "role": "statement",
    "topic": "affine-wave",
    "status": "new",
@@ -3281,6 +3281,24 @@
    }
   },
   {
+   "id": "adapted.E1-10.1",
+   "from": "Imposing $\\xi(T,a)=0$ selects this initial velocity.",
+   "to": "Imposing $\\xi(T,a)=0$ selects this initial velocity.",
+   "role": "explanation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.theorem_4_2",
+     "file": "TorusEuler/Paper/Spine.lean",
+     "relation": "part",
+     "fidelity": "unassessed",
+     "fidelity_note": "The smooth forced solution has a selected initial velocity c, while displacement vanishes at both ends.",
+     "link_note": "The smooth forced solution has a selected initial velocity c, while displacement vanishes at both ends."
+    }
+   ]
+  },
+  {
    "id": "e01.endpoint.linearized-euler",
    "from": "$$\\begin{equation}\n \\partial_t b+(u\\cdot\\nabla)b+(b\\cdot\\nabla)u+\\nabla q=f,\n \\qquad \\operatorname{div}b=0. \\tag{1.6}\n\\end{equation}$$",
    "to": "$$\\begin{equation}\n \\partial_t b+(u\\cdot\\nabla)b+(b\\cdot\\nabla)u+\\nabla q=f,\n \\qquad \\operatorname{div}b=0. \\tag{1.6}\n\\end{equation}$$",
@@ -3314,24 +3332,6 @@
     ],
     "grounded": true
    }
-  },
-  {
-   "id": "adapted.E1-10.1",
-   "from": "The unknown initial velocity $b(0)$ must give the two displacement conditions above.",
-   "to": "The unknown initial velocity $b(0)$ must give the two displacement conditions above.",
-   "role": "explanation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.theorem_4_2",
-     "file": "TorusEuler/Paper/Spine.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The smooth forced solution has a selected initial velocity c, while displacement vanishes at both ends.",
-     "link_note": "The smooth forced solution has a selected initial velocity c, while displacement vanishes at both ends."
-    }
-   ]
   },
   {
    "id": "adapted.E1-11.1",
@@ -3654,8 +3654,8 @@
   },
   {
    "id": "adapted.E1-14.1",
-   "from": "Bernstein’s inequality bounds its higher spatial derivatives by powers of the cutoff frequency.",
-   "to": "Bernstein’s inequality bounds its higher spatial derivatives by powers of the cutoff frequency.",
+   "from": "Its Fourier support is bounded, so Bernstein’s inequality controls its higher derivatives.",
+   "to": "Its Fourier support is bounded, so Bernstein’s inequality controls its higher derivatives.",
    "role": "explanation",
    "topic": "induction",
    "status": "new",
@@ -4238,8 +4238,8 @@
   },
   {
    "id": "e01.correction.retained-completion",
-   "from": "We retain $C_{P+1}$ to complete the last oscillation.",
-   "to": "We retain $C_{P+1}$ to complete the last oscillation.",
+   "from": "retaining $C_{P+1}$ to complete the last oscillation.",
+   "to": "retaining $C_{P+1}$ to complete the last oscillation.",
    "role": "definition",
    "topic": "hierarchy",
    "status": "new",
@@ -4282,8 +4282,8 @@
   },
   {
    "id": "adapted.E1-15.2",
-   "from": "Each level gains a factor $\\lambda^{-2/3}$ up to powers of the parent bound.",
-   "to": "Each level gains a factor $\\lambda^{-2/3}$ up to powers of the parent bound.",
+   "from": "Theorem 5.6 gains $\\lambda^{-2/3}$ per level up to parent factors.",
+   "to": "Theorem 5.6 gains $\\lambda^{-2/3}$ per level up to parent factors.",
    "role": "explanation",
    "topic": "hierarchy",
    "status": "new",
@@ -4299,51 +4299,9 @@
    ]
   },
   {
-   "id": "e01.correction.depth-remainder",
-   "from": "Once $\\lambda$ exceeds a fixed power of that bound, the remainder has the factor $\\lambda^{-2P/3}$ (Theorem 5.6).",
-   "to": "Once $\\lambda$ exceeds a fixed power of that bound, the remainder has the factor $\\lambda^{-2P/3}$ (Theorem 5.6).",
-   "role": "statement",
-   "topic": "hierarchy",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
-     "file": "TorusEuler/PaperGenericWaveSwitchDepth.lean",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_note": "On $[0,T]\\times\\mathbb T^3$, $0<T\\le1$, take smooth periodic $U,p_U$, with $U$ and $R_U=\\partial_tU+(U\\cdot\\nabla)U+\\nabla p_U$ odd. Let $X$ be the supplied flow, $F=D_aX$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The explicitly listed parent bounds are Fourier support radii $2\\mathsf D$ for $U$ and $4\\mathsf D$ for $R_U$, $\\|D_xU\\|,\\|F\\|,\\|F^{-1}\\|\\le\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and bounds $\\mathsf D$ for both endpoint constants carried by the supplied mean equation. A parent-geometry condition is also required: $F^{-1}$, $M$ and $\\kappa$ are smooth and label-periodic, with $F_t=MF$, $\\kappa_t=-M^T\\kappa$, $\\kappa(0)\\ne0$, $M_t$ continuous, the two endpoint constants bounding $|F^{-1}|$ and $|M|$, and $-(M_t+M^2)\\le\\operatorname{Id}$, which is $H^\\#\\le\\operatorname{Id}$. Put $M=(D_xU)\\circ X$, $\\kappa=F^{-T}k_*$, and choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the centre let $\\mathbf a\\ne0$ solve $\\mathbf a_t=-M\\mathbf a+2(\\kappa\\cdot M\\mathbf a)\\kappa/|\\kappa|^2$, with $\\kappa\\cdot\\mathbf a=0$, $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ and $0<\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t)|\\le1$. Every transverse homogeneous solution $b$ must satisfy $|b(t)|/\\gamma(t)\\le\\mathsf D|b(t')|/\\gamma(t')$ for $t_0\\le t'\\le t\\le T$. Absolute integers $a_0\\ge30,b_0\\ge32$ and constants $C_{n,P}$ are chosen before these data. For $a\\ge a_0$, put $\\ell_*=\\mathsf D^{-a}$, $h=\\lambda^{-1/2}$ and $L=\\mathsf D^{2a+b_0}$, and assume $L^6\\lambda^{-1/12}\\le1$. One seed is then chosen before every smooth cutoff $0\\le\\widetilde\\chi\\le1$ vanishing for $t<t_0$ and every depth $P\\ge2$. The formal statement constructs an expansion satisfying, for all $n$, $\\|R_P\\|_{[n]}\\le C_{n,P}\\lambda^{-5/4-2P/3}$. Here $\\|f\\|_{[n]}=\\sum_{|\\alpha|+j\\le n}\\ell_*^{|\\alpha|}h^j\\sup_{[0,T],a,s}|\\partial_a^\\alpha\\partial_s^jf|$, with each multiindex once. The exact additional depth factor is therefore the quoted $\\lambda^{-2P/3}$, with no remaining parent factor in this remainder estimate. The verdict concerns that quantitative assertion."
-    },
-    {
-     "name": "TorusEuler.hierarchyOscExponent",
-     "file": "TorusEuler/HierarchyExponents.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "The formal definition assigns $-5/4-2(p-1)/3$ to level $p$. Substitution $p=P+1$ gives $-5/4-2P/3$, identifying the factor in the paper. This is arithmetic only: it does not prove that a remainder has that size or state the required lower bound on frequency relative to the parent.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The exponent identity records the bookkeeping used by the separate hierarchy estimates."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "At depth $P\\ge2$, the hierarchy remainder has a factor $\\lambda^{-2P/3}$ beyond the leading size $\\lambda^{-5/4}$. Theorem 5.6 proves this after assuming the truncated-parent bounds, endpoint coercivity, a nonzero growing central wave with $0<\\gamma\\le1$, and frequency large enough relative to the parent. Its role is to make the expansion error smaller than the required next-stage residual. The formal existence theorem implements the frequency condition as $L^6\\lambda^{-1/12}\\le1$, with $\\ell_*=\\mathsf D^{-a}$, $h=\\lambda^{-1/2}$ and $L=\\mathsf D^{2a+b_0}$, and gives $\\|R_P\\|_{[n]}\\le C_{n,P}\\lambda^{-5/4-2P/3}$ in the scaled label-and-phase derivative norm. That link is same for the asserted depth factor; the separate exponent formula is weaker because it supplies only the arithmetic power, without a remainder estimate.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Theorem 5.6, hypothesis preceding equation (5.34) and estimate (5.38); Section 1.3, depth selection",
-      "supports": "The frequency hypothesis and decay of the finite-expansion remainder."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
    "id": "e01.correction.cutoff-error",
-   "from": "Finally we apply a Fourier cutoff to the corrected velocity.",
-   "to": "Finally we apply a Fourier cutoff to the corrected velocity.",
+   "from": "Finally the corrected velocity is truncated in Fourier space.",
+   "to": "Finally the corrected velocity is truncated in Fourier space.",
    "role": "statement",
    "topic": "approximate",
    "status": "new",
@@ -4372,8 +4330,8 @@
   },
   {
    "id": "e01.correction.transported-support",
-   "from": "The oscillation and its divergence corrections remain localized before truncation.",
-   "to": "The oscillation and its divergence corrections remain localized before truncation.",
+   "from": "is thereafter confined to a shrinking neighborhood of the origin before Fourier truncation.",
+   "to": "is thereafter confined to a shrinking neighborhood of the origin before Fourier truncation.",
    "role": "statement",
    "topic": "localized-wave",
    "status": "new",
@@ -4591,8 +4549,8 @@
   },
   {
    "id": "r2a1.intro.derivative-conventions",
-   "from": "We use $(\\nabla U)_{ij}=\\partial_jU_i$, and for a matrix field $A$, $(\\operatorname{div}A)_i=\\sum_j\\partial_jA_{ij}$.",
-   "to": "We use $(\\nabla U)_{ij}=\\partial_jU_i$, and for a matrix field $A$, $(\\operatorname{div}A)_i=\\sum_j\\partial_jA_{ij}$.",
+   "from": "We use $(\\nabla U)_{ij}=\\partial_jU_i$ and $(\\operatorname{div}A)_i=\\sum_j\\partial_jA_{ij}$.",
+   "to": "We use $(\\nabla U)_{ij}=\\partial_jU_i$ and $(\\operatorname{div}A)_i=\\sum_j\\partial_jA_{ij}$.",
    "role": "definition",
    "topic": "singularity",
    "status": "new",
@@ -16138,6 +16096,48 @@
       "url": null,
       "where": "Section 4.3, concluding step in the proof of Theorem 4.2; equation (4.10)",
       "supports": "Choice of one uniform polynomial bound for the endpoint and fixed-time inverses."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "e01.correction.depth-remainder",
+   "from": "In physical space the depth and activation errors have sizes $\\lambda^{-2P/3}$ and $\\|\\widetilde\\chi'\\gamma\\|_\\infty$, with common factor $C_{\\rm step}\\lambda^2$",
+   "to": "In physical space the depth and activation errors have sizes $\\lambda^{-2P/3}$ and $\\|\\widetilde\\chi'\\gamma\\|_\\infty$, with common factor $C_{\\rm step}\\lambda^2$",
+   "role": "statement",
+   "topic": "hierarchy",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.HierarchyTwistedProfile.TruncatedHierarchyParent.exists_paper_hierarchy_depth_of_cutoff",
+     "file": "TorusEuler/PaperGenericWaveSwitchDepth.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "On $[0,T]\\times\\mathbb T^3$, $0<T\\le1$, take smooth periodic $U,p_U$, with $U$ and $R_U=\\partial_tU+(U\\cdot\\nabla)U+\\nabla p_U$ odd. Let $X$ be the supplied flow, $F=D_aX$, $\\mathsf D\\ge2$ and $\\lambda\\ge1$. The explicitly listed parent bounds are Fourier support radii $2\\mathsf D$ for $U$ and $4\\mathsf D$ for $R_U$, $\\|D_xU\\|,\\|F\\|,\\|F^{-1}\\|\\le\\mathsf D$, $\\|R_U\\|_\\infty\\le\\lambda^{-5/2}$, and bounds $\\mathsf D$ for both endpoint constants carried by the supplied mean equation. A parent-geometry condition is also required: $F^{-1}$, $M$ and $\\kappa$ are smooth and label-periodic, with $F_t=MF$, $\\kappa_t=-M^T\\kappa$, $\\kappa(0)\\ne0$, $M_t$ continuous, the two endpoint constants bounding $|F^{-1}|$ and $|M|$, and $-(M_t+M^2)\\le\\operatorname{Id}$, which is $H^\\#\\le\\operatorname{Id}$. Put $M=(D_xU)\\circ X$, $\\kappa=F^{-T}k_*$, and choose $0\\le t_0<T$ with $|\\kappa(t_0,0)|=\\lambda$. At the centre let $\\mathbf a\\ne0$ solve $\\mathbf a_t=-M\\mathbf a+2(\\kappa\\cdot M\\mathbf a)\\kappa/|\\kappa|^2$, with $\\kappa\\cdot\\mathbf a=0$, $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$ and $0<\\gamma(t)=\\lambda^{3/4}|\\mathbf a(t)|\\le1$. Every transverse homogeneous solution $b$ must satisfy $|b(t)|/\\gamma(t)\\le\\mathsf D|b(t')|/\\gamma(t')$ for $t_0\\le t'\\le t\\le T$. Absolute integers $a_0\\ge30,b_0\\ge32$ and constants $C_{n,P}$ are chosen before these data. For $a\\ge a_0$, put $\\ell_*=\\mathsf D^{-a}$, $h=\\lambda^{-1/2}$ and $L=\\mathsf D^{2a+b_0}$, and assume $L^6\\lambda^{-1/12}\\le1$. One seed is then chosen before every smooth cutoff $0\\le\\widetilde\\chi\\le1$ vanishing for $t<t_0$ and every depth $P\\ge2$. The formal statement constructs an expansion satisfying, for all $n$, $\\|R_P\\|_{[n]}\\le C_{n,P}\\lambda^{-5/4-2P/3}$. Here $\\|f\\|_{[n]}=\\sum_{|\\alpha|+j\\le n}\\ell_*^{|\\alpha|}h^j\\sup_{[0,T],a,s}|\\partial_a^\\alpha\\partial_s^jf|$, with each multiindex once. The exact additional depth factor is therefore the quoted $\\lambda^{-2P/3}$, with no remaining parent factor in this remainder estimate. The verdict concerns that quantitative assertion."
+    },
+    {
+     "name": "TorusEuler.hierarchyOscExponent",
+     "file": "TorusEuler/HierarchyExponents.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "The formal definition assigns $-5/4-2(p-1)/3$ to level $p$. Substitution $p=P+1$ gives $-5/4-2P/3$, identifying the factor in the paper. This is arithmetic only: it does not prove that a remainder has that size or state the required lower bound on frequency relative to the parent.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The exponent identity records the bookkeeping used by the separate hierarchy estimates."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "At depth $P\\ge2$, the hierarchy remainder has a factor $\\lambda^{-2P/3}$ beyond the leading size $\\lambda^{-5/4}$. Theorem 5.6 proves this after assuming the truncated-parent bounds, endpoint coercivity, a nonzero growing central wave with $0<\\gamma\\le1$, and frequency large enough relative to the parent. Its role is to make the expansion error smaller than the required next-stage residual. The formal existence theorem implements the frequency condition as $L^6\\lambda^{-1/12}\\le1$, with $\\ell_*=\\mathsf D^{-a}$, $h=\\lambda^{-1/2}$ and $L=\\mathsf D^{2a+b_0}$, and gives $\\|R_P\\|_{[n]}\\le C_{n,P}\\lambda^{-5/4-2P/3}$ in the scaled label-and-phase derivative norm. That link is same for the asserted depth factor; the separate exponent formula is weaker because it supplies only the arithmetic power, without a remainder estimate.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Theorem 5.6, hypothesis preceding equation (5.34) and estimate (5.38); Section 1.3, depth selection",
+      "supports": "The frequency hypothesis and decay of the finite-expansion remainder."
      }
     ],
     "grounded": true

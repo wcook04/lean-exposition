@@ -10,7 +10,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Theorem 1.1
 
-[Authors’ statement](../?l=b7477-8770) · [Adapted statement](../adapted/?l=b9255-10548)
+[Authors’ statement](../?l=b7477-8770) · [Adapted statement](../adapted/?l=b9131-10424)
 
 **Proved and checked by Comparator.** [`NavierStokes.theorem_1_1_space`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/MainTheorems.lean#L47). The companion constructs one smooth finite-energy whole-space solution with the two-sided rate and the physical error in (1.6), together with uniqueness and noncontinuation. Its profile premise explicitly requires velocity derivative decay through order two and pressure-gradient decay. The quantitative torus trajectory remains open.
 
@@ -24,13 +24,13 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Remark 1.2
 
-[Authors’ statement](../?l=b10202-10975) · [Adapted statement](../adapted/?l=b13118-13891)
+[Authors’ statement](../?l=b10202-10975) · [Adapted statement](../adapted/?l=b13093-13866)
 
 **Comparison unresolved.** The paper derives first and second derivative decay from the velocity bound and the smooth equations by local parabolic estimates. The library’s pinned Lean profile predicate assumes derivative decay. The comparison has no checked declaration deriving these bounds from the paper’s weaker premise.
 
 ### Proposition 2.1
 
-[Authors’ statement](../?l=b44471-45221) · [Adapted statement](../adapted/?l=b46749-47499)
+[Authors’ statement](../?l=b44471-45221) · [Adapted statement](../adapted/?l=b47699-48449)
 
 **Open Lean proposition.** [`NavierStokes.proposition_2_1_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L72). The target requires a single finite-dimensional correction space that works for each prescribed nearby datum.
 
@@ -40,7 +40,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 2.2
 
-[Authors’ statement](../?l=b45429-45951) · [Adapted statement](../adapted/?l=b47963-48485)
+[Authors’ statement](../?l=b45429-45951) · [Adapted statement](../adapted/?l=b48913-49435)
 
 **Open Lean proposition.** [`NavierStokes.proposition_2_2_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L95). The target keeps the finite time, both rate bounds and the local profile comparison on the unit torus.
 
@@ -50,7 +50,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 2.3
 
-[Authors’ statement](../?l=b46358-46766) · [Adapted statement](../adapted/?l=b49229-49637)
+[Authors’ statement](../?l=b46358-46766) · [Adapted statement](../adapted/?l=b50179-50587)
 
 **Open Lean proposition.** [`NavierStokes.lemma_2_3_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L121). The target covers both domains and requires energy nonincrease and one smooth representative on the whole interval.
 
@@ -60,7 +60,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.1
 
-[Authors’ statement](../?l=b50925-51654) · [Adapted statement](../adapted/?l=b56200-56929)
+[Authors’ statement](../?l=b50925-51654) · [Adapted statement](../adapted/?l=b57150-57879)
 
 **Open Lean proposition.** [`NavierStokes.lemma_3_1_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L149). The target includes the projected heat response to general forcing in $L^{3/2}$.
 
@@ -74,7 +74,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.2
 
-[Authors’ statement](../?l=b55230-55343) · [Adapted statement](../adapted/?l=b60673-60786)
+[Authors’ statement](../?l=b55230-55343) · [Adapted statement](../adapted/?l=b61623-61736)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_3_2`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L33). Compactness is proved for the represented bilinear operator.
 
@@ -88,7 +88,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.3
 
-[Authors’ statement](../?l=b58232-58490) · [Adapted statement](../adapted/?l=b63628-63886)
+[Authors’ statement](../?l=b58232-58490) · [Adapted statement](../adapted/?l=b64578-64836)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_3_3`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L50). The proof obtains the required suprema from the abstract heat and bilinear hypotheses.
 
@@ -98,7 +98,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.4
 
-[Authors’ statement](../?l=b58650-58974) · [Adapted statement](../adapted/?l=b64051-64375)
+[Authors’ statement](../?l=b58650-58974) · [Adapted statement](../adapted/?l=b65001-65325)
 
 **Open Lean proposition.** [`NavierStokes.lemma_3_4_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L168). The target asks for inversion over every finite interval, without a smallness hypothesis on the operator norm.
 
@@ -108,7 +108,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.5
 
-[Authors’ statement](../?l=b59112-59482) · [Adapted statement](../adapted/?l=b64573-64943)
+[Authors’ statement](../?l=b59112-59482) · [Adapted statement](../adapted/?l=b65523-65893)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_3_5`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L65). The proof gives the restriction identity with independent inputs and uniqueness for the quadratic mild problem.
 
@@ -122,7 +122,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.6
 
-[Authors’ statement](../?l=b60231-60819) · [Adapted statement](../adapted/?l=b66230-66818)
+[Authors’ statement](../?l=b60231-60819) · [Adapted statement](../adapted/?l=b67180-67768)
 
 **Open Lean proposition.** [`NavierStokes.lemma_3_6_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L185). The target uses the paper’s continuous homogeneous $H^1$ weak-solution class.
 
@@ -132,7 +132,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 3.7
 
-[Authors’ statement](../?l=b64066-65454) · [Adapted statement](../adapted/?l=b70174-71562)
+[Authors’ statement](../?l=b64066-65454) · [Adapted statement](../adapted/?l=b71124-72512)
 
 **Open Lean proposition.** [`NavierStokes.lemma_3_7_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L204). The target includes all periods and lags, using the mean-zero homogeneous norm.
 
@@ -142,7 +142,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 4.1
 
-[Authors’ statement](../?l=b67560-67961) · [Adapted statement](../adapted/?l=b73838-74239)
+[Authors’ statement](../?l=b67560-67961) · [Adapted statement](../adapted/?l=b74788-75189)
 
 **Open Lean proposition.** [`NavierStokes.proposition_4_1_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L234). The target asks for the velocity with the recurrence specified by the printed profile.
 
@@ -156,7 +156,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 4.2
 
-[Authors’ statement](../?l=b69363-69689) · [Adapted statement](../adapted/?l=b75809-76135)
+[Authors’ statement](../?l=b69363-69689) · [Adapted statement](../adapted/?l=b76759-77085)
 
 **Open Lean proposition.** [`NavierStokes.lemma_4_2_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L248). The target keeps the physical recurrence and both sides of the physical norm estimate.
 
@@ -166,7 +166,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 4.3
 
-[Authors’ statement](../?l=b72658-73144) · [Adapted statement](../adapted/?l=b79335-79821)
+[Authors’ statement](../?l=b72658-73144) · [Adapted statement](../adapted/?l=b80285-80771)
 
 **Open Lean proposition.** [`NavierStokes.proposition_4_3_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L264). The target is a bounded inverse on a single weighted time trajectory.
 
@@ -184,7 +184,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 4.4
 
-[Authors’ statement](../?l=b74267-74437) · [Adapted statement](../adapted/?l=b81149-81319)
+[Authors’ statement](../?l=b74267-74437) · [Adapted statement](../adapted/?l=b82099-82269)
 
 **Open Lean proposition.** [`NavierStokes.lemma_4_4_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L286). The open statement uses the paper’s Volterra operator over one full period.
 
@@ -194,7 +194,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 4.5
 
-[Authors’ statement](../?l=b75594-76095) · [Adapted statement](../adapted/?l=b82637-83138)
+[Authors’ statement](../?l=b75594-76095) · [Adapted statement](../adapted/?l=b83587-84088)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_4_5`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionsTwoSix.lean#L193). The formal conclusion gives geometric bounds for the split operator. The paper expresses them as convergence of two series at an intermediate weight.
 
@@ -204,7 +204,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 4.6
 
-[Authors’ statement](../?l=b78181-79181) · [Adapted statement](../adapted/?l=b86241-87241)
+[Authors’ statement](../?l=b78181-79181) · [Adapted statement](../adapted/?l=b87191-88191)
 
 **Open Lean proposition.** [`NavierStokes.lemma_4_6_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L304). The target includes the passage to discrete time, forcing linearity and the weighted estimate.
 
@@ -214,7 +214,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 4.7
 
-[Authors’ statement](../?l=b86966-87679) · [Adapted statement](../adapted/?l=b95644-96357)
+[Authors’ statement](../?l=b86966-87679) · [Adapted statement](../adapted/?l=b96635-97348)
 
 **Open Lean proposition.** [`NavierStokes.lemma_4_7_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L340). The target keeps all three weighted estimates with the constant uniform in the underlying space and operators.
 
@@ -224,7 +224,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 4.8
 
-[Authors’ statement](../?l=b88323-89559) · [Adapted statement](../adapted/?l=b97001-98237)
+[Authors’ statement](../?l=b88323-89559) · [Adapted statement](../adapted/?l=b97992-99228)
 
 **Open Lean proposition.** [`NavierStokes.lemma_4_8_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L361). The target is for a general small weighted residual on the full time interval.
 
@@ -234,7 +234,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 5.1
 
-[Authors’ statement](../?l=b91525-91956) · [Adapted statement](../adapted/?l=b100923-101354)
+[Authors’ statement](../?l=b91525-91956) · [Adapted statement](../adapted/?l=b101914-102345)
 
 **Open Lean proposition.** [`NavierStokes.lemma_5_1_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L391). The target varies the cutoff radius and keeps the constants uniform in radius and time.
 
@@ -244,7 +244,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 6.1
 
-[Authors’ statement](../?l=b98078-98512) · [Adapted statement](../adapted/?l=b109265-109699)
+[Authors’ statement](../?l=b98078-98512) · [Adapted statement](../adapted/?l=b110256-110690)
 
 **Open Lean proposition.** [`NavierStokes.lemma_6_1_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L442). The target gives the explicit large-period rate for compactly supported tensor forcing and every positive lag.
 
@@ -254,7 +254,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 6.2
 
-[Authors’ statement](../?l=b102327-102772) · [Adapted statement](../adapted/?l=b113293-113738)
+[Authors’ statement](../?l=b102327-102772) · [Adapted statement](../adapted/?l=b114284-114729)
 
 **Open Lean proposition.** [`NavierStokes.lemma_6_2_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L414). The target keeps the physical norms and the explicit large-period residual rate.
 
@@ -268,7 +268,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 6.3
 
-[Authors’ statement](../?l=b111914-112410) · [Adapted statement](../adapted/?l=b123370-123866)
+[Authors’ statement](../?l=b111914-112410) · [Adapted statement](../adapted/?l=b124554-125050)
 
 **Open Lean proposition.** [`NavierStokes.lemma_6_3_target`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L468). The target retains the prescribed approximate inverse and the explicit large-period defect bound.
 
@@ -282,7 +282,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Theorem 7.1
 
-[Authors’ statement](../?l=b143264-143973) · [Adapted statement](../adapted/?l=b158049-158758)
+[Authors’ statement](../?l=b143264-143973) · [Adapted statement](../adapted/?l=b159733-160442)
 
 **Proved in the stated formal form.** [`NavierStokes.theorem_7_1`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L29). The proof assumes the full formal extended certificate, including its approximate-profile regularity and decay requirements. It retains the chosen parameter, smooth profile, correction, bounds and symmetries in (7.38)–(7.39), and gives Hessian and pressure-gradient decay for that profile.
 
@@ -292,7 +292,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Corollary 7.2
 
-[Authors’ statement](../?l=b143974-144191) · [Adapted statement](../adapted/?l=b158759-158976)
+[Authors’ statement](../?l=b143974-144191) · [Adapted statement](../adapted/?l=b160443-160660)
 
 **Proved in the stated formal form.** [`NavierStokes.corollary_7_2`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L45). The companion retains the profile from Theorem 7.1 and constructs the quantitative whole-space trajectory with the error bound (1.6). Its torus conclusion is qualitative nonexistence of a global smooth solution with periodic velocity. The trajectory and convergence estimates in (1.7) remain open.
 
@@ -302,13 +302,13 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Remark 7.3
 
-[Authors’ statement](../?l=b144192-144664) · [Adapted statement](../adapted/?l=b158977-159449)
+[Authors’ statement](../?l=b144192-144664) · [Adapted statement](../adapted/?l=b160661-161133)
 
 **Paper only.** This is a consequence in the paper of the chosen profile’s twist identity. Replacing the period by the positive shift in that identity leaves the profile equations and decay bounds in force. The pinned Lean library has a separate result for half-periodicity of a gradient-energy representative.
 
 ### Lemma 7.4
 
-[Authors’ statement](../?l=b149507-150290) · [Adapted statement](../adapted/?l=b161103-161886)
+[Authors’ statement](../?l=b149507-150290) · [Adapted statement](../adapted/?l=b162973-163756)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_7_4`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L75). The estimate concerns the constructed inverse. It gives the integrated energy identity, with the differentiated identity and period pairing outside the stated conclusion.
 
@@ -318,7 +318,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 7.5
 
-[Authors’ statement](../?l=b153443-153939) · [Adapted statement](../adapted/?l=b165760-166256)
+[Authors’ statement](../?l=b153443-153939) · [Adapted statement](../adapted/?l=b167630-168126)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_7_5`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L94). The proof gives a symmetry-preserving inverse and weak graph convergence. The statement leaves open the full domain identification and local strong convergence of the full sequence.
 
@@ -328,7 +328,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 7.6
 
-[Authors’ statement](../?l=b158955-159435) · [Adapted statement](../adapted/?l=b170826-171306)
+[Authors’ statement](../?l=b158955-159435) · [Adapted statement](../adapted/?l=b172696-173176)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_7_6`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L115). The estimate uses graph norms and an essential gradient supremum. The time-dependent bound accommodates two fields.
 
@@ -338,7 +338,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma 7.7
 
-[Authors’ statement](../?l=b160680-161205) · [Adapted statement](../adapted/?l=b172775-173300)
+[Authors’ statement](../?l=b160680-161205) · [Adapted statement](../adapted/?l=b174645-175170)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_7_7`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L141). Compactness is proved after applying the solenoidal projection, on the graph domain.
 
@@ -348,7 +348,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 7.8
 
-[Authors’ statement](../?l=b164640-165325) · [Adapted statement](../adapted/?l=b176722-177407)
+[Authors’ statement](../?l=b164640-165325) · [Adapted statement](../adapted/?l=b178592-179277)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_7_8`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L158). Existence and uniqueness are expressed in forcing coordinates for the constructed inverse, with the four normalization equations explicit.
 
@@ -358,7 +358,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 7.9
 
-[Authors’ statement](../?l=b167536-167983) · [Adapted statement](../adapted/?l=b179834-180281)
+[Authors’ statement](../?l=b167536-167983) · [Adapted statement](../adapted/?l=b181704-182151)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_7_9`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L181). The bound concerns the constructed inverse and the projected residual, with an essential gradient supremum.
 
@@ -368,7 +368,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 7.10
 
-[Authors’ statement](../?l=b173785-174199) · [Adapted statement](../adapted/?l=b185730-186144)
+[Authors’ statement](../?l=b173785-174199) · [Adapted statement](../adapted/?l=b187600-188014)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_7_10`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L198). The solution is given after the certificate's reductions, with the relation between reduced and original multipliers explicit.
 
@@ -378,7 +378,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition 7.11
 
-[Authors’ statement](../?l=b185393-186259) · [Adapted statement](../adapted/?l=b196939-197805)
+[Authors’ statement](../?l=b185393-186259) · [Adapted statement](../adapted/?l=b198809-199675)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_7_11`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/SectionSeven.lean#L215). The proof retains the same input profile at every time. It assumes a square-integrable weak Hessian and a specified continuous representative, and concludes extra decay.
 
@@ -388,7 +388,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition B.1
 
-[Authors’ statement](../?l=b235285-236313) · [Adapted statement](../adapted/?l=b258763-259791)
+[Authors’ statement](../?l=b235285-236313) · [Adapted statement](../adapted/?l=b261931-262959)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_B_1`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L26). The weak-form estimate permits general admissible weights and states the density inequality through positive and negative integrals.
 
@@ -402,7 +402,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.2
 
-[Authors’ statement](../?l=b239970-240188) · [Adapted statement](../adapted/?l=b265544-265762)
+[Authors’ statement](../?l=b239970-240188) · [Adapted statement](../adapted/?l=b268712-268930)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_2`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L57). The statement makes analytic hypotheses explicit and assumes the parameter-wise row lower bound. The constants are symbolic.
 
@@ -416,7 +416,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.3
 
-[Authors’ statement](../?l=b242329-242796) · [Adapted statement](../adapted/?l=b268399-268866)
+[Authors’ statement](../?l=b242329-242796) · [Adapted statement](../adapted/?l=b271567-272034)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_3`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L90). The two nonnegative identities are proved separately, including infinite values. The printed signed identity uses a finiteness assumption.
 
@@ -430,7 +430,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition B.4
 
-[Authors’ statement](../?l=b255480-257482) · [Adapted statement](../adapted/?l=b282459-284461)
+[Authors’ statement](../?l=b255480-257482) · [Adapted statement](../adapted/?l=b286018-288020)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_B_4`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L115). The proof uses the full formal cell conditions and their separate positive and negative density accounts. The printed remainder numbers are outside the conclusion.
 
@@ -448,7 +448,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.5
 
-[Authors’ statement](../?l=b261621-262589) · [Adapted statement](../adapted/?l=b291610-292585)
+[Authors’ statement](../?l=b261621-262589) · [Adapted statement](../adapted/?l=b295169-296144)
 
 **In the adapted edition.** The rotational order is written as $k_{\mathrm{rot}}$ in this edition. It is the integer $\varkappa$ of the authors’ statement.
 
@@ -468,7 +468,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.6
 
-[Authors’ statement](../?l=b264858-265365) · [Adapted statement](../adapted/?l=b295026-295533)
+[Authors’ statement](../?l=b264858-265365) · [Adapted statement](../adapted/?l=b298585-299092)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_6`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixBTail.lean#L165). The formal ray geometry adds explicit regularity and bounds. The conclusion includes finiteness of the negative part.
 
@@ -482,7 +482,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.7
 
-[Authors’ statement](../?l=b272644-273109) · [Adapted statement](../adapted/?l=b304524-304989)
+[Authors’ statement](../?l=b272644-273109) · [Adapted statement](../adapted/?l=b308083-308548)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_7`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L205). The lower bound keeps the nonnegative root contribution and the result makes strict positivity explicit.
 
@@ -496,7 +496,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition B.8
 
-[Authors’ statement](../?l=b275971-276185) · [Adapted statement](../adapted/?l=b308033-308247)
+[Authors’ statement](../?l=b275971-276185) · [Adapted statement](../adapted/?l=b311592-311806)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_B_8`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L253). The estimate is stated as a comparison of nonnegative extended integrals for periodic weak perturbations under all formal cell conditions.
 
@@ -510,7 +510,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.9
 
-[Authors’ statement](../?l=b280764-282654) · [Adapted statement](../adapted/?l=b313611-315501)
+[Authors’ statement](../?l=b280764-282654) · [Adapted statement](../adapted/?l=b317170-319060)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_9`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L273). The proof uses an arbitrary finite decomposition with explicit hypotheses for derivative identification.
 
@@ -528,7 +528,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.10
 
-[Authors’ statement](../?l=b286225-286624) · [Adapted statement](../adapted/?l=b319351-319750)
+[Authors’ statement](../?l=b286225-286624) · [Adapted statement](../adapted/?l=b322910-323309)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_10`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L303). The bound on the integral of the product of norms implies the printed pairing estimate.
 
@@ -542,7 +542,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.11
 
-[Authors’ statement](../?l=b288370-288657) · [Adapted statement](../adapted/?l=b321613-321900)
+[Authors’ statement](../?l=b288370-288657) · [Adapted statement](../adapted/?l=b325172-325459)
 
 **Open Lean proposition.** [`NavierStokes.lemma_B_11`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/OpenTargets.lean#L598). Joint absolute integrability remains open. A companion theorem gives slice integrability and a time-integrable signed spatial pairing.
 
@@ -560,7 +560,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.12
 
-[Authors’ statement](../?l=b296453-297231) · [Adapted statement](../adapted/?l=b329928-330706)
+[Authors’ statement](../?l=b296453-297231) · [Adapted statement](../adapted/?l=b333487-334265)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_12`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L344). The formal statement exposes regularity and decomposition premises and records the coefficient budget through its data fields.
 
@@ -570,7 +570,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Lemma B.13
 
-[Authors’ statement](../?l=b303479-304912) · [Adapted statement](../adapted/?l=b337322-338755)
+[Authors’ statement](../?l=b303479-304912) · [Adapted statement](../adapted/?l=b340881-342314)
 
 **Proved in the stated formal form.** [`NavierStokes.lemma_B_13`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L372). The statement assumes the cell and pressure representation explicitly and records the error budget in the offset data.
 
@@ -584,7 +584,7 @@ Comparator also checked [`NavierStokes.conditional_main`](https://github.com/wco
 
 ### Proposition B.14
 
-[Authors’ statement](../?l=b307737-308320) · [Adapted statement](../adapted/?l=b341783-342366)
+[Authors’ statement](../?l=b307737-308320) · [Adapted statement](../adapted/?l=b345342-345925)
 
 **Proved in the stated formal form.** [`NavierStokes.proposition_B_14`](https://github.com/wcook04/proof-reader/blob/5cf49623675e7fcb3ae59ffcc69d9f736fbaed0a/lean-wrappers/navier-stokes-edition/lean/AppendixB.lean#L394). The proof chooses a decay constant and builds an extended certificate under all fifteen groups of formal cell hypotheses. A separate Comparator run accepted the three statements in `CellLayerTheorems` against `Solution`, proving conditional whole-space and torus nonexistence separately and together. The authors report a separate interval-arithmetic evaluation of their numerical data, whose files and checker are absent from the pinned release. [Cell hypotheses](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/StatementDefs.lean#L6223-L6242) · [Conditional Comparator run](https://github.com/wcook04/proof-reader/actions/runs/44819023135).
 

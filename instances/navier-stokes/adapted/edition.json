@@ -19,24 +19,24 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "bytes": 1229837,
-   "sha256": "853874d94f6f42719617867065e43234550f85773f6131dc4a2bd516713e5e66"
+   "bytes": 1232968,
+   "sha256": "c610962653977454e8a170d8d1107a0c0cdb19bb843937d8677f065ebd12d7e6"
   },
   "release": {
-   "version": 7,
+   "version": 8,
    "date": "2026-11-22",
    "notes": [
-    "The abstract states the hypothesis of the localization theorem before describing how the rescaled gradients follow the reference flow.",
-    "The proof outline explains why spatial localization and heat flow together give compactness and how a change of frame removes the periodic pressure difference.",
-    "The certificate and computation sections identify the exact hypotheses used by the estimates and place the original figures alongside their explanations."
+    "The introduction explains what cutting off a reference flow achieves and why a further correction is needed on each domain.",
+    "The proof distinguishes the linear forced solve from the coupled update that makes the net auxiliary force vanish.",
+    "The exposition spells out the critical L³ concentration estimate for the localized whole-space solution in the unrotated case."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "navier-stokes-adapted-v7.pdf",
+   "name": "navier-stokes-adapted-v8.pdf",
    "label": "Reading copy",
-   "bytes": 1165507,
-   "sha256": "ff95253aeb4d4d0df681d3f28e828e45c88edf61f95dc67fd74940fadad70ced"
+   "bytes": 1168529,
+   "sha256": "41841f29461806897b3bc48fed70a01930e37b97c68bd0c2f74a3f0d5436bf71"
   },
   "result_comparison": {
    "reading": {
@@ -44,14 +44,14 @@
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
     "bytes": 56499,
-    "sha256": "977822256f4f36b29bd5984ba42f689f48cc54399a2dad08e1a5f185fb05e38f"
+    "sha256": "5554962acc65133f67abb73458550b59727671793ce482c29e73feeb7d2a96fc"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
     "bytes": 109572,
-    "sha256": "08422ac13b401f9185703002bc99bc498ead68db58cb10f450e2ade2716fa3d1"
+    "sha256": "759b6daf7003200e9f6e2d885080c5cc140f32225ac88ff021a3a6a5ba3721a9"
    }
   }
  }

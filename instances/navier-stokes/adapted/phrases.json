@@ -55,7 +55,7 @@
    "name": "",
    "lines": [
     1,
-    2217
+    2226
    ],
    "source_commit": "3858afbe00b23dd8bba13ffa41409310b712723d",
    "topics": [
@@ -1419,6 +1419,54 @@
  ],
  "ties": [
   {
+   "id": "s1-headline",
+   "from": "From this singular flow we construct finite-energy solutions with smooth divergence-free data, compactly supported on $\\mathbb R^3$ or periodic on $\\mathbb T^3$.",
+   "to": "From this singular flow we construct finite-energy solutions with smooth divergence-free data, compactly supported on $\\mathbb R^3$ or periodic on $\\mathbb T^3$.",
+   "role": "statement",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.breakdownOnSpace_of_profile",
+     "file": "Breakdown/Uniqueness/Space.lean",
+     "relation": "states",
+     "fidelity": "different",
+     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here."
+    },
+    {
+     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
+     "file": "Breakdown/Torus/Main.lean",
+     "relation": "states",
+     "fidelity": "different",
+     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here. The paper's definition of a torus solution requires periodic pressure, so the formal excluded solution class is larger."
+    }
+   ]
+  },
+  {
+   "id": "s1-profile-reduction",
+   "from": "Theorem 1.1 gives such data for every nonzero recurrent flow satisfying the decay bound below.",
+   "to": "Theorem 1.1 gives such data for every nonzero recurrent flow satisfying the decay bound below.",
+   "role": "explanation",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.breakdownOnSpace_of_profile",
+     "file": "Breakdown/Uniqueness/Space.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here."
+    },
+    {
+     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
+     "file": "Breakdown/Torus/Main.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here. The paper's definition of a torus solution requires periodic pressure, so the formal excluded solution class is larger."
+    }
+   ]
+  },
+  {
    "id": "s1-unforced",
    "from": "without external force",
    "to": "without external force",
@@ -1506,57 +1554,9 @@
    ]
   },
   {
-   "id": "s1-profile-reduction",
-   "from": "Theorem 1.1 starts from a nonzero solution of this kind.",
-   "to": "Theorem 1.1 starts from a nonzero solution of this kind.",
-   "role": "explanation",
-   "topic": "statement",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.breakdownOnSpace_of_profile",
-     "file": "Breakdown/Uniqueness/Space.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here."
-    },
-    {
-     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
-     "file": "Breakdown/Torus/Main.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here. The paper's definition of a torus solution requires periodic pressure, so the formal excluded solution class is larger."
-    }
-   ]
-  },
-  {
-   "id": "s1-headline",
-   "from": "We obtain solutions from compactly supported data on $\\mathbb R^3$ and from periodic data on $\\mathbb T^3$",
-   "to": "We obtain solutions from compactly supported data on $\\mathbb R^3$ and from periodic data on $\\mathbb T^3$",
-   "role": "statement",
-   "topic": "statement",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.breakdownOnSpace_of_profile",
-     "file": "Breakdown/Uniqueness/Space.lean",
-     "relation": "states",
-     "fidelity": "different",
-     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here."
-    },
-    {
-     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
-     "file": "Breakdown/Torus/Main.lean",
-     "relation": "states",
-     "fidelity": "different",
-     "fidelity_note": "Assume jointly smooth $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ satisfy $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Require $S>0$, $R\\in O(3)$, $W(s+S,y)=RW(s,R^{-1}y)$, and $W(s,y)\\ne0$ somewhere. One constant $C$ must bound $\\|D_y^jW(s,y)\\|_{\\rm op}\\le C(1+|y|)^{-j-1}$ for $j=0,1,2$, with $D^0W=W$, and $|\\nabla q(s,y)|\\le C(1+|y|)^{-3}$, for all $s,y$. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. Compared with (1.3), the formal premise explicitly includes second derivatives and the pressure gradient. Remark 1.2 supplies the second-derivative decay from the paper's hypotheses; it does not state the pressure-gradient bound. Derivative operator norms and the paper's sums of squared coordinate derivatives agree only up to fixed dimensional factors. The paper's current Theorem 1.1 also constructs a smooth finite-time trajectory and states the two-sided rate and profile error; those conclusions are absent here. The paper's definition of a torus solution requires periodic pressure, so the formal excluded solution class is larger."
-    }
-   ]
-  },
-  {
    "id": "s1-finite-codimension-summary",
-   "from": "On $\\mathbb R^3$ a correction in a fixed finite-dimensional space of initial velocities suffices to follow the profile into the singularity.",
-   "to": "On $\\mathbb R^3$ a correction in a fixed finite-dimensional space of initial velocities suffices to follow the profile into the singularity.",
+   "from": "The proof adjusts the cutoff datum in finitely many directions to obtain the required decay of the error.",
+   "to": "The proof adjusts the cutoff datum in finitely many directions to obtain the required decay of the error.",
    "role": "explanation",
    "topic": "monodromy",
    "status": "new",
@@ -2770,8 +2770,8 @@
   },
   {
    "id": "s1-outline-no-spectrum-assumption",
-   "from": "We impose no requirement on whether any eigenvalue grows.",
-   "to": "We impose no requirement on whether any eigenvalue grows.",
+   "from": "We impose no spectral stability condition on the profile.",
+   "to": "We impose no spectral stability condition on the profile.",
    "role": "explanation",
    "topic": "monodromy",
    "status": "new",
@@ -3018,8 +3018,8 @@
   },
   {
    "id": "s1-outline-certificate-force",
-   "from": "We add finitely many force coefficients and impose the same number of linear constraints.",
-   "to": "We add finitely many force coefficients and impose the same number of linear constraints.",
+   "from": "We introduce one linear constraint for each auxiliary force coefficient.",
+   "to": "We introduce one linear constraint for each auxiliary force coefficient.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
@@ -19011,8 +19011,8 @@
   },
   {
    "id": "b12-tensor-support",
-   "from": "Thus $\\Xi_i$ is bounded and vanishes outside the cells.",
-   "to": "Thus $\\Xi_i$ is bounded and vanishes outside the cells.",
+   "from": "The finite polynomial representation on the cells gives a bounded $\\Xi_i$ that vanishes outside them.",
+   "to": "The finite polynomial representation on the cells gives a bounded $\\Xi_i$ that vanishes outside them.",
    "role": "explanation",
    "topic": "encoding",
    "status": "new",
@@ -25772,8 +25772,8 @@
   },
   {
    "id": "adapted.N6-52.1",
-   "from": "Thus the family stays affine inside the ball,",
-   "to": "Thus the family stays affine inside the ball,",
+   "from": "Inside the ball $f_*=0$, so (B.9) depends affinely on the parameter.",
+   "to": "Inside the ball $f_*=0$, so (B.9) depends affinely on the parameter.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",

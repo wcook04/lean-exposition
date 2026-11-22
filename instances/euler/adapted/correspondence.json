@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "d0f9fe44e8a470d98087a808305b31622f12ce4e5a480ce5fa26cc12c9534a25",
+ "content_sha256": "9fc7aae90c61c1657365b6ee25fbde9bb20bda5fe19315f6dfd9f9b7675cc17d",
  "graph_sha256": "db48fdd5ba2604749972848ed79e43c2768fdab18b46be5a44ed5375dec0afe1",
  "selected_goal_ids": [
   "euler.theorem-1.1"
@@ -336,7 +336,7 @@
   },
   {
    "anchor": "sec-finite-time-singularity-formation-for-the-three-dimensional-euler-equations",
-   "text_sha256": "187ab54984ab5adecf99f639749e1e22e52717a699d6dbd88e37a63df5074e8d",
+   "text_sha256": "cf01dc37fd5a53ba2e57137f2a310436a0aae07b0500b4e55d06e7e7e974aaf3",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -345,7 +345,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "b1fa8b671341089c4a5f8c4b5bd1d3d62174648cf46fab8879d2ff1f1ee026d9",
+   "text_sha256": "c73a4b8b47bf00ddb47f78e3b20dd7c3f46cff56f3bee9a04d0a6f59b4b8541b",
    "claim_ids": [
     "euler.theorem-1.1",
     "euler.remark-1.2",
@@ -533,7 +533,7 @@
   },
   {
    "anchor": "sec-3",
-   "text_sha256": "1260a2f0c9a3fe86ee02c8f931f27bd1bc139687966b924a4761932e642f02ca",
+   "text_sha256": "1a4455a1b1da03586450fe52118bc677b6b8878726c9687818c83a357799657c",
    "claim_ids": [
     "euler.lemma-3.1"
    ],
@@ -573,7 +573,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "10174cae2f2a8ef11ff0f87d7626589e3f9124e03e1a2a281a27b980a3712f64",
+   "text_sha256": "2486bc7978a35975483620d09eaae2f52a80e6a265a030776c5657ad52414af4",
    "claim_ids": [
     "euler.proposition-5.1",
     "euler.proposition-5.2",
@@ -684,7 +684,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "553aa5fa60aca20a2884236e82fdc7782d98b1bb85a2e5ad4dce41da5011f525",
+   "text_sha256": "af9eef59e589e066eb9155fcc1d2840826e4376e497a966278f76e59a27f6059",
    "claim_ids": [
     "euler.theorem-7.1"
    ],
@@ -799,7 +799,7 @@
   },
   {
    "anchor": "sec-8",
-   "text_sha256": "e76a2c174ee1ad0707370f6fa444effc8944bc53828d521fa31f6988c7a7598c",
+   "text_sha256": "0f346b9dc733bbe4538d3ccd9203c95aa9c5c16879526516a4c829ca58156ba9",
    "claim_ids": [
     "euler.proposition-8.1",
     "euler.proposition-8.2",
@@ -1022,7 +1022,7 @@
   },
   {
    "anchor": "sec-references",
-   "text_sha256": "05af0df503f31c683fada90f3e8a5ae53cad99973fd744ed51c8c8cdc0deb81b",
+   "text_sha256": "1684bdd689e911f768c815fead41226a04f15e1396747b654244488f678f3ed5",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
