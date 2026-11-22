@@ -281,7 +281,9 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
 
   const empty = !record && !name;
   return (
-    <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
+    // Until the alignment names this step's Lean, its title, buttons, list and body would all
+    // rearrange as it arrives: the page keeps its place in the sheet, undrawn, and is shown once, whole.
+    <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"} data-waiting={!slot && !alignment && !tie?.rows ? "" : undefined}>
       {!slot && (
         <header className="lean-page__head">
           {open.via !== "pin" && (
@@ -320,9 +322,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
           {slot}
         </div>
       ) : (
-        // Until the alignment names this step's Lean, the list and body would rearrange as it
-        // arrives: the column keeps its place, undrawn, and is shown once, whole.
-        <div ref={scroller} className="lean-page__scroll" data-keep data-waiting={!alignment && !tie?.rows ? "" : undefined}>
+        <div ref={scroller} className="lean-page__scroll" data-keep>
           {record && !isPhraseRecord(record) && (
             <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
               {open.via === "pin" && graph.nodes.has(record) && (

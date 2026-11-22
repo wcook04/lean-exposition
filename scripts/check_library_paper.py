@@ -101,6 +101,7 @@ def main() -> int:
     ap.add_argument("--shots", type=Path)
     ap.add_argument("--budget", type=float, default=8.0)
     ap.add_argument("--phrase", default="e01.abstract.bounded-velocity")
+    ap.add_argument("--lands", action="append", default=[], help="another numbered result whose cold address must open at its statement (repeatable)")
     ap.add_argument("--result", default="theorem-1.1", help="a numbered result's address; empty for a paper with none (the SK short paper)")
     ap.add_argument("--decl", default="TorusEuler.EulerSingularityWitness")
     ap.add_argument("--section", default="5.6")
@@ -224,21 +225,25 @@ def main() -> int:
             # if any, is not an introduction before it.
             fresh = browser.new_context(viewport={"width": width, "height": height})
             probe = fresh.new_page()
-            probe.goto(base + (f"{args.result}/" if args.result else ""))
-            probe.wait_for_selector(".paper .tie", timeout=60000)
-            probe.wait_for_timeout(2500)
-            title = " ".join(w.capitalize() if i == 0 else w.upper() if re.fullmatch(r"[a-z](\.\d+)*", w) else w
-                             for i, w in enumerate(args.result.split("-", 1)))
-            place = probe.evaluate("""(title) => {
-                const label = [...document.querySelectorAll('.paper strong')].find(s => s.textContent.trim().startsWith(title));
-                const pin = document.querySelector('.paper .tie[data-pin]');
-                const top = (el) => el ? Math.round(el.getBoundingClientRect().top) : null;
-                return { label: top(label), pin: top(pin) };
-            }""", title)
-            # A result the paper prints without a number has no bold label to land on.
-            if args.result and not args.result.startswith("claim-"):
-                check(f"{tag} result lands on its statement", place["label"] is not None and 0 <= place["label"] <= height
-                      and (place["pin"] is None or place["pin"] >= place["label"] - 2), f"{title}: {place}")
+            # --lands adds results that must land the same way from a cold load (one the stillness
+            # gates leave out is still checked to reach its statement).
+            for result in [args.result, *args.lands] if args.result else [""]:
+                probe.goto(base + (f"{result}/" if result else ""))
+                probe.wait_for_selector(".paper .tie", timeout=60000)
+                probe.wait_for_timeout(2500)
+                title = " ".join(w.capitalize() if i == 0 else w.upper() if re.fullmatch(r"[a-z](\.\d+)*", w) else w
+                                 for i, w in enumerate(result.split("-", 1)))
+                place = probe.evaluate("""(title) => {
+                    const label = [...document.querySelectorAll('.paper strong')].find(s => s.textContent.trim().startsWith(title));
+                    const pin = document.querySelector('.paper .tie[data-pin]');
+                    const top = (el) => el ? Math.round(el.getBoundingClientRect().top) : null;
+                    return { label: top(label), pin: top(pin) };
+                }""", title)
+                # A result the paper prints without a number has no bold label to land on.
+                if result and not result.startswith("claim-"):
+                    check(f"{tag} {'result' if result == args.result else result} lands on its statement",
+                          place["label"] is not None and 0 <= place["label"] <= height
+                          and (place["pin"] is None or place["pin"] >= place["label"] - 2), f"{title}: {place}")
             # An address that names no phrase opens the paper with a "not found" line, never a guessed place.
             probe.goto(base + "@no-such-phrase-here")
             probe.wait_for_selector(".paper .tie", timeout=60000)

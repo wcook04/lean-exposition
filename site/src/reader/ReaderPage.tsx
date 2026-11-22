@@ -599,7 +599,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         landed = true;
         requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("landing")));
       };
-      window.setTimeout(show, 1500);
+      // Far down a long paper the parts on the way can take a while to lay out on a slow machine.
+      window.setTimeout(show, 3000);
       void going.then(show, show);
     };
     if (initial.saved) {

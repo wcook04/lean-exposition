@@ -1845,9 +1845,9 @@ html.is-reading {
   overflow-wrap: anywhere;
 }
 
-/* The Lean column waits, undrawn but in place, until the alignment has named its rows
-   (RecordDock.tsx), so its list and body never move after they are shown. */
-.lean-page__scroll[data-waiting] {
+/* The Lean page waits, undrawn but in place in its sheet, until the alignment has named its rows
+   (RecordDock.tsx), so its title, buttons, list and body never move after they are shown. */
+.lean-page[data-waiting] {
   visibility: hidden;
 }
 
