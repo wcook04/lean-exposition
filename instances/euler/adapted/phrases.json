@@ -54,7 +54,7 @@
    "name": "",
    "lines": [
     1,
-    1887
+    1885
    ],
    "source_commit": "0a556ace755b1d2f7e94797267e2b1f9781dfec3",
    "topics": [
@@ -502,7 +502,7 @@
     "TorusEuler.Paper.Proof.proposition_5_4_of": "Existence of the finite expansion",
     "TorusEuler.Paper.Proof.proposition_8_1_of": "Constructing the Euler limit",
     "TorusEuler.Paper.Proof.proposition_8_4_of": "Proof of limits off the origin",
-    "TorusEuler.Paper.Proof.remark_1_2": "Proof of smooth terminal extension",
+    "TorusEuler.Paper.Proof.remark_1_2": "Smooth extension away from the origin",
     "TorusEuler.Paper.Proof.theorem_1_1_of": "Assembling the singularity theorem",
     "TorusEuler.Paper.Proof.theorem_4_2_of": "Deriving Theorem 4.2",
     "TorusEuler.Paper.Proof.theorem_5_6_of": "Proving all hierarchy bounds",
@@ -520,7 +520,7 @@
     "TorusEuler.Paper.S5.MeanSolution": "The mean endpoint problem",
     "TorusEuler.Paper.S5.Origin": "The seed at the origin",
     "TorusEuler.Paper.S5.Parent": "The hypotheses on the parent",
-    "TorusEuler.Paper.S5.TransverseSolution": "The transverse correction problem",
+    "TorusEuler.Paper.S5.TransverseSolution": "Zero initial transverse correction",
     "TorusEuler.Paper.S5.Yd": "The oscillatory part of one level",
     "TorusEuler.Paper.S5.Zd": "The field at one level",
     "TorusEuler.Paper.S5.curlCorrection": "The divergence correction",
@@ -1131,7 +1131,7 @@
     "TorusEuler.trace_endpointPhysicalMean_eq_zero_of_volumePreserving": "Divergence of the transported mean",
     "TorusEuler.transportedProfile": "Evaluating a transported profile",
     "TorusEuler.transportedProfile_chainRule": "The two transported chain rules",
-    "TorusEuler.transportedProfile_on_trajectory": "Evaluation on a particle trajectory",
+    "TorusEuler.transportedProfile_on_trajectory": "Evaluate phase along the trajectory",
     "TorusEuler.tsupport_radialEnvelope_subset": "Support of the radial envelope",
     "TorusEuler.unitTorus_sup_le_holderHalf_add_l2": "Interpolating the spatial supremum",
     "TorusEuler.vorticityForm": "The vorticity coefficient",
@@ -1165,7 +1165,10 @@
     "TorusEuler.curlIntegral_eq_top_of_inductive_physical_crossings": "Integrating the curl between launches",
     "TorusEuler.inner_normalize_twoLayerCurl": "Projection cancels the newest curl",
     "TorusEuler.preceding_curl_projection_of_stage_scales": "Vorticity left by the preceding wave",
-    "TorusEuler.slowFastDivergence_curlCompletedProfile": "Divergence of the completed wave"
+    "TorusEuler.slowFastDivergence_curlCompletedProfile": "Divergence of the completed wave",
+    "TorusEuler.Paper.Theorem71Conclusions.oscillation_vanishes": "Oscillation vanishes up to activation",
+    "TorusEuler.localizedCurl_properties": "Smooth periodic curl after localization",
+    "TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing.inductive_activation_clock": "Lower bound on crossing time"
    },
    "notes": {
     "TorusEuler.AmplificationCrossing.eight_div_le_crossingHorizon": "Assume $\\varepsilon>0$, $\\varepsilon_+>0$ and $\\varepsilon_+\\le\\varepsilon/32$. Then $8/\\varepsilon\\le2/\\sqrt{\\varepsilon\\varepsilon_+}$. Thus the proposed upper endpoint lies beyond every reference peak with $2/\\varepsilon\\le\\tau_m\\le3/\\varepsilon$. The paper states the equivalent inequality $(\\varepsilon\\varepsilon_+)^{-1/2}\\ge4/\\varepsilon$ in the proof of Proposition 2.8. This is an algebraic comparison of positive numbers; it uses no wave equation and does not itself locate a crossing.",
@@ -1526,7 +1529,7 @@
     "TorusEuler.Paper.Proof.proposition_5_4_of": "Assuming Theorem 4.2, the formal implication proves the following. Let the parent be smooth, odd, unit-periodic and solenoidal, with smooth periodic pressure on $0<T\\le1$, with bands $2\\mathsf D$ for velocity and $4\\mathsf D$ for its odd residual, gradient and both deformation bounds $\\mathsf D\\ge2$, residual bound $\\lambda^{-5/2}$ and $D^2p_U-DR_U\\le I$. Put $M=DU\\circ X$, $\\kappa=DX^{-T}k_*$, $\\lambda=|\\kappa(t_0,0)|\\ge1$ and $0\\le t_0<T$. The nonzero central seed solves $\\mathbf a_t=-(I-2P_\\kappa)M\\mathbf a$, is transverse, has $\\kappa\\cdot M\\mathbf a\\ge\\mathsf D^{-1}|\\kappa||\\mathbf a|$, and satisfies $0<\\gamma=\\lambda^{3/4}|\\mathbf a(t,0)|\\le1$. Every transverse homogeneous solution $\\mathbf b$ obeys $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$ for $t_0\\le t'\\le t\\le T$. For sufficiently small fixed $\\ell_*$, the projected seed exists, and every depth $P\\ge2$ admits a unique family of retained velocities and normalized pressures satisfying the mean and transverse recursions. For $W=\\sum_{p=1}^P(V_p+C_{p+1}+B_p)$ and $\\mathsf P=\\sum_{p=1}^P(\\mathsf p_p+\\bar q_p)$, $\\widetilde{\\mathbf d}\\cdot W=0$ and the momentum residual is $R_P+R_{\\widetilde\\chi}$. The oscillations and their sources vanish before activation and, at all times, outside the envelope; outside the envelope the remainder $R_P$ is also phase independent. Means need not vanish before activation. Smoothness concerns the closed slab.",
     "TorusEuler.Paper.Proof.proposition_8_1_of": "Assume the frequency conclusions of Lemma 1.3 and the product estimate (5.59). For any common construction satisfying Theorem 7.1, the formal statement produces smooth periodic $u,p$ solving incompressible Euler on $[0,T_\\infty)$, with mean-zero pressure and odd velocity. The data $U_j(0)$ converge to the smooth odd divergence-free $u(0)$ in every $C^{m,1/2}$, and $U_j\\to u$ uniformly in that spatial norm on each $[0,S]$, $S<T_\\infty$. Every maximal solution of finite lifespan from $u(0)$ lasts at least to $T_\\infty$ and agrees with $u$ before it. General maximal-solution existence is not a conclusion here. The spatial $C^{m,1/2}$ norm is $\\sum_{i\\le m}(\\sup|D^if|+[D^if]_{1/2})$, where $D^if$ is the full $i$th derivative tensor in operator norm.",
     "TorusEuler.Paper.Proof.proposition_8_4_of": "Assume Lemma 1.3, a common construction satisfying Theorem 7.1, and its smooth periodic Euler limit from Proposition 8.1. For every compact $K\\subset\\mathbb R^3\\setminus\\mathbb Z^3$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge as $t\\uparrow T_\\infty$, uniformly on $K$ with all spatial derivatives through order $m$. Each limit extends to a $C^m$ field on an open neighbourhood of $K$. Removing the integer lattice represents removal of the torus origin. The time derivative is taken within $[0,T_\\infty)$, including the right derivative at zero. Shrinking oscillation supports give the velocity limits; a separated pressure kernel handles the time derivative. The conclusion is not a smooth Euler continuation through the terminal time.",
-    "TorusEuler.Paper.Proof.remark_1_2": "The formal proof chooses smooth odd divergence-free periodic data and a maximal Euler solution on $[0,T_*)$, where $0<T_*<\\infty$. Velocity is bounded, central vorticity tends to infinity, both gradient and vorticity time integrals diverge, and velocity and its time derivative have all spatial limits away from the origin. In addition, the velocity has a smooth periodic extension through $T_*$ away from that point. Every other maximal solution of finite real lifespan from the chosen data has the same lifespan and velocity. The proof uses an auxiliary existence theorem with selected parameters. It does not establish the auxiliary note’s broader assertion for every admissible threshold, and imposes no Euler equation after $T_*$.",
+    "TorusEuler.Paper.Proof.remark_1_2": "The extension passes through the singular time on the punctured torus. The Euler equation is imposed on the solution before that time.",
     "TorusEuler.Paper.Proof.theorem_1_1_of": "Assume existence of the common approximate sequence selected in Section 8, its smooth Euler limit and initial-data convergence from Proposition 8.1, bounded velocity and central-vorticity blow-up from Proposition 8.2, finite maximality and both divergent integrals from Corollary 8.3, and the local spatial limits from Proposition 8.4. The formal statement then proves existence of smooth odd divergence-free periodic data and an odd maximal Euler solution on $[0,T_*)$, $0<T_*<\\infty$. Velocity stays bounded, $|\\operatorname{curl}u(t,0)|\\to\\infty$, and the time integrals of both $\\|\\nabla u\\|_\\infty$ and $\\|\\operatorname{curl}u\\|_\\infty$ are infinite. On each compact set off the torus origin, $u$ and $\\partial_tu$ have limits with all spatial derivatives. Every maximal solution of finite real lifespan from those data has the same lifespan and velocity before it. The inputs are hypotheses of this assembly; separate numbered theorems establish them.",
     "TorusEuler.Paper.Proof.theorem_4_2_of": "On $I=[0,T]$, $0<T\\le1$, let $U$ be smooth, unit-periodic and divergence free, $X$ its flow from time zero, $F=D_aX$, $M=(DU)\\circ X$, $K=F^TF$, $\\Omega=F^T(M^T-M)F$, and $H^\\#=-(M_t+M^2)\\le I$ as quadratic forms. Assume $\\|F^{-1}\\|_\\infty\\le D\\ge1$, $\\|M\\|_\\infty\\le L$, $\\|K\\|_\\infty\\le K_0$, $\\|D_aK\\|_\\infty\\le K_1$, $\\|\\Omega\\|_\\infty\\le\\Omega_0$, $\\|D_a\\Omega\\|_\\infty\\le\\Omega_1$, with nonnegative bounds. For $L_{\\rm src}\\in C(I;C^{0,1/2}(\\mathbb T^3))$, solve $Kv-J(\\Omega v)+L_{\\rm src}=c+G_\\phi$, $z_t=v$, $z(0)=z(T)=0$, where $Jw(t)=\\int_0^tw(s)\\,ds$. The fields $z,v,c$ are weakly divergence free; $z\\in C^1_tC^{0,1/2}$, $v,G_\\phi\\in C_tC^{0,1/2}$, and $G_\\phi=\\nabla_a\\phi$ for a periodic potential at each time. There are absolute $C\\ge0$ and an integer $p\\ge0$ such that $A=C(D+L+K_0+K_1+\\Omega_0+\\Omega_1)^p$ gives $\\|v\\|_{C_tC^{0,1/2}}\\le A\\|L_{\\rm src}\\|_{C_tC^{0,1/2}}$ and $\\|(\\mathbb PK(t))^{-1}\\mathbb P\\|\\le A$ uniformly on $I$. This is conditional on Lemma 4.1, Theorem A.1 and Lemma A.2. It also supplies smooth Eulerian corrections for smooth force sources $L_{\\rm src}=-J(F^T(f\\circ X))$, with a reconstructed smooth label pressure. The coefficient inputs use first derivative suprema.",
     "TorusEuler.Paper.Proof.theorem_5_6_of": "Assuming Propositions 5.1, 5.2, 5.4, Lemmas 5.3, 5.5, D.1 and B.1 (the Fourier cutoff lemma, including Bernstein’s inequality), the formal implication proves Theorem 5.6 for each depth-$P$ expansion. Under the smooth parent bounds, central transverse stability and $\\mathsf D^C\\lambda^{-1/12}\\le1$, level-$p$ oscillations decay as $\\lambda^{-5/4-2(p-1)/3}$, means as $\\lambda^{-5/2-2(p-2)/3}$ and $C_{p+1}$ as $\\lambda^{-9/4-2(p-1)/3}$, up to $C_{n,p}\\mathsf D^C$. The remainder is bounded by $C_{m,P}\\lambda^{-5/4-2P/3}$. All derivative orders apply to the same profiles; the parent exponent is independent of order, level and depth. The transverse stability assumption is $|\\mathbf b(t)|/\\gamma(t)\\le\\mathsf D|\\mathbf b(t')|/\\gamma(t')$ for every transverse homogeneous solution $\\mathbf b$ and $t_0\\le t'\\le t\\le T$.",
@@ -1544,7 +1547,7 @@
     "TorusEuler.Paper.S5.MeanSolution": "On $[0,T]$, let $X$ be the parent flow, $M=DU\\circ X$ and $\\mathbf d=(D_aX)^{-T}\\nabla_a$. The formal condition on smooth phase-independent $B,\\bar q$ is $B_t+MB+\\mathbf d\\bar q=\\bar f$, with smooth periodic fields $z,v$ satisfying $z_t=v$, $\\operatorname{div}_a v=0$, $z(0)=z(T)=0$ and $B=D_aXv$. Volume preservation converts this to $\\mathbf d\\cdot B=0$, as in (5.11). The pressure’s spatial mean is not fixed here. The conditions select $B(0)$ through both displacement endpoints; they do not require zero initial velocity or vanishing before activation.",
     "TorusEuler.Paper.S5.Origin": "On $[t_0,T]$, put $M=DU\\circ X$, $\\kappa=DX^{-T}k_*$, and $\\gamma=\\lambda^{3/4}|c|$. The formal conditions require $\\kappa,c\\ne0$, $\\kappa\\cdot c=0$, $\\kappa_t=-M^T\\kappa$ and $c_t=-(I-2P_\\kappa)Mc$. For every transverse solution $b$ of the same amplitude equation and $t_0\\le t'\\le t\\le T$, require $|b(t)|/|c(t)|\\le\\mathsf D|b(t')|/|c(t')|$, and require $\\kappa\\cdot Mc\\ge\\mathsf D^{-1}|\\kappa||c|$. Finally $\\gamma\\le1$. These are hypotheses, not an existence theorem. With $\\lambda\\ge1$ supplied separately, $\\gamma>0$ and the stability inequality is unchanged when its denominators are replaced by $\\gamma$. The paper’s stronger normalization $\\max\\gamma=1$ is not required.",
     "TorusEuler.Paper.S5.Parent": "The domain is represented by periodic fields on $\\mathbb R^3$. Require $T\\le1$, $\\mathsf D\\ge2$, $\\lambda\\ge1$, smooth odd divergence-free $U$ with flow $X$, and Fourier support $|\\xi|\\le2\\mathsf D$. Operator norms of $\\nabla U$, $D_aX$ and its inverse are at most $\\mathsf D$. The pressure $p$ is smooth and periodic; $R_U=U_t+U\\cdot\\nabla U+\\nabla p$ is odd, supported in $|\\xi|\\le4\\mathsf D$, and has supremum norm at most $\\lambda^{-5/2}$. Finally $D^2p-\\nabla R_U\\le I$ as quadratic forms. The time derivative is within $[0,T]$. Unlike §5.1, this condition imposes neither $\\int p=0$ nor $\\Delta p=-\\operatorname{tr}((\\nabla U)^2)$, and it does not assume $\\operatorname{div}R_U=0$. The numbered results separately add $T>0$.",
-    "TorusEuler.Paper.S5.TransverseSolution": "Given the parent flow, its gradient $M$, transported covector $\\kappa$ and forcing profile $f$, a transverse solution on $[0,T]$ satisfies $V_t+MV+\\kappa\\partial_s\\pi=f$, $\\kappa\\cdot V=0$, $\\langle V\\rangle_s=0$ and $V(0,a,s)=0$. The phase pressure is also normalized by $\\langle\\pi\\rangle_s=0$. These are smooth profiles with phase period one and the simultaneous label-phase translation law giving a periodic physical field. Time derivatives hold the label fixed. This is the problem used for (1.12) after its specified forcing is inserted. The definition describes a solution; it does not assert existence, uniqueness or a bound.",
+    "TorusEuler.Paper.S5.TransverseSolution": "The transverse solution satisfies its forced momentum equation, has zero phase average and vanishes initially for every label and phase.",
     "TorusEuler.Paper.S5.Yd": "The paper’s $C_p$ is stored at index $p-1$; the physical expansion sets $C_1=0$. The field $Y_p=V_p+C_p$ groups the new transverse velocity with the divergence correction produced by $V_{p-1}$. This is the convention at the start of §5.5, reflecting the extra frequency gain of the correction. The sum itself imposes no equation; its size and constraints follow from the expansion equations and Theorem 5.6.",
     "TorusEuler.Paper.S5.Zd": "For an indexed family of profiles, the formal definition gives $Z_p=V_p+C_p+B_p$ in the paper's notation. Here $C_p$ is generated by the preceding oscillation $V_{p-1}$: the stored correction index is one smaller than the paper index. The formula defines the level field used in the quadratic interactions of §1.3 and §5.5. It does not impose that $B_p$ is phase independent or that $V_p$ is transverse; these belong to the expansion equations. At index zero, subtraction is truncated to zero, so the intended mathematical use is at levels $p\\ge1$.",
     "TorusEuler.Paper.S5.curlCorrection": "Profiles are smooth on $[0,T]$, with phase period one and $F(t,a+n,s+k_*\\cdot n)=F(t,a,s)$. Nonvanishing of the transported covector is supplied by the parent geometry. The correction is $C[V]=\\mathbf d\\times Q[V]$, with $Q[V]=-\\partial_s^{-1}((\\kappa\\times V)/|\\kappa|^2)$. For zero-mean transverse profiles it gives $V+C[V]=\\widetilde{\\mathbf d}\\times Q[V]$, as used in §5.5. The formal operation acts on the oscillatory part of a general profile; the divergence identity requires the zero-mean and transversality assumptions.",
@@ -2155,7 +2158,7 @@
     "TorusEuler.trace_endpointPhysicalMean_eq_zero_of_volumePreserving": "This is pointwise at a label $a$: $X$ is twice differentiable, $v$ differentiable, $\\det D_aX=1$ in a neighbourhood and $G(D_aX)=I$. If $X$ preserves volume, $v$ is divergence free in label coordinates and $B=D_aXv$, then $\\mathbf d\\cdot B=0$. The statement assumes the necessary spatial derivatives and inverse deformation. This identifies the divergence condition in the endpoint formulation with the mean equation (5.11), using the volume-preserving change of variables.",
     "TorusEuler.transportedProfile": "Given maps $A(t,x)$, a fixed $k_*\\in\\mathbb R^3$ and a profile $f(t,a,s)$, the formal definition is $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$. For the parent flow, $A(t,\\cdot)=X(t,\\cdot)^{-1}$, so it is exactly the evaluation convention of §3.1. The formula itself does not assume that $A$ is an inverse or solves a transport equation. It is defined on all arguments and imposes no regularity, spatial periodicity or label support. Those properties must be established before this evaluated expression is used as a smooth field on the torus.",
     "TorusEuler.transportedProfile_chainRule": "At $(t,x)$, assume the inverse label map and profile have their indicated joint derivatives, and that $A_t+D_xA\\,U=0$. Let $a=A(t,x)$, $s=k_*\\cdot a$ and $\\kappa=(D_xA)^Tk_*$. The formal statement gives $D_xf^\\natural=D_af\\,D_xA+(\\partial_sf)\\kappa^T$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=\\partial_tf$, with the profile derivatives evaluated at $(t,a,s)$. These are (3.1). Time derivatives are taken within the given time set, which must determine a unique derivative at $t$; a nondegenerate closed interval includes the appropriate one-sided endpoints. Periodicity and nonvanishing of the wave vector are unnecessary for the chain rule.",
-    "TorusEuler.transportedProfile_on_trajectory": "At a fixed time, suppose $A(t,X(t,a))=a$. For any profile $f$ and any real wave vector $k_*$, the formal statement proves $f^\\natural(t,X(t,a))=f(t,a,k_*\\cdot a)$, where $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$. This is the evaluation convention used for the leading oscillation in §3.1. Only the inverse relation at the label in question is required; there is no derivative, trajectory equation, periodicity or nonzero-covector hypothesis. Constancy of the phase along the parent follows by applying this identity with the phase profile itself.",
+    "TorusEuler.transportedProfile_on_trajectory": "The transported field evaluated at the particle position equals the label profile evaluated at the label’s phase.",
     "TorusEuler.tsupport_radialEnvelope_subset": "For the chosen radial envelope $g(a)=\\chi(|a|/\\ell_*)$ with $\\ell_*>0$, the closure of the set where $g\\ne0$ lies in $\\{a:|a|\\le2\\ell_*\\}$. This is a closed-support statement, so it includes possible boundary points where the function itself is zero. The theorem does not mention the periodic cell. To obtain the sentence in §5.1, also use $\\ell_*\\le\\mathsf D^{-3}$ and $\\mathsf D\\ge2$, which give $2\\ell_*\\le1/4<1/2$; hence the support lies strictly inside the centered unit cell. The envelope acts in label space, before transport to physical space.",
     "TorusEuler.unitTorus_sup_le_holderHalf_add_l2": "Let $v$ be a continuous normed-space-valued field on the unit torus and suppose $\\|v(a)-v(b)\\|\\le H\\sqrt{d(a,b)}$ with $H\\ge0$. For $0<\\varepsilon\\le1$, $\\|v\\|_\\infty\\le\\varepsilon H+\\varepsilon^{-3}(\\int\\|v\\|^2)^{1/2}$. Measure is normalized to total mass one. This is the averaging inequality used in Lemma A.2; the exponent three reflects the spatial dimension. The paper writes a full half-Hölder norm and an unspecified constant, whereas this formal estimate uses the supplied seminorm bound and explicitly restricts the small parameter.",
     "TorusEuler.vorticityForm": "For bounded operators $F,M$ on a real Hilbert space, define $\\Omega=F^*(M^*-M)F$. In the three-dimensional application, the adjoints are transposes, $F=D_aX$ and $M=(\\nabla u)\\circ X$, so this is precisely (4.1). The sign is $M^T-M$, consistent with the paper's velocity-gradient convention. No invertibility, flow equation or Euler equation is assumed in this definition. The time evolution relation with $K=F^*F$ is established separately using $F_t=MF$.",
@@ -2189,7 +2192,10 @@
     "TorusEuler.curlIntegral_eq_top_of_inductive_physical_crossings": "The curl on each sufficiently late interval has a lower bound of order at least $\\mu^{1/8}$ after absorbing smaller errors. The crossing estimate bounds the product of this scale and the interval length below by a positive multiple of the gain parameter. As those gains tend to infinity, the curl integral diverges.",
     "TorusEuler.inner_normalize_twoLayerCurl": "The leading curl of a rank-one wave is the cross product of its wave vector and amplitude. Taking the scalar product with the normalized wave vector kills this term for every value of the time cutoff. The background and the preceding curl keep their projections.",
     "TorusEuler.preceding_curl_projection_of_stage_scales": "The geometry of the moving frame gives a lower bound on the component of the preceding curl in the newest wave direction. Combining the retained strength, of order at least $\\mu^{1/4}$, with the length bound for the normalized wave vector leaves a positive multiple of $\\mu^{1/8}$, where $\\mu$ is the preceding frequency.",
-    "TorusEuler.slowFastDivergence_curlCompletedProfile": "The slow and fast divergence terms sum to zero for the curl-completed profile. Evaluation along the phase yields the corresponding divergence-free physical field."
+    "TorusEuler.slowFastDivergence_curlCompletedProfile": "The slow and fast divergence terms sum to zero for the curl-completed profile. Evaluation along the phase yields the corresponding divergence-free physical field.",
+    "TorusEuler.Paper.Theorem71Conclusions.oscillation_vanishes": "For each stage from the second onward, its oscillatory velocity field is zero on the closed interval from time zero to its activation time.",
+    "TorusEuler.localizedCurl_properties": "At a time with a smooth lattice-equivariant inverse flow, a smooth transported potential vanishing near the cell boundary gives a smooth periodic curl for an arbitrary real wave vector.",
+    "TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing.inductive_activation_clock": "Under the growth and scale hypotheses the clock theorem bounds the time from launch to crossing from below. The curl integral proof then uses this lower bound."
    }
   }
  ],
@@ -2980,147 +2986,6 @@
       "url": null,
       "where": "Section 1.1, stationary-shear flow; Section 6.1",
       "supports": "The explicit initial flow and its use in the first localized wave."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e01.correction.mean-source",
-   "from": "The mean correction $B_2$ cancels the phase average of $H_2$ together with the parent residual.",
-   "to": "The mean correction $B_2$ cancels the phase average of $H_2$ together with the parent residual.",
-   "role": "statement",
-   "topic": "hierarchy",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.HierarchyOperators.level_two_meanSource",
-     "file": "TorusEuler/HierarchySourceAssembly.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "At depth $P\\ge2$, assume $C_1=B_1=0$, zero phase average of the linear terms in $H_2$, and $\\langle(C_2\\cdot\\kappa)\\partial_sV_1\\rangle_s=\\langle J\\rangle_s$ for a specified profile $J$. The formal identity is $-\\langle H_2\\rangle_s-R=-(\\langle(V_1\\cdot\\mathbf d)V_1\\rangle_s+\\langle J\\rangle_s+R)$. Here $\\mathbf d$ differentiates the slow coefficient at fixed phase; in the geometric application $J=(\\mathbf d\\cdot V_1)V_1$ and $R=R_U\\circ X$. Averaging and the two advection operations are supplied linear and bilinear operations. This rewrites the forcing; it does not construct $B_2$ or prove its differential equation or divergence condition.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The mean-source formula is combined with the endpoint inverse to construct the correction."
-     }
-    },
-    {
-     "name": "TorusEuler.Paper.S5.meanSource",
-     "file": "TorusEuler/Paper/S5/Vocabulary.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "The formal definition prescribes the mean source as $-\\langle H_p\\rangle_s-\\mathbf1_{p=2}R_U\\circ X$. At $p=2$, this is precisely the force needed to cancel the averaged error and parent residual. The existence of a mean correction satisfying that equation comes from the endpoint inverse, not from this source formula.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The mean-source formula is combined with the endpoint inverse to construct the correction."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "At level two the mean equation is forced by $-\\langle H_2\\rangle_s-R_U$, so it cancels both the averaged wave error and the parent’s residual. Section 5.5.1 makes the parent residual appear only at this level. This is the step that removes the inherited forcing instead of retaining it in the limiting Euler equation. One formal expression prescribes precisely $-\\langle H_p\\rangle_s-\\mathbf1_{p=2}R_U\\circ X$, while the algebraic theorem rewrites the level-two average using $C_1=B_1=0$ and the phase-integration identity for $C_2$. Both links are weaker than the cancellation assertion because they specify or simplify the source; existence of $B_2$ with that source comes from the endpoint inverse.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 1.3, mean correction; Section 5.5.1, equations (5.26)–(5.27)",
-      "supports": "The level-two mean source cancels the parent residual as well as the averaged wave error."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e01.correction.mean-equation",
-   "from": "$D_t B_2+(\\nabla U)B_2+\\nabla q=-\\langle H_2\\rangle_s-R_U$ with $\\operatorname{div}B_2=0$.",
-   "to": "$D_t B_2+(\\nabla U)B_2+\\nabla q=-\\langle H_2\\rangle_s-R_U$ with $\\operatorname{div}B_2=0$.",
-   "role": "statement",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.paper_mean_inverse_smooth_force_of_flow",
-     "file": "TorusEuler/PaperMeanFlowAdapter.lean",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_note": "Let $U$ be smooth, periodic and divergence free on $[0,T]\\times\\mathbb R^3$, $0<T\\le1$, with flow $X(0,a)=a$, $F=D_aX$ and $M=(D_xU)\\circ X$. Assume uniform Euclidean operator bounds $\\|F^{-1}\\|\\le D$, $\\|D_xU\\|\\le L_0$, with $D\\ge1$, $L_0\\ge0$, and $-(M_t+M^2)\\le I$ as a quadratic form. For every smooth periodic physical force $f$, the formal statement supplies a smooth periodic divergence-free correction $b$ and pressure $q$ satisfying $\\partial_tb+(U\\cdot\\nabla)b+(b\\cdot\\nabla)U+\\nabla q=f$, with zero displacement at both endpoints. Taking $f=-\\langle H_2\\rangle_s-R_U$ yields the paper's equation for $B_2$, once this particular force is known to be smooth and periodic. Its label representation is $f\\circ X$; an arbitrary label force is not automatically this pullback.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The physical inverse theorem includes the forced correction required by the construction."
-     }
-    },
-    {
-     "name": "TorusEuler.HierarchyOperators.level_two_meanSource",
-     "file": "TorusEuler/HierarchySourceAssembly.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "At depth $P\\ge2$, assume $C_1=B_1=0$, zero phase average of the linear terms in $H_2$, and $\\langle(C_2\\cdot\\kappa)\\partial_sV_1\\rangle_s=\\langle J\\rangle_s$ for a specified profile $J$. The formal identity is $-\\langle H_2\\rangle_s-R=-(\\langle(V_1\\cdot\\mathbf d)V_1\\rangle_s+\\langle J\\rangle_s+R)$. Here $\\mathbf d$ differentiates the slow coefficient at fixed phase; in the geometric application $J=(\\mathbf d\\cdot V_1)V_1$ and $R=R_U\\circ X$. Averaging and the two advection operations are supplied linear and bilinear operations. This rewrites the forcing; it does not construct $B_2$ or prove its differential equation or divergence condition.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The mean-source formula is combined with the endpoint inverse to construct the correction."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "With $D_t=\\partial_t+U\\cdot\\nabla$, the correction solves $D_tB_2+(\\nabla U)B_2+\\nabla q=-\\langle H_2\\rangle_s-R_U$ and $\\operatorname{div}B_2=0$. Section 5.5.1 applies the endpoint inverse to this smooth periodic source, after computing its phase average. The formal inverse treats every smooth periodic force over a smooth periodic divergence-free parent on $0<T\\le1$, with bounded inverse deformation and gradient and $H^\\#=-(M_t+M^2)\\le I$ along the flow. That link is stronger in its choice of force; the displayed right side must first be identified with a physical force whose label expression is its pullback by $X$. The other link is weaker because it only rewrites the level-two source using the zero first mean and correction and the phase-average cancellation, without constructing $B_2$.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Equation (1.6); Section 1.3, mean equation; Section 5.5.1; Theorem 4.2",
-      "supports": "The particular mean equation is obtained from the general forced endpoint inverse."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e01.correction.mean-endpoints",
-   "from": "The Jacobi inverse selects $B_2(0)$ so that the correction leaves the truncated parent’s final particle positions fixed to first order.",
-   "to": "The Jacobi inverse selects $B_2(0)$ so that the correction leaves the truncated parent’s final particle positions fixed to first order.",
-   "role": "explanation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.PaperSmoothMeanSolution",
-     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "The formal definition imposes $z(0)=z(T)=0$ and $z_t=v$ for label fields, with $B=Fv$. Thus $\\xi=Fz$ has zero physical displacement at both endpoints. This states the first-order endpoint requirement; it does not prove that a solution or an initial value realizing it exists.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The endpoint solution conditions are realized by the mean inverse theorem."
-     }
-    },
-    {
-     "name": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
-     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "Under the same smooth parent and forcing on $[0,T]$, $0<T\\le1$, with $H^\\#\\le I$, the formal theorem proves equality of the physical means of any two endpoint solutions. Consequently $B_2(0)$ is unique. It compares existing solutions and must be combined with the inverse's existence result to justify the paper's selection claim.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. Uniqueness of an existing endpoint correction complements the inverse theorem’s existence."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "For the level-two correction, $B_2(0)$ is selected so that the induced physical displacement vanishes at both time endpoints. Writing $F=D_aX$, $B_2\\circ X=Fz_t$ and $\\xi=Fz$ turns this into $z(0)=z(T)=0$. Theorem 4.2 supplies this endpoint solution for a smooth periodic source when $0<T\\le1$ and the parent’s effective Hessian is bounded above by $I$. The first formal link only imposes the smooth label equations and endpoints, and the second proves that two existing solutions for the same parent and source have the same pulled-back physical correction. Both are weaker than selection with existence: the inverse theorem is also needed, and the preserved final positions are only a first-order statement.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 1.3, endpoint choice for the mean; Section 4.1; Theorem 4.2",
-      "supports": "The endpoint condition and uniqueness of the selected initial mean correction."
      }
     ],
     "grounded": true
@@ -11634,221 +11499,6 @@
       "url": null,
       "where": "Section 3.1, opening paragraph and lattice-equivariance sentence",
       "supports": "The lattice-equivariance of the lifted parent flow."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "localized.transported-covector",
-   "from": "The transported phase $\\phi\\circ X(t,\\cdot)^{-1}$ has Eulerian gradient $\\kappa=\\mathbf d\\phi=(D_aX)^{-T}k_*$ at $X(t,a)$.",
-   "to": "The transported phase $\\phi\\circ X(t,\\cdot)^{-1}$ has Eulerian gradient $\\kappa=\\mathbf d\\phi=(D_aX)^{-T}k_*$ at $X(t,a)$.",
-   "role": "definition",
-   "topic": "localized-wave",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.labelWaveVector",
-     "file": "TorusEuler/LabelFlowGeometry.lean",
-     "relation": "defines",
-     "fidelity": "same",
-     "fidelity_note": "The formal definition is the transpose of the reverse-flow derivative at the current position, applied to $k_*$. For the smooth parent flow, the reverse derivative equals $(D_aX)^{-1}$, giving the paper's $(D_aX)^{-T}k_*$. Nonzero $k_*$ and invertibility ensure the resulting covector is nonzero; those facts are not built into the formula itself."
-    },
-    {
-     "name": "TorusEuler.hasGradientAt_transportedPhase",
-     "file": "TorusEuler/TransportedPhase.lean",
-     "relation": "defines",
-     "fidelity": "stronger",
-     "fidelity_note": "For any differentiable map $A$ and any $k_*$, the formal theorem proves $\\nabla(k_*\\cdot A)=(DA)^Tk_*$. Taking $A=X(t,\\cdot)^{-1}$ gives the paper's transported phase gradient. The identity is valid without a flow equation, periodicity or the nonzero-covector assumption used later for division by $|\\kappa|^2$.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The local chain rule includes the smooth transported fields used by the construction."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "For $\\phi(a)=k_*\\cdot a$, the phase in physical coordinates is $\\phi(X(t,\\cdot)^{-1}(x))$, whose gradient at $x=X(t,a)$ is $\\kappa=F^{-T}k_*$ with $F=D_aX$. This follows directly from the spatial chain rule and identifies the local direction and frequency of the transported oscillation. The formal covector formula uses the transpose of the derivative of the reverse flow, agreeing with the paper once the inverse-flow identity is used. The separately linked gradient theorem is stronger in scope: it applies to any differentiable inverse-label candidate, without incompressibility, periodicity or $k_*\\ne0$; nonvanishing matters only when later formulas divide by $|\\kappa|^2$.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 3.1, transported phase and equation (3.1)",
-      "supports": "The chain-rule identification of the transported wave covector."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "localized.profile-graph",
-   "from": "$$f^\\natural(t,X(t,a))=f(t,a,\\phi(a)),\\qquad\n \\widetilde{\\mathbf d}=\\mathbf d+\\kappa\\partial_s .$$",
-   "to": "$$f^\\natural(t,X(t,a))=f(t,a,\\phi(a)),\\qquad\n \\widetilde{\\mathbf d}=\\mathbf d+\\kappa\\partial_s .$$",
-   "role": "definition",
-   "topic": "localized-wave",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.transportedProfile",
-     "file": "TorusEuler/TransportedPhase.lean",
-     "relation": "defines",
-     "fidelity": "weaker",
-     "fidelity_note": "The formal definition gives $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$. Under the inverse relation $A(t,X(t,a))=a$, this yields the evaluation in the display. It does not define or prove the operator $\\widetilde{\\mathbf d}$; differentiability is not assumed by the formula.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The profile evaluation formula is differentiated only after the inverse-flow and smoothness hypotheses are supplied."
-     }
-    },
-    {
-     "name": "TorusEuler.transportedProfile_on_trajectory",
-     "file": "TorusEuler/TransportedPhase.lean",
-     "relation": "defines",
-     "fidelity": "weaker",
-     "fidelity_note": "Assuming $A(t,X(t,a))=a$, the formal theorem proves the displayed evaluation identity at that particle. It is valid for arbitrary profiles and wave vectors, but it does not state the slow-plus-fast differentiation rule or impose any regularity.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The inverse-flow substitution proves the stated trajectory evaluation."
-     }
-    },
-    {
-     "name": "TorusEuler.transportedProfile_chainRule",
-     "file": "TorusEuler/TransportedPhase.lean",
-     "relation": "defines",
-     "fidelity": "same",
-     "fidelity_note": "Put $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$ and $\\kappa=(D_xA)^Tk_*$. At the point considered, assume $A$ has a joint first derivative in time and space, $f$ has a joint first derivative in time, label and phase, and $A_t+D_xA\\,U=0$. The time set must determine a unique derivative; a nondegenerate closed interval permits one-sided endpoint derivatives. The formal statement gives $D_xf^\\natural=D_af\\,D_xA+(\\partial_sf)\\kappa^T$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=f_t$, with all derivatives of $f$ evaluated at the profile graph. No global smoothness, periodicity or incompressibility is required. Taking $A=X^{-1}$ identifies the spatial operator with $\\mathbf d+\\kappa\\partial_s$."
-    }
-   ],
-   "explanation": {
-    "text": "For a profile $f(t,a,s)$ with independent phase $s$, evaluate $f^\\natural(t,X(t,a))=f(t,a,k_*\\cdot a)$ and set $\\kappa=F^{-T}k_*$, where $F=D_aX$. Differentiating in physical space then either differentiates the label dependence through $F^{-1}$ or differentiates the phase, giving $\\widetilde{\\mathbf d}=F^{-T}\\nabla_a+\\kappa\\partial_s$. This separation is the source of the slow and fast terms in the later divergence correction. The formal evaluation formula and its trajectory identity each supply only the first part of the display, hence the weaker verdicts, while the differentiable chain-rule statement supplies the operator interpretation under the inverse-label transport equation.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 3.1, profile evaluation and (3.1)",
-      "supports": "The evaluated profile and separation of label and phase derivatives."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "localized.graph-chain-rules",
-   "from": "$$\\begin{equation}\n \\nabla_x f^\\natural=(\\widetilde{\\mathbf d}f)^\\natural,\\qquad\n (\\partial_t+U\\cdot\\nabla_x)f^\\natural=(f_t)^\\natural. \\tag{3.1}\n\\end{equation}$$",
-   "to": "$$\\begin{equation}\n \\nabla_x f^\\natural=(\\widetilde{\\mathbf d}f)^\\natural,\\qquad\n (\\partial_t+U\\cdot\\nabla_x)f^\\natural=(f_t)^\\natural. \\tag{3.1}\n\\end{equation}$$",
-   "role": "statement",
-   "topic": "localized-wave",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.transportedProfile_chainRule",
-     "file": "TorusEuler/TransportedPhase.lean",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_note": "Put $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$ and $\\kappa=(D_xA)^Tk_*$. At the point considered, assume $A$ has a joint first derivative in time and space, $f$ has a joint first derivative in time, label and phase, and $A_t+D_xA\\,U=0$. The time set must determine a unique derivative; a nondegenerate closed interval permits one-sided endpoint derivatives. The formal statement gives $D_xf^\\natural=D_af\\,D_xA+(\\partial_sf)\\kappa^T$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=f_t$, with all derivatives of $f$ evaluated at the profile graph. No global smoothness, periodicity or incompressibility is required. The paper’s smooth transported fields meet these pointwise hypotheses, which are weaker than its full setting.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The local chain rule includes the smooth transported fields used by the construction."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "Let $A=X(t,\\cdot)^{-1}$, $\\kappa=(D_xA)^Tk_*$ and $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$. The ordinary chain rule, together with $A_t+D_xA\\,U=0$, gives $\\nabla_xf^\\natural=(\\mathbf d f+\\kappa\\partial_sf)^\\natural$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=(f_t)^\\natural$. These identities turn the Eulerian equations into profile equations without introducing a transported-phase time derivative. The formal statement proves the same identities from first derivatives at the point considered, with one-sided time derivatives at the ends of a nondegenerate closed interval; it is stronger than the paper's smooth periodic setting because global regularity and incompressibility are unnecessary.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 3.1, equation (3.1)",
-      "supports": "The spatial and material chain rules for evaluated profiles."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "r2.s34.phase-lattice",
-   "from": "The phase modulo one is periodic in $a$ exactly when $k_*\\in\\mathbb Z^3$.",
-   "to": "The phase modulo one is periodic in $a$ exactly when $k_*\\in\\mathbb Z^3$.",
-   "role": "statement",
-   "topic": "localized-wave",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.spatiallyPeriodic_modOne_linearPhase_iff",
-     "file": "TorusEuler/FrequencyLattice.lean",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_note": "The formal theorem states that $a\\mapsto k_*\\cdot a$ modulo one is invariant under all integer label translations exactly when every coordinate of $k_*$ is an integer. This is the lattice condition in the paper. It is a statement about the circle-valued phase; the real-valued linear phase itself need not be periodic."
-    }
-   ],
-   "explanation": {
-    "text": "The circle-valued phase $a\\mapsto k_*\\cdot a\\pmod1$ descends to $\\mathbb T^3$ exactly when $k_*\\in\\mathbb Z^3$. An integer translation $n$ changes it by $k_*\\cdot n$, and testing the three coordinate translations gives the necessity as well as the sufficiency of integral coordinates. This explains why a general real wave vector requires localization and periodic extension instead of global evaluation of the phase alone. The formal statement has exactly this equivalence for the phase modulo one; it does not claim that the real-valued linear function $k_*\\cdot a$ is periodic.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 3.1, paragraph following (3.1)",
-      "supports": "The lattice condition for the phase modulo one and the need for localization."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "localized.cell-extension",
-   "from": "To allow arbitrary $k_*$, we evaluate the oscillatory profiles on the lifted label cell $[-1/2,1/2]^3$ and extend periodically. They vanish near the cell boundary, so the extension is smooth.",
-   "to": "To allow arbitrary $k_*$, we evaluate the oscillatory profiles on the lifted label cell $[-1/2,1/2]^3$ and extend periodically. They vanish near the cell boundary, so the extension is smooth.",
-   "role": "statement",
-   "topic": "localized-wave",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.localizedTransportedProfile",
-     "file": "TorusEuler/WaveDivergence.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "The formal definition evaluates the profile at $s=k_*\\cdot a$, extends it periodically from the centered label cell and composes with the inverse label map. It permits arbitrary real $k_*$. The formula alone does not assert smoothness or even require vanishing near the cell boundary.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. Smoothness and transport require the support and inverse-flow hypotheses supplied for the constructed wave."
-     }
-    },
-    {
-     "name": "TorusEuler.spatiallyPeriodic_localizedTransportedProfile",
-     "file": "TorusEuler/WaveDivergence.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "For an inverse map commuting with integer translations, the formal theorem proves periodicity of the extended field for every real wave vector. No regularity or boundary vanishing is assumed. The paper's additional smoothness conclusion requires the collar and differentiability theorem in the next row.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. Periodicity and smoothness of the cell extension are proved by separate arguments."
-     }
-    },
-    {
-     "name": "TorusEuler.contDiff_localizedTransportedProfile",
-     "file": "TorusEuler/WaveDivergence.lean",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_note": "Suppose the evaluated label field and inverse label map have the asserted differentiability order and the label field vanishes whenever some coordinate lies within a fixed positive collar of the cell boundary. The formal theorem preserves that regularity after periodization and composition, including smoothness. This is the seam-free extension used in the paper; no integer-coordinate restriction on $k_*$ is needed."
-    }
-   ],
-   "explanation": {
-    "text": "For arbitrary $k_*\\in\\mathbb R^3$, evaluate $f(t,a,k_*\\cdot a)$ on the centered label cell and extend the resulting label field with period one in each coordinate. If this evaluated field vanishes in a positive collar of the cell boundary, its copies meet smoothly; composition with the smooth inverse flow then gives a smooth periodic physical field. Section 3.1 uses this construction to avoid an integrality restriction on the wave vector. The formal formula and periodicity result each establish only part of the claim, whereas the regularity theorem gives the matching smoothness conclusion with an explicit boundary collar and regularity of both the evaluated label field and the inverse map.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 3.1, paragraph following (3.1)",
-      "supports": "Periodic extension of a localized profile and smoothness across the cell boundary."
      }
     ],
     "grounded": true
@@ -26175,101 +25825,6 @@
    }
   },
   {
-   "id": "r5-ind-figure4-inactive",
-   "from": "In each row the oscillation vanishes on the thick solid segment $[0,t_i]$.",
-   "to": "In each row the oscillation vanishes on the thick solid segment $[0,t_i]$.",
-   "role": "statement",
-   "topic": "induction",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.theorem_7_1",
-     "file": "TorusEuler/Paper/Spine.lean",
-     "relation": "states",
-     "fidelity": "stronger",
-     "fidelity_note": "The caption depicts $i\\ge4$. The formal theorem identifies the expansion oscillation and proves $O_i=0$ on $[0,t_i]$ for every $i\\ge2$, so it covers the depicted stages and also the two earlier indices.",
-     "matters": {
-      "kind": "convention",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The vanishing assertion includes all stages depicted in the paper and also two earlier stages."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "In Figure 4, the solid interval $[0,t_i]$ marks the part of stage $i$ before its oscillation becomes active, so $O_i=0$ there. Theorem 7.1 and §7.2, item 5 establish this from the cutoff and zero initial data of the higher oscillatory profiles, including the activation endpoint. The visual distinction explains why later stages change an earlier-time velocity only through the small smooth remainder. The linked numbered formal theorem identifies the actual expansion oscillation and proves this vanishing for every $i\\ge2$, which is stronger than the caption's depicted cases $i\\ge4$.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "§7, Figure 4 and Theorem 7.1; §7.2, item 5",
-      "supports": "The inactive interval represented by the figure’s solid segments."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "r5-ind-figure4-crossing",
-   "from": "The dashed segment ends at the crossing $t_{i+1}$, when the next wave is activated.",
-   "to": "The dashed segment ends at the crossing $t_{i+1}$, when the next wave is activated.",
-   "role": "definition",
-   "topic": "induction",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.InductiveEulerConstruction.centralWaves",
-     "file": "TorusEuler/InductiveStageConstruction.lean",
-     "relation": "defines",
-     "fidelity": "same",
-     "fidelity_note": "For each later wave in a supplied construction, the central-wave data identify the selected physical crossing with the next activation time. The internal index zero refers to wave two, so its crossing is $t_3$. This identifies the end of the caption's segment; it does not assert that the intermediate fields are exact Euler solutions."
-    }
-   ],
-   "explanation": {
-    "text": "The dashed segment for wave $i$ ends at $t_{i+1}$, the selected crossing where its coupling ratio reaches the value prescribed for the next wave. Section 6.2 chooses the first crossing within the reference bracket, and §7.2, item 3 uses it as the next activation time. The figure therefore distinguishes the start of a wave from the later time at which that wave supplies a suitable parent shear. The formal construction identifies each selected physical crossing with the next activation exactly as stated; its internal index zero refers to wave two and therefore to the crossing $t_3$, not to a preceding extra wave.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "§7, Figure 4; §6.2, final paragraph; §7.2, item 3",
-      "supports": "The crossing represented by the end of each dashed segment."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "r5-ind-figure4-endpoint",
-   "from": "Each solution continues to its final time $S_i>T_\\infty$.",
-   "to": "Each solution continues to its final time $S_i>T_\\infty$.",
-   "role": "statement",
-   "topic": "induction",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.theorem_7_1",
-     "file": "TorusEuler/Paper/Spine.lean",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_note": "The formal theorem supplies a smooth approximate velocity on $[0,S_i]$ at every stage, and a positive common limit $T_\\infty<S_i$. The residual is small rather than required to vanish, so “solution” in this caption means the stated approximate solution, not an exact Euler continuation through blow-up."
-    }
-   ],
-   "explanation": {
-    "text": "Every row of Figure 4 represents an approximate velocity $U_i$ defined smoothly up to its own final time $S_i>T_\\infty$. The stage interval is longer than the remaining sum of activation gaps by the geometric estimate at the end of §7.2. This permits comparison of all stages on the common interval reaching the accumulation time. The linked formal theorem gives exactly joint smoothness on $[0,S_i]\\times\\mathbb T^3$ and $T_\\infty<S_i$; the caption's word “solution” refers here to an approximate solution with controlled residual, not an exact Euler continuation through the singular time.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "§7, Figure 4; Theorem 7.1 (T1)–(T2); final paragraph of §7.2",
-      "supports": "The stage endpoints and the approximate nature of the depicted velocities."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
    "id": "e03-s7-residual-support",
    "from": "the residual is supported on frequencies at most $4\\Lambda_j$",
    "to": "the residual is supported on frequencies at most $4\\Lambda_j$",
@@ -28302,248 +27857,6 @@
       "url": null,
       "where": "Theorem A.1, smooth-data clause; Appendix A.2, final paragraph",
       "supports": "The spatial and temporal bootstrap and the precise recovered fields."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-displacement-recovery",
-   "from": "Write $v=z_t$ and $z=Jv$.",
-   "to": "Write $v=z_t$ and $z=Jv$.",
-   "role": "derivation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.paperA1_displacement_eq_primitive",
-     "file": "TorusEuler/PaperAppendixARecovery.lean",
-     "relation": "proof",
-     "fidelity": "same",
-     "fidelity_note": "Let $z,v$ be curves of divergence-free half-Hölder fields on the unit torus. If $v$ is continuous on $[0,1]$, $z_t=v$ there with derivatives taken within the interval, and $z(0)=0$, then $z(t)=\\int_0^tv(s)\\,ds$ for every $t\\in[0,1]$. This is the fundamental theorem of calculus used in Theorem A.1. No terminal condition is needed for this identity; $z(1)=0$ is equivalent to the additional zero-time-mean condition on $v$. It supplies the asserted identity $z=Jv$ from the initial condition and $z_t=v$, without using the terminal condition."
-    }
-   ],
-   "explanation": {
-    "text": "For continuous $v:[0,1]\\to C^{0,1/2}(\\mathbb T^3)$ and $z_t=v$ with $z(0)=0$, the fundamental theorem of calculus gives $z(t)=Jv(t)=\\int_0^t v(s)\\,\\mathrm ds$. The formal statement proves exactly this identity for solenoidal fields, including derivatives taken from within the interval at its ends. The same verdict applies to this displacement recovery and does not require the terminal condition. That condition is imposed separately: $z(1)=0$ becomes $\\int_0^1v=0$, which is the constraint used to construct the endpoint inverse.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Appendix A, reduction following Theorem A.1",
-      "supports": "Recovery of displacement from velocity and conversion of the terminal trace to zero time mean."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-subtract-time-mean",
-   "from": "Let $\\mathcal Q$ subtract this mean.",
-   "to": "Let $\\mathcal Q$ subtract this mean.",
-   "role": "definition",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.endpointSubtractMean",
-     "file": "TorusEuler/EndpointDensity.lean",
-     "relation": "defines",
-     "fidelity": "same",
-     "fidelity_note": "The formal formula on a positive interval is $\\mathcal Qv=v-T^{-1}\\int_0^Tv$. At $T=1$ it is exactly the time-average subtraction in Appendix A. The general definition also has a value at $T=0$ because its reciprocal is assigned zero there; none of the positive-interval endpoint conclusions rely on that degenerate case."
-    }
-   ],
-   "explanation": {
-    "text": "On $I=[0,1]$, $\\mathcal Qv=v-\\int_0^1v(s)\\,\\mathrm ds$ subtracts the time mean of each path. It enforces the zero-mean condition corresponding to $Jv(1)=0$ and removes the time-independent field $c$ after spatial projection of the endpoint equation. The formal expression gives $v-T^{-1}\\int_0^Tv$ on $L^2([0,T])$, so at $T=1$ it is the same operator. It is also assigned a value at $T=0$ because division by zero is taken to be zero; this convention has no role in the positive-interval endpoint argument.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Appendix A, reduction after Theorem A.1; Lemma A.2",
-      "supports": "The time projection, its normalization and its role in removing the integration constant."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-remove-pressure-gradient",
-   "from": "The spatial Leray projection $\\mathbb P$ removes the pressure gradient",
-   "to": "The spatial Leray projection $\\mathbb P$ removes the pressure gradient",
-   "role": "derivation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.paperMean_projection_C1_gradient_zero",
-     "file": "TorusEuler/PaperMeanPressureCompatibility.lean",
-     "relation": "proof",
-     "fidelity": "same",
-     "fidelity_note": "Let $q$ be a continuously differentiable $\\mathbb Z^3$-periodic scalar function on $\\mathbb R^3$, and suppose its gradient represents a $C^{0,1/2}$ vector field $g$ on $\\mathbb T^3$. Then $\\mathbb Pg=0$. This is the pressure-removal step in Appendix A. A zero-mean normalization of $q$ is not needed. Periodicity is needed: a constant vector field is a gradient of a nonperiodic affine function, but the torus Leray projection preserves that constant field. This is the precise meaning of removal of the periodic pressure gradient in the selected phrase."
-    }
-   ],
-   "explanation": {
-    "text": "If $\\phi$ is a $C^1$ periodic scalar function on $\\mathbb R^3$ and $G=\\nabla\\phi$ represents a half-Hölder field on $\\mathbb T^3$, then $\\mathbb PG=0$. Applying this fact to the endpoint equation removes the pressure gradient and leaves an equation for the divergence-free velocity. The formal statement proves exactly this pressure-removal step, so the comparison is the same; a zero-mean normalization of $\\phi$ is unnecessary. Periodicity is essential because a nonzero constant vector is the gradient of a nonperiodic affine function and is preserved by the torus Leray projection.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Appendix A, projection reduction after Theorem A.1; Appendix A.1, zero Fourier mode",
-      "supports": "Removal of periodic gradients and preservation of the constant spatial mode."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-projections-commute",
-   "from": "The two projections commute.",
-   "to": "The two projections commute.",
-   "role": "derivation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.endpointJointSpatialProjection_commutes_subtractMean",
-     "file": "TorusEuler/EndpointJointTimeProjection.lean",
-     "relation": "proof",
-     "fidelity": "stronger",
-     "fidelity_note": "The paper uses commutation on $[0,1]\\times\\mathbb T^3$. The formal result proves that orthogonal spatial Leray projection and time-average subtraction commute on space-time $L^2$ for every positive interval length $T$. The normalization $T^{-1}$ in the average is included, so the paper's two projections are recovered when $T=1$.",
-     "matters": {
-      "kind": "convention",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The projection identity holds on every positive time interval and therefore on the unit interval used in Appendix A."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "On $[0,1]\\times\\mathbb T^3$, the spatial Leray projection $\\mathbb P$ commutes with the time-mean subtraction $\\mathcal Q$. Spatial projection can be passed through the time integral, so either order produces a divergence-free field with zero time mean. This permits the single projection $\\mathcal R=\\mathbb P\\mathcal Q$ used in the mixed endpoint inverse. The formal result proves the commutation on space-time $L^2$ for every $T>0$, with $\\mathcal Qv=v-T^{-1}\\int_0^Tv$, so stronger means that the unit interval is one case of a positive-interval statement.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Appendix A, reduction after Theorem A.1",
-      "supports": "Commutation of the spatial and temporal projections and construction of the mixed constraint."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-compressed-equation",
-   "from": "$$\\mathcal R Bv=-\\mathcal R L,\\qquad v=\\mathcal Rv,\\qquad\n Bv=Kv-J(\\Omega v).$$",
-   "to": "$$\\mathcal R Bv=-\\mathcal R L,\\qquad v=\\mathcal Rv,\\qquad\n Bv=Kv-J(\\Omega v).$$",
-   "role": "derivation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.endpointMixedPathCoefficient",
-     "file": "TorusEuler/EndpointMixedConcreteOperator.lean",
-     "relation": "proof",
-     "fidelity": "weaker",
-     "fidelity_note": "At each spatial label, let $K$ and $\\Omega$ be bounded operators on $L^2([0,T];\\mathbb R^3)$, varying half-Hölder continuously with the label, and take $T\\ge0$. Define $B=K-J\\Omega$, where $J$ integrates a time path from zero. Thus $J$ acts after $\\Omega$. When these operators are multiplication by the time-dependent matrices, this is $Bv=Kv-J(\\Omega v)$ in Appendix A. The formula does not impose zero time mean, divergence freedom or coercivity; those are separate ingredients in the projected equation $\\mathcal RBv=-\\mathcal RL$. The paper states the projected equation, the projection constraint and the formula for $B$. This formal expression supplies only $B=K-J\\Omega$ on time paths; the other assertions come from the projected solution construction.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The coefficient $B=K-J\\Omega$ is one ingredient of the projected equation; the time operator and its inverse are handled separately."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "With $v=z_t$, $z=Jv$ and $\\mathcal R=\\mathbb P\\mathcal Q$ on $[0,1]\\times\\mathbb T^3$, the endpoint equation becomes $\\mathcal R(Bv)=-\\mathcal RL$ with $\\mathcal Rv=v$, where $Bv=Kv-J(\\Omega v)$. The reduction after Theorem A.1 removes the periodic pressure by $\\mathbb P$ and the time-independent field by $\\mathcal Q$, while the constraint retains divergence freedom and zero time mean. This turns the endpoint problem into the form treated by Lemma A.2. The linked formal expression is weaker than this complete display: it only forms the operator $B=K-J\\Omega$ on $L^2$ time paths from coefficient operators varying half-Hölder continuously in the label. The projected equation, the constraint and coercivity must be supplied separately; composition means that $\\Omega$ acts before the time primitive.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Appendix A, projected equation following Theorem A.1; Lemma A.2",
-      "supports": "Reduction to the projected time-path equation and the ordering of its coefficient operators."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-primitive-adjoint",
-   "from": "$J^*w(t)=\\int_t^1 w(s)\\,\\mathrm ds=-Jw(t)$",
-   "to": "$J^*w(t)=\\int_t^1 w(s)\\,\\mathrm ds=-Jw(t)$",
-   "role": "derivation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.endpointPrimitiveLp_inner_eq_neg_inner",
-     "file": "TorusEuler/EndpointPrimitiveAdjoint.lean",
-     "relation": "proof",
-     "fidelity": "weaker",
-     "fidelity_note": "Let $T\\ge0$ and let $u,v\\in L^2([0,T];E)$ for a complete real Hilbert space. If $\\int_0^Tv=0$, then $\\langle Ju,v\\rangle_{L^2}=-\\langle u,Jv\\rangle_{L^2}$. Only the second path needs zero mean. This is the pairing identity used in Appendix A to turn $\\langle(K-J\\Omega)v,v\\rangle$ into the displacement energy. The conclusion is an identity of integrals, not the paper's pointwise formula for $J^*v$; its application to the energy requires no pointwise choice of an $L^2$ representative. Here $Jw(t)=\\int_0^tw(s)\\,ds$. The paper gives a pointwise adjoint formula. The formal result proves the corresponding pairing identity $\\langle Ju,v\\rangle=-\\langle u,Jv\\rangle$ for zero-mean $v$, which is enough for the energy calculation but does not itself state the pointwise formula.",
-     "matters": {
-      "kind": "scope",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The adjoint identity on the projected subspace is sufficient for the energy argument; a stronger pointwise operator identity is unnecessary."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "For a zero-mean path $w\\in L^2([0,1];\\mathbb R^3)$, the adjoint primitive satisfies $J^*w(t)=\\int_t^1w(s)\\,\\mathrm ds=-Jw(t)$. The first equality comes from interchanging the two time integrals, and the second uses $\\int_0^1w=0$. It changes the term $-\\langle J(\\Omega w),w\\rangle$ into $\\langle\\Omega w,Jw\\rangle$, giving the displacement energy used in (A.2). The formal result states the corresponding pairing identity $\\langle Ju,v\\rangle=-\\langle u,Jv\\rangle$ whenever $v$ has zero mean, for Hilbert-valued paths on any $[0,T]$ with $T\\ge0$. Thus weaker identifies the absence of the displayed pointwise adjoint formula; the integral identity is exactly what the energy calculation needs.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Appendix A, primitive-adjoint identity and coercivity reduction before §A.1",
-      "supports": "The adjoint calculation that converts the projected operator pairing into displacement energy."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "e03-appa-energy-identity",
-   "from": "$$\\langle B(a)w,w\\rangle_H\n =\\int_I\\bigl(Kw\\cdot w+\\Omega w\\cdot Jw\\bigr)\\,\\mathrm dt\n \\ge\\mu\\left\\lVert w\\right\\rVert_H^2$$",
-   "to": "$$\\langle B(a)w,w\\rangle_H\n =\\int_I\\bigl(Kw\\cdot w+\\Omega w\\cdot Jw\\bigr)\\,\\mathrm dt\n \\ge\\mu\\left\\lVert w\\right\\rVert_H^2$$",
-   "role": "explanation",
-   "topic": "endpoint-inverse",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.endpointMixedPathCoefficient_inner_eq_sobolevEnergy",
-     "file": "TorusEuler/PaperAppendixAInverse.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "On $[0,1]$, let $v\\in L^2$ have zero integral. At a fixed label $a$, suppose applying the supplied bounded path operators to this particular $v$ agrees almost everywhere with $K(t,a)v(t)$ and $\\Omega(t,a)v(t)$, respectively. Then $\\langle(K-J\\Omega)v,v\\rangle_{L^2}=\\int_0^1(Kv\\cdot v+\\Omega v\\cdot Jv)\\,dt$, where $Jw(t)=\\int_0^tw(s)\\,ds$. The left side uses the supplied operators and the right side uses the coefficient matrices. Agreement on every other path is not required. This is the energy identity preceding Appendix A.1. The lower bound $\\mu\\|v\\|_{L^2}^2$ is a separate displacement-energy assumption, not a conclusion of this identity. The display additionally asserts coercivity by $\\mu$; that inequality is not this theorem's conclusion.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The displayed identity becomes the required lower bound after the separate positive coercivity hypothesis is applied."
-     }
-    },
-    {
-     "name": "TorusEuler.EndpointSobolevEnergyBound",
-     "file": "TorusEuler/PaperAppendixAInverse.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "For every label $a\\in\\mathbb T^3$ and every $v\\in L^2([0,1];\\mathbb R^3)$ with $\\int_0^1v=0$, require $\\int_0^1(Kv\\cdot v+\\Omega v\\cdot Jv)\\,dt\\ge\\mu\\|v\\|_{L^2}^2$, where $Jv(t)=\\int_0^tv$. Thus $z=Jv$ has both zero endpoint values and ranges over $H^1_0$. This is exactly the test class and energy inequality in (A.2). The condition itself does not require $\\mu>0$, coefficient symmetry or pointwise ellipticity; those are imposed separately when applying Theorem A.1. This specifies the lower-bound assumption. It does not itself prove the equality between the operator pairing and the energy integral.",
-     "matters": {
-      "kind": "granularity",
-      "affects_main_result": "no",
-      "line": "Does this affect Theorem 1.1? No. The energy estimate is the consequence needed to begin the inverse argument; the operator representation is supplied separately."
-     }
-    }
-   ],
-   "explanation": {
-    "text": "Let $w\\in L^2([0,1];\\mathbb R^3)$ have zero mean, so $z=Jw$ has both zero endpoint values and belongs to $H^1_0$. For $B=K-J\\Omega$, the adjoint identity gives $\\langle Bw,w\\rangle=\\int_0^1(Kw\\cdot w+\\Omega w\\cdot Jw)$, and (A.2) bounds this below by $\\mu\\|w\\|_2^2$. This supplies the coercivity required for the whole-time-path case of Lemma A.2. The formal identity proves the equality after requiring the bounded path operators to agree almost everywhere with multiplication by the matrices on this path. The second formal condition requires the lower energy bound for every zero-mean path, so each link is weaker than the combined display: one supplies the equality and the other its assumed inequality.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Equation (A.2); Appendix A, energy identity immediately before §A.1",
-      "supports": "The zero-endpoint test class and the two components of mixed-path coercivity."
      }
     ],
     "grounded": true
@@ -33768,6 +33081,24 @@
    ]
   },
   {
+   "id": "adapted.E1-03.3",
+   "from": "extends as a smooth field in space and time through $T_*$ away from the origin",
+   "to": "extends as a smooth field in space and time through $T_*$ away from the origin",
+   "role": "explanation",
+   "topic": "singularity",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.Proof.remark_1_2",
+     "file": "TorusEuler/Paper/Proofs/Rem12/Remark12.lean",
+     "relation": "part",
+     "fidelity": "unassessed",
+     "fidelity_note": "The proved remark provides a selected singular solution with a smooth space-time velocity extension through the terminal time away from the origin.",
+     "link_note": "The proved remark provides a selected singular solution with a smooth space-time velocity extension through the terminal time away from the origin."
+    }
+   ]
+  },
+  {
    "id": "adapted.E1-03.1",
    "from": "to an Euler solution",
    "to": "to an Euler solution",
@@ -33782,42 +33113,6 @@
      "fidelity": "unassessed",
      "fidelity_note": "The approximate solutions converge smoothly in space on compact time intervals before breakdown, and the limit solves Euler.",
      "link_note": "The approximate solutions converge smoothly in space on compact time intervals before breakdown, and the limit solves Euler."
-    }
-   ]
-  },
-  {
-   "id": "adapted.E1-03.2",
-   "from": "spatial limits of both $u$ and $\\partial_tu$",
-   "to": "spatial limits of both $u$ and $\\partial_tu$",
-   "role": "explanation",
-   "topic": "terminal",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.proposition_8_4",
-     "file": "TorusEuler/Paper/Spine.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "Both fields, with each finite number of spatial derivatives, converge on every compact set avoiding the origin.",
-     "link_note": "Both fields, with each finite number of spatial derivatives, converge on every compact set avoiding the origin."
-    }
-   ]
-  },
-  {
-   "id": "adapted.E1-03.3",
-   "from": "every mixed space-time derivative",
-   "to": "every mixed space-time derivative",
-   "role": "explanation",
-   "topic": "singularity",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.remark_1_2",
-     "file": "TorusEuler/Paper/Spine.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The stronger conclusion chooses a solution with smooth space-time extension away from the singular point.",
-     "link_note": "The stronger conclusion chooses a solution with smooth space-time extension away from the singular point."
     }
    ]
   },
@@ -34345,12 +33640,19 @@
    "status": "new",
    "lean": [
     {
+     "name": "TorusEuler.localizedCurl_properties",
+     "file": "TorusEuler/WaveDivergence.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "At a time with a smooth lattice-equivariant inverse flow, a smooth transported potential vanishing near the cell boundary gives a smooth periodic curl for an arbitrary real wave vector."
+    },
+    {
      "name": "TorusEuler.initialLocalizedCompletedWave_properties",
      "file": "TorusEuler/BaseParentData.lean",
      "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The localized field with its divergence correction is smooth and periodic for arbitrary nonzero real wave vector under the stated cutoff hypotheses.",
-     "link_note": "The localized field with its divergence correction is smooth and periodic for arbitrary nonzero real wave vector under the stated cutoff hypotheses."
+     "fidelity": "different",
+     "fidelity_note": "At activation, the curl-completed wave with a radial cutoff is smooth and periodic for every nonzero real wave vector transverse to its amplitude.",
+     "link_note": "At activation, a radial cutoff gives the smooth periodic wave for arbitrary nonzero wave vector transverse to its amplitude."
     }
    ]
   },
@@ -34851,8 +34153,9 @@
      "name": "TorusEuler.Paper.lemma_5_9",
      "file": "TorusEuler/Paper/Spine.lean",
      "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The full pressure Hessian has a one-sided bound of order λ⁻¹/⁴. In the TeX proof its leading rank-one term gains λ⁻¹/² from the slope bound against a nonnegative coefficient of size at most 4D³λ¹/⁴."
+     "fidelity": "different",
+     "fidelity_note": "The pressure added by the wave and its corrections has a one-sided Hessian bound of order $\\lambda^{-1/4}$. In the TeX proof its leading rank-one term gains $\\lambda^{-1/2}$ from the slope bound against a nonnegative coefficient of size at most $4D^3\\lambda^{1/4}$.",
+     "link_note": "The bound applies to the pressure added by the wave and its corrections."
     }
    ]
   },
@@ -35175,6 +34478,147 @@
    }
   },
   {
+   "id": "e01.correction.mean-source",
+   "from": "The mean correction $B_2$ cancels the phase average of $H_2$ together with the parent residual.",
+   "to": "The mean correction $B_2$ cancels the phase average of $H_2$ together with the parent residual.",
+   "role": "statement",
+   "topic": "hierarchy",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.HierarchyOperators.level_two_meanSource",
+     "file": "TorusEuler/HierarchySourceAssembly.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "At depth $P\\ge2$, assume $C_1=B_1=0$, zero phase average of the linear terms in $H_2$, and $\\langle(C_2\\cdot\\kappa)\\partial_sV_1\\rangle_s=\\langle J\\rangle_s$ for a specified profile $J$. The formal identity is $-\\langle H_2\\rangle_s-R=-(\\langle(V_1\\cdot\\mathbf d)V_1\\rangle_s+\\langle J\\rangle_s+R)$. Here $\\mathbf d$ differentiates the slow coefficient at fixed phase; in the geometric application $J=(\\mathbf d\\cdot V_1)V_1$ and $R=R_U\\circ X$. Averaging and the two advection operations are supplied linear and bilinear operations. This rewrites the forcing; it does not construct $B_2$ or prove its differential equation or divergence condition.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The mean-source formula is combined with the endpoint inverse to construct the correction."
+     }
+    },
+    {
+     "name": "TorusEuler.Paper.S5.meanSource",
+     "file": "TorusEuler/Paper/S5/Vocabulary.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "The formal definition prescribes the mean source as $-\\langle H_p\\rangle_s-\\mathbf1_{p=2}R_U\\circ X$. At $p=2$, this is precisely the force needed to cancel the averaged error and parent residual. The existence of a mean correction satisfying that equation comes from the endpoint inverse, not from this source formula.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The mean-source formula is combined with the endpoint inverse to construct the correction."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "At level two the mean equation is forced by $-\\langle H_2\\rangle_s-R_U$, so it cancels both the averaged wave error and the parent’s residual. Section 5.5.1 makes the parent residual appear only at this level. This is the step that removes the inherited forcing instead of retaining it in the limiting Euler equation. One formal expression prescribes precisely $-\\langle H_p\\rangle_s-\\mathbf1_{p=2}R_U\\circ X$, while the algebraic theorem rewrites the level-two average using $C_1=B_1=0$ and the phase-integration identity for $C_2$. Both links are weaker than the cancellation assertion because they specify or simplify the source; existence of $B_2$ with that source comes from the endpoint inverse.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 1.3, mean correction; Section 5.5.1, equations (5.26)–(5.27)",
+      "supports": "The level-two mean source cancels the parent residual as well as the averaged wave error."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "e01.correction.mean-equation",
+   "from": "$D_t B_2+(\\nabla U)B_2+\\nabla q=-\\langle H_2\\rangle_s-R_U$ with $\\operatorname{div}B_2=0$.",
+   "to": "$D_t B_2+(\\nabla U)B_2+\\nabla q=-\\langle H_2\\rangle_s-R_U$ with $\\operatorname{div}B_2=0$.",
+   "role": "statement",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.paper_mean_inverse_smooth_force_of_flow",
+     "file": "TorusEuler/PaperMeanFlowAdapter.lean",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Let $U$ be smooth, periodic and divergence free on $[0,T]\\times\\mathbb R^3$, $0<T\\le1$, with flow $X(0,a)=a$, $F=D_aX$ and $M=(D_xU)\\circ X$. Assume uniform Euclidean operator bounds $\\|F^{-1}\\|\\le D$, $\\|D_xU\\|\\le L_0$, with $D\\ge1$, $L_0\\ge0$, and $-(M_t+M^2)\\le I$ as a quadratic form. For every smooth periodic physical force $f$, the formal statement supplies a smooth periodic divergence-free correction $b$ and pressure $q$ satisfying $\\partial_tb+(U\\cdot\\nabla)b+(b\\cdot\\nabla)U+\\nabla q=f$, with zero displacement at both endpoints. Taking $f=-\\langle H_2\\rangle_s-R_U$ yields the paper's equation for $B_2$, once this particular force is known to be smooth and periodic. Its label representation is $f\\circ X$; an arbitrary label force is not automatically this pullback.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The physical inverse theorem includes the forced correction required by the construction."
+     }
+    },
+    {
+     "name": "TorusEuler.HierarchyOperators.level_two_meanSource",
+     "file": "TorusEuler/HierarchySourceAssembly.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "At depth $P\\ge2$, assume $C_1=B_1=0$, zero phase average of the linear terms in $H_2$, and $\\langle(C_2\\cdot\\kappa)\\partial_sV_1\\rangle_s=\\langle J\\rangle_s$ for a specified profile $J$. The formal identity is $-\\langle H_2\\rangle_s-R=-(\\langle(V_1\\cdot\\mathbf d)V_1\\rangle_s+\\langle J\\rangle_s+R)$. Here $\\mathbf d$ differentiates the slow coefficient at fixed phase; in the geometric application $J=(\\mathbf d\\cdot V_1)V_1$ and $R=R_U\\circ X$. Averaging and the two advection operations are supplied linear and bilinear operations. This rewrites the forcing; it does not construct $B_2$ or prove its differential equation or divergence condition.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The mean-source formula is combined with the endpoint inverse to construct the correction."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "With $D_t=\\partial_t+U\\cdot\\nabla$, the correction solves $D_tB_2+(\\nabla U)B_2+\\nabla q=-\\langle H_2\\rangle_s-R_U$ and $\\operatorname{div}B_2=0$. Section 5.5.1 applies the endpoint inverse to this smooth periodic source, after computing its phase average. The formal inverse treats every smooth periodic force over a smooth periodic divergence-free parent on $0<T\\le1$, with bounded inverse deformation and gradient and $H^\\#=-(M_t+M^2)\\le I$ along the flow. That link is stronger in its choice of force; the displayed right side must first be identified with a physical force whose label expression is its pullback by $X$. The other link is weaker because it only rewrites the level-two source using the zero first mean and correction and the phase-average cancellation, without constructing $B_2$.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Equation (1.6); Section 1.3, mean equation; Section 5.5.1; Theorem 4.2",
+      "supports": "The particular mean equation is obtained from the general forced endpoint inverse."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "e01.correction.mean-endpoints",
+   "from": "The Jacobi inverse selects $B_2(0)$ so that the correction leaves the truncated parent’s final particle positions fixed to first order.",
+   "to": "The Jacobi inverse selects $B_2(0)$ so that the correction leaves the truncated parent’s final particle positions fixed to first order.",
+   "role": "explanation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.PaperSmoothMeanSolution",
+     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "The formal definition imposes $z(0)=z(T)=0$ and $z_t=v$ for label fields, with $B=Fv$. Thus $\\xi=Fz$ has zero physical displacement at both endpoints. This states the first-order endpoint requirement; it does not prove that a solution or an initial value realizing it exists.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The endpoint solution conditions are realized by the mean inverse theorem."
+     }
+    },
+    {
+     "name": "TorusEuler.PaperSmoothMeanSolution.mean_eq_of_endpoints",
+     "file": "TorusEuler/PaperPhysicalMeanStatements.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "Under the same smooth parent and forcing on $[0,T]$, $0<T\\le1$, with $H^\\#\\le I$, the formal theorem proves equality of the physical means of any two endpoint solutions. Consequently $B_2(0)$ is unique. It compares existing solutions and must be combined with the inverse's existence result to justify the paper's selection claim.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. Uniqueness of an existing endpoint correction complements the inverse theorem’s existence."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "For the level-two correction, $B_2(0)$ is selected so that the induced physical displacement vanishes at both time endpoints. Writing $F=D_aX$, $B_2\\circ X=Fz_t$ and $\\xi=Fz$ turns this into $z(0)=z(T)=0$. Theorem 4.2 supplies this endpoint solution for a smooth periodic source when $0<T\\le1$ and the parent’s effective Hessian is bounded above by $I$. The first formal link only imposes the smooth label equations and endpoints, and the second proves that two existing solutions for the same parent and source have the same pulled-back physical correction. Both are weaker than selection with existence: the inverse theorem is also needed, and the preserved final positions are only a first-order statement.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 1.3, endpoint choice for the mean; Section 4.1; Theorem 4.2",
+      "supports": "The endpoint condition and uniqueness of the selected initial mean correction."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
    "id": "localized.intro.transverse-equation",
    "from": "$$\\begin{equation}\n \\begin{split}\n D_tV_2+(\\nabla U)V_2+\\kappa\\partial_s\\pi_2\n   &=-(H_2-\\langle H_2\\rangle_s)-(B_2\\cdot\\kappa)\\partial_s(\\widetilde\\chi A_1),\\\\\n \\kappa\\cdot V_2&=0,\\qquad \\langle V_2\\rangle_s=0.\n \\end{split} \\tag{1.12}\n\\end{equation}$$",
    "to": "$$\\begin{equation}\n \\begin{split}\n D_tV_2+(\\nabla U)V_2+\\kappa\\partial_s\\pi_2\n   &=-(H_2-\\langle H_2\\rangle_s)-(B_2\\cdot\\kappa)\\partial_s(\\widetilde\\chi A_1),\\\\\n \\kappa\\cdot V_2&=0,\\qquad \\langle V_2\\rangle_s=0.\n \\end{split} \\tag{1.12}\n\\end{equation}$$",
@@ -35384,6 +34828,24 @@
    }
   },
   {
+   "id": "adapted.E1-15A.3",
+   "from": "transverse corrections start with zero velocity",
+   "to": "transverse corrections start with zero velocity",
+   "role": "explanation",
+   "topic": "hierarchy",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.S5.TransverseSolution",
+     "file": "TorusEuler/Paper/S5/Vocabulary.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal transverse-solution definition sets the correction to zero at time zero for every label and phase.",
+     "link_note": "The formal transverse-solution definition sets the correction to zero at time zero for every label and phase."
+    }
+   ]
+  },
+  {
    "id": "adapted.E1-16.1",
    "from": "one plane of constant phase",
    "to": "one plane of constant phase",
@@ -35574,6 +35036,239 @@
    ]
   },
   {
+   "id": "localized.transported-covector",
+   "from": "The transported phase $\\phi\\circ X(t,\\cdot)^{-1}$ has Eulerian gradient $\\kappa=\\mathbf d\\phi=(D_aX)^{-T}k_*$ at $X(t,a)$.",
+   "to": "The transported phase $\\phi\\circ X(t,\\cdot)^{-1}$ has Eulerian gradient $\\kappa=\\mathbf d\\phi=(D_aX)^{-T}k_*$ at $X(t,a)$.",
+   "role": "definition",
+   "topic": "localized-wave",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.labelWaveVector",
+     "file": "TorusEuler/LabelFlowGeometry.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition is the transpose of the reverse-flow derivative at the current position, applied to $k_*$. For the smooth parent flow, the reverse derivative equals $(D_aX)^{-1}$, giving the paper's $(D_aX)^{-T}k_*$. Nonzero $k_*$ and invertibility ensure the resulting covector is nonzero; those facts are not built into the formula itself."
+    },
+    {
+     "name": "TorusEuler.hasGradientAt_transportedPhase",
+     "file": "TorusEuler/TransportedPhase.lean",
+     "relation": "defines",
+     "fidelity": "stronger",
+     "fidelity_note": "For any differentiable map $A$ and any $k_*$, the formal theorem proves $\\nabla(k_*\\cdot A)=(DA)^Tk_*$. Taking $A=X(t,\\cdot)^{-1}$ gives the paper's transported phase gradient. The identity is valid without a flow equation, periodicity or the nonzero-covector assumption used later for division by $|\\kappa|^2$.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The local chain rule includes the smooth transported fields used by the construction."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "For $\\phi(a)=k_*\\cdot a$, the phase in physical coordinates is $\\phi(X(t,\\cdot)^{-1}(x))$, whose gradient at $x=X(t,a)$ is $\\kappa=F^{-T}k_*$ with $F=D_aX$. This follows directly from the spatial chain rule and identifies the local direction and frequency of the transported oscillation. The formal covector formula uses the transpose of the derivative of the reverse flow, agreeing with the paper once the inverse-flow identity is used. The separately linked gradient theorem is stronger in scope: it applies to any differentiable inverse-label candidate, without incompressibility, periodicity or $k_*\\ne0$; nonvanishing matters only when later formulas divide by $|\\kappa|^2$.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 3.1, transported phase and equation (3.1)",
+      "supports": "The chain-rule identification of the transported wave covector."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "adapted.E2-3-PHASE.1",
+   "from": "Substituting $s=\\phi(a)$ gives the physical field",
+   "to": "Substituting $s=\\phi(a)$ gives the physical field",
+   "role": "explanation",
+   "topic": "localized-wave",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.transportedProfile_on_trajectory",
+     "file": "TorusEuler/TransportedPhase.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "At a trajectory point whose inverse label is a, the formal identity evaluates the independent phase variable at the label-space phase.",
+     "link_note": "At a trajectory point whose inverse label is a, the formal identity evaluates the independent phase variable at the label-space phase."
+    }
+   ]
+  },
+  {
+   "id": "localized.profile-graph",
+   "from": "$$f^\\natural(t,X(t,a))=f(t,a,\\phi(a)),\\qquad\n \\widetilde{\\mathbf d}=\\mathbf d+\\kappa\\partial_s .$$",
+   "to": "$$f^\\natural(t,X(t,a))=f(t,a,\\phi(a)),\\qquad\n \\widetilde{\\mathbf d}=\\mathbf d+\\kappa\\partial_s .$$",
+   "role": "definition",
+   "topic": "localized-wave",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.transportedProfile",
+     "file": "TorusEuler/TransportedPhase.lean",
+     "relation": "defines",
+     "fidelity": "weaker",
+     "fidelity_note": "The formal definition gives $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$. Under the inverse relation $A(t,X(t,a))=a$, this yields the evaluation in the display. It does not define or prove the operator $\\widetilde{\\mathbf d}$; differentiability is not assumed by the formula.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The profile evaluation formula is differentiated only after the inverse-flow and smoothness hypotheses are supplied."
+     }
+    },
+    {
+     "name": "TorusEuler.transportedProfile_on_trajectory",
+     "file": "TorusEuler/TransportedPhase.lean",
+     "relation": "defines",
+     "fidelity": "weaker",
+     "fidelity_note": "Assuming $A(t,X(t,a))=a$, the formal theorem proves the displayed evaluation identity at that particle. It is valid for arbitrary profiles and wave vectors, but it does not state the slow-plus-fast differentiation rule or impose any regularity.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The inverse-flow substitution proves the stated trajectory evaluation."
+     }
+    },
+    {
+     "name": "TorusEuler.transportedProfile_chainRule",
+     "file": "TorusEuler/TransportedPhase.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "Put $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$ and $\\kappa=(D_xA)^Tk_*$. At the point considered, assume $A$ has a joint first derivative in time and space, $f$ has a joint first derivative in time, label and phase, and $A_t+D_xA\\,U=0$. The time set must determine a unique derivative; a nondegenerate closed interval permits one-sided endpoint derivatives. The formal statement gives $D_xf^\\natural=D_af\\,D_xA+(\\partial_sf)\\kappa^T$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=f_t$, with all derivatives of $f$ evaluated at the profile graph. No global smoothness, periodicity or incompressibility is required. Taking $A=X^{-1}$ identifies the spatial operator with $\\mathbf d+\\kappa\\partial_s$."
+    }
+   ],
+   "explanation": {
+    "text": "For a profile $f(t,a,s)$ with independent phase $s$, evaluate $f^\\natural(t,X(t,a))=f(t,a,k_*\\cdot a)$ and set $\\kappa=F^{-T}k_*$, where $F=D_aX$. Differentiating in physical space then either differentiates the label dependence through $F^{-1}$ or differentiates the phase, giving $\\widetilde{\\mathbf d}=F^{-T}\\nabla_a+\\kappa\\partial_s$. This separation is the source of the slow and fast terms in the later divergence correction. The formal evaluation formula and its trajectory identity each supply only the first part of the display, hence the weaker verdicts, while the differentiable chain-rule statement supplies the operator interpretation under the inverse-label transport equation.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 3.1, profile evaluation and (3.1)",
+      "supports": "The evaluated profile and separation of label and phase derivatives."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "localized.graph-chain-rules",
+   "from": "$$\\begin{equation}\n \\nabla_x f^\\natural=(\\widetilde{\\mathbf d}f)^\\natural,\\qquad\n (\\partial_t+U\\cdot\\nabla_x)f^\\natural=(f_t)^\\natural. \\tag{3.1}\n\\end{equation}$$",
+   "to": "$$\\begin{equation}\n \\nabla_x f^\\natural=(\\widetilde{\\mathbf d}f)^\\natural,\\qquad\n (\\partial_t+U\\cdot\\nabla_x)f^\\natural=(f_t)^\\natural. \\tag{3.1}\n\\end{equation}$$",
+   "role": "statement",
+   "topic": "localized-wave",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.transportedProfile_chainRule",
+     "file": "TorusEuler/TransportedPhase.lean",
+     "relation": "states",
+     "fidelity": "stronger",
+     "fidelity_note": "Put $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$ and $\\kappa=(D_xA)^Tk_*$. At the point considered, assume $A$ has a joint first derivative in time and space, $f$ has a joint first derivative in time, label and phase, and $A_t+D_xA\\,U=0$. The time set must determine a unique derivative; a nondegenerate closed interval permits one-sided endpoint derivatives. The formal statement gives $D_xf^\\natural=D_af\\,D_xA+(\\partial_sf)\\kappa^T$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=f_t$, with all derivatives of $f$ evaluated at the profile graph. No global smoothness, periodicity or incompressibility is required. The paper’s smooth transported fields meet these pointwise hypotheses, which are weaker than its full setting.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The local chain rule includes the smooth transported fields used by the construction."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "Let $A=X(t,\\cdot)^{-1}$, $\\kappa=(D_xA)^Tk_*$ and $f^\\natural(t,x)=f(t,A(t,x),k_*\\cdot A(t,x))$. The ordinary chain rule, together with $A_t+D_xA\\,U=0$, gives $\\nabla_xf^\\natural=(\\mathbf d f+\\kappa\\partial_sf)^\\natural$ and $(\\partial_t+U\\cdot\\nabla_x)f^\\natural=(f_t)^\\natural$. These identities turn the Eulerian equations into profile equations without introducing a transported-phase time derivative. The formal statement proves the same identities from first derivatives at the point considered, with one-sided time derivatives at the ends of a nondegenerate closed interval; it is stronger than the paper's smooth periodic setting because global regularity and incompressibility are unnecessary.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 3.1, equation (3.1)",
+      "supports": "The spatial and material chain rules for evaluated profiles."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "r2.s34.phase-lattice",
+   "from": "The phase modulo one is periodic in $a$ exactly when $k_*\\in\\mathbb Z^3$.",
+   "to": "The phase modulo one is periodic in $a$ exactly when $k_*\\in\\mathbb Z^3$.",
+   "role": "statement",
+   "topic": "localized-wave",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.spatiallyPeriodic_modOne_linearPhase_iff",
+     "file": "TorusEuler/FrequencyLattice.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The formal theorem states that $a\\mapsto k_*\\cdot a$ modulo one is invariant under all integer label translations exactly when every coordinate of $k_*$ is an integer. This is the lattice condition in the paper. It is a statement about the circle-valued phase; the real-valued linear phase itself need not be periodic."
+    }
+   ],
+   "explanation": {
+    "text": "The circle-valued phase $a\\mapsto k_*\\cdot a\\pmod1$ descends to $\\mathbb T^3$ exactly when $k_*\\in\\mathbb Z^3$. An integer translation $n$ changes it by $k_*\\cdot n$, and testing the three coordinate translations gives the necessity as well as the sufficiency of integral coordinates. This explains why a general real wave vector requires localization and periodic extension instead of global evaluation of the phase alone. The formal statement has exactly this equivalence for the phase modulo one; it does not claim that the real-valued linear function $k_*\\cdot a$ is periodic.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 3.1, paragraph following (3.1)",
+      "supports": "The lattice condition for the phase modulo one and the need for localization."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "localized.cell-extension",
+   "from": "To allow arbitrary $k_*$, we evaluate the oscillatory profiles on the lifted label cell $[-1/2,1/2]^3$ and extend periodically. They vanish near the cell boundary, so the extension is smooth.",
+   "to": "To allow arbitrary $k_*$, we evaluate the oscillatory profiles on the lifted label cell $[-1/2,1/2]^3$ and extend periodically. They vanish near the cell boundary, so the extension is smooth.",
+   "role": "statement",
+   "topic": "localized-wave",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.localizedTransportedProfile",
+     "file": "TorusEuler/WaveDivergence.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "The formal definition evaluates the profile at $s=k_*\\cdot a$, extends it periodically from the centered label cell and composes with the inverse label map. It permits arbitrary real $k_*$. The formula alone does not assert smoothness or even require vanishing near the cell boundary.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. Smoothness and transport require the support and inverse-flow hypotheses supplied for the constructed wave."
+     }
+    },
+    {
+     "name": "TorusEuler.spatiallyPeriodic_localizedTransportedProfile",
+     "file": "TorusEuler/WaveDivergence.lean",
+     "relation": "states",
+     "fidelity": "weaker",
+     "fidelity_note": "For an inverse map commuting with integer translations, the formal theorem proves periodicity of the extended field for every real wave vector. No regularity or boundary vanishing is assumed. The paper's additional smoothness conclusion requires the collar and differentiability theorem in the next row.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. Periodicity and smoothness of the cell extension are proved by separate arguments."
+     }
+    },
+    {
+     "name": "TorusEuler.contDiff_localizedTransportedProfile",
+     "file": "TorusEuler/WaveDivergence.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "Suppose the evaluated label field and inverse label map have the asserted differentiability order and the label field vanishes whenever some coordinate lies within a fixed positive collar of the cell boundary. The formal theorem preserves that regularity after periodization and composition, including smoothness. This is the seam-free extension used in the paper; no integer-coordinate restriction on $k_*$ is needed."
+    }
+   ],
+   "explanation": {
+    "text": "For arbitrary $k_*\\in\\mathbb R^3$, evaluate $f(t,a,k_*\\cdot a)$ on the centered label cell and extend the resulting label field with period one in each coordinate. If this evaluated field vanishes in a positive collar of the cell boundary, its copies meet smoothly; composition with the smooth inverse flow then gives a smooth periodic physical field. Section 3.1 uses this construction to avoid an integrality restriction on the wave vector. The formal formula and periodicity result each establish only part of the claim, whereas the regularity theorem gives the matching smoothness conclusion with an explicit boundary collar and regularity of both the evaluated label field and the inverse map.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 3.1, paragraph following (3.1)",
+      "supports": "Periodic extension of a localized profile and smoothness across the cell boundary."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
    "id": "adapted.E2-3-01.1",
    "from": "A unit slope",
    "to": "A unit slope",
@@ -35701,6 +35396,13 @@
    "topic": "endpoint-inverse",
    "status": "new",
    "lean": [
+    {
+     "name": "TorusEuler.exists_endpointContinuousRepresentative",
+     "file": "TorusEuler/EndpointRecoverTime.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "Under continuity and compatibility of the inverses, fixed-time inversion recovers a continuous representative of the weak label-velocity path."
+    },
     {
      "name": "TorusEuler.Paper.theorem_A_1",
      "file": "TorusEuler/Paper/Spine.lean",
@@ -36695,7 +36397,7 @@
      "link_note": "The supplementary source at level p includes advection of the leading profile by the mean at level p."
     }
    ],
-   "after": "lower levels. This mean "
+   "after": "d the mean $B_p$, which "
   },
   {
    "id": "e02.thm56.fast-mean-integration",
@@ -38132,8 +37834,8 @@
   },
   {
    "id": "adapted.E3-S6-01.2",
-   "from": "the first wave. Its leading velocity",
-   "to": "the first wave. Its leading velocity",
+   "from": "which amplifies the second wave",
+   "to": "which amplifies the second wave",
    "role": "explanation",
    "topic": "induction",
    "status": "new",
@@ -38878,6 +38580,71 @@
     ],
     "grounded": true
    }
+  },
+  {
+   "id": "r5-ind-figure4-inactive",
+   "from": "the oscillation vanishes on the thick solid segment",
+   "to": "the oscillation vanishes on the thick solid segment",
+   "role": "explanation",
+   "topic": "induction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.Theorem71Conclusions.oscillation_vanishes",
+     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The field records that each later oscillation vanishes through its own activation time. The figure depicts this interval for the illustrated stages.",
+     "link_note": "The field records that each later oscillation vanishes through its own activation time. The figure depicts this interval for the illustrated stages."
+    }
+   ]
+  },
+  {
+   "id": "r5-ind-figure4-crossing",
+   "from": "The dashed segment ends at the crossing $t_{i+1}$, when the next wave is activated.",
+   "to": "The dashed segment ends at the crossing $t_{i+1}$, when the next wave is activated.",
+   "role": "definition",
+   "topic": "induction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.InductiveEulerConstruction.centralWaves",
+     "file": "TorusEuler/InductiveStageConstruction.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "For each later wave in a supplied construction, the central-wave data identify the selected physical crossing with the next activation time. The internal index zero refers to wave two, so its crossing is $t_3$. This identifies the end of the caption's segment; it does not assert that the intermediate fields are exact Euler solutions."
+    }
+   ],
+   "explanation": {
+    "text": "The dashed segment for wave $i$ ends at $t_{i+1}$, the selected crossing where its coupling ratio reaches the value prescribed for the next wave. Section 6.2 chooses the first crossing within the reference bracket, and §7.2, item 3 uses it as the next activation time. The figure therefore distinguishes the start of a wave from the later time at which that wave supplies a suitable parent shear. The formal construction identifies each selected physical crossing with the next activation exactly as stated; its internal index zero refers to wave two and therefore to the crossing $t_3$, not to a preceding extra wave.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "§7, Figure 4; §6.2, final paragraph; §7.2, item 3",
+      "supports": "The crossing represented by the end of each dashed segment."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "r5-ind-figure4-endpoint",
+   "from": "Each approximate velocity $U_i$ is defined up to $S_i>T_\\infty$",
+   "to": "Each approximate velocity $U_i$ is defined up to $S_i>T_\\infty$",
+   "role": "statement",
+   "topic": "induction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.theorem_7_1",
+     "file": "TorusEuler/Paper/Spine.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The formal theorem supplies a smooth approximate velocity on $[0,S_i]$ at every stage, and a positive common limit $T_\\infty<S_i$. The residual is small rather than required to vanish, so “solution” in this caption means the stated approximate solution, not an exact Euler continuation through blow-up."
+    }
+   ]
   },
   {
    "id": "e03-s7-pressure-sum",
@@ -40209,6 +39976,13 @@
    "status": "new",
    "lean": [
     {
+     "name": "TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing.inductive_activation_clock",
+     "file": "TorusEuler/InductiveActivationClock.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "Under the growth and scale hypotheses the clock theorem bounds the time from launch to crossing from below. The curl integral proof then uses this lower bound."
+    },
+    {
      "name": "TorusEuler.curlIntegral_eq_top_of_inductive_physical_crossings",
      "file": "TorusEuler/InductiveActivationClock.lean",
      "relation": "part",
@@ -40217,6 +39991,221 @@
      "link_note": "The checked proof multiplies the stagewise curl lower bound by the physical time between crossings to force divergence."
     }
    ]
+  },
+  {
+   "id": "e03-appa-displacement-recovery",
+   "from": "Write $v=z_t$ and $z=Jv$.",
+   "to": "Write $v=z_t$ and $z=Jv$.",
+   "role": "derivation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.paperA1_displacement_eq_primitive",
+     "file": "TorusEuler/PaperAppendixARecovery.lean",
+     "relation": "proof",
+     "fidelity": "same",
+     "fidelity_note": "Let $z,v$ be curves of divergence-free half-Hölder fields on the unit torus. If $v$ is continuous on $[0,1]$, $z_t=v$ there with derivatives taken within the interval, and $z(0)=0$, then $z(t)=\\int_0^tv(s)\\,ds$ for every $t\\in[0,1]$. This is the fundamental theorem of calculus used in Theorem A.1. No terminal condition is needed for this identity; $z(1)=0$ is equivalent to the additional zero-time-mean condition on $v$. It supplies the asserted identity $z=Jv$ from the initial condition and $z_t=v$, without using the terminal condition."
+    }
+   ],
+   "explanation": {
+    "text": "For continuous $v:[0,1]\\to C^{0,1/2}(\\mathbb T^3)$ and $z_t=v$ with $z(0)=0$, the fundamental theorem of calculus gives $z(t)=Jv(t)=\\int_0^t v(s)\\,\\mathrm ds$. The formal statement proves exactly this identity for solenoidal fields, including derivatives taken from within the interval at its ends. The same verdict applies to this displacement recovery and does not require the terminal condition. That condition is imposed separately: $z(1)=0$ becomes $\\int_0^1v=0$, which is the constraint used to construct the endpoint inverse.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Appendix A, reduction following Theorem A.1",
+      "supports": "Recovery of displacement from velocity and conversion of the terminal trace to zero time mean."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "e03-appa-remove-pressure-gradient",
+   "from": "The Leray projection $\\mathbb P$ in labels removes $\\nabla_a\\phi$",
+   "to": "The Leray projection $\\mathbb P$ in labels removes $\\nabla_a\\phi$",
+   "role": "derivation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.paperMean_projection_C1_gradient_zero",
+     "file": "TorusEuler/PaperMeanPressureCompatibility.lean",
+     "relation": "proof",
+     "fidelity": "same",
+     "fidelity_note": "Let $q$ be a continuously differentiable $\\mathbb Z^3$-periodic scalar function on $\\mathbb R^3$, and suppose its gradient represents a $C^{0,1/2}$ vector field $g$ on $\\mathbb T^3$. Then $\\mathbb Pg=0$. This is the pressure-removal step in Appendix A. A zero-mean normalization of $q$ is not needed. Periodicity is needed: a constant vector field is a gradient of a nonperiodic affine function, but the torus Leray projection preserves that constant field. This is the precise meaning of removal of the periodic pressure gradient in the selected phrase."
+    }
+   ]
+  },
+  {
+   "id": "e03-appa-subtract-time-mean",
+   "from": "Subtracting the time mean with $\\mathcal Q$ removes $c$",
+   "to": "Subtracting the time mean with $\\mathcal Q$ removes $c$",
+   "role": "definition",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.endpointSubtractMean",
+     "file": "TorusEuler/EndpointDensity.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal formula on a positive interval is $\\mathcal Qv=v-T^{-1}\\int_0^Tv$. At $T=1$ it is exactly the time-average subtraction in Appendix A. The general definition also has a value at $T=0$ because its reciprocal is assigned zero there; none of the positive-interval endpoint conclusions rely on that degenerate case."
+    }
+   ]
+  },
+  {
+   "id": "e03-appa-projections-commute",
+   "from": "$\\mathcal R=\\mathbb P\\mathcal Q=\\mathcal Q\\mathbb P$",
+   "to": "$\\mathcal R=\\mathbb P\\mathcal Q=\\mathcal Q\\mathbb P$",
+   "role": "derivation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.endpointJointSpatialProjection_commutes_subtractMean",
+     "file": "TorusEuler/EndpointJointTimeProjection.lean",
+     "relation": "proof",
+     "fidelity": "stronger",
+     "fidelity_note": "The paper uses commutation on $[0,1]\\times\\mathbb T^3$. The formal result proves that orthogonal spatial Leray projection and time-average subtraction commute on space-time $L^2$ for every positive interval length $T$. The normalization $T^{-1}$ in the average is included, so the paper's two projections are recovered when $T=1$."
+    }
+   ]
+  },
+  {
+   "id": "adapted.E3-A-LABEL.1",
+   "from": "the label velocity satisfies",
+   "to": "the label velocity satisfies",
+   "role": "explanation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.theorem_A_1",
+     "file": "TorusEuler/Paper/Spine.lean",
+     "relation": "part",
+     "fidelity": "unassessed",
+     "fidelity_note": "The theorem solves the endpoint problem for the label velocity and displacement. Its proof passes to the projected equation by removing the pressure gradient and the time mean."
+    }
+   ]
+  },
+  {
+   "id": "e03-appa-compressed-equation",
+   "from": "$$\\mathcal R Bv=-\\mathcal R L,\\qquad v=\\mathcal Rv,\\qquad\n Bv=Kv-J(\\Omega v).$$",
+   "to": "$$\\mathcal R Bv=-\\mathcal R L,\\qquad v=\\mathcal Rv,\\qquad\n Bv=Kv-J(\\Omega v).$$",
+   "role": "derivation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.endpointMixedPathCoefficient",
+     "file": "TorusEuler/EndpointMixedConcreteOperator.lean",
+     "relation": "proof",
+     "fidelity": "weaker",
+     "fidelity_note": "At each spatial label, let $K$ and $\\Omega$ be bounded operators on $L^2([0,T];\\mathbb R^3)$, varying half-Hölder continuously with the label, and take $T\\ge0$. Define $B=K-J\\Omega$, where $J$ integrates a time path from zero. Thus $J$ acts after $\\Omega$. When these operators are multiplication by the time-dependent matrices, this is $Bv=Kv-J(\\Omega v)$ in Appendix A. The formula does not impose zero time mean, divergence freedom or coercivity; those are separate ingredients in the projected equation $\\mathcal RBv=-\\mathcal RL$. The paper states the projected equation, the projection constraint and the formula for $B$. This formal expression supplies only $B=K-J\\Omega$ on time paths; the other assertions come from the projected solution construction.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The coefficient $B=K-J\\Omega$ is one ingredient of the projected equation; the time operator and its inverse are handled separately."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "With $v=z_t$, $z=Jv$ and $\\mathcal R=\\mathbb P\\mathcal Q$ on $[0,1]\\times\\mathbb T^3$, the endpoint equation becomes $\\mathcal R(Bv)=-\\mathcal RL$ with $\\mathcal Rv=v$, where $Bv=Kv-J(\\Omega v)$. The reduction after Theorem A.1 removes the periodic pressure by $\\mathbb P$ and the time-independent field by $\\mathcal Q$, while the constraint retains divergence freedom and zero time mean. This turns the endpoint problem into the form treated by Lemma A.2. The linked formal expression is weaker than this complete display: it only forms the operator $B=K-J\\Omega$ on $L^2$ time paths from coefficient operators varying half-Hölder continuously in the label. The projected equation, the constraint and coercivity must be supplied separately; composition means that $\\Omega$ acts before the time primitive.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Appendix A, projected equation following Theorem A.1; Lemma A.2",
+      "supports": "Reduction to the projected time-path equation and the ordering of its coefficient operators."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "e03-appa-primitive-adjoint",
+   "from": "$J^*w(t)=\\int_t^1 w(s)\\,\\mathrm ds=-Jw(t)$",
+   "to": "$J^*w(t)=\\int_t^1 w(s)\\,\\mathrm ds=-Jw(t)$",
+   "role": "derivation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.endpointPrimitiveLp_inner_eq_neg_inner",
+     "file": "TorusEuler/EndpointPrimitiveAdjoint.lean",
+     "relation": "proof",
+     "fidelity": "weaker",
+     "fidelity_note": "Let $T\\ge0$ and let $u,v\\in L^2([0,T];E)$ for a complete real Hilbert space. If $\\int_0^Tv=0$, then $\\langle Ju,v\\rangle_{L^2}=-\\langle u,Jv\\rangle_{L^2}$. Only the second path needs zero mean. This is the pairing identity used in Appendix A to turn $\\langle(K-J\\Omega)v,v\\rangle$ into the displacement energy. The conclusion is an identity of integrals, not the paper's pointwise formula for $J^*v$; its application to the energy requires no pointwise choice of an $L^2$ representative. Here $Jw(t)=\\int_0^tw(s)\\,ds$. The paper gives a pointwise adjoint formula. The formal result proves the corresponding pairing identity $\\langle Ju,v\\rangle=-\\langle u,Jv\\rangle$ for zero-mean $v$, which is enough for the energy calculation but does not itself state the pointwise formula.",
+     "matters": {
+      "kind": "scope",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The adjoint identity on the projected subspace is sufficient for the energy argument; a stronger pointwise operator identity is unnecessary."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "For a zero-mean path $w\\in L^2([0,1];\\mathbb R^3)$, the adjoint primitive satisfies $J^*w(t)=\\int_t^1w(s)\\,\\mathrm ds=-Jw(t)$. The first equality comes from interchanging the two time integrals, and the second uses $\\int_0^1w=0$. It changes the term $-\\langle J(\\Omega w),w\\rangle$ into $\\langle\\Omega w,Jw\\rangle$, giving the displacement energy used in (A.2). The formal result states the corresponding pairing identity $\\langle Ju,v\\rangle=-\\langle u,Jv\\rangle$ whenever $v$ has zero mean, for Hilbert-valued paths on any $[0,T]$ with $T\\ge0$. Thus weaker identifies the absence of the displayed pointwise adjoint formula; the integral identity is exactly what the energy calculation needs.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Appendix A, primitive-adjoint identity and coercivity reduction before §A.1",
+      "supports": "The adjoint calculation that converts the projected operator pairing into displacement energy."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "e03-appa-energy-identity",
+   "from": "$$\\langle B(a)w,w\\rangle_H\n =\\int_I\\bigl(Kw\\cdot w+\\Omega w\\cdot Jw\\bigr)\\,\\mathrm dt\n \\ge\\mu\\left\\lVert w\\right\\rVert_H^2$$",
+   "to": "$$\\langle B(a)w,w\\rangle_H\n =\\int_I\\bigl(Kw\\cdot w+\\Omega w\\cdot Jw\\bigr)\\,\\mathrm dt\n \\ge\\mu\\left\\lVert w\\right\\rVert_H^2$$",
+   "role": "explanation",
+   "topic": "endpoint-inverse",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.endpointMixedPathCoefficient_inner_eq_sobolevEnergy",
+     "file": "TorusEuler/PaperAppendixAInverse.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "On $[0,1]$, let $v\\in L^2$ have zero integral. At a fixed label $a$, suppose applying the supplied bounded path operators to this particular $v$ agrees almost everywhere with $K(t,a)v(t)$ and $\\Omega(t,a)v(t)$, respectively. Then $\\langle(K-J\\Omega)v,v\\rangle_{L^2}=\\int_0^1(Kv\\cdot v+\\Omega v\\cdot Jv)\\,dt$, where $Jw(t)=\\int_0^tw(s)\\,ds$. The left side uses the supplied operators and the right side uses the coefficient matrices. Agreement on every other path is not required. This is the energy identity preceding Appendix A.1. The lower bound $\\mu\\|v\\|_{L^2}^2$ is a separate displacement-energy assumption, not a conclusion of this identity. The display additionally asserts coercivity by $\\mu$; that inequality is not this theorem's conclusion.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The displayed identity becomes the required lower bound after the separate positive coercivity hypothesis is applied."
+     }
+    },
+    {
+     "name": "TorusEuler.EndpointSobolevEnergyBound",
+     "file": "TorusEuler/PaperAppendixAInverse.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "For every label $a\\in\\mathbb T^3$ and every $v\\in L^2([0,1];\\mathbb R^3)$ with $\\int_0^1v=0$, require $\\int_0^1(Kv\\cdot v+\\Omega v\\cdot Jv)\\,dt\\ge\\mu\\|v\\|_{L^2}^2$, where $Jv(t)=\\int_0^tv$. Thus $z=Jv$ has both zero endpoint values and ranges over $H^1_0$. This is exactly the test class and energy inequality in (A.2). The condition itself does not require $\\mu>0$, coefficient symmetry or pointwise ellipticity; those are imposed separately when applying Theorem A.1. This specifies the lower-bound assumption. It does not itself prove the equality between the operator pairing and the energy integral.",
+     "matters": {
+      "kind": "granularity",
+      "affects_main_result": "no",
+      "line": "Does this affect Theorem 1.1? No. The energy estimate is the consequence needed to begin the inverse argument; the operator representation is supplied separately."
+     }
+    }
+   ],
+   "explanation": {
+    "text": "Let $w\\in L^2([0,1];\\mathbb R^3)$ have zero mean, so $z=Jw$ has both zero endpoint values and belongs to $H^1_0$. For $B=K-J\\Omega$, the adjoint identity gives $\\langle Bw,w\\rangle=\\int_0^1(Kw\\cdot w+\\Omega w\\cdot Jw)$, and (A.2) bounds this below by $\\mu\\|w\\|_2^2$. This supplies the coercivity required for the whole-time-path case of Lemma A.2. The formal identity proves the equality after requiring the bounded path operators to agree almost everywhere with multiplication by the matrices on this path. The second formal condition requires the lower energy bound for every zero-mean path, so each link is weaker than the combined display: one supplies the equality and the other its assumed inequality.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Equation (A.2); Appendix A, energy identity immediately before §A.1",
+      "supports": "The zero-endpoint test class and the two components of mixed-path coercivity."
+     }
+    ],
+    "grounded": true
+   }
   },
   {
    "id": "c8-holder-coercive-testing",
@@ -42114,42 +42103,6 @@
     }
    ],
    "after": "em 4.2 and (5.23). When "
-  },
-  {
-   "id": "adapted.E4-A-02.1",
-   "from": "one construction for which both lemmas below hold",
-   "to": "one construction for which both lemmas below hold",
-   "role": "explanation",
-   "topic": "auxiliary-smoothness",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.auxiliaryTerminalSmoothness",
-     "file": "TorusEuler/AuxiliaryTerminalSmoothness.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The existential theorem uses one schedule for the stage time bounds, mixed increment bounds and smooth extension of the same solution.",
-     "link_note": "The existential theorem uses one schedule for the stage time bounds, mixed increment bounds and smooth extension of the same solution."
-    }
-   ]
-  },
-  {
-   "id": "adapted.E4-A-02.2",
-   "from": "the smooth extension",
-   "to": "the smooth extension",
-   "role": "explanation",
-   "topic": "auxiliary-smoothness",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.auxiliaryTerminalSmoothness",
-     "file": "TorusEuler/AuxiliaryTerminalSmoothness.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The same witness has a smooth off-origin extension through the singular time.",
-     "link_note": "The same witness has a smooth off-origin extension through the singular time."
-    }
-   ]
   },
   {
    "id": "e03-aux-mixed-display",

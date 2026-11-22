@@ -13,42 +13,21 @@
   "group": "edition",
   "group_title": "Adapted edition",
   "order": 0,
-  "credit": "An adapted edition of Alpöge, Buckmaster and Coiculescu's paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the authors'. Every change is marked, and no change has been reviewed by the authors.",
+  "credit": "Adapted by Will Cook with AI assistance from the authors' manuscript.",
   "published": true,
   "pdf": {
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with changes marked",
-   "sha256": "76d82cd09ab9841652972658a4e60ab7415b87f2aa749cb0abc462451ccecbf2",
-   "bytes": 710735
+   "sha256": "55268a872b781e304f3e9bdf05778a4034d96504cba65ba8892d93e68c303653",
+   "bytes": 714862
   },
   "aux_pdf": {
    "file": "aux.pdf",
    "name": "adapted-auxiliary-note-marked.pdf",
    "label": "Auxiliary note, PDF with changes marked",
-   "sha256": "b2bc0a2880c1be63a3247183622e98556d9167f050f8fef8adf75b99da8e9e4c",
-   "bytes": 129860
-  },
-  "reading_pdf": {
-   "file": "reading.pdf",
-   "label": "Reading copy",
-   "name": "euler-adapted-v2.pdf",
-   "bytes": 553110,
-   "sha256": "b73d89b5ce149a2e1fc19bb5d91a14b931a2392fc8a5f26933eb33253df51144"
-  },
-  "aux_reading_pdf": {
-   "file": "aux-reading.pdf",
-   "label": "Auxiliary note",
-   "name": "euler-adapted-auxiliary-v2.pdf",
-   "bytes": 111072,
-   "sha256": "f9f960cee0ef738b0cd2514f66a0d0131596a910383b19c345d8cda8d367b0b3"
-  },
-  "source_overlay": {
-   "file": "source-overlay.zip",
-   "label": "TeX revisions against the authors’ source",
-   "name": "euler-adapted-v2-source-overlay.zip",
-   "bytes": 25388,
-   "sha256": "4d6ab9055c4a29224a67cc9e434a2b32377ffabf8957782039ef23284506b20a"
+   "sha256": "43b1547b92cc21c2e0d924c541b98d17d6763302136a5a9af3ba8008e53e6350",
+   "bytes": 128859
   },
   "release": {
    "version": 2,
@@ -58,20 +37,41 @@
     "The final estimates distinguish growth at launch times from control between launches. Appendix A identifies the real Hilbert space used for the endpoint inverse."
    ]
   },
+  "reading_pdf": {
+   "file": "reading.pdf",
+   "name": "euler-adapted-v2.pdf",
+   "label": "Reading copy",
+   "bytes": 550062,
+   "sha256": "60e0b4ccffd6169808234a140dac81291ec9d7e933a40ce09b1f84ed692bf2d4"
+  },
+  "aux_reading_pdf": {
+   "file": "aux-reading.pdf",
+   "name": "euler-adapted-auxiliary-v2.pdf",
+   "label": "Auxiliary note",
+   "bytes": 110157,
+   "sha256": "d3b50bf6b64112a12dfdd99efcc7ddb84f620d216a2754fdc44390b3f08e6e19"
+  },
+  "source_overlay": {
+   "file": "source-overlay.zip",
+   "name": "euler-adapted-v2-source-overlay.zip",
+   "label": "TeX revisions against the authors’ source",
+   "bytes": 26939,
+   "sha256": "5ef3a1c1100bbadca944cb4e94a6276469da41c9e1770c91b08b86f6b0586d2b"
+  },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 109431,
-    "sha256": "58863ab11b1fb71bd3e4aa90fb48def5a3071a5d4ff6b5e266d6794f46c4f4b7"
+    "bytes": 110319,
+    "sha256": "a2cb69fcdfd7cbc4cd4f42f404c6b7d025b45db974e0c47cb5f6cff7cec06276"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 138484,
-    "sha256": "f196511d034a69138d78e7116f594e8a1b8fa3c8a0c140ebadfa22897ef7369c"
+    "bytes": 139454,
+    "sha256": "1591d7d0da6061de49762d5e556aa7e3bf14855ecba747c0eaaa2f2ab0fa48c5"
    }
   }
  }
