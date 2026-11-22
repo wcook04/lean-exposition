@@ -112,13 +112,16 @@ describe("display fitting notifications", () => {
     Object.defineProperty(box.querySelector(".katex"), "scrollWidth", { get: () => formulaWidth });
     const stop = markWideMaths(root);
     try {
-      // Nothing is fitted in a fallback font: the display waits for KaTeX's fonts.
+      // Nothing is fitted in a fallback font: the display waits for KaTeX's fonts, hidden, so a
+      // formula wider than its column is never seen cut off at the column's edge.
       expect(box.dataset.fit).toBeUndefined();
+      expect(box.dataset.unfitted).toBe("");
       formulaWidth = 600;
       ready();
       await Promise.resolve();
       // No broken form (the formula has no TeX to break): it shrinks to fit and offers Expand.
       expect(box.dataset.fit).toBe("squeezed");
+      expect(box.dataset.unfitted).toBeUndefined();
     } finally {
       stop();
       if (previous) Object.defineProperty(document, "fonts", previous);

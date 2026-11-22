@@ -36,7 +36,7 @@
     },
     "height": 498,
     "pdf": "papers/erdos257/short/paper.pdf",
-    "pdf_sha256": "sha256:1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
+    "pdf_sha256": "sha256:2667100d6ed7824b8653f69c7392a5e1a241505ae9285e097e95ea2f13ddcf43",
     "width": 352
   },
   "expository": {
@@ -66,7 +66,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/short/paper.pdf",
-    "pdf_sha256": "sha256:2fefb175a986102afbfc3d23f494d62cc0b4221b08c048909b742a8e6e4c8431",
+    "pdf_sha256": "sha256:393998cd3fc15601d690987b5cbafa763e6931c3eba1300c6be826d1d4746841",
     "width": 352
   }
 }

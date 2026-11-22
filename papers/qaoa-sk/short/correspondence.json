@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "0cd16e6afa4096fccc55a516a798b7287a6570a5e77248099820f99b2079800b",
+  "content_sha256": "05cbf4e9e741677b5970bc48b072a73f79cf221f90eef2e2fc343648710979f7",
   "graph_sha256": "f22708f3180068944c06829213f78f6ecfb65ef34f6c8decded774b95a041d92",
   "selected_goal_ids": [
     "full_support",
@@ -360,7 +360,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "9d874de488dfcabf3696016cc311b8e2153878083b33a5a0a519dd34f1438c32",
+      "text_sha256": "c564f6cddce6a4d866dc292bc83b748174b15f83cd0790f67b0b2f4426550ecc",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -638,7 +638,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
+      "text_sha256": "e2d7bfc49c511f0ab6dbc1878e1dea86eebb9a8e898a11f73e19891dd43b3630",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
@@ -1038,7 +1038,7 @@
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
+      "from_text_sha256": "e2d7bfc49c511f0ab6dbc1878e1dea86eebb9a8e898a11f73e19891dd43b3630",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
       "to_text_sha256": "87c9b6cea47401a6f3c12a714632d406da5eca158f0024795e74b50e8105519a",

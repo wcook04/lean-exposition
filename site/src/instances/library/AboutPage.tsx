@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import type { Route } from "../../app/router";
 import { routeHref } from "../../app/router";
 import { Out } from "../../app/Out";
+import { Rich } from "../../figures/tex";
 import { AboutKey, AboutUsing } from "../../reader/aboutParts";
 import { PAPER, MAIN, LIBRARY_ROOT } from "./data";
 import { SupplementaryChecks } from "./Checks";
@@ -23,6 +24,27 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <h1>{PAPER.title}</h1>
         <p>By {PAPER.authors.join(", ")}.</p>
       </header>
+      {(PAPER.about ?? []).map((section, i) => (
+        <section className="about__what" key={section.heading} aria-labelledby={`about-own-${i}`}>
+          <h2 id={`about-own-${i}`}>
+            <Rich src={section.heading} />
+          </h2>
+          {(section.paragraphs ?? []).map((text) => (
+            <p key={text}>
+              <Rich src={text} />
+            </p>
+          ))}
+          {section.links?.length ? (
+            <ul className="about__links">
+              {section.links.map((link) => (
+                <li key={link.href}>
+                  {/^https?:/.test(link.href) ? <Out href={link.href}>{link.label}</Out> : <a href={`${import.meta.env.BASE_URL}${link.href}`}>{link.label}</a>}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      ))}
       <section aria-labelledby="about-credit">
         <h2 id="about-credit">Who wrote what</h2>
         {PAPER.credit_lines.map((line) => <p key={line}>{line}</p>)}

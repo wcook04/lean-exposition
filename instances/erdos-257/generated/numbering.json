@@ -1,0 +1,2473 @@
+{
+ "short": {
+  "labels": {
+   "app:elementary-details": {
+    "printed": "E",
+    "page": 23,
+    "kind": "appendix",
+    "title": "Elementary details used in the proofs"
+   },
+   "app:sources": {
+    "printed": "F",
+    "page": 25,
+    "kind": "appendix",
+    "title": "Sources and formal verification"
+   },
+   "eq:actual-repair-recurrence": {
+    "printed": "10",
+    "page": 18,
+    "kind": "equation",
+    "title": "The greedy recurrence"
+   },
+   "eq:actual-selector-obligation": {
+    "printed": "11",
+    "page": 19,
+    "kind": "equation",
+    "title": "The greedy recurrence"
+   },
+   "eq:cover-log-obstruction": {
+    "printed": "7",
+    "page": 10,
+    "kind": "equation",
+    "title": "A lower bound independent of the cover"
+   },
+   "eq:gcd-orbit-mean": {
+    "printed": "8",
+    "page": 15,
+    "kind": "equation",
+    "title": "Reciprocal-summable supports"
+   },
+   "eq:incidence": {
+    "printed": "6",
+    "page": 5,
+    "kind": "equation",
+    "title": "Positive divisor majorants"
+   },
+   "eq:intro-displacement": {
+    "printed": "D",
+    "page": 2,
+    "kind": "equation",
+    "title": "Introduction"
+   },
+   "eq:lcm-prefix-orbit-limit": {
+    "printed": "9",
+    "page": 15,
+    "kind": "equation",
+    "title": "Reciprocal-summable supports"
+   },
+   "eq:mixed-finite-kernel": {
+    "printed": "S",
+    "page": 7,
+    "kind": "equation",
+    "title": "A finite mean for shifted divisor tails"
+   },
+   "eq:optimal-cube-cost": {
+    "printed": "13",
+    "page": 24,
+    "kind": "equation",
+    "title": ""
+   },
+   "eq:strengthened-cover": {
+    "printed": "V",
+    "page": 6,
+    "kind": "equation",
+    "title": "a summable divisor-cover criterion"
+   },
+   "eq:twenty-one-rounding": {
+    "printed": "12",
+    "page": 21,
+    "kind": "equation",
+    "title": "Integer quotients for $1/21$"
+   },
+   "eq:weighted-dyadic-short": {
+    "printed": "4",
+    "page": 4,
+    "kind": "equation",
+    "title": "Finite averages and the weighted criterion"
+   },
+   "eq:weighted-finite-orbit": {
+    "printed": "2",
+    "page": 3,
+    "kind": "equation",
+    "title": "Finite averages and the weighted criterion"
+   },
+   "eq:weighted-fixed-base": {
+    "printed": "1",
+    "page": 2,
+    "kind": "equation",
+    "title": "a weighted condition on the support"
+   },
+   "eq:weighted-main-bound": {
+    "printed": "5",
+    "page": 4,
+    "kind": "equation",
+    "title": "Finite averages and the weighted criterion"
+   },
+   "eq:weighted-outer-short": {
+    "printed": "3",
+    "page": 3,
+    "kind": "equation",
+    "title": "Finite averages and the weighted criterion"
+   },
+   "eq:weighted-return": {
+    "printed": "W",
+    "page": 2,
+    "kind": "equation",
+    "title": "a weighted condition on the support"
+   },
+   "prob:actual-invariant": {
+    "printed": "D.6",
+    "page": 23,
+    "kind": "problem",
+    "title": "arithmetic tests for the greedy sequence"
+   },
+   "prob:fatal-interval": {
+    "printed": "D.7",
+    "page": 23,
+    "kind": "problem",
+    "title": "final-skip Diophantine exclusion"
+   },
+   "prob:one-over-twenty-one-membership": {
+    "printed": "D.4",
+    "page": 23,
+    "kind": "problem",
+    "title": "membership of 1/21 in the Mersenne achievement set"
+   },
+   "prob:scaled-return": {
+    "printed": "D.5",
+    "page": 23,
+    "kind": "problem",
+    "title": "bounded returns of the scaled remainder"
+   },
+   "res:cylinderhalf": {
+    "printed": "D.3",
+    "page": 22,
+    "kind": "theorem",
+    "title": "unbounded shared-prefix families represent one half"
+   },
+   "res:general-repair": {
+    "printed": "C.1",
+    "page": 18,
+    "kind": "theorem",
+    "title": "membership and nonincreasing integer remainders"
+   },
+   "res:mixed-supports": {
+    "printed": "4.1",
+    "page": 9,
+    "kind": "theorem",
+    "title": "mixed weighted and cover supports"
+   },
+   "res:one-over-twenty-one-frontier": {
+    "printed": "D.1",
+    "page": 20,
+    "kind": "theorem",
+    "title": "integer-quotient tests for $1/21$"
+   },
+   "res:period": {
+    "printed": "B.1",
+    "page": 16,
+    "kind": "theorem",
+    "title": "the exact denominator period"
+   },
+   "res:problem": {
+    "printed": "1.1",
+    "page": 1,
+    "kind": "problem",
+    "title": "Erd\\H {o}s \\#257"
+   },
+   "res:reciprocal-support": {
+    "printed": "A.1",
+    "page": 14,
+    "kind": "theorem",
+    "title": "reciprocal-summable supports"
+   },
+   "res:strict-mixed-supports": {
+    "printed": "5.2",
+    "page": 12,
+    "kind": "corollary",
+    "title": "a support requiring the mixed criterion"
+   },
+   "res:terminalhalf": {
+    "printed": "D.2",
+    "page": 21,
+    "kind": "theorem",
+    "title": "finite approximations with vanishing scaled error"
+   },
+   "res:weighted-cover-incomparability": {
+    "printed": "5.1",
+    "page": 10,
+    "kind": "proposition",
+    "title": "incomparable support criteria"
+   },
+   "res:weighted-support": {
+    "printed": "1.2",
+    "page": 2,
+    "kind": "theorem",
+    "title": "a weighted condition on the support"
+   },
+   "sec:actual-repairs": {
+    "printed": "C.3",
+    "page": 18,
+    "kind": "subsection",
+    "title": "The greedy recurrence"
+   },
+   "sec:common-kernel": {
+    "printed": "3",
+    "page": 5,
+    "kind": "section",
+    "title": "Positive divisor majorants"
+   },
+   "sec:comparison": {
+    "printed": "5",
+    "page": 10,
+    "kind": "section",
+    "title": "Comparison of the support classes"
+   },
+   "sec:eight-return-extensions": {
+    "printed": "2",
+    "page": 3,
+    "kind": "section",
+    "title": "Finite averages and the weighted criterion"
+   },
+   "sec:forced": {
+    "printed": "C.1",
+    "page": 17,
+    "kind": "subsection",
+    "title": "Rational values and scaled tails"
+   },
+   "sec:geometry": {
+    "printed": "C.2",
+    "page": 17,
+    "kind": "subsection",
+    "title": "The achievement set"
+   },
+   "sec:map": {
+    "printed": "6",
+    "page": 13,
+    "kind": "section",
+    "title": "Limits of the small-displacement criterion"
+   },
+   "sec:mixed": {
+    "printed": "4",
+    "page": 9,
+    "kind": "section",
+    "title": "A common index for the two criteria"
+   },
+   "sec:open": {
+    "printed": "D",
+    "page": 19,
+    "kind": "appendix",
+    "title": "Integer quotients, approximation and further questions"
+   },
+   "sec:period": {
+    "printed": "B",
+    "page": 16,
+    "kind": "appendix",
+    "title": "Finite-support denominator periods"
+   },
+   "sec:problem": {
+    "printed": "1",
+    "page": 1,
+    "kind": "section",
+    "title": "Introduction"
+   },
+   "sec:rational-membership": {
+    "printed": "C",
+    "page": 17,
+    "kind": "appendix",
+    "title": "Rational membership"
+   },
+   "sec:reciprocal-support": {
+    "printed": "A",
+    "page": 14,
+    "kind": "appendix",
+    "title": "Reciprocal-summable supports"
+   },
+   "sec:separated-support-transfer": {
+    "printed": "6.1",
+    "page": 14,
+    "kind": "subsection",
+    "title": "Algebraic bases on separated supports"
+   },
+   "thm:variable-fractional-cover": {
+    "printed": "3.1",
+    "page": 6,
+    "kind": "theorem",
+    "title": "a summable divisor-cover criterion"
+   }
+  },
+  "unlabelled_results": [],
+  "anchors": "Anchor ids are the TeX labels unchanged; the reader accepts a colon in an id."
+ },
+ "expository": {
+  "labels": {
+   "app:answers": {
+    "printed": "C",
+    "page": 15,
+    "kind": "appendix",
+    "title": "Answers"
+   },
+   "app:bases": {
+    "printed": "A.5",
+    "page": 14,
+    "kind": "subsection",
+    "title": "Other bases"
+   },
+   "app:cycle": {
+    "printed": "A.3",
+    "page": 13,
+    "kind": "subsection",
+    "title": "Why the sampled remainders form a cycle"
+   },
+   "app:full": {
+    "printed": "A",
+    "page": 12,
+    "kind": "appendix",
+    "title": "Supporting details and formal-proof correspondence"
+   },
+   "app:lean": {
+    "printed": "A.6",
+    "page": 14,
+    "kind": "subsection",
+    "title": "The formal proof and how it differs"
+   },
+   "app:numbers": {
+    "printed": "7.1",
+    "page": 10,
+    "kind": "subsection",
+    "title": "The construction with actual numbers"
+   },
+   "app:proof": {
+    "printed": "A.4",
+    "page": 13,
+    "kind": "subsection",
+    "title": "Adding the row averages"
+   },
+   "app:split": {
+    "printed": "A.2",
+    "page": 13,
+    "kind": "subsection",
+    "title": "Passing to the full transformed sum"
+   },
+   "app:sums": {
+    "printed": "A.1",
+    "page": 12,
+    "kind": "subsection",
+    "title": "Convergence and tails"
+   },
+   "chk:columns": {
+    "printed": "3",
+    "page": 15,
+    "kind": "question",
+    "title": ""
+   },
+   "chk:hypotheses": {
+    "printed": "1",
+    "page": 15,
+    "kind": "question",
+    "title": ""
+   },
+   "chk:order": {
+    "printed": "5",
+    "page": 15,
+    "kind": "question",
+    "title": ""
+   },
+   "chk:partial": {
+    "printed": "4",
+    "page": 15,
+    "kind": "question",
+    "title": ""
+   },
+   "chk:positive": {
+    "printed": "2",
+    "page": 15,
+    "kind": "question",
+    "title": ""
+   },
+   "eq:average-main": {
+    "printed": "4",
+    "page": 7,
+    "kind": "equation",
+    "title": "Average complete attempts"
+   },
+   "eq:cycle-main": {
+    "printed": "5",
+    "page": 8,
+    "kind": "equation",
+    "title": "Compare means without calculating a new formula"
+   },
+   "eq:fracpart-main": {
+    "printed": "2",
+    "page": 4,
+    "kind": "equation",
+    "title": "The remainder can be read from the exponents"
+   },
+   "eq:goal": {
+    "printed": "1",
+    "page": 4,
+    "kind": "equation",
+    "title": "A rational number has a fixed positive gap"
+   },
+   "eq:split-main": {
+    "printed": "3",
+    "page": 5,
+    "kind": "equation",
+    "title": "What happens to the entire sum"
+   },
+   "eq:uniform-main": {
+    "printed": "6",
+    "page": 9,
+    "kind": "equation",
+    "title": "Compare means without calculating a new formula"
+   },
+   "ex:2": {
+    "printed": "1",
+    "page": 15,
+    "kind": "exercise",
+    "title": ""
+   },
+   "ex:3": {
+    "printed": "2",
+    "page": 15,
+    "kind": "exercise",
+    "title": ""
+   },
+   "ex:4": {
+    "printed": "3",
+    "page": 15,
+    "kind": "exercise",
+    "title": ""
+   },
+   "ex:5": {
+    "printed": "4",
+    "page": 15,
+    "kind": "exercise",
+    "title": ""
+   },
+   "ex:6": {
+    "printed": "5",
+    "page": 15,
+    "kind": "exercise",
+    "title": ""
+   },
+   "fig:cycle-mean": {
+    "printed": "1",
+    "page": 9,
+    "kind": "figure",
+    "title": "For $n=6,Q=4$, two copies of each sample double both sum and count, preserving the mean. Each filled value is at most its outlined counterpart, so the sampled mean is at most the consecutive-cycle mean, which is below $1/6$.\\relax "
+   },
+   "sec:allchoices": {
+    "printed": "7.2",
+    "page": 11,
+    "kind": "subsection",
+    "title": "The same choices for any admissible set"
+   },
+   "sec:cycles": {
+    "printed": "6.2",
+    "page": 7,
+    "kind": "subsection",
+    "title": "Complete cycles give small averages"
+   },
+   "sec:doubling": {
+    "printed": "5",
+    "page": 5,
+    "kind": "section",
+    "title": "A complete example: the doubling exponents"
+   },
+   "sec:exercises": {
+    "printed": "B",
+    "page": 15,
+    "kind": "appendix",
+    "title": "Questions and exercises"
+   },
+   "sec:general": {
+    "printed": "6",
+    "page": 6,
+    "kind": "section",
+    "title": "Why averaging works"
+   },
+   "sec:intro": {
+    "printed": "1",
+    "page": 1,
+    "kind": "section",
+    "title": "The question: which infinite sums are irrational?"
+   },
+   "sec:limits": {
+    "printed": "8",
+    "page": 12,
+    "kind": "section",
+    "title": "Consequences and limits"
+   },
+   "sec:problem": {
+    "printed": "2",
+    "page": 2,
+    "kind": "section",
+    "title": "Erd\\H {o}s's question and the theorem"
+   },
+   "sec:proof": {
+    "printed": "7",
+    "page": 10,
+    "kind": "section",
+    "title": "Combining the estimates"
+   },
+   "sec:split": {
+    "printed": "4",
+    "page": 4,
+    "kind": "section",
+    "title": "Multiplying the series and retaining fractional parts"
+   },
+   "sec:test": {
+    "printed": "3",
+    "page": 3,
+    "kind": "section",
+    "title": "A rational number has a fixed positive gap"
+   },
+   "sec:unfinished": {
+    "printed": "6.3",
+    "page": 9,
+    "kind": "subsection",
+    "title": "A bound that also covers unfinished cycles"
+   },
+   "thm:main": {
+    "printed": "1",
+    "page": 2,
+    "kind": "theorem",
+    "title": ""
+   }
+  },
+  "unlabelled_results": [],
+  "anchors": "Anchor ids are the TeX labels unchanged; the reader accepts a colon in an id."
+ },
+ "long": {
+  "labels": {
+   "bar:asym": {
+    "printed": "2.5",
+    "page": 31,
+    "kind": "subsection",
+    "title": "What finite certificates decide"
+   },
+   "bar:box": {
+    "printed": "2.7",
+    "page": 32,
+    "kind": "subsection",
+    "title": "Hypotheses of the CRT block-certificate argument"
+   },
+   "bar:canon": {
+    "printed": "2.2",
+    "page": 27,
+    "kind": "subsection",
+    "title": "Uniqueness of the specified greedy words"
+   },
+   "bar:collapse": {
+    "printed": "2.3",
+    "page": 28,
+    "kind": "subsection",
+    "title": "Equivalent formulations of half-membership"
+   },
+   "bar:measure": {
+    "printed": "2.6",
+    "page": 31,
+    "kind": "subsection",
+    "title": "Why measure and category do not decide a rational target"
+   },
+   "bar:scale": {
+    "printed": "2.4",
+    "page": 29,
+    "kind": "subsection",
+    "title": "The size of the required error bounds"
+   },
+   "cert:band-through-31": {
+    "printed": "10.17",
+    "page": 120,
+    "kind": "observation",
+    "title": "A verified finite range of reset indices"
+   },
+   "cor:257-logarithmic-separation": {
+    "printed": "13.2",
+    "page": 145,
+    "kind": "corollary",
+    "title": "finite-functional separation"
+   },
+   "cor:cd-remaining": {
+    "printed": "10.7",
+    "page": 116,
+    "kind": "corollary",
+    "title": "Only $C_D\\in \\{-2,-1\\}$ remain among the exceptional dyadic cells"
+   },
+   "cor:mersenne-height": {
+    "printed": "10.14",
+    "page": 119,
+    "kind": "corollary",
+    "title": "Mersenne specialisation"
+   },
+   "cor:negative-mobius-overshoot": {
+    "printed": "6.29",
+    "page": 52,
+    "kind": "corollary",
+    "title": "Negative-M\\\"obius Boolean support overshoots $1/2$"
+   },
+   "cor:tr-half-lcm": {
+    "printed": "8.7",
+    "page": 95,
+    "kind": "corollary",
+    "title": "Half-LCM horizon"
+   },
+   "defn:H": {
+    "printed": "1.6",
+    "page": 20,
+    "kind": "definition",
+    "title": "The half-value question, written (H)"
+   },
+   "defn:U": {
+    "printed": "1.5",
+    "page": 20,
+    "kind": "definition",
+    "title": "Universal \\#257, written (U)"
+   },
+   "defn:achievement-set": {
+    "printed": "6.58",
+    "page": 60,
+    "kind": "definition",
+    "title": "The Mersenne achievement set and the support-series object"
+   },
+   "defn:band-escape": {
+    "printed": "10.15",
+    "page": 119,
+    "kind": "definition",
+    "title": "Upper-reset dyadic band escape"
+   },
+   "defn:greedy-orbit": {
+    "printed": "5.11",
+    "page": 40,
+    "kind": "definition",
+    "title": "The half-value greedy orbit"
+   },
+   "defn:half-question": {
+    "printed": "5.2",
+    "page": 38,
+    "kind": "definition",
+    "title": "The distinguished half-value question"
+   },
+   "defn:perturbed-family": {
+    "printed": "6.61",
+    "page": 61,
+    "kind": "definition",
+    "title": "Separated integer values and bounded perturbations"
+   },
+   "defn:theta": {
+    "printed": "11.1",
+    "page": 120,
+    "kind": "definition",
+    "title": "The short-window divisor phase"
+   },
+   "eq:257-arithmetic-cover-lower": {
+    "printed": "20",
+    "page": 145,
+    "kind": "equation",
+    "title": "finite-functional separation"
+   },
+   "eq:257-finite-witness-rule": {
+    "printed": "12",
+    "page": 13,
+    "kind": "equation",
+    "title": "realising finite monotone witness rules"
+   },
+   "eq:257-logarithmic-cost": {
+    "printed": "17",
+    "page": 142,
+    "kind": "equation",
+    "title": "The two finite costs"
+   },
+   "eq:257-mixed-finite-kernel": {
+    "printed": "13",
+    "page": 15,
+    "kind": "equation",
+    "title": "A finite estimate on common observation scales"
+   },
+   "eq:257-optimised-cover-cost": {
+    "printed": "18",
+    "page": 142,
+    "kind": "equation",
+    "title": "The two finite costs"
+   },
+   "eq:257-parent-log-cost": {
+    "printed": "19",
+    "page": 144,
+    "kind": "equation",
+    "title": "The two finite costs"
+   },
+   "eq:257-strengthened-cover": {
+    "printed": "14",
+    "page": 16,
+    "kind": "equation",
+    "title": "A summable family of divisor majorants"
+   },
+   "eq:257-weighted-dyadic-average": {
+    "printed": "6",
+    "page": 11,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-final-diagonal": {
+    "printed": "11",
+    "page": 12,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-gap": {
+    "printed": "3",
+    "page": 10,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-gcd-average": {
+    "printed": "4",
+    "page": 10,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-large-part": {
+    "printed": "9",
+    "page": 12,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-lattice": {
+    "printed": "2",
+    "page": 10,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-mass": {
+    "printed": "1",
+    "page": 8,
+    "kind": "equation",
+    "title": "A weighted summability criterion"
+   },
+   "eq:257-weighted-master-average": {
+    "printed": "10",
+    "page": 12,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-outer": {
+    "printed": "5",
+    "page": 11,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-small-part": {
+    "printed": "8",
+    "page": 11,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:257-weighted-tail-choice": {
+    "printed": "7",
+    "page": 11,
+    "kind": "equation",
+    "title": "Examples and limits of the hypothesis"
+   },
+   "eq:record257-twenty-one-recurrence": {
+    "printed": "15",
+    "page": 88,
+    "kind": "equation",
+    "title": "Integer-quotient tests for one twenty-first"
+   },
+   "eq:record257-twenty-one-rounding": {
+    "printed": "16",
+    "page": 88,
+    "kind": "equation",
+    "title": "Integer-quotient tests for one twenty-first"
+   },
+   "lem:collapse-mech": {
+    "printed": "2.4",
+    "page": 28,
+    "kind": "lemma",
+    "title": "Carry and residual value"
+   },
+   "lem:denominator-sandwich": {
+    "printed": "6.55",
+    "page": 59,
+    "kind": "lemma",
+    "title": "The odd denominator survives dyadic subtraction"
+   },
+   "lem:denominator-survival": {
+    "printed": "6.56",
+    "page": 59,
+    "kind": "lemma",
+    "title": "A guaranteed divisor of a reduced denominator"
+   },
+   "lem:dyadic-excess-reformulation": {
+    "printed": "6.54",
+    "page": 59,
+    "kind": "lemma",
+    "title": "An integer test for the interval between the dyadic and Mersenne weights"
+   },
+   "lem:eventually-right-impossible": {
+    "printed": "6.33",
+    "page": 54,
+    "kind": "lemma",
+    "title": "The values on either side of an eventual right continuation"
+   },
+   "lem:fatal-gap-exclusion": {
+    "printed": "6.37",
+    "page": 54,
+    "kind": "lemma",
+    "title": "A greedy gap excludes every representation"
+   },
+   "lem:gap-mass-summability": {
+    "printed": "6.50",
+    "page": 58,
+    "kind": "lemma",
+    "title": "Summability of one gap length per level"
+   },
+   "lem:half-divisor-unit-drop": {
+    "printed": "6.51",
+    "page": 58,
+    "kind": "lemma",
+    "title": "The effect of adding one divisor"
+   },
+   "lem:half-endpoint-kills": {
+    "printed": "6.38",
+    "page": 55,
+    "kind": "lemma",
+    "title": "No finite Mersenne sum equals one half"
+   },
+   "lem:largest-false-rank-algebra": {
+    "printed": "6.42",
+    "page": 55,
+    "kind": "lemma",
+    "title": "The exact gap at the largest omitted rank"
+   },
+   "lem:linear-channel-nogo": {
+    "printed": "6.47",
+    "page": 57,
+    "kind": "lemma",
+    "title": "Linear functionals factoring through one value"
+   },
+   "lem:mersenne-tail-weight": {
+    "printed": "6.34",
+    "page": 54,
+    "kind": "lemma",
+    "title": "Each Mersenne weight exceeds its remaining tail"
+   },
+   "lem:mixed-prime-power-layer": {
+    "printed": "6.57",
+    "page": 59,
+    "kind": "lemma",
+    "title": "Commuting prime-power differences"
+   },
+   "lem:no-ties": {
+    "printed": "8.2",
+    "page": 93,
+    "kind": "lemma",
+    "title": "No-ties lemma"
+   },
+   "lem:odometer": {
+    "printed": "11.2",
+    "page": 122,
+    "kind": "lemma",
+    "title": "Divisor-residue form of the short-window phase"
+   },
+   "lem:rank-step-trichotomy": {
+    "printed": "6.36",
+    "page": 54,
+    "kind": "lemma",
+    "title": "The two next-prefix intervals and their gap"
+   },
+   "lem:reverse-carry-word": {
+    "printed": "6.46",
+    "page": 57,
+    "kind": "lemma",
+    "title": "Spacing of reverse-carry words"
+   },
+   "lem:scalar-localization": {
+    "printed": "10.13",
+    "page": 119,
+    "kind": "lemma",
+    "title": "Denominator complement survives scaling"
+   },
+   "lem:seam-upper-or-middle": {
+    "printed": "6.41",
+    "page": 55,
+    "kind": "lemma",
+    "title": "Seam upper-or-middle classification"
+   },
+   "lem:skipped-endpoint-trichotomy": {
+    "printed": "6.45",
+    "page": 57,
+    "kind": "lemma",
+    "title": "The signed position of a skipped greedy prefix"
+   },
+   "lem:sqrt-witness": {
+    "printed": "2.6",
+    "page": 28,
+    "kind": "lemma",
+    "title": "The terminal bound at square depths"
+   },
+   "lem:sqwitness": {
+    "printed": "11.3",
+    "page": 129,
+    "kind": "lemma",
+    "title": "The terminal bound at square depths"
+   },
+   "lem:straddle-agrees-greedy": {
+    "printed": "6.39",
+    "page": 55,
+    "kind": "lemma",
+    "title": "Straddle words are canonical: they agree with the greedy prefix"
+   },
+   "lem:tail-transfer": {
+    "printed": "6.53",
+    "page": 59,
+    "kind": "lemma",
+    "title": "Changing finitely many support elements"
+   },
+   "lem:tr-forced-greedy": {
+    "printed": "8.4",
+    "page": 94,
+    "kind": "lemma",
+    "title": "Forced greedy"
+   },
+   "lem:tr-mod12": {
+    "printed": "8.8",
+    "page": 96,
+    "kind": "lemma",
+    "title": "Mod-12 filter, $J\\ge 7$"
+   },
+   "lem:tr-parity": {
+    "printed": "8.5",
+    "page": 95,
+    "kind": "lemma",
+    "title": "Parity forces infinite support"
+   },
+   "obs:affine-excess-recurrence": {
+    "printed": "9.5",
+    "page": 98,
+    "kind": "observation",
+    "title": "The affine excess recurrence"
+   },
+   "obs:anchors-coords": {
+    "printed": "5.19",
+    "page": 44,
+    "kind": "observation",
+    "title": "Four computations side by side"
+   },
+   "obs:anchors-depth": {
+    "printed": "5.18",
+    "page": 44,
+    "kind": "observation",
+    "title": "Depths of the reported computations"
+   },
+   "obs:anchors-low": {
+    "printed": "5.17",
+    "page": 44,
+    "kind": "observation",
+    "title": "Exact low-row values"
+   },
+   "obs:box": {
+    "printed": "2.13",
+    "page": 32,
+    "kind": "observation",
+    "title": "Two inputs to the CRT certificate argument"
+   },
+   "obs:dangerous-reset-rigidity": {
+    "printed": "12.9",
+    "page": 137,
+    "kind": "observation",
+    "title": "Rigidity of dangerous resets"
+   },
+   "obs:general-target-gap": {
+    "printed": "9.44",
+    "page": 110,
+    "kind": "observation",
+    "title": "A finite-gap criterion for every target in the convex hull"
+   },
+   "obs:half-controls-universal": {
+    "printed": "5.3",
+    "page": 38,
+    "kind": "observation",
+    "title": "Why the half-value question controls universal \\#257"
+   },
+   "obs:half-regression": {
+    "printed": "6.26",
+    "page": 52,
+    "kind": "observation",
+    "title": "A finite half-value approximation and the first correction tail"
+   },
+   "obs:irrationality-measure": {
+    "printed": "10.3",
+    "page": 114,
+    "kind": "observation",
+    "title": "What the denominator estimate does not give"
+   },
+   "obs:no-ensemble": {
+    "printed": "2.1",
+    "page": 26,
+    "kind": "observation",
+    "title": "Uniqueness within the fixed-target coding"
+   },
+   "obs:parity-squares": {
+    "printed": "10.2",
+    "page": 113,
+    "kind": "observation",
+    "title": "Parity and perfect squares in the recurrence"
+   },
+   "obs:period-four-obstruction": {
+    "printed": "6.27",
+    "page": 52,
+    "kind": "observation",
+    "title": "Period-4 sign weight vanishes on a residue class"
+   },
+   "obs:prime-doubling": {
+    "printed": "10.1",
+    "page": 113,
+    "kind": "observation",
+    "title": "Prime steps can occur within a bounded drift window"
+   },
+   "obs:skip-block-non-invariant": {
+    "printed": "6.30",
+    "page": 53,
+    "kind": "observation",
+    "title": "Dyadic safety need not survive a take"
+   },
+   "prop:257-finite-witness-rule": {
+    "printed": "1.2",
+    "page": 13,
+    "kind": "proposition",
+    "title": "realising finite monotone witness rules"
+   },
+   "prop:257-logarithmic-initial-interval": {
+    "printed": "13.3",
+    "page": 146,
+    "kind": "proposition",
+    "title": "ordinary initial intervals"
+   },
+   "prop:2adic-nogo": {
+    "printed": "10.4",
+    "page": 114,
+    "kind": "proposition",
+    "title": "Centred completion of fixed-precision 2-adic data"
+   },
+   "prop:achievement-set-topology": {
+    "printed": "6.59",
+    "page": 60,
+    "kind": "proposition",
+    "title": "Achievement-set topology: compact, closed, perfect, measure exactly one"
+   },
+   "prop:canon": {
+    "printed": "2.2",
+    "page": 27,
+    "kind": "proposition",
+    "title": "Uniqueness under the stated finite conditions"
+   },
+   "prop:carry-survivor-extinction": {
+    "printed": "10.12",
+    "page": 118,
+    "kind": "proposition",
+    "title": "Period exclusion for the totient series"
+   },
+   "prop:collapse": {
+    "printed": "2.5",
+    "page": 28,
+    "kind": "proposition",
+    "title": "A cofinal carry bound"
+   },
+   "prop:collapsed-list": {
+    "printed": "2.7",
+    "page": 29,
+    "kind": "proposition",
+    "title": "Six equivalent membership conditions"
+   },
+   "prop:cpgs-equiv": {
+    "printed": "12.3",
+    "page": 134,
+    "kind": "proposition",
+    "title": "Infinitely many positive skips are equivalent to half-membership"
+   },
+   "prop:critical-band-index": {
+    "printed": "10.16",
+    "page": 119,
+    "kind": "proposition",
+    "title": "Quantifier collapse: one critical index suffices, not $d{+}1$"
+   },
+   "prop:exact-lebesgue-measure-dichotomy": {
+    "printed": "6.146",
+    "page": 87,
+    "kind": "proposition",
+    "title": "Exact Lebesgue-measure dichotomy"
+   },
+   "prop:exponent-gap": {
+    "printed": "2.9",
+    "page": 30,
+    "kind": "proposition",
+    "title": "A bound for the reduced denominator"
+   },
+   "prop:finite-approximations-without-compatibility": {
+    "printed": "6.142",
+    "page": 84,
+    "kind": "proposition",
+    "title": ""
+   },
+   "prop:finite-boolSupport-and-onesided": {
+    "printed": "10.11",
+    "page": 118,
+    "kind": "proposition",
+    "title": "Finite computation and half-membership"
+   },
+   "prop:finite-state-nogo": {
+    "printed": "10.9",
+    "page": 117,
+    "kind": "proposition",
+    "title": "A finite-state restriction for the stated pulse family"
+   },
+   "prop:local-void": {
+    "printed": "2.8",
+    "page": 30,
+    "kind": "proposition",
+    "title": "Limits of the specified local summaries"
+   },
+   "prop:mobius-nogo": {
+    "printed": "10.10",
+    "page": 118,
+    "kind": "proposition",
+    "title": "Möbius-support countermodel: the natural negative-sign candidate overshoots"
+   },
+   "prop:one-orbit": {
+    "printed": "8.1",
+    "page": 93,
+    "kind": "proposition",
+    "title": "Stability of each fixed greedy prefix"
+   },
+   "prop:soft": {
+    "printed": "2.12",
+    "page": 31,
+    "kind": "remark",
+    "title": "Achievement-set geometry does not decide rational-target membership"
+   },
+   "prop:squarefree": {
+    "printed": "11.4",
+    "page": 131,
+    "kind": "proposition",
+    "title": "Squarefree support: a limit of the certificate method, not an open value"
+   },
+   "prop:strip-equiv": {
+    "printed": "12.4",
+    "page": 135,
+    "kind": "proposition",
+    "title": "Terminal carry bounds are equivalent to half-membership"
+   },
+   "prop:unsafe-middle-range-exactly-three": {
+    "printed": "6.140",
+    "page": 82,
+    "kind": "proposition",
+    "title": "The unsafe middle range is exactly three integers"
+   },
+   "prop:upper-unconditional": {
+    "printed": "10.5",
+    "page": 115,
+    "kind": "proposition",
+    "title": "The upper (carries) successor needs no exceptional-cell exclusion"
+   },
+   "record257:strict-mixed-proof": {
+    "printed": "1.6",
+    "page": 18,
+    "kind": "paragraph",
+    "title": "Why the mixed criterion is strict"
+   },
+   "record:257bm-c1": {
+    "printed": "6.67",
+    "page": 63,
+    "kind": "theorem",
+    "title": "Compactness from exact finite sums"
+   },
+   "record:257bm-c10": {
+    "printed": "6.78",
+    "page": 66,
+    "kind": "theorem",
+    "title": "A finite sum from a skipped prefix"
+   },
+   "record:257bm-c11": {
+    "printed": "6.79",
+    "page": 67,
+    "kind": "theorem",
+    "title": "Testing one nearest dyadic boundary"
+   },
+   "record:257bm-c12": {
+    "printed": "6.80",
+    "page": 67,
+    "kind": "proposition",
+    "title": "An upper bound for the reset expression"
+   },
+   "record:257bm-c13": {
+    "printed": "6.81",
+    "page": 67,
+    "kind": "definition",
+    "title": "A nonnegativity condition at skipped ranks"
+   },
+   "record:257bm-c14": {
+    "printed": "6.82",
+    "page": 68,
+    "kind": "theorem",
+    "title": "An equivalent vanishing condition"
+   },
+   "record:257bm-c15": {
+    "printed": "6.83",
+    "page": 68,
+    "kind": "theorem",
+    "title": "A sufficient lower bound for the integer remainder"
+   },
+   "record:257bm-c19": {
+    "printed": "6.87",
+    "page": 69,
+    "kind": "theorem",
+    "title": "An eventual nonnegative margin suffices"
+   },
+   "record:257bm-c2": {
+    "printed": "6.68",
+    "page": 63,
+    "kind": "theorem",
+    "title": "Infinitely many greedy skips suffice"
+   },
+   "record:257bm-c20": {
+    "printed": "6.88",
+    "page": 69,
+    "kind": "theorem",
+    "title": "Half-membership and infinitely many skips"
+   },
+   "record:257bm-c3": {
+    "printed": "6.69",
+    "page": 64,
+    "kind": "theorem",
+    "title": "A compatible family of finite supports"
+   },
+   "record:257bm-c4": {
+    "printed": "6.70",
+    "page": 64,
+    "kind": "theorem",
+    "title": "A sufficient quotient bound at a crossing"
+   },
+   "record:257bm-c5": {
+    "printed": "6.71",
+    "page": 64,
+    "kind": "theorem",
+    "title": "Induction from the depth-six example"
+   },
+   "record:257bm-c6": {
+    "printed": "6.72",
+    "page": 65,
+    "kind": "theorem",
+    "title": "The quotient condition on greedy prefixes"
+   },
+   "record:257bm-c6a": {
+    "printed": "6.73",
+    "page": 65,
+    "kind": "theorem",
+    "title": "Two consecutive skips"
+   },
+   "record:257bm-c6b": {
+    "printed": "6.74",
+    "page": 65,
+    "kind": "theorem",
+    "title": "A later skip after a selected block"
+   },
+   "record:257bm-c7": {
+    "printed": "6.75",
+    "page": 66,
+    "kind": "theorem",
+    "title": "Filling the remaining binary positions"
+   },
+   "record:257bm-c8": {
+    "printed": "6.76",
+    "page": 66,
+    "kind": "theorem",
+    "title": "An exact sum at depth $2c-2$"
+   },
+   "record:257bm-c9": {
+    "printed": "6.77",
+    "page": 66,
+    "kind": "proposition",
+    "title": "Quotients in the upper half of the index range"
+   },
+   "record:257bm-d1": {
+    "printed": "6.63",
+    "page": 62,
+    "kind": "definition",
+    "title": "An exact finite quotient sum"
+   },
+   "record:257bm-d2": {
+    "printed": "6.64",
+    "page": 62,
+    "kind": "definition",
+    "title": "Floor quotients and the signed endpoint expression"
+   },
+   "record:257bm-d3": {
+    "printed": "6.65",
+    "page": 63,
+    "kind": "definition",
+    "title": "The remaining binary suffix"
+   },
+   "record:257bm-d4": {
+    "printed": "6.66",
+    "page": 63,
+    "kind": "definition",
+    "title": "Exact quotient sums at unbounded depths"
+   },
+   "record:257bm-i-bridge": {
+    "printed": "6.107",
+    "page": 75,
+    "kind": "theorem",
+    "title": "The support series as a coefficient series"
+   },
+   "record:257bm-i-cap": {
+    "printed": "6.92",
+    "page": 70,
+    "kind": "definition",
+    "title": "The sharper binary bound"
+   },
+   "record:257bm-i-cross": {
+    "printed": "6.113",
+    "page": 76,
+    "kind": "definition",
+    "title": "The first crossing rank"
+   },
+   "record:257bm-i-cross2": {
+    "printed": "6.114",
+    "page": 76,
+    "kind": "theorem",
+    "title": "Existence of a first crossing"
+   },
+   "record:257bm-i-mob": {
+    "printed": "6.106",
+    "page": 74,
+    "kind": "theorem",
+    "title": "M\\\"obius inversion of the divisor counts"
+   },
+   "record:257bm-i-rank2": {
+    "printed": "6.96",
+    "page": 72,
+    "kind": "proposition",
+    "title": "Every exact sum contains exponent two"
+   },
+   "record:257bm-i-seed": {
+    "printed": "6.97",
+    "page": 72,
+    "kind": "definition",
+    "title": "An exact sum at depth six"
+   },
+   "record:257bm-i-t7": {
+    "printed": "6.105",
+    "page": 74,
+    "kind": "theorem",
+    "title": "Rationality through an integer recurrence"
+   },
+   "record:257bm-i10": {
+    "printed": "6.99",
+    "page": 72,
+    "kind": "proposition",
+    "title": "No finite support has value one half"
+   },
+   "record:257bm-i11a": {
+    "printed": "6.100",
+    "page": 72,
+    "kind": "theorem",
+    "title": "Small remainder forces the greedy word"
+   },
+   "record:257bm-i11b": {
+    "printed": "6.101",
+    "page": 73,
+    "kind": "proposition",
+    "title": "Gap domination of the integer weights"
+   },
+   "record:257bm-i11c": {
+    "printed": "6.102",
+    "page": 73,
+    "kind": "proposition",
+    "title": "Uniqueness of the finite greedy representation"
+   },
+   "record:257bm-i12": {
+    "printed": "6.103",
+    "page": 73,
+    "kind": "theorem",
+    "title": "A division-free form of the binary bound"
+   },
+   "record:257bm-i13": {
+    "printed": "6.122",
+    "page": 78,
+    "kind": "theorem",
+    "title": "Two-sided dyadic bounds"
+   },
+   "record:257bm-i14": {
+    "printed": "6.123",
+    "page": 78,
+    "kind": "proposition",
+    "title": "A finite band check for $13\\le d\\le 30$"
+   },
+   "record:257bm-i15": {
+    "printed": "6.124",
+    "page": 78,
+    "kind": "theorem",
+    "title": "A general perturbed greedy recurrence"
+   },
+   "record:257bm-i16": {
+    "printed": "6.125",
+    "page": 79,
+    "kind": "theorem",
+    "title": "Spacing of compatible reverse-carry words"
+   },
+   "record:257bm-i17": {
+    "printed": "6.126",
+    "page": 79,
+    "kind": "proposition",
+    "title": "Changing one support bit at a doubled rank"
+   },
+   "record:257bm-i1a": {
+    "printed": "6.89",
+    "page": 70,
+    "kind": "theorem",
+    "title": "The next floor quotient"
+   },
+   "record:257bm-i1b": {
+    "printed": "6.90",
+    "page": 70,
+    "kind": "theorem",
+    "title": "The next quotient sum"
+   },
+   "record:257bm-i1c": {
+    "printed": "6.91",
+    "page": 70,
+    "kind": "theorem",
+    "title": "The signed endpoint recurrence"
+   },
+   "record:257bm-i2": {
+    "printed": "6.104",
+    "page": 74,
+    "kind": "theorem",
+    "title": "An upper bound for a binary coefficient tail"
+   },
+   "record:257bm-i5": {
+    "printed": "6.93",
+    "page": 70,
+    "kind": "theorem",
+    "title": "Equivalent forms of the sharper bound"
+   },
+   "record:257bm-i6": {
+    "printed": "6.94",
+    "page": 71,
+    "kind": "theorem",
+    "title": "An unconditional bound with one extra bit"
+   },
+   "record:257bm-i7": {
+    "printed": "6.95",
+    "page": 71,
+    "kind": "theorem",
+    "title": "The binary bound after doubling"
+   },
+   "record:257bm-i9": {
+    "printed": "6.98",
+    "page": 72,
+    "kind": "proposition",
+    "title": "Error in the finite subseries value"
+   },
+   "record:257bm-k-dich": {
+    "printed": "6.128",
+    "page": 79,
+    "kind": "theorem",
+    "title": "Doubling or returning to an earlier depth"
+   },
+   "record:257bm-k1": {
+    "printed": "6.127",
+    "page": 79,
+    "kind": "theorem",
+    "title": "A bounded model of the doubling-or-return alternative"
+   },
+   "record:257bm-k10": {
+    "printed": "6.137",
+    "page": 82,
+    "kind": "observation",
+    "title": "The additive error in the binary bound"
+   },
+   "record:257bm-k11": {
+    "printed": "6.138",
+    "page": 82,
+    "kind": "observation",
+    "title": "Odd denominators of finite sums"
+   },
+   "record:257bm-k2": {
+    "printed": "6.129",
+    "page": 80,
+    "kind": "proposition",
+    "title": "A sufficient fractional-mass bound need not hold"
+   },
+   "record:257bm-k3": {
+    "printed": "6.130",
+    "page": 80,
+    "kind": "observation",
+    "title": "A doubled finite sum can exceed one half"
+   },
+   "record:257bm-k4": {
+    "printed": "6.131",
+    "page": 80,
+    "kind": "theorem",
+    "title": "The returning endpoint need not be larger"
+   },
+   "record:257bm-k5": {
+    "printed": "6.132",
+    "page": 81,
+    "kind": "observation",
+    "title": "The skip condition is equivalent to membership"
+   },
+   "record:257bm-k9": {
+    "printed": "6.136",
+    "page": 81,
+    "kind": "theorem",
+    "title": "Vanishing of the specified linear-channel determinant"
+   },
+   "record:257hg-i1": {
+    "printed": "6.117",
+    "page": 77,
+    "kind": "definition",
+    "title": "The gap after a Mersenne weight"
+   },
+   "record:257hg-i2": {
+    "printed": "6.118",
+    "page": 77,
+    "kind": "theorem",
+    "title": "The unweighted sum of remaining gap lengths"
+   },
+   "record:257hg-i3": {
+    "printed": "6.119",
+    "page": 77,
+    "kind": "definition",
+    "title": "Three geometric terms in the tail lower bound"
+   },
+   "record:257hg-i4": {
+    "printed": "6.120",
+    "page": 77,
+    "kind": "theorem",
+    "title": "A sufficient inequality for a safe skip"
+   },
+   "record:257hg-i5": {
+    "printed": "6.121",
+    "page": 78,
+    "kind": "proposition",
+    "title": "Two unconditional safety cases"
+   },
+   "record:257hg-i6": {
+    "printed": "6.115",
+    "page": 76,
+    "kind": "theorem",
+    "title": "Nonnegative centred carries below the half-value"
+   },
+   "record:257hg-i7": {
+    "printed": "6.116",
+    "page": 76,
+    "kind": "theorem",
+    "title": "Three possibilities at a skipped endpoint"
+   },
+   "record:257hg-k12": {
+    "printed": "6.139",
+    "page": 82,
+    "kind": "theorem",
+    "title": "Excluding the cell with value minus three"
+   },
+   "record:257hg-k8": {
+    "printed": "6.135",
+    "page": 81,
+    "kind": "observation",
+    "title": "An unsafe example in the two-thirds interval"
+   },
+   "record:257rig-c16": {
+    "printed": "6.84",
+    "page": 68,
+    "kind": "theorem",
+    "title": "A square-root carry bound implies half-membership"
+   },
+   "record:257rig-c17": {
+    "printed": "6.85",
+    "page": 68,
+    "kind": "theorem",
+    "title": "Terminal bounds at unbounded depths"
+   },
+   "record:257rig-c18": {
+    "printed": "6.86",
+    "page": 69,
+    "kind": "theorem",
+    "title": "Cofinal returns of the greedy carry"
+   },
+   "record:257rig-i2": {
+    "printed": "6.108",
+    "page": 75,
+    "kind": "theorem",
+    "title": "A restriction on dyadic rational values"
+   },
+   "record:257rig-i3": {
+    "printed": "6.109",
+    "page": 75,
+    "kind": "theorem",
+    "title": "Unboundedness of a positive shifted recurrence"
+   },
+   "record:257rig-i4a": {
+    "printed": "6.110",
+    "page": 75,
+    "kind": "theorem",
+    "title": "Bounds for intervals with zero divisor counts"
+   },
+   "record:257rig-i4b": {
+    "printed": "6.111",
+    "page": 75,
+    "kind": "proposition",
+    "title": "A subpower bound for divisor counts"
+   },
+   "record:257rig-i5": {
+    "printed": "6.112",
+    "page": 76,
+    "kind": "proposition",
+    "title": "Two distinct prime-power differences commute"
+   },
+   "record:257rig-k6": {
+    "printed": "6.133",
+    "page": 81,
+    "kind": "theorem",
+    "title": "Uniqueness at a critical crossing"
+   },
+   "record:257rig-k7": {
+    "printed": "6.134",
+    "page": 81,
+    "kind": "observation",
+    "title": "Different requirements on finite witnesses"
+   },
+   "rem:band-caveat": {
+    "printed": "10.18",
+    "page": 120,
+    "kind": "remark",
+    "title": "What this does \\emph {not} show"
+   },
+   "rem:dangerous-reset-chain-scope": {
+    "printed": "9.47",
+    "page": 111,
+    "kind": "remark",
+    "title": "B: rigidity of dangerous resets"
+   },
+   "rem:no-ties": {
+    "printed": "5.12",
+    "page": 41,
+    "kind": "remark",
+    "title": "No-ties: both greedy-orbit boundaries are strict"
+   },
+   "rem:promotion-audit": {
+    "printed": "7.1",
+    "page": 92,
+    "kind": "remark",
+    "title": "Finite checks and quantified conclusions"
+   },
+   "rem:tail-dominance-open": {
+    "printed": "10.8",
+    "page": 116,
+    "kind": "remark",
+    "title": "A sufficient tail inequality and its source"
+   },
+   "sec:257-common-kernel": {
+    "printed": "1.4",
+    "page": 14,
+    "kind": "subsection",
+    "title": "A finite estimate on common observation scales"
+   },
+   "sec:257-finite-witness-rules": {
+    "printed": "1.3",
+    "page": 13,
+    "kind": "subsection",
+    "title": "Dependence on the chosen primes"
+   },
+   "sec:257-howto": {
+    "printed": "4",
+    "page": 37,
+    "kind": "section",
+    "title": "Reading the detailed record"
+   },
+   "sec:257-logarithmic-sampling": {
+    "printed": "13",
+    "page": 142,
+    "kind": "section",
+    "title": "Logarithmic cost under arithmetic sampling"
+   },
+   "sec:257-problem": {
+    "printed": "1",
+    "page": 7,
+    "kind": "section",
+    "title": "Support criteria and their proofs"
+   },
+   "sec:257-survivors": {
+    "printed": "3",
+    "page": 33,
+    "kind": "section",
+    "title": "Unproved inputs for further arguments"
+   },
+   "sec:257-wall": {
+    "printed": "2",
+    "page": 26,
+    "kind": "section",
+    "title": "Limitations of the recorded methods"
+   },
+   "sec:branch-exclusions": {
+    "printed": "10.2",
+    "page": 115,
+    "kind": "subsection",
+    "title": "Excluding particular final dyadic intervals"
+   },
+   "sec:four-coordinates": {
+    "printed": "8",
+    "page": 92,
+    "kind": "section",
+    "title": "Approximations to the greedy orbit"
+   },
+   "sec:invent-257": {
+    "printed": "11",
+    "page": 120,
+    "kind": "section",
+    "title": "Unproved inputs for the recorded implications"
+   },
+   "sec:invent-R1": {
+    "printed": "11.1",
+    "page": 121,
+    "kind": "subsection",
+    "title": "Reset bounds and finite weighted divisor sums"
+   },
+   "sec:invent-R2": {
+    "printed": "11.2",
+    "page": 126,
+    "kind": "subsection",
+    "title": "Progress to larger endpoint depths"
+   },
+   "sec:invent-R3": {
+    "printed": "11.3",
+    "page": 128,
+    "kind": "subsection",
+    "title": "Prime support and the limits of one formal argument"
+   },
+   "sec:invent-R4": {
+    "printed": "11.4",
+    "page": 128,
+    "kind": "subsection",
+    "title": "Equivalent carry conditions at perfect-square depths"
+   },
+   "sec:invent-R5": {
+    "printed": "11.5",
+    "page": 130,
+    "kind": "subsection",
+    "title": "Sparse and dense supports under the certificate criterion"
+   },
+   "sec:invent-shape": {
+    "printed": "11.6",
+    "page": 131,
+    "kind": "subsection",
+    "title": "What the experiments and obstructions do not imply"
+   },
+   "sec:o4": {
+    "printed": "12.5",
+    "page": 137,
+    "kind": "subsection",
+    "title": "Reset bounds and runs of right transitions"
+   },
+   "sec:scale-ladder": {
+    "printed": "7",
+    "page": 90,
+    "kind": "section",
+    "title": "Finite ranges and unbounded parameters"
+   },
+   "sec:v-table": {
+    "printed": "12.8",
+    "page": 139,
+    "kind": "subsection",
+    "title": "Implication table"
+   },
+   "ssec:anchors": {
+    "printed": "5.7",
+    "page": 44,
+    "kind": "subsection",
+    "title": "Reported finite checks"
+   },
+   "ssec:greedy-orbit": {
+    "printed": "5.3",
+    "page": 40,
+    "kind": "subsection",
+    "title": "The greedy rule for one half"
+   },
+   "ssec:route-1": {
+    "printed": "3.1",
+    "page": 34,
+    "kind": "subsection",
+    "title": "A lower bound at reset ranks"
+   },
+   "ssec:route-2": {
+    "printed": "3.2",
+    "page": 35,
+    "kind": "subsection",
+    "title": "Increasing the depths of exact finite sums"
+   },
+   "ssec:route-3": {
+    "printed": "3.3",
+    "page": 35,
+    "kind": "subsection",
+    "title": "The known prime-support theorem"
+   },
+   "ssec:route-4": {
+    "printed": "3.4",
+    "page": 36,
+    "kind": "subsection",
+    "title": "Equivalent membership conditions"
+   },
+   "ssec:route-5": {
+    "printed": "3.5",
+    "page": 36,
+    "kind": "subsection",
+    "title": "Why zero windows do not split the support class"
+   },
+   "ssec:seam-model": {
+    "printed": "5.4",
+    "page": 41,
+    "kind": "subsection",
+    "title": "Integer quotients and their remainder identity"
+   },
+   "tab:scale-ladder": {
+    "printed": "2",
+    "page": 92,
+    "kind": "table",
+    "title": "Quantifiers for the stated results. The groups separate finite tests, uniform implications, unbounded witness conditions and all-reset hypotheses. A theorem conditional on an unproved hypothesis is not a proof of that hypothesis.\\relax "
+   },
+   "thm:257-logarithmic-counterexample": {
+    "printed": "13.1",
+    "page": 143,
+    "kind": "theorem",
+    "title": "arithmetic logarithmic counterexample"
+   },
+   "thm:257-mixed-supports": {
+    "printed": "1.4",
+    "page": 17,
+    "kind": "theorem",
+    "title": "mixed weighted and cover supports"
+   },
+   "thm:257-variable-fractional-cover": {
+    "printed": "1.3",
+    "page": 16,
+    "kind": "theorem",
+    "title": "A summable family of divisor majorants"
+   },
+   "thm:257-weighted": {
+    "printed": "1.1",
+    "page": 8,
+    "kind": "theorem",
+    "title": "A weighted summability criterion"
+   },
+   "thm:cd-neg3-impossible": {
+    "printed": "10.6",
+    "page": 115,
+    "kind": "theorem",
+    "title": "$C_D=-3$ is impossible at the final middle transition, $D\\ge 13$"
+   },
+   "thm:critical-dyadic-band": {
+    "printed": "6.43",
+    "page": 56,
+    "kind": "theorem",
+    "title": "Reduction to the nearest dyadic boundary"
+   },
+   "thm:dynamics": {
+    "printed": "5.16",
+    "page": 42,
+    "kind": "theorem",
+    "title": "Exact recurrences for the three branches"
+   },
+   "thm:eventually-periodic": {
+    "printed": "6.21",
+    "page": 50,
+    "kind": "theorem",
+    "title": "Eventually-periodic support irrationality"
+   },
+   "thm:eventually-periodic-support": {
+    "printed": "5.6",
+    "page": 39,
+    "kind": "theorem",
+    "title": "Eventually periodic support"
+   },
+   "thm:factorial-twopow-support": {
+    "printed": "6.18",
+    "page": 50,
+    "kind": "theorem",
+    "title": "Factorial-support and $2^k$-support instances"
+   },
+   "thm:fatal-absorbing": {
+    "printed": "6.1",
+    "page": 45,
+    "kind": "theorem",
+    "title": "Infinitely many greedy skips force membership"
+   },
+   "thm:final-middle-cell": {
+    "printed": "6.44",
+    "page": 56,
+    "kind": "theorem",
+    "title": "Excluding minus three at a final middle transition"
+   },
+   "thm:frozen-margin": {
+    "printed": "6.13",
+    "page": 48,
+    "kind": "theorem",
+    "title": "Equivalent sign and vanishing conditions"
+   },
+   "thm:full-support": {
+    "printed": "5.4",
+    "page": 39,
+    "kind": "theorem",
+    "title": "Full-support irrationality, unconditional, every base $b \\ge 2$"
+   },
+   "thm:full-support-catalogue": {
+    "printed": "6.14",
+    "page": 49,
+    "kind": "theorem",
+    "title": "Erd\\H {o}s--Borwein full-support irrationality, unconditional"
+   },
+   "thm:geometry": {
+    "printed": "1.8",
+    "page": 23,
+    "kind": "theorem",
+    "title": "Achievement-set geometry"
+   },
+   "thm:greedy-survival": {
+    "printed": "1.11",
+    "page": 24,
+    "kind": "theorem",
+    "title": "Membership equals greedy survival; the fatal-gap dichotomy"
+   },
+   "thm:greedy-survival-catalogue": {
+    "printed": "6.35",
+    "page": 54,
+    "kind": "theorem",
+    "title": "Greedy survival and membership"
+   },
+   "thm:greedy-survival-record": {
+    "printed": "5.10",
+    "page": 40,
+    "kind": "theorem",
+    "title": "Membership equals greedy survival at every level"
+   },
+   "thm:half-skip-dichotomy": {
+    "printed": "6.31",
+    "page": 53,
+    "kind": "theorem",
+    "title": "The half-skip dichotomy via Erd\\H {o}s--Borwein irrationality"
+   },
+   "thm:largest-skip-late": {
+    "printed": "6.6",
+    "page": 46,
+    "kind": "theorem",
+    "title": "Keeping the largest skipped rank beyond two thirds"
+   },
+   "thm:last-skip-iff-fatal": {
+    "printed": "6.40",
+    "page": 55,
+    "kind": "theorem",
+    "title": "Last-skip iff local fatality: a pointwise criterion"
+   },
+   "thm:lcm-gap-engine": {
+    "printed": "6.17",
+    "page": 49,
+    "kind": "theorem",
+    "title": "Irrationality from a gap beyond the preceding least common multiple"
+   },
+   "thm:lower-bound-every-reset": {
+    "printed": "9.46",
+    "page": 111,
+    "kind": "theorem",
+    "title": "A: a sufficient lower bound at every reset"
+   },
+   "thm:master-dichotomy": {
+    "printed": "6.60",
+    "page": 61,
+    "kind": "theorem",
+    "title": "Nonmembership of one half and a finite fatal gap"
+   },
+   "thm:master-identity": {
+    "printed": "5.14",
+    "page": 41,
+    "kind": "theorem",
+    "title": "Decomposition of the integer remainder"
+   },
+   "thm:mersenne-channel-growth": {
+    "printed": "6.25",
+    "page": 51,
+    "kind": "theorem",
+    "title": "Exponential growth of the reduced denominators"
+   },
+   "thm:mersenne-channel-survival": {
+    "printed": "6.24",
+    "page": 51,
+    "kind": "theorem",
+    "title": "Denominators of finite Mersenne sums"
+   },
+   "thm:middle-allright-defect": {
+    "printed": "6.8",
+    "page": 47,
+    "kind": "theorem",
+    "title": "The tail inequality at a final middle transition"
+   },
+   "thm:middle-producer-escape": {
+    "printed": "6.7",
+    "page": 47,
+    "kind": "theorem",
+    "title": "Two sufficient bounds at middle transitions"
+   },
+   "thm:mobius-centred-nonneg": {
+    "printed": "6.11",
+    "page": 48,
+    "kind": "theorem",
+    "title": "M\\\"obius-centred carry nonnegativity below $1/2$"
+   },
+   "thm:mobius-lambert-identity": {
+    "printed": "6.28",
+    "page": 52,
+    "kind": "theorem",
+    "title": "The Lambert-series identity for the M\\\"obius function"
+   },
+   "thm:multiples-support": {
+    "printed": "6.19",
+    "page": 50,
+    "kind": "theorem",
+    "title": "Multiples-support irrationality via dilation"
+   },
+   "thm:nine-way-hub": {
+    "printed": "6.32",
+    "page": 53,
+    "kind": "theorem",
+    "title": "Equivalent descriptions of half-membership"
+   },
+   "thm:odd-support": {
+    "printed": "5.8",
+    "page": 39,
+    "kind": "theorem",
+    "title": "Odd support"
+   },
+   "thm:one-sided": {
+    "printed": "2.11",
+    "page": 31,
+    "kind": "theorem",
+    "title": "One-sidedness"
+   },
+   "thm:one-sided-finite-decision-boundary": {
+    "printed": "9.48",
+    "page": 111,
+    "kind": "theorem",
+    "title": "C: the one-sided finite decision boundary"
+   },
+   "thm:pairwise-coprime": {
+    "printed": "6.15",
+    "page": 49,
+    "kind": "theorem",
+    "title": "Pairwise-coprime support irrationality, Erd\\H {o}s 1968"
+   },
+   "thm:periodic-support": {
+    "printed": "6.20",
+    "page": 50,
+    "kind": "theorem",
+    "title": "Periodic-support irrationality"
+   },
+   "thm:perturbed-family-maximality": {
+    "printed": "6.62",
+    "page": 61,
+    "kind": "theorem",
+    "title": "Perturbed-family maximality and the three-branch recurrence"
+   },
+   "thm:purely-periodic-support": {
+    "printed": "5.5",
+    "page": 39,
+    "kind": "theorem",
+    "title": "Purely periodic support"
+   },
+   "thm:real-form": {
+    "printed": "5.15",
+    "page": 42,
+    "kind": "theorem",
+    "title": "Real (non-integer) form of the quotient identity"
+   },
+   "thm:residue-class-support": {
+    "printed": "5.7",
+    "page": 39,
+    "kind": "theorem",
+    "title": "Residue-class support"
+   },
+   "thm:residue-odd": {
+    "printed": "6.22",
+    "page": 50,
+    "kind": "theorem",
+    "title": "Residue-class and odd-support irrationality"
+   },
+   "thm:seam-limit": {
+    "printed": "6.2",
+    "page": 45,
+    "kind": "theorem",
+    "title": "The quotient remainders converge to the greedy deficit"
+   },
+   "thm:second-channel": {
+    "printed": "6.4",
+    "page": 46,
+    "kind": "theorem",
+    "title": "Second-channel phase separation sufficiency"
+   },
+   "thm:sharp-fatal-gap": {
+    "printed": "6.49",
+    "page": 58,
+    "kind": "theorem",
+    "title": "A weaker sufficient test against the remaining tail"
+   },
+   "thm:signed-periodic": {
+    "printed": "6.23",
+    "page": 50,
+    "kind": "theorem",
+    "title": "A formal dichotomy for signed periodic weights"
+   },
+   "thm:sqrt-bound-route": {
+    "printed": "6.12",
+    "page": 48,
+    "kind": "theorem",
+    "title": "A square-root bound on the greedy carry"
+   },
+   "thm:straddle-closed-set": {
+    "printed": "6.5",
+    "page": 46,
+    "kind": "theorem",
+    "title": "Straddle-prefix closed-set criterion"
+   },
+   "thm:supported-dichotomy": {
+    "printed": "1.9",
+    "page": 23,
+    "kind": "theorem",
+    "title": "Support-restricted refinement"
+   },
+   "thm:tempered-orbit-rigidity": {
+    "printed": "6.52",
+    "page": 59,
+    "kind": "theorem",
+    "title": "Uniqueness of an integer recurrence with a vanishing scaled limit"
+   },
+   "thm:topology": {
+    "printed": "5.9",
+    "page": 40,
+    "kind": "theorem",
+    "title": "Achievement-set topology and measure"
+   },
+   "thm:tr-finite-decision": {
+    "printed": "8.9",
+    "page": 96,
+    "kind": "theorem",
+    "title": "Finite decision procedure"
+   },
+   "thm:tr-witness-exclusion": {
+    "printed": "8.6",
+    "page": 95,
+    "kind": "theorem",
+    "title": "Witness exclusion"
+   },
+   "thm:two-channel-cap": {
+    "printed": "6.3",
+    "page": 46,
+    "kind": "theorem",
+    "title": "Two-channel and dyadic cap sufficiency"
+   },
+   "thm:two-sided-dyadic": {
+    "printed": "6.9",
+    "page": 47,
+    "kind": "theorem",
+    "title": "A conditional two-sided dyadic bound"
+   },
+   "thm:two-thirds-band": {
+    "printed": "6.48",
+    "page": 57,
+    "kind": "theorem",
+    "title": "Two-thirds band: exact localisation of post-take skip-unsafety"
+   },
+   "thm:upper-reset-band": {
+    "printed": "6.10",
+    "page": 48,
+    "kind": "theorem",
+    "title": "Upper-reset dyadic-band escape, checked for $13\\le d\\le 30$"
+   },
+   "thm:weighted-coeff-engine": {
+    "printed": "6.16",
+    "page": 49,
+    "kind": "theorem",
+    "title": "Irrationality from divisible coefficient blocks"
+   }
+  },
+  "unlabelled_results": [
+   {
+    "kind": "remark",
+    "printed": "1.7"
+   },
+   {
+    "kind": "remark",
+    "printed": "1.10"
+   },
+   {
+    "kind": "remark",
+    "printed": "1.12"
+   },
+   {
+    "kind": "remark",
+    "printed": "2.3"
+   },
+   {
+    "kind": "remark",
+    "printed": "2.10"
+   },
+   {
+    "kind": "definition",
+    "printed": "5.1"
+   },
+   {
+    "kind": "definition",
+    "printed": "5.13"
+   },
+   {
+    "kind": "observation",
+    "printed": "6.141"
+   },
+   {
+    "kind": "observation",
+    "printed": "6.143"
+   },
+   {
+    "kind": "definition",
+    "printed": "6.144"
+   },
+   {
+    "kind": "definition",
+    "printed": "6.145"
+   },
+   {
+    "kind": "remark",
+    "printed": "8.3"
+   },
+   {
+    "kind": "remark",
+    "printed": "8.10"
+   },
+   {
+    "kind": "definition",
+    "printed": "9.1"
+   },
+   {
+    "kind": "definition",
+    "printed": "9.2"
+   },
+   {
+    "kind": "definition",
+    "printed": "9.3"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.4"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.6"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.7"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.8"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.9"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.10"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.11"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.12"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.13"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.14"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.15"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.16"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.17"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.18"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.19"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.20"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.21"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.22"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.23"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.24"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.25"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.26"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.27"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.28"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.29"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.30"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.31"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.32"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.33"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.34"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.35"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.36"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.37"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.38"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.39"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.40"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.41"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.42"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.43"
+   },
+   {
+    "kind": "observation",
+    "printed": "9.45"
+   },
+   {
+    "kind": "remark",
+    "printed": "9.49"
+   },
+   {
+    "kind": "remark",
+    "printed": "9.50"
+   },
+   {
+    "kind": "remark",
+    "printed": "9.51"
+   },
+   {
+    "kind": "remark",
+    "printed": "9.52"
+   },
+   {
+    "kind": "definition",
+    "printed": "12.1"
+   },
+   {
+    "kind": "definition",
+    "printed": "12.2"
+   },
+   {
+    "kind": "observation",
+    "printed": "12.5"
+   },
+   {
+    "kind": "definition",
+    "printed": "12.6"
+   },
+   {
+    "kind": "definition",
+    "printed": "12.7"
+   },
+   {
+    "kind": "observation",
+    "printed": "12.8"
+   },
+   {
+    "kind": "definition",
+    "printed": "12.10"
+   }
+  ],
+  "anchors": "Anchor ids are the TeX labels unchanged; the reader accepts a colon in an id."
+ }
+}

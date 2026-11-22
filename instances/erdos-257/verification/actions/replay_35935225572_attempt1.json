@@ -1,0 +1,18 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Palomar Comparator replay",
+  "repository": "wcook04/plectis-erdos-lean",
+  "run_id": 35935225572,
+  "run_attempt": 1,
+  "url": "https://github.com/wcook04/plectis-erdos-lean/actions/runs/35935225572",
+  "commit": "cc7e541cf2081c6fef5a5e377d52e365e33b01eb",
+  "branch": "palomar/comparator-cycle-20260923",
+  "event": "push",
+  "started_at": "2026-09-23T23:46:12Z",
+  "completed_at": "2026-09-24T01:13:00Z",
+  "conclusion": "failure",
+  "shows": "The first attempt failed in shard-03, which holds E1049 entries, after a runner shutdown; the shards holding the E257 entries succeeded and wrote their receipts.",
+  "does_not_show": "Nothing about #257 failed in this attempt; the run passed on its second attempt.",
+  "description": "Palomar Comparator replay, attempt 1: failed in shard-03 (E1049 entries, not #257) after a runner shutdown",
+  "jobs": null
+}

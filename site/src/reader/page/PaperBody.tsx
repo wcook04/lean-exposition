@@ -730,9 +730,35 @@ export function formulaExtent(box: HTMLElement): number {
   return right;
 }
 
+/** Displays fitted at least once, across mounts. */
+const widthsSeen = new WeakSet<HTMLElement>();
+
+/** KaTeX's main faces, the ones most formulas are drawn in, are loaded (or there is no font API). */
+function katexFacesReady(): boolean {
+  const fonts = typeof document === "undefined" ? undefined : document.fonts;
+  if (!fonts) return true;
+  if (typeof fonts.check === "function") {
+    try {
+      return fonts.check("1em KaTeX_Main") && fonts.check("italic 1em KaTeX_Math");
+    } catch {
+      /* fall through */
+    }
+  }
+  return fonts.status === "loaded";
+}
+
+function katexFacesLoaded(): Promise<unknown> {
+  const fonts = document.fonts;
+  if (typeof fonts?.load !== "function") return fonts?.ready ?? Promise.resolve();
+  return Promise.all([fonts.load("1em KaTeX_Main"), fonts.load("italic 1em KaTeX_Math")]).catch(() => undefined);
+}
+
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
+  // Until it is first fitted a display is hidden, so a formula wider than its column is never
+  // seen cut off by the column's edge before the fitter has shrunk or broken it.
+  for (const box of boxes) if (!widthsSeen.has(box) && box.dataset.unfitted === undefined) box.dataset.unfitted = "";
   const cues = new Map<HTMLElement, HTMLElement>();
   const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
   let live = true;
@@ -748,6 +774,9 @@ export function markWideMaths(root: HTMLElement): () => void {
     if (force || (changed && !flipBack)) {
       fitDisplay(box);
       widths.set(box, { now: width, before: seen?.now ?? null, at: performance.now() });
+      // Shown from its first fit on, never before (reader-content.css).
+      widthsSeen.add(box);
+      if (box.dataset.unfitted !== undefined) delete box.dataset.unfitted;
     }
     // A display shrunk below the floor offers its full size in a dialog. It sits under the
     // display, outside the measured box, so showing it changes no width.
@@ -776,11 +805,31 @@ export function markWideMaths(root: HTMLElement): () => void {
   const fit = (box: HTMLElement) => {
     fitted.add(box);
     observer.observe(box);
-    // A width measured in a fallback font is wrong, and fitting on it and again once KaTeX's
-    // fonts arrive changes the display twice, after the page has painted: wait for the fonts.
-    if (document.fonts && document.fonts.status !== "loaded") return;
+    // A width measured in a fallback font is wrong: a display reached before KaTeX's main faces
+    // load waits for them, hidden (data-unfitted), and is fitted the moment they arrive.
+    if (!katexFacesReady()) {
+      waiting.add(box);
+      return;
+    }
     update(box);
   };
+  const waiting = new Set<HTMLElement>();
+  // The browser's find selects a match: one inside a display not yet fitted fits it now, so the
+  // reader sees the formula it found, not an empty space.
+  const onSelect = () => {
+    const node = document.getSelection()?.anchorNode;
+    const el = node && (node.nodeType === 1 ? (node as Element) : node.parentElement);
+    const box = el?.closest<HTMLElement>(".math-display[data-unfitted]");
+    if (!box || !boxes.includes(box)) return;
+    near?.unobserve(box);
+    if (!fitted.has(box)) fit(box);
+    else update(box, true);
+    if (box.dataset.unfitted !== undefined) {
+      // Not even KaTeX's main faces are in yet: show it as it is rather than not at all.
+      delete box.dataset.unfitted;
+    }
+  };
+  document.addEventListener("selectionchange", onSelect);
   // Each measurement forces a layout, so a formula is fitted as it comes near the screen.
   const near =
     typeof IntersectionObserver === "undefined"
@@ -808,7 +857,16 @@ export function markWideMaths(root: HTMLElement): () => void {
     }
     return true;
   });
-  // Formulas reached before KaTeX's fonts arrive are fitted once they have.
+  if (!katexFacesReady()) {
+    // KaTeX's main faces are preloaded (vite.config.ts); fit what waited as soon as they are in,
+    // or after three seconds in whatever font the browser fell back to.
+    void Promise.race([katexFacesLoaded(), new Promise((resolve) => setTimeout(resolve, 3000))]).then(() => {
+      if (!live) return;
+      waiting.forEach((box) => update(box, true));
+      waiting.clear();
+    });
+  }
+  // Any other face (AMS, Size3, …) can still change a width: measure again once every font is in.
   if (document.fonts && document.fonts.status !== "loaded") {
     void document.fonts.ready.then(() => {
       if (!live) return;
@@ -818,6 +876,7 @@ export function markWideMaths(root: HTMLElement): () => void {
   }
   return () => {
     live = false;
+    document.removeEventListener("selectionchange", onSelect);
     fitters.delete(root);
     near?.disconnect();
     observer.disconnect();
