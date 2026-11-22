@@ -118,6 +118,10 @@ export interface LibraryInstance {
   goal: string;
   main_lean?: string | null;
   comparisons_hidden?: boolean;
+  /** What the formal development does in each section, by section number or title (generated/section-aids.json). */
+  section_aids?: Record<string, string>;
+  /** Which guides the paper has, known to the build (generated/showcase.json, route.json). */
+  reading_aids?: { showcase: boolean; route: boolean };
   comparisons_held_text?: string;
   /** About's own sections, before the reader's shared ones. */
   about?: AboutSection[];

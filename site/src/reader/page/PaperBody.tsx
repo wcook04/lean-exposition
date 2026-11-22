@@ -14,7 +14,9 @@ import { mountFigures } from "../mount";
 import { checksMentionedBy, LaterCheckNote } from "../../lean/ours";
 import { breakForms, splitDisplay } from "../texBreaks";
 import { useReferences } from "./RefInset";
-import { estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
+import { DESKTOP_MEASURE, estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
+import { sectionAidFor } from "../engine";
+import site from "@instance/site";
 import type { Statements } from "./statements";
 
 export interface Links {
@@ -30,6 +32,11 @@ export interface BodyHandle {
   reanchor(force?: boolean): void;
   /** Hold this element where it is now (the target of a jump). */
   hold(el: Element): void;
+  /**
+   * Lay out these parts at their real height and fit their formulas now, wherever they are, so a
+   * jump measured into them lands where it stays: nothing in them changes as they come on screen.
+   */
+  settle(parts: number[]): void;
 }
 
 interface Props {
@@ -76,6 +83,8 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const { stage, doc, structures, initial, topInset, inspected, statements, onReferenceLean } = props;
   const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
+  // The first render's parts, fixed for the life of the paper.
+  const [firstParts] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
   const renderedRef = useRef(rendered);
@@ -173,13 +182,39 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         anchor.current = { el, top: el.getBoundingClientRect().top, scroll: window.scrollY };
         pinned.current = true;
       },
+      settle: (parts) => {
+        for (const index of parts) {
+          const text = elements.current.get(index)?.querySelector<HTMLElement>(":scope > .part__text");
+          if (!text) continue;
+          // A part in the window is laid out at its real height already; one off it is held at its
+          // reserved height until it comes near, which is what the jump must not measure.
+          const r = text.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < window.innerHeight) continue;
+          layOutWhole(stage, index);
+          fitters.get(text)?.(() => true, true);
+        }
+      },
       };
       handle.current = value;
       return value;
     },
-    [add, doc, reanchor],
+    [add, doc, reanchor, stage],
   );
   const references = useReferences(stage, doc, handle, useCallback(() => topRef.current, []), onReferenceLean ?? noLean);
+
+  // The parts in the window when the paper first mounts are laid out whole from the first frame.
+  // Content-visibility decides a part is on screen only after a first layout at its reserved height,
+  // and then lays it out again at its real one: under the first screen that moved the text below.
+  useLayoutEffect(() => {
+    const top = -window.innerHeight / 2;
+    const bottom = window.innerHeight * 1.5;
+    elements.current.forEach((el, index) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom > top && r.top < bottom) layOutWhole(stage, index);
+    });
+    // Once, for the paper as it first stands.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Resolve waiters once their parts are in the DOM and laid out.
   useLayoutEffect(() => {
@@ -332,6 +367,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           stage={stage}
           doc={doc}
           rendered={rendered.has(part.index)}
+          placedLater={!firstParts.has(part.index)}
           structures={structures}
           lit={!!part.anchor && part.anchor === inspected}
           statements={statements}
@@ -381,13 +417,15 @@ interface PartProps {
   stage: Stage;
   doc: PreparedDocument;
   rendered: boolean;
+  /** Typeset after the first render: its formulas are fitted as it is placed. */
+  placedLater: boolean;
   structures: Structures;
   lit: boolean;
   statements?: Statements;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, placedLater, structures, lit, statements, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   // Tones, hints and bracket-joined formula pieces go into the markup before it is placed, so a part
   // arriving on the page is written once and then left still.
@@ -412,20 +450,31 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
     if (!html || !rendered || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
+    // A part typeset only after the reader has passed it has its formulas fitted as it is placed,
+    // in the frame it first paints; they would otherwise wait for the reader to come back. Every
+    // other part's formulas are fitted as they come near and in idle time, a few at a time.
+    if (placedLater && textRef.current.getBoundingClientRect().bottom < 0) fitNow(textRef.current);
     statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
       statements?.adopt(part.index, null);
       unmount();
       unmark();
     };
-  }, [html, rendered, statements, part.index]);
+  }, [html, rendered, placedLater, statements, part.index]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
   // The same height before and after the text arrives, so rendering a part far away moves nothing.
-  const reserved = useMemo(() => estimateHeight(part), [part]);
+  const reserved = useMemo(() => {
+    const aids = site.sectionAids?.[doc.stage];
+    const aided = aids ? part.headings.filter((heading) => heading.level >= 2 && sectionAidFor(aids, heading.title)).length : 0;
+    // The column's width as the page is laid out now: half the window beside the pane from 1024 to 1359px.
+    const wide = typeof window === "undefined" ? DESKTOP_MEASURE : window.innerWidth;
+    const measure = wide >= 1024 && wide < 1360 ? Math.min(DESKTOP_MEASURE, wide / 2) : DESKTOP_MEASURE;
+    return estimateHeight(part, aided, measure);
+  }, [part, doc.stage]);
   const textSize = useMemo(() => ({ "--part-h": `${reserved}px` }) as React.CSSProperties, [reserved]);
 
-  if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
+  if (part.blank) return <div ref={setRef} data-part={part.index} data-passage={anchor} className="part part--blank" />;
 
   return (
     <section
@@ -662,6 +711,50 @@ export function joinBracketedPieces(math: HTMLElement): void {
   }
 }
 
+/**
+ * Whether one of KaTeX's faces is still on its way. A formula measured in a fallback face is
+ * measured wrong, so fitting waits for KaTeX's own faces; other faces (the Lean's mono, the
+ * serif's italic) arriving later do not change a formula's width and do not hold it up.
+ */
+function katexLoading(): boolean {
+  if (typeof document === "undefined" || !document.fonts) return false;
+  if (document.fonts.status === "loaded") return false;
+  // Without a list of faces, any face loading counts.
+  if (typeof (document.fonts as unknown as Iterable<FontFace>)[Symbol.iterator] !== "function") return true;
+  for (const face of document.fonts) if (face.status === "loading" && face.family.replace(/["']/g, "").startsWith("KaTeX")) return true;
+  return false;
+}
+
+/** Resolves once no KaTeX face is loading (checked again after each arrives). */
+function katexReady(): Promise<void> {
+  if (typeof (document.fonts as unknown as Iterable<FontFace>)[Symbol.iterator] !== "function") return document.fonts.ready as unknown as Promise<void>;
+  const loading = [...document.fonts].filter((face) => face.status === "loading" && face.family.replace(/["']/g, "").startsWith("KaTeX"));
+  if (!loading.length) return Promise.resolve();
+  return Promise.allSettled(loading.map((face) => face.loaded)).then(() => (katexLoading() ? katexReady() : undefined));
+}
+
+/**
+ * Parts laid out whole whatever their distance from the window, as rules of a stylesheet of their
+ * own rather than marks on the page, so that laying a part out changes nothing a reader (or a
+ * check for stillness) could see in the document. They keep the containment content-visibility
+ * gives every other part, so nothing in them reaches past the column and widens the page.
+ */
+let wholeSheet: CSSStyleSheet | null = null;
+const laidWhole = new Set<string>();
+function layOutWhole(stage: string, index: number): void {
+  const key = `${stage}:${index}`;
+  if (laidWhole.has(key) || typeof CSSStyleSheet === "undefined" || !("adoptedStyleSheets" in document)) return;
+  if (!wholeSheet) {
+    wholeSheet = new CSSStyleSheet();
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, wholeSheet];
+  }
+  laidWhole.add(key);
+  wholeSheet.insertRule(`.paper[data-stage="${CSS.escape(stage)}"] .part[data-part="${index}"] > .part__text { content-visibility: visible; contain: layout style paint; }`);
+}
+
+/** How far from the window idle time fits a part's formulas ahead of the reader, in pixels. */
+const AHEAD_REACH = 2400;
+
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
 const FIT_MARGIN = "900px 0px";
 
@@ -675,9 +768,9 @@ const FIT_BUDGET_MS = 40;
 function drainFits() {
   fitFrame = 0;
   // A width measured in a fallback font is wrong for good: fit once, after the fonts are in.
-  if (document.fonts && document.fonts.status !== "loaded") {
+  if (katexLoading()) {
     fitFrame = -1;
-    void document.fonts.ready.then(() => {
+    void katexReady().then(() => {
       fitFrame = requestAnimationFrame(drainFits);
     });
     return;
@@ -688,13 +781,13 @@ function drainFits() {
 }
 
 /** Each part's formulas not yet fitted; it stops when `more` says so and reports whether it finished. */
-const fitters = new WeakMap<HTMLElement, (more: () => boolean) => boolean>();
+const fitters = new WeakMap<HTMLElement, (more: () => boolean, everywhere?: boolean) => boolean>();
 const laidOut = new WeakSet<HTMLElement>();
 
 /**
  * Do now what a part would otherwise need the moment it comes near. Reading a position inside
  * it lays it out, even while it is held off the screen. That first layout is also what asks for
- * any new KaTeX face, so its formulas are fitted on a later visit, once the fonts have settled:
+ * any new KaTeX face, so when it does, its formulas are fitted on a later visit, once the fonts have settled:
  * a width measured in a fallback font is wrong for good. Reading again leaves nothing to redo.
  * True when the part is finished.
  */
@@ -703,9 +796,10 @@ function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
   if (!laidOut.has(text)) {
     laidOut.add(text);
     first?.getBoundingClientRect();
-    return false;
+    // A layout that asked for no new KaTeX face can be fitted at once, in this same visit.
+    if (katexLoading()) return false;
   }
-  if (document.fonts && document.fonts.status !== "loaded") return false;
+  if (katexLoading()) return false;
   const fitter = fitters.get(text);
   if (fitter && !fitter(more)) return false;
   first?.getBoundingClientRect();
@@ -777,6 +871,11 @@ function katexFacesLoaded(): Promise<unknown> {
   return Promise.all([fonts.load("1em KaTeX_Main"), fonts.load("italic 1em KaTeX_Math")]).catch(() => undefined);
 }
 
+/** Fit every display under a root markWideMaths has set up, now, wherever it is. */
+export function fitNow(root: HTMLElement): void {
+  fitters.get(root)?.(() => true, true);
+}
+
 export function markWideMaths(root: HTMLElement, offerExpand = true): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
@@ -790,6 +889,14 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
   const cues = new Map<HTMLElement, HTMLElement>();
   const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
   let live = true;
+  /** Displays last measured while a KaTeX face was loading: the only ones a font's arrival refits. */
+  const stale = new Set<HTMLElement>();
+  const refitStale = () => {
+    const boxes = [...stale];
+    stale.clear();
+    boxes.forEach(forgetSizes);
+    boxes.forEach((box) => update(box, true));
+  };
   const update = (box: HTMLElement, force = false) => {
     const width = box.clientWidth;
     // Fitting can change a display's height, which the observer reports back, and a height can
@@ -801,6 +908,9 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     const flipBack = !!seen && seen.before !== null && Math.abs(seen.before - width) <= 1 && performance.now() - seen.at < 1000;
     if (force || (changed && !flipBack)) {
       fitDisplay(box);
+      // Measured while a KaTeX face was still on its way: fitted again once it is in.
+      if (katexLoading()) stale.add(box);
+      else stale.delete(box);
       widths.set(box, { now: width, before: seen?.now ?? null, at: performance.now() });
       // Shown from its first fit on, never before (reader-content.css).
       widthsSeen.add(box);
@@ -837,6 +947,7 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     // load waits for them, hidden (data-unfitted), and is fitted the moment they arrive.
     if (!katexFacesReady()) {
       waiting.add(box);
+      stale.add(box);
       return;
     }
     update(box);
@@ -887,12 +998,26 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     if (r.height > 0 && r.bottom > 0 && r.top < screen) fit(box);
     else near.observe(box);
   }
-  fitters.set(root, (more) => {
+  let refitting = false;
+  fitters.set(root, (more, everywhere) => {
     for (const box of boxes) {
       if (fitted.has(box)) continue;
+      // A formula far from the window is left to the observer, which fits it as it comes near:
+      // fitting it now would change the page, unseen, while the reader has only just arrived.
+      const r = box.getBoundingClientRect();
+      if (!everywhere && (r.bottom < -AHEAD_REACH || r.top > window.innerHeight + AHEAD_REACH)) continue;
       if (!more()) return false;
       near?.unobserve(box);
       fit(box);
+    }
+    // Measuring may have asked for a KaTeX face not yet loaded (a large brace, a script letter):
+    // what was fitted in its stand-in is fitted again once it is in.
+    if (katexLoading() && !refitting) {
+      refitting = true;
+      void katexReady().then(() => {
+        refitting = false;
+        if (live) refitStale();
+      });
     }
     return true;
   });
@@ -905,12 +1030,11 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
       waiting.clear();
     });
   }
-  // Any other face (AMS, Size3, …) can still change a width: measure again once every font is in.
-  if (document.fonts && document.fonts.status !== "loaded") {
-    void document.fonts.ready.then(() => {
-      if (!live) return;
-      fitted.forEach(forgetSizes);
-      fitted.forEach((box) => update(box, true));
+  // Any other KaTeX face (AMS, Size3, …) can still change a width: measure again once they are in.
+  // Other faces (the Lean's mono, the serif's italic) change no formula's width and are not awaited.
+  if (katexLoading()) {
+    void katexReady().then(() => {
+      if (live) refitStale();
     });
   }
   return () => {

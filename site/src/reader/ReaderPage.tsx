@@ -36,8 +36,10 @@ import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
-import { readKeepLean, saveKeepLean } from "./page/panePrefs";
+import { applyTones, readTones, readView, saveView } from "./page/panePrefs";
 import { RightSheet } from "./page/RightSheet";
+import { HeldBar } from "./page/HeldBar";
+import { READER_HINT } from "./skeleton";
 import { FOLLOW_HOLD, leanPage, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
@@ -59,6 +61,7 @@ import {
   sectionTitleIn,
   selectionSpan,
   statusWords,
+  subjectPlace,
   type Destination,
   type OutlineEntry,
   type Structures,
@@ -95,7 +98,7 @@ import "./page/map-pane.css";
 const mapPane = code(() => import("./page/MapPane"));
 const MapPane = lazyCode(mapPane, (m) => m.MapPane);
 // Beside the paper the pane is part of the page, so its code starts with the page's.
-if (window.matchMedia?.("(min-width: 1280px)").matches) mapPane.start();
+if (window.matchMedia?.("(min-width: 1024px)").matches) mapPane.start();
 
 type ReadRoute = Extract<Route, { view: "read" }>;
 
@@ -248,10 +251,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const stage = route.stage;
   const structure = paper.structure;
   const wide = useMedia("(min-width: 1360px)");
-  const mid = useMedia("(min-width: 1120px)");
+  const mid = useMedia("(min-width: 1024px)");
   // From 1280px the paper moves left and the argument map stands beside it, the
   // reader's remembered choice. Below 1680px the outline folds, so the graph fits its pane.
-  const paneRoom = useMedia("(min-width: 1280px)");
+  const paneRoom = useMedia("(min-width: 1024px)");
   const outlineRoom = useMedia("(min-width: 1680px)");
   const phone = useMedia("(max-width: 700px)");
   const [mapShown, setMapShown] = useState(readMapShown);
@@ -266,6 +269,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, []);
   /** Below 1280px, or with the page turned off: the right page as a sheet, opened on demand. */
   const [sheetOpen, setSheetOpen] = useState(false);
+  const sheetShownRef = useRef(false);
   // The first screen is the paper: the map and the alignment arrive in idle time.
   const [paneReady, setPaneReady] = useState(false);
   const [alignment, setAlignment] = useState<Alignment | null>(null);
@@ -326,6 +330,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [inspect, setInspect] = useState<InspectorTarget | null>(null);
   /** A paragraph the reader clicked: the pane's subject until something else is clicked or Escape. */
   const [held, setHeld] = useState<HeldParagraph | null>(null);
+  const heldRef = useRef(held);
+  heldRef.current = held;
+  /** On a narrow window: the inspector is closed over a selection that is still held. */
+  const [sheetCollapsed, setSheetCollapsed] = useState(false);
   const [chooser, setChooser] = useState<string | null>(null);
   const [sectionsOpen, setSectionsOpen] = useState(false);
   /** Below 1680px the sections stand on the right page, where they cover no text. */
@@ -375,7 +383,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const start = savedPart ?? (named !== null ? statements.partOf(named) : undefined) ?? (lines ? partsOfLines(doc.parts, lines)[0] : undefined) ?? hit?.part ?? 0;
     const parts = new Set<number>();
     for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
-    if (start < 4) [0, 1, 2].forEach((i) => i < doc.parts.length && parts.add(i));
+    // Reading from the opening, every part the first screen can show is typeset in the first render,
+    // so none of them is filled in, and its margin drawn, after the page has painted.
+    if (start < 4) for (let i = 0; i < Math.min(7, doc.parts.length); i++) parts.add(i);
     return { parts: [...parts], saved: savedPart !== null ? saved : null };
     // Computed once per mounted paper.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -516,10 +526,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       let landing: () => number;
       if (statement !== null) {
         const part = statements.partOf(statement);
-        await body.ensure([part - 1, part, part + 1]);
+        await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : [part - 2, part - 1, part, part + 1, part + 2]);
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll === false) return true;
+        // Only a jump that moves the paper lays out and fits where it lands: the parts the window
+        // can show around it, so none of them changes height once the paper is there.
+        body.settle([part - 2, part - 1, part, part + 1, part + 2]);
         stepped.current = true;
         current.current = statement;
         currentSegment.current = ties.segmentsOf[statement][0];
@@ -532,11 +545,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const lines = at ? resolveAt(doc, at) : null;
         const parts = lines ? partsOfLines(doc.parts, lines) : [];
         if (!lines || !parts.length) return false;
-        await body.ensure([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
+        await body.ensure(options.scroll === false ? [parts[0] - 1, ...parts, parts[parts.length - 1] + 1] : [parts[0] - 2, parts[0] - 1, ...parts, parts[parts.length - 1] + 1, parts[parts.length - 1] + 2]);
         const blocks = parts.flatMap((part) => blocksOf(body.partElement(part), part === parts[parts.length - 1] ? doc.parts[part].lines.end : doc.parts[part + 1]?.lines.start - 1, lines));
         if (!blocks.length) return false;
         blocks.forEach((el) => el.setAttribute("data-slice", ""));
         if (options.scroll === false) return true;
+        body.settle([parts[0] - 2, parts[0] - 1, ...parts, parts[parts.length - 1] + 1, parts[parts.length - 1] + 2]);
         // An address with no statement holds the line on its own blocks: no statement near the
         // reading line stands for it, and the address stays, until the reader moves the page.
         stepped.current = true;
@@ -557,7 +571,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         // Lazy parts, the phone sheet and late fonts can all change this geometry.
         // Reuse the saved-position restorer; any reader input stops it immediately.
         restoring.current?.();
-        restoring.current = restoreScroll({ window: landing }, { limit: 20000, settle: 3000, refit: true, onDone: () => body.hold(target!) });
+        restoring.current = restoreScroll({ window: landing }, { limit: 20000, settle: 3000, refit: true, slack: 2, onDone: () => body.hold(target!) });
       };
       if (smooth) {
         let done = false;
@@ -648,6 +662,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const fromPop = !!existing && existing !== previousKey;
     keyRef.current = historyKey();
     setVisit(visitOrigin());
+    // Back and Forward restore an earlier subject and place; a paragraph held since then is not part of it.
+    if (fromPop) setHeld(null);
     const anchorChanged = route.anchor !== lastAnchor.current;
     lastAnchor.current = route.anchor;
     const atChanged = route.at !== lastAt.current;
@@ -749,9 +765,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
   const noLeanRef = useRef(pinWithoutLean);
   noLeanRef.current = pinWithoutLean;
-  // The view is the one the address names. An address that names none opens a statement's or a
-  // declaration's Lean, and the graph otherwise. Clicks keep the view; only the view buttons change it.
-  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : route.decl || (pin && !pinWithoutLean) ? "lean" : "graph";
+  // The view is the one the address names. An address that names none opens the Lean view: the
+  // quotation, the comparison and the note, then the Lean (docs/reader-design.md). A statement with
+  // no Lean has nothing to compare, so it opens on the graph. Clicks keep the view; only the view
+  // buttons change it.
+  // A view this reader chose with the tabs before is the default in place of Lean; it is read once and is
+  // not written into the address, so an address names a view only when someone chose one for it.
+  const [chosenView] = useState(readView);
+  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : pinWithoutLean ? "graph" : (chosenView ?? "lean");
   const modeRef = useRef(mode);
   modeRef.current = mode;
   // The view stays as the reader left it through Back and Forward: an entry keeps its subject,
@@ -805,29 +826,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     }
   }, [pin, pinWithoutLean, statements]);
 
-  /**
-   * Let go here, for a step on to something else in the paper. The view stays as it is. A step
-   * names where it goes (followingAt), so the one replaced entry already holds the new place.
-   */
-  const releaseInPlace = useCallback((followingAt?: string) => {
+  /** Let go here, for a step on to something else in the paper. */
+  const releaseInPlace = useCallback(() => {
     const here = hereRef.current;
     writeEntry(OPENED, undefined);
-    if (here.node || here.at || here.decl) {
-      if (followingAt) selfAt.current = followingAt;
-      navigate({ ...here, node: undefined, at: followingAt, decl: undefined, declModule: undefined }, { replace: true });
-    }
+    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined }, { replace: true });
   }, []);
-
-  /**
-   * Close what is open. Where this page opened it the way back is the browser's own, by as many
-   * entries as were opened, so that Escape, Close and Back land alike and Back is never left
-   * with nothing to do. A deep link has nowhere to go back to, so it lets go in place.
-   */
-  const release = useCallback(() => {
-    const opened = readEntry<Opened>(OPENED);
-    if (opened) window.history.go(-opened.steps);
-    else releaseInPlace();
-  }, [releaseInPlace]);
 
   /** What the entry about to be pushed will remember about how it was reached. */
   const nextOpened = useCallback((): Opened | undefined => {
@@ -975,7 +979,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, release, drawThread]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread]);
 
   // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
@@ -1032,6 +1036,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [structure, stage],
   );
 
+  /** Where in the paper something is, for the pane's band: "§5.6", a heading, or the opening. */
+  const placeWords = useCallback(
+    (anchor: string | undefined, at?: string) => subjectPlace(structure, doc, anchor, at),
+    [structure, doc],
+  );
+
   const originHere = useCallback(
     (anchor: string | undefined): VisitOrigin => ({ key: keyRef.current, stage, anchor, label: placeLabel(anchor) }),
     [stage, placeLabel],
@@ -1065,13 +1075,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   /** A record chosen in a list: opened like a card. */
   const selectRecord = useCallback(
     (id: string | null) => {
-      if (!id) return release();
+      if (!id) return releaseInPlace();
       const statement = statementFor(ties, id);
       selfAt.current = statement !== null ? ties.index.ties[statement].at : undefined;
       // A card opens its step on the tab the pane is on; the tab never changes by itself.
       navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
     },
-    [ties, release],
+    [ties, releaseInPlace],
   );
 
   // ---- Pinning -------------------------------------------------------------------------
@@ -1100,11 +1110,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const mode = want ?? modeRef.current;
       go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined });
       writeEntry(OPENED, opened);
-      // A phone's sheet rises from the foot: the statement goes above it.
-      const box = phoneRef.current ? statements.first(t)?.getBoundingClientRect() : null;
-      if (box) window.scrollBy({ top: box.top - readingTop() - 12, behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
+      // A narrow window's inspector opens over the whole screen; the paper stays exactly where it is.
+      setSheetCollapsed(false);
     },
-    [ties, go, statements, readingTop, nextOpened],
+    [ties, go, nextOpened],
   );
 
   /** "See its Lean" in a reference's inset: the statement opens as if it had been clicked. */
@@ -1173,40 +1182,56 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     setSectionsSide(false);
     const here = hereRef.current;
     viewKept.current = mode;
+    saveView(mode);
     if (mode === "lean" ? here.lean : here.graph) return;
     navigate({ ...here, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined }, { replace: true });
   }, []);
 
-  /** Close, Escape and "Follow the paper again": let go of what was clicked; the view stays. */
+  /**
+   * Auto and Escape: let go of what was selected and follow the paper from where the
+   * reader now is. The paper does not move and the view stays; the browser's Back is the way to an
+   * earlier place.
+   */
   const closeLean = useCallback(() => {
-    const here = hereRef.current;
     setHeld(null);
-    if (here.node || here.decl) release();
-  }, [release]);
+    setSheetCollapsed(false);
+    releaseInPlace();
+  }, [releaseInPlace]);
 
+  /** "Return to selected words": the paper goes back to the selection, which stays selected. */
+  const returnToSelected = useCallback(() => {
+    const p = pinRef.current;
+    const block = heldRef.current?.block;
+    if (p?.tie != null) void landSlice(ties.index.ties[p.tie].at, { node: p.record, smooth: true });
+    else if (block?.isConnected) block.scrollIntoView({ block: "center", behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
+  }, [landSlice, ties]);
+
+  /**
+   * "Back to paper" on a narrow window: the inspector closes over a selection that stays, with a
+   * bar at the foot to reopen it or let it go. With nothing selected there is nothing to keep.
+   */
   const closeSheet = useCallback(() => {
     setSheetOpen(false);
-    if (hereRef.current.node || hereRef.current.decl || hereRef.current.lean) closeLean();
-  }, [closeLean]);
+    const here = hereRef.current;
+    if (here.node || here.decl || heldRef.current) setSheetCollapsed(true);
+    else if (here.lean || here.graph) navigate({ ...here, lean: undefined, graph: undefined }, { replace: true });
+  }, []);
 
-  // The mode carries to another paper and survives a reload; the address says which it is.
-  const seeded = useRef(false);
-  useEffect(() => {
-    if (!paneRoom) return;
-    if (!seeded.current) {
-      seeded.current = true;
-      // A saved Lean is a default only: an address that names the graph keeps it.
-      if (!route.lean && !route.graph && readKeepLean() && arrivedBy() !== "pop") {
-        navigate({ ...hereRef.current, lean: true }, { replace: true });
-        return;
-      }
-    }
-    saveKeepLean(!!route.lean);
-  }, [route.lean, paneRoom]);
+  // Underlines carry their topics' colours unless this reader turned that off.
+  useLayoutEffect(() => applyTones(readTones()), []);
+  /** "Hide pane": the paper alone. What was selected is let go, since nothing would show it. */
   const hideMap = useCallback(() => {
     showMap(false);
-    closeSheet();
-  }, [showMap, closeSheet]);
+    closeLean();
+  }, [showMap, closeLean]);
+  // A selection made while the pane is hidden brings the pane back beside the paper, where there is
+  // room for both; the reader's stored choice to hide it is left as it is.
+  const subjectKey = `${route.node ?? ""}|${route.at ?? ""}|${route.decl ?? ""}|${held ? "p" : ""}`;
+  useEffect(() => {
+    if (paneRoom && !mapShown && (route.node || route.decl || held)) setMapShown(true);
+    // Only when the subject changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subjectKey]);
 
   const dismissVisit = useCallback(() => {
     patchHistoryState({ lxVisit: undefined });
@@ -1291,13 +1316,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const step = useCallback(
     (by: 1 | -1) => {
       // Between statements the step starts from where the reader is, not from the paper's start.
-      // A selected phrase is where the reader is, wherever the reading line has scrolled to.
       const at = signals.part.get();
-      const pinned = pinRef.current?.tie;
-      const from = pinned == null ? currentSegment.current : ties.segmentsOf[pinned][0];
+      const from = currentSegment.current;
       const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.stops.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.stops].reverse().find((t) => statements.partOf(t) < at) ?? null);
       if (next === null) return;
-      if (pinRef.current) releaseInPlace(ties.index.ties[next].at);
+      if (pinRef.current) releaseInPlace();
       stepped.current = true;
       current.current = next;
       currentSegment.current = ties.segmentsOf[next][0];
@@ -1330,7 +1353,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         } else if (sectionsSide) {
           event.preventDefault();
           setSectionsSide(false);
-        } else if (!paneOn && sheetOpen) {
+        } else if (!paneOn && sheetShownRef.current) {
           event.preventDefault();
           closeSheet();
         } else if (hereRef.current.node || hereRef.current.decl || held) {
@@ -1377,6 +1400,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     if (event.button !== 0) return;
     if (target.closest?.(".ref-inset")) return;
     if (!a) {
+      const pick = target.closest?.<HTMLElement>(".para-pick");
+      const picked = pick ? statements.blockOf(pick) : null;
+      if (picked) {
+        holdParagraph(picked);
+        return;
+      }
       if (target.closest?.("button")) return;
       const mark = target.closest?.<HTMLElement>("[data-t]");
       // The browser counts a click soon after the last as a double click, wherever the words have
@@ -1387,13 +1416,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (event.detail > 1 && waiting) return;
       // A drag or a selection is reading, not asking.
       const down = downAt.current;
-      const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 5;
+      // A finger's tap lands a few pixels from where it went down (the browser nudges it to a target).
+      const slack = (event.nativeEvent as PointerEvent).pointerType === "touch" ? 12 : 5;
+      const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > slack;
       const selection = window.getSelection();
       if (moved || (selection && !selection.isCollapsed && selection.toString().trim())) return;
-      if (!mark) {
-        if (event.detail === 1 && paneOn) holdParagraph(target);
-        return;
-      }
+      if (!mark) return;
       const t = statementOf(ties, Number(mark.dataset.t));
       if (t === null) return;
       // The second click of a double click selects a word; wait to see that it does not come.
@@ -1571,16 +1599,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [go, nextOpened],
   );
 
-  /** A paragraph clicked away from its phrases: what is tied to it, or nothing, and its passage. */
-  const holdParagraph = (target: Element) => {
-    const block = target.closest?.(".part__text p, .part__text li, .part__text figure, .part__text table, .part__text blockquote, .part__text .math-display");
-    if (!block) return;
+  /** A paragraph chosen by its control in the margin: every link in it, in the order of the text. */
+  const holdParagraph = (block: HTMLElement) => {
     const anchor = block.closest<HTMLElement>("[data-passage]")?.dataset.passage ?? doc.parts[signals.part.get()]?.anchor ?? null;
-    const tied = [...new Set([...block.querySelectorAll<HTMLElement>("[data-t]")].map((el) => statementOf(ties, Number(el.dataset.t))).filter((t): t is number => t !== null))];
+    const tied = [...new Set([...(block.matches("[data-t]") ? [block] : []), ...block.querySelectorAll<HTMLElement>("[data-t]")].map((el) => statementOf(ties, Number(el.dataset.t))).filter((t): t is number => t !== null))];
     const records = [...new Set(tied.map((t) => ties.index.ties[t].record))].filter((id) => graph.nodes.has(id));
     const decl = records.length ? undefined : tied.map((t) => ties.index.ties[t].rows?.[0]?.name).find((name) => !!name);
-    setHeld({ anchor, records, decl });
+    // One selection at a time: the paragraph takes the place of any selected words.
+    if (hereRef.current.node || hereRef.current.decl) releaseInPlace();
+    setHeld({ anchor, records, decl, ties: tied, block });
+    setSheetCollapsed(false);
+    if (!paneOn) setSheetOpen(true);
   };
+  useEffect(() => statements.holdBlock(held?.block ?? null), [statements, held]);
 
   // ---- Selections ----------------------------------------------------------------------
 
@@ -1782,7 +1813,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     onDecl: openDeclHere,
     held,
     onRelease: closeLean,
-    onFollowText: closeLean,
+    onReturn: returnToSelected,
+    placeOf: placeWords,
+    onOpenTie: (t: number, land?: boolean) => {
+      openStatement(t);
+      if (land) void landSlice(ties.index.ties[t].at, { node: ties.index.ties[t].record, smooth: true });
+    },
     onMode: setMode,
     mode,
     onName: openDecl,
@@ -1790,6 +1826,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     onPoint: pointAt,
     passagePart: (part: number) => (doc.parts[part]?.kind === "passage" ? doc.parts[part].anchor : undefined),
   };
+
+  /** Below 1024px, or with the pane turned off: the inspector over the whole screen, opened on demand. */
+  const sheetShown = !paneRoom && !route.beside && !sheetCollapsed && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || !!held || (!!route.lean && !paneRoom));
+  sheetShownRef.current = sheetShown;
+  const selectedTie = pin?.tie != null ? ties.index.ties[pin.tie] : null;
+  const heldPlace = held ? placeWords(held.anchor ?? undefined) : selectedTie ? placeWords(selectedTie.anchor ?? undefined, selectedTie.at) : "";
 
   const inspector = inspect && (
     <Inspector
@@ -1886,7 +1928,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <span className="visually-hidden">Sections</span>
             </button>
           )}
-          <Crumbs signals={signals} outline={outline} place={!outlineColumn} phone={phone} hint={ties.stops.length > 0} phrases={isPhraseLayer(ties)} onJump={(id) => jumpWithHistory(id, true)} />
+          <Crumbs signals={signals} outline={outline} place={!outlineColumn} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onJump={(id) => jumpWithHistory(id, true)} />
           {side && <span className="edition-break" aria-hidden="true" />}
           {side && (
             <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
@@ -1907,7 +1949,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
             </span>
           )}
-          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
+          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
           {mid && (
             <button
               type="button"
@@ -1955,6 +1997,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {editionNotice}
           </p>
         )}
+        {isPhraseLayer(ties) && ties.stops.length > 0 && !pdfOn && <p className="reader-hint">{READER_HINT}</p>}
         {notice && (
           <p className="reader-notice" role="status">
             {notice}
@@ -1993,12 +2036,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <aside className="reader__inspector" aria-label="Steps linked to this passage" inert={route.beside ? true : undefined}>
           {inspector}
         </aside>
-      )}
-
-      {paneOn && (
-        <svg className="reader-thread" aria-hidden="true" style={{ display: "none" }}>
-          <path ref={thread} />
-        </svg>
       )}
 
       {paneOn && (
@@ -2049,16 +2086,25 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         </div>
       )}
 
-      {!paneOn && !route.beside && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || (!!route.lean && !paneRoom)) && (
-        <RightSheet phone={phone} onClose={closeSheet}>
+      {sheetShown && (
+        <RightSheet onClose={closeSheet}>
           <GraphBoundary scope={`sheet beside ${route.stage}`}>
-            <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
+            <Suspense fallback={<p className="right-sheet__wait">Loading the Lean</p>}>
               <MapPane {...paneProps} inModal onHide={closeSheet} />
             </Suspense>
           </GraphBoundary>
         </RightSheet>
       )}
 
+      {!paneRoom && !route.beside && sheetCollapsed && (!!pin || !!route.decl || !!held) && (
+        <HeldBar
+          state={held ? "Selected paragraph" : route.decl ? "Selected declaration" : "Selected words"}
+          place={heldPlace}
+          onReturn={pin?.tie != null || held ? returnToSelected : undefined}
+          onView={() => setSheetCollapsed(false)}
+          onResume={closeLean}
+        />
+      )}
       {changeView && !paneOn && (
         <Modal title={changePane?.kind === "list" ? "Show changes" : "Selected change"} placement={phone ? "sheet" : "side-end"} className="modal--inspector" onClose={() => setChangePane(null)}>
           {changeView}
@@ -2149,8 +2195,8 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
     <nav className="crumbs" aria-label="Where you are in this paper">
       {/* The first screen says what to do; it goes as soon as there is a section to name. */}
       {hint && !chain.length && (phrases ? (
-        <span className="reader-strip__hint" title="Each phrase a Lean declaration states is underlined in the colour of its topic; Sections lists the colours. j and k step through them.">
-          {phone ? "Tap" : "Click"} an underlined phrase to see the Lean that states it.
+        <span className="reader-strip__hint" title="The margin shows topic colours in phrase order. Sections lists the topics. Use j and k to step through linked phrases.">
+          {READER_HINT}
         </span>
       ) : (
         <span className="reader-strip__hint" title="Faint highlights mark linked statements. Use j and k to move between them.">
@@ -2181,13 +2227,9 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
   );
 }
 
-/**
- * "12 of 86" between two arrows: the tied statements, one at a time. j and k do the same. A
- * selected phrase is the one counted; with nothing selected, the one at the reading line.
- */
-function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignals; ties: TieModel; pinned?: number | null; onStep(by: 1 | -1): void }) {
-  const followed = useSignal(signals.follow);
-  const tie = pinned ?? followed.tie;
+/** "12 of 86" between two arrows: the tied statements, one at a time. j and k do the same. */
+function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties: TieModel; onStep(by: 1 | -1): void }) {
+  const { tie } = useSignal(signals.follow);
   const place = tie === null ? -1 : ties.place[tie];
   const arrow = (d: string) => (
     <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
@@ -2199,8 +2241,15 @@ function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignal
       <button type="button" aria-label="Previous tied statement" title="Previous tied statement (k)" onClick={() => onStep(-1)}>
         {arrow("M7.5 2.5L4 6l3.5 3.5")}
       </button>
-      <span className="num" aria-live="polite">
-        {place >= 0 ? `Statement ${place + 1} of ${ties.stops.length}` : `${ties.stops.length} statements`}
+      {/* As wide as its longest wording from the start, so a selection that changes it moves nothing beside it. */}
+      <span className="num" aria-live="polite" style={{ minWidth: `${`${isPhraseLayer(ties) ? "Link" : "Statement"} ${ties.stops.length} of ${ties.stops.length}`.length * 0.92}ch` }}>
+        {isPhraseLayer(ties)
+          ? place >= 0
+            ? `Link ${place + 1} of ${ties.stops.length}`
+            : `${ties.stops.length} links`
+          : place >= 0
+            ? `Statement ${place + 1} of ${ties.stops.length}`
+            : `${ties.stops.length} statements`}
       </span>
       <button type="button" aria-label="Next tied statement" title="Next tied statement (j)" onClick={() => onStep(1)}>
         {arrow("M4.5 2.5L8 6l-3.5 3.5")}

@@ -17,11 +17,13 @@ function rule(selector: string): string {
   }
   throw new Error(`no rule for ${selector}`);
 }
-const lineOf = (body: string) => body.match(/background-size:\s*calc\(100% - 3px\)\s*([^;]+);/)?.[1].trim();
+// The design branch names the existing three-pixel phrase-end gap.
+const lineOf = (body: string) => body.replace("var(--tie-end-gap)", "3px").match(/background-size:\s*calc\(100% - 3px\)\s*([^;]+);/)?.[1].trim();
 
 describe("phrase underline", () => {
   it("defines the resting line's token as one pixel", () => {
     expect(tokens).toMatch(/--tie-rule:\s*1px;/);
+    expect(tokens).toMatch(/--tie-end-gap:\s*3px;/);
   });
 
   it("sets the line of a phrase in running text 3px below its words, and leaves a display's padding alone", () => {

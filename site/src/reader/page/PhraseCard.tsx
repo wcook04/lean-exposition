@@ -3,35 +3,55 @@
 // topic were all drafted by an AI agent, and the card says so; nothing here rests on colour.
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { loadPhraseNotes, type MergedPhrase, type PhraseAssessment, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
-import { isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict } from "../../compare/fidelityWords";
+import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
+import { cardKeys, conventionsFor, useAids } from "../aids";
 import { renderTex } from "../math";
-import { markWideMaths } from "./PaperBody";
+import { fitNow, markWideMaths } from "./PaperBody";
 import site from "@instance/site";
 import { Signal } from "./signal";
 import { useLeanNote } from "../../lean/noteSummaries";
 
 const cache = new Map<Stage, Promise<PhraseNotes | null>>();
+/** Each paper's notes once they have arrived, so a card mounted later has them in its first render. */
+const arrived = new Map<Stage, PhraseNotes | null>();
 
-/** Each part's titles and notes for one paper, loaded once; null for a paper without them. */
-export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | null {
-  const [notes, setNotes] = useState<PhraseNotes | null>(null);
+/** Start loading a paper's phrase notes, so a card opened later has them at once. */
+export function prefetchPhraseNotes(stage: Stage): void {
+  if (cache.has(stage)) return;
+  cache.set(
+    stage,
+    loadPhraseNotes(stage)
+      .catch(() => null)
+      .then((found) => {
+        arrived.set(stage, found);
+        return found;
+      }),
+  );
+}
+
+/**
+ * Each part's titles and notes for one paper, loaded once; null for a paper without them, and
+ * undefined while they are on their way (or not wanted).
+ */
+export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | null | undefined {
+  const [notes, setNotes] = useState<PhraseNotes | null | undefined>(() => arrived.get(stage));
   useEffect(() => {
     if (!wanted) return;
-    let live = true;
-    let pending = cache.get(stage);
-    if (!pending) {
-      pending = loadPhraseNotes(stage).catch(() => null);
-      cache.set(stage, pending);
+    if (arrived.has(stage)) {
+      setNotes(arrived.get(stage));
+      return;
     }
-    void pending.then((found) => live && setNotes(found));
+    let live = true;
+    prefetchPhraseNotes(stage);
+    void cache.get(stage)!.then((found) => live && setNotes(found));
     return () => {
       live = false;
     };
   }, [stage, wanted]);
-  return notes;
+  return wanted ? notes : null;
 }
 
 /** The declaration a phrase's card shows (its selected tab), for the graph above it. */
@@ -173,39 +193,189 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
   return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
 }
 
-export function PhraseCard({ row, topic, note, quote, merged }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[] }) {
+/** What each comparison means, in one sentence of mathematical terms (docs/reader-design.md, "The legend"). */
+const FIDELITY_MEANING: Record<Fidelity, string> = {
+  same: "The formal statement asserts what the quoted words assert, after the translation the note states.",
+  stronger: "The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference.",
+  weaker: "The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference.",
+  different: "Neither implies the other as stated: for example, a definition linked to a sentence about a construction.",
+};
+
+/**
+ * Each comparison as the card words it, with its meaning: the four verdicts in `phraseVerdict`'s
+ * words, "Not assessed" as `NOT_ASSESSED`, and a withheld comparison.
+ */
+export const COMPARISON_LEGEND: readonly (readonly [string, string])[] = [
+  ...FIDELITIES.map((f) => [phraseVerdict(f), FIDELITY_MEANING[f]] as const),
+  [NOT_ASSESSED, "No comparison has been recorded for this pair. That says nothing about whether they agree."],
+  ["Withheld", "A comparison was drafted and is not shown, for the reason given beside it."],
+];
+
+/**
+ * The legend under every comparison: closed until asked for, and the same words wherever it
+ * stands. Its words are written only once it is opened, so a closed legend never sets a verdict's
+ * name ("same" among them) beside a comparison that is not that verdict.
+ */
+export function ComparisonLegend() {
+  const [open, setOpen] = useState(false);
+  return (
+    <details className="phrase-card__legend" onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary>What do these words mean?</summary>
+      {open && (
+        <>
+          <dl>
+            {COMPARISON_LEGEND.map(([word, meaning]) => (
+              <div key={word}>
+                <dt>{word}</dt>
+                <dd>{meaning}</dd>
+              </div>
+            ))}
+          </dl>
+          <p>{site.library && (
+          <>
+            <a href={`${import.meta.env.BASE_URL}about/#differences`}>Differences between the paper and the Lean</a>{". "}
+          </>
+        )}
+        A comparison concerns the quoted words only. A shared name or number is not evidence that two statements agree, and a check of the Lean by its kernel is not a check of this comparison.</p>
+        </>
+      )}
+    </details>
+  );
+}
+
+/** The paper's formal conventions that bear on this card, each opening to its statement as mathematics. */
+function Conventions({ keys }: { keys: readonly string[] }) {
+  const aids = useAids(keys.length > 0);
+  const found = useMemo(() => conventionsFor(aids, keys), [aids, keys]);
+  if (!found.length) return null;
+  return (
+    <div className="phrase-card__conventions">
+      <p className="phrase-card__label">
+        Conventions used here <span>AI-drafted</span>
+      </p>
+      <ul>
+        {found.map((entry) => (
+          <li key={entry.term}>
+            <details>
+              <summary>{entry.term}</summary>
+              <p dangerouslySetInnerHTML={{ __html: noteHtml(entry.convention).html }} />
+              {entry.differs_from_paper && (
+                <p className="phrase-card__differs">
+                  <strong>Differs from the paper:</strong> <span dangerouslySetInnerHTML={{ __html: noteHtml(entry.differs_from_paper).html }} />
+                </p>
+              )}
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * What stands between a phrase's title and its Lean, in the order a reader asks: the exact words,
+ * how the Lean compares with them and every qualification of that, the reading note, then the
+ * conventions the statement relies on. The topic's colour marks nothing here: the amber rule
+ * beside the quotation is the same mark the selected words carry in the paper.
+ */
+const MATTERS_KIND: Record<string, string> = {
+  scope: "a difference of scope",
+  granularity: "a difference of granularity",
+  convention: "a difference of convention",
+  "genuine-gap": "a genuine gap",
+};
+
+/** The verdict's last line: whether the difference bears on the paper's main result, and why. */
+function Matters({ matters, mainResult }: { matters: ComparisonMatters; mainResult?: string }) {
+  const answer = matters.affects_main_result === "yes" ? "Yes" : matters.affects_main_result === "no" ? "No" : "Not settled";
+  return (
+    <p className="phrase-card__matters" data-affects={matters.affects_main_result}>
+      <span className="phrase-card__ask">Does this affect {mainResult ? <span dangerouslySetInnerHTML={{ __html: noteHtml(mainResult).html }} /> : "the main result"}?</span>{" "}
+      <strong>{answer}.</strong>
+      {MATTERS_KIND[matters.kind] ? ` This is ${MATTERS_KIND[matters.kind]}.` : ""}
+      {matters.line && (
+        <>
+          {" "}
+          <span dangerouslySetInnerHTML={{ __html: noteHtml(matters.line).html }} />
+        </>
+      )}
+    </p>
+  );
+}
+
+/** What the quoted words say, in the paper's notation, with its sources; and what is not settled from them. */
+function Explanation({ explanation }: { explanation: PhraseExplanation }) {
+  const sources = explanation.citations ?? [];
+  return (
+    <div className="phrase-card__explanation">
+      <p className="phrase-card__label">
+        What these words say <span>AI-drafted</span>
+      </p>
+      <p className="phrase-card__text" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.text).html }} />
+      {explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
+      {sources.length > 0 && (
+        <details className="phrase-card__sources">
+          <summary>{sources.length === 1 ? "The source this rests on" : `The ${sources.length} sources this rests on`}</summary>
+          <ul>
+            {sources.map((source) => (
+              <li key={`${source.ref}:${source.where ?? ""}`}>
+                {source.url ? <a href={source.url}>{source.title}</a> : source.title}
+                {source.where && <>, {source.where}</>}
+                {source.supports && (
+                  <>
+                    : <span dangerouslySetInnerHTML={{ __html: noteHtml(source.supports).html }} />
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </div>
+  );
+}
+
+export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string }) {
   const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
+  const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
   // A quoted display formula is fitted to the card like one in the paper: it never scrolls sideways.
   const quoteRef = useRef<HTMLQuoteElement>(null);
-  useLayoutEffect(() => (quoteRef.current ? markWideMaths(quoteRef.current) : undefined), [quote]);
+  useLayoutEffect(() => {
+    if (!quoteRef.current) return undefined;
+    const stop = markWideMaths(quoteRef.current);
+    // Fitted in the frame the quotation first paints, as a part of the paper is.
+    fitNow(quoteRef.current);
+    return stop;
+  }, [quote]);
   return (
-    <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
-      {topic && (
-        <p className="phrase-card__topic" title={topic.description || undefined}>
-          <span className="phrase-card__swatch" aria-hidden="true" />
-          Topic: {topic.name}
+    <section className="phrase-card" aria-label="These words and how the Lean compares with them">
+      {quote && <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />}
+      {explanation?.text && <Explanation explanation={explanation} />}
+      <div className="phrase-card__compare">
+        <p className="phrase-card__label">
+          Comparison with these words
         </p>
-      )}
-      {quote && (
-        <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The phrase in the paper" dangerouslySetInnerHTML={{ __html: quote }} />
-      )}
-      {merged && merged.length > 1 && (
-        <p className="phrase-card__merged" data-merged={merged.length}>
-          These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
-        </p>
-      )}
-      {shown.map(({ assessment, words }, i) => (
-        <Verdict key={i} assessment={assessment} words={words} />
-      ))}
+        {merged && merged.length > 1 && (
+          <p className="phrase-card__merged" data-merged={merged.length}>
+            These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
+          </p>
+        )}
+        {shown.map(({ assessment, words }, i) => (
+          <Verdict key={i} assessment={assessment} words={words} />
+        ))}
+        {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
+        <ComparisonLegend />
+      </div>
       {note && (
         <div className="phrase-card__note">
           <p className="phrase-card__label">
-            Reading note <span>· AI-drafted</span>
+            Reading note <span>AI-drafted</span>
           </p>
           <NoteBody text={note} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
         </div>
       )}
+      <Conventions keys={keys} />
     </section>
   );
 }

@@ -171,6 +171,8 @@ const site = {
   },
   frontCreditNote: ADAPTED?.credit ? { [ADAPTED.slot]: ADAPTED.credit.split(/\s+/).slice(0, 4).join(" ") } : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
+  sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
+  readingAids: PAPER.reading_aids,
   library: {
     paper: PAPER.id,
     main: MAIN.slot,
@@ -185,6 +187,7 @@ const site = {
       .filter((d) => d.kind === "companion")
       .map((d) => ({ slot: d.slot, id: d.id, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
       .sort((a, b) => a.order - b.order),
+    guide: PAPER.documents.find((d) => !d.main && d.noun === "guide")?.slot,
   },
   adapted: ADAPTED
     ? {

@@ -1,0 +1,1 @@
+--graph-none TorusEuler.hierarchy_level_budget_of_step_budget --graph-few TorusEuler.normalizeDerivOfScaled --graph-many TorusEuler.EulerSingularityWitness

@@ -118,6 +118,13 @@ export interface SiteInstance {
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
   /**
+   * What the formal development does in each section of a paper, by paper slot and then by section
+   * number ("5.6") or heading. The reader sets one under each section head as a reader annotation.
+   */
+  sectionAids?: Partial<Record<string, Record<string, string>>>;
+  /** Which of a paper's guides exist, so their links stand from the first paint. */
+  readingAids?: { showcase: boolean; route: boolean };
+  /**
    * A library paper's credit as one short line under the authors in its front matter (the authors, their
    * repository and commit, the Anthropic sentence where the paper has one, and that the links are AI-made
    * and unreviewed), by document slot. The full credit is in About. Absent: the account line says it.
@@ -141,6 +148,8 @@ export interface SiteInstance {
     removed?: string[];
     /** `id` names the companion's folder in its source (`<id>/paper.md`), so links between companions resolve. */
     companions?: { slot: string; id?: string; title: string; group: string; group_title: string; order: number }[];
+    /** The paper's guide to its formal conventions, shown in the pane as "How to read the Lean". */
+    guide?: InstanceStage;
     /** Documents of the same paper read in another build (a fourth document, served at its own address); the Read menu links to them. */
     external?: { title: string; job: string; href: string }[];
     /** Documents read only in the authors' PDF: no reading copy, so no Text toggle. */

@@ -16,7 +16,7 @@
   background-image: linear-gradient(var(--tie-line), var(--tie-line));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: calc(100% - 3px) var(--tie-rule);
+  background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule);
   padding-bottom: 1px;
 }
 
@@ -60,10 +60,28 @@
   background-color: var(--ink-3);
 }
 
+/* The selected block keeps one amber edge in this column. Its topic bands paint above it. */
+.paper .part__ticks {
+  z-index: 1;
+}
+
 .paper .para-pick {
   left: calc(-1 * var(--mark-x) - 10px);
   width: 20px;
+  margin-top: 0;
   border-radius: 2px;
+  overflow: visible;
+}
+
+.paper .para-pick > span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.paper .para-pick:focus-visible > span {
+  outline: var(--focus-ring);
+  outline-offset: -3px;
 }
 
 .paper .para-pick::before {
@@ -130,9 +148,30 @@
   .paper .math-display.tie {
     border-inline-start: 2px solid LinkText;
   }
+  .paper .para-pick:focus-visible,
+  .paper .para-pick:focus-visible > span,
   .paper .tie[data-pin],
   .paper .tie:focus-visible {
     outline: 2px solid Highlight;
+  }
+}
+
+/* Where colours are forced the underline is a real text decoration and the selection the system's highlight. */
+@media (forced-colors: active) {
+  .paper .tie[data-tone] {
+    background-image: none;
+    text-decoration: underline 2px LinkText;
+    text-underline-offset: 0.18em;
+  }
+
+  .paper .math-display.tie[data-tone] {
+    box-shadow: none;
+    border-left: 3px solid LinkText;
+  }
+
+  .paper .tie[data-tone][data-pin] {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
   }
 }
 
@@ -142,18 +181,18 @@
   }
 }
 
-/* ---- The declaration card's phrase block --------------------------------------------------- */
+/* ---- The inspector's card for selected words ------------------------------------------------
+   In the order a reader asks (docs/reader-design.md): the exact words, how the Lean compares with
+   them and every qualification of that, the reading note, the conventions used. One calm surface,
+   no colour by topic: the amber rule beside the quotation is the mark the words carry in the paper.
+   Its type does not grow with the window. */
 
 .phrase-card {
-  margin: 0 0 var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  border-left: 3px solid var(--tone, var(--rule-strong));
-  border-radius: 0 var(--radius-s) var(--radius-s) 0;
-  background: color-mix(in oklab, var(--tone, var(--ink)) 6%, var(--surface));
+  margin: var(--space-2) 0 var(--space-4);
   font-family: var(--font-sans);
-  font-size: var(--fs-ui);
-  line-height: var(--lh-ui);
-  color: var(--ink-2);
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  color: var(--ink);
 }
 
 .phrase-card p {
@@ -161,15 +200,28 @@
 }
 
 .phrase-card > * + * {
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
-.phrase-card__topic {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.phrase-card__quote {
+  max-width: var(--evidence-measure);
+  margin: 0;
+  padding: 2px 0 2px var(--space-3);
+  border-left: var(--sel-rail) solid var(--follow-ink);
+  font-family: var(--font-serif);
+  font-size: var(--quote-fs);
+  line-height: 1.5;
   color: var(--ink);
-  font-weight: 500;
+}
+
+/* Selected words carry amber, in the paper and here; words only followed or previewed do not. */
+.lean-page[data-via="pin"] .phrase-card__quote {
+  border-left-color: var(--sel-ink);
+}
+
+.phrase-card__quote .math-display,
+.phrase-card__quote .katex-display {
+  margin: 0.2em 0;
 }
 
 .phrase-card__swatch,
@@ -206,24 +258,132 @@
   font-size: var(--fs-sm);
 }
 
+/* A small heading for each part of the card, with who made it beside it. */
 .phrase-card__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin-bottom: var(--space-1);
   font-size: var(--fs-sm);
   font-weight: 600;
-  color: var(--ink);
-  letter-spacing: 0.01em;
-}
-
-.phrase-card__text {
+  line-height: 1.5;
   color: var(--ink);
 }
 
-.phrase-card__text .nowrap {
+.phrase-card__label span,
+.phrase-card__who {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.phrase-card__compare,
+.phrase-card__note,
+.phrase-card__conventions {
+  max-width: var(--evidence-measure);
+}
+
+.phrase-card__fidelity strong {
+  font-weight: 600;
+}
+
+.phrase-card__fidelity[data-fidelity="none"],
+.phrase-card__fidelity[data-fidelity="held"] {
+  color: var(--ink-2);
+}
+
+/* A formula keeps its punctuation, but itself may still break between terms, as in the paper:
+   a long one never runs past a narrow pane. */
+.phrase-card .nowrap {
   white-space: nowrap;
 }
 
-.phrase-card__text code {
-  font-size: 0.92em;
+.phrase-card .nowrap > .katex {
+  white-space: normal;
+}
+
+.phrase-card code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
   overflow-wrap: anywhere;
+}
+
+/* The legend and each convention: closed until asked for. */
+.phrase-card__legend,
+.phrase-card__conventions details {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.phrase-card__legend {
+  margin-top: var(--space-2);
+}
+
+.phrase-card__legend summary,
+.phrase-card__conventions summary {
+  width: fit-content;
+  min-height: 24px;
+  cursor: pointer;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+}
+
+.phrase-card__legend summary:hover,
+.phrase-card__conventions summary:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+.phrase-card__legend summary:focus-visible,
+.phrase-card__conventions summary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.phrase-card__legend dl {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0;
+}
+
+.phrase-card__legend dl > div {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.phrase-card__legend dt {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.phrase-card__legend dd {
+  margin: 0;
+}
+
+.phrase-card__conventions ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phrase-card__conventions summary {
+  color: var(--ink);
+}
+
+.phrase-card__conventions details p {
+  margin: var(--space-1) 0 var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--rule-strong);
+  font-size: var(--evidence-fs);
+  line-height: var(--evidence-lh);
+  color: var(--ink);
 }
 
 /* ---- The colour key in the contents list ---------------------------------------------------- */
@@ -318,28 +478,7 @@
   background: var(--tone);
 }
 
-/* A wide window reads the card larger, as it reads the paper larger. */
-@media (min-width: 1921px) {
-  .phrase-card {
-    font-size: calc(var(--fs-ui) * 1.1);
-  }
-}
-
-/* The phrase itself, as the paper sets it, at the head of its card. */
-.phrase-card__quote {
-  margin: 0;
-  padding: 2px 0 2px var(--space-2);
-  border-left: 2px solid color-mix(in oklab, var(--tone, var(--ink)) 60%, transparent);
-  font-family: var(--font-serif);
-  font-size: 1.05em;
-  line-height: 1.45;
-  color: var(--ink);
-  max-height: 9.5em;
-  /* A long quote scrolls down; nothing scrolls sideways (its displays are fitted, PaperBody.tsx). */
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
+/* A display formula in a quotation is fitted to the inspector like one in the paper (PhraseCard.tsx). */
 .phrase-card__quote .math-display,
 .phrase-card__quote .katex-display {
   margin: 0.2em 0;
@@ -361,4 +500,92 @@
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
+}
+
+/* "Colour underlines by topic", under the key and in the guide. */
+.tones-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  margin-top: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.tones-switch input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
+.tones-switch input:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* With colour off the key's swatches and the graph's topic edges go neutral with the underlines. */
+:root[data-tones="off"] .phrase-key__swatch,
+:root[data-tones="off"] .phrase-bars > span {
+  background: var(--ink-3);
+}
+
+/* What the quoted words say, between the quotation and the comparison; and the verdict's last line. */
+.phrase-card__explanation {
+  max-width: var(--evidence-measure);
+}
+
+/* Not settled from the sources: said plainly, with a rule, never coloured as a failure. */
+.phrase-card__open {
+  margin-top: var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--ink-2);
+  color: var(--ink);
+}
+
+.phrase-card__sources {
+  margin-top: var(--space-2);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.phrase-card__sources summary {
+  width: fit-content;
+  min-height: 24px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+}
+
+.phrase-card__sources summary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.phrase-card__sources ul {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding-left: 1.1em;
+}
+
+.phrase-card__matters {
+  margin-top: var(--space-2);
+}
+
+.phrase-card__ask {
+  font-weight: 600;
+}
+
+/* Under the drawing the card is short: its verdict alone, three lines at most, until the reader opens it. */
+.phrase-card--brief {
+  margin: 0;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
 }

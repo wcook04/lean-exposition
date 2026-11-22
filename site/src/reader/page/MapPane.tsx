@@ -16,6 +16,7 @@ import type { Alignment } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
+import { PAPER_NAMES } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { FocusGraph, relationCounts, type FGCard, type FGRelation } from "../../map/FocusGraph";
 import { GraphBoundary } from "../../map/GraphBoundary";
@@ -25,18 +26,27 @@ import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
 import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
-import { passageTopics, statementFor, type TieModel } from "../ties";
+import { passageTopics, phraseTitle, statementFor, type TieModel } from "../ties";
 import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
 import { passageOf, passageRecords, type Structures } from "./model";
-import { LeanDock, recordOfDecl, type LeanOpen } from "./RecordDock";
+import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
+import { SubjectBand, type SubjectState } from "./SubjectBand";
+import { GuidePanel, ProofRoute, StartHere } from "./Guides";
+import { cardKeys, cardTarget, useAids } from "../aids";
+import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
-import { dockDecl, noteHtml } from "./PhraseCard";
+import { dockDecl, noteHtml, prefetchPhraseNotes } from "./PhraseCard";
+import { loadComparator } from "../../lean/comparatorMark";
+import { loadLeanNotes } from "../../lean/noteSummaries";
+import { loadOurs } from "../../lean/ours";
 import "../../map/focus-graph.css";
 import "./map-pane.css";
 
+/** The fewest neighbours worth a drawing: below this a line of names says the same. */
+const DRAW_FROM = 4;
 /** Under this width the graph folds to one line, and the dock keeps the rest. */
 const FOLD_WIDTH = 600;
 /** Narrow tiles, so that the whole argument fits the pane when it is opened there. */
@@ -52,6 +62,10 @@ export interface HeldParagraph {
   records: string[];
   /** Where no step is tied to it: the first declaration its phrases are tied to. */
   decl?: string;
+  /** Every link in the paragraph, in the order of the text. */
+  ties?: number[];
+  /** The paragraph on the page. */
+  block?: HTMLElement;
 }
 
 interface Props {
@@ -80,8 +94,14 @@ interface Props {
   onRecord?(id: string): void;
   /** A declaration was chosen: it becomes the subject. */
   onDecl?(name: string, module?: string): void;
-  /** Let go of what was clicked and follow the paper again. */
+  /** Auto (or Escape): let go of what was selected and follow the paper from where the reader is. The paper does not move. */
   onRelease(): void;
+  /** "Return to selected words": the paper goes back to the selection, which stays. */
+  onReturn?(): void;
+  /** Where a passage is in the paper, in words: "§5.6", a heading. */
+  placeOf?(anchor: string | undefined, at?: string): string;
+  /** Linked words were chosen in the pane (a paragraph's list, a showcase card): select them; `land` also brings the paper to them. */
+  onOpenTie?(tie: number, land?: boolean): void;
   /** From an opened statement to the Lean following the text. */
   onFollowText?(): void;
   mode: PaneMode;
@@ -102,7 +122,7 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onFollowText, mode, onMode, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, onMode, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -428,11 +448,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- The line over the drawing ----------------------------------------------------------
 
   const subjectTitle = focus?.subjects.length === 1 ? (focus.cards.get(focus.subjects[0])?.title ?? "") : "";
-  const again = (
-    <button type="button" onClick={onRelease}>
-      Follow the paper again
-    </button>
-  );
+  // Letting go is in the subject band (Auto); the line over the drawing only says what is drawn.
+  const again = null;
   const label = ((): ReactNode => {
     if (!current) return null;
     const why = current.why;
@@ -473,7 +490,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- Layout ----------------------------------------------------------------------------
 
   const counts = useMemo(() => {
-    if (!focus) return { uses: 0, usedBy: 0, usesHow: "", usedByHow: "" };
+    if (!focus) return { uses: 0, usedBy: 0, usesHow: "", usedByHow: "", usesIds: [] as string[], usedByIds: [] as string[] };
     const here = new Set(focus.subjects);
     // Each side counted as FocusGraph counts it: unique neighbours, a card used by the subject and
     // using it counted among its users, and each relation counted apart.
@@ -492,10 +509,98 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       for (const kinds of side.values()) for (const k of kinds) n.set(k, (n.get(k) ?? 0) + 1);
       return relationCounts(n);
     };
-    return { uses: usesKinds.size, usedBy: usedByKinds.size, usesHow: tally(usesKinds), usedByHow: tally(usedByKinds) };
+    return { uses: usesKinds.size, usedBy: usedByKinds.size, usesHow: tally(usesKinds), usedByHow: tally(usedByKinds), usesIds: [...usesKinds.keys()], usedByIds: [...usedByKinds.keys()] };
   }, [focus]);
+  // The graph has to earn its space. With no neighbour there is nothing to draw, and with one to
+  // three a line of names says it all: the drawing is kept for four or more (docs/reader-design.md).
+  const neighbours = counts.uses + counts.usedBy;
+  const drawn = !!focus && neighbours >= DRAW_FROM;
+  const few = mode === "graph" && !showWhole && !drawn;
+  // Under the drawing the dock is a short card until the reader opens it.
+  const [dockWide, setDockWide] = useState(false);
   const folded = narrow && !unfolded && !showWhole;
-  const fill = !!leanSlot;
+
+  // ---- The subject band, and the two guides that can stand in the pane ----------------------
+
+  const aids = useAids();
+  const guideStage = site.library && stage === site.library.main ? site.library.guide : undefined;
+  const [aside, setAside] = useState<"start" | "guide" | "route" | null>(null);
+  // A guide is read with nothing else in mind: a new selection takes its place.
+  useEffect(() => setAside(null), [pin?.record, pin?.tie, decl, held]);
+  // What a selection's card and Lean read from is fetched once the page has settled, so the first
+  // selection's column, which waits for all of it to arrive together, comes at once.
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      prefetchPhraseNotes(stage);
+      void loadComparator();
+      void loadLeanNotes();
+      void loadOurs();
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [stage]);
+  const holding = !!pin || !!decl || !!held;
+  const bandState: SubjectState = decl
+    ? "declaration"
+    : pin
+      ? pin.tie !== null
+        ? "words"
+        : "step"
+      : held
+        ? "paragraph"
+        : preview || (mode === "lean" && pointed)
+          ? "preview"
+          : "following";
+  const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined, pinTie.at) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
+  const bandTitle = pin?.tie != null ? phraseTitle(ties, pin.tie) : decl ? plainName(alignment, decl) : subjectTitle;
+  const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
+  /** A showcase card names linked words, a numbered result or a declaration: open whichever it is. */
+  const openCard = useCallback(
+    (card: string) => {
+      const { kind, id } = cardTarget(card);
+      setAside(null);
+      const phrase = kind === "tie" || kind === "bare" ? ties.order.find((n) => ties.index.ties[n].phrase === id) : undefined;
+      if (phrase !== undefined) return onOpenTie?.(phrase, true);
+      if (kind === "tie") return;
+      // A result opens at the words that state it, where the paper has them; else as a declaration.
+      const stated = kind === "result" ? ties.order.find((n) => ties.index.ties[n].role === "statement" && ties.index.ties[n].rows?.some((row) => row.name === id)) : undefined;
+      if (stated !== undefined) onOpenTie?.(stated, true);
+      else onDecl?.(id, tools.rowOf(id)?.module);
+    },
+    [ties, onOpenTie, onDecl, tools],
+  );
+  const cardTitle = useCallback(
+    (card: string) => {
+      const { kind, id } = cardTarget(card);
+      const t = kind === "tie" || kind === "bare" ? ties.order.find((n) => ties.index.ties[n].phrase === id) : undefined;
+      if (t !== undefined) return phraseTitle(ties, t);
+      return kind === "tie" ? id : plainName(alignment, id);
+    },
+    [ties, alignment],
+  );
+  // The paper's longer start-here page, where it has one, for the link under the summary.
+  const startPage = site.library?.pages?.["start-here"];
+  const startHref = startPage ? routeHref({ view: "read", stage: startPage }) : undefined;
+  // The paper's own short orientation where it has one; else what its main formal statement asserts.
+  const about = aids.summary ?? site.sectionAids?.[stage]?.[PAPER_NAMES[stage].short];
+  // Before the paper's first link (its title and authors) there is nothing to follow: the pane offers where to start.
+  const firstLink = ties.order.length ? startOf(ties.index.ties[ties.order[0]].at) : null;
+  const atFront = !holding && follow.tie === null && (readAt === null || readAt === undefined || firstLink === null || readAt < firstLink);
+  const frontSlot = atFront && aids.showcase.length > 0 ? <StartHere cards={aids.showcase} about={about} more={startHref} titleOf={cardTitle} onOpen={openCard} /> : undefined;
+  // Where the selection is one of the paper's showcase cards, the pane says which, with the way to the next.
+  const tourAt = useMemo(() => {
+    if (!aids.showcase.length || (!pinTie && !decl)) return -1;
+    const keys = new Set(cardKeys(pinTie?.phrase, decl ? [decl] : (pinTie?.rows ?? []).map((row) => row.name)));
+    return aids.showcase.findIndex((item) => keys.has(item.card));
+  }, [aids, pinTie, decl]);
+  const asideSlot =
+    aside === "start" ? (
+      <StartHere cards={aids.showcase} about={about} more={startHref} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
+    ) : aside === "route" && aids.route ? (
+      <ProofRoute steps={aids.route} onOpen={openCard} onClose={() => setAside(null)} />
+    ) : aside === "guide" && guideStage ? (
+      <GuidePanel stage={guideStage} onClose={() => setAside(null)} />
+    ) : null;
+  const fill = !!leanSlot || !!asideSlot;
   const mapHref = routeHref({ view: "map", goal, node: subjectRecords[0] });
 
   const drawing = showWhole ? (
@@ -553,7 +658,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   return (
     <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
-        <ModeToggle mode={mode} onMode={onMode} leanButtonRef={leanButtonRef} />
+        <ModeToggle mode={mode} onMode={onMode} leanButtonRef={leanButtonRef} graphCount={focus && !showWhole ? neighbours : null} />
         {mode === "graph" && !fill && !unlinked && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}
@@ -564,7 +669,24 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             Fold the graph
           </button>
         )}
-        <a
+        <span className="map-pane__guides">
+          {(site.readingAids?.showcase ?? aids.showcase.length > 0) && (
+            <button type="button" className="map-pane__guide" aria-expanded={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
+              Start here
+            </button>
+          )}
+          {(site.readingAids?.route ?? !!aids.route) && (
+            <button type="button" className="map-pane__guide" aria-expanded={aside === "route"} onClick={() => setAside(aside === "route" ? null : "route")}>
+              Follow the proof
+            </button>
+          )}
+          {guideStage && (
+            <button type="button" className="map-pane__guide" aria-expanded={aside === "guide"} onClick={() => setAside(aside === "guide" ? null : "guide")}>
+              How to read the Lean
+            </button>
+          )}
+        </span>
+        {mode === "graph" && !fill && <a
           className="map-pane__open"
           href={mapHref}
           onClick={(event) => {
@@ -574,7 +696,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           }}
         >
           Open the full map
-        </a>
+        </a>}
         {!inModal && (
           <button type="button" className="map-pane__hide" aria-label="Hide the pane" onClick={onHide}>
             <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
@@ -583,9 +705,23 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           </button>
         )}
       </div>
+      {!fill && tourAt >= 0 && (
+        <p className="tour-line">
+          <span>
+            Start here, example {tourAt + 1} of {aids.showcase.length}
+          </span>
+          <button type="button" disabled={tourAt === 0} onClick={() => openCard(aids.showcase[tourAt - 1].card)}>
+            Previous
+          </button>
+          <button type="button" disabled={tourAt === aids.showcase.length - 1} onClick={() => openCard(aids.showcase[tourAt + 1].card)}>
+            Next
+          </button>
+        </p>
+      )}
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} onReturn={(pin?.tie != null || held?.block) && onReturn ? onReturn : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
-          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
+          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? asideSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" && !unlinked ? (
         <div className="map-pane__lean">
@@ -594,10 +730,47 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             ties={ties}
             stage={stage}
             alignment={alignment}
-            slot={preview}
-            onRelease={onRelease}
-            onFollowText={onFollowText}
-            noClose={!pin && !decl && !held}
+            slot={preview ?? heldList}
+            emptySlot={frontSlot}
+            onOpenGraph={() => onMode("graph")}
+            onPick={(id) => onRecord?.(id)}
+            onPoint={onPoint}
+            onName={onName}
+            passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
+          />
+        </div>
+      ) : few ? (
+        <div className="map-pane__lean map-pane__few" data-neighbours={neighbours}>
+          {neighbours === 0 ? (
+            <p className="map-pane__fewline">Nothing in the recorded graph uses this or is used by it: no link the paper states and no use in the Lean is recorded at either end.</p>
+          ) : (
+            <p className="map-pane__fewline">
+              {(["uses", "usedBy"] as const).map((side) => {
+                const ids = side === "uses" ? counts.usesIds : counts.usedByIds;
+                if (!ids.length) return null;
+                return (
+                  <span key={side} className="map-pane__fewside">
+                    <span className="map-pane__fewword">{side === "uses" ? "Uses" : "Used by"}</span>
+                    {ids.map((id, i) => (
+                      <span key={id}>
+                        {i > 0 && ", "}
+                        <button type="button" onClick={() => onSubject(id)} title={side === "uses" ? counts.usesHow : counts.usedByHow}>
+                          {cardOf(id) ? renderTitle(cardOf(id)!) : id}
+                        </button>
+                      </span>
+                    ))}
+                  </span>
+                );
+              })}
+              <span className="map-pane__fewnote">Too few to draw: {neighbours === 1 ? "this is the one recorded neighbour" : `these are all ${neighbours} recorded neighbours`}.</span>
+            </p>
+          )}
+          <LeanDock
+            open={dockOpen}
+            ties={ties}
+            stage={stage}
+            alignment={alignment}
+            slot={preview ?? heldList}
             onPick={(id) => onRecord?.(id)}
             onPoint={onPoint}
             onName={onName}
@@ -605,14 +778,14 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           />
         </div>
       ) : (
-        <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}`}>
+        <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}${dockWide || folded ? "" : " is-brief"}`}>
           <div className="map-pane__drawing">
             {unlinked && (
               <h3 className="map-pane__unlinked">Whole proof map</h3>
             )}
             <GraphBoundary scope={showWhole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
           </div>
-          {!folded && !(unlinked && !preview) && (
+          {!folded && dockWide && !(unlinked && !preview) && (
             <div
               className="map-pane__handle"
               role="separator"
@@ -635,7 +808,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               ties={ties}
               stage={stage}
               alignment={alignment}
-              slot={preview}
+              slot={preview ?? (previewCard ? null : heldList)}
+              brief={!dockWide && !folded}
+              onBrief={folded ? undefined : setDockWide}
               onRelease={onRelease}
               noClose={!pin && !decl && !held}
               onOpenLean={() => {

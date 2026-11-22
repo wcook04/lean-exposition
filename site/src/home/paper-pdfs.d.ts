@@ -30,6 +30,11 @@ declare module "virtual:record-index" {
 }
 
 // What the site states about itself, read at build time (siteFacts.ts).
+declare module "virtual:paper-figure-sizes" {
+  /** "<stage>/<file>" to the image's width and height, for the figures a paper ships as files. */
+  export const FIGURE_SIZES: Record<string, [number, number]>;
+}
+
 declare module "virtual:site-facts" {
   export const SITE_FACTS: import("./siteFacts").SiteFacts;
 }

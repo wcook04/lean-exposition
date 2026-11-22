@@ -12,6 +12,21 @@ if (!paper || !/^[a-z0-9-]+$/.test(paper)) throw new Error("Name the library pap
 const from = resolve(import.meta.dirname, "../../instances", paper, "instance.json");
 if (!existsSync(from)) throw new Error(`No library paper ${paper}: ${from} is missing.`);
 const instance = JSON.parse(readFileSync(from, "utf8"));
+// The paper's optional reading aids (generated/): what the formal development does in each section
+// goes into the build with the instance, because the paper's text is laid out with it; the glossary
+// of conventions and the showcase cards are published as one file the reader fetches when idle.
+const generated = (name) => {
+  const path = resolve(import.meta.dirname, "../../instances", paper, "generated", name);
+  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : null;
+};
+const sectionAids = (() => {
+  const raw = generated("section-aids.json") ?? generated("reading_aids.json");
+  if (!raw) return null;
+  // Euler's file is the table itself; Navier–Stokes's keeps the paper's sections under `paper`.
+  const table = raw.paper ?? raw.sections ?? raw.aids ?? raw;
+  if (Array.isArray(table)) return Object.fromEntries(table.filter((row) => row && (row.section ?? row.key) && (row.aid ?? row.text)).map((row) => [String(row.section ?? row.key), String(row.aid ?? row.text)]));
+  return Object.fromEntries(Object.entries(table).filter(([, text]) => typeof text === "string"));
+})();
 // An adapted edition joins the documents only when the build staged it (LX_ADAPTED=1, set by
 // scripts/build_library_paper.sh from the edition's `published` flag); otherwise the paper builds as before.
 const adaptedPath = resolve(import.meta.dirname, "../../instances", paper, "adapted/edition.json");
@@ -28,7 +43,15 @@ if (existsSync(graphPath)) {
     .map((e) => `${e.from}→${e.to}`)
     .sort();
 }
-writeFileSync(resolve(import.meta.dirname, "../src/instances/library/current.json"), JSON.stringify(instance, null, 1) + "\n");
+// Which guides the paper has is known to the build, so the pane's links to them stand from the first
+// paint and nothing shifts when the guides' own data arrives.
+const hasShowcase = (generated("showcase.json") ?? []).length > 0;
+const routeData = generated("route.json");
+const hasRoute = Array.isArray(routeData) ? routeData.length > 0 : Array.isArray(routeData?.steps) && routeData.steps.length > 0;
+writeFileSync(
+  resolve(import.meta.dirname, "../src/instances/library/current.json"),
+  JSON.stringify({ ...instance, ...(sectionAids ? { section_aids: sectionAids } : {}), reading_aids: { showcase: hasShowcase, route: hasRoute } }, null, 1) + "\n",
+);
 const phrases = {};
 // Phrase addresses (/@<id>) open the main document; a companion's phrases keep the reader's own
 // addresses under /read/<slot>/. Each numbered result's canonical target in the main document is the
@@ -90,6 +113,22 @@ for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["ge
   if (existsSync(source)) copyFileSync(source, target);
   else if (existsSync(target)) rmSync(target);
 }
+// Also, where the paper has them: a short orientation for "Start here" (start-here-summary.md) and
+// the proof as ordered steps (route.json, a list or {steps: [...]}), for "Follow the proof".
+const generatedText = (name) => {
+  const path = resolve(import.meta.dirname, "../../instances", paper, "generated", name);
+  return existsSync(path) ? readFileSync(path, "utf8").replace(/^#[^\n]*\n+/, "").trim() : "";
+};
+const route = generated("route.json");
+const aids = {
+  glossary: generated("glossary.json") ?? [],
+  showcase: generated("showcase.json") ?? [],
+  summary: generatedText("start-here-summary.md") || undefined,
+  route: Array.isArray(route) ? route : Array.isArray(route?.steps) ? route.steps : undefined,
+};
+const aidsPath = resolve(import.meta.dirname, "../public/aids.json");
+if (aids.glossary.length || aids.showcase.length || aids.summary || aids.route) writeFileSync(aidsPath, JSON.stringify(aids));
+else if (existsSync(aidsPath)) rmSync(aidsPath);
 // A companion phrase merged into another keeps its id as an address of the phrase that holds it.
 if (existsSync(aliases)) {
   const table = JSON.parse(readFileSync(aliases, "utf8"));

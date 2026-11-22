@@ -12,8 +12,17 @@ interface Mark {
   segment: number;
 }
 
+/**
+ * What a paragraph's margin control selects: the block of text that holds its links. A displayed
+ * formula set inside a paragraph belongs to that paragraph; one that stands alone is its own block.
+ */
+const PICK_PROSE = "p, li, figure, table, blockquote";
+const PICK_DISPLAY = ".math-display";
+const PICK_LABEL = "Select this paragraph’s links";
+
 interface Fragment {
   block: HTMLElement | null;
+  pick: HTMLElement | null;
   segment: number;
   tone?: string;
   top: number;
@@ -103,6 +112,9 @@ export class Statements {
   private sections = new Map<number, HTMLElement>();
   private marks = new Map<number, Mark[]>();
   private ticks = new Map<number, Map<number, SegmentTicks>>();
+  /** Each paragraph's control in the margin, and the paragraph it selects. */
+  private picks = new WeakMap<HTMLElement, HTMLElement>();
+  private heldBlock: HTMLElement | null = null;
   private lit: Record<Light, number | null> = { on: null, point: null, pin: null };
   /** A declaration pointed at in the Lean pane: its phrases are lit. */
   private decl: string | null = null;
@@ -278,15 +290,19 @@ export class Statements {
     const section = this.sections.get(part);
     const marks = this.marks.get(part);
     if (!section || !marks) return;
-    const sectionTop = section.getBoundingClientRect().top;
+    const box = section.getBoundingClientRect();
+    const sectionTop = box.top;
     const fragments: Fragment[] = [];
     const bySegment = new Map<number, SegmentTicks>();
+    const hits = new Map<HTMLElement, { top: number; bottom: number }[]>();
     for (const { el, segment } of marks) {
+      const prose = el.closest<HTMLElement>(PICK_PROSE);
+      const pick = prose && section.contains(prose) ? prose : el.closest<HTMLElement>(PICK_DISPLAY);
       const block = el.closest<HTMLElement>(BLOCKS);
       for (const rect of el.getClientRects()) {
         if (!rect.width || !rect.height) continue;
         const top = rect.top - sectionTop, bottom = rect.bottom - sectionTop;
-        fragments.push({ block, segment, tone: el.dataset.tone, top, bottom, left: rect.left });
+        fragments.push({ pick, block, segment, tone: el.dataset.tone, top, bottom, left: rect.left });
         const bounds = bySegment.get(segment);
         if (bounds) {
           bounds.top = Math.min(bounds.top, top);
@@ -308,11 +324,13 @@ export class Statements {
       if (line.joinsAbove) tick.dataset.joinsAbove = "";
       if (line.joinsBelow) tick.dataset.joinsBelow = "";
       const tones = new Set<string>();
+      const owners = new Map<string | undefined, HTMLElement>();
       for (const f of line.words) {
         const lines = bySegment.get(f.segment)!.lines;
         if (lines[lines.length - 1] !== tick) lines.push(tick);
         if (this.model.segmentLean[f.segment]) tick.dataset.lean = "";
         if (f.tone !== undefined) tones.add(f.tone);
+        if (f.pick && !owners.has(f.tone)) owners.set(f.tone, f.pick);
       }
       if (tones.size === 1) {
         tick.dataset.tone = [...tones][0];
@@ -324,16 +342,90 @@ export class Statements {
           tick.append(band);
         }
       }
-      tick.style.top = `${Math.round(line.top)}px`;
-      tick.style.height = `${Math.round(line.bottom) - Math.round(line.top)}px`;
+      const y = Math.round(line.top), height = Math.round(line.bottom) - y;
+      tick.style.top = `${y}px`;
+      tick.style.height = `${height}px`;
+      const bands = tones.size ? [...tones] : [undefined];
+      bands.forEach((tone, i) => {
+        const block = owners.get(tone);
+        if (!block) return;
+        const start = y + (height * i) / bands.length;
+        const end = y + (height * (i + 1)) / bands.length;
+        let spans = hits.get(block);
+        if (!spans) hits.set(block, spans = []);
+        const last = spans[spans.length - 1];
+        // Keep distinct lines independent: a gap in the printed marks remains a gap in the target.
+        if (last && start <= last.bottom + 0.01) last.bottom = Math.max(last.bottom, end);
+        else spans.push({ top: start, bottom: end });
+      });
       fragment.append(tick);
     }
     layer.replaceChildren(fragment);
+    this.drawPicks(section, hits, box.top);
     this.ticks.set(part, bySegment);
     this.measured.add(part);
     for (const kind of ["on", "point", "pin"] as Light[]) {
       const t = this.lit[kind];
       if (t !== null) this.write(kind, t, true, part);
+    }
+  }
+
+  /** Each paragraph has one native button. Its pointer targets sit over the lines it owns. */
+  private drawPicks(section: HTMLElement, hits: Map<HTMLElement, { top: number; bottom: number }[]>, sectionTop: number) {
+    let layer = section.querySelector<HTMLElement>(":scope > .part__picks");
+    if (!layer) {
+      layer = document.createElement("div");
+      layer.className = "part__picks";
+      section.append(layer);
+    }
+    const active = document.activeElement;
+    const focusedBlock = active instanceof HTMLElement && layer.contains(active) ? this.picks.get(active) : null;
+    let restore: HTMLButtonElement | undefined;
+    const fragment = document.createDocumentFragment();
+    for (const [block, [first, ...rest]] of hits) {
+      const pick = document.createElement("button");
+      pick.type = "button";
+      pick.className = "para-pick";
+      pick.title = PICK_LABEL;
+      pick.setAttribute("aria-label", PICK_LABEL);
+      pick.style.top = `${first.top}px`;
+      pick.style.height = `${first.bottom - first.top}px`;
+      for (const span of rest) {
+        const area = document.createElement("span");
+        area.style.top = `${span.top - first.top}px`;
+        area.style.height = `${span.bottom - span.top}px`;
+        pick.append(area);
+      }
+      this.picks.set(pick, block);
+      if (block === focusedBlock) restore = pick;
+      fragment.append(pick);
+      if (block !== this.heldBlock) continue;
+      pick.setAttribute("aria-pressed", "true");
+      const whole = block.getBoundingClientRect();
+      const rail = document.createElement("i");
+      rail.className = "para-rail";
+      rail.setAttribute("aria-hidden", "true");
+      rail.style.top = `${Math.round(whole.top - sectionTop)}px`;
+      rail.style.height = `${Math.round(whole.height)}px`;
+      fragment.append(rail);
+    }
+    layer.replaceChildren(fragment);
+    restore?.focus({ preventScroll: true });
+  }
+
+  /** The paragraph a margin control selects. */
+  blockOf(pick: HTMLElement): HTMLElement | null {
+    return this.picks.get(pick) ?? null;
+  }
+
+  /** Mark one paragraph as the selected one, or none. */
+  holdBlock(block: HTMLElement | null) {
+    if (this.heldBlock === block) return;
+    const was = this.heldBlock;
+    this.heldBlock = block;
+    // Redraw the margin of the part that held the mark and of the part that takes it.
+    for (const [part, section] of this.sections) {
+      if ((was && section.contains(was)) || (block && section.contains(block))) this.drawTicks(part);
     }
   }
 

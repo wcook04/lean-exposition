@@ -93,6 +93,9 @@ html.is-reading {
   overflow-clip-margin: 8px;
 }
 
+/* The parts a jump lands in are laid out whole before it measures (layOutWhole in PaperBody.tsx),
+   so they keep their height as they come on screen and the landing is not corrected. */
+
 @media print {
   .part__text {
     content-visibility: visible;
@@ -186,6 +189,11 @@ html.is-reading {
   color: var(--ink-2);
   font-variant-numeric: tabular-nums lining-nums;
   white-space: nowrap;
+}
+
+.reader-strip__steps .num {
+  display: inline-block;
+  text-align: center;
 }
 
 .reader-strip__steps button {
@@ -494,13 +502,14 @@ html.is-reading {
   background: var(--ink);
 }
 
+/* Followed: neutral ink. Amber is kept for what the reader selected. */
 .tick[data-on] {
-  background: var(--lit-line);
+  background: var(--follow-ink);
 }
 
 .tick[data-pin] {
-  width: 3px;
-  background: var(--lit-line);
+  width: var(--sel-rail);
+  background: var(--sel-ink);
 }
 
 .paper .tie {
@@ -538,21 +547,184 @@ html.is-reading {
   outline-offset: 2px;
 }
 
-/* The thread across the gutter. Fixed to the window; it only ever crosses empty space. */
-.reader-thread {
-  position: fixed;
-  z-index: 5;
-  inset: 0;
-  width: 100%;
+/* One control in the margin beside each paragraph that has links: it selects the paragraph
+   (statements.ts). A small ring at the paragraph's first line, left of the ticks; its target is
+   24px. Plain words of the paragraph stay plain text. */
+.part__picks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
   height: 100%;
+}
+
+.para-pick {
+  position: absolute;
+  left: calc(-1 * var(--mark-x) + 1px);
+  width: 18px;
+  height: 24px;
+  margin-top: calc((var(--fs-read) * var(--lh-read) - 24px) / 2);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.para-pick::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--ink-3);
+  border-radius: 50%;
+  transition: background-color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
+}
+
+.para-pick:hover::before {
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.para-pick:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -3px;
+}
+
+.para-pick[aria-pressed="true"]::before {
+  border-color: var(--sel-ink);
+  background: var(--sel-ink);
+}
+
+/* The selected paragraph: the selection's amber rule down its whole height, in the ticks' column. */
+.para-rail {
+  position: absolute;
+  left: calc(-1 * var(--mark-x) - 1px);
+  width: var(--sel-rail);
+  border-radius: 1px;
+  background: var(--sel-ink);
   pointer-events: none;
 }
 
-.reader-thread path {
-  fill: none;
-  stroke: var(--lit-line);
-  stroke-width: 1.25;
-  opacity: 0.7;
+@media (max-width: 700px) {
+  .para-pick {
+    left: calc(-1 * var(--mark-x) - 4px);
+  }
+
+  .para-pick::before {
+    width: 5px;
+    height: 5px;
+    margin: -2.5px 0 0 -2.5px;
+  }
+}
+
+@media (forced-colors: active) {
+  .para-pick::before {
+    border-color: ButtonText;
+  }
+
+  .para-pick[aria-pressed="true"]::before {
+    background: Highlight;
+    border-color: Highlight;
+  }
+}
+
+/* What the underlines are and what to do with them: one sentence at the head of the paper, whole at
+   every width. It is part of the page, not of the strip, so it wraps and scrolls away with the title. */
+.reader-hint {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-2) var(--space-3);
+  border-left: 2px solid var(--rule-control);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.reader--outlined .reader-hint {
+  margin-top: var(--space-4);
+}
+
+/* On a narrow window, the bar at the foot while the inspector is closed over a held selection. */
+.held-bar {
+  position: fixed;
+  z-index: 39;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+  min-height: var(--held-bar-h);
+  padding: 6px var(--space-3) calc(6px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--rule-strong);
+  background: var(--surface);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+}
+
+.held-bar__where {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 0 0 var(--space-3);
+  border: 0;
+  border-left: var(--sel-rail) solid var(--sel-ink);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.held-bar__state {
+  font-weight: 600;
+}
+
+.held-bar__place {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.held-bar__view {
+  flex: none;
+  min-width: 64px;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.held-bar__view {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.held-bar__mode {
+  align-self: center;
+}
+
+.held-bar button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* The paper's last line can scroll clear of the bar. */
+.reader:has(.held-bar) .reader__paper {
+  padding-bottom: calc(var(--held-bar-h) + var(--space-5) + env(safe-area-inset-bottom, 0px));
 }
 
 /* The first screen's one line, in the strip: what to do. */
@@ -1873,6 +2045,21 @@ html.is-reading {
   .visit,
   .select-action {
     animation: none;
+  }
+}
+
+/* On a phone the strip has no room to spare: the link counter gives way before anything runs off the screen. */
+@media (max-width: 700px) {
+  .reader-strip__steps {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .reader-strip__steps .num {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 

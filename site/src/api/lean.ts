@@ -230,6 +230,35 @@ export interface PhraseLean extends FidelityFields {
   plain?: string;
   /** In a tie that holds several overlapping phrases: every phrase's own comparison of this Lean. */
   assessments?: PhraseAssessment[];
+  /** Whether this comparison's difference bears on the paper's main result, where the paper's data says. */
+  matters?: ComparisonMatters;
+}
+
+/** One source an explanation rests on: what it is, where in it, and what it supports. */
+export interface ExplanationCitation {
+  ref: string;
+  title: string;
+  url?: string | null;
+  where?: string;
+  supports?: string;
+}
+
+/**
+ * What a linked passage says, in the paper's notation, with the sources it rests on. `grounded`
+ * false means part of it is not settled from the sources; `open` then says what is not.
+ */
+export interface PhraseExplanation {
+  text: string;
+  citations?: ExplanationCitation[];
+  grounded?: boolean;
+  open?: string;
+}
+
+/** Whether a difference between words and Lean bears on the main result, with one line of why. */
+export interface ComparisonMatters {
+  kind: "scope" | "granularity" | "convention" | "genuine-gap" | (string & {});
+  affects_main_result: "yes" | "no" | "not settled" | (string & {});
+  line?: string;
 }
 
 /**
@@ -279,6 +308,8 @@ export interface Tie {
   record: string;
   /** Phrase layer only: the phrase's id, topic, part, colour shade and every Lean row. */
   phrase?: string;
+  /** Phrase layer only: what these words say, with its sources, where the paper's data carries it. */
+  explanation?: PhraseExplanation;
   topic?: string;
   part?: number;
   /** The topic's colour index (see PhraseTopic.tone). */
@@ -318,6 +349,8 @@ export type TiePassage = [startByte: number, endByte: number, records: string[],
 export interface TieIndex {
   /** "phrases" when each tie is a phrase that one or more declarations state. */
   layer?: "phrases";
+  /** The paper's main result in words, for "Does this affect the main result?". */
+  main_result?: string;
   /**
    * Each record's one canonical target in this paper: the tie at its statement block, and the
    * block's UTF-8 byte range. An address, search result, Copy link, Compare and the graph that name

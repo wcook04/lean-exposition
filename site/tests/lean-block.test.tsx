@@ -75,6 +75,8 @@ describe("LeanBlock's props", () => {
       return top;
     };
     const original = Element.prototype.getBoundingClientRect;
+    // The column moves only in answer to the reader: the lines are shown after a press.
+    window.dispatchEvent(new Event("pointerdown"));
     expect(await mount(true)).toBe(0);
     expect(await mount(false)).toBeGreaterThan(0);
     Element.prototype.getBoundingClientRect = original;
