@@ -45,7 +45,7 @@ SIDEWAYS = """() => {
     const extent = Math.max(0, ...parts.map(p => p.getBoundingClientRect().right - left));
     if (extent > box.clientWidth + 1) {
       const t = box.closest('[data-t]') || box;
-      out.push(`math-display${t.dataset.t ? ' data-t=' + t.dataset.t : ''} reaches ${extent.toFixed(0)} in a ${box.clientWidth}px column: ${(box.querySelector('.math-number, .katex-tag') || {}).textContent || ''} ${box.textContent.replace(/\\s+/g, ' ').slice(0, 50)}`);
+      out.push(`math-display${t.dataset.t ? ' data-t=' + t.dataset.t : ''}${box.dataset.unfitted !== undefined ? ' (not yet fitted, transparent)' : ''} form=${box.dataset.form || '0'} fit=${box.dataset.fit || '-'} reaches ${extent.toFixed(0)} in a ${box.clientWidth}px column: ${(box.querySelector('.math-number, .katex-tag') || {}).textContent || ''} ${box.textContent.replace(/\\s+/g, ' ').slice(0, 50)}`);
     }
   }
   const page = document.documentElement.scrollWidth - document.documentElement.clientWidth;
@@ -145,6 +145,14 @@ def main() -> int:
                         break
                     page.wait_for_timeout(60)
                 page.wait_for_timeout(1500)
+                # A display whose part was typeset after the scroll passed it is still waiting to be
+                # fitted (transparent until then): bring each into view, as a reader would, so every
+                # display is checked as the reader sees it.
+                for _ in range(400):
+                    left = page.evaluate("""() => { const b = document.querySelector('.prose .math-display[data-unfitted]'); if (!b) return 0; b.scrollIntoView({ block: 'center' }); return document.querySelectorAll('.prose .math-display[data-unfitted]').length; }""")
+                    if not left:
+                        break
+                    page.wait_for_timeout(250)
                 found = page.evaluate(SIDEWAYS)
                 tag = f"{width} read/{slot}"
                 print(f"{'ok  ' if not found else 'FAIL'} {tag}: {len(found)} sideways scroller(s)", flush=True)
