@@ -79,7 +79,7 @@
    "id": "proof_reader",
    "kind": "repository",
    "url": "https://github.com/wcook04/proof-reader",
-   "revision": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "revision": "1200c81bb5fedf6827cf4b616f9070ea95321fa9",
    "license": "MIT",
    "redistribution": "reference_only"
   },
@@ -5005,7 +5005,7 @@
    "details": "The Lean the document's passages define or state, as Proof Reader links them. Made with AI; not reviewed by the authors."
   }
  ],
- "scope": "The SMT-LIB Standard: Version 2.7, by Clark Barrett, Pascal Fontaine, Cesare Tinelli, with their Lean at https://github.com/onderjan/blazing-smtlib 42b45c20b0045495a40b9eaf0a717e0f1c976bed, as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "scope": "The SMT-LIB Standard: Version 2.7, by Clark Barrett, Pascal Fontaine, Cesare Tinelli, with their Lean at https://github.com/onderjan/blazing-smtlib 42b45c20b0045495a40b9eaf0a717e0f1c976bed, as read for Proof Reader (wcook04/proof-reader 1200c81bb5fedf6827cf4b616f9070ea95321fa9). The numbered results are the authors'; their links to the Lean were made with AI.",
  "extraction_status": "not_run",
  "notes": [
   "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."

@@ -19,7 +19,7 @@
  "source": {
   "proof_reader": {
    "repository": "https://github.com/wcook04/proof-reader",
-   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "commit": "1200c81bb5fedf6827cf4b616f9070ea95321fa9",
    "page": "smtlib-2-7"
   },
   "upstream": {

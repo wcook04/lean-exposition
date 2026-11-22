@@ -4,7 +4,7 @@
  "state": "scaffold",
  "path": "papers/expository.md",
  "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
- "graph_sha256": "732a93e02a8e967a384c8bffbf8d1d1feb82996f3de5d5bf18f2f5792cb069f5",
+ "graph_sha256": "5d834c6e446727e1742893a247030b71c64daa163c2c5f67a8317e25ac0dd12d",
  "selected_goal_ids": [
   "smtlib.document"
  ],

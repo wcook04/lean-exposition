@@ -1,7 +1,7 @@
 {
  "schema": "phrase-ties/1",
  "paper": "short",
- "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as read side by side for Proof Reader (wcook04/proof-reader 79fe18157a1d, papers/smtlib-2-7). Titles, reading notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them.",
+ "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as read side by side for Proof Reader (wcook04/proof-reader 1200c81bb5fe, papers/smtlib-2-7). Titles, reading notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them.",
  "families": [
   {
    "id": "source-text",
@@ -57,7 +57,7 @@
     1,
     229
    ],
-   "source_commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "source_commit": "1200c81bb5fedf6827cf4b616f9070ea95321fa9",
    "topics": [
     {
      "id": "source-text-tokenization",

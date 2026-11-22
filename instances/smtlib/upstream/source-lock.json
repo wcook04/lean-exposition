@@ -3,7 +3,7 @@
  "id": "smtlib",
  "repository": "https://github.com/onderjan/blazing-smtlib",
  "revision": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
- "via": "wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139, papers/smtlib-2-7/lean",
+ "via": "wcook04/proof-reader 1200c81bb5fedf6827cf4b616f9070ea95321fa9, papers/smtlib-2-7/lean",
  "license": "NOASSERTION",
  "files": [
   {

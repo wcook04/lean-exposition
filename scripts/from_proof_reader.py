@@ -1144,6 +1144,9 @@ def main() -> None:
         stop = text.index(end, start)
         cursor = stop
         ids = [nid for nid, at in claim_at.items() if start <= at < stop]
+        # A document that is its own root is stated by its opening passage.
+        if not passages and goal.endswith(".document") and goal not in claim_at:
+            ids = [goal]
         statuses = {nodes[i]["status"] for i in ids}
         passages.append({"anchor": sec["anchor"], "text_sha256": sha(text[start:stop].encode("utf-8")),
                          "claim_ids": ids, "citation_ids": sorted(required_citation_ids(graph, ids)) if ids else [],
