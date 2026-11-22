@@ -1,0 +1,36 @@
+{
+ "record_type": "comparator_receipt",
+ "entry_id": "Unconditional",
+ "run": {
+  "repository": "wcook04/quartic-query-lean",
+  "url": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+  "run_id": "44762028741",
+  "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+  "date": "2026-11-20"
+ },
+ "theorem_pairs": [
+  {
+   "challenge": "QuarticQuery.Checked.alpha_tot_eq_four"
+  },
+  {
+   "challenge": "QuarticQuery.Checked.theorem_one_one"
+  },
+  {
+   "challenge": "QuarticQuery.Checked.cubic_bound_fails"
+  },
+  {
+   "challenge": "QuarticQuery.Checked.forrelation_lower_bound"
+  }
+ ],
+ "kernels": [
+  "Lean’s default kernel",
+  "every external checker bundled with Lean (--paranoid)"
+ ],
+ "axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ],
+ "outcome": "accepted",
+ "receipt": "receipts/comparator-Unconditional-2026-11-20T160320262522+0000.json"
+}

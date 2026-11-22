@@ -9,7 +9,7 @@ import type { AlignedStatement, RecordAlignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { statedIn } from "../app/papers";
-import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
+import { navigate, routeHref, type Level, type Route } from "../app/router";
 import { useEntryState } from "../app/trail";
 import { kindName } from "../map/labels";
 import { mainGoal, sectionLabel, startingGoals } from "../map/TheoremPlate";
@@ -40,6 +40,7 @@ import {
   type LevelFilter,
   type OutlineRow,
   type Slot,
+  SHOWN_LEVELS,
 } from "./model";
 import { shortTitle, useFullAlignment } from "./useAlignment";
 import { useWidth } from "./useWidth";
@@ -387,7 +388,7 @@ function SliceRow({ id, statement }: { id: string; statement: AlignedStatement }
 /** Below 1000px the levels stack in reading order, and tabs jump between them. */
 function StackedLevels({ id, record, slots }: { id: string; record: RecordAlignment; slots: Slot[] }) {
   const has = (level: Level) => slots.some((s) => s.level === level && s.state !== "empty");
-  const [active, setActive] = useState<Level>(() => LEVELS.find(has) ?? "lean");
+  const [active, setActive] = useState<Level>(() => SHOWN_LEVELS.find(has) ?? "lean");
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const scroller = root.current?.closest<HTMLElement>(".bench-main");
@@ -408,13 +409,13 @@ function StackedLevels({ id, record, slots }: { id: string; record: RecordAlignm
   return (
     <div className="bench-stack" ref={root}>
       <div className="bench-tabs" role="group" aria-label="Jump to a level">
-        {LEVELS.map((level) => (
+        {SHOWN_LEVELS.map((level) => (
           <button key={level} type="button" className="bench-tab" aria-current={active === level ? "true" : undefined} disabled={!has(level)} onClick={() => jump(level)}>
             {LEVEL_NAMES[level]}
           </button>
         ))}
       </div>
-      {LEVELS.map((level) =>
+      {SHOWN_LEVELS.map((level) =>
         has(level) ? (
           <section key={level} className="bench-stack__level" data-level={level} aria-label={LEVEL_NAMES[level]}>
             <ColumnHead level={level} />

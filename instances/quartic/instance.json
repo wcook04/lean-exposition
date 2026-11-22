@@ -130,5 +130,63 @@
   "prediction"
  ],
  "goal": "quartic.theorem-1",
- "main_lean": "QuarticQuery.theorem_1_1_unconditional"
+ "main_lean": "QuarticQuery.theorem_1_1_unconditional",
+ "comparator": {
+  "files": {
+   "receipt.json": "f41ef46f6b244552b180679251e1a1fd9256a783200ef6831f0d64b09fa8dca6",
+   "receipts/comparator-Construction-2026-11-20T153340340428+0000.json": "2a41d5946d973d5601cab19da46a8c82f5211e53fd11a80391a67c1b3ec5a816",
+   "receipts/comparator-Foundations-2026-11-20T153427455450+0000.json": "287635d3e0476f509e11f915ee90707d73fd7a48addbb2e2f38d4ca839418ea2",
+   "receipts/comparator-Separation-2026-11-20T153615327764+0000.json": "b5223e4322485a1138bc348b78ad2b8310f430ecd6b3eeffe3c8bd7a669ec31e",
+   "receipts/comparator-Tournament-2026-11-20T153650967273+0000.json": "02ec2bfbdfeae04b16fdc54852aeaac7db6387eeba59a8463c77392e5c688fde",
+   "receipts/comparator-Unconditional-2026-11-20T160320262522+0000.json": "c7d9d21df356af80ab8bed75a44c4512f595487e55aa1baf6dedbd195daaa7e2",
+   "receipts/comparator-negative-ChangedDefinition-2026-11-20T154002347022+0000.json": "c991dc5466b42af6637de4ec36d68958c008ed18a2498b13479b86d39e86c99d",
+   "receipts/comparator-negative-ForeignAxiom-2026-11-20T154027548957+0000.json": "ed852c79c238cd6d83cde7146b92f71af44b9f53007f43baeec3a3ae6f6ee4ca",
+   "receipts/comparator-negative-MissingDeclaration-2026-11-20T154124494070+0000.json": "227e74737d48806ed4173e2422c6a8d4d4a2ced6a0994b2add8bc34e6f5919d6",
+   "receipts/comparator-negative-SorryProof-2026-11-20T154149956820+0000.json": "855634207fdb5e7d3d98f8f82865964d0e0e099817a1bf6094070e9ef812c591",
+   "receipts/comparator-negative-WeakenedConclusion-2026-11-20T154216367016+0000.json": "69a8b261b5ad8902dbc368831c33e62a127e4d381c1183fdd19fe5ff8e5cf209",
+   "receipts/comparator-round3-construction-support-2026-11-20T154358125356+0000.json": "124d1cdd1932912426655140a7307fcc89a157b8c997ee6bdf8727430d1f4661",
+   "receipts/comparator-round3-eq19-direct-2026-11-20T154429814046+0000.json": "2139c6739a436ffd9564835b229b6032ff2099157d37c0b147af83dd69fcc3ad",
+   "receipts/comparator-round3-eq19-independent-2026-11-20T154501827718+0000.json": "f22eb6bdb048806b9c9519d4990652b09b8e2416e7fed11debe81d6127c9b69c",
+   "receipts/comparator-round3-eq19-missing-equality-2026-11-20T154527708271+0000.json": "70fc474a88b51ceaa0a54be3b0943f7f85d6a88cf6016a31710f860b9dd002df",
+   "receipts/comparator-round4-decoder-sharp-2026-11-20T154728059187+0000.json": "9d624921f46ee7234475c3a6a14fa5229680ed4f41b71f1e53d4db0877443ad3",
+   "receipts/comparator-round4-degree-conventions-2026-11-20T154801174663+0000.json": "a11f55d8843dc944df3465e78ed1ce215643e7e918ab2e2678f6f8b5e2c3ec62",
+   "receipts/comparator-round4-degree-missing-uniqueness-2026-11-20T154824187990+0000.json": "b05df4e351d60250af44425b3b6a869085d1cd4cfc3703b911fa66df21a3c1d1",
+   "receipts/comparator-round4-model-zero-2026-11-20T154909863624+0000.json": "acc07b1b3ba624a1f74d3eb2f9ff1730f72f4944a108407e542bd5f7341321ef",
+   "receipts/comparator-round4-model-zero-classical-only-2026-11-20T154936913562+0000.json": "38e60e377e1377e3025fba28443c077189db1b651f8d06b9f11098567f68d88f",
+   "receipts/comparator-round4-real-leaves-2026-11-20T155202642378+0000.json": "dbeb88292fb4fb8e6cb6237856df08487a1ec13026e8c7f2275eacadf8b84a8a",
+   "receipts/comparator-round4-real-leaves-zero-only-2026-11-20T155232540684+0000.json": "d828dcb22e27fb8e0b08b1294334d1ad424dac14ab5c0a962e52373bf34db797",
+   "receipts/comparator-round4-realized-caps-capped-premise-2026-11-20T155257967549+0000.json": "d7b03390f64f0233b645a94589e911974e27ef44968b4fed34be2c8fb54f7271",
+   "receipts/comparator-round4-realized-caps-external-2026-11-20T155326320928+0000.json": "d505e8517566afdf0feb973a5bef8281b83cfb456d75ab6ab020f8d2432bf670",
+   "receipts/comparator-round4-uniform-amplifier-2026-11-20T155433102790+0000.json": "61694c2dd5fb367ad799afd819918a7cfaae562b1ad6955834b78b94faf24b6c",
+   "runs/Construction.json": "14aebe5753056c53943f28ad5b1998f3572730c79cc82d42e0487c418d868e9d",
+   "runs/Foundations.json": "249d4cbe22095cfc3f9f70c0538d56362020669a921dde08078fa4843060cbe3",
+   "runs/Separation.json": "8ba003371f1a0bb8540fdd869a4e6fee27562303b48bc5c47065f3dff07e992f",
+   "runs/Tournament.json": "ea4a5139c6d9e536251c55e51a53e42ff34d3110fb0c4bba79dc0237bc3c96ee",
+   "runs/Unconditional.json": "e2e2d06afb987360fdc61b727c684fb86b771dc57cdb494412c85ad5a221f961",
+   "runs/index.json": "8ecb3e10a68ab355fc84d534ae23a3ab62a55ed0d37c7b1b674c229e316257da",
+   "runs/round3-construction-support.json": "9dd88a284ab0c16fde9aebca43508dddbff1c2764725598fbcd5712819d7579d",
+   "runs/round3-eq19-direct.json": "0289e42cf36d43606cbd82ee3409bea19a1da80e9a1af8653b7cbcfc66a68fe6",
+   "runs/round3-eq19-independent.json": "365ae6424eba677219ea002d2878ec6cbc20fff00ae1b5c4202e9e1f5c9ce2a1",
+   "runs/round4-decoder-sharp.json": "84ed27622e62d3f952421954f103f572c09eefba3c16a1c6edd080c26af69f8b",
+   "runs/round4-degree-conventions.json": "75c5d74839e3d31887661308708a89866e98045d0eae9a295b2a9a842aa51a06",
+   "runs/round4-model-zero.json": "af47c95f741a5fc2eaf08bb2dd0cb1475c8555e371d60425b0eccdd823947dc6",
+   "runs/round4-real-leaves.json": "91f50689d75ae341f40fae6bb03b98270ad13e41e2841bbd2f0e3a5db68cc98e",
+   "runs/round4-realized-caps-external.json": "1502a0a53abbe441556924ef369aa1a73b9c69ce93b71ef61c8acacf1b89ac01",
+   "runs/round4-uniform-amplifier.json": "d1a798318af79c01c1235abecaabb01d0b1449c4b48a83de0709319ce3ab1e72"
+  },
+  "receipt": "receipt.json"
+ },
+ "reader": {
+  "publish_receipts": true
+ },
+ "levels": [
+  "expository",
+  "short",
+  "long"
+ ],
+ "level_names": {
+  "short": "Expert companion",
+  "expository": "Worked exposition",
+  "long": "Full proof reconstruction"
+ }
 }

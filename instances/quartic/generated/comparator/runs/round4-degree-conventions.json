@@ -1,0 +1,26 @@
+{
+ "record_type": "comparator_receipt",
+ "entry_id": "round4-degree-conventions",
+ "run": {
+  "repository": "wcook04/quartic-query-lean",
+  "url": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+  "run_id": "44762028741",
+  "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+  "date": "2026-11-20"
+ },
+ "theorem_pairs": [
+  {
+   "challenge": "QuarticQuery.Independent.Degree.checked_degree_conventions"
+  }
+ ],
+ "kernels": [
+  "Lean’s default kernel"
+ ],
+ "axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ],
+ "outcome": "accepted",
+ "receipt": "receipts/comparator-round4-degree-conventions-2026-11-20T154801174663+0000.json"
+}
