@@ -10,9 +10,10 @@
 /* Keep the paper readable when every sentence is linked. Both the underline and tint use
    the topic colour, with a neutral fallback for readers without a topic palette. */
 .paper .tie {
-  --tie-color: var(--tone, var(--ink-2));
-  --tie-line: color-mix(in oklab, var(--tie-color) var(--tie-rest-line-opacity), transparent);
-  background-color: color-mix(in oklab, var(--tie-color) var(--tie-rest-fill-opacity), transparent);
+  --tie-color: var(--tone, var(--ink-3));
+  --tie-fill: var(--tie-rest-fill-opacity);
+  --tie-line: color-mix(in oklab, var(--tie-color) var(--tie-line-rest, var(--tie-rest-line-opacity)), transparent);
+  background-color: color-mix(in oklab, var(--tie-color) var(--tie-fill), transparent);
   background-image: linear-gradient(var(--tie-line), var(--tie-line));
   background-repeat: no-repeat;
   background-position: 0 100%;
@@ -24,8 +25,25 @@
   padding-bottom: 3px;
 }
 
+/* A topic's phrase at rest: a thin line of its colour over a tint that is barely there, so
+   the hue reads from the line and a page of linked sentences stays a page of prose. */
+.paper .tie[data-tone] {
+  --tie-fill: 4%;
+  --tie-line-rest: 42%;
+}
+
+/* A display has no line under it, so its tint carries the colour. */
+.paper .math-display.tie[data-tone] {
+  --tie-fill: 8%;
+}
+
+/* A phrase with no topic colour, and every phrase when colours are off, has no fill at rest:
+   only the thin line. A display is not laid on a grey slab. */
+.paper .tie:not([data-tone]),
 :root[data-tones="off"] .paper .tie {
   --tie-color: var(--ink-3);
+  --tie-fill: 0%;
+  --tie-line-rest: 30%;
 }
 
 /* The rail takes its colour from the same marked words as the tint. Paragraph selection
@@ -104,6 +122,18 @@
 
 .paper .math-display.tie:is([data-point], :hover, :focus-visible) {
   box-shadow: inset 2px 0 0 var(--tie-color);
+}
+
+/* Without a topic colour, pointing gives a light wash of the ink, never a grey block. */
+.paper .tie:not([data-tone]):is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin]),
+:root[data-tones="off"] .paper .tie:is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin]) {
+  background-color: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+/* Keyboard focus is a ring, so it never reads as hover or as the selection. */
+.paper .tie:not(.math-display):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 1px;
 }
 
 .paper .tie[data-pin] {
@@ -713,4 +743,189 @@
 
 .map-pane .phrase-card :is(.phrase-card__compare, .phrase-card__notes > div) p + p {
   margin-top: 0.6em;
+}
+
+/* ---- The pane's hierarchy --------------------------------------------------------------------
+   Three levels and no more: the serif title, a sans heading for each verdict, and small capital
+   labels for who or what a line is ("Stated here", "AI-assessed"). Folds are quiet rows, sections
+   are parted by a hairline, and the code and our own statements sit on calm grounds. */
+
+.map-pane .lean-page__head {
+  align-items: flex-start;
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-2);
+}
+
+.map-pane .lean-page__title {
+  flex-basis: 100%;
+  font-size: 1.3125rem;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.map-pane .lean-page__meta {
+  row-gap: 2px;
+  margin-top: var(--space-1);
+}
+
+.map-pane :is(.lean-page__role, .phrase-card__who, .phrase-card__label span, .ours__who) {
+  font-family: var(--font-sans);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* The verdict is a heading over its explanation. */
+.map-pane .phrase-card--lean .phrase-card__judgment {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin-bottom: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.map-pane .phrase-card--lean .phrase-card__who {
+  margin-left: 0;
+}
+
+.map-pane .phrase-card__label,
+.map-pane .phrase-card--lean .phrase-card__for {
+  font-family: var(--font-sans);
+}
+
+/* Sections of the card, parted by a hairline. */
+.map-pane .phrase-card--lean > :is(.phrase-card__compare, .phrase-card__notes) {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.map-pane .phrase-card--lean > .phrase-card__notes {
+  padding-top: var(--space-3);
+}
+
+.map-pane .phrase-card__compare > details {
+  margin-top: var(--space-3);
+}
+
+/* Folds: one quiet row each. The marker says it opens, so the words need no underline at rest. */
+.map-pane :is(.lean-page__choices, .phrase-card__passage, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary {
+  color: var(--ink-2);
+  font: 500 var(--fs-ui)/var(--lh-ui) var(--font-sans);
+  text-decoration: none;
+}
+
+.map-pane .phrase-card__passage-label {
+  text-decoration: none;
+}
+
+.map-pane :is(.lean-page__choices, .phrase-card__passage, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary::marker {
+  color: var(--ink-3);
+  font-size: 0.8em;
+}
+
+.map-pane :is(.lean-page__choices, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary:hover,
+.map-pane .phrase-card__passage > summary:hover .phrase-card__passage-label {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 0.2em;
+}
+
+/* Our own statements: still set apart by a dashed rule, drawn thinner, with room to read. */
+.map-pane .ours {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border: 1px dashed var(--rule-control);
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+}
+
+.map-pane .ours--open {
+  border-style: dotted;
+}
+
+.map-pane .ours > p,
+.map-pane .ours__more > p {
+  margin: 0 0 var(--space-2);
+}
+
+/* In a wide pane its sentences keep a reading measure. */
+.map-pane .ours :is(p, .ours__title, .ours__open) {
+  max-width: 76ch;
+}
+
+.map-pane .ours > :last-child,
+.map-pane .ours__more > :last-child {
+  margin-bottom: 0;
+}
+
+.map-pane .ours__badge {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-caps);
+  color: var(--ink-3);
+}
+
+.map-pane .ours__title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  font-weight: 500;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+.map-pane .ours__name {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+}
+
+.map-pane .ours__more > summary {
+  margin-bottom: var(--space-2);
+}
+
+.map-pane .ours__source {
+  margin: var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 6px;
+  background: var(--lean-code-ground);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  font-variant-ligatures: none;
+}
+
+/* The Lean source: a little more room inside, and one rounded ground for the code and the
+   definitions quoted under it. */
+.map-pane .lean-code {
+  padding: 10px var(--space-3) 10px var(--space-1);
+  border-radius: 6px;
+}
+
+.map-pane .lean-code:has(+ .lean-where) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.map-pane .lean-where {
+  border-top-color: var(--rule);
+}
+
+.map-pane .lean-where:last-of-type {
+  border-radius: 0 0 6px 6px;
+}
+
+.map-pane .lean-where__label {
+  padding-top: var(--space-2);
+  font-weight: 500;
+}
+
+.map-pane .lean-line__n {
+  opacity: 0.75;
 }
