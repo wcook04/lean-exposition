@@ -42,7 +42,7 @@ MATHS = """() => [...document.querySelectorAll('.prose .math-display')].filter(b
 }).filter(Boolean)"""
 
 # The front matter's line naming who made what, wherever this width puts it.
-NOTICE = """() => [...document.querySelectorAll('.account-line, .outline__job')]
+NOTICE = """() => [...document.querySelectorAll('.account-line, .front-credit')]
   .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1 && e.getBoundingClientRect().left >= 0)
   .map(e => (e.closest('.outline') || e).textContent).join(' ')"""
 

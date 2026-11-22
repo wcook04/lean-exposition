@@ -69,11 +69,24 @@ describe("a library paper's front matter", () => {
 });
 
 describe("the short credit line", () => {
+  it("does not end a sentence at an author's initial", () => {
+    expect(frontCreditLine("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. More.", "Made with AI.")).toBe("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. Made with AI.");
+  });
+
   it("takes the credit's first sentence and the review, whole", () => {
     const credit = "Paper and Lean by A and B, from their repository a/b at abc1234; their paper thanks Anthropic. The reading copy is set from their TeX.";
     const review = "The links were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.";
     expect(frontCreditLine(credit, review)).toBe(
       "Paper and Lean by A and B, from their repository a/b at abc1234; their paper thanks Anthropic. The links were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
     );
+  });
+});
+
+describe("a section's title in the contents", async () => {
+  const { plainTitle } = await import("../src/reader/page/Outline");
+  it("says a heading's formula without its TeX", () => {
+    expect(plainTitle("5 Blow-up on \\mathbb R^3")).toBe("5 Blow-up on ℝ³");
+    expect(plainTitle("4 The equation linearized about u^*")).toBe("4 The equation linearized about u*");
+    expect(plainTitle("Appendix A Proofs")).toBe("Appendix A Proofs");
   });
 });

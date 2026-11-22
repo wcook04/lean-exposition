@@ -262,7 +262,7 @@ def front_matter(browser: Browser, url: str) -> None:
                    const credit = [...document.querySelectorAll('.front-credit')];
                    const headings = [...document.querySelectorAll('.paper h1, .paper h2')].map(h => h.textContent.trim());
                    return { authors: lis.length, oneLine: tops.size === 1, text: ul?.innerText ?? null,
-                            bullets: lis.some(li => getComputedStyle(li).display === 'list-item'),
+                            bullets: !!ul && getComputedStyle(ul).listStyleType !== 'none' && lis.some(li => getComputedStyle(li).display === 'list-item'),
                             credits: credit.length, creditText: credit[0]?.textContent ?? '',
                             accountLine: !!document.querySelector('.account-line'),
                             contents: headings.some(h => /^(table of )?contents$/i.test(h)) }; }"""
@@ -286,14 +286,10 @@ def read_menu(browser: Browser, url: str, menu: list[str]) -> None:
         check(names == menu, f"5 {width} {scheme}: the Read menu lists only {menu}", str(items))
         check("draft" not in text.lower(), f"5 {width} {scheme}: no draft label in the Read menu", text[:200])
         shot(page, f"{scheme}-read-menu" if width == 2000 else f"{width}-{scheme}-read-menu")
-        if width == 1440:
-            if scheme == "light":
-                page.keyboard.press("Escape")
-            shot(page, f"{width}-{scheme}-first-load")
-        else:
-            page.keyboard.press("Escape")
-            page.wait_for_timeout(200)
-            shot(page, f"{scheme}-first-load")
+        page.keyboard.press("Escape")
+        page.mouse.click(4, 400)
+        page.wait_for_timeout(300)
+        shot(page, f"{scheme}-first-load" if width == 2000 else f"{width}-{scheme}-first-load")
         page.context.close()
 
 
@@ -305,7 +301,7 @@ def compare(browser: Browser, url: str, levels: list[str]) -> None:
         page.goto(f"{base}/compare/")
         page.wait_for_timeout(5000)
         offered = page.evaluate("[...document.querySelectorAll('.table-line button[aria-pressed], .table-head span, .bench-levels button, [aria-label*=level] button')].map(e => e.textContent.trim())")
-        named = sorted(set(o for o in offered if o))
+        named = sorted(set(o for o in offered if o and not o.startswith('Filter')))
         check(named == sorted(levels), f"6 {width} {scheme}: Compare offers only {levels}", str(offered))
         text = page.evaluate("document.querySelector('main')?.innerText ?? document.body.innerText")
         for absent in ("Long record", "Short paper", "Exposition"):
