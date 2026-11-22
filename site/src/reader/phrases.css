@@ -56,19 +56,40 @@
   background-size: calc(100% - var(--tie-end-gap)) var(--tie-rule-strong);
 }
 
-/* Selected: amber, and only this. A thick amber underline on every line of the exact words, a pale
-   wash under them, and the amber rule in the margin (the tick). The topic's colour steps back while
-   the words are selected, so that amber has one meaning on the paper. */
-.paper .tie[data-tone][data-pin],
-.paper .tie[data-tone][data-pin]:hover {
-  --tie-ink: var(--sel-ink);
-  background-color: var(--sel-wash);
-  background-size: calc(100% - var(--tie-end-gap)) var(--sel-rule);
+/* Selected (pinned) stays amber, never a topic colour, and stays quiet: the words are read while
+   they are selected. A phrase or a sentence takes the resting line's mechanism in amber, 2px and
+   stopping 3px short of its end, over a faint amber wash (--pin-wash) that leaves the words their
+   full contrast; the amber rule in the margin (.tick[data-pin]) says the same beside it. */
+.paper .tie[data-tone][data-pin] {
+  background-color: var(--pin-wash);
+  background-image: linear-gradient(var(--lit-line), var(--lit-line));
+  background-size: calc(100% - 3px) 2px;
 }
 
+/* A whole statement or paragraph (data-pin-block, set by reader/page/statements.ts): no amber line
+   under every phrase. Its phrases keep their resting topic lines, the wash lies under the words,
+   and one amber rule runs down the margin beside the block (.tick-run). */
+.paper .tie[data-tone][data-pin][data-pin-block] {
+  background-image: linear-gradient(var(--tone), var(--tone));
+  background-size: calc(100% - 3px) 1.5px;
+}
+
+/* A phrase pointed at inside a selected block still answers as at rest: a 2px line in its colour. */
+.paper .tie[data-tone][data-pin][data-pin-block]:hover,
+.paper .tie[data-tone][data-pin][data-pin-block]:focus-visible {
+  background-size: calc(100% - 3px) 2px;
+}
+
+/* A display: a thin amber rule beside it and nothing else, no fill and no line under it. Inside a
+   selected block the margin rule marks it, so it keeps its resting topic rule. */
 .paper .math-display.tie[data-tone][data-pin] {
-  background-color: var(--sel-wash);
-  box-shadow: inset var(--sel-rule) 0 0 var(--sel-ink);
+  background-color: transparent;
+  background-image: none;
+  box-shadow: inset 2px 0 0 var(--lit-line);
+}
+
+.paper .math-display.tie[data-tone][data-pin][data-pin-block] {
+  box-shadow: inset 2px 0 0 var(--tone);
 }
 
 /* Where colours are forced the underline is a real text decoration and the selection the system's highlight. */

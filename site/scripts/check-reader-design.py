@@ -5,7 +5,7 @@ It checks, each from a fresh browser with empty storage:
 
  1. first visit: the pane opens on the Lean tab, the address has no `v=`, and the hint
     (`.reader-hint`) is visible and whole, at 1440x900 and at 390x844;
- 2. a click on linked words selects them (`.subject-band[data-state="words"]`, `data-pin`, a 5px
+ 2. a click on linked words selects them (`.subject-band[data-state="words"]`, `data-pin`, a 2px
     underline) and does not scroll the paper;
  3. Graph and back to Lean change neither the scroll, the subject nor the history;
  4. Auto, and Escape, release the selection in place: no scroll, no history entry;
@@ -194,7 +194,7 @@ def select_and_views(browser: Browser, base: str) -> None:
     check(pins(page) > 0, "2 the selected marks carry data-pin", f"{pins(page)} pinned")
     sizes = page.evaluate("[...document.querySelectorAll('.part__text [data-t][data-pin]')].map(e => getComputedStyle(e).backgroundSize)")
     heights = [s.split()[-1] if s else "" for s in sizes]
-    check(bool(heights) and all(h == "5px" for h in heights), "2 the selected underline is 5px", f"background-size {sizes[:3]}")
+    check(bool(heights) and all(h == "2px" for h in heights), "2 the selected line is 2px", f"background-size {sizes[:3]}")
     check(abs(scroll_y(page) - y0) <= 1, "2 the click does not scroll the paper", f"scrollY {y0} -> {scroll_y(page)}")
 
     # 3: Graph then Lean.

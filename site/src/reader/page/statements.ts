@@ -19,6 +19,23 @@ interface Mark {
 const PICK_PROSE = "p, li, figure, table, blockquote";
 const PICK_DISPLAY = ".math-display";
 const PICK_LABEL = "Select this paragraph’s links";
+/** The blocks a statement's words can stand in. */
+const BLOCKS = "p, li, td, th, blockquote, figcaption, .math-display";
+
+/**
+ * Whether selected words are a block rather than a phrase: they stand in more than one block (a
+ * statement with its displays, or several paragraphs), or they are the whole of a paragraph longer
+ * than a sentence or two. A display alone is a display: it takes its own rule.
+ */
+export function isBlock(spans: readonly HTMLElement[]): boolean {
+  const blocks = new Set(spans.map((el) => (el.matches(".math-display") ? el : (el.closest(BLOCKS) ?? el))));
+  if (blocks.size !== 1) return blocks.size > 1;
+  const [only] = blocks;
+  if (only.matches(".math-display")) return false;
+  const whole = (only.textContent ?? "").replace(/\s+/g, "").length;
+  const words = spans.reduce((n, el) => n + (el.textContent ?? "").replace(/\s+/g, "").length, 0);
+  return whole > 160 && words >= whole * 0.9;
+}
 
 /** How far from a part's edge a tick layer is laid out before it can be seen. */
 const NEAR = "900px 0px";
@@ -309,6 +326,36 @@ export class Statements {
         if (on) tick.setAttribute(name, "");
         else tick.removeAttribute(name);
       }
+    }
+    if (kind === "pin") this.writeBlock(t, on);
+  }
+
+  /**
+   * A selection that is a whole statement or paragraph is marked as a block (phrases.css): its
+   * phrases keep their topic lines and one amber rule runs down the margin beside each of its parts,
+   * from its first selected line to its last. A phrase or a sentence inside one paragraph is not.
+   */
+  private writeBlock(t: number, on: boolean) {
+    const spans = this.spans(t);
+    const block = on && isBlock(spans);
+    for (const el of spans) {
+      if (block) el.setAttribute("data-pin-block", "");
+      else el.removeAttribute("data-pin-block");
+    }
+    const segments = new Set(this.model.segmentsOf[t] ?? []);
+    for (const part of new Set([...segments].map((segment) => this.partOfSegment[segment]))) {
+      const layer = this.sections.get(part)?.querySelector<HTMLElement>(":scope > .part__ticks");
+      if (!layer) continue;
+      layer.querySelector(":scope > .tick-run")?.remove();
+      const ticks = (this.ticks.get(part) ?? []).filter((tick) => segments.has(Number(tick.dataset.s)));
+      if (!block || !ticks.length) continue;
+      const top = Math.min(...ticks.map((tick) => parseFloat(tick.style.top)));
+      const bottom = Math.max(...ticks.map((tick) => parseFloat(tick.style.top) + parseFloat(tick.style.height)));
+      const run = document.createElement("i");
+      run.className = "tick-run";
+      run.style.top = `${top}px`;
+      run.style.height = `${bottom - top}px`;
+      layer.append(run);
     }
   }
 

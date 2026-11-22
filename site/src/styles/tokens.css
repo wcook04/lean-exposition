@@ -94,7 +94,7 @@
   --tie-rule: 1.5px;
   --tie-rule-strong: 2px;
   --tie-end-gap: 3px;
-  --sel-rule: 5px;
+  --sel-rule: 2px;
   --sel-ink: var(--lit);
   --sel-wash: var(--lit-wash);
   --sel-rail: 3px;
@@ -129,6 +129,8 @@
   --lit-wash: #fae4c7;
   --lit-line: #c9761a;
   --lit-glow: rgb(201 118 26 / 0);
+  /* The wash under selected words: faint, so that the words keep their full contrast. */
+  --pin-wash: color-mix(in oklab, var(--lit-line) 9%, transparent);
   --focus-ring: 2px solid var(--lit);
 
   /* A recorded failed outcome, and only that. */
@@ -222,6 +224,7 @@
   --lit-line: #f3a43a;
   --lit-glow: rgb(243 164 58 / 0.28);
   --fail: #ea8470;
+  --pin-wash: color-mix(in oklab, var(--lit-line) 7%, transparent);
   --rel-supports: #6a7581;
   --rel-supports-lit: #f3a43a;
   --rel-assumes: #7d68b8;
@@ -271,6 +274,7 @@
     --lit-line: #f3a43a;
     --lit-glow: rgb(243 164 58 / 0.28);
     --fail: #ea8470;
+    --pin-wash: color-mix(in oklab, var(--lit-line) 7%, transparent);
     --rel-supports: #6a7581;
     --rel-supports-lit: #f3a43a;
     --rel-assumes: #7d68b8;

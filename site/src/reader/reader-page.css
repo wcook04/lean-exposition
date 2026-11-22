@@ -527,7 +527,16 @@ html.is-reading {
 
 /* Following marks the margin only (the tick): the paper reads as a paper. */
 .paper .tie[data-pin] {
-  background-color: var(--sel-wash);
+  background-color: var(--pin-wash);
+}
+
+/* A selected block's one amber rule, from its first selected line to its last (statements.ts). */
+.tick-run {
+  position: absolute;
+  left: 0;
+  width: 3px;
+  border-radius: 1px;
+  background: var(--lit-line);
 }
 
 .paper .tie:focus {

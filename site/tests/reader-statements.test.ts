@@ -2,7 +2,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { TieIndex } from "../src/api/lean";
 import type { PreparedPart } from "../src/reader/engine";
-import { Statements } from "../src/reader/page/statements";
+import { isBlock, Statements } from "../src/reader/page/statements";
 import { tieModel } from "../src/reader/ties";
 
 const index: TieIndex = {
@@ -87,6 +87,44 @@ describe("statements on the page", () => {
     const late = section(1, [[2, 400, 420]]);
     statements.adopt(1, late);
     expect(late.querySelector("[data-pin]")).not.toBeNull();
+  });
+
+  it("marks a selection across paragraphs as a block, with one margin rule, and clears both", () => {
+    const text = first.querySelector(".part__text")!;
+    const [a, b] = [...first.querySelectorAll<HTMLElement>(".tie")];
+    const p1 = document.createElement("p");
+    const p2 = document.createElement("p");
+    p1.append(a);
+    p2.append(b);
+    text.append(p1, p2);
+    (statements as unknown as { drawTicks(part: number): void }).drawTicks(0);
+    statements.light("pin", 0);
+    expect(first.querySelectorAll("[data-pin-block]").length).toBe(2);
+    const run = first.querySelectorAll<HTMLElement>(".part__ticks .tick-run");
+    expect(run.length).toBe(1);
+    expect([run[0].style.top, run[0].style.height]).toEqual(["100px", "50px"]);
+    statements.light("pin", null);
+    expect(first.querySelectorAll("[data-pin-block]").length).toBe(0);
+    expect(first.querySelectorAll(".tick-run").length).toBe(0);
+  });
+
+  it("tells a block from a phrase", () => {
+    const para = (words: string) => Object.assign(document.createElement("p"), { textContent: words });
+    const long = para("x".repeat(300));
+    const phrase = document.createElement("span");
+    phrase.textContent = "x".repeat(40);
+    long.append(phrase);
+    expect(isBlock([phrase])).toBe(false);
+    const whole = para("");
+    const all = document.createElement("span");
+    all.textContent = "x".repeat(300);
+    whole.append(all);
+    expect(isBlock([all])).toBe(true);
+    const display = document.createElement("span");
+    display.className = "math-display";
+    display.textContent = "y".repeat(300);
+    expect(isBlock([display])).toBe(false);
+    expect(isBlock([phrase, display])).toBe(true);
   });
 
   it("picks the words under the line, else the nearest, the one above winning a near tie", () => {

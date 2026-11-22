@@ -209,7 +209,7 @@ statements agree, and a kernel check of a declaration is not a check of the comp
 | Linked, at rest | 1.5px underline in the topic's colour at full strength, nothing behind the words, stopping 3px short of the phrase's end so neighbours read as two | thin tick |
 | Pointed at | the same underline at 2px and a 10% wash of the topic's colour | tick in ink |
 | Followed | no change to the words | tick in ink, 2px |
-| Selected words | 5px amber underline, amber wash, on every fragment of the exact recorded range | 3px amber rule |
+| Selected words | 2px amber line over a faint amber wash (9% by day, 7% by night), on every fragment of the exact recorded range; a whole statement takes no per-phrase amber and one 3px rule in the margin instead | 3px amber rule |
 | Selected paragraph | no change to the words | 3px amber rule down the paragraph, and its ring filled amber |
 | A paragraph with links | no change to the words | a 7px ring at its first line, between the ticks and the text; fills with ink under the pointer |
 | Keyboard focus | 2px amber outline at 2px offset, on top of any of the above | none |
@@ -427,7 +427,7 @@ are aliases, so each mark's job is written down once.
 | --- | --- | --- |
 | `--tie-rule` | 1.5px | a linked phrase's underline at rest |
 | `--tie-rule-strong` | 2px | the underline when pointed at |
-| `--sel-rule` | 5px | the selection's underline |
+| `--sel-rule` | 2px | the selection's line |
 | `--tie-end-gap` | 3px | where a phrase's underline stops short |
 | `--tie-ink` | `var(--tone)`, or `var(--ink-3)` with colour off | the underline's colour |
 | `--tie-hover-wash` | 10% of `--tie-ink` | under words the pointer is on |
@@ -443,7 +443,7 @@ are aliases, so each mark's job is written down once.
 | `--held-bar-h` | 56px | the phone's bar for a held selection |
 
 The wash is reinforcement: against the ground it is only 1.1:1 by day. The selection is
-carried by the 3px underline, the margin rule and the words "Selected words", each of which
+carried by the 2px amber line, the margin rule and the words "Selected words", each of which
 passes 3:1 alone.
 
 ## Motion
@@ -474,7 +474,7 @@ loops. Left alone, the page makes no change at all, and `check-idle.py` holds it
 | Question | Positions | Decision and reason |
 | --- | --- | --- |
 | Colour of underlines | 04: neutral underlines, topic only as a named swatch. 01: topic colour as a secondary cue. | Topic colours stay on the underlines, with a setting to turn them off. The colour coding is wanted and helps a reader see where a topic runs; the risk 04 names (colour read as a verdict) is met by the key's sentence and by giving amber and verdicts their own, separate marks. |
-| How loud a selection is | 01: wash and margin rule, underline unchanged. 04: 3px amber underline as well. | The 3px amber underline, the margin rule and the wash. The exact extent of the selected words is the thing being checked; an underline shows the extent on every wrapped line, where a wash at 1.1:1 cannot. |
+| How loud a selection is | 01: wash and margin rule, underline unchanged. 04: 3px amber underline as well. | A 2px amber line, the margin rule and a faint wash; a whole statement takes only one margin rule. The exact extent of the selected words is the thing being checked; an underline shows the extent on every wrapped line, where a wash at 1.1:1 cannot. The heavier line first built here made the selected words hard to read, so the line is thin and the wash faint enough to keep 7:1 by night and 4.5:1 by day. |
 | The followed passage's mark | 04: keep the amber margin marker. 01: neutral. | Neutral ink. Amber then has one meaning on the paper. |
 | Default view | 01, 02: the comparison first, unless the reader chose Graph. | Lean view on a first visit; an address or a stored choice of Graph wins. The stored choice is now an explicit value, since the old key could not tell "chose Graph" from "never chose". |
 | The tab's name | 01: rename "Lean" to "Comparison". 02: keep "Lean". | "Lean". The sister readers, the addresses (`v=lean`), "Open its Lean" and the checks all use it, and the view is headed by the quotation and comparison whatever the tab is called. |
