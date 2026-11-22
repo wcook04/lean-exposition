@@ -91,8 +91,8 @@
   /* The reader's marks, each with one job (docs/reader-design.md). Aliases of the family's
      colours: a linked phrase's underline, the selection, the followed passage, and the
      inspector's type, which does not grow with the window. */
-  --tie-rule: 3px;
-  --tie-rule-strong: 4px;
+  --tie-rule: 1.5px;
+  --tie-rule-strong: 2px;
   --tie-end-gap: 3px;
   --sel-rule: 5px;
   --sel-ink: var(--lit);

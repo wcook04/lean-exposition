@@ -206,8 +206,8 @@ statements agree, and a kernel check of a declaration is not a check of the comp
 
 | State | Words | Margin |
 | --- | --- | --- |
-| Linked, at rest | 3px underline in the topic's colour at full strength over a faint wash of it, stopping 3px short of the phrase's end so neighbours read as two | thin tick |
-| Pointed at | the same underline at 4px and a 14% wash of the topic's colour | tick in ink |
+| Linked, at rest | 1.5px underline in the topic's colour at full strength, nothing behind the words, stopping 3px short of the phrase's end so neighbours read as two | thin tick |
+| Pointed at | the same underline at 2px and a 10% wash of the topic's colour | tick in ink |
 | Followed | no change to the words | tick in ink, 2px |
 | Selected words | 5px amber underline, amber wash, on every fragment of the exact recorded range | 3px amber rule |
 | Selected paragraph | no change to the words | 3px amber rule down the paragraph, and its ring filled amber |
@@ -425,12 +425,12 @@ are aliases, so each mark's job is written down once.
 
 | Token | Value | Job |
 | --- | --- | --- |
-| `--tie-rule` | 3px | a linked phrase's underline at rest |
-| `--tie-rule-strong` | 4px | the underline when pointed at |
+| `--tie-rule` | 1.5px | a linked phrase's underline at rest |
+| `--tie-rule-strong` | 2px | the underline when pointed at |
 | `--sel-rule` | 5px | the selection's underline |
 | `--tie-end-gap` | 3px | where a phrase's underline stops short |
 | `--tie-ink` | `var(--tone)`, or `var(--ink-3)` with colour off | the underline's colour |
-| `--tie-hover-wash` | 12% of `--tie-ink` | under words the pointer is on |
+| `--tie-hover-wash` | 10% of `--tie-ink` | under words the pointer is on |
 | `--sel-ink` | `var(--lit)` | the selection's underline and rules (4.96:1 day, 9.75:1 night on the ground) |
 | `--sel-wash` | `var(--lit-wash)` | under selected words; ink on it keeps 14.5:1 day, 11.2:1 night |
 | `--sel-rail` | 3px | the selection's rule in the margin and beside its quotation |
