@@ -12,7 +12,6 @@ import type { PreparedDocument, TextBlock } from "../engine";
 import type { PhraseFamily, PhrasePart, PhraseTopic } from "../../api/lean";
 import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
-import { readTones, saveTones } from "./panePrefs";
 
 interface Props {
   entries: OutlineEntry[];
@@ -37,20 +36,8 @@ interface Props {
  */
 /** Topic colours are on by default. Turning them off makes the phrase and margin marks neutral. */
 export function TonesSwitch() {
-  const [on, setOn] = useState(readTones);
-  return (
-    <label className="tones-switch">
-      <input
-        type="checkbox"
-        checked={on}
-        onChange={(event) => {
-          setOn(event.target.checked);
-          saveTones(event.target.checked);
-        }}
-      />
-      Show topic colours
-    </label>
-  );
+  // Topic colours are always on; the switch is gone.
+  return null;
 }
 
 function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; families: PhraseFamily[]; parts: PhrasePart[]; part: number }) {

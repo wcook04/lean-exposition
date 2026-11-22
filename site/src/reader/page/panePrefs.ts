@@ -76,17 +76,18 @@ const TONES_KEY = "lx-reader-tones";
 
 /** Whether underlines carry their topics' colours. On unless the reader turned it off. */
 export function readTones(): boolean {
+  // Topic colours are always on (Will, 22 Nov). Clear any old "off" choice a reader saved.
   try {
-    return localStorage.getItem(TONES_KEY) !== "off";
+    localStorage.removeItem(TONES_KEY);
   } catch {
-    return true;
+    /* storage unavailable */
   }
+  return true;
 }
 
 /** Set on the root, so the paper, the key and the graph's cards all follow one switch. */
-export function applyTones(on: boolean) {
-  if (on) document.documentElement.removeAttribute("data-tones");
-  else document.documentElement.setAttribute("data-tones", "off");
+export function applyTones(_on: boolean) {
+  document.documentElement.removeAttribute("data-tones");
 }
 
 export function saveTones(on: boolean) {
