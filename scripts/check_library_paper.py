@@ -9,7 +9,8 @@ and the address names the phrase; topic colours show (several distinct tones); t
 draws; each kind of address (numbered result, phrase, Lean declaration, section) opens what it
 names; the Open PDF link opens the PDF in a new tab and the file is a PDF; display formulas lie
 inside their columns and never scroll; the front matter carries the AI notice (--notice). Then at 800, 1000, 390, 360 and
-320 px: the header's controls do not overlap and Search and Menu stay inside the window.
+320 px: the header's controls do not overlap and Search and Menu stay inside the window. A selected
+result and a selected phrase, in both schemes, keep their words' contrast and a quiet amber mark.
 Needs Playwright for Python with Chromium. Exits 1 if any check fails.
 """
 from __future__ import annotations
@@ -45,6 +46,83 @@ MATHS = """() => [...document.querySelectorAll('.prose .math-display')].filter(b
 NOTICE = """() => [...document.querySelectorAll('.account-line, .front-credit')]
   .filter(e => e.offsetParent && e.getBoundingClientRect().width > 1 && e.getBoundingClientRect().left >= 0)
   .map(e => (e.closest('.outline') || e).textContent).join(' ')"""
+
+
+# The selected words, as drawn: each selected element's text colour against the background it is
+# actually read on (its own wash composited over every ancestor's, down to the first opaque one, on a
+# canvas so that any CSS colour resolves), the wash's opacity, the line under it, and each selected
+# display's fill and rule. Contrast follows WCAG 2.x relative luminance.
+SELECTION = r"""() => {
+  const ctx = Object.assign(document.createElement('canvas'), { width: 1, height: 1 }).getContext('2d', { willReadFrequently: true });
+  const paint = (colours) => { ctx.clearRect(0, 0, 1, 1); for (const c of colours) { ctx.fillStyle = '#000'; ctx.fillStyle = c; ctx.fillRect(0, 0, 1, 1); } return [...ctx.getImageData(0, 0, 1, 1).data]; };
+  const lum = ([r, g, b]) => [r, g, b].map(v => v / 255).map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  const behind = (el) => { const layers = []; for (let e = el; e; e = e.parentElement) { const c = getComputedStyle(e).backgroundColor; layers.unshift(c); if (paint([c])[3] === 255) break; } return layers; };
+  const px = (v) => parseFloat(String(v).split(' ').pop()) || 0;
+  const els = [...document.querySelectorAll('.paper .tie[data-pin]')];
+  return {
+    ground: paint(behind(document.querySelector('.paper'))),
+    block: els.some(e => e.hasAttribute('data-pin-block')), runs: document.querySelectorAll('.part__ticks .tick-run').length,
+    words: els.filter(e => !e.matches('.math-display')).map(e => {
+      const s = getComputedStyle(e), bg = paint(behind(e));
+      return { text: e.textContent.slice(0, 24), contrast: ratio(paint([s.color]).slice(0, 3), bg.slice(0, 3)), wash: paint([s.backgroundColor])[3] / 255, line: px(s.backgroundSize), block: e.hasAttribute('data-pin-block') };
+    }),
+    displays: els.filter(e => e.matches('.math-display')).map(e => {
+      const s = getComputedStyle(e);
+      return { fill: paint([s.backgroundColor])[3] / 255, image: s.backgroundImage, rule: (s.boxShadow.match(/(\d+(?:\.\d+)?)px 0px 0px 0px inset/) || [0, 0])[1] * 1 };
+    }),
+  };
+}"""
+
+
+def selection_checks(browser, base, args, check) -> None:
+    """A selected result and a selected phrase, in both schemes at 1440x900: the words keep their
+    contrast (7:1 in the dark scheme, 4.5:1 in the light), the wash stays faint, a phrase's amber line
+    is 2px, a whole statement is one margin rule with its phrases' own topic lines, and a display is
+    a thin rule with no fill and no line under it."""
+    floors = {"dark": (7.0, 0.08), "light": (4.5, 0.10)}
+    for scheme, (floor, wash) in floors.items():
+        context = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme=scheme)
+        page = context.new_page()
+        for kind, path in ((("result", f"{args.result}/"),) if args.result else ()) + (("phrase", f"@{args.phrase}"),):
+            tag = f"selection {scheme} {kind}"
+            page.goto(base + path)
+            page.wait_for_selector(".paper .tie", timeout=60000)
+            if kind == "phrase":
+                try:
+                    page.wait_for_selector(".paper .tie[data-pin]", timeout=15000)
+                except Exception:
+                    pass
+            page.wait_for_timeout(2500)
+            if not page.locator(".paper .tie[data-pin]").count():
+                # A numbered result may open on its statement with no phrase of its own to select (quartic).
+                check(f"{tag} selected", kind == "result", f"nothing selected at {path}")
+                continue
+            got = page.evaluate(SELECTION)
+            if args.shots:
+                page.screenshot(path=str(args.shots / f"selection-{scheme}-{kind}.png"))
+            words, displays = got["words"], got["displays"]
+            low = min((w["contrast"] for w in words), default=None)
+            # A selection may be a display alone (a formula has no run of words to measure).
+            check(f"{tag} contrast", (low is None and displays) or (low is not None and low >= floor),
+                  f"lowest {low and round(low, 2)}:1 (floor {floor}:1) over {len(words)} selected runs and {len(displays)} displays")
+            heavy = [w for w in words if w["wash"] > wash + 0.005]
+            check(f"{tag} faint wash", not heavy, f"wash above {wash:.0%}: {heavy[:2]}")
+            thick = [w for w in words if w["line"] > 2]
+            check(f"{tag} thin line", not thick, f"lines over 2px: {thick[:2]}")
+            loud = [d for d in displays if d["fill"] > 0 or d["image"] != "none" or d["rule"] > 3]
+            check(f"{tag} displays", not loud, f"a selected display with a fill, a line under it or a rule over 3px: {loud[:2]}")
+            # A whole statement is one margin rule beside it, its phrases keeping their topic lines; a
+            # phrase or sentence is a 2px amber line with no rule of its own.
+            if got["block"]:
+                check(f"{tag} one margin rule", got["runs"] >= 1 and all(w["block"] and w["line"] <= 1.5 for w in words),
+                      f"runs={got['runs']} lines={sorted({w['line'] for w in words})}")
+            else:
+                check(f"{tag} phrase line", not got["runs"] and all(w["line"] == 2 for w in words),
+                      f"runs={got['runs']} lines={sorted({w['line'] for w in words})}")
+            print(f"{tag}: lowest contrast {low and round(low, 2)}:1, wash {max((w['wash'] for w in words), default=0):.3f}, "
+                  f"{len(words)} runs, {len(displays)} displays", file=sys.stderr)
+        context.close()
 
 
 def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
@@ -429,6 +507,8 @@ def main() -> int:
             if args.shots:
                 page.screenshot(path=str(args.shots / f"pdf-strip-{width}x{height}.png"))
             context.close()
+        if not args.pdf_only:
+            selection_checks(browser, base, args, check)
         # Each companion named opens its own text with its phrases, from its own edition, never the
         # edition error; a phrase address on one also opens that phrase's card.
         for width, height in SIZES:
