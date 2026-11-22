@@ -342,17 +342,25 @@ def main() -> int:
             check(f"{tag} strip", not clash, f"overlapping: {clash[:3]}")
             if args.shots:
                 page.screenshot(path=str(args.shots / f"pdf-strip-{width}x{height}.png"))
-            # Each companion named opens its own text with its phrases, from its own edition.
+            context.close()
+        # Each companion named opens its own text with its phrases, from its own edition, never the
+        # edition error; a phrase address on one also opens that phrase's card.
+        for width, height in SIZES:
+            tag = f"{width}x{height}"
+            context = browser.new_context(viewport={"width": width, "height": height})
+            page = context.new_page()
             for address in args.companion:
                 page.goto(base + (address if "/@" in address else address.rstrip("/") + "/"), wait_until="domcontentloaded")
                 try:
                     page.wait_for_selector(".paper .tie[data-tone]", timeout=45000)
+                    if "/@" in address:
+                        page.wait_for_selector(".phrase-card", timeout=15000)
                 except Exception:
                     pass
                 body = page.inner_text("body")
                 ties = page.eval_on_selector_all(".paper .tie[data-tone]", "els => els.length")
-                card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''") if "/@" in address else "-"
-                check(f"{tag} companion {address}", ties > 0 and "different edition" not in body and bool(card),
+                card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).textContent || ''") if "/@" in address else "-"
+                check(f"{tag} companion {address}", ties > 0 and "different edition" not in body and bool(card.strip()),
                       f"{ties} phrases; edition error={'different edition' in body}; card={card[:60]!r}")
             context.close()
         browser.close()
