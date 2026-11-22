@@ -184,7 +184,11 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         for (const index of parts) {
           const text = elements.current.get(index)?.querySelector<HTMLElement>(":scope > .part__text");
           if (!text) continue;
-          if (text.dataset.near === undefined) text.dataset.near = "";
+          // A part in the window is laid out at its real height already; one off it is held at its
+          // reserved height until it comes near, which is what the jump must not measure.
+          const r = text.getBoundingClientRect();
+          const inView = r.bottom > 0 && r.top < window.innerHeight;
+          if (!inView && text.dataset.near === undefined) text.dataset.near = "";
           fitters.get(text)?.(() => true, true);
         }
       },
