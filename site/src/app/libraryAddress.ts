@@ -142,7 +142,10 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
     const stage = lib.pages[inPage[1]];
     if (inPage[2].startsWith("lean/")) return { ...common, stage, decl: decodeURIComponent(inPage[2].slice(5)), lean: v === "graph" ? undefined : true };
     const id = decodeURIComponent(inPage[2].slice(1));
-    const row = pagePhrases[inPage[1]]?.[id];
+    // A page whose phrases this build did not list (a companion answered from its own edition) opens
+    // the phrase by its id, at the place the address names.
+    if (!pagePhrases[inPage[1]]) return { ...common, stage, node: `phrase:${id}`, at: q.get("l") ?? undefined };
+    const row = pagePhrases[inPage[1]][id];
     return row ? { ...common, stage, node: row.record ?? `phrase:${row.host ?? id}`, at: row.at } : { ...common, stage, missing: id };
   }
   const result = path.match(/^\/([a-z]+-[0-9a-z.-]+)$/);
@@ -179,7 +182,7 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     const view = route.lean ? "lean" : route.graph ? "graph" : null;
     const tail = route.anchor ? `#${encodeURIComponent(route.anchor)}` : "";
     const phrase = route.node && route.at ? pageByPlace.get(`${slug}|${route.node}|${route.at}`) : route.node?.startsWith("phrase:") ? route.node.slice(7) : undefined;
-    if (phrase && pagePhrases[slug]?.[phrase]) {
+    if (phrase && (!pagePhrases[slug] || pagePhrases[slug][phrase])) {
       if (view) q.set("v", view);
       if (route.decl) q.set("d", route.decl);
       return `${base}/${slug}/@${encodeURIComponent(phrase)}${q.size ? `?${q}` : ""}${tail}`;

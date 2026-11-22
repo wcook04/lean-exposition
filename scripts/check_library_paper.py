@@ -77,6 +77,11 @@ def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
         page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
     page.goto(base + f"@{args.phrase}")
     page.wait_for_selector(".pdf-view__mark.is-selected", timeout=60000)
+    # The PDF scrolls to the phrase once its pages are laid out: wait for the mark to arrive on screen.
+    try:
+        page.wait_for_function("(h) => { const r = document.querySelector('.pdf-view__mark.is-selected')?.getBoundingClientRect(); return !!r && r.top >= 0 && r.top <= h; }", arg=height, timeout=15000)
+    except Exception:
+        pass
     sel = page.locator(".pdf-view__mark.is-selected").first.bounding_box()
     check(f"{tag} address phrase", sel is not None and 0 <= sel["y"] <= height and page.url.endswith(f"@{args.phrase}"), page.url)
     page.goto(base + f"lean/{args.decl}")
