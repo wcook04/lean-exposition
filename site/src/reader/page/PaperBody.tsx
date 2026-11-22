@@ -487,8 +487,10 @@ function formsFor(box: HTMLElement): Forms {
   const display = box.querySelector<HTMLElement>(":scope > .katex-display");
   const tex = box.querySelector('.katex-mathml annotation[encoding="application/x-tex"]')?.textContent ?? "";
   const tags = display ? display.querySelectorAll(".katex-tag, .tag") : [];
-  const single = tags.length === 1 && (tex.match(/\\tag\b/g) ?? []).length === 1 && !!splitDisplay(tex).tag;
-  if (single && !box.querySelector(":scope > .math-number")) {
+  // The engine sets a plain number up already (engine.ts); one with markup is set up here.
+  const set = !!box.querySelector(":scope > .math-number");
+  const single = set || (tags.length === 1 && (tex.match(/\\tag\b/g) ?? []).length === 1 && !!splitDisplay(tex).tag);
+  if (single && !set) {
     const number = document.createElement("span");
     number.className = "katex math-number";
     number.textContent = (tags[0].textContent ?? "").replace(/[​\s]+/g, "");
