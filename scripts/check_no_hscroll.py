@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if anything in a served library paper scrolls sideways.
 
-    python scripts/check_no_hscroll.py http://127.0.0.1:47311/library/euler/ [--widths 390 800 1100 1440 2000 2560] [--dark] [--shots DIR]
+    python scripts/check_no_hscroll.py http://127.0.0.1:47311/library/euler/ [--widths 390 800 1024 1100 1440 2000 2560] [--dark] [--shots DIR]
 
 For each window width and each of the paper's documents (read/<slot>/), from a cold browser: scroll
 the whole paper from top to bottom so every lazily rendered part and formula is laid out and fitted,
@@ -99,7 +99,7 @@ def documents(base: str) -> list[str]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("base")
-    ap.add_argument("--widths", type=int, nargs="+", default=[390, 800, 1100, 1440, 2000, 2560])
+    ap.add_argument("--widths", type=int, nargs="+", default=[390, 800, 1024, 1100, 1440, 2000, 2560])
     ap.add_argument("--slots", nargs="+", help="document slots to read (default: every slot the edition serves)")
     ap.add_argument("--shots", type=Path)
     ap.add_argument("--dark", action="store_true", help="read in the dark colour scheme")
