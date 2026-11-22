@@ -661,6 +661,28 @@ export function joinBracketedPieces(math: HTMLElement): void {
   }
 }
 
+/**
+ * Whether one of KaTeX's faces is still on its way. A formula measured in a fallback face is
+ * measured wrong, so fitting waits for KaTeX's own faces; other faces (the Lean's mono, the
+ * serif's italic) arriving later do not change a formula's width and do not hold it up.
+ */
+function katexLoading(): boolean {
+  if (typeof document === "undefined" || !document.fonts) return false;
+  if (document.fonts.status === "loaded") return false;
+  // Without a list of faces, any face loading counts.
+  if (typeof (document.fonts as unknown as Iterable<FontFace>)[Symbol.iterator] !== "function") return true;
+  for (const face of document.fonts) if (face.status === "loading" && face.family.replace(/["']/g, "").startsWith("KaTeX")) return true;
+  return false;
+}
+
+/** Resolves once no KaTeX face is loading (checked again after each arrives). */
+function katexReady(): Promise<void> {
+  if (typeof (document.fonts as unknown as Iterable<FontFace>)[Symbol.iterator] !== "function") return document.fonts.ready as unknown as Promise<void>;
+  const loading = [...document.fonts].filter((face) => face.status === "loading" && face.family.replace(/["']/g, "").startsWith("KaTeX"));
+  if (!loading.length) return Promise.resolve();
+  return Promise.allSettled(loading.map((face) => face.loaded)).then(() => (katexLoading() ? katexReady() : undefined));
+}
+
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
 const FIT_MARGIN = "900px 0px";
 
@@ -674,9 +696,9 @@ const FIT_BUDGET_MS = 40;
 function drainFits() {
   fitFrame = 0;
   // A width measured in a fallback font is wrong for good: fit once, after the fonts are in.
-  if (document.fonts && document.fonts.status !== "loaded") {
+  if (katexLoading()) {
     fitFrame = -1;
-    void document.fonts.ready.then(() => {
+    void katexReady().then(() => {
       fitFrame = requestAnimationFrame(drainFits);
     });
     return;
@@ -704,7 +726,7 @@ function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
     first?.getBoundingClientRect();
     return false;
   }
-  if (document.fonts && document.fonts.status !== "loaded") return false;
+  if (katexLoading()) return false;
   const fitter = fitters.get(text);
   if (fitter && !fitter(more)) return false;
   first?.getBoundingClientRect();
@@ -780,7 +802,7 @@ export function markWideMaths(root: HTMLElement): () => void {
     observer.observe(box);
     // A width measured in a fallback font is wrong, and fitting on it and again once KaTeX's
     // fonts arrive changes the display twice, after the page has painted: wait for the fonts.
-    if (document.fonts && document.fonts.status !== "loaded") return;
+    if (katexLoading()) return;
     update(box);
   };
   // Each measurement forces a layout, so a formula is fitted as it comes near the screen.
@@ -811,8 +833,8 @@ export function markWideMaths(root: HTMLElement): () => void {
     return true;
   });
   // Formulas reached before KaTeX's fonts arrive are fitted once they have.
-  if (document.fonts && document.fonts.status !== "loaded") {
-    void document.fonts.ready.then(() => {
+  if (katexLoading()) {
+    void katexReady().then(() => {
       if (!live) return;
       fitted.forEach(forgetSizes);
       fitted.forEach((box) => update(box, true));
