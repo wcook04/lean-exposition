@@ -320,9 +320,9 @@ describe("the inspector's phrase card", async () => {
     expect(details.textContent).toContain("Equation (7.63)");
     expect(details.textContent).toContain("The rescaling alone does not give equality.");
     expect(container.querySelectorAll(".phrase-card__who")).toHaveLength(1);
-    expect(container.querySelector(".phrase-card__assessment .phrase-card__for")).toBeNull();
+    expect(container.querySelector(".phrase-card__assessment")?.querySelector(".phrase-card__for")).toBeNull();
     act(() => root.render(<PhraseCard inLean row={row({ assessments })} phrase="whole" merged={merged} quoteBytes={bytes + 10} note={undefined} />));
-    expect(container.querySelector(".phrase-card__assessment .phrase-card__for")?.textContent).toContain(merged[1].quote);
+    expect(container.querySelector(".phrase-card__assessment")?.querySelector(".phrase-card__for")?.textContent).toContain(merged[1].quote);
     act(() => root.render(<PhraseCard inLean row={row({ assessments: [assessments[0], { ...assessments[1], fidelity: "different" }] })}
       phrase="whole" merged={merged} note={undefined} />));
     expect(container.querySelector(".phrase-card__comparisons")).toBeNull();
