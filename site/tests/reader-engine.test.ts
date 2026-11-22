@@ -162,7 +162,7 @@ it("retains prose, equations and headings between inline page comments and the p
   expect(doc.render(0).mathErrors).toEqual([]);
   const rendered = dom(doc.render(0).html);
   expect(rendered.querySelector('[id="prop-7.10"] .tie')?.textContent).toBe(tied);
-  expect(rendered.querySelector('[id="eq-7.61"] .math-number')?.textContent).toBe("(7.61)");
+  expect(rendered.querySelector('[id="eq-7.61"] .katex-display annotation')?.textContent).toContain("\\tag{7.61}");
   for (const [mode, html] of [["plain", doc.renderPlain(0).html], ["typeset", doc.render(0).html]]) {
     expect(visibleText(html), mode).toContain("We choose a correction");
     expect(visibleText(html), mode).toContain("The force vanishes.");
