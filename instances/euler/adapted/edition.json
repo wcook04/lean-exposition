@@ -1,0 +1,33 @@
+{
+ "schema": "adapted-edition/1",
+ "published": true,
+ "document": {
+  "id": "adapted",
+  "slot": "adapted",
+  "slug": "adapted",
+  "kind": "companion",
+  "adapted": true,
+  "of": "paper",
+  "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations",
+  "noun": "adapted edition",
+  "group": "edition",
+  "group_title": "Adapted edition",
+  "order": 0,
+  "credit": "An adapted edition of Alpöge, Buckmaster and Coiculescu's paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the authors'. Every change is marked, and no change has been reviewed by the authors.",
+  "published": true,
+  "pdf": {
+   "file": "paper.pdf",
+   "name": "adapted-edition-marked.pdf",
+   "label": "PDF with changes marked",
+   "sha256": "40ac35e9f200ebe4606b7dc6e107ba65eff2791a451d00fdf3dfe21bcc4c28e5",
+   "bytes": 688650
+  },
+  "aux_pdf": {
+   "file": "aux.pdf",
+   "name": "adapted-auxiliary-note-marked.pdf",
+   "label": "Auxiliary note, PDF with changes marked",
+   "sha256": "9ef0fc57a6a6e785f91244ffbb6481f817c2e4a4896ec2ba325febc7fe76cbd8",
+   "bytes": 129994
+  }
+ }
+}
