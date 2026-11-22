@@ -97,7 +97,7 @@ interface Props {
   /** "Return to selected words": the paper goes back to the selection, which stays. */
   onReturn?(): void;
   /** Where a passage is in the paper, in words: "§5.6", a heading. */
-  placeOf?(anchor: string | undefined): string;
+  placeOf?(anchor: string | undefined, at?: string): string;
   /** Linked words were chosen in the pane (a paragraph's list, a showcase card): select them; `land` also brings the paper to them. */
   onOpenTie?(tie: number, land?: boolean): void;
   /** From an opened statement to the Lean following the text. */
@@ -530,7 +530,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         : preview || (mode === "lean" && pointed)
           ? "preview"
           : "following";
-  const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
+  const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined, pinTie.at) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
   const bandTitle = pin?.tie != null ? phraseTitle(ties, pin.tie) : decl ? plainName(alignment, decl) : subjectTitle;
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
   /** A showcase card names linked words, a numbered result or a declaration: open whichever it is. */

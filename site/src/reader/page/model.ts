@@ -320,6 +320,15 @@ export function resolveAt(doc: Pick<PreparedDocument, "lineOfByte">, at: string)
   return { start, end: Math.max(start, Number(lines[2] ?? start)) };
 }
 
+/** Name the section containing the selected words, or the passage when only its anchor is known. */
+export function subjectPlace(structure: PaperStructure | undefined, doc: Pick<PreparedDocument, "lineOfByte">, anchor?: string, at?: string): string {
+  const line = at ? resolveAt(doc, at)?.start : undefined;
+  const title = line === undefined
+    ? anchor && sectionTitleIn(structure, anchor)
+    : structure?.paper.sections.findLast((s) => s.level > 1 && s.span.start_line <= line && line <= s.span.end_line)?.title;
+  return title ? sectionNumber(title) : "the opening";
+}
+
 /** The parts that hold these lines. */
 export function partsOfLines(parts: PreparedPart[], lines: { start: number; end: number }): number[] {
   return parts.filter((p) => !p.blank && p.lines.start <= lines.end && p.lines.end >= lines.start).map((p) => p.index);

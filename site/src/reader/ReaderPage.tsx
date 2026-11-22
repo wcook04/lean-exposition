@@ -61,6 +61,7 @@ import {
   sectionTitleIn,
   selectionSpan,
   statusWords,
+  subjectPlace,
   type Destination,
   type OutlineEntry,
   type Structures,
@@ -1006,11 +1007,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   /** Where in the paper something is, for the pane's band: "§5.6", a heading, or the opening. */
   const placeWords = useCallback(
-    (anchor: string | undefined) => {
-      const title = anchor ? sectionTitleIn(structure, anchor) : null;
-      return title ? sectionNumber(title) : "the opening";
-    },
-    [structure],
+    (anchor: string | undefined, at?: string) => subjectPlace(structure, doc, anchor, at),
+    [structure, doc],
   );
 
   const originHere = useCallback(
@@ -1748,7 +1746,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   /** Below 1024px, or with the pane turned off: the inspector over the whole screen, opened on demand. */
   const sheetShown = !paneRoom && !route.beside && !sheetCollapsed && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || !!held || (!!route.lean && !paneRoom));
   sheetShownRef.current = sheetShown;
-  const heldPlace = held ? placeWords(held.anchor ?? undefined) : pin?.tie != null ? placeWords(ties.index.ties[pin.tie].anchor ?? undefined) : "";
+  const selectedTie = pin?.tie != null ? ties.index.ties[pin.tie] : null;
+  const heldPlace = held ? placeWords(held.anchor ?? undefined) : selectedTie ? placeWords(selectedTie.anchor ?? undefined, selectedTie.at) : "";
 
   const inspector = inspect && (
     <Inspector
