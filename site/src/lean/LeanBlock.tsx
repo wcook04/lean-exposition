@@ -12,6 +12,8 @@ import {
   compiled,
   declIn,
   dependencyWords,
+  fetchModule,
+  moduleIfLoaded,
   kindWord,
   LINK_CAVEAT,
   RELATION_WORDS,
@@ -138,20 +140,31 @@ export function readsWhole(decl: LeanDeclaration): boolean {
   return (decl.kind === "def" || decl.kind === "abbrev") && decl.end_line - decl.signature_end_line <= SHORT_DEFINITION;
 }
 
+/** The conclusion and short hypotheses a statement may show the definitions of, before their modules load. */
+function whereCandidates(decl: LeanDeclaration, tokens: LeanToken[], scope: Scope): { row: DeclRow; conclusion: boolean }[] {
+  const shape = statementShape(tokens);
+  const found: { row: DeclRow; conclusion: boolean }[] = [];
+  const add = (text: string | undefined, conclusion: boolean) => {
+    const target = text ? resolveName(text, scope) : null;
+    if (target?.kind !== "decl" || target.row.name === decl.name || found.some((f) => f.row.name === target.row.name)) return;
+    if (target.row.endLine - target.row.line + 1 <= (conclusion ? SHOWN_CONCLUSION : SHOWN_HYPOTHESIS)) found.push({ row: target.row, conclusion });
+  };
+  add(shape.conclusion, true);
+  shape.hypotheses.forEach((name) => add(name, false));
+  return found;
+}
+
+/** The modules a block's "Where ... says" sections read, so the block can wait for them. */
+function whereModules(decl: LeanDeclaration, module: LeanModule, shell: LeanShell): string[] {
+  const scope = makeScope(decl, module, shell.index, shell.terms);
+  const tokens = tokenize(sourceLines(module).slice(decl.line - 1, statementLastLine(decl, readsWhole(decl))).join("\n"));
+  collectLocals(tokens, scope.locals);
+  return [...new Set(whereCandidates(decl, tokens, scope).map((c) => c.row.module))];
+}
+
 /** The statement's conclusion and short hypotheses, resolved to in-tree predicates and laid out. */
 function useWhere(decl: LeanDeclaration, tokens: LeanToken[], scope: Scope, shell: LeanShell, compact: boolean | undefined, clause: string | undefined): { bodies: WhereBody[]; pending: boolean } {
-  const candidates = useMemo(() => {
-    const shape = statementShape(tokens);
-    const found: { row: DeclRow; conclusion: boolean }[] = [];
-    const add = (text: string | undefined, conclusion: boolean) => {
-      const target = text ? resolveName(text, scope) : null;
-      if (target?.kind !== "decl" || target.row.name === decl.name || found.some((f) => f.row.name === target.row.name)) return;
-      if (target.row.endLine - target.row.line + 1 <= (conclusion ? SHOWN_CONCLUSION : SHOWN_HYPOTHESIS)) found.push({ row: target.row, conclusion });
-    };
-    add(shape.conclusion, true);
-    shape.hypotheses.forEach((name) => add(name, false));
-    return found;
-  }, [tokens, scope, decl.name]);
+  const candidates = useMemo(() => whereCandidates(decl, tokens, scope), [tokens, scope, decl]);
   const names = useMemo(() => [...new Set(candidates.map((c) => c.row.module))], [candidates]);
   const arrived = useLeanModules(names);
   const key = arrived.map((m) => m.module).join(" ");
@@ -472,7 +485,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
     collectLocals(tokens, scope.locals);
     return { statement: buildCode(tokens, decl.line, scope, clause), scope, tokens };
   }, [decl, module, shell.index, shell.terms, lines, statementEnd, clause]);
-  const { bodies: where, pending: wherePending } = useWhere(decl, tokens, scope, shell, compact, clause);
+  const { bodies: where } = useWhere(decl, tokens, scope, shell, compact, clause);
 
   const proof = useMemo(() => {
     if (!showProof || foldLines === 0) return null;
@@ -498,7 +511,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
     if (!rangesKey || quietLines) return;
     const first = root.current?.querySelector<HTMLElement>(".lean-line.is-lit");
     if (first) showLine(first);
-  }, [rangesKey, proof, quietLines, wherePending]);
+  }, [rangesKey, proof, quietLines]);
 
   const parent = (decl as LeanDeclaration & { parent?: string }).parent;
   const Title = depth > 0 ? "h3" : "h2";
@@ -564,10 +577,6 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
       {below}
     </>
   );
-
-  // The block arrives in one step: until the definitions shown under the statement have loaded it
-  // keeps the waiting box, so nothing in it grows and pushes what follows down while it is read.
-  if (wherePending) return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
 
   return (
     <article ref={root} className={`lean-block${compact ? " is-compact" : ""}${row ? " is-row" : ""}${fill ? " is-fill" : ""}${bare ? " is-bare" : ""}`}>
@@ -645,6 +654,23 @@ function useBlockExtras(): boolean {
   return now || ready();
 }
 
+/** Whether every named module has loaded or failed to, so a block waits for its definitions once. */
+function useModulesSettled(names: readonly string[]): boolean {
+  const key = names.join(" ");
+  const [settled, setSettled] = useState<string | null>(() => (names.every((n) => moduleIfLoaded(n)) ? key : null));
+  useEffect(() => {
+    if (names.every((n) => moduleIfLoaded(n))) return setSettled(key);
+    let live = true;
+    void Promise.allSettled(names.map((n) => fetchModule(n))).then(() => live && setSettled(key));
+    return () => {
+      live = false;
+    };
+    // The names are compared through their joined key.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+  return settled === key || names.every((n) => moduleIfLoaded(n));
+}
+
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
 export function LeanBlock({ name, module: moduleName, relation, note, fidelity, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
   const state = useLeanShell();
@@ -652,10 +678,14 @@ export function LeanBlock({ name, module: moduleName, relation, note, fidelity, 
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
   const loaded = useLeanModule(moduleName ?? row?.module);
   const extras = useBlockExtras();
+  const source = loaded.status === "ready" ? loaded.module : undefined;
+  const target = shell && source ? declIn(source, name) : undefined;
+  const wanted = useMemo(() => (shell && source && target ? whereModules(target, source, shell) : []), [shell, source, target]);
+  const whereReady = useModulesSettled(wanted);
   if (state.status === "missing") return <p className="lean-note">This edition does not include the Lean source.</p>;
   if (shell && !row) return <p className="lean-note">No declaration named <code>{name}</code> in this source.</p>;
   if (loaded.status === "failed") return <p className="lean-note">The Lean source for this declaration could not be loaded.</p>;
-  if (!shell || loaded.status !== "ready" || !extras) return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
+  if (!shell || loaded.status !== "ready" || !extras || !whereReady) return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return <p className="lean-note">No declaration named <code>{name}</code> in {loaded.module.module}.</p>;
   return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} fidelity={fidelity} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
