@@ -916,3 +916,107 @@
 .map-pane .lean-line__n {
   opacity: 0.75;
 }
+
+/* ---- Finishing ---------------------------------------------------------------------------------
+   Small corrections seen across the Euler, Navier–Stokes and quartic readers at 1440 and 2560
+   wide, by day and at night. Nothing here changes what a control does. */
+
+/* A display on its topic's tint: lighter, with rounded corners and a little air above and below
+   the mathematics, so a run of numbered equations reads as equations and not as slabs. */
+.paper .math-display.tie[data-tone] {
+  --tie-fill: 4%;
+}
+
+/* A hairline of the topic's colour gives the display an edge, so the faint tint reads as a
+   frame for the equation. Pointing and selecting keep their own marks. */
+.paper .math-display.tie:where([data-tone]) {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--tie-color) 14%, transparent);
+}
+
+/* The ground reaches a little past the text's edges, so an equation's number does not touch
+   the frame; the mathematics keeps the column's full width. */
+.paper .math-display.tie {
+  margin-inline: -6px;
+  padding: 7px 6px 5px;
+  border-radius: 6px;
+}
+
+/* Lean | Graph: one rounded control with the side in view inset, in the manner of the
+   Auto | Manual switch under it, where it had been a square block with a hard divider. */
+.map-pane .mode-toggle {
+  gap: 2px;
+  padding: 2px;
+  border-radius: 8px;
+  background: var(--sunk);
+}
+
+.map-pane .mode-toggle button {
+  min-height: 28px;
+  border-radius: 6px;
+}
+
+.map-pane .mode-toggle button + button {
+  border-left: 0;
+}
+
+.map-pane .mode-toggle button:hover:not([aria-pressed="true"]) {
+  background: var(--surface);
+}
+
+/* The hairline over the comparison runs the width of the card, like the one over the notes;
+   the sentences under it keep their measure. */
+.map-pane .phrase-card.phrase-card--lean > .phrase-card__compare {
+  max-width: none;
+}
+
+.map-pane .phrase-card.phrase-card--lean > .phrase-card__compare > * {
+  max-width: 68ch;
+}
+
+/* The small lines around the Lean source: links with a quiet underline, and room between the
+   actions, what the declaration is, and the code. */
+.map-pane .lean-block__actions {
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
+}
+
+.map-pane :is(.lean-action, .lean-page__quiet) {
+  text-decoration-color: var(--rule-control);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.map-pane .lean-block__relation {
+  max-width: 84ch;
+  margin-top: var(--space-2);
+  line-height: 1.5;
+}
+
+.map-pane .lean-block__relation:has(+ .lean-code),
+.map-pane .lean-block__link:has(+ .lean-code) {
+  margin-bottom: var(--space-2);
+}
+
+.map-pane .tie-origin {
+  max-width: 84ch;
+  margin-top: var(--space-3);
+  line-height: 1.5;
+}
+
+/* The contents column: the key's heading is a small capital label like the pane's, and a
+   family of topics stands a little apart from the next. */
+.outline .phrase-key__head {
+  margin-bottom: var(--space-2);
+  color: var(--ink-3);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.outline .phrase-key__family + .phrase-key__family {
+  margin-top: var(--space-3);
+}
+
+.outline .phrase-key li {
+  line-height: 1.35;
+}
