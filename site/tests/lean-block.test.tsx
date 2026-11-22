@@ -107,6 +107,15 @@ describe("LeanBlock's props", () => {
     expect(actions[1].getAttribute("href")).toBe("https://github.com/o/r/blob/abc/lean/OAI/M.lean#L1-L3");
   });
 
+  it("opens an archived source at its DOI while keeping the exact local lines", async () => {
+    const doi = "https://doi.org/10.5281/zenodo.19081887";
+    const archived = { ...shell, modules: { ...shell.modules, revision: doi, base_url: `${doi}/blob/${doi}/` } };
+    const view = await render(<DeclView decl={main} module={module} shell={archived} compact noTerms noDependencies noPapers />);
+    const actions = Array.from(view.querySelectorAll<HTMLAnchorElement>("a.lean-action"));
+    expect(actions.map((a) => a.textContent)).toEqual(["Whole file", "Source archive"]);
+    expect(actions.map((a) => a.getAttribute("href"))).toEqual(["/lean/?m=OAI.M&file=1-3", doi]);
+  });
+
   it("puts the head and reading line around a scrolling middle when filling", async () => {
     const view = await render(<DeclView decl={main} module={module} shell={shell} compact fill noTerms noDependencies noPapers />);
     expect(view.querySelector(".lean-block.is-compact.is-fill > .lean-block__head")).not.toBeNull();

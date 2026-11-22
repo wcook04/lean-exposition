@@ -268,7 +268,7 @@ def main() -> int:
             f'[paper]\ntitle = {json.dumps(title)}\nshort_title = {json.dumps(title)}\nmarkdown = "paper.md"\n'
             f'url = "{repo}/blob/{commit}/{layer["manuscript"]}"\nauthors = ["AI systems under the direction of Will Cook"]\n'
             f'noun = "{noun}"\nlicence = "Apache-2.0"\n\n[lean]\nproject = {json.dumps(str(q / "lean"))}\n'
-            f'source = "{repo}/tree/{commit}"\nmodules = ["QuarticQuery", "QuarticCorpus"]\n'
+            f'source = "{repo}/tree/{commit}/lean"\nmodules = ["QuarticQuery", "QuarticCorpus"]\n'
             f'scope = "The Quartic project’s Lean, at {commit[:7]}: the QuarticQuery development and the QuarticCorpus statement files. '
             f'Each declaration’s dependencies shown here are Lean’s own report from the compiled modules."\n')
         links = {"passages": [], "topics": topics, "families": [], "plain": {}, "notes": {}, "claims": [], "fidelity": {}, "show_also": []}

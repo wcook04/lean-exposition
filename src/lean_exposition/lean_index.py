@@ -750,10 +750,15 @@ def _source_details(tree, lock):
     details = {"revision": None, "base_url": None,
                "toolchain": toolchain.read_text().strip() if toolchain.is_file() else None}
     if lock:
-        prefix = "lean/" if any(row.get("upstream_path", "").startswith("lean/")
-                                for row in lock.get("files", ())) else ""
         details["revision"] = lock["revision"]
-        details["base_url"] = f"{lock['repository']}/blob/{lock['revision']}/{prefix}"
+        if lock["repository"] == lock["revision"] and lock["revision"].startswith("https://doi.org/"):
+            details["base_url"] = lock["revision"]
+        else:
+            root = lock.get("upstream_lean_root")
+            if root is None:  # Earlier source locks recorded the upstream directory per file.
+                root = "lean" if any(row.get("upstream_path", "").startswith("lean/")
+                                     for row in lock.get("files", ())) else ""
+            details["base_url"] = f"{lock['repository']}/blob/{lock['revision']}/" + (f"{root}/" if root else "")
     return details
 
 

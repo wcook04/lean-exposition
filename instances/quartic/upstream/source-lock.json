@@ -3,6 +3,7 @@
  "id": "quartic",
  "repository": "https://github.com/wcook04/quartic-query-lean",
  "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+ "upstream_lean_root": "lean",
  "via": "wcook04/proof-reader 56ac62feece77bdfd44a211ca2ae92f0916053ca, papers/expert//Volumes/Demo Take Media/aiw-builds/qq-main/lean",
  "license": "NOASSERTION",
  "files": [

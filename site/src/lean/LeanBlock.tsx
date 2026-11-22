@@ -281,13 +281,15 @@ export function CopyName({ name }: { name: string }) {
 /** This file on this site, at this declaration; Back returns from it. GitHub is the quiet second. */
 export function SourceLink({ decl, module, shell }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell }) {
   const path = shell.paths.get(module.module)?.path ?? module.path;
+  const href = leanSourceUrl(shell.modules, path, decl.line, decl.end_line);
+  const archive = href === shell.modules.revision;
   return (
     <>
       <a className="lean-action" href={routeHref({ view: "lean", module: module.module, file: `${decl.line}-${decl.end_line}` })}>
         Whole file
       </a>
-      <a className="lean-action lean-action--quiet" href={leanSourceUrl(shell.modules, path, decl.line, decl.end_line)} target="_blank" rel="noreferrer" title={`${path}, lines ${decl.line} to ${decl.end_line}, at commit ${shell.modules.revision.slice(0, 7)} of OpenAI's repository`}>
-        On GitHub
+      <a className="lean-action lean-action--quiet" href={href} target="_blank" rel="noreferrer" title={`${path}, lines ${decl.line} to ${decl.end_line}${archive ? "" : `, at commit ${shell.modules.revision.slice(0, 7)}`}`}>
+        {archive ? "Source archive" : "On GitHub"}
       </a>
     </>
   );
