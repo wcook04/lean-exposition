@@ -27,18 +27,9 @@ export function ResultComparison({ doc }: { doc: LibraryDocument }) {
       live = false;
     };
   }, [doc, reading]);
-  // A cold link to this section (about/#result-comparison) lands on it once its text is set, after the
-  // sections above it have filled in.
-  useEffect(() => {
-    if (!html || decodeURIComponent(window.location.hash.slice(1)) !== COMPARISON_ANCHOR) return;
-    const land = () => document.getElementById(COMPARISON_ANCHOR)?.scrollIntoView({ block: "start" });
-    requestAnimationFrame(land);
-    const later = window.setTimeout(land, 600);
-    return () => window.clearTimeout(later);
-  }, [html]);
   if (!reading) return null;
   return (
-    <section aria-labelledby="about-result-comparison" aria-busy={!html} id={COMPARISON_ANCHOR}>
+    <section aria-labelledby="about-result-comparison" aria-busy={!html ? "true" : undefined} id={COMPARISON_ANCHOR}>
       <h2 id="about-result-comparison">{reading.label ?? "Result-by-result comparison"}</h2>
       {html && <div className="about__differences" dangerouslySetInnerHTML={{ __html: html }} />}
     </section>

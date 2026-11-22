@@ -1,6 +1,6 @@
 // About one library paper: who wrote it, where it comes from, how the links were made and
 // that no mathematician has reviewed them. Every sentence about the paper is its data's.
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Route } from "../../app/router";
 import { routeHref } from "../../app/router";
 import { Out } from "../../app/Out";
@@ -29,12 +29,45 @@ import "../../reader/reader-content.css";
 import "../../reader/about.css";
 
 export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> }) {
+  const page = useRef<HTMLElement>(null);
+  // An address with a section in it (about/#result-comparison) lands there once. Several sections fill
+  // in after first paint (the differences, the Comparator receipts, the comparison), so the page is
+  // held undrawn, in place, until it has stopped growing and the section is filled, then shown at the
+  // section: it never shows the top and then jumps.
   useEffect(() => {
-    if (route.anchor) requestAnimationFrame(() => document.getElementById(route.anchor!)?.scrollIntoView({ block: "start" }));
+    const anchor = route.anchor;
+    const root = document.documentElement;
+    if (!anchor || !page.current) return;
+    root.classList.add("about-landing");
+    let height = -1;
+    let still = 0;
+    let done = false;
+    const land = () => {
+      if (done) return;
+      done = true;
+      window.clearInterval(watch);
+      window.clearTimeout(cap);
+      document.getElementById(anchor)?.scrollIntoView({ block: "start" });
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("about-landing")));
+    };
+    const watch = window.setInterval(() => {
+      const target = document.getElementById(anchor);
+      const now = page.current?.offsetHeight ?? 0;
+      still = now === height ? still + 1 : 0;
+      height = now;
+      if (target && target.getAttribute("aria-busy") !== "true" && still >= 3) land();
+    }, 100);
+    const cap = window.setTimeout(land, 2500);
+    return () => {
+      done = true;
+      window.clearInterval(watch);
+      window.clearTimeout(cap);
+      root.classList.remove("about-landing");
+    };
   }, [route.anchor]);
   const up = PAPER.source.upstream;
   return (
-    <article className="about">
+    <article className="about" ref={page}>
       <header className="about__intro">
         <h1>{PAPER.title}</h1>
         <p>By {PAPER.authors.join(", ")}.</p>
