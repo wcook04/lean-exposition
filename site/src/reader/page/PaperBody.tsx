@@ -11,6 +11,7 @@ import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { renderTex } from "../math";
 import { mountFigures } from "../mount";
+import { checksMentionedBy, LaterCheckNote } from "../../lean/ours";
 import { breakForms, splitDisplay } from "../texBreaks";
 import { useReferences } from "./RefInset";
 import { DESKTOP_MEASURE, estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
@@ -405,6 +406,9 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
   const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
   const records = useMemo(() => passageRecords(passage), [passage]);
   const mapped = !!anchor && records.length > 0;
+  // A later check this passage mentions (a library paper's checks, read before the first render), shown
+  // after it from the start, so the part never grows once it is on the page.
+  const checks = useMemo(() => (part.blank ? [] : checksMentionedBy(doc.renderPlain(part.index).html.replace(/<[^>]*>/g, " "))), [part, doc]);
 
   useLayoutEffect(() => {
     if (!html || !rendered || !textRef.current) return;
@@ -445,6 +449,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
       ) : (
         <div className="part__placeholder" style={{ height: reserved }} aria-hidden="true" />
       )}
+      {checks.map((check) => <LaterCheckNote key={check.constant} check={check} />)}
     </section>
   );
 });
@@ -496,8 +501,10 @@ function formsFor(box: HTMLElement): Forms {
   const display = box.querySelector<HTMLElement>(":scope > .katex-display");
   const tex = box.querySelector('.katex-mathml annotation[encoding="application/x-tex"]')?.textContent ?? "";
   const tags = display ? display.querySelectorAll(".katex-tag, .tag") : [];
-  const single = tags.length === 1 && (tex.match(/\\tag\b/g) ?? []).length === 1 && !!splitDisplay(tex).tag;
-  if (single && !box.querySelector(":scope > .math-number")) {
+  // The engine sets a plain number up already (engine.ts); one with markup is set up here.
+  const set = !!box.querySelector(":scope > .math-number");
+  const single = set || (tags.length === 1 && (tex.match(/\\tag\b/g) ?? []).length === 1 && !!splitDisplay(tex).tag);
+  if (single && !set) {
     const number = document.createElement("span");
     number.className = "katex math-number";
     number.textContent = (tags[0].textContent ?? "").replace(/[​\s]+/g, "");

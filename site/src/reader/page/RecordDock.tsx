@@ -22,6 +22,7 @@ import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
 import { assessmentsOf, declLight, dockDecl, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
+import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
 
@@ -195,16 +196,16 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   // What the card and the places above the Lean read from: until they have arrived the column holds
   // one waiting box, so the card, the places and the Lean come in together rather than one under
   // another, each pushing the next down while the reader looks.
-  const [settled, setSettled] = useState(() => alignment !== null && aidsArrived());
+  const [settled, setSettled] = useState(() => alignment !== null && aidsArrived() && oursArrived());
   useEffect(() => {
     if (settled) return;
     let live = true;
-    void Promise.all([paperAlignmentResource(stage), loadAids()]).then(() => live && setSettled(true));
+    void Promise.all([paperAlignmentResource(stage), loadAids(), loadOurs()]).then(() => live && setSettled(true));
     return () => {
       live = false;
     };
   }, [settled, stage]);
-  const holding = (!!tie?.rows && notes === undefined) || (!settled && alignment === null) || !aidsArrived();
+  const holding = (!!tie?.rows && notes === undefined) || (!settled && alignment === null) || !aidsArrived() || !oursArrived();
   const rows = useMemo(() => {
     // A statement with no Lean has none, whatever its step has elsewhere.
     if (tie && !tie.lean) return [];
@@ -428,6 +429,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   mainResult={ties.index.main_result}
                 />
               )}
+              {phrase && open.tie !== null && <OurStatements phrase={ties.index.ties[open.tie]?.phrase} />}
               {phrase && row && crumbs}
               <LazyLeanBlock
                 key={`${row?.module ?? open.declModule ?? ""}:${name}`}

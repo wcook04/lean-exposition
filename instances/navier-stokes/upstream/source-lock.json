@@ -6642,6 +6642,11 @@
    "bytes": 3732
   },
   {
+   "path": "upstream/lean/Breakdown/FracCell/FarSupportZeroExtension.lean",
+   "sha256": "5dbdb22d79dcb4457f62ccaecfd972954ea1c88de863520fb0ff1fd113e71127",
+   "bytes": 4836
+  },
+  {
    "path": "upstream/lean/Breakdown/FracCell/FieldJointSmooth.lean",
    "sha256": "da01cffec1e32864474df41365874f101fa37cafd6186d31e86557ff6770892a",
    "bytes": 15831
@@ -6695,6 +6700,11 @@
    "path": "upstream/lean/Breakdown/FracCell/FormulaFar.lean",
    "sha256": "d8821c07917162a169b3c9e2803d1be6fb39f36519f537b6a9e4e03aa8590b94",
    "bytes": 3955
+  },
+  {
+   "path": "upstream/lean/Breakdown/FracCell/FormulaModeRestriction.lean",
+   "sha256": "a089184e767b468db9eebd3298bdede370e24227aec46158a436b72b0f151b26",
+   "bytes": 8847
   },
   {
    "path": "upstream/lean/Breakdown/FracCell/FormulaNear.lean",
@@ -8015,6 +8025,11 @@
    "path": "upstream/lean/Breakdown/FracCell/RowCouplingSquare.lean",
    "sha256": "eff6d87503ed1e47fc31ddcdbb3816ba45d5fbb51496782ca45585dc24bd166a",
    "bytes": 1459
+  },
+  {
+   "path": "upstream/lean/Breakdown/FracCell/RowDegreeIndependence.lean",
+   "sha256": "e1497cfa9a4e9478a875243fe38ee8ce037042928681ca0a98dbf380679cfc14",
+   "bytes": 10708
   },
   {
    "path": "upstream/lean/Breakdown/FracCell/RowFacePolynomial.lean",

@@ -12,7 +12,18 @@ rm -rf "build/$paper-edition"
 # beside each phrases file (alignment/colours-<slot>.json); this keeps them current.
 node site/scripts/topic-colours.ts
 "$LX" validate "$I/evidence-graph.json" > /dev/null
-"$LX" check-alignment "$I/alignment" --lean-tree "$I/upstream/lean" --graph "$I/evidence-graph.json" \
+# The paper's three accounts are checked and exported here; its companion documents (phrases-<page>.json)
+# each get an edition of their own below (build_companion_editions.py).
+A="build/$paper-alignment-main"
+rm -rf "$A" && mkdir -p "$A"
+for f in "$I"/alignment/*; do
+  case "$(basename "$f")" in
+    phrases-*|references-*|colours-*) stage=$(basename "$f" .json); stage=${stage#*-}
+      case "$stage" in long|short|expository) cp "$f" "$A/";; esac;;
+    *) cp "$f" "$A/";;
+  esac
+done
+"$LX" check-alignment "$A" --lean-tree "$I/upstream/lean" --graph "$I/evidence-graph.json" \
   --paper long $(pair long | cut -d' ' -f1) --paper short $(pair short | cut -d' ' -f1) --paper expository $(pair expository | cut -d' ' -f1) > "build/$paper-alignment.json"
 "$LX" assemble "$I/evidence-graph.json" --long $(pair long) --short $(pair short) --expository $(pair expository) --out "build/$paper-edition" > /dev/null
 # The Lean index the reader shows: the text scan with Lean's own dependencies, where the paper has them.
@@ -22,7 +33,13 @@ if [ -f "$I/generated/lean-facts.json" ]; then
   LEAN_TREE="build/$paper-lean-index.json"
 fi
 "$PY" scripts/check_instance.py "$paper" "$LEAN_TREE"
-"$PY" site/scripts/export-static.py "build/$paper-edition" --lean-tree "$LEAN_TREE" --alignment "$I/alignment"
+"$PY" site/scripts/export-static.py "build/$paper-edition" --lean-tree "$LEAN_TREE" --alignment "$A"
+if grep -q '"kind": "companion"' "$I/instance.json"; then
+  # Companion editions are kept between builds (build/<paper>-companion-editions) and rebuilt only when
+  # their inputs change; the export above starts site/public/edition afresh, so they are copied in.
+  "$PY" scripts/build_companion_editions.py "$paper" "$LEAN_TREE" "build/$paper-companion-editions" --jobs "${COMPANION_JOBS:-3}"
+  cp -R "build/$paper-companion-editions/docs" site/public/edition/
+fi
 # The phrases placed on the authors' PDF, for the reader's PDF view (needs poppler's pdftotext).
 rm -rf site/public/pdf-marks
 for slot in long short expository; do
@@ -55,8 +72,14 @@ for address in results:
 pages = [d for d in inst["documents"] if not d.get("main") and d.get("slug")]
 for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
-    (dist / doc["slug"] / "index.html").write_text((dist / "read" / doc["slot"] / "index.html").read_text())
-print(f"static addresses: / and {len(results)} results and {len(pages)} pages")
+    shell_of = dist / "read" / doc["slot"] / "index.html"
+    (dist / doc["slug"] / "index.html").write_text((shell_of if shell_of.is_file() else dist / "404.html").read_text())
+# A page that moved (moved_pages) is served as its new page's shell; the reader then shows the new address.
+slugs = {doc["slug"] for doc in pages}
+for old, row in inst.get("moved_pages", {}).items():
+    (dist / old).mkdir(exist_ok=True)
+    (dist / old / "index.html").write_text((dist / row["to"] / "index.html").read_text() if row["to"] in slugs else shell)
+print(f"static addresses: / and {len(results)} results and {len(pages)} pages and {len(inst.get('moved_pages', {}))} moved")
 PYEOF
 # Put back the tracked placeholder that library-instance.mjs replaced.
 git checkout -- site/src/instances/library/current.json 2>/dev/null || true

@@ -122,12 +122,22 @@ const site = {
   },
   regionTitles: {},
   paperNames,
-  stages: PAPER.documents.map((d) => d.slot),
+  // The reader's accounts; companion documents are listed apart (library.companions), by group.
+  stages: PAPER.documents.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
   readingAids: PAPER.reading_aids,
-  library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])), guide: PAPER.documents.find((d) => !d.main && d.noun === "guide")?.slot },
+  library: {
+    paper: PAPER.id,
+    main: MAIN.slot,
+    pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
+    companions: PAPER.documents
+      .filter((d) => d.kind === "companion")
+      .map((d) => ({ slot: d.slot, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
+      .sort((a, b) => a.order - b.order),
+    guide: PAPER.documents.find((d) => !d.main && d.noun === "guide")?.slot,
+  },
   recordKind,
   leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
   levelGoals: null,

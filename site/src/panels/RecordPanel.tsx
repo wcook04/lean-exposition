@@ -476,7 +476,7 @@ function PaperSlices({
   const present = LENS_ORDER.filter((s) => aligned.statements.some((a) => a.paper === s));
   // The entry owns the tab, per record, so Back returns to it and a new record starts fresh.
   const [chosen, setChosen] = useEntryState<Stage | null>(`paper-tab:${resetKey}`, null);
-  const stage = chosen ?? (first && present.includes(first) ? first : present[0]);
+  const stage = chosen ?? (first && (present as readonly string[]).includes(first) ? first : present[0]);
   const slices = aligned.statements.filter((a) => a.paper === stage).sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role));
   return (
     <>

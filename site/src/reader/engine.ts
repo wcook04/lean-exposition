@@ -23,6 +23,7 @@ import {
 } from "./math";
 import { equationId, figureId, labelIds, linkReferences, markReferences, referenceIndex, stripRefMarks, type RefIndex, type ReferenceTable } from "./references";
 import { sanitizeHtml } from "./sanitize";
+import { plainNumber } from "./texBreaks";
 import { clearTexBlocks, hasMarks, isMarkCode, MARK, markSource, segmentsIn, stripMarks, wrapTies, type TieSegment } from "./ties";
 
 export { byteOffsetOf };
@@ -747,11 +748,25 @@ function renderTokens(
     if (r.error) mathErrors.push({ tex: span.tex, message: r.error });
     return r.html;
   };
+  // A display with one plain equation number carries it as its own element beside the formula
+  // from the start (PaperBody.tsx, formsFor), so fitting never changes its layout after it paints.
+  const display = (n: string) => {
+    const html = typeset(n);
+    const number = plainNumber(st.spans[Number(n)]?.tex ?? "");
+    if (!number || (html.match(/class="tag"/g) ?? []).length !== 1) return { attr: "", html };
+    return { attr: ' data-number=""', html: `${html}<span class="katex math-number">${esc(number)}</span>` };
+  };
   html = html.replace(
     new RegExp(`<p${LINE_ATTR}>${MARKS}${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}${MARKS}</p>`, "g"),
-    (_m, line: string | undefined, before: string, n: string, after: string) => `${before}<div class="math-display"${equationAttr(n)}${line ? ` data-line="${line}"` : ""}>${typeset(n)}</div>${after}`,
+    (_m, line: string | undefined, before: string, n: string, after: string) => {
+      const d = display(n);
+      return `${before}<div class="math-display"${equationAttr(n)}${line ? ` data-line="${line}"` : ""}${d.attr}>${d.html}</div>${after}`;
+    },
   );
-  html = html.replace(new RegExp(`${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`, "g"), (_m, n: string) => `<span class="math-display"${equationAttr(n)}>${typeset(n)}</span>`);
+  html = html.replace(new RegExp(`${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`, "g"), (_m, n: string) => {
+    const d = display(n);
+    return `<span class="math-display"${equationAttr(n)}${d.attr}>${d.html}</span>`;
+  });
   // Punctuation directly after inline math stays on the formula's line.
   html = html.replace(
     new RegExp(`${INLINE_OPEN}(\\d+)${INLINE_CLOSE}${MARKS}([.,;:!?)\\]\u2019\u201d]+)?`, "g"),
