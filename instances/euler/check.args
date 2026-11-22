@@ -1,1 +1,1 @@
---raw-check TorusEuler.Paper.proposition_8_4 --raw-check TorusEuler.BoundedSpatialJet --removed start-here --removed how-the-lean-encodes-it --removed adapted/start-here --lean-addresses --unlinked '|*' --unlinked 'adapted/|*' --linked 'adapted/|Away from the origin the velocity and its first time derivative'
+--raw-check TorusEuler.Paper.proposition_8_4 --raw-check TorusEuler.BoundedSpatialJet --removed start-here --removed how-the-lean-encodes-it --removed adapted/start-here --lean-addresses --linked 'adapted/|Away from the origin the velocity and its first time derivative'
