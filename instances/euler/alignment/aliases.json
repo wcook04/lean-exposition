@@ -9,7 +9,10 @@
   "e01.theorem.terminal-bounds": "r5-root-theorem11-complete",
   "e01.theorem.off-origin-limits": "r5-root-theorem11-complete",
   "sec4.inverse-existence": "sec4.inverse-hypothesis",
-  "p5.1.field-hypothesis": "p5.1.polynomial-coefficients"
+  "p5.1.field-hypothesis": "p5.1.polynomial-coefficients",
+  "e03-r2-appb-kernel-mass": "e03-r2-appb-taylor-remainder",
+  "e03-appb-kernel-moments": "e03-r2-appb-taylor-remainder",
+  "e03-appb-moment-scale": "e03-r2-appb-taylor-remainder"
  },
  "retired": {
   "r2-s7-pressure-input": {

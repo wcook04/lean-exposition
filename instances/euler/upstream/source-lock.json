@@ -3,7 +3,7 @@
  "id": "euler",
  "repository": "https://github.com/mcoiculescu/EulerBlowupPublic",
  "revision": "fd3a1588967810b9abe42a1dcf46ee662d6434e2",
- "via": "wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139, papers/euler/lean",
+ "via": "wcook04/proof-reader 0a556ace755b1d2f7e94797267e2b1f9781dfec3, papers/euler/lean",
  "license": "NOASSERTION",
  "files": [
   {
