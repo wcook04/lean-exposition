@@ -1,0 +1,40 @@
+{
+ "schema": "adapted-edition/1",
+ "published": true,
+ "document": {
+  "id": "adapted",
+  "slot": "adapted",
+  "slug": "adapted",
+  "kind": "companion",
+  "adapted": true,
+  "of": "paper",
+  "title": "Finite-time blow-up for the Navier–Stokes equations",
+  "noun": "adapted edition",
+  "group": "edition",
+  "group_title": "Adapted edition",
+  "order": 0,
+  "credit": "An adapted edition of Alpöge and Buckmaster's paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the authors'. Every change is marked, and no change has been reviewed by the authors.",
+  "published": true,
+  "pdf": {
+   "file": "paper.pdf",
+   "name": "adapted-edition-marked.pdf",
+   "label": "PDF with changes marked",
+   "sha256": "318915b23ccef5b5d3cd085b03f91f3b18121c8b19fa7b279270e4273804ecb3",
+   "bytes": 1243421
+  },
+  "reading_pdf": {
+   "file": "reading.pdf",
+   "name": "navier-stokes-adapted-v1.pdf",
+   "bytes": 1158802,
+   "sha256": "6dbaa21266a7be9810534a3843b7b6183a632f5efdb7a0e55a19990972d22789"
+  },
+  "release": {
+   "version": 1,
+   "date": "2026-11-22",
+   "notes": [
+    "The similarity-variable calculation explains the exponent in the physical gradient rate. The whole-space argument cuts off the initial data. The torus argument also controls the residual throughout the evolution.",
+    "The certificate construction identifies where the auxiliary force vanishes. The comparison gives the strengthened hypotheses of the checked whole-space theorem and records which quantities it estimates."
+   ]
+  }
+ }
+}
