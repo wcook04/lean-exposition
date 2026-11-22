@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "id": "contextual-embeddings",
  "repository": "https://doi.org/10.5281/zenodo.19081887",
- "revision": "",
+ "revision": "https://doi.org/10.5281/zenodo.19081887",
  "via": "wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139, papers/contextual-embeddings/lean",
  "license": "NOASSERTION",
  "files": [

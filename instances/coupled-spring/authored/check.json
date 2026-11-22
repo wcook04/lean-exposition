@@ -1,0 +1,9 @@
+{
+ "not_joined": {
+  "coupled-spring.claim-global-minimum": "The global minimum is proved by a supplementary Lean check written for this page, not in PhyslibAlpha; the local-minimum theorem does not use it.",
+  "coupled-spring.claim-cubic-local-not-global": "The cubic perturbation is a supplementary Lean check written for this page, not in PhyslibAlpha; the local-minimum theorem does not use it."
+ },
+ "no_uses": {
+  "coupled_spring_potential": "Its statement writes out the polynomial and IsLocalMin, which are Mathlib's; it uses no declaration of the project."
+ }
+}

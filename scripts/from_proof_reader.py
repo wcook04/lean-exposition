@@ -627,8 +627,10 @@ def main() -> None:
     src = toml["lean"].get("source", "")
     m = re.match(r"https://github.com/([^/]+/[^/]+)/tree/([0-9a-f]{40})", src)
     upstream_repo, upstream_rev = (f"https://github.com/{m.group(1)}", m.group(2)) if m else (src, "")
+    # A source that is not a pinned git tree (an archive DOI) is its own revision.
+    revision = upstream_rev or src
     write(out / "upstream/source-lock.json", dumps({
-        "schema_version": "1.0", "id": args.paper, "repository": upstream_repo, "revision": upstream_rev,
+        "schema_version": "1.0", "id": args.paper, "repository": upstream_repo, "revision": revision,
         "via": f"wcook04/proof-reader {args.source_commit}, papers/{page.name}/{toml['lean']['project']}",
         "license": "NOASSERTION", "files": locked,
         # The modules the page reads: their top-level directories, and top-level module files such as Solution.
@@ -714,6 +716,7 @@ def main() -> None:
         aliases.setdefault(old_id, aliases.get(new_id, new_id))
         retired.pop(old_id, None)
     overrides = json.loads(args.titles.read_text())["titles"] if args.titles else {}
+    result_titles = json.loads(args.titles.read_text()).get("results", {}) if args.titles else {}
     named = sorted({row["name"] for t in ties for row in t["lean"]})
     back = {}
     for name in links["plain"]:
@@ -845,7 +848,10 @@ def main() -> None:
             elif row["fidelity"] != "same":
                 row["fidelity_note"] = "The source records this verdict without a note."
             rows.append(row)
-        short = c["title"] if words(c["title"]) <= 6 else c["title"].split(":")[0].strip()
+        # A result titled in words longer than six takes its authored short title (--titles "results").
+        short = result_titles.get(c["id"]) or (c["title"] if words(c["title"]) <= 6 else c["title"].split(":")[0].strip())
+        if words(short) > 6:
+            raise SystemExit(f"result {address} ({c['id']}): its title has {words(short)} words; give a short one in --titles under \"results\"")
         batch[f"{args.paper}.{address}"] = {slot: short, "lean": rows,
                                              "statements": [{"paper": slot, "role": "statement", "from": first, "to": last,
                                                              "origin": "ai"}]}
@@ -868,7 +874,7 @@ def main() -> None:
     sources["paper"] = {"id": "paper", "kind": "file", "url": toml["paper"].get("url", upstream_repo),
                         "revision": upstream_rev or args.source_commit, "license": "NOASSERTION",
                         "redistribution": "reference_only", "sha256": sha(paper_md)}
-    sources["upstream"] = {"id": "upstream", "kind": "repository", "url": upstream_repo, "revision": upstream_rev,
+    sources["upstream"] = {"id": "upstream", "kind": "repository", "url": upstream_repo, "revision": revision,
                            "license": "NOASSERTION", "redistribution": "reference_only"}
     sources["proof_reader"] = {"id": "proof_reader", "kind": "repository", "url": "https://github.com/wcook04/proof-reader",
                                "revision": args.source_commit, "license": "MIT", "redistribution": "reference_only"}
@@ -898,7 +904,7 @@ def main() -> None:
                 lp = f"upstream/lean/{path}"
                 sid = "lean:" + path
                 sources[sid] = {"id": sid, "kind": "file", "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}",
-                                "revision": upstream_rev, "license": "NOASSERTION", "redistribution": "vendored",
+                                "revision": revision, "license": "NOASSERTION", "redistribution": "vendored",
                                 "sha256": locked_by_path[lp]["sha256"], "path": lp}
                 dcid = f"cite.{did}"
                 citations[dcid] = {"id": dcid, "title": target, "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}#L{d['line']}",
@@ -925,7 +931,7 @@ def main() -> None:
         if did in nodes:
             return did
         lp, sid = f"upstream/lean/{path}", "lean:" + path
-        sources[sid] = {"id": sid, "kind": "file", "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}", "revision": upstream_rev,
+        sources[sid] = {"id": sid, "kind": "file", "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}", "revision": revision,
                         "license": "NOASSERTION", "redistribution": "vendored", "sha256": locked_by_path[lp]["sha256"], "path": lp}
         dcid = f"cite.{did}"
         citations[dcid] = {"id": dcid, "title": target, "url": f"{upstream_repo}/blob/{upstream_rev}/lean/{path}#L{d['line']}",

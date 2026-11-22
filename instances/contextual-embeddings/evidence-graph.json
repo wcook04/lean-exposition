@@ -10,7 +10,7 @@
    "id": "lean:CE.lean",
    "kind": "file",
    "url": "https://doi.org/10.5281/zenodo.19081887/blob//lean/CE.lean",
-   "revision": "",
+   "revision": "https://doi.org/10.5281/zenodo.19081887",
    "license": "NOASSERTION",
    "redistribution": "vendored",
    "sha256": "413610454511548fedd68a73f2b0d7d4e1708e8d98a24cca6cdf8b31ee476ec4",
@@ -37,7 +37,7 @@
    "id": "upstream",
    "kind": "repository",
    "url": "https://doi.org/10.5281/zenodo.19081887",
-   "revision": "",
+   "revision": "https://doi.org/10.5281/zenodo.19081887",
    "license": "NOASSERTION",
    "redistribution": "reference_only"
   }

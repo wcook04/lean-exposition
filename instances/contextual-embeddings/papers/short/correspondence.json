@@ -4,7 +4,7 @@
  "state": "draft",
  "path": "papers/short.md",
  "content_sha256": "dd4ef7bee6fd085e9cc66291a4488f69f1a308ed77409570f1cdd8acf8df3a8d",
- "graph_sha256": "be51321b6f576692295def31c90a677821fe95adcfcafde6caa77e893edf3506",
+ "graph_sha256": "6e23f60691d74842d1bc9f196768fe526e9838a3c873c5ce428cd02ab9805c9d",
  "selected_goal_ids": [
   "contextual-embeddings.claim-isomorphism"
  ],

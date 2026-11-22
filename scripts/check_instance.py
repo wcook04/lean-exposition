@@ -33,11 +33,16 @@ def main() -> int:
     goal_lean = [e["to"][len("lean."):] for e in graph["edges"] if e["from"] == goal and e["kind"] == "formalizes"]
     if not goal_lean:
         problems.append(f"the main result {goal} has no Lean on the map")
-    for name in goal_lean:
-        d = rows.get(name, {})
-        uses = d.get("statement_uses", d.get("uses", []))
-        if not uses:
-            problems.append(f"the main result's Lean {name} has no statement uses")
+    # A document that numbers no results has itself as the map's root (`<paper>.document`), linked to all
+    # the Lean its passages state; some of that is plain data with no uses, so one with uses is enough.
+    authored = json.loads((root / "authored/check.json").read_text()) if (root / "authored/check.json").is_file() else {}
+    lacking = [n for n in goal_lean if not rows.get(n, {}).get("statement_uses", rows.get(n, {}).get("uses", []))
+               and n not in authored.get("no_uses", {})]
+    if goal.endswith(".document"):
+        if goal_lean and len(lacking) == len(goal_lean):
+            problems.append(f"none of the Lean the document's root links has statement uses")
+    else:
+        problems += [f"the main result's Lean {name} has no statement uses" for name in lacking]
     # Every numbered result the main result uses: following the map's edges in the direction of use
     # (a result to its Lean, a declaration to what it uses), from the main result. A result is joined
     # when the main result reaches it this way, or reaches any declaration it states.

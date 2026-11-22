@@ -4,7 +4,7 @@
  "state": "scaffold",
  "path": "papers/long.md",
  "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
- "graph_sha256": "be51321b6f576692295def31c90a677821fe95adcfcafde6caa77e893edf3506",
+ "graph_sha256": "6e23f60691d74842d1bc9f196768fe526e9838a3c873c5ce428cd02ab9805c9d",
  "selected_goal_ids": [
   "contextual-embeddings.claim-isomorphism"
  ],
