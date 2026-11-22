@@ -3057,7 +3057,7 @@
       "from_text_sha256": "7284cee4321d7cd96f17911285d5ffebcf7d05f0a96869845eaf1a0c7e5ef14f",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
+      "to_text_sha256": "e2d7bfc49c511f0ab6dbc1878e1dea86eebb9a8e898a11f73e19891dd43b3630",
       "kind": "expands",
       "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
     },
@@ -3066,7 +3066,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "815957118f95b32c607248c491410635fe8775d2eb921044dffa43271b3d6d12",
+      "to_text_sha256": "e2d7bfc49c511f0ab6dbc1878e1dea86eebb9a8e898a11f73e19891dd43b3630",
       "kind": "expands",
       "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps."
     },

@@ -1,0 +1,306 @@
+{
+ "schema": "library-instance/1",
+ "id": "erdos-257",
+ "title": "Which sums of 1/(2ⁿ − 1) are irrational?",
+ "short_title": "Erdős problem #257",
+ "authors": [
+  "Will Cook"
+ ],
+ "venue": "Three papers on Erdős problem #257, from wcook04/plectis-erdos at a501de9",
+ "credit_lines": [
+  "Made by Will Cook using AI. He built and directed the research; AI agents did most of the research, the drafting and the Lean, and no independent mathematician has reviewed the papers"
+ ],
+ "companion_credit": "Made by Will Cook using AI; no independent mathematician has reviewed the papers.",
+ "licence": "CC-BY-4.0 for the papers (the source repository's REUSE.toml: 2026 Will Cook) and Apache-2.0 for the Lean; the reading copies are offered under CC-BY-4.0 with that attribution",
+ "host": "Read here in Will Cook's reading library.",
+ "review": "The links from the papers to the Lean, the plain titles, the reading notes and the comparisons were made with AI. No mathematician has reviewed them.",
+ "source": {
+  "upstream": {
+   "repository": "https://github.com/wcook04/plectis-erdos",
+   "commit": "a501de956765730ba4e6c9ad284e6d65855d533a",
+   "paper": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos-257-mersenne-support-subseries.pdf"
+  },
+  "lean_scope": "The Lean is Will Cook's, from wcook04/plectis-erdos at 3368d1e, vendored here unchanged. The reading copies are transcribed from the published text at a501de9 by a program, which compares every word with the source and typesets every formula. The PDFs are the published files, unchanged."
+ },
+ "documents": [
+  {
+   "id": "short",
+   "slot": "short",
+   "slug": "",
+   "title": "Short paper",
+   "noun": "paper",
+   "main": true,
+   "pdf": {
+    "file": "paper.pdf",
+    "name": "short-paper.pdf",
+    "alias": "short/paper.pdf",
+    "url": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos-257-mersenne-support-subseries.pdf"
+   },
+   "job": "Irrationality criteria for Lambert subseries: the three criteria with their proofs, the comparison of their classes, and the limits of the method.",
+   "reader": "Written for readers who know analytic number theory. Made by Will Cook using AI."
+  },
+  {
+   "id": "record",
+   "slot": "long",
+   "slug": "record",
+   "title": "Long record",
+   "noun": "record",
+   "pdf": {
+    "file": "paper.pdf",
+    "name": "long-record.pdf",
+    "alias": "long/reasoning-record.pdf",
+    "url": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos257-mersenne-reasoning-surface.pdf"
+   },
+   "job": "Reciprocal Mersenne Subseries: detailed proofs, computations, attempted approaches and the obstructions they met.",
+   "reader": "Written so that a reader can examine any single step. Made by Will Cook using AI."
+  },
+  {
+   "id": "exposition",
+   "slot": "expository",
+   "slug": "exposition",
+   "title": "Exposition",
+   "noun": "exposition",
+   "pdf": {
+    "file": "paper.pdf",
+    "name": "exposition.pdf",
+    "alias": "expository/main.pdf",
+    "url": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos257-expository-sums-never-fractions.pdf"
+   },
+   "job": "Why certain sums of 1/(2ⁿ − 1) are irrational: the reciprocal-summable case at base two, built from a worked example with doubling exponents.",
+   "reader": "Written for readers new to irrationality proofs. It starts from fractions. Made by Will Cook using AI."
+  }
+ ],
+ "levels": [
+  "expository",
+  "short",
+  "long"
+ ],
+ "families": [],
+ "topics": [
+  {
+   "id": "setup",
+   "name": "The series and its displacement",
+   "description": "The selected exponents, their convergent sum, and the positive error used to contradict rationality.",
+   "family": null
+  },
+  {
+   "id": "weighted",
+   "name": "Weighted summability",
+   "description": "One fixed finite prime set discounts exponents with large selected prime powers and gives hereditary irrationality.",
+   "family": null
+  },
+  {
+   "id": "cover",
+   "name": "Positive divisor covers",
+   "description": "Positive sums of divisibility indicators control finite divisor counts and their shifted tails.",
+   "family": null
+  },
+  {
+   "id": "mixed",
+   "name": "A common index",
+   "description": "A shared finite mean gives one observation index controlling both the weighted and cover errors.",
+   "family": null
+  },
+  {
+   "id": "comparison",
+   "name": "Comparing the support conditions",
+   "description": "Separating supports, logarithmic lower bounds, scalar minimization, and the costs of divisor covers.",
+   "family": null
+  },
+  {
+   "id": "boundaries",
+   "name": "Limits of small displacements",
+   "description": "Known irrationality results and coefficient obstructions show what the sufficient criteria do not decide.",
+   "family": null
+  },
+  {
+   "id": "finite-period",
+   "name": "Finite sums and denominator periods",
+   "description": "The reduced denominator of a finite sum retains the least common multiple of its selected exponents.",
+   "family": null
+  },
+  {
+   "id": "membership",
+   "name": "Greedy remainders and membership",
+   "description": "Achievement sets, divisor-count compatibility, and the actual greedy sequence determine whether a target is represented.",
+   "family": null
+  },
+  {
+   "id": "approximation",
+   "name": "Finite approximations to rational values",
+   "description": "Integer quotient rows and finite supports give conditional representation criteria at unbounded depths.",
+   "family": null
+  }
+ ],
+ "topic_order": [
+  "setup",
+  "weighted",
+  "cover",
+  "mixed",
+  "comparison",
+  "boundaries",
+  "finite-period",
+  "membership",
+  "approximation"
+ ],
+ "goal": "short.res-reciprocal-support",
+ "main_lean": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+ "figures": {
+  "fig:cycle-mean": {
+   "slot": "expository",
+   "file": "cycle-mean.svg"
+  }
+ },
+ "about": [
+  {
+   "heading": "The question",
+   "paragraphs": [
+    "Erdős asked whether $\\sum_{a\\in A}1/(2^a-1)$ is irrational for every infinite set $A$ of positive integers. The question is open. The papers here prove that the sum is irrational when $A$ satisfies a weighted summability condition, when $A$ has a summable divisor cover, and when $A$ lies in the union of a set of each kind. Each result holds with any integer $b\\ge2$ in place of $2$. The simplest case is the one Erdős stated in 1968: every infinite $A$ with $\\sum_{a\\in A}1/a<\\infty$.",
+    "Erdős proved the case of all positive integers in 1948, and in 1968 the case of pairwise coprime sets with finite reciprocal sum, remarking without details that coprimality could be removed. Duverney and Tachiya proved the squarefree case, and Tao and Teräväinen the case of the primes."
+   ]
+  },
+  {
+   "heading": "What was asked, what is proved and what stays open",
+   "paragraphs": [
+    "Is $X_A(2)=\\sum_{a\\in A}1/(2^a-1)$ irrational for every infinite set $A$ of positive integers? This is Erdős problem #257. Yes when $\\sum_{a\\in A}1/a$ is finite, at every integer base $b\\ge2$ (short paper, Theorem A.1). Erdős stated this in 1968 without details. More generally, yes when $\\sum_{a\\in A}h(a)/\\bigl(a(2^{h(a)}-1)\\bigr)$ is finite, where $h(a)$ is the part of $a$ built from a fixed finite set of primes (Theorem 1.2). Some sets with finite weighted sum have divergent $\\sum_{a\\in A}1/a$. Arbitrary infinite $A$ stays open: the conditions are sufficient, and none of them characterises the sets in the problem.",
+    "Does the joint divisibility of the exponents give irrationality where the weighted condition fails? Yes. If $A$ lies in a union of finite sets $F_j$ for which fractional powers of the divisor counts are bounded by positive divisor sums of summable total cost, then $X_A(b)$ is irrational for every integer $b\\ge2$ (Theorem 3.1). Neither condition implies the other (Proposition 5.1), and they combine: every infinite subset of $E\\cup V$, with $E$ of the first kind and $V$ of the second, has an irrational sum (Theorem 4.1). Corollary 5.2 exhibits a set that lies in neither class and needs the combined theorem. It has no Lean proof at the revision this reader pins.",
+    "Is a prescribed rational number, such as $1/2$ or $1/21$, equal to $X_A(2)$ for some set $A$? For a finite set $F$, the multiplicative order of $b$ modulo the reduced denominator of $X_F(b)$ equals the least common multiple of $F$ (Theorem B.1), so $1/21$ is the sum of no finite set. Theorems C.1 and D.1 to D.3 give tests for membership. The tests decide neither $1/2$ nor $1/21$ for infinite sets."
+   ]
+  },
+  {
+   "heading": "How the proof goes",
+   "paragraphs": [
+    "Compare a multiple of the sum with an integer. For a positive integer $N$, the displacement $\\Delta_{b,A}(N)=\\sum_{a\\in A}(b^{N\\bmod a}-1)/(b^a-1)$ equals $(b^N-1)X_A(b)$ minus an integer, and it is positive when $A$ is infinite. If $X_A(b)=p/q$, then $q\\,\\Delta_{b,A}(N)$ is a positive integer, so $\\Delta_{b,A}(N)\\ge1/q$. It therefore suffices to find displacements that tend to zero.",
+    "Take $N$ to be a multiple of a modulus. When $N$ is a multiple of $Q$, each exponent dividing $Q$ contributes nothing. An exponent that shares a large common divisor with $Q$ has a small mean over a complete period of its residues.",
+    "Average over dyadic lengths. The bound for an incomplete period lacks the factor $1/a$. Averaging over the lengths $2^j$ restores it: an exponent enters the truncated error only once the sampled range reaches it, and the reciprocals of the later lengths form a geometric tail bounded by a multiple of $1/a$.",
+    "Choose one index. The mean of the displacements over the sampled indices is then small, so some sampled $N$ has $\\Delta_{b,A}(N)$ below any prescribed $\\varepsilon$. This contradicts $\\Delta_{b,A}(N)\\ge1/q$. Both criteria use the same average, so for a union one index makes both errors small."
+   ]
+  },
+  {
+   "heading": "Theorem A.1, clause by clause",
+   "paragraphs": [
+    "Theorem A.1 of the short paper is the statement Erdős gave in 1968. Its Lean statement is irrational_erdosSupportSeries_of_summable_reciprocal, which also allows the set to contain 0. The exposition proves the theorem at base two only, so the Lean statement says more than the exposition's Theorem 1 in the base as well. An AI agent compared the clauses, and no independent mathematician has reviewed the comparison.",
+    "The base and the set, $b\\ge2$ and $A$ infinite (Lean: (b : ℕ) (A : Set ℕ) (hb : 2 ≤ b) (hA : A.Infinite)): the Lean says more. The Lean allows $A$ to contain $0$, which the paper excludes. Lean's division by $0$ gives $0$, so the exponent $0$ adds $0$ to both sums, and on sets of positive integers the two statements agree. The exposition's Theorem 1 fixes $b=2$.",
+    "The condition $\\sum_{a\\in A}1/a<\\infty$ (Lean: hsum : Summable (reciprocalSupportTerm A)): the same. reciprocalSupportTerm A takes the value $1/a$ at $a$ in $A$ and $0$ elsewhere.",
+    "The conclusion, $X_A(b)=\\sum_{a\\in A}1/(b^a-1)$ is irrational (Lean: Irrational (erdosSupportSeries b A)): the same. erdosSupportSeries b A is the sum over all natural numbers $a$ of $1/(b^a-1)$ for $a$ in $A$ and $0$ elsewhere."
+   ]
+  },
+  {
+   "heading": "Where the papers and the Lean come from",
+   "paragraphs": [
+    "The papers and the Lean are Will Cook's, from the public repository wcook04/plectis-erdos at one pinned revision. The reading copies are transcribed from the published text by a program, which compares every word with the source and typesets every formula. The PDFs are the published files, unchanged.",
+    "Will Cook built and directed the research and reviewed the claims when he could. AI agents did most of the research, the drafting and the Lean. No independent mathematician has reviewed the papers."
+   ]
+  },
+  {
+   "heading": "What a link between a paper and the Lean means",
+   "paragraphs": [
+    "Most links from a printed result to its Lean declaration are copied from the evidence record that the papers themselves publish. The others were written for this reader by an AI agent that read both sides. The reader says which kind each link is.",
+    "A link says where to look. A program confirms that both ends exist in the pinned files. Whether the paper's sentence and the Lean statement mean the same is a reading, recorded with the name of who made it, and no independent mathematician has reviewed these readings."
+   ]
+  },
+  {
+   "heading": "What was run",
+   "paragraphs": [
+    "The Lean was compiled and compared by public GitHub Actions runs in the source repositories, and this reader records those runs with their outcomes, failures included. Nothing was compiled again for this reader, and the statuses it shows are the ones those runs recorded."
+   ]
+  },
+  {
+   "heading": "Elsewhere",
+   "links": [
+    {
+     "label": "Erdős problem #257 on erdosproblems.com",
+     "href": "https://www.erdosproblems.com/257"
+    },
+    {
+     "label": "The Lean directory on GitHub",
+     "href": "https://github.com/wcook04/plectis-erdos/tree/main/lean/ErdosProblems/Erdos257"
+    },
+    {
+     "label": "The Lean's pinned revision, 3368d1e",
+     "href": "https://github.com/wcook04/plectis-erdos/tree/3368d1e69467aec111eb3244843ad3542171ff96"
+    },
+    {
+     "label": "The short paper's .tex source",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos-257-mersenne-support-subseries.tex"
+    },
+    {
+     "label": "The exposition's .tex source",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos257-expository-sums-never-fractions.tex"
+    },
+    {
+     "label": "The long record's .tex source",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos257-mersenne-reasoning-surface.tex"
+    },
+    {
+     "label": "The three papers as PDFs",
+     "href": "pdf/"
+    },
+    {
+     "label": "Erdős #257 on the Maths Map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/universe.html#o=problem%3Aerdos_257"
+    },
+    {
+     "label": "Worked figures, the 189/388 calculation and the full list of results",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_257_overview.html"
+    }
+   ]
+  }
+ ],
+ "reader": {
+  "publish_receipts": true,
+  "theorem": {
+   "record": "short.res-reciprocal-support",
+   "paper": "short",
+   "pattern": "^\\*\\*Theorem A\\.1\\b"
+  },
+  "hero_step": "exp.thm-main",
+  "level_goals": {
+   "expository": "exp.thm-main"
+  },
+  "levels_lean_snippet": "theorem irrational_erdosSupportSeries_of_summable_reciprocal (b : ℕ) (A : Set ℕ) (hb : 2 ≤ b) (hA : A.Infinite) (hsum : Summable (reciprocalSupportTerm A)) : Irrational (erdosSupportSeries b A)",
+  "lean_level_who": "Statements and proofs written for the Lean compiler, from Will Cook's public repository.",
+  "step_records": "^(step|exp\\.step|context)\\.",
+  "link_caveat": "Each tie says who made it: copied from the papers’ published evidence mapping, or made by an AI agent for this reader. No independent mathematician has reviewed the ties, and no program tests whether the two sides say the same thing.",
+  "films": [
+   {
+    "id": "short-mathematics",
+    "kicker": "Erdős’s 1968 case in brief"
+   },
+   {
+    "id": "mathematics",
+    "kicker": "Erdős’s 1968 case, proved from fractions"
+   },
+   {
+    "id": "short-funnel",
+    "kicker": "How the three papers are made"
+   }
+  ],
+  "lean": {
+   "mainTheorem": "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal",
+   "roots": [
+    "ErdosProblems",
+    "Erdos249257"
+   ],
+   "owner": "the",
+   "ownerSource": "the Lean source in this reader"
+  },
+  "words": {
+   "stepTerms": "A step is one record of the argument: a result printed in a paper, a proof step an AI agent wrote out from the papers, a cited result, an open question or a Lean declaration. The Lean column is the Lean linked to that step, with what it says against each paper where that has been compared.",
+   "leanAbsence": {
+    "default": "No Lean declaration is linked to this step. The steps it uses and is used by may have their own."
+   },
+   "mapKeyIntro": "Each box is one step of the recorded argument: a claim, an assumption or a declaration in Lean. Select one to read it in Lean and in each paper.",
+   "extractionNote": "No successful run is among these records.",
+   "checksTerms": "Lean is a programming language whose compiler rejects a proof with a wrong step. Comparator is a program that checks a Lean proof against a separately written statement, using only permitted axioms. A GitHub Actions run is a recorded job on GitHub’s machines, with its commit, date and outcome. A step, or record, is one result printed in a paper, proof step written out from the papers, cited result, open question or Lean declaration in the argument, a tie joins a statement in a paper to a step, and a run record says what ran or was planned and with what outcome."
+  },
+  "checks_lead": "ledger",
+  "checks_rows": [
+   {
+    "name": "Corollary 5.2",
+    "did": "No Lean proof of the whole statement at the pinned revision. The papers’ evidence mapping records that the new host existence claim has not been formalised and that the mixed implication it invokes is already checked.",
+    "open": "A Lean proof and a Comparator run exist only on a branch that has not been merged; this reader does not count them."
+   }
+  ]
+ }
+}

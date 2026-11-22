@@ -10,13 +10,62 @@ export interface LibraryDocument {
   title: string;
   noun: string;
   main?: boolean;
-  pdf?: { file: string; sha256: string; bytes: number; url: string };
+  /** The authors' PDF. `name` and `alias` publish it under pdf/ by those names (a reader that moved into the library keeps its PDF addresses). */
+  pdf?: { file: string; sha256?: string; bytes?: number; url?: string; name?: string; alias?: string };
   /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
   kind?: "companion";
   group?: string;
   group_title?: string;
   order?: number;
   credit?: string;
+  /** What the document does and who it is written for, in place of the reader's default account line. */
+  job?: string;
+  reader?: string;
+}
+
+/** A section of About, in the paper's own words: TeX between single dollar signs is typeset. */
+export interface AboutSection { heading: string; paragraphs?: string[]; links?: { label: string; href: string }[] }
+
+/**
+ * The reader settings a paper that moved into the library from its own reader keeps (the SK and
+ * Erdős #257 readers): every field is plain data, read into the library instance (site.ts) in
+ * place of its default. Absent fields keep the library's defaults.
+ */
+export interface ReaderSettings {
+  publish_receipts?: boolean;
+  public_observations?: { file: string; name: string }[];
+  observation?: string | null;
+  tie_audit?: string | null;
+  theorem?: { record: string | null; paper: "long" | "short" | "expository"; pattern: string | null };
+  hero_step?: string | null;
+  models_step?: string | null;
+  level_goals?: Partial<Record<"long" | "short" | "expository", string>> | null;
+  levels_lean_snippet?: string | null;
+  lean_level_who?: string;
+  /** Graph ids matching this pattern are proof steps written out from the papers (recordKind "step"). */
+  step_records?: string;
+  link_caveat?: string;
+  region_titles?: Record<string, string>;
+  films?: { id: string; kicker: string }[];
+  lean?: Partial<{
+    mainTheorem: string | null; valueTheorem: string | null; minimizer: string | null; challengeFile: string | null; valueChallengeFile: string | null;
+    mainTree: string | null; valueModel: string | null; folderWords: Record<string, string>; folderPrefix: string; moduleRoot: string | null;
+    roots: string[] | null; owner: string; ownerSource: string;
+  }>;
+  words?: Partial<{
+    argumentFor: string; stepTerms: string; mapKeyIntro: string; extractionNote: string; failureWords: Record<string, string>;
+    valueModelNote: string; valueModelLink: string; checksTerms: string;
+    /** Compare's note on a step with no Lean: the first rule whose prefix the step's id starts with, else `default`. */
+    leanAbsence: { default: string; prefixes?: { prefix: string; text: string }[] };
+  }>;
+  /** The lead of What ran: "ledger" (a table from the run receipts), "observation" (from the published build and extraction observation), or none. */
+  checks_lead?: "ledger" | "observation";
+  /** Rows the What ran lead adds after its own: a question, what ran and what that leaves open. */
+  checks_rows?: { name: string; did: string; open: string }[];
+  /** A note under What ran's table, shown when the run record `card` is listed, linking one published file. */
+  checks_note?: { card: string; before: string; link: string; file: string; after: string };
+  /** More PDFs to publish under pdf/ (an architectural companion), relative to the repository root. */
+  extra_pdfs?: Record<string, { file: string; name: string }>;
 }
 export interface LibraryInstance {
   schema: string;
@@ -45,6 +94,11 @@ export interface LibraryInstance {
   /** Which guides the paper has, known to the build (generated/showcase.json, route.json). */
   reading_aids?: { showcase: boolean; route: boolean };
   comparisons_held_text?: string;
+  /** About's own sections, before the reader's shared ones. */
+  about?: AboutSection[];
+  /** Figures drawn from a file of the reading copy (`file` in papers/<slot>/figures/) or by a shared figure component, by the figure's label. */
+  figures?: Record<string, { slot: string; file: string } | { component: string }>;
+  reader?: ReaderSettings;
   /** Written by scripts/library-instance.mjs: supports links ("from→to") whose only evidence is the Lean's dependencies. */
   lean_derived_supports?: string[];
 }

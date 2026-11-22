@@ -1,0 +1,59 @@
+{
+  "record_type": "curated_interruption_summary",
+  "observed_at": "2026-10-25T17:48:54.713682+00:00",
+  "source_observation_sha256": "67b7f4c6aaef262f738ac9cc49ff9936722ad69bf60372f505c092c63cc4d535",
+  "status": "interrupted_unknown",
+  "source_revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "input_edition": {
+    "edition": "corrected-globs-20261024",
+    "original_lakefile_sha256": "bbd2d0a9252732d76248fc35ff61ffcaa7818314619a85b68533ddd63a27063b",
+    "corrected_lakefile_sha256": "82b47148544cf1a645a28738d8c93451bc1f98c5441f9d8b5988b6d7a5547c74",
+    "all_original_lean_and_challenge_bytes_preserved": true
+  },
+  "research_process_terminal_evidence_available": false,
+  "actual_research_acceptance_established": false,
+  "comparator": [
+    {
+      "target": "SKFullSupport",
+      "status": "unknown",
+      "proof_verdict": "unknown",
+      "returncode": null,
+      "kernel_accepted": null,
+      "comparison_accepted": null,
+      "config_sha256": "15a00a19f702bd58a30ca37d606d67e9d5cbc41aeae2334c76b5b3c50d5bea6c",
+      "last_observation": "challenge_build_passed_then_challenge_export_live",
+      "terminal_log_recovered": false
+    },
+    {
+      "target": "SKValue",
+      "status": "unknown",
+      "proof_verdict": "unknown",
+      "returncode": null,
+      "kernel_accepted": null,
+      "comparison_accepted": null,
+      "config_sha256": "6a6c5c7039e3a475c7f777375498ccff393b0d5334d2cee111ca3eeefab3ec11",
+      "last_observation": "programmed_next_target_not_observed",
+      "terminal_log_recovered": false
+    }
+  ],
+  "research_v2_extractions": [
+    {
+      "target": "SKFullSupport",
+      "status": "not_observed",
+      "actual_axioms": null,
+      "scope_complete": null
+    },
+    {
+      "target": "SKValue",
+      "status": "not_observed",
+      "actual_axioms": null,
+      "scope_complete": null
+    }
+  ],
+  "controller_observation": {
+    "failure_class": "orphaned_supervisor",
+    "finished_at": "2026-10-25T17:44:08.270+00:00",
+    "research_process_exit_code": null
+  },
+  "boundary": "The stopped controller had no recovered terminal research result. A challenge build and a live exporter were observed; solution, kernel/quotient, comparison and research-v2 outcomes remain unknown. This summary is not a process receipt, a proof rejection, an acceptance or a replacement for the retained original logs. The full reconciliation is retained in the operator archive under source_observation_sha256. Historical pre-repair failures remain distinct."
+}

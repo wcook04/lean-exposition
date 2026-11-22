@@ -48,7 +48,9 @@ export function libraryChecks(): readonly LaterCheck[] {
  * block, and the block itself (`theorem-1.1` → ["b4521-4600", "b4521-5120"]). Either place, or none,
  * is the result's own address.
  */
-let resultTargets: Record<string, readonly [tie: string, block: string]> = {};
+let resultTargets: Record<string, readonly [tie: string, block: string, record?: string]> = {};
+/** A result's record when its id is not `<paper>.<address>` (a reader that moved in keeps its records' ids): record → address. */
+const resultOfRecord = new Map<string, string>();
 const byPlace = new Map<string, string>();
 
 export const LIBRARY = site.library ?? null;
@@ -68,11 +70,13 @@ export async function loadLibraryAddresses(base: string): Promise<void> {
   }
 }
 
-export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string]> = {}, moved: Record<string, MovedPage> = {}): void {
+export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string, string?]> = {}, moved: Record<string, MovedPage> = {}): void {
   phrases = table;
   movedPages = moved;
   retiredLinks = retired;
   resultTargets = results;
+  resultOfRecord.clear();
+  for (const [address, row] of Object.entries(results)) if (row[2]) resultOfRecord.set(row[2], address);
   byPlace.clear();
   // Copy link names the phrase itself, never an old id that redirects to it.
   for (const [id, row] of Object.entries(table)) if (!row.host) byPlace.set(`${row.record ?? `phrase:${id}`}|${row.at}`, id);
@@ -127,13 +131,13 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   }
   const result = path.match(/^\/([a-z]+-[0-9a-z.]+)$/);
   // A numbered result lands on its canonical target, the statement block, never an earlier mention.
-  if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] };
+  if (result && RESULT.test(result[1])) return { ...common, node: resultTargets[result[1]]?.[2] ?? `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] || undefined };
   return null;
 }
 
 /** The library address of a read route of the main document, or null to keep the reader's own. */
 /** A numbered result's canonical place in the main document, or undefined. */
-export function resultTarget(address: string): readonly [tie: string, block: string] | undefined {
+export function resultTarget(address: string): readonly [tie: string, block: string, record?: string] | undefined {
   return resultTargets[address];
 }
 
@@ -178,7 +182,9 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
   };
   // A numbered result at its canonical target (or at no place) keeps the result's own address.
   const prefix = `${lib.paper}.`;
-  const resultId = route.node?.startsWith(prefix) && RESULT.test(route.node.slice(prefix.length)) ? route.node.slice(prefix.length) : null;
+  const resultId =
+    (route.node && resultOfRecord.get(route.node)) ??
+    (route.node?.startsWith(prefix) && RESULT.test(route.node.slice(prefix.length)) ? route.node.slice(prefix.length) : null);
   if (resultId && (!route.at || resultTargets[resultId]?.includes(route.at))) {
     if (view) q.set("v", view);
     if (route.decl) q.set("d", route.decl);

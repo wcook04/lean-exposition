@@ -30,6 +30,7 @@ ap.add_argument("--companion-phrase", nargs=2, metavar=("PAGE", "ID"), help="a p
 ap.add_argument("--companion-lean", nargs=2, metavar=("PAGE", "NAME"), help="/<page>/lean/<name> opens that Lean card")
 ap.add_argument("--moved", nargs=3, metavar=("OLD", "ID", "NEW"), help="a moved page: /<old>/ shows /<new>/, and /<old>/@<id> opens the phrase at /<new>/@<id>")
 ap.add_argument("--later-check", nargs=2, metavar=("PAGE", "PASSAGE"), help="a passage that mentions a later check shows it after the passage")
+ap.add_argument("--premise-tie", help="a phrase whose card shows our statement conditional on a premise, with the forms not yet formalized")
 ap.add_argument("--far-phrase", help="words from far down the paper: the browser's find must reach them from the top")
 ap.add_argument("--statement-tie", help="a tie id on a numbered statement: its address alone must open its card and Lean")
 ap.add_argument("--companion", action="append", default=[])
@@ -176,6 +177,15 @@ with sync_playwright() as pw:
             badge = page.evaluate("() => [...document.querySelectorAll('.ours__checked a')].map(e => e.href)")
             check(f"{tag} our statement's Comparator badge", "pending" not in ours and any("/actions/runs/" in h for h in badge), badge)
             page.screenshot(path=str(a.shots / f"ours-{tag}.png"))
+        if a.premise_tie:
+            page.goto(base + f"@{a.premise_tie}", wait_until="domcontentloaded")
+            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_timeout(4000)
+            seen = page.evaluate("() => ({cond: [...document.querySelectorAll('.ours__condition')].filter(e => e.offsetParent).map(e => e.innerText), "
+                                 "open: [...document.querySelectorAll('.ours--open li')].length, badge: [...document.querySelectorAll('.ours__badge')].map(e => e.innerText)})")
+            check(f"{tag} our conditional statement", any("Conditional on the profile premise" in c for c in seen["cond"]) and seen["open"] == 3
+                  and any("Not the authors' Lean" in b for b in seen["badge"]), seen)
+            page.screenshot(path=str(a.shots / f"premise-{tag}.png"))
         if a.companion_phrase:
             cp, cid = a.companion_phrase
             page.goto(base + f"{cp}/@{cid}", wait_until="domcontentloaded")

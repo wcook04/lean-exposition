@@ -23,10 +23,13 @@ import unicodedata
 import urllib.parse
 from pathlib import Path
 
-COMMIT = "d9c43b26d1686523e95e09ab0014aaadb1903d03"
+COMMIT = "a501de956765730ba4e6c9ad284e6d65855d533a"
 REPO = "wcook04/plectis-erdos"
 BLOB = f"https://github.com/{REPO}/blob/{COMMIT}/"
 PAGES = "https://wcook04.github.io/practical-formal-verification/papers/"
+# The SVG link is absolute: the reader resolves a relative link only when it names one of its
+# papers, so "figures/cycle-mean.svg" rendered as a link with no target there.
+FIGURE_SVG = "https://github.com/wcook04/lean-exposition/blob/main/papers/erdos257/expository/figures/cycle-mean.svg"
 
 PAPERS = [
     {"level": "short", "stem": "erdos-257-mersenne-support-subseries", "out": "short/paper.md",
@@ -507,7 +510,7 @@ class Converter:
         page = self.labels["fig:cycle-mean"]["page"]
         pdf = PAGES + self.p["stem"] + f".pdf#page={page}"
         return (["```{=latex}"] + env.split("\n") + ["```", "",
-                f"[Figure {number} on page {page} of the PDF]({pdf}) · [SVG rendering](figures/cycle-mean.svg)"])
+                f"[Figure {number} on page {page} of the PDF]({pdf}) · [SVG rendering]({FIGURE_SVG})"])
 
     def front_matter(self):
         def arg(cmd):

@@ -206,6 +206,14 @@
   padding: var(--space-1) 0;
 }
 
+/* A display not yet fitted (PaperBody.tsx, data-unfitted) keeps its place but is not drawn, so
+   a formula wider than the column is never seen cut off before it is shrunk or broken. It is
+   transparent rather than hidden, so the browser's find still reaches its text, and a match
+   inside it fits it at once. */
+.prose .math-display[data-unfitted] > :is(.katex-display, .math-number) {
+  opacity: 0;
+}
+
 /* KaTeX ends each vertical list with a 2px strut past its edge (.vlist-s). On an equation
    number pinned to the right edge that strut alone overflowed the box (scrollWidth 682 in a
    680 column). The strut holds no glyph. */

@@ -1,6 +1,6 @@
 {
  "repository": "https://github.com/wcook04/plectis-erdos",
- "commit": "d9c43b26d1686523e95e09ab0014aaadb1903d03",
+ "commit": "a501de956765730ba4e6c9ad284e6d65855d533a",
  "papers": {
   "short": {
    "source_files": {
@@ -10,10 +10,10 @@
     "pdf": "paper/257/erdos-257-mersenne-support-subseries.pdf"
    },
    "sha256": {
-    "full_text_markdown": "37beed6af1038beb2d901a5af22a86980a7f2bc5c27c8c40e26a524ee6a247ca",
-    "tex": "dc3986fdadf0e875ef95894e7cab1eb36f42dddfcf2bceb1eea588e556a3fd0b",
-    "aux": "fc8b44ba6c5ac5496c16b57a19ef06baba7265cfd80324647cc6af773641ff84",
-    "pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69"
+    "full_text_markdown": "d608e5d9d4fc8220c7a7cde73f3acc80e5a8896ab51c42aeef836bc923727bf4",
+    "tex": "08a800d07fe36361cb0f545bd8d3e6247060552c11efa98356fadf02aade36fb",
+    "aux": "f7a1bff86e2d697e132dcd8c30d6dccdeb7962ae920dac9da1cf6c5fe3989f62",
+    "pdf": "2667100d6ed7824b8653f69c7392a5e1a241505ae9285e097e95ea2f13ddcf43"
    },
    "tex_inputs_sha256": {
     "paper/problem-note-preamble.tex": "088d36d7ba3d3ee0cee2df99e8915927999698f19889f8ea0b8d55b3721ec778",
@@ -22,9 +22,9 @@
     "paper/evidence/erdos-257-mersenne-support-subseries.tex": "722ce3fc0640d2a265e5dd747e1c1d9a5d87a65aa5975d51a664acfed4135fef"
    },
    "outputs_sha256": {
-    "short/paper.md": "8d9f75b758e3c8d7c7bbc7ef963f0552dfa559e1b857f3a5a36242c215f86526",
-    "short/paper.pdf": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69",
-    "short/passages.json": "5f7f1c53625e984086b874b4c1722e00fe1b596b5d4cf3ccab426b25162dc31d"
+    "short/paper.md": "ae6287dd3ddd6d2eb4949f576418ff02504bd2d24ecd6e9ace499c597c9c4d9f",
+    "short/paper.pdf": "2667100d6ed7824b8653f69c7392a5e1a241505ae9285e097e95ea2f13ddcf43",
+    "short/passages.json": "f48923b360251fc4aadbb999be64dd7df8380fd79db9238fb6eb16dccea78523"
    }
   },
   "expository": {
@@ -45,9 +45,9 @@
     "paper/257/figures/cycle-mean.tex": "6155b89fc5370c923a1b66e349ae7086bbb3e30c9d34bd3ca09a0583064893da"
    },
    "outputs_sha256": {
-    "expository/main.md": "71083856306374c63ea8277fd72b934364ef30186261add8b961bdd03dd68476",
+    "expository/main.md": "cc58622bd4560e61899f8d0b845de5a6d8485eb59e2e03a3cf5121b2bbed527f",
     "expository/main.pdf": "34e8bdfbe8ca43adff8e7e400cad8bf1e109cc76150f57fb98184d55d1944e0d",
-    "expository/passages.json": "f50a05017bad475ddab44be2605e88605448d1799fe1d9d0f3c23031b79bb90d",
+    "expository/passages.json": "64b1b4ab2a12501bfd3bd8302a3ffb8f712dd0400cf1a1a7988c5df9be153535",
     "expository/figures/cycle-mean.svg": "5ec9d0cea94c541b195d2384b12cf35672baa1b57f3c9f1a8b54e25ff234c85e"
    }
   },

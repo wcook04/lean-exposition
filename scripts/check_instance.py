@@ -9,7 +9,7 @@ Lean tree). Fails, naming each problem, when:
   * a numbered result of the paper is not used, through the map's edges in the direction of use,
     by the main result (unless authored/check.json records why);
   * a declaration a phrase names shows no uses, unless its own source names none either
-    (the text scan finds nothing outside its own name).
+    (the index is the text scan alone, which finds nothing outside the declaration's own name).
 """
 from __future__ import annotations
 
@@ -30,7 +30,16 @@ def main() -> int:
     instance = json.loads((root / "instance.json").read_text())
     problems = []
     goal = instance["goal"]
-    goal_lean = [e["to"][len("lean."):] for e in graph["edges"] if e["from"] == goal and e["kind"] == "formalizes"]
+    # A declaration node names its Lean declaration (`declaration`, else its label); older graphs use
+    # short node ids such as lean.full_support for OAI.ZeroTemperatureSK.full_support.
+    nodes = {n["id"]: n for n in graph["nodes"]}
+    def lean_name(node_id):
+        node = nodes.get(node_id, {})
+        for name in (node.get("declaration"), node.get("label")):
+            if name and name in rows:
+                return name
+        return node_id[len("lean."):]
+    goal_lean = [lean_name(e["to"]) for e in graph["edges"] if e["from"] == goal and e["kind"] == "formalizes"]
     if not goal_lean:
         problems.append(f"the main result {goal} has no Lean on the map")
     for name in goal_lean:
@@ -74,6 +83,11 @@ def main() -> int:
                 frontier.append(n)
     seen |= {r for d in list(seen) for r in formal.get(d, ())}
     results = [n["id"] for n in graph["nodes"] if n["kind"] in ("claim", "goal") and n["id"].startswith(f"{paper}.")]
+    # A paper that moved in from its own reader keeps its records' ids; alignment/results.json names
+    # the record of each numbered result.
+    if (root / "alignment/results.json").is_file():
+        named = [row["record"] for row in json.loads((root / "alignment/results.json").read_text())["results"].values() if row.get("record")]
+        results += [r for r in named if r not in results]
     # A result may be known to stand apart, with the reason recorded in authored/check.json.
     allowed = {}
     if (root / "authored/check.json").is_file():
@@ -103,8 +117,12 @@ def main() -> int:
     named = set()
     for path in sorted((root / "alignment").glob("phrases-*.json")):
         named |= {row["name"] for t in json.loads(path.read_text())["ties"] for row in t["lean"]}
+    # With Lean's own report, a declaration with no uses is a report the enrichment missed. An index
+    # that is the text scan alone (no report for this paper) has no uses exactly where the source
+    # names no declaration of the index, so there it is the scan's own answer.
+    scanned_only = index.get("dependency_source") == "source_text"
     empty = [n for n in sorted(named) if n in rows and not rows[n].get("uses") and rows[n].get("dependency_source") != "lean_report"
-             and rows[n]["kind"] not in ("axiom", "inductive", "structure", "class")]
+             and not scanned_only and rows[n]["kind"] not in ("axiom", "inductive", "structure", "class")]
     if empty:
         problems.append(f"{len(empty)} declaration(s) a phrase names show no uses and carry no Lean report: {', '.join(empty[:6])}")
     # Page slugs (/<paper>/<page>/) may not take a reserved word or a numbered result's address.

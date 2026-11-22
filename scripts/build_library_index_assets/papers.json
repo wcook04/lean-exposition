@@ -14,36 +14,14 @@
   },
   {
    "id": "erdos-257",
-   "title": "Which sums of 1/(2ⁿ − 1) are irrational?",
-   "authors": ["Will Cook, using AI"],
+   "library": true,
    "sentence": "Proves that the sum of 1/(2ᵃ − 1) over an infinite set A is irrational when A satisfies a weighted summability condition, has a summable divisor cover, or lies in a union of one set of each kind, at every integer base b ≥ 2; Erdős’s question for every infinite A stays open.",
-   "credit": "Three papers on Erdős problem #257, made by Will Cook using AI. No independent mathematician has reviewed them.",
-   "where": "On its current site, Erdős 257 Reader.",
-   "href": "https://wcook04.github.io/erdos-257-reader/",
-   "counts": {"phrases": 1459, "statements": 738, "lean": 881},
-   "comparator": "Comparator accepted all 51 statements replayed on GitHub Actions.",
-   "counted_from": "lean-exposition examples/erdos257/alignment/phrases-*.json; Comparator from examples/erdos257/verification/comparator-replay-35935225572.json",
-   "pages": [
-    {"title": "Short paper", "href": "https://wcook04.github.io/erdos-257-reader/read/short/"},
-    {"title": "Exposition", "href": "https://wcook04.github.io/erdos-257-reader/read/expository/"},
-    {"title": "Long record", "href": "https://wcook04.github.io/erdos-257-reader/read/long/"}
-   ]
+   "comparator": "Comparator accepted all 51 statements replayed on GitHub Actions."
   },
   {
-   "id": "sk",
-   "title": "Why the Sherrington–Kirkpatrick order parameter has no gaps",
-   "authors": ["OpenAI (the proof and its Lean)", "Will Cook, using AI (the three papers)"],
-   "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1.",
-   "credit": "The proof and its Lean are OpenAI’s. Hong-Bin Chen first proved that a minimising order parameter has no gaps.",
-   "where": "On its current site, SK Reader.",
-   "href": "https://wcook04.github.io/lean-exposition-site/",
-   "counts": {"phrases": 707, "statements": 250, "lean": 399},
-   "counted_from": "lean-exposition examples/qaoa-sk/alignment/phrases-*.json",
-   "pages": [
-    {"title": "Short paper", "href": "https://wcook04.github.io/lean-exposition-site/read/short/"},
-    {"title": "Exposition", "href": "https://wcook04.github.io/lean-exposition-site/read/expository/"},
-    {"title": "Long record", "href": "https://wcook04.github.io/lean-exposition-site/read/long/"}
-   ]
+   "id": "qaoa-sk",
+   "library": true,
+   "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1."
   },
   {
    "id": "quartic",
