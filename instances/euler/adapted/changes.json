@@ -71,8 +71,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds pinpoint citations for local existence (Ebin and Marsden, 15.2) and for the Beale–Kato–Majda criterion (p. 62), with Theorem 1 of [GGPP] for its periodic form.",
-   "status": "as returned",
+   "note": "Adds pinpoint citations for local existence (Ebin and Marsden, 15.2) and for the Beale–Kato–Majda criterion (p. 62), with Theorem 1 of [GGPP] for its periodic form. Introduces the distinct behavior of velocity and vorticity before presenting the equations. Specifies the primary source for smooth periodic local theory, retaining Bedrossian–Vicol as background.",
+   "status": "revised",
    "adapted": [
     "1 Introduction#2"
    ],
@@ -85,10 +85,10 @@
    "adapted_bytes": [
     [
      1583,
-     2709
+     2964
     ]
    ],
-   "adapted_text": "The goal of this work is to construct smooth initial data for the incompressible Euler equations on the three-dimensional torus whose solution blows up in finite time. We represent $\\mathbb T^3$ by the cube $[-1/2,1/2]^3$ with periodic boundary conditions (opposite faces identified). We write these equations as $$\\begin{equation}\n \\partial_tu+(u\\cdot\\nabla)u+\\nabla p=0,\n \\qquad \\operatorname{div}u=0\n \\quad\\hbox{on }\\mathbb T^3\\times[0,T_*). \\tag{1.1}\n\\end{equation}$$ Local existence and uniqueness for sufficiently regular data go back to Lichtenstein and Günther in the 1920s \\[[43](#cite-Lichtenstein1925), [44](#cite-Gunther1926)\\]. Classical theory on $\\mathbb T^3$ supplies a unique maximal smooth solution from smooth divergence-free data \\[[13](#cite-EbinMarsden), 15.2(i),(iii)\\]; see also \\[[10](#cite-BedrossianVicol)\\]. By the Beale–Kato–Majda criterion \\[[9](#cite-BKM), p. 62, Theorem and Corollary\\], in its periodic form \\[[11](#cite-GGPP), Theorem 1\\], a smooth solution on $[0,T)$ continues smoothly through $T<\\infty$ if $\\int_0^T\\|\\operatorname{curl}u(t)\\|_{L^\\infty}\\,\\,\\mathrm dt<\\infty$.",
+   "adapted_text": "We construct smooth initial data for the unforced incompressible Euler equations on the three-dimensional torus. The resulting velocity stays bounded up to a finite time $T_*$. At the origin the magnitude of its vorticity (the curl of the velocity) tends to infinity as $t\\uparrow T_*$. We represent $\\mathbb T^3$ by the cube $[-1/2,1/2]^3$ with opposite faces identified. The velocity $u$ and pressure $p$ satisfy $$\\begin{equation}\n \\partial_tu+(u\\cdot\\nabla)u+\\nabla p=0,\n \\qquad \\operatorname{div}u=0\n \\quad\\hbox{on }\\mathbb T^3\\times[0,T_*). \\tag{1.1}\n\\end{equation}$$ Local existence and uniqueness for sufficiently regular data go back to Lichtenstein and Günther in the 1920s \\[[43](#cite-Lichtenstein1925), [44](#cite-Gunther1926)\\]. On $\\mathbb T^3$, smooth divergence-free data give a unique smooth solution on its maximal interval by the local existence, uniqueness and regularity results of Ebin and Marsden \\[[13](#cite-EbinMarsden), §15.2(i),(iii), pp. 150–151\\]. For background on the Euler initial value problem see Bedrossian and Vicol \\[[10](#cite-BedrossianVicol)\\]. By the Beale–Kato–Majda criterion \\[[9](#cite-BKM), p. 62, Theorem and Corollary\\], in its periodic form \\[[11](#cite-GGPP), Theorem 1\\], a smooth solution on $[0,T)$ continues smoothly through $T<\\infty$ if $\\int_0^T\\|\\operatorname{curl}u(t)\\|_{L^\\infty}\\,\\,\\mathrm dt<\\infty$.",
    "replaced": [
     "1 Introduction#2"
    ],
@@ -97,6 +97,49 @@
     [
      33,
      38
+    ]
+   ]
+  },
+  {
+   "id": "ED-01",
+   "part": "edition",
+   "kind": "clarification",
+   "authors": [
+    "1 Introduction#4"
+   ],
+   "ours": "sections/01_problem.tex",
+   "sources": [
+    {
+     "kind": "literature",
+     "ref": "Childress, Gilbert and Valiant (2016), Abstract and Section 1, p. 1; Section 2, p. 4"
+    }
+   ],
+   "note": "Adds that the $t^{4/3}$ law of Childress, Gilbert and Valiant comes from an asymptotic model supported by numerical calculations, as their paper states.",
+   "status": "edition addition",
+   "adapted": [
+    "1 Introduction#4"
+   ],
+   "adapted_lines": [
+    [
+     47,
+     48
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     3499,
+     4663
+    ]
+   ],
+   "adapted_text": "Numerical searches for blow-up include the Taylor–Green vortex study of Morf, Orszag and Frisch \\[[48](#cite-MorfOrszagFrisch1980)\\] and Kerr’s computations for antiparallel vortex tubes \\[[49](#cite-Kerr1993)\\]. In a later computation, Hou and Li \\[[50](#cite-HouLi2006)\\] observed at most double-exponential growth of the maximum vorticity past Kerr’s predicted singular time. Luo and Hou \\[[51](#cite-LuoHou2014)\\] found numerical evidence for axisymmetric blow-up at the wall of an axially periodic cylinder. Childress, Gilbert and Valiant \\[[52](#cite-ChildressGilbertValiant2016)\\] studied, analytically and numerically, eroding vortex dipoles in axisymmetric flow without swirl, whose maximal vorticity grows like $t^{4/3}$, and Childress and Gilbert \\[[53](#cite-ChildressGilbert2018)\\] proposed, by formal asymptotic analysis, the hairpin geometry as a model for finite-time blow-up. The $t^{4/3}$ law of Childress, Gilbert and Valiant comes from an asymptotic model that neglects certain higher-order effects, supported by numerical calculations \\[[52](#cite-ChildressGilbertValiant2016), Abstract and Section 1, p. 1; Section 2, p. 4\\].",
+   "replaced": [
+    "1 Introduction#4"
+   ],
+   "authors_text": "Numerical searches for blow-up include the Taylor–Green vortex study of Morf, Orszag and Frisch \\[[48](#cite-MorfOrszagFrisch1980)\\] and Kerr’s computations for antiparallel vortex tubes \\[[49](#cite-Kerr1993)\\]. In a later computation, Hou and Li \\[[50](#cite-HouLi2006)\\] observed at most double-exponential growth of the maximum vorticity past Kerr’s predicted singular time. Luo and Hou \\[[51](#cite-LuoHou2014)\\] found numerical evidence for axisymmetric blow-up at the wall of an axially periodic cylinder. Childress, Gilbert and Valiant \\[[52](#cite-ChildressGilbertValiant2016)\\] studied, analytically and numerically, eroding vortex dipoles in axisymmetric flow without swirl, whose maximal vorticity grows like $t^{4/3}$, and Childress and Gilbert \\[[53](#cite-ChildressGilbert2018)\\] proposed, by formal asymptotic analysis, the hairpin geometry as a model for finite-time blow-up.",
+   "authors_lines": [
+    [
+     41,
+     42
     ]
    ]
   },
@@ -114,8 +157,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds Theorems 1 and 2 of [EGM] and Theorem 5 of Chen and Hou, and states the perturbation class for which Theorem 2 of [EGM] gives stability.",
-   "status": "revised wording",
+   "note": "Adds Theorems 1 and 2 of [EGM] and Theorem 5 of Chen and Hou, and states the perturbation class for which Theorem 2 of [EGM] gives stability. Places the singularity in the interior and explains how a stationary particle can have unbounded vorticity.",
+   "status": "revised",
    "adapted": [
     "1 Introduction#5"
    ],
@@ -127,11 +170,11 @@
    ],
    "adapted_bytes": [
     [
-     4150,
-     4989
+     4665,
+     5536
     ]
    ],
-   "adapted_text": "On $\\mathbb R^3$, Elgindi \\[[15](#cite-ElgindiSingularity)\\] constructed finite-time blow-up from $C^{1,\\alpha_0}$ initial data for some $\\alpha_0>0$. Elgindi, Ghoul and Masmoudi \\[[16](#cite-ElgindiGhoulMasmoudi), Theorems 1 and 2\\] obtained stable, locally self-similar blow-up for finite-energy data in this regularity class; the stability in their Theorem 2 is with respect to small axisymmetric perturbations, which may have swirl, in their weighted Sobolev spaces. Chen and Hou \\[[28](#cite-ChenHouSmoothI), Theorem 5\\] prove nearly self-similar blow-up from smooth axisymmetric data in a periodic cylinder with boundary, using computer-assisted estimates \\[[29](#cite-ChenHouSmoothII)\\]. The theorem below concerns smooth periodic data on $\\mathbb T^3$, with bounded velocity and vorticity growth concentrated at the origin.",
+   "adapted_text": "On $\\mathbb R^3$, Elgindi \\[[15](#cite-ElgindiSingularity)\\] constructed finite-time blow-up from $C^{1,\\alpha_0}$ initial data for some $\\alpha_0>0$. Elgindi, Ghoul and Masmoudi \\[[16](#cite-ElgindiGhoulMasmoudi), Theorems 1 and 2\\] obtained stable, locally self-similar blow-up for finite-energy data in this regularity class; the stability in their Theorem 2 is with respect to small axisymmetric perturbations, which may have swirl, in their weighted Sobolev spaces. Chen and Hou \\[[28](#cite-ChenHouSmoothI), Theorem 5\\] prove nearly self-similar blow-up from smooth axisymmetric data in a periodic cylinder with boundary, using computer-assisted estimates \\[[29](#cite-ChenHouSmoothII)\\]. Here the initial velocity is smooth on the whole torus, which has no boundary. Oddness keeps the velocity zero at the origin even as its curl there grows without bound.",
    "replaced": [
     "1 Introduction#5"
    ],
@@ -148,7 +191,8 @@
    "part": "E1",
    "kind": "clarification",
    "authors": [
-    "1 Introduction#7"
+    "1 Introduction#7",
+    "1 Introduction#8"
    ],
    "ours": "sections/01_problem.tex",
    "sources": [
@@ -157,32 +201,46 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "States that the terminal extension is a smooth field, cites Theorem 1.1 of the auxiliary note, and records that the equations are imposed for $0\\le t<T_*$.",
-   "status": "as returned",
+   "note": "States that the terminal extension is a smooth field, cites Theorem 1.1 of the auxiliary note, and records that the equations are imposed for $0\\le t<T_*$. Distinguishes convergence before the singular time and the two off-origin terminal conclusions while preserving the theorem and remark verbatim.",
+   "status": "revised",
    "adapted": [
-    "1 Introduction#7"
+    "1 Introduction#7",
+    "1 Introduction#8"
    ],
    "adapted_lines": [
     [
      60,
      61
+    ],
+    [
+     62,
+     63
     ]
    ],
    "adapted_bytes": [
     [
-     5721,
-     6021
+     6268,
+     6568
+    ],
+    [
+     6570,
+     7038
     ]
    ],
-   "adapted_text": "**Remark 1.2.** The solution in Theorem 1.1 may be chosen so that it extends as a smooth field in space and time through $T_*$ away from the origin. A proof is given in the auxiliary note \\[[31](#cite-TerminalSmoothness), Theorem 1.1\\], where the Euler equations are imposed only for $0\\le t<T_*$.",
+   "adapted_text": "**Remark 1.2.** The solution in Theorem 1.1 may be chosen so that it extends as a smooth field in space and time through $T_*$ away from the origin. A proof is given in the auxiliary note \\[[31](#cite-TerminalSmoothness), Theorem 1.1\\], where the Euler equations are imposed only for $0\\le t<T_*$.\n\nWe construct smooth approximate flows whose residuals, the errors in the Euler momentum equation, tend to zero. On each compact time interval before $T_*$ the velocities converge in every spatial $C^m$ norm to an Euler solution. As $t\\uparrow T_*$, the theorem gives spatial limits of both $u$ and $\\partial_tu$ on compact sets away from the origin. For the solution chosen in the remark, smooth extension also gives limits there for every mixed space-time derivative.",
    "replaced": [
-    "1 Introduction#7"
+    "1 Introduction#7",
+    "1 Introduction#8"
    ],
-   "authors_text": "**Remark 1.2.** The solution in Theorem 1.1 may be chosen so that it extends smoothly in space and time through $T_*$ away from the origin. A proof is given in the auxiliary note \\[[31](#cite-TerminalSmoothness)\\].",
+   "authors_text": "**Remark 1.2.** The solution in Theorem 1.1 may be chosen so that it extends smoothly in space and time through $T_*$ away from the origin. A proof is given in the auxiliary note \\[[31](#cite-TerminalSmoothness)\\].\n\nWe construct a sequence of smooth approximate solutions of the Euler equations whose residuals tend to zero. The sequence converges in every spatial $C^m$ norm, uniformly on compact time intervals before $T_*$, to a solution of the Euler equations.",
    "authors_lines": [
     [
      54,
      55
+    ],
+    [
+     56,
+     57
     ]
    ]
   },
@@ -200,8 +258,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds the section and theorem numbers for each cited blow-up result with and without forcing, including the authors' companion papers.",
-   "status": "as returned",
+   "note": "Adds the section and theorem numbers for each cited blow-up result with and without forcing, including the authors' companion papers. Explains how decreasing velocity and increasing gradient can coexist in the cascade.",
+   "status": "revised",
    "adapted": [
     "1 Introduction#9"
    ],
@@ -213,11 +271,11 @@
    ],
    "adapted_bytes": [
     [
-     6273,
-     7927
+     7040,
+     8782
     ]
    ],
-   "adapted_text": "At each step in the sequence we add an oscillation at a higher frequency, localized near the origin and initially small in velocity. The velocity gradient of the preceding scales amplifies the new oscillation, whose gradient in turn drives the growth of the next one. The growth intervals have finite total length. This multiscale construction follows the approach of Córdoba and Martínez-Zoroa for the Euler equations with forcing \\[[18](#cite-CMZForcedEuler), Section 1.2\\] and for forced IPM \\[[19](#cite-CMZForcedIPM), Sections 1.2.1–1.2.4\\]. Córdoba, Martínez-Zoroa and Zheng \\[[17](#cite-CMZUnforcedEuler), Theorem 2\\] used a cascade of vorticity layers to obtain blow-up for the unforced Euler equations on $\\mathbb R^3$ from $C^{1,\\alpha}$ data smooth away from the origin. Related constructions give blow-up with forcing for the inviscid Boussinesq equations \\[[20](#cite-CLMZForcedBoussinesq), Theorem 1\\], the variable-density Euler equations \\[[21](#cite-CLMZNonhomogeneousEuler), Theorem 1\\] and the hypodissipative Navier–Stokes equations \\[[22](#cite-CMZHypodissipativeNS), Theorem 1\\]. Our companion papers proving singularity formation for forced IPM \\[[3](#cite-AlpogeBuckmasterCoiculescuIPM), Theorem 2.1\\], the forced Boussinesq equations \\[[1](#cite-AlpogeBuckmasterBoussinesq), Theorem 1.1\\], and the forced Euler equations \\[[2](#cite-AlpogeBuckmasterForcedEuler), Theorem 1.1\\] use forces smooth in space and time up to the singular time. In the present construction we use Craik–Criminale waves as building blocks and choose the initial velocity at each step so that the limiting solution is unforced.",
+   "adapted_text": "We build the solution one scale at a time. Each new oscillation is supported in a ball about the origin whose radius shrinks with the step. Its velocity is initially small, but its short wavelength allows a large velocity gradient. The gradient from the preceding scales amplifies this oscillation until its own gradient can amplify the next one. The successive growth intervals fit into a finite time. This multiscale construction follows the approach of Córdoba and Martínez-Zoroa for the Euler equations with forcing \\[[18](#cite-CMZForcedEuler), Section 1.2\\] and for forced IPM \\[[19](#cite-CMZForcedIPM), Sections 1.2.1–1.2.4\\]. Córdoba, Martínez-Zoroa and Zheng \\[[17](#cite-CMZUnforcedEuler), Theorem 2\\] used a cascade of vorticity layers to obtain blow-up for the unforced Euler equations on $\\mathbb R^3$ from $C^{1,\\alpha}$ data smooth away from the origin. Related constructions give blow-up with forcing for the inviscid Boussinesq equations \\[[20](#cite-CLMZForcedBoussinesq), Theorem 1\\], the variable-density Euler equations \\[[21](#cite-CLMZNonhomogeneousEuler), Theorem 1\\] and the hypodissipative Navier–Stokes equations \\[[22](#cite-CMZHypodissipativeNS), Theorem 1\\]. Our companion papers proving singularity formation for forced IPM \\[[3](#cite-AlpogeBuckmasterCoiculescuIPM), Theorem 2.1\\], the forced Boussinesq equations \\[[1](#cite-AlpogeBuckmasterBoussinesq), Theorem 1.1\\], and the forced Euler equations \\[[2](#cite-AlpogeBuckmasterForcedEuler), Theorem 1.1\\] use forces smooth in space and time up to the singular time. In the present construction we use Craik–Criminale waves as building blocks and choose the initial velocity at each step so that the limiting solution is unforced.",
    "replaced": [
     "1 Introduction#9"
    ],
@@ -243,8 +301,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds the location of the Craik–Criminale reduced equations: Section 2, equations (2.4)–(2.10).",
-   "status": "as returned",
+   "note": "Adds the location of the Craik–Criminale reduced equations: Section 2, equations (2.4)–(2.10). Explains the phase planes, wavelength and transverse velocity directly from the wave ansatz.",
+   "status": "revised",
    "adapted": [
     "1.1 Waves and successive amplification#1"
    ],
@@ -256,11 +314,11 @@
    ],
    "adapted_bytes": [
     [
-     9333,
-     10352
+     10188,
+     11167
     ]
    ],
-   "adapted_text": "We first describe the wave construction of Craik and Criminale \\[[12](#cite-CraikCriminale), Section 2, equations (2.4)–(2.10)\\]. Let $D(t)$ be a smooth matrix with $\\operatorname{tr}D=0$ and $D'+D^2$ symmetric. These conditions ensure that $U(t,x)=D(t)x$, linear in space, solves the Euler equations on $\\mathbb R^3$, with pressure $p_D(t,x)=-x\\cdot(D'+D^2)x/2$. We add to this linear background a velocity $$w(t,x)=\\mathbf a(t)F(k(t)\\cdot x),\\qquad \\mathbf a\\cdot k=0,$$ where $k(t)\\ne0$ is the wave vector, $\\mathbf a(t)$ is the amplitude vector, and $F$ is a smooth odd $1$-periodic profile of the scalar phase $s$. For example, one may take $F(s)=\\sin(2\\pi s)$. The vector $\\mathbf a$ records both size and direction: the velocity amplitude is $|\\mathbf a|\\|F\\|_\\infty$, and $\\mathbf a/|\\mathbf a|$ is its unit direction when $\\mathbf a\\ne0$. The unit wave vector is $k/|k|$. Since $F$ has period one, $w$ is periodic in the direction of $k$ with period $1/|k|$, so $|k|$ is the spatial frequency of the wave.",
+   "adapted_text": "We first describe the wave construction of Craik and Criminale \\[[12](#cite-CraikCriminale), Section 2, equations (2.4)–(2.10)\\]. Let $D(t)$ be a smooth matrix with $\\operatorname{tr}D=0$ and $D'+D^2$ symmetric. These conditions ensure that $U(t,x)=D(t)x$, linear in space, solves the Euler equations on $\\mathbb R^3$, with pressure $p_D(t,x)=-x\\cdot(D'+D^2)x/2$. We add to this linear background a velocity $$w(t,x)=\\mathbf a(t)F(k(t)\\cdot x),\\qquad \\mathbf a\\cdot k=0,$$ where $F$ is smooth, odd and $1$-periodic, for instance $F(s)=\\sin(2\\pi s)$. At a fixed time, the wave has the same velocity everywhere on each plane $k\\cdot x=s$. The nonzero vector $k$ is normal to these planes. A displacement of $1/|k|$ in direction $k/|k|$ advances the phase by one period, so $|k|$ measures spatial frequency. The amplitude vector $\\mathbf a$ is tangent to the phase planes. The signed factor $F(s)$ gives the velocity on each plane, with maximum speed $|\\mathbf a|\\|F\\|_\\infty$.",
    "replaced": [
     "1.1 Waves and successive amplification#1"
    ],
@@ -269,6 +327,49 @@
     [
      66,
      67
+    ]
+   ]
+  },
+  {
+   "id": "E1-05A",
+   "part": "E1",
+   "kind": "clarification",
+   "authors": [
+    "1.1 Waves and successive amplification#3"
+   ],
+   "ours": "sections/01_problem.tex",
+   "sources": [
+    {
+     "kind": "paper",
+     "ref": "the authors' own text at this point"
+    }
+   ],
+   "note": "Explains the direction of the preceding wave's shear and which velocity component it changes.",
+   "status": "revised",
+   "adapted": [
+    "1.1 Waves and successive amplification#3"
+   ],
+   "adapted_lines": [
+    [
+     80,
+     85
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     12091,
+     13728
+    ]
+   ],
+   "adapted_text": "To describe amplification of a new wave, write $k_p$ and $\\mathbf a_p$ for the nonzero wave vector and amplitude vector of the preceding wave, and set $$E_1=\\frac{k_p}{|k_p|},\\qquad\n E_2=\\frac{\\mathbf a_p}{|\\mathbf a_p|},\\qquad E_3=E_1\\times E_2,\n \\qquad \\sigma=|\\mathbf a_p|\\,|k_p|.$$ For the preceding wave, $E_1$ points across its phase planes and $E_2$ points along its amplitude vector. At the origin its velocity gradient is $\\mathbf a_p\\otimes k_p=\\sigma E_2\\otimes E_1$. Applied to a vector $v$, this matrix gives $\\sigma(E_1\\cdot v)E_2$. Thus moving in the $E_1$ direction changes the velocity in the $E_2$ direction. The new wave evolves under the sum $D=B+\\sigma E_2\\otimes E_1$ of this shear and the older background gradient $B$. To model the wave equations at the origin, take $B$ with just two nonzero entries in this moving frame, both constant, $$E_1\\cdot BE_2=\\nu>0,\\qquad E_3\\cdot BE_2=\\eta>0,\n \\qquad \\varepsilon=\\eta/\\nu\\ll1.$$ Start the new wave at time $t=0$ with $k=\\lambda E_3$, where $\\lambda>0$ is its initial frequency, and write $a_i=\\mathbf a\\cdot E_i$. The preceding wave evolves by (1.4) with $D=B$. Differentiating its normalized vectors gives, in this case, $E_1'=-\\nu E_2$, $E_2'=\\nu E_1-\\eta E_3$ and $E_3'=\\eta E_2$. Combining these frame equations with (1.4) for the new wave gives, at $t=0$, $$\\dot a_1=-2\\nu a_2,\\qquad\n \\dot a_2=-(\\sigma-\\nu)a_1.$$ Freezing these coefficients gives a growing mode with rate $\\sqrt{2\\nu(\\sigma-\\nu)}$ when $\\sigma>\\nu$. We choose the initial direction of the amplitude along $E_2-\\sqrt{2\\nu/\\sigma}\\,E_1$, the growing direction to leading order for $\\sigma\\gg\\nu$.",
+   "replaced": [
+    "1.1 Waves and successive amplification#3"
+   ],
+   "authors_text": "To describe amplification of a new wave, write $k_p$ and $\\mathbf a_p$ for the nonzero wave vector and amplitude vector of the preceding wave, and set $$E_1=\\frac{k_p}{|k_p|},\\qquad\n E_2=\\frac{\\mathbf a_p}{|\\mathbf a_p|},\\qquad E_3=E_1\\times E_2,\n \\qquad \\sigma=|\\mathbf a_p|\\,|k_p|.$$ $E_1$ is the unit wave vector and $E_2$ the direction vector of the preceding wave. The preceding wave contributes the velocity gradient $\\mathbf a_p\\otimes k_p=\\sigma E_2\\otimes E_1$ at the origin. Here $(E_2\\otimes E_1)v=(E_1\\cdot v)E_2$: the corresponding linear velocity is $\\sigma(E_1\\cdot x)E_2$, a shear in direction $E_2$ varying in direction $E_1$. The new wave therefore sees $D=B+\\sigma E_2\\otimes E_1$, where $B$ is the older background gradient. To model the wave equations at the origin, take $B$ with just two nonzero entries in this moving frame, both constant, $$E_1\\cdot BE_2=\\nu>0,\\qquad E_3\\cdot BE_2=\\eta>0,\n \\qquad \\varepsilon=\\eta/\\nu\\ll1.$$ Start the new wave at time $t=0$ with $k=\\lambda E_3$, where $\\lambda>0$ is its initial frequency, and write $a_i=\\mathbf a\\cdot E_i$. The preceding wave evolves by (1.4) with $D=B$. Differentiating its normalized vectors gives, in this case, $E_1'=-\\nu E_2$, $E_2'=\\nu E_1-\\eta E_3$ and $E_3'=\\eta E_2$. Combining these frame equations with (1.4) for the new wave gives, at $t=0$, $$\\dot a_1=-2\\nu a_2,\\qquad\n \\dot a_2=-(\\sigma-\\nu)a_1.$$ Freezing these coefficients gives a growing mode with rate $\\sqrt{2\\nu(\\sigma-\\nu)}$ when $\\sigma>\\nu$. We choose the initial direction of the amplitude along $E_2-\\sqrt{2\\nu/\\sigma}\\,E_1$, the growing direction to leading order for $\\sigma\\gg\\nu$.",
+   "authors_lines": [
+    [
+     74,
+     79
     ]
    ]
   },
@@ -286,8 +387,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Describes the reference angle as the angle of the projection of $k$ onto the $(E_1,E_3)$-plane, measured from $E_3$ toward $E_1$.",
-   "status": "as returned",
+   "note": "Describes the reference angle as the angle of the projection of $k$ onto the $(E_1,E_3)$-plane, measured from $E_3$ toward $E_1$. Specifies the launch direction and the plane in which the observed angle is measured.",
+   "status": "revised",
    "adapted": [
     "1.1 Waves and successive amplification#4"
    ],
@@ -299,11 +400,11 @@
    ],
    "adapted_bytes": [
     [
-     12917,
-     13978
+     13730,
+     14875
     ]
    ],
-   "adapted_text": "The coefficients evolve as the wave vector turns. Let $\\varphi$ be the angle of the projection of $k$ onto the $(E_1,E_3)$-plane, measured from $E_3$ toward $E_1$: $$\\tan\\varphi=\\frac{k\\cdot E_1}{k\\cdot E_3},$$ so $\\varphi=0$ at $t=0$. The coupling $\\eta$ tilts $k$ toward $-E_2$, and the shear carries this tilt into $E_1$, so $\\varphi$ increases; while $\\eta t$ is small, $\\tan\\varphi$ grows like $(\\sigma+\\nu)\\eta t^2$. In the strong-shear limit $\\sigma/\\nu\\to\\infty$, the wave pressure multiplies the driving coefficient $2\\nu$ in the equation for $a_1$ by $\\cos^2\\varphi\\,(1-\\varepsilon\\tan\\varphi)$ (Lemma 2.3). This factor changes sign at $\\tan\\varphi=1/\\varepsilon$, and in the strong-shear limit the amplitude $|\\mathbf a|$ reaches its peak after this sign change, as shown in Figure 1. For the perturbed wave with this initial direction, Proposition 2.8 gives a *gain* of at least a fixed multiple of $\\exp(\\varepsilon^{-1/2})$ on its prescribed interval. The gain is the ratio of the maximum of $|\\mathbf a|$ on that interval to its initial value.",
+   "adapted_text": "The new wave vector starts along $E_3$, perpendicular to both the preceding wave vector and its amplitude. As it turns, follow its projection on the $(E_1,E_3)$-plane. The angle $\\varphi$ is measured from $E_3$ towards $E_1$. In these coordinates $$\\tan\\varphi=\\frac{k\\cdot E_1}{k\\cdot E_3},$$ so $\\varphi=0$ initially. The coupling $\\eta$ tilts $k$ toward $-E_2$, and the shear carries this tilt into $E_1$, so $\\varphi$ increases; while $\\eta t$ is small, $\\tan\\varphi$ grows like $(\\sigma+\\nu)\\eta t^2$. In the strong-shear limit $\\sigma/\\nu\\to\\infty$, the wave pressure multiplies the driving coefficient $2\\nu$ in the equation for $a_1$ by $\\cos^2\\varphi\\,(1-\\varepsilon\\tan\\varphi)$ (Lemma 2.3). This factor changes sign at $\\tan\\varphi=1/\\varepsilon$, and in the strong-shear limit the amplitude $|\\mathbf a|$ reaches its peak after this sign change, as shown in Figure 1. For the perturbed wave with this initial direction, Proposition 2.8 gives a *gain* of at least a fixed multiple of $\\exp(\\varepsilon^{-1/2})$ on its prescribed interval. The gain is the ratio of the maximum of $|\\mathbf a|$ on that interval to its initial value.",
    "replaced": [
     "1.1 Waves and successive amplification#4"
    ],
@@ -329,8 +430,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Recalls that $\\phi$ here is the reference angle defined earlier in Section 1.1.",
-   "status": "as returned",
+   "note": "Recalls that $\\phi$ here is the reference angle defined earlier in Section 1.1. Distinguishes the model peak in the comparison from the actual coupling ratio at the stopping time. Identifies the positive pressure coefficient of the current wave and shows why its shear remains large when the coupling ratio reaches the target for the next wave.",
+   "status": "revised",
    "adapted": [
     "1.1 Waves and successive amplification#7"
    ],
@@ -342,11 +443,11 @@
    ],
    "adapted_bytes": [
     [
-     14318,
-     15927
+     15215,
+     16800
     ]
    ],
-   "adapted_text": "Size alone does not determine the successor wave. The new wave must supply both a large shear and a suitable frame for the next step of the iteration. In its frame (the subscript $+$ denotes the frame of the newly added wave), $$E_{1,+}=k/|k|,\\qquad E_{2,+}=\\mathbf a/|\\mathbf a|,\\qquad\n E_{3,+}=E_{1,+}\\times E_{2,+},$$ its shear is $\\sigma_+E_{2,+}\\otimes E_{1,+}$, with $\\sigma_+=|\\mathbf a|\\,|k|$. The older gradient $D$, expressed in this new frame, must again have positive couplings $$\\nu_+=E_{1,+}\\cdot D E_{2,+},\\qquad\n \\eta_+=E_{3,+}\\cdot D E_{2,+}.$$ These play the roles of $\\nu$ and $\\eta$ in the next amplification step. We prescribe a smaller ratio $\\eta_+/\\nu_+=\\varepsilon_+<\\varepsilon$ to give the next wave enough amplification to keep the errors small. The turning of the wave vector supplies this orientation. In the strong-shear limit, $\\nu_+$ starts at $\\varepsilon\\nu$, and $\\eta_+$ stays within a factor $1+O(\\varepsilon)$ of $\\nu\\cos\\varphi$; at late times this results from a cancellation between terms much larger than $\\nu\\cos\\varphi$. For the perturbed wave, Lemma 2.7 shows that at late times $\\nu_+$ is close to $\\nu$ and $\\eta_+/\\nu_+$ is comparable to $\\cos\\varphi$, where $\\varphi$ is the reference angle defined by (2.4). Under the hypotheses of Proposition 2.8, the ratio reaches the prescribed value after the amplitude peaks in the strong-shear limit, while the new shear remains large. We start the successor when the ratio reaches that threshold. Thus the Craik–Criminale equations produce both amplification and the orientation needed to repeat the construction.",
+   "adapted_text": "Size alone does not determine the successor wave. The new wave must supply both a large shear and a suitable frame for the next step of the iteration. In its frame (the subscript $+$ denotes the frame of the newly added wave), $$E_{1,+}=k/|k|,\\qquad E_{2,+}=\\mathbf a/|\\mathbf a|,\\qquad\n E_{3,+}=E_{1,+}\\times E_{2,+},$$ its shear is $\\sigma_+E_{2,+}\\otimes E_{1,+}$, with $\\sigma_+=|\\mathbf a|\\,|k|$. The older gradient $D$, expressed in this new frame, must again have positive couplings $$\\nu_+=E_{1,+}\\cdot D E_{2,+},\\qquad\n \\eta_+=E_{3,+}\\cdot D E_{2,+}.$$ The pressure coefficient of the wave just added is $p_{\\rm w}=2\\nu_+|\\mathbf a|/|k|$ by (1.4), so $\\nu_+>0$ gives $p_{\\rm w}>0$. For the successor we prescribe a smaller ratio $\\eta_+/\\nu_+=\\varepsilon_+<\\varepsilon$ to obtain the gain needed to control its errors. In the strong-shear limit, $\\nu_+$ starts at $\\varepsilon\\nu$ and $\\eta_+$ stays within a factor $1+O(\\varepsilon)$ of $\\nu\\cos\\varphi$. In particular, at late times this results from a cancellation between terms much larger than $\\nu\\cos\\varphi$. For the perturbed wave, Lemma 2.7 gives $\\nu_+$ close to $\\nu$ and $\\eta_+/\\nu_+$ comparable to $\\cos\\varphi$ at late times, with the reference angle of (2.4). Under the comparison hypotheses, Proposition 2.8 finds a crossing at or after the peak of the *reference* amplitude. There $\\eta_+/\\nu_+=\\varepsilon_+$ and $|k|$ is comparable to $\\lambda/\\varepsilon_+$. This length compensates for the decline from peak amplitude. The shear $\\sigma_+=|\\mathbf a||k|$ is still large enough to launch the successor.",
    "replaced": [
     "1.1 Waves and successive amplification#7"
    ],
@@ -372,8 +473,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds equation numbers for the Lifschitz–Hameiri and Friedlander–Vishik equations, and section numbers for Choquet-Bruhat, listing the general asymptotic-wave references separately.",
-   "status": "as returned",
+   "note": "Adds equation numbers for the Lifschitz–Hameiri and Friedlander–Vishik equations, and section numbers for Choquet-Bruhat, listing the general asymptotic-wave references separately. Explains why localization permits a nonintegral wave vector in a periodic problem and identifies the resulting errors. Retains Lax as historical context and locates Choquet-Bruhat’s quasilinear construction in §§2–3, pp. 3–6.",
+   "status": "revised",
    "adapted": [
     "1.1 Waves and successive amplification#9"
    ],
@@ -385,11 +486,11 @@
    ],
    "adapted_bytes": [
     [
-     16366,
-     17262
+     17239,
+     18253
     ]
    ],
-   "adapted_text": "Craik–Criminale waves on $\\mathbb R^3$ provide a local model for amplification. For the periodic construction, we localize each wave by a smooth cutoff supported in the interior of a fundamental cell in Lagrangian coordinates. We extend the localized field periodically and transport its phase and cutoff by the preceding periodic velocity, as in geometric optics \\[[37](#cite-LifschitzHameiri1991), Section II, equations (7), (9) and (17)\\]; see also \\[[38](#cite-FriedlanderVishik1991), equations (5)–(7)\\]. For the general asymptotic-wave framework, see \\[[39](#cite-Lax1957)\\] and \\[[40](#cite-ChoquetBruhat1969), Sections 2–3\\]. Since the cutoff vanishes near the cell boundary, the wave vector need not lie in $\\mathbb Z^3$. Localization and the spatial variation of the background introduce errors, which the corrections below make small at each step and remove in the limit.",
+   "adapted_text": "The affine wave lives on $\\mathbb R^3$. To use it on the torus we first multiply its profile by a smooth cutoff in the particle labels. The cutoff vanishes near the faces of a fundamental cell, so copies of the localized wave fit together smoothly on opposite faces for any initial wave vector, including nonintegral ones. The preceding periodic velocity transports both the phase and the cutoff. For this transport of phase in geometric optics see \\[[37](#cite-LifschitzHameiri1991), Section II, equations (7), (9) and (17)\\] and \\[[38](#cite-FriedlanderVishik1991), equations (5)–(7)\\]. For the broader theory of asymptotic waves, see the foundational work of Lax \\[[39](#cite-Lax1957)\\] and Choquet-Bruhat’s construction near a given solution of a quasilinear system \\[[40](#cite-ChoquetBruhat1969), §§2–3, pp. 3–6\\]. Spatial variation of the background and differentiation of the cutoff now leave errors. The corrections below reduce these errors at each step until they vanish in the limit.",
    "replaced": [
     "1.1 Waves and successive amplification#9"
    ],
@@ -415,8 +516,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds a sentence after the authors' motivation: in the linearized problem, prescribing the final positions means they are unchanged to first order.",
-   "status": "revised wording",
+   "note": "Adds a sentence after the authors' motivation: in the linearized problem, prescribing the final positions means they are unchanged to first order. Gives the growing-error motivation for fixing particle positions at both ends while allowing the initial correction velocity to vary.",
+   "status": "revised",
    "adapted": [
     "1.2 Controlling corrections in an amplifying flow#1"
    ],
@@ -428,11 +529,11 @@
    ],
    "adapted_bytes": [
     [
-     17337,
-     17668
+     18328,
+     18510
     ]
    ],
-   "adapted_text": "To correct a velocity in an amplifying flow, we use the freedom to choose its initial value. To avoid exciting growing modes, we prescribe the final particle positions and choose the initial velocity to reach them. In the linearized problem below, this means that the correction leaves the final positions unchanged to first order.",
+   "adapted_text": "A small error introduced early can grow along with the wave. To correct it we choose the initial velocity so that the first-order change in each particle’s final position vanishes.",
    "replaced": [
     "1.2 Controlling corrections in an amplifying flow#1"
    ],
@@ -458,8 +559,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "States that $u$, $p$ are a smooth solution on $\\mathbb T^3\\times[0,T]$ with $T>0$, and that the added velocity $b$ is smooth.",
-   "status": "as returned",
+   "note": "States that $u$, $p$ are a smooth solution on $\\mathbb T^3\\times[0,T]$ with $T>0$, and that the added velocity $b$ is smooth. Distinguishes the automatic starting position, the free initial velocity and the imposed final position.",
+   "status": "revised",
    "adapted": [
     "1.2 Controlling corrections in an amplifying flow#2"
    ],
@@ -471,11 +572,11 @@
    ],
    "adapted_bytes": [
     [
-     17670,
-     19088
+     18512,
+     19832
     ]
    ],
-   "adapted_text": "Let $u,p$ be a smooth solution of the Euler equations on $\\mathbb T^3\\times[0,T]$, with $T>0$. The flow $X(t,a)$ of $u$ gives the position at time $t$ of the particle that starts at $a$. It satisfies $$\\partial_tX(t,a)=u(t,X(t,a)),\\qquad X(0,a)=a.$$ For a smooth divergence-free velocity correction $b$, let $X_\\delta$ be the flow of $u+\\delta b$ with the same initial positions, so that $$\\partial_tX_\\delta(t,a)\n       =(u+\\delta b)(t,X_\\delta(t,a)),\\qquad X_\\delta(0,a)=a.$$ The first-order change $\\xi$ in the particle trajectories is defined by $$X_\\delta(t,a)=X(t,a)+\\delta\\xi(t,a)+O(\\delta^2).$$ Differentiating the flow equation at $\\delta=0$ gives $$\\begin{equation}\n \\partial_t\\xi(t,a)=\\nabla u(t,X(t,a))\\xi(t,a)+b(t,X(t,a)),\n \\qquad \\xi(0,a)=0. \\tag{1.5}\n\\end{equation}$$ The initial condition follows from the common starting positions. Since also $X(0,a)=a$, evaluating (1.5) at $t=0$ gives $\\partial_t\\xi(0,a)=b(0,a)$. This identity holds for every $b$ and imposes no condition. We impose instead the endpoint condition $\\xi(T,a)=0$. It states that $X_\\delta(T,a)=X(T,a)+O(\\delta^2)$: the corrected flow carries each particle to its original final position, up to an error of order $\\delta^2$. When $b$ solves the linearized Euler equations (1.6) below, it is determined by $b(0)$ and the source. Under the bounds $H\\le\\operatorname{Id}$ and $T\\le1$ below, the endpoint condition selects $b(0)$ uniquely.",
+   "adapted_text": "Let $u,p$ be a smooth solution of the Euler equations on $\\mathbb T^3\\times[0,T]$, with $T>0$. The flow $X(t,a)$ of $u$ gives the position at time $t$ of the particle that starts at $a$. It satisfies $$\\partial_tX(t,a)=u(t,X(t,a)),\\qquad X(0,a)=a.$$ For a smooth divergence-free velocity correction $b$, let $X_\\delta$ be the flow of $u+\\delta b$ with the same initial positions, so that $$\\partial_tX_\\delta(t,a)\n       =(u+\\delta b)(t,X_\\delta(t,a)),\\qquad X_\\delta(0,a)=a.$$ The first-order change $\\xi$ in the particle trajectories is defined by $$X_\\delta(t,a)=X(t,a)+\\delta\\xi(t,a)+O(\\delta^2).$$ Differentiating the flow equation at $\\delta=0$ gives $$\\begin{equation}\n \\partial_t\\xi(t,a)=\\nabla u(t,X(t,a))\\xi(t,a)+b(t,X(t,a)),\n \\qquad \\xi(0,a)=0. \\tag{1.5}\n\\end{equation}$$ Every perturbation starts the particle at the same label $a$, so $\\xi(0,a)=0$. Its initial *velocity* can vary. Indeed, (1.5) gives $\\partial_t\\xi(0,a)=b(0,a)$. At the other end we impose $\\xi(T,a)=0$, or equivalently $X_\\delta(T,a)=X(T,a)+O(\\delta^2)$. Thus a particle may move away from its reference path in the intervening time. For a prescribed source in the linearized Euler equations (1.6), the final position condition determines which initial correction $b(0)$ to use, under the bounds $H\\le\\operatorname{Id}$ and $T\\le1$ below.",
    "replaced": [
     "1.2 Controlling corrections in an amplifying flow#2"
    ],
@@ -501,8 +602,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds that the momentum source $f$ is smooth, spells out $H\\le\\mathrm{Id}$ as a quadratic-form bound, and cites Section 10 of Arnold (1966).",
-   "status": "as returned",
+   "note": "Adds that the momentum source $f$ is smooth, spells out $H\\le\\mathrm{Id}$ as a quadratic-form bound, and cites Section 10 of Arnold (1966). Explains which spatial variable enters each coefficient and the divergence constraint. Explains why a prescribed force occurs in the linearized correction inside the construction of an unforced limit.",
+   "status": "revised",
    "adapted": [
     "1.2 Controlling corrections in an amplifying flow#3"
    ],
@@ -514,11 +615,11 @@
    ],
    "adapted_bytes": [
     [
-     19090,
-     20126
+     19834,
+     21086
     ]
    ],
-   "adapted_text": "For a prescribed smooth momentum source $f$, the inhomogeneous problem is to find $b,q$ satisfying the linearized Euler equations $$\\begin{equation}\n \\partial_t b+(u\\cdot\\nabla)b+(b\\cdot\\nabla)u+\\nabla q=f,\n \\qquad \\operatorname{div}b=0. \\tag{1.6}\n\\end{equation}$$ Here $q$ is the pressure variation, and the displacement induced by $b$ must satisfy $\\xi(0)=\\xi(T)=0$. Differentiating (1.5) in time and using (1.6) gives $$\\begin{equation}\n \\begin{gathered}\n \\xi_{tt}+H\\xi+(\\nabla q)\\circ X=f\\circ X,\n \\qquad H=(D_x^2p)\\circ X,\\\\\n \\operatorname{div}_x(\\xi\\circ X^{-1})=0,\\qquad \\xi(0)=\\xi(T)=0.\n \\end{gathered} \\tag{1.7}\n\\end{equation}$$ Here $H\\le\\operatorname{Id}$ means $z\\cdot H(t,a)z\\le|z|^2$ for every $(t,a)\\in[0,T]\\times\\mathbb T^3$ and every $z\\in\\mathbb R^3$. The homogeneous equation is the Jacobi equation along the geodesic associated with this solution in Arnold’s formulation \\[[5](#cite-Arnold1966), Section 10\\]. The constraint $\\operatorname{div}_x(\\xi\\circ X^{-1})=0$ expresses volume preservation to first order.",
+   "adapted_text": "Let $f$ be a prescribed smooth momentum source. In the iteration this source is chosen to cancel errors left by the approximate flow and the new wave. We seek $b$ and $q$ satisfying the linearized Euler equations $$\\begin{equation}\n \\partial_t b+(u\\cdot\\nabla)b+(b\\cdot\\nabla)u+\\nabla q=f,\n \\qquad \\operatorname{div}b=0. \\tag{1.6}\n\\end{equation}$$ Here $q$ is the pressure variation, and the displacement induced by $b$ must satisfy $\\xi(0)=\\xi(T)=0$. Differentiating (1.5) in time and using (1.6) gives $$\\begin{equation}\n \\begin{gathered}\n \\xi_{tt}+H\\xi+(\\nabla q)\\circ X=f\\circ X,\n \\qquad H=(D_x^2p)\\circ X,\\\\\n \\operatorname{div}_x(\\xi\\circ X^{-1})=0,\\qquad \\xi(0)=\\xi(T)=0.\n \\end{gathered} \\tag{1.7}\n\\end{equation}$$ At each label $a$, $H$ is the pressure Hessian at the particle’s current position. The bound $H\\le\\operatorname{Id}$ means $z\\cdot H(t,a)z\\le|z|^2$ for every vector $z$ and every $(t,a)$. The divergence constraint expresses volume preservation to first order. It applies to $\\xi\\circ X^{-1}$ because this is the displacement written as a function of the particle’s current position. With $f=0$ the equation is the Jacobi equation for the geodesic in Arnold’s description of Euler flow \\[[5](#cite-Arnold1966), Section 10\\].",
    "replaced": [
     "1.2 Controlling corrections in an amplifying flow#3"
    ],
@@ -544,8 +645,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds Theorem 2.4 of Brenier (1999, author version) as the specific reference for the action-minimization criterion.",
-   "status": "as returned",
+   "note": "Adds Theorem 2.4 of Brenier (1999, author version) as the specific reference for the action-minimization criterion. Explains why negative pressure curvature helps and identifies precisely the uniqueness consequence of the energy identity.",
+   "status": "revised",
    "adapted": [
     "1.2 Controlling corrections in an amplifying flow#4"
    ],
@@ -557,11 +658,11 @@
    ],
    "adapted_bytes": [
     [
-     20128,
-     21507
+     21088,
+     22597
     ]
    ],
-   "adapted_text": "For a solution of (1.7), testing with $-\\xi$ and integrating by parts gives the identity $$\\begin{equation}\n \\underbrace{\\int_0^T\\!\\int_{\\mathbb T^3}\n   \\bigl(|\\xi_t|^2-\\xi\\cdot H\\xi\\bigr)\\,\\,\\mathrm da\\,\\,\\mathrm dt}_{\\mathcal Q(\\xi)}\n =-\\int_0^T\\!\\int_{\\mathbb T^3}(f\\circ X)\\cdot\\xi\\,\\,\\mathrm da\\,\\,\\mathrm dt. \\tag{1.8}\n\\end{equation}$$ Volume preservation and the divergence constraint remove the pressure variation. The quadratic form $\\mathcal Q$ is the fixed-endpoint second variation of the action. If $H\\le\\operatorname{Id}$ and $T\\le1$, then ${|\\xi(t,a)|^2\\le(T-t)\\int_t^T|\\xi_\\tau(\\tau,a)|^2\\,\\,\\mathrm d\\tau}$ gives $$\\begin{equation}\n \\mathcal Q(\\xi)\\ge\\Bigl(1-\\frac{T^2}{2}\\Bigr)\\|\\xi_t\\|_{L^2_{t,a}}^2\n \\ge\\frac12\\|\\xi_t\\|_{L^2_{t,a}}^2 . \\tag{1.9}\n\\end{equation}$$ The term $-\\xi\\cdot H\\xi$ lowers the integrand where $\\xi\\cdot H\\xi>0$ and raises it where $\\xi\\cdot H\\xi<0$. Thus an upper bound for $H$ gives the lower bound in (1.9). For $f=0$, (1.8) gives $\\mathcal Q(\\xi)=0$. Then (1.9) forces $\\xi_t=0$, and $\\xi(0)=0$ gives $\\xi=0$. Equation (1.5) gives $b=0$, proving that the linearized endpoint map $b(0)\\mapsto\\xi(T)$ has trivial kernel. Upper bounds on the pressure Hessian also enter Brenier’s fixed-endpoint action-minimization criterion \\[[32](#cite-Brenier1989)\\]; see, in particular, \\[[33](#cite-Brenier1999), Theorem 2.4, author version\\].",
+   "adapted_text": "For a solution of (1.7), testing with $-\\xi$ and integrating by parts gives the identity $$\\begin{equation}\n \\underbrace{\\int_0^T\\!\\int_{\\mathbb T^3}\n   \\bigl(|\\xi_t|^2-\\xi\\cdot H\\xi\\bigr)\\,\\,\\mathrm da\\,\\,\\mathrm dt}_{\\mathcal Q(\\xi)}\n =-\\int_0^T\\!\\int_{\\mathbb T^3}(f\\circ X)\\cdot\\xi\\,\\,\\mathrm da\\,\\,\\mathrm dt. \\tag{1.8}\n\\end{equation}$$ Volume preservation and the divergence constraint remove the pressure variation. The quadratic form $\\mathcal Q$ is the fixed-endpoint second variation of the action. If $H\\le\\operatorname{Id}$ and $T\\le1$, then $|\\xi(t,a)|^2\\le(T-t)\\int_t^T|\\xi_\\tau(\\tau,a)|^2\\,\\,\\mathrm d\\tau$ gives $$\\begin{equation}\n \\mathcal Q(\\xi)\\ge\\Bigl(1-\\frac{T^2}{2}\\Bigr)\\|\\xi_t\\|_{L^2_{t,a}}^2\n \\ge\\frac12\\|\\xi_t\\|_{L^2_{t,a}}^2 . \\tag{1.9}\n\\end{equation}$$ Only a positive value of $\\xi\\cdot H\\xi$ can reduce the energy. A large negative eigenvalue of $H$ increases the contribution from displacements in its eigendirection. Thus the upper bound on $H$ suffices for (1.9). With $f=0$ the energy identity gives $\\mathcal Q(\\xi)=0$, so the estimate forces $\\xi_t=0$. Starting from $\\xi(0)=0$ we get $\\xi=0$, and then $b=0$ by (1.5). This proves injectivity of the homogeneous endpoint map $b(0)\\mapsto\\xi(T)$ and hence uniqueness whenever the forced problem has a solution. Upper bounds on the pressure Hessian also enter Brenier’s fixed-endpoint action-minimization criterion \\[[32](#cite-Brenier1989)\\]; see, in particular, \\[[33](#cite-Brenier1999), Theorem 2.4, author version\\].",
    "replaced": [
     "1.2 Controlling corrections in an amplifying flow#4"
    ],
@@ -578,7 +679,9 @@
    "part": "E1",
    "kind": "clarification",
    "authors": [
-    "1.2 Controlling corrections in an amplifying flow#5"
+    "1.2 Controlling corrections in an amplifying flow#5",
+    "1.2 Controlling corrections in an amplifying flow#6",
+    "1.2 Controlling corrections in an amplifying flow#7"
    ],
    "ours": "sections/01_problem.tex",
    "sources": [
@@ -587,32 +690,60 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Notes that $H^\\#$ need not be symmetric and reads $H^\\#\\le\\mathrm{Id}$ as a quadratic-form bound, pointwise in time and label.",
-   "status": "as returned",
+   "note": "Notes that $H^\\#$ need not be symmetric and reads $H^\\#\\le\\mathrm{Id}$ as a quadratic-form bound, pointwise in time and label. Separates the residual-corrected coefficient of an approximate flow from the exact Hessian and separates uniqueness from the bounded forced inverse. Identifies the eigendirection and the sign of the slope that can threaten the upper curvature bound. Connects the rank-one curvature estimate to the central shear, small velocity and the hypothesis needed at the next step. Explains why a narrow region of positive slope can be balanced by a shallow negative slope under periodicity.",
+   "status": "revised",
    "adapted": [
-    "1.2 Controlling corrections in an amplifying flow#5"
+    "1.2 Controlling corrections in an amplifying flow#5",
+    "1.2 Controlling corrections in an amplifying flow#6",
+    "1.2 Controlling corrections in an amplifying flow#7"
    ],
    "adapted_lines": [
     [
      132,
      133
+    ],
+    [
+     134,
+     140
+    ],
+    [
+     141,
+     142
     ]
    ],
    "adapted_bytes": [
     [
-     21509,
-     22352
+     22599,
+     23388
+    ],
+    [
+     23390,
+     24924
+    ],
+    [
+     24926,
+     25328
     ]
    ],
-   "adapted_text": "For an approximate parent $U$ with residual $R_U$, Subsection 5.1 uses $H^\\#=(D_x^2p_U-\\nabla R_U)\\circ X$ in place of $H$, under the same bounds $H^\\#\\le\\operatorname{Id}$ and $T\\le1$. The matrix $H^\\#$ need not be symmetric; the inequality again means $z\\cdot H^\\#z\\le|z|^2$ for every vector $z$, pointwise in time and particle labels. Subsection 4.3 uses the resulting coercivity to construct a bounded inverse for the forced Jacobi problem, and Appendix A establishes the quantitative Hölder bounds of Theorem 4.2. The inverse exists on every interval $[0,T]$ with $0<T\\le1$ on which $H^\\#\\le\\operatorname{Id}$, with a bound that depends on the parent but requires no further smallness of $T$. Each correction therefore solves a linear two-point boundary value problem along the flow of the parent, and no short-time argument is used.",
+   "adapted_text": "The velocity $U$ produced at a finite step is only approximate. Its Euler equation has residual $R_U$, so differentiating that equation along the particle flow replaces $H$ by $H^\\#=(D_x^2p_U-\\nabla R_U)\\circ X$ (Subsection 5.1). The Jacobian $\\nabla R_U$ can be nonsymmetric. The same energy estimate still applies when $z\\cdot H^\\#z\\le |z|^2$ for all vectors, times and labels. Only the symmetric part contributes to this quadratic form. The construction also needs existence for each prescribed force and a bound on the resulting correction. Theorem 4.2 in Subsection 4.3 supplies both, using the coercivity estimate and the Hölder theory in Appendix A. Its bound depends on the parent. It holds throughout every interval $[0,T]$ with $0<T\\le1$ on which $H^\\#\\le\\operatorname{Id}$.\n\nIn the affine wave of Subsection 1.1, the Hessian of $-p_{\\rm w}P(k\\cdot x)$ is $-p_{\\rm w}F'(k\\cdot x)k\\otimes k$. We seek an odd periodic profile $F_h$ satisfying $$\\begin{equation}\n F_h'(0)=1,\\qquad -Ch\\le F_h'(s)\\le1 . \\tag{1.10}\n\\end{equation}$$ At the origin the unit slope gives exactly the shear $\\mathbf a\\otimes k$ that amplifies the next wave. Elsewhere it is the *negative* slope of $F_h$ that needs control. Indeed, in a direction perpendicular to $k$ the wave pressure has zero curvature. In the direction of $k$ its curvature is $-p_{\\rm w}|k|^2F_h'(k\\cdot x)$, where $P_h'=F_h$. Thus on any interval where $p_{\\rm w}>0$, the positive curvature obeys $$\\begin{equation}\n p_{\\rm w}|k|^2\\bigl(-F_h'(k\\cdot x)\\bigr)_+\n \\le Ch\\,p_{\\rm w}|k|^2, \\tag{1.11}\n\\end{equation}$$ where $(r)_+=\\max\\{r,0\\}$. For fixed wave coefficients this upper bound tends to zero with $h$. In the localized wave the coefficient multiplying $-F_h'$ in the leading pressure curvature is nonnegative and bounded by a parent-dependent multiple of $\\lambda^{1/4}$, where $\\lambda$ is the initial frequency. Taking $h=\\lambda^{-1/2}$ therefore bounds the positive curvature from this term by a parent-dependent multiple of $\\lambda^{-1/4}$ (Lemma 5.9). The velocity of the wave is then $O(h|\\mathbf a|)$, while the slope at the origin remains one. Section 7 sums the upper bounds for the pressure curvature added at successive steps and controls $\\|\\nabla R_U\\|_\\infty$. Together these estimates give $H^\\#\\le\\operatorname{Id}$ as a quadratic form.\n\nPeriodicity forces the derivative to have mean zero over one period. For the sine wave, $F'(1/2)/F'(0)=-1$, so normalizing its slope to one at the origin would also give a slope of minus one half a period away. Instead we concentrate the positive slope in a narrow interval. Its integral can then be balanced by a shallow negative slope over the rest of the period, as in Figure 2 and Subsection 3.2.",
    "replaced": [
-    "1.2 Controlling corrections in an amplifying flow#5"
+    "1.2 Controlling corrections in an amplifying flow#5",
+    "1.2 Controlling corrections in an amplifying flow#6",
+    "1.2 Controlling corrections in an amplifying flow#7"
    ],
-   "authors_text": "For an approximate parent $U$ with residual $R_U$, Subsection 5.1 uses $H^\\#=(D_x^2p_U-\\nabla R_U)\\circ X$ in place of $H$, under the same bounds $H^\\#\\le\\operatorname{Id}$ and $T\\le1$. Subsection 4.3 uses the resulting coercivity to construct a bounded inverse for the forced Jacobi problem, and Appendix A establishes the quantitative Hölder bounds of Theorem 4.2. The inverse exists on every interval $[0,T]$ with $0<T\\le1$ on which $H^\\#\\le\\operatorname{Id}$, with a bound that depends on the parent but requires no further smallness of $T$. Each correction therefore solves a linear two-point boundary value problem along the flow of the parent, and no short-time argument is used.",
+   "authors_text": "For an approximate parent $U$ with residual $R_U$, Subsection 5.1 uses $H^\\#=(D_x^2p_U-\\nabla R_U)\\circ X$ in place of $H$, under the same bounds $H^\\#\\le\\operatorname{Id}$ and $T\\le1$. Subsection 4.3 uses the resulting coercivity to construct a bounded inverse for the forced Jacobi problem, and Appendix A establishes the quantitative Hölder bounds of Theorem 4.2. The inverse exists on every interval $[0,T]$ with $0<T\\le1$ on which $H^\\#\\le\\operatorname{Id}$, with a bound that depends on the parent but requires no further smallness of $T$. Each correction therefore solves a linear two-point boundary value problem along the flow of the parent, and no short-time argument is used.\n\nIn the affine wave of Subsection 1.1, the Hessian of $-p_{\\rm w}P(k\\cdot x)$ is $-p_{\\rm w}F'(k\\cdot x)k\\otimes k$. We seek an odd periodic profile $F_h$ satisfying $$\\begin{equation}\n F_h'(0)=1,\\qquad -Ch\\le F_h'(s)\\le1 . \\tag{1.10}\n\\end{equation}$$ The first condition preserves the wave gradient $\\mathbf a\\otimes k$ at the origin, and hence the amplification described in Subsection 1.1. The lower bound on $F_h'$ controls the largest eigenvalue of $D_x^2[-p_{\\rm w}P_h(k\\cdot x)]$, where $P_h'=F_h$. On an interval with $p_{\\rm w}>0$, its positive part satisfies $$\\begin{equation}\n p_{\\rm w}|k|^2\\bigl(-F_h'(k\\cdot x)\\bigr)_+\n \\le Ch\\,p_{\\rm w}|k|^2, \\tag{1.11}\n\\end{equation}$$ where $(r)_+=\\max\\{r,0\\}$. For fixed wave coefficients, taking $h$ small makes this positive part small at every point. In the construction $h$ is a negative power of the frequency of the wave. As $h$ shrinks, the wave produces thin layers of strong shear while its velocity amplitude is $O(h|\\mathbf a|)$. Its gradient at the origin remains $\\mathbf a\\otimes k$, preserving the local shear that amplifies the next wave. The pressure Hessian added at each step is bounded above by a small multiple of the identity. Section 7 sums these bounds and controls $\\|\\nabla R_U\\|_\\infty$ to obtain $H^\\#\\le\\operatorname{Id}$ as a quadratic form.\n\nFor $F(s)=\\sin(2\\pi s)$, the ratio $F'(1/2)/F'(0)$ is $-1$. The sine profile with slope one at the origin therefore violates the lower bound in (1.10) for small $h$. Subsection 3.2 constructs $F_h$ with a narrow positive bump in $F_h'$ and a shallow negative part, as shown in Figure 2.",
    "authors_lines": [
     [
      126,
      127
+    ],
+    [
+     128,
+     134
+    ],
+    [
+     135,
+     136
     ]
    ]
   },
@@ -621,7 +752,8 @@
    "part": "E1",
    "kind": "clarification",
    "authors": [
-    "1.3 Correcting a localized wave#1"
+    "1.3 Correcting a localized wave#1",
+    "1.3 Correcting a localized wave#2"
    ],
    "ours": "sections/01_problem.tex",
    "sources": [
@@ -630,32 +762,46 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds Proposition 2.2 to the citation of Section 2.4 of [BDLSV] for the mollification step.",
-   "status": "as returned",
+   "note": "Adds Proposition 2.2 to the citation of Section 2.4 of [BDLSV] for the mollification step. Gives the reason for Fourier truncation and says where the discarded frequencies enter the next correction. Uses a moving particle and a phase surface to explain why the independent phase variable separates slow and fast derivatives.",
+   "status": "revised",
    "adapted": [
-    "1.3 Correcting a localized wave#1"
+    "1.3 Correcting a localized wave#1",
+    "1.3 Correcting a localized wave#2"
    ],
    "adapted_lines": [
     [
      151,
      152
+    ],
+    [
+     153,
+     154
     ]
    ],
    "adapted_bytes": [
     [
-     24226,
-     24679
+     25585,
+     26098
+    ],
+    [
+     26100,
+     27325
     ]
    ],
-   "adapted_text": "We smoothly truncate the velocity of each step in frequency at the end of the step, to simplify the bookkeeping of derivative estimates, as in the mollification step of convex integration \\[[6](#cite-BDLSVOnsager), Section 2.4, Proposition 2.2\\]. This introduces a small error, carried to the next step; Subsection 5.7 gives the estimates. Write $U$ for the truncated velocity of the preceding step and $R_U$ for its residual in the Euler equations.",
+   "adapted_text": "At the end of each step we apply a smooth Fourier cutoff to the velocity. Once its frequencies have an upper bound, Bernstein’s inequality bounds spatial derivatives in terms of that frequency and the velocity norm. This is the role of mollification in convex integration \\[[6](#cite-BDLSVOnsager), Section 2.4, Proposition 2.2\\]. Write $U$ for the velocity left by the cutoff. Its Euler residual $R_U$ includes the small error from discarding the high frequencies (Subsection 5.7) and enters the next step.\n\nWe add the localized wave described in Subsection 1.1, using $F_h$ and a divergence correction. Let $X$ be the flow of $U$ from time zero, and fix a nonzero vector $k_*$. The phase $\\theta$ of the localized wave is defined by $$\\theta(t,X(t,a))=k_*\\cdot a$$ for labels $a$ in the fundamental cell. A moving particle therefore keeps its initial phase, although the surfaces of constant phase deform with the flow. Their normal is $\\kappa=\\nabla_x\\theta$, the local wave vector. For a linear flow this gives $\\theta=\\kappa\\cdot x$, as in Subsection 1.1. After the first wave we choose $k_*$ so that, at activation, $\\kappa=\\lambda E_3$ at the origin. The leading wave velocity is $A_1(t,x,\\theta(t,x))$. To differentiate it, first treat $s$ as an independent variable in $A_1(t,x,s)$. The spatial chain rule gives a derivative at fixed $s$ and a phase derivative with the large factor $\\kappa$, both evaluated at $s=\\theta(t,x)$. A wave after the first is multiplied by a cutoff $\\widetilde\\chi(t)$ in time that vanishes before its amplification interval; for the first wave $\\widetilde\\chi=1$. The derivative of the cutoff leaves an error of the size of the wave at the start of that interval, also carried to the next step.",
    "replaced": [
-    "1.3 Correcting a localized wave#1"
+    "1.3 Correcting a localized wave#1",
+    "1.3 Correcting a localized wave#2"
    ],
-   "authors_text": "We smoothly truncate the velocity of each step in frequency at the end of the step, to simplify the bookkeeping of derivative estimates, as in the mollification step of convex integration \\[[6](#cite-BDLSVOnsager), Section 2.4\\]. This introduces a small error, carried to the next step; Subsection 5.7 gives the estimates. Write $U$ for the truncated velocity of the preceding step and $R_U$ for its residual in the Euler equations.",
+   "authors_text": "We smoothly truncate the velocity of each step in frequency at the end of the step, to simplify the bookkeeping of derivative estimates, as in the mollification step of convex integration \\[[6](#cite-BDLSVOnsager), Section 2.4\\]. This introduces a small error, carried to the next step; Subsection 5.7 gives the estimates. Write $U$ for the truncated velocity of the preceding step and $R_U$ for its residual in the Euler equations.\n\nWe add the localized wave described in Subsection 1.1, using $F_h$ and a divergence correction. Let $X$ be the flow of $U$ from time zero, and fix a nonzero vector $k_*$. The phase $\\theta$ of the localized wave is defined by $$\\theta(t,X(t,a))=k_*\\cdot a$$ for Lagrangian coordinates $a$ in the fundamental cell. It is the plane phase $k_*\\cdot x$ at time zero, transported by $U$. Its gradient $\\kappa=\\nabla_x\\theta$ is the wave vector of the localized wave; for a linear flow, $\\theta=\\kappa\\cdot x$, as in Subsection 1.1. For a wave after the first, $k_*$ is chosen so that $\\kappa=\\lambda E_3$ at the origin at its activation time, as for the new wave of Subsection 1.1. The leading velocity is $A_1(t,x,\\theta(t,x))$. Writing the profile as $A_1(t,x,s)$ with $s$ independent lets us distinguish derivatives of the coefficients from the large term $\\kappa\\partial_s$ that arises when differentiating through the phase. A wave after the first is multiplied by a cutoff $\\widetilde\\chi(t)$ in time that vanishes before its amplification interval; for the first wave $\\widetilde\\chi=1$. The derivative of the cutoff leaves an error of the size of the wave at the start of that interval, also carried to the next step.",
    "authors_lines": [
     [
      145,
      146
+    ],
+    [
+     147,
+     148
     ]
    ]
   },
@@ -673,8 +819,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds equations (4.19) and (4.21) to the citation of Section 4.1 of Cheverry (2006).",
-   "status": "as returned",
+   "note": "Adds equations (4.19) and (4.21) to the citation of Section 4.1 of Cheverry (2006). Introduces the three correction fields through their dependence on phase and the size gained at each level. Condenses the size and ordering of correction terms before working through the first transverse velocity correction.",
+   "status": "revised",
    "adapted": [
     "1.3 Correcting a localized wave#3"
    ],
@@ -686,11 +832,11 @@
    ],
    "adapted_bytes": [
     [
-     25906,
-     26986
+     27327,
+     28165
     ]
    ],
-   "adapted_text": "The velocity added to $U$ is a finite expansion $$\\sum_{p=1}^PZ_p+C_{P+1},\\qquad Z_p=V_p+C_p+B_p,$$ where $V_p(t,x,s)$ is a profile perpendicular to $\\kappa$ with zero phase average, $C_{p+1}$ is the divergence correction of $V_p$, and $B_p(t,x)$ is a mean, independent of the phase; the profiles are evaluated at $s=\\theta$. The leading term is the wave, $Z_1=V_1=\\widetilde\\chi A_1$, with $C_1=0$ and $B_1=0$. We call $p$ the *level* of $Z_p$ and of each of $V_p$, $C_p$ and $B_p$: up to a fixed power of a number that bounds the parent, the bound for $Z_p$ is that of the wave times $\\lambda^{-2(p-1)/3}$, where $\\lambda$ is the frequency of the wave. The corrections are computed one level at a time up to the depth $P$, which is fixed in Section 7. The error left by the wave and its divergence correction $C_2$ is a profile $H_2(t,x,s)$ of level two. We split $H_2$ into its phase average $\\langle H_2\\rangle_s$ and its oscillatory part $H_2-\\langle H_2\\rangle_s$, as in the expansions of Cheverry \\[[34](#cite-Cheverry2006), Section 4.1, equations (4.19) and (4.21)\\].",
+   "adapted_text": "The velocity added to $U$ is a finite expansion $$\\sum_{p=1}^PZ_p+C_{P+1},\\qquad Z_p=V_p+C_p+B_p,$$ with the profiles evaluated at $s=\\theta(t,x)$. The transverse velocity $V_p$ lies in $\\kappa^\\perp$ and has zero phase average. It has its own divergence correction $C_{p+1}$. The mean $B_p$ is independent of phase. At level one, $Z_1=V_1=\\widetilde\\chi A_1$ and $C_1=B_1=0$. Each successive level gains a factor $\\lambda^{-2/3}$ in the bound relative to the wave, up to powers of the parent bound. Section 7 fixes the final level $P$. The leading wave and $C_2$ together leave an error $H_2(t,x,s)$ of level two. We split $H_2$ into its phase average $\\langle H_2\\rangle_s$ and its oscillatory part $H_2-\\langle H_2\\rangle_s$, as in the expansions of Cheverry \\[[34](#cite-Cheverry2006), Section 4.1, equations (4.19) and (4.21)\\].",
    "replaced": [
     "1.3 Correcting a localized wave#3"
    ],
@@ -699,6 +845,49 @@
     [
      149,
      150
+    ]
+   ]
+  },
+  {
+   "id": "E1-15A",
+   "part": "E1",
+   "kind": "clarification",
+   "authors": [
+    "1.3 Correcting a localized wave#5"
+   ],
+   "ours": "sections/01_problem.tex",
+   "sources": [
+    {
+     "kind": "paper",
+     "ref": "the authors' own text at this point"
+    }
+   ],
+   "note": "Identifies the unknown at one particle and phase and distinguishes transverse velocity from exact divergence freedom of the curl-completed field.",
+   "status": "revised",
+   "adapted": [
+    "1.3 Correcting a localized wave#5"
+   ],
+   "adapted_lines": [
+    [
+     159,
+     166
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     28573,
+     29652
+    ]
+   ],
+   "adapted_text": "With $B_2$ determined, the oscillatory correction $V_2$ and its pressure $\\pi_2$ solve $$\\begin{equation}\n \\begin{split}\n D_tV_2+(\\nabla U)V_2+\\kappa\\partial_s\\pi_2\n   &=-(H_2-\\langle H_2\\rangle_s)-(B_2\\cdot\\kappa)\\partial_s(\\widetilde\\chi A_1),\\\\\n \\kappa\\cdot V_2&=0,\\qquad \\langle V_2\\rangle_s=0.\n \\end{split} \\tag{1.12}\n\\end{equation}$$ The mean $B_2$ transports the leading wave’s fast phase. This term has zero phase average because it differentiates a periodic profile in $s$. At fixed phase along each trajectory, (1.12) is a forced Craik–Criminale amplitude equation. Every wave uses zero initial data for this correction. For label $a$ and phase $s$ its solution gives the velocity correction $V_2(t,X(t,a),s)$. Perpendicularity to $\\kappa$ cancels the fast part of the divergence, leaving the spatial derivatives at fixed phase. The curl construction of Subsection 3.1 gives the divergence correction $C_3$ of $V_2$, so that $V_2+C_3$ is exactly divergence free. The term $C_3$ belongs to level three, where we solve for the mean and oscillatory corrections again.",
+   "replaced": [
+    "1.3 Correcting a localized wave#5"
+   ],
+   "authors_text": "With $B_2$ determined, the oscillatory correction $V_2$ and its pressure $\\pi_2$ solve $$\\begin{equation}\n \\begin{split}\n D_tV_2+(\\nabla U)V_2+\\kappa\\partial_s\\pi_2\n   &=-(H_2-\\langle H_2\\rangle_s)-(B_2\\cdot\\kappa)\\partial_s(\\widetilde\\chi A_1),\\\\\n \\kappa\\cdot V_2&=0,\\qquad \\langle V_2\\rangle_s=0.\n \\end{split} \\tag{1.12}\n\\end{equation}$$ The mean $B_2$ transports the leading wave’s fast phase. This term has zero phase average and, like the oscillatory part $H_2-\\langle H_2\\rangle_s$, belongs to level two, so we solve for the mean $B_2$ before the oscillatory correction $V_2$. At fixed phase along each trajectory, (1.12) is a forced Craik–Criminale amplitude equation. Every wave uses zero initial data for this correction. The curl construction of Subsection 3.1 gives the divergence correction $C_3$ of $V_2$, so that $V_2+C_3$ is exactly divergence free. The term $C_3$ belongs to level three, where we solve for the mean and oscillatory corrections again.",
+   "authors_lines": [
+    [
+     153,
+     160
     ]
    ]
   },
@@ -716,8 +905,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds the location of the Craik–Criminale equations, Section 2, equations (2.4)–(2.10), at the exact waves over a linear background.",
-   "status": "as returned",
+   "note": "Adds the location of the Craik–Criminale equations, Section 2, equations (2.4)–(2.10), at the exact waves over a linear background. Explains the nonlinear cancellation behind the exact affine solution without changing the proof.",
+   "status": "revised",
    "adapted": [
     "2.1 Exact waves over a linear background#4"
    ],
@@ -729,11 +918,11 @@
    ],
    "adapted_bytes": [
     [
-     40315,
-     40470
+     41602,
+     41956
     ]
    ],
-   "adapted_text": "For a single profile, this is the inviscid wave construction of Craik and Criminale \\[[12](#cite-CraikCriminale), Section 2, equations (2.4)–(2.10)\\].",
+   "adapted_text": "For a single profile, the condition $\\mathbf a\\cdot k=0$ has a geometric consequence. Motion in the direction $\\mathbf a$ stays in one plane of constant phase, so the wave does not advect its own velocity. This is the cancellation in the inviscid construction of Craik and Criminale \\[[12](#cite-CraikCriminale), Section 2, equations (2.4)–(2.10)\\].",
    "replaced": [
     "2.1 Exact waves over a linear background#4"
    ],
@@ -759,8 +948,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Recalls that $\\phi$ remains the reference angle in the comparisons that follow, and points to the lemma estimating the actual wave vector against it.",
-   "status": "as returned",
+   "note": "Recalls that $\\phi$ remains the reference angle in the comparisons that follow, and points to the lemma estimating the actual wave vector against it. Distinguishes the explicit model angle from the projection angle of a finite, perturbed wave.",
+   "status": "revised",
    "adapted": [
     "2.2.1 The new wave in the preceding frame#4"
    ],
@@ -772,11 +961,11 @@
    ],
    "adapted_bytes": [
     [
-     46932,
-     47683
+     48418,
+     49234
     ]
    ],
-   "adapted_text": "In the model case of Subsection 1.1, the entries of $B$ in the frame are the constants $B_{12}=\\nu$ and $B_{32}=\\eta$, all other entries vanish, and $E_c=0$. Put $$\\begin{equation}\n \\tan\\varphi=\\tfrac12\\varepsilon\\tau^2,\\qquad\n 0\\le\\varphi<\\tfrac\\pi2,\\qquad\n \\zeta_0=(\\tan\\varphi,-\\varepsilon\\tau,1). \\tag{2.4}\n\\end{equation}$$ The next lemma derives the equations for the scaled components in the model case and their limit as the preceding shear becomes infinitely strong. In the limit the wave vector is $\\lambda(\\tan\\varphi E_1+E_3)$, so $\\varphi$ is its angle from $E_3$ toward $E_1$, as in Subsection 1.1. In the comparisons below, $\\varphi$ continues to denote this reference angle; Lemma 2.4 estimates the actual wave vector relative to it.",
+   "adapted_text": "In the model case of Subsection 1.1, the entries of $B$ in the frame are the constants $B_{12}=\\nu$ and $B_{32}=\\eta$, all other entries vanish, and $E_c=0$. Put $$\\begin{equation}\n \\tan\\varphi=\\tfrac12\\varepsilon\\tau^2,\\qquad\n 0\\le\\varphi<\\tfrac\\pi2,\\qquad\n \\zeta_0=(\\tan\\varphi,-\\varepsilon\\tau,1). \\tag{2.4}\n\\end{equation}$$ As the strength of the preceding shear tends to infinity with $\\varepsilon$ and $T$ fixed, the new wave vector tends, in the moving frame, to $\\lambda(\\tan\\varphi E_1+E_3)$. This vector lies in the $(E_1,E_3)$-plane, at angle $\\varphi$ from $E_3$ toward $E_1$. We use the same explicit $\\varphi$ as a reference at finite shear. The wave vector can then have an $E_2$ component, and its projection can turn through a different angle. Lemma 2.4 bounds the difference in scaled components.",
    "replaced": [
     "2.2.1 The new wave in the preceding frame#4"
    ],
@@ -802,8 +991,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "States that the matrix norms of $B$ and $E_c$ are operator norms for the Euclidean norm on $\\mathbb R^3$.",
-   "status": "as returned",
+   "note": "States that the matrix norms of $B$ and $E_c$ are operator norms for the Euclidean norm on $\\mathbb R^3$. Explains the two time and component scales that require an error small compared with the coupling.",
+   "status": "revised",
    "adapted": [
     "2.2.1 The new wave in the preceding frame#9"
    ],
@@ -815,11 +1004,11 @@
    ],
    "adapted_bytes": [
     [
-     51424,
-     52346
+     52975,
+     53891
     ]
    ],
-   "adapted_text": "The errors of the comparison are measured by $$\\begin{equation}\n \\delta=\\left\\|\\frac{B_{12}}{\\nu}-1\\right\\|_\\infty\n       +\\left\\|\\frac{B_{32}}{\\eta}-1\\right\\|_\\infty\n       +\\frac{\\|B\\|_\\infty}{r}+\\frac{\\|E_c\\|_\\infty}{\\nu}. \\tag{2.6}\n\\end{equation}$$ Here the matrix norms of $B$ and $E_c$ are operator norms for the Euclidean norm on $\\mathbb R^3$. The first two terms are the relative variations of the two couplings on the interval. The third compares the older gradient with the growth rate; it is at least $\\nu/r=1/(2S)$, as shown below, so it is small only if the preceding shear is strong. The last compares the error $E_c$ with the coupling $\\nu$ rather than with $r$. The scaled components multiply the $E_2$ component of $k$ and the $E_1$ and $E_3$ components of $\\mathbf a$ by $S$, so in the time $\\tau$ an entry of $E_c$ enters their equations with a factor up to $S/r=1/(2\\nu)$; see the proof of Lemma 2.4.",
+   "adapted_text": "The errors of the comparison are measured by $$\\begin{equation}\n \\delta=\\left\\|\\frac{B_{12}}{\\nu}-1\\right\\|_\\infty\n       +\\left\\|\\frac{B_{32}}{\\eta}-1\\right\\|_\\infty\n       +\\frac{\\|B\\|_\\infty}{r}+\\frac{\\|E_c\\|_\\infty}{\\nu}. \\tag{2.6}\n\\end{equation}$$ All matrix norms here are Euclidean operator norms. The first two terms measure how far the two couplings drift from their launch values. The third compares the older gradient to the growth rate $r$. Since it is at least $\\nu/r=1/(2S)$, a small $\\delta$ requires strong preceding shear. The scale for the error $E_c$ is finer. The change of variables multiplies the $E_2$ component of $k$ and the $E_1,E_3$ components of $\\mathbf a$ by $S$. Changing time to $\\tau$ divides their rates by $r$. An entry of $E_c$ can therefore carry a factor as large as $S/r=1/(2\\nu)$ in the scaled equations. This accounts for the denominator $\\nu$ in the final term (Lemma 2.4).",
    "replaced": [
     "2.2.1 The new wave in the preceding frame#9"
    ],
@@ -845,8 +1034,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "States the upper bound on the wave-pressure Hessian as the quadratic-form bound $C\\,h\\,p_{\\rm w}|k|^2\\,\\mathrm{Id}$ where the profile is chosen.",
-   "status": "as returned",
+   "note": "States the upper bound on the wave-pressure Hessian as the quadratic-form bound $C\\,h\\,p_{\\rm w}|k|^2\\,\\mathrm{Id}$ where the profile is chosen. Explains which profile condition fixes the velocity gradient at one point and which controls pressure curvature everywhere.",
+   "status": "revised",
    "adapted": [
     "3.2 The profile#1"
    ],
@@ -858,11 +1047,11 @@
    ],
    "adapted_bytes": [
     [
-     89742,
-     90214
+     91287,
+     91836
     ]
    ],
-   "adapted_text": "We choose $F_0=F_h$ to prescribe the central velocity gradient and control the wave pressure. Since $g(0)=1$ and $F_h(0)=0$, taking $F_h'(0)=1$ gives the leading oscillation $A_1^\\natural$ the gradient $\\mathbf a\\otimes\\kappa$ at the origin. In the affine model the wave pressure has Hessian $-p_{\\rm w}F_h'(k\\cdot x)k\\otimes k$. When $p_{\\rm w}>0$, the bound $F_h'\\ge-Ch$ bounds this Hessian above by $Chp_{\\rm w}|k|^2\\operatorname{Id}$ as a quadratic form, as in (1.11).",
+   "adapted_text": "The value and the slope of the profile play different roles. At the origin $g(0)=1$ and $F_h(0)=0$, so differentiating the envelope makes no contribution there. A unit slope $F_h'(0)=1$ then leaves the central gradient of $A_1^\\natural$ equal to $\\mathbf a\\otimes\\kappa$. For the pressure we use the whole range of slopes. In the affine model the pressure Hessian is $-p_{\\rm w}F_h'(k\\cdot x)k\\otimes k$. When $p_{\\rm w}>0$, its largest eigenvalue is at most $Chp_{\\rm w}|k|^2$ provided $F_h'\\ge-Ch$, as in (1.11). We take $F_0=F_h$ in what follows.",
    "replaced": [
     "3.2 The profile#1"
    ],
@@ -902,8 +1091,8 @@
    ],
    "adapted_bytes": [
     [
-     90216,
-     90595
+     91838,
+     92217
     ]
    ],
    "adapted_text": "**Lemma 3.1.** There are odd smooth $1$-periodic functions $F_h$, $0<h\\le1$, with zero-mean periodic primitives $P_h$, such that $$F_h'(0)=1,\\qquad -Ch\\le F_h'\\le1,\\qquad\n \\left\\lVert F_h\\right\\rVert_\\infty\\le Ch,\\qquad\n \\left\\lVert\\partial_s^jF_h\\right\\rVert_\\infty\\le C_jh^{1-j}\\quad(j\\ge2).$$ Here $j$ is an integer, and the constants $C>0$ and $C_j>0$ are independent of $h$.",
@@ -932,8 +1121,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Recalls the zero-mean pressure convention of Section 1 at the step that sets $\\mathsf q=-\\phi_t$.",
-   "status": "revised wording",
+   "note": "Recalls the zero-mean pressure convention of Section 1 at the step that sets $\\mathsf q=-\\phi_t$. Explains why the endpoint problem uses both a path inverse and a fixed-time spatial inverse.",
+   "status": "revised",
    "adapted": [
     "4.3 The inverse and its pressure#5"
    ],
@@ -945,11 +1134,11 @@
    ],
    "adapted_bytes": [
     [
-     98855,
-     100188
+     100477,
+     102083
     ]
    ],
-   "adapted_text": "*Proof.* Rescale time by $\\tau=t/T$ and put $Z(\\tau)=z(t)/T$, so $Z_\\tau=v$. Theorem A.1 applies with coefficients $K,T\\Omega$, ellipticity $D_-^{-2}$ and source $L$. Its coercivity constant is $1/\\bigl(2D_-^2(1+\\|M\\|_\\infty)^2\\bigr)$, by Lemma 4.1 and (4.6). It gives the unique solution. Since $D_-\\ge1$ and $T\\le1$, the quantity $Q$ of Appendix A is at most an absolute constant times a fixed power of the sum in parentheses in (4.10), so the estimate (A.3) gives the asserted bound. For a smooth $f$ the source $L$ is smooth, and so is the solution, by the last assertion of Theorem A.1. Differentiating (4.9), using $K_t-\\Omega=\\mathcal D$ from (4.2), and setting $\\mathsf q=-\\phi_t$, where $\\phi$ has zero spatial mean by the pressure convention of Section 1, gives (4.11). Then $B_t+MB=D_aX v_t+2(\\partial_t D_aX)v$ and the Piola identity $\\operatorname{div}_x(B\\circ X^{-1})=(\\operatorname{div}_a v)\\circ X^{-1}$ give (4.12). Finally, by Lemma A.2 with $H=\\mathbb R^3$, $\\mathcal R=\\mathbb P$ and $B=K(t)$, whose coercivity is $D_-^{-2}$, the fixed-time inverse is bounded by a fixed power of $2+D_-^2+\\|K(t)\\|_{C^1}$. Since $D_-\\ge1$, this number is also at most an absolute constant times a fixed power of the sum in parentheses in (4.10), so $A$ bounds the fixed-time inverse once $C$ and $p$ are enlarged. $\\square$",
+   "adapted_text": "*Proof.* The two inverses answer different questions. To choose the initial velocity we solve for the whole path, since its time integral in label coordinates must vanish. Once we know the path, the fixed-time inverse recovers the velocity at each time in the spatial Hölder norm. Rescale time by $\\tau=t/T$ and put $Z(\\tau)=z(t)/T$, so $Z_\\tau=v$. Theorem A.1 applies with coefficients $K,T\\Omega$, ellipticity $D_-^{-2}$ and source $L$. Its coercivity constant is $1/\\bigl(2D_-^2(1+\\|M\\|_\\infty)^2\\bigr)$, by Lemma 4.1 and (4.6). It gives the unique solution. Since $D_-\\ge1$ and $T\\le1$, the quantity $Q$ of Appendix A is at most an absolute constant times a fixed power of the sum in parentheses in (4.10), so the estimate (A.3) gives the asserted bound. For a smooth $f$ the source $L$ is smooth, and so is the solution, by the last assertion of Theorem A.1. Differentiating (4.9), using $K_t-\\Omega=\\mathcal D$ from (4.2), and setting $\\mathsf q=-\\phi_t$, where $\\phi$ has zero spatial mean by the pressure convention of Section 1, gives (4.11). Then $B_t+MB=D_aX v_t+2(\\partial_t D_aX)v$ and the Piola identity $\\operatorname{div}_x(B\\circ X^{-1})=(\\operatorname{div}_a v)\\circ X^{-1}$ give (4.12). Finally, by Lemma A.2 with $H=\\mathbb R^3$, $\\mathcal R=\\mathbb P$ and $B=K(t)$, whose coercivity is $D_-^{-2}$, the fixed-time inverse is bounded by a fixed power of $2+D_-^2+\\|K(t)\\|_{C^1}$. Since $D_-\\ge1$, this number is also at most an absolute constant times a fixed power of the sum in parentheses in (4.10), so $A$ bounds the fixed-time inverse once $C$ and $p$ are enlarged. $\\square$",
    "replaced": [
     "4.3 The inverse and its pressure#5"
    ],
@@ -976,7 +1165,7 @@
     }
    ],
    "note": "Adds that the field $f$ is smooth in $x$ and that the number $A_f$ is nonnegative in the coefficient estimate.",
-   "status": "as returned",
+   "status": "revised",
    "adapted": [
     "5.2 Coefficient bounds for the parent#2"
    ],
@@ -988,8 +1177,8 @@
    ],
    "adapted_bytes": [
     [
-     108088,
-     108698
+     109983,
+     110593
     ]
    ],
    "adapted_text": "**Proposition 5.1.** There is an absolute exponent $C$ such that each coefficient $c$ among $$(D_aX)^{\\pm1},\\qquad M,\\qquad\n \\kappa/\\lambda,\\qquad \\lambda^2/|\\kappa|^2,\\qquad P_\\kappa$$ satisfies (D.6). Let $f(t,x)$ be a field, smooth in $x$ and with values in a normed space, such that $|f|_m\\le C_m'A_f\\mathsf D^m$ for every $m\\ge0$ and a number $A_f\\ge0$. Then $$\\begin{equation}\n |f\\circ X|_m\\le C_mA_f\\mathsf D^{Cm}\\qquad(m\\ge0). \\tag{5.7}\n\\end{equation}$$ Consequently, for every $n\\ge0$, $$\\begin{equation}\n \\|c\\|_{[n]}\\le C_n\\mathsf D^C,\\qquad\n \\|f\\circ X\\|_{[n]}\\le C_nA_f . \\tag{5.8}\n\\end{equation}$$",
@@ -1001,6 +1190,49 @@
     [
      784,
      791
+    ]
+   ]
+  },
+  {
+   "id": "E2-5H-01A",
+   "part": "E2",
+   "kind": "clarification",
+   "authors": [
+    "5.2 Coefficient bounds for the parent#5"
+   ],
+   "ours": "sections/05b_parent_coefficients.tex",
+   "sources": [
+    {
+     "kind": "formalization",
+     "ref": "the authors' Lean formalization at fd3a158"
+    }
+   ],
+   "note": "Explains how the Fourier bound and the length weights keep the parent residual small in the particle labels at each fixed derivative order.",
+   "status": "revised",
+   "adapted": [
+    "5.2 Coefficient bounds for the parent#5"
+   ],
+   "adapted_lines": [
+    [
+     809,
+     812
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     112790,
+     113323
+    ]
+   ],
+   "adapted_text": "Apply the composition estimate to the residual $R_U$ itself. Its frequencies are at most $4\\mathsf D$, so Bernstein’s inequality (B.1) gives the derivative bounds required in (5.7), with $A_f=\\left\\lVert R_U\\right\\rVert_{C_tL^\\infty}$. Thus the smallness assumed in (5.6) survives the passage to particle labels at each fixed derivative order $n$ when the derivatives carry the length weights of $\\|\\cdot\\|_{[n]}$. For every $n\\ge0$ we have $$\\begin{equation}\n \\|R_U\\circ X\\|_{[n]}\\le C_n\\lambda^{-5/2}. \\tag{5.10}\n\\end{equation}$$",
+   "replaced": [
+    "5.2 Coefficient bounds for the parent#5"
+   ],
+   "authors_text": "In particular the residual of the parent, which is supported on frequencies at most $4\\mathsf D$, satisfies the hypothesis of (5.7) with $A_f=\\left\\lVert R_U\\right\\rVert_{C_tL^\\infty}$, by (B.1). With (5.6) this gives, for every $n\\ge0$, $$\\begin{equation}\n \\|R_U\\circ X\\|_{[n]}\\le C_n\\lambda^{-5/2}. \\tag{5.10}\n\\end{equation}$$",
+   "authors_lines": [
+    [
+     803,
+     806
     ]
    ]
   },
@@ -1018,8 +1250,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Adds periodicity in the label $a$ to the setting in which the mean inverse theorem is applied over $U$.",
-   "status": "as returned",
+   "note": "Adds periodicity in the label $a$ to the setting in which the mean inverse theorem is applied over $U$. Connects the terminal condition to the possible initial correction and explains where one spatial derivative is spent.",
+   "status": "revised",
    "adapted": [
     "5.3 Finite-order estimates for the mean#1"
    ],
@@ -1031,11 +1263,11 @@
    ],
    "adapted_bytes": [
     [
-     111288,
-     112293
+     113388,
+     114404
     ]
    ],
-   "adapted_text": "The phase-independent corrections of the expansion solve the linearized Euler equations over the parent, with zero displacement at both ends of $[0,T]$. For a smooth phase-independent source $\\bar f(t,a)$, periodic in $a$, Theorem 4.2 over $U$ gives $(B,\\bar q)$ with $$\\begin{equation}\n B_t+MB+\\mathbf d\\bar q=\\bar f,\\qquad \\mathbf d\\cdot B=0,\\qquad\n z(0)=z(T)=0,\\quad B=D_aX z_t. \\tag{5.11}\n\\end{equation}$$ In the notation of that theorem, $\\bar f=f\\circ X$, $g=(D_aX)^T\\bar f$, $v=z_t$, and $\\bar q$ is the pressure $\\mathsf q$ of (4.11). We call (5.11) the *mean equation*. The terminal condition selects the initial velocity $B(0)$, so the mean can already be present before activation. We estimate it on all of $[0,T]$ in the unweighted label norms. The inverse preserves the derivative order in the scaled Hölder norms. Passing to the supremum norms by (D.2) costs one derivative of the source. At each level of the expansion the mean source is formed from terms already estimated at all orders.",
+   "adapted_text": "The phase-independent corrections of the expansion solve the linearized Euler equations over the parent, with zero displacement at both ends of $[0,T]$. For a smooth phase-independent source $\\bar f(t,a)$, periodic in $a$, Theorem 4.2 over $U$ gives $(B,\\bar q)$ with $$\\begin{equation}\n B_t+MB+\\mathbf d\\bar q=\\bar f,\\qquad \\mathbf d\\cdot B=0,\\qquad\n z(0)=z(T)=0,\\quad B=D_aX z_t. \\tag{5.11}\n\\end{equation}$$ In the notation of that theorem, $\\bar f=f\\circ X$, $g=(D_aX)^T\\bar f$, $v=z_t$, and $\\bar q$ is the pressure $\\mathsf q$ of (4.11). We call (5.11) the *mean equation*. The terminal condition determines $B(0)$. Even a force that starts late can require an earlier velocity correction to make the total displacement zero. We therefore estimate the mean on all of $[0,T]$. The inverse preserves order in the scaled Hölder norms. By (D.2), bounding the source in those norms by supremum estimates costs one source derivative. The lower levels supply this derivative since they have estimates of every order.",
    "replaced": [
     "5.3 Finite-order estimates for the mean#1"
    ],
@@ -1061,8 +1293,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Records the default time domains: weighted norms on $[t_0,T]$ and unweighted norms on $[0,T]$, as in the field-norm definition.",
-   "status": "as returned",
+   "note": "Records the default time domains: weighted norms on $[t_0,T]$ and unweighted norms on $[0,T]$, as in the field-norm definition. Contrasts the forward oscillatory equation with the two-endpoint mean problem and explains the amplitude weight.",
+   "status": "revised",
    "adapted": [
     "5.4 The transverse equation#1"
    ],
@@ -1074,11 +1306,11 @@
    ],
    "adapted_bytes": [
     [
-     114191,
-     114630
+     116302,
+     116915
     ]
    ],
-   "adapted_text": "Each oscillatory correction solves a forced seed equation forward from zero initial data at each label and phase. Its forcing vanishes before activation, so the correction does too. From activation onward we measure its size relative to the amplitude of the seed at the origin, using the weight $\\gamma$. Unless another time domain is indicated, $\\|\\cdot\\|_{[n],\\gamma}$ is taken on $[t_0,T]$ and $\\|\\cdot\\|_{[n]}$ on $[0,T]$, as in (D.1).",
+   "adapted_text": "For an oscillatory correction we prescribe zero initial velocity and solve forward at each label and phase. Until the forcing starts, the solution stays zero. Thereafter the seed itself may grow rapidly. We divide by its normalized amplitude $\\gamma$ at the origin to measure the correction relative to the seed. At each level we first find the mean from the lower levels. This mean transports the leading wave and therefore enters the forcing of the new oscillatory correction. Unless another time domain is indicated, $\\|\\cdot\\|_{[n],\\gamma}$ is taken on $[t_0,T]$ and $\\|\\cdot\\|_{[n]}$ on $[0,T]$, as in (D.1).",
    "replaced": [
     "5.4 The transverse equation#1"
    ],
@@ -1117,8 +1349,8 @@
    ],
    "adapted_bytes": [
     [
-     138933,
-     140366
+     141218,
+     142651
     ]
    ],
    "adapted_text": "In the mean source $\\bar f_p$, integration by parts in $s$ removes the fast derivative just as at level two. By (3.6), for $i\\ge2$ we have $$\\begin{equation}\n \\langle (C_i\\cdot\\kappa)\\partial_sY_j\\rangle_s\n                 =\\langle (\\mathbf d\\cdot V_{i-1})Y_j\\rangle_s. \\tag{5.42}\n\\end{equation}$$ The linear terms have zero phase average because $C_p$ and $\\mathsf p_{p-1}$ do. Products of one mean and one oscillation also average to zero, since $B_i$ and $\\kappa$ are phase independent and $\\langle Y_j\\rangle_s=0$. Thus, for $p\\ge2$, the mean source is $$\\begin{aligned}\n -\\bar f_p={}&\n \\sum_{i+j=p}\\langle (Y_i\\cdot\\mathbf d)Y_j\\rangle_s\n +\\sum_{i+j=p}\\langle (\\mathbf d\\cdot V_i)Y_j\\rangle_s\\\\\n &+\\sum_{i+j=p}(B_i\\cdot\\mathbf d)B_j\n +\\mathbf1_{\\{p=2\\}}R_U\\circ X,\n \\end{aligned}$$ where the last term occurs only at $p=2$. By (5.39) and (5.41), the first two sums are at most $\\mathsf D^C\\lambda^{-5/2}\\lambda^{-2(p-2)/3}$. By (5.39) and (5.40) at the lower levels, the third is at most $\\mathsf D^C\\lambda^{-7/2}\\lambda^{-2(p-2)/3}$, which is smaller. The term $R_U\\circ X$ is at most $C_n\\lambda^{-5/2}$, by (5.10). Hence $\\|\\bar f_p\\|_{[n]}\\le\\mathsf D^C\\lambda^{-5/2}\\lambda^{-2(p-2)/3}$ at every order. With this estimate at the order $n+1$, (5.12) bounds $\\|B_p\\|_{[n]}$ by $\\mathsf D^C$ times as much. This proves (5.35) at the level $p$, and with the hypothesis $\\mathsf D^C\\le\\lambda^{1/12}$ it gives (5.40) for $B_p$.",
@@ -1160,8 +1392,8 @@
    ],
    "adapted_bytes": [
     [
-     140993,
-     142004
+     143278,
+     144289
     ]
    ],
    "adapted_text": "Since $\\lambda\\ge1$, summing (5.34)–(5.36) over $p\\le P$ gives (5.37). For the remainder, recall $Y_{P+1}=Z_{P+1}=C_{P+1}$. By (5.36) for $C_{P+1}$, the bound (5.41) holds for $i\\le P+1$. The products in (5.30) are therefore bounded as those of $H_p$ and $f_p^S$ were: the products $(Z_i\\cdot\\mathbf d)Z_j$ with $i+j=q$, and $(C_i\\cdot\\kappa)\\partial_sY_j$ and $(B_i\\cdot\\kappa)\\partial_sY_j$ with $i+j=q+1$, are at most $\\mathsf D^C\\lambda^{-1/12}$ times $\\lambda^{-5/4}\\lambda^{-2(q-1)/3}$, and in (5.30) they have $q\\ge P+1$. By (5.32) and (5.34) for $V_P$, the linear term $(\\partial_t+M)C_{P+1}+\\mathbf d\\mathsf p_P$ is at most $\\mathsf D^C\\lambda^{-1/3}$ times $\\lambda^{-5/4}\\lambda^{-2P/3}$. The products of two means are bounded in the unweighted norm, and every other term in the weighted norm, which dominates the unweighted one because $\\gamma\\le1$. These other terms vanish for $t<t_0$ by Proposition 5.4, so the comparison holds on all of $[0,T]$. With the hypothesis, this is (5.38). $\\square$",
@@ -1204,8 +1436,8 @@
    ],
    "adapted_bytes": [
     [
-     144024,
-     145304
+     146309,
+     147589
     ]
    ],
    "adapted_text": "*Proof.* Since $\\operatorname{supp}g$ lies in the interior of the cell, $g_0$ equals its phase average near every cell face, and the assumed smooth periodic continuation of that average continues $g_0(t,a,k_*\\cdot a)$ across the faces for every $k_*$. The field $\\widetilde{\\mathbf d}_ig_0$ is again independent of the phase outside $\\operatorname{supp}g$, so, after composition with the inverse flow, $g_0^\\natural$ and its derivatives extend smoothly and periodically. The spatial chain rule in (3.1) and $\\widetilde{\\mathbf d}=(D_aX)^{-T}(\\nabla_a+k_*\\partial_s)$ give $$\\sum_i\\|\\widetilde{\\mathbf d}_ig_0\\|_{[n],\\gamma}\n \\le C_n\\mathsf D^C\\lambda^{3/2}\\|g_0\\|_{[n+1],\\gamma},\\qquad n\\ge0,$$ by Lemma D.1 and (5.8): a label derivative costs $\\ell_*^{-1}$, a fixed power of $\\mathsf D$, and $k_*\\partial_s$ costs $|k_*|h^{-1}\\le\\mathsf D\\lambda^{3/2}$, by (5.3). Iterate the displayed bound; at each time the supremum of a field is at most $\\gamma(t)$ times its weighted norm of order zero. This proves (5.44). The bound $\\|v\\|_{C^{0,1/2}}\\le C(\\|v\\|_\\infty+\\|\\nabla v\\|_\\infty)$, applied to derivatives through order $m$, proves (5.45) with one additional derivative. A phase-independent field has $\\widetilde{\\mathbf d}g_0=\\mathbf dg_0$, proving the last assertion. $\\square$",
@@ -1247,8 +1479,8 @@
    ],
    "adapted_bytes": [
     [
-     147218,
-     148143
+     149503,
+     150428
     ]
    ],
    "adapted_text": "Since $W_{\\rm osc}=0$ for $t<t_0$ by Proposition 5.4, and $\\gamma\\le1$ on $[t_0,T]$, the supremum of $W_{\\rm osc}^\\natural$ is at most $\\|W_{\\rm osc}\\|_{[0],\\gamma}$, and (5.37) gives (5.47). The bound (5.45) of Lemma 5.7, applied to $W_{\\rm osc}$ and $\\bar W$ with (5.37) at the order $m+1$, proves the first two bounds of (5.48). By Proposition 5.4, $R_P$ is independent of the phase outside $\\operatorname{supp}g$, so (5.45) at $m=1$, with $\\gamma$ replaced by one, and (5.38) bound $R_P^\\natural$ in $C_tC^{1,1/2}$ by $C_{2,P}\\mathsf D^C\\lambda^{7/4}\\lambda^{-2P/3}$. By (5.22) and (5.31), $\\|A_1+C[A_1]\\|_{[2],\\gamma}\\le C\\mathsf D^C\\lambda^{-5/4}$. At each time $t$, $R_{\\widetilde\\chi}$ is $\\widetilde\\chi'(t)$ times this field, so (5.45) at that time bounds $R_{\\widetilde\\chi}^\\natural(t)$ in $C^{1,1/2}$ by $C\\mathsf D^C\\lambda^{7/4}|\\widetilde\\chi'(t)|\\gamma(t)$. This proves the last bound of (5.48). $\\square$",
@@ -1291,8 +1523,8 @@
    ],
    "adapted_bytes": [
     [
-     148622,
-     149023
+     150907,
+     151308
     ]
    ],
    "adapted_text": "**Lemma 5.9.** On $[0,T]\\times\\mathbb T^3$, in the sense of quadratic forms, $$\\begin{equation}\n D_x^2\\mathsf P^\\natural\\le C_{\\rm step}\\lambda^{-1/4}\\operatorname{Id}. \\tag{5.49}\n\\end{equation}$$ At $x=0$, for $t_0\\le t\\le T$, $$\\begin{equation}\n \\nabla V(t,0)=\\nabla U(t,0)\n   +\\widetilde\\chi(t)\\,\\mathbf a(t,0)\\otimes\\kappa(t,0)+E_c(t),\n \\qquad\n |E_c|\\le\\lambda^{-1/3} . \\tag{5.50}\n\\end{equation}$$",
@@ -1335,8 +1567,8 @@
    ],
    "adapted_bytes": [
     [
-     154483,
-     155752
+     156768,
+     158037
     ]
    ],
    "adapted_text": "*Proof.* The field $v\\circ X$ is independent of the phase, and $\\mathbf d\\cdot(v\\circ X)=(\\operatorname{div}v)\\circ X=0$, so $\\widetilde{\\mathbf d}\\cdot(W+v\\circ X)=0$. By the chain rule and (5.8) for $D_aX$, $\\|v\\circ X\\|_{[2]}\\le C\\mathsf D^C\\left\\lVert v\\right\\rVert_{C_tC^2}$. Put $c=(D_aX)^{-1}(W+v\\circ X)$ and write $c=c_{\\rm osc}+\\bar c$ for its oscillatory and phase-independent parts, with $c_{\\rm osc}$ repeated over the lattice by $(a,s)\\mapsto(a+n,s+k_*\\cdot n)$, $n\\in\\mathbb Z^3$. On the graph $s=k_*\\cdot a$, the field $c$ is then $(D_aX)^{-1}((W^\\natural+v)\\circ X)$. The Piola identity turns the solenoidality of $W+v\\circ X$ into $(\\nabla_a+k_*\\partial_s)\\cdot c=0$, and the zero-mean phase primitive of its oscillatory part gives $k_*\\cdot c_{\\rm osc}=-\\partial_s^{-1}\\operatorname{div}_a c_{\\rm osc}$. With (5.37) and (5.8), the norms without weight therefore satisfy $$\\|c_{\\rm osc}\\|_{[2]}\\le C_{2,P}\\mathsf D^C\\lambda^{-5/4},\\qquad\n \\|\\bar c\\|_{[2]}\\le C_{2,P}\\mathsf D^C\\lambda^{-5/2},\\qquad\n \\|k_*\\cdot c\\|_{[1]}\\le C_{2,P}\\mathsf D^C\\lambda^{-5/4};$$ in the last bound the oscillatory part costs one label derivative and the mean part the factor $|k_*|\\le\\mathsf D\\lambda$ of (5.3). The flow estimate below uses only the order-one mean bound.",
@@ -1365,8 +1597,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds Proposition 2.2 to the citation of Section 2.4 of [BDLSV] and names Lemma B.1 as the source of the higher-derivative bounds.",
-   "status": "revised wording",
+   "note": "Adds Proposition 2.2 to the citation of Section 2.4 of [BDLSV] and names Lemma B.1 as the source of the higher-derivative bounds. Explains the cutoff's role in the next step and why both pressure and residual estimates enter the displacement bound.",
+   "status": "revised",
    "adapted": [
     "5.7 Frequency truncation#1"
    ],
@@ -1378,11 +1610,11 @@
    ],
    "adapted_bytes": [
     [
-     157676,
-     158319
+     159961,
+     160641
     ]
    ],
-   "adapted_text": "We truncate $V$ with the smooth frequency cutoff $S_\\Lambda$ of Appendix B, as in the mollification step of \\[[6](#cite-BDLSVOnsager), Section 2.4, Proposition 2.2\\]. By Lemma B.1, the cutoff bounds all higher derivatives of the next parent in terms of $\\Lambda$ and its supremum. We choose its pressure $p$ so that its residual is divergence free. The equation for the expansion pressure $\\Pi$ contains $\\operatorname{div}R_V$ by (5.46), so the bound for $D^2(p-\\Pi)$ includes both the residual of $V$ and the Fourier tail. The iteration uses the gradient bound on the new residual and the upper bound on $D^2(p-p_U)$ to propagate (5.2).",
+   "adapted_text": "The next wave needs bounds on derivatives of its parent. We take the parent to be $S_\\Lambda V$, using the smooth Fourier cutoff of Appendix B as in the mollification step of \\[[6](#cite-BDLSVOnsager), Section 2.4, Proposition 2.2\\]. Its frequency bound gives estimates at every derivative order from its supremum by Lemma B.1. We choose the pressure $p$ so that the new residual is divergence free. Since the equation for $\\Pi$ contains $\\operatorname{div}R_V$ by (5.46), both $R_V$ and the discarded Fourier tail enter the estimate of $D^2(p-\\Pi)$. The upper bound on $D^2(p-p_U)$ and the bound on the gradient of the new residual preserve (5.2) for the next mean equation.",
    "replaced": [
     "5.7 Frequency truncation#1"
    ],
@@ -1422,8 +1654,8 @@
    ],
    "adapted_bytes": [
     [
-     159446,
-     161902
+     161768,
+     164224
     ]
    ],
    "adapted_text": "*Proof.* By Lemma B.1, $u$ and $v_\\Lambda$ are odd and divergence free and $u$ is supported on frequencies at most $2\\Lambda$. Since $\\operatorname{div}(u\\cdot\\nabla u)=\\operatorname{tr}((\\nabla u)^2)$, the residual is $R_u=\\partial_tu+\\mathbb P\\operatorname{div}(u\\otimes u)$; it is odd, divergence free and supported on frequencies at most $4\\Lambda$. Applying $S_\\Lambda$ and then $\\mathbb P$ to (5.46) gives $\\partial_tu+\\mathbb P\\operatorname{div}S_\\Lambda(V\\otimes V)=\\mathbb PS_\\Lambda R_V$. Subtracting this from the formula for $R_u$ gives $$\\begin{equation}\n R_u=\\mathbb P\\bigl[S_\\Lambda R_V\n   +\\operatorname{div}\\bigl(v_\\Lambda\\otimes u+V\\otimes v_\\Lambda\n                +(\\operatorname{Id}-S_\\Lambda)(V\\otimes V)\\bigr)\\bigr]. \\tag{5.58}\n\\end{equation}$$ To bound $R_u$ in $C^{1,1/2}$ we need the three quadratic tensors in (5.58) in $C^{2,1/2}$. This accounts for the power $\\Lambda^{2-P}$ and the square in $\\varepsilon_\\Lambda$. The tail bound (B.2) at the order $P$ gives $\\left\\lVert v_\\Lambda\\right\\rVert_{C^{s,1/2}}\n\\le C_{2,P}\\Lambda^{s-P}\\left\\lVert V\\right\\rVert_{C^{P,1/2}}$ for $s\\le2$, and in particular the first bound of (5.56). By Leibniz’ rule and the algebra inequality for the norm of $C^{0,1/2}$, for every integer $m\\ge0$, $$\\begin{equation}\n \\left\\lVert fg\\right\\rVert_{C^{m,1/2}}\\le C_m\\left\\lVert f\\right\\rVert_{C^{m,1/2}}\\left\\lVert g\\right\\rVert_{C^{m,1/2}}. \\tag{5.59}\n\\end{equation}$$ Hence the three tensors on the right of (5.58) are at most $C_{2,P}\\Lambda^{2-P}\\left\\lVert V\\right\\rVert_{C^{P,1/2}}^2\\le C_{2,P}\\varepsilon_\\Lambda$ in $C^{2,1/2}$. The periodic multipliers $\\mathbb P$ and $D^2\\Delta^{-1}$ of order zero are bounded on $C^{0,1/2}$ and commute with derivatives, as does $S_\\Lambda$; this bounds $R_u$ in $C^{1,1/2}$. For the pressure, the divergence of (5.46) is $\\Delta\\Pi=\\operatorname{div}R_V-\\operatorname{tr}((\\nabla V)^2)$. Hence $$\\Delta(p-\\Pi)\n =-\\operatorname{tr}(\\nabla v_\\Lambda\\nabla V)-\\operatorname{tr}(\\nabla u\\nabla v_\\Lambda)\n  -\\operatorname{div}R_V,$$ and $\\left\\lVert D^2(p-\\Pi)\\right\\rVert_{C^{0,1/2}}\n\\le C\\left\\lVert v_\\Lambda\\right\\rVert_{C^{1,1/2}}(\\left\\lVert V\\right\\rVert_{C^{1,1/2}}+\\left\\lVert u\\right\\rVert_{C^{1,1/2}})\n+C\\left\\lVert R_V\\right\\rVert_{C^{1,1/2}}$. Taking the time suprema of the residual and pressure estimates separately and enlarging the constants proves (5.56). Since $p-p_U=(p-\\Pi)+\\mathsf P^\\natural$, Lemma 5.9 then gives (5.57). $\\square$",
@@ -1452,8 +1684,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "States the standing assumptions $\\lambda\\ge1$ and $T>0$ for the first wave, and that the seed solution is scaled by a positive constant.",
-   "status": "as returned",
+   "note": "States the standing assumptions $\\lambda\\ge1$ and $T>0$ for the first wave, and that the seed solution is scaled by a positive constant. Distinguishes the stationary flow supplying the two couplings from the first wave supplying the shear.",
+   "status": "revised",
    "adapted": [
     "6.1 The initial wave over a stationary shear#2"
    ],
@@ -1465,11 +1697,11 @@
    ],
    "adapted_bytes": [
     [
-     163220,
-     164172
+     165542,
+     166543
     ]
    ],
-   "adapted_text": "For $\\lambda\\ge1$ and $T>0$, take the first wave over $U_0$ on $[0,T]$ with $$\\begin{equation}\n k_*=\\lambda e_1,\\qquad \\widetilde\\chi\\equiv1, \\tag{6.3}\n\\end{equation}$$ so it is fully present at time zero. At the origin solve the seed equation (3.2) with initial direction $e_2$ and scale the solution by a positive constant so that $\\max_{[0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. At time zero $\\kappa(0,a)=\\lambda e_1$ at every label, so the projection in (5.4) leaves this initial amplitude unchanged. The initial frame at the origin is $(e_1,e_2,e_3)$, in which $$\\begin{equation}\n e_1\\cdot B_\\rho e_2=2\\pi,\\qquad e_3\\cdot B_\\rho e_2=2\\pi\\rho . \\tag{6.4}\n\\end{equation}$$ The second wave starts at time zero, so its amplification parameter is the ratio $\\eta(0)/\\nu(0)=\\rho$ of these couplings in the first wave’s frame. The shear that amplifies it is the leading gradient $\\mathbf a(0,0)\\otimes\\kappa(0,0)$ contributed by the first wave in (5.50).",
+   "adapted_text": "For $\\lambda\\ge1$ and $T>0$, take the first wave over $U_0$ on $[0,T]$ with $$\\begin{equation}\n k_*=\\lambda e_1,\\qquad \\widetilde\\chi\\equiv1, \\tag{6.3}\n\\end{equation}$$ so it is fully present at time zero. At the origin solve the seed equation (3.2) with initial direction $e_2$ and scale the solution by a positive constant so that $\\max_{[0,T]}|\\mathbf a(t,0)|=\\lambda^{-3/4}$. At time zero $\\kappa(0,a)=\\lambda e_1$ at every label, so the projection in (5.4) leaves this initial amplitude unchanged. The initial frame at the origin is $(e_1,e_2,e_3)$, in which $$\\begin{equation}\n e_1\\cdot B_\\rho e_2=2\\pi,\\qquad e_3\\cdot B_\\rho e_2=2\\pi\\rho . \\tag{6.4}\n\\end{equation}$$ The first two waves both start at time zero. For the second wave the older background is the stationary flow, whose two entries displayed above give $\\eta(0)/\\nu(0)=\\rho$. The large shear acting on that wave comes from the first wave. Its leading velocity gradient at the origin is $\\mathbf a(0,0)\\otimes\\kappa(0,0)$ by (5.50).",
    "replaced": [
     "6.1 The initial wave over a stationary shear#2"
    ],
@@ -1495,8 +1727,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Records that the preceding wave satisfies $a_p\\cdot\\kappa_p=0$ and $|a_p||\\kappa_p|>0$ on $[t_0,T]$.",
-   "status": "as returned",
+   "note": "Records that the preceding wave satisfies $a_p\\cdot\\kappa_p=0$ and $|a_p||\\kappa_p|>0$ on $[t_0,T]$. Identifies the gradient felt by the new wave and the two estimates that isolate the preceding wave's contribution.",
+   "status": "revised",
    "adapted": [
     "6.2 Choosing the next wave#1"
    ],
@@ -1508,11 +1740,11 @@
    ],
    "adapted_bytes": [
     [
-     165402,
-     166447
+     167773,
+     168895
     ]
    ],
-   "adapted_text": "Let $U$ and its flow $X$ be as in Subsection 5.1. The new wave starts at $t_0$ with frequency $\\lambda$. The origin is a fixed particle. Once the preceding wave’s cutoff equals one, (5.50) and the truncation estimate (5.56) give its contribution to the gradient there. Suppose, accordingly, that on $[t_0,T]$ the gradient $M=\\nabla U(t,0)$ has the form $$\\begin{equation}\n M=B+\\mathbf a_p\\otimes\\kappa_p+E_c , \\tag{6.5}\n\\end{equation}$$ where $B$ is the smooth trace-free gradient of the older velocity, $(\\mathbf a_p,\\kappa_p)$ is the preceding wave over $B$, with $\\mathbf a_p\\cdot\\kappa_p=0$ and $|\\mathbf a_p||\\kappa_p|>0$ on $[t_0,T]$. The matrix $E_c$ contains the errors from its corrections and truncation. The preceding pair solves (2.1) with $D=B$. In its moving frame $(E_i)$ write $B_{ij}=E_i\\cdot BE_j$. At $t_0$ freeze its strength $\\sigma=|\\mathbf a_p||\\kappa_p|$ and its couplings $\\nu=B_{12}>0$ and $\\eta=B_{32}>0$. As in Subsection 2.2.1, put $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$ and $\\tau=r(t-t_0)$.",
+   "adapted_text": "Let $U$ and its flow $X$ be as in Subsection 5.1. To launch a wave of frequency $\\lambda$ at $t_0$, we use the shear left by its predecessor. The origin is a fixed particle, so both waves sample the gradient there. Once the preceding cutoff equals one, (5.50) gives its rank-one contribution and (5.56) bounds the change due to truncation. Suppose, accordingly, that on $[t_0,T]$ the central gradient $M=\\nabla U(t,0)$ has the form $$\\begin{equation}\n M=B+\\mathbf a_p\\otimes\\kappa_p+E_c , \\tag{6.5}\n\\end{equation}$$ where $B$ is the smooth trace-free gradient of the older velocity, $(\\mathbf a_p,\\kappa_p)$ is the preceding wave over $B$, with $\\mathbf a_p\\cdot\\kappa_p=0$ and $|\\mathbf a_p||\\kappa_p|>0$ on $[t_0,T]$. The matrix $E_c$ contains the errors from its corrections and truncation. The preceding pair solves (2.1) with $D=B$. In its moving frame $(E_i)$ write $B_{ij}=E_i\\cdot BE_j$. At $t_0$ freeze its strength $\\sigma=|\\mathbf a_p||\\kappa_p|$ and its couplings $\\nu=B_{12}>0$ and $\\eta=B_{32}>0$. As in Subsection 2.2.1, put $r=\\sqrt{2\\sigma\\nu}$, $S=\\sigma/r$, $\\varepsilon=\\eta/\\nu$ and $\\tau=r(t-t_0)$.",
    "replaced": [
     "6.2 Choosing the next wave#1"
    ],
@@ -1538,8 +1770,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Writes out the two smallness conditions with the new interval length: $C_0\\varepsilon\\le1$ and $C_0[r(T-t_0)]^{C_0}\\delta\\le\\varepsilon$.",
-   "status": "as returned",
+   "note": "Writes out the two smallness conditions with the new interval length: $C_0\\varepsilon\\le1$ and $C_0[r(T-t_0)]^{C_0}\\delta\\le\\varepsilon$. Explains why the amplitude normalization preserves the comparison and the couplings. The first crossing is taken in the prescribed interval.",
+   "status": "revised",
    "adapted": [
     "6.2 Choosing the next wave#4"
    ],
@@ -1551,11 +1783,11 @@
    ],
    "adapted_bytes": [
     [
-     167900,
-     168679
+     170348,
+     171182
     ]
    ],
-   "adapted_text": "Suppose the normalized interval has length $r(T-t_0)\\ge2$ and that (2.7) holds with this length in place of $T$: $C_0\\varepsilon\\le1$ and $C_0[r(T-t_0)]^{C_0}\\delta\\le\\varepsilon$. Lemmas 2.6 and 2.7 then apply to the chosen direction. The positive rescaling of the seed preserves its frame and all ratios of its lengths. Write $\\nu_+,\\eta_+$ for the couplings of $M$ in the frame of the new wave. For $t_0\\le t'\\le t\\le T$ and every transverse solution $\\mathbf b$ of the seed equation at the origin, the two lemmas give $$\\begin{equation}\n \\frac{|\\mathbf b(t)|}{\\gamma(t)}\n \\le CS\\,\\frac{|\\mathbf b(t')|}{\\gamma(t')},\\qquad\n \\nu_+(t)\\ge\\tfrac12\\nu\\varepsilon. \\tag{6.7}\n\\end{equation}$$ These are the two estimates (5.5) when $\\mathsf D$ bounds $CS$ and $2/(\\nu\\varepsilon)$.",
+   "adapted_text": "Suppose the normalized interval has length $r(T-t_0)\\ge2$ and that (2.7) holds with this length in place of $T$: $C_0\\varepsilon\\le1$ and $C_0[r(T-t_0)]^{C_0}\\delta\\le\\varepsilon$. These bounds let us use Lemmas 2.6 and 2.7 on this interval. Rescaling the seed by a positive constant changes its amplitude but preserves its frame and the ratio of its lengths at any two times. Write $\\nu_+,\\eta_+$ for the couplings of $M$ in the frame of the new wave. For $t_0\\le t'\\le t\\le T$ and every transverse solution $\\mathbf b$ of the seed equation at the origin, the two lemmas give $$\\begin{equation}\n \\frac{|\\mathbf b(t)|}{\\gamma(t)}\n \\le CS\\,\\frac{|\\mathbf b(t')|}{\\gamma(t')},\\qquad\n \\nu_+(t)\\ge\\tfrac12\\nu\\varepsilon. \\tag{6.7}\n\\end{equation}$$ These are the two estimates (5.5) when $\\mathsf D$ bounds $CS$ and $2/(\\nu\\varepsilon)$.",
    "replaced": [
     "6.2 Choosing the next wave#4"
    ],
@@ -1581,8 +1813,8 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Recalls from the schedule the values $L_j=4\\log\\lambda_{j+1}$ and $\\varepsilon_j=L_{j+1}^{-2}$.",
-   "status": "as returned",
+   "note": "Recalls from the schedule the values $L_j=4\\log\\lambda_{j+1}$ and $\\varepsilon_j=L_{j+1}^{-2}$. Explains why one schedule serves all derivative orders and why the present residual is estimated at the next frequency.",
+   "status": "revised",
    "adapted": [
     "7 A common sequence of approximate solutions#1"
    ],
@@ -1594,11 +1826,11 @@
    ],
    "adapted_bytes": [
     [
-     169903,
-     170404
+     172406,
+     172910
     ]
    ],
-   "adapted_text": "We construct a single sequence of approximate solutions for all derivative orders. The parent for wave $1$ is the stationary shear (6.1) with $\\rho=\\varepsilon_1$. At step $j$ we choose the wave over $U_{j-1}$ as in Section 6 and apply Proposition 5.11 to obtain $U_j$. The frequencies and orders are fixed by (1.14); in particular, $L_j=4\\log\\lambda_{j+1}$ and $\\varepsilon_j=L_{j+1}^{-2}$. The residual of $U_j$ must already be small on the scale of the frequency $\\lambda_{j+1}$ of the next wave.",
+   "adapted_text": "The same sequence of velocities must converge in every fixed derivative order before the singular time. We start from the stationary shear (6.1) with $\\rho=\\varepsilon_1$. At step $j$ we choose the wave over $U_{j-1}$ as in Section 6 and use Proposition 5.11 to obtain $U_j$. The schedule (1.14) fixes $L_j=4\\log\\lambda_{j+1}$ and $\\varepsilon_j=L_{j+1}^{-2}$. It also fixes how accurately $U_j$ must solve Euler. Its residual serves as forcing when the next wave is added at frequency $\\lambda_{j+1}$.",
    "replaced": [
     "7 A common sequence of approximate solutions#1"
    ],
@@ -1639,8 +1871,8 @@
    ],
    "adapted_bytes": [
     [
-     172316,
-     173326
+     174822,
+     175832
     ]
    ],
    "adapted_text": "1.  $U_j$ is a smooth odd divergence-free field on $[0,S_j]\\times\\mathbb T^3$, supported on frequencies at most $2\\Lambda_j$.\n\n2.  $\\left\\lVert U_j\\right\\rVert_{C_tL^\\infty}\\le\\lambda_j$, $\\sup|(D_aX_j)^{\\pm1}|\\le\\lambda_j$ and $\\left\\lVert R_j\\right\\rVert_{C_tL^\\infty}\\le\\lambda_{j+1}^{-3}$.\n\n3.  $D^2\\pi_j\\le\\bigl(\\sum_{i=1}^j\\lambda_{i-1}^{-1}\\bigr)\\operatorname{Id}$ on $[0,S_j]\\times\\mathbb T^3$, as an upper bound of quadratic forms.\n\n4.  At the center on $[t_j,S_j]$, $\\nabla U_j=\\nabla U_{j-1}\n    +\\widetilde\\chi_j\\,\\mathbf a_j\\otimes\\kappa_j+E_{c,j}$ with $|E_{c,j}|\\le\\lambda_j^{-1/4}$. Moreover $0\\le t_{j+1}-t_j\\le\\tau_j$ and $\\widetilde\\chi_j=1$ on $[t_{j+1},S_j]$, so that the gradient of $U_j$ has the splitting (6.5) there. At $t_{j+1}$, with an absolute constant $C\\ge2$ for which (2.23) holds, $$\\begin{equation}\n     \\frac{\\eta_j}{\\nu_j}=\\varepsilon_j,\\qquad\n     \\pi\\le\\nu_j\\le4\\pi,\\qquad\n     C^{-1}\\lambda_j^{1/4}\\le\\sigma_j\\le C\\lambda_j^{1/4}L_{j+1}^2 . \\tag{7.3}\n    \\end{equation}$$",
@@ -1682,8 +1914,8 @@
    ],
    "adapted_bytes": [
     [
-     177445,
-     187087
+     179951,
+     189593
     ]
    ],
    "adapted_text": "1.  *Estimates for the parent.* On $[0,S_j]\\subset[0,S_{j-1}]$, (T1) bounds the frequencies of $U=U_{j-1}$ by $2\\Lambda_{j-1}=2\\mu^5\\le2\\mathsf D$. By (T2) and (7.6), $\\sup|(D_aX)^{\\pm1}|\\le\\mu$ and $\\|\\nabla U\\|_\\infty\\le\\mu^9=\\mathsf D$, as required in (5.1). The residual bound $\\|R_{j-1}\\|_{C_tL^\\infty}\\le\\lambda^{-3}$ in (T2) gives (5.6). For the endpoint problem we also need (5.2). The derivative bound preceding (7.6) gives $\\|\\nabla R_{j-1}\\|_\\infty\n    \\le C\\mu^5\\lambda^{-3}$. In (T3) the sum is at most $2/N$, since $\\lambda_0=N$ and $\\lambda_i\\ge2\\lambda_{i-1}$. Thus $D^2\\pi_{j-1}-\\nabla R_{j-1}\\le(2/N+C\\mu^5\\lambda^{-3})\\operatorname{Id}$ as quadratic forms, which gives (5.2) for large $N$.\n\n2.  *Choosing wave $j$.* For $j=1$ take the wave (6.3) of frequency $\\lambda_1$ on $[0,S_1]$. Since $4\\pi S_1\\le1/8$ for large $N$, Lemma 6.1 gives (5.5) and the strength bounds in (7.3) at $t_2=t_1=0$. The couplings there are $\\nu_1=2\\pi$ and $\\eta_1=2\\pi\\varepsilon_1$ by (6.4). The first wave has $\\widetilde\\chi_1\\equiv1$.\n\n    For $j\\ge2$, (T4) at $j-1$ gives the splitting (6.5) on $[t_j,S_j]$ with $B=\\nabla U_{j-2}(t,0)$, the preceding pair $(\\mathbf a_{j-1},\\kappa_{j-1})$ and $\\|E_c\\|_\\infty\\le\\mu^{-1/4}$. The pair solves (2.1) over $B$ because the flow of $U_{j-2}$ fixes the origin. Freeze its couplings and strength at $t_j$. For $j=2$ these are the values of wave $1$ at time zero. For $j\\ge3$ they are the values at the preceding crossing. In both cases (7.3) gives $$\\varepsilon=\\varepsilon_{j-1}=L_j^{-2},\\qquad\n     \\pi\\le\\nu\\le4\\pi,\\qquad\n     c\\mu^{1/4}\\le\\sigma\\le C\\mu^{1/4}L_j^2 .$$ Choose the wave of Subsection 6.2, whose wave vector has length $\\lambda$ at $t_j$. Since $r=\\sqrt{2\\sigma\\nu}$, $c\\mu^{1/8}\\le r\\le C\\mu^{1/8}L_j$. The normalized length $r(S_j-t_j)=2r\\mu^{-1/8}L_{j+1}^3$ is therefore between $2$ and $CL_{j+1}^4$ for large $N$.\n\n    To check the comparison on this interval, (7.6) at $j-2$ gives $\\|B\\|_\\infty\\le\\lambda_{j-2}^9\\le\\mu^{1/32}$ and $\\|B_t\\|_\\infty\\le\\mu^{1/16}$, since $\\lambda_{j-2}=\\mu^{1/K_{j-1}}$ and $K_{j-1}>288$. With $\\eta=\\nu\\varepsilon$, the three terms in (6.6) give $$\\delta\\le C\\bigl(\\varepsilon^{-1}L_{j+1}^3\\mu^{-1/16}\n                       +\\mu^{-3/32}+\\mu^{-1/4}\\bigr).$$ By (1.15), $L_j\\le L_{j+1}\\le(\\log\\mu)^2$. Thus, with $C_0$ fixed as in Subsection 2.2, $C_0(2r\\tau_j)^{C_0}\\delta/\\varepsilon$ is bounded by $\\mu^{-1/16}$ times a fixed power of $\\log\\mu$, and $C_0\\varepsilon\\le C_0(\\log N)^{-2}$. For this fixed $C_0$, both conditions of (2.7) hold for every $j\\ge2$ once $N$ is sufficiently large; the threshold is independent of $j$. In the resulting central estimates (6.7), $CS=Cr/(2\\nu)\\le C\\mu^{1/8}L_j$ and $2/(\\nu\\varepsilon)\\le 2L_j^2/\\pi$. Both are at most $\\mu\\le\\mathsf D$ for large $N$. This proves (5.5) for wave $j$.\n\n3.  *The next activation time.* For $j\\ge2$ we seek a crossing with $\\eta_j/\\nu_j=\\varepsilon_j$ in the first half of $[t_j,S_j]$. Then $t_{j+1}\\le t_j+\\tau_j$ leaves room for the next interval, since $2\\tau_{j+1}\\le\\tau_j/2$ by (7.7). The parameter choice (1.14) gives $L_{j+1}/L_j=K_{j+2}\\ge640$, so $$\\begin{equation}\n     \\varepsilon_j=(L_j/L_{j+1})^2\\varepsilon_{j-1}\\le\\varepsilon_{j-1}/32, \\tag{7.9}\n    \\end{equation}$$ and $(\\varepsilon\\varepsilon_j)^{-1/2}=L_jL_{j+1}\\le L_{j+1}^2$. In physical time the upper endpoint of the bracket in Proposition 2.8 lies at most $\\tau_j$ after $t_j$. Indeed, $$\\frac{2(\\varepsilon\\varepsilon_j)^{-1/2}}{r}\n     \\le C\\mu^{-1/8}L_{j+1}^2\\le\\tau_j ,$$ using $r\\ge c\\mu^{1/8}$ and $L_{j+1}\\ge\\log N$. Take $t_{j+1}$ to be the first crossing in that interval. Its normalized time is at least $\\tau_m\\ge2/\\varepsilon>1$, so $0<t_{j+1}-t_j\\le\\tau_j$ and $\\widetilde\\chi=1$ on $[t_{j+1},S_j]$.\n\n    At this crossing (2.23) bounds $\\sigma_j(t_{j+1})$ above and below by absolute multiples of $\\lambda^{1/4}L_jL_{j+1}$, since $\\max_{[t_j,S_j]}|\\mathbf a_j(t,0)|=\\lambda^{-3/4}$. As $1\\le L_jL_{j+1}\\le L_{j+1}^2$, this gives the strength bounds in (7.3). Equation (2.19) applies at the same time and gives $$\\bigl|\\log\\bigl(\\nu_j(t_{j+1})/\\nu_{j-1}(t_j)\\bigr)\\bigr|\n     \\le2\\varepsilon_{j-1}.$$ Summing this inequality over the successive crossings from $\\nu_1(t_2)=2\\pi$ and using $\\varepsilon_i\\le32^{1-i}\\varepsilon_1$ from (7.9) gives $|\\log(\\nu_j(t_{j+1})/(2\\pi))|\\le4\\varepsilon_1\\le4(\\log N)^{-2}$. Thus $\\pi\\le\\nu_j(t_{j+1})\\le4\\pi$ for large $N$, completing (7.3).\n\n    On the interval where the cutoff changes, (6.8) gives $\\gamma\\le e^{3-L_j}=e^3\\lambda_{j+1}^{-4}$. Since $|\\widetilde\\chi'|\\le Cr$ and $Ce^3r\\le\\mu$ for large $N$ by item 2, $$\\begin{equation}\n     \\|\\widetilde\\chi'\\gamma\\|_\\infty\\le\\mu\\lambda_{j+1}^{-4}. \\tag{7.10}\n    \\end{equation}$$ The same estimate holds for the first wave since $\\widetilde\\chi_1'\\equiv0$.\n\n4.  *The expansion and its truncation.* Items 1 and 2 give the parent and wave assumptions of Subsection 5.1. By (7.8), $C_{\\rm step}=\\Gamma_P\\mathsf D^b\\le\\mu^{10b}\\le\\lambda^{1/32}$, so (5.43) holds. We can therefore apply the expansion and truncation estimates of Section 5.\n\n    The new residual must be small at the frequency $\\lambda_{j+1}$ of the next wave. For the expansion remainder, the depth (7.2) gives $\\lambda^{-2P/3}=\\lambda^{-4K_{j+1}}=\\lambda_{j+1}^{-4}$. For the time cutoff, item 3 gives the bound (7.10), with the same decay up to a factor $\\mu$. Thus (5.48) and $C_{\\rm step}\\mu\\le\\lambda^{1/16}$ give $$\\begin{equation}\n     \\left\\lVert R_V\\right\\rVert_{C_tC^{1,1/2}}\\le2\\lambda^{2+1/16}\\lambda_{j+1}^{-4}\n     \\le\\lambda_{j+1}^{-7/2}. \\tag{7.11}\n    \\end{equation}$$\n\n    To estimate the Fourier tail in (5.55), we need $\\left\\lVert V\\right\\rVert_{C_tC^{P,1/2}}$. For the parent $U=U_{j-1}$, (T1), (T2) and the Bernstein bound (B.1) give $\\left\\lVert U\\right\\rVert_{C_tC^{P,1/2}}\\le C_P\\mu^{5(P+1)+1}\\le\\lambda^{P+2}$, since $C_P\\le\\mu$ and $\\lambda=\\mu^{K_j}$ with $K_j\\ge6$. For the wave, (7.8) bounds the factor $C_{P,P}\\mathsf D^{b(P+2)}$ in (5.48) by $\\lambda^{(P+2)/32}$. The larger of the two resulting exponents for the oscillation and the mean is $3P/2+1/4+(P+2)/32$. This gives $\\left\\lVert W^\\natural\\right\\rVert_{C_tC^{P,1/2}}\\le\\lambda^{2(P+1)}$ for large $N$. Hence $1+\\left\\lVert V\\right\\rVert_{C_tC^{P,1/2}}\\le3\\lambda^{2(P+1)}$. Inserting this with $\\Lambda=\\lambda^5$ and $9\\mu\\le\\lambda$ gives $$\\begin{equation}\n     \\mu\\varepsilon_\\Lambda\\le9\\mu\\lambda^{5(2-P)+4(P+1)}\n     \\le\\lambda^{15-P}\n     =\\lambda^{15}\\lambda_{j+1}^{-6}\\le\\lambda_{j+1}^{-5}. \\tag{7.12}\n    \\end{equation}$$ In particular $C_{2,P}\\varepsilon_\\Lambda\\le\\lambda_{j+1}^{-5}$.\n\n5.  *The new velocity.* Take $U_j=S_{\\Lambda_j}V$ in Proposition 5.11. The proposition gives (T1), and (5.56) with (7.11) and (7.12) gives $$\\left\\lVert R_j\\right\\rVert_{C_tL^\\infty}\\le C\\lambda_{j+1}^{-7/2}+\\lambda_{j+1}^{-5}\n     \\le\\lambda_{j+1}^{-3},\\qquad\n     \\left\\lVert v_\\Lambda\\right\\rVert_{C_tC^2}\\le\\lambda_{j+1}^{-5}.$$ Since $U_j=V+v_\\Lambda$ and $\\lambda_{j+1}^{-5}\\le\\lambda^{-5/2}$, the divergence-free field $v_\\Lambda$ satisfies the hypothesis of Lemma 5.10. It follows that $\\sup|(D_aX_j)^{\\pm1}|\\le C_{\\rm step}\\lambda^{1/4}\\le\\lambda$.\n\n    By Proposition 5.4, $W_{\\rm osc}$ is supported in $|a|\\le2\\ell_*$ in label coordinates. The support of $O_j=W_{\\rm osc}^\\natural$ lies in the image of this ball under the parent flow. The flow fixes the origin, so (5.1) and $\\ell_*\\le\\mathsf D^{-3}$ place its Eulerian support in the ball of radius $2\\mathsf D\\ell_*\\le2\\mathsf D^{-2}\\le\\mu^{-1}$. For $j\\ge2$, $O_j$ vanishes before $t_j$ by the same proposition. It vanishes also at $t_j$, since $\\widetilde\\chi(t_j)=0$ and the higher oscillatory profiles have zero data there by Subsection 5.4. By (5.47) and (7.8), $\\left\\lVert O_j\\right\\rVert_{C_tL^\\infty}\\le\\lambda^{1/32}\\lambda^{-5/4}\\le\\lambda^{-1}$.\n\n    The rest of the velocity increment can extend across the torus. Since $V=U_{j-1}+W^\\natural$, $$U_j-U_{j-1}-O_j=\\bar W^\\natural+v_\\Lambda .$$ For $0\\le m\\le q_j$, the coefficient $C_{m,P}\\mathsf D^{b(m+2)}$ in (5.48) is at most $\\mu^{10b(m+2)}\\le\n    \\lambda^{1/16}$, since $K_j=320b(q_j+1)$. Thus $\\|\\bar W^\\natural\\|_{C_tC^{m,1/2}}\\le\\lambda^{1/16-5/2}\n    \\le\\lambda^{-3/2}$. For the Fourier tail, (B.2) at order $P$ and (7.12) give $$\\|v_\\Lambda\\|_{C_tC^{m,1/2}}\n     \\le\\mu\\Lambda_j^{m-P}\\left\\lVert V\\right\\rVert_{C_tC^{P,1/2}}\n     \\le\\Lambda_j^{m-2}\\mu\\varepsilon_\\Lambda\n     \\le\\lambda^{5q_j}\\lambda_{j+1}^{-5}\\le\\lambda_{j+1}^{-4},$$ where $K_{j+1}\\ge K_j\\ge5q_j$. The sum of the mean and tail bounds is at most $\\lambda^{-1}$, proving (7.4). In particular $\\left\\lVert U_j\\right\\rVert_{C_tL^\\infty}\\le\\mu+2\\lambda^{-1}\\le\\lambda$ by (T2) for the parent. This completes (T2) for $U_j$.\n\n6.  *Pressure and the central velocity gradient.* For the pressure increment, the leading term in (5.57) satisfies $C_{\\rm step}\\lambda^{-1/4}\\le\\lambda^{-7/32}\\le\\mu^{-2}$. By (7.11) and (7.12), the other two terms are at most $C\\lambda_{j+1}^{-7/2}+\\lambda_{j+1}^{-5}$. Hence $D^2\\pi_j\\le D^2\\pi_{j-1}+\\mu^{-1}\\operatorname{Id}$ on $[0,S_j]$ for large $N$. Since $\\mu^{-1}=\\lambda_{j-1}^{-1}$ and $S_j\\le S_{j-1}$, adding this increment to (T3) for the parent proves (T3) at step $j$.\n\n    At the origin truncation adds $\\nabla v_\\Lambda(t,0)$ to the gradient in (5.50). Thus the new error is $E_{c,j}=E_c+\\nabla v_\\Lambda(t,0)$ with $|E_{c,j}|\\le\\lambda^{-1/3}+\\lambda_{j+1}^{-5}\\le\\lambda^{-1/4}$. From $t_{j+1}$ onward the cutoff equals one, so the full rank-one term is present for the next wave. With the coupling and strength bounds from items 2 and 3, this proves (T4) and closes the induction.",
@@ -1712,8 +1944,8 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Describes the two convergence regimes: on intervals ending before $T_\\infty$ the late oscillations vanish, and on compact sets away from the origin their supports eventually leave the set.",
-   "status": "as returned",
+   "note": "Describes the two convergence regimes: on intervals ending before $T_\\infty$ the late oscillations vanish, and on compact sets away from the origin their supports eventually leave the set. Distinguishes uniform velocity convergence from derivative convergence, and explains the off-origin pressure trace.",
+   "status": "revised",
    "adapted": [
     "8 The limit and its terminal behavior#1"
    ],
@@ -1725,11 +1957,11 @@
    ],
    "adapted_bytes": [
     [
-     187522,
-     188084
+     190028,
+     191026
     ]
    ],
-   "adapted_text": "On the common interval $[0,T_\\infty]$ of Theorem 7.1, (7.4) gives $\\|U_j-U_{j-1}\\|_{C_tL^\\infty}\n\\le2\\lambda_j^{-1}$. The sum converges, so the velocities converge uniformly to a continuous field $w$ on $[0,T_\\infty]\\times\\mathbb T^3$. For convergence of derivatives on each fixed interval ending before $T_\\infty$, the late oscillations vanish before activation. On each compact set away from the origin, their shrinking supports eventually miss the set throughout $[0,T_\\infty]$. In either case, (7.4) leaves summable corrections in every fixed spatial order.",
+   "adapted_text": "The velocity increments are summable even at $T_\\infty$. On the common interval of Theorem 7.1, (7.4) gives $\\|U_j-U_{j-1}\\|_{C_tL^\\infty}\n\\le2\\lambda_j^{-1}$, so the velocities converge uniformly to a continuous field $w$ on $[0,T_\\infty]\\times\\mathbb T^3$. At each fixed derivative order, only the oscillation $O_j$ can be large in a late increment. On any fixed interval ending before $T_\\infty$, all sufficiently late waves have yet to start. On any compact set away from the origin, their supports eventually miss the set even at $T_\\infty$. In either case only a summable remainder survives at each fixed derivative order. Before $T_\\infty$ we identify $w$ with the Euler solution $u$. To find the trace of $\\partial_t u$ away from zero we must account for the pressure due to the velocity near the origin. A cutoff separates a local term, controlled by these spatial derivatives, from a far term with a smooth kernel. Uniform convergence of the velocity on the torus controls this far term.",
    "replaced": [
     "8 The limit and its terminal behavior#1"
    ],
@@ -1774,12 +2006,12 @@
    ],
    "adapted_bytes": [
     [
-     188154,
-     188625
+     191096,
+     191567
     ],
     [
-     188627,
-     189105
+     191569,
+     192047
     ]
    ],
    "adapted_text": "**Proposition 8.1.** The data $U_j(0)$ converge in every $C^{m,1/2}$ to an odd divergence-free field $u_0$. In particular, $u_0\\in C^\\infty(\\mathbb T^3;\\mathbb R^3)$. Let $u$ be the maximal smooth solution of the Euler equations from $u_0$, with maximal time $T_*>0$, supplied by Section 1. Then $T_*\\ge T_\\infty$ and, for every $0\\le T<T_\\infty$ and integer $m\\ge0$, $U_j\\to u$ in $C([0,T];C^{m,1/2})$. The solution is smooth and odd on $[0,T_\\infty)\\times\\mathbb T^3$.\n\n*Proof.* Fix $0\\le T<T_\\infty$ and an integer $m\\ge1$. Since $t_j\\uparrow T_\\infty$ and $q_j\\uparrow\\infty$, we can choose $j_0$ with $T\\le t_{j_0}$ and $q_{j_0}\\ge m$. For $j>j_0$ the oscillation $O_j$ vanishes on $[0,T]$. Thus (7.4) gives, for $\\ell>n\\ge j_0$, $$\\|U_\\ell-U_n\\|_{C([0,T];C^{m,1/2})}\n \\le\\sum_{j>n}\\lambda_j^{-1}\\le2\\lambda_{n+1}^{-1}.$$ The limit in each of these norms is $w$. In particular $u_0=w(0)$ is smooth, and $w$ is odd and divergence free on $[0,T]$.",
@@ -1826,8 +2058,8 @@
    ],
    "adapted_bytes": [
     [
-     189107,
-     189967
+     192049,
+     192909
     ]
    ],
    "adapted_text": "We pass to the limit in the equation using the vanishing residual. Integrating (7.5) gives $$U_j(t)=U_j(0)-\\int_0^t\\mathbb P\\operatorname{div}(U_j\\otimes U_j)\\,\\mathrm dt'\n        +\\int_0^tR_j\\,\\mathrm dt'.$$ By <span class=\"upright\">(T2)</span>, the last integral has supremum norm at most $T\\lambda_{j+1}^{-3}$. Convergence in $C([0,T];C^{1,1/2})$, the product estimate (5.59) and boundedness of $\\mathbb P$ on $C^{0,1/2}$ give uniform convergence of the projected nonlinear term. Hence $\\partial_t w=-\\mathbb P\\operatorname{div}(w\\otimes w)$. The convergence holds in every spatial order, so the right-hand side is continuous in every spatial Hölder norm. Differentiating the equation then gives joint smoothness. Uniqueness identifies $w$ with $u$ wherever both exist. Since $w$ exists for every $T<T_\\infty$, maximality gives $T_*\\ge T_\\infty$. $\\square$",
@@ -1841,6 +2073,86 @@
      1397
     ]
    ]
+  },
+  {
+   "id": "E3-S8-05",
+   "part": "E3",
+   "kind": "added-justification",
+   "authors": [
+    "8.2 Velocity, central vorticity and the maximal time#3"
+   ],
+   "ours": "sections/09b_terminal_properties.tex",
+   "sources": [
+    {
+     "kind": "paper",
+     "ref": "Equation (8.1) in the proof of Proposition 8.2"
+    },
+    {
+     "kind": "lean",
+     "ref": "TorusEuler.inner_normalize_twoLayerCurl and TorusEuler.preceding_curl_projection_of_stage_scales"
+    }
+   ],
+   "note": "Explains why projecting the curl in the newest wave direction gives a lower bound throughout each late launch interval, including the time the newest wave is switching on.",
+   "status": "revised",
+   "adapted": [
+    "8.2 Velocity, central vorticity and the maximal time#3"
+   ],
+   "adapted_lines": [
+    [
+     1415,
+     1416
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     193287,
+     193646
+    ]
+   ],
+   "adapted_text": "At the origin, project the curl along the newest wave vector. The new wave’s leading curl contributes zero in this direction. The projected curl of the preceding wave has a lower bound tending to infinity, uniform throughout each successive launch interval. The older gradient and the errors are too small to cancel it. This rules out a smooth continuation.",
+   "replaced": [],
+   "authors_text": "",
+   "authors_lines": []
+  },
+  {
+   "id": "E3-S8-04",
+   "part": "E3",
+   "kind": "added-justification",
+   "authors": [
+    "8.2 Velocity, central vorticity and the maximal time#7"
+   ],
+   "ours": "sections/09b_terminal_properties.tex",
+   "sources": [
+    {
+     "kind": "paper",
+     "ref": "Corollary 8.3 and the proof of Proposition 8.2"
+    },
+    {
+     "kind": "lean",
+     "ref": "TorusEuler.Paper.Proof.corollary_8_3 and TorusEuler.curlIntegral_eq_top_of_inductive_physical_crossings"
+    }
+   ],
+   "note": "Distinguishes the periodic Beale–Kato–Majda argument in the manuscript from the direct time integration in the formal proof.",
+   "status": "revised",
+   "adapted": [
+    "8.2 Velocity, central vorticity and the maximal time#9"
+   ],
+   "adapted_lines": [
+    [
+     1438,
+     1439
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     196902,
+     197431
+    ]
+   ],
+   "adapted_text": "The proof above uses the periodic Beale–Kato–Majda criterion. The Lean proof obtains divergence of the curl integral directly from this construction. On each sufficiently late interval $[t_j,t_{j+1}]$, the magnitude of the curl at the origin is at least a fixed multiple of $\\lambda_{j-1}^{1/8}$. The crossing estimate bounds the time between launches from below by a fixed multiple of $L_j\\lambda_{j-1}^{-1/8}$. Thus one interval alone contributes at least a fixed multiple of $L_j$ to the curl integral, and $L_j\\to\\infty$.",
+   "replaced": [],
+   "authors_text": "",
+   "authors_lines": []
   },
   {
    "id": "E3-A-01",
@@ -1863,14 +2175,14 @@
    ],
    "adapted_lines": [
     [
-     1490,
-     1492
+     1494,
+     1496
     ]
    ],
    "adapted_bytes": [
     [
-     199069,
-     199423
+     202903,
+     203257
     ]
    ],
    "adapted_text": "*Proof.* We first prove the a priori estimate and then obtain existence by continuation. For $\\mathcal Rv=v$, testing $f=\\mathcal R(Bv)$ against $v$ and using (A.4) gives $$\\mu\\left\\lVert v\\right\\rVert_{L^2_a(H)}^2\n \\le \\langle Bv,v\\rangle_{L^2_a(H)}=\\langle f,v\\rangle_{L^2_a(H)} .$$ This bound will control the lower-order term in the Hölder estimate.",
@@ -1906,14 +2218,14 @@
    ],
    "adapted_lines": [
     [
-     1493,
-     1496
+     1497,
+     1500
     ]
    ],
    "adapted_bytes": [
     [
-     199425,
-     200164
+     203259,
+     203998
     ]
    ],
    "adapted_text": "Freeze $B_0=B(a_0)$ and let $r(n)$ be the symbol of $\\mathcal R$. For $n\\ne0$ the Leray symbol projects onto $n^\\perp$, and at zero it is the identity. In the time-dependent case $r(n)$ also includes $\\mathcal Q$. Extend the frozen operator to all of $H$ by $$A_0(n)=r(n)B_0r(n)+I-r(n).$$ It acts as the identity on the orthogonal complement of $r(n)H$. Applying (A.4) to the real and imaginary parts of $r(n)w$ gives $$\\operatorname{Re}\\langle A_0(n)w,w\\rangle_H\n \\ge\\mu\\left\\lVert r(n)w\\right\\rVert_H^2+\\left\\lVert(I-r(n))w\\right\\rVert_H^2\n \\ge\\min(1,\\mu)\\left\\lVert w\\right\\rVert_H^2 .$$ Lax–Milgram, which does not require symmetry of $B_0$, gives $\\|A_0(n)^{-1}\\|\\le\\min(1,\\mu)^{-1}$ \\[[14](#cite-Evans), Section 6.2.1, Theorem 1\\].",
@@ -1927,6 +2239,42 @@
      1483
     ]
    ]
+  },
+  {
+   "id": "ED-02",
+   "part": "edition",
+   "kind": "added-justification",
+   "authors": [
+    "A.1 Spatial freezing#4"
+   ],
+   "ours": "sections/appA_mean_regularity.tex",
+   "sources": [
+    {
+     "kind": "literature",
+     "ref": "Evans, Partial Differential Equations, Section 6.2.1, Theorem 1 and its proof, pp. 315-317"
+    }
+   ],
+   "note": "Adds how Lax–Milgram, stated for real Hilbert spaces, applies to the complex Fourier coefficients here, and where the inverse bound comes from in its proof.",
+   "status": "edition addition",
+   "adapted": [
+    "A.1 Spatial freezing#5"
+   ],
+   "adapted_lines": [
+    [
+     1501,
+     1502
+    ]
+   ],
+   "adapted_bytes": [
+    [
+     204000,
+     204446
+    ]
+   ],
+   "adapted_text": "The theorem is stated for real Hilbert spaces; it applies here on the underlying real space with the bilinear form $(u,v)\\mapsto\\operatorname{Re}\\langle A_0(n)u,v\\rangle_H$, which the display above makes coercive with constant $\\beta=\\min(1,\\mu)$, and the estimate $\\beta\\left\\lVert u\\right\\rVert_H\\le\\left\\lVert A_0(n)u\\right\\rVert_H$ from its proof gives the bound \\[[14](#cite-Evans), Section 6.2.1, Theorem 1 and its proof, pp. 315–317\\].",
+   "replaced": [],
+   "authors_text": "",
+   "authors_lines": []
   },
   {
    "id": "E3-A-03",
@@ -1945,18 +2293,18 @@
    "note": "Records the lower bound $1\\le C_1$ and the range $0<\\varepsilon\\le1$ for the averaging radius.",
    "status": "as returned",
    "adapted": [
-    "A.1 Spatial freezing#7"
+    "A.1 Spatial freezing#8"
    ],
    "adapted_lines": [
     [
-     1508,
-     1512
+     1514,
+     1518
     ]
    ],
    "adapted_bytes": [
     [
-     202157,
-     203408
+     206439,
+     207690
     ]
    ],
    "adapted_text": "For the last term the source vanishes on the ball of radius $r$. The periodized bounds for $d=1$ sum to $CC_0(|y|^{-4}+1)$ away from zero. At points within $r/2$ of $a_0$, integrating over torus distances $|y|\\ge r/2$ bounds the gradient by $CC_0r^{-1}\\left\\lVert B\\right\\rVert_\\infty\\left\\lVert v\\right\\rVert_\\infty$. For pairs of points at distance at most $r/2$, center the cutoff at one of them. The last term then contributes at most $CC_0r^{-1/2}\\left\\lVert B\\right\\rVert_\\infty\\left\\lVert v\\right\\rVert_\\infty$ to the Hölder quotient. For other pairs use $Cr^{-1/2}\\left\\lVert v\\right\\rVert_\\infty$ for the quotient of $v$. Absorbing the second term of (A.7) gives $$\\left\\lVert v\\right\\rVert_{C^{0,1/2}_a(H)}\\le C_1\n       \\bigl(\\left\\lVert f\\right\\rVert_{C^{0,1/2}_a(H)}+\\left\\lVert v\\right\\rVert_{L^\\infty_a(H)}\\bigr),\n \\qquad 1\\le C_1\\le CQ_0^C.$$ For $0<\\varepsilon\\le1$, averaging on a ball of radius $\\varepsilon^2$ gives $$\\left\\lVert v\\right\\rVert_\\infty\\le\\varepsilon\\left\\lVert v\\right\\rVert_{C^{0,1/2}_a(H)}\n       +C\\varepsilon^{-3}\\left\\lVert v\\right\\rVert_{L^2_a(H)}.$$ Taking $\\varepsilon=(2C_1)^{-1}$ and using $\\left\\lVert v\\right\\rVert_{L^2_a(H)}\\le\\mu^{-1}\\left\\lVert f\\right\\rVert_{L^2_a(H)}$ from coercivity proves (A.5).",
@@ -1985,24 +2333,24 @@
      "ref": "the authors' own text at this point"
     }
    ],
-   "note": "Adds that the inverse on time paths enforces both endpoint conditions and that inversion at each time then gives a continuous velocity.",
-   "status": "as returned",
+   "note": "Adds that the inverse on time paths enforces both endpoint conditions and that inversion at each time then gives a continuous velocity. Distinguishes the mean-zero path selected by the endpoints from the time-continuous representative recovered by spatial inversion.",
+   "status": "revised",
    "adapted": [
     "A.2 Recovering the velocity at each time#1"
    ],
    "adapted_lines": [
     [
-     1520,
-     1525
+     1526,
+     1531
     ]
    ],
    "adapted_bytes": [
     [
-     204268,
-     205556
+     208550,
+     209964
     ]
    ],
-   "adapted_text": "*Proof of Theorem A.1.* The inverse on time paths enforces both endpoint conditions. Inversion at each fixed time will then give a continuous velocity. On $H=L^2(I;\\mathbb R^3)$ the coefficient $B=K-J\\Omega$ satisfies $\\left\\lVert B\\right\\rVert_{C^1_a\\mathcal L(H)}\\le C(\\left\\lVert K\\right\\rVert_1+\\left\\lVert\\Omega\\right\\rVert_1)$. With the coercivity obtained from (A.2), Lemma A.2 gives a unique solution $v=\\mathbb P\\mathcal Qv$ of $\\mathbb P\\mathcal Q(Bv+L)=0$, with $$\\begin{equation}\n \\left\\lVert v\\right\\rVert_{C^{0,1/2}_a(L^2_t)}\\le C Q^{p}\\left\\lVert L\\right\\rVert_0. \\tag{A.8}\n\\end{equation}$$ Taking the time mean recovers the field removed by $\\mathcal Q$, $$c=\\mathbb P\\int_0^1(Bv+L)\\,\\mathrm dt .$$ Then $\\mathbb P(Bv+L)=c$ in $L^2_t L^2_a$. In particular, for almost every time, $$\\begin{equation}\n \\mathbb P(Kv)=c+\\mathbb PJ(\\Omega v)-\\mathbb PL. \\tag{A.9}\n\\end{equation}$$ The right-hand side, denoted by $g(t)$, is already continuous in $C^{0,1/2}$. Indeed, (A.8) bounds $c$ in $C^{0,1/2}$, and Cauchy–Schwarz on $[s,t]$ bounds the time increment of $J(\\Omega v)$ in the same norm by $|t-s|^{1/2}\\left\\lVert\\Omega v\\right\\rVert_{C^{0,1/2}_a(L^2_t)}$. Together with the hypothesis on $L$, this gives $\\left\\lVert g\\right\\rVert_0\\le CQ^p\\left\\lVert L\\right\\rVert_0$.",
+   "adapted_text": "*Proof of Theorem A.1.* For $z=Jv$ the endpoint condition says that $v$ has zero time mean. The first inversion gives such a path in $L^2_t$ at each label. To recover its value at a particular time we use the integrated equation once more, now as a spatial equation for $v(t)$. On $H=L^2(I;\\mathbb R^3)$ the coefficient $B=K-J\\Omega$ satisfies $\\left\\lVert B\\right\\rVert_{C^1_a\\mathcal L(H)}\\le C(\\left\\lVert K\\right\\rVert_1+\\left\\lVert\\Omega\\right\\rVert_1)$. With the coercivity obtained from (A.2), Lemma A.2 gives a unique solution $v=\\mathbb P\\mathcal Qv$ of $\\mathbb P\\mathcal Q(Bv+L)=0$, with $$\\begin{equation}\n \\left\\lVert v\\right\\rVert_{C^{0,1/2}_a(L^2_t)}\\le C Q^{p}\\left\\lVert L\\right\\rVert_0. \\tag{A.8}\n\\end{equation}$$ Taking the time mean recovers the field removed by $\\mathcal Q$, $$c=\\mathbb P\\int_0^1(Bv+L)\\,\\mathrm dt .$$ Then $\\mathbb P(Bv+L)=c$ in $L^2_t L^2_a$. In particular, for almost every time, $$\\begin{equation}\n \\mathbb P(Kv)=c+\\mathbb PJ(\\Omega v)-\\mathbb PL. \\tag{A.9}\n\\end{equation}$$ The right-hand side, denoted by $g(t)$, is already continuous in $C^{0,1/2}$. Indeed, (A.8) bounds $c$ in $C^{0,1/2}$, and Cauchy–Schwarz on $[s,t]$ bounds the time increment of $J(\\Omega v)$ in the same norm by $|t-s|^{1/2}\\left\\lVert\\Omega v\\right\\rVert_{C^{0,1/2}_a(L^2_t)}$. Together with the hypothesis on $L$, this gives $\\left\\lVert g\\right\\rVert_0\\le CQ^p\\left\\lVert L\\right\\rVert_0$.",
    "replaced": [
     "A.2 Recovering the velocity at each time#1"
    ],
@@ -2035,14 +2383,14 @@
    ],
    "adapted_lines": [
     [
-     1540,
-     1546
+     1546,
+     1552
     ]
    ],
    "adapted_bytes": [
     [
-     207718,
-     208602
+     212126,
+     213010
     ]
    ],
    "adapted_text": "**Lemma B.1.** With $\\Lambda$ fixed in time, $S_\\Lambda$ commutes with spatial and time derivatives of smooth fields, preserves parity and divergence freeness, and maps into fields supported on frequencies at most $2\\Lambda$. Its operator norms on $L^\\infty$ and on $C^{0,1/2}$ are bounded in terms of $\\psi$ alone. For every integer $m\\ge0$ and every normed-space-valued $f$ supported on frequencies at most $4\\Lambda$, $$\\begin{equation}\n \\sum_{|\\beta|=m}\\left\\lVert\\partial^\\beta f\\right\\rVert_\\infty\\le C_m\\Lambda^m\\left\\lVert f\\right\\rVert_\\infty . \\tag{B.1}\n\\end{equation}$$ For all integers $0\\le s\\le M$ and every $f\\in C^{M,1/2}$, $$\\begin{equation}\n \\left\\lVert(\\operatorname{Id}-S_\\Lambda)f\\right\\rVert_{C^{s,1/2}}\n \\le C_M\\Lambda^{s-M}\\left\\lVert f\\right\\rVert_{C^{M,1/2}}. \\tag{B.2}\n\\end{equation}$$ The constants $C_m$ and $C_M$ depend only on their index and on $\\psi$.",
@@ -2078,14 +2426,14 @@
    ],
    "adapted_lines": [
     [
-     1547,
-     1549
+     1553,
+     1555
     ]
    ],
    "adapted_bytes": [
     [
-     208604,
-     209602
+     213012,
+     214010
     ]
    ],
    "adapted_text": "*Proof.* The symbol is scalar, even and independent of time, so the cutoff preserves parity and divergence freeness and commutes with differentiation. Its support gives the frequency bound. For the norm estimates we use the convolution kernel as in the Euclidean Bernstein inequalities \\[[55](#cite-TaoDispersive), Appendix A, (A.2)–(A.6)\\]. Let $K=\\check\\psi$, a Schwartz function, real-valued because $\\psi$ is real and even, and set $K_\\Lambda(y)=\\Lambda^3K(\\Lambda y)$. To compute $S_\\Lambda f$, convolve the periodic extension of $f$ to $\\mathbb R^3$ with $K_\\Lambda$. Since $\\left\\lVert K_\\Lambda\\right\\rVert_{L^1}=\\left\\lVert K\\right\\rVert_{L^1}$, applying convolution to $f$ and to its spatial increments gives the two operator bounds. If $f$ has frequencies at most $4\\Lambda$, then $f=S_{4\\Lambda}f$. The identity $\\left\\lVert\\partial^\\beta K_{4\\Lambda}\\right\\rVert_{L^1}\n=(4\\Lambda)^{|\\beta|}\\left\\lVert\\partial^\\beta K\\right\\rVert_{L^1}$ gives (B.1) also for normed-space-valued $f$.",
@@ -2114,24 +2462,24 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Records the consequences $0<\\ell_*\\le1$ and $h>0$ of the parameter choices.",
-   "status": "as returned",
+   "note": "Records the consequences $0<\\ell_*\\le1$ and $h>0$ of the parameter choices. Explains the length weights and distinguishes the fixed parent exponent from the derivative-dependent constants.",
+   "status": "revised",
    "adapted": [
     "Appendix D. Finite norms and coefficient estimates#1"
    ],
    "adapted_lines": [
     [
-     1574,
-     1575
+     1580,
+     1581
     ]
    ],
    "adapted_bytes": [
     [
-     211591,
-     211990
+     215999,
+     216453
     ]
    ],
-   "adapted_text": "In Section 5 we estimate the mean and the oscillatory corrections at every derivative order. We measure label derivatives on the envelope radius $\\ell_*$ and phase derivatives on the profile width $h$, as chosen in Subsection 5.1. In particular, $0<\\ell_*\\le1$ and $h>0$. With these weights the power of the parent bound $\\mathsf D$ in the inverse estimates is independent of the derivative order.",
+   "adapted_text": "Each label derivative can cost the inverse of the envelope radius $\\ell_*$, and each phase derivative the inverse of the profile width $h$. The scaled norms below give each derivative its corresponding length factor. With $0<\\ell_*\\le1$ and $h>0$ chosen as in Subsection 5.1, Section 5 can then estimate the mean and oscillatory corrections at every order with a fixed power of the parent bound $\\mathsf D$. The constants may still depend on the order.",
    "replaced": [
     "Appendix D. Finite norms and coefficient estimates#1"
    ],
@@ -2164,14 +2512,14 @@
    ],
    "adapted_lines": [
     [
-     1591,
-     1604
+     1597,
+     1610
     ]
    ],
    "adapted_bytes": [
     [
-     213441,
-     214224
+     217904,
+     218687
     ]
    ],
    "adapted_text": "**Lemma D.1.** For every integer $n\\ge0$ and fields $f,g$ smooth in label and phase, $$\\begin{align}\n \\sum_i\\|\\partial_{a_i}f\\|_{[n],\\gamma}\n &\\le C\\ell_*^{-1}\\|f\\|_{[n+1],\\gamma},\\qquad\n \\|\\partial_sf\\|_{[n],\\gamma}\n \\le h^{-1}\\|f\\|_{[n+1],\\gamma}, \\tag{D.3}\\\\\n \\|fg\\|_{[n],\\gamma}\n &\\le C_n\\|f\\|_{[n]}\\|g\\|_{[n],\\gamma}. \\tag{D.4}\n\\end{align}$$ With $\\langle f\\rangle_s$ the phase average, $$\\begin{equation}\n \\|\\langle f\\rangle_s\\|_{[n],\\gamma}\\le\\|f\\|_{[n],\\gamma},\\qquad\n \\|f-\\langle f\\rangle_s\\|_{[n],\\gamma}\\le2\\|f\\|_{[n],\\gamma},\\qquad\n \\|\\partial_s^{-1}f\\|_{[n],\\gamma}\\le C\\|f\\|_{[n],\\gamma}\n \\quad(\\langle f\\rangle_s=0). \\tag{D.5}\n\\end{equation}$$ For phase-independent fields, (D.4) also holds with $\\|\\cdot\\|_{[n],1/2}$ in place of $\\|\\cdot\\|_{[n]}$ and $\\gamma\\equiv1$.",
@@ -2207,14 +2555,14 @@
    ],
    "adapted_lines": [
     [
-     1613,
-     1614
+     1619,
+     1620
     ]
    ],
    "adapted_bytes": [
     [
-     215323,
-     215433
+     219786,
+     219896
     ]
    ],
    "adapted_text": "**Lemma D.2.** Let $\\mathsf D\\ge1$ and let $c,d$ be smooth phase-independent matrix fields that satisfy (D.6).",
@@ -2250,14 +2598,14 @@
    ],
    "adapted_lines": [
     [
-     1626,
-     1629
+     1632,
+     1635
     ]
    ],
    "adapted_bytes": [
     [
-     216968,
-     218290
+     221431,
+     222753
     ]
    ],
    "adapted_text": "**Lemma D.3.** Consider a linear equation of the form $$\\mathcal Lv=\\mathcal L_0v+\\sum_\\nu T_\\nu(c_\\nu v)=F$$ with finitely many phase-independent coefficients $c_\\nu(t,a)$. Assume that $\\mathcal L_0$ and the linear operators $T_\\nu$ commute with label and phase derivatives. The equation may hold modulo a fixed subspace, such as gradients. Assume that differentiation preserves this subspace and the linear constraints on $v$, and commutes with the maps giving any prescribed data. Write $f$ for the forcing $F$ together with these data, with the sum of their norms. Suppose that every admissible solution, with its own forcing and prescribed data, satisfies the estimate $$\\|v\\|_{[0],\\gamma}\\le C_{\\rm low}\\|f\\|_{[0],\\gamma}.$$ Let $b_\\nu$ be the operator norm of $T_\\nu$ from $\\|\\cdot\\|_{[0],\\gamma}$ to the forcing norm. If $$\\begin{equation}\n C_{\\rm low}\\sum_\\nu b_\\nu\\ell_*^m|c_\\nu|_m\\le C_m\\qquad(m\\ge1), \\tag{D.7}\n\\end{equation}$$ then every smooth solution satisfies, for $n\\ge0$, $$\\|v\\|_{[n],\\gamma}\\le C_n C_{\\rm low}\\|f\\|_{[n],\\gamma}.$$ Here $C_n$ depends only on $n$ and the bounds $C_m$ in (D.7) for $m\\le n$. For phase-independent fields with $\\gamma\\equiv1$, the same assertion holds using $\\|\\cdot\\|_{[n],1/2}$ and $|c_\\nu|_{m,1/2}$ throughout, with $b_\\nu$ taken in the corresponding zero-order norms.",
@@ -2286,24 +2634,24 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Records the order of choices: the exponents in (D.4) come first, then $A$, and the constants $C_m$ may depend on the order.",
-   "status": "revised wording",
+   "note": "Records the order of choices: the exponents in (D.4) come first, then $A$, and the constants $C_m$ may depend on the order. Explains how one small envelope radius absorbs the inverse bound at every derivative order.",
+   "status": "revised",
    "adapted": [
     "Appendix D. Finite norms and coefficient estimates#14"
    ],
    "adapted_lines": [
     [
-     1639,
-     1640
+     1645,
+     1646
     ]
    ],
    "adapted_bytes": [
     [
-     219273,
-     219770
+     223736,
+     224252
     ]
    ],
-   "adapted_text": "In Section 5 the zero-order bounds come from Theorem 4.2 and (5.23). For $m\\ge1$, Lemma D.2(c) leaves a factor $\\ell_*$ in $\\ell_*^m|c_\\nu|_m$. In the Hölder norm, (D.2) leaves a factor $\\ell_*^{1/2}$, as in (5.13). In each case $C_{\\rm low}\\sum_\\nu b_\\nu$ is bounded by a fixed power of $\\mathsf D$. With the exponents in (D.6) fixed first, one choice $\\ell_*=\\mathsf D^{-A}$ with $A$ sufficiently large therefore gives (D.7) at every order, with constants $C_m$ that may depend on the order.",
+   "adapted_text": "Apply Lemma D.3 with the zero-order inverse bounds from Theorem 4.2 and (5.23). When at least one derivative falls on a coefficient, Lemma D.2(c) leaves one factor $\\ell_*$ in $\\ell_*^m|c_\\nu|_m$. In the Hölder estimate half a power remains by (D.2), as in (5.13). Either gain can absorb $C_{\\rm low}\\sum_\\nu b_\\nu$, which grows at most as a fixed power of $\\mathsf D$. Fix the exponents in (D.6) first. Then one sufficiently large $A$ in $\\ell_*=\\mathsf D^{-A}$ gives (D.7) at every order, with constants $C_m$.",
    "replaced": [
     "Appendix D. Finite norms and coefficient estimates#14"
    ],
@@ -2337,14 +2685,14 @@
    ],
    "adapted_lines": [
     [
-     1778,
-     1779
+     1784,
+     1785
     ]
    ],
    "adapted_bytes": [
     [
-     236190,
-     236358
+     240672,
+     240840
     ]
    ],
    "adapted_text": "We use the notation and the construction of *Finite-Time Singularity Formation for the Three-Dimensional Euler Equations*. References with prefix M refer to that paper.",
@@ -2366,24 +2714,33 @@
      "ref": "the authors' Lean formalization at fd3a158"
     }
    ],
-   "note": "Adds a paragraph on the scope of the formal verification: what the formal proof establishes for the selected construction, and which wider formal statements it records without proof.",
-   "status": "revised wording",
+   "note": "Adds a paragraph on the scope of the formal verification: what the formal proof establishes for the selected construction, and which wider formal statements it records without proof. Makes the order of the formal quantifiers explicit and keeps the distinction between the selected construction and the wider, unproved assertions.",
+   "status": "revised",
    "adapted": [
-    "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#3"
+    "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#3",
+    "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#4"
    ],
    "adapted_lines": [
     [
-     1782,
-     1783
+     1788,
+     1789
+    ],
+    [
+     1790,
+     1791
     ]
    ],
    "adapted_bytes": [
     [
-     236762,
-     237690
+     241244,
+     241513
+    ],
+    [
+     241515,
+     242022
     ]
    ],
-   "adapted_text": "*Scope of the formal verification.* The formally verified existence assertion chooses one threshold $\\mathcal B$ before $N$; every sufficiently large $N$ then admits a selected construction that satisfies the bounds of both lemmas below and has the smooth extension of Theorem 1.1. A wider formal statement of Theorem 1.1, quantified over every admissible cutoff and, after choosing its exponents and majorants, over every threshold satisfying them, is recorded in the formalization without a formal proof. The formal statements of the two lemmas for every construction satisfying their hypotheses, and the uniform induction steps for the time bounds and the mixed increment bound, are likewise not formally proved in that generality. Conditional deductions from these formal statements do not establish their premises. The main theorem and the formally proved strengthening in Remark M.1.2 do not use these wider statements.",
+   "adapted_text": "*Scope of the formal verification.* Lean proves that one can choose a threshold $\\mathcal B$ before choosing $N$. For every sufficiently large $N$ it then gives one construction for which both lemmas below hold and the velocity has the smooth extension of Theorem 1.1.\n\nThe formalization also states a version for every admissible cutoff and, once its exponents and majorants are chosen, every threshold satisfying the resulting bounds. This version, the two lemmas for every construction satisfying their hypotheses, and the uniform induction steps for the time and mixed increment bounds have no Lean proof in that generality. Some formal deductions assume these wider statements. The proofs of the main theorem and of Remark M.1.2 are independent of those wider statements.",
    "replaced": [],
    "authors_text": "",
    "authors_lines": []
@@ -2405,18 +2762,18 @@
    "note": "Gives the starting index $j_{m,q}$ for each pair $(m,q)$, and states that time derivatives at the endpoints of $[0,S_j]$ are taken from within the interval.",
    "status": "as returned",
    "adapted": [
-    "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#6"
+    "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#7"
    ],
    "adapted_lines": [
     [
-     1790,
-     1794
+     1798,
+     1802
     ]
    ],
    "adapted_bytes": [
     [
-     239009,
-     239402
+     243341,
+     243734
     ]
    ],
    "adapted_text": "**Lemma 1.2.** For each fixed pair of integers $m,q\\ge0$ there is an index $j_{m,q}$ such that, for every $j\\ge j_{m,q}$, $$\\begin{equation}\n \\|\\partial_t^q(U_j-U_{j-1}-O_j)\\|_{C([0,S_j];C^{m,1/2})}\n \\le\\lambda_j^{-1}. \\tag{1.2}\n\\end{equation}$$ The time derivatives are taken at fixed spatial point, from within $[0,S_j]$ at its endpoints. The index may also depend on the fixed construction.",
@@ -2452,14 +2809,14 @@
    ],
    "adapted_lines": [
     [
-     1806,
-     1807
+     1814,
+     1815
     ]
    ],
    "adapted_bytes": [
     [
-     240439,
-     240864
+     244771,
+     245196
     ]
    ],
    "adapted_text": "*Proof of Lemmas 1.2 and 1.3.* We argue by induction on $q$. For $q=0$, Lemma 1.2 is the second bound of <span class=\"upright\">(M.7.4)</span>, which holds as soon as $q_j\\ge m$, and (1.3) follows from <span class=\"upright\">(T2)</span> of Theorem M.7.1, with $\\psi_0=1$ and $j_0=1$. Let $q\\ge1$, and assume Lemma 1.3 with $q-1$ in place of $q$. We prove Lemma 1.2 for this $q$ and every $m$, and then Lemma 1.3 for $q$.",
@@ -2495,14 +2852,14 @@
    ],
    "adapted_lines": [
     [
-     1834,
-     1839
+     1842,
+     1847
     ]
    ],
    "adapted_bytes": [
     [
-     246494,
-     249052
+     250826,
+     253384
     ]
    ],
    "adapted_text": "A mean $B=D_aX v$ with source $f_{\\rm m}$ satisfies, by <span class=\"upright\">(M.4.11)</span> with $g=(D_aX)^Tf_{\\rm m}$ and $\\mathcal T=\\mathbb PK$ on divergence-free label fields, $\\mathcal Tv_t=\\mathbb P(g-\\mathcal Dv)$. Hence $$\\mathcal T\\partial_t^{l+1}v=\\mathbb P\\Big[\\partial_t^l g\n -\\sum_{i=0}^l\\binom li(\\partial_t^i\\mathcal D)\\partial_t^{l-i}v\n -\\sum_{i=1}^l\\binom li(\\partial_t^iK)\\partial_t^{l+1-i}v\\Big],$$ whose right side contains $v$ and the source only to time order $l$. By the last assertion of Theorem M.4.2, the constant $A$ of <span class=\"upright\">(M.4.10)</span> bounds the inverse of $\\mathcal T$ on the divergence-free fields of $C^{0,1/2}$ at each time. Then <span class=\"upright\">(M.5.13)</span> is condition <span class=\"upright\">(M.D.7)</span> for the equation $\\mathcal Tw=\\mathbb PF$ with the coefficient $K$, and Lemma M.D.3 in its Hölder form inverts $\\mathcal T$ in the norms $\\|\\cdot\\|_{[n],1/2}$ at every order, with a constant that is an old-parent polynomial. Starting from the bound <span class=\"upright\">(M.5.14)</span> for $v$, induction over $l\\le q-1$ and <span class=\"upright\">(M.D.2)</span> give, with the norms $\\|\\cdot\\|_{[n]}$ on the left and $\\|\\cdot\\|_{[n+1]}$ on the right, and independently of the depth, $$\\begin{equation}\n \\mathcal J_q(B)\\le C_q\\mu^{a_q}\\mathcal J_{q-1}(f_{\\rm m}). \\tag{2.3}\n\\end{equation}$$ Thus the mean velocity at time order $q$ uses its source only to time order $q-1$, at the cost of one additional spatial derivative of the source. No boundary condition is imposed on time derivatives; the undifferentiated solution keeps its actual initial trace. A transverse solution satisfies $V_t=-(\\operatorname{Id}-2P_\\kappa)MV+(\\operatorname{Id}-P_\\kappa)f$; the same induction from <span class=\"upright\">(M.5.21)</span> bounds its time derivatives in $\\mathcal J_q$ by an old-parent polynomial times $\\mathcal J_q(f)$, and <span class=\"upright\">(M.5.16)</span> bounds its pressure. On $[t_0,T]$ the leading oscillation $A_1=g\\mathbf aF_h$ solves this equation with $f=0$, and the cutoff of Subsection M.6.2 satisfies $|\\widetilde\\chi^{(l)}|\\le C_lr^l$, with the rate $r$ of the comparison, and $r\\le\\mu$ by item 3 of the proof of Theorem M.7.1. With <span class=\"upright\">(M.5.20)</span> and <span class=\"upright\">(M.5.22)</span>, the same induction bounds $A_1$, $V_1=\\widetilde\\chi A_1$, their pressures and $R_{\\widetilde\\chi}=\\widetilde\\chi'(A_1+C[A_1])$ of <span class=\"upright\">(M.3.8)</span> in the weighted $\\mathcal J_q$ by an old-parent polynomial times $\\lambda^{-5/4}$.",
@@ -2538,14 +2895,14 @@
    ],
    "adapted_lines": [
     [
-     1872,
-     1873
+     1880,
+     1881
     ]
    ],
    "adapted_bytes": [
     [
-     257886,
-     258484
+     262218,
+     262816
     ]
    ],
    "adapted_text": "The convergence of all mixed derivatives gives smoothness up to $t=T_\\infty$ on each compact subset away from the origin. Seeley’s extension theorem \\[[1](#cite-Seeley), Theorem, p. 625\\], applied componentwise in boundary charts with $T_\\infty-t$ as the half-space coordinate and patched with a locally finite spatial partition of unity, extends the field smoothly through $T_\\infty$ away from zero. This is an extension of the velocity as a smooth field; the Euler equations are required only for $0\\le t<T_\\infty$. The main paper identifies $T_*=T_\\infty$, which proves the theorem. $\\square$",
@@ -2712,7 +3069,7 @@
   {
    "authors": "1 Introduction#4",
    "adapted": "1 Introduction#4",
-   "change": null,
+   "change": "ED-01",
    "authors_lines": [
     41,
     42
@@ -2764,7 +3121,7 @@
   {
    "authors": "1 Introduction#8",
    "adapted": "1 Introduction#8",
-   "change": null,
+   "change": "E1-03",
    "authors_lines": [
     56,
     57
@@ -2829,7 +3186,7 @@
   {
    "authors": "1.1 Waves and successive amplification#3",
    "adapted": "1.1 Waves and successive amplification#3",
-   "change": null,
+   "change": "E1-05A",
    "authors_lines": [
     74,
     79
@@ -2985,7 +3342,7 @@
   {
    "authors": "1.2 Controlling corrections in an amplifying flow#6",
    "adapted": "1.2 Controlling corrections in an amplifying flow#6",
-   "change": null,
+   "change": "E1-13",
    "authors_lines": [
     128,
     134
@@ -2998,7 +3355,7 @@
   {
    "authors": "1.2 Controlling corrections in an amplifying flow#7",
    "adapted": "1.2 Controlling corrections in an amplifying flow#7",
-   "change": null,
+   "change": "E1-13",
    "authors_lines": [
     135,
     136
@@ -3050,7 +3407,7 @@
   {
    "authors": "1.3 Correcting a localized wave#2",
    "adapted": "1.3 Correcting a localized wave#2",
-   "change": null,
+   "change": "E1-14",
    "authors_lines": [
     147,
     148
@@ -3089,7 +3446,7 @@
   {
    "authors": "1.3 Correcting a localized wave#5",
    "adapted": "1.3 Correcting a localized wave#5",
-   "change": null,
+   "change": "E1-15A",
    "authors_lines": [
     153,
     160
@@ -4584,7 +4941,7 @@
   {
    "authors": "5.2 Coefficient bounds for the parent#5",
    "adapted": "5.2 Coefficient bounds for the parent#5",
-   "change": null,
+   "change": "E2-5H-01A",
    "authors_lines": [
     803,
     806
@@ -5804,68 +6161,88 @@
    ]
   },
   {
-   "authors": "8.2 Velocity, central vorticity and the maximal time#3",
+   "authors": null,
    "adapted": "8.2 Velocity, central vorticity and the maximal time#3",
+   "change": "E3-S8-05",
+   "authors_lines": null,
+   "adapted_lines": [
+    1415,
+    1416
+   ]
+  },
+  {
+   "authors": "8.2 Velocity, central vorticity and the maximal time#3",
+   "adapted": "8.2 Velocity, central vorticity and the maximal time#4",
    "change": null,
    "authors_lines": [
     1406,
     1413
    ],
    "adapted_lines": [
-    1415,
-    1422
+    1417,
+    1424
    ]
   },
   {
    "authors": "8.2 Velocity, central vorticity and the maximal time#4",
-   "adapted": "8.2 Velocity, central vorticity and the maximal time#4",
+   "adapted": "8.2 Velocity, central vorticity and the maximal time#5",
    "change": null,
    "authors_lines": [
     1414,
     1419
    ],
    "adapted_lines": [
-    1423,
-    1428
+    1425,
+    1430
    ]
   },
   {
    "authors": "8.2 Velocity, central vorticity and the maximal time#5",
-   "adapted": "8.2 Velocity, central vorticity and the maximal time#5",
+   "adapted": "8.2 Velocity, central vorticity and the maximal time#6",
    "change": null,
    "authors_lines": [
     1420,
     1422
    ],
    "adapted_lines": [
-    1429,
-    1431
+    1431,
+    1433
    ]
   },
   {
    "authors": "8.2 Velocity, central vorticity and the maximal time#6",
-   "adapted": "8.2 Velocity, central vorticity and the maximal time#6",
+   "adapted": "8.2 Velocity, central vorticity and the maximal time#7",
    "change": null,
    "authors_lines": [
     1423,
     1424
    ],
    "adapted_lines": [
-    1432,
-    1433
+    1434,
+    1435
    ]
   },
   {
    "authors": "8.2 Velocity, central vorticity and the maximal time#7",
-   "adapted": "8.2 Velocity, central vorticity and the maximal time#7",
+   "adapted": "8.2 Velocity, central vorticity and the maximal time#8",
    "change": null,
    "authors_lines": [
     1425,
     1426
    ],
    "adapted_lines": [
-    1434,
-    1435
+    1436,
+    1437
+   ]
+  },
+  {
+   "authors": null,
+   "adapted": "8.2 Velocity, central vorticity and the maximal time#9",
+   "change": "E3-S8-04",
+   "authors_lines": null,
+   "adapted_lines": [
+    1438,
+    1439
    ]
   },
   {
@@ -5877,8 +6254,8 @@
     1432
    ],
    "adapted_lines": [
-    1440,
-    1441
+    1444,
+    1445
    ]
   },
   {
@@ -5890,8 +6267,8 @@
     1434
    ],
    "adapted_lines": [
-    1442,
-    1443
+    1446,
+    1447
    ]
   },
   {
@@ -5903,8 +6280,8 @@
     1436
    ],
    "adapted_lines": [
-    1444,
-    1445
+    1448,
+    1449
    ]
   },
   {
@@ -5916,8 +6293,8 @@
     1438
    ],
    "adapted_lines": [
-    1446,
-    1447
+    1450,
+    1451
    ]
   },
   {
@@ -5929,8 +6306,8 @@
     1440
    ],
    "adapted_lines": [
-    1448,
-    1449
+    1452,
+    1453
    ]
   },
   {
@@ -5942,8 +6319,8 @@
     1447
    ],
    "adapted_lines": [
-    1457,
-    1458
+    1461,
+    1462
    ]
   },
   {
@@ -5955,8 +6332,8 @@
     1454
    ],
    "adapted_lines": [
-    1459,
-    1465
+    1463,
+    1469
    ]
   },
   {
@@ -5968,8 +6345,8 @@
     1459
    ],
    "adapted_lines": [
-    1466,
-    1470
+    1470,
+    1474
    ]
   },
   {
@@ -5981,8 +6358,8 @@
     1464
    ],
    "adapted_lines": [
-    1471,
-    1475
+    1475,
+    1479
    ]
   },
   {
@@ -5994,8 +6371,8 @@
     1468
    ],
    "adapted_lines": [
-    1480,
-    1481
+    1484,
+    1485
    ]
   },
   {
@@ -6007,8 +6384,8 @@
     1476
    ],
    "adapted_lines": [
-    1482,
-    1489
+    1486,
+    1493
    ]
   },
   {
@@ -6020,8 +6397,8 @@
     1479
    ],
    "adapted_lines": [
-    1490,
-    1492
+    1494,
+    1496
    ]
   },
   {
@@ -6033,60 +6410,70 @@
     1483
    ],
    "adapted_lines": [
-    1493,
-    1496
+    1497,
+    1500
+   ]
+  },
+  {
+   "authors": null,
+   "adapted": "A.1 Spatial freezing#5",
+   "change": "ED-02",
+   "authors_lines": null,
+   "adapted_lines": [
+    1501,
+    1502
    ]
   },
   {
    "authors": "A.1 Spatial freezing#5",
-   "adapted": "A.1 Spatial freezing#5",
+   "adapted": "A.1 Spatial freezing#6",
    "change": null,
    "authors_lines": [
     1484,
     1489
    ],
    "adapted_lines": [
-    1497,
-    1502
+    1503,
+    1508
    ]
   },
   {
    "authors": "A.1 Spatial freezing#6",
-   "adapted": "A.1 Spatial freezing#6",
+   "adapted": "A.1 Spatial freezing#7",
    "change": null,
    "authors_lines": [
     1490,
     1494
    ],
    "adapted_lines": [
-    1503,
-    1507
+    1509,
+    1513
    ]
   },
   {
    "authors": "A.1 Spatial freezing#7",
-   "adapted": "A.1 Spatial freezing#7",
+   "adapted": "A.1 Spatial freezing#8",
    "change": "E3-A-03",
    "authors_lines": [
     1495,
     1499
    ],
    "adapted_lines": [
-    1508,
-    1512
+    1514,
+    1518
    ]
   },
   {
    "authors": "A.1 Spatial freezing#8",
-   "adapted": "A.1 Spatial freezing#8",
+   "adapted": "A.1 Spatial freezing#9",
    "change": null,
    "authors_lines": [
     1500,
     1502
    ],
    "adapted_lines": [
-    1513,
-    1515
+    1519,
+    1521
    ]
   },
   {
@@ -6098,8 +6485,8 @@
     1510
    ],
    "adapted_lines": [
-    1520,
-    1525
+    1526,
+    1531
    ]
   },
   {
@@ -6111,8 +6498,8 @@
     1513
    ],
    "adapted_lines": [
-    1526,
-    1528
+    1532,
+    1534
    ]
   },
   {
@@ -6124,8 +6511,8 @@
     1515
    ],
    "adapted_lines": [
-    1529,
-    1530
+    1535,
+    1536
    ]
   },
   {
@@ -6137,8 +6524,8 @@
     1522
    ],
    "adapted_lines": [
-    1538,
-    1539
+    1544,
+    1545
    ]
   },
   {
@@ -6150,8 +6537,8 @@
     1529
    ],
    "adapted_lines": [
-    1540,
-    1546
+    1546,
+    1552
    ]
   },
   {
@@ -6163,8 +6550,8 @@
     1532
    ],
    "adapted_lines": [
-    1547,
-    1549
+    1553,
+    1555
    ]
   },
   {
@@ -6176,8 +6563,8 @@
     1535
    ],
    "adapted_lines": [
-    1550,
-    1552
+    1556,
+    1558
    ]
   },
   {
@@ -6189,8 +6576,8 @@
     1543
    ],
    "adapted_lines": [
-    1560,
-    1562
+    1566,
+    1568
    ]
   },
   {
@@ -6202,8 +6589,8 @@
     1547
    ],
    "adapted_lines": [
-    1563,
-    1566
+    1569,
+    1572
    ]
   },
   {
@@ -6215,8 +6602,8 @@
     1554
    ],
    "adapted_lines": [
-    1574,
-    1575
+    1580,
+    1581
    ]
   },
   {
@@ -6228,8 +6615,8 @@
     1560
    ],
    "adapted_lines": [
-    1576,
-    1581
+    1582,
+    1587
    ]
   },
   {
@@ -6241,8 +6628,8 @@
     1569
    ],
    "adapted_lines": [
-    1582,
-    1590
+    1588,
+    1596
    ]
   },
   {
@@ -6254,8 +6641,8 @@
     1583
    ],
    "adapted_lines": [
-    1591,
-    1604
+    1597,
+    1610
    ]
   },
   {
@@ -6267,8 +6654,8 @@
     1585
    ],
    "adapted_lines": [
-    1605,
-    1606
+    1611,
+    1612
    ]
   },
   {
@@ -6280,8 +6667,8 @@
     1587
    ],
    "adapted_lines": [
-    1607,
-    1608
+    1613,
+    1614
    ]
   },
   {
@@ -6293,8 +6680,8 @@
     1591
    ],
    "adapted_lines": [
-    1609,
-    1612
+    1615,
+    1618
    ]
   },
   {
@@ -6306,8 +6693,8 @@
     1593
    ],
    "adapted_lines": [
-    1613,
-    1614
+    1619,
+    1620
    ]
   },
   {
@@ -6319,8 +6706,8 @@
     1599
    ],
    "adapted_lines": [
-    1615,
-    1620
+    1621,
+    1626
    ]
   },
   {
@@ -6332,8 +6719,8 @@
     1602
    ],
    "adapted_lines": [
-    1621,
-    1623
+    1627,
+    1629
    ]
   },
   {
@@ -6345,8 +6732,8 @@
     1604
    ],
    "adapted_lines": [
-    1624,
-    1625
+    1630,
+    1631
    ]
   },
   {
@@ -6358,8 +6745,8 @@
     1608
    ],
    "adapted_lines": [
-    1626,
-    1629
+    1632,
+    1635
    ]
   },
   {
@@ -6371,8 +6758,8 @@
     1617
    ],
    "adapted_lines": [
-    1630,
-    1638
+    1636,
+    1644
    ]
   },
   {
@@ -6384,8 +6771,8 @@
     1619
    ],
    "adapted_lines": [
-    1639,
-    1640
+    1645,
+    1646
    ]
   },
   {
@@ -6397,8 +6784,8 @@
     1626
    ],
    "adapted_lines": [
-    1646,
-    1647
+    1652,
+    1653
    ]
   },
   {
@@ -6410,8 +6797,8 @@
     1628
    ],
    "adapted_lines": [
-    1648,
-    1649
+    1654,
+    1655
    ]
   },
   {
@@ -6423,8 +6810,8 @@
     1635
    ],
    "adapted_lines": [
-    1655,
-    1656
+    1661,
+    1662
    ]
   },
   {
@@ -6436,8 +6823,8 @@
     1637
    ],
    "adapted_lines": [
-    1657,
-    1658
+    1663,
+    1664
    ]
   },
   {
@@ -6449,8 +6836,8 @@
     1639
    ],
    "adapted_lines": [
-    1659,
-    1660
+    1665,
+    1666
    ]
   },
   {
@@ -6462,8 +6849,8 @@
     1641
    ],
    "adapted_lines": [
-    1661,
-    1662
+    1667,
+    1668
    ]
   },
   {
@@ -6475,8 +6862,8 @@
     1643
    ],
    "adapted_lines": [
-    1663,
-    1664
+    1669,
+    1670
    ]
   },
   {
@@ -6488,8 +6875,8 @@
     1645
    ],
    "adapted_lines": [
-    1665,
-    1666
+    1671,
+    1672
    ]
   },
   {
@@ -6501,8 +6888,8 @@
     1647
    ],
    "adapted_lines": [
-    1667,
-    1668
+    1673,
+    1674
    ]
   },
   {
@@ -6514,8 +6901,8 @@
     1649
    ],
    "adapted_lines": [
-    1669,
-    1670
+    1675,
+    1676
    ]
   },
   {
@@ -6527,8 +6914,8 @@
     1651
    ],
    "adapted_lines": [
-    1671,
-    1672
+    1677,
+    1678
    ]
   },
   {
@@ -6540,8 +6927,8 @@
     1653
    ],
    "adapted_lines": [
-    1673,
-    1674
+    1679,
+    1680
    ]
   },
   {
@@ -6553,8 +6940,8 @@
     1655
    ],
    "adapted_lines": [
-    1675,
-    1676
+    1681,
+    1682
    ]
   },
   {
@@ -6566,8 +6953,8 @@
     1657
    ],
    "adapted_lines": [
-    1677,
-    1678
+    1683,
+    1684
    ]
   },
   {
@@ -6579,8 +6966,8 @@
     1659
    ],
    "adapted_lines": [
-    1679,
-    1680
+    1685,
+    1686
    ]
   },
   {
@@ -6592,8 +6979,8 @@
     1661
    ],
    "adapted_lines": [
-    1681,
-    1682
+    1687,
+    1688
    ]
   },
   {
@@ -6605,8 +6992,8 @@
     1663
    ],
    "adapted_lines": [
-    1683,
-    1684
+    1689,
+    1690
    ]
   },
   {
@@ -6618,8 +7005,8 @@
     1665
    ],
    "adapted_lines": [
-    1685,
-    1686
+    1691,
+    1692
    ]
   },
   {
@@ -6631,8 +7018,8 @@
     1667
    ],
    "adapted_lines": [
-    1687,
-    1688
+    1693,
+    1694
    ]
   },
   {
@@ -6644,8 +7031,8 @@
     1669
    ],
    "adapted_lines": [
-    1689,
-    1690
+    1695,
+    1696
    ]
   },
   {
@@ -6657,8 +7044,8 @@
     1671
    ],
    "adapted_lines": [
-    1691,
-    1692
+    1697,
+    1698
    ]
   },
   {
@@ -6670,8 +7057,8 @@
     1673
    ],
    "adapted_lines": [
-    1693,
-    1694
+    1699,
+    1700
    ]
   },
   {
@@ -6683,8 +7070,8 @@
     1675
    ],
    "adapted_lines": [
-    1695,
-    1696
+    1701,
+    1702
    ]
   },
   {
@@ -6696,8 +7083,8 @@
     1677
    ],
    "adapted_lines": [
-    1697,
-    1698
+    1703,
+    1704
    ]
   },
   {
@@ -6709,8 +7096,8 @@
     1679
    ],
    "adapted_lines": [
-    1699,
-    1700
+    1705,
+    1706
    ]
   },
   {
@@ -6722,8 +7109,8 @@
     1681
    ],
    "adapted_lines": [
-    1701,
-    1702
+    1707,
+    1708
    ]
   },
   {
@@ -6735,8 +7122,8 @@
     1683
    ],
    "adapted_lines": [
-    1703,
-    1704
+    1709,
+    1710
    ]
   },
   {
@@ -6748,8 +7135,8 @@
     1685
    ],
    "adapted_lines": [
-    1705,
-    1706
+    1711,
+    1712
    ]
   },
   {
@@ -6761,8 +7148,8 @@
     1687
    ],
    "adapted_lines": [
-    1707,
-    1708
+    1713,
+    1714
    ]
   },
   {
@@ -6774,8 +7161,8 @@
     1689
    ],
    "adapted_lines": [
-    1709,
-    1710
+    1715,
+    1716
    ]
   },
   {
@@ -6787,8 +7174,8 @@
     1691
    ],
    "adapted_lines": [
-    1711,
-    1712
+    1717,
+    1718
    ]
   },
   {
@@ -6800,8 +7187,8 @@
     1693
    ],
    "adapted_lines": [
-    1713,
-    1714
+    1719,
+    1720
    ]
   },
   {
@@ -6813,8 +7200,8 @@
     1695
    ],
    "adapted_lines": [
-    1715,
-    1716
+    1721,
+    1722
    ]
   },
   {
@@ -6826,8 +7213,8 @@
     1697
    ],
    "adapted_lines": [
-    1717,
-    1718
+    1723,
+    1724
    ]
   },
   {
@@ -6839,8 +7226,8 @@
     1699
    ],
    "adapted_lines": [
-    1719,
-    1720
+    1725,
+    1726
    ]
   },
   {
@@ -6852,8 +7239,8 @@
     1701
    ],
    "adapted_lines": [
-    1721,
-    1722
+    1727,
+    1728
    ]
   },
   {
@@ -6865,8 +7252,8 @@
     1703
    ],
    "adapted_lines": [
-    1723,
-    1724
+    1729,
+    1730
    ]
   },
   {
@@ -6878,8 +7265,8 @@
     1705
    ],
    "adapted_lines": [
-    1725,
-    1726
+    1731,
+    1732
    ]
   },
   {
@@ -6891,8 +7278,8 @@
     1707
    ],
    "adapted_lines": [
-    1727,
-    1728
+    1733,
+    1734
    ]
   },
   {
@@ -6904,8 +7291,8 @@
     1709
    ],
    "adapted_lines": [
-    1729,
-    1730
+    1735,
+    1736
    ]
   },
   {
@@ -6917,8 +7304,8 @@
     1711
    ],
    "adapted_lines": [
-    1731,
-    1732
+    1737,
+    1738
    ]
   },
   {
@@ -6930,8 +7317,8 @@
     1713
    ],
    "adapted_lines": [
-    1733,
-    1734
+    1739,
+    1740
    ]
   },
   {
@@ -6943,8 +7330,8 @@
     1715
    ],
    "adapted_lines": [
-    1735,
-    1736
+    1741,
+    1742
    ]
   },
   {
@@ -6956,8 +7343,8 @@
     1717
    ],
    "adapted_lines": [
-    1737,
-    1738
+    1743,
+    1744
    ]
   },
   {
@@ -6969,8 +7356,8 @@
     1719
    ],
    "adapted_lines": [
-    1739,
-    1740
+    1745,
+    1746
    ]
   },
   {
@@ -6982,8 +7369,8 @@
     1721
    ],
    "adapted_lines": [
-    1741,
-    1742
+    1747,
+    1748
    ]
   },
   {
@@ -6995,8 +7382,8 @@
     1723
    ],
    "adapted_lines": [
-    1743,
-    1744
+    1749,
+    1750
    ]
   },
   {
@@ -7008,8 +7395,8 @@
     1725
    ],
    "adapted_lines": [
-    1745,
-    1746
+    1751,
+    1752
    ]
   },
   {
@@ -7021,8 +7408,8 @@
     1727
    ],
    "adapted_lines": [
-    1747,
-    1748
+    1753,
+    1754
    ]
   },
   {
@@ -7034,8 +7421,8 @@
     1729
    ],
    "adapted_lines": [
-    1749,
-    1750
+    1755,
+    1756
    ]
   },
   {
@@ -7047,8 +7434,8 @@
     1731
    ],
    "adapted_lines": [
-    1751,
-    1752
+    1757,
+    1758
    ]
   },
   {
@@ -7060,8 +7447,8 @@
     1733
    ],
    "adapted_lines": [
-    1753,
-    1754
+    1759,
+    1760
    ]
   },
   {
@@ -7073,8 +7460,8 @@
     1735
    ],
    "adapted_lines": [
-    1755,
-    1756
+    1761,
+    1762
    ]
   },
   {
@@ -7086,8 +7473,8 @@
     1737
    ],
    "adapted_lines": [
-    1757,
-    1758
+    1763,
+    1764
    ]
   },
   {
@@ -7099,8 +7486,8 @@
     1739
    ],
    "adapted_lines": [
-    1759,
-    1760
+    1765,
+    1766
    ]
   },
   {
@@ -7112,8 +7499,8 @@
     1741
    ],
    "adapted_lines": [
-    1761,
-    1762
+    1767,
+    1768
    ]
   },
   {
@@ -7125,8 +7512,8 @@
     1743
    ],
    "adapted_lines": [
-    1763,
-    1764
+    1769,
+    1770
    ]
   },
   {
@@ -7138,8 +7525,8 @@
     1750
    ],
    "adapted_lines": [
-    1770,
-    1771
+    1776,
+    1777
    ]
   },
   {
@@ -7151,8 +7538,8 @@
     1752
    ],
    "adapted_lines": [
-    1772,
-    1773
+    1778,
+    1779
    ]
   },
   {
@@ -7164,8 +7551,8 @@
     1754
    ],
    "adapted_lines": [
-    1774,
-    1775
+    1780,
+    1781
    ]
   },
   {
@@ -7177,8 +7564,8 @@
     1758
    ],
    "adapted_lines": [
-    1778,
-    1779
+    1784,
+    1785
    ]
   },
   {
@@ -7190,8 +7577,8 @@
     1760
    ],
    "adapted_lines": [
-    1780,
-    1781
+    1786,
+    1787
    ]
   },
   {
@@ -7200,86 +7587,96 @@
    "change": "E4-A-02",
    "authors_lines": null,
    "adapted_lines": [
-    1782,
-    1783
+    1788,
+    1789
+   ]
+  },
+  {
+   "authors": null,
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#4",
+   "change": "E4-A-02",
+   "authors_lines": null,
+   "adapted_lines": [
+    1790,
+    1791
    ]
   },
   {
    "authors": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#3",
-   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#4",
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#5",
    "change": null,
    "authors_lines": [
     1761,
     1764
    ],
    "adapted_lines": [
-    1784,
-    1787
+    1792,
+    1795
    ]
   },
   {
    "authors": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#4",
-   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#5",
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#6",
    "change": null,
    "authors_lines": [
     1765,
     1766
    ],
    "adapted_lines": [
-    1788,
-    1789
+    1796,
+    1797
    ]
   },
   {
    "authors": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#5",
-   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#6",
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#7",
    "change": "E4-A-03",
    "authors_lines": [
     1767,
     1771
    ],
    "adapted_lines": [
-    1790,
-    1794
+    1798,
+    1802
    ]
   },
   {
    "authors": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#6",
-   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#7",
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#8",
    "change": null,
    "authors_lines": [
     1772,
     1773
    ],
    "adapted_lines": [
-    1795,
-    1796
+    1803,
+    1804
    ]
   },
   {
    "authors": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#7",
-   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#8",
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#9",
    "change": null,
    "authors_lines": [
     1774,
     1778
    ],
    "adapted_lines": [
-    1797,
-    1801
+    1805,
+    1809
    ]
   },
   {
    "authors": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#8",
-   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#9",
+   "adapted": "Note 1 Choice of $\\mathcal B$ and the stronger conclusion#10",
    "change": null,
    "authors_lines": [
     1779,
     1780
    ],
    "adapted_lines": [
-    1802,
-    1803
+    1810,
+    1811
    ]
   },
   {
@@ -7291,8 +7688,8 @@
     1784
    ],
    "adapted_lines": [
-    1806,
-    1807
+    1814,
+    1815
    ]
   },
   {
@@ -7304,8 +7701,8 @@
     1786
    ],
    "adapted_lines": [
-    1808,
-    1809
+    1816,
+    1817
    ]
   },
   {
@@ -7317,8 +7714,8 @@
     1800
    ],
    "adapted_lines": [
-    1810,
-    1823
+    1818,
+    1831
    ]
   },
   {
@@ -7330,8 +7727,8 @@
     1805
    ],
    "adapted_lines": [
-    1824,
-    1828
+    1832,
+    1836
    ]
   },
   {
@@ -7343,8 +7740,8 @@
     1807
    ],
    "adapted_lines": [
-    1829,
-    1830
+    1837,
+    1838
    ]
   },
   {
@@ -7356,8 +7753,8 @@
     1810
    ],
    "adapted_lines": [
-    1831,
-    1833
+    1839,
+    1841
    ]
   },
   {
@@ -7369,8 +7766,8 @@
     1816
    ],
    "adapted_lines": [
-    1834,
-    1839
+    1842,
+    1847
    ]
   },
   {
@@ -7382,8 +7779,8 @@
     1819
    ],
    "adapted_lines": [
-    1840,
-    1842
+    1848,
+    1850
    ]
   },
   {
@@ -7395,8 +7792,8 @@
     1821
    ],
    "adapted_lines": [
-    1843,
-    1844
+    1851,
+    1852
    ]
   },
   {
@@ -7408,8 +7805,8 @@
     1823
    ],
    "adapted_lines": [
-    1845,
-    1846
+    1853,
+    1854
    ]
   },
   {
@@ -7421,8 +7818,8 @@
     1828
    ],
    "adapted_lines": [
-    1847,
-    1851
+    1855,
+    1859
    ]
   },
   {
@@ -7434,8 +7831,8 @@
     1834
    ],
    "adapted_lines": [
-    1852,
-    1857
+    1860,
+    1865
    ]
   },
   {
@@ -7447,8 +7844,8 @@
     1838
    ],
    "adapted_lines": [
-    1858,
-    1861
+    1866,
+    1869
    ]
   },
   {
@@ -7460,8 +7857,8 @@
     1844
    ],
    "adapted_lines": [
-    1862,
-    1867
+    1870,
+    1875
    ]
   },
   {
@@ -7473,8 +7870,8 @@
     1848
    ],
    "adapted_lines": [
-    1870,
-    1871
+    1878,
+    1879
    ]
   },
   {
@@ -7486,8 +7883,8 @@
     1850
    ],
    "adapted_lines": [
-    1872,
-    1873
+    1880,
+    1881
    ]
   },
   {
@@ -7499,13 +7896,13 @@
     1854
    ],
    "adapted_lines": [
-    1876,
-    1877
+    1884,
+    1885
    ]
   }
  ],
  "ties": {
-  "carried": 769,
-  "not_carried": 227
+  "carried": 747,
+  "not_carried": 249
  }
 }

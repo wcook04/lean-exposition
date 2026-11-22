@@ -19,15 +19,44 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with changes marked",
-   "sha256": "40ac35e9f200ebe4606b7dc6e107ba65eff2791a451d00fdf3dfe21bcc4c28e5",
-   "bytes": 688650
+   "sha256": "76d82cd09ab9841652972658a4e60ab7415b87f2aa749cb0abc462451ccecbf2",
+   "bytes": 710735
   },
   "aux_pdf": {
    "file": "aux.pdf",
    "name": "adapted-auxiliary-note-marked.pdf",
    "label": "Auxiliary note, PDF with changes marked",
-   "sha256": "9ef0fc57a6a6e785f91244ffbb6481f817c2e4a4896ec2ba325febc7fe76cbd8",
-   "bytes": 129994
+   "sha256": "b2bc0a2880c1be63a3247183622e98556d9167f050f8fef8adf75b99da8e9e4c",
+   "bytes": 129860
+  },
+  "reading_pdf": {
+   "file": "reading.pdf",
+   "label": "Reading copy",
+   "name": "euler-adapted-v2.pdf",
+   "bytes": 553110,
+   "sha256": "b73d89b5ce149a2e1fc19bb5d91a14b931a2392fc8a5f26933eb33253df51144"
+  },
+  "aux_reading_pdf": {
+   "file": "aux-reading.pdf",
+   "label": "Auxiliary note",
+   "name": "euler-adapted-auxiliary-v2.pdf",
+   "bytes": 111072,
+   "sha256": "f9f960cee0ef738b0cd2514f66a0d0131596a910383b19c345d8cda8d367b0b3"
+  },
+  "source_overlay": {
+   "file": "source-overlay.zip",
+   "label": "TeX revisions against the authors’ source",
+   "name": "euler-adapted-v2-source-overlay.zip",
+   "bytes": 25388,
+   "sha256": "4d6ab9055c4a29224a67cc9e434a2b32377ffabf8957782039ef23284506b20a"
+  },
+  "release": {
+   "version": 2,
+   "date": "2026-11-22",
+   "notes": [
+    "The revision follows the shear from one wave to the next and explains how the pressure bound enters the endpoint correction.",
+    "The final estimates distinguish growth at launch times from control between launches. Appendix A identifies the real Hilbert space used for the endpoint inverse."
+   ]
   }
  }
 }
