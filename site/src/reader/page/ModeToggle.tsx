@@ -20,7 +20,8 @@ export function ModeToggle({ mode, onMode, graphCount = null }: { mode: PaneMode
         title={graphCount === 0 ? "Nothing in the recorded graph uses this or is used by it" : "What this uses and what uses it"}
         onClick={() => onMode("graph")}
       >
-        Graph{graphCount !== null && <span className="mode-toggle__count"> · {graphCount}</span>}
+        {/* The count's room is kept before it arrives, so the tabs never move when it does. */}
+        Graph<span className="mode-toggle__count">{graphCount !== null ? ` · ${graphCount}` : ""}</span>
       </button>
     </div>
   );

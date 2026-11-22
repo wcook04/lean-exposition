@@ -200,6 +200,20 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   );
   const references = useReferences(stage, doc, handle, useCallback(() => topRef.current, []), onReferenceLean ?? noLean);
 
+  // The parts in the window when the paper first mounts are laid out whole from the first frame.
+  // Content-visibility decides a part is on screen only after a first layout at its reserved height,
+  // and then lays it out again at its real one: under the first screen that moved the text below.
+  useLayoutEffect(() => {
+    const top = -window.innerHeight / 2;
+    const bottom = window.innerHeight * 1.5;
+    elements.current.forEach((el, index) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom > top && r.top < bottom) layOutWhole(stage, index);
+    });
+    // Once, for the paper as it first stands.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Resolve waiters once their parts are in the DOM and laid out.
   useLayoutEffect(() => {
     const ready = waiters.current.filter((w) => w.parts.every((i) => rendered.has(i)));

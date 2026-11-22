@@ -1465,7 +1465,11 @@ html[data-right-sheet] {
 
 /* The Graph tab carries its count; with nothing recorded it is dimmed, and still opens. */
 .mode-toggle__count {
+  display: inline-block;
+  min-width: 3.6ch;
+  text-align: left;
   font-variant-numeric: tabular-nums;
+  white-space: pre;
 }
 
 .mode-toggle button[data-empty]:not([aria-pressed="true"]) {

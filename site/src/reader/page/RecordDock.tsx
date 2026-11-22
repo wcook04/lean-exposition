@@ -314,6 +314,14 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   );
   const topic = phrase && open.tie !== null ? topicOf(ties, open.tie) : null;
   const names = useMemo(() => rows.map((item) => item.name), [rows]);
+  // Until what the card reads from is in, the whole column, its head included (the title is the
+  // paper's own once its notes arrive), is one waiting box: the head, card and Lean come together.
+  if (name && holding && !slot)
+    return (
+      <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label="The Lean">
+        <div className="lean-wait is-compact">Loading the Lean source</div>
+      </div>
+    );
   return (
     <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
       {!slot && (
