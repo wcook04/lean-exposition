@@ -3,8 +3,8 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "e8d422a62c6fb53729d8395b5f2af197052273c5750c4beb6478323d14a2b82d",
- "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
+ "content_sha256": "c7fffb0eccd3430e21be6d7107dc32f5b8ccff3ba4826e1ddaf6253aad2e9bac",
+ "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
@@ -470,7 +470,7 @@
   },
   {
    "anchor": "sec-finite-time-blow-up-for-the-navier-stokes-equations",
-   "text_sha256": "b06b46643342b2383ca94bc826e8bec76e984380047a2e09a84aa68142a6d77f",
+   "text_sha256": "2306b2b5e279c72dec31cec18b7a94c06feedc5c00d163642f9e0f66cfd12f82",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -488,7 +488,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "61946debda08ef8fec8b1ea220284d051d96f0f3823b01140d3e2547cb1572e8",
+   "text_sha256": "b9fd2c89f808b34c5912fbce10751f9949db3e465c767e41a1d47e8ebaad3664",
    "claim_ids": [
     "navier-stokes.theorem-1.1"
    ],
@@ -599,7 +599,7 @@
   },
   {
    "anchor": "sec-2",
-   "text_sha256": "7ffe45d56378878b1ab33da92cc2e8abac501244b5005ba2f6263940edcb3fb2",
+   "text_sha256": "73253b9c0147c778ffdcdcd444935b6752d52b69f82f7eab0224389434f99184",
    "claim_ids": [
     "navier-stokes.proposition-2.1",
     "navier-stokes.proposition-2.2",
@@ -709,7 +709,7 @@
   },
   {
    "anchor": "sec-3",
-   "text_sha256": "63e45dfd7822dd05f5be343423b681587805b4c97c7b92b98e80f1dbf62721c8",
+   "text_sha256": "523b7b3052057ec51fcca29432782ceab88594c16d9614749d0bdbf6c29c1236",
    "claim_ids": [
     "navier-stokes.lemma-3.1",
     "navier-stokes.lemma-3.2",
@@ -783,7 +783,7 @@
   },
   {
    "anchor": "sec-4",
-   "text_sha256": "59c283fdcd737c3f4112d5058d795dc2a978dc1769f47fd4faf0bebc5d9322b0",
+   "text_sha256": "b69e17522694ff0ec4779c630e7c549936ad43994eb974cdb5ef593f2bf853f3",
    "claim_ids": [
     "navier-stokes.proposition-4.1",
     "navier-stokes.lemma-4.2",
@@ -849,7 +849,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "b30460a8b3c51aad6f69a27132535fb8d731ccb2d7ac9f00ad03c330159934e9",
+   "text_sha256": "a3448e955a402cf9ae74ab167dce8e8e221c3eb656b5c7b4d6828354b3e93e82",
    "claim_ids": [
     "navier-stokes.lemma-5.1"
    ],
@@ -894,7 +894,7 @@
   },
   {
    "anchor": "sec-6",
-   "text_sha256": "9fffd738401cbe7cd9d9c3d4a3be00bd9aa6c60908a8e10a5daba45163f22656",
+   "text_sha256": "0a5cd589ba6e9adee8653296cab5b77924215284b123ca8840a8647efd7590ac",
    "claim_ids": [
     "navier-stokes.lemma-6.1",
     "navier-stokes.lemma-6.2",
@@ -983,7 +983,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "cce6df348014ad21ae0abef4906cb95e9f58430be2b4dc0263e524ea137267b0",
+   "text_sha256": "b91c9106e9df30ff509f12437355410d45e73e56b820cf2654139dbe81bce534",
    "claim_ids": [
     "navier-stokes.theorem-7.1",
     "navier-stokes.corollary-7.2",
@@ -1143,7 +1143,7 @@
   },
   {
    "anchor": "sec-appendix-a",
-   "text_sha256": "5b8092e1f0e81a897c24dafa7db1a6f44263c1e5ce22193efb3f3bc964a0a93d",
+   "text_sha256": "ca8c8abd9522cd0aac5aada059d2a23cfe225221ffdcc0a3af2e3730ee9d1ed2",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1152,7 +1152,7 @@
   },
   {
    "anchor": "sec-appendix-b",
-   "text_sha256": "55532861398619c21f0cdeac343ed79015f553842548c91ea11d33980430ce6e",
+   "text_sha256": "94b07dce8b13c4d12aed41625086e795d59081011a950fc9e00e315182c9517b",
    "claim_ids": [
     "navier-stokes.proposition-b.1",
     "navier-stokes.lemma-b.2",
@@ -1328,7 +1328,7 @@
   },
   {
    "anchor": "sec-appendix-c",
-   "text_sha256": "645e215ef2aac5f051485fc660bb9eb43094e9d904f7e35495510b34b8e83a21",
+   "text_sha256": "52c72734a8bdbc74b1070b83723a8fc320395ed5afa0f2d11cb25b7b69ecd8d5",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1337,7 +1337,7 @@
   },
   {
    "anchor": "sec-acknowledgments",
-   "text_sha256": "9d75ac454cfca7e88e9d17273751a7d6b015c1dfab087c10f3c4f66bef598121",
+   "text_sha256": "9f006d058c8a41bfba84c7ce779449f7155c0f790450d488f9b51e6ef037407d",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

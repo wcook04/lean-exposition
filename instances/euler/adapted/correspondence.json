@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "9b939051b6694cc06208b773295600a8520cf8cbc8e9f0ade8204126265ad808",
+ "content_sha256": "b530dbb49152850b252a93c9da97ea66d3799394b2e0186e7ebf5c53e0cc518e",
  "graph_sha256": "db48fdd5ba2604749972848ed79e43c2768fdab18b46be5a44ed5375dec0afe1",
  "selected_goal_ids": [
   "euler.theorem-1.1"
@@ -336,7 +336,7 @@
   },
   {
    "anchor": "sec-finite-time-singularity-formation-for-the-three-dimensional-euler-equations",
-   "text_sha256": "d9b1385ed0df26517e5121958454c92daca0ff53314ba81bd60d9ec0559b418c",
+   "text_sha256": "d2bea1426933d2d948f155a2561b5c48e2a6fcac63f0bfa8fd3b4b63eb31eea9",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -345,7 +345,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "880e234f741a05511181fac99923278c5d3e644dcd84bf493cdf908a6156ed72",
+   "text_sha256": "44205569b413971fa5a2d33479f4be411ad3778dc6baefa6bf0af4fe6dc885dd",
    "claim_ids": [
     "euler.theorem-1.1",
     "euler.remark-1.2",
@@ -493,7 +493,7 @@
   },
   {
    "anchor": "sec-2",
-   "text_sha256": "6f75a9eb75293976fb643ec88289900a239378d5ae188521cbff80fcebae9592",
+   "text_sha256": "c9a8fd6930bb160c140683d1adb8be98a1839339ee45f46bdd57277624b3ba66",
    "claim_ids": [
     "euler.lemma-2.1",
     "euler.lemma-2.2",
@@ -533,7 +533,7 @@
   },
   {
    "anchor": "sec-3",
-   "text_sha256": "c8128399754eb219c1dd26a2de5b4c2bc92fe3c315c8ade8d9b4bdd9630a8c11",
+   "text_sha256": "1260a2f0c9a3fe86ee02c8f931f27bd1bc139687966b924a4761932e642f02ca",
    "claim_ids": [
     "euler.lemma-3.1"
    ],
@@ -550,7 +550,7 @@
   },
   {
    "anchor": "sec-4",
-   "text_sha256": "a21ddecf74411ef38cb3005b358a915cbff496636a8b1ec2a6dad0c9f794ec44",
+   "text_sha256": "006fb485f6cb84a8da7187ab0b63775f3503a5b404fe21b41fe938c3636c141f",
    "claim_ids": [
     "euler.lemma-4.1",
     "euler.theorem-4.2"
@@ -573,7 +573,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "412567261709d3a64e2c498884f84038e3fa9a43349d6c7c566cf54d46be6a6f",
+   "text_sha256": "5ff0d3cf52c9dfa4d477f152dbfd189ffbf2f76e48413df0a444fb93bc4303a7",
    "claim_ids": [
     "euler.proposition-5.1",
     "euler.proposition-5.2",
@@ -668,7 +668,7 @@
   },
   {
    "anchor": "sec-6",
-   "text_sha256": "b83c463537cea44d06b06af70fff528a0652f1e6fbb7b7d48e4b1dbc05fe166b",
+   "text_sha256": "40165d526bcad7735650c1b9a7ff5bdab515cefc2db31ceceac4fcca29b6b2bc",
    "claim_ids": [
     "euler.lemma-6.1"
    ],
@@ -684,7 +684,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "9a4d7411af0fd5c069babac9790a8281be7f4c62ecd3f65609639d6725033579",
+   "text_sha256": "f0254cd21c26b3d640baca7ff674795836ffea34394547c4654d871fd80c062c",
    "claim_ids": [
     "euler.theorem-7.1"
    ],
@@ -799,7 +799,7 @@
   },
   {
    "anchor": "sec-8",
-   "text_sha256": "a4022fe9427ab4f953a0e10459703fffa63cd2d9fc9acc81ab7e3761e5aa6055",
+   "text_sha256": "d1ba64a8aa3aa48d5c8ecaaa658097c76049d1dd5090efa84efc9374cd8cd1e4",
    "claim_ids": [
     "euler.proposition-8.1",
     "euler.proposition-8.2",
@@ -945,7 +945,7 @@
   },
   {
    "anchor": "sec-appendix-a-the-h-lder-inverse",
-   "text_sha256": "1b5fc6e2ee82c34c9a670a7c2aa693f4be76ae3c2c7210c0435ccae9e7be3257",
+   "text_sha256": "68fe4685d6e0cf4e01b5ee910871267ee0b847b782a09b116914a84509bd6090",
    "claim_ids": [
     "euler.theorem-a.1",
     "euler.lemma-a.2"
@@ -964,7 +964,7 @@
   },
   {
    "anchor": "sec-appendix-b-the-frequency-cutoff",
-   "text_sha256": "450fdb55053f4234d054629b65c01440793f1dbbea329a950e0b807fd4003a5b",
+   "text_sha256": "d0194bf5a3e3d606c5b5eb26a2feedf3ceba9e34eda72ff181fa97253e4f4c05",
    "claim_ids": [
     "euler.lemma-b.1"
    ],
@@ -978,7 +978,7 @@
   },
   {
    "anchor": "sec-appendix-c-the-parameter-inequalities",
-   "text_sha256": "cb065e1cbeaaecc271106f27a336ac8a970e380ff98f3b20e65a8a39caf01b73",
+   "text_sha256": "59d167e853281e4a8d816ec9b0b7cfa5cee1434460a51b8d1a5a9ca0e8626df3",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -987,7 +987,7 @@
   },
   {
    "anchor": "sec-appendix-d-finite-norms-and-coefficient-estimates",
-   "text_sha256": "fe1a246130aa0b5ef338f5e421bd6d1dd6970fd5a3b14eb5f42b9f994f9406eb",
+   "text_sha256": "8a772c6c5de43bee065c347aecd75b4f7b08fe5fe7d005ffe4131858e8df25a7",
    "claim_ids": [
     "euler.lemma-d.1",
     "euler.lemma-d.2",
@@ -1022,7 +1022,7 @@
   },
   {
    "anchor": "sec-references",
-   "text_sha256": "2cf17af4406637d486ce5d086a72c60218b21838fc8a74f19622774f39f2d25c",
+   "text_sha256": "481d1c901a7d8f91766f190f25938f959e649e10be8ac863a1fcae6ba4696846",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1031,7 +1031,7 @@
   },
   {
    "anchor": "sec-auxiliary-note-smooth-terminal-regularity-away-from-the-origin",
-   "text_sha256": "13a5f165ff5091fee7703097015d7894f9a81ef7cdcaa8953fc90335ec773ac0",
+   "text_sha256": "186241965a4b0e2920a14d8c0fa1250c9895e170bb05ba7e807f8c47614d0a4d",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

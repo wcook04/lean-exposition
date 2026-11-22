@@ -13,65 +13,65 @@
   "group": "edition",
   "group_title": "Adapted edition",
   "order": 0,
-  "credit": "Adapted by Will Cook with AI assistance from the authors' manuscript.",
+  "credit": "Reading edition, 22 November 2026. Will Cook adapted the authors' 20 November manuscript (revision fd3a158) with AI assistance. The proof and numbered results are the authors'. This edition reorganizes the exposition, annotates the figures and adds calculations, including the fixed-particle integral after Corollary 8.3. The authors' Lean formalization follows their manuscript.",
   "published": true,
   "pdf": {
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
-   "label": "PDF with changes marked",
-   "sha256": "77584bb98c31e5e7f3c36c47ffe436cb3906d2431e34c279b3daff991e25c60d",
-   "bytes": 774530
+   "label": "PDF with change record",
+   "sha256": "1e2af1ed54ea68d195a0e83cb067d4f294daf43602411384f0bbb35256dd729f",
+   "bytes": 819113
   },
   "aux_pdf": {
    "file": "aux.pdf",
    "name": "adapted-auxiliary-note-marked.pdf",
-   "label": "Auxiliary note, PDF with changes marked",
-   "sha256": "c36be79fb6a4643ba414e900e9283ebd98a896355b5b36b65098d9fc1e4492bd",
-   "bytes": 136909
+   "label": "Auxiliary note with change record",
+   "sha256": "6e51f1781e26e3002d23526b714c5ecf1d3467e3f3f45487ba8b5f8ad0860179",
+   "bytes": 139966
   },
   "release": {
-   "version": 3,
+   "version": 4,
    "date": "2026-11-22",
    "notes": [
-    "Explains what grows in each wave, how the pressure bound enters the endpoint correction, and how that correction changes the initial velocity.",
-    "Distinguishes the stage endpoints from the singular time and explains the convergence of velocity and its time derivative away from the origin."
+    "Revises the introduction and the proof explanations in response to two expert readings.",
+    "Identifies the source edition and explains why the wave growth, pressure bound, and stage estimates are needed together."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "euler-adapted-v3.pdf",
+   "name": "euler-adapted-v4.pdf",
    "label": "Reading copy",
-   "bytes": 554275,
-   "sha256": "364d64e7c6ea75a3affd62066d202a0c8fd6121d9f4662590fa89a1d584800b3"
+   "bytes": 568096,
+   "sha256": "ca25777bd699484e49e83bb04fa8179fb6bed70f960d76df7a065026567794bb"
   },
   "aux_reading_pdf": {
    "file": "aux-reading.pdf",
-   "name": "euler-adapted-auxiliary-v3.pdf",
+   "name": "euler-adapted-auxiliary-v4.pdf",
    "label": "Auxiliary note",
-   "bytes": 108471,
-   "sha256": "d97aea02ec59285fe2134671e3f8179c731e2a8c212e781e474d4002f3d6c5e4"
+   "bytes": 108998,
+   "sha256": "f9953ce5a7ebee0d455fa06f44ebb374d52a142f11485202d5f7565d91ed2cd1"
   },
   "source_overlay": {
    "file": "source-overlay.zip",
-   "name": "euler-adapted-v3-source-overlay.zip",
+   "name": "euler-adapted-v4-source-overlay.zip",
    "label": "TeX revisions against the authors’ source",
-   "bytes": 54421,
-   "sha256": "3bb90efd86fd524b772b268a02db426ec3c0a54a85efd5e37167480247a52615"
+   "bytes": 72691,
+   "sha256": "abf2f1f886f769677f354f3cf71ebaa7e7681fd22c38a4f97498946333913506"
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 110321,
-    "sha256": "7382381d40a7c7aa05425068405d8e0088ffc3bde7c94188c5a0e83b2793c760"
+    "bytes": 110323,
+    "sha256": "8643513e7667d01700c0583eef9f677c83f22042dd4f181b02df104de6d3fd17"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 139458,
-    "sha256": "c82f198ccbd229e7317dd22ec5a5f9ed5b71d83a5c1e78b24353bd73c486b2a4"
+    "bytes": 139462,
+    "sha256": "4e57d43d11f6083f80454b1eb1308759b5d7d5aa0be029fe905f5a4d196c5002"
    }
   }
  }
