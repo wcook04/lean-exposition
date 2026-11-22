@@ -214,6 +214,14 @@ function partAt(body: BodyHandle | null, count: number, line: number): number {
   return lo;
 }
 
+interface PdfOrigin {
+  page: number;
+  at?: string;
+  textAt?: string;
+  position: ReadingPosition | null;
+  line: number | null;
+}
+
 interface SelectionAction {
   x: number;
   y: number;
@@ -388,10 +396,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const saveNow = useCallback(() => {
     // Nothing has moved it since it was restored: measuring again could only add the
     // rounding of idle rendering, and each save and restore would then creep.
-    if (heldEntry.current === entryKey()) return;
+    if (route.pdf || heldEntry.current === entryKey()) return;
     const position = measurePosition();
     if (position) savePosition(position);
-  }, [measurePosition]);
+  }, [measurePosition, route.pdf]);
   useEffect(() => {
     const release = () => (heldEntry.current = null);
     for (const type of INPUT) window.addEventListener(type, release, { passive: true, capture: true });
@@ -827,7 +835,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       addressTimer = window.setTimeout(() => {
         const here = hereRef.current;
         const at = ties.index.ties[tie].at;
-        if (here.at === at || here.node || here.beside) return;
+        if (here.at === at || here.node || here.beside || here.pdf) return;
         selfAt.current = at;
         navigate({ ...here, at }, { replace: true });
       }, 1400);
@@ -1452,7 +1460,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     let live = true;
     // Let go of the place once this reader has held it a moment (a reader that unmounts at once leaves it for the next).
     const done = window.setTimeout(() => live && clearPlace(), 1200);
-    void landAtLine(carried.line);
+    if (!route.pdf) void landAtLine(carried.line);
     return () => {
       live = false;
       window.clearTimeout(done);
@@ -1462,7 +1470,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, []);
   const switchEdition = (to: "authors" | "adapted", fromLine?: number) => {
     if (!ADAPTED || !changeMap || !side || to === side) return;
-    const line = fromLine ?? lineInView(paperRef.current, readingTop());
+    const line = fromLine ?? (route.pdf ? lineInPdf() : lineInView(paperRef.current, readingTop()));
     const place = line !== null ? counterpart(changeMap, side, line) : null;
     const target = to === "adapted" ? ADAPTED.slot : ADAPTED.of;
     carryPlace({
@@ -1636,16 +1644,66 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const onPdfPage = useCallback((page: number) => {
     pdfPage.current = page;
   }, []);
-  /** Switch between the text and the PDF, keeping the place: the selected phrase, else what is in view. */
+  // A PDF page can contain many paragraphs. Remember the exact text position for a
+  // round trip on the same page. A new PDF selection or a different page takes precedence.
+  const textReturn = useRef<ReadingPosition | null>(null);
+  useLayoutEffect(() => {
+    if (!pdfOn && textReturn.current) {
+      const position = textReturn.current;
+      textReturn.current = null;
+      void restorePosition(position);
+    }
+  }, [pdfOn, restorePosition]);
+
+  // When switching editions inside the PDF, the alignment gives a line in the new
+  // text. Find its page in that edition, whose pagination may be quite different.
+  const carriedPdfPage = useMemo(() => {
+    if (!carried || !pdfMarks || !route.pdf || route.page) return null;
+    return pageAtByte(pdfMarks, doc.byteOfLine(carried.line)) ?? 1;
+  }, [carried, pdfMarks, route.pdf, route.page, doc]);
+  useEffect(() => {
+    if (!carried || !carriedPdfPage) return;
+    writeEntry("pdfOrigin", { page: carriedPdfPage, at: route.at, position: null, line: carried.line } satisfies PdfOrigin);
+    navigate({ ...route, page: carriedPdfPage }, { replace: true });
+  }, [carried, carriedPdfPage, route]);
+
+  const pageInView = () => pdfPage.current ?? route.page ?? carriedPdfPage ?? 1;
+  const samePdfOrigin = () => {
+    const origin = readEntry<PdfOrigin>("pdfOrigin");
+    return origin && origin.page === pageInView() && origin.at === route.at ? origin : null;
+  };
+  const atInPdf = () => {
+    const page = pageInView();
+    if (route.at && page === route.page) return route.at;
+    return pdfMarks ? atOnPage(pdfMarks, page) ?? undefined : undefined;
+  };
+  const lineInPdf = () => {
+    const at = atInPdf();
+    return samePdfOrigin()?.line ?? (at ? resolveAt(doc, at)?.start : undefined) ?? null;
+  };
   const showPdf = (on: boolean) => {
     if (!pdfMarks || on === pdfOn) return;
     if (on) {
-      const seen = Array.from(document.querySelectorAll<HTMLElement>(".reader__paper [data-t]")).find((el) => el.getBoundingClientRect().top >= 0);
-      const segment = seen ? ties.index.segments[Number(seen.dataset.t)] : undefined;
-      const byte = route.at?.startsWith("b") ? Number(route.at.slice(1).split("-")[0]) : (segment?.[0] ?? 0);
-      navigate({ ...route, pdf: true, page: pageAtByte(pdfMarks, byte) ?? 1 }, { replace: true });
+      const line = lineInView(paperRef.current, readingTop());
+      const linePage = pageAtByte(pdfMarks, doc.byteOfLine(line ?? 1)) ?? 1;
+      const mark = route.at?.startsWith("b") ? Number(route.at.slice(1).split("-")[0]) : null;
+      const markPage = mark !== null ? pageAtByte(pdfMarks, mark) : null;
+      const page = markPage && (route.node || line === null) ? markPage : linePage;
+      const at = markPage === page ? route.at : undefined;
+      writeEntry("pdfOrigin", { page, at, textAt: route.at, position: measurePosition(), line } satisfies PdfOrigin);
+      pdfPage.current = page;
+      navigate({ ...route, at, pdf: true, page }, { replace: true });
     } else {
-      const at = route.at ?? (pdfPage.current ? (atOnPage(pdfMarks, pdfPage.current) ?? undefined) : undefined);
+      const origin = samePdfOrigin();
+      textReturn.current = origin?.position ?? null;
+      let at = atInPdf();
+      if (origin?.position) {
+        at = origin.textAt;
+        selfAt.current = at;
+      } else if (origin?.line) {
+        at = String(origin.line);
+      }
+      writeEntry("pdfOrigin", undefined);
       navigate({ ...route, pdf: undefined, page: undefined, at }, { replace: true });
     }
   };

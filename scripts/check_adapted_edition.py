@@ -193,6 +193,31 @@ with sync_playwright() as pw:
           const hit = window.find(phrase, false, false, true); return { inText, hit }; }""", a.far)
         check("1440 find in page reaches the edition's own words", found["inText"] and found["hit"], found)
 
+        # In a paper with figures, the PDF has only a page for many text blocks.
+        # A round trip on that page must restore the original block and its offset.
+        page.goto(edition, wait_until="domcontentloaded")
+        settle(page)
+        figure = page.locator(".paper figure").first
+        if figure.count():
+            center = "el => el.scrollIntoView({block:'center', behavior:'instant'})"
+            figure.evaluate(center)
+            figure.locator("img").first.wait_for(state="visible", timeout=15000)
+            figure.evaluate(center)
+            page.wait_for_timeout(1600)
+            before_line = page.evaluate(AT_LINE)
+            before_y = figure.bounding_box()["y"]
+            depth = page.evaluate("history.length")
+            page.get_by_role("button", name="PDF", exact=True).click()
+            page.locator(".pdf-view__page canvas").first.wait_for(state="attached", timeout=60000)
+            page.get_by_role("button", name="Text", exact=True).click()
+            page.wait_for_timeout(1200)
+            after_line = page.evaluate(AT_LINE)
+            after_y = figure.bounding_box()["y"]
+            check("1440 PDF round trip keeps the paragraph and figure in place",
+                  before_line == after_line and abs(before_y - after_y) < 5,
+                  f"{before_line!r} at {before_y:.1f} -> {after_line!r} at {after_y:.1f}")
+            check("1440 PDF round trip uses the same history entry", page.evaluate("history.length") == depth)
+
         # The PDF with changes marked: its link, the file, and its bars as marks in the PDF view.
         link = page.locator("a.pdf-link", has_text="PDF with changes marked").first
         href = link.get_attribute("href")
