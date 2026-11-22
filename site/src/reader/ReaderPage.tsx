@@ -502,6 +502,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (statement !== null) {
         const part = statements.partOf(statement);
         await body.ensure([part - 1, part, part + 1]);
+        body.settle([part - 1, part, part + 1]);
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll === false) return true;
@@ -518,6 +519,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const parts = lines ? partsOfLines(doc.parts, lines) : [];
         if (!lines || !parts.length) return false;
         await body.ensure([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
+        body.settle([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
         const blocks = parts.flatMap((part) => blocksOf(body.partElement(part), part === parts[parts.length - 1] ? doc.parts[part].lines.end : doc.parts[part + 1]?.lines.start - 1, lines));
         if (!blocks.length) return false;
         blocks.forEach((el) => el.setAttribute("data-slice", ""));

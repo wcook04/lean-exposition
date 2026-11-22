@@ -93,6 +93,12 @@ html.is-reading {
   overflow-clip-margin: 8px;
 }
 
+/* The parts a jump lands in are laid out whole before it measures, so they keep their height
+   as they come on screen and the landing is not corrected under the reader. */
+.part__text[data-near] {
+  content-visibility: visible;
+}
+
 @media print {
   .part__text {
     content-visibility: visible;

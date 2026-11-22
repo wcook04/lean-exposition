@@ -32,6 +32,11 @@ export interface BodyHandle {
   reanchor(force?: boolean): void;
   /** Hold this element where it is now (the target of a jump). */
   hold(el: Element): void;
+  /**
+   * Lay out these parts at their real height and fit their formulas now, wherever they are, so a
+   * jump measured into them lands where it stays: nothing in them changes as they come on screen.
+   */
+  settle(parts: number[]): void;
 }
 
 interface Props {
@@ -174,6 +179,14 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         reanchor(true);
         anchor.current = { el, top: el.getBoundingClientRect().top, scroll: window.scrollY };
         pinned.current = true;
+      },
+      settle: (parts) => {
+        for (const index of parts) {
+          const text = elements.current.get(index)?.querySelector<HTMLElement>(":scope > .part__text");
+          if (!text) continue;
+          if (text.dataset.near === undefined) text.dataset.near = "";
+          fitters.get(text)?.(() => true, true);
+        }
       },
       };
       handle.current = value;
@@ -719,7 +732,7 @@ function drainFits() {
 }
 
 /** Each part's formulas not yet fitted; it stops when `more` says so and reports whether it finished. */
-const fitters = new WeakMap<HTMLElement, (more: () => boolean) => boolean>();
+const fitters = new WeakMap<HTMLElement, (more: () => boolean, everywhere?: boolean) => boolean>();
 const laidOut = new WeakSet<HTMLElement>();
 
 /**
@@ -834,14 +847,14 @@ export function markWideMaths(root: HTMLElement): () => void {
           { rootMargin: FIT_MARGIN, scrollMargin: FIT_MARGIN },
         );
   boxes.forEach((box) => (near ? near.observe(box) : fit(box)));
-  fitters.set(root, (more) => {
+  fitters.set(root, (more, everywhere) => {
     for (const box of boxes) {
       if (fitted.has(box)) continue;
       // A formula far below the window is left to the observer, which fits it as it comes near:
       // fitting it now would change the page, unseen, while the reader has only just arrived. One
       // above the window is left to it too, since its new height would move the text being read.
       const r = box.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight + AHEAD_REACH) continue;
+      if (!everywhere && (r.bottom < 0 || r.top > window.innerHeight + AHEAD_REACH)) continue;
       if (!more()) return false;
       near?.unobserve(box);
       fit(box);
