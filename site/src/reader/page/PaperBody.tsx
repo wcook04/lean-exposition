@@ -819,6 +819,21 @@ export function formulaExtent(box: HTMLElement): number {
   return right;
 }
 
+/**
+ * A display as a quotation (a phrase card's quote): the formula as written, with its number,
+ * free of the sizes and forms its column chose, so the card fits it to its own width.
+ */
+export function quoteOfDisplay(box: HTMLElement): string {
+  let display = formsOf.get(box)?.html[0];
+  if (!display) {
+    const copy = box.querySelector<HTMLElement>(":scope > .katex-display")?.cloneNode(true) as HTMLElement | undefined;
+    copy?.querySelectorAll<HTMLElement>("[style]").forEach((el) => el.style.removeProperty("font-size"));
+    display = copy?.outerHTML ?? "";
+  }
+  const number = box.querySelector(":scope > .math-number")?.outerHTML ?? "";
+  return `<div class="math-display"${number ? ' data-number=""' : ""}>${display}${number}</div>`;
+}
+
 /** Displays fitted at least once, across mounts. */
 const widthsSeen = new WeakSet<HTMLElement>();
 

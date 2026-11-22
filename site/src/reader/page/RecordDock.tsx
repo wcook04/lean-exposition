@@ -24,6 +24,7 @@ import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statemen
 import { assessmentsOf, declLight, dockDecl, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
 import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
+import { quoteOfDisplay } from "./PaperBody";
 import { leanPage } from "./rightPage";
 
 /** What is open: a step, its statement here when it has one, or a declaration walked to. */
@@ -494,7 +495,8 @@ export function quoteOf(ties: TieModel, t: number): string | null {
   const segments = ties.segmentsOf[t];
   if (!segments?.length) return null;
   const marks = segments.flatMap((segment) => [...document.querySelectorAll<HTMLElement>(`.paper [data-t="${segment}"]`)]);
-  return marks.length ? marks.map((mark) => mark.innerHTML).join(" ") : null;
+  // A display formula is quoted whole, as written, and fitted where it is shown (PhraseCard.tsx).
+  return marks.length ? marks.map((mark) => (mark.classList.contains("math-display") ? quoteOfDisplay(mark) : mark.innerHTML)).join(" ") : null;
 }
 
 /**

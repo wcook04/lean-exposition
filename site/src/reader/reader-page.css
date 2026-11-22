@@ -1938,7 +1938,7 @@ html.is-reading {
 
 /* A numbered display (\tag) needs the full width of its box, or the number
    is drawn over the formula. */
-.prose .math-display:not([data-number]) > .katex-display:has(.katex-tag, .tag) > .katex {
+:is(.prose, .phrase-card__quote) .math-display:not([data-number]) > .katex-display:has(.katex-tag, .tag) > .katex {
   display: block;
 }
 

@@ -3,12 +3,13 @@
 // topic were all drafted by an AI agent, and the card says so; nothing here rests on colour.
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
 import { renderTex } from "../math";
+import { markWideMaths } from "./PaperBody";
 import site from "@instance/site";
 import { Signal } from "./signal";
 import { useLeanNote } from "../../lean/noteSummaries";
@@ -333,9 +334,12 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
   const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
   const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
+  // A quoted display formula is fitted to the card like one in the paper: it never scrolls sideways.
+  const quoteRef = useRef<HTMLQuoteElement>(null);
+  useLayoutEffect(() => (quoteRef.current ? markWideMaths(quoteRef.current) : undefined), [quote]);
   return (
     <section className="phrase-card" aria-label="These words and how the Lean compares with them">
-      {quote && <blockquote className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />}
+      {quote && <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />}
       {explanation?.text && <Explanation explanation={explanation} />}
       <div className="phrase-card__compare">
         <p className="phrase-card__label">

@@ -372,6 +372,12 @@
   background: var(--tone);
 }
 
+/* A display formula in a quotation is fitted to the inspector like one in the paper (PhraseCard.tsx). */
+.phrase-card__quote .math-display,
+.phrase-card__quote .katex-display {
+  margin: 0.2em 0;
+}
+
 /* Each section's topic dashes sit after its title and wrap with it, at one size for every level. */
 .outline__name .phrase-bars {
   white-space: nowrap;
