@@ -1,6 +1,6 @@
 import katex from "katex";
 import { describe, expect, it } from "vitest";
-import { breakForms, independentFormulas, relationLines, splitDisplay, sumRuns } from "../src/reader/texBreaks";
+import { breakForms, independentFormulas, plainNumber, relationLines, splitDisplay, sumRuns } from "../src/reader/texBreaks";
 
 const renders = (tex: string) => katex.renderToString(tex, { displayMode: true, throwOnError: true, strict: "ignore" });
 
@@ -82,5 +82,15 @@ describe("the broken forms", () => {
     expect(breakForms("\\frac{a+b}{c=d}")).toEqual([]);
     expect(breakForms("\\begin{aligned} a &= b \\\\ &= c \\end{aligned}")).toEqual([]);
     expect(breakForms("a &= b \\\\ c &= d")).toEqual([]);
+  });
+});
+
+describe("a display's printed number", () => {
+  it("reads one plain number, and none with markup or several", () => {
+    expect(plainNumber(EULER_1_2)).toBe("(1.2)");
+    expect(plainNumber("a = b \\tag*{B.47}")).toBe("B.47");
+    expect(plainNumber("a = b")).toBeNull();
+    expect(plainNumber("a = b \\tag{$\\star$}")).toBeNull();
+    expect(plainNumber("\\begin{gather} a \\tag{1} \\\\ b \\tag{2} \\end{gather}")).toBeNull();
   });
 });
