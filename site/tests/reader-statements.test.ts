@@ -89,6 +89,18 @@ describe("statements on the page", () => {
     expect(late.querySelector("[data-pin]")).not.toBeNull();
   });
 
+  it("colours existing margin ticks from their own linked words", () => {
+    const model = tieModel({ ...index, ties: [{ ...index.ties[0], tone: 0 }, { ...index.ties[1], tone: 7 }] });
+    const reader = new Statements(model, parts);
+    const page = section(0, [[0, 100, 120], [1, 130, 150], [2, 155, 175]]);
+    reader.adopt(0, page);
+    (reader as unknown as { drawTicks(part: number): void }).drawTicks(0);
+    const topics = (selector: string) => [...page.querySelectorAll<HTMLElement>(selector)].map(el => el.dataset.tone);
+    expect(topics(".tick")).toEqual(["0", "0", "7"]);
+    expect(topics(".tick")).toEqual(topics(".tie"));
+    reader.dispose();
+  });
+
   it("marks a selection across paragraphs as a block, with one margin rule, and clears both", () => {
     const text = first.querySelector(".part__text")!;
     const [a, b] = [...first.querySelectorAll<HTMLElement>(".tie")];

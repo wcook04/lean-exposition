@@ -28,6 +28,26 @@
   --tie-color: var(--ink-3);
 }
 
+/* The rail takes its colour from the same marked words as the tint. Paragraph selection
+   keeps its keyboard and pointer target in this column. */
+.paper .tick[data-tone] {
+  background-color: var(--tone);
+}
+
+:root[data-tones="off"] .paper .tick[data-tone] {
+  background-color: var(--ink-3);
+}
+
+.paper .para-pick {
+  left: calc(-1 * var(--mark-x) - 10px);
+  width: 20px;
+  border-radius: 2px;
+}
+
+.paper .para-pick::before {
+  content: none;
+}
+
 /* Keep the full width of a display available to its mathematics. */
 .paper .math-display.tie {
   background-image: none;
@@ -79,6 +99,10 @@
     text-decoration: underline;
     text-decoration-color: LinkText;
     text-underline-offset: 0.15em;
+  }
+  .paper .tick[data-tone] {
+    background-color: LinkText;
+    forced-color-adjust: none;
   }
   .paper .math-display.tie {
     border-inline-start: 2px solid LinkText;

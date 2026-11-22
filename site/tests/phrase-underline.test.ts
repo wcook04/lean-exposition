@@ -32,7 +32,7 @@ describe("phrase underline", () => {
   it("uses the same faint ink and tint for text and PDF phrase links", () => {
     const pdf = read("../src/reader/pdf/pdf-view.css");
     expect(tokens).toMatch(/--tie-rest-line-opacity:\s*8%;/);
-    expect(tokens).toMatch(/--tie-rest-fill-opacity:\s*14%;/);
+    expect(tokens).toMatch(/--tie-rest-fill-opacity:\s*10%;/);
     for (const css of [rule(".paper .tie"), pdf]) {
       expect(css).toContain("var(--tie-rest-line-opacity)");
       expect(css).toContain("var(--tie-rest-fill-opacity)");

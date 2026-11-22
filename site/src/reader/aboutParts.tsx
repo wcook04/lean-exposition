@@ -39,7 +39,7 @@ export function AboutUsing() {
       <div>
         <h3>What the marks mean</h3>
         <ul>
-          <li>A faint highlight marks linked text. Select it to open the corresponding step.</li>
+          <li>Linked text has a light tint. The line in the margin shows its topic colour. Select the text to open the corresponding step.</li>
           <li>The highlighter marks the statement you are on, in the same ink as the Lean lines it maps to.</li>
           <li>On a graph, a green card is a step stated and proved in Lean, or defined there. A paler green card has some of that.</li>
         </ul>

@@ -313,7 +313,7 @@ def underline_checks(browser, base, args, check) -> None:
             el.evaluate("e => e.scrollIntoView({block: 'center'})")
             page.wait_for_timeout(400)
             rest = el.evaluate(UNDERLINE)
-            check(f"{tag} rest 1px", rest["line"] == 1 and 0.13 <= rest["tint"] <= 0.15 and not rest["hover"], str(rest))
+            check(f"{tag} rest 1px", rest["line"] == 1 and 0.09 <= rest["tint"] <= 0.11 and not rest["hover"], str(rest))
             if args.shots:
                 box = el.bounding_box()
                 if box:

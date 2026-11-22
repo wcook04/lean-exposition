@@ -192,7 +192,7 @@ export class Statements {
     const marks = this.marks.get(part);
     if (!section || !marks) return;
     const box = section.getBoundingClientRect();
-    const rows = new Map<number, { top: number; bottom: number }>();
+    const rows = new Map<number, { top: number; bottom: number; tone?: string }>();
     for (const { el, segment } of marks) {
       const r = el.getBoundingClientRect();
       if (!r.height) continue;
@@ -200,7 +200,7 @@ export class Statements {
       if (row) {
         row.top = Math.min(row.top, r.top);
         row.bottom = Math.max(row.bottom, r.bottom);
-      } else rows.set(segment, { top: r.top, bottom: r.bottom });
+      } else rows.set(segment, { top: r.top, bottom: r.bottom, tone: el.dataset.tone });
     }
     let layer = section.querySelector<HTMLElement>(":scope > .part__ticks");
     if (!layer) {
@@ -215,6 +215,7 @@ export class Statements {
       const tick = document.createElement("i");
       tick.className = "tick";
       tick.dataset.s = String(segment);
+      if (row.tone !== undefined) tick.dataset.tone = row.tone;
       if (this.model.segmentLean[segment]) tick.dataset.lean = "";
       tick.style.top = `${Math.round(row.top - box.top)}px`;
       tick.style.height = `${Math.round(row.bottom - row.top)}px`;
