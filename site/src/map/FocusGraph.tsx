@@ -241,6 +241,19 @@ export function FocusGraph(props: FocusGraphProps) {
     auto.current = false;
     setCam({ ...cam.current, x: cam.current.x + dx, y: cam.current.y + dy });
   };
+  /** Move the camera just enough to show a card or an open group. */
+  const reveal = (node: HTMLElement) => {
+    const view = scroller.current?.getBoundingClientRect();
+    if (!view) return;
+    const box = node.getBoundingClientRect();
+    const margin = 8;
+    let dx = 0, dy = 0;
+    if (box.left < view.left + margin || box.width > view.width - 2 * margin) dx = view.left + margin - box.left;
+    else if (box.right > view.right - margin) dx = view.right - margin - box.right;
+    if (box.top < view.top + margin || box.height > view.height - 2 * margin) dy = view.top + margin - box.top;
+    else if (box.bottom > view.bottom - margin) dy = view.bottom - margin - box.bottom;
+    if (dx || dy) panBy(dx, dy);
+  };
   /**
    * Fit the whole drawing in view with a margin, no larger than its own size. When that would set the
    * titles below a readable size, the sides are grouped further first (up to six times) and the fit
@@ -627,15 +640,12 @@ export function FocusGraph(props: FocusGraphProps) {
     else return;
     e.preventDefault();
   };
-  // The canvas never scrolls, but the browser scrolls even a clipped box to bring a focused card
-  // into view: that becomes a move of the camera, and the box is put back.
-  const onScroll = () => {
-    const el = scroller.current;
-    if (!el || (!el.scrollLeft && !el.scrollTop)) return;
-    const dx = el.scrollLeft, dy = el.scrollTop;
-    el.scrollLeft = 0;
-    el.scrollTop = 0;
-    setCam({ ...cam.current, x: cam.current.x - dx, y: cam.current.y - dy });
+  // Browser scrolling cannot reveal a card above or to the left of a transformed drawing.
+  // Move the camera explicitly on focus and keep a card still while a pointer press selects it.
+  const onFocus = (e: React.FocusEvent) => {
+    if (drag.current) return;
+    const node = (e.target as HTMLElement).closest<HTMLElement>(".fg__card, .fg__grouphead");
+    if (node) reveal(node);
   };
   // A double click on the drawing (not on a card) zooms in there.
   const onDoubleClick = (e: React.MouseEvent) => {
@@ -676,17 +686,8 @@ export function FocusGraph(props: FocusGraphProps) {
     });
     auto.current = false;
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      const sc = scroller.current;
       const el = world.current?.querySelector<HTMLElement>(`.fg__side[data-band="${side}"] .fg__group[data-group="${CSS.escape(path)}"]`);
-      if (!sc || !el) return;
-      // Only the graph's own view moves: the page and the paper stay where they are.
-      const v = sc.getBoundingClientRect(), r = el.getBoundingClientRect();
-      let dx = 0, dy = 0;
-      if (r.height > v.height - 16 || r.top < v.top + 8) dy = v.top + 8 - r.top;
-      else if (r.bottom > v.bottom - 8) dy = v.bottom - 8 - r.bottom;
-      if (r.left < v.left + 8) dx = v.left + 8 - r.left;
-      else if (r.right > v.right - 8) dx = Math.max(v.left + 8 - r.left, v.right - 8 - r.right);
-      if (dx || dy) setCam({ ...cam.current, x: cam.current.x + dx, y: cam.current.y + dy });
+      if (el) reveal(el);
     }));
   };
 
@@ -864,7 +865,7 @@ export function FocusGraph(props: FocusGraphProps) {
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
         onKeyDown={onKeyDown}
-        onScroll={onScroll}
+        onFocusCapture={onFocus}
         onDoubleClick={onDoubleClick}
       >
         <div className={`fg__world${narrow ? " fg__world--narrow" : ""}`} ref={world} style={{ columnGap: gap }}>
