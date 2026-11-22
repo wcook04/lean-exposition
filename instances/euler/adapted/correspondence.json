@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "9cd63586596292bd2b5c0ef738fc4745afd4b433dd032369a4e6174e1dcf5753",
+ "content_sha256": "9b939051b6694cc06208b773295600a8520cf8cbc8e9f0ade8204126265ad808",
  "graph_sha256": "db48fdd5ba2604749972848ed79e43c2768fdab18b46be5a44ed5375dec0afe1",
  "selected_goal_ids": [
   "euler.theorem-1.1"
@@ -336,7 +336,7 @@
   },
   {
    "anchor": "sec-finite-time-singularity-formation-for-the-three-dimensional-euler-equations",
-   "text_sha256": "82ac0e4cfd79d5c0435f2892fc267d2dab984d392f919f7ae656875799aff3fc",
+   "text_sha256": "d9b1385ed0df26517e5121958454c92daca0ff53314ba81bd60d9ec0559b418c",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -345,7 +345,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "91b338b80b206bbc5490c2cc38e43f358ab5fe1d7cfe4c339af57a1c8c6eb840",
+   "text_sha256": "880e234f741a05511181fac99923278c5d3e644dcd84bf493cdf908a6156ed72",
    "claim_ids": [
     "euler.theorem-1.1",
     "euler.remark-1.2",
@@ -493,7 +493,7 @@
   },
   {
    "anchor": "sec-2",
-   "text_sha256": "4ff1286dfcfcd877ed07145ee48264046caaac59bc1e96363d966049e0f5ad8d",
+   "text_sha256": "6f75a9eb75293976fb643ec88289900a239378d5ae188521cbff80fcebae9592",
    "claim_ids": [
     "euler.lemma-2.1",
     "euler.lemma-2.2",
@@ -533,7 +533,7 @@
   },
   {
    "anchor": "sec-3",
-   "text_sha256": "9e5d4989ec573eeeb9f48beb645c2bdc4c0cc6a7098e1cb2da530d498e3a553a",
+   "text_sha256": "c8128399754eb219c1dd26a2de5b4c2bc92fe3c315c8ade8d9b4bdd9630a8c11",
    "claim_ids": [
     "euler.lemma-3.1"
    ],
@@ -550,7 +550,7 @@
   },
   {
    "anchor": "sec-4",
-   "text_sha256": "1f36b49f927055a0b7513855efa76578fb8720bd02ca1054cdc496442662861b",
+   "text_sha256": "a21ddecf74411ef38cb3005b358a915cbff496636a8b1ec2a6dad0c9f794ec44",
    "claim_ids": [
     "euler.lemma-4.1",
     "euler.theorem-4.2"
@@ -573,7 +573,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "3ebb98f48f9b558d1ca85e046ee89ced0299f5e63f742df350aae01e9151a166",
+   "text_sha256": "412567261709d3a64e2c498884f84038e3fa9a43349d6c7c566cf54d46be6a6f",
    "claim_ids": [
     "euler.proposition-5.1",
     "euler.proposition-5.2",
@@ -668,7 +668,7 @@
   },
   {
    "anchor": "sec-6",
-   "text_sha256": "e64711cc7a906f71c02f4c269783533955b525b7054cdbc94f95d6c1bf9187d8",
+   "text_sha256": "b83c463537cea44d06b06af70fff528a0652f1e6fbb7b7d48e4b1dbc05fe166b",
    "claim_ids": [
     "euler.lemma-6.1"
    ],
@@ -684,7 +684,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "ab84182523045a7c04784c7451e3b529a30de95c97cfb3f1306dd68cfd1c14c6",
+   "text_sha256": "9a4d7411af0fd5c069babac9790a8281be7f4c62ecd3f65609639d6725033579",
    "claim_ids": [
     "euler.theorem-7.1"
    ],
@@ -799,7 +799,7 @@
   },
   {
    "anchor": "sec-8",
-   "text_sha256": "8f3d5db3541a6f42212310602e5c6b8553e36e742df70042baac00eb71476ee2",
+   "text_sha256": "a4022fe9427ab4f953a0e10459703fffa63cd2d9fc9acc81ab7e3761e5aa6055",
    "claim_ids": [
     "euler.proposition-8.1",
     "euler.proposition-8.2",
@@ -945,7 +945,7 @@
   },
   {
    "anchor": "sec-appendix-a-the-h-lder-inverse",
-   "text_sha256": "471a4998a24e446a83cb3e775ec7577edb601246fe773cd9bd9df80be883b80c",
+   "text_sha256": "1b5fc6e2ee82c34c9a670a7c2aa693f4be76ae3c2c7210c0435ccae9e7be3257",
    "claim_ids": [
     "euler.theorem-a.1",
     "euler.lemma-a.2"
@@ -1022,7 +1022,7 @@
   },
   {
    "anchor": "sec-references",
-   "text_sha256": "9ed9b27e92ade6de16a914d68eba1ec2ee0c7d3f0bbfdc68cb058c9d9490aacf",
+   "text_sha256": "2cf17af4406637d486ce5d086a72c60218b21838fc8a74f19622774f39f2d25c",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -1031,7 +1031,7 @@
   },
   {
    "anchor": "sec-auxiliary-note-smooth-terminal-regularity-away-from-the-origin",
-   "text_sha256": "38461a799c83612360cb357c36b40f63d2df142b7613e26adcab9e5ba958da28",
+   "text_sha256": "13a5f165ff5091fee7703097015d7894f9a81ef7cdcaa8953fc90335ec773ac0",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

@@ -19,59 +19,59 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with changes marked",
-   "sha256": "55268a872b781e304f3e9bdf05778a4034d96504cba65ba8892d93e68c303653",
-   "bytes": 714862
+   "sha256": "77584bb98c31e5e7f3c36c47ffe436cb3906d2431e34c279b3daff991e25c60d",
+   "bytes": 774530
   },
   "aux_pdf": {
    "file": "aux.pdf",
    "name": "adapted-auxiliary-note-marked.pdf",
    "label": "Auxiliary note, PDF with changes marked",
-   "sha256": "43b1547b92cc21c2e0d924c541b98d17d6763302136a5a9af3ba8008e53e6350",
-   "bytes": 128859
+   "sha256": "c36be79fb6a4643ba414e900e9283ebd98a896355b5b36b65098d9fc1e4492bd",
+   "bytes": 136909
   },
   "release": {
-   "version": 2,
+   "version": 3,
    "date": "2026-11-22",
    "notes": [
-    "The revision follows the shear from one wave to the next and explains how the pressure bound enters the endpoint correction.",
-    "The final estimates distinguish growth at launch times from control between launches. Appendix A identifies the real Hilbert space used for the endpoint inverse."
+    "Explains what grows in each wave, how the pressure bound enters the endpoint correction, and how that correction changes the initial velocity.",
+    "Distinguishes the stage endpoints from the singular time and explains the convergence of velocity and its time derivative away from the origin."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "euler-adapted-v2.pdf",
+   "name": "euler-adapted-v3.pdf",
    "label": "Reading copy",
-   "bytes": 550062,
-   "sha256": "60e0b4ccffd6169808234a140dac81291ec9d7e933a40ce09b1f84ed692bf2d4"
+   "bytes": 554275,
+   "sha256": "364d64e7c6ea75a3affd62066d202a0c8fd6121d9f4662590fa89a1d584800b3"
   },
   "aux_reading_pdf": {
    "file": "aux-reading.pdf",
-   "name": "euler-adapted-auxiliary-v2.pdf",
+   "name": "euler-adapted-auxiliary-v3.pdf",
    "label": "Auxiliary note",
-   "bytes": 110157,
-   "sha256": "d3b50bf6b64112a12dfdd99efcc7ddb84f620d216a2754fdc44390b3f08e6e19"
+   "bytes": 108471,
+   "sha256": "d97aea02ec59285fe2134671e3f8179c731e2a8c212e781e474d4002f3d6c5e4"
   },
   "source_overlay": {
    "file": "source-overlay.zip",
-   "name": "euler-adapted-v2-source-overlay.zip",
+   "name": "euler-adapted-v3-source-overlay.zip",
    "label": "TeX revisions against the authors’ source",
-   "bytes": 26939,
-   "sha256": "5ef3a1c1100bbadca944cb4e94a6276469da41c9e1770c91b08b86f6b0586d2b"
+   "bytes": 54421,
+   "sha256": "3bb90efd86fd524b772b268a02db426ec3c0a54a85efd5e37167480247a52615"
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 110319,
-    "sha256": "a2cb69fcdfd7cbc4cd4f42f404c6b7d025b45db974e0c47cb5f6cff7cec06276"
+    "bytes": 110321,
+    "sha256": "7382381d40a7c7aa05425068405d8e0088ffc3bde7c94188c5a0e83b2793c760"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 139454,
-    "sha256": "1591d7d0da6061de49762d5e556aa7e3bf14855ecba747c0eaaa2f2ab0fa48c5"
+    "bytes": 139458,
+    "sha256": "c82f198ccbd229e7317dd22ec5a5f9ed5b71d83a5c1e78b24353bd73c486b2a4"
    }
   }
  }
