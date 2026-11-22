@@ -3,11 +3,12 @@
 // topic were all drafted by an AI agent, and the card says so; nothing here rests on colour.
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { loadPhraseNotes, type MergedPhrase, type PhraseAssessment, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict } from "../../compare/fidelityWords";
 import { renderTex } from "../math";
+import { markWideMaths } from "./PaperBody";
 import site from "@instance/site";
 import { Signal } from "./signal";
 import { useLeanNote } from "../../lean/noteSummaries";
@@ -175,6 +176,9 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
 export function PhraseCard({ row, topic, note, quote, merged }: { row: PhraseLean; topic: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[] }) {
   const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
+  // A quoted display formula is fitted to the card like one in the paper: it never scrolls sideways.
+  const quoteRef = useRef<HTMLQuoteElement>(null);
+  useLayoutEffect(() => (quoteRef.current ? markWideMaths(quoteRef.current) : undefined), [quote]);
   return (
     <section className="phrase-card" data-tone={topic ? topic.tone : undefined} aria-label="About this phrase and its Lean">
       {topic && (
@@ -184,7 +188,7 @@ export function PhraseCard({ row, topic, note, quote, merged }: { row: PhraseLea
         </p>
       )}
       {quote && (
-        <blockquote className="phrase-card__quote" aria-label="The phrase in the paper" dangerouslySetInnerHTML={{ __html: quote }} />
+        <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The phrase in the paper" dangerouslySetInnerHTML={{ __html: quote }} />
       )}
       {merged && merged.length > 1 && (
         <p className="phrase-card__merged" data-merged={merged.length}>
