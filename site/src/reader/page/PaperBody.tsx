@@ -9,7 +9,9 @@ import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayou
 import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
+import { renderTex } from "../math";
 import { mountFigures } from "../mount";
+import { breakForms, splitDisplay } from "../texBreaks";
 import { useReferences } from "./RefInset";
 import { estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
 import type { Statements } from "./statements";
@@ -439,40 +441,191 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
 });
 
 /**
- * A display formula wider than its box scrolls inside it, natively, and keeps
- * its focus ring and MathML. Nothing is faded: the last condition is part of
- * the statement. Under an overflowing display a quiet row says it scrolls
- * ("Scroll formula →", "←" at the end, "↔" between) and offers "Expand",
- * a labelled dialog with the formula at full width.
+ * A display formula never scrolls sideways and is never cut off. Fitted to its column it
+ *  1. stays as written when it fits: centred beside its number, or flush left when that is enough;
+ *  2. else shrinks, to no less than FIT_FLOOR of its size, its number keeping its own size;
+ *  3. else takes the first of its broken forms that fits at FIT_FLOOR or above: independent
+ *     formulas stacked, then a line per relation sign, then long sums split at plus and minus
+ *     (texBreaks.ts), its number on the last line;
+ *  4. else, with no form that fits, shrinks its best form below the floor until it fits, and
+ *     offers "Expand": a dialog with the formula as large as the window allows.
+ * Each form is typeset and measured once, at full size, so a refit never oscillates.
  */
-/** A display may shrink to this share of its size; past it, it breaks at a relation sign instead. */
-const FIT_FLOOR = 0.8;
-/** A numbered display cannot break without losing its number, so it may shrink further. */
-const TAGGED_FLOOR = 0.72;
-/** Space kept between a formula and its equation number, in pixels at full size. */
+/** A display may shrink to this share of its size before it breaks. */
+const FIT_FLOOR = 0.88;
+/** Space kept between a formula and its equation number, in pixels. */
 const TAG_GAP = 16;
-/** Last resort before scrolling: a single unbreakable piece may shrink this far. */
-const PIECE_FLOOR = 0.62;
 
 interface Natural {
-  /** The formula's width at full size, number excluded. */
+  /** The formula's width at full size, number excluded, in pixels. */
   formula: number;
-  /** The equation number's width at full size, or 0. */
+  /** The equation number's width, or 0. */
   tag: number;
-  /** The widest piece KaTeX cannot break, at full size. */
-  widest: number;
-  /** The runs between relation signs (groupRelationSegments), each with its width at full size. */
-  segments: { el: HTMLElement; w: number }[];
+  /** The formula's font size at full size, in pixels. */
+  font: number;
 }
 
-/** A run between relation signs shorter than this many ems stays with the run before it ("n ≥ 1."). */
-const TAIL_EM = 2.5;
+interface Forms {
+  /** Each form's KaTeX markup (its .katex-display): the display as written, then its broken forms once typeset. */
+  html: (string | null | undefined)[];
+  /** The broken forms' TeX, without the number (texBreaks.ts). */
+  tex: string[];
+  natural: (Natural | undefined)[];
+  shown: number;
+}
+
+const formsOf = new WeakMap<HTMLElement, Forms>();
 
 /**
- * KaTeX splits a display into pieces after each relation sign, and a breaking
- * display wraps between them. A piece that starts inside brackets is joined to the
- * piece before it, so a bracketed condition such as "(0 ≤ t₁ < t₂ < 1)" never splits.
- * Runs once per formula; joined pieces render exactly as before when nothing wraps.
+ * Set a display up for fitting, once. A display with one equation number gets that number as
+ * its own element beside the formula (.math-number), so the formula can shrink or break while
+ * the number keeps its size and sits on the formula's last line; KaTeX's own number is hidden.
+ */
+function formsFor(box: HTMLElement): Forms {
+  let forms = formsOf.get(box);
+  if (forms) return forms;
+  const display = box.querySelector<HTMLElement>(":scope > .katex-display");
+  const tex = box.querySelector('.katex-mathml annotation[encoding="application/x-tex"]')?.textContent ?? "";
+  const tags = display ? display.querySelectorAll(".katex-tag, .tag") : [];
+  const single = tags.length === 1 && (tex.match(/\\tag\b/g) ?? []).length === 1 && !!splitDisplay(tex).tag;
+  if (single && !box.querySelector(":scope > .math-number")) {
+    const number = document.createElement("span");
+    number.className = "katex math-number";
+    number.textContent = (tags[0].textContent ?? "").replace(/[​\s]+/g, "");
+    box.append(number);
+    box.dataset.number = "";
+  }
+  forms = { html: [display?.outerHTML ?? null], tex: tex ? breakForms(tex, { number: !single }) : [], natural: [], shown: 0 };
+  formsOf.set(box, forms);
+  return forms;
+}
+
+/** Show form `k` (typesetting it the first time). False when that form cannot be typeset. */
+function showForm(box: HTMLElement, forms: Forms, k: number): boolean {
+  if (forms.html[k] === undefined) {
+    const result = renderTex(forms.tex[k - 1], true);
+    forms.html[k] = result.error ? null : result.html;
+  }
+  const html = forms.html[k];
+  if (html == null) return false;
+  if (forms.shown !== k) {
+    const display = box.querySelector(":scope > .katex-display");
+    if (!display) return false;
+    const holder = document.createElement("template");
+    holder.innerHTML = html;
+    display.replaceWith(holder.content);
+    forms.shown = k;
+  }
+  // A broken form's number sits on its last line.
+  const lines = k > 0 ? "" : undefined;
+  if (box.dataset.lines !== lines) {
+    if (lines === undefined) delete box.dataset.lines;
+    else box.dataset.lines = lines;
+  }
+  return true;
+}
+
+const mathOf = (box: HTMLElement) => box.querySelector<HTMLElement>(":scope > .katex-display > .katex");
+const numberOf = (box: HTMLElement) =>
+  box.querySelector<HTMLElement>(":scope > .math-number") ?? box.querySelector<HTMLElement>(".katex-tag, .tag");
+
+function setScale(box: HTMLElement, size: Natural, scale: number): void {
+  const math = mathOf(box);
+  const font = scale >= 1 ? "" : `${Math.floor(size.font * scale * 100) / 100}px`;
+  if (math && math.style.fontSize !== font) math.style.fontSize = font;
+}
+
+function measureNatural(box: HTMLElement, forms: Forms, k: number): Natural | undefined {
+  if (forms.natural[k]) return forms.natural[k];
+  if (!showForm(box, forms, k)) return undefined;
+  const math = mathOf(box);
+  if (!math) return undefined;
+  math.style.fontSize = "";
+  delete box.dataset.align;
+  if (k === 0) joinBracketedPieces(math);
+  const font = parseFloat(getComputedStyle(math).fontSize) || 16;
+  const number = numberOf(box);
+  let size: Natural;
+  if (!number || box.dataset.number !== undefined) {
+    // The formula alone: its own number, if any, is a separate element.
+    size = { formula: math.scrollWidth, tag: number ? number.getBoundingClientRect().width : 0, font };
+    // The space a centred formula keeps free on its left, the number's width (reader-content.css).
+    const free = number ? `${Math.ceil(size.tag)}px` : "";
+    if (box.style.getPropertyValue("--number-w") !== free) box.style.setProperty("--number-w", free);
+  } else {
+    // KaTeX's own number (a display with several): KaTeX stretches the display to the full
+    // width and pins the numbers to the right, so the formula's width is the sum of its pieces.
+    const pieces = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .katex-base"));
+    const formula = pieces.reduce((sum, piece) => sum + piece.getBoundingClientRect().width, 0);
+    size = { formula, tag: number.getBoundingClientRect().width, font };
+  }
+  forms.natural[k] = size;
+  return size;
+}
+
+/** The scale at which a form fits `available` pixels, its number at full size, and where it sits. */
+export function scaleToFit(size: Pick<Natural, "formula" | "tag">, available: number): { scale: number; start: boolean } {
+  if (!size.formula) return { scale: 1, start: false };
+  if (!size.tag) return { scale: Math.min(1, available / size.formula), start: false };
+  if (size.formula + 2 * (size.tag + TAG_GAP) <= available + 1) return { scale: 1, start: false };
+  const room = available - size.tag - TAG_GAP;
+  return { scale: Math.min(1, Math.max(0, room) / size.formula), start: true };
+}
+
+/** Choose a display's form and size for its column (see above). */
+function fitDisplay(box: HTMLElement): void {
+  // Two per cent of slack absorbs rounding in KaTeX's spacing, so a shrunk display really fits.
+  const available = box.clientWidth * 0.98;
+  if (!available || !mathOf(box)) return;
+  const forms = formsFor(box);
+  let choice: { k: number; scale: number; start: boolean; size: Natural } | null = null;
+  for (let k = 0; k <= forms.tex.length; k++) {
+    const size = measureNatural(box, forms, k);
+    if (!size) continue;
+    const fit = scaleToFit(size, available);
+    if (fit.scale >= FIT_FLOOR) {
+      choice = { k, ...fit, size };
+      break;
+    }
+    if (!choice || fit.scale > choice.scale) choice = { k, ...fit, size };
+  }
+  if (!choice) return;
+  showForm(box, forms, choice.k);
+  let scale = Math.floor(choice.scale * 1000) / 1000;
+  setScale(box, choice.size, scale);
+  // What is drawn must lie inside the column: if KaTeX's spacing still reaches past it, shrink
+  // the formula by what remains, once.
+  const extent = formulaExtent(box);
+  if (extent > box.clientWidth + 0.5 && extent > 0) {
+    const tagPart = choice.size.tag ? choice.size.tag + TAG_GAP : 0;
+    scale = Math.floor(scale * Math.max(0, box.clientWidth - tagPart) / Math.max(1, extent - tagPart) * 0.99 * 1000) / 1000;
+    setScale(box, choice.size, scale);
+  }
+  const fit = scale >= 1 ? undefined : scale >= FIT_FLOOR ? "scaled" : "squeezed";
+  if (box.dataset.fit !== fit) {
+    if (fit) box.dataset.fit = fit;
+    else delete box.dataset.fit;
+  }
+  const form = choice.k ? String(choice.k) : undefined;
+  if (box.dataset.form !== form) {
+    if (form) box.dataset.form = form;
+    else delete box.dataset.form;
+  }
+  if (choice.start) {
+    if (box.dataset.align !== "start") box.dataset.align = "start";
+  } else if (box.dataset.align) delete box.dataset.align;
+}
+
+/** Measure again (the fonts changed): every form's natural size is stale. */
+function forgetSizes(box: HTMLElement): void {
+  const forms = formsOf.get(box);
+  if (forms) forms.natural = [];
+}
+
+/**
+ * KaTeX splits a display into pieces after each relation sign. A piece that starts inside
+ * brackets is joined to the piece before it, so a bracketed condition such as
+ * "(0 ≤ t₁ < t₂ < 1)" is one piece. Runs once per formula; joined pieces render exactly as before.
  */
 /** Join bracketed formula pieces in a part's markup, before it is placed (see joinBracketedPieces). */
 function prepareMarkup(html: string): string {
@@ -497,197 +650,6 @@ export function joinBracketedPieces(math: HTMLElement): void {
       piece.remove();
     } else previous = piece;
   }
-}
-
-/**
- * A breaking display breaks after a relation sign, not after a plus or minus: the pieces
- * between two relation signs are wrapped in one run (.math-seg), which stays on one line
- * while it fits ("1 − Ke^{−n/K}" never splits at its minus), and a run shorter than
- * `tail` pixels stays with the run before it. A run wider than the line opens and breaks
- * at its operators after all (fitDisplay). Runs once per formula, after joinBracketedPieces;
- * the runs change nothing while the display does not break.
- */
-export function groupRelationRuns(math: HTMLElement, tail: number): void {
-  const html = math.querySelector<HTMLElement>(":scope > .katex-html");
-  if (!html || html.dataset.runs) return;
-  html.dataset.runs = "true";
-  const runs: HTMLElement[][] = [];
-  let run: HTMLElement[] = [];
-  const close = () => {
-    if (run.length) runs.push(run);
-    run = [];
-  };
-  for (const child of Array.from(html.children) as HTMLElement[]) {
-    // An explicit line break or the equation number ends a run.
-    if (!child.classList.contains("katex-base")) {
-      close();
-      continue;
-    }
-    run.push(child);
-    if (endsWithRelation(child)) close();
-  }
-  close();
-  const width = (r: HTMLElement[]) => r.reduce((sum, p) => sum + p.getBoundingClientRect().width, 0);
-  for (let i = runs.length - 1; i > 0; i--) {
-    const a = runs[i - 1];
-    const b = runs[i];
-    if (width(b) < tail && a[a.length - 1].nextElementSibling === b[0]) {
-      a.push(...b);
-      runs.splice(i, 1);
-    }
-  }
-  for (const r of runs) {
-    if (r.length < 2) continue;
-    const seg = document.createElement("span");
-    seg.className = "math-seg";
-    r[0].before(seg);
-    seg.append(...r);
-  }
-}
-
-function endsWithRelation(piece: HTMLElement): boolean {
-  const atoms = Array.from(piece.children).filter((c) => !c.classList.contains("mspace") && !c.classList.contains("katex-strut"));
-  return !!atoms.length && atoms[atoms.length - 1].classList.contains("mrel");
-}
-
-function measureNatural(box: HTMLElement, math: HTMLElement): Natural {
-  box.style.fontSize = "";
-  delete box.dataset.fit;
-  delete box.dataset.align;
-  delete box.dataset.tag;
-  joinBracketedPieces(math);
-  groupRelationRuns(math, TAIL_EM * (parseFloat(getComputedStyle(math).fontSize) || 16));
-  const tag = box.querySelector<HTMLElement>(".katex-tag, .tag");
-  const pieces = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .katex-base, :scope > .katex-html > .math-seg > .katex-base"));
-  const widths = pieces.map((piece) => piece.getBoundingClientRect().width);
-  const widest = Math.max(0, ...widths);
-  const segments = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .math-seg")).map((el) => ({
-    el,
-    w: Array.from(el.children).reduce((sum, p) => sum + p.getBoundingClientRect().width, 0),
-  }));
-  if (!tag) return { formula: math.scrollWidth, tag: 0, widest, segments };
-  // KaTeX stretches a numbered display to the full width and pins the number to
-  // the right, so the formula's own width is the sum of its pieces.
-  const formula = widths.reduce((sum, w) => sum + w, 0);
-  return { formula, tag: tag.getBoundingClientRect().width, widest, segments };
-}
-
-/** At a breaking size, each run stays whole while it fits the line; a wider one opens to break at its operators. */
-function openRuns(size: Natural, scale: number, available: number): void {
-  for (const s of size.segments) s.el.toggleAttribute("data-open", s.w * scale > available);
-}
-
-/**
- * Fit a display formula to its column. An unnumbered display shrinks if that
- * keeps it at or above FIT_FLOOR of its size; otherwise it shrinks to the floor
- * and KaTeX breaks it between relation signs. A numbered display keeps its
- * formula clear of the number: it is centred when there is room, set flush
- * left when that is enough, and shrunk only as far as needed beyond that; if
- * even that is not enough, its number moves to a line of its own and the
- * formula breaks like an unnumbered one.
- * Widths are measured once at full size so repeated calls do not oscillate.
- */
-function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): void {
-  const math = box.querySelector<HTMLElement>(":scope > .katex-display > .katex");
-  // Two per cent of slack absorbs rounding in KaTeX's spacing, so a shrunk display really fits.
-  const available = box.clientWidth * 0.98;
-  if (!math || !available) return;
-  let size = natural.get(box);
-  if (!size) {
-    size = measureNatural(box, math);
-    natural.set(box, size);
-  }
-  // Whether a numbered display's number goes under the formula, decided below and written once.
-  numberBelow(box, !!size.tag && taggedScrolls(box, math, size, available));
-  if (size.tag) {
-    const centred = size.formula + 2 * (size.tag + TAG_GAP);
-    const flush = size.formula + size.tag + TAG_GAP;
-    if (centred <= available + 1) {
-      box.style.fontSize = "";
-      delete box.dataset.fit;
-      delete box.dataset.align;
-      return;
-    }
-    box.dataset.align = "start";
-    if (flush <= available + 1) {
-      box.style.fontSize = "";
-      delete box.dataset.fit;
-      return;
-    }
-    const scale = available / flush;
-    if (scale >= TAGGED_FLOOR) {
-      box.style.fontSize = `${Math.floor(scale * 1000) / 1000}em`;
-      box.dataset.fit = "scaled";
-      return;
-    }
-    if (unbreakable(math)) return keepWhole(box);
-    if (staysOnOneLine(box)) return fitOneLine(box, scale);
-    // Too wide even beside a small number: the number takes its own line under
-    // the formula, and the formula breaks between relation signs.
-    const tagged = breakSize(size, available);
-    box.style.fontSize = `${tagged}em`;
-    box.dataset.fit = "wrap-tagged";
-    openRuns(size, tagged, available);
-    return;
-  }
-  if (size.formula <= available + 1) {
-    box.style.fontSize = "";
-    delete box.dataset.fit;
-    return;
-  }
-  const scale = available / size.formula;
-  if (scale >= FIT_FLOOR) {
-    box.style.fontSize = `${Math.floor(scale * 1000) / 1000}em`;
-    box.dataset.fit = "scaled";
-    return;
-  }
-  if (unbreakable(math)) return keepWhole(box);
-  if (staysOnOneLine(box)) return fitOneLine(box, scale);
-  const wrap = breakSize(size, available);
-  box.style.fontSize = `${wrap}em`;
-  box.dataset.fit = "wrap";
-  openRuns(size, wrap, available);
-}
-
-/**
- * A numbered display too wide to shrink beside its number that cannot break (a cases or aligned
- * block, or a display in a slice) keeps its shape and scrolls. Its number stays pinned to the
- * column's edge and was drawn over the formula's end, so the number goes under the formula.
- */
-function taggedScrolls(box: HTMLElement, math: HTMLElement, size: Natural, available: number): boolean {
-  const flush = size.formula + size.tag + TAG_GAP;
-  if (flush <= available + 1 || available / flush >= TAGGED_FLOOR) return false;
-  return unbreakable(math) || staysOnOneLine(box);
-}
-
-/** Set a numbered display's number on its own line under the formula, or back beside it. */
-function numberBelow(box: HTMLElement, below: boolean): void {
-  if (below) {
-    if (box.dataset.tag !== "below") box.dataset.tag = "below";
-  } else if (box.dataset.tag) delete box.dataset.tag;
-}
-
-/** A cases or aligned block has rows and a brace: breaking it inline tears them apart. */
-const unbreakable = (math: HTMLElement) => !!math.querySelector(".mtable");
-
-/** A slice in a narrow cell keeps each display on one line: it shrinks a little further and scrolls there, and never breaks at its relation signs. */
-const staysOnOneLine = (box: HTMLElement) => !!box.closest(".slice");
-
-function fitOneLine(box: HTMLElement, scale: number): void {
-  box.style.fontSize = `${Math.max(TAGGED_FLOOR, Math.floor(scale * 1000) / 1000)}em`;
-  box.dataset.fit = "scaled";
-}
-
-/** Such a block keeps its shape at the smallest fitted size, and scrolls in its own box. */
-function keepWhole(box: HTMLElement): void {
-  box.style.fontSize = `${FIT_FLOOR}em`;
-  box.dataset.fit = "scaled";
-}
-
-/** The size for a display that breaks: FIT_FLOOR, or smaller if its widest piece would still not fit. */
-function breakSize(size: Natural, available: number): number {
-  if (!size.widest || size.widest * FIT_FLOOR <= available) return FIT_FLOOR;
-  return Math.max(Math.floor((available / size.widest) * 1000) / 1000, PIECE_FLOOR);
 }
 
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
@@ -750,9 +712,10 @@ function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
 export function formulaExtent(box: HTMLElement): number {
   const html = box.querySelector<HTMLElement>(":scope > .katex-display > .katex > .katex-html");
   if (!html) return box.scrollWidth;
-  const parts = html.querySelectorAll<HTMLElement>(
-    ":scope > .katex-base, :scope > .math-seg > .katex-base, :scope > .katex-tag, :scope > .tag",
-  );
+  const parts = [
+    ...Array.from(html.querySelectorAll<HTMLElement>(":scope > .katex-base, :scope > .katex-tag, :scope > .tag")),
+    ...Array.from(box.querySelectorAll<HTMLElement>(":scope > .math-number")),
+  ];
   if (!parts.length) return box.scrollWidth;
   const start = box.getBoundingClientRect().left + box.clientLeft - box.scrollLeft;
   let right = 0;
@@ -764,7 +727,6 @@ export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
   const cues = new Map<HTMLElement, HTMLElement>();
-  const natural = new WeakMap<HTMLElement, Natural>();
   const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
   let live = true;
   const update = (box: HTMLElement, force = false) => {
@@ -772,44 +734,25 @@ export function markWideMaths(root: HTMLElement): () => void {
     // Fitting can change a display's height, which the observer reports back, and a height can
     // bring a scroll bar to the column, which narrows it. Only a different available width (or
     // newly loaded fonts) needs another fit, and a width that returns within a second to the one
-    // before the last is that loop answering itself: the last decision stands. Scrolling a formula
-    // only changes its cue.
+    // before the last is that loop answering itself: the last decision stands.
     const seen = widths.get(box);
     const changed = !seen || Math.abs(seen.now - width) > 1;
     const flipBack = !!seen && seen.before !== null && Math.abs(seen.before - width) <= 1 && performance.now() - seen.at < 1000;
     if (force || (changed && !flipBack)) {
-      fitDisplay(box, natural);
+      fitDisplay(box);
       widths.set(box, { now: width, before: seen?.now ?? null, at: performance.now() });
     }
-    // Only a formula that still does not fit after shrinking and breaking scrolls.
-    const wide = formulaExtent(box) > box.clientWidth + 1;
-    if (box.dataset.overflow !== String(wide)) box.dataset.overflow = String(wide);
-    const atStart = box.scrollLeft <= 1;
-    const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
-    if (box.dataset.scrolledEnd !== String(atEnd)) box.dataset.scrolledEnd = String(atEnd);
+    // A display shrunk below the floor offers its full size in a dialog. It sits under the
+    // display, outside the measured box, so showing it changes no width.
+    const squeezed = box.dataset.fit === "squeezed";
     let cue = cues.get(box);
-    if (wide && !cue) {
+    if (squeezed && !cue) {
       cue = makeCue(box);
       cues.set(box, cue);
       box.after(cue);
     }
-    if (wide && !box.hasAttribute("tabindex")) {
-      box.tabIndex = 0;
-      box.setAttribute("role", "group");
-      box.setAttribute("aria-label", "Formula wider than the column, scroll sideways to read it");
-    }
-    if (!cue) return;
-    if (cue.hidden !== !wide) cue.hidden = !wide;
-    const where = atStart ? "start" : atEnd ? "end" : "between";
-    if (cue.dataset.at !== where) {
-      cue.dataset.at = where;
-      const scroll = cue.querySelector<HTMLButtonElement>(".math-cue__scroll")!;
-      scroll.textContent = where === "start" ? "Scroll formula →" : where === "end" ? "← Scroll formula" : "Scroll formula ↔";
-      scroll.setAttribute("aria-label", where === "end" ? "Scroll the formula back to its start" : "Scroll the formula to its end");
-    }
+    if (cue && cue.hidden !== !squeezed) cue.hidden = !squeezed;
   };
-  const onScroll = (event: Event) => update(event.currentTarget as HTMLElement);
-  boxes.forEach((b) => b.addEventListener("scroll", onScroll, { passive: true }));
   // Sizes are read once a frame, after every change of that frame, never inside the change itself.
   const resized = new Set<HTMLElement>();
   let resizeFrame = 0;
@@ -826,6 +769,9 @@ export function markWideMaths(root: HTMLElement): () => void {
   const fit = (box: HTMLElement) => {
     fitted.add(box);
     observer.observe(box);
+    // A width measured in a fallback font is wrong, and fitting on it and again once KaTeX's
+    // fonts arrive changes the display twice, after the page has painted: wait for the fonts.
+    if (document.fonts && document.fonts.status !== "loaded") return;
     update(box);
   };
   // Each measurement forces a layout, so a formula is fitted as it comes near the screen.
@@ -855,11 +801,11 @@ export function markWideMaths(root: HTMLElement): () => void {
     }
     return true;
   });
-  // KaTeX's fonts can arrive after the first measurement; measure again once they have.
+  // Formulas reached before KaTeX's fonts arrive are fitted once they have.
   if (document.fonts && document.fonts.status !== "loaded") {
     void document.fonts.ready.then(() => {
       if (!live) return;
-      fitted.forEach((b) => natural.delete(b));
+      fitted.forEach(forgetSizes);
       fitted.forEach((box) => update(box, true));
     });
   }
@@ -869,7 +815,6 @@ export function markWideMaths(root: HTMLElement): () => void {
     near?.disconnect();
     observer.disconnect();
     cancelAnimationFrame(resizeFrame);
-    boxes.forEach((b) => b.removeEventListener("scroll", onScroll));
     cues.forEach((cue) => cue.remove());
   };
 }
@@ -877,25 +822,21 @@ export function markWideMaths(root: HTMLElement): () => void {
 function makeCue(box: HTMLElement): HTMLElement {
   const cue = document.createElement("span");
   cue.className = "math-cue";
-  const scroll = document.createElement("button");
-  scroll.type = "button";
-  scroll.className = "math-cue__scroll";
-  scroll.addEventListener("click", () => {
-    const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
-    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    box.scrollTo({ left: atEnd ? 0 : box.scrollWidth, behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
-  });
   const expand = document.createElement("button");
   expand.type = "button";
   expand.className = "math-cue__expand";
   expand.textContent = "Expand";
   expand.setAttribute("aria-haspopup", "dialog");
+  expand.setAttribute("aria-label", "Show the formula larger");
   expand.addEventListener("click", () => expandFormula(box, expand));
-  cue.append(scroll, expand);
+  cue.append(expand);
   return cue;
 }
 
-/** The formula alone, at full width, in a labelled modal dialog. */
+/**
+ * The formula alone, as large as the window allows, in a labelled modal dialog across the
+ * window's width. It is fitted like any display (fitDisplay) and never scrolls; Escape closes it.
+ */
 function expandFormula(box: HTMLElement, opener: HTMLElement): void {
   const dialog = document.createElement("dialog");
   dialog.className = "modal modal--centre modal--formula";
@@ -907,12 +848,11 @@ function expandFormula(box: HTMLElement, opener: HTMLElement): void {
   inner.innerHTML = `<header class="modal__bar"><h2 id="${id}" class="modal__title" tabindex="-1">Formula</h2><button type="button" class="modal__close" aria-label="Close the formula"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></header>`;
   const body = document.createElement("div");
   body.className = "modal__body prose formula-full";
-  const copy = box.cloneNode(true) as HTMLElement;
-  copy.removeAttribute("tabindex");
-  copy.removeAttribute("role");
-  copy.removeAttribute("aria-label");
-  copy.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  const copy = document.createElement("div");
   copy.className = "math-display";
+  // The display as written, at full size, not the form the column chose.
+  copy.innerHTML = formsOf.get(box)?.html[0] ?? box.innerHTML;
+  copy.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
   body.append(copy);
   inner.append(body);
   dialog.append(inner);
@@ -930,6 +870,7 @@ function expandFormula(box: HTMLElement, opener: HTMLElement): void {
   dialog.addEventListener("click", (event) => event.target === dialog && close());
   inner.querySelector<HTMLButtonElement>(".modal__close")!.addEventListener("click", close);
   dialog.showModal();
+  fitDisplay(copy);
   inner.querySelector<HTMLElement>(".modal__title")!.focus({ preventScroll: true });
 }
 
