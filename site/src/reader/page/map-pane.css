@@ -739,6 +739,18 @@ html[data-right-sheet] .reader__paper {
   margin-left: auto;
 }
 
+/* Nothing in the Lean is linked to what is being read: one plain line over the whole map. */
+.map-pane__unlinked {
+  flex: none;
+  margin: 0;
+  padding: 6px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--rule, color-mix(in srgb, currentColor 18%, transparent));
+}
+
 .map-pane__none {
   margin: auto;
   padding: var(--space-4);

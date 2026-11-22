@@ -6,7 +6,9 @@
 // Graph is the focus graph (FocusGraph, specified in docs/graph-pane.md): the subject in the
 // middle, everything that uses it on the left and everything it uses on the right, grouped by topic, with
 // the dock under it showing one card in detail. The whole proof map stays one button away,
-// in the same place. Lean is the Lean of the subject, the whole height of the pane. Under
+// in the same place. Lean is the Lean of the subject, the whole height of the pane. Where the
+// paragraph or selection has no Lean linked to it, either view shows the whole proof map instead,
+// with one line saying so: never an empty notice, never a guess presented as its Lean. Under
 // 1280px the same page opens as a sheet; under 600px of width the graph folds to one line.
 
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
@@ -25,6 +27,7 @@ import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
 import { passageTopics, statementFor, type TieModel } from "../ties";
 import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
+import { nearestWithLean } from "./unlinked";
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
@@ -216,7 +219,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     return { subject: best ? asSubject(best) : { kind: "records", ids: [home] }, why: "follow" };
   }, [ties, onGraph, asSubject, readAt, home]);
   const current = fresh ?? kept.current ?? opening;
-  const stale = !fresh && !!kept.current;
   const subjectKey = current ? (current.subject.kind === "decl" ? `d:${current.subject.name}` : `r:${current.subject.ids.join("|")}`) : "";
 
   // The Lean modules the drawing reads, fetched once each.
@@ -313,12 +315,31 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin, decl, openRecord, declModule, held, heldFirst, tools, ties, pointed, followRecord, follow.tie, anchor, passage]);
 
+  // ---- Nothing in the Lean linked: the whole proof map ------------------------------------------
+
+  // Whether the Lean view has a declaration to show for what it is on. A statement the Lean does
+  // not state, a step with no Lean and a paragraph with nothing tied have none.
+  const hasLean = (open: LeanOpen): boolean => {
+    if (open.decl || open.via === "point") return true;
+    const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
+    if (tie) return !!tie.lean;
+    if (!open.record) return false;
+    // Until the alignment arrives a step's Lean is not known: keep what is there.
+    return !alignment || !!alignment.records[open.record]?.lean.length;
+  };
+  // The Lean view with nothing to show, or the graph with no subject of its own: the whole map, in
+  // the view the reader chose, until a linked paragraph or a click gives it a subject again.
+  const unlinked = !leanSlot && (mode === "lean" ? !preview && !hasLean(leanOpen) : !fresh);
+  const unlinkedAt = held ? passageStart(ties, held.anchor) : readAt;
+  const near = useMemo(() => (unlinked ? nearestWithLean(ties, unlinkedAt, (id) => onGraph(id) && graph.nodes.get(id)?.kind !== "declaration") : null), [unlinked, ties, unlinkedAt, onGraph, graph]);
+
   // ---- The whole proof map, one button away ------------------------------------------------
 
   const [whole, setWhole] = useState(false);
+  const showWhole = whole || unlinked;
   const treeRef = useRef<MapViewHandle>(null);
   useKeptCamera(treeRef, useCallback((id: string) => graph.nodes.has(id), [graph]));
-  const subjectRecords = useMemo(() => (current?.subject.kind === "records" ? [...current.subject.ids] : []), [current]);
+  const subjectRecords = useMemo(() => (unlinked ? (near ? [near] : []) : current?.subject.kind === "records" ? [...current.subject.ids] : []), [unlinked, near, current]);
   const goal = useMemo(
     () => (!subjectRecords.length || subjectRecords.some((id) => reachOf(home).has(id)) ? home : (chooseGoal(subjectRecords, candidates, reachOf, home) ?? home)),
     [subjectRecords, reachOf, home, candidates],
@@ -332,10 +353,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const previewIds = useMemo(() => (lit.length ? new Set(lit) : null), [lit]);
   const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 24, right: 16 }), []);
   useEffect(() => {
-    if (!whole) return;
+    if (!showWhole) return;
     const open = window.setTimeout(() => treeRef.current?.expandAll(), 0);
     const frame = window.setTimeout(() => {
-      const ids = subjectRecords.filter((id) => reachOf(goal).has(id));
+      // Shown for want of Lean, the map opens whole; opened by the button, on the subject.
+      const ids = unlinked && !whole ? [] : subjectRecords.filter((id) => reachOf(goal).has(id));
       if (ids.length) treeRef.current?.focusIds(ids);
       else treeRef.current?.fitAll(false);
     }, 80);
@@ -345,7 +367,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     };
     // Framed when it opens; afterwards the reader moves it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [whole, goal]);
+  }, [showWhole, goal]);
   const onTreeHover = useCallback((id: string | null) => onPoint(id ? statementFor(ties, id) : null, id ?? undefined), [onPoint, ties]);
   const onTrace = useCallback((id: string) => navigate({ view: "map", goal, node: id, trace: "rests" }), [goal]);
   const onTreeSelect = useCallback((id: string | null) => id && onSubject(id), [onSubject]);
@@ -412,10 +434,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const label = ((): ReactNode => {
     if (!current) return null;
     const why = current.why;
-    if (stale) {
-      const shown = subjectTitle ? <>“{subjectTitle}”</> : "the steps";
-      return <>No Lean is linked to this paragraph. The graph keeps {shown} from the last paragraph that had any.</>;
-    }
     const offMap = current.subject.kind === "decl" && !reachOf(home).has(focus?.subjects[0] ?? "");
     if (why === "phrase")
       return (
@@ -474,12 +492,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     };
     return { uses: usesKinds.size, usedBy: usedByKinds.size, usesHow: tally(usesKinds), usedByHow: tally(usedByKinds) };
   }, [focus]);
-  const folded = narrow && !unfolded && !whole;
+  const folded = narrow && !unfolded && !showWhole;
   const fill = !!leanSlot;
   const mapHref = routeHref({ view: "map", goal, node: subjectRecords[0] });
 
-  const drawing = whole ? (
-    <div className="map-pane__canvas">
+  const drawing = showWhole ? (
+    <div className="map-pane__canvas" data-unlinked={unlinked ? "" : undefined}>
       <ArgumentTree
         key={goal}
         ref={treeRef}
@@ -534,7 +552,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
         <ModeToggle mode={mode} onMode={onMode} />
-        {mode === "graph" && !fill && (
+        {mode === "graph" && !fill && !unlinked && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}
           </button>
@@ -567,7 +585,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         <div className="map-pane__fill">
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
-      ) : mode === "lean" ? (
+      ) : mode === "lean" && !unlinked ? (
         <div className="map-pane__lean">
           <LeanDock
             open={leanOpen}
@@ -587,9 +605,15 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       ) : (
         <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}`}>
           <div className="map-pane__drawing">
-            <GraphBoundary scope={whole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
+            {unlinked && (
+              <p className="map-pane__unlinked" role="status">
+                Nothing in the Lean is linked to {pin ? "the words you chose" : "this paragraph"}, so here is the whole proof map.
+                {near && " The highlighted step is the nearest one with Lean."}
+              </p>
+            )}
+            <GraphBoundary scope={showWhole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
           </div>
-          {!folded && (
+          {!folded && !(unlinked && !preview) && (
             <div
               className="map-pane__handle"
               role="separator"
@@ -605,6 +629,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               <span aria-hidden="true" />
             </div>
           )}
+          {!(unlinked && !preview) && (
           <div className="map-pane__dock">
             <LeanDock
               open={dockOpen}
@@ -621,6 +646,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
             />
           </div>
+          )}
         </div>
       )}
     </section>

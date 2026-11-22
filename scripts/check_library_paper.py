@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 import sys
 import time
 import urllib.request
@@ -73,6 +74,197 @@ SELECTION = r"""() => {
     }),
   };
 }"""
+
+
+# The right pane where nothing in the Lean is linked: the whole proof map, drawn and interactive,
+# with no dead-end notice; and where something is, its declaration at its lines.
+PANE = """() => {
+  const pane = document.querySelector('.map-pane');
+  const canvas = pane?.querySelector('.map-pane__canvas[data-unlinked]');
+  return {
+    unlinked: !!canvas,
+    cards: canvas ? canvas.querySelectorAll('.tree [data-card]').length : 0,
+    lines: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line').length : 0,
+    lit: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line.is-lit').length : 0,
+    raw: pane?.querySelector('.map-pane__lean .lean-page__raw')?.getAttribute('title') ?? '',
+    title: pane?.querySelector('.map-pane__lean .lean-page__title')?.textContent ?? '',
+    lean: pane?.querySelector('.mode-toggle button[aria-pressed="true"]')?.textContent?.trim() ?? '',
+    topics: pane ? pane.querySelectorAll('.lean-page__topics').length : 0,
+    text: pane?.innerText ?? '',
+  };
+}"""
+DEAD_ENDS = ("No Lean is linked to this paragraph", "names no step of the map", "Steps of the map in its passage")
+
+# The paragraph of the paper that starts with these words: a point on its words that is no link,
+# phrase or control, where a reader would click it, and its top.
+PARAGRAPH = """([words, linked]) => {
+  const norm = (t) => t.replace(/\\s+/g, ' ').trim();
+  // Linked words are clicked on their own phrase; an unlinked paragraph off every phrase.
+  const el = (linked ? [...document.querySelectorAll('.paper .tie')].find(e => norm(e.textContent).startsWith(words)) : null)
+    ?? [...document.querySelectorAll('.paper p, .paper li, .paper [data-line]')].find(e => norm(e.textContent).startsWith(words));
+  if (!el) return null;
+  el.scrollIntoView({block: 'center'});
+  for (const r of el.getClientRects()) for (let y = r.top + r.height / 2; y < r.bottom - 2; y += 8) for (let x = r.left + 6; x < r.right - 4; x += 10) {
+    const hit = document.elementFromPoint(x, y);
+    if (hit && el.contains(hit) && !hit.closest('a, button, .katex') && (linked || !hit.closest('.tie'))) return {x, y};
+  }
+  return null;
+}"""
+
+# Brings the paragraph to the reading line, as scrolling to it would: Auto follows it there.
+TO_LINE = """(words) => {
+  const norm = (t) => t.replace(/\\s+/g, ' ').trim();
+  const el = [...document.querySelectorAll('.paper p, .paper li, .paper [data-line]')].find(e => norm(e.textContent).startsWith(words));
+  if (!el) return false;
+  const strip = document.querySelector('.reader-strip')?.getBoundingClientRect().bottom ?? 56;
+  window.scrollBy(0, el.getBoundingClientRect().top - strip - 4);
+  return true;
+}"""
+
+
+def unlinked_checks(browser, base, args, check) -> None:
+    """Every unlinked paragraph named (--unlinked PAGE|WORDS) shows the whole proof map in the Lean
+    view, in Auto (scrolled to) and Manual (clicked, and the clicked address loaded cold); every
+    linked one named (--linked PAGE|WORDS) and the phrase and result addresses show their declaration."""
+
+    def pane(page, want_unlinked, settle=15000):
+        test = "() => { const p = document.querySelector('.map-pane'); return !!p && " + (
+            "!!p.querySelector('.map-pane__canvas[data-unlinked] .tree [data-card]')" if want_unlinked
+            else "p.querySelectorAll('.map-pane__lean .lean-page .lean-line').length > 0") + "; }"
+        try:
+            page.wait_for_function(test, timeout=settle)
+        except Exception:
+            pass
+        page.wait_for_timeout(600)
+        return page.evaluate(PANE)
+
+    def unlinked_ok(state):
+        dead = [d for d in DEAD_ENDS if d in state["text"]]
+        return state["unlinked"] and state["cards"] > 0 and not dead and not state["topics"] and state["lean"] == "Lean", \
+            f"canvas {state['unlinked']}, {state['cards']} cards, view {state['lean']!r}, dead ends {dead}, step lists {state['topics']}"
+
+    def linked_ok(state):
+        return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"]) and state["lean"] == "Lean",
+                f"{state['lines']} Lean lines ({state['lit']} lit), declaration {state['raw']!r}, title {state['title']!r}, canvas {state['unlinked']}")
+
+    def shoot(page, name):
+        if args.shots:
+            args.shots.mkdir(parents=True, exist_ok=True)
+            page.screenshot(path=str(args.shots / f"{name}.png"))
+
+    def open_page(page, where):
+        page.goto(where)
+        page.wait_for_selector(".paper .tie", timeout=90000)
+        page.wait_for_timeout(1500)
+
+    def find_unlinked(doc):
+        """The first words of the first paragraph without phrases that, clicked, has nothing in the Lean linked."""
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        open_page(page, base + doc + "?v=lean")
+        candidates = page.evaluate("""() => [...document.querySelectorAll('.paper p')]
+            .filter(p => !p.querySelector('.tie') && p.textContent.trim().length > 80)
+            .slice(0, 12).map(p => p.textContent.replace(/\\s+/g, ' ').trim().slice(0, 48))""")
+        found = None
+        for words in candidates:
+            point = page.evaluate(PARAGRAPH, [words, False])
+            if not point:
+                continue
+            page.mouse.click(point["x"], point["y"])
+            if pane(page, True, 4000)["unlinked"]:
+                found = words
+                break
+        context.close()
+        return found
+
+    for kind, specs in (("unlinked", args.unlinked), ("linked", args.linked)):
+        for n, spec in enumerate(specs):
+            doc, words = spec.split("|", 1)
+            doc = doc.strip("/") + "/" if doc.strip("/") else ""
+            if kind == "unlinked" and words == "*":
+                words = find_unlinked(doc)
+                if not words:
+                    check(f"unlinked {doc or 'paper'} paragraph found", False, "no paragraph among the first ones without phrases shows the whole map")
+                    continue
+            name = f"{kind} {doc or 'paper'} {words[:32]!r}"
+            judge = unlinked_ok if kind == "unlinked" else linked_ok
+            context = browser.new_context(viewport={"width": 1440, "height": 900})
+            page = context.new_page()
+            errors = []
+            page.on("pageerror", lambda e: errors.append(str(e)))
+            # Auto: the paragraph brought to the reading line, nothing clicked.
+            open_page(page, base + doc + "?v=lean")
+            if kind == "unlinked":
+                found = page.evaluate(TO_LINE, words)
+                page.wait_for_timeout(2500)
+                ok, detail = judge(pane(page, True))
+                check(f"{name} auto", found and ok, detail if found else "paragraph not found")
+                shoot(page, f"{kind}-{n}-auto")
+            # Manual: the paragraph clicked.
+            point = page.evaluate(PARAGRAPH, [words, kind == "linked"])
+            if not point:
+                check(f"{name} manual", False, "paragraph not found")
+                context.close()
+                continue
+            page.mouse.click(point["x"], point["y"])
+            try:
+                page.wait_for_function("() => /[?&]l=b\\d+-\\d+|\\/@|[?&]n=/.test(location.href)", timeout=10000)
+            except Exception:
+                pass
+            ok, detail = judge(pane(page, kind == "unlinked"))
+            at = page.url
+            check(f"{name} manual", ok and "v=lean" in at, f"{at}: {detail}")
+            shoot(page, f"{kind}-{n}-manual")
+            # The address the click made, opened cold (for an unlinked paragraph, ?l=b<start>-<end>).
+            cold = browser.new_context(viewport={"width": 1440, "height": 900})
+            fresh = cold.new_page()
+            open_page(fresh, at)
+            ok, detail = judge(pane(fresh, kind == "unlinked"))
+            check(f"{name} cold address", ok and (kind == "linked" or re.search(r"[?&]l=b\d+-\d+", at)), f"{at}: {detail}")
+            shoot(fresh, f"{kind}-{n}-cold")
+            cold.close()
+            check(f"{name} no page errors", not errors, "; ".join(errors[:3]))
+            context.close()
+    # A page opened cold on the Lean view whose opening has nothing tied: the whole map at once.
+    for doc in args.unlinked_cold:
+        doc = doc.strip("/") + "/" if doc.strip("/") else ""
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        open_page(page, base + doc + "?v=lean")
+        ok, detail = unlinked_ok(pane(page, True))
+        check(f"unlinked {doc or 'paper'} opening, cold", ok, detail)
+        shoot(page, f"unlinked-cold-{doc.strip('/') or 'paper'}")
+        context.close()
+    # A numbered display clicked on the Lean view (its equation number, "1.1"): its declaration.
+    for spec in args.linked_equation:
+        doc, tag = spec.split("|", 1)
+        doc = doc.strip("/") + "/" if doc.strip("/") else ""
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+        open_page(page, base + doc + "?v=lean")
+        point = page.evaluate("""(tag) => {
+          const box = [...document.querySelectorAll('.paper .math-display')].find(d => d.textContent.replace(/\\s+/g, '').includes('(' + tag + ')'));
+          if (!box) return null;
+          box.scrollIntoView({block: 'center'});
+          const r = (box.querySelector('.tie') ?? box).getBoundingClientRect();
+          return {x: r.left + r.width / 2, y: r.top + r.height / 2};
+        }""", tag)
+        if point:
+            page.mouse.click(point["x"], point["y"])
+        ok, detail = linked_ok(pane(page, False, 30000))
+        check(f"linked {doc or 'paper'} equation ({tag})", bool(point) and ok, detail if point else f"no display numbered ({tag})")
+        shoot(page, f"linked-equation-{doc.strip('/') or 'paper'}-{tag}")
+        context.close()
+    # The stable linked addresses, opened on the Lean view: a phrase and a numbered result show a declaration.
+    if not args.lean_addresses:
+        return
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    for kind, path in ((("phrase", f"@{args.phrase}"),) + ((("result", f"{args.result}/"),) if args.result else ())):
+        open_page(page, base + path + "?v=lean")
+        ok, detail = linked_ok(pane(page, False, 30000))
+        check(f"lean view of the {kind} address", ok, f"{path}: {detail}")
+    context.close()
 
 
 def selection_checks(browser, base, args, check) -> None:
@@ -188,9 +380,24 @@ def main() -> int:
     ap.add_argument("--pdf-only", action="store_true", help="the paper is read only in its PDF: no Text toggle, the PDF view opens at its top")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
+    ap.add_argument("--unlinked", action="append", default=[], metavar="PAGE|WORDS",
+                    help="a paragraph (its first words, or * for the first such paragraph found; PAGE empty for the paper itself) linked to no Lean: the Lean view shows the whole proof map")
+    ap.add_argument("--linked", action="append", default=[], metavar="PAGE|WORDS",
+                    help="a paragraph linked to Lean: clicked, and its address opened cold, the Lean view shows its declaration")
+    ap.add_argument("--unlinked-cold", action="append", default=[], metavar="PAGE",
+                    help="a page (empty for the paper) whose opening has nothing tied: opened cold on the Lean view, it shows the whole proof map")
+    ap.add_argument("--linked-equation", action="append", default=[], metavar="PAGE|NUMBER",
+                    help="a numbered display (\"1.1\") tied to Lean: clicked on the Lean view, it shows its declaration")
+    ap.add_argument("--lean-addresses", action="store_true", help="the phrase and result addresses, opened on the Lean view, show a declaration")
     ap.add_argument("--companion", action="append", default=[], metavar="PAGE[/@ID]",
                     help="a companion page (or a phrase address on it) that must open its own text, never the edition error")
-    args = ap.parse_args()
+    ap.add_argument("--args-file", metavar="FILE", help="more arguments, read as a shell would split them (instances/<paper>/check.args); a missing file adds none")
+    argv = sys.argv[1:]
+    if "--args-file" in argv:
+        i = argv.index("--args-file")
+        extra = Path(argv[i + 1]) if i + 1 < len(argv) else None
+        argv = argv[:i] + argv[i + 2:] + (shlex.split(extra.read_text()) if extra and extra.is_file() else [])
+    args = ap.parse_args(argv)
     base = args.base.rstrip("/") + "/"
     failures, report = [], {}
 
@@ -509,6 +716,8 @@ def main() -> int:
             context.close()
         if not args.pdf_only:
             selection_checks(browser, base, args, check)
+        if args.unlinked or args.linked or args.unlinked_cold or args.linked_equation or args.lean_addresses:
+            unlinked_checks(browser, base, args, check)
         # Each companion named opens its own text with its phrases, from its own edition, never the
         # edition error; a phrase address on one also opens that phrase's card.
         for width, height in SIZES:
