@@ -211,7 +211,12 @@ export function ComparisonLegend() {
               </div>
             ))}
           </dl>
-          <p>A comparison concerns the quoted words only. A shared name or number is not evidence that two statements agree, and a check of the Lean by its kernel is not a check of this comparison.</p>
+          <p>{site.library && (
+          <>
+            <a href={`${import.meta.env.BASE_URL}about/#differences`}>Differences between the paper and the Lean</a>{". "}
+          </>
+        )}
+        A comparison concerns the quoted words only. A shared name or number is not evidence that two statements agree, and a check of the Lean by its kernel is not a check of this comparison.</p>
         </>
       )}
     </details>

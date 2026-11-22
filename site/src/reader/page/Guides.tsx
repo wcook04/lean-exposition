@@ -24,7 +24,7 @@ function Head({ title, onClose }: { title: string; onClose(): void }) {
 }
 
 /** `about`: what the paper's main formal statement asserts, where the paper gives that (the aid for its title). */
-export function StartHere({ cards, about, titleOf, onOpen, onClose }: { cards: readonly ShowcaseCard[]; about?: string; titleOf(card: string): string; onOpen(card: string): void; onClose?(): void }) {
+export function StartHere({ cards, about, more, titleOf, onOpen, onClose }: { cards: readonly ShowcaseCard[]; about?: string; /** The paper's longer start-here page, where it has one. */ more?: string; titleOf(card: string): string; onOpen(card: string): void; onClose?(): void }) {
   return (
     <section className="guide-panel" aria-label="Start here">
       {onClose ? (
@@ -35,6 +35,11 @@ export function StartHere({ cards, about, titleOf, onOpen, onClose }: { cards: r
         </header>
       )}
       {about && <p className="guide-panel__about" dangerouslySetInnerHTML={{ __html: noteHtml(about).html }} />}
+      {more && (
+        <p className="guide-panel__who">
+          <a href={more}>Read the whole of “Start here”</a>
+        </p>
+      )}
       <p className="guide-panel__lead">
         {cards.length === 1 ? "One place" : `${cards.length} places`} to start from. Each opens its words in the paper, with the comparison and the Lean beside them.
       </p>

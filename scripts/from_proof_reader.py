@@ -398,6 +398,7 @@ def main() -> None:
                     help="replace the ties, comparisons and notes of an existing instance, keeping every old tie id as an address")
     ap.add_argument("--retired-on", default=__import__("datetime").date.today().isoformat(),
                     help="the date a re-import records for the phrase links it retires (YYYY-MM-DD; default today)")
+    ap.add_argument("--start-here", type=Path, help="a long Markdown 'Start here' for the paper, read as a page of its own")
     ap.add_argument("--guide", type=Path, help="a Markdown guide to how the Lean encodes the paper's objects, read as a page of its own")
     ap.add_argument("--hold-comparisons", action="store_true",
                     help="keep the page's comparisons hidden: every comparison is replaced by the page's held text (fidelity_held)")
@@ -1019,12 +1020,15 @@ def main() -> None:
         receipt = json.loads((folder / "receipt.json").read_text()) if (folder / "receipt.json").is_file() else None
         comparator = {"files": files, "receipt": "receipt.json" if receipt else None}
 
-    # ---- the guide to how the Lean encodes the paper, as a page of its own (the exposition slot)
-    guide = None
-    if args.guide:
-        gslot = next(s for s in ("expository", "long") if s != slot)
-        gtext = args.guide.read_text()
-        gtext, gsections, _ = reading_copy(gtext, [])
+    # ---- companion pages read as documents of their own, in the free document slots: the guide to how
+    # the Lean encodes the paper (--guide) and the long "Start here" (--start-here).
+    def companion(path, doc_id, slug, title, why):
+        free = [x for x in ("expository", "long") if x != slot and x not in taken]
+        if not free:
+            raise SystemExit(f"no free document slot for {title}")
+        gslot = free[0]
+        taken.add(gslot)
+        gtext, gsections, _ = reading_copy(path.read_text(), [])
         gbytes = gtext.encode("utf-8")
         write(out / "papers" / gslot / "paper.md", gtext)
         (out / "papers" / gslot / "absent.md").unlink(missing_ok=True)
@@ -1032,13 +1036,13 @@ def main() -> None:
         gpassages, cursor = [], 0
         for sec in gsections:
             marker, end = f"<!-- passage:{sec['anchor']} -->", f"<!-- /passage:{sec['anchor']} -->"
-            start = gtext.index(marker, cursor) + len(marker)
-            stop = gtext.index(end, start)
+            begin = gtext.index(marker, cursor) + len(marker)
+            stop = gtext.index(end, begin)
             cursor = stop
-            gpassages.append({"anchor": sec["anchor"], "text_sha256": sha(gtext[start:stop].encode("utf-8")), "claim_ids": [],
+            gpassages.append({"anchor": sec["anchor"], "text_sha256": sha(gtext[begin:stop].encode("utf-8")), "claim_ids": [],
                               "citation_ids": [], "assumption_ids": [], "evidence_class": "context",
-                              "rationale": f"{sec['heading']}: how the formalisation encodes the paper's objects."})
-        # The guide explains how the main result is encoded; its opening section carries that result.
+                              "rationale": f"{sec['heading']}: {why}"})
+        # The page is about the main result; its opening section carries that result.
         if gpassages:
             gpassages[0].update(claim_ids=[goal], citation_ids=sorted(required_citation_ids(graph, [goal])),
                                 evidence_class="source_argument")
@@ -1046,7 +1050,17 @@ def main() -> None:
         mapped["state"] = "draft"
         write(out / "papers" / gslot / "correspondence.json", dumps(mapped))
         write(out / f"alignment/references-{gslot}.json", dumps(references(gtext, gslot)))
-        guide = {"id": "encoding", "slot": gslot, "slug": "how-the-lean-encodes-it", "title": "How the Lean encodes it", "noun": "guide"}
+        return {"id": doc_id, "slot": gslot, "slug": slug, "title": title, "noun": "guide"}
+
+    taken = {d["slot"] for d in companion_docs}
+    companions = []
+    if args.guide:
+        companions.append(companion(args.guide, "encoding", "how-the-lean-encodes-it", "How the Lean encodes it",
+                                    "how the formalisation encodes the paper's objects."))
+    if args.start_here:
+        companions.append(companion(args.start_here, "start-here", "start-here", "Start here",
+                                    "an orientation to the paper and its Lean."))
+    guide = companions[0] if companions else None
 
     # ---- supplementary checks and the declarations no sentence names
     if (page / "generated/checks.json").is_file():
@@ -1094,7 +1108,7 @@ def main() -> None:
                    "upstream": {"repository": upstream_repo, "commit": upstream_rev, "paper": toml["paper"].get("url")},
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
-                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + ([guide] if guide else []),
+                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + companions,
         **({"comparator": comparator} if comparator else {}),
         **({"comparisons_hidden": True, "comparisons_held_text": held} if held else {}),
         "families": links.get("families", []),

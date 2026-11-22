@@ -83,7 +83,7 @@ if (existsSync(aliases)) {
   }
 }
 // Reading notes on Lean and the supplementary checks, published beside the edition when the paper has them.
-for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["generated/checks.json", "checks.json"], ["generated/comparator/receipt.json", "comparator.json"]]) {
+for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["generated/checks.json", "checks.json"], ["generated/comparator/receipt.json", "comparator.json"], ["generated/differences-summary.md", "differences.md"]]) {
   const source = resolve(import.meta.dirname, "../../instances", paper, from);
   const target = resolve(import.meta.dirname, "../public", to);
   if (existsSync(source)) copyFileSync(source, target);

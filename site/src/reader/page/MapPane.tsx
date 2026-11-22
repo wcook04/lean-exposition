@@ -544,12 +544,15 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     },
     [ties, alignment],
   );
+  // The paper's longer start-here page, where it has one, for the link under the summary.
+  const startPage = site.library?.pages?.["start-here"];
+  const startHref = startPage ? routeHref({ view: "read", stage: startPage }) : undefined;
   // The paper's own short orientation where it has one; else what its main formal statement asserts.
   const about = aids.summary ?? site.sectionAids?.[stage]?.[PAPER_NAMES[stage].short];
   // Before the paper's first link (its title and authors) there is nothing to follow: the pane offers where to start.
   const firstLink = ties.order.length ? startOf(ties.index.ties[ties.order[0]].at) : null;
   const atFront = !holding && follow.tie === null && (readAt === null || readAt === undefined || firstLink === null || readAt < firstLink);
-  const frontSlot = atFront && aids.showcase.length > 0 ? <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} /> : undefined;
+  const frontSlot = atFront && aids.showcase.length > 0 ? <StartHere cards={aids.showcase} about={about} more={startHref} titleOf={cardTitle} onOpen={openCard} /> : undefined;
   // Where the selection is one of the paper's showcase cards, the pane says which, with the way to the next.
   const tourAt = useMemo(() => {
     if (!aids.showcase.length || (!pinTie && !decl)) return -1;
@@ -558,7 +561,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   }, [aids, pinTie, decl]);
   const asideSlot =
     aside === "start" ? (
-      <StartHere cards={aids.showcase} about={about} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
+      <StartHere cards={aids.showcase} about={about} more={startHref} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
     ) : aside === "route" && aids.route ? (
       <ProofRoute steps={aids.route} onOpen={openCard} onClose={() => setAside(null)} />
     ) : aside === "guide" && guideStage ? (
