@@ -769,6 +769,9 @@ export function markWideMaths(root: HTMLElement): () => void {
   const fit = (box: HTMLElement) => {
     fitted.add(box);
     observer.observe(box);
+    // A width measured in a fallback font is wrong, and fitting on it and again once KaTeX's
+    // fonts arrive changes the display twice, after the page has painted: wait for the fonts.
+    if (document.fonts && document.fonts.status !== "loaded") return;
     update(box);
   };
   // Each measurement forces a layout, so a formula is fitted as it comes near the screen.
@@ -798,7 +801,7 @@ export function markWideMaths(root: HTMLElement): () => void {
     }
     return true;
   });
-  // KaTeX's fonts can arrive after the first measurement; measure again once they have.
+  // Formulas reached before KaTeX's fonts arrive are fitted once they have.
   if (document.fonts && document.fonts.status !== "loaded") {
     void document.fonts.ready.then(() => {
       if (!live) return;

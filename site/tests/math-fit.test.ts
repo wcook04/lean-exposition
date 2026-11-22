@@ -96,7 +96,7 @@ describe("display fitting notifications", () => {
     stop();
   });
 
-  it("remeasures formula geometry when pending fonts finish loading at the same width", async () => {
+  it("fits a display reached before the fonts arrive once they have, with their widths", async () => {
     vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
     let ready!: () => void;
     const previous = Object.getOwnPropertyDescriptor(document, "fonts");
@@ -112,7 +112,8 @@ describe("display fitting notifications", () => {
     Object.defineProperty(box.querySelector(".katex"), "scrollWidth", { get: () => formulaWidth });
     const stop = markWideMaths(root);
     try {
-      expect(box.dataset.fit).toBe("scaled");
+      // Nothing is fitted in a fallback font: the display waits for KaTeX's fonts.
+      expect(box.dataset.fit).toBeUndefined();
       formulaWidth = 600;
       ready();
       await Promise.resolve();
