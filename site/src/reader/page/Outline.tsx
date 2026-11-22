@@ -144,14 +144,18 @@ export interface AccountHead {
   reader: string;
   status: string;
   /** The paper's PDF, opened in a new tab. */
-  pdf?: { href: string; pages: number };
+  pdf?: { href: string; pages: number; label?: string };
+  /** Shown after the credit: an adapted edition's link to the authors' paper. */
+  after?: import("react").ReactNode;
+  /** Shown after the PDF link: an adapted edition's further PDFs. */
+  pdfAfter?: import("react").ReactNode;
 }
 
 /** "Open PDF, 21 pages": the account's PDF, beside the words that say who it is for. */
 export function PdfLink({ pdf }: { pdf: NonNullable<AccountHead["pdf"]> }) {
   return (
     <a className="pdf-link" href={pdf.href} target="_blank" rel="noopener">
-      Open PDF, {pdf.pages} {pdf.pages === 1 ? "page" : "pages"}
+      {pdf.label ?? "Open PDF"}, {pdf.pages} {pdf.pages === 1 ? "page" : "pages"}
     </a>
   );
 }
@@ -176,11 +180,13 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
         <p className="outline__job">{head.job}</p>
         <p className="outline__reader">
           {head.reader}
+          {head.after && <> {head.after}</>}
           {head.status && <> {head.status}</>}
         </p>
         {head.pdf && (
           <p className="outline__pdf">
             <PdfLink pdf={head.pdf} />
+            {head.pdfAfter}
           </p>
         )}
       </div>

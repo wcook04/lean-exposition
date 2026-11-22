@@ -14,7 +14,9 @@ import "./pdf-view.css";
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 export interface PdfMark { at: string; tone: number | null; record: string | null; boxes: [number, number, number, number, number][] }
-export interface PdfMarks { pages: [number, number][]; marks: Record<string, PdfMark> }
+/** An adapted edition's change on its marked PDF: the margin strip of its bar, page by page (scripts/pdf_marks.py). */
+export interface PdfChange { boxes: [number, number, number, number, number][] }
+export interface PdfMarks { pages: [number, number][]; marks: Record<string, PdfMark>; changes?: Record<string, PdfChange> }
 
 const marksLoaded = new Map<string, Promise<PdfMarks | null>>();
 /** The marks of a paper's PDF, or null when the build placed none. */
@@ -56,9 +58,11 @@ interface Props {
   page?: number;
   onPick(id: string, mark: PdfMark, page: number): void;
   onPage(page: number): void;
+  /** Opens an adapted edition's change from its bar on the marked PDF. */
+  onChange?(id: string, opener: HTMLElement): void;
 }
 
-export function PdfView({ url, marks, at, page, onPick, onPage }: Props) {
+export function PdfView({ url, marks, at, page, onPick, onPage, onChange }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -148,7 +152,7 @@ export function PdfView({ url, marks, at, page, onPick, onPage }: Props) {
 
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (
-    <div className="pdf-view" ref={box} aria-label="The authors’ PDF">
+    <div className="pdf-view" ref={box} aria-label={onChange ? "The adapted edition’s PDF, with its changes marked" : "The authors’ PDF"}>
       {width > 0 &&
         marks.pages.map(([w, h], i) => {
           const scale = width / w;
@@ -171,6 +175,23 @@ export function PdfView({ url, marks, at, page, onPick, onPage }: Props) {
                     />
                   )),
               )}
+              {onChange &&
+                Object.entries(marks.changes ?? {}).flatMap(([id, change]) =>
+                  change.boxes
+                    .filter((b) => b[0] === i + 1)
+                    .map((b, k) => (
+                      <button
+                        key={`change-${id}-${k}`}
+                        type="button"
+                        className="pdf-view__change"
+                        data-change-mark={id}
+                        style={{ left: b[1] * scale - 3, top: b[2] * scale - 3, width: (b[3] - b[1]) * scale + 6, height: (b[4] - b[2]) * scale + 6 }}
+                        aria-label={`See what changed here (${id})`}
+                        title="See what changed here"
+                        onClick={(event) => onChange(id, event.currentTarget)}
+                      />
+                    )),
+                )}
             </section>
           );
         })}
