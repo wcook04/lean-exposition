@@ -2,15 +2,17 @@
 // subject with its neighbours; Lean gives the pane to the subject's Lean. Pressing the view
 // already on does nothing, and says so by being marked.
 
+import type { Ref } from "react";
+
 export type PaneMode = "graph" | "lean";
 
-export function ModeToggle({ mode, onMode }: { mode: PaneMode; onMode(mode: PaneMode): void }) {
+export function ModeToggle({ mode, onMode, leanButtonRef }: { mode: PaneMode; onMode(mode: PaneMode): void; leanButtonRef?: Ref<HTMLButtonElement> }) {
   return (
     <div className="mode-toggle" role="group" aria-label="What the right pane shows">
       <button type="button" aria-pressed={mode === "graph"} onClick={() => onMode("graph")}>
         Graph
       </button>
-      <button type="button" aria-pressed={mode === "lean"} onClick={() => onMode("lean")}>
+      <button ref={leanButtonRef} type="button" aria-pressed={mode === "lean"} onClick={() => onMode("lean")}>
         Lean
       </button>
     </div>

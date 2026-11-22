@@ -105,6 +105,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
   const viewRef = useRef<HTMLDivElement>(null);
+  const leanButtonRef = useRef<HTMLButtonElement>(null);
 
   // ---- What the reader is on ---------------------------------------------------------
 
@@ -533,7 +534,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   return (
     <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
-        <ModeToggle mode={mode} onMode={onMode} />
+        <ModeToggle mode={mode} onMode={onMode} leanButtonRef={leanButtonRef} />
         {mode === "graph" && !fill && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}
@@ -614,7 +615,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               slot={preview}
               onRelease={onRelease}
               noClose={!pin && !decl && !held}
-              onOpenLean={() => onMode("lean")}
+              onOpenLean={() => {
+                // The dock button disappears when the view changes. Its corresponding
+                // mode button stays in place and leads into the newly opened pane.
+                leanButtonRef.current?.focus({ preventScroll: true });
+                onMode("lean");
+              }}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}
               onName={onName}
