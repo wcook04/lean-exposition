@@ -14379,13 +14379,16 @@
   },
   {
    "authors": "1.3 Ideas of the proof#8",
-   "adapted": null,
+   "adapted": "1.2 Ideas of the proof#10",
    "change": "N1-19",
    "authors_lines": [
     151,
     152
    ],
-   "adapted_lines": null
+   "adapted_lines": [
+    157,
+    158
+   ]
   },
   {
    "authors": null,
@@ -14485,16 +14488,6 @@
    "adapted_lines": [
     155,
     156
-   ]
-  },
-  {
-   "authors": null,
-   "adapted": "1.2 Ideas of the proof#10",
-   "change": "N1-19",
-   "authors_lines": null,
-   "adapted_lines": [
-    157,
-    158
    ]
   },
   {
