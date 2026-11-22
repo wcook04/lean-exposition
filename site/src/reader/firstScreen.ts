@@ -10,7 +10,7 @@ import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { preparePaper } from "./documents";
 import { statusWords } from "./page/model";
 import type { ReferenceTable } from "./references";
-import { accountLineHtml } from "./skeleton";
+import { accountLineHtml, readerHintHtml } from "./skeleton";
 
 /** Bytes of Markdown that fill a tall window. The last part may run past this. */
 const FIRST_SCREEN_BYTES = 4000;
@@ -39,5 +39,6 @@ export function firstScreen(stage: Stage, bytes: Uint8Array, structure: PaperStr
   const account = [names.job, names.reader, status].filter(Boolean).join(" ");
   // A paper whose credit stands under its authors (frontCredit) has no account line above it.
   const line = doc.creditPart === null ? accountLineHtml(account, pdf ? `${import.meta.env.BASE_URL}${pdf.path}` : null, pdf?.pages ?? 0) : "";
-  return { account: line, parts };
+  const hint = ties?.layer === "phrases" && ties.ties.length ? readerHintHtml() : "";
+  return { account: line + hint, parts };
 }

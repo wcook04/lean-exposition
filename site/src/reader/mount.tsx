@@ -5,6 +5,7 @@
 
 import { createRoot, type Root } from "react-dom/client";
 import { figureForKey } from "@instance/figures";
+import { FIGURE_SIZES } from "virtual:paper-figure-sizes";
 
 export function mountFigures(container: HTMLElement): () => void {
   const roots: Root[] = [];
@@ -21,6 +22,12 @@ export function mountFigures(container: HTMLElement): () => void {
         const img = document.createElement("img");
         img.className = "paper-figure__image";
         img.src = src;
+        // Its own size, so the box is held before the file loads and nothing under it moves.
+        const size = FIGURE_SIZES[src.split("/paper-figures/").pop() ?? ""];
+        if (size) {
+          img.width = Math.round(size[0]);
+          img.height = Math.round(size[1]);
+        }
         // The caption below says what the picture shows; the alt text repeats the paper's own words for it.
         img.alt = slot.dataset.figureAlt ?? caption;
         img.loading = "lazy";

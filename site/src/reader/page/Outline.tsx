@@ -12,6 +12,7 @@ import type { PreparedDocument, TextBlock } from "../engine";
 import type { PhraseFamily, PhrasePart, PhraseTopic } from "../../api/lean";
 import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
+import { readTones, saveTones } from "./panePrefs";
 
 interface Props {
   entries: OutlineEntry[];
@@ -34,6 +35,24 @@ interface Props {
  * authors named carry their name; families derived from how the topics co-occur are set apart
  * without one. A paper whose topics come in parts shows the topics of the part being read.
  */
+/** "Colour underlines by topic": on by default; off sets every underline in one neutral ink. Remembered. */
+export function TonesSwitch() {
+  const [on, setOn] = useState(readTones);
+  return (
+    <label className="tones-switch">
+      <input
+        type="checkbox"
+        checked={on}
+        onChange={(event) => {
+          setOn(event.target.checked);
+          saveTones(event.target.checked);
+        }}
+      />
+      Colour underlines by topic
+    </label>
+  );
+}
+
 function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; families: PhraseFamily[]; parts: PhrasePart[]; part: number }) {
   const shown = topics.filter((topic) => topic.part === part);
   if (!shown.length) return null;
@@ -66,10 +85,11 @@ function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; f
       <details className="phrase-key__about">
         <summary>What the colours mean</summary>
         <p className="phrase-key__note">
-          Each phrase a Lean declaration states is underlined in its topic’s colour; topics of one family share a hue. Colours do not say whether a statement is proved or whether it matches the paper. Topics and ties are AI-drafted.
+          Colours group topics within this paper; topics of one family share a hue. They do not say whether a statement is proved or whether it matches the paper. Topics and links are AI-drafted.
           {several ? " Each part of this paper has its own topics." : ""}
         </p>
       </details>
+      <TonesSwitch />
     </section>
   );
 }

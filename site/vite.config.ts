@@ -395,7 +395,7 @@ async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record
     server: { middlewareMode: true, hmr: false, ws: false },
     optimizeDeps: { noDiscovery: true },
     resolve: { alias: [{ find: /^@instance\//, replacement: `${resolve("src/instances", INSTANCE.id)}/` }] },
-    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts)],
+    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts), paperFigureSizes()],
   });
   try {
     const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
@@ -432,10 +432,12 @@ function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
     transformIndexHtml: {
       order: "post",
       handler(html, context) {
-        // Keep the fonts of the first screen from swapping in late: the text faces, and the KaTeX
-        // faces most formulas are drawn in (every route and address, 404.html included, starts here).
+        // Keep the fonts of the first screen from swapping in late: the text faces, the serif's
+        // italic, and the KaTeX faces formulas are drawn in, large brackets, script and blackboard
+        // letters included, so none arrives after the page has painted and moves the text (every
+        // route and address, 404.html included, starts here).
         const fonts = Object.keys(context.bundle ?? {}).filter((name) =>
-          /stix-two-text-latin-(400|500)-normal.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$|KaTeX_(Main-Regular|Math-Italic|Size1-Regular|Size2-Regular)-.*\.woff2$/.test(name),
+          /stix-two-text-latin-(400|500)-normal.*\.woff2$|stix-two-text-latin-400-italic.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$|KaTeX_(Main-Regular|Main-Italic|Main-Bold|Math-Italic|AMS-Regular|Caligraphic-Regular|Size1-Regular|Size2-Regular|Size3-Regular)-.*\.woff2$/.test(name),
         );
         const preload = [
           ...fonts.map((name) => `<link rel="preload" href="${base}${name}" as="font" type="font/woff2" crossorigin />`),
@@ -511,6 +513,57 @@ function requireInputs(): void {
   if (absent.length) throw new Error(absent.map(([path, what]) => missingInput(path, what)).join("\n"));
 }
 
+/** An image file's width and height in CSS pixels, read from an SVG's attributes or viewBox, or a PNG's header. */
+function imageSize(file: string): [number, number] | null {
+  if (file.endsWith(".png")) {
+    const head = readFileSync(file).subarray(16, 24);
+    return head.length === 8 ? [head.readUInt32BE(0), head.readUInt32BE(4)] : null;
+  }
+  if (!file.endsWith(".svg")) return null;
+  const tag = readFileSync(file, "utf8").match(/<svg\b[^>]*>/)?.[0] ?? "";
+  const number = (name: string) => {
+    const m = tag.match(new RegExp(`\\s${name}="([\\d.]+)(px|pt)?"`));
+    return m ? Number(m[1]) * (m[2] === "pt" ? 4 / 3 : 1) : null;
+  };
+  const w = number("width");
+  const h = number("height");
+  if (w && h) return [w, h];
+  const box = tag.match(/viewBox="[\d.-]+[ ,]+[\d.-]+[ ,]+([\d.]+)[ ,]+([\d.]+)"/);
+  return box ? [Number(box[1]), Number(box[2])] : null;
+}
+
+/**
+ * Each figure image's own width and height (virtual:paper-figure-sizes), so its box is reserved
+ * before it loads and the text under it never moves when it arrives (mount.tsx sets them on the
+ * <img>). Also given to the first screen's server, which loads mount.tsx too.
+ */
+function paperFigureSizes(stages = figureSlots()): Pick<Plugin, "name" | "resolveId" | "load"> & { resolveId: (source: string) => string | null; load: (resolved: string) => string | null } {
+  const id = "virtual:paper-figure-sizes";
+  return {
+    name: "paper-figure-sizes",
+    resolveId: (source: string) => (source === id ? `\0${id}` : null),
+    load: (resolved: string) => (resolved === `\0${id}` ? `export const FIGURE_SIZES = ${JSON.stringify(figureSizes(stages))};` : null),
+  };
+}
+
+/** Every document slot with a figures folder: long, short, expository, an adapted edition, a companion. */
+function figureSlots(): string[] {
+  return existsSync(PAPERS_DIR) ? readdirSync(PAPERS_DIR).filter((stage) => /^[\w-]+$/.test(stage) && existsSync(resolve(PAPERS_DIR, stage, "figures"))) : [];
+}
+
+/** "<stage>/<file>" to its size, for every figure image a paper ships. */
+function figureSizes(stages: string[]): Record<string, [number, number]> {
+  const sizes: Record<string, [number, number]> = {};
+  for (const stage of stages) {
+    const from = resolve(PAPERS_DIR, stage, "figures");
+    for (const name of readdirSync(from)) {
+      const size = /\.(svg|png)$/.test(name) ? imageSize(resolve(from, name)) : null;
+      if (size) sizes[`${stage}/${name}`] = size;
+    }
+  }
+  return sizes;
+}
+
 /** The paper figures shipped as image files (papers/<name>/<slot>/figures/), served and copied under paper-figures/<slot>/. */
 function paperFigures(build = false): Plugin {
   // Every document slot with a figures folder: long, short, expository, an adapted edition, a companion.
@@ -518,8 +571,11 @@ function paperFigures(build = false): Plugin {
     ? readdirSync(PAPERS_DIR).filter((stage) => /^[\w-]+$/.test(stage) && existsSync(resolve(PAPERS_DIR, stage, "figures")))
     : [];
   const types: Record<string, string> = { svg: "image/svg+xml", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" };
+  const { resolveId, load } = paperFigureSizes(stages);
   return {
     name: "paper-figures",
+    resolveId,
+    load,
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const m = req.url?.split("?", 1)[0].match(/\/paper-figures\/([\w-]+)\/([\w.-]+\.(svg|png|jpe?g|webp))$/);

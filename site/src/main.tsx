@@ -25,6 +25,7 @@ import { prefetch } from "./app/prefetch";
 import { parseRoute, reparseCurrentRoute } from "./app/router";
 import { loadLibraryAddresses } from "./app/libraryAddress";
 import { loadLeanNotes } from "./lean/noteSummaries";
+import { loadAids } from "./reader/aids";
 
 // A library paper reads its phrase addresses before the first route is used; the router parsed the
 // address when it loaded, so it parses it again with the table.
@@ -33,6 +34,9 @@ reparseCurrentRoute();
 // A library paper's reading notes fill its Lean cards; fetched now, they are in before a card opens,
 // so a note never arrives under a card that is already drawn.
 void loadLeanNotes();
+// A paper's conventions and guides stand in the inspector above the Lean: asked for at the start, like the
+// notes, so that they are there before the pane draws and nothing in it is pushed down later.
+void loadAids();
 prefetch(parseRoute(new URL(window.location.href)).view);
 
 createRoot(document.getElementById("root")!).render(

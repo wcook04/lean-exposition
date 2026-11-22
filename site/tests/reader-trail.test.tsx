@@ -185,11 +185,10 @@ describe("the Lean page", async () => {
     expect(container.textContent).toContain("No Lean linked.");
   });
 
-  it("closes with one control, and opens the whole record only from a pin", () => {
-    const onRelease = vi.fn();
-    show({ record, tie: 0 }, { onRelease });
-    act(() => button("Close")!.click());
-    expect(onRelease).toHaveBeenCalledOnce();
+  it("leaves letting go to the subject band, and opens the whole record only from a pin", () => {
+    show({ record, tie: 0 });
+    // "Resume here" and "Return to selected words" are the band's; the page itself has no Close.
+    expect(button("Close")).toBeUndefined();
     act(() => button("Everything on this step")!.click());
     expect(container.querySelector("[data-testid=panel]")!.textContent).toBe(record);
     show({ via: "follow", record, tie: 0 });
@@ -205,14 +204,16 @@ describe("the Lean page", async () => {
     expect(plainName({ ...alignment, names: { "OAI.c.x": "The heat identity" } } as Alignment, "OAI.c.x")).toBe("The heat identity");
   });
 
-  it("kept open, says it is following, and answers between statements", () => {
+  it("kept open, answers between statements, and labels what is only pointed at", () => {
     show({ via: "follow", record, tie: 0 });
-    expect(container.querySelector(".lean-page__state")!.textContent).toBe("Changes as you scroll");
+    expect(container.querySelector(".lean-page__preview")).toBeNull();
+    show({ via: "point", record, tie: 0 });
+    expect(container.querySelector(".lean-page__preview")!.textContent).toBe("Preview, not selected");
     show({ via: "follow", topics: [record] });
     expect(container.textContent).toContain("No Lean is linked to this paragraph. Steps of the map in its passage");
     expect(container.querySelectorAll(".lean-page__topics button").length).toBe(1);
     show({ via: "follow" });
-    expect(container.textContent).toContain("No Lean is linked to this paragraph, and its passage names no step of the map.");
+    expect(container.textContent).toContain("No Lean is linked to this paragraph. Scroll on");
   });
 
   it("lets a preview stand in", () => {
@@ -221,11 +222,11 @@ describe("the Lean page", async () => {
     expect(container.querySelector("[data-testid=lean]")).toBeNull();
   });
 
-  it("gives the dock under the graph 30% until a reader draws the handle, between 15% and 70%, and remembers", () => {
+  it("gives the dock under the graph 40% until a reader draws the handle, between 15% and 70%, and remembers", () => {
     expect(clampDock(0.1)).toBe(DOCK_MIN);
     expect(clampDock(1.2)).toBe(DOCK_MAX);
     expect([DOCK_MIN, DOCK_MAX]).toEqual([0.15, 0.7]);
-    expect(readDockShare()).toBe(0.3);
+    expect(readDockShare()).toBe(0.4);
     saveDockShare(0.61);
     expect(readDockShare()).toBe(0.61);
   });

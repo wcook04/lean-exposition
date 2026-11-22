@@ -35,6 +35,7 @@ import { transitiveReduction } from "./engine/skeleton";
 import { edgeKeyOf, layoutScope, recordOf, splitSharedLeaves } from "./engine/occurrences";
 import { layoutBounds, layoutTree } from "./engine/layout";
 import { arrowHead, polygonPath, roundedPath, route, type Plan, type Pt, type Routed } from "./engine/router";
+import { graphWheel } from "./graphWheel";
 import { clampView, ensureVisible, fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
 import { CAMERA_MS, MOVE_MS, easeMove, lerp } from "./engine/motion";
 import { METRICS, METRICS_COMPACT, METRICS_DENSE, type EngineEdge, type Layout, type Rect, type Size } from "./engine/types";
@@ -1741,15 +1742,12 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       // The drawing moves under the pointer: what was named is no longer what it rests on.
       const caption = captionRefRef.current?.current;
       if (caption) caption.hidden = true;
-      const t = viewRef.current;
-      const unit = event.deltaMode === 1 ? 16 : 1;
-      // Two fingers on a trackpad or a wheel pan, as they scroll any page. A pinch arrives with
-      // the Ctrl flag, and Ctrl or Cmd with a wheel zooms about the pointer.
-      if (event.ctrlKey || event.metaKey) {
+      const gesture = graphWheel(event, wrap);
+      if ("zoom" in gesture) {
         const rect = wrap.getBoundingClientRect();
         const point: [number, number] = [event.clientX - rect.left, event.clientY - rect.top];
-        s.call(behaviour.scaleBy, Math.pow(2, -event.deltaY * (event.deltaMode === 1 ? 0.05 : 0.0022) * 3.2), point);
-      } else s.call(behaviour.translateBy, (-event.deltaX * unit) / t.k, (-event.deltaY * unit) / t.k);
+        s.call(behaviour.scaleBy, gesture.zoom, point);
+      } else s.call(behaviour.translateBy, gesture.panX / viewRef.current.k, 0);
       userMoved.current = true;
       userMovedSinceAsk.current = true;
       pendingCamera.current = null;

@@ -460,43 +460,32 @@ mark {
   line-height: 1.5;
 }
 
-.paper__meta > p + p {
+/* Three plain groups: what is linked, what was checked, whose work it is. */
+.paper__group + .paper__group {
+  margin-top: var(--space-4);
+}
+
+.paper__label {
+  margin: 0 0 var(--space-1);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.paper__group > p + p {
   margin-top: var(--space-2);
 }
 
-.strip {
-  display: flex;
-  gap: 2px;
-  height: 8px;
-  margin-bottom: var(--space-4);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.strip i {
-  flex-basis: 0;
-  min-width: 3px;
-  background: var(--c-l);
-}
-
-:root[data-theme="dark"] .strip i {
-  background: var(--c-d);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .strip i {
-    background: var(--c-d);
-  }
-}
-
-@media (forced-colors: active) {
-  .strip {
-    border: 1px solid CanvasText;
-  }
-}
-
 .paper__counts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   color: var(--ink);
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-variant-numeric: tabular-nums;
 }
@@ -573,13 +562,6 @@ mark {
 @media (min-width: 120em) {
   :root {
     --wrap: 84rem;
-  }
-}
-
-/* A 1440p monitor reads the page from further away: everything set in rem grows a step. */
-@media (min-width: 150em) {
-  html {
-    font-size: 112.5%;
   }
 }
 
