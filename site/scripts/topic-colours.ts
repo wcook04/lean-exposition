@@ -15,6 +15,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { palette, relatedness, type FamilyIn, type Palette, type PhraseIn, type TopicIn } from "../src/reader/palette.ts";
 
 export const ROOT = resolve(import.meta.dirname, "../..");
@@ -176,7 +177,8 @@ export function report(c: Computed): string {
   return lines.join("\n");
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run as a script: compared as URLs, so a path with a space (percent-encoded in the URL) still matches.
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const check = process.argv.includes("--check");
   const c = compute();
   let stale = 0;
