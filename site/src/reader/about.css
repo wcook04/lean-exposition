@@ -478,3 +478,9 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* An About address with a section in it is held undrawn, in place, until it has landed there
+   (AboutPage.tsx), so the top never shows and then jumps. */
+html.about-landing .about {
+  visibility: hidden;
+}

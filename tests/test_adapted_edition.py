@@ -106,6 +106,24 @@ class Assignment(unittest.TestCase):
         self.assertIn({"authors": None, "adapted": "1 One#3", "change": "c1"}, rows)
 
 
+class PrivateWords(unittest.TestCase):
+    """The public change map carries no words of the private build."""
+
+    def row(self, note, ref):
+        return {"id": "c1", "note": note, "sources": [{"kind": "paper", "ref": ref}]}
+
+    def test_private_words_are_refused(self):
+        for note, ref in [("Adds a locator.", "the authors' text, p0011"), ("Adds a locator.", "53.pdf: pp. 1–2"),
+                          ("Adds a locator.", "ac-058, ac-059"), ("Adds a locator.", "p::s1-domains"),
+                          ("Uses Breakdown.theorem71_cell.", "the authors' text, (1.4)")]:
+            self.assertTrue(ae.private_words([self.row(note, ref)]), (note, ref))
+
+    def test_plain_citations_pass(self):
+        rows = [self.row("Adds the page of Theorem 1.1 and of Subsection B.2. Points at main.pdf.", "[53], pp. 1–2, (1.4)"),
+                self.row("States that.", "the authors' Lean at ad53419, Breakdown/Defs.lean:26–61")]
+        self.assertEqual(ae.private_words(rows), [])
+
+
 @unittest.skipUnless(any((ROOT / "instances").glob("*/adapted/changes.json")), "no adapted edition converted here")
 class ConvertedEdition(unittest.TestCase):
     """On a converted edition: the change map shows every change, and every paragraph it calls
@@ -135,11 +153,16 @@ class ConvertedEdition(unittest.TestCase):
                 self.assertIsNotNone(row["change"], row)
 
     def test_the_credit_is_verbatim(self):
-        credit = ("An adapted edition of Alpöge, Buckmaster and Coiculescu's paper, prepared by Will Cook with AI "
-                  "assistance. The mathematics and the original text are the authors'. Every change is marked, and no "
-                  "change has been reviewed by the authors.")
-        if self.inst.name == "euler":
-            self.assertEqual(self.edition["document"]["credit"], credit)
+        # The edition's own credit (document.credit in its edition.json) stands once in its reading copy,
+        # as one line, read as the reader sees it: the reading copy sets straight apostrophes as
+        # typographic ones, may emphasise the line and may link words of it.
+        typeset = lambda text: re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text).replace("\u2019", "'").strip("*_ ")
+        for folder in sorted((ROOT / "instances").glob("*/adapted")):
+            with self.subTest(paper=folder.parent.name):
+                credit = json.loads((folder / "edition.json").read_text())["document"]["credit"]
+                self.assertTrue(credit.strip())
+                lines = (folder / "paper.md").read_text().split("\n")
+                self.assertEqual(sum(1 for line in lines if typeset(line) == credit), 1, credit)
 
     def test_the_edition_is_off_until_published(self):
         if not self.edition["published"]:
