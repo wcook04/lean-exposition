@@ -1,0 +1,508 @@
+{
+ "schema_version": "1.2",
+ "id": "quartic-library-edition",
+ "title": "Reconstructing OpenAI’s nearly quartic query separation",
+ "selected_goals": [
+  "quartic.theorem-1"
+ ],
+ "sources": [
+  {
+   "id": "lean:QuarticQuery/Amplification/Bounded.lean",
+   "kind": "file",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Amplification/Bounded.lean",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "6a6465ae0cbd0503cf327c5f33f6509f492a707795c0358880c8f12c9624c96d",
+   "path": "upstream/lean/QuarticQuery/Amplification/Bounded.lean"
+  },
+  {
+   "id": "lean:QuarticQuery/LowerBound/DirectProduct.lean",
+   "kind": "file",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/LowerBound/DirectProduct.lean",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "ddef7a365940f1916b9aff74b6441fa0850b0ca0abdcd1d4a3f8853c3562271f",
+   "path": "upstream/lean/QuarticQuery/LowerBound/DirectProduct.lean"
+  },
+  {
+   "id": "lean:QuarticQuery/Paper/ConstructionForrelationComplete.lean",
+   "kind": "file",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Paper/ConstructionForrelationComplete.lean",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "afeefad116aa40bf3fabd91740da0868f668d2ea9cded2250c1ea2fc69ec55e1",
+   "path": "upstream/lean/QuarticQuery/Paper/ConstructionForrelationComplete.lean"
+  },
+  {
+   "id": "lean:QuarticQuery/Paper/QuantumTournamentFacts.lean",
+   "kind": "file",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Paper/QuantumTournamentFacts.lean",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "c555f5e70c797467bef0bf39117a41cc11cbf5888e56d0f05ae37de080941550",
+   "path": "upstream/lean/QuarticQuery/Paper/QuantumTournamentFacts.lean"
+  },
+  {
+   "id": "lean:QuarticQuery/Results/Unconditional.lean",
+   "kind": "file",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Results/Unconditional.lean",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "46e6f51f713109bab717956bd2536711dc927a356027748712e571ce12f0b85e",
+   "path": "upstream/lean/QuarticQuery/Results/Unconditional.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/docs/expert_companion.md",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "62ba85c0268de6b2c3c184bdaa0f57be2fe0e4a4de54a371d1db80fabd64829a"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/quartic-query-lean",
+   "revision": "56ac62feece77bdfd44a211ca2ae92f0916053ca",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.lean.QuarticQuery.Amplification.bounded_amplification",
+   "title": "QuarticQuery.Amplification.bounded_amplification",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Amplification/Bounded.lean#L242",
+   "source_id": "lean:QuarticQuery/Amplification/Bounded.lean",
+   "locator": "QuarticQuery/Amplification/Bounded.lean, line 242"
+  },
+  {
+   "id": "cite.lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "title": "QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Paper/ConstructionForrelationComplete.lean#L66",
+   "source_id": "lean:QuarticQuery/Paper/ConstructionForrelationComplete.lean",
+   "locator": "QuarticQuery/Paper/ConstructionForrelationComplete.lean, line 66"
+  },
+  {
+   "id": "cite.lean.QuarticQuery.Paper.quantumTournament",
+   "title": "QuarticQuery.Paper.quantumTournament",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Paper/QuantumTournamentFacts.lean#L287",
+   "source_id": "lean:QuarticQuery/Paper/QuantumTournamentFacts.lean",
+   "locator": "QuarticQuery/Paper/QuantumTournamentFacts.lean, line 287"
+  },
+  {
+   "id": "cite.lean.QuarticQuery.direct_product_average",
+   "title": "QuarticQuery.direct_product_average",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/LowerBound/DirectProduct.lean#L316",
+   "source_id": "lean:QuarticQuery/LowerBound/DirectProduct.lean",
+   "locator": "QuarticQuery/LowerBound/DirectProduct.lean, line 316"
+  },
+  {
+   "id": "cite.lean.QuarticQuery.direct_product_randomized",
+   "title": "QuarticQuery.direct_product_randomized",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/LowerBound/DirectProduct.lean#L327",
+   "source_id": "lean:QuarticQuery/LowerBound/DirectProduct.lean",
+   "locator": "QuarticQuery/LowerBound/DirectProduct.lean, line 327"
+  },
+  {
+   "id": "cite.lean.QuarticQuery.theorem_1_1_unconditional",
+   "title": "QuarticQuery.theorem_1_1_unconditional",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/lean/QuarticQuery/Results/Unconditional.lean#L23",
+   "source_id": "lean:QuarticQuery/Results/Unconditional.lean",
+   "locator": "QuarticQuery/Results/Unconditional.lean, line 23"
+  },
+  {
+   "id": "cite.quartic.lemma-2",
+   "title": "Reconstructing OpenAI’s nearly quartic query separation, Lemma 2",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/docs/expert_companion.md",
+   "source_id": "paper",
+   "locator": "Lemma 2, Section 2"
+  },
+  {
+   "id": "cite.quartic.lemma-4",
+   "title": "Reconstructing OpenAI’s nearly quartic query separation, Lemma 4",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/docs/expert_companion.md",
+   "source_id": "paper",
+   "locator": "Lemma 4, Section 4.2"
+  },
+  {
+   "id": "cite.quartic.lemma-5",
+   "title": "Reconstructing OpenAI’s nearly quartic query separation, Lemma 5",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/docs/expert_companion.md",
+   "source_id": "paper",
+   "locator": "Lemma 5, Section 5.3"
+  },
+  {
+   "id": "cite.quartic.proposition-3",
+   "title": "Reconstructing OpenAI’s nearly quartic query separation, Proposition 3",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/docs/expert_companion.md",
+   "source_id": "paper",
+   "locator": "Proposition 3, Section 4.2"
+  },
+  {
+   "id": "cite.quartic.theorem-1",
+   "title": "Reconstructing OpenAI’s nearly quartic query separation, Theorem 1",
+   "url": "https://github.com/wcook04/quartic-query-lean/blob/56ac62feece77bdfd44a211ca2ae92f0916053ca/docs/expert_companion.md",
+   "source_id": "paper",
+   "locator": "Theorem 1, Section 1"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "lean.QuarticQuery.Amplification.bounded_amplification",
+   "kind": "declaration",
+   "label": "QuarticQuery.Amplification.bounded_amplification",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.Amplification.bounded_amplification"
+   ],
+   "source_id": "lean:QuarticQuery/Amplification/Bounded.lean",
+   "declaration": "QuarticQuery.Amplification.bounded_amplification",
+   "statement": "QuarticQuery.Amplification.bounded_amplification",
+   "locator": "QuarticQuery/Amplification/Bounded.lean, line 242",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "kind": "declaration",
+   "label": "QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.Paper.construction_lemma_2_1_complete"
+   ],
+   "source_id": "lean:QuarticQuery/Paper/ConstructionForrelationComplete.lean",
+   "declaration": "QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "statement": "QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "locator": "QuarticQuery/Paper/ConstructionForrelationComplete.lean, line 66",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.QuarticQuery.Paper.quantumTournament",
+   "kind": "declaration",
+   "label": "QuarticQuery.Paper.quantumTournament",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.Paper.quantumTournament"
+   ],
+   "source_id": "lean:QuarticQuery/Paper/QuantumTournamentFacts.lean",
+   "declaration": "QuarticQuery.Paper.quantumTournament",
+   "statement": "QuarticQuery.Paper.quantumTournament",
+   "locator": "QuarticQuery/Paper/QuantumTournamentFacts.lean, line 287",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.QuarticQuery.direct_product_average",
+   "kind": "declaration",
+   "label": "QuarticQuery.direct_product_average",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.direct_product_average"
+   ],
+   "source_id": "lean:QuarticQuery/LowerBound/DirectProduct.lean",
+   "declaration": "QuarticQuery.direct_product_average",
+   "statement": "QuarticQuery.direct_product_average",
+   "locator": "QuarticQuery/LowerBound/DirectProduct.lean, line 316",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.QuarticQuery.direct_product_randomized",
+   "kind": "declaration",
+   "label": "QuarticQuery.direct_product_randomized",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.direct_product_randomized"
+   ],
+   "source_id": "lean:QuarticQuery/LowerBound/DirectProduct.lean",
+   "declaration": "QuarticQuery.direct_product_randomized",
+   "statement": "QuarticQuery.direct_product_randomized",
+   "locator": "QuarticQuery/LowerBound/DirectProduct.lean, line 327",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.QuarticQuery.theorem_1_1_unconditional",
+   "kind": "declaration",
+   "label": "QuarticQuery.theorem_1_1_unconditional",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.QuarticQuery.theorem_1_1_unconditional"
+   ],
+   "source_id": "lean:QuarticQuery/Results/Unconditional.lean",
+   "declaration": "QuarticQuery.theorem_1_1_unconditional",
+   "statement": "QuarticQuery.theorem_1_1_unconditional",
+   "locator": "QuarticQuery/Results/Unconditional.lean, line 23",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "quartic.lemma-2",
+   "kind": "claim",
+   "label": "Lemma 2",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.quartic.lemma-2"
+   ],
+   "citation_ids": [
+    "cite.quartic.lemma-2"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 2, Section 2",
+   "statement": "**Lemma 2** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Lemma 2.1)). *Fix $k\\ge2$. For all sufficiently large powers of four $m$,*\n$$\n L:=\\left\\lfloor m^{1-1/k}/\\ell^2\\right\\rfloor < R(P).\n\\tag{3}\n$$\n*For every $0<\\eta<1/2$ a reversible quantum algorithm with $O_k(1+\\log(1/\\eta))$ queries on every input computes $P$ with error at most $\\eta$ on its domain. There is an exact fan-in-two circuit with $S=O_k(m\\ell^2)$ gates whose two outputs are the domain bit of $P$ and, on the domain, its value.*",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "quartic.lemma-4",
+   "kind": "claim",
+   "label": "Lemma 4",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.quartic.lemma-4"
+   ],
+   "citation_ids": [
+    "cite.quartic.lemma-4"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 4, Section 4.2",
+   "statement": "**Lemma 4** (bounded amplification ([OpenAI 2026](#cite-OpenAI2026), Lemma 3.1); see @BBHT1998 and @BHMT2002). *Let $A$ prepare a state with a success flag, with success probability $p$. For $0<\\gamma\\le1/2$ and $0<\\eta<1/2$ there is a procedure making $O(\\gamma^{-1/2}\\log(1/\\eta))$ calls to $A$ and $A^{-1}$ on every branch, for every $p$, that either reports failure or produces a successful outcome. Conditional on success, the measured label has the same distribution as in the successful part of $A$'s state. If $p\\ge\\gamma$ it fails with probability at most $\\eta$, and if $p=0$ it always fails.*",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "quartic.lemma-5",
+   "kind": "claim",
+   "label": "Lemma 5",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.quartic.lemma-5"
+   ],
+   "citation_ids": [
+    "cite.quartic.lemma-5"
+   ],
+   "source_id": "paper",
+   "locator": "Lemma 5, Section 5.3",
+   "statement": "**Lemma 5** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Lemma 4.1); @Shaltiel2003; @Drucker2012). *Let $P$ be a partial function and $\\mu$ a distribution on its domain such that every deterministic algorithm making at most $L$ queries computes $P$ under $\\mu$ with probability at most $\\beta$. If $U_1,\\ldots,U_r$ are independent samples from $\\mu$, every algorithm making at most $L$ queries to each $U_h$ outputs $(P(U_1),\\ldots,P(U_r))$ with probability at most $\\beta^r$. The algorithm may be randomized, interleave its queries adaptively among the $r$ inputs, and receive additional information independent of $(U_1,\\ldots,U_r)$.*",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "quartic.proposition-3",
+   "kind": "claim",
+   "label": "Proposition 3",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.quartic.proposition-3"
+   ],
+   "citation_ids": [
+    "cite.quartic.proposition-3"
+   ],
+   "source_id": "paper",
+   "locator": "Proposition 3, Section 4.2",
+   "statement": "**Proposition 3** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Proposition 3.2)). *Let $T=\\lceil\\log(1000m)\\rceil$ and $\\varepsilon=1/(1000T)$. Suppose a reversible comparison circuit, controlled by two candidate indices, uses at most $c$ queries and satisfies (4). There is a quantum algorithm making $O(c\\sqrt m\\,T^2\\log T)$ queries on every branch and returning a list of at most $T$ candidates such that, if $a_{i^\\star j}\\ge1-\\varepsilon$ for all $j\\ne i^\\star$, the list contains $i^\\star$ with probability at least $1-2m2^{-T}-T\\varepsilon$.*",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "quartic.theorem-1",
+   "kind": "goal",
+   "label": "Theorem 1",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.quartic.theorem-1"
+   ],
+   "citation_ids": [
+    "cite.quartic.theorem-1"
+   ],
+   "source_id": "paper",
+   "locator": "Theorem 1, Section 1",
+   "statement": "**Theorem 1** (OpenAI ([OpenAI 2026](#cite-OpenAI2026), Theorem 1.1)). *For every total Boolean function $f$, $R(f)=O((1+Q(f))^4)$. For each fixed integer $k\\ge2$ there are positive constants $c_k$, $C_k$ and $b_k$ and total Boolean functions $F_{k,m}$, defined for powers of four $m$, such that for all sufficiently large $m$, with $\\ell=\\log_2m$,*\n$$\n Q(F_{k,m})\\le C_k\\sqrt m\\,\\ell^{b_k},\n \\qquad R(F_{k,m})\\ge c_k\\,\\frac{m^{2-1/k}}{\\ell^2}.\n\\tag{1}\n$$\n*Consequently the critical exponent of $R$ relative to $Q$ is four.*",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  }
+ ],
+ "edges": [
+  {
+   "from": "lean.QuarticQuery.direct_product_randomized",
+   "to": "lean.QuarticQuery.direct_product_average",
+   "kind": "supports",
+   "evidence_ids": [
+    "lean_dependencies"
+   ]
+  },
+  {
+   "from": "quartic.lemma-2",
+   "to": "lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.quartic.lemma-2"
+   ]
+  },
+  {
+   "from": "quartic.lemma-4",
+   "to": "lean.QuarticQuery.Amplification.bounded_amplification",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.quartic.lemma-4"
+   ]
+  },
+  {
+   "from": "quartic.lemma-5",
+   "to": "lean.QuarticQuery.direct_product_average",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.quartic.lemma-5"
+   ]
+  },
+  {
+   "from": "quartic.lemma-5",
+   "to": "lean.QuarticQuery.direct_product_randomized",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.quartic.lemma-5"
+   ]
+  },
+  {
+   "from": "quartic.proposition-3",
+   "to": "lean.QuarticQuery.Paper.quantumTournament",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.quartic.proposition-3"
+   ]
+  },
+  {
+   "from": "quartic.theorem-1",
+   "to": "lean.QuarticQuery.theorem_1_1_unconditional",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.quartic.theorem-1"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "lean.QuarticQuery.Amplification.bounded_amplification",
+    "lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+    "lean.QuarticQuery.Paper.quantumTournament",
+    "lean.QuarticQuery.direct_product_average",
+    "lean.QuarticQuery.direct_product_randomized",
+    "lean.QuarticQuery.theorem_1_1_unconditional"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.quartic.lemma-2",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.QuarticQuery.Paper.construction_lemma_2_1_complete",
+    "quartic.lemma-2"
+   ],
+   "details": "Proof Reader's links.json at 56ac62feece7 names these Lean declarations for Lemma 2. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.quartic.lemma-4",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.QuarticQuery.Amplification.bounded_amplification",
+    "quartic.lemma-4"
+   ],
+   "details": "Proof Reader's links.json at 56ac62feece7 names these Lean declarations for Lemma 4. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.quartic.lemma-5",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.QuarticQuery.direct_product_average",
+    "lean.QuarticQuery.direct_product_randomized",
+    "quartic.lemma-5"
+   ],
+   "details": "Proof Reader's links.json at 56ac62feece7 names these Lean declarations for Lemma 5. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.quartic.proposition-3",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.QuarticQuery.Paper.quantumTournament",
+    "quartic.proposition-3"
+   ],
+   "details": "Proof Reader's links.json at 56ac62feece7 names these Lean declarations for Proposition 3. The links were made with AI and have not been reviewed by the authors."
+  },
+  {
+   "id": "link.quartic.theorem-1",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "lean.QuarticQuery.theorem_1_1_unconditional",
+    "quartic.theorem-1"
+   ],
+   "details": "Proof Reader's links.json at 56ac62feece7 names these Lean declarations for Theorem 1. The links were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "scope": "Reconstructing OpenAI’s nearly quartic query separation, by AI systems under the direction of Will Cook, with their Lean at https://github.com/wcook04/quartic-query-lean 56ac62feece77bdfd44a211ca2ae92f0916053ca, as read for Proof Reader (wcook04/proof-reader 56ac62feece77bdfd44a211ca2ae92f0916053ca). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

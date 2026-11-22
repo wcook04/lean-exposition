@@ -4,7 +4,7 @@
   "lean_not_in_index": 0,
   "verdict_without_note": 0,
   "statement_without_lean": 0,
-  "merged": 3,
+  "merged": 4,
   "merged_assessments_differ": 4,
   "unassessed": 0,
   "result_label_not_found": 0,
@@ -12,7 +12,7 @@
   "long_title_without_override": 0,
   "gone_kept_as_addresses": 0,
   "retired": 1,
-  "ties": 999,
+  "ties": 996,
   "titled": 1013,
   "names": 7551,
   "results": 37,
@@ -42,6 +42,12 @@
   [
    "p5.1.polynomial-coefficients",
    "p5.1.field-hypothesis"
+  ],
+  [
+   "e03-r2-appb-taylor-remainder",
+   "e03-r2-appb-kernel-mass",
+   "e03-appb-kernel-moments",
+   "e03-appb-moment-scale"
   ]
  ],
  "merged_assessments_differ": [

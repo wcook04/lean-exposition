@@ -2,7 +2,7 @@
 <!-- passage:front -->
 # Reading the formal statements as mathematics
 
-The paper is *Finite-Time Singularity Formation for the Three-Dimensional Euler Equations*, by Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu; the formal statements are theirs, at commit `fd3a158`. A definition specifies an object or a condition; an existence theorem supplies an object satisfying it. A step used inside a proof is not automatically a conclusion of the theorem it is linked to. Each card states its own hypotheses and conclusion.
+The paper is *Finite-Time Singularity Formation for the Three-Dimensional Euler Equations*, by Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu; the formal statements are theirs, at commit fd3a158. A definition specifies an object or a condition; an existence theorem supplies an object satisfying it. A step used inside a proof is not automatically a conclusion of the theorem it is linked to. Each card states its own hypotheses and conclusion.
 <!-- /passage:front -->
 
 ## What a comparison means
