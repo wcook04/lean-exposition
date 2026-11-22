@@ -55,7 +55,7 @@
    "name": "",
    "lines": [
     1,
-    2108
+    2217
    ],
    "source_commit": "3858afbe00b23dd8bba13ffa41409310b712723d",
    "topics": [
@@ -1482,33 +1482,9 @@
    ]
   },
   {
-   "id": "s1-viscosity",
-   "from": "Here $u$ is the velocity, $p$ is the pressure, and the viscosity is normalized to one: if $(u,p)$ solves (1.1), then $(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ solves the equations with viscosity $\\nu>0$, so that the results of this paper hold, after this change of variables, for every viscosity.",
-   "to": "Here $u$ is the velocity, $p$ is the pressure, and the viscosity is normalized to one: if $(u,p)$ solves (1.1), then $(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ solves the equations with viscosity $\\nu>0$, so that the results of this paper hold, after this change of variables, for every viscosity.",
-   "role": "explanation",
-   "topic": "statement",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.BreakdownOnSpace",
-     "file": "Breakdown/Defs.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. It does not prove that change of variables or that the target holds."
-    },
-    {
-     "name": "Breakdown.BreakdownOnTorus",
-     "file": "Breakdown/Defs.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. It does not prove that change of variables or that the target holds."
-    }
-   ]
-  },
-  {
    "id": "s1-domains",
-   "from": "Whether smooth solutions of (1.1) with finite energy, or smooth solutions on the torus $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, can develop singularities in finite time is the regularity problem for the Navier–Stokes equations",
-   "to": "Whether smooth solutions of (1.1) with finite energy, or smooth solutions on the torus $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, can develop singularities in finite time is the regularity problem for the Navier–Stokes equations",
+   "from": "For divergence-free data, Fefferman asks whether smooth, rapidly decaying initial velocities on $\\mathbb R^3$ always give global smooth solutions of bounded energy, and whether smooth periodic data always give global smooth periodic solutions on $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$",
+   "to": "For divergence-free data, Fefferman asks whether smooth, rapidly decaying initial velocities on $\\mathbb R^3$ always give global smooth solutions of bounded energy, and whether smooth periodic data always give global smooth periodic solutions on $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$",
    "role": "mention",
    "topic": "statement",
    "status": "new",
@@ -1554,30 +1530,6 @@
    ]
   },
   {
-   "id": "s1-finite-codimension-summary",
-   "from": "On $\\mathbb R^3$ a correction in a fixed finite-dimensional space of initial velocities suffices to follow the profile into the singularity.",
-   "to": "On $\\mathbb R^3$ a correction in a fixed finite-dimensional space of initial velocities suffices to follow the profile into the singularity.",
-   "role": "explanation",
-   "topic": "monodromy",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.DichotomyHolds",
-     "file": "Breakdown/Base/Framework.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "Let $\\mathcal X$ be a real Hilbert space and let $T_0,C$ be bounded linear operators, with $C$ compact. Let $0\\le b\\le\\alpha<\\beta$ and $\\|T_0\\|\\le b$, and write $T=T_0+C$. This assertion says that there are $\\alpha<r_1<r_2<\\beta$, $K>0$, and a bounded projection $P_u$ commuting with $T$, whose range is finite-dimensional, such that $\\|T^n(I-P_u)\\|\\le Kr_1^n$ and $\\|P_ux\\|\\le Kr_2^{-n}\\|T^nP_ux\\|$ for every natural number $n$ and every $x\\in\\mathcal X$. The restriction of $T$ maps the range of $P_u$ onto itself. Hence the complement has a controlled forward evolution and the finite-dimensional part has a controlled inverse evolution. The inequalities imply $r_2>0$, so the reciprocal in $r_2^{-n}$ is an ordinary reciprocal. The formulation uses projections and powers rather than a list of complex eigenvalues. It does not impose the existence or size of an unstable eigenvalue. Taking $b=\\alpha=e^{-S/4}$ and $\\beta=1$ is the application to the period map.\n\nThe formal assertion provides a finite-dimensional commuting projection for every compact perturbation of a small bounded operator, without assuming a particular unstable eigenvalue; it is the spectral input rather than the nonlinear stability conclusion."
-    },
-    {
-     "name": "Breakdown.StepDataStatement",
-     "file": "Breakdown/Transfer/StatementsFrame.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "Let $X$ be a complete real Hilbert space. Let $G(t)$, for $t\\ge0$, be a strongly continuous semigroup of contractions with $G(0)=I$. Let $K(\\tau):X\\times X\\to X$ be symmetric and bounded bilinear, continuous in $\\tau>0$ on each pair of vectors, with $\\|K(\\tau)\\|\\le C_K\\tau^{-3/4}$ for $0<\\tau\\le1$ and $G(a)K(\\tau)=K(a+\\tau)$ for $a\\ge0$, $\\tau>0$. Let $D_\\mu$ be a continuous dilation action for $\\mu>0$, with $D_1=I$, $D_\\mu D_\\nu=D_{\\mu\\nu}$, $\\|D_\\mu x\\|=\\mu^{1/4}\\|x\\|$, $D_\\mu G(\\mu t)=G(t)D_\\mu$ for $t\\ge0$, and $\\mu D_\\mu K(\\mu\\tau)(x,y)=K(\\tau)(D_\\mu x,D_\\mu y)$. Assume there is a dense set of $f\\in X$ for which $K(\\tau)(f,\\cdot)$ is compact for every $\\tau>0$. The families $G,K,D$ are defined on all real parameters; their analytic bounds and scaling properties hold on the ranges just stated.\n\nLet $\\rho$ be a linear isometry of $X$ onto itself commuting with $G,K,D$ for all their real parameters. Let $w:\\mathbb R\\to X$ be continuous, nonzero at some time, and satisfy $w(s+S)=\\rho w(s)$ with $S>0$. Put $\\mathcal S(a)=D_{e^{-a}}G(1-e^{-a})$ and $\\widetilde K(a)=D_{e^{-a}}K(1-e^{-a})$. For every $a\\le s$, assume the integral below exists and $w(s)=\\mathcal S(s-a)w(a)+\\int_a^s\\widetilde K(s-\\sigma)(w(\\sigma),w(\\sigma))\\,d\\sigma$.\n\nFor every dense linear subspace $C'\\subset X$ and $t_0>0$, the assertion supplies an integer $k\\ge1$ and a real $\\theta$ with $\\delta=1-e^{-S/k}\\le t_0$ and $e^{-S/(4k)}<\\theta<1$. Put $\\mu=e^{-S/k}$, $Y=C([0,\\delta];X)$ with its supremum norm, $u_n^*(\\tau)=D_{(1-\\tau)^{-1}}w(nS/k-\\log(1-\\tau))$, $B_\\delta(f,g)(\\tau)=\\int_0^\\tau K(\\tau-\\sigma)(f(\\sigma),g(\\sigma))\\,d\\sigma$, $A_n=2B_\\delta(u_n^*,\\cdot)$, $\\Gamma x(\\tau)=G(\\tau)x$, and $Lv=D_\\mu v(\\delta)$. It asserts $\\|A_n\\|\\le1/4$ for all nonnegative integers $n$, and supplies a finite dimensional subspace $V\\subset X$, a bounded linear $J:X\\to X$ with range in $C'$, and a bounded linear map $\\mathcal R:\\ell^\\infty(\\mathbb N;Y)\\to X\\times\\ell^\\infty(\\mathbb N;Y)$. If $(e,z)=\\mathcal Rg$, then $e\\in V$, $z_0-A_0z_0-\\Gamma Je=g_0$ and $z_n-A_nz_n-\\theta^{-1}\\Gamma Lz_{n-1}=g_n$ for $n\\ge1$. This is a statement of the linear correction on successive intervals; the correction of the datum is $Je\\in C'$. The smooth compactly supported space $E$ of the paper is represented by $J(V)$ when $C'$ is the corresponding dense data space. The formula uses only positive $k$, $\\mu$, $\\theta$ and $1-\\tau$, so their reciprocals are ordinary ones. The path operators are formally assigned zero if their required continuous realizations do not exist; the analytic construction for $\\delta>0$ proves those realizations before using them.\n\nThe product norm controlled by $\\mathcal R$ is $\\max(\\|e\\|,\\sup_n\\|z_n\\|_Y)$. A bound for the actual datum correction $Je$ also uses $\\|J\\|$. The assertion concerns sequences of compact-interval paths, whereas Proposition 4.3 is phrased for a global weighted curve.\n\nThis formal statement specifies an implication. Defining the implication does not prove it.\n\nThe correction component of the linear right inverse lies in a fixed finite-dimensional space; nonlinear stability and the physical norm identification require the subsequent contraction and realization."
-    }
-   ]
-  },
-  {
    "id": "s1-headline",
    "from": "We obtain solutions from compactly supported data on $\\mathbb R^3$ and from periodic data on $\\mathbb T^3$",
    "to": "We obtain solutions from compactly supported data on $\\mathbb R^3$ and from periodic data on $\\mathbb T^3$",
@@ -1602,6 +1554,30 @@
    ]
   },
   {
+   "id": "s1-finite-codimension-summary",
+   "from": "On $\\mathbb R^3$ a correction in a fixed finite-dimensional space of initial velocities suffices to follow the profile into the singularity.",
+   "to": "On $\\mathbb R^3$ a correction in a fixed finite-dimensional space of initial velocities suffices to follow the profile into the singularity.",
+   "role": "explanation",
+   "topic": "monodromy",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.DichotomyHolds",
+     "file": "Breakdown/Base/Framework.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "Let $\\mathcal X$ be a real Hilbert space and let $T_0,C$ be bounded linear operators, with $C$ compact. Let $0\\le b\\le\\alpha<\\beta$ and $\\|T_0\\|\\le b$, and write $T=T_0+C$. This assertion says that there are $\\alpha<r_1<r_2<\\beta$, $K>0$, and a bounded projection $P_u$ commuting with $T$, whose range is finite-dimensional, such that $\\|T^n(I-P_u)\\|\\le Kr_1^n$ and $\\|P_ux\\|\\le Kr_2^{-n}\\|T^nP_ux\\|$ for every natural number $n$ and every $x\\in\\mathcal X$. The restriction of $T$ maps the range of $P_u$ onto itself. Hence the complement has a controlled forward evolution and the finite-dimensional part has a controlled inverse evolution. The inequalities imply $r_2>0$, so the reciprocal in $r_2^{-n}$ is an ordinary reciprocal. The formulation uses projections and powers rather than a list of complex eigenvalues. It does not impose the existence or size of an unstable eigenvalue. Taking $b=\\alpha=e^{-S/4}$ and $\\beta=1$ is the application to the period map.\n\nThe formal assertion provides a finite-dimensional commuting projection for every compact perturbation of a small bounded operator, without assuming a particular unstable eigenvalue; it is the spectral input rather than the nonlinear stability conclusion."
+    },
+    {
+     "name": "Breakdown.StepDataStatement",
+     "file": "Breakdown/Transfer/StatementsFrame.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "Let $X$ be a complete real Hilbert space. Let $G(t)$, for $t\\ge0$, be a strongly continuous semigroup of contractions with $G(0)=I$. Let $K(\\tau):X\\times X\\to X$ be symmetric and bounded bilinear, continuous in $\\tau>0$ on each pair of vectors, with $\\|K(\\tau)\\|\\le C_K\\tau^{-3/4}$ for $0<\\tau\\le1$ and $G(a)K(\\tau)=K(a+\\tau)$ for $a\\ge0$, $\\tau>0$. Let $D_\\mu$ be a continuous dilation action for $\\mu>0$, with $D_1=I$, $D_\\mu D_\\nu=D_{\\mu\\nu}$, $\\|D_\\mu x\\|=\\mu^{1/4}\\|x\\|$, $D_\\mu G(\\mu t)=G(t)D_\\mu$ for $t\\ge0$, and $\\mu D_\\mu K(\\mu\\tau)(x,y)=K(\\tau)(D_\\mu x,D_\\mu y)$. Assume there is a dense set of $f\\in X$ for which $K(\\tau)(f,\\cdot)$ is compact for every $\\tau>0$. The families $G,K,D$ are defined on all real parameters; their analytic bounds and scaling properties hold on the ranges just stated.\n\nLet $\\rho$ be a linear isometry of $X$ onto itself commuting with $G,K,D$ for all their real parameters. Let $w:\\mathbb R\\to X$ be continuous, nonzero at some time, and satisfy $w(s+S)=\\rho w(s)$ with $S>0$. Put $\\mathcal S(a)=D_{e^{-a}}G(1-e^{-a})$ and $\\widetilde K(a)=D_{e^{-a}}K(1-e^{-a})$. For every $a\\le s$, assume the integral below exists and $w(s)=\\mathcal S(s-a)w(a)+\\int_a^s\\widetilde K(s-\\sigma)(w(\\sigma),w(\\sigma))\\,d\\sigma$.\n\nFor every dense linear subspace $C'\\subset X$ and $t_0>0$, the assertion supplies an integer $k\\ge1$ and a real $\\theta$ with $\\delta=1-e^{-S/k}\\le t_0$ and $e^{-S/(4k)}<\\theta<1$. Put $\\mu=e^{-S/k}$, $Y=C([0,\\delta];X)$ with its supremum norm, $u_n^*(\\tau)=D_{(1-\\tau)^{-1}}w(nS/k-\\log(1-\\tau))$, $B_\\delta(f,g)(\\tau)=\\int_0^\\tau K(\\tau-\\sigma)(f(\\sigma),g(\\sigma))\\,d\\sigma$, $A_n=2B_\\delta(u_n^*,\\cdot)$, $\\Gamma x(\\tau)=G(\\tau)x$, and $Lv=D_\\mu v(\\delta)$. It asserts $\\|A_n\\|\\le1/4$ for all nonnegative integers $n$, and supplies a finite dimensional subspace $V\\subset X$, a bounded linear $J:X\\to X$ with range in $C'$, and a bounded linear map $\\mathcal R:\\ell^\\infty(\\mathbb N;Y)\\to X\\times\\ell^\\infty(\\mathbb N;Y)$. If $(e,z)=\\mathcal Rg$, then $e\\in V$, $z_0-A_0z_0-\\Gamma Je=g_0$ and $z_n-A_nz_n-\\theta^{-1}\\Gamma Lz_{n-1}=g_n$ for $n\\ge1$. This is a statement of the linear correction on successive intervals; the correction of the datum is $Je\\in C'$. The smooth compactly supported space $E$ of the paper is represented by $J(V)$ when $C'$ is the corresponding dense data space. The formula uses only positive $k$, $\\mu$, $\\theta$ and $1-\\tau$, so their reciprocals are ordinary ones. The path operators are formally assigned zero if their required continuous realizations do not exist; the analytic construction for $\\delta>0$ proves those realizations before using them.\n\nThe product norm controlled by $\\mathcal R$ is $\\max(\\|e\\|,\\sup_n\\|z_n\\|_Y)$. A bound for the actual datum correction $Je$ also uses $\\|J\\|$. The assertion concerns sequences of compact-interval paths, whereas Proposition 4.3 is phrased for a global weighted curve.\n\nThis formal statement specifies an implication. Defining the implication does not prove it.\n\nThe correction component of the linear right inverse lies in a fixed finite-dimensional space; nonlinear stability and the physical norm identification require the subsequent contraction and realization."
+    }
+   ]
+  },
+  {
    "id": "s1-certificate-summary",
    "from": "A family of approximate profiles, together with data satisfying the certificate conditions, yields the required exact profile.",
    "to": "A family of approximate profiles, together with data satisfying the certificate conditions, yields the required exact profile.",
@@ -1615,6 +1591,30 @@
      "relation": "part",
      "fidelity": "different",
      "fidelity_note": "The formal theorem takes the earlier rectangular-box certificate as a premise and concludes existence of a recurrent weak profile; its conclusion does not state smoothness, closeness, or the prescribed symmetry group of the current paper."
+    }
+   ]
+  },
+  {
+   "id": "s1-similarity-time",
+   "from": "Write $y=x/\\sqrt{T-t}$ for position on the shrinking length scale and $s=\\log(T/(T-t))$ for logarithmic time.",
+   "to": "Write $y=x/\\sqrt{T-t}$ for position on the shrinking length scale and $s=\\log(T/(T-t))$ for logarithmic time.",
+   "role": "definition",
+   "topic": "profile",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.physicalTime",
+     "file": "Breakdown/Profile/StatementsPhysical.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "For a real phase $s_0$ and time $t<1$, this defines $s=s_0-\\log(1-t)$. At $s_0=0$ it equals $\\log(1/(1-t))$, the similarity time in (1.4) with $T=1$. No equation or profile hypothesis is included. The function is defined for all real $t$: the real logarithm is assigned the value zero at zero and uses the absolute value for a negative argument. These extensions carry no assertion about a solution at or after time one; all physical change-of-variable statements restrict to $t<1$, where $1-t>0$. For a general final time $T>0$, the paper instead uses $\\log(T/(T-t))$.\n\nThe formal time variable is $s_0-\\log(1-t)$; at $T=1,s_0=0$ it agrees with the paper."
+    },
+    {
+     "name": "Breakdown.physicalScale",
+     "file": "Breakdown/Profile/StatementsPhysical.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "For $t<1$, the scale is $a(t)=\\sqrt{(1-t)^{-1}}=(1-t)^{-1/2}$. Multiplying $x\\in\\mathbb R^3$ by $a(t)$ gives the similarity position. The function is defined for every real $t$; division by zero is assigned zero, and the real square root of a nonpositive number is zero. Consequently its value is zero at and after $t=1$. These values serve only to define a function everywhere. They do not extend the physical solution through its final time. The paper's general scale is $(T-t)^{-1/2}$ for $t<T$.\n\nThe formal spatial scale is $(1-t)^{-1/2}$ on $t<1$; the paper allows any $T>0$."
     }
    ]
   },
@@ -1888,51 +1888,9 @@
    ]
   },
   {
-   "id": "s1-similarity-time",
-   "from": "so that $y=x/\\sqrt{T-t}$ and $s=\\log(T/(T-t))$.",
-   "to": "so that $y=x/\\sqrt{T-t}$ and $s=\\log(T/(T-t))$.",
-   "role": "definition",
-   "topic": "profile",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.physicalTime",
-     "file": "Breakdown/Profile/StatementsPhysical.lean",
-     "relation": "defines",
-     "fidelity": "different",
-     "fidelity_note": "For a real phase $s_0$ and time $t<1$, this defines $s=s_0-\\log(1-t)$. At $s_0=0$ it equals $\\log(1/(1-t))$, the similarity time in (1.4) with $T=1$. No equation or profile hypothesis is included. The function is defined for all real $t$: the real logarithm is assigned the value zero at zero and uses the absolute value for a negative argument. These extensions carry no assertion about a solution at or after time one; all physical change-of-variable statements restrict to $t<1$, where $1-t>0$. For a general final time $T>0$, the paper instead uses $\\log(T/(T-t))$.\n\nThe formal time variable is $s_0-\\log(1-t)$; at $T=1,s_0=0$ it agrees with the paper."
-    },
-    {
-     "name": "Breakdown.physicalScale",
-     "file": "Breakdown/Profile/StatementsPhysical.lean",
-     "relation": "defines",
-     "fidelity": "different",
-     "fidelity_note": "For $t<1$, the scale is $a(t)=\\sqrt{(1-t)^{-1}}=(1-t)^{-1/2}$. Multiplying $x\\in\\mathbb R^3$ by $a(t)$ gives the similarity position. The function is defined for every real $t$; division by zero is assigned zero, and the real square root of a nonpositive number is zero. Consequently its value is zero at and after $t=1$. These values serve only to define a function everywhere. They do not extend the physical solution through its final time. The paper's general scale is $(T-t)^{-1/2}$ for $t<T$.\n\nThe formal spatial scale is $(1-t)^{-1/2}$ on $t<1$; the paper allows any $T>0$."
-    }
-   ]
-  },
-  {
-   "id": "adapted.N1-04.1",
-   "from": "Advancing $s$ by $S$ multiplies the remaining time by $e^{-S}$ and the spatial scale by $e^{-S/2}$.",
-   "to": "Advancing $s$ by $S$ multiplies the remaining time by $e^{-S}$ and the spatial scale by $e^{-S/2}$.",
-   "role": "explanation",
-   "topic": "profile",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.PeriodicSimilarityProfileExists",
-     "file": "Breakdown/Defs.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The authors’ profile premise gives the recurrence for every similarity time. Formula (1.4) in the paper gives its finite-time interpretation.",
-     "link_note": "The authors’ profile premise gives the recurrence for every similarity time. Formula (1.4) in the paper gives its finite-time interpretation."
-    }
-   ]
-  },
-  {
    "id": "s1-physical-pde",
-   "from": "The first two equations of (1.2) say that $u_T^*$, with the pressure $(T-t)^{-1}\\,q(s,y)$, solves (1.1) on $(-\\infty,T)\\times\\mathbb R^3$",
-   "to": "The first two equations of (1.2) say that $u_T^*$, with the pressure $(T-t)^{-1}\\,q(s,y)$, solves (1.1) on $(-\\infty,T)\\times\\mathbb R^3$",
+   "from": "which, with pressure $(T-t)^{-1}q(s,y)$, solves (1.1) on $(-\\infty,T)\\times\\mathbb R^3$ by the first two equations of (1.2).",
+   "to": "which, with pressure $(T-t)^{-1}q(s,y)$, solves (1.1) on $(-\\infty,T)\\times\\mathbb R^3$ by the first two equations of (1.2).",
    "role": "explanation",
    "topic": "profile",
    "status": "new",
@@ -1950,6 +1908,24 @@
      "relation": "part",
      "fidelity": "weaker",
      "fidelity_note": "For any scalar field $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ and phase $s_0\\in\\mathbb R$, this defines $p(t,x)=(1-t)^{-1}q(s_0-\\log(1-t),x/\\sqrt{1-t})$ when $t<1$. It is the pressure accompanying the velocity transformation (1.4) at final time one. The definition asserts no equation, smoothness, periodicity, or pressure normalization. It is defined at all times by the assigned values of reciprocal, logarithm and square root; at $t=1$ the prefactor is zero, while at $t>1$ the spatial argument is zero and the prefactor is negative. Those values are outside the physical interval and do not assert a continuation. On $t<1$, every denominator and logarithm argument has the usual positive-domain meaning.\n\nThe formal formula defines the accompanying pressure at final time one; the definition alone does not prove the equations."
+    }
+   ]
+  },
+  {
+   "id": "adapted.N1-04.1",
+   "from": "From one return to the next, the remaining time shrinks by $e^{-S}$, lengths shrink by $e^{-S/2}$ and speeds grow by $e^{S/2}$.",
+   "to": "From one return to the next, the remaining time shrinks by $e^{-S}$, lengths shrink by $e^{-S/2}$ and speeds grow by $e^{S/2}$.",
+   "role": "explanation",
+   "topic": "profile",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.PeriodicSimilarityProfileExists",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "unassessed",
+     "fidelity_note": "The authors’ profile premise gives the recurrence for every similarity time. Formula (1.4) in the paper gives its finite-time interpretation.",
+     "link_note": "The authors’ profile premise gives the recurrence for every similarity time. Formula (1.4) in the paper gives its finite-time interpretation."
     }
    ]
   },
@@ -2044,8 +2020,8 @@
   },
   {
    "id": "s1-smooth-finite-interval",
-   "from": "A *smooth solution* of (1.1) on $[0,T)\\times\\mathbb R^3$ with datum $u_0$ is a pair $(u,p)$ of functions that are smooth on $[0,T)\\times\\mathbb R^3$, up to the boundary, and satisfy (1.1) there, with $u(0,\\cdot)=u_0$; we also call the velocity $u$ a smooth solution.",
-   "to": "A *smooth solution* of (1.1) on $[0,T)\\times\\mathbb R^3$ with datum $u_0$ is a pair $(u,p)$ of functions that are smooth on $[0,T)\\times\\mathbb R^3$, up to the boundary, and satisfy (1.1) there, with $u(0,\\cdot)=u_0$; we also call the velocity $u$ a smooth solution.",
+   "from": "A *smooth solution* on $[0,T)\\times\\mathbb R^3$, $0<T\\le\\infty$, consists of a velocity and pressure smooth up to $t=0$ satisfying (1.1) and $u(0,\\cdot)=u_0$.",
+   "to": "A *smooth solution* on $[0,T)\\times\\mathbb R^3$, $0<T\\le\\infty$, consists of a velocity and pressure smooth up to $t=0$ satisfying (1.1) and $u(0,\\cdot)=u_0$.",
    "role": "definition",
    "topic": "statement",
    "status": "new",
@@ -2085,8 +2061,8 @@
   },
   {
    "id": "s1-periodic-definition",
-   "from": "We call a function on $\\mathbb R^3$ periodic if it has period $1$ in each coordinate, and we identify the functions on $\\mathbb T^3$ with the periodic functions on $\\mathbb R^3$.",
-   "to": "We call a function on $\\mathbb R^3$ periodic if it has period $1$ in each coordinate, and we identify the functions on $\\mathbb T^3$ with the periodic functions on $\\mathbb R^3$.",
+   "from": "We identify functions on $\\mathbb T^3$ with functions on $\\mathbb R^3$ of period one in each coordinate.",
+   "to": "We identify functions on $\\mathbb T^3$ with functions on $\\mathbb R^3$ of period one in each coordinate.",
    "role": "definition",
    "topic": "torus",
    "status": "new",
@@ -2102,8 +2078,8 @@
   },
   {
    "id": "s1-periodic-pressure",
-   "from": "Thus a smooth solution on $[0,T)\\times\\mathbb T^3$, or on $[0,T]\\times\\mathbb T^3$, is a smooth solution on $[0,T)\\times\\mathbb R^3$, or on $[0,T]\\times\\mathbb R^3$, for which $u(t)$ and $p(t)$ are periodic.",
-   "to": "Thus a smooth solution on $[0,T)\\times\\mathbb T^3$, or on $[0,T]\\times\\mathbb T^3$, is a smooth solution on $[0,T)\\times\\mathbb R^3$, or on $[0,T]\\times\\mathbb R^3$, for which $u(t)$ and $p(t)$ are periodic.",
+   "from": "A smooth solution on the torus has both velocity and pressure periodic in this sense.",
+   "to": "A smooth solution on the torus has both velocity and pressure periodic in this sense.",
    "role": "definition",
    "topic": "statement",
    "status": "new",
@@ -2367,6 +2343,23 @@
    ]
   },
   {
+   "id": "s1-rescaled-error",
+   "from": "Then (1.6) gives $\\|\\nabla_y(U(s)-W(s))\\|_{L^2(\\mathbb R^3)}\\le Ce^{-\\kappa s}$.",
+   "to": "Then (1.6) gives $\\|\\nabla_y(U(s)-W(s))\\|_{L^2(\\mathbb R^3)}\\le Ce^{-\\kappa s}$.",
+   "role": "explanation",
+   "topic": "profile",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.TransferHolds",
+     "file": "Breakdown/Base/Framework.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "Put $s=-\\log(1-t)$ and $U(s)=D_{1-t}u(t)$, where $D_\\mu f(x)=\\sqrt\\mu f(\\sqrt\\mu x)$ in the whole-space realization $X=\\dot H^1_{\\rm div}(\\mathbb R^3)$. The formal estimate is $\\|U(s)-w(s)\\|_X\\le A e^{-\\kappa s}$ for $s\\ge0$, with some $A\\in\\mathbb R$ and $\\kappa>0$. Identifying $w(s)$ with $W(s,\\cdot)$ gives precisely the displayed gradient-norm error. This row compares that estimate; the formal conclusion does not additionally require $\\kappa<1/4$."
+    }
+   ]
+  },
+  {
    "id": "s1-unperturbed-rate",
    "from": "The change of variables gives $\\|\\nabla u_T^*(t)\\|_{L^2}=(T-t)^{-1/4}\\|\\nabla W(s)\\|_{L^2}$. The function $s\\mapsto\\|\\nabla W(s)\\|_{L^2}$ is continuous, positive and $S$-periodic (Lemma 4.2).",
    "to": "The change of variables gives $\\|\\nabla u_T^*(t)\\|_{L^2}=(T-t)^{-1/4}\\|\\nabla W(s)\\|_{L^2}$. The function $s\\mapsto\\|\\nabla W(s)\\|_{L^2}$ is continuous, positive and $S$-periodic (Lemma 4.2).",
@@ -2394,23 +2387,6 @@
      "relation": "part",
      "fidelity": "same",
      "fidelity_note": "Let $\\mathcal X$ be a real Hilbert space. The bounded linear families $e^{t\\Delta}$ and $D_\\mu$ and bounded bilinear family $K(\\tau)$ are defined at every real parameter. Assume $e^{t\\Delta}$ is a strongly continuous contraction semigroup for $t\\ge0$, with $e^{0\\Delta}=I$. Assume $K(\\tau)$ is symmetric for every real $\\tau$, continuous in $\\tau>0$ on each pair of inputs, with $e^{t\\Delta}K(\\tau)=K(t+\\tau)$ for $t\\ge0,\\tau>0$ and $\\|K(\\tau)\\|\\le C_K\\tau^{-3/4}$ for $0<\\tau\\le1$. For positive $\\mu,\\nu$, assume the dilations satisfy $\\|D_\\mu x\\|=\\mu^{1/4}\\|x\\|$, $D_1=I$, $D_\\mu D_\\nu=D_{\\mu\\nu}$ and strong continuity in $\\mu$. Also require $D_\\mu e^{\\mu t\\Delta}=e^{t\\Delta}D_\\mu$ for $\\mu>0,t\\ge0$ and $\\mu D_\\mu K(\\mu\\tau)(x,y)=K(\\tau)(D_\\mu x,D_\\mu y)$ for $\\mu,\\tau>0$. For each positive $\\tau$, $K(\\tau)(f,\\cdot)$ is compact for $f$ in one fixed dense subset of $\\mathcal X$. Let $\\rho$ be a surjective linear isometry, let $S>0$, and let $w:\\mathbb R\\to\\mathcal X$ be continuous, nonzero at some time, and satisfy $w(s+S)=\\rho w(s)$. Write $A(\\sigma)=D_{e^{-\\sigma}}e^{(1-e^{-\\sigma})\\Delta}$ and $B(\\sigma)(x,y)=D_{e^{-\\sigma}}K(1-e^{-\\sigma})(x,y)$. For every $a\\le b$, require the Bochner-integrable orbit equation $w(b)=A(b-a)w(a)+\\int_a^bB(b-s)(w(s),w(s))\\,ds$. The formal theorem concludes that there is $M\\in\\mathbb R$ with $\\|w(s)\\|\\le M$ for every real $s$. In the whole-space application this norm is $\\|\\nabla W(s,\\cdot)\\|_{L^2(\\mathbb R^3)}$. Continuity and the recurrence up to an isometry make the norm continuous and $S$-periodic, hence bounded on all of $\\mathbb R$. This upper-bound theorem does not assume that the isometry commutes with the evolution operators. It provides no estimate for a corrected trajectory and no lower bound. The ambient heat, dilation, and orbit assumptions above specify the stated domain even though the proof of this particular bound uses only continuity and recurrence.\n\nContinuity and recurrence under an isometry give a uniform upper bound on the orbit norm for every real similarity time."
-    }
-   ]
-  },
-  {
-   "id": "s1-rescaled-error",
-   "from": "Then (1.6) gives $\\|\\nabla_y(U(s)-W(s))\\|_{L^2(\\mathbb R^3)}\\le Ce^{-\\kappa s}$.",
-   "to": "Then (1.6) gives $\\|\\nabla_y(U(s)-W(s))\\|_{L^2(\\mathbb R^3)}\\le Ce^{-\\kappa s}$.",
-   "role": "explanation",
-   "topic": "profile",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.TransferHolds",
-     "file": "Breakdown/Base/Framework.lean",
-     "relation": "part",
-     "fidelity": "same",
-     "fidelity_note": "Put $s=-\\log(1-t)$ and $U(s)=D_{1-t}u(t)$, where $D_\\mu f(x)=\\sqrt\\mu f(\\sqrt\\mu x)$ in the whole-space realization $X=\\dot H^1_{\\rm div}(\\mathbb R^3)$. The formal estimate is $\\|U(s)-w(s)\\|_X\\le A e^{-\\kappa s}$ for $s\\ge0$, with some $A\\in\\mathbb R$ and $\\kappa>0$. Identifying $w(s)$ with $W(s,\\cdot)$ gives precisely the displayed gradient-norm error. This row compares that estimate; the formal conclusion does not additionally require $\\kappa<1/4$."
     }
    ]
   },
@@ -2579,8 +2555,8 @@
   },
   {
    "id": "s1-symmetry-class",
-   "from": "The perturbations satisfy the same symmetry conditions.",
-   "to": "The perturbations satisfy the same symmetry conditions.",
+   "from": "The perturbations have the same symmetries.",
+   "to": "The perturbations have the same symmetries.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
@@ -2811,8 +2787,8 @@
   },
   {
    "id": "s1-outline-weighted-perturbations",
-   "from": "For a perturbation to decay at the chosen rate its physical-variable norm must satisfy $$\n\\sup_{0\\le t<1}\\,(1-t)^{\\frac14-\\kappa}\\,\\|v(t)\\|_{\\dot H^1}<\\infty,\n$$",
-   "to": "For a perturbation to decay at the chosen rate its physical-variable norm must satisfy $$\n\\sup_{0\\le t<1}\\,(1-t)^{\\frac14-\\kappa}\\,\\|v(t)\\|_{\\dot H^1}<\\infty,\n$$",
+   "from": "For a perturbation to decay at the chosen rate its physical-variable norm must satisfy $$\n\\sup_{0\\le t<1}\\,(1-t)^{\\frac14-\\kappa}\\,\\|v(t)\\|_{\\dot H^1}<\\infty.\n$$",
+   "to": "For a perturbation to decay at the chosen rate its physical-variable norm must satisfy $$\n\\sup_{0\\le t<1}\\,(1-t)^{\\frac14-\\kappa}\\,\\|v(t)\\|_{\\dot H^1}<\\infty.\n$$",
    "role": "explanation",
    "topic": "monodromy",
    "status": "new",
@@ -2846,8 +2822,8 @@
   },
   {
    "id": "adapted.N1-15.3",
-   "from": "whose projections form a basis",
-   "to": "whose projections form a basis",
+   "from": "Choose one such field over each basis vector.",
+   "to": "Choose one such field over each basis vector.",
    "role": "explanation",
    "topic": "monodromy",
    "status": "new",
@@ -3041,30 +3017,6 @@
    ]
   },
   {
-   "id": "s1-outline-unforced-correction",
-   "from": "Here the error of the cutoff is removed by the contraction, and the equations on the torus hold without force.",
-   "to": "Here the error of the cutoff is removed by the contraction, and the equations on the torus hold without force.",
-   "role": "explanation",
-   "topic": "torus",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.Periodic.SeqPerturbation",
-     "file": "Breakdown/Torus/StatementsSteps.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "Let $X,E$ be real Banach spaces. For each integer $n\\ge0$, let $G_n$ be a strongly continuous contraction heat semigroup and $K_n$ a continuous symmetric bilinear kernel satisfying $G_n(s)K_n(\\tau)=K_n(s+\\tau)$ for $s\\ge0$, $\\tau>0$, with $\\|K_n(\\tau)\\|\\le C_K\\tau^{-3/4}$ for $0<\\tau\\le1$, where $C_K\\ge0$ is independent of $n$. Fix $0<\\ell\\le1$, $0<\\theta<1$, a real endpoint factor $c$, bounded linear $J:E\\to X$, and continuous interval curves $a_n,r_n:[0,\\ell]\\to X$. Assume $\\|a_n\\|_\\infty\\le M$, $a_{n+1}(0)=c\\,a_n(\\ell)$, $a_n=G_n(\\cdot)a_n(0)+\\mathcal B_n(a_n,a_n)+r_n$, and $\\|r_n\\|_\\infty\\le\\theta^n\\rho$. Here $\\mathcal B_n(f,g)(s)=\\int_0^sK_n(s-\\sigma)(f(\\sigma),g(\\sigma))\\,d\\sigma$.\n\nSuppose a bounded linear map $R$ takes each bounded interval sequence $g$ to $(e,z)$ satisfying $z_n-2\\mathcal B_n(a_n,z_n)-G_n(\\cdot)Je=g_0$ for $n=0$, and $z_n-2\\mathcal B_n(a_n,z_n)-(c/\\theta)G_n(\\cdot)z_{n-1}(\\ell)=g_n$ for $n\\ge1$.\n\nFor a datum displacement $\\xi\\in X$, assume $64\\|R\\|^2C_K\\ell^{1/4}(\\rho+\\|\\xi\\|)\\le1$.\n\nThe formal statement asserts an $e$ and curves $z_n$ with $\\|e\\|,\\sup_n\\|z_n\\|_\\infty\\le2\\|R\\|(\\rho+\\|\\xi\\|)$, such that, on writing $v_n=a_n+\\theta^nz_n$, each $v_n$ satisfies $v_n(s)=G_n(s)v_n(0)+\\mathcal B_n(v_n,v_n)(s)$ on the closed interval, with an integrable nonlinear term. Moreover $v_{n+1}(0)=c\\,v_n(\\ell)$ and $z_0(0)=\\xi+Je$. The sequence norm is the supremum over the interval index and time, and the product norm is the maximum of its two factor norms. The positive hypotheses exclude zero denominators.\n\nThe formal statement is this implication, and it is proved.\n\nFinite dimensionality of $E$ is not assumed. The separate bounds on the residual and datum displacement do not retain possible cancellation in the paper's combined forcing $e^{t\\Delta}\\chi-F^{\\mathrm a}$. The paper asserts removal of the particular cutoff residual and a physical solution on the torus. This conditional sequence assertion supplies exact matched mild pieces once its residual, inverse and smallness hypotheses hold. It does not itself verify those hypotheses for the cutoff or identify and join the final physical solution."
-    },
-    {
-     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
-     "file": "Breakdown/Torus/Main.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "Let $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ be jointly smooth. For every $s\\in\\mathbb R$ and $y\\in\\mathbb R^3$, assume $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Assume one real constant $C$ gives $\\|D_y^jW(s,y)\\|\\le C(1+|y|)^{-j-1}$ for the integers $j=0,1,2$, and $|\\nabla_yq(s,y)|\\le C(1+|y|)^{-3}$, uniformly in all $s,y$. Here $D_y^0W=W$, while for $j=1,2$ the derivative is a linear or bilinear map with its operator norm. The paper uses the square root of the sum of squared coordinate derivatives. These norms are equivalent in dimension three, with fixed factors; an unspecified bound transfers after enlarging $C$, but the same numerical constant is not asserted. In addition, there are $S>0$ and an orthogonal linear map $R:\\mathbb R^3\\to\\mathbb R^3$ such that $W(s+S,y)=RW(s,R^{-1}y)$ for every $s,y$, and $W(s,y)\\ne0$ for at least one pair $(s,y)$. Both rotations and orientation-reversing orthogonal maps are admitted. No recurrence condition is imposed on $q$ itself. Under these assumptions the formal statement concludes the following. For each viscosity $\\nu>0$ there is a smooth field $u_0:\\mathbb R^3\\to\\mathbb R^3$ with $u_0(x+e_i)=u_0(x)$ for each coordinate vector $e_i$ and $\\operatorname{div}u_0=0$, such that no pair of globally defined functions $u(t,x),p(t,x)$ is jointly smooth on $[0,\\infty)\\times\\mathbb R^3$, has $u(0)=u_0$, satisfies $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$ and $\\operatorname{div}u=0$ for every $t>0$, and has $u(t,x+e_i)=u(t,x)$ for every $t\\ge0$. These periodic fields represent fields on $\\mathbb R^3/\\mathbb Z^3$. Periodicity is required of the velocity only. The excluded pressure may be any smooth scalar field on $\\mathbb R^3$, including a nonperiodic one. There is no separate energy condition, prescribed mean, blow-up time, two-sided rate, or comparison on a ball. Values at negative times have no role. Relative to Theorem 1.1, the smooth finite-time trajectory and both estimates in (1.7) are absent, while the profile premise explicitly includes extra derivative and pressure-gradient decay. Allowing nonperiodic pressures makes the excluded class of global solutions larger than the paper's definition of a torus solution.\n\nThe formal profile implication excludes global unforced smooth solutions for some smooth periodic datum; it does not state the cutoff-error correction or identify the corrected finite-time trajectory asserted here."
-    }
-   ]
-  },
-  {
    "id": "s1-outline-certificate-force",
    "from": "We add finitely many force coefficients and impose the same number of linear constraints.",
    "to": "We add finitely many force coefficients and impose the same number of linear constraints.",
@@ -3152,6 +3104,30 @@
    ]
   },
   {
+   "id": "s1-outline-unforced-correction",
+   "from": "In Section 6 the error of the cutoff is removed by the contraction, and the equations on the torus hold without force.",
+   "to": "In Section 6 the error of the cutoff is removed by the contraction, and the equations on the torus hold without force.",
+   "role": "explanation",
+   "topic": "torus",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Periodic.SeqPerturbation",
+     "file": "Breakdown/Torus/StatementsSteps.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "Let $X,E$ be real Banach spaces. For each integer $n\\ge0$, let $G_n$ be a strongly continuous contraction heat semigroup and $K_n$ a continuous symmetric bilinear kernel satisfying $G_n(s)K_n(\\tau)=K_n(s+\\tau)$ for $s\\ge0$, $\\tau>0$, with $\\|K_n(\\tau)\\|\\le C_K\\tau^{-3/4}$ for $0<\\tau\\le1$, where $C_K\\ge0$ is independent of $n$. Fix $0<\\ell\\le1$, $0<\\theta<1$, a real endpoint factor $c$, bounded linear $J:E\\to X$, and continuous interval curves $a_n,r_n:[0,\\ell]\\to X$. Assume $\\|a_n\\|_\\infty\\le M$, $a_{n+1}(0)=c\\,a_n(\\ell)$, $a_n=G_n(\\cdot)a_n(0)+\\mathcal B_n(a_n,a_n)+r_n$, and $\\|r_n\\|_\\infty\\le\\theta^n\\rho$. Here $\\mathcal B_n(f,g)(s)=\\int_0^sK_n(s-\\sigma)(f(\\sigma),g(\\sigma))\\,d\\sigma$.\n\nSuppose a bounded linear map $R$ takes each bounded interval sequence $g$ to $(e,z)$ satisfying $z_n-2\\mathcal B_n(a_n,z_n)-G_n(\\cdot)Je=g_0$ for $n=0$, and $z_n-2\\mathcal B_n(a_n,z_n)-(c/\\theta)G_n(\\cdot)z_{n-1}(\\ell)=g_n$ for $n\\ge1$.\n\nFor a datum displacement $\\xi\\in X$, assume $64\\|R\\|^2C_K\\ell^{1/4}(\\rho+\\|\\xi\\|)\\le1$.\n\nThe formal statement asserts an $e$ and curves $z_n$ with $\\|e\\|,\\sup_n\\|z_n\\|_\\infty\\le2\\|R\\|(\\rho+\\|\\xi\\|)$, such that, on writing $v_n=a_n+\\theta^nz_n$, each $v_n$ satisfies $v_n(s)=G_n(s)v_n(0)+\\mathcal B_n(v_n,v_n)(s)$ on the closed interval, with an integrable nonlinear term. Moreover $v_{n+1}(0)=c\\,v_n(\\ell)$ and $z_0(0)=\\xi+Je$. The sequence norm is the supremum over the interval index and time, and the product norm is the maximum of its two factor norms. The positive hypotheses exclude zero denominators.\n\nThe formal statement is this implication, and it is proved.\n\nFinite dimensionality of $E$ is not assumed. The separate bounds on the residual and datum displacement do not retain possible cancellation in the paper's combined forcing $e^{t\\Delta}\\chi-F^{\\mathrm a}$. The paper asserts removal of the particular cutoff residual and a physical solution on the torus. This conditional sequence assertion supplies exact matched mild pieces once its residual, inverse and smallness hypotheses hold. It does not itself verify those hypotheses for the cutoff or identify and join the final physical solution."
+    },
+    {
+     "name": "Breakdown.Periodic.breakdownOnTorus_of_profile",
+     "file": "Breakdown/Torus/Main.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "Let $W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$ and $q:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R$ be jointly smooth. For every $s\\in\\mathbb R$ and $y\\in\\mathbb R^3$, assume $\\partial_sW+\\frac12W+\\frac12(y\\cdot\\nabla)W-\\Delta W+(W\\cdot\\nabla)W+\\nabla q=0$ and $\\operatorname{div}W=0$. Assume one real constant $C$ gives $\\|D_y^jW(s,y)\\|\\le C(1+|y|)^{-j-1}$ for the integers $j=0,1,2$, and $|\\nabla_yq(s,y)|\\le C(1+|y|)^{-3}$, uniformly in all $s,y$. Here $D_y^0W=W$, while for $j=1,2$ the derivative is a linear or bilinear map with its operator norm. The paper uses the square root of the sum of squared coordinate derivatives. These norms are equivalent in dimension three, with fixed factors; an unspecified bound transfers after enlarging $C$, but the same numerical constant is not asserted. In addition, there are $S>0$ and an orthogonal linear map $R:\\mathbb R^3\\to\\mathbb R^3$ such that $W(s+S,y)=RW(s,R^{-1}y)$ for every $s,y$, and $W(s,y)\\ne0$ for at least one pair $(s,y)$. Both rotations and orientation-reversing orthogonal maps are admitted. No recurrence condition is imposed on $q$ itself. Under these assumptions the formal statement concludes the following. For each viscosity $\\nu>0$ there is a smooth field $u_0:\\mathbb R^3\\to\\mathbb R^3$ with $u_0(x+e_i)=u_0(x)$ for each coordinate vector $e_i$ and $\\operatorname{div}u_0=0$, such that no pair of globally defined functions $u(t,x),p(t,x)$ is jointly smooth on $[0,\\infty)\\times\\mathbb R^3$, has $u(0)=u_0$, satisfies $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$ and $\\operatorname{div}u=0$ for every $t>0$, and has $u(t,x+e_i)=u(t,x)$ for every $t\\ge0$. These periodic fields represent fields on $\\mathbb R^3/\\mathbb Z^3$. Periodicity is required of the velocity only. The excluded pressure may be any smooth scalar field on $\\mathbb R^3$, including a nonperiodic one. There is no separate energy condition, prescribed mean, blow-up time, two-sided rate, or comparison on a ball. Values at negative times have no role. Relative to Theorem 1.1, the smooth finite-time trajectory and both estimates in (1.7) are absent, while the profile premise explicitly includes extra derivative and pressure-gradient decay. Allowing nonperiodic pressures makes the excluded class of global solutions larger than the paper's definition of a torus solution.\n\nThe formal profile implication excludes global unforced smooth solutions for some smooth periodic datum; it does not state the cutoff-error correction or identify the corrected finite-time trajectory asserted here."
+    }
+   ]
+  },
+  {
    "id": "s1-stable-convergence",
    "from": "Here we follow the stable directions toward the blow-up time, and the solution converges to the profile.",
    "to": "Here we follow the stable directions toward the blow-up time, and the solution converges to the profile.",
@@ -3165,6 +3141,30 @@
      "relation": "part",
      "fidelity": "same",
      "fidelity_note": "For the continuous mild curve $u:[0,1)\\to X$ and recurrent orbit $w:\\mathbb R\\to X$ supplied by the formal transfer assertion, there are $A\\in\\mathbb R$ and $\\kappa>0$ with $\\|D_{1-t}u(t)-w(-\\log(1-t))\\|_X\\le A(1-t)^\\kappa$. Writing $s=-\\log(1-t)$ gives $Ae^{-\\kappa s}\\to0$. In the Navier–Stokes application $X=\\dot H^1_{\\rm div}(\\mathbb R^3)$ and $D_\\mu f(x)=\\sqrt\\mu f(\\sqrt\\mu x)$. This compares the convergence conclusion alone, and asserts no nonuniqueness result."
+    }
+   ]
+  },
+  {
+   "id": "s1-viscosity",
+   "from": "For any $\\nu>0$ the change $(u,p)\\mapsto(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ gives the corresponding solution with viscosity $\\nu$.",
+   "to": "For any $\\nu>0$ the change $(u,p)\\mapsto(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ gives the corresponding solution with viscosity $\\nu$.",
+   "role": "explanation",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.BreakdownOnSpace",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. It does not prove that change of variables or that the target holds."
+    },
+    {
+     "name": "Breakdown.BreakdownOnTorus",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. It does not prove that change of variables or that the target holds."
     }
    ]
   },
@@ -3245,8 +3245,8 @@
   },
   {
    "id": "s1-conventions-projection",
-   "from": "It multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
-   "to": "It multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
+   "from": "In Fourier variables $\\mathbb P$ multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
+   "to": "In Fourier variables $\\mathbb P$ multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
    "role": "definition",
    "topic": "torus",
    "status": "new",
@@ -3262,8 +3262,8 @@
   },
   {
    "id": "s1-formal-space-result",
-   "from": "For every positive viscosity it gives smooth, compactly supported, divergence-free data on $\\mathbb R^3$ for which there is no global smooth solution of bounded energy. It also gives smooth divergence-free periodic data for which there is no global smooth solution with periodic velocity.",
-   "to": "For every positive viscosity it gives smooth, compactly supported, divergence-free data on $\\mathbb R^3$ for which there is no global smooth solution of bounded energy. It also gives smooth divergence-free periodic data for which there is no global smooth solution with periodic velocity.",
+   "from": "For every positive viscosity the authors obtain smooth, compactly supported, divergence-free data on $\\mathbb R^3$ for which there is no global smooth solution of bounded energy. They also obtain smooth divergence-free periodic data for which there is no global smooth solution with periodic velocity.",
+   "to": "For every positive viscosity the authors obtain smooth, compactly supported, divergence-free data on $\\mathbb R^3$ for which there is no global smooth solution of bounded energy. They also obtain smooth divergence-free periodic data for which there is no global smooth solution with periodic velocity.",
    "role": "statement",
    "topic": "statement",
    "status": "new",
@@ -3309,24 +3309,6 @@
    ]
   },
   {
-   "id": "adapted.N1-22.2",
-   "from": "preserves the datum and gives periodic pressure",
-   "to": "preserves the datum and gives periodic pressure",
-   "role": "explanation",
-   "topic": "torus",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.Periodic.movingFrameReduction",
-     "file": "Breakdown/Torus/MovingFrame.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "In the authors’ viscosity-one reduction the frame translation and velocity shift vanish at time zero. Their pressure correction subtracts the spatial linear part.",
-     "link_note": "In the authors’ viscosity-one reduction the frame translation and velocity shift vanish at time zero. Their pressure correction subtracts the spatial linear part."
-    }
-   ]
-  },
-  {
    "id": "adapted.N1-22.cell-system",
    "from": "the full finite-data conditions described in Appendix B imply the two nonexistence statements",
    "to": "the full finite-data conditions described in Appendix B imply the two nonexistence statements",
@@ -3341,6 +3323,24 @@
      "fidelity": "unassessed",
      "fidelity_note": "For data satisfying the full cell-system condition, the authors prove the two global nonexistence endpoints together. The theorem assumes the cell conditions on the data.",
      "link_note": "For data satisfying the full cell-system condition, the authors prove the two global nonexistence endpoints together. The theorem assumes the cell conditions on the data."
+    }
+   ]
+  },
+  {
+   "id": "adapted.N1-22.2",
+   "from": "The datum is unchanged, and both velocity and pressure are periodic",
+   "to": "The datum is unchanged, and both velocity and pressure are periodic",
+   "role": "explanation",
+   "topic": "torus",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.Periodic.movingFrameReduction",
+     "file": "Breakdown/Torus/MovingFrame.lean",
+     "relation": "part",
+     "fidelity": "unassessed",
+     "fidelity_note": "In the authors’ viscosity-one reduction the frame translation and velocity shift vanish at time zero. Their pressure correction subtracts the spatial linear part.",
+     "link_note": "In the authors’ viscosity-one reduction the frame translation and velocity shift vanish at time zero. Their pressure correction subtracts the spatial linear part."
     }
    ]
   },
@@ -10764,8 +10764,8 @@
   },
   {
    "id": "ns6.local-agreement",
-   "from": "The defect comes from the difference between this local field and the restriction of $z$.",
-   "to": "The defect comes from the difference between this local field and the restriction of $z$.",
+   "from": "The defect now depends only on how well $\\zeta$ predicts the restriction of $z$ to $B$.",
+   "to": "The defect now depends only on how well $\\zeta$ predicts the restriction of $z$ to $B$.",
    "role": "explanation",
    "topic": "torus",
    "status": "new",
@@ -16538,23 +16538,6 @@
    ]
   },
   {
-   "id": "ns7-data-s038",
-   "from": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
-   "to": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
-   "role": "explanation",
-   "topic": "certificate",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.extended_certificate_orbit_proved",
-     "file": "Breakdown/Cert/ExtendedMain.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "The endpoint proves weak-profile existence from certificate existence; the chosen parameter and force cancellation are hidden by its existential conclusion."
-    }
-   ]
-  },
-  {
    "id": "adapted.N4-37.1",
    "from": "where continuity is tested against each divergence-free",
    "to": "where continuity is tested against each divergence-free",
@@ -16586,6 +16569,23 @@
      "relation": "part",
      "fidelity": "unassessed",
      "fidelity_note": "The formal parameter step uses an inwardness condition to obtain a zero of the parameter map through the convex compact fixed-point theorem. The correction is constructed separately for each parameter."
+    }
+   ]
+  },
+  {
+   "id": "ns7-data-s038",
+   "from": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
+   "to": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.extended_certificate_orbit_proved",
+     "file": "Breakdown/Cert/ExtendedMain.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "The endpoint proves weak-profile existence from certificate existence; the chosen parameter and force cancellation are hidden by its existential conclusion."
     }
    ]
   },
@@ -17433,27 +17433,9 @@
    "after": "tz, $\\tilde u,\\tilde p$ "
   },
   {
-   "id": "adapted.N5-15.1",
-   "from": "Proposition B.1 tests the linearized equation against a multiplier built from $v$.",
-   "to": "Proposition B.1 tests the linearized equation against a multiplier built from $v$.",
-   "role": "explanation",
-   "topic": "coercive",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.CoerciveWeak.extendedCoerciveClause_of_pieceData_proved",
-     "file": "Breakdown/Cert/ExtendedCoerciveMain.lean",
-     "relation": "part",
-     "fidelity": "unassessed",
-     "fidelity_note": "The weighted multiplier estimates the coercive clause for admissible weak perturbations under the represented piece-data hypotheses.",
-     "link_note": "The weighted multiplier estimates the coercive clause for admissible weak perturbations under the represented piece-data hypotheses."
-    }
-   ]
-  },
-  {
    "id": "adapted.N6-36.1",
-   "from": "Besides the inequalities displayed below, they give the coefficients and lower bounds in (B.16), enforce invariance of the cell matrices under constant pressure shifts, and specify the maps from global coordinates to cell coordinates.",
-   "to": "Besides the inequalities displayed below, they give the coefficients and lower bounds in (B.16), enforce invariance of the cell matrices under constant pressure shifts, and specify the maps from global coordinates to cell coordinates.",
+   "from": "These specify, among other things, the coefficient models and their remainders, the joins across $y_3=0$, the pressure freedoms and the common coordinates for neighbouring cells.",
+   "to": "These specify, among other things, the coefficient models and their remainders, the joins across $y_3=0$, the pressure freedoms and the common coordinates for neighbouring cells.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
@@ -17469,8 +17451,8 @@
   },
   {
    "id": "ns7-data-s004",
-   "from": "Uniform enclosures for the multipliers supply the constants multiplying $\\|F\\|_{\\mathcal H}$ and $|\\ell(v)|$ in (7.18). The other clauses bound the change of reference field and the time-slice form (Lemma B.9), the adjoint quadratic terms and defects (Lemmas B.10–B.12)",
-   "to": "Uniform enclosures for the multipliers supply the constants multiplying $\\|F\\|_{\\mathcal H}$ and $|\\ell(v)|$ in (7.18). The other clauses bound the change of reference field and the time-slice form (Lemma B.9), the adjoint quadratic terms and defects (Lemmas B.10–B.12)",
+   "from": "The certificate supplies a coercive estimate at the reference field, a bound for transferring it to the approximate field, a time-slice bound and two adjoint estimates for the parameter update.",
+   "to": "The certificate supplies a coercive estimate at the reference field, a bound for transferring it to the approximate field, a time-slice bound and two adjoint estimates for the parameter update.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
@@ -19286,6 +19268,24 @@
      "fidelity": "unassessed",
      "fidelity_note": "The definition specifies the multiplier from weighted frequency terms of the perturbation and its Laplacian.",
      "link_note": "The definition specifies the multiplier from weighted frequency terms of the perturbation and its Laplacian."
+    }
+   ]
+  },
+  {
+   "id": "adapted.N5-15.1",
+   "from": "Adding that bound to (B.20) cancels both the integral and the pairings with the forcing fields. The remaining terms give the norm of $(v,\\beta)$ (Lemma B.2).",
+   "to": "Adding that bound to (B.20) cancels both the integral and the pairings with the forcing fields. The remaining terms give the norm of $(v,\\beta)$ (Lemma B.2).",
+   "role": "explanation",
+   "topic": "coercive",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.CoerciveWeak.extendedCoerciveClause_of_pieceData_proved",
+     "file": "Breakdown/Cert/ExtendedCoerciveMain.lean",
+     "relation": "part",
+     "fidelity": "unassessed",
+     "fidelity_note": "The weighted multiplier estimates the coercive clause for admissible weak perturbations under the represented piece-data hypotheses.",
+     "link_note": "The weighted multiplier estimates the coercive clause for admissible weak perturbations under the represented piece-data hypotheses."
     }
    ]
   },

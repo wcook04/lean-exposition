@@ -3,7 +3,7 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "c7fffb0eccd3430e21be6d7107dc32f5b8ccff3ba4826e1ddaf6253aad2e9bac",
+ "content_sha256": "a92d0772e354a68955fe5033d756df78b6bd2a67bdc6d84a19f98857db6c9bf8",
  "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
@@ -470,7 +470,7 @@
   },
   {
    "anchor": "sec-finite-time-blow-up-for-the-navier-stokes-equations",
-   "text_sha256": "2306b2b5e279c72dec31cec18b7a94c06feedc5c00d163642f9e0f66cfd12f82",
+   "text_sha256": "0034080f27c0f25edf926074aae4c7b3b7f2240658f9b4d12873bd246c1a08c0",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -479,7 +479,7 @@
   },
   {
    "anchor": "sec-contents",
-   "text_sha256": "d2d291be08e0c0e2617a00fac68c0b14e65403682f4b695c108df4007d9c359b",
+   "text_sha256": "c4d84b76ddc6b7b176d3de5d1efd3b4eede4cd2789729b5d512ab406c432f3cc",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -488,7 +488,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "b9fd2c89f808b34c5912fbce10751f9949db3e465c767e41a1d47e8ebaad3664",
+   "text_sha256": "080bca316b04cb9bca7f4fb8bbf5ac67cc280f42e56864bdb8fc698314e26924",
    "claim_ids": [
     "navier-stokes.theorem-1.1"
    ],
@@ -599,7 +599,7 @@
   },
   {
    "anchor": "sec-2",
-   "text_sha256": "73253b9c0147c778ffdcdcd444935b6752d52b69f82f7eab0224389434f99184",
+   "text_sha256": "968c30904f44afbb8ae42beef87df82446b81f6b7ec039c9c8984e52021fd3ef",
    "claim_ids": [
     "navier-stokes.proposition-2.1",
     "navier-stokes.proposition-2.2",
@@ -783,7 +783,7 @@
   },
   {
    "anchor": "sec-4",
-   "text_sha256": "b69e17522694ff0ec4779c630e7c549936ad43994eb974cdb5ef593f2bf853f3",
+   "text_sha256": "b88182638e1fbe6dd8cb5e7ffc9e5462d2b97cb5e94f5a4f4a8838657acd7c5f",
    "claim_ids": [
     "navier-stokes.proposition-4.1",
     "navier-stokes.lemma-4.2",
@@ -849,7 +849,7 @@
   },
   {
    "anchor": "sec-5",
-   "text_sha256": "a3448e955a402cf9ae74ab167dce8e8e221c3eb656b5c7b4d6828354b3e93e82",
+   "text_sha256": "7b01e1e24900eeee7c169fd8640e1ffa17875cce18f06d4124f4b5b20d06dde7",
    "claim_ids": [
     "navier-stokes.lemma-5.1"
    ],
@@ -894,7 +894,7 @@
   },
   {
    "anchor": "sec-6",
-   "text_sha256": "0a5cd589ba6e9adee8653296cab5b77924215284b123ca8840a8647efd7590ac",
+   "text_sha256": "71db8d388253fbe3a8dd7346acb627e55c1b3f2c97ceba5e17858741245d1206",
    "claim_ids": [
     "navier-stokes.lemma-6.1",
     "navier-stokes.lemma-6.2",
@@ -983,7 +983,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "b91c9106e9df30ff509f12437355410d45e73e56b820cf2654139dbe81bce534",
+   "text_sha256": "622b0b7ec975490544bcbe8345e6be89760f6d773c5ef8a535d409690a48ebfd",
    "claim_ids": [
     "navier-stokes.theorem-7.1",
     "navier-stokes.corollary-7.2",
@@ -1152,7 +1152,7 @@
   },
   {
    "anchor": "sec-appendix-b",
-   "text_sha256": "94b07dce8b13c4d12aed41625086e795d59081011a950fc9e00e315182c9517b",
+   "text_sha256": "a033d1e902498a7b95561d99fe079a066f5e1ea2638e0f036ac2757a5946aa65",
    "claim_ids": [
     "navier-stokes.proposition-b.1",
     "navier-stokes.lemma-b.2",
@@ -1328,7 +1328,7 @@
   },
   {
    "anchor": "sec-appendix-c",
-   "text_sha256": "52c72734a8bdbc74b1070b83723a8fc320395ed5afa0f2d11cb25b7b69ecd8d5",
+   "text_sha256": "7a6d64841b054508ec55a5055e64372ac46b5080f5cf585964ac14735108788e",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

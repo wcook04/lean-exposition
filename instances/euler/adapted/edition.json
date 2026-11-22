@@ -13,66 +13,67 @@
   "group": "edition",
   "group_title": "Adapted edition",
   "order": 0,
-  "credit": "Reading edition, 22 November 2026. Will Cook adapted the authors' 20 November manuscript (revision fd3a158) with AI assistance. The proof and numbered results are the authors'. This edition reorganizes the exposition, annotates the figures and adds calculations, including the fixed-particle integral after Corollary 8.3. The authors' Lean formalization follows their manuscript.",
+  "credit": "Adapted by Will Cook with AI assistance from the authors' manuscript.",
   "published": true,
   "pdf": {
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "sha256": "1e2af1ed54ea68d195a0e83cb067d4f294daf43602411384f0bbb35256dd729f",
-   "bytes": 819113
+   "bytes": 829601,
+   "sha256": "0f0b9ee7a2f7c2d25b4abe3d5cba607b7b09ffbd16fae991be1764404ddae201"
   },
   "aux_pdf": {
    "file": "aux.pdf",
    "name": "adapted-auxiliary-note-marked.pdf",
    "label": "Auxiliary note with change record",
-   "sha256": "6e51f1781e26e3002d23526b714c5ecf1d3467e3f3f45487ba8b5f8ad0860179",
-   "bytes": 139966
+   "bytes": 139966,
+   "sha256": "6e51f1781e26e3002d23526b714c5ecf1d3467e3f3f45487ba8b5f8ad0860179"
   },
   "release": {
-   "version": 4,
+   "version": 7,
    "date": "2026-11-22",
    "notes": [
-    "Revises the introduction and the proof explanations in response to two expert readings.",
-    "Identifies the source edition and explains why the wave growth, pressure bound, and stage estimates are needed together."
+    "The introduction follows one wave from its amplification to the orientation that allows it to launch its successor.",
+    "The proof separates the phase average corrected by selecting initial velocity from the oscillatory error removed at successive orders.",
+    "The terminal section groups the spatial convergence and fixed-particle estimates and traces them to the iteration bounds."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "euler-adapted-v4.pdf",
+   "name": "euler-adapted-v7.pdf",
    "label": "Reading copy",
-   "bytes": 568096,
-   "sha256": "ca25777bd699484e49e83bb04fa8179fb6bed70f960d76df7a065026567794bb"
-  },
-  "aux_reading_pdf": {
-   "file": "aux-reading.pdf",
-   "name": "euler-adapted-auxiliary-v4.pdf",
-   "label": "Auxiliary note",
-   "bytes": 108998,
-   "sha256": "f9953ce5a7ebee0d455fa06f44ebb374d52a142f11485202d5f7565d91ed2cd1"
-  },
-  "source_overlay": {
-   "file": "source-overlay.zip",
-   "name": "euler-adapted-v4-source-overlay.zip",
-   "label": "TeX revisions against the authors’ source",
-   "bytes": 72691,
-   "sha256": "abf2f1f886f769677f354f3cf71ebaa7e7681fd22c38a4f97498946333913506"
+   "bytes": 581518,
+   "sha256": "2f5cffe593931475b835479ddb6f2fe5c7a68a8679d0587d6077b25f81eb3256"
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 110323,
-    "sha256": "8643513e7667d01700c0583eef9f677c83f22042dd4f181b02df104de6d3fd17"
+    "bytes": 110325,
+    "sha256": "871f9ded5222e455455308f4b565b316f9dc12a9a43f79b0cdc336ba6b037798"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 139462,
-    "sha256": "4e57d43d11f6083f80454b1eb1308759b5d7d5aa0be029fe905f5a4d196c5002"
+    "bytes": 139466,
+    "sha256": "eeb7033464e7f32f7f2ee5ba6cdc1f4f03b2937bd118bb815de6e04b1215163d"
    }
+  },
+  "aux_reading_pdf": {
+   "file": "aux-reading.pdf",
+   "name": "euler-adapted-auxiliary-v7.pdf",
+   "label": "Auxiliary note",
+   "bytes": 108998,
+   "sha256": "a54d276f4cacea4d655ff9514b8e6fa80363a4ca4c089c3adb608ac7ecaff24b"
+  },
+  "source_overlay": {
+   "file": "source-overlay.zip",
+   "name": "euler-adapted-v7-source-overlay.zip",
+   "label": "TeX revisions against the authors’ source",
+   "bytes": 75805,
+   "sha256": "72fcc1fc41fe2fbb2007a672bea0f1fee6cfd27045f68a178ce947db8eac0a12"
   }
  }
 }

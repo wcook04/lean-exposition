@@ -54,7 +54,7 @@
    "name": "",
    "lines": [
     1,
-    1936
+    1962
    ],
    "source_commit": "0a556ace755b1d2f7e94797267e2b1f9781dfec3",
    "topics": [
@@ -2202,8 +2202,8 @@
  "ties": [
   {
    "id": "e01.abstract.existence",
-   "from": "We construct smooth odd initial data on the three-dimensional torus for which the unforced incompressible Euler equations develop a finite-time singularity.",
-   "to": "We construct smooth odd initial data on the three-dimensional torus for which the unforced incompressible Euler equations develop a finite-time singularity.",
+   "from": "We construct smooth odd initial data on the three-dimensional torus whose solution of the unforced incompressible Euler equations develops a finite-time singularity.",
+   "to": "We construct smooth odd initial data on the three-dimensional torus whose solution of the unforced incompressible Euler equations develops a finite-time singularity.",
    "role": "statement",
    "topic": "singularity",
    "status": "new",
@@ -2236,39 +2236,9 @@
    }
   },
   {
-   "id": "e01.abstract.bounded-velocity",
-   "from": "The velocity converges uniformly to a continuous field",
-   "to": "The velocity converges uniformly to a continuous field",
-   "role": "definition",
-   "topic": "singularity",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.Lib.S678b.closedSlab_velocity_limit",
-     "file": "TorusEuler/Paper/Proofs/S678b/Library/Limit.lean",
-     "relation": "proof",
-     "fidelity": "same",
-     "fidelity_note": "Given the stage estimates and the identification of the classical solution on the half-open interval, the theorem constructs a continuous velocity on the closed slab and proves agreement before the terminal time."
-    }
-   ],
-   "explanation": {
-    "text": "On the closed slab up to $T_*$, the velocity increments are uniformly bounded by $2\\lambda_j^{-1}$, a summable sequence. Their uniform limit is continuous and agrees with the classical velocity for $t<T_*$. This is continuity of the velocity itself, even at the origin. The vorticity is allowed to diverge there. The formal theorem uses the conclusions of Theorem 7.1 and Proposition 8.1 for this same construction.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Section 8 opening; Proposition 8.2; equation (1.3)",
-      "supports": "Uniform velocity convergence gives the asserted bound through the singular time."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
    "id": "e01.abstract.central-vorticity",
-   "from": "the vorticity magnitude at the stationary particle at the origin tends to infinity.",
-   "to": "the vorticity magnitude at the stationary particle at the origin tends to infinity.",
+   "from": "The vorticity magnitude at the stationary particle at the origin tends to infinity",
+   "to": "The vorticity magnitude at the stationary particle at the origin tends to infinity",
    "role": "definition",
    "topic": "singularity",
    "status": "new",
@@ -2296,9 +2266,39 @@
    }
   },
   {
+   "id": "e01.abstract.bounded-velocity",
+   "from": "the velocity converges on the whole torus",
+   "to": "the velocity converges on the whole torus",
+   "role": "definition",
+   "topic": "singularity",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.Lib.S678b.closedSlab_velocity_limit",
+     "file": "TorusEuler/Paper/Proofs/S678b/Library/Limit.lean",
+     "relation": "proof",
+     "fidelity": "same",
+     "fidelity_note": "Given the stage estimates and the identification of the classical solution on the half-open interval, the theorem constructs a continuous velocity on the closed slab and proves agreement before the terminal time."
+    }
+   ],
+   "explanation": {
+    "text": "On the closed slab up to $T_*$, the velocity increments are uniformly bounded by $2\\lambda_j^{-1}$, a summable sequence. Their uniform limit is continuous and agrees with the classical velocity for $t<T_*$. This is continuity of the velocity itself, even at the origin. The vorticity is allowed to diverge there. The formal theorem uses the conclusions of Theorem 7.1 and Proposition 8.1 for this same construction.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Section 8 opening; Proposition 8.2; equation (1.3)",
+      "supports": "Uniform velocity convergence gives the asserted bound through the singular time."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
    "id": "e01.abstract.off-origin",
-   "from": "Away from the origin the velocity and its first time derivative converge in every local spatial $C^m$ norm.",
-   "to": "Away from the origin the velocity and its first time derivative converge in every local spatial $C^m$ norm.",
+   "from": "Away from the origin the velocity and its first time derivative converge locally in every spatial $C^m$ norm.",
+   "to": "Away from the origin the velocity and its first time derivative converge locally in every spatial $C^m$ norm.",
    "role": "definition",
    "topic": "singularity",
    "status": "new",
@@ -3038,8 +3038,8 @@
   },
   {
    "id": "intro-amplification-new-frame",
-   "from": "Its own frame",
-   "to": "Its own frame",
+   "from": "the present wave’s frame.",
+   "to": "the present wave’s frame.",
    "role": "definition",
    "topic": "amplification",
    "status": "new",
@@ -3068,8 +3068,8 @@
   },
   {
    "id": "intro-amplification-new-couplings",
-   "from": "the two entries of the older gradient in that frame",
-   "to": "the two entries of the older gradient in that frame",
+   "from": "$$E_{1,+}=k/|k|,\\quad E_{2,+}=\\mathbf a/|\\mathbf a|,\\quad\n E_{3,+}=E_{1,+}\\times E_{2,+},\\qquad\n \\nu_+=E_{1,+}\\cdot D E_{2,+},\\quad\n \\eta_+=E_{3,+}\\cdot D E_{2,+}.$$",
+   "to": "$$E_{1,+}=k/|k|,\\quad E_{2,+}=\\mathbf a/|\\mathbf a|,\\quad\n E_{3,+}=E_{1,+}\\times E_{2,+},\\qquad\n \\nu_+=E_{1,+}\\cdot D E_{2,+},\\quad\n \\eta_+=E_{3,+}\\cdot D E_{2,+}.$$",
    "role": "definition",
    "topic": "amplification",
    "status": "new",
@@ -4149,8 +4149,8 @@
   },
   {
    "id": "adapted.E1-15A.1",
-   "from": "the velocity correction $V_2(t,X(t,a),s)$",
-   "to": "the velocity correction $V_2(t,X(t,a),s)$",
+   "from": "this equation determines $V_2(t,X(t,a),s)$ from zero initial data.",
+   "to": "this equation determines $V_2(t,X(t,a),s)$ from zero initial data.",
    "role": "explanation",
    "topic": "hierarchy",
    "status": "new",
@@ -4401,6 +4401,71 @@
    }
   },
   {
+   "id": "r5-ind-figure4-inactive",
+   "from": "On the thick segment $[0,t_i]$ the oscillation $O_i$ vanishes.",
+   "to": "On the thick segment $[0,t_i]$ the oscillation $O_i$ vanishes.",
+   "role": "explanation",
+   "topic": "induction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.Theorem71Conclusions.oscillation_vanishes",
+     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The field records that each later oscillation vanishes through its own activation time. The figure depicts this interval for the illustrated stages.",
+     "link_note": "The field records that each later oscillation vanishes through its own activation time. The figure depicts this interval for the illustrated stages."
+    }
+   ]
+  },
+  {
+   "id": "r5-ind-figure4-crossing",
+   "from": "the crossing that permits the next launch, at $t_{i+1}$.",
+   "to": "the crossing that permits the next launch, at $t_{i+1}$.",
+   "role": "definition",
+   "topic": "induction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.InductiveEulerConstruction.centralWaves",
+     "file": "TorusEuler/InductiveStageConstruction.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The selected crossing of stage $i$ is the activation time $t_{i+1}$ of the following wave. The formal structure records this equality in its crossing-time field."
+    }
+   ],
+   "explanation": {
+    "text": "The next launch time $t_{i+1}$ is the selected crossing for wave $i$. The formal central-wave data identify the physical crossing with the following activation time. Figure 4 uses the dashed segment to show that the cutoff has reached one by the crossing.",
+    "citations": [
+     {
+      "ref": "paper",
+      "title": "this paper",
+      "url": null,
+      "where": "Figure 4 and §7.2, choice of crossing and activation",
+      "supports": "The selected crossing is the launch of the following wave."
+     }
+    ],
+    "grounded": true
+   }
+  },
+  {
+   "id": "r5-ind-figure4-endpoint",
+   "from": "Each $S_i$ lies beyond the limit $T_\\infty$ of the launch times.",
+   "to": "Each $S_i$ lies beyond the limit $T_\\infty$ of the launch times.",
+   "role": "statement",
+   "topic": "induction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.Paper.theorem_7_1",
+     "file": "TorusEuler/Paper/Spine.lean",
+     "relation": "states",
+     "fidelity": "same",
+     "fidelity_note": "The lifetime conclusion of Theorem 7.1 states that activation times tend to a positive $T_\\infty$ and that $T_\\infty<S_i$ for every stage. Each $U_i$ is defined as a smooth approximate velocity on $[0,S_i]$."
+    }
+   ]
+  },
+  {
    "id": "e01.conventions.leray-projection",
    "from": "$\\mathbb P=I-\\nabla\\Delta^{-1}\\operatorname{div}$, where $\\Delta^{-1}$ acts on zero-mean scalars.",
    "to": "$\\mathbb P=I-\\nabla\\Delta^{-1}\\operatorname{div}$, where $\\Delta^{-1}$ acts on zero-mean scalars.",
@@ -4561,8 +4626,8 @@
   },
   {
    "id": "r5-root-schedule-purpose",
-   "from": "The iteration will use one sequence of approximate velocities for all orders of differentiation. At step $j$ we make the error small through order $q_j$.",
-   "to": "The iteration will use one sequence of approximate velocities for all orders of differentiation. At step $j$ we make the error small through order $q_j$.",
+   "from": "At step $j$ let $\\lambda_j$ denote the wave number at launch, $q_j$ the order to which the error is controlled, and $\\Lambda_j$ the Fourier cutoff after correction. We keep $q_j$ fixed until the preceding frequency can absorb the constants at order $q_j+1$. The frequencies grow without bound, so every fixed order is eventually reached.",
+   "to": "At step $j$ let $\\lambda_j$ denote the wave number at launch, $q_j$ the order to which the error is controlled, and $\\Lambda_j$ the Fourier cutoff after correction. We keep $q_j$ fixed until the preceding frequency can absorb the constants at order $q_j+1$. The frequencies grow without bound, so every fixed order is eventually reached.",
    "role": "explanation",
    "topic": "induction",
    "status": "new",
@@ -5916,8 +5981,8 @@
   },
   {
    "id": "r5-reference-relative-comparison-overview",
-   "from": "The comparison must keep errors small *relative* to the growing solution to control the orientation of the amplified wave.",
-   "to": "The comparison must keep errors small *relative* to the growing solution to control the orientation of the amplified wave.",
+   "from": "Dividing out the growing reference amplitude in (2.15) lets us control the wave’s direction.",
+   "to": "Dividing out the growing reference amplitude in (2.15) lets us control the wave’s direction.",
    "role": "statement",
    "topic": "amplification",
    "status": "new",
@@ -5963,8 +6028,8 @@
   },
   {
    "id": "r5-reference-crossing-overview",
-   "from": "The resulting coupling estimates give a crossing and the shear available there (Proposition 2.8).",
-   "to": "The resulting coupling estimates give a crossing and the shear available there (Proposition 2.8).",
+   "from": "Proposition 2.8 bounds the shear at that crossing and the amplitude in the first unit of normalized time.",
+   "to": "Proposition 2.8 bounds the shear at that crossing and the amplitude in the first unit of normalized time.",
    "role": "statement",
    "topic": "amplification",
    "status": "new",
@@ -28470,71 +28535,6 @@
    }
   },
   {
-   "id": "r5-ind-figure4-inactive",
-   "from": "On the thick segment $[0,t_i]$ the oscillation $O_i$ vanishes.",
-   "to": "On the thick segment $[0,t_i]$ the oscillation $O_i$ vanishes.",
-   "role": "explanation",
-   "topic": "induction",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.Theorem71Conclusions.oscillation_vanishes",
-     "file": "TorusEuler/Paper/S678/Vocabulary.lean",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_note": "The field records that each later oscillation vanishes through its own activation time. The figure depicts this interval for the illustrated stages.",
-     "link_note": "The field records that each later oscillation vanishes through its own activation time. The figure depicts this interval for the illustrated stages."
-    }
-   ]
-  },
-  {
-   "id": "r5-ind-figure4-crossing",
-   "from": "the next crossing at $t_{i+1}$.",
-   "to": "the next crossing at $t_{i+1}$.",
-   "role": "definition",
-   "topic": "induction",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.InductiveEulerConstruction.centralWaves",
-     "file": "TorusEuler/InductiveStageConstruction.lean",
-     "relation": "defines",
-     "fidelity": "same",
-     "fidelity_note": "The selected crossing of stage $i$ is the activation time $t_{i+1}$ of the following wave. The formal structure records this equality in its crossing-time field."
-    }
-   ],
-   "explanation": {
-    "text": "The next launch time $t_{i+1}$ is the selected crossing for wave $i$. The formal central-wave data identify the physical crossing with the following activation time. Figure 4 uses the dashed segment to show that the cutoff has reached one by the crossing.",
-    "citations": [
-     {
-      "ref": "paper",
-      "title": "this paper",
-      "url": null,
-      "where": "Figure 4 and §7.2, choice of crossing and activation",
-      "supports": "The selected crossing is the launch of the following wave."
-     }
-    ],
-    "grounded": true
-   }
-  },
-  {
-   "id": "r5-ind-figure4-endpoint",
-   "from": "The launch times accumulate at $T_\\infty<S_i$.",
-   "to": "The launch times accumulate at $T_\\infty<S_i$.",
-   "role": "statement",
-   "topic": "induction",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.Paper.theorem_7_1",
-     "file": "TorusEuler/Paper/Spine.lean",
-     "relation": "states",
-     "fidelity": "same",
-     "fidelity_note": "The lifetime conclusion of Theorem 7.1 states that activation times tend to a positive $T_\\infty$ and that $T_\\infty<S_i$ for every stage. Each $U_i$ is defined as a smooth approximate velocity on $[0,S_i]$."
-    }
-   ]
-  },
-  {
    "id": "e03-s7-residual-support",
    "from": "the residual is supported on frequencies at most $4\\Lambda_j$",
    "to": "the residual is supported on frequencies at most $4\\Lambda_j$",
@@ -30808,31 +30808,6 @@
    }
   },
   {
-   "id": "adapted.E3-S8-04.1",
-   "from": "Thus the interval has length at least $cL_j\\lambda_{j-1}^{-1/8}$.",
-   "to": "Thus the interval has length at least $cL_j\\lambda_{j-1}^{-1/8}$.",
-   "role": "explanation",
-   "topic": "terminal",
-   "status": "new",
-   "lean": [
-    {
-     "name": "TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing.inductive_activation_clock",
-     "file": "TorusEuler/InductiveActivationClock.lean",
-     "relation": "part",
-     "fidelity": "same",
-     "fidelity_note": "The clock gives $(2/C_{\\rm rate})L_j\\le\\lambda_{j-1}^{1/8}(t_{j+1}-t_j)$ under the growth and scale hypotheses, which is the stated lower bound on the physical interval."
-    },
-    {
-     "name": "TorusEuler.curlIntegral_eq_top_of_inductive_physical_crossings",
-     "file": "TorusEuler/InductiveActivationClock.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "The checked curl-integral proof uses this clock bound together with the central signed lower bound to force divergence of the spatial supremum of the curl integrated over time. The paper's paragraph also gives a local integral at the origin.",
-     "link_note": "The curl-integral proof uses the lower bound on elapsed time between crossings."
-    }
-   ]
-  },
-  {
    "id": "e03-s8-off-origin",
    "from": "For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_\\infty$.",
    "to": "For every compact $K\\subset\\mathbb T^3\\setminus\\{0\\}$ and every integer $m\\ge0$, both $u(t)$ and $\\partial_tu(t)$ converge in $C^m(K)$ as $t\\uparrow T_\\infty$.",
@@ -31176,6 +31151,31 @@
     ],
     "grounded": true
    }
+  },
+  {
+   "id": "adapted.E3-S8-04.1",
+   "from": "Thus the interval has length at least $cL_j\\lambda_{j-1}^{-1/8}$.",
+   "to": "Thus the interval has length at least $cL_j\\lambda_{j-1}^{-1/8}$.",
+   "role": "explanation",
+   "topic": "terminal",
+   "status": "new",
+   "lean": [
+    {
+     "name": "TorusEuler.MovingWaveVector.PhysicalAmplification.GrowingCrossing.inductive_activation_clock",
+     "file": "TorusEuler/InductiveActivationClock.lean",
+     "relation": "part",
+     "fidelity": "same",
+     "fidelity_note": "The clock gives $(2/C_{\\rm rate})L_j\\le\\lambda_{j-1}^{1/8}(t_{j+1}-t_j)$ under the growth and scale hypotheses, which is the stated lower bound on the physical interval."
+    },
+    {
+     "name": "TorusEuler.curlIntegral_eq_top_of_inductive_physical_crossings",
+     "file": "TorusEuler/InductiveActivationClock.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "The checked curl-integral proof uses this clock bound together with the central signed lower bound to force divergence of the spatial supremum of the curl integrated over time. The paper's paragraph also gives a local integral at the origin.",
+     "link_note": "The curl-integral proof uses the lower bound on elapsed time between crossings."
+    }
+   ]
   },
   {
    "id": "e03-appa-time-norm",
