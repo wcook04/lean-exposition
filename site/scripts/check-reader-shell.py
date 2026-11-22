@@ -34,8 +34,10 @@ Playwright's own click(), which scrolls the page first.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
+import urllib.parse
 from pathlib import Path
 
 from playwright.sync_api import Browser, Page, sync_playwright
@@ -364,6 +366,16 @@ def sidebar_scrolls(browser: Browser, url: str) -> None:
         got = page.evaluate(LAST_VISIBLE, scope)
         check(got.get("lastSection") is True, f"7 {at}: the last section can be scrolled into view in the column", str(got))
         shot(page, f"{width}x{height}-sidebar-bottom")
+        if width >= 1024:
+            links = page.locator(f"{scope} .outline__item > a")
+            link = links.nth(links.count() // 2)
+            anchor = link.get_attribute("href")
+            link.click()
+            heading = page.locator(f".prose [id={json.dumps(urllib.parse.unquote(anchor[1:]))}]")
+            heading.wait_for(state="attached")
+            page.wait_for_timeout(1000)  # allow a nearby heading's smooth jump to finish
+            gap = heading.evaluate("e => e.getBoundingClientRect().top - document.querySelector('.reader-strip').getBoundingClientRect().bottom")
+            check(0 <= gap < height / 2, f"7 {at}: the chosen heading is visible below the reader controls", f"{anchor}: {gap:.1f}px")
         page.context.close()
 
 
