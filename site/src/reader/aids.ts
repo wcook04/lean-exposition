@@ -45,6 +45,11 @@ export interface ReadingAids {
 
 const NONE: ReadingAids = { glossary: [], showcase: [] };
 let loading: Promise<ReadingAids> | null = null;
+/** The aids once they have arrived, so a card mounted later has them in its first render. */
+let arrived: ReadingAids | null = site.library ? null : NONE;
+
+/** Whether the aids have arrived (or there are none to wait for). */
+export const aidsArrived = () => arrived !== null;
 
 export function loadAids(): Promise<ReadingAids> {
   if (!site.library) return Promise.resolve(NONE);
@@ -56,15 +61,20 @@ export function loadAids(): Promise<ReadingAids> {
       summary: typeof data.summary === "string" && data.summary.trim() ? data.summary : undefined,
       route: Array.isArray(data.route) && data.route.length ? data.route : undefined,
     }))
-    .catch(() => NONE);
+    .catch(() => NONE)
+    .then((found: ReadingAids) => (arrived = found));
   return loading;
 }
 
 /** The paper's aids once loaded; empty lists until then and for a paper without any. */
 export function useAids(wanted = true): ReadingAids {
-  const [aids, setAids] = useState<ReadingAids>(NONE);
+  const [aids, setAids] = useState<ReadingAids>(() => arrived ?? NONE);
   useEffect(() => {
     if (!wanted) return;
+    if (arrived) {
+      setAids(arrived);
+      return;
+    }
     let live = true;
     void loadAids().then((found) => live && setAids(found));
     return () => {

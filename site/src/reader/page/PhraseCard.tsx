@@ -14,16 +14,30 @@ import { Signal } from "./signal";
 import { useLeanNote } from "../../lean/noteSummaries";
 
 const cache = new Map<Stage, Promise<PhraseNotes | null>>();
+/** Each paper's notes once they have arrived, so a card mounted later has them in its first render. */
+const arrived = new Map<Stage, PhraseNotes | null>();
 
-/** Each part's titles and notes for one paper, loaded once; null for a paper without them. */
-export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | null {
-  const [notes, setNotes] = useState<PhraseNotes | null>(null);
+/**
+ * Each part's titles and notes for one paper, loaded once; null for a paper without them, and
+ * undefined while they are on their way (or not wanted).
+ */
+export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | null | undefined {
+  const [notes, setNotes] = useState<PhraseNotes | null | undefined>(() => arrived.get(stage));
   useEffect(() => {
     if (!wanted) return;
+    if (arrived.has(stage)) {
+      setNotes(arrived.get(stage));
+      return;
+    }
     let live = true;
     let pending = cache.get(stage);
     if (!pending) {
-      pending = loadPhraseNotes(stage).catch(() => null);
+      pending = loadPhraseNotes(stage)
+        .catch(() => null)
+        .then((found) => {
+          arrived.set(stage, found);
+          return found;
+        });
       cache.set(stage, pending);
     }
     void pending.then((found) => live && setNotes(found));
@@ -31,7 +45,7 @@ export function usePhraseNotes(stage: Stage, wanted: boolean): PhraseNotes | nul
       live = false;
     };
   }, [stage, wanted]);
-  return notes;
+  return wanted ? notes : null;
 }
 
 /** The declaration a phrase's card shows (its selected tab), for the graph above it. */

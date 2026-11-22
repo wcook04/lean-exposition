@@ -14,9 +14,10 @@ import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref, type Trace } from "../../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
-import { shortTitle } from "../../compare/useAlignment";
+import { paperAlignmentResource, shortTitle } from "../../compare/useAlignment";
 import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
+import { aidsArrived, loadAids } from "../aids";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
@@ -191,6 +192,19 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   const phrase = !!tie?.rows && !open.decl;
   const notes = usePhraseNotes(stage, !!tie?.rows);
   const part = notes?.parts[tie?.part ?? 0];
+  // What the card and the places above the Lean read from: until they have arrived the column holds
+  // one waiting box, so the card, the places and the Lean come in together rather than one under
+  // another, each pushing the next down while the reader looks.
+  const [settled, setSettled] = useState(() => alignment !== null && aidsArrived());
+  useEffect(() => {
+    if (settled) return;
+    let live = true;
+    void Promise.all([paperAlignmentResource(stage), loadAids()]).then(() => live && setSettled(true));
+    return () => {
+      live = false;
+    };
+  }, [settled, stage]);
+  const holding = (!!tie?.rows && notes === undefined) || (!settled && alignment === null) || !aidsArrived();
   const rows = useMemo(() => {
     // A statement with no Lean has none, whatever its step has elsewhere.
     if (tie && !tie.lean) return [];
@@ -356,7 +370,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
         </div>
       ) : brief && !empty ? null : (
         <div ref={scroller} className="lean-page__scroll" data-keep>
-          {!(phrase && row && !full) && crumbs}
+          {!(phrase && row && !full) && !holding && crumbs}
           {!open.decl && rows.length > 1 && !full && (
             <ul className="lean-page__rows" aria-label="Lean declarations of this step">
               {rows.map((item, i) => (
@@ -398,6 +412,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   No Lean is linked to this paragraph. Scroll on, or press <kbd>j</kbd> for the next linked passage.
                 </p>
               )
+            ) : name && holding ? (
+              <div className="lean-wait is-compact">Loading the Lean source</div>
             ) : name ? (
               <>
               {phrase && row && (

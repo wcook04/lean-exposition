@@ -1261,6 +1261,12 @@ html[data-right-sheet] {
   border-top: 1px solid var(--rule);
 }
 
+/* The link at the foot comes with the Lean block it follows: while the block is still a waiting
+   box it is not drawn, so the block's arrival adds it rather than pushing it down. */
+.lean-page__body:has(.lean-wait) .lean-page__tograph {
+  display: none;
+}
+
 /* On a narrow window the band's two acts share one row under the state. */
 .right-sheet .subject-band__acts {
   flex: 1 1 100%;
