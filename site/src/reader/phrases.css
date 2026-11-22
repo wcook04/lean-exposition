@@ -60,10 +60,28 @@
   background-color: var(--ink-3);
 }
 
+/* The selected block keeps one amber edge in this column. Its topic bands paint above it. */
+.paper .part__ticks {
+  z-index: 1;
+}
+
 .paper .para-pick {
   left: calc(-1 * var(--mark-x) - 10px);
   width: 20px;
+  margin-top: 0;
   border-radius: 2px;
+  overflow: visible;
+}
+
+.paper .para-pick > span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.paper .para-pick:focus-visible > span {
+  outline: var(--focus-ring);
+  outline-offset: -3px;
 }
 
 .paper .para-pick::before {
@@ -130,6 +148,8 @@
   .paper .math-display.tie {
     border-inline-start: 2px solid LinkText;
   }
+  .paper .para-pick:focus-visible,
+  .paper .para-pick:focus-visible > span,
   .paper .tie[data-pin],
   .paper .tie:focus-visible {
     outline: 2px solid Highlight;
