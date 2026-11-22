@@ -65,6 +65,17 @@ describe("readable excerpts", () => {
     expect(segs.some((s) => s.kind === "text" && s.mark && s.text === "gap")).toBe(true);
   });
 
+  it("keeps a prose hit when the right edge cuts off the next formula", () => {
+    const text = "as formulated by Fefferman, at the rate $(T-t)^{-1/4";
+    const start = text.indexOf("Fefferman");
+    const parts = segments(marked(text, [[start, start + "Fefferman".length]]), true, true);
+    expect(parts).toEqual([
+      { kind: "text", text: "as formulated by ", mark: false },
+      { kind: "text", text: "Fefferman", mark: true },
+      { kind: "text", text: ", at the rate", mark: false },
+    ]);
+  });
+
   it("drops a display formula cut at the end, both of its dollars", () => {
     const m = marked("then for $t\\in I$ $$q'''(t)", []);
     const segs = segments(m, false, true);
