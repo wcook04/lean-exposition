@@ -80,6 +80,8 @@ A first reading sampled about 1,500 of the standalone file's 7,086 lines and com
 
 `targetGap` is `target − pinValue(profile gradient)` in [`ExtendedCertificateChallenge.lean:84–85`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L84-L85). `IsProfileShapeEntry.target_eq` (L3854) sets those two terms equal, so condition 8 forces `targetGap=0`. The proof already records this cancellation at [`Breakdown/CellReduction/InstOffsetClause.lean:321–323`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CellReduction/InstOffsetClause.lean#L321-L323). The use of a more general structure does not mean this specialized path permits every value that structure could hold.
 
+<a id="appendix-b.26"></a>
+
 ### B.26 is visible in the assembly condition
 
 `EliminationConditions.residual_value_le` (L5486–5488) compares `cellForm−energyLeafForm` with `potentialKept+pairingKept−top+bandEliminated+rowsEliminated`. This is the organization of B.26. The hypothesis `InRowRange` restricts the vector to compatible cell rows, including permitted gauge/head directions; the paper instead writes `x=X_Qx_g`. The intended roles agree, but a full equivalence of these representations requires the row transport and pressure-blindness arguments, not just this line.

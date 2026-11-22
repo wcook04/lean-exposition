@@ -10,6 +10,8 @@ Every source link is pinned. Pages in paper references are printed pages, equal 
 
 Field paragraphs provide every structure-field gloss. Each opens the exact field lines. Other line-tie paragraphs isolate clauses or formulas inside a declaration.
 
+<a id="001"></a>
+
 ### 001. Three-dimensional Euclidean space
 
 `Breakdown.Space`: The paper’s physical and similarity spaces are represented by Euclidean three-vectors with the usual inner-product norm. This fixed dimension is used in the drift integration by parts as well as in the Navier–Stokes operators.
@@ -21,6 +23,8 @@ Field paragraphs provide every structure-field gloss. Each opens the exact field
 Encoding for `Breakdown.Space` (1): Fin 3 has exactly three coordinates; this is neither a variable-dimensional nor an empty ambient space.
 
 Clause 1 of `Breakdown.Space`, lines 10-10: Fix the ambient physical space to R³. Paper: Equation (1.1), p.1. Source: [lean/Challenge.lean:10-10](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L10).
+
+<a id="002"></a>
 
 ### 002. Coordinate unit vectors
 
@@ -34,6 +38,8 @@ Encoding for `Breakdown.unitVector` (1): Every basis vector has norm one, so the
 
 Clause 1 of `Breakdown.unitVector`, lines 12-12: These are the three standard basis vectors used to write the divergence, Laplacian and gradient of (1.1). Paper: Coordinate helper for equation (1.1), p.1; no separately numbered definition. Source: [lean/Challenge.lean:12-12](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L12).
 
+<a id="003"></a>
+
 ### 003. Divergence
 
 `Breakdown.divergenceAt`: This is the trace of the spatial derivative, representing div u in (1.1) and div W in (1.2). The derivative is stored as a continuous linear map.
@@ -45,6 +51,8 @@ Clause 1 of `Breakdown.unitVector`, lines 12-12: These are the three standard ba
 Encoding for `Breakdown.divergenceAt` (1): Mathlib’s fderiv is total and is zero when differentiability fails; the smooth-solution and smooth-profile hypotheses supply differentiability where this operator is used.
 
 Clause 1 of `Breakdown.divergenceAt`, lines 14-15: This is the trace of the spatial derivative, representing div u in (1.1) and div W in (1.2). Paper: Equations (1.1), p.1, and (1.2), p.2. Source: [lean/Challenge.lean:14-15](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L14-L15).
+
+<a id="004"></a>
 
 ### 004. Laplacian
 
@@ -58,6 +66,8 @@ Encoding for `Breakdown.sumSecondPartialsAt` (1): The derivative expression is m
 
 Clause 1 of `Breakdown.sumSecondPartialsAt`, lines 17-18: The sum of the three diagonal second directional derivatives represents the vector Laplacian in (1.1). Paper: Equation (1.1), p.1; equation (1.2), p.2. Source: [lean/Challenge.lean:17-18](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L17-L18).
 
+<a id="005"></a>
+
 ### 005. Pressure gradient
 
 `Breakdown.gradientAt`: This reconstructs the vector ∇p from the three coordinate derivatives of the scalar pressure. Only the gradient enters the equation, so adding a function of time to p does not change this term.
@@ -70,6 +80,8 @@ Encoding for `Breakdown.gradientAt` (1): The raw fderiv operation is total; smoo
 
 Clause 1 of `Breakdown.gradientAt`, lines 20-21: This reconstructs the vector ∇p from the three coordinate derivatives of the scalar pressure. Paper: Equation (1.1), p.1; equation (1.2), p.2. Source: [lean/Challenge.lean:20-21](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L20-L21).
 
+<a id="006"></a>
+
 ### 006. Nonlinear transport
 
 `Breakdown.advectionAt`: Applying the spatial derivative of v to v itself gives the paper’s (v·∇)v. This order of application fixes the convection convention used throughout the certificate files.
@@ -81,6 +93,8 @@ Clause 1 of `Breakdown.gradientAt`, lines 20-21: This reconstructs the vector �
 Encoding for `Breakdown.advectionAt` (1): The operation does not carry a differentiability proof; the classical and weak interfaces provide separate regularity contracts.
 
 Clause 1 of `Breakdown.advectionAt`, lines 23-24: Applying the spatial derivative of v to v itself gives the paper’s (v·∇)v. Paper: Equation (1.1), p.1; equation (7.1), p.30. Source: [lean/Challenge.lean:23-24](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L23-L24).
+
+<a id="007"></a>
 
 ### 007. Global smooth solution
 
@@ -108,6 +122,8 @@ Field `Breakdown.IsSmoothSolution.momentum`: The unforced momentum equation hold
 
 Field `Breakdown.IsSmoothSolution.incompressible`: The velocity has zero divergence at every positive time. Paper: Equation (1.1), p.1. Source: [lean/Challenge.lean:33-33](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L33).
 
+<a id="008"></a>
+
 ### 008. Breakdown on the whole space
 
 `Breakdown.BreakdownOnSpace`: For each positive viscosity, this asks for smooth compactly supported solenoidal data admitting no global smooth solution with uniformly bounded kinetic energy. It records a nonexistence endpoint and leaves the rate and profile convergence in Theorem 1.1 outside the conclusion.
@@ -125,6 +141,8 @@ Encoding for `Breakdown.BreakdownOnSpace` (3): The energy is an ENNReal lintegra
 Clause 1 of `Breakdown.BreakdownOnSpace`, lines 36-37: For each positive viscosity choose smooth compactly supported divergence-free initial data. Paper: Theorem 1.1, p.3. Source: [lean/Challenge.lean:36-37](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L36-L37).
 
 Clause 2 of `Breakdown.BreakdownOnSpace`, lines 38-39: Exclude every global smooth solution for which one finite energy bound works at all nonnegative times. Paper: Finite-energy convention, §1.1, p.2; formal endpoint, §1.5, pp.9-10. Source: [lean/Challenge.lean:38-39](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L38-L39).
+
+<a id="009"></a>
 
 ### 009. Breakdown on the torus
 
@@ -144,6 +162,8 @@ Clause 1 of `Breakdown.BreakdownOnTorus`, lines 42-43: For each positive viscosi
 
 Clause 2 of `Breakdown.BreakdownOnTorus`, lines 44-45: Exclude all global smooth solutions whose velocity retains the periods, regardless of pressure periodicity. Paper: Formal torus endpoint, §1.5, pp.9-10; compare the periodic-pressure convention on p.2. Source: [lean/Challenge.lean:44-45](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L44-L45).
 
+<a id="010"></a>
+
 ### 010. Self-similar equation residual
 
 `Breakdown.SimilarityResidual`: This is the left-hand side of the velocity equation in (1.2), before setting it to zero. Its time variable is the similarity time s, so it contains no reciprocal-period factor.
@@ -155,6 +175,8 @@ Clause 2 of `Breakdown.BreakdownOnTorus`, lines 44-45: Exclude all global smooth
 Encoding for `Breakdown.SimilarityResidual` (1): The classical derivative operations require the smoothness supplied by PeriodicSimilarityProfileExists.
 
 Clause 1 of `Breakdown.SimilarityResidual`, lines 48-49: Assemble time differentiation, dilation drift, diffusion, convection and pressure gradient in similarity variables. Paper: Equation (1.2), p.2. Source: [lean/Challenge.lean:48-49](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L48-L49).
+
+<a id="011"></a>
 
 ### 011. Smooth recurrent profile exists
 
@@ -184,6 +206,8 @@ Clause 5 of `Breakdown.PeriodicSimilarityProfileExists`, lines 60-60: Control sp
 
 Clause 6 of `Breakdown.PeriodicSimilarityProfileExists`, lines 61-61: Require inverse-cubic decay of the pressure gradient. Paper: Theorem 1.1, p.3; additional formal pressure bound with no separately numbered paper counterpart. Source: [lean/Challenge.lean:61-61](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L61).
 
+<a id="012"></a>
+
 ### 012. Compactly supported scalar test
 
 `Breakdown.IsTestFunction`: This supplies the scalar C∞ compactly supported test functions used to express weak spatial derivatives. Such tests make integration by parts local in the spatial variable.
@@ -195,6 +219,8 @@ Clause 6 of `Breakdown.PeriodicSimilarityProfileExists`, lines 61-61: Require in
 Encoding for `Breakdown.IsTestFunction` (1): A test is compactly supported in space; time is absent from this predicate.
 
 Clause 1 of `Breakdown.IsTestFunction`, lines 63-63: This supplies the scalar C∞ compactly supported test functions used to express weak spatial derivatives. Paper: Encoding helper for the distributional derivatives in §7.1, p.30; no separately numbered scalar-test definition. Source: [lean/Challenge.lean:63-63](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L63).
+
+<a id="013"></a>
 
 ### 013. Weak spatial gradient
 
@@ -212,6 +238,8 @@ Clause 1 of `Breakdown.IsWeakGradient`, lines 66-66: Require local integrability
 
 Clause 2 of `Breakdown.IsWeakGradient`, lines 67-68: Test each coordinate derivative against every scalar smooth compactly supported function. Paper: Distributional derivatives used in (7.4), p.30. Source: [lean/Challenge.lean:67-68](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L67-L68).
 
+<a id="014"></a>
+
 ### 014. Solenoidal space-time test
 
 `Breakdown.IsSpaceTimeTestField`: These are the smooth compactly supported vector tests that remove pressure from the weak equation. Their divergence vanishes for every time and spatial point.
@@ -223,6 +251,8 @@ Clause 2 of `Breakdown.IsWeakGradient`, lines 67-68: Test each coordinate deriva
 Encoding for `Breakdown.IsSpaceTimeTestField` (1): Support is compact in the joint time-space variable; these tests are not required to be time-periodic.
 
 Clause 1 of `Breakdown.IsSpaceTimeTestField`, lines 71-72: Require joint smoothness, joint compact support and spatial divergence zero. Paper: Equation (7.2), p.30. Source: [lean/Challenge.lean:71-72](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L71-L72).
+
+<a id="015"></a>
 
 ### 015. Weak self-similar equation
 
@@ -243,6 +273,8 @@ Clause 1 of `Breakdown.weakSimilarityIntegrand`, lines 76-78: Time integration b
 Clause 2 of `Breakdown.weakSimilarityIntegrand`, lines 79-79: Diffusion contributes the pairing of the weak gradient with the test gradient. Paper: Equation (1.2), p.2; weak testing in (7.2), p.30. Source: [lean/Challenge.lean:79-79](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L79).
 
 Clause 3 of `Breakdown.weakSimilarityIntegrand`, lines 80-80: Incompressibility moves the nonlinear transport derivative onto the test. Paper: Equation (1.2), p.2; weak testing in (7.2), p.30. Source: [lean/Challenge.lean:80-80](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L80).
+
+<a id="016"></a>
 
 ### 016. Weak recurrent profile exists
 
@@ -280,6 +312,8 @@ Clause 8 of `Breakdown.WeakPeriodicSimilarityProfileExists`, lines 97-98: For ev
 
 Clause 9 of `Breakdown.WeakPeriodicSimilarityProfileExists`, lines 99-99: Exclude velocity fields that vanish almost everywhere on space-time. Paper: Nonzero-profile requirement, §1.1, p.2; Proposition 7.11, p.44. Source: [lean/Challenge.lean:99-99](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L99).
 
+<a id="017"></a>
+
 ### 017. Profile gives whole-space breakdown
 
 `Breakdown.breakdown_on_space`: The exported implication sends a smooth recurrent profile to the whole-space nonexistence endpoint. The readable theorem contains a proof placeholder; Solution.lean supplies the implementation from the library.
@@ -293,6 +327,8 @@ Encoding for `Breakdown.breakdown_on_space` (1): The profile remains an assumpti
 Comparison for `Breakdown.breakdown_on_space`: The written profile premise includes extra decay bounds, and the conclusion retains nonexistence for every positive viscosity while omitting the constructed trajectory, rate and convergence in Theorem 1.1. Relating the paper and formal endpoints uses the analytic bridges described in the authors’ README.
 
 Clause 1 of `Breakdown.breakdown_on_space`, lines 101-101: The readable implication has an explicit hypothesis and endpoint; its proof is supplied separately in Solution.lean. Paper: Theorem 1.1 and (1.6), p.3; formal endpoint in §1.5, pp.9-10. Source: [lean/Challenge.lean:101-101](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L101).
+
+<a id="018"></a>
 
 ### 018. Profile gives torus breakdown
 
@@ -310,6 +346,8 @@ Comparison for `Breakdown.breakdown_on_torus`: The formal conclusion excludes a 
 
 Clause 1 of `Breakdown.breakdown_on_torus`, lines 104-104: The readable implication has an explicit hypothesis and endpoint; its proof is supplied separately in Solution.lean. Paper: Theorem 1.1 and (1.7), p.3; torus convention, p.2; formal endpoint in §1.5, pp.9-10. Source: [lean/Challenge.lean:104-104](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L104).
 
+<a id="019"></a>
+
 ### 019. Weak profile gives breakdown
 
 `Breakdown.breakdown_on_space_of_weak`: This routes the explicit weak-profile interface directly to whole-space breakdown. The paper instead presents the related passage through a smooth profile in Proposition 7.11 before applying Theorem 1.1.
@@ -326,6 +364,8 @@ Comparison for `Breakdown.breakdown_on_space_of_weak`: The paper has no theorem 
 
 Clause 1 of `Breakdown.breakdown_on_space_of_weak`, lines 107-107: The readable implication has an explicit hypothesis and endpoint; its proof is supplied separately in Solution.lean. Paper: Related route: Proposition 7.11, p.44, and Theorem 1.1, p.3; no separately stated paper theorem has this exact weak premise. Source: [lean/Challenge.lean:107-107](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean#L107).
 
+<a id="020"></a>
+
 ### 020. Space-time symmetry
 
 `Breakdown.Symmetry`: A symmetry pairs an orthogonal transformation R with a shift θ₀ in normalized period-one time. The set Γ may be empty and is not required to be supplied as a group.
@@ -337,6 +377,8 @@ Clause 1 of `Breakdown.breakdown_on_space_of_weak`, lines 107-107: The readable 
 Encoding for `Breakdown.Symmetry` (1): The time shift is in normalized time θ; in the final profile it becomes θ₀S, as in (7.39), p.35.
 
 Clause 1 of `Breakdown.Symmetry`, lines 10-10: A symmetry pairs an orthogonal transformation R with a shift θ₀ in normalized period-one time. Paper: Equation (7.5), p.30. Source: [lean/CertificateChallenge.lean:10-10](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L10).
+
+<a id="021"></a>
 
 ### 021. Squared gradient matrix norm
 
@@ -350,6 +392,8 @@ Encoding for `Breakdown.matSq` (1): The paper writes (∇v)ⱼₖ=∂ⱼvₖ; in
 
 Clause 1 of `Breakdown.matSq`, lines 12-12: Summing the squared lengths of the three coordinate directional derivatives gives the Frobenius square used for |∇v|² in Section 7. Paper: Matrix inner-product convention in §7.1, p.30; weighted norm (7.14), p.32. Source: [lean/CertificateChallenge.lean:12-12](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L12).
 
+<a id="022"></a>
+
 ### 022. Gradient matrix pairing
 
 `Breakdown.matInner`: This is the Frobenius inner product of two derivative matrices written through their coordinate columns. It supplies the weak diffusion pairing and the pinning functional ℓᵢ.
@@ -362,6 +406,8 @@ Encoding for `Breakdown.matInner` (1): The paper writes (∇v)ⱼₖ=∂ⱼvₖ;
 
 Clause 1 of `Breakdown.matInner`, lines 14-15: This is the Frobenius inner product of two derivative matrices written through their coordinate columns. Paper: Matrix inner-product convention in §7.1, p.30; pinning (7.11), p.31. Source: [lean/CertificateChallenge.lean:14-15](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L14-L15).
 
+<a id="023"></a>
+
 ### 023. Trace of the weak Hessian
 
 `Breakdown.secondDerivTrace`: Tracing the two spatial input directions of H gives the vector Laplacian represented by the supplied weak Hessian. It is the quantity controlled by the graph condition defining D_S.
@@ -373,6 +419,8 @@ Clause 1 of `Breakdown.matInner`, lines 14-15: This is the Frobenius inner produ
 Encoding for `Breakdown.secondDerivTrace` (1): This is an algebraic trace of supplied data; IsPerturbation or IsProfileField connects H to actual weak derivatives.
 
 Clause 1 of `Breakdown.secondDerivTrace`, lines 17-18: Tracing the two spatial input directions of H gives the vector Laplacian represented by the supplied weak Hessian. Paper: Equation (7.4), p.30; weighted norm (7.14), p.32. Source: [lean/CertificateChallenge.lean:17-18](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L17-L18).
+
+<a id="024"></a>
 
 ### 024. Integral over one normalized period
 
@@ -390,6 +438,8 @@ Encoding for `Breakdown.periodLIntegral` (3): Replacing the paper’s (0,1) by [
 
 Clause 1 of `Breakdown.periodLIntegral`, lines 20-21: This integrates a nonnegative density over θ∈[0,1] and all of R³, returning an extended nonnegative real. Paper: Hilbert-space H and period-one convention, §7.1, p.30. Source: [lean/CertificateChallenge.lean:20-21](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L20-L21).
 
+<a id="025"></a>
+
 ### 025. Integral restricted to a spatial ball
 
 `Breakdown.periodBallLIntegral`: The earlier certificate also measures squared forcing on a closed ball during one normalized period. This local-ball quantity has no finite-row counterpart in the paper’s definition of [F].
@@ -406,6 +456,8 @@ Encoding for `Breakdown.periodBallLIntegral` (3): A local L² restriction is gen
 
 Clause 1 of `Breakdown.periodBallLIntegral`, lines 23-24: Restrict the space integral to the closed ball while retaining the normalized time period. Paper: Compare (7.17), p.32; earlier local-ball seminorm has no identical printed counterpart. Source: [lean/CertificateChallenge.lean:23-24](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L23-L24).
 
+<a id="026"></a>
+
 ### 026. Period-averaged L² norm
 
 `Breakdown.periodNorm`: For a measurable field with finite squared integral, this is the H norm of Section 7. It first converts the extended nonnegative integral to a real number and then takes its square root.
@@ -419,6 +471,8 @@ Encoding for `Breakdown.periodNorm` (1): ENNReal.toReal sends infinity to zero, 
 Encoding for `Breakdown.periodNorm` (2): IsCertificate.coercive explicitly requires the right side’s squared integral to be finite; finite residual budgets provide the corresponding guard for residual fields.
 
 Clause 1 of `Breakdown.periodNorm`, lines 26-27: For a measurable field with finite squared integral, this is the H norm of Section 7. Paper: Hilbert-space H norm, §7.1, p.30. Source: [lean/CertificateChallenge.lean:26-27](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L26-L27).
+
+<a id="027"></a>
 
 ### 027. Local period-averaged L² norm
 
@@ -436,6 +490,8 @@ Encoding for `Breakdown.periodBallNorm` (3): A zero or negative ball radius is a
 
 Clause 1 of `Breakdown.periodBallNorm`, lines 29-30: Take the square root of the finite restricted integral when the L² guard is available. Paper: Compare (7.17)-(7.18), p.32; no identical local-ball condition in the current paper. Source: [lean/CertificateChallenge.lean:29-30](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L29-L30).
 
+<a id="028"></a>
+
 ### 028. Euclidean norm of coefficients
 
 `Breakdown.vecNorm`: This is the Euclidean norm of a finite multiplier or pin vector, used as |β| and |ℓ(v)| in Section 7. The index size is the certificate’s multiplier dimension.
@@ -447,6 +503,8 @@ Clause 1 of `Breakdown.periodBallNorm`, lines 29-30: Take the square root of the
 Encoding for `Breakdown.vecNorm` (1): When k=0 the sum is empty and the norm is zero; the paper explicitly permits zero dimensions on p.35.
 
 Clause 1 of `Breakdown.vecNorm`, lines 32-32: This is the Euclidean norm of a finite multiplier or pin vector, used as |β| and |ℓ(v)| in Section 7. Paper: Equations (7.14) and (7.18), p.32. Source: [lean/CertificateChallenge.lean:32-32](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L32).
+
+<a id="029"></a>
 
 ### 029. Normalized time periodicity
 
@@ -460,6 +518,8 @@ Encoding for `Breakdown.IsTimePeriodic` (1): The recurrence is pointwise for eve
 
 Clause 1 of `Breakdown.IsTimePeriodic`, lines 34-34: This is period one in θ=s/S, the common convention for the approximate fields, perturbations and forcings in Section 7. Paper: Normalized-time convention and equation (7.1), p.30. Source: [lean/CertificateChallenge.lean:34-34](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L34).
 
+<a id="030"></a>
+
 ### 030. Unrestricted space-time test
 
 `Breakdown.IsSpaceTimeTestVector`: These smooth compactly supported vector tests encode the weak transport derivative before pressure is removed. They have no divergence-free condition, unlike IsSpaceTimeTestField.
@@ -471,6 +531,8 @@ Clause 1 of `Breakdown.IsTimePeriodic`, lines 34-34: This is period one in θ=s/
 Encoding for `Breakdown.IsSpaceTimeTestVector` (1): Compact support is in the joint time-space variable; there is no periodicity requirement.
 
 Clause 1 of `Breakdown.IsSpaceTimeTestVector`, lines 36-38: These smooth compactly supported vector tests encode the weak transport derivative before pressure is removed. Paper: Distributional derivative convention and equation (7.4), §7.1, p.30; no separately numbered unrestricted-test definition. Source: [lean/CertificateChallenge.lean:36-38](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L36-L38).
+
+<a id="031"></a>
 
 ### 031. Admissible weak perturbation
 
@@ -524,6 +586,8 @@ Field `Breakdown.IsPerturbation.transport`: Against every unrestricted compact v
 
 Field `Breakdown.IsPerturbation.invariant`: For each prescribed symmetry, the velocity transforms equivariantly almost everywhere in space-time. Paper: Equation (7.5), p.30. Source: [lean/CertificateChallenge.lean:62-62](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L62).
 
+<a id="032"></a>
+
 ### 032. Linear equation modulo pressure
 
 `Breakdown.IsRightSide`: This states that F represents T_Pv+(W·∇)v+(v·∇)W plus the finite actuator force when paired with every solenoidal test. The Laplacian appears through the gradient pairing, and a pressure gradient is invisible to these tests.
@@ -542,6 +606,8 @@ Clause 1 of `Breakdown.IsRightSide`, lines 67-68: Test the asserted right side a
 
 Clause 2 of `Breakdown.IsRightSide`, lines 69-70: Pair the combined derivative, both linear convection terms, actuator force and weak diffusion with the test. Paper: Linear convection (7.13) and the premise of (7.18), p.32. Source: [lean/CertificateChallenge.lean:69-70](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L69-L70).
 
+<a id="033"></a>
+
 ### 033. Squared weighted perturbation norm
 
 `Breakdown.weightedEnergy`: This is ∥v∥²_w from (7.14), written using the supplied gradient and Hessian trace. The multiplier contribution is added separately in the coercive estimate.
@@ -556,6 +622,8 @@ Encoding for `Breakdown.weightedEnergy` (2): ENNReal.ofReal clips a negative den
 
 Clause 1 of `Breakdown.weightedEnergy`, lines 72-74: This is ∥v∥²_w from (7.14), written using the supplied gradient and Hessian trace. Paper: Equation (7.14), p.32. Source: [lean/CertificateChallenge.lean:72-74](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L72-L74).
 
+<a id="034"></a>
+
 ### 034. Linear pinning functional
 
 `Breakdown.pinValue`: With χ=Ξᵢ and G=∇v, this is the pin ℓᵢ(v) used to remove the finite-dimensional defect in the linearized equation. It is the signed period pairing of the two derivative-matrix fields.
@@ -569,6 +637,8 @@ Encoding for `Breakdown.pinValue` (1): The Bochner integral is totalized; pin_fi
 Encoding for `Breakdown.pinValue` (2): The pin matrix need not itself be a derivative, divergence-free, or periodic in this readable predicate.
 
 Clause 1 of `Breakdown.pinValue`, lines 76-77: With χ=Ξᵢ and G=∇v, this is the pin ℓᵢ(v) used to remove the finite-dimensional defect in the linearized equation. Paper: Equation (7.11), p.31. Source: [lean/CertificateChallenge.lean:76-77](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L76-L77).
+
+<a id="035"></a>
 
 ### 035. Stationary test field for the form
 
@@ -598,6 +668,8 @@ Field `Breakdown.IsProfileField.sumSecondPartials_finite`: The trace of H, repre
 
 Field `Breakdown.IsProfileField.invariant`: The field is invariant under each spatial isometry paired with a zero time shift in Γ. Paper: Symmetry restriction after (7.22), p.33. Source: [lean/CertificateChallenge.lean:88-88](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L88).
 
+<a id="036"></a>
+
 ### 036. Frozen quadratic form
 
 `Breakdown.frozenForm`: This is the left-hand side of (7.22), evaluated at one time of the approximate profile. The convection term is paired with minus the Laplacian, so its displayed sign agrees with the paper after expanding that pairing.
@@ -612,6 +684,8 @@ Encoding for `Breakdown.frozenForm` (2): The signed Bochner integrals need the s
 
 Clause 1 of `Breakdown.frozenForm`, lines 92-93: Combine Laplacian energy, one quarter of the gradient energy and the two linear convection pairings. Paper: Equation (7.22), p.33. Source: [lean/CertificateChallenge.lean:92-93](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L92-L93).
 
+<a id="037"></a>
+
 ### 037. Squared weighted spatial norm
 
 `Breakdown.stationaryEnergy`: This is |u|²_w, the spatial weighted energy used on the right-hand side of (7.22). The trace of H represents Δu and matSq G represents the Frobenius square of ∇u.
@@ -623,6 +697,8 @@ Clause 1 of `Breakdown.frozenForm`, lines 92-93: Combine Laplacian energy, one q
 Encoding for `Breakdown.stationaryEnergy` (1): The raw signed integrals are interpreted using the positive bounded measurable weight and the L² conditions supplied by the certificate and IsProfileField.
 
 Clause 1 of `Breakdown.stationaryEnergy`, lines 95-97: This is |u|²_w, the spatial weighted energy used on the right-hand side of (7.22). Paper: Equation (7.14), p.32, as used in (7.22), p.33. Source: [lean/CertificateChallenge.lean:95-97](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L95-L97).
+
+<a id="038"></a>
 
 ### 038. Approximate profile residual
 
@@ -640,6 +716,8 @@ Encoding for `Breakdown.defectField` (3): The approximate force need not vanish;
 
 Clause 1 of `Breakdown.defectField`, lines 101-102: Assemble the rescaled self-similar residual with approximate force and pressure. Paper: Equations (7.1), p.30, and (7.10), p.31. Source: [lean/CertificateChallenge.lean:101-102](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L101-L102).
 
+<a id="039"></a>
+
 ### 039. Weighted Sobolev constant
 
 `Breakdown.supBoundFactor`: This is c_w=(4π√w_*)⁻¹ᐟ² in the paper’s bound from weighted energy to the spatial supremum norm. The expanded product inside the square root is algebraically the same constant.
@@ -651,6 +729,8 @@ Clause 1 of `Breakdown.defectField`, lines 101-102: Assemble the rescaled self-s
 Encoding for `Breakdown.supBoundFactor` (1): Real.sqrt and division are total operations; the certificate’s weight_pos supplies w_*>0 and makes the intended constant positive.
 
 Clause 1 of `Breakdown.supBoundFactor`, lines 104-104: This is c_w=(4π√w_*)⁻¹ᐟ² in the paper’s bound from weighted energy to the spatial supremum norm. Paper: Equation (7.15), p.32; Lemma 7.6, p.38. Source: [lean/CertificateChallenge.lean:104-104](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L104).
+
+<a id="040"></a>
 
 ### 040. Data for the earlier certificate
 
@@ -732,6 +812,8 @@ Field `Breakdown.CertificateData.sizeBound`: ε is half the admissible weighted 
 
 Field `Breakdown.CertificateData.supBound`: M bounds the spatial gradient norm uniformly in normalized time. Paper: Equations (7.25)-(7.27), p.33, and (7.38), p.35. Source: [lean/CertificateChallenge.lean:137-137](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L137).
 
+<a id="041"></a>
+
 ### 041. Rectangular parameter set
 
 `Breakdown.CertificateData.box`: The earlier certificate uses the coordinate interval between centre minus radius and centre plus radius. This replaces the paper’s mixed coordinate-box and ellipsoid geometry with a translated rectangle.
@@ -745,6 +827,8 @@ Encoding for `Breakdown.CertificateData.box` (1): Order on Fin k → R is pointw
 Encoding for `Breakdown.CertificateData.box` (2): radius_nonneg ensures that the centre belongs to the box; zero radii and k=0 remain allowed.
 
 Clause 1 of `Breakdown.CertificateData.box`, lines 139-140: Specify the older parameter domain by coordinate lower and upper endpoints. Paper: Related to (7.29), p.33; no identical centred-box definition. Source: [lean/CertificateChallenge.lean:139-140](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L139-L140).
+
+<a id="042"></a>
 
 ### 042. Conditions of the earlier certificate
 
@@ -870,6 +954,8 @@ Clause 50 of `Breakdown.IsCertificate`, lines 182-186: The estimate ranges over 
 
 Clause 51 of `Breakdown.IsCertificate`, lines 187-189: The left side uses unit multiplier weight, and the right side includes the local-ball norm in place of a finite-row seminorm. Paper: Earlier analogue of (7.18), p.32. Source: [lean/CertificateChallenge.lean:187-189](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L187-L189).
 
+<a id="043"></a>
+
 ### 043. An earlier certificate exists
 
 `Breakdown.CertificateHypothesis`: This existentially packages a finite multiplier dimension, an older certificate data record and every clause of IsCertificate. It is the premise of certificate_orbit, with the dimension and data left to be supplied.
@@ -883,6 +969,8 @@ Encoding for `Breakdown.CertificateHypothesis` (1): The existential does not res
 Encoding for `Breakdown.CertificateHypothesis` (2): No concrete numerical certificate is constructed by this definition.
 
 Clause 1 of `Breakdown.CertificateHypothesis`, lines 217-217: Require existence of data together with a proof of the entire older certificate predicate. Paper: Theorem 7.1, p.35; earlier formal certificate variant. Source: [lean/CertificateChallenge.lean:217-217](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L217).
+
+<a id="044"></a>
 
 ### 044. Earlier certificate gives a profile
 
@@ -902,6 +990,8 @@ Comparison for `Breakdown.certificate_orbit`: The input is the earlier box-and-l
 
 Clause 1 of `Breakdown.certificate_orbit`, lines 219-219: The readable implication has an explicit hypothesis and endpoint; its proof is supplied separately in Solution.lean. Paper: Related to Theorem 7.1 and (7.38)-(7.39), p.35; weak regularization in Proposition 7.11, p.44. Source: [lean/CertificateChallenge.lean:219-219](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CertificateChallenge.lean#L219).
 
+<a id="045"></a>
+
 ### 045. A priori perturbation estimate
 
 `Breakdown.CoerciveClause`: This is the earlier certificate version of the estimate in (7.18): the perturbation energy and squared force coefficients are controlled by the right-hand side and the pins. It uses the approximate profile itself, unit weight on the force coefficients, and a ball-restricted L² term; the paper uses a reference profile, a separate multiplier weight and finitely many row pairings.
@@ -920,6 +1010,8 @@ Clause 1 of `Breakdown.CoerciveClause`, lines 11-15: Universal scope and the lin
 
 Clause 2 of `Breakdown.CoerciveClause`, lines 16-18: Energy estimate with unit force weight and a ball L² remainder. Paper: (7.14) and (7.18), p. 32 Source: [lean/CoerciveChallenge.lean:16-18](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L16-L18).
 
+<a id="046"></a>
+
 ### 046. Extract the a priori estimate
 
 `Breakdown.coerciveClause_of_isCertificate`: A certificate already contains the universally quantified a priori estimate. This theorem exposes that field for the multiplier argument leading back to (7.18).
@@ -931,6 +1023,8 @@ Clause 2 of `Breakdown.CoerciveClause`, lines 16-18: Energy estimate with unit f
 Comparison for `Breakdown.coerciveClause_of_isCertificate`: This is a projection from the earlier certificate structure, with no separate theorem in the paper. Its target has the ball L² and unit-force-weight conventions of CoerciveClause.
 
 Clause 1 of `Breakdown.coerciveClause_of_isCertificate`, lines 20-22: A certificate already contains the universally quantified a priori estimate. Paper: (7.17)-(7.18), p. 32; Lemma B.2 and (B.21)-(B.22), p. 56 Source: [lean/CoerciveChallenge.lean:20-22](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L20-L22).
+
+<a id="047"></a>
 
 ### 047. Inner product over one period
 
@@ -945,6 +1039,8 @@ Encoding for `Breakdown.periodPairing` (1): Mathlib real Bochner integrals are t
 Encoding for `Breakdown.periodPairing` (2): The closed interval [0,1] differs from the paper’s open interval only on null endpoints for Lebesgue integration.
 
 Clause 1 of `Breakdown.periodPairing`, lines 24-25: This is the real H-pairing from §7.1, integrating first in space and then over the normalized time period. Paper: §7.1, definition of the H inner product, p. 30; (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:24-25](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L24-L25).
+
+<a id="048"></a>
 
 ### 048. Multiplier estimate before division
 
@@ -970,6 +1066,8 @@ Field `Breakdown.MultiplierInequality.K_nonneg`: The ball L² term uses a nonneg
 
 Field `Breakdown.MultiplierInequality.bound`: For each admissible input, choose an L² multiplier and a nonnegative frequency norm satisfying both bounds. Paper: Proposition B.1, p. 55, and the combined inequality in the proof of Lemma B.2, p. 56 Source: [lean/CoerciveChallenge.lean:33-44](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L33-L44).
 
+<a id="049"></a>
+
 ### 049. Cauchy-Schwarz over one period
 
 `Breakdown.periodPairing_abs_le`: This supplies the Cauchy-Schwarz step in Lemma B.2. The proof first places the two fields and their pairing on the product measure and verifies integrability, which gives the real integrals and converted L² norms their intended values.
@@ -986,6 +1084,8 @@ Comparison for `Breakdown.periodPairing_abs_le`: The estimate used for the H-pai
 
 Clause 1 of `Breakdown.periodPairing_abs_le`, lines 46-51: L² hypotheses and the Cauchy-Schwarz conclusion. Paper: Lemma B.2 and (B.21)-(B.22), p. 56 Source: [lean/CoerciveChallenge.lean:46-51](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L46-L51).
 
+<a id="050"></a>
+
 ### 050. Solve the quadratic bound
 
 `Breakdown.le_add_of_sq_le`: This isolates the scalar step P² ≤ aP + Q² ⇒ P ≤ a + Q in the proof of Lemma B.2. All three scalar quantities are required to be nonnegative.
@@ -997,6 +1097,8 @@ Clause 1 of `Breakdown.periodPairing_abs_le`, lines 46-51: L² hypotheses and th
 Comparison for `Breakdown.le_add_of_sq_le`: This is precisely the scalar implication used in Lemma B.2, with x and b standing for P and Q.
 
 Clause 1 of `Breakdown.le_add_of_sq_le`, lines 115-116: Nonnegative scalar variables and the quadratic-to-linear implication. Paper: Lemma B.2 and (B.21)-(B.22), p. 56 Source: [lean/CoerciveChallenge.lean:115-116](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L115-L116).
+
+<a id="051"></a>
 
 ### 051. Convert the multiplier estimate
 
@@ -1014,6 +1116,8 @@ Comparison for `Breakdown.coercive_scalar_core`: This generalizes the algebraic 
 
 Clause 1 of `Breakdown.coercive_scalar_core`, lines 121-125: Abstract norm and pairing bounds yield the divided estimate. Paper: Lemma B.2 and (B.21)-(B.22), p. 56 Source: [lean/CoerciveChallenge.lean:121-125](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L121-L125).
 
+<a id="052"></a>
+
 ### 052. Obtain the a priori estimate
 
 `Breakdown.coerciveClause_of_multiplierInequality`: The multiplier bound gives the earlier certificate estimate once its three output constants fit inside the declared certificate constants. This is the scalar assembly corresponding to Lemma B.2, retaining the older ball L² term.
@@ -1030,6 +1134,8 @@ Comparison for `Breakdown.coerciveClause_of_multiplierInequality`: The proof imp
 
 Clause 1 of `Breakdown.coerciveClause_of_multiplierInequality`, lines 172-175: Compare the divided multiplier constants with the certificate constants. Paper: (B.22) and Lemma B.2, p. 56 Source: [lean/CoerciveChallenge.lean:172-175](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L172-L175).
 
+<a id="053"></a>
+
 ### 053. Rotation about the vertical axis
 
 `Breakdown.axialRot`: This is the rotation Rφ about the third coordinate axis used in the mode average (B.12). Lean writes it in the Cartesian basis, so no cylindrical-coordinate choice is needed on the axis.
@@ -1042,6 +1148,8 @@ Encoding for `Breakdown.axialRot` (1): Fin 3 uses coordinates 0, 1 and 2; the pa
 
 Clause 1 of `Breakdown.axialRot`, lines 191-193: This is the rotation Rφ about the third coordinate axis used in the mode average (B.12). Paper: (B.12)-(B.13), p. 53, with harmonic convention (B.2), p. 50 Source: [lean/CoerciveChallenge.lean:191-193](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L191-L193).
 
+<a id="054"></a>
+
 ### 054. Alternating symbol for curl
 
 `Breakdown.alternatingSymbol`: This gives the three-dimensional alternating symbol used to form the curls in (B.14) and (B.18). It uses zero-based coordinate indices and is zero when two indices coincide.
@@ -1051,6 +1159,8 @@ Clause 1 of `Breakdown.axialRot`, lines 191-193: This is the rotation Rφ about 
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/CoerciveStatement.lean:195-196](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/CoerciveStatement.lean#L195-L196).
 
 Clause 1 of `Breakdown.alternatingSymbol`, lines 195-196: This gives the three-dimensional alternating symbol used to form the curls in (B.14) and (B.18). Paper: Encoding helper for curls in (B.14), p. 54, and (B.18), p. 55; no separately numbered definition Source: [lean/CoerciveChallenge.lean:195-196](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L195-L196).
+
+<a id="055"></a>
 
 ### 055. Time and angle Fourier coefficient
 
@@ -1066,6 +1176,8 @@ Encoding for `Breakdown.modeAverage` (2): The complex interval integrals are tot
 
 Clause 1 of `Breakdown.modeAverage`, lines 198-200: This extracts a joint time-angle Fourier coefficient with normalization 1/(2π) and the conjugate exponential used in (B.12). Paper: (B.12)-(B.13), p. 53, with harmonic convention (B.2), p. 50 Source: [lean/CoerciveChallenge.lean:198-200](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L198-L200).
 
+<a id="056"></a>
+
 ### 056. Velocity mode in the rotating frame
 
 `Breakdown.modeVel`: This is the mode of v in (B.12), evaluated by rotating the point forward and the vector back before Fourier averaging. The generic index runs over all direct frequency pairs; the symmetry-adapted paper index enters through the harmonic embedding.
@@ -1079,6 +1191,8 @@ Encoding for `Breakdown.modeVel` (1): Use (n,k) = (2ι₂−ι₁, κι₁) when
 Encoding for `Breakdown.modeVel` (2): The components are complex Fourier coefficients even though v is a real vector field.
 
 Clause 1 of `Breakdown.modeVel`, lines 202-203: This is the mode of v in (B.12), evaluated by rotating the point forward and the vector back before Fourier averaging. Paper: (B.12)-(B.13), p. 53, with harmonic convention (B.2), p. 50 Source: [lean/CoerciveChallenge.lean:202-203](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L202-L203).
+
+<a id="057"></a>
 
 ### 057. Gradient mode in the rotating frame
 
@@ -1094,6 +1208,8 @@ Encoding for `Breakdown.modeGrad` (2): A pointwise arbitrary G need not be the g
 
 Clause 1 of `Breakdown.modeGrad`, lines 205-208: This extends (B.12) to the gradient tensor by rotating its input and output indices. Paper: (B.12)-(B.13), p. 53; gradient modes in (B.16), p. 54; matrix convention near (7.11), p. 31 Source: [lean/CoerciveChallenge.lean:205-208](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L205-L208).
 
+<a id="058"></a>
+
 ### 058. Second derivative mode
 
 `Breakdown.modeSecondDeriv`: This applies the rotating Fourier average to the second spatial derivative tensor appearing in (B.16). Its three indices are the output component and the two differentiation directions.
@@ -1107,6 +1223,8 @@ Encoding for `Breakdown.modeSecondDeriv` (1): The tensor is supplied as H, with 
 Encoding for `Breakdown.modeSecondDeriv` (2): The component norm used later is a finite sum of squared complex components, not the operator norm of H.
 
 Clause 1 of `Breakdown.modeSecondDeriv`, lines 210-214: This applies the rotating Fourier average to the second spatial derivative tensor appearing in (B.16). Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:210-214](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L210-L214).
+
+<a id="059"></a>
 
 ### 059. Squared component norm
 
@@ -1122,6 +1240,8 @@ Encoding for `Breakdown.cnormSq` (2): The sum over an empty index type is zero; 
 
 Clause 1 of `Breakdown.cnormSq`, lines 216-216: This sums the squared moduli of a finite complex array. Paper: Norm encoding for (B.16), p. 54; no separately numbered definition Source: [lean/CoerciveChallenge.lean:216-216](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L216).
 
+<a id="060"></a>
+
 ### 060. Curl of a gradient mode
 
 `Breakdown.curlOfGrad`: This contracts the Fourier gradient array with the alternating symbol to form the curl mode in (B.14) and (B.16). The component-first array convention explains the reversed pair of indices in the contraction.
@@ -1134,6 +1254,8 @@ Encoding for `Breakdown.curlOfGrad` (1): The array entry g(l,j) represents ∂j 
 
 Clause 1 of `Breakdown.curlOfGrad`, lines 218-219: This contracts the Fourier gradient array with the alternating symbol to form the curl mode in (B.14) and (B.16). Paper: (B.14) and (B.16), p. 54 Source: [lean/CoerciveChallenge.lean:218-219](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L218-L219).
 
+<a id="061"></a>
+
 ### 061. Gradient of a curl mode
 
 `Breakdown.curlGradOfSecondDeriv`: This contracts the second derivative mode to obtain the derivative of the curl used in (B.16). Its output pair records the curl component and its differentiation direction.
@@ -1145,6 +1267,8 @@ Clause 1 of `Breakdown.curlOfGrad`, lines 218-219: This contracts the Fourier gr
 Encoding for `Breakdown.curlGradOfSecondDeriv` (1): Weak derivative compatibility and symmetry of second derivatives are analytic facts supplied by the perturbation hypotheses, not by this algebraic contraction.
 
 Clause 1 of `Breakdown.curlGradOfSecondDeriv`, lines 221-222: This contracts the second derivative mode to obtain the derivative of the curl used in (B.16). Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:221-222](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L221-L222).
+
+<a id="062"></a>
 
 ### 062. Distance from the rotation axis
 
@@ -1160,6 +1284,8 @@ Encoding for `Breakdown.cylRadius` (2): r is zero on the axis; the gain theorem 
 
 Clause 1 of `Breakdown.cylRadius`, lines 224-224: This is r, the distance to the y₃ axis in Appendix B.3. Paper: Meridian coordinates in Appendix B.1, p. 50; (B.35), p. 60 Source: [lean/CoerciveChallenge.lean:224-224](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L224).
 
+<a id="063"></a>
+
 ### 063. Invariance under axial rotations
 
 `Breakdown.IsAxisymmetric`: This states that a scalar coefficient is unchanged by every rotation about the y₃ axis. It expresses the rotational invariance required of the weights and auxiliary functions in Appendix B.2.
@@ -1171,6 +1297,8 @@ Clause 1 of `Breakdown.cylRadius`, lines 224-224: This is r, the distance to the
 Encoding for `Breakdown.IsAxisymmetric` (1): The invariance is pointwise for every angle and point, rather than merely almost everywhere.
 
 Clause 1 of `Breakdown.IsAxisymmetric`, lines 226-226: This states that a scalar coefficient is unchanged by every rotation about the y₃ axis. Paper: Appendix B.2, weights paragraph, p. 53; mode coefficients (B.16), p. 54 Source: [lean/CoerciveChallenge.lean:226-226](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L226).
+
+<a id="064"></a>
 
 ### 064. Frequency in a rotating frame
 
@@ -1186,6 +1314,8 @@ Encoding for `Breakdown.shiftedFrequency` (2): The paper’s κ is a spatial har
 
 Clause 1 of `Breakdown.shiftedFrequency`, lines 228-229: This is the frequency 2πn/P + kν(y), corresponding to Ωp in (B.15) after the paper’s harmonic reindexing. Paper: (B.15) and the frequency seminorm immediately below it, p. 54 Source: [lean/CoerciveChallenge.lean:228-229](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L228-L229).
 
+<a id="065"></a>
+
 ### 065. Mean time-angle mode
 
 `Breakdown.meanField`: This reconstructs the real vector field in the zero time-angle mode. The earlier multiplier estimates separate this mean from the nonzero waves when bounding the coefficients related to (B.16).
@@ -1200,6 +1330,8 @@ Encoding for `Breakdown.meanField` (2): Evaluation at time zero is part of the m
 
 Clause 1 of `Breakdown.meanField`, lines 231-232: This reconstructs the real vector field in the zero time-angle mode. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:231-232](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L231-L232).
 
+<a id="066"></a>
+
 ### 066. Transport in a rotating frame
 
 `Breakdown.relativeVelocity`: This is the mean field plus the similarity drift y/2, measured relative to a rotating frame. It supplies the earlier route’s mean transport bound corresponding to the full reference-profile transport bound described before (B.14).
@@ -1209,6 +1341,8 @@ Clause 1 of `Breakdown.meanField`, lines 231-232: This reconstructs the real vec
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/CoerciveStatement.lean:234-235](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/CoerciveStatement.lean#L234-L235).
 
 Clause 1 of `Breakdown.relativeVelocity`, lines 234-235: This is the mean field plus the similarity drift y/2, measured relative to a rotating frame. Paper: Related to the transport bound in Appendix B.2, p. 53; earlier mean/wave split has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:234-235](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L234-L235).
+
+<a id="067"></a>
 
 ### 067. Curl from a spatial derivative
 
@@ -1222,6 +1356,8 @@ Encoding for `Breakdown.curlVec` (1): The expression is algebraic for any G; cal
 
 Clause 1 of `Breakdown.curlVec`, lines 237-238: This turns a real derivative map into the curl vector used in (B.18). Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:237-238](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L237-L238).
 
+<a id="068"></a>
+
 ### 068. Derivative of vorticity
 
 `Breakdown.vortGrad`: This contracts a second derivative tensor to obtain one component of ∇curl W in (B.18). The first explicit index selects the curl component and the second selects the differentiation direction.
@@ -1233,6 +1369,8 @@ Clause 1 of `Breakdown.curlVec`, lines 237-238: This turns a real derivative map
 Encoding for `Breakdown.vortGrad` (1): DDW is an iterated continuous-linear-map representation of the Hessian; the tensor contraction assumes its derivative meaning at analytic call sites.
 
 Clause 1 of `Breakdown.vortGrad`, lines 240-241: This contracts a second derivative tensor to obtain one component of ∇curl W in (B.18). Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:240-241](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L240-L241).
+
+<a id="069"></a>
 
 ### 069. Stretching term in the energy identity
 
@@ -1251,6 +1389,8 @@ Clause 1 of `Breakdown.stretchForm`, lines 245-246: Negative symmetric-gradient 
 Clause 2 of `Breakdown.stretchForm`, lines 247-248: Pair (v·∇)curl W with curl v. Paper: (B.18), p. 55 Source: [lean/CoerciveChallenge.lean:247-248](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L247-L248).
 
 Clause 3 of `Breakdown.stretchForm`, lines 249-251: The half-weighted cross-product term written in components. Paper: (B.18), p. 55 Source: [lean/CoerciveChallenge.lean:249-251](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L249-L251).
+
+<a id="070"></a>
 
 ### 070. Bounds for the mean and the waves
 
@@ -1283,6 +1423,8 @@ Field `Breakdown.FlowBounds.wave2`: Bound for the sum of the gradient-of-vortici
 Field `Breakdown.FlowBounds.waveStretch`: Absolute quadratic-form bound for the derivative of the oscillatory field. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:263-263](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L263).
 
 Field `Breakdown.FlowBounds.waveVortGrad`: Bound for the derivative of the oscillatory vorticity. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:264-264](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L264).
+
+<a id="071"></a>
 
 ### 071. Weights assigned to mode classes
 
@@ -1328,6 +1470,8 @@ Field `Breakdown.ModeWeights.c`: Coefficient reserved for the weighted perturbat
 
 Field `Breakdown.ModeWeights.cμ`: Coefficient reserved for the frequency seminorm. Paper: Proposition B.1 and (B.20), p. 55 Source: [lean/CoerciveChallenge.lean:282-282](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L282).
 
+<a id="072"></a>
+
 ### 072. Magnitude of the curl weight
 
 `Breakdown.ModeWeights.eps`: This is the absolute value of the signed curl weight for the class of a mode. It is the nonnegative magnitude entering the earlier coefficient estimates related to (B.16).
@@ -1339,6 +1483,8 @@ Field `Breakdown.ModeWeights.cμ`: Coefficient reserved for the frequency semino
 Encoding for `Breakdown.ModeWeights.eps` (1): The signed weight still occurs in the multiplier pairing; replacing it there by its magnitude would lose the Fourier sign.
 
 Clause 1 of `Breakdown.ModeWeights.eps`, lines 288-288: This is the absolute value of the signed curl weight for the class of a mode. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:288-288](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L288).
+
+<a id="073"></a>
 
 ### 073. Magnitude of the velocity weight
 
@@ -1352,6 +1498,8 @@ Encoding for `Breakdown.ModeWeights.mu` (1): Its nonnegativity follows from the 
 
 Clause 1 of `Breakdown.ModeWeights.mu`, lines 290-290: This is the absolute value of the signed velocity weight for the class of a mode. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:290-290](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L290).
 
+<a id="074"></a>
+
 ### 074. Class frequency in its rotating frame
 
 `Breakdown.ModeWeights.dop`: This applies the shifted frequency to the rotation rate assigned to a mode’s class. It corresponds to the frequency in (B.15), with direct frequency coordinates and the earlier spatially varying rate.
@@ -1363,6 +1511,8 @@ Clause 1 of `Breakdown.ModeWeights.mu`, lines 290-290: This is the absolute valu
 Encoding for `Breakdown.ModeWeights.dop` (1): Positive P is a separate admissibility field; the raw function remains defined at P = 0.
 
 Clause 1 of `Breakdown.ModeWeights.dop`, lines 292-292: This applies the shifted frequency to the rotation rate assigned to a mode’s class. Paper: (B.15) and the frequency seminorm immediately below it, p. 54 Source: [lean/CoerciveChallenge.lean:292-292](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L292).
+
+<a id="075"></a>
 
 ### 075. Gradient size of the curl weight
 
@@ -1378,6 +1528,8 @@ Encoding for `Breakdown.ModeWeights.epsGrad` (2): The total fderiv value at a no
 
 Clause 1 of `Breakdown.ModeWeights.epsGrad`, lines 294-294: This measures the spatial derivative of the signed curl weight. Paper: Appendix B.2, coefficient discussion p. 54 and (B.19), p. 55; earlier class-weight encoding Source: [lean/CoerciveChallenge.lean:294-294](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L294).
 
+<a id="076"></a>
+
 ### 076. Gradient size of the velocity weight
 
 `Breakdown.ModeWeights.muGrad`: This measures the spatial derivative of the signed velocity weight. It enters the mixed derivative loss in the earlier version of the quadratic form associated with (B.16).
@@ -1389,6 +1541,8 @@ Clause 1 of `Breakdown.ModeWeights.epsGrad`, lines 294-294: This measures the sp
 Encoding for `Breakdown.ModeWeights.muGrad` (1): The derivative is used under the Lipschitz and decay conditions of ModeWeights.IsAdmissible; it is a total function outside those conditions.
 
 Clause 1 of `Breakdown.ModeWeights.muGrad`, lines 296-296: This measures the spatial derivative of the signed velocity weight. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:296-296](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L296).
+
+<a id="077"></a>
 
 ### 077. Neighbouring curl-weight bound
 
@@ -1404,6 +1558,8 @@ Encoding for `Breakdown.ModeWeights.epsNb` (2): It is not a conditionally comple
 
 Clause 1 of `Breakdown.ModeWeights.epsNb`, lines 298-299: This takes the largest curl-weight magnitude among modes joined to the given mode by a listed reference-profile wave. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:298-299](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L298-L299).
 
+<a id="078"></a>
+
 ### 078. Neighbouring velocity-weight bound
 
 `Breakdown.ModeWeights.muNb`: This takes the largest velocity-weight magnitude among modes joined to the given mode by a listed reference-profile wave. It bounds the velocity multiplier’s off-mode losses in the earlier version of (B.16).
@@ -1416,6 +1572,8 @@ Encoding for `Breakdown.ModeWeights.muNb` (1): The finite nonnegative supremum r
 
 Clause 1 of `Breakdown.ModeWeights.muNb`, lines 301-302: This takes the largest velocity-weight magnitude among modes joined to the given mode by a listed reference-profile wave. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:301-302](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L301-L302).
 
+<a id="079"></a>
+
 ### 079. Indicator of a condition
 
 `Breakdown.ModeWeights.ind`: This encodes a logical condition as the real number zero or one. The coefficient formulas use it to charge an error budget only when the corresponding weight or coupling is active.
@@ -1427,6 +1585,8 @@ Clause 1 of `Breakdown.ModeWeights.muNb`, lines 301-302: This takes the largest 
 Encoding for `Breakdown.ModeWeights.ind` (1): Classical decidability is used for arbitrary propositions; the definition is mathematical and need not be an executable membership test.
 
 Clause 1 of `Breakdown.ModeWeights.ind`, lines 305-305: This encodes a logical condition as the real number zero or one. Paper: Encoding helper for the unexpanded coefficients of (B.16), p. 54; no separately numbered condition Source: [lean/CoerciveChallenge.lean:305-305](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L305).
+
+<a id="080"></a>
 
 ### 080. Curl-gradient energy already assigned
 
@@ -1442,6 +1602,8 @@ Encoding for `Breakdown.ModeWeights.shareHat` (2): Admissibility requires D to l
 
 Clause 1 of `Breakdown.ModeWeights.shareHat`, lines 307-308: This adds the shares spent on the active curl weight and on its neighbouring modes. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:307-308](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L307-L308).
 
+<a id="081"></a>
+
 ### 081. Operator norm of a scalar Hessian
 
 `Breakdown.ModeWeights.secondDerivNorm`: This is the operator norm of the second Fréchet derivative of a scalar conversion weight. It appears in the conversion losses for D and Z described explicitly below (B.16).
@@ -1455,6 +1617,8 @@ Encoding for `Breakdown.ModeWeights.secondDerivNorm` (1): This norm is an operat
 Encoding for `Breakdown.ModeWeights.secondDerivNorm` (2): The conversion weights are required to be C² before their Hessian norms are used analytically.
 
 Clause 1 of `Breakdown.ModeWeights.secondDerivNorm`, lines 310-310: This is the operator norm of the second Fréchet derivative of a scalar conversion weight. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:310-310](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L310).
+
+<a id="082"></a>
 
 ### 082. Curl coefficient before conversion
 
@@ -1470,6 +1634,8 @@ Encoding for `Breakdown.ModeWeights.coefA` (2): The whole formula belongs to the
 
 Clause 1 of `Breakdown.ModeWeights.coefA`, lines 312-317: This is the earlier curl-energy coefficient before subtracting Z: it starts at 1/4, gains from the rotating-frame frequency, and pays for transport and wave couplings. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:312-317](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L312-L317).
 
+<a id="083"></a>
+
 ### 083. Gradient coefficient after conversion
 
 `Breakdown.ModeWeights.coefAA`: This is the earlier coefficient of the squared gradient mode after the Z conversion and subtraction of c times the energy weight. It also subtracts the D Hessian loss, vorticity losses and velocity-coupling share.
@@ -1481,6 +1647,8 @@ Clause 1 of `Breakdown.ModeWeights.coefA`, lines 312-317: This is the earlier cu
 Encoding for `Breakdown.ModeWeights.coefAA` (1): The coefficient may have either sign; pointwise positivity of the full density is a separate obligation.
 
 Clause 1 of `Breakdown.ModeWeights.coefAA`, lines 319-321: This is the earlier coefficient of the squared gradient mode after the Z conversion and subtraction of c times the energy weight. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:319-321](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L319-L321).
+
+<a id="084"></a>
 
 ### 084. Velocity-weight coupling penalty
 
@@ -1496,6 +1664,8 @@ Encoding for `Breakdown.ModeWeights.penalty` (2): The eta and etaMin denominator
 
 Clause 1 of `Breakdown.ModeWeights.penalty`, lines 323-326: This records Young-inequality losses caused by the mean derivative and the nonzero waves in the earlier velocity multiplier. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:323-326](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L323-L326).
 
+<a id="085"></a>
+
 ### 085. Velocity coefficient after losses
 
 `Breakdown.ModeWeights.coefB`: This is the earlier coefficient of the squared velocity mode in the quadratic lower bound. Its positive rotating-frame contribution is reduced by rotation, wave, Z-Hessian and Young-inequality losses.
@@ -1508,6 +1678,8 @@ Encoding for `Breakdown.ModeWeights.coefB` (1): The coefficient need not be nonn
 
 Clause 1 of `Breakdown.ModeWeights.coefB`, lines 328-331: This is the earlier coefficient of the squared velocity mode in the quadratic lower bound. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:328-331](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L328-L331).
 
+<a id="086"></a>
+
 ### 086. Mixed gradient-velocity loss
 
 `Breakdown.ModeWeights.coefC`: This is the coefficient of the mixed gradient-velocity term in the earlier class-weight density. The printed piecewise form (B.16) absorbs such products into its five squared-amplitude coefficients.
@@ -1519,6 +1691,8 @@ Clause 1 of `Breakdown.ModeWeights.coefB`, lines 328-331: This is the earlier co
 Encoding for `Breakdown.ModeWeights.coefC` (1): The mixed term has an overall negative sign when modeDensity is assembled; its sign cannot be inferred from this name alone.
 
 Clause 1 of `Breakdown.ModeWeights.coefC`, lines 333-334: This is the coefficient of the mixed gradient-velocity term in the earlier class-weight density. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:333-334](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L333-L334).
+
+<a id="087"></a>
 
 ### 087. Earlier quadratic form for one mode
 
@@ -1536,6 +1710,8 @@ Clause 1 of `Breakdown.ModeWeights.modeDensity`, lines 337-337: Hessian and curl
 
 Clause 2 of `Breakdown.ModeWeights.modeDensity`, lines 338-339: Curl, gradient and velocity coefficients, with an additional mixed loss. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:338-339](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L338-L339).
 
+<a id="088"></a>
+
 ### 088. Earlier density evaluated on a mode
 
 `Breakdown.ModeWeights.modeTerm`: This substitutes the actual Fourier-mode amplitudes of v, G and H into the earlier quadratic form. It is the integrand corresponding to one Iι before the separate stretching term is added.
@@ -1550,6 +1726,8 @@ Encoding for `Breakdown.ModeWeights.modeTerm` (2): The weak derivative relations
 
 Clause 1 of `Breakdown.ModeWeights.modeTerm`, lines 341-346: This substitutes the actual Fourier-mode amplitudes of v, G and H into the earlier quadratic form. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:341-346](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L341-L346).
 
+<a id="089"></a>
+
 ### 089. Earlier frequency seminorm squared
 
 `Breakdown.ModeWeights.frequencySeminormSq`: This integrates the squared velocity modes against the magnitude of the signed velocity weight and the rotating-frame frequency. It is the class-weight version of the seminorm defined immediately after (B.15).
@@ -1563,6 +1741,8 @@ Encoding for `Breakdown.ModeWeights.frequencySeminormSq` (1): The ENNReal sum an
 Encoding for `Breakdown.ModeWeights.frequencySeminormSq` (2): multiplier_density explicitly proves finiteness before this quantity is used as a real norm.
 
 Clause 1 of `Breakdown.ModeWeights.frequencySeminormSq`, lines 348-350: This integrates the squared velocity modes against the magnitude of the signed velocity weight and the rotating-frame frequency. Paper: (B.15) and the frequency seminorm immediately below it, p. 54 Source: [lean/CoerciveChallenge.lean:348-350](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L348-L350).
+
+<a id="090"></a>
 
 ### 090. Admissible class-based weights
 
@@ -1708,6 +1888,8 @@ Field `Breakdown.ModeWeights.IsAdmissible.etaMin_le`: The common lower Young par
 
 Field `Breakdown.ModeWeights.IsAdmissible.conv_le`: The D conversion weight does not exceed the remaining curl-gradient share. Paper: Nonnegativity of I′₂ in the admissibility paragraph, p. 55, for the earlier coefficient formula Source: [lean/CoerciveChallenge.lean:424-424](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L424).
 
+<a id="091"></a>
+
 ### 091. Spatial derivative of the profile
 
 `Breakdown.gradField`: This provides the spatial derivative of W used in the Fourier gradient modes and the stretching form. The strong multiplier theorem requires W to be C², so this derivative has its ordinary analytic meaning there.
@@ -1719,6 +1901,8 @@ Field `Breakdown.ModeWeights.IsAdmissible.conv_le`: The D conversion weight does
 Encoding for `Breakdown.gradField` (1): At an arbitrary nonsmooth input, fderiv is a total operation and must not be read as a proof of differentiability.
 
 Clause 1 of `Breakdown.gradField`, lines 428-429: This provides the spatial derivative of W used in the Fourier gradient modes and the stretching form. Paper: Derivative notation in (B.16), p. 54, and (B.18), p. 55 Source: [lean/CoerciveChallenge.lean:428-429](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L428-L429).
+
+<a id="092"></a>
 
 ### 092. Spatial second derivative of the profile
 
@@ -1732,6 +1916,8 @@ Encoding for `Breakdown.secondDerivField` (1): The nested fderiv calls are total
 
 Clause 1 of `Breakdown.secondDerivField`, lines 431-432: This supplies the iterated spatial derivative of W used in ∇curl W. Paper: Derivative notation in (B.16), p. 54, and (B.18), p. 55; weak second derivatives in §7.2, p. 31 Source: [lean/CoerciveChallenge.lean:431-432](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L431-L432).
 
+<a id="093"></a>
+
 ### 093. Quadratic form of the symmetric part
 
 `Breakdown.symPartForm`: This evaluates u·Gu, which equals the quadratic form of the symmetric part of G over the reals. The mean and wave bounds use it to control the stretching term J.
@@ -1743,6 +1929,8 @@ Clause 1 of `Breakdown.secondDerivField`, lines 431-432: This supplies the itera
 Encoding for `Breakdown.symPartForm` (1): No symmetric matrix is constructed: the antisymmetric part contributes zero to this scalar quadratic form.
 
 Clause 1 of `Breakdown.symPartForm`, lines 434-434: This evaluates u·Gu, which equals the quadratic form of the symmetric part of G over the reals. Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:434-434](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L434).
+
+<a id="094"></a>
 
 ### 094. Validity of the mean and wave bounds
 
@@ -1780,6 +1968,8 @@ Field `Breakdown.FlowBounds.IsValid.waveStretch_ge`: Bound the absolute stretchi
 
 Field `Breakdown.FlowBounds.IsValid.waveVortGrad_ge`: Bound the difference between total and mean vorticity derivatives at every rotated point. Paper: Related to Appendix B.2, pp. 53-55; this earlier class-weight encoding has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:454-455](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L454-L455).
 
+<a id="095"></a>
+
 ### 095. Periodic divergence-free test fields
 
 `Breakdown.IsPeriodicTestField`: These are the smooth divergence-free test fields of period one with a common compact spatial support used in (B.14). The time variable remains periodic, so compactness is required only in space.
@@ -1793,6 +1983,8 @@ Encoding for `Breakdown.IsPeriodicTestField` (1): The support radius is chosen b
 Encoding for `Breakdown.IsPeriodicTestField` (2): The divergence constraint is pointwise because the test field is smooth.
 
 Clause 1 of `Breakdown.IsPeriodicTestField`, lines 458-459: Smoothness, period one, common spatial support and vanishing divergence. Paper: (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:458-459](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L458-L459).
+
+<a id="096"></a>
 
 ### 096. Periodic scalar test potentials
 
@@ -1808,6 +2000,8 @@ Encoding for `Breakdown.IsPeriodicTestPotential` (2): The support radius is unif
 
 Clause 1 of `Breakdown.IsPeriodicTestPotential`, lines 461-463: These are smooth scalar potentials of period one with a common compact spatial support. Paper: (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:461-463](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L461-L463).
 
+<a id="097"></a>
+
 ### 097. Complex vector pairing
 
 `Breakdown.cdot`: This is the Hermitian component pairing in the mode terms of (B.14), linear in the first argument and conjugate-linear in the second. The conjugation is essential when converting real field pairings to Fourier modes.
@@ -1820,6 +2014,8 @@ Encoding for `Breakdown.cdot` (1): This pairing is not the unconjugated complex 
 
 Clause 1 of `Breakdown.cdot`, lines 465-465: This is the Hermitian component pairing in the mode terms of (B.14), linear in the first argument and conjugate-linear in the second. Paper: (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:465-465](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L465).
 
+<a id="098"></a>
+
 ### 098. Complex matrix pairing
 
 `Breakdown.cdotMat`: This extends the same Hermitian pairing to the nine components of a gradient mode. It is a componentwise encoding used in the multiplier analysis around (B.14).
@@ -1831,6 +2027,8 @@ Clause 1 of `Breakdown.cdot`, lines 465-465: This is the Hermitian component pai
 Encoding for `Breakdown.cdotMat` (1): The Frobenius pairing conjugates the second matrix componentwise.
 
 Clause 1 of `Breakdown.cdotMat`, lines 467-467: This extends the same Hermitian pairing to the nine components of a gradient mode. Paper: Encoding helper for the mode pairings of Appendix B.2, pp. 54-55; no separately numbered definition Source: [lean/CoerciveChallenge.lean:467-467](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L467).
+
+<a id="099"></a>
 
 ### 099. Multiplier for class-based weights
 
@@ -1850,6 +2048,8 @@ Clause 1 of `Breakdown.ModeWeights.IsMultiplierField`, lines 475-478: Periodicit
 
 Clause 2 of `Breakdown.ModeWeights.IsMultiplierField`, lines 479-485: Weak defining identity for the Laplacian and signed mode multipliers. Paper: (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:479-485](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L479-L485).
 
+<a id="100"></a>
+
 ### 100. Positive part of the earlier density
 
 `Breakdown.ModeWeights.densityPos`: This sums the positive parts of the earlier mode terms and adds the positive part of J. Its integral is the earlier route’s version of I⁺ in the convention following (B.18).
@@ -1863,6 +2063,8 @@ Encoding for `Breakdown.ModeWeights.densityPos` (1): Each term is clipped separa
 Encoding for `Breakdown.ModeWeights.densityPos` (2): The value may be infinity, and no real conversion is made here.
 
 Clause 1 of `Breakdown.ModeWeights.densityPos`, lines 487-490: This sums the positive parts of the earlier mode terms and adds the positive part of J. Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:487-490](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L487-L490).
+
+<a id="101"></a>
 
 ### 101. Negative part of the earlier density
 
@@ -1878,6 +2080,8 @@ Encoding for `Breakdown.ModeWeights.densityNeg` (2): Finite negative mass is req
 
 Clause 1 of `Breakdown.ModeWeights.densityNeg`, lines 492-496: This sums the negative parts of the earlier mode terms and adds the negative part of J. Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:492-496](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L492-L496).
 
+<a id="102"></a>
+
 ### 102. Norm constant for the multiplier
 
 `Breakdown.ModeWeights.multiplierConstant`: This is the square-root constant cM in Proposition B.1 with the energy share c left abstract. Setting c = 3/50 turns the first factor into the printed 50/3 coefficient.
@@ -1892,6 +2096,8 @@ Encoding for `Breakdown.ModeWeights.multiplierConstant` (2): epsSup, epsGradSup 
 
 Clause 1 of `Breakdown.ModeWeights.multiplierConstant`, lines 498-499: This is the square-root constant cM in Proposition B.1 with the energy share c left abstract. Paper: Proposition B.1 and (B.20), p. 55 Source: [lean/CoerciveChallenge.lean:498-499](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L498-L499).
 
+<a id="103"></a>
+
 ### 103. Pairing remaining after energy costs
 
 `Breakdown.ModeWeights.multiplierGap`: This is the left-hand side of the multiplier lower bound (B.20), with the earlier class-weight seminorm and an abstract coefficient c. The forcing-field pairings are subtracted so that they cancel against the lower-density estimate.
@@ -1905,6 +2111,8 @@ Encoding for `Breakdown.ModeWeights.multiplierGap` (1): The frequency seminorm u
 Encoding for `Breakdown.ModeWeights.multiplierGap` (2): The definition alone does not assert that the real converted energy is the intended finite integral.
 
 Clause 1 of `Breakdown.ModeWeights.multiplierGap`, lines 501-505: This is the left-hand side of the multiplier lower bound (B.20), with the earlier class-weight seminorm and an abstract coefficient c. Paper: Proposition B.1 and (B.20), p. 55 Source: [lean/CoerciveChallenge.lean:501-505](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L501-L505).
+
+<a id="104"></a>
 
 ### 104. Earlier multiplier lower bound
 
@@ -1930,6 +2138,8 @@ Clause 3 of `Breakdown.ModeWeights.multiplier_density`, lines 523-524: Multiplie
 
 Clause 4 of `Breakdown.ModeWeights.multiplier_density`, lines 525-529: Cross-added extended-real form of the density lower bound. Paper: (B.20) and the signed-integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:525-529](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L525-L529).
 
+<a id="105"></a>
+
 ### 105. Reduced quadratic lower bound
 
 `Breakdown.ModeWeights.diagonalDensity`: This is a scalar quadratic form in Hessian, gradient and velocity amplitudes with one mixed term. It isolates the pointwise positivity algebra used in the region inequalities (B.29) and (B.36).
@@ -1939,6 +2149,8 @@ Clause 4 of `Breakdown.ModeWeights.multiplier_density`, lines 525-529: Cross-add
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/CoerciveStatement.lean:506-506](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/CoerciveStatement.lean#L506).
 
 Clause 1 of `Breakdown.ModeWeights.diagonalDensity`, lines 532-532: This is a scalar quadratic form in Hessian, gradient and velocity amplitudes with one mixed term. Paper: Algebraic helper for (B.29), p. 59, and (B.36), p. 60; no exact printed definition Source: [lean/CoerciveChallenge.lean:532-532](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L532).
+
+<a id="106"></a>
 
 ### 106. Positivity from a discriminant bound
 
@@ -1951,6 +2163,8 @@ Clause 1 of `Breakdown.ModeWeights.diagonalDensity`, lines 532-532: This is a sc
 Comparison for `Breakdown.ModeWeights.diagonalDensity_nonneg`: This is a general scalar positivity lemma with no separately stated paper theorem. It extracts the discriminant argument used in the pointwise region conditions.
 
 Clause 1 of `Breakdown.ModeWeights.diagonalDensity_nonneg`, lines 534-535: Nonnegative diagonal terms and the mixed-term discriminant imply a nonnegative quadratic form. Paper: (B.29), p. 59 Source: [lean/CoerciveChallenge.lean:534-535](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L534-L535).
+
+<a id="107"></a>
 
 ### 107. Positivity using angular frequency
 
@@ -1968,6 +2182,8 @@ Comparison for `Breakdown.ModeWeights.azimuthalDensity_nonneg`: This scalar lemm
 
 Clause 1 of `Breakdown.ModeWeights.azimuthalDensity_nonneg`, lines 550-557: Distribute the angular gains and test the resulting quadratic form. Paper: (B.29), p. 59; (B.35)-(B.36), p. 60 Source: [lean/CoerciveChallenge.lean:550-557](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L550-L557).
 
+<a id="108"></a>
+
 ### 108. Angular gains for two derivatives
 
 `Breakdown.ModeWeights.mode_azimuthal_gain`: This gives the velocity-to-gradient and gradient-to-Hessian gains from (B.35) for a mode with |k| ≥ 2. The generic second mode coordinate is the actual azimuthal frequency k, which equals κι₁ in the paper.
@@ -1984,6 +2200,8 @@ Comparison for `Breakdown.ModeWeights.mode_azimuthal_gain`: The export supplies 
 
 Clause 1 of `Breakdown.ModeWeights.mode_azimuthal_gain`, lines 574-581: Two almost-everywhere angular gains under |k| ≥ 2. Paper: (B.35), p. 60 Source: [lean/CoerciveChallenge.lean:574-581](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L574-L581).
 
+<a id="109"></a>
+
 ### 109. Cost of the earlier stretching bound
 
 `Breakdown.ModeWeights.stretchCharge`: This is the modewise cost used to control the time-angle mean of the stretching term in the earlier mean/wave route. It separates mean and oscillatory vorticity-gradient contributions, with a balancing length for the latter.
@@ -1997,6 +2215,8 @@ Encoding for `Breakdown.ModeWeights.stretchCharge` (1): The coefficient √2 + 1
 Encoding for `Breakdown.ModeWeights.stretchCharge` (2): Its denominator len is guarded by a strict-positivity assumption in stretch_mean_bound.
 
 Clause 1 of `Breakdown.ModeWeights.stretchCharge`, lines 584-590: This is the modewise cost used to control the time-angle mean of the stretching term in the earlier mean/wave route. Paper: Related to (B.18), p. 55, and the stretching lower bound (B.25), p. 57; earlier mean/wave estimate has no exact printed counterpart Source: [lean/CoerciveChallenge.lean:584-590](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L584-L590).
+
+<a id="110"></a>
 
 ### 110. Bound the mean stretching loss
 
@@ -2018,6 +2238,8 @@ Clause 1 of `Breakdown.ModeWeights.stretch_mean_bound`, lines 592-595: Regularit
 
 Clause 2 of `Breakdown.ModeWeights.stretch_mean_bound`, lines 596-600: Almost-everywhere mean stretching estimate with the earlier modewise charges. Paper: Related to (B.32), p. 59 Source: [lean/CoerciveChallenge.lean:596-600](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L596-L600).
 
+<a id="111"></a>
+
 ### 111. Combine signed bounds safely
 
 `Breakdown.ModeWeights.le_of_ennreal_bounds`: This turns two cross-added extended-real comparisons into a real inequality after assuming the negative mass is finite. It first derives finiteness of the positive mass, implementing the cancellation used in Lemma B.2 without subtracting infinity.
@@ -2033,6 +2255,8 @@ Encoding for `Breakdown.ModeWeights.le_of_ennreal_bounds` (2): The proof establi
 Comparison for `Breakdown.ModeWeights.le_of_ennreal_bounds`: This is an explicit extended-real bookkeeping lemma for the cancellation in Lemma B.2. The paper works directly with the finite signed integral and has no separately numbered version of this conversion.
 
 Clause 1 of `Breakdown.ModeWeights.le_of_ennreal_bounds`, lines 604-606: Finite negative mass and the two comparisons that can safely be combined. Paper: Signed-integral convention after (B.18), p. 55; Lemma B.2, p. 56 Source: [lean/CoerciveChallenge.lean:604-606](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L604-L606).
+
+<a id="112"></a>
 
 ### 112. Combine the earlier density bounds
 
@@ -2055,6 +2279,8 @@ Clause 1 of `Breakdown.ModeWeights.multiplierInequality_of_density`, lines 632-6
 Clause 2 of `Breakdown.ModeWeights.multiplierInequality_of_density`, lines 647-666: Assumed finite negative mass and the additional density lower bound. Paper: (B.21), p. 56; lower bound supplied by Proposition B.8, p. 63 Source: [lean/CoerciveChallenge.lean:647-666](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L647-L666).
 
 Clause 3 of `Breakdown.ModeWeights.multiplierInequality_of_density`, lines 667-669: Combined multiplier inequality and its norm constant. Paper: Lemma B.2 and (B.21)-(B.22), p. 56 Source: [lean/CoerciveChallenge.lean:667-669](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L667-L669).
+
+<a id="113"></a>
 
 ### 113. One curl-multiplier piece
 
@@ -2092,6 +2318,8 @@ This scale balances inward and outward velocity-mode couplings; admissibility re
 
 Field `Breakdown.EpsPiece.speed`: Pointwise bound for the full reference transport velocity in this frame. Paper: Appendix B.2, weight data p. 53; (B.14)-(B.16), p. 54 Source: [lean/CoerciveChallenge.lean:712-712](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L712).
 
+<a id="114"></a>
+
 ### 114. One velocity-multiplier piece
 
 These are the proposed data for one velocity piece p: a mode set, rotation rate, weight μp, Young parameter ηp and auxiliary functions. Admissibility supplies the one-sided frequency and positivity conditions.
@@ -2117,6 +2345,8 @@ Field `Breakdown.MuPiece.t4`: Young parameter for reference-velocity mode coupli
 The scalar ηp is the Young parameter for derivative couplings; admissibility requires ηp>0. Paper: Auxiliary data for the unexpanded coefficients of (B.16), p. 54; data described in Appendix B.2, p. 53 Source: [lean/CoerciveChallenge.lean:720-720](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L720).
 
 Field `Breakdown.MuPiece.speed`: Bound for the full reference transport velocity in this rotating frame. Paper: Appendix B.2, weight data p. 53; (B.14)-(B.16), p. 54 Source: [lean/CoerciveChallenge.lean:721-721](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L721).
+
+<a id="115"></a>
 
 ### 115. Bounds for the reference harmonics
 
@@ -2144,6 +2374,8 @@ Field `Breakdown.HarmonicBounds.supVort`: Pointwise majorant for the full vortic
 
 Field `Breakdown.HarmonicBounds.supGradVort`: Pointwise operator-norm majorant for the full vorticity derivative. Paper: Appendix B.2, bounds paragraph immediately before (B.16), p. 54 Source: [lean/CoerciveChallenge.lean:730-730](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L730).
 
+<a id="116"></a>
+
 ### 116. Finite families of multiplier pieces
 
 `Breakdown.PieceWeights`: This is the multiplier data format used in the paper: finitely many curl and velocity pieces together with the classwise conversion weights D and Z. The energy coefficient c remains abstract here and is set to 3/50 by the cell certificate.
@@ -2170,6 +2402,8 @@ The energy fraction c is an unrestricted real value in the data; admissibility r
 
 Field `Breakdown.PieceWeights.cμ`: Fraction of the frequency seminorm retained in the multiplier estimate. Paper: Proposition B.1 and (B.20), p. 55 Source: [lean/CoerciveChallenge.lean:739-739](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L739).
 
+<a id="117"></a>
+
 ### 117. Signed membership of a mode piece
 
 `Breakdown.PieceWeights.sgn`: This is sgnp from the paragraph before (B.14): it assigns opposite signs to a mode set and its negative, and zero outside their union. The one-sided positive-frequency condition ensures those two sets are disjoint for admissible data.
@@ -2184,6 +2418,8 @@ Encoding for `Breakdown.PieceWeights.sgn` (2): Membership in an infinite Set is 
 
 The sign is +1 on Np, −1 on −Np outside Np, and zero elsewhere; admissibility makes Np and −Np disjoint. Paper: Definition of sgnp immediately before (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:744-744](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L744).
 
+<a id="118"></a>
+
 ### 118. Membership up to mode negation
 
 `Breakdown.PieceWeights.inPiece`: This tests whether a mode belongs to Np or to its negative. The coefficients in (B.16) use it to decide which modes receive a piece’s frequency gain and local losses.
@@ -2195,6 +2431,8 @@ The sign is +1 on Np, −1 on −Np outside Np, and zero elsewhere; admissibilit
 Encoding for `Breakdown.PieceWeights.inPiece` (1): It records support without the sign; the signed multiplier itself uses sgn.
 
 Clause 1 of `Breakdown.PieceWeights.inPiece`, lines 746-746: This tests whether a mode belongs to Np or to its negative. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:746-746](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L746).
+
+<a id="119"></a>
 
 ### 119. Couplings entering a mode piece
 
@@ -2210,6 +2448,8 @@ Encoding for `Breakdown.PieceWeights.fwdSum` (2): The bounds are indexed by the 
 
 Clause 1 of `Breakdown.PieceWeights.fwdSum`, lines 749-750: This sums the reference-mode majorants whose frequency shift carries the current mode into Np. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:749-750](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L749-L750).
 
+<a id="120"></a>
+
 ### 120. Couplings leaving a mode piece
 
 `Breakdown.PieceWeights.backSum`: For a chosen mode, this sums reference-mode majorants when subtracting the reference harmonic leaves Np. The piece coefficients use it to allocate losses at modes inside the piece.
@@ -2221,6 +2461,8 @@ Clause 1 of `Breakdown.PieceWeights.fwdSum`, lines 749-750: This sums the refere
 Encoding for `Breakdown.PieceWeights.backSum` (1): Whether the current mode is in Np is checked by the caller inward; backSum by itself does not impose membership.
 
 Clause 1 of `Breakdown.PieceWeights.backSum`, lines 753-754: For a chosen mode, this sums reference-mode majorants when subtracting the reference harmonic leaves Np. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:753-754](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L753-L754).
+
+<a id="121"></a>
 
 ### 121. Internal share of piece couplings
 
@@ -2234,6 +2476,8 @@ Encoding for `Breakdown.PieceWeights.inward` (1): The first membership branch ha
 
 Clause 1 of `Breakdown.PieceWeights.inward`, lines 757-758: This selects the complement-coupling sum at the representative of ±ι that lies in Np, and returns zero when neither representative lies there. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:757-758](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L757-L758).
 
+<a id="122"></a>
+
 ### 122. External share of piece couplings
 
 `Breakdown.PieceWeights.outward`: This adds the forward coupling sums from each of ±ι that lies outside Np. It charges reference-harmonic interactions to the external modes in the error terms of (B.16).
@@ -2246,6 +2490,8 @@ Encoding for `Breakdown.PieceWeights.outward` (1): The positive and negative rep
 
 Clause 1 of `Breakdown.PieceWeights.outward`, lines 761-762: This adds the forward coupling sums from each of ±ι that lies outside Np. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:761-762](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L761-L762).
 
+<a id="123"></a>
+
 ### 123. Total reference-gradient majorant
 
 `Breakdown.PieceWeights.harmonicSum`: This adds the majorants for all listed gradient modes of the reference profile. The velocity-piece coefficient uses this total when dividing derivative couplings into inward and outward losses.
@@ -2257,6 +2503,8 @@ Clause 1 of `Breakdown.PieceWeights.outward`, lines 761-762: This adds the forwa
 Encoding for `Breakdown.PieceWeights.harmonicSum` (1): The finite list includes the zero mode under admissibility, unlike ModeWeights.waves in the earlier mean/wave route.
 
 Clause 1 of `Breakdown.PieceWeights.harmonicSum`, lines 764-764: This adds the majorants for all listed gradient modes of the reference profile. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:764-764](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L764).
+
+<a id="124"></a>
 
 ### 124. Frequency of a multiplier piece
 
@@ -2272,6 +2520,8 @@ Encoding for `Breakdown.PieceWeights.frameFreq` (2): P > 0 is required by admiss
 
 Clause 1 of `Breakdown.PieceWeights.frameFreq`, lines 766-766: This is Ωp in (B.15) written for the direct frequency pair (n,k). Paper: (B.15) and the frequency seminorm immediately below it, p. 54 Source: [lean/CoerciveChallenge.lean:766-766](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L766).
 
+<a id="125"></a>
+
 ### 125. Derivative size of a piece weight
 
 `Breakdown.PieceWeights.wtGrad`: This is the derivative norm of a scalar piece weight. It enters the gradient budget in (B.19) and the transport losses described below (B.16).
@@ -2285,6 +2535,8 @@ Encoding for `Breakdown.PieceWeights.wtGrad` (1): Admissible piece weights are L
 Encoding for `Breakdown.PieceWeights.wtGrad` (2): The total fderiv value at spline knots is not a smoothness assertion and does not replace the Lipschitz hypothesis.
 
 Clause 1 of `Breakdown.PieceWeights.wtGrad`, lines 771-771: This is the derivative norm of a scalar piece weight. Paper: (B.16), p. 54, and (B.19), p. 55 Source: [lean/CoerciveChallenge.lean:771-771](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L771).
+
+<a id="126"></a>
 
 ### 126. Assigned curl-gradient energy
 
@@ -2300,6 +2552,8 @@ Encoding for `Breakdown.PieceWeights.shareHat` (2): The denominator scale is str
 
 Clause 1 of `Breakdown.PieceWeights.shareHat`, lines 774-778: This adds the shares of curl-gradient energy used by every active curl piece and its couplings. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:774-778](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L774-L778).
 
+<a id="127"></a>
+
 ### 127. Curl-mode coefficient before Z
 
 `Breakdown.PieceWeights.coefA`: This gives I′₁ + Z in (B.16): the base 1/4 and curl-piece frequency gains after transport, rotation and reference-harmonic losses. The full expression fills in coefficients that the paper deliberately does not print.
@@ -2314,6 +2568,8 @@ Encoding for `Breakdown.PieceWeights.coefA` (2): Strict positivity of share1, sh
 
 Clause 1 of `Breakdown.PieceWeights.coefA`, lines 781-792: This gives I′₁ + Z in (B.16): the base 1/4 and curl-piece frequency gains after transport, rotation and reference-harmonic losses. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:781-792](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L781-L792).
 
+<a id="128"></a>
+
 ### 128. Gradient-mode coefficient
 
 `Breakdown.PieceWeights.coefAA`: This is I₁ in (B.16), starting with Z − |∇²D|op − cw and subtracting the curl- and velocity-piece losses assigned to the gradient amplitude. The coefficient is allowed to be negative before the region and cell lower bounds are imposed.
@@ -2325,6 +2581,8 @@ Clause 1 of `Breakdown.PieceWeights.coefA`, lines 781-792: This gives I′₁ + 
 Encoding for `Breakdown.PieceWeights.coefAA` (1): The Hessian norm is the operator norm of the scalar conversion weight, not the component norm of the perturbation Hessian.
 
 Clause 1 of `Breakdown.PieceWeights.coefAA`, lines 795-801: This is I₁ in (B.16), starting with Z − |∇²D|op − cw and subtracting the curl- and velocity-piece losses assigned to the gradient amplitude. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:795-801](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L795-L801).
+
+<a id="129"></a>
 
 ### 129. Velocity-mode coefficient
 
@@ -2339,6 +2597,8 @@ Encoding for `Breakdown.PieceWeights.coefB` (1): Each eta is strictly positive u
 Encoding for `Breakdown.PieceWeights.coefB` (2): No sign is asserted by the definition; lower bounds for this coefficient belong to the later analytic and cell conditions.
 
 Clause 1 of `Breakdown.PieceWeights.coefB`, lines 804-815: This is I₀ in (B.16), combining the Z-Hessian loss with the retained velocity-frequency gains and all errors assigned to the velocity amplitude. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:804-815](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L804-L815).
+
+<a id="130"></a>
 
 ### 130. Five-term quadratic form for a mode
 
@@ -2356,6 +2616,8 @@ Clause 1 of `Breakdown.PieceWeights.modeDensity`, lines 818-818: Hessian coeffic
 
 Clause 2 of `Breakdown.PieceWeights.modeDensity`, lines 819-820: Curl, gradient and velocity slots of the five-term form. Paper: (B.16), p. 54 Source: [lean/CoerciveChallenge.lean:819-820](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L819-L820).
 
+<a id="131"></a>
+
 ### 131. Quadratic form on a Fourier mode
 
 `Breakdown.PieceWeights.modeTerm`: This evaluates the five-term form Iι using the amplitudes of the Fourier modes of v and its supplied first and second derivatives. The separate stretching expression J is added only in densityPos and densityNeg.
@@ -2370,6 +2632,8 @@ Encoding for `Breakdown.PieceWeights.modeTerm` (2): IsPerturbation, rather than 
 
 Clause 1 of `Breakdown.PieceWeights.modeTerm`, lines 822-827: This evaluates the five-term form Iι using the amplitudes of the Fourier modes of v and its supplied first and second derivatives. Paper: (B.16) and the unexpanded coefficient formulas described below it, p. 54 Source: [lean/CoerciveChallenge.lean:822-827](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L822-L827).
 
+<a id="132"></a>
+
 ### 132. Frequency seminorm squared
 
 `Breakdown.PieceWeights.seminormSq`: This is the nonnegative frequency seminorm defined after (B.15), summed over every velocity piece and every Fourier mode. The finite piece sum is outside the infinite mode sum, matching the paper’s piecewise weighting.
@@ -2383,6 +2647,8 @@ Encoding for `Breakdown.PieceWeights.seminormSq` (1): ENNReal.ofReal clips negat
 Encoding for `Breakdown.PieceWeights.seminormSq` (2): The extended-real value may be infinity; piece_multiplier_density proves it finite for admissible perturbations before real conversion.
 
 Clause 1 of `Breakdown.PieceWeights.seminormSq`, lines 829-832: This is the nonnegative frequency seminorm defined after (B.15), summed over every velocity piece and every Fourier mode. Paper: (B.15) and the frequency seminorm immediately below it, p. 54 Source: [lean/CoerciveChallenge.lean:829-832](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L829-L832).
+
+<a id="133"></a>
 
 ### 133. Multiplier defined by test pairings
 
@@ -2404,6 +2670,8 @@ Clause 2 of `Breakdown.PieceWeights.IsMultiplierField`, lines 840-842: Test-fiel
 
 Clause 3 of `Breakdown.PieceWeights.IsMultiplierField`, lines 843-847: Signed curl and velocity piece contributions, summed over Fourier modes. Paper: (B.14), p. 54 Source: [lean/CoerciveChallenge.lean:843-847](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L843-L847).
 
+<a id="134"></a>
+
 ### 134. Positive mass of the mode density
 
 `Breakdown.PieceWeights.densityPos`: This is the pointwise sum whose integral is I⁺ after (B.18). It adds the positive part of each Iι and the positive part of J, retaining the value infinity when needed.
@@ -2417,6 +2685,8 @@ Encoding for `Breakdown.PieceWeights.densityPos` (1): Positive parts are taken t
 Encoding for `Breakdown.PieceWeights.densityPos` (2): This definition does not form a potentially undefined difference of two infinite signed sums.
 
 Clause 1 of `Breakdown.PieceWeights.densityPos`, lines 849-852: This is the pointwise sum whose integral is I⁺ after (B.18). Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:849-852](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L849-L852).
+
+<a id="135"></a>
 
 ### 135. Negative mass of the mode density
 
@@ -2432,6 +2702,8 @@ Encoding for `Breakdown.PieceWeights.densityNeg` (2): It is not sufficient to wr
 
 Clause 1 of `Breakdown.PieceWeights.densityNeg`, lines 854-858: This is the pointwise sum whose integral is I⁻ after (B.18). Paper: (B.18) and the positive/negative integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:854-858](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L854-L858).
 
+<a id="136"></a>
+
 ### 136. Multiplier pairing after energy costs
 
 `Breakdown.PieceWeights.multiplierGap`: This is the left side of (B.20), using the piecewise frequency seminorm and leaving c abstract. It separates the fixed energy costs and the forcing-field pairings from the quantity available to dominate the density.
@@ -2445,6 +2717,8 @@ Encoding for `Breakdown.PieceWeights.multiplierGap` (1): The conversion of the f
 Encoding for `Breakdown.PieceWeights.multiplierGap` (2): The same multiplier is used in every pairing, which matters when the forcing-field terms cancel.
 
 Clause 1 of `Breakdown.PieceWeights.multiplierGap`, lines 860-864: This is the left side of (B.20), using the piecewise frequency seminorm and leaving c abstract. Paper: Proposition B.1 and (B.20), p. 55 Source: [lean/CoerciveChallenge.lean:860-864](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L860-L864).
+
+<a id="137"></a>
 
 ### 137. Admissible piecewise multiplier weights
 
@@ -2568,6 +2842,8 @@ Field `Breakdown.PieceWeights.IsAdmissible.convZ_decay`: Z and its first two der
 
 Field `Breakdown.PieceWeights.IsAdmissible.conv_le`: The coefficient I′₂ = 1 − shareHat − D is nonnegative for every mode and point. Paper: Nonnegativity of I′₂ from (B.16), p. 54, required in the admissibility paragraph, p. 55 Source: [lean/CoerciveChallenge.lean:934-934](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L934).
 
+<a id="138"></a>
+
 ### 138. Multiplier bound for piece weights
 
 `Breakdown.PieceWeights.piece_multiplier_density`: This is the strong C²-reference-profile version of Proposition B.1 for the printed piecewise multiplier data. It provides the multiplier, finite frequency energy, the stated norm bound and an extended-real form of (B.20).
@@ -2592,6 +2868,8 @@ Clause 3 of `Breakdown.PieceWeights.piece_multiplier_density`, lines 953-954: Th
 
 Clause 4 of `Breakdown.PieceWeights.piece_multiplier_density`, lines 955-958: Cross-added positive and negative density comparison. Paper: (B.20) and the signed-integral convention, p. 55 Source: [lean/CoerciveChallenge.lean:955-958](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L955-L958).
 
+<a id="139"></a>
+
 ### 139. Assemble the piecewise estimate
 
 `Breakdown.PieceWeights.multiplierInequality_of_pieceDensity`: This adds the piecewise multiplier bound to a supplied remainder-density bound and returns the abstract MultiplierInequality. It implements the cancellation of (B.20) with (B.21), while its target still uses the earlier ball L² certificate.
@@ -2614,6 +2892,8 @@ Clause 2 of `Breakdown.PieceWeights.multiplierInequality_of_pieceDensity`, lines
 
 Clause 3 of `Breakdown.PieceWeights.multiplierInequality_of_pieceDensity`, lines 996-997: Combined multiplier inequality with the common norm constant. Paper: Lemma B.2 and (B.21)-(B.22), p. 56 Source: [lean/CoerciveChallenge.lean:996-997](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/CoerciveChallenge.lean#L996-L997).
 
+<a id="140"></a>
+
 ### 140. Finite row seminorm
 
 `Breakdown.rowNorm`: This represents the finite-direction seminorm [F] in (7.17), with orthonormal row fields and separate squared-length weights. The paper absorbs each weight into its orthogonal field eₖ.
@@ -2627,6 +2907,8 @@ Encoding for `Breakdown.rowNorm` (1): The raw square root does not enforce nonne
 Encoding for `Breakdown.rowNorm` (2): rowCount may be zero, giving the zero seminorm. This does not remove the other certificate obligations.
 
 Clause 1 of `Breakdown.rowNorm`, lines 10-11: This represents the finite-direction seminorm [F] in (7.17), with orthonormal row fields and separate squared-length weights. Paper: (7.17), p. 32; (B.11), p. 53 Source: [lean/ExtendedCertificateChallenge.lean:10-11](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L10-L11).
+
+<a id="141"></a>
 
 ### 141. Approximate-profile residual
 
@@ -2643,6 +2925,8 @@ Encoding for `Breakdown.weakDefectField` (2): The supplied Hessian must satisfy 
 Encoding for `Breakdown.weakDefectField` (3): pressureGrad is a measurable field orthogonal to solenoidal tests, rather than a scalar pressure function differentiated here.
 
 Clause 1 of `Breakdown.weakDefectField`, lines 13-17: This builds the residual Fₐᵅ in (7.10), including the approximate force and a pressure-gradient representative. Paper: (7.1), p. 30; (7.10), p. 31 Source: [lean/ExtendedCertificateChallenge.lean:13-17](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L13-L17).
+
+<a id="142"></a>
 
 ### 142. Data for the extended certificate
 
@@ -2750,6 +3034,8 @@ Field `Breakdown.ExtendedCertificateData.stiffNorm`: The bound a∗ for the fram
 
 Field `Breakdown.ExtendedCertificateData.stiffOffset`: The joint offset bound o∗ for the complementary coordinates. Paper: (7.36), p. 34 Source: [lean/ExtendedCertificateChallenge.lean:66-66](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L66).
 
+<a id="143"></a>
+
 ### 143. Mixed box and ellipsoid
 
 `Breakdown.ExtendedCertificateData.params`: This is the set K in (7.29): coordinate intervals on J and a scaled Euclidean ball on its complement. It contains the zero vector when the coordinate radii are nonnegative, including when k is zero or some radii vanish.
@@ -2766,6 +3052,8 @@ Clause 1 of `Breakdown.ExtendedCertificateData.params`, lines 73-73: Separate in
 
 Clause 2 of `Breakdown.ExtendedCertificateData.params`, lines 74-74: The squared scaled-radius bound on the complementary coordinates. Paper: (7.29), p. 33 Source: [lean/ExtendedCertificateChallenge.lean:74-74](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L74).
 
+<a id="144"></a>
+
 ### 144. Reference-profile loss
 
 `Breakdown.ExtendedCertificateData.transferLoss`: This is ϑ in (7.20), the product of the full reference inverse bound c₁+c₀ and the profile-comparison error cᵣ. The strict bound ϑ<1 permits the comparison error to be absorbed.
@@ -2775,6 +3063,8 @@ Clause 2 of `Breakdown.ExtendedCertificateData.params`, lines 74-74: The squared
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/ExtendedStatement.lean:76-76](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedStatement.lean#L76).
 
 Clause 1 of `Breakdown.ExtendedCertificateData.transferLoss`, lines 76-76: This is ϑ in (7.20), the product of the full reference inverse bound c₁+c₀ and the profile-comparison error cᵣ. Paper: (7.20)–(7.21), p. 33 Source: [lean/ExtendedCertificateChallenge.lean:76-76](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L76).
+
+<a id="145"></a>
 
 ### 145. Residual row seminorm
 
@@ -2788,6 +3078,8 @@ Encoding for `Breakdown.ExtendedCertificateData.rows` (1): Finite L² rows and n
 
 Clause 1 of `Breakdown.ExtendedCertificateData.rows`, lines 78-78: This applies the certificate’s chosen finite row seminorm to F. Paper: (7.17), p. 32 Source: [lean/ExtendedCertificateChallenge.lean:78-78](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L78).
 
+<a id="146"></a>
+
 ### 146. Chosen residual field
 
 `Breakdown.ExtendedCertificateData.defect`: This evaluates the explicit residual Fₐᵅ at the parameter q, using the chosen weak Hessian, pressure representative and approximate force. Its finite H norm is an obligation in defect_l2.
@@ -2800,6 +3092,8 @@ Encoding for `Breakdown.ExtendedCertificateData.defect` (1): No continuity of th
 
 Clause 1 of `Breakdown.ExtendedCertificateData.defect`, lines 80-82: This evaluates the explicit residual Fₐᵅ at the parameter q, using the chosen weak Hessian, pressure representative and approximate force. Paper: (7.10), p. 31; (7.23), p. 33 Source: [lean/ExtendedCertificateChallenge.lean:80-82](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L80-L82).
 
+<a id="147"></a>
+
 ### 147. Required correction pins
 
 `Breakdown.ExtendedCertificateData.targetGap`: This is the paper’s ℓ̄(α), expressed as the prescribed total-profile pins minus the pins already contributed by Wₐᵅ. It is the value required of the correction in (7.12).
@@ -2811,6 +3105,8 @@ Clause 1 of `Breakdown.ExtendedCertificateData.defect`, lines 80-82: This evalua
 Encoding for `Breakdown.ExtendedCertificateData.targetGap` (1): Do not identify target itself with ℓ̄; the derivative pairing must be subtracted.
 
 Clause 1 of `Breakdown.ExtendedCertificateData.targetGap`, lines 84-85: This is the paper’s ℓ̄(α), expressed as the prescribed total-profile pins minus the pins already contributed by Wₐᵅ. Paper: (7.11)–(7.12), p. 31; (7.24), p. 33 Source: [lean/ExtendedCertificateChallenge.lean:84-85](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L84-L85).
+
+<a id="148"></a>
 
 ### 148. Corrected force coordinate
 
@@ -2826,6 +3122,8 @@ Encoding for `Breakdown.ExtendedCertificateData.adjustedMultiplier` (2): The adj
 
 Clause 1 of `Breakdown.ExtendedCertificateData.adjustedMultiplier`, lines 87-89: This forms the quantity inside the offset estimate (7.34) before subtracting dⱼαⱼ. Paper: (7.34), p. 34 Source: [lean/ExtendedCertificateChallenge.lean:87-89](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L87-L89).
 
+<a id="149"></a>
+
 ### 149. Adjoint pairing discrepancy
 
 `Breakdown.ExtendedCertificateData.actuatorAdjointError`: This is the vector ⟨b,ψα,ⱼ⟩H−Vⱼ used in (7.35). It measures how accurately the selected adjoint field reads out the intended column of the force-coordinate matrix.
@@ -2837,6 +3135,8 @@ Clause 1 of `Breakdown.ExtendedCertificateData.adjustedMultiplier`, lines 87-89:
 Encoding for `Breakdown.ExtendedCertificateData.actuatorAdjointError` (1): The field pairings need their L² hypotheses before the total Bochner integrals can be read as ordinary H inner products.
 
 Clause 1 of `Breakdown.ExtendedCertificateData.actuatorAdjointError`, lines 91-92: This is the vector ⟨b,ψα,ⱼ⟩H−Vⱼ used in (7.35). Paper: (7.31) and (7.35), p. 34 Source: [lean/ExtendedCertificateChallenge.lean:91-92](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L91-L92).
+
+<a id="150"></a>
 
 ### 150. Extended certificate conditions
 
@@ -3034,6 +3334,8 @@ Clause 84 of `Breakdown.IsExtendedCertificate`, lines 130-130: The first spatial
 
 Clause 85 of `Breakdown.IsExtendedCertificate`, lines 131-131: The supplied weak Hessian has a pointwise third-order decay bound beyond the two printed estimates in (7.8). Paper: §7.2, p. 31; additional explicit Hessian-decay condition Source: [lean/ExtendedCertificateChallenge.lean:131-131](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L131).
 
+<a id="151"></a>
+
 ### 151. An extended certificate exists
 
 `Breakdown.ExtendedCertificateHypothesis`: This existentially packages a parameter dimension, a complete data record and all extended certificate conditions. It is the premise of extended_certificate_orbit; it does not supply the numerical data or discharge their inequalities.
@@ -3045,6 +3347,8 @@ Clause 85 of `Breakdown.IsExtendedCertificate`, lines 131-131: The supplied weak
 Encoding for `Breakdown.ExtendedCertificateHypothesis` (1): The existential quantifier does not claim that a witness has been computed or checked.
 
 Clause 1 of `Breakdown.ExtendedCertificateHypothesis`, lines 227-228: This existentially packages a parameter dimension, a complete data record and all extended certificate conditions. Paper: Certificate definition at the end of §7.3, pp. 34–35; Theorem 7.1, p. 35 Source: [lean/ExtendedCertificateChallenge.lean:227-228](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L227-L228).
+
+<a id="152"></a>
 
 ### 152. Normalise the force weight
 
@@ -3058,6 +3362,8 @@ Encoding for `Breakdown.ExtendedCertificateData.withUnitWeight` (1): The transfo
 
 For ω≠0, reciprocal rescaling of the forcing fields and force coefficients sets ω to one and preserves their product in the equation. Paper: (7.10), p. 31; (7.14), p. 32; (7.30)–(7.37), p. 34; normalisation helper Source: [lean/ExtendedCertificateChallenge.lean:234-241](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L234-L241).
 
+<a id="153"></a>
+
 ### 153. Absorb the reference error
 
 `Breakdown.ExtendedCertificateData.atProfile`: This replaces the reference profile by the approximate profile after absorbing the comparison loss ϑ. It divides c₁, c₂, c₀ and δ₀ by 1−ϑ and each squared row-length weight by (1−ϑ)²; the final inverse allowance c_L is unchanged.
@@ -3069,6 +3375,8 @@ For ω≠0, reciprocal rescaling of the forcing fields and force coefficients se
 Encoding for `Breakdown.ExtendedCertificateData.atProfile` (1): The preservation theorem uses transfer_lt, so every division by 1−ϑ has a positive denominator.
 
 Clause 1 of `Breakdown.ExtendedCertificateData.atProfile`, lines 243-253: This replaces the reference profile by the approximate profile after absorbing the comparison loss ϑ. Paper: (7.19)–(7.21), pp. 32–33; (7.22), p. 33; normalisation helper Source: [lean/ExtendedCertificateChallenge.lean:243-253](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L243-L253).
+
+<a id="154"></a>
 
 ### 154. Force rescaling preserves conditions
 
@@ -3082,6 +3390,8 @@ Comparison for `Breakdown.isExtendedCertificate_withUnitWeight`: This is a certi
 
 Clause 1 of `Breakdown.isExtendedCertificate_withUnitWeight`, lines 257-258: This states that a valid extended certificate remains valid after the force weight is normalised to one. Paper: (7.10), p. 31; (7.14), p. 32; implementation normalisation, no separately numbered theorem Source: [lean/ExtendedCertificateChallenge.lean:257-258](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L257-L258).
 
+<a id="155"></a>
+
 ### 155. Reference transfer preserves conditions
 
 `Breakdown.isExtendedCertificate_atProfile`: This states that the reference-profile error can be absorbed into the certificate constants. Its input includes ϑ<1, the condition needed to replace the reference linearisation by the approximate-profile linearisation.
@@ -3093,6 +3403,8 @@ Clause 1 of `Breakdown.isExtendedCertificate_withUnitWeight`, lines 257-258: Thi
 Comparison for `Breakdown.isExtendedCertificate_atProfile`: The paper explains this transfer after (7.21); Lean states preservation of its entire data-and-condition record. The formulations are at different levels of detail.
 
 Clause 1 of `Breakdown.isExtendedCertificate_atProfile`, lines 261-262: This states that the reference-profile error can be absorbed into the certificate constants. Paper: Paragraph after (7.21), p. 33; implementation normalisation Source: [lean/ExtendedCertificateChallenge.lean:261-262](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L261-L262).
+
+<a id="156"></a>
 
 ### 156. A certificate gives a weak profile
 
@@ -3112,6 +3424,8 @@ Comparison for `Breakdown.extended_certificate_orbit`: The extended predicate ad
 
 Clause 1 of `Breakdown.extended_certificate_orbit`, lines 265-266: This exports weak-profile existence from an extended certificate. Paper: Theorem 7.1 and (7.38)–(7.39), p. 35 Source: [lean/ExtendedCertificateChallenge.lean:265-266](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCertificateChallenge.lean#L265-L266).
 
+<a id="157"></a>
+
 ### 157. Squared Hessian size
 
 `Breakdown.Coercive.secondDerivSq`: This is the sum of squares of all spatial Hessian entries, used to measure convergence of the smooth approximations. It is a pointwise Hessian norm, whereas the correction energy in (7.14) uses the squared Laplacian.
@@ -3123,6 +3437,8 @@ Clause 1 of `Breakdown.extended_certificate_orbit`, lines 265-266: This exports 
 Encoding for `Breakdown.Coercive.secondDerivSq` (1): Equality of integrated Hessian and Laplacian energies requires the analytic identities in the proof; it is not a pointwise definition here.
 
 Clause 1 of `Breakdown.Coercive.secondDerivSq`, lines 12-13: This is the sum of squares of all spatial Hessian entries, used to measure convergence of the smooth approximations. Paper: (B.16), p. 54; approximation step of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:12-13](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L12-L13).
+
+<a id="158"></a>
 
 ### 158. Base part of the mode density
 
@@ -3138,6 +3454,8 @@ Encoding for `Breakdown.Coercive.baseDensity` (2): The second derivatives of D a
 
 Clause 1 of `Breakdown.Coercive.baseDensity`, lines 15-19: This is the part of Iι in (B.16) before the λ and μ corrections are added. Paper: (B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:15-19](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L15-L19).
 
+<a id="159"></a>
+
 ### 159. Velocity-mode amplitude
 
 `Breakdown.Coercive.velAmp`: This is the Euclidean magnitude of the velocity mode v̂ι from (B.12). It supplies the order-zero argument in the mode quadratic form (B.16).
@@ -3151,6 +3469,8 @@ Encoding for `Breakdown.Coercive.velAmp` (1): The finite sum of squared complex 
 Encoding for `Breakdown.Coercive.velAmp` (2): The underlying mode integrals still require the admissible-field integrability hypotheses; the definition alone is total on arbitrary input fields.
 
 Clause 1 of `Breakdown.Coercive.velAmp`, lines 21-22: This is the Euclidean magnitude of the velocity mode v̂ι from (B.12). Paper: (B.12), p. 53; (B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:21-22](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L21-L22).
+
+<a id="160"></a>
 
 ### 160. Gradient-mode amplitude
 
@@ -3166,6 +3486,8 @@ Encoding for `Breakdown.Coercive.gradAmp` (2): The underlying mode integrals sti
 
 Clause 1 of `Breakdown.Coercive.gradAmp`, lines 24-25: This is the Euclidean magnitude of the matrix mode representing ∇v̂ι. Paper: (B.12), p. 53; (B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:24-25](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L24-L25).
 
+<a id="161"></a>
+
 ### 161. Vorticity-mode amplitude
 
 `Breakdown.Coercive.vortAmp`: This contracts the gradient mode to its curl and takes its magnitude. It is the primed order-one amplitude in Iι and the main amplitude in the λ multiplier gains.
@@ -3179,6 +3501,8 @@ Encoding for `Breakdown.Coercive.vortAmp` (1): The finite sum of squared complex
 Encoding for `Breakdown.Coercive.vortAmp` (2): The underlying mode integrals still require the admissible-field integrability hypotheses; the definition alone is total on arbitrary input fields.
 
 Clause 1 of `Breakdown.Coercive.vortAmp`, lines 27-28: This contracts the gradient mode to its curl and takes its magnitude. Paper: (B.16), p. 54; (B.14)–(B.15), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:27-28](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L27-L28).
+
+<a id="162"></a>
 
 ### 162. Hessian-mode amplitude
 
@@ -3194,6 +3518,8 @@ Encoding for `Breakdown.Coercive.secondDerivAmp` (2): The underlying mode integr
 
 Clause 1 of `Breakdown.Coercive.secondDerivAmp`, lines 30-31: This is the Euclidean magnitude of all entries of the second-derivative mode. Paper: (B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:30-31](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L30-L31).
 
+<a id="163"></a>
+
 ### 163. Vorticity-gradient amplitude
 
 `Breakdown.Coercive.vortGradAmp`: This takes the curl contraction of a second-derivative mode and measures all entries of the resulting gradient. It is the primed order-two amplitude in Iι.
@@ -3208,6 +3534,8 @@ Encoding for `Breakdown.Coercive.vortGradAmp` (2): The underlying mode integrals
 
 Clause 1 of `Breakdown.Coercive.vortGradAmp`, lines 33-34: This takes the curl contraction of a second-derivative mode and measures all entries of the resulting gradient. Paper: (B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:33-34](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L33-L34).
 
+<a id="164"></a>
+
 ### 164. Insert the five mode amplitudes
 
 `Breakdown.Coercive.modeVals`: This evaluates a scalar quadratic-form expression on the five derivative amplitudes used in (B.16). The argument order keeps the vorticity terms separate from the full gradient and Hessian terms.
@@ -3217,6 +3545,8 @@ Clause 1 of `Breakdown.Coercive.vortGradAmp`, lines 33-34: This takes the curl c
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/ExtendedCoerciveDefs.lean:36-39](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedCoerciveDefs.lean#L36-L39).
 
 Clause 1 of `Breakdown.Coercive.modeVals`, lines 36-39: This evaluates a scalar quadratic-form expression on the five derivative amplitudes used in (B.16). Paper: (B.16), p. 54; evaluation helper Source: [lean/ExtendedCoerciveChallenge.lean:36-39](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L36-L39).
+
+<a id="165"></a>
 
 ### 165. Signed split of the multiplier bound
 
@@ -3234,6 +3564,8 @@ Clause 1 of `Breakdown.Coercive.IsSplitLowerBound`, lines 42-43: The negative re
 
 The sum of the positive masses plus max(−X,0) is at most max(X,0) plus the negative masses. The negative mass of J may still be infinite at this stage. Paper: (B.20), p. 55; signed implementation form Source: [lean/ExtendedCoerciveChallenge.lean:44-48](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L44-L48).
 
+<a id="166"></a>
+
 ### 166. Interactions across a mode set
 
 `Breakdown.Coercive.edgeSum`: This sums harmonic interactions that leave a selected set Nₚ or its negative. These are the cross-mode errors in the λ and μ estimates described after (B.20).
@@ -3247,6 +3579,8 @@ Encoding for `Breakdown.Coercive.edgeSum` (1): The two branches select opposite 
 Encoding for `Breakdown.Coercive.edgeSum` (2): Only the supplied finite harmonic set is summed here; its coverage of the reference profile is imposed separately.
 
 Clause 1 of `Breakdown.Coercive.edgeSum`, lines 51-53: This sums harmonic interactions that leave a selected set Nₚ or its negative. Paper: Proof of Proposition B.1 after (B.20), pp. 55–56; no separately printed formula Source: [lean/ExtendedCoerciveChallenge.lean:51-53](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L51-L53).
+
+<a id="167"></a>
 
 ### 167. Mode-set square-sum norm
 
@@ -3262,6 +3596,8 @@ Encoding for `Breakdown.Coercive.pieceNorm` (2): At its proof uses, Fourier squa
 
 For a square-summable amplitude sequence, the formula gives its ℓ² norm restricted to Np∪−Np. Paper: Proof of Proposition B.1, pp. 55–56; block estimate helper Source: [lean/ExtendedCoerciveChallenge.lean:55-56](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L55-L56).
 
+<a id="168"></a>
+
 ### 168. Transport speed in a rotating frame
 
 `Breakdown.Coercive.frameSpeedSup`: This is the time-and-angle supremum of the transport velocity Wᵣ+y/2−νₚe_z×y. It gives the transport bound entering the errors in (B.16).
@@ -3275,6 +3611,8 @@ Encoding for `Breakdown.Coercive.frameSpeedSup` (1): The supremum is taken in �
 Encoding for `Breakdown.Coercive.frameSpeedSup` (2): The admissibility speed bounds are pointwise in time and angle and provide the required finite majorant.
 
 Clause 1 of `Breakdown.Coercive.frameSpeedSup`, lines 58-60: This is the time-and-angle supremum of the transport velocity Wᵣ+y/2−νₚe_z×y. Paper: Transport bounds in §B.2, pp. 53–54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:58-60](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L58-L60).
+
+<a id="169"></a>
 
 ### 169. Vorticity bound over time and angle
 
@@ -3290,6 +3628,8 @@ Encoding for `Breakdown.Coercive.vortSup` (2): The derivative is meaningful unde
 
 Clause 1 of `Breakdown.Coercive.vortSup`, lines 62-63: This is the real supremum of the vorticity of the reference profile over time and axial angle. Paper: Reference-profile bounds before (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:62-63](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L62-L63).
 
+<a id="170"></a>
+
 ### 170. Vorticity-gradient bound
 
 `Breakdown.Coercive.vortGradSup`: This is the real supremum of the operator norm of ∇curl Wᵣ over time and axial angle. The weak-Hessian route replaces this classical derivative by vortGradSupWith.
@@ -3304,6 +3644,8 @@ Encoding for `Breakdown.Coercive.vortGradSup` (2): The admissibility bound suppl
 
 Clause 1 of `Breakdown.Coercive.vortGradSup`, lines 65-66: This is the real supremum of the operator norm of ∇curl Wᵣ over time and axial angle. Paper: Reference-profile bounds before (B.16), p. 54; (B.18), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:65-66](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L65-L66).
 
+<a id="171"></a>
+
 ### 171. Positive vorticity-mode gain
 
 `Breakdown.Coercive.pieceEpsPos`: This is λₚ|Ωₚ(ι)| times the squared vorticity-mode amplitude on Nₚ∪−Nₚ. It is the positive contribution of a λ piece to the primed order-one coefficient in (B.16).
@@ -3316,6 +3658,8 @@ Encoding for `Breakdown.Coercive.pieceEpsPos` (1): The λ weights are nonnegativ
 
 Clause 1 of `Breakdown.Coercive.pieceEpsPos`, lines 69-72: This is λₚ|Ωₚ(ι)| times the squared vorticity-mode amplitude on Nₚ∪−Nₚ. Paper: (B.15)–(B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:69-72](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L69-L72).
 
+<a id="172"></a>
+
 ### 172. Vorticity cross-mode errors
 
 `Breakdown.Coercive.pieceEpsRestMode`: This records the negative interaction terms from one λ piece when reference-profile harmonics connect its modes to modes outside the piece. The four summands use the reference velocity, gradient, vorticity gradient and vorticity bounds.
@@ -3325,6 +3669,8 @@ Clause 1 of `Breakdown.Coercive.pieceEpsPos`, lines 69-72: This is λₚ|Ωₚ(�
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/ExtendedCoerciveDefs.lean:74-81](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedCoerciveDefs.lean#L74-L81).
 
 Clause 1 of `Breakdown.Coercive.pieceEpsRestMode`, lines 74-81: This records the negative interaction terms from one λ piece when reference-profile harmonics connect its modes to modes outside the piece. Paper: Terms omitted from (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:74-81](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L74-L81).
+
+<a id="173"></a>
 
 ### 173. Vorticity block errors
 
@@ -3338,6 +3684,8 @@ Encoding for `Breakdown.Coercive.pieceEpsBlock` (1): The real square sums and su
 
 Clause 1 of `Breakdown.Coercive.pieceEpsBlock`, lines 83-94: This bounds the remaining λ-piece terms by products of square-sum norms over its modes. Paper: Terms omitted from (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:83-94](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L83-L94).
 
+<a id="174"></a>
+
 ### 174. Positive velocity-mode gain
 
 `Breakdown.Coercive.pieceMuPos`: This is (1−cμ)μₚ|Ωₚ(ι)| times the squared velocity-mode amplitude. The fraction cμ of the same frequency seminorm is reserved on the left of (B.20).
@@ -3349,6 +3697,8 @@ Clause 1 of `Breakdown.Coercive.pieceEpsBlock`, lines 83-94: This bounds the rem
 Encoding for `Breakdown.Coercive.pieceMuPos` (1): Admissibility supplies 0<cμ<1 and nonnegative μ weights.
 
 Clause 1 of `Breakdown.Coercive.pieceMuPos`, lines 97-100: This is (1−cμ)μₚ|Ωₚ(ι)| times the squared velocity-mode amplitude. Paper: (B.15)–(B.16), p. 54; (B.20), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:97-100](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L97-L100).
+
+<a id="175"></a>
 
 ### 175. Velocity cross-mode errors
 
@@ -3362,6 +3712,8 @@ Encoding for `Breakdown.Coercive.pieceMuRestMode` (1): The division by ηₚ is 
 
 Clause 1 of `Breakdown.Coercive.pieceMuRestMode`, lines 103-110: This bounds the cross-mode transport and stretching terms for a μ piece. Paper: Terms omitted from (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:103-110](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L103-L110).
 
+<a id="176"></a>
+
 ### 176. Velocity block errors
 
 `Breakdown.Coercive.pieceMuBlock`: This collects the μ-piece transport, weight-gradient and frame-rotation errors using the mode-set norms. It is an intermediate bound before Young’s inequality distributes errors among the coefficients of (B.16).
@@ -3373,6 +3725,8 @@ Clause 1 of `Breakdown.Coercive.pieceMuRestMode`, lines 103-110: This bounds the
 Encoding for `Breakdown.Coercive.pieceMuBlock` (1): The pieceNorm square sums require the Fourier summability estimates at the point of use.
 
 Clause 1 of `Breakdown.Coercive.pieceMuBlock`, lines 112-117: This collects the μ-piece transport, weight-gradient and frame-rotation errors using the mode-set norms. Paper: Proof of Proposition B.1, pp. 55–56; no separately printed formula Source: [lean/ExtendedCoerciveChallenge.lean:112-117](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L112-L117).
+
+<a id="177"></a>
 
 ### 177. Sum of the positive piece gains
 
@@ -3386,6 +3740,8 @@ Encoding for `Breakdown.Coercive.piecePos` (1): The two piece families are finit
 
 Clause 1 of `Breakdown.Coercive.piecePos`, lines 119-121: This adds the λ and μ positive frequency gains for one mode. Paper: (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:119-121](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L119-L121).
 
+<a id="178"></a>
+
 ### 178. Base density and mode remainders
 
 `Breakdown.Coercive.pieceRest`: This combines the base quadratic density with all λ and μ cross-mode remainders for one mode. The positive frequency gains and block errors are carried separately until the signed bound is assembled.
@@ -3396,6 +3752,8 @@ Clause 1 of `Breakdown.Coercive.piecePos`, lines 119-121: This adds the λ and �
 
 Clause 1 of `Breakdown.Coercive.pieceRest`, lines 123-127: This combines the base quadratic density with all λ and μ cross-mode remainders for one mode. Paper: (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:123-127](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L123-L127).
 
+<a id="179"></a>
+
 ### 179. Sum of the block errors
 
 `Breakdown.Coercive.pieceBlock`: This adds the block errors over the finite λ and μ piece families. It completes the intermediate split used to prove the density lower bound in Proposition B.1.
@@ -3405,6 +3763,8 @@ Clause 1 of `Breakdown.Coercive.pieceRest`, lines 123-127: This combines the bas
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/ExtendedCoerciveDefs.lean:129-132](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedCoerciveDefs.lean#L129-L132).
 
 Clause 1 of `Breakdown.Coercive.pieceBlock`, lines 129-132: This adds the block errors over the finite λ and μ piece families. Paper: Proof of Proposition B.1, pp. 55–56; no separately printed formula Source: [lean/ExtendedCoerciveChallenge.lean:129-132](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L129-L132).
+
+<a id="180"></a>
 
 ### 180. Time derivative and similarity drift
 
@@ -3419,6 +3779,8 @@ Encoding for `Breakdown.Coercive.transportPart` (1): The source’s g denotes th
 Encoding for `Breakdown.Coercive.transportPart` (2): SmoothPerturbation provides genuine derivatives; at weak inputs g is independently linked through the perturbation contract.
 
 Clause 1 of `Breakdown.Coercive.transportPart`, lines 134-135: This is S⁻¹∂θv+v/2+(y·∇)v/2, the time-and-drift part of T_S. Paper: (7.1) and explanation after (7.4), p. 30 Source: [lean/ExtendedCoerciveChallenge.lean:134-135](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L134-L135).
+
+<a id="181"></a>
 
 ### 181. Smooth fields for approximation
 
@@ -3450,6 +3812,8 @@ Field `Breakdown.Coercive.IsSmoothPerturbation.time_derivatives_finite`: Every p
 
 Field `Breakdown.Coercive.IsSmoothPerturbation.transport_finite`: The combined time-and-drift term and all its spatial derivatives have finite squared period integral. Paper: (7.1), p. 30; Proposition B.1 approximation step, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:149-150](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L149-L150).
 
+<a id="182"></a>
+
 ### 182. Convergence of smooth approximations
 
 `Breakdown.Coercive.IsSmoothApproximation`: This specifies the convergence used to pass the multiplier identities to a weak perturbation in D_S. The gradients, full Hessians, weighted velocities and combined time-and-drift terms converge in their squared period integrals.
@@ -3472,6 +3836,8 @@ Clause 4 of `Breakdown.Coercive.IsSmoothApproximation`, lines 160-161: The veloc
 
 Clause 5 of `Breakdown.Coercive.IsSmoothApproximation`, lines 162-163: The combined time-and-drift terms converge in period L². Paper: Proposition B.1 approximation step, p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:162-163](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L162-L163).
 
+<a id="183"></a>
+
 ### 183. Every perturbation can be approximated
 
 `Breakdown.Coercive.SmoothApproximationHolds`: This is the proposition that every weak perturbation admits the smooth approximation just specified. It packages the density step invoked in the proof of Proposition B.1.
@@ -3483,6 +3849,8 @@ Clause 5 of `Breakdown.Coercive.IsSmoothApproximation`, lines 162-163: The combi
 Encoding for `Breakdown.Coercive.SmoothApproximationHolds` (1): A declaration ending in Holds here is a proposition definition, not an added axiom; its proof is supplied elsewhere in the library.
 
 Clause 1 of `Breakdown.Coercive.SmoothApproximationHolds`, lines 165-167: This is the proposition that every weak perturbation admits the smooth approximation just specified. Paper: Approximation step of Proposition B.1, p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:165-167](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L165-L167).
+
+<a id="184"></a>
 
 ### 184. Reference field with a weak Hessian
 
@@ -3512,6 +3880,8 @@ Field `Breakdown.CoerciveWeak.IsWeakSecondDerivState.secondDeriv_weak`: For each
 
 Field `Breakdown.CoerciveWeak.IsWeakSecondDerivState.decay`: The field, gradient and supplied Hessian obey uniform decay of orders one, two and three. Paper: (7.8), p. 31; additional Hessian bound for Proposition B.1 Source: [lean/ExtendedCoerciveChallenge.lean:184-185](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L184-L185).
 
+<a id="185"></a>
+
 ### 185. Extract a weak-Hessian profile state
 
 `Breakdown.CoerciveWeak.isWeakSecondDerivState_of_profile`: This fixes an admissible parameter and packages the approximate profile’s regularity, periodicity, divergence and weak-Hessian data. It passes from the family used in Section 7 to the single field required by the multiplier analysis.
@@ -3523,6 +3893,8 @@ Field `Breakdown.CoerciveWeak.IsWeakSecondDerivState.decay`: The field, gradient
 Comparison for `Breakdown.CoerciveWeak.isWeakSecondDerivState_of_profile`: This is an implementation helper assembling already supplied hypotheses at one parameter. It has no separately numbered paper theorem.
 
 Clause 1 of `Breakdown.CoerciveWeak.isWeakSecondDerivState_of_profile`, lines 187-201: This fixes an admissible parameter and packages the approximate profile’s regularity, periodicity, divergence and weak-Hessian data. Paper: §7.2, p. 31; Proposition B.1, p. 55; packaging helper Source: [lean/ExtendedCoerciveChallenge.lean:187-201](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L187-L201).
+
+<a id="186"></a>
 
 ### 186. Weak Hessian symmetry
 
@@ -3540,6 +3912,8 @@ Comparison for `Breakdown.CoerciveWeak.IsWeakSecondDerivState.secondDeriv_symm`:
 
 Clause 1 of `Breakdown.CoerciveWeak.IsWeakSecondDerivState.secondDeriv_symm`, lines 210-212: This states that the two spatial derivative slots of the supplied weak Hessian commute almost everywhere. Paper: Weak second derivatives in §7.2, p. 31; proof of Proposition B.1, pp. 55–56; unnumbered analytic identity Source: [lean/ExtendedCoerciveChallenge.lean:210-212](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L210-L212).
 
+<a id="187"></a>
+
 ### 187. Vorticity gradient from a Hessian
 
 `Breakdown.CoerciveWeak.vortGradMap`: This contracts a supplied Hessian into a linear map representing ∇curl Wᵣ. It provides the operator-norm input used in the weak version of the reference-profile bounds.
@@ -3551,6 +3925,8 @@ Clause 1 of `Breakdown.CoerciveWeak.IsWeakSecondDerivState.secondDeriv_symm`, li
 Encoding for `Breakdown.CoerciveWeak.vortGradMap` (1): The constructor is algebraic; its interpretation as a classical derivative is supplied by vortGradMap_secondDerivField under C² regularity.
 
 Clause 1 of `Breakdown.CoerciveWeak.vortGradMap`, lines 215-216: This contracts a supplied Hessian into a linear map representing ∇curl Wᵣ. Paper: Reference-profile bounds before (B.16), p. 54; (B.18), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:215-216](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L215-L216).
+
+<a id="188"></a>
 
 ### 188. Stretching with a weak Hessian
 
@@ -3564,6 +3940,8 @@ Encoding for `Breakdown.CoerciveWeak.stretchFormWith` (1): The physical meaning 
 
 Clause 1 of `Breakdown.CoerciveWeak.stretchFormWith`, lines 218-224: This is the stretching term J of (B.18), using the reference field’s first derivative and the supplied weak Hessian for ∇curl Wᵣ. Paper: (B.18), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:218-224](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L218-L224).
 
+<a id="189"></a>
+
 ### 189. Recover the classical stretching term
 
 `Breakdown.CoerciveWeak.stretchFormWith_secondDerivField`: This identifies the weak-Hessian stretching formula with the earlier formula when HW is chosen as the iterated derivative. The equality follows by unfolding the definitions.
@@ -3575,6 +3953,8 @@ Clause 1 of `Breakdown.CoerciveWeak.stretchFormWith`, lines 218-224: This is the
 Comparison for `Breakdown.CoerciveWeak.stretchFormWith_secondDerivField`: This is a definitional identity between two Lean representations of J. It is not a separate assertion made by the paper.
 
 Clause 1 of `Breakdown.CoerciveWeak.stretchFormWith_secondDerivField`, lines 226-227: This identifies the weak-Hessian stretching formula with the earlier formula when HW is chosen as the iterated derivative. Paper: (B.18), p. 55; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:226-227](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L226-L227).
+
+<a id="190"></a>
 
 ### 190. Recover the classical curl derivative
 
@@ -3590,6 +3970,8 @@ Comparison for `Breakdown.CoerciveWeak.vortGradMap_secondDerivField`: The paper 
 
 Clause 1 of `Breakdown.CoerciveWeak.vortGradMap_secondDerivField`, lines 229-231: This identifies the tensor contraction with the actual derivative of curl Wᵣ for a C² field. Paper: Reference-profile bounds before (B.16), p. 54; (B.18), p. 55; derivative identity Source: [lean/ExtendedCoerciveChallenge.lean:229-231](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L229-L231).
 
+<a id="191"></a>
+
 ### 191. Positive part of the weak density
 
 `Breakdown.CoerciveWeak.densityPosWith`: This sums the positive parts of the whole mode densities Iι and of the stretching term J. It is the integrand defining I⁺ for the weak-Hessian multiplier theorem.
@@ -3604,6 +3986,8 @@ Encoding for `Breakdown.CoerciveWeak.densityPosWith` (2): The positive part is t
 
 Clause 1 of `Breakdown.CoerciveWeak.densityPosWith`, lines 235-240: This sums the positive parts of the whole mode densities Iι and of the stretching term J. Paper: (B.16), p. 54; definition of I⁺ after (B.18), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:235-240](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L235-L240).
 
+<a id="192"></a>
+
 ### 192. Negative part of the weak density
 
 `Breakdown.CoerciveWeak.densityNegWith`: This sums the negative parts of the whole mode densities Iι and of J. It is the integrand defining I⁻, whose finiteness is needed before the signed density becomes an ordinary real integral.
@@ -3615,6 +3999,8 @@ Clause 1 of `Breakdown.CoerciveWeak.densityPosWith`, lines 235-240: This sums th
 Encoding for `Breakdown.CoerciveWeak.densityNegWith` (1): ENNReal.ofReal of the negated real expression is its negative part; no cancellation of infinities is built into the definition.
 
 Clause 1 of `Breakdown.CoerciveWeak.densityNegWith`, lines 242-247: This sums the negative parts of the whole mode densities Iι and of J. Paper: Definition of I⁻ after (B.18), p. 55; (B.21), p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:242-247](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L242-L247).
+
+<a id="193"></a>
 
 ### 193. Recover the classical positive density
 
@@ -3628,6 +4014,8 @@ Comparison for `Breakdown.CoerciveWeak.densityPosWith_secondDerivField`: This is
 
 Clause 1 of `Breakdown.CoerciveWeak.densityPosWith_secondDerivField`, lines 249-251: This identifies the pointwise integrand defining I⁺ with its earlier encoding when the supplied Hessian is the iterated derivative. Paper: Definition of I⁺ after (B.18), p. 55; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:249-251](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L249-L251).
 
+<a id="194"></a>
+
 ### 194. Recover the classical negative density
 
 `Breakdown.CoerciveWeak.densityNegWith_secondDerivField`: This identifies the pointwise integrand defining I⁻ with its earlier encoding when the supplied Hessian is the iterated derivative. The identity preserves the separate treatment of negative parts.
@@ -3639,6 +4027,8 @@ Clause 1 of `Breakdown.CoerciveWeak.densityPosWith_secondDerivField`, lines 249-
 Comparison for `Breakdown.CoerciveWeak.densityNegWith_secondDerivField`: This is a definitional compatibility statement between two Lean encodings of the negative density, with no separately numbered paper theorem.
 
 Clause 1 of `Breakdown.CoerciveWeak.densityNegWith_secondDerivField`, lines 254-256: This identifies the pointwise integrand defining I⁻ with its earlier encoding when the supplied Hessian is the iterated derivative. Paper: Definition of I⁻ after (B.18), p. 55; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:254-256](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L254-L256).
+
+<a id="195"></a>
 
 ### 195. Admissible multiplier weights
 
@@ -3764,6 +4154,8 @@ Field `Breakdown.CoerciveWeak.IsAdmissibleWeak.convZ_decay`: Z and its first two
 
 Field `Breakdown.CoerciveWeak.IsAdmissibleWeak.conv_le`: D plus the allocated Hessian-error share stays below one, leaving a nonnegative vorticity-gradient coefficient. Paper: Nonnegativity of the primed order-two coefficient before (B.19), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:329-329](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L329).
 
+<a id="196"></a>
+
 ### 196. Convert classical admissibility
 
 `Breakdown.CoerciveWeak.isAdmissibleWeak_of_isAdmissible`: This converts the classical multiplier-weight conditions into the weak-Hessian conditions for a C² reference field. The vorticity-gradient operator bound is transported through the curl-derivative identity. Its library counterpart takes the curl-derivative identity as an explicit premise, which the library proves separately.
@@ -3777,6 +4169,8 @@ Encoding for `Breakdown.CoerciveWeak.isAdmissibleWeak_of_isAdmissible` (1): The 
 Comparison for `Breakdown.CoerciveWeak.isAdmissibleWeak_of_isAdmissible`: The paper has one admissibility formulation. This Lean helper relates two representations and makes the C² condition for the classical derivative explicit.
 
 Clause 1 of `Breakdown.CoerciveWeak.isAdmissibleWeak_of_isAdmissible`, lines 332-336: This converts the classical multiplier-weight conditions into the weak-Hessian conditions for a C² reference field. Paper: Admissibility before (B.19), p. 55; representation conversion Source: [lean/ExtendedCoerciveChallenge.lean:332-336](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L332-L336).
+
+<a id="197"></a>
 
 ### 197. Weak multiplier-density statement
 
@@ -3798,6 +4192,8 @@ Clause 2 of `Breakdown.CoerciveWeak.PieceMultiplierDensityWeakHolds`, lines 358-
 
 Clause 3 of `Breakdown.CoerciveWeak.PieceMultiplierDensityWeakHolds`, lines 362-365: The multiplier gap bounds the signed mode-and-stretching density without subtracting infinities. Paper: (B.20), p. 55; signed implementation form Source: [lean/ExtendedCoerciveChallenge.lean:362-365](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L362-L365).
 
+<a id="198"></a>
+
 ### 198. Weak multiplier-density inequality
 
 `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak`: This states the assembled multiplier theorem for the weak-Hessian representation. It supplies the analytic Proposition B.1 step used by the subsequent coercivity conversion.
@@ -3811,6 +4207,8 @@ Encoding for `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak` (1): This prove
 Comparison for `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak`: The paper specialises the coefficient to 3/50 and describes particular harmonic and weight data. This theorem uses general admissible weights and explicit weak-Hessian representatives, with a signed ENNReal formulation of the density bound.
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak`, lines 367-367: This states the assembled multiplier theorem for the weak-Hessian representation. Paper: Proposition B.1 and (B.20), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:367-367](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L367).
+
+<a id="199"></a>
 
 ### 199. Weak vorticity-gradient bound
 
@@ -3826,6 +4224,8 @@ Encoding for `Breakdown.CoerciveWeak.vortGradSupWith` (2): The link between this
 
 Clause 1 of `Breakdown.CoerciveWeak.vortGradSupWith`, lines 371-372: This takes the time-and-angle supremum of the operator norm obtained by contracting the supplied Hessian. Paper: Reference-profile bounds before (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:371-372](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L371-L372).
 
+<a id="200"></a>
+
 ### 200. Recover the classical gradient bound
 
 `Breakdown.CoerciveWeak.vortGradSupWith_secondDerivField`: This identifies the weak-Hessian vorticity-gradient supremum with the earlier classical supremum for a C² reference field. It transports the derivative identity through the real supremum. Its library counterpart takes the curl-derivative identity as an explicit premise, which the library proves separately.
@@ -3840,6 +4240,8 @@ Comparison for `Breakdown.CoerciveWeak.vortGradSupWith_secondDerivField`: This i
 
 Clause 1 of `Breakdown.CoerciveWeak.vortGradSupWith_secondDerivField`, lines 374-376: This identifies the weak-Hessian vorticity-gradient supremum with the earlier classical supremum for a C² reference field. Paper: Reference-profile bounds before (B.16), p. 54; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:374-376](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L374-L376).
 
+<a id="201"></a>
+
 ### 201. Weak vorticity cross-mode errors
 
 `Breakdown.CoerciveWeak.pieceEpsRestModeWith`: This is the λ-piece cross-mode remainder with the supplied weak Hessian used for the vorticity-gradient mode. Its other three reference-field amplitudes are unchanged.
@@ -3849,6 +4251,8 @@ Clause 1 of `Breakdown.CoerciveWeak.vortGradSupWith_secondDerivField`, lines 374
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/ExtendedCoerciveDefs.lean:349-361](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedCoerciveDefs.lean#L349-L361).
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceEpsRestModeWith`, lines 380-392: This is the λ-piece cross-mode remainder with the supplied weak Hessian used for the vorticity-gradient mode. Paper: Error terms in (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:380-392](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L380-L392).
+
+<a id="202"></a>
 
 ### 202. Recover classical cross-mode errors
 
@@ -3862,6 +4266,8 @@ Comparison for `Breakdown.CoerciveWeak.pieceEpsRestModeWith_secondDerivField`: T
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceEpsRestModeWith_secondDerivField`, lines 394-396: This identifies the weak λ-piece mode remainder with the earlier one when the supplied Hessian is the iterated derivative. Paper: Error terms in (B.16), p. 54; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:394-396](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L394-L396).
 
+<a id="203"></a>
+
 ### 203. Weak vorticity block errors
 
 `Breakdown.CoerciveWeak.pieceEpsBlockWith`: This is the λ-piece block remainder with vortGradSupWith supplying the weak vorticity-gradient bound. The transport, rotation, weight-gradient and vorticity terms retain their previous form.
@@ -3873,6 +4279,8 @@ Clause 1 of `Breakdown.CoerciveWeak.pieceEpsRestModeWith_secondDerivField`, line
 Encoding for `Breakdown.CoerciveWeak.pieceEpsBlockWith` (1): Fourier summability and the pointwise majorants justify the real piece norms and suprema at the estimate’s use.
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceEpsBlockWith`, lines 398-412: This is the λ-piece block remainder with vortGradSupWith supplying the weak vorticity-gradient bound. Paper: Error terms in (B.16), p. 54; proof of Proposition B.1, pp. 55–56 Source: [lean/ExtendedCoerciveChallenge.lean:398-412](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L398-L412).
+
+<a id="204"></a>
 
 ### 204. Recover classical vorticity blocks
 
@@ -3888,6 +4296,8 @@ Comparison for `Breakdown.CoerciveWeak.pieceEpsBlockWith_secondDerivField`: This
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceEpsBlockWith_secondDerivField`, lines 414-416: This identifies the weak λ-piece block formula with the earlier classical formula for a C² reference field. Paper: Error terms in (B.16), p. 54; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:414-416](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L414-L416).
 
+<a id="205"></a>
+
 ### 205. Weak base density and remainders
 
 `Breakdown.CoerciveWeak.pieceRestWith`: This combines the base density with weak-Hessian λ mode errors and the unchanged μ mode errors. It is the per-mode remainder in the weak density-passage argument.
@@ -3898,6 +4308,8 @@ Clause 1 of `Breakdown.CoerciveWeak.pieceEpsBlockWith_secondDerivField`, lines 4
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceRestWith`, lines 420-426: This combines the base density with weak-Hessian λ mode errors and the unchanged μ mode errors. Paper: (B.16), p. 54; approximation step of Proposition B.1, p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:420-426](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L420-L426).
 
+<a id="206"></a>
+
 ### 206. Sum of the weak block errors
 
 `Breakdown.CoerciveWeak.pieceBlockWith`: This sums all λ block errors with the supplied weak Hessian and all μ block errors. It is the block part of the signed split used after approximation.
@@ -3907,6 +4319,8 @@ Clause 1 of `Breakdown.CoerciveWeak.pieceRestWith`, lines 420-426: This combines
 **Library.** An identical source definition occurs at: [lean/Breakdown/Cert/ExtendedCoerciveDefs.lean:391-395](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/Cert/ExtendedCoerciveDefs.lean#L391-L395).
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceBlockWith`, lines 428-432: This sums all λ block errors with the supplied weak Hessian and all μ block errors. Paper: Approximation step of Proposition B.1, p. 56; error terms of (B.16), p. 54 Source: [lean/ExtendedCoerciveChallenge.lean:428-432](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L428-L432).
+
+<a id="207"></a>
 
 ### 207. Recover classical mode remainders
 
@@ -3919,6 +4333,8 @@ Clause 1 of `Breakdown.CoerciveWeak.pieceBlockWith`, lines 428-432: This sums al
 Comparison for `Breakdown.CoerciveWeak.pieceRestWith_secondDerivField`: This is a definitional compatibility lemma for two Lean encodings of the mode remainder. It has no separately numbered paper statement.
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceRestWith_secondDerivField`, lines 434-436: This identifies the summed weak-Hessian mode remainder with the earlier remainder after substituting the iterated derivative. Paper: (B.16), p. 54; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:434-436](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L434-L436).
+
+<a id="208"></a>
 
 ### 208. Recover classical block remainders
 
@@ -3933,6 +4349,8 @@ Encoding for `Breakdown.CoerciveWeak.pieceBlockWith_secondDerivField` (1): The *
 Comparison for `Breakdown.CoerciveWeak.pieceBlockWith_secondDerivField`: This is a compatibility lemma for the aggregate block remainder, with C² needed for its classical vorticity-gradient bound. It is not a separate paper theorem.
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceBlockWith_secondDerivField`, lines 438-440: This identifies the total weak-Hessian block remainder with the earlier one for a C² reference field. Paper: (B.16), p. 54; representation identity Source: [lean/ExtendedCoerciveChallenge.lean:438-440](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L438-L440).
+
+<a id="209"></a>
 
 ### 209. Existence of the multiplier field
 
@@ -3952,6 +4370,8 @@ Clause 1 of `Breakdown.CoerciveWeak.PieceFieldExistsWeakHolds`, lines 445-447: A
 
 Clause 2 of `Breakdown.CoerciveWeak.PieceFieldExistsWeakHolds`, lines 448-450: The frequency seminorm is finite and an L² multiplier with the required quantitative bound exists. Paper: Multiplier existence and norm bound in Proposition B.1, p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:448-450](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L448-L450).
 
+<a id="210"></a>
+
 ### 210. Pass the density bound to a limit
 
 `Breakdown.CoerciveWeak.PieceDensityPassageWeakHolds`: This is the approximation step that carries the smooth multiplier estimate to a weak perturbation. Given a convergent smooth sequence and an admissible right-hand side, it produces the signed lower bound before Young’s inequality absorbs the remainder products.
@@ -3968,6 +4388,8 @@ Encoding for `Breakdown.CoerciveWeak.PieceDensityPassageWeakHolds` (3): This is 
 
 Clause 1 of `Breakdown.CoerciveWeak.PieceDensityPassageWeakHolds`, lines 452-470: This is the approximation step that carries the smooth multiplier estimate to a weak perturbation. Paper: Approximation step in the proof of Proposition B.1, p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:452-470](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L452-L470).
 
+<a id="211"></a>
+
 ### 211. Absorb the remainder products
 
 `Breakdown.CoerciveWeak.PieceAbsorbStepWeakHolds`: This packages the Young-inequality step that distributes the cross-mode and block errors into the final coefficients Iι. It converts the intermediate signed split into the positive/negative density inequality of (B.20).
@@ -3982,6 +4404,8 @@ Encoding for `Breakdown.CoerciveWeak.PieceAbsorbStepWeakHolds` (2): This is a pr
 
 Clause 1 of `Breakdown.CoerciveWeak.PieceAbsorbStepWeakHolds`, lines 472-482: This packages the Young-inequality step that distributes the cross-mode and block errors into the final coefficients Iι. Paper: Last step in the proof of Proposition B.1, p. 56; (B.20), p. 55 Source: [lean/ExtendedCoerciveChallenge.lean:472-482](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L472-L482).
 
+<a id="212"></a>
+
 ### 212. Assemble the weak multiplier estimate
 
 `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak_of_nodes`: This combines multiplier existence, smooth approximation, passage to the limit and absorption of the error products. These four nodes supply the complete statement PieceMultiplierDensityWeakHolds.
@@ -3995,6 +4419,8 @@ Encoding for `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak_of_nodes` (1): T
 Comparison for `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak_of_nodes`: This theorem decomposes the proof of Proposition B.1 into four formal obligations. It is an assembly implication, rather than the paper’s final theorem statement alone.
 
 Clause 1 of `Breakdown.CoerciveWeak.pieceMultiplierDensityWeak_of_nodes`, lines 484-486: This combines multiplier existence, smooth approximation, passage to the limit and absorption of the error products. Paper: Proof of Proposition B.1, pp. 55–56; formal assembly Source: [lean/ExtendedCoerciveChallenge.lean:484-486](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L484-L486).
+
+<a id="213"></a>
 
 ### 213. Coercivity with residual rows
 
@@ -4014,6 +4440,8 @@ Clause 1 of `Breakdown.CoerciveWeak.ExtendedCoerciveClause`, lines 499-503: The 
 
 Clause 2 of `Breakdown.CoerciveWeak.ExtendedCoerciveClause`, lines 504-505: The weighted correction-and-force norm is bounded by the full residual, finite rows and pin costs. Paper: (7.18), p. 32 Source: [lean/ExtendedCoerciveChallenge.lean:504-505](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L504-L505).
 
+<a id="214"></a>
+
 ### 214. Extract the coercive estimate
 
 `Breakdown.CoerciveWeak.extendedCoerciveClause_of_isExtendedCertificate`: This reads the coercive field from a complete extended certificate. It lets the multiplier argument use the isolated estimate (7.18) without passing the other certificate conditions.
@@ -4025,6 +4453,8 @@ Clause 2 of `Breakdown.CoerciveWeak.ExtendedCoerciveClause`, lines 504-505: The 
 Comparison for `Breakdown.CoerciveWeak.extendedCoerciveClause_of_isExtendedCertificate`: This is a projection of an already assumed certificate condition. It does not prove (7.18) from numerical data or from the other certificate conditions.
 
 Clause 1 of `Breakdown.CoerciveWeak.extendedCoerciveClause_of_isExtendedCertificate`, lines 507-508: This reads the coercive field from a complete extended certificate. Paper: (7.18), p. 32; field-projection helper Source: [lean/ExtendedCoerciveChallenge.lean:507-508](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L507-L508).
+
+<a id="215"></a>
 
 ### 215. The row expression is nonnegative
 
@@ -4042,6 +4472,8 @@ Comparison for `Breakdown.CoerciveWeak.rows_nonneg`: The paper treats [F] as a s
 
 Clause 1 of `Breakdown.CoerciveWeak.rows_nonneg`, lines 511-511: This records nonnegativity of the square-root expression used for [F]. Paper: (7.17)–(7.18), p. 32; scalar helper Source: [lean/ExtendedCoerciveChallenge.lean:511-511](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L511).
 
+<a id="216"></a>
+
 ### 216. The parameter set contains zero
 
 `Breakdown.CoerciveWeak.zero_mem_params`: This proves the origin belongs to the mixed set K when the separate coordinate radii are nonnegative. It is used to recover global scalar positivity from conditions that were written parameterwise.
@@ -4058,6 +4490,8 @@ Comparison for `Breakdown.CoerciveWeak.zero_mem_params`: The paper says the set 
 
 Clause 1 of `Breakdown.CoerciveWeak.zero_mem_params`, lines 514-515: This proves the origin belongs to the mixed set K when the separate coordinate radii are nonnegative. Paper: (7.29), p. 33; first sentence of p. 34 Source: [lean/ExtendedCoerciveChallenge.lean:514-515](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L514-L515).
 
+<a id="217"></a>
+
 ### 217. Every forcing field has finite norm
 
 `Breakdown.CoerciveWeak.actuator_finite`: This extracts finite period L² norm for each forcing field from the aggregate bound (7.9). The finite ENNReal upper bound prevents an infinite individual norm from being hidden by a later real conversion.
@@ -4069,6 +4503,8 @@ Clause 1 of `Breakdown.CoerciveWeak.zero_mem_params`, lines 514-515: This proves
 Comparison for `Breakdown.CoerciveWeak.actuator_finite`: This isolates a direct consequence of the aggregate norm bound and the paper’s bᵢ∈H assumption. It is an implementation finiteness lemma, with no separately numbered paper statement.
 
 Clause 1 of `Breakdown.CoerciveWeak.actuator_finite`, lines 522-525: This extracts finite period L² norm for each forcing field from the aggregate bound (7.9). Paper: (7.9), p. 31; finiteness helper Source: [lean/ExtendedCoerciveChallenge.lean:522-525](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L522-L525).
+
+<a id="218"></a>
 
 ### 218. Multiplier estimate with row terms
 
@@ -4094,6 +4530,8 @@ Field `Breakdown.CoerciveWeak.RowMultiplierInequality.a_nonneg`: The multiplier-
 
 Field `Breakdown.CoerciveWeak.RowMultiplierInequality.bound`: For each admissible equation, an L² multiplier and nonnegative auxiliary size satisfy the norm bound and the quadratic estimate with rows and pins. Paper: Combined inequalities in the proof of Lemma B.2, p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:534-544](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L534-L544).
 
+<a id="219"></a>
+
 ### 219. Rows give the a priori estimate
 
 `Breakdown.CoerciveWeak.extendedCoerciveClause_of_rowMultiplierInequality`: This converts the quadratic multiplier estimate into (7.18) by the period Cauchy–Schwarz inequality and the scalar argument of Lemma B.2. The coefficient comparisons require a/√c≤c₁ and √(t/c)≤c₂.
@@ -4105,6 +4543,8 @@ Field `Breakdown.CoerciveWeak.RowMultiplierInequality.bound`: For each admissibl
 Comparison for `Breakdown.CoerciveWeak.extendedCoerciveClause_of_rowMultiplierInequality`: This is the parameter-uniform scalar implication behind Lemma B.2, allowing general c,t and weighted orthonormal rows. The paper displays the specialised constants c=3/50 and t=1000.
 
 Clause 1 of `Breakdown.CoerciveWeak.extendedCoerciveClause_of_rowMultiplierInequality`, lines 546-548: This converts the quadratic multiplier estimate into (7.18) by the period Cauchy–Schwarz inequality and the scalar argument of Lemma B.2. Paper: Lemma B.2 and (B.22), p. 56; (7.18), p. 32 Source: [lean/ExtendedCoerciveChallenge.lean:546-548](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L546-L548).
+
+<a id="220"></a>
 
 ### 220. The remaining density lower bound
 
@@ -4126,6 +4566,8 @@ Clause 2 of `Breakdown.CoerciveWeak.RowRestClause`, lines 577-578: The integrate
 
 Clause 3 of `Breakdown.CoerciveWeak.RowRestClause`, lines 579-588: The weighted coefficient penalty cω²|κ|², minus the actuator pairing and quadratic row and pin penalties, lies below the signed density integral. Paper: (B.21), p. 56; signed implementation form Source: [lean/ExtendedCoerciveChallenge.lean:579-588](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L579-L588).
 
+<a id="221"></a>
+
 ### 221. Combine the two density bounds
 
 `Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity`: This combines the weak multiplier theorem with RowRestClause and cancels their common signed densities. It gives the quadratic estimate used by Lemma B.2, with a multiplier-norm constant that is uniform in the parameter.
@@ -4141,6 +4583,8 @@ Encoding for `Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity` (2
 Comparison for `Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity`: The paper combines the specialised density bounds inside the proof of Lemma B.2. This theorem isolates that combination for general coefficients, explicit weak-Hessian data and parameter-dependent weights.
 
 Clause 1 of `Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity`, lines 590-607: This combines the weak multiplier theorem with RowRestClause and cancels their common signed densities. Paper: (B.20)–(B.21), pp. 55–56; proof of Lemma B.2, p. 56 Source: [lean/ExtendedCoerciveChallenge.lean:590-607](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/ExtendedCoerciveChallenge.lean#L590-L607).
+
+<a id="222"></a>
 
 ### 222. Piece estimates give coercivity
 

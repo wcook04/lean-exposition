@@ -36,9 +36,11 @@ replay, and validation of numerical data are separate results, and §5 says
 which of them have been obtained.
 <!-- /passage:front -->
 
+<a id="1"></a>
+
 ## 1. The equations and the Clay conclusions
 
-<!-- passage:sec-1-the-equations-and-the-clay-conclusions -->
+<!-- passage:sec-1 -->
 
 The statement file [`Challenge.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Challenge.lean) uses Mathlib derivatives on
 `EuclideanSpace ℝ (Fin 3)`. `IsSmoothSolution` asks for joint smoothness on
@@ -78,11 +80,13 @@ Sources: [`Challenge.lean:10–45`](https://github.com/tristanbuckmaster/navier-
 [official Clay statement, (4)–(11), (C), (D), and Errata](https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf).
 This implication is a mathematical interpretation of the definitions, not
 a newly checked Lean translation of Fefferman.
-<!-- /passage:sec-1-the-equations-and-the-clay-conclusions -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. A profile gives breakdown
 
-<!-- passage:sec-2-a-profile-gives-breakdown -->
+<!-- passage:sec-2 -->
 
 `PeriodicSimilarityProfileExists` requires smooth $W(s,y)$ and $q(s,y)$,
 a positive period $P$, a linear isometric equivalence $R$, and a finite
@@ -249,11 +253,13 @@ along a whole line, so $a\mapsto h_a(0)$ is injective and these three
 directions grow by the factor $e^{S/2}>1$ each period. So
 $\dim E\ge3$. This is a consistency check on the spectral argument and a
 lower bound only; the paper does not compute the codimension.
-<!-- /passage:sec-2-a-profile-gives-breakdown -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. A certificate gives a profile
 
-<!-- passage:sec-3-a-certificate-gives-a-profile -->
+<!-- passage:sec-3 -->
 
 **`certificate_orbit` and `extended_certificate_orbit`.** Their stated
 output is weaker than Theorem 7.1's output: they return abstract weak-profile
@@ -495,11 +501,13 @@ exterior conditions, so the empty mesh moves all the work to the exterior and
 removes none of it. Whether a complete certificate with $k=0$ and no cells can
 exist is open. These deductions are checked by hand; their Lean probes do
 not all compile yet.
-<!-- /passage:sec-3-a-certificate-gives-a-profile -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. The outstanding certificate bridge
 
-<!-- passage:sec-4-the-outstanding-certificate-bridge -->
+<!-- passage:sec-4 -->
 
 The required implication is
 
@@ -532,11 +540,13 @@ has to establish for the implication above to hold: every field of
 natural implementation would check too little, a data schema that can be
 written before release, and a plan for checking the certificate
 independently of the authors' program.
-<!-- /passage:sec-4-the-outstanding-certificate-bridge -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. Checking workflow and status
 
-<!-- passage:sec-5-checking-workflow-and-status -->
+<!-- passage:sec-5 -->
 
 Our [workflow](https://github.com/wcook04/proof-reader/blob/claude/navier-stokes-20261120/.github/workflows/navier-stokes-comparator.yml)
 builds the authors' package at the pinned commit with Lean and Mathlib 4.33.1,
@@ -623,11 +633,13 @@ stopped every call with exit code 2 because the external checkers were not on
 the runner's PATH while the job still showed green. The workflow now puts the
 toolchain directory on PATH, stops if a checker is missing, and fails unless
 the control is rejected and every positive comparison accepted.
-<!-- /passage:sec-5-checking-workflow-and-status -->
+<!-- /passage:sec-5 -->
+
+<a id="6"></a>
 
 ## 6. Historical scope
 
-<!-- passage:sec-6-historical-scope -->
+<!-- passage:sec-6 -->
 
 This is an unforced smooth-data claim. The
 [8 September 2026 announcement](https://openai.com/index/navier-stokes-solution/)
@@ -655,5 +667,5 @@ broadly clear strategy (a numerically built approximate discretely
 self-similar solution, made exact by rigorous perturbation theory), and says
 that a professionally written proof still needs more work. The third is
 Alpöge's Lean-only proof of the Generalized Riemann Hypothesis.
-<!-- /passage:sec-6-historical-scope -->
+<!-- /passage:sec-6 -->
 

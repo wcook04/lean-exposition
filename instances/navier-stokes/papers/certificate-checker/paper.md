@@ -30,9 +30,11 @@ implication requires, read from the Lean source, so that the program can be
 judged against it when it appears.
 <!-- /passage:front -->
 
+<a id="1"></a>
+
 ## 1. The size of the predicate
 
-<!-- passage:sec-1-the-size-of-the-predicate -->
+<!-- passage:sec-1 -->
 
 `CellSystemCondition` has fifteen fields over seven data arguments. Tracing
 them through the definitions they use reaches 176 local predicate
@@ -47,11 +49,13 @@ Two counts from the Lean structures help with planning a parser: the five
 statement files declare 228 structures with 2,172 direct fields. Many fields
 are functions, sets or proofs, so this is an inventory of the interface, not
 of the numbers in the file.
-<!-- /passage:sec-1-the-size-of-the-predicate -->
+<!-- /passage:sec-1 -->
+
+<a id="2"></a>
 
 ## 2. Where a natural implementation checks too little
 
-<!-- passage:sec-2-where-a-natural-implementation-checks-too-little -->
+<!-- passage:sec-2 -->
 
 Each item below follows from a definition in the source. None is a claim
 that the authors' program makes the mistake; they are the tests to run on it.
@@ -153,11 +157,13 @@ transports the support object across the parameter set. On this path
 fitted adjoint set empty, so the fitted bounds hold vacuously. The step
 profile's tail condition reduces to the last cell polynomial being identically
 one.
-<!-- /passage:sec-2-where-a-natural-implementation-checks-too-little -->
+<!-- /passage:sec-2 -->
+
+<a id="3"></a>
 
 ## 3. What the library already proves, and what it takes as input
 
-<!-- passage:sec-3-what-the-library-already-proves-and-what-it-takes-as-input -->
+<!-- passage:sec-3 -->
 
 Much of the infinite and analytic content is proved in Lean, with finite data
 as input: the extension of checked finite bases to infinite orthonormal ones,
@@ -174,11 +180,13 @@ found no closed proofs of them under those names, so the bridge from a
 rational representation to these properties is a decoder obligation unless
 it is proved. `ExtendSegmentStatement` is declared in
 [`ReductionPointwiseDefs.lean`](https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/FracCell/ReductionPointwiseDefs.lean) and neither proved nor used.
-<!-- /passage:sec-3-what-the-library-already-proves-and-what-it-takes-as-input -->
+<!-- /passage:sec-3 -->
+
+<a id="4"></a>
 
 ## 4. A schema before the release
 
-<!-- passage:sec-4-a-schema-before-the-release -->
+<!-- passage:sec-4 -->
 
 Appendix B.1 gives mathematical representations, not a file format. The
 missing choices are concrete: coefficient encodings, tensor order, sparse
@@ -206,11 +214,13 @@ field cost about $4bHC(d_r+1)(d_\eta+1)$ bytes for $H$ harmonics, $C$
 rectangles, bidegree $(d_r,d_\eta)$ and $b$ bytes per real number; 128
 harmonics, 256 rectangles, bidegree 12 and 16 bytes give 338 MiB before
 pressure, auxiliary fields and matrices. That is a scenario, not an estimate.
-<!-- /passage:sec-4-a-schema-before-the-release -->
+<!-- /passage:sec-4 -->
+
+<a id="5"></a>
 
 ## 5. Three ways to check it
 
-<!-- passage:sec-5-three-ways-to-check-it -->
+<!-- passage:sec-5 -->
 
 | Route | What it adds | Rough effort | What it leaves open |
 |---|---|---|---|
@@ -245,11 +255,13 @@ $$
 On the test field $W=(-y,x,0)e^{-|x|^2}$ the residual norm is about 6.145 and
 the bound gives 6.079. Applied to the certificate it must account for the
 finite-dimensional force and for the interfaces between spline pieces.
-<!-- /passage:sec-5-three-ways-to-check-it -->
+<!-- /passage:sec-5 -->
+
+<a id="6"></a>
 
 ## 6. Order of work
 
-<!-- passage:sec-6-order-of-work -->
+<!-- passage:sec-6 -->
 
 Before the release: the conventions of §4, sparse indexing, polynomial
 identities and joins, the witness checks of §5, and receipts that name for
@@ -271,7 +283,7 @@ values and tolerances, recomputing the profile is a research project, and a
 failure to find it would say little. One coarse profile in the stated
 representation, with its residual recipe, would make independent residual
 checks possible before the full certificate.
-<!-- /passage:sec-6-order-of-work -->
+<!-- /passage:sec-6 -->
 
 ## Precedents
 
