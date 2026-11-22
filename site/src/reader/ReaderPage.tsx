@@ -833,10 +833,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, [pin, pinWithoutLean, statements]);
 
   /** Let go here, for a step on to something else in the paper. */
-  const releaseInPlace = useCallback(() => {
+  const releaseInPlace = useCallback((followingAt?: string) => {
     const here = hereRef.current;
     writeEntry(OPENED, undefined);
-    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined }, { replace: true });
+    if (here.node || here.at || here.decl) {
+      if (followingAt) selfAt.current = followingAt;
+      navigate({ ...here, node: undefined, at: followingAt, decl: undefined, declModule: undefined }, { replace: true });
+    }
   }, []);
 
   /** What the entry about to be pushed will remember about how it was reached. */
@@ -1325,10 +1328,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (by: 1 | -1) => {
       // Between statements the step starts from where the reader is, not from the paper's start.
       const at = signals.part.get();
-      const from = currentSegment.current;
+      const pinned = pinRef.current?.tie;
+      const from = pinned == null ? currentSegment.current : ties.segmentsOf[pinned][0];
       const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.stops.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.stops].reverse().find((t) => statements.partOf(t) < at) ?? null);
       if (next === null) return;
-      if (pinRef.current) releaseInPlace();
+      if (pinRef.current) releaseInPlace(ties.index.ties[next].at);
       stepped.current = true;
       current.current = next;
       currentSegment.current = ties.segmentsOf[next][0];
@@ -1947,7 +1951,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
             </span>
           )}
-          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
+          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {mid && (
             <button
               type="button"
@@ -2226,8 +2230,9 @@ function Crumbs({ signals, outline, place, phone, hint, phrases, onJump }: { sig
 }
 
 /** "12 of 86" between two arrows: the tied statements, one at a time. j and k do the same. */
-function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties: TieModel; onStep(by: 1 | -1): void }) {
-  const { tie } = useSignal(signals.follow);
+function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignals; ties: TieModel; pinned?: number | null; onStep(by: 1 | -1): void }) {
+  const followed = useSignal(signals.follow);
+  const tie = pinned ?? followed.tie;
   const place = tie === null ? -1 : ties.place[tie];
   const arrow = (d: string) => (
     <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">

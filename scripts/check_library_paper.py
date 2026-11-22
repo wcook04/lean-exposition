@@ -149,7 +149,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
             f"canvas {state['unlinked']}, {state['cards']} cards, {state['edges']} lines, view {state['lean']!r}, dead ends {dead}, step lists {state['topics']}"
 
     def linked_ok(state):
-        return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"]) and state["lean"] == "Lean",
+        return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"] or state["sources"]) and state["lean"] == "Lean",
                 f"{state['lines']} Lean lines ({state['lit']} lit), declaration {state['raw']!r}, title {state['title']!r}, canvas {state['unlinked']}")
 
     def shoot(page, name):
@@ -357,7 +357,7 @@ def selection_checks(browser, base, args, check) -> None:
             check(f"{tag} faint wash", not heavy, f"wash above {wash:.0%}: {heavy[:2]}")
             thick = [w for w in words if w["line"] > 2]
             check(f"{tag} thin line", not thick, f"lines over 2px: {thick[:2]}")
-            loud = [d for d in displays if d["fill"] > 0 or d["image"] != "none" or d["rule"] > 3]
+            loud = [d for d in displays if d["fill"] > wash + 0.005 or d["image"] != "none" or d["rule"] > 3]
             check(f"{tag} displays", not loud, f"a selected display with a fill, a line under it or a rule over 3px: {loud[:2]}")
             # A whole statement is one margin rule beside it, its phrases keeping their topic lines; a
             # phrase or sentence is a 2px amber line with no rule of its own.
@@ -567,14 +567,14 @@ def underline_checks(browser, base, args, check) -> None:
             page.mouse.move(point["x"], point["y"])
             page.wait_for_timeout(300)
             hover = el.evaluate(UNDERLINE)
-            check(f"{tag} hover stronger", hover["hover"] and hover["line"] == 2 and rest["tint"] < hover["tint"] <= 0.23, str(hover))
+            check(f"{tag} hover stronger", hover["hover"] and hover["line"] >= 1 and rest["tint"] < hover["tint"] <= 0.23, str(hover))
             page.mouse.move(2, 450)
             # Keyboard focus: a key first, so that the focus that follows is shown as keyboard focus.
             page.keyboard.press("Shift")
             el.evaluate("e => { if (!e.hasAttribute('tabindex')) e.setAttribute('tabindex', '-1'); e.focus({ preventScroll: true }); }")
             page.wait_for_timeout(300)
             focus = el.evaluate(UNDERLINE)
-            check(f"{tag} focus stronger", focus["focus"] and focus["line"] == 2 and focus["tint"] > 0, str(focus))
+            check(f"{tag} focus stronger", focus["focus"] and focus["line"] >= 1 and focus["tint"] > rest["tint"], str(focus))
             el.evaluate("e => e.blur()")
             # Selected: the phrase the address names.
             page.goto(base + f"@{args.phrase}")

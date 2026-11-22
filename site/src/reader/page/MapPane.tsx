@@ -36,7 +36,7 @@ import { cardKeys, cardTarget, useAids } from "../aids";
 import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
-import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
+import { rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
 import { dockDecl, noteHtml, prefetchPhraseNotes } from "./PhraseCard";
 import { loadComparator } from "../../lean/comparatorMark";
@@ -241,7 +241,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     return { subject: best ? asSubject(best) : { kind: "records", ids: [home] }, why: "follow" };
   }, [ties, onGraph, asSubject, readAt, home]);
   const current = fresh ?? kept.current ?? opening;
-  const subjectKey = current ? (current.subject.kind === "decl" ? `d:${current.subject.name}` : `r:${current.subject.ids.join("|")}`) : "";
 
   // The Lean modules the drawing reads, fetched once each.
   const needed = useMemo(() => (current ? modulesFor(current.subject, tools) : []), [current, tools]);
@@ -282,20 +281,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     return [...ids];
   }, [pointed, hovered, onGraph, ties, tools]);
 
-  const [previewCard, setPreviewCard] = useState<string | null>(null);
-  const previewTimer = useRef(0);
-  const onCardHover = useCallback((id: string | null) => {
-    window.clearTimeout(previewTimer.current);
-    if (!id) return setPreviewCard(null);
-    previewTimer.current = window.setTimeout(() => setPreviewCard(id), POINT_DWELL);
-  }, []);
-  useEffect(() => () => window.clearTimeout(previewTimer.current), []);
-  useEffect(() => setPreviewCard(null), [subjectKey, mode]);
-
   /** A card or a link in the route was chosen: it becomes the subject. */
   const onSubject = useCallback(
     (id: string) => {
-      setPreviewCard(null);
       const name = tools.declOf(id);
       if (name) onDecl?.(name, tools.rowOf(name)?.module);
       else onRecord?.(id);
@@ -313,10 +301,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     return { via: "follow", record: null, tie: null, decl: null, topics: topics.length ? topics : passage };
   };
   const dockOpen = useMemo<LeanOpen>(() => {
-    if (previewCard) {
-      const name = tools.declOf(previewCard);
-      return name ? { via: "point", record: null, tie: null, decl: name, declModule: tools.rowOf(name)?.module } : { via: "point", record: previewCard, tie: null, decl: null };
-    }
     if (decl) return { via: "pin", record: null, tie: null, decl, declModule };
     if (pin) return { via: "pin", record: pin.record, tie: pin.tie, decl: null };
     if (held) {
@@ -326,7 +310,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     }
     return following();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previewCard, tools, decl, declModule, pin, held, heldFirst, ties, followRecord, follow.tie, anchor, passage]);
+  }, [tools, decl, declModule, pin, held, heldFirst, ties, followRecord, follow.tie, anchor, passage]);
   const leanOpen = useMemo<LeanOpen>(() => {
     if (pin || decl) return { via: "pin", record: openRecord, tie: decl ? null : (pin?.tie ?? null), decl, declModule };
     if (heldFirst) return { via: "pin", record: heldFirst, tie: statementFor(ties, heldFirst), decl: null };
@@ -649,9 +633,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       routeLabel={focus.routeLabel}
       label={label}
       lit={lit}
-      held={previewCard}
       onSubject={onSubject}
-      onHover={onCardHover}
       renderTitle={renderTitle}
       roles={focus.roles}
       manyLabel={current?.why === "paragraph" ? "Tied to this paragraph" : "In this passage"}
@@ -816,7 +798,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
               ties={ties}
               stage={stage}
               alignment={alignment}
-              slot={preview ?? (previewCard ? null : heldList)}
+              slot={preview ?? heldList}
               brief={!dockWide && !folded}
               onBrief={folded ? undefined : setDockWide}
               onRelease={onRelease}
