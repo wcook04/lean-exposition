@@ -103,6 +103,12 @@ export interface PrepareInput {
    * are from, and who made the links.
    */
   frontCredit?: string | null;
+  /**
+   * The first words of a credit note the document's own text carries (an adapted edition's "An adapted
+   * edition of …"). With it, frontCredit joins the end of that note's paragraph instead of standing under
+   * the authors, so the credit is said once.
+   */
+  frontCreditNote?: string | null;
 }
 
 // ------------------------------------------------------------- section aids
@@ -992,10 +998,20 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
   });
 
   // The credit line goes under the authors' names in the front matter, in the part that lists them.
-  const authorsAt = input.frontCredit ? raw.findIndex((text) => /<ul class="authors">[\s\S]*?<\/ul>/.test(text)) : -1;
-  const creditPart = authorsAt >= 0 ? authorsAt : null;
-  const withCredit = (index: number, html: string) =>
-    index === creditPart && input.frontCredit ? html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n<p class="front-credit">${input.frontCredit}</p>`) : html;
+  // An adapted edition's own credit note takes the line at the end of its paragraph instead.
+  const fold = (text: string) => text.replace(/[’‘]/g, "'").replace(/\s+/g, " ");
+  const note = input.frontCredit && input.frontCreditNote ? fold(input.frontCreditNote) : null;
+  const authorsAt = input.frontCredit && !note ? raw.findIndex((text) => /<ul class="authors">[\s\S]*?<\/ul>/.test(text)) : -1;
+  const noteAt = note ? raw.findIndex((text) => fold(text).includes(note)) : -1;
+  const creditPart = authorsAt >= 0 ? authorsAt : noteAt >= 0 ? noteAt : null;
+  const withCredit = (index: number, html: string) => {
+    if (index !== creditPart || !input.frontCredit) return html;
+    if (!note) return html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n<p class="front-credit">${input.frontCredit}</p>`);
+    const at = fold(html).indexOf(note) >= 0 ? html.search(new RegExp(note.split(" ").map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+").replace(/'/g, "['’‘]"))) : -1;
+    const close = at >= 0 ? html.indexOf("</p>", at) : -1;
+    // Where the note's words cannot be found in the drawn paragraph, the line still stands, after the part.
+    return close < 0 ? `${html}\n<p class="front-credit">${input.frontCredit}</p>` : `${html.slice(0, close)} <span class="front-credit front-credit--note">${input.frontCredit}</span>${html.slice(close)}`;
+  };
 
   const anchorIndex = registry.entries();
   const issues = registry.duplicates.map((d) => `duplicate explicit id "${d.id}" in parts ${d.parts[0]} and ${d.parts[1]}`);

@@ -552,6 +552,14 @@
   text-align: start;
 }
 
+/* Joined to an adapted edition's own credit note: the same words in the sans, inside that one note. */
+.paper.prose .front-credit--note {
+  display: inline;
+  max-width: none;
+  margin: 0;
+  font-style: normal;
+}
+
 .paper.prose .front-credit a {
   color: var(--ink-2);
   text-decoration: underline;

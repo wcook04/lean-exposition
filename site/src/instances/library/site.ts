@@ -164,7 +164,13 @@ const site = {
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
   stages: PAPER.documents.filter((d) => d.kind !== "companion").map((d) => d.slot),
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
-  frontCredit: { [MAIN.slot]: frontCreditLine(CREDIT, PAPER.review) },
+  // The authors' paper: one line under the authors. An adapted edition: its own credit note, verbatim in
+  // its text, then the review sentence joined to that note; the edition has no account line.
+  frontCredit: {
+    [MAIN.slot]: frontCreditLine(CREDIT, PAPER.review),
+    ...(ADAPTED ? { [ADAPTED.slot]: PAPER.review.trim() } : {}),
+  },
+  frontCreditNote: ADAPTED?.credit ? { [ADAPTED.slot]: ADAPTED.credit.split(/\s+/).slice(0, 4).join(" ") } : undefined,
   readMenu: READ_MENU,
   readMenuJobs: Object.fromEntries(
     PAPER.documents.filter((d) => READ_MENU.includes(d.slot)).map((d) => [d.slot, isAdapted(d) ? "An adapted edition, every change marked" : d.main && !PAPER.levels?.length ? `By ${BY}` : undefined]),

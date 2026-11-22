@@ -68,6 +68,26 @@ describe("a library paper's front matter", () => {
   });
 });
 
+describe("an adapted edition's credit", () => {
+  const EDITION = PAPER.replace("## Contents", `<div class="center">
+
+*An adapted edition of the authors’ paper, prepared with AI assistance. Every change is marked.*
+
+</div>
+
+## Contents`);
+  it("joins the reader's line to the edition's own note, once, and nothing goes under the authors", () => {
+    const bytes = new TextEncoder().encode(EDITION);
+    const doc = prepareDocument({ stage: "adapted", bytes, documentPath: paths.short, documentPaths: paths, frontCredit: "Links made with AI.", frontCreditNote: "An adapted edition of" });
+    expect(doc.creditPart).toBe(0);
+    const html = doc.renderAll().map((part) => part.html).join("");
+    expect(html.match(/front-credit/g)).toHaveLength(2); // one span: "front-credit front-credit--note"
+    expect(html).toMatch(/Every change is marked\.<\/em> <span class="front-credit front-credit--note">Links made with AI\.<\/span><\/p>/);
+    expect(html.indexOf("front-credit")).toBeGreaterThan(html.indexOf("</ul>"));
+    expect(html).not.toContain('<p class="front-credit">');
+  });
+});
+
 describe("the short credit line", () => {
   it("does not end a sentence at an author's initial", () => {
     expect(frontCreditLine("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. More.", "Made with AI.")).toBe("Paper by A, B and Matei P. Coiculescu, from c/d at fd3a158. Made with AI.");

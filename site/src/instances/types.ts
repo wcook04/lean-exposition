@@ -124,6 +124,12 @@ export interface SiteInstance {
    */
   frontCredit?: Partial<Record<string, string>>;
   /**
+   * Where a document's credit line goes when it is not under the authors: an adapted edition's text
+   * carries its own credit as a note (its first words here, "An adapted edition of"), and the reader's
+   * line joins that one note, so the credit is said once. By document slot.
+   */
+  frontCreditNote?: Partial<Record<string, string>>;
+  /**
    * The documents the Read menu lists, in order: the authors' paper and, where one exists, its adapted
    * edition (or a paper's own levels). Absent: every stage. Other documents keep their addresses, unlisted.
    */
