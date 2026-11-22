@@ -7,17 +7,17 @@
    "key": "f6987931a7ccfe84",
    "shared_by": 1,
    "lightness": {
-    "light": 0.57,
+    "light": 0.525,
     "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.138,
-     0.201
+     0.129,
+     0.2
     ],
     "dark": [
-     0.147,
-     0.201
+     0.146,
+     0.2
     ]
    },
    "families": [
@@ -25,10 +25,10 @@
      "id": "family-p1-weighted",
      "name": "Reciprocal and weighted supports · Divisor counts and averaging",
      "named": false,
-     "hue": 15.5,
+     "hue": 3,
      "chroma": {
-      "light": 0.201,
-      "dark": 0.201
+      "light": 0.2,
+      "dark": 0.2
      },
      "topics": [
       "p1-weighted",
@@ -39,10 +39,10 @@
      "id": "family-p1-cover",
      "name": "Positive divisor majorants · Combining support criteria",
      "named": false,
-     "hue": 105,
+     "hue": 66,
      "chroma": {
       "light": 0.138,
-      "dark": 0.157
+      "dark": 0.167
      },
      "topics": [
       "p1-cover",
@@ -53,10 +53,10 @@
      "id": "family-p1-witness",
      "name": "Dependence on the chosen primes",
      "named": false,
-     "hue": 159,
+     "hue": 148,
      "chroma": {
-      "light": 0.142,
-      "dark": 0.163
+      "light": 0.178,
+      "dark": 0.19
      },
      "topics": [
       "p1-witness"
@@ -66,10 +66,10 @@
      "id": "family-p1-scope",
      "name": "Universal and half-value questions · Unproved inputs and further arguments",
      "named": false,
-     "hue": 249,
+     "hue": 228,
      "chroma": {
-      "light": 0.179,
-      "dark": 0.147
+      "light": 0.129,
+      "dark": 0.146
      },
      "topics": [
       "p1-scope",
@@ -80,10 +80,10 @@
      "id": "family-p1-geometry",
      "name": "Achievement sets and greedy survival · Carry bounds and finite certificates",
      "named": false,
-     "hue": 303,
+     "hue": 282,
      "chroma": {
-      "light": 0.201,
-      "dark": 0.201
+      "light": 0.2,
+      "dark": 0.2
      },
      "topics": [
       "p1-limits",
@@ -95,56 +95,56 @@
     "p1-weighted": {
      "index": 0,
      "family": "family-p1-weighted",
-     "light": "oklch(0.524 0.201 10.1)",
-     "dark": "oklch(0.614 0.201 10.1)"
+     "light": "oklch(0.523 0.200 358.0)",
+     "dark": "oklch(0.658 0.200 358.0)"
     },
     "p1-average": {
      "index": 1,
      "family": "family-p1-weighted",
-     "light": "oklch(0.646 0.179 20.9)",
-     "dark": "oklch(0.736 0.161 20.9)"
+     "light": "oklch(0.647 0.181 8.0)",
+     "dark": "oklch(0.782 0.131 8.0)"
     },
     "p1-cover": {
      "index": 2,
      "family": "family-p1-cover",
-     "light": "oklch(0.509 0.105 99.6)",
-     "dark": "oklch(0.599 0.124 99.6)"
+     "light": "oklch(0.518 0.120 61.0)",
+     "dark": "oklch(0.653 0.151 61.0)"
     },
     "p1-mixed": {
      "index": 3,
      "family": "family-p1-cover",
-     "light": "oklch(0.631 0.138 110.4)",
-     "dark": "oklch(0.721 0.157 110.4)"
+     "light": "oklch(0.642 0.138 71.0)",
+     "dark": "oklch(0.777 0.167 71.0)"
     },
     "p1-witness": {
      "index": 4,
      "family": "family-p1-witness",
-     "light": "oklch(0.620 0.142 159.0)",
-     "dark": "oklch(0.710 0.163 159.0)"
+     "light": "oklch(0.615 0.178 148.0)",
+     "dark": "oklch(0.750 0.190 148.0)"
     },
     "p1-scope": {
      "index": 5,
      "family": "family-p1-scope",
-     "light": "oklch(0.509 0.124 243.6)",
-     "dark": "oklch(0.599 0.146 243.6)"
+     "light": "oklch(0.503 0.093 223.0)",
+     "dark": "oklch(0.638 0.118 223.0)"
     },
     "p1-inputs": {
      "index": 6,
      "family": "family-p1-scope",
-     "light": "oklch(0.631 0.179 254.4)",
-     "dark": "oklch(0.721 0.147 254.4)"
+     "light": "oklch(0.627 0.129 233.0)",
+     "dark": "oklch(0.762 0.146 233.0)"
     },
     "p1-limits": {
      "index": 7,
      "family": "family-p1-geometry",
-     "light": "oklch(0.454 0.201 297.6)",
-     "dark": "oklch(0.544 0.201 297.6)"
+     "light": "oklch(0.468 0.200 277.0)",
+     "dark": "oklch(0.603 0.200 277.0)"
     },
     "p1-geometry": {
      "index": 8,
      "family": "family-p1-geometry",
-     "light": "oklch(0.576 0.179 308.4)",
-     "dark": "oklch(0.666 0.179 308.4)"
+     "light": "oklch(0.592 0.181 287.0)",
+     "dark": "oklch(0.727 0.149 287.0)"
     }
    }
   },
@@ -157,12 +157,12 @@
    },
    "chroma": {
     "light": [
-     0.109,
-     0.201
+     0.11,
+     0.2
     ],
     "dark": [
-     0.131,
-     0.213
+     0.132,
+     0.209
     ]
    },
    "families": [
@@ -170,7 +170,7 @@
      "id": "family-p2-series-greedy",
      "name": "Series and greedy expansions",
      "named": false,
-     "hue": 24,
+     "hue": 24.5,
      "chroma": {
       "light": 0.19,
       "dark": 0.143
@@ -183,7 +183,7 @@
      "id": "family-p2-support-irrationality",
      "name": "Irrationality of support classes",
      "named": false,
-     "hue": 79.5,
+     "hue": 80.5,
      "chroma": {
       "light": 0.131,
       "dark": 0.157
@@ -211,8 +211,8 @@
      "named": false,
      "hue": 214.5,
      "chroma": {
-      "light": 0.109,
-      "dark": 0.131
+      "light": 0.11,
+      "dark": 0.132
      },
      "topics": [
       "p2-open-inputs"
@@ -222,10 +222,10 @@
      "id": "family-p2-obstructions",
      "name": "Obstructions and countermodels · Arithmetic sampling and logarithmic cost",
      "named": false,
-     "hue": 264,
+     "hue": 263.5,
      "chroma": {
-      "light": 0.201,
-      "dark": 0.194
+      "light": 0.2,
+      "dark": 0.197
      },
      "topics": [
       "p2-arithmetic-cost",
@@ -236,10 +236,10 @@
      "id": "family-p2-integer-quotients",
      "name": "Integer quotients and remainders · Dyadic boundaries and omitted tails · Conditions for rational-target membership",
      "named": false,
-     "hue": 326,
+     "hue": 330.5,
      "chroma": {
-      "light": 0.201,
-      "dark": 0.213
+      "light": 0.195,
+      "dark": 0.209
      },
      "topics": [
       "p2-dyadic-margins",
@@ -252,14 +252,14 @@
     "p2-series-greedy": {
      "index": 0,
      "family": "family-p2-series-greedy",
-     "light": "oklch(0.635 0.190 24.0)",
-     "dark": "oklch(0.760 0.143 24.0)"
+     "light": "oklch(0.635 0.190 24.5)",
+     "dark": "oklch(0.760 0.143 24.5)"
     },
     "p2-support-irrationality": {
      "index": 1,
      "family": "family-p2-support-irrationality",
-     "light": "oklch(0.635 0.131 79.5)",
-     "dark": "oklch(0.760 0.157 79.5)"
+     "light": "oklch(0.635 0.131 80.5)",
+     "dark": "oklch(0.760 0.157 80.5)"
     },
     "p2-finite-approximations": {
      "index": 2,
@@ -270,38 +270,38 @@
     "p2-open-inputs": {
      "index": 3,
      "family": "family-p2-open-inputs",
-     "light": "oklch(0.620 0.109 214.5)",
-     "dark": "oklch(0.745 0.131 214.5)"
+     "light": "oklch(0.625 0.110 214.5)",
+     "dark": "oklch(0.750 0.132 214.5)"
     },
     "p2-arithmetic-cost": {
      "index": 4,
      "family": "family-p2-obstructions",
-     "light": "oklch(0.514 0.201 259.5)",
-     "dark": "oklch(0.639 0.194 259.5)"
+     "light": "oklch(0.508 0.200 259.3)",
+     "dark": "oklch(0.633 0.197 259.3)"
     },
     "p2-obstructions": {
      "index": 5,
      "family": "family-p2-obstructions",
-     "light": "oklch(0.636 0.179 268.5)",
-     "dark": "oklch(0.761 0.121 268.5)"
+     "light": "oklch(0.632 0.181 267.7)",
+     "dark": "oklch(0.757 0.123 267.7)"
     },
     "p2-dyadic-margins": {
      "index": 6,
      "family": "family-p2-integer-quotients",
-     "light": "oklch(0.413 0.201 317.0)",
-     "dark": "oklch(0.538 0.213 317.0)"
+     "light": "oklch(0.411 0.195 322.1)",
+     "dark": "oklch(0.536 0.209 322.1)"
     },
     "p2-integer-quotients": {
      "index": 7,
      "family": "family-p2-integer-quotients",
-     "light": "oklch(0.535 0.190 326.0)",
-     "dark": "oklch(0.660 0.190 326.0)"
+     "light": "oklch(0.535 0.190 330.5)",
+     "dark": "oklch(0.660 0.190 330.5)"
     },
     "p2-conditional-membership": {
      "index": 8,
      "family": "family-p2-integer-quotients",
-     "light": "oklch(0.657 0.167 335.0)",
-     "dark": "oklch(0.782 0.167 335.0)"
+     "light": "oklch(0.659 0.171 338.9)",
+     "dark": "oklch(0.784 0.171 338.9)"
     }
    }
   }

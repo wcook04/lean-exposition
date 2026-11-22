@@ -7,17 +7,17 @@
    "key": "f2cafbbf690e654d",
    "shared_by": 1,
    "lightness": {
-    "light": 0.5,
+    "light": 0.495,
     "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.109,
-     0.201
+     0.114,
+     0.2
     ],
     "dark": [
-     0.15,
-     0.213
+     0.165,
+     0.209
     ]
    },
    "families": [
@@ -25,10 +25,10 @@
      "id": "family-model",
      "name": "The SK model and Parisi functional · Variational contact · Strict curvature on constant intervals",
      "named": false,
-     "hue": 38.5,
+     "hue": 42.5,
      "chroma": {
-      "light": 0.17,
-      "dark": 0.213
+      "light": 0.161,
+      "dark": 0.209
      },
      "topics": [
       "curvature",
@@ -40,10 +40,10 @@
      "id": "family-support",
      "name": "Excluding support gaps · Further consequences · Formal statements and their scope",
      "named": false,
-     "hue": 167.5,
+     "hue": 162.5,
      "chroma": {
-      "light": 0.109,
-      "dark": 0.15
+      "light": 0.114,
+      "dark": 0.165
      },
      "topics": [
       "support",
@@ -55,10 +55,10 @@
      "id": "family-scalar",
      "name": "The scalar ground-state value · Finite Gaussian approximation",
      "named": false,
-     "hue": 273,
+     "hue": 270,
      "chroma": {
-      "light": 0.201,
-      "dark": 0.183
+      "light": 0.2,
+      "dark": 0.181
      },
      "topics": [
       "gaussian",
@@ -70,50 +70,50 @@
     "curvature": {
      "index": 0,
      "family": "family-model",
-     "light": "oklch(0.403 0.162 20.5)",
-     "dark": "oklch(0.563 0.213 20.5)"
+     "light": "oklch(0.396 0.161 25.7)",
+     "dark": "oklch(0.561 0.209 25.7)"
     },
     "contact": {
      "index": 1,
      "family": "family-model",
-     "light": "oklch(0.525 0.170 38.5)",
-     "dark": "oklch(0.685 0.190 38.5)"
+     "light": "oklch(0.520 0.155 42.5)",
+     "dark": "oklch(0.685 0.190 42.5)"
     },
     "model": {
      "index": 2,
      "family": "family-model",
-     "light": "oklch(0.647 0.157 56.5)",
-     "dark": "oklch(0.807 0.129 56.5)"
+     "light": "oklch(0.644 0.152 59.3)",
+     "dark": "oklch(0.809 0.131 59.3)"
     },
     "support": {
      "index": 3,
      "family": "family-support",
-     "light": "oklch(0.378 0.105 149.5)",
-     "dark": "oklch(0.538 0.150 149.5)"
+     "light": "oklch(0.371 0.114 145.7)",
+     "dark": "oklch(0.536 0.165 145.7)"
     },
     "consequences": {
      "index": 4,
      "family": "family-support",
-     "light": "oklch(0.500 0.101 167.5)",
-     "dark": "oklch(0.660 0.134 167.5)"
+     "light": "oklch(0.495 0.107 162.5)",
+     "dark": "oklch(0.660 0.143 162.5)"
     },
     "scope": {
      "index": 5,
      "family": "family-support",
-     "light": "oklch(0.622 0.109 185.5)",
-     "dark": "oklch(0.782 0.137 185.5)"
+     "light": "oklch(0.619 0.112 179.3)",
+     "dark": "oklch(0.784 0.142 179.3)"
     },
     "gaussian": {
      "index": 6,
      "family": "family-scalar",
-     "light": "oklch(0.494 0.201 264.0)",
-     "dark": "oklch(0.654 0.183 264.0)"
+     "light": "oklch(0.493 0.200 261.6)",
+     "dark": "oklch(0.658 0.181 261.6)"
     },
     "scalar": {
      "index": 7,
      "family": "family-scalar",
-     "light": "oklch(0.616 0.179 282.0)",
-     "dark": "oklch(0.776 0.116 282.0)"
+     "light": "oklch(0.617 0.181 278.4)",
+     "dark": "oklch(0.782 0.111 278.4)"
     }
    }
   }
