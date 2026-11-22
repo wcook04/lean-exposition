@@ -9,7 +9,7 @@ declare module "virtual:paper-pdfs" {
     height: number;
   }
   /** The SK site also ships its architectural companion; another instance has the three papers only. */
-  export const PAPER_PDFS: Record<"long" | "short" | "expository", { path: string; pages: number; firstPage?: FirstPage }> & {
+  export const PAPER_PDFS: Record<string, { path: string; pages: number; firstPage?: FirstPage }> & {
     architecture: { path: string; pages: number; firstPage?: FirstPage };
   };
 }

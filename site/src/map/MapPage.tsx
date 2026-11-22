@@ -10,7 +10,7 @@
 
 import site from "@instance/site";
 import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type RefObject } from "react";
-import type { Stage } from "../api/types";
+import type { Account, Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { navigate, type Route } from "../app/router";
 import { PAPER_NAMES, statedIn } from "../app/papers";
@@ -135,7 +135,7 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   const allGoals = useMemo(() => startingGoals(edition), [edition]);
   // With an account chosen, the map shows that account's records and starts from its goals.
-  const within = useMemo(() => (route.lens ? levelRecords(graph, route.lens) : undefined), [graph, route.lens]);
+  const within = useMemo(() => (route.lens ? levelRecords(graph, route.lens as Account) : undefined), [graph, route.lens]);
   const goals = useMemo(() => {
     if (!route.lens) return allGoals;
     const own = allGoals.filter((g) => g.stages.includes(route.lens!));
@@ -521,7 +521,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const scopeLine = lensSentence(counts, route.lens);
+  const scopeLine = lensSentence(counts, route.lens as Account | undefined);
 
   // The place being left, for the Back control on the next page.
   const placeRef = useRef<string | null>(null);
@@ -557,11 +557,11 @@ export function MapPage({ route }: { route: MapRoute }) {
       <h1 className="visually-hidden">Argument for {goalFullTitle}</h1>
       <div className="map-head" role="group" aria-label="Argument map controls">
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
-        <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
+        <LensControl lens={route.lens as Account | undefined} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
         <ViewSwitch pressed={viewPressed} onView={chooseView} />
         <KeyPopover onNotesHost={setNotesHost} lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut } : undefined} />
       </div>
-      {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens)}` : `${scopeLine} A line may pass over steps it leaves out.`}</p>}
+      {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens as Account)}` : `${scopeLine} A line may pass over steps it leaves out.`}</p>}
 
       <div className="map-page__main" ref={canvasRef} style={{ ["--sheet-inset" as string]: `${sheetInset}px` }}>
         {noteShown && (

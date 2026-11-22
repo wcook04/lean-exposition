@@ -44,11 +44,649 @@
    }
   },
   {
-   "id": "navier-stokes-digest+navier-stokes-part-1+navier-stokes-part-2",
-   "slot": "long",
-   "slug": "accounts",
-   "title": "The digest and the full account, Parts I and II",
-   "noun": "digest"
+   "id": "navier-stokes",
+   "slot": "what-the-lean-states",
+   "slug": "what-the-lean-states",
+   "title": "Finite-time blow-up for Navier–Stokes: what the Lean states",
+   "noun": "companion",
+   "group": "overview",
+   "group_title": "Overview",
+   "order": 1,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-digest",
+   "slot": "digest",
+   "slug": "digest",
+   "title": "From a recurrent profile to unforced Navier–Stokes blow-up",
+   "noun": "companion",
+   "group": "overview",
+   "group_title": "Overview",
+   "order": 2,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-index",
+   "slot": "index",
+   "slug": "index",
+   "title": "The authors’ paper, by its own numbering",
+   "noun": "companion",
+   "group": "overview",
+   "group_title": "Overview",
+   "order": 3,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-part-1",
+   "slot": "part-1",
+   "slug": "part-1",
+   "title": "From a recurrent profile to compact-data Navier–Stokes blow-up",
+   "noun": "companion",
+   "group": "account",
+   "group_title": "The proof in our words",
+   "order": 4,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-part-2",
+   "slot": "part-2",
+   "slug": "part-2",
+   "title": "Part II. A certificate produces a nonzero periodic profile",
+   "noun": "companion",
+   "group": "account",
+   "group_title": "The proof in our words",
+   "order": 5,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-appendix-b",
+   "slot": "appendix-b",
+   "slug": "appendix-b",
+   "title": "From cell data to a Navier–Stokes certificate",
+   "noun": "companion",
+   "group": "account",
+   "group_title": "The proof in our words",
+   "order": 6,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-routes",
+   "slot": "routes",
+   "slug": "routes",
+   "title": "Reading the proof routes",
+   "noun": "companion",
+   "group": "routes",
+   "group_title": "The proof routes",
+   "order": 7,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-route-details",
+   "slot": "route-details",
+   "slug": "route-details",
+   "title": "The proof routes in detail",
+   "noun": "companion",
+   "group": "routes",
+   "group_title": "The proof routes",
+   "order": 8,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-statement-files",
+   "slot": "statement-files",
+   "slug": "statement-files",
+   "title": "Annotations of the readable statements",
+   "noun": "companion",
+   "group": "statements",
+   "group_title": "The readable statement files",
+   "order": 9,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-cell-guide",
+   "slot": "cell-guide",
+   "slug": "cell-guide",
+   "title": "Reading the cell certificate",
+   "noun": "companion",
+   "group": "cells",
+   "group_title": "The cell certificate",
+   "order": 10,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-cell-fidelity",
+   "slot": "cell-fidelity",
+   "slug": "cell-fidelity",
+   "title": "Cell-layer fidelity: the Lean condition and Appendix B",
+   "noun": "companion",
+   "group": "cells",
+   "group_title": "The cell certificate",
+   "order": 11,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-certificate-checker",
+   "slot": "certificate-checker",
+   "slug": "certificate-checker",
+   "title": "Checking the Navier–Stokes certificate",
+   "noun": "companion",
+   "group": "cells",
+   "group_title": "The cell certificate",
+   "order": 12,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-cell-reference",
+   "slot": "cell-reference",
+   "slug": "cell-reference",
+   "title": "Cell declaration reference",
+   "noun": "companion",
+   "group": "cells",
+   "group_title": "The cell certificate",
+   "order": 13,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-01",
+   "slot": "library-01",
+   "slug": "library-01",
+   "title": "Library guide 1: Breakdown/Base, Breakdown/CellReduction",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 14,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-02",
+   "slot": "library-02",
+   "slug": "library-02",
+   "title": "Library guide 2: Breakdown/CellReduction",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 15,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-03",
+   "slot": "library-03",
+   "slug": "library-03",
+   "title": "Library guide 3: Breakdown/Cert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 16,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-04",
+   "slot": "library-04",
+   "slug": "library-04",
+   "title": "Library guide 4: Breakdown/Cert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 17,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-05",
+   "slot": "library-05",
+   "slug": "library-05",
+   "title": "Library guide 5: Breakdown/Cert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 18,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-06",
+   "slot": "library-06",
+   "slug": "library-06",
+   "title": "Library guide 6: Breakdown/Cert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 19,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-07",
+   "slot": "library-07",
+   "slug": "library-07",
+   "title": "Library guide 7: Breakdown/Cert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 20,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-08",
+   "slot": "library-08",
+   "slug": "library-08",
+   "title": "Library guide 8: Breakdown/CertCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 21,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-09",
+   "slot": "library-09",
+   "slug": "library-09",
+   "title": "Library guide 9: Breakdown/CertCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 22,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-10",
+   "slot": "library-10",
+   "slug": "library-10",
+   "title": "Library guide 10: Breakdown/CertCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 23,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-11",
+   "slot": "library-11",
+   "slug": "library-11",
+   "title": "Library guide 11: Breakdown/CertCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 24,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-12",
+   "slot": "library-12",
+   "slug": "library-12",
+   "title": "Library guide 12: Breakdown/CertCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 25,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-13",
+   "slot": "library-13",
+   "slug": "library-13",
+   "title": "Library guide 13: Breakdown/CertTorus",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 26,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-14",
+   "slot": "library-14",
+   "slug": "library-14",
+   "title": "Library guide 14: Breakdown/Frac",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 27,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-15",
+   "slot": "library-15",
+   "slug": "library-15",
+   "title": "Library guide 15: Breakdown/Frac",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 28,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-16",
+   "slot": "library-16",
+   "slug": "library-16",
+   "title": "Library guide 16: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 29,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-17",
+   "slot": "library-17",
+   "slug": "library-17",
+   "title": "Library guide 17: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 30,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-18",
+   "slot": "library-18",
+   "slug": "library-18",
+   "title": "Library guide 18: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 31,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-19",
+   "slot": "library-19",
+   "slug": "library-19",
+   "title": "Library guide 19: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 32,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-20",
+   "slot": "library-20",
+   "slug": "library-20",
+   "title": "Library guide 20: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 33,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-21",
+   "slot": "library-21",
+   "slug": "library-21",
+   "title": "Library guide 21: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 34,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-22",
+   "slot": "library-22",
+   "slug": "library-22",
+   "title": "Library guide 22: Breakdown/FracCell",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 35,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-23",
+   "slot": "library-23",
+   "slug": "library-23",
+   "title": "Library guide 23: Breakdown/FracCert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 36,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-24",
+   "slot": "library-24",
+   "slug": "library-24",
+   "title": "Library guide 24: Breakdown/FracCert",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 37,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-25",
+   "slot": "library-25",
+   "slug": "library-25",
+   "title": "Library guide 25: Breakdown/FreqTr, Breakdown/Held, Breakdown/Profile, Breakdown/Spectral",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 38,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-26",
+   "slot": "library-26",
+   "slug": "library-26",
+   "title": "Library guide 26: Breakdown/Torus",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 39,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-27",
+   "slot": "library-27",
+   "slug": "library-27",
+   "title": "Library guide 27: Breakdown/Torus, Breakdown/Transfer",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 40,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-28",
+   "slot": "library-28",
+   "slug": "library-28",
+   "title": "Library guide 28: Breakdown/Uniqueness, Breakdown/Weak, Solution",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 41,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-29",
+   "slot": "library-29",
+   "slug": "library-29",
+   "title": "Library guide 29: Fractional statements",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 42,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
+  },
+  {
+   "id": "navier-stokes-library-30",
+   "slot": "library-30",
+   "slug": "library-30",
+   "title": "Library guide 30: definitions the readable files restate",
+   "noun": "companion",
+   "group": "library",
+   "group_title": "Library guides",
+   "order": 43,
+   "credit": "Paper and Lean: Levent Alpöge and Tristan Buckmaster, github.com/tristanbuckmaster/navier-stokes at ad53419. Text, links, plain titles, notes and comparisons prepared by Will Cook with AI assistance, MIT licence",
+   "authors": [
+    "Prepared by Will Cook with AI assistance"
+   ],
+   "kind": "companion"
   },
   {
    "id": "encoding",
@@ -58,6 +696,17 @@
    "noun": "guide"
   }
  ],
+ "moved_pages": {
+  "accounts": {
+   "to": "digest",
+   "phrases_from": [
+    "digest",
+    "part-1",
+    "part-2"
+   ],
+   "note": "The digest and Parts I and II were one page, /accounts/, until 22 Nov 2026."
+  }
+ },
  "families": [
   {
    "id": "theorems",

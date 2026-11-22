@@ -49,7 +49,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 2.3.** Let $0<T<\\infty$, and let $u$ be a mild solution on $[0,T)$ with ",
-     "to": "h is a smooth solution of (1.1) on $[0,T)\\times\\mathbb T^3$.",
+     "to": "$u$ is a smooth solution of (1.1) on $[0,T)\\times\\mathbb R^3$",
      "origin": "ai"
     }
    ]
@@ -79,7 +79,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 3.1.** There exists a constant $C$ such that for all $\\tau>0$ and $f\\in L^{3/2}(\\mathbb R^3;\\mathbb R^3)$",
-     "to": "$$\\begin{equation}\n\\|K(\\tau)(u,v)\\|_{\\dot H^1}\\le C_K\\,\\tau^{-3/4}\\,\\|u\\|_{\\dot H^1}\\,\\|v\\|_{\\dot H^1}.\\tag{3.7}\n\\end{equation}$$",
+     "to": "$$\\begin{equation}\n\\|e^{\\tau\\Delta}\\mathbb P f\\|_{\\dot H^1}\\le C\\,\\tau^{-3/4}\\,\\|f\\|_{L^{3/2}}.\\tag{3.6}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -168,8 +168,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "$$\nh(t)=2\\int_a^t K(t-t')(f(t'),h(t'))\\,dt'+g(t)\\qquad(a\\le t\\le b).\n$$ The map ",
-     "to": "$g\\mapsto h$ is linear, and it is bounded for the supremum norm.",
+     "from": "$$\nh(t)=2\\int_a^t K(t-t')(f(t'),h(t'))\\,dt'+g(t)\\qquad(a\\le t\\le b).\n$$",
+     "to": "$$\nh(t)=2\\int_a^t K(t-t')(f(t'),h(t'))\\,dt'+g(t)\\qquad(a\\le t\\le b).\n$$",
      "origin": "ai"
     }
    ]
@@ -214,8 +214,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma 3.5.** Let $a<b$, and let $f,h,u:[a,b]\\to\\mathcal X$ be continuous with ",
-     "to": "o solutions on $[a,b]$ with the same value at $a$ are equal.",
+     "from": "**Lemma 3.5.**",
+     "to": "**Lemma 3.5.**",
      "origin": "ai"
     }
    ]
@@ -245,7 +245,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 3.6.** Let $a<b$, and let $u:[a,b]\\to X$ be continuous. Suppose that for",
-     "to": "$h$ on $\\mathbb R^3$. Then $u$ is a mild solution on $[a,b]$.",
+     "to": "$t\\mapsto\\int_{\\mathbb R^3}u(t)\\cdot\\psi\\,dx$ is continuously differentiable on $[a,b]$",
      "origin": "ai"
     }
    ]
@@ -274,8 +274,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma 3.7.** There exists a constant $C$ such that for all $L>0$ and $\\tau>0$ ",
-     "to": "$C_{\\mathbb T}$, which does not depend on $L$, in place of $C_K$.",
+     "from": "**Lemma 3.7.**",
+     "to": "**Lemma 3.7.**",
      "origin": "ai"
     }
    ]
@@ -365,7 +365,7 @@
      "paper": "short",
      "role": "statement",
      "from": "Let $0\\le\\kappa<\\tfrac14$. For a Banach space $\\mathcal X$, $C_\\kappa([0,1);\\mathcal X)$",
-     "to": "the same notation is used with $\\mathcal X$ in place of $X$.",
+     "to": "$$\\begin{equation}\n\\|v\\|_\\kappa=\\sup_{0\\le t<1}\\,(1-t)^{\\frac14-\\kappa}\\,\\|v(t)\\|_{\\mathcal X}<\\infty.\\tag{4.5}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -387,7 +387,7 @@
      "paper": "short",
      "role": "statement",
      "from": "For continuous $f,g:[0,1)\\to X$ the map $\\mathcal B(f,g)$ from $[0,1)$ to $X$ is",
-     "to": "the same notation is used with $\\mathcal X$ in place of $X$.",
+     "to": "$$\\begin{equation}\n\\mathcal B(f,g)(t)=\\int_0^t K(t-t')(f(t'),g(t'))\\,dt'.\\tag{4.6}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -417,7 +417,7 @@
      "paper": "short",
      "role": "statement",
      "from": "$$\\begin{equation}\nv=e^{t\\Delta}v(0)+2\\,\\mathcal B(u^*,v)+\\mathcal B(v,v).\\tag{4.7}\n\\end{equation}$$",
-     "to": "rmines the component of the datum $\\gamma$ in that subspace.",
+     "to": "$$\\begin{equation}\nv=e^{t\\Delta}v(0)+2\\,\\mathcal B(u^*,v)+\\mathcal B(v,v).\\tag{4.7}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -477,7 +477,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 5.1.** There exists a constant $C$ such that for every $r>0$ the field $\\bar u$",
-     "to": "$$\\begin{equation}\n\\|\\bar u(t)-u^*(t)\\|_{\\dot H^1}\\le C\\,r^{-1/2},\\qquad\\|\\bar u(t)\\|_{L^2(\\mathbb R^3)}\\le C\\,r^{1/2}.\\tag{5.2}\n\\end{equation}$$",
+     "to": "$C^\\infty_{c,\\mathrm{div}}$, equals $u^*(t)$ on $B_{r/2}$, vanishes outside $B_r$",
      "origin": "ai"
     }
    ]
@@ -507,7 +507,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 6.1.** There exists a constant $C$ such that for every $L\\ge1$, every $t>0$",
-     "to": "$$\\begin{equation}\n\\|\\nabla g\\|_{L^2(Q_L)}+\\|g\\|_{L^6(Q_L)}\\le C\\,L^{-7/2}\\|F\\|_{L^1(\\mathbb R^3)}.\\tag{6.2}\n\\end{equation}$$",
+     "to": "$g=e^{t\\Delta}\\mathbb P\\operatorname{div}\\Pi_LF-e^{t\\Delta}\\mathbb P\\operatorname{div}F$ satisfies",
      "origin": "ai"
     }
    ]
@@ -552,8 +552,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma 6.2.** There exists a constant $C$ such that for every $L\\ge1$ the maps ",
-     "to": "$F^{\\mathrm a}\\in C_\\kappa([0,1);\\dot H^1_{\\mathrm{div}}(\\mathbb T_L^3))$ with $\\|F^{\\mathrm a}\\|_\\kappa\\le C\\,L^{-1/2}$.",
+     "from": "**Lemma 6.2.**",
+     "to": "**Lemma 6.2.**",
      "origin": "ai"
     }
    ]
@@ -599,7 +599,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 6.3.** There exists a constant $C$ such that for every $L\\ge\\max\\{1,8\\,r_E\\}$",
-     "to": "$$\\begin{equation}\n\\max\\{\\|\\gamma\\|_{\\dot H^1},\\|z\\|_\\kappa\\}\\le C\\,\\|g\\|_\\kappa,\\qquad\\|\\mathcal L(\\gamma,z)-g\\|_\\kappa\\le C\\,L^{-1/2}\\|g\\|_\\kappa,\\tag{6.15}\n\\end{equation}$$ where $\\mathcal L$ is the operator (6.6).",
+     "to": "$E\\times C_\\kappa([0,1);\\dot H^1_{\\mathrm{div}}(\\mathbb T_L^3))$, and",
      "origin": "ai"
     }
    ]
@@ -621,7 +621,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 7.4.** Let $S>0$ and $v\\in\\mathcal D_S$. Then $\\mathcal T_Sv\\in\\mathcal H_{\\mathrm{div}}$",
-     "to": "$$\\begin{equation}\n\\|\\Delta v\\|_{\\mathcal H}^2+\\tfrac14\\,\\|\\nabla v\\|_{\\mathcal H}^2=-\\langle\\mathcal T_Sv,\\Delta v\\rangle_{\\mathcal H}\\le\\|\\mathcal T_Sv\\|_{\\mathcal H}^2.\\tag{7.43}\n\\end{equation}$$",
+     "to": "$v\\in\\mathcal D_S$. Then $\\mathcal T_Sv\\in\\mathcal H_{\\mathrm{div}}$.",
      "origin": "ai"
     }
    ]
@@ -643,7 +643,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 7.6.** Let $u\\in X$ with $\\Delta u\\in L^2$. Then $$\\begin{equation}\n\\|u\\|_{L^\\infty}^2\\le c_w^2\\int_{\\mathbb R^3}\\bigl(|\\Delta u|^2+w_*\\,|\\nabla u|^2\\bigr)\\,dy.\\tag{7.48}\n\\end{equation}$$",
-     "to": "$$\\begin{equation}\n\\|(v\\cdot\\nabla)v\\|_{\\mathcal H}\\le c_w\\,\\|v\\|_w\\sup_{\\theta\\in\\mathbb R}\\|v(\\theta)\\|_{\\dot H^1}.\\tag{7.49}\n\\end{equation}$$",
+     "to": "$$\\begin{equation}\n\\|u\\|_{L^\\infty}^2\\le c_w^2\\int_{\\mathbb R^3}\\bigl(|\\Delta u|^2+w_*\\,|\\nabla u|^2\\bigr)\\,dy.\\tag{7.48}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -665,7 +665,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 7.7.** Let $\\alpha\\in\\mathcal K$ and $S=S(\\alpha)$. There exists a const",
-     "to": "from $\\mathcal H_{\\mathrm{div}}$ to $\\mathcal H$ is compact.",
+     "to": "$\\|\\mathcal C_\\alpha v\\|_{\\mathcal H}\\le C\\,\\|\\nabla v\\|_{\\mathcal H}$.",
      "origin": "ai"
     }
    ]
@@ -695,7 +695,7 @@
      "paper": "short",
      "role": "statement",
      "from": "Suppose that $\\mathsf n_\\psi\\ge\\sup_\\theta\\|\\psi_j(\\theta)\\|_{L^3}$ and $\\frac2{\\sqrt3\\,w_*}\\,\\mathsf n_\\psi\\le\\tilde a_j$",
-     "to": "$\\alpha\\in\\mathcal K$ and every $v\\in\\mathcal D_{S(\\alpha)}$.",
+     "to": "$\\mathsf n_\\psi\\ge\\sup_\\theta\\|\\psi_j(\\theta)\\|_{L^2}$ and $\\frac{c_w}{\\sqrt{w_*}}\\,\\mathsf n_\\psi\\le\\tilde a_j$.",
      "origin": "ai"
     }
    ]
@@ -732,8 +732,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "Then $v\\cdot\\mathsf R$ is integrable on $(0,1)\\times\\mathbb R^3$, and $\\bigl|\\iint v\\cdot\\mathsf R\\bigr|\\le\\mathsf n\\,\\|\\nabla v\\|_{\\mathcal H}$",
-     "to": "$\\bigl|\\iint v\\cdot\\mathsf R\\bigr|\\le\\mathsf n\\,\\|\\nabla v\\|_{\\mathcal H}$.",
+     "from": "Then $v\\cdot\\mathsf R$ is integrable on $(0,1)\\times\\mathbb R^3$,",
+     "to": "$v\\cdot\\mathsf R$ is integrable on $(0,1)\\times\\mathbb R^3$,",
      "origin": "ai"
     }
    ]
@@ -755,7 +755,7 @@
      "paper": "short",
      "role": "statement",
      "from": "Then, for every $\\alpha\\in\\mathcal K$, every $v\\in\\mathcal D_{S(\\alpha)}$ and ev",
-     "to": "$$\\begin{equation}\n\\begin{aligned}\n&\\Bigl(\\mathsf n_{\\mathsf G}^2+\\frac{(w_*\\,\\mathsf n_{\\mathsf U}+\\mathsf n_{\\mathsf F}+\\mathsf n_{\\mathsf R})^2}{w_*}\\Bigr)^{1/2}+\\frac1{\\sqrt{w_*}}\\Bigl[\\Bigl(\\sum_i\\frac{\\bar\\varrho_i^2}{\\varpi_i}\\Bigr)^{1/2}(\\mathsf n_{\\mathrm v}+\\mathsf n_{\\mathrm d})+\\Bigl(\\sum_i|\\varsigma_i|\\,\\bar\\varrho_i\\Bigr)\\mathsf n_\\theta\\Bigr]\\\\\n&\\qquad+\\mathsf n_\\Phi+\\frac{\\mathsf n_Y\\,c_\\Xi}{\\sqrt{w_*}}\\le a_j.\n\\end{aligned}\\tag{B.53}\n\\end{equation}$$",
+     "to": "$F\\simeq\\mathcal T_{S(\\alpha)}v+\\mathcal C_\\alpha v$, the bound (7.33) holds with every number $a_j$ such that",
      "origin": "ai"
     }
    ]
@@ -785,7 +785,7 @@
      "paper": "short",
      "role": "statement",
      "from": "$$\\begin{equation}\n\\begin{gathered}\n\\bigl|\\mathsf C_j^0-V_j\\cdot\\beta^0+\\langle F^{(0)},\\psi_j\\rangle_\\chi\\bigr|\\le\\tilde{\\mathsf C}_j^0,\\qquad\n\\bigl|\\mathsf C_{ji}^1-V_j\\cdot\\beta^i+\\langle F^{(i)},\\psi_j\\rangle_\\chi\\bigr|\\le\\tilde{\\mathsf C}_{ji}^1,\\\\\n\\bigl|\\mathsf C_{jii'}^2+\\langle F^{(ii')},\\psi_j\\rangle_\\chi\\bigr|\\le\\tilde{\\mathsf C}_{jii'}^2,\n\\end{gathered}\\tag{B.58}\n\\end{equation}$$",
-     "to": "therwise. Then (7.34) holds for every $\\alpha\\in\\mathcal K$.",
+     "to": "$$\\begin{equation}\n\\begin{gathered}\n\\bigl|\\mathsf C_j^0-V_j\\cdot\\beta^0+\\langle F^{(0)},\\psi_j\\rangle_\\chi\\bigr|\\le\\tilde{\\mathsf C}_j^0,\\qquad\n\\bigl|\\mathsf C_{ji}^1-V_j\\cdot\\beta^i+\\langle F^{(i)},\\psi_j\\rangle_\\chi\\bigr|\\le\\tilde{\\mathsf C}_{ji}^1,\\\\\n\\bigl|\\mathsf C_{jii'}^2+\\langle F^{(ii')},\\psi_j\\rangle_\\chi\\bigr|\\le\\tilde{\\mathsf C}_{jii'}^2,\n\\end{gathered}\\tag{B.58}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -844,8 +844,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma B.3.** Suppose that the symmetry (B.17) holds and that $\\mathcal I^-<\\infty$",
-     "to": "ntegral. So do the positive parts, if $\\mathcal I^+<\\infty$.",
+     "from": "**Lemma B.3.**",
+     "to": "**Lemma B.3.**",
      "origin": "ai"
     }
    ]
@@ -882,8 +882,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma B.5.** Let $u=\\hat v_\\iota$ and $k=\\varkappa\\iota_1$. At almost every po",
-     "to": "${\\mathsf Q}$ in the second case, if (B.29) holds on the region.",
+     "from": "**Lemma B.5.**",
+     "to": "**Lemma B.5.**",
      "origin": "ai"
     }
    ]
@@ -912,8 +912,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma B.6.** Let $Z$ be a region on which $|(r,z)|$ exceeds a radius that depe",
-     "to": "ight $r$, and $\\int_Z\\mathcal I_\\iota^\\circ\\,r\\,dr\\,dz\\ge0$.",
+     "from": "**Lemma B.6.**",
+     "to": "**Lemma B.6.**",
      "origin": "ai"
     }
    ]
@@ -942,8 +942,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Lemma B.7.** Suppose that the conditions on the tree hold. Then, for every rea",
-     "to": "thogonal to the columns of all the matrices $\\mathsf Y_\\xi$.",
+     "from": "**Lemma B.7.**",
+     "to": "**Lemma B.7.**",
      "origin": "ai"
     }
    ]
@@ -1011,7 +1011,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Proposition 2.1.** Let $(W,q)$ be a profile, and let $u_1^*$ be the field (1.4",
-     "to": "$w_0\\in C_{c,\\mathrm{div}}^\\infty$ with $\\|w_0-W(0,\\cdot)\\|_{\\dot H^1}\\le\\varepsilon_0$.",
+     "to": "be a profile, and let $u_1^*$ be the field (1.4) with $T=1$.",
      "origin": "ai"
     }
    ]
@@ -1040,8 +1040,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Proposition 2.2.** Let $(W,q)$ be a profile. Then there exist $T\\in(0,1]$, $\\kappa\\in(0,\\tfrac14)$",
-     "to": "$$\\begin{equation}\nc\\,(T-t)^{-\\frac14}\\le\\|u(t)\\|_{H^1(\\mathbb T^3)}\\le C\\,(T-t)^{-\\frac14},\\quad \\|u(t)-u_T^*(t)\\|_{H^1(B_{1/16})}\\le C\\,(T-t)^{\\kappa-\\frac14},\\tag{2.6}\n\\end{equation}$$ where $u_T^*$ is the field (1.4).",
+     "from": "**Proposition 2.2.** Let $(W,q)$ be a profile.",
+     "to": "**Proposition 2.2.** Let $(W,q)$ be a profile.",
      "origin": "ai"
     }
    ]
@@ -1087,7 +1087,7 @@
      "paper": "short",
      "role": "statement",
      "from": "$$\\begin{equation}\n|u^*(t,x)|\\le\\frac{C_W}{\\sqrt{1-t}+|x|}\\le\\frac{C_W}{|x|},\\qquad |\\nabla u^*(t,x)|\\le\\frac{C_W}{\\bigl(\\sqrt{1-t}+|x|\\bigr)^2}\\le\\frac{C_W}{|x|^2}.\\tag{4.1}\n\\end{equation}$$",
-     "to": " and to $L^2(\\mathbb R^3)$, so that $u^*(t)$ belongs to $X$.",
+     "to": "$$\\begin{equation}\n|u^*(t,x)|\\le\\frac{C_W}{\\sqrt{1-t}+|x|}\\le\\frac{C_W}{|x|},\\qquad |\\nabla u^*(t,x)|\\le\\frac{C_W}{\\bigl(\\sqrt{1-t}+|x|\\bigr)^2}\\le\\frac{C_W}{|x|^2}.\\tag{4.1}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -1149,7 +1149,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Lemma 4.2.** For $n\\ge0$ and $0\\le\\sigma<1$, $$\\begin{equation}\nu^*(t_n+\\lambda^n\\sigma)=\\rho_R^n\\,D_{\\lambda^{-n}}\\,u^*(\\sigma).\\tag{4.3}\n\\end{equation}$$",
-     "to": "$$\\begin{equation}\nc_*\\,(1-t)^{-1/4}\\le\\|u^*(t)\\|_{\\dot H^1}\\le C\\,(1-t)^{-1/4}\\qquad(0\\le t<1).\\tag{4.4}\n\\end{equation}$$",
+     "to": "$$\\begin{equation}\nu^*(t_n+\\lambda^n\\sigma)=\\rho_R^n\\,D_{\\lambda^{-n}}\\,u^*(\\sigma).\\tag{4.3}\n\\end{equation}$$",
      "origin": "ai"
     }
    ]
@@ -1192,8 +1192,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Proposition 7.11.** Let $S>0$, and let $\\mathcal W:\\mathbb R\\times\\mathbb R^3\\to\\mathbb R^3$",
-     "to": "$$\\begin{equation}\n W(s,\\cdot)=\\mathcal W\\bigl(\\tfrac sS\\bigr)\\qquad\\text{in }X\\quad\\text{for every }s\\in\\mathbb R.\n \\tag{7.62}\n\\end{equation}$$",
+     "from": "**Proposition 7.11.**",
+     "to": "**Proposition 7.11.**",
      "origin": "ai"
     }
    ]
@@ -1215,7 +1215,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Proposition 7.5.** Let $S>0$. The operator $\\mathcal T_S$ is a bijection of $\\mathcal D_S$",
-     "to": "$\\mathcal H$, and $v_k\\to v$ in $L^2((0,1)\\times B_r)$ for every $r>0$.",
+     "to": "$\\mathcal D_S^\\Gamma$ onto $\\mathcal H_{\\mathrm{div}}^\\Gamma$.",
      "origin": "ai"
     }
    ]
@@ -1237,7 +1237,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Proposition 7.8.** Let $\\alpha\\in\\mathcal K$ and $S=S(\\alpha)$. The map $$\\begin{equation}\n (v,\\beta)\\mapsto\\Bigl(\\mathbb P\\Bigl(\\mathcal T_Sv+\\mathcal C_\\alpha v+\\sum_{i=1}^n\\beta_i b_i\\Bigr),\\,\\ell(v)\\Bigr)\n \\tag{7.53}\n\\end{equation}$$",
-     "to": "$\\mathcal T_Sv+\\mathcal C_\\alpha v+\\sum_i\\beta_i b_i\\simeq F$ and with this value of $\\ell(v)$.",
+     "to": "$\\mathcal D_S^\\Gamma\\times\\mathbb R^n$ onto $\\mathcal H_{\\mathrm{div}}^\\Gamma\\times\\mathbb R^n$.",
      "origin": "ai"
     }
    ]
@@ -1289,7 +1289,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Proposition B.1.** For data of the form of Subsection B.1 and weights of the f",
-     "to": "$$\\begin{equation}\n \\langle F,\\mathsf Mv\\rangle_{\\mathcal H}-\\tfrac3{50}\\,\\|v\\|_w^2-c_\\mu\\,\\|v\\|_\\mu^2-\\sum_i\\beta_i\\,\\langle b_i,\\mathsf Mv\\rangle_{\\mathcal H}\\geq\\int_0^1\\int_{\\mathbb R^3}\\Bigl(\\sum_\\iota\\mathcal I_\\iota+J\\Bigr)\\,dy\\,d\\theta.\n \\tag{B.20}\n\\end{equation}$$",
+     "to": "$F\\simeq\\mathcal T_{S(\\alpha)}v+\\mathcal C_\\alpha^{\\mathrm r}v+\\sum_i\\beta_i b_i$.",
      "origin": "ai"
     }
    ]
@@ -1311,7 +1311,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Proposition B.14.** Let data of the form of Subsection B.1 be given, with the ",
-     "to": " the conditions are a certificate in the sense of Section 7.",
+     "to": "d suppose that they satisfy the conditions of this appendix.",
      "origin": "ai"
     }
    ]
@@ -1378,8 +1378,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "**Proposition B.8.** Suppose that the data satisfy the conditions of this append",
-     "to": " in (7.18), we have $\\mathcal I^-<\\infty$, and (B.21) holds.",
+     "from": "**Proposition B.8.**",
+     "to": "**Proposition B.8.**",
      "origin": "ai"
     }
    ]
@@ -1409,7 +1409,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Theorem 1.1.** Let $S>0$, and let $R$ be a linear isometry of $\\mathbb R^3$, t",
-     "to": "$$\\begin{equation}\n\\left.\\begin{gathered}\nc\\,(T-t)^{-\\frac14}\\le\\|u_{\\mathrm{per}}(t)\\|_{H^1(\\mathbb T^3)}\\le C\\,(T-t)^{-\\frac14},\\\\\n\\|u_{\\mathrm{per}}(t)-u_T^*(t)\\|_{H^1(B_{1/16})}\\le C\\,(T-t)^{\\kappa-\\frac14}\n\\end{gathered}\\quad\\right.\\qquad(0\\le t<T).\\tag{1.7}\n\\end{equation}$$",
+     "to": "od $S$ and isometry $R$, and let $u_T^*$ be the field (1.4).",
      "origin": "ai"
     }
    ]
@@ -1431,7 +1431,7 @@
      "paper": "short",
      "role": "statement",
      "from": "**Theorem 7.1.** Suppose that a certificate is given. Then there exist $\\alpha\\in\\mathcal K$",
-     "to": "$$\\begin{equation}\nW(s+\\theta_0S,y)=R\\,W(s,R^{-1}y)\\qquad\\text{for all }(s,y)\\in\\mathbb R\\times\\mathbb R^3\\text{ and every }(R,\\theta_0)\\in\\Gamma.\\tag{7.39}\n\\end{equation}$$",
+     "to": "$S=S(\\alpha)$ and isometry $I$, in the sense of (1.2) and (1.3),",
      "origin": "ai"
     }
    ]
