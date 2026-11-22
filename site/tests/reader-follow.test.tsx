@@ -221,6 +221,19 @@ describe("MapPane", async () => {
     }
   });
 
+  it("keeps keyboard focus in the pane when Open its Lean replaces the graph dock", () => {
+    const pin = { record: goal, tie: null };
+    const onMode = vi.fn();
+    show(null, { pin, onMode });
+    const open = [...container.querySelectorAll<HTMLButtonElement>(".map-pane__dock button")].find((button) => button.textContent === "Open its Lean")!;
+    open.focus();
+    act(() => open.click());
+    expect(onMode).toHaveBeenCalledWith("lean");
+    show(null, { pin, mode: "lean", onMode });
+    expect(open.isConnected).toBe(false);
+    expect(document.activeElement).toBe(container.querySelector(".mode-toggle [aria-pressed='true']"));
+  });
+
   it("has one toggle; Lean fills the pane, and the whole proof map is one button away in Graph", () => {
     const onMode = vi.fn();
     show(null, { onMode });
