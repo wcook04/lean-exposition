@@ -100,6 +100,10 @@ export interface LibraryInstance {
   review: string;
   source: { proof_reader?: { repository: string; commit: string; page: string }; upstream: { repository: string; commit: string; paper?: string | null }; lean_scope?: string };
   documents: LibraryDocument[];
+  /** Compare's columns besides the Lean, by document slot, when the paper has several accounts of one argument. */
+  levels?: string[];
+  /** Compare's column names by slot (for example "Expert companion"), in place of the reader's default names. */
+  level_names?: Record<string, string>;
   families: { id: string; name: string }[];
   topics: { id: string; name: string; description: string; family: string | null }[];
   topic_order: string[];

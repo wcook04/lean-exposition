@@ -10,19 +10,26 @@ import { LEVELS, type Level } from "../app/router";
 import { usesOf } from "../map/treeModel";
 import { inLevel } from "../map/levels";
 
-export const LEVEL_NAMES: Record<Level, string> = {
+export const DEFAULT_NAMES: Record<Level, string> = {
   lean: "Lean",
   long: "Long record",
   short: "Short paper",
   expository: "Exposition",
 };
 
+/** Each level's column name; an instance with its own accounts names them (the quartic reader's expert companion, …). */
+export const LEVEL_NAMES: Record<Level, string> = { ...DEFAULT_NAMES, ...(site.levelNames ?? {}) };
+
 const IN_PROSE: Record<Level, string> = {
   lean: "OpenAI's Lean",
   long: "the long record",
   short: "the short paper",
   expository: "the exposition",
+  ...Object.fromEntries(Object.entries(site.levelNames ?? {}).filter(([l]) => l !== "lean").map(([l, name]) => [l, `the ${name.charAt(0).toLowerCase()}${name.slice(1)}`])),
 };
+
+/** Compare's columns: the levels an instance declares (with the Lean), else all four. */
+export const SHOWN_LEVELS: readonly Level[] = site.compareLevels?.length ? LEVELS.filter((l) => site.compareLevels!.includes(l)) : LEVELS;
 
 export interface OutlineRow {
   id: string;
@@ -149,10 +156,10 @@ export type Slot =
  */
 export function arrangeLevels(record: RecordAlignment, width: number, chosen?: readonly Level[]): Slot[] {
   const has = (level: Level) => amount(record, level) > 0;
-  const ranked = LEVELS.filter(has).sort((a, b) => strength(record, b) - strength(record, a) || LEVELS.indexOf(a) - LEVELS.indexOf(b));
+  const ranked = SHOWN_LEVELS.filter(has).sort((a, b) => strength(record, b) - strength(record, a) || SHOWN_LEVELS.indexOf(a) - SHOWN_LEVELS.indexOf(b));
   // A choice with nothing for this record would leave the bench empty, so it is set aside here.
   const shown = new Set(chosen?.some(has) ? chosen.filter(has) : ranked.slice(0, defaultColumns(width) - (width < LEAN_NEEDS && has("lean") && width >= 1280 ? 1 : 0)));
-  return LEVELS.map((level) => {
+  return SHOWN_LEVELS.map((level) => {
     if (!has(level)) return { level, state: "empty" };
     return shown.has(level) ? { level, state: "column", weight: columnWeight(amount(record, level)) } : { level, state: "folded" };
   });
@@ -211,5 +218,5 @@ export function pressLevel(slots: readonly Slot[], chosen: readonly Level[] | un
 /** A level toggled on or off, keeping the levels' order. At least one stays on. */
 export function toggleLevel(shown: readonly Level[], level: Level): Level[] {
   const next = shown.includes(level) ? shown.filter((l) => l !== level) : [...shown, level];
-  return next.length ? LEVELS.filter((l) => next.includes(l)) : [...shown];
+  return next.length ? SHOWN_LEVELS.filter((l) => next.includes(l)) : [...shown];
 }

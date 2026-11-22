@@ -166,6 +166,10 @@ export interface SiteInstance {
   mainGoal: string | null;
   /** The Lean the levels band shows when a paper has no first-page picture. */
   levelsLeanSnippet: string | null;
+  /** Compare's columns, when an instance declares them (always with the Lean); otherwise every level. */
+  compareLevels?: readonly ("lean" | "long" | "short" | "expository")[];
+  /** Compare's column names, when an instance names its own levels. */
+  levelNames?: Partial<Record<"lean" | "long" | "short" | "expository", string>>;
   /** The levels band's line on the Lean level: whose statements and proofs. */
   leanLevelWho: string;
   /** Sentences shared components say about this example. */

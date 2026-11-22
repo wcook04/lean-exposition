@@ -174,6 +174,8 @@ const site = {
   mainGoal: PAPER.goal,
   leanLevelWho: R.lean_level_who ?? `Statements and proofs by ${BY}`,
   levelsLeanSnippet: R.levels_lean_snippet ?? null,
+  ...(PAPER.levels?.length ? { compareLevels: ["lean", ...PAPER.levels] as ("lean" | "long" | "short" | "expository")[] } : {}),
+  ...(PAPER.level_names ? { levelNames: PAPER.level_names as Partial<Record<"lean" | "long" | "short" | "expository", string>> } : {}),
   words: {
     argumentFor: "Argument for",
     stepTerms: "A step is one record of the argument: a result as the authors number it, or a Lean declaration linked to it.",

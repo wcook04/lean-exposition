@@ -232,6 +232,9 @@ def main() -> int:
     ap.add_argument("--out", type=Path, default=ROOT / "instances" / PAPER)
     ap.add_argument("--work", type=Path, required=True, help="a scratch folder for the assembled pages")
     ap.add_argument("--lean-exposition", default="lean-exposition")
+    ap.add_argument("--comparator-run", help="the GitHub Actions run that wrote the current Comparator receipts (its URL)")
+    ap.add_argument("--comparator-artifact", type=Path,
+                    help="that run's downloaded evidence artifact; every current receipt's file name and log hash must appear in it")
     ap.add_argument("--pdf", action="append", default=[], metavar="PAPER=FILE",
                     help="an accepted PDF of one paper (expert, exposition or reconstruction) rendered from the current manuscript")
     args = ap.parse_args()
@@ -467,8 +470,211 @@ def main() -> int:
     # ---- the browser checks' arguments for this paper (CI reads them: .github/workflows/library.yml)
     (out / "check.args").write_text("--phrase a-family --result theorem-1 --decl QuarticQuery.theorem_1_1_unconditional "
                                     "--section 4.2 --notice reviewed --no-pdf\n")
+    comparator(q, out, commit, args)
+    levels(q, out, transforms)
     print(f"quartic: {sum(len(l['ties']) for l in layers.values())} ties over 3 papers, {len(results)} results, commit {commit[:12]}")
     return 0
+
+
+def edition_resource(q: Path, revision: str, name: str):
+    """A resource of the newest gh-pages edition built from `revision`, as the old reader served it."""
+    ref = "origin/gh-pages"
+    def show(path):
+        return subprocess.run(["git", "-C", str(q), "show", f"{ref}:reading-api/v1/{path}"], capture_output=True, check=True).stdout
+    names = subprocess.run(["git", "-C", str(q), "ls-tree", "--name-only", f"{ref}:reading-api/v1/"], capture_output=True, text=True,
+                           check=True).stdout.split()
+    for edition in sorted(n for n in names if n.startswith("edition-")):
+        manifest = json.loads(show(edition))
+        if manifest.get("revision") == revision and name in manifest["resources"]:
+            return json.loads(show(manifest["resources"][name]["href"]))
+    raise SystemExit(f"no gh-pages edition of {revision[:12]} carries {name}")
+
+
+def comparator(q: Path, out: Path, commit: str, args) -> None:
+    """Quartic's Comparator evidence, as its reader showed it (the edition's comparator-evidence.json):
+    each positive configuration whose latest receipt passed for the current sources, with its receipt
+    file and its rejected controls, carried unchanged into generated/comparator/receipts/. The receipt
+    the reader shows (generated/comparator/receipt.json) lists one entry per configuration; What ran
+    lists each receipt (generated/comparator/runs/, an evidence record of kind comparator)."""
+    evidence = edition_resource(q, commit, "comparator-evidence.json")
+    folder = out / "generated/comparator"
+    shutil.rmtree(folder, ignore_errors=True)
+    run_url, basis = None, None
+    receipts = {}
+    for config, run in evidence["runs"].items():
+        for path in [run["receipt"], *(c["receipt"] for c in run["rejected_controls"])]:
+            receipts[path] = json.loads((q / path).read_text())
+    if args.comparator_run:
+        if not args.comparator_artifact:
+            raise SystemExit("--comparator-run needs --comparator-artifact, to check that the run wrote these receipts")
+        blob = b"".join(f.read_bytes() for f in args.comparator_artifact.rglob("*") if f.is_file())
+        absent = [p for p, r in receipts.items() if Path(p).name.encode() not in blob or r["log_sha256"].encode() not in blob]
+        if absent:
+            raise SystemExit(f"{len(absent)} receipt(s) not in the run's artifact, e.g. {absent[0]}")
+        run_url = args.comparator_run
+        basis = (f"The run's evidence artifact carries all {len(receipts)} receipt files below, each with the same log hash; "
+                 "the receipts themselves do not name the run.")
+    files = {}
+    for path, body in receipts.items():
+        data = (q / path).read_bytes()
+        (folder / "receipts").mkdir(parents=True, exist_ok=True)
+        (folder / "receipts" / Path(path).name).write_bytes(data)
+        files[f"receipts/{Path(path).name}"] = sha(data)
+    def words(config: str) -> str:
+        stem = Path(config).stem.removeprefix("negative-")
+        return re.sub(r"(?<=[a-z])(?=[A-Z])", " ", stem).replace("-", " ").lower()
+    runs, applies, ledger = [], {}, []
+    for decl, rows in evidence["declarations"].items():
+        for row in rows:
+            if row["link"] == "solution_applies":
+                applies.setdefault(row["run"], {})[decl] = row["target"]
+    for config, run in sorted(evidence["runs"].items(), key=lambda kv: kv[1]["name"]):
+        receipt = receipts[run["receipt"]]
+        paranoid = bool(receipt.get("paranoid"))
+        kernels = ["Lean’s default kernel"] + (["every external checker bundled with Lean (--paranoid)"] if paranoid else [])
+        controls = []
+        for c in run["rejected_controls"]:
+            r = receipts[c["receipt"]]
+            controls.append({"change": f"{words(c['configuration'])} ({Path(c['configuration']).name})",
+                             "output": [f"rejected as expected ({r.get('expected_diagnostic', 'exit ' + str(r.get('exit_code')))})"],
+                             "receipt": f"receipts/{Path(c['receipt']).name}"})
+        runs.append({
+            "name": run["name"], "configuration": config.removeprefix("lean/"),
+            **({"run": run_url} if run_url else {}), "date": run["ran_at"][:10], "commit": receipt["commit"],
+            "kernels": kernels, "permitted_axioms": run["permitted_axioms"],
+            "mode": f"{receipt['tool']}{', with --paranoid' if paranoid else ''}",
+            "receipt": f"receipts/{Path(run['receipt']).name}",
+            "accepted": {"theorem_names": run["theorem_names"]},
+            **({"applies": applies[config]} if config in applies else {}),
+            "rejected_controls": controls})
+        ledger.append({
+            "record_type": "comparator_receipt", "entry_id": run["name"],
+            "run": {"repository": "wcook04/quartic-query-lean", **({"url": run_url, "run_id": run_url.rstrip("/").rsplit("/", 1)[-1]} if run_url else {}),
+                    "commit": receipt["commit"], "date": run["ran_at"][:10]},
+            "theorem_pairs": [{"challenge": n} for n in run["theorem_names"]], "kernels": kernels,
+            "axioms": run["permitted_axioms"], "outcome": "accepted" if receipt["status"] == "passed" else receipt["status"],
+            "receipt": f"receipts/{Path(run['receipt']).name}"})
+    (folder / "runs").mkdir(parents=True, exist_ok=True)
+    names = []
+    for row in ledger:
+        name = f"{re.sub(r'[^A-Za-z0-9-]+', '-', row['entry_id'])}.json"
+        (folder / "runs" / name).write_text(json.dumps(row, indent=1, ensure_ascii=False) + "\n")
+        names.append(name)
+    (folder / "runs/index.json").write_text(json.dumps({"record_type": "receipt_index", "receipts": names}, indent=1) + "\n")
+    accepted = sum(len(r["accepted"]["theorem_names"]) for r in runs)
+    (folder / "receipt.json").write_text(json.dumps({
+        "schema": 1,
+        "what": (f"Comparator checked {accepted} theorem statements in {len(runs)} configurations against challenge files that hold "
+                 "the project’s own frozen definitions and statements, and rejected every altered control. The Unconditional "
+                 "configuration accepts the main theorem’s four statements, the family with no hypothesis among them, and was also "
+                 "run with --paranoid. Comparator compares each solution with its challenge statement; whether that statement "
+                 "says what the paper says is the comparison shown on each step."),
+        "against": "the project’s frozen challenge statements",
+        **({"run": run_url, "run_basis": basis} if run_url else {}),
+        "date": max(r["date"] for r in runs), "commit": runs[0]["commit"],
+        "runs": runs}, indent=1, ensure_ascii=False) + "\n")
+    files["receipt.json"] = sha((folder / "receipt.json").read_bytes())
+    for name in names + ["index.json"]:
+        files[f"runs/{name}"] = sha((folder / "runs" / name).read_bytes())
+    # What ran: one evidence record naming the receipt index. The graph's hash is bound in each paper's
+    # mapping, so the mappings are rebound to the new graph.
+    graph_path = out / "evidence-graph.json"
+    graph = json.loads(graph_path.read_text())
+    graph["evidence"] = [e for e in graph["evidence"] if e["id"] != "comparator_runs"] + [{
+        # An outside run, observed: this tool ran nothing, so the record is a platform observation that
+        # ran nothing here; each receipt it lists carries its own outcome.
+        "id": "comparator_runs", "kind": "platform_observation", "status": "not_run",
+        "command": ["lake", "comparator", "--config", "<each configuration>"], "tool": runs[0]["mode"],
+        "source_ids": ["upstream"], "subject_ids": [graph["selected_goals"][0]],
+        "details": f"{len(runs)} Comparator configurations accepted; their receipts are listed one by one in What ran.",
+        "receipt_path": "generated/comparator/runs/index.json",
+        "receipt_sha256": sha((folder / "runs/index.json").read_bytes())}]
+    old = sha(graph_path.read_bytes())
+    graph_bytes = (json.dumps(graph, indent=1, ensure_ascii=False) + "\n").encode()
+    graph_path.write_bytes(graph_bytes)
+    for mapping in (out / "papers").glob("*/*.json"):
+        if mapping.name in ("correspondence.json", "absent.json"):
+            text = mapping.read_text()
+            if old in text:
+                mapping.write_text(text.replace(old, sha(graph_bytes)))
+    inst = json.loads((out / "instance.json").read_text())
+    inst["comparator"] = {"files": dict(sorted(files.items())), "receipt": "receipt.json"}
+    inst.setdefault("reader", {})["publish_receipts"] = True
+    (out / "instance.json").write_text(json.dumps(inst, indent=1, ensure_ascii=False) + "\n")
+
+
+LEVELS = {"short": "Expert companion", "expository": "Worked exposition", "long": "Full proof reconstruction"}
+
+
+def levels(q: Path, out: Path, transforms: dict) -> None:
+    """Compare's three levels: each numbered result stated in the expert companion, the reconstruction
+    (the paragraph after the source's own claim marker for the OpenAI statement it restates) and the
+    exposition (a phrase that states the result's Lean)."""
+    batch_path = out / "alignment/m1-results.json"
+    batch = json.loads(batch_path.read_text())
+    record = (out / "papers/long/paper.md").read_text()
+    expo = json.loads((out / "alignment/phrases-expository.json").read_text())["ties"]
+    recon = json.loads((out / "alignment/phrases-long.json").read_text())["ties"]
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from lean_exposition.alignment import _math_spans
+    statements = {a: s for a, _, _, s in results_of(front_matter((q / "docs/expert_companion.md").read_text())[1])}
+    found = {"long": 0, "expository": 0}
+    for rid, row in batch["records"].items():
+        address = rid.split(".", 1)[1]
+        statement = statements.get(address)
+        names = {r["name"] for r in row["lean"]}
+        marker = record.find(f"<!-- quartic-claim {statement} -->") if statement else -1
+        if marker >= 0:
+            begin = record.find("\n", marker) + 1
+            while record[begin:begin + 1] == "\n":
+                begin += 1
+            stop = begin
+            while True:  # to the paragraph's end, never inside a display
+                nxt = record.find("\n\n", stop)
+                stop = len(record) if nxt < 0 else nxt
+                body = record[begin:stop]
+                if nxt < 0 or (body.count("$$") % 2 == 0 and body.count("\\[") == body.count("\\]")):
+                    break
+                stop = nxt + 2
+            stop = min(stop, begin + 1700)
+            spans = _math_spans(record[begin:stop])
+            def edge(cut, forward):
+                for x, y, _ in spans:
+                    if x < cut - begin < y:
+                        return begin + (y if forward else x)
+                return cut
+            grow = 0
+            while True:
+                a = edge(begin + min(80 + grow, stop - begin), True)
+                b = edge(stop - min(60 + grow, stop - begin), False)
+                first, last = record[begin:a], record[b:stop]
+                if (record.count(first) == 1 and record.find(last, begin) + len(last) == stop) or a >= stop:
+                    break
+                grow += 20
+            row["statements"].append({"paper": "long", "role": "statement", "from": first, "to": last, "origin": "ai"})
+            found["long"] += 1
+        # Otherwise a phrase of that paper tied to the result's Lean: one that states it is the result's
+        # statement there; one the Lean contains, or states a part of, explains it.
+        for slot, ties in (("long", recon), ("expository", expo)):
+            if any(st["paper"] == slot for st in row["statements"]):
+                continue
+            rank = {"states": 0, "contains": 1, "part": 2}
+            best = sorted(((rank[r["relation"]], k, t) for k, t in enumerate(ties) for r in t["lean"]
+                           if r["name"] in names and r["relation"] in rank and t["role"] in ("statement", "definition")),
+                          key=lambda x: (x[0], x[1]))
+            if not best:
+                continue
+            level, _, tie = best[0]
+            row["statements"].append({"paper": slot, "role": "statement" if level == 0 else "explanation",
+                                      "from": tie["from"], "to": tie["to"],
+                                      **({"after": tie["after"]} if tie.get("after") else {}), "origin": "ai"})
+            found[slot] += 1
+    batch_path.write_text(json.dumps(batch, indent=1, ensure_ascii=False) + "\n")
+    inst = json.loads((out / "instance.json").read_text())
+    inst["levels"] = ["expository", "short", "long"]
+    inst["level_names"] = LEVELS
+    (out / "instance.json").write_text(json.dumps(inst, indent=1, ensure_ascii=False) + "\n")
+    print(f"compare: {found['long']} results placed in the reconstruction, {found['expository']} in the exposition")
 
 
 if __name__ == "__main__":

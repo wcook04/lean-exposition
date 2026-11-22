@@ -5,7 +5,7 @@
 import type { AlignedStatement, RecordAlignment } from "../api/lean";
 import type { Account as Stage } from "../api/types";
 import { LEVELS, type Level } from "../app/router";
-import { defaultColumns, statementsOf } from "./model";
+import { DEFAULT_NAMES, LEVEL_NAMES, defaultColumns, statementsOf } from "./model";
 
 /** What a paper says about a step, strongest first. A bare mention says nothing about it. */
 export function sayings(record: RecordAlignment, stage: Stage): AlignedStatement[] {
@@ -79,6 +79,9 @@ const IN_WORDS: Record<Level, string> = {
   long: "the long record",
   short: "the short paper",
   expository: "the exposition",
+  // An instance's own names for its levels (LEVEL_NAMES), in running text.
+  ...Object.fromEntries(Object.entries(LEVEL_NAMES).filter(([l]) => l !== "lean" && LEVEL_NAMES[l as Level] !== DEFAULT_NAMES[l as Level])
+    .map(([l, name]) => [l, `the ${name.charAt(0).toLowerCase()}${name.slice(1)}`])),
 };
 
 const COUNT_WORDS = ["", "one", "both", "all three", "all four"];

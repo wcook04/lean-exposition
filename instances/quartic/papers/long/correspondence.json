@@ -4,7 +4,7 @@
  "state": "draft",
  "path": "papers/long.md",
  "content_sha256": "806053e019b394fdff0c88914564f8211e037c58b65d06b8bf0cea131d4863c0",
- "graph_sha256": "64b4bff49f4a37d69616e0b90f4914305cfb20c7c3287b1bc972500c7b211f5d",
+ "graph_sha256": "b01fb7dc64f90c9c1f9fb29554b974330c989197a18a158ed14e47c792db1a40",
  "selected_goal_ids": [
   "quartic.theorem-1"
  ],

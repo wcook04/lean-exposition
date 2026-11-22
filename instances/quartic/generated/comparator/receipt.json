@@ -1,0 +1,468 @@
+{
+ "schema": 1,
+ "what": "Comparator checked 34 theorem statements in 14 configurations against challenge files that hold the project’s own frozen definitions and statements, and rejected every altered control. The Unconditional configuration accepts the main theorem’s four statements, the family with no hypothesis among them, and was also run with --paranoid. Comparator compares each solution with its challenge statement; whether that statement says what the paper says is the comparison shown on each step.",
+ "against": "the project’s frozen challenge statements",
+ "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+ "run_basis": "The run's evidence artifact carries all 24 receipt files below, each with the same log hash; the receipts themselves do not name the run.",
+ "date": "2026-11-20",
+ "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+ "runs": [
+  {
+   "name": "Construction",
+   "configuration": "QuarticCorpus/Construction/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions run",
+   "receipt": "receipts/comparator-Construction-2026-11-20T153340340428+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Checked.winsAt_unique",
+     "QuarticQuery.Checked.existsUnique_gateConsistent",
+     "QuarticQuery.Checked.winner_no_incoming_zero",
+     "QuarticQuery.Checked.winner_finds_zero"
+    ]
+   },
+   "applies": {
+    "QuarticQuery.existsUnique_gateConsistent": "QuarticQuery.Checked.existsUnique_gateConsistent",
+    "QuarticQuery.winner_finds_zero": "QuarticQuery.Checked.winner_finds_zero",
+    "QuarticQuery.winner_no_incoming_zero": "QuarticQuery.Checked.winner_no_incoming_zero",
+    "QuarticQuery.winsAt_unique": "QuarticQuery.Checked.winsAt_unique"
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "Foundations",
+   "configuration": "QuarticCorpus/Foundations/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions run",
+   "receipt": "receipts/comparator-Foundations-2026-11-20T153427455450+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Checked.R_le_iff",
+     "QuarticQuery.Checked.Q_le_iff",
+     "QuarticQuery.Checked.D_le_iff",
+     "QuarticQuery.Checked.R_le_D",
+     "QuarticQuery.Checked.Q_le_D",
+     "QuarticQuery.Checked.D_le_card",
+     "QuarticQuery.Checked.R_reindex",
+     "QuarticQuery.Checked.Q_reindex"
+    ]
+   },
+   "applies": {
+    "QuarticQuery.D_le_card": "QuarticQuery.Checked.D_le_card",
+    "QuarticQuery.D_le_iff": "QuarticQuery.Checked.D_le_iff",
+    "QuarticQuery.Q_le_D": "QuarticQuery.Checked.Q_le_D",
+    "QuarticQuery.Q_le_iff": "QuarticQuery.Checked.Q_le_iff",
+    "QuarticQuery.Q_reindex": "QuarticQuery.Checked.Q_reindex",
+    "QuarticQuery.R_le_D": "QuarticQuery.Checked.R_le_D",
+    "QuarticQuery.R_le_iff": "QuarticQuery.Checked.R_le_iff",
+    "QuarticQuery.R_reindex": "QuarticQuery.Checked.R_reindex"
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "Separation",
+   "configuration": "QuarticCorpus/Separation/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions run",
+   "receipt": "receipts/comparator-Separation-2026-11-20T153615327764+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Checked.alphaTot_eq_four_of_bansalSinha",
+     "QuarticQuery.Checked.theorem_1_1",
+     "QuarticQuery.Checked.universal_quartic_bound",
+     "QuarticQuery.Checked.cubic_bound_fails_of_bansalSinha",
+     "QuarticQuery.Checked.family_bounds",
+     "QuarticQuery.Checked.addressed_lower_bound"
+    ]
+   },
+   "applies": {
+    "QuarticQuery.Gvalue_lt_R_addressedF": "QuarticQuery.Checked.addressed_lower_bound",
+    "QuarticQuery.alphaTot_eq_four_of_bansalSinha": "QuarticQuery.Checked.alphaTot_eq_four_of_bansalSinha",
+    "QuarticQuery.cubic_bound_fails_of_bansalSinha": "QuarticQuery.Checked.cubic_bound_fails_of_bansalSinha",
+    "QuarticQuery.family_bounds": "QuarticQuery.Checked.family_bounds",
+    "QuarticQuery.theorem_1_1": "QuarticQuery.Checked.theorem_1_1",
+    "QuarticQuery.universalPower_four": "QuarticQuery.Checked.universal_quartic_bound"
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "Tournament",
+   "configuration": "QuarticCorpus/Tournament/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions run",
+   "receipt": "receipts/comparator-Tournament-2026-11-20T153650967273+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Checked.expected_weight_eq",
+     "QuarticQuery.Checked.expected_weight_le_half"
+    ]
+   },
+   "applies": {
+    "QuarticQuery.Tournament.expected_weight_eq": "QuarticQuery.Checked.expected_weight_eq",
+    "QuarticQuery.Tournament.expected_weight_le_half": "QuarticQuery.Checked.expected_weight_le_half"
+   },
+   "rejected_controls": [
+    {
+     "change": "changed definition (ChangedDefinition.json)",
+     "output": [
+      "rejected as expected (IsComparison)"
+     ],
+     "receipt": "receipts/comparator-negative-ChangedDefinition-2026-11-20T154002347022+0000.json"
+    },
+    {
+     "change": "foreign axiom (ForeignAxiom.json)",
+     "output": [
+      "rejected as expected (cheat)"
+     ],
+     "receipt": "receipts/comparator-negative-ForeignAxiom-2026-11-20T154027548957+0000.json"
+    },
+    {
+     "change": "missing declaration (MissingDeclaration.json)",
+     "output": [
+      "rejected as expected (expected_weight_le_half)"
+     ],
+     "receipt": "receipts/comparator-negative-MissingDeclaration-2026-11-20T154124494070+0000.json"
+    },
+    {
+     "change": "sorry proof (SorryProof.json)",
+     "output": [
+      "rejected as expected (sorryAx)"
+     ],
+     "receipt": "receipts/comparator-negative-SorryProof-2026-11-20T154149956820+0000.json"
+    },
+    {
+     "change": "weakened conclusion (WeakenedConclusion.json)",
+     "output": [
+      "rejected as expected (statement do not match)"
+     ],
+     "receipt": "receipts/comparator-negative-WeakenedConclusion-2026-11-20T154216367016+0000.json"
+    }
+   ]
+  },
+  {
+   "name": "Unconditional",
+   "configuration": "QuarticCorpus/Unconditional/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel",
+    "every external checker bundled with Lean (--paranoid)"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions run, with --paranoid",
+   "receipt": "receipts/comparator-Unconditional-2026-11-20T160320262522+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Checked.alpha_tot_eq_four",
+     "QuarticQuery.Checked.theorem_one_one",
+     "QuarticQuery.Checked.cubic_bound_fails",
+     "QuarticQuery.Checked.forrelation_lower_bound"
+    ]
+   },
+   "applies": {
+    "QuarticQuery.ForrelationLower.bansalSinhaLower": "QuarticQuery.Checked.forrelation_lower_bound",
+    "QuarticQuery.alphaTot_eq_four_unconditional": "QuarticQuery.Checked.alpha_tot_eq_four",
+    "QuarticQuery.cubic_bound_fails_unconditional": "QuarticQuery.Checked.cubic_bound_fails",
+    "QuarticQuery.theorem_1_1_unconditional": "QuarticQuery.Checked.theorem_one_one"
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "round3-construction-support",
+   "configuration": "QuarticCorpus/Independent/ConstructionFull/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round3-construction-support-2026-11-20T154358125356+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Paper.construction_lemma_2_2_with_support"
+    ]
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "round3-eq19-direct",
+   "configuration": "QuarticCorpus/Independent/Eq19/whole-comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round3-eq19-direct-2026-11-20T154429814046+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Paper.eq19_whole"
+    ]
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "round3-eq19-independent",
+   "configuration": "QuarticCorpus/Independent/Eq19/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round3-eq19-independent-2026-11-20T154501827718+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Independent.Eq19.checked_eq19"
+    ]
+   },
+   "rejected_controls": [
+    {
+     "change": "inequality only (negative-inequality-only.json)",
+     "output": [
+      "rejected as expected (statement do not match)"
+     ],
+     "receipt": "receipts/comparator-round3-eq19-missing-equality-2026-11-20T154527708271+0000.json"
+    }
+   ]
+  },
+  {
+   "name": "round4-decoder-sharp",
+   "configuration": "QuarticCorpus/Independent/DecoderSharp/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round4-decoder-sharp-2026-11-20T154728059187+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Paper.construction_decoder_sharp"
+    ]
+   },
+   "rejected_controls": []
+  },
+  {
+   "name": "round4-degree-conventions",
+   "configuration": "QuarticCorpus/Independent/Degree/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round4-degree-conventions-2026-11-20T154801174663+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Independent.Degree.checked_degree_conventions"
+    ]
+   },
+   "rejected_controls": [
+    {
+     "change": "missing uniqueness (negative-missing-uniqueness.json)",
+     "output": [
+      "rejected as expected (statement do not match)"
+     ],
+     "receipt": "receipts/comparator-round4-degree-missing-uniqueness-2026-11-20T154824187990+0000.json"
+    }
+   ]
+  },
+  {
+   "name": "round4-model-zero",
+   "configuration": "QuarticCorpus/Independent/ModelZero/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round4-model-zero-2026-11-20T154909863624+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Independent.ModelZero.checked_zero_query_characterization"
+    ]
+   },
+   "rejected_controls": [
+    {
+     "change": "classical only (negative-classical-only.json)",
+     "output": [
+      "rejected as expected (statement do not match)"
+     ],
+     "receipt": "receipts/comparator-round4-model-zero-classical-only-2026-11-20T154936913562+0000.json"
+    }
+   ]
+  },
+  {
+   "name": "round4-real-leaves",
+   "configuration": "QuarticCorpus/Independent/RealLeaves/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round4-real-leaves-2026-11-20T155202642378+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Independent.RealLeaves.Compare.growth",
+     "QuarticQuery.Independent.RealLeaves.Compare.advantage"
+    ]
+   },
+   "applies": {
+    "QuarticQuery.ForrelationLower.advantage_le_sharp_real_leaves": "QuarticQuery.Independent.RealLeaves.Compare.advantage",
+    "QuarticQuery.ForrelationLower.sum_abs_ext_Dl_le_real_leaves": "QuarticQuery.Independent.RealLeaves.Compare.growth"
+   },
+   "rejected_controls": [
+    {
+     "change": "zero only (negative-zero-only.json)",
+     "output": [
+      "rejected as expected (statement do not match)"
+     ],
+     "receipt": "receipts/comparator-round4-real-leaves-zero-only-2026-11-20T155232540684+0000.json"
+    }
+   ]
+  },
+  {
+   "name": "round4-realized-caps-external",
+   "configuration": "QuarticCorpus/Independent/RealizedCaps/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round4-realized-caps-external-2026-11-20T155326320928+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.direct_product_external_finite_realized_caps"
+    ]
+   },
+   "rejected_controls": [
+    {
+     "change": "capped premise (negative-capped-premise.json)",
+     "output": [
+      "rejected as expected (statement do not match)"
+     ],
+     "receipt": "receipts/comparator-round4-realized-caps-capped-premise-2026-11-20T155257967549+0000.json"
+    }
+   ]
+  },
+  {
+   "name": "round4-uniform-amplifier",
+   "configuration": "QuarticCorpus/Independent/UniformAmplifier/comparator.json",
+   "run": "https://github.com/wcook04/quartic-query-lean/actions/runs/44762028741",
+   "date": "2026-11-20",
+   "commit": "88a2b968d86c15a6a2fb5cd6d4977441a616bf6e",
+   "kernels": [
+    "Lean’s default kernel"
+   ],
+   "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+   ],
+   "mode": "lake comparator, sandboxed GitHub Actions rerun of a recorded command",
+   "receipt": "receipts/comparator-round4-uniform-amplifier-2026-11-20T155433102790+0000.json",
+   "accepted": {
+    "theorem_names": [
+     "QuarticQuery.Upper.uniformOpaqueAmplifier"
+    ]
+   },
+   "rejected_controls": []
+  }
+ ]
+}
