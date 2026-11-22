@@ -4,11 +4,11 @@
  "title": "Constant-query verification by algebraic encoding",
  "short_title": "Constant-query verification by algebraic encoding",
  "authors": [
-  "Will Cook, with AI assistance"
+  "Will Cook, using AI"
  ],
  "venue": "Explanatory reconstruction of Troy Lee's pinned formalization",
  "credit_lines": [
-  "Original algebraic proof: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee. Explanatory reconstruction prepared by Will Cook with AI assistance"
+  "Original algebraic proof: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee. Explanatory reconstruction by Will Cook, using AI"
  ],
  "companion_credit": "Original algebraic proof by Amireddy, Behera, Srinivasan, Sudan and Willumsgaard; Lean formalization by Troy Lee, from his repository troyjlee/tcs-formalizations at a0ce13e (Apache-2.0).",
  "host": "Hosted by Will Cook in his reading library, with credit to the authors.",

@@ -1490,7 +1490,7 @@
    "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for Theorem 5.1. The links were made with AI and have not been reviewed by the authors."
   }
  ],
- "scope": "Constant-query verification by algebraic encoding, by Will Cook, with AI assistance, with their Lean at https://github.com/troyjlee/tcs-formalizations a0ce13ed0fa264f051c1278e039596ce65557fa4, as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "scope": "Constant-query verification by algebraic encoding, by Will Cook, using AI, with their Lean at https://github.com/troyjlee/tcs-formalizations a0ce13ed0fa264f051c1278e039596ce65557fa4, as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
  "extraction_status": "not_run",
  "notes": [
   "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."

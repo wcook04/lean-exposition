@@ -4,7 +4,7 @@
  "state": "draft",
  "path": "papers/short.md",
  "content_sha256": "a65094c08b7fb151c3fafa730ab0eb4fd614d5308dbb0d2e2466e668130e13b4",
- "graph_sha256": "41f00933958a68496ebe52b82a33d5b4472891bad301e913de1e17449956ec38",
+ "graph_sha256": "0544eb2e356b797914aa8df20ae92a44b0ba8dc80a1f381430efc8a71213a44d",
  "selected_goal_ids": [
   "pcp.theorem-1.1"
  ],
