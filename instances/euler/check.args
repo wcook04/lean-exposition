@@ -1,1 +1,1 @@
---raw-check TorusEuler.Paper.proposition_8_4 --raw-check TorusEuler.BoundedSpatialJet
+--raw-check TorusEuler.Paper.proposition_8_4 --raw-check TorusEuler.BoundedSpatialJet --lean-addresses --unlinked '|The incompressible Euler equations are among the earliest' --unlinked 'adapted/|The incompressible Euler equations are among the earliest' --linked 'adapted/|Away from the origin, the velocity and its time derivative'

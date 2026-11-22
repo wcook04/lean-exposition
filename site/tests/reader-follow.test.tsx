@@ -167,7 +167,7 @@ describe("MapPane", async () => {
     (side === "out" ? graph.out : graph.in).get(id)!.filter((e) => e.kind === "supports" || e.kind === "assumes").map((e) => (side === "out" ? e.to : e.from));
 
   it("opens on one statement near the reading position, every record that uses it on the left and every record it uses on the right", () => {
-    show("contact-and-gap");
+    show(null);
     const subject = drawn("subject");
     expect(subject).toHaveLength(1);
     const [id] = subject;
@@ -195,21 +195,35 @@ describe("MapPane", async () => {
   it("changes the subject on a card click and never the view", () => {
     const onRecord = vi.fn();
     const onMode = vi.fn();
-    show("contact-and-gap", { onRecord, onMode });
+    show(null, { onRecord, onMode });
     const neighbour = container.querySelector<HTMLButtonElement>('.fg__card[data-band="uses"], .fg__card[data-band="users"]')!;
     act(() => neighbour.click());
     expect(onRecord).toHaveBeenCalledWith(neighbour.dataset.card);
     expect(onMode).not.toHaveBeenCalled();
   });
 
-  it("keeps the dock under the graph, never empty, and says so when nothing is tied", () => {
-    show("changed-cases");
-    expect(container.querySelector(".map-pane__dock .lean-page")!.textContent).toContain("No Lean is linked to this paragraph");
+  it("keeps the dock under the graph, never empty, with nothing open", () => {
+    show(null);
+    expect(container.querySelector(".fg")).not.toBeNull();
+    expect(container.querySelector(".map-pane__dock .lean-page")!.textContent!.trim()).not.toBe("");
+  });
+
+  it("shows the whole proof map, headed only so, for an open paragraph with nothing in the Lean linked to it", () => {
+    // These fixtures tie nothing: a paragraph at the reading line is an open, unlinked one.
+    for (const mode of ["graph", "lean"] as const) {
+      show("changed-cases", { mode });
+      expect(container.querySelector(".map-pane .tree")).not.toBeNull();
+      expect(container.querySelector(".fg")).toBeNull();
+      expect(container.querySelector(".map-pane__unlinked")!.textContent).toBe("Whole proof map");
+      expect(container.querySelector(".map-pane__dock")).toBeNull();
+      expect(container.querySelector(".map-pane")!.textContent).not.toContain("No Lean is linked");
+      expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe(mode === "graph" ? "Graph" : "Lean");
+    }
   });
 
   it("has one toggle; Lean fills the pane, and the whole proof map is one button away in Graph", () => {
     const onMode = vi.fn();
-    show("contact-and-gap", { onMode });
+    show(null, { onMode });
     const words = [...container.querySelectorAll<HTMLButtonElement>(".mode-toggle button")];
     expect(words.map((w) => w.textContent)).toEqual(["Graph", "Lean"]);
     act(() => words[1].click());
@@ -220,14 +234,14 @@ describe("MapPane", async () => {
     expect(container.querySelector(".fg")).toBeNull();
     act(() => [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Around this step")!.click());
     expect(container.querySelector(".fg")).not.toBeNull();
-    show("contact-and-gap", { mode: "lean" });
+    show(null, { mode: "lean" });
     expect(container.querySelector(".fg")).toBeNull();
     expect(container.querySelector(".map-pane__lean .lean-page")).not.toBeNull();
     expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe("Lean");
   });
 
   it("lights the card of a statement under the pointer", () => {
-    show("contact-and-gap");
+    show(null);
     const id = drawn("uses")[0] ?? drawn("subject")[0];
     act(() => signals.point.set({ tie: null, record: id }));
     expect(container.querySelector(`.fg__card[data-card="${CSS.escape(id)}"]`)!.className).toContain("is-lit");
