@@ -195,31 +195,22 @@
   text-rendering: auto;
 }
 
+/* A display never scrolls sideways: it is fitted to its column by shrinking, by breaking at
+   its top level, or at the last by shrinking further with an Expand button under it
+   (PaperBody.tsx, fitDisplay). Nothing it draws lies outside the box, so nothing is cut. */
 .prose .math-display {
   display: block;
   margin: var(--space-3) 0 var(--space-4);
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding: var(--space-1) 0;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* KaTeX ends each vertical list with a 2px strut past its edge (.vlist-s). On an equation
    number pinned to the right edge that strut alone overflowed the box (scrollWidth 682 in a
-   680 column), so a formula that fits got a scroll bar. The strut holds no glyph. */
+   680 column). The strut holds no glyph. */
 .prose .math-display :is(.katex-tag, .tag) {
   overflow-x: clip;
-}
-
-/* A display whose formula and number fit (PaperBody.tsx, formulaExtent) never scrolls. */
-.prose .math-display[data-overflow="false"] {
-  overflow-x: hidden;
-}
-
-/* In a narrow cell the words under the formula say it scrolls. */
-.slice .math-display {
-  scrollbar-width: none;
 }
 
 .prose span.math-display {
@@ -236,56 +227,48 @@
   max-width: none;
 }
 
-/* A display too wide even at 80% of its size breaks between relation signs,
-   with every line centred, instead of scrolling sideways. */
-.prose .math-display[data-fit="wrap"] > .katex-display > .katex,
-.prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex {
-  display: block;
-  white-space: normal;
+/* A display with one equation number sets it beside the formula as its own element
+   (.math-number, PaperBody.tsx), so the formula shrinks or breaks while the number keeps its
+   size: on the formula's baseline, or on the last line of a broken form. KaTeX's own number
+   is hidden. A centred formula keeps the number's width free on its left too, so it is
+   centred in the column. */
+.prose .math-display[data-number] {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
 }
 
-/* The equation number on its own line, flush right under the formula. */
-.prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex > .katex-html > :is(.katex-tag, .tag) {
-  position: static;
-  flex-basis: 100%;
-  text-align: right;
+.prose .math-display[data-number][data-lines] {
+  align-items: flex-end;
 }
 
-/* A numbered display that keeps its shape and scrolls (PaperBody.tsx, numberBelow) sets its
-   number on a line of its own under the formula, flush right, so the number is never drawn
-   over the formula's end. */
-.prose .math-display[data-tag="below"] > .katex-display > .katex > .katex-html > :is(.katex-tag, .tag) {
-  position: static;
-  display: block;
-  text-align: right;
+.prose .math-display[data-number] > .katex-display {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.prose .math-display[data-number] > .katex-display > .katex {
+  display: inline-block;
+}
+
+.prose .math-display[data-number] > .katex-display :is(.katex-tag, .tag) {
+  display: none;
+}
+
+.prose .math-display[data-number]:not([data-align="start"])::before {
+  content: "";
+  flex: none;
+  width: var(--number-w, 0px);
+}
+
+.prose .math-display > .math-number {
+  flex: none;
+  display: inline-block;
 }
 
 /* A numbered display too tight to centre beside its number is set flush left. */
 .prose .math-display[data-align="start"] > .katex-display > .katex {
   text-align: left;
-}
-
-/* A breaking display breaks after a relation sign: the pieces between two relation signs
-   (.math-seg, PaperBody.tsx) stay on one line unless the run alone is wider than the line
-   (data-open). Outside a breaking display a run is not a box at all. */
-.prose .math-display .math-seg {
-  display: contents;
-}
-
-.prose .math-display:is([data-fit="wrap"], [data-fit="wrap-tagged"]) .math-seg:not([data-open]) {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: baseline;
-}
-
-/* Each piece keeps its full height and depth, so a fraction never overlaps the next line. */
-.prose .math-display[data-fit="wrap"] > .katex-display > .katex > .katex-html,
-.prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex > .katex-html {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: baseline;
-  row-gap: 0.45em;
 }
 
 .prose .math-display:focus-visible {
@@ -332,10 +315,10 @@
 
 /* ----------------------------------------------------------------- tables */
 
+/* A table fits its column and never scrolls sideways: its cells wrap, a long Lean name or
+   word breaking anywhere when nothing else fits. */
 .prose table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
+  width: 100%;
   border-collapse: collapse;
   font-size: 0.94em;
   line-height: var(--lh-snug);
@@ -344,6 +327,7 @@
 
 .prose th,
 .prose td {
+  overflow-wrap: anywhere;
   padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--rule);
   vertical-align: top;
@@ -394,8 +378,10 @@
   font-variant-ligatures: none;
 }
 
+/* Code wraps inside its block rather than scrolling sideways. */
 .prose pre {
-  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   padding: var(--space-3) var(--space-4);
   background: var(--sunk);
   border-radius: var(--radius-m);
