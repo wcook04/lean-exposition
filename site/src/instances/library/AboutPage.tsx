@@ -10,9 +10,22 @@ import { PAPER, MAIN, BUILT, LIBRARY_ROOT } from "./data";
 
 const ADAPTED = BUILT.find((d) => d.adapted);
 const AUTHORS = (ADAPTED && BUILT.find((d) => d.id === ADAPTED.of)) || MAIN;
+/** The edition's other downloads, as its edition.json declares them (the build checks and copies each). */
+const ADAPTED_DOWNLOADS = ADAPTED
+  ? [
+      { entry: ADAPTED.reading_pdf, pdf: true, label: "PDF without change marks" },
+      { entry: ADAPTED.aux_reading_pdf, pdf: true, label: "Auxiliary note, PDF without change marks" },
+      { entry: ADAPTED.source_overlay, pdf: false, label: "TeX revisions against the authors’ source (ZIP)" },
+      { entry: ADAPTED.result_comparison?.reading, pdf: false, label: "Result-by-result comparison" },
+      { entry: ADAPTED.result_comparison?.data, pdf: false, label: "Comparison data" },
+    ]
+      .filter((d) => !!d.entry)
+      .map((d) => ({ href: supplementHref(ADAPTED, d.entry!.name ?? d.entry!.file, d.pdf), pdf: d.pdf, label: d.entry!.label ?? d.label }))
+  : [];
 import { SupplementaryChecks } from "./Checks";
 import { ComparatorSection } from "./Comparator";
 import { DifferencesSection } from "./Differences";
+import { COMPARISON_ANCHOR, ResultComparison, supplementHref } from "./ResultComparison";
 import "../../reader/reader-content.css";
 import "../../reader/about.css";
 
@@ -77,8 +90,26 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             ))}
             . Each PDF marks every change with a bar in the margin and its id, and lists every change at its end.
           </p>
+          {ADAPTED_DOWNLOADS.length > 0 && (
+            <p>
+              {ADAPTED_DOWNLOADS.map((d, i) => (
+                <span key={d.href}>
+                  {i ? " · " : ""}
+                  <a className={d.pdf ? "pdf-link" : undefined} href={d.href} target="_blank" rel="noopener">{d.label}</a>
+                </span>
+              ))}
+              .
+            </p>
+          )}
+          {ADAPTED.result_comparison?.reading && (
+            <p>
+              <a href={routeHref({ view: "about", anchor: COMPARISON_ANCHOR })}>The result-by-result comparison</a> below opens each numbered
+              statement in the authors’ paper and in the adapted edition.
+            </p>
+          )}
         </section>
       )}
+      {ADAPTED && <ResultComparison doc={ADAPTED} />}
       <section aria-labelledby="about-review">
         <h2 id="about-review">How the links were made</h2>
         <p>{PAPER.review}</p>

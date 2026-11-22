@@ -42,6 +42,7 @@ describe("an adapted edition's paragraph alignment", () => {
 
   it("names each kind in words", () => {
     expect(kindWords("added-justification")).toBe("Added justification");
+    expect(kindWords("formal-note")).toBe("Note on the formal statement");
     expect(kindWords("edition-credit")).toBe("Edition credit");
   });
 });

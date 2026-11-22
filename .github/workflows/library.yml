@@ -95,6 +95,12 @@ jobs:
         run: |
           curl -sf -o /dev/null "http://127.0.0.1:47311/library/$AT/" || { python scripts/serve_library.py serve 47311 & sleep 2; }
           python scripts/check_no_hscroll.py "http://127.0.0.1:47311/library/$AT/" --widths 390 1024 1440 2560 --shots shots/sideways
+      - name: Check ${{ matrix.paper }}'s adapted edition with its own credit, when it has one
+        run: |
+          if python scripts/adapted_edition.py enabled ${{ matrix.paper }}; then
+            curl -sf -o /dev/null "http://127.0.0.1:47311/library/$AT/" || { python scripts/serve_library.py serve 47311 & sleep 2; }
+            python scripts/check_adapted_edition.py "http://127.0.0.1:47311/library/$AT/" --paper ${{ matrix.paper }} --shots shots/adapted --widths 390 1440 2560
+          fi
       # Kept when a check fails too, so its screenshots can be read.
       - uses: actions/upload-artifact@v4
         if: always()

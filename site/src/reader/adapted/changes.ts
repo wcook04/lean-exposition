@@ -60,6 +60,7 @@ export function loadChanges(): Promise<ChangeMap | null> {
 const KIND_WORDS: Record<string, string> = {
   clarification: "Clarification",
   "added-justification": "Added justification",
+  "formal-note": "Note on the formal statement",
   "edition-credit": "Edition credit",
   correction: "Correction",
   restatement: "Restatement",

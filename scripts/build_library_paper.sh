@@ -96,12 +96,36 @@ for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
     shell_of = dist / "read" / doc["slot"] / "index.html"
     (dist / doc["slug"] / "index.html").write_text((shell_of if shell_of.is_file() else dist / "404.html").read_text())
-# An adapted edition's other files: the auxiliary note's PDF with changes marked.
+# An adapted edition's other files, each declared in its edition.json as {file, name, label?, bytes,
+# sha256} and copied byte for byte after its size and digest are checked: the PDFs (the auxiliary
+# note's with changes marked, and the ordinary reading copies of the edition and the note) to pdf/,
+# and the TeX overlay and the result-by-result comparison to the edition's own folder, one level
+# below the paper root, where the comparison's relative links resolve. The PDF with changes marked
+# stays the reader's PDF and the source of its marks (the Vite paperPdfs plugin copies it).
+import hashlib
+def supplement(doc, entry, where):
+    folder = Path(f"instances/{paper}/adapted").resolve()
+    source = (folder / entry["file"]).resolve()
+    if folder not in source.parents or not source.is_file():
+        raise SystemExit(f"{doc['slug']}: declared file {entry['file']!r} is not in {folder}")
+    if "/" in entry["name"] or entry["name"].startswith("."):
+        raise SystemExit(f"{doc['slug']}: download name {entry['name']!r} is not a plain file name")
+    data = source.read_bytes()
+    if len(data) != entry["bytes"] or hashlib.sha256(data).hexdigest() != entry["sha256"]:
+        raise SystemExit(f"{doc['slug']}: {entry['file']} does not match its declared bytes and sha256")
+    where.mkdir(parents=True, exist_ok=True)
+    (where / entry["name"]).write_bytes(data)
 for doc in pages:
-    aux = doc.get("aux_pdf")
-    if aux:
-        (dist / "pdf").mkdir(exist_ok=True)
-        shutil.copy(Path(f"instances/{paper}/adapted/{aux['file']}"), dist / "pdf" / aux["name"])
+    if not doc.get("adapted"):
+        continue
+    for key in ("aux_pdf", "reading_pdf", "aux_reading_pdf"):
+        if doc.get(key):
+            supplement(doc, doc[key], dist / "pdf")
+    if doc.get("source_overlay"):
+        supplement(doc, doc["source_overlay"], dist / doc["slug"])
+    for key in ("reading", "data"):
+        if (doc.get("result_comparison") or {}).get(key):
+            supplement(doc, doc["result_comparison"][key], dist / doc["slug"])
 # A page that moved (moved_pages) is served as its new page's shell; the reader then shows the new address.
 slugs = {doc["slug"] for doc in pages}
 for old, row in inst.get("moved_pages", {}).items():

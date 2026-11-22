@@ -8,8 +8,13 @@ import { texHtml } from "../../figures/tex";
 
 const md = new MarkdownIt({ html: false, linkify: true });
 
-/** Formulas first (display $$...$$, then inline $...$), so Markdown never sees their underscores. */
-function render(source: string): string {
+/**
+ * Markdown with its formulas typeset. Formulas first (display $$...$$, then inline $...$), so
+ * Markdown never sees their underscores. With `base`, every relative link is resolved against it:
+ * the address the Markdown was published at, so its own relative links keep their meaning wherever
+ * it is shown.
+ */
+export function renderMarkdown(source: string, base?: string): string {
   const held: string[] = [];
   const hold = (html: string) => `\u0000${held.push(html) - 1}\u0000`;
   const text = source
@@ -28,9 +33,19 @@ function render(source: string): string {
         return whole;
       }
     });
-  const html = md.render(text).replace(/\u0000(\d+)\u0000/g, (_, k) => held[Number(k)]);
-  return DOMPurify.sanitize(html);
+  const html = DOMPurify.sanitize(md.render(text).replace(/\u0000(\d+)\u0000/g, (_, k) => held[Number(k)]));
+  if (!base) return html;
+  return html.replace(/ href="([^"]*)"/g, (whole, href: string) => {
+    const raw = href.replace(/&amp;/g, "&");
+    if (/^([a-z][a-z0-9+.-]*:|#)/i.test(raw)) return whole;
+    try {
+      return ` href="${new URL(raw, new URL(base, window.location.href)).href.replace(/&/g, "&amp;")}"`;
+    } catch {
+      return whole;
+    }
+  });
 }
+const render = (source: string) => renderMarkdown(source);
 
 export const DIFFERENCES_ANCHOR = "differences";
 
