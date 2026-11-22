@@ -514,3 +514,30 @@ the PDF view (packet 02); a recorded map between places in the reading copy and 
 the whole map's opening as an argument overview (03); search scope and result rows (05); the
 Compare page's columns for papers with other document kinds (05); one inventory of checks
 across About and What ran (05).
+
+## The shell around the paper (22 November)
+
+Will's review of the live library reader at 2000px set these for every paper.
+
+- **The left column is the paper's contents.** Top to bottom: search, the sections, then the
+  topic colours grouped by family. Each section carries its topics' colours; a section with
+  subsections folds and unfolds, and the sections along the way to the place being read stand
+  open. The section being read is marked as the paper scrolls. The whole column is sticky and
+  scrolls on its own. It holds no credit and no prose: what the colours mean is one closed
+  disclosure under the key. The paper's own "Contents" block is left out of the reading copy,
+  since the column lists the same sections.
+- **The credit is said once**, as one short line under the authors in the paper's front matter:
+  the authors, their repository and commit, the Anthropic sentence where the paper has one, and
+  the sentence that the links, titles, notes and comparisons were made with AI and are
+  unreviewed, then "Full credit in About" and the authors' PDF. About carries the whole credit.
+  A document without that line (a companion page, an account with no authors list) keeps the
+  account line above its text.
+- **The authors stand on one line**, as the paper sets them: "A, B and C".
+- **Read lists the authors' paper** and, where one exists, its adapted edition (a paper with its
+  own levels, as SK and #257, lists those). Guides, companion pages and the proof routes keep
+  their addresses, unlisted, in Read and in the library index. No item says "draft".
+- **Compare offers only the levels the paper has**: the Lean and the authors' paper for a paper
+  with one document, named "Lean" and "Authors' paper"; SK and #257 keep their four.
+- **Neither column runs under the other** at any width, and "Hide pane" gives the paper the
+  window while "Show pane" brings the pane back on the same subject.
+  `site/scripts/check-reader-shell.py` holds all of this in a browser.

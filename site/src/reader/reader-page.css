@@ -742,22 +742,13 @@ html.is-reading {
 
 /* Below 1680px the sections stand on the right page, and their list scrolls on its own. */
 .sections-side {
-  display: flex;
-  flex-direction: column;
+  display: block;
   height: 100%;
   min-height: 0;
   padding-top: var(--space-2);
-}
-
-.sections-side .outline__list {
-  flex: 1;
-  min-height: 0;
   overflow-y: auto;
   scrollbar-gutter: stable;
   overscroll-behavior: contain;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 /* A large window reads larger: the type and the measure grow together, so a line holds the
@@ -1026,40 +1017,15 @@ html.is-reading {
 }
 
 .outline {
-  display: flex;
-  flex-direction: column;
+  display: block;
   min-height: 0;
   width: 100%;
-  padding: var(--space-5) 0 0;
-}
-
-.outline__account {
-  padding: 0 0 var(--space-4);
-  margin-bottom: var(--space-3);
-  border-bottom: 1px solid var(--rule);
-}
-
-.outline__job {
-  margin-top: var(--space-2);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--ink);
-  text-wrap: pretty;
-}
-
-.outline__reader {
-  margin-top: var(--space-1);
-  font-size: var(--fs-sm);
-  line-height: 1.4;
-  color: var(--ink-3);
-  text-wrap: pretty;
-}
-
-.outline__pdf {
-  margin-top: var(--space-2);
-  font-size: var(--fs-sm);
-  line-height: 1.4;
+  padding: var(--space-5) 0 var(--space-6);
+  /* The whole column scrolls on its own: search, the contents, then the colour key. */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
 }
 
 /* The account's PDF: a plain link in ink, named with its page count. */
@@ -1072,20 +1038,62 @@ html.is-reading {
 
 .outline__list {
   list-style: none;
-  margin: 0;
-  padding: 0 0 var(--space-6);
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-  flex: 1;
-  min-height: 0;
-  scrollbar-width: thin;
-  overscroll-behavior: contain;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+}
+
+/* A section with subsections: a fold control in the margin before its name. */
+.outline__item {
+  position: relative;
+}
+
+.outline__fold {
+  position: absolute;
+  left: -2px;
+  top: 3px;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.outline__fold:hover {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
+.outline__fold:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 0;
+}
+
+.outline__chev {
+  transition: transform 120ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.outline__chev.is-open {
+  transform: rotate(90deg);
+}
+
+.outline__item--l3 > .outline__fold {
+  left: calc(var(--space-3) - 2px);
+}
+
+.outline__item--l4 > .outline__fold {
+  left: calc(var(--space-3) + var(--space-3) - 2px);
 }
 
 .outline__item a {
   position: relative;
   display: block;
-  padding: 4px var(--space-2) 4px var(--space-3);
+  padding: 4px var(--space-2) 4px calc(var(--space-3) + 6px);
   border-radius: var(--radius-s);
   font-size: var(--fs-sm);
   line-height: 1.36;
@@ -1096,12 +1104,12 @@ html.is-reading {
 }
 
 .outline__item--l3 a {
-  padding-left: calc(var(--space-3) + var(--space-3));
+  padding-left: calc(var(--space-3) + var(--space-3) + 6px);
   color: var(--ink-3);
 }
 
 .outline__item--l4 a {
-  padding-left: calc(var(--space-3) + var(--space-5));
+  padding-left: calc(var(--space-3) + var(--space-5) + 6px);
   color: var(--ink-3);
 }
 
