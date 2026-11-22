@@ -1518,11 +1518,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
   useEffect(() => {
     let live = true;
+    // Only a document with the authors' PDF has its phrases placed on one.
+    if (!pdfOwn) {
+      setPdfMarks(null);
+      return;
+    }
     void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
     return () => {
       live = false;
     };
-  }, [stage]);
+  }, [stage, pdfOwn]);
   const pdfOn = !!route.pdf && !!pdfMarks;
   const pdfPage = useRef<number | null>(null);
   const onPdfPage = useCallback((page: number) => {

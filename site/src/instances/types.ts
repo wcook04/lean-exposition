@@ -126,7 +126,8 @@ export interface SiteInstance {
     paper: string;
     main: InstanceStage;
     pages?: Record<string, string>;
-    companions?: { slot: string; title: string; group: string; group_title: string; order: number }[];
+    /** `id` names the companion's folder in its source (`<id>/paper.md`), so links between companions resolve. */
+    companions?: { slot: string; id?: string; title: string; group: string; group_title: string; order: number }[];
   };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
