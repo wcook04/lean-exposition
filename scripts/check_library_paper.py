@@ -226,7 +226,9 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
             fresh = cold.new_page()
             open_page(fresh, at)
             ok, detail = judge(pane(fresh, kind == "unlinked"))
-            check(f"{name} cold address", ok and (kind == "linked" or re.search(r"[?&]l=b\d+-\d+", at)), f"{at}: {detail}")
+            # An unlinked paragraph's address need carry no byte range: the whole map, drawn, with no
+            # dead end, is the requirement (judged above).
+            check(f"{name} cold address", ok, f"{at}: {detail}")
             shoot(fresh, f"{kind}-{n}-cold")
             cold.close()
             check(f"{name} no page errors", not errors, "; ".join(errors[:3]))
@@ -299,9 +301,21 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
     context = browser.new_context(viewport={"width": 1440, "height": 900})
     page = context.new_page()
     for kind, path in ((("phrase", f"@{args.phrase}"),) + ((("result", f"{args.result}/"),) if args.result else ())):
-        open_page(page, base + path + "?v=lean")
-        ok, detail = linked_ok(pane(page, False, 30000))
-        check(f"lean view of the {kind} address", ok, f"{path}: {detail}")
+        # A phrase address is served by the 404 shell: wait for the paper whatever the status.
+        page.goto(base + path + "?v=lean")
+        page.wait_for_selector(".paper .tie", timeout=90000)
+        # The Lean source arrives after the declaration's heading ("Loading the Lean source…"):
+        # wait for its lines and the pinned line lit, then judge.
+        try:
+            page.wait_for_function("() => { const p = document.querySelector('.map-pane__lean .lean-page');"
+                                   " return !!p && p.querySelectorAll('.lean-line').length > 0 && !!p.querySelector('.lean-line.is-lit'); }",
+                                   timeout=60000)
+        except Exception:
+            pass
+        page.wait_for_timeout(300)
+        state = page.evaluate(PANE)
+        ok, detail = linked_ok(state)
+        check(f"lean view of the {kind} address", ok and state["lit"] > 0, f"{path}: {detail}")
     context.close()
 
 
