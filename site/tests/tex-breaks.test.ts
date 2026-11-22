@@ -94,3 +94,10 @@ describe("a display's printed number", () => {
     expect(plainNumber("\\begin{gather} a \\tag{1} \\\\ b \\tag{2} \\end{gather}")).toBeNull();
   });
 });
+
+describe("KaTeX's number markup the engine relies on", () => {
+  it("marks a display's single number katex-tag, so the engine sets it beside the formula", () => {
+    const html = katex.renderToString("a = b \\tag{1.2}", { displayMode: true });
+    expect(html.match(/class="(katex-tag|tag)"/g)).toHaveLength(1);
+  });
+});
