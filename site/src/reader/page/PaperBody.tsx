@@ -739,7 +739,7 @@ function layOutWhole(stage: string, index: number): void {
   wholeSheet.insertRule(`.paper[data-stage="${CSS.escape(stage)}"] .part[data-part="${index}"] > .part__text { content-visibility: visible; }`);
 }
 
-/** How far below the window idle time fits a part's formulas ahead of the reader, in pixels. */
+/** How far from the window idle time fits a part's formulas ahead of the reader, in pixels. */
 const AHEAD_REACH = 2400;
 
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
@@ -935,11 +935,10 @@ export function markWideMaths(root: HTMLElement): () => void {
   fitters.set(root, (more, everywhere) => {
     for (const box of boxes) {
       if (fitted.has(box)) continue;
-      // A formula far below the window is left to the observer, which fits it as it comes near:
-      // fitting it now would change the page, unseen, while the reader has only just arrived. One
-      // above the window is left to it too, since its new height would move the text being read.
+      // A formula far from the window is left to the observer, which fits it as it comes near:
+      // fitting it now would change the page, unseen, while the reader has only just arrived.
       const r = box.getBoundingClientRect();
-      if (!everywhere && (r.bottom < 0 || r.top > window.innerHeight + AHEAD_REACH)) continue;
+      if (!everywhere && (r.bottom < -AHEAD_REACH || r.top > window.innerHeight + AHEAD_REACH)) continue;
       if (!more()) return false;
       near?.unobserve(box);
       fit(box);
