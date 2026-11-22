@@ -12,6 +12,43 @@ interface Mark {
   segment: number;
 }
 
+interface Fragment {
+  segment: number;
+  tone?: string;
+  top: number;
+  bottom: number;
+  left: number;
+}
+
+interface SegmentTicks {
+  top: number;
+  bottom: number;
+  lines: HTMLElement[];
+}
+
+/** Inline boxes on a baseline can differ in height, especially around inline mathematics. */
+function visualLines(fragments: Fragment[]) {
+  const lines: Fragment[][] = [];
+  let line: Fragment[] = [];
+  let commonTop = 0, commonBottom = 0;
+  fragments.sort((a, b) => (a.top + a.bottom) - (b.top + b.bottom) || a.left - b.left);
+  for (const f of fragments) {
+    // Require a substantial common vertical slice. A tall fraction must not join two adjacent lines.
+    const overlap = Math.min(commonBottom, f.bottom) - Math.max(commonTop, f.top);
+    if (!line.length || overlap < Math.min(commonBottom - commonTop, f.bottom - f.top) / 2) {
+      line = [];
+      lines.push(line);
+      commonTop = f.top;
+      commonBottom = f.bottom;
+    } else {
+      commonTop = Math.max(commonTop, f.top);
+      commonBottom = Math.min(commonBottom, f.bottom);
+    }
+    line.push(f);
+  }
+  return lines;
+}
+
 /** The blocks a statement's words can stand in. */
 const BLOCKS = "p, li, td, th, blockquote, figcaption, .math-display";
 
@@ -36,7 +73,7 @@ const NEAR = "900px 0px";
 export class Statements {
   private sections = new Map<number, HTMLElement>();
   private marks = new Map<number, Mark[]>();
-  private ticks = new Map<number, HTMLElement[]>();
+  private ticks = new Map<number, Map<number, SegmentTicks>>();
   private lit: Record<Light, number | null> = { on: null, point: null, pin: null };
   /** A declaration pointed at in the Lean pane: its phrases are lit. */
   private decl: string | null = null;
@@ -45,7 +82,12 @@ export class Statements {
   private resized: ResizeObserver | null = null;
   private queued = new Set<number>();
   private frame = 0;
-  private widths = new Map<number, number>();
+  private nearby = new Set<number>();
+  private measured = new Set<number>();
+  private fontsChanged = () => {
+    this.measured.clear();
+    this.nearby.forEach((part) => this.queue(part));
+  };
 
   /** The one tab stop among the statements. */
   private stop: number | null = null;
@@ -63,24 +105,35 @@ export class Statements {
     });
     if (typeof IntersectionObserver !== "undefined") {
       this.near = new IntersectionObserver((entries) => {
-        for (const entry of entries) if (entry.isIntersecting) this.queue(Number((entry.target as HTMLElement).dataset.part));
+        for (const entry of entries) {
+          const part = Number((entry.target as HTMLElement).dataset.part);
+          if (this.sections.get(part) !== entry.target) continue;
+          if (entry.isIntersecting) {
+            this.nearby.add(part);
+            if (!this.measured.has(part)) this.queue(part);
+          } else this.nearby.delete(part);
+        }
       }, { rootMargin: NEAR });
     }
     if (typeof ResizeObserver !== "undefined") {
       this.resized = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const part = Number((entry.target as HTMLElement).dataset.part);
-          // Only parts that have ticks need new ones.
-          if (this.widths.has(part)) this.queue(part);
+          if (this.sections.get(part) !== entry.target) continue;
+          this.measured.delete(part);
+          if (this.nearby.has(part)) this.queue(part);
         }
       });
     }
-    void document.fonts?.ready?.then(() => this.widths.forEach((_, part) => this.queue(part)));
+    document.fonts?.addEventListener?.("loadingdone", this.fontsChanged);
+    void document.fonts?.ready?.then(this.fontsChanged);
   }
 
   dispose() {
     this.near?.disconnect();
     this.resized?.disconnect();
+    this.nearby.clear();
+    document.fonts?.removeEventListener?.("loadingdone", this.fontsChanged);
     cancelAnimationFrame(this.frame);
   }
 
@@ -112,7 +165,8 @@ export class Statements {
     this.sections.delete(part);
     this.marks.delete(part);
     this.ticks.delete(part);
-    this.widths.delete(part);
+    this.nearby.delete(part);
+    this.measured.delete(part);
     if (!section) return;
     this.sections.set(part, section);
     const found = Array.from(section.querySelectorAll<HTMLElement>(":scope > .part__text [data-t]")).map((el) => ({ el, segment: Number(el.dataset.t) }));
@@ -131,7 +185,11 @@ export class Statements {
       if (el.title !== hint) el.title = hint;
       if (this.decl && !el.hasAttribute("data-decl") && tie.rows?.some((row) => row.name === this.decl)) el.setAttribute("data-decl", "");
     }
-    this.near?.observe(section);
+    if (this.near) this.near.observe(section);
+    else {
+      this.nearby.add(part);
+      this.queue(part);
+    }
     this.resized?.observe(section);
     for (const kind of ["on", "point", "pin"] as Light[]) {
       const t = this.lit[kind];
@@ -182,25 +240,29 @@ export class Statements {
       this.frame = 0;
       const parts = [...this.queued];
       this.queued.clear();
-      parts.forEach((p) => this.drawTicks(p));
+      for (const p of parts) if (this.nearby.has(p)) this.drawTicks(p);
     });
   }
 
-  /** The margin ticks of one part: one per segment, from where its words actually fell. */
+  /** One tick per physical line. Its topics follow the words from left to right. */
   private drawTicks(part: number) {
     const section = this.sections.get(part);
     const marks = this.marks.get(part);
     if (!section || !marks) return;
-    const box = section.getBoundingClientRect();
-    const rows = new Map<number, { top: number; bottom: number; tone?: string }>();
+    const sectionTop = section.getBoundingClientRect().top;
+    const fragments: Fragment[] = [];
+    const bySegment = new Map<number, SegmentTicks>();
     for (const { el, segment } of marks) {
-      const r = el.getBoundingClientRect();
-      if (!r.height) continue;
-      const row = rows.get(segment);
-      if (row) {
-        row.top = Math.min(row.top, r.top);
-        row.bottom = Math.max(row.bottom, r.bottom);
-      } else rows.set(segment, { top: r.top, bottom: r.bottom, tone: el.dataset.tone });
+      for (const rect of el.getClientRects()) {
+        if (!rect.width || !rect.height) continue;
+        const top = rect.top - sectionTop, bottom = rect.bottom - sectionTop;
+        fragments.push({ segment, tone: el.dataset.tone, top, bottom, left: rect.left });
+        const bounds = bySegment.get(segment);
+        if (bounds) {
+          bounds.top = Math.min(bounds.top, top);
+          bounds.bottom = Math.max(bounds.bottom, bottom);
+        } else bySegment.set(segment, { top, bottom, lines: [] });
+      }
     }
     let layer = section.querySelector<HTMLElement>(":scope > .part__ticks");
     if (!layer) {
@@ -209,22 +271,38 @@ export class Statements {
       layer.setAttribute("aria-hidden", "true");
       section.append(layer);
     }
-    const made: HTMLElement[] = [];
     const fragment = document.createDocumentFragment();
-    for (const [segment, row] of rows) {
+    for (const line of visualLines(fragments)) {
+      line.sort((a, b) => a.left - b.left);
       const tick = document.createElement("i");
       tick.className = "tick";
-      tick.dataset.s = String(segment);
-      if (row.tone !== undefined) tick.dataset.tone = row.tone;
-      if (this.model.segmentLean[segment]) tick.dataset.lean = "";
-      tick.style.top = `${Math.round(row.top - box.top)}px`;
-      tick.style.height = `${Math.round(row.bottom - row.top)}px`;
-      made.push(tick);
+      const tones = new Set<string>();
+      let top = Infinity, bottom = -Infinity;
+      for (const f of line) {
+        const lines = bySegment.get(f.segment)!.lines;
+        if (lines[lines.length - 1] !== tick) lines.push(tick);
+        if (this.model.segmentLean[f.segment]) tick.dataset.lean = "";
+        if (f.tone !== undefined) tones.add(f.tone);
+        top = Math.min(top, f.top);
+        bottom = Math.max(bottom, f.bottom);
+      }
+      if (tones.size === 1) {
+        tick.dataset.tone = [...tones][0];
+      } else if (tones.size > 1) {
+        tick.classList.add("tick--bands");
+        for (const tone of tones) {
+          const band = document.createElement("span");
+          band.dataset.tone = tone;
+          tick.append(band);
+        }
+      }
+      tick.style.top = `${Math.round(top)}px`;
+      tick.style.height = `${Math.round(bottom) - Math.round(top)}px`;
       fragment.append(tick);
     }
     layer.replaceChildren(fragment);
-    this.ticks.set(part, made);
-    this.widths.set(part, box.width);
+    this.ticks.set(part, bySegment);
+    this.measured.add(part);
     for (const kind of ["on", "point", "pin"] as Light[]) {
       const t = this.lit[kind];
       if (t !== null) this.write(kind, t, true, part);
@@ -242,10 +320,9 @@ export class Statements {
         if (on) mark.el.setAttribute(name, "");
         else mark.el.removeAttribute(name);
       }
-      for (const tick of this.ticks.get(part) ?? []) {
-        if (!segments.has(Number(tick.dataset.s))) continue;
-        if (on) tick.setAttribute(name, "");
-        else tick.removeAttribute(name);
+      const bySegment = this.ticks.get(part);
+      if (bySegment) for (const segment of segments) {
+        for (const tick of bySegment.get(segment)?.lines ?? []) tick.toggleAttribute(name, on);
       }
     }
     if (kind === "pin") this.writeBlock(t, on);
@@ -268,15 +345,22 @@ export class Statements {
       const layer = this.sections.get(part)?.querySelector<HTMLElement>(":scope > .part__ticks");
       if (!layer) continue;
       layer.querySelector(":scope > .tick-run")?.remove();
-      const ticks = (this.ticks.get(part) ?? []).filter((tick) => segments.has(Number(tick.dataset.s)));
-      if (!block || !ticks.length) continue;
-      const top = Math.min(...ticks.map((tick) => parseFloat(tick.style.top)));
-      const bottom = Math.max(...ticks.map((tick) => parseFloat(tick.style.top) + parseFloat(tick.style.height)));
+      const bySegment = this.ticks.get(part);
+      if (!block || !bySegment) continue;
+      let top = Infinity, bottom = -Infinity;
+      for (const segment of segments) {
+        const bounds = bySegment.get(segment);
+        if (bounds) {
+          top = Math.min(top, Math.round(bounds.top));
+          bottom = Math.max(bottom, Math.round(bounds.bottom));
+        }
+      }
+      if (bottom <= top) continue;
       const run = document.createElement("i");
       run.className = "tick-run";
       run.style.top = `${top}px`;
       run.style.height = `${bottom - top}px`;
-      layer.append(run);
+      layer.prepend(run);
     }
   }
 
