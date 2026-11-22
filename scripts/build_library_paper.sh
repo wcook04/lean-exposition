@@ -140,8 +140,11 @@ for old in inst.get("removed_pages", []):
     (dist / old).mkdir(exist_ok=True)
     (dist / old / "index.html").write_text(
         '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">'
+        # Only the pane's view (v=lean or v=graph) is carried to the paper; no old place is.
+        '<script>var v=new URLSearchParams(location.search).get("v");'
+        'location.replace("../"+(v==="lean"||v==="graph"?"?v="+v:""))</script>'
         f'<link rel="canonical" href="../"><meta http-equiv="refresh" content="0; url=../">'
-        f'<title>{inst["title"]}</title><script>location.replace("../")</script>'
+        f'<title>{inst["title"]}</title>'
         f'<p><a href="../">{inst["title"]}</a></p>\n')
 print(f"static addresses: / and {len(results)} results and {len(pages)} pages and {len(inst.get('moved_pages', {}))} moved and {len(inst.get('removed_pages', []))} removed")
 PYEOF

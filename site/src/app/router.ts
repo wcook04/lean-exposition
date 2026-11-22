@@ -5,7 +5,7 @@ import site from "@instance/site";
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
 import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
-import { libraryHref, movedLibraryPath, parseLibraryPath, pdfParams } from "./libraryAddress";
+import { LIBRARY, libraryHref, movedLibraryPath, parseLibraryPath, pdfParams } from "./libraryAddress";
 
 export type Trace = "rests" | "uses";
 
@@ -306,10 +306,13 @@ export function reparseCurrentRoute(): void {
   const url = new URL(window.location.href);
   const inBase = BASE && url.pathname.startsWith(BASE) ? url.pathname.slice(BASE.length) : url.pathname;
   const moved = movedLibraryPath(inBase.replace(/\/+$/, "") || "/");
-  if (moved === "/") {
-    // A page no longer published: the paper's own address, with nothing of the old page's place kept.
-    url.pathname = `${BASE}/`;
-    url.search = "";
+  const removedTo = moved === "/" || (!!moved && LIBRARY?.removed?.some((slug) => inBase.split("/").includes(slug)));
+  if (moved && removedTo) {
+    // A page no longer published: the paper's (or its edition's) own address. Only the pane's view
+    // (v=lean or v=graph) is kept; no place of the old page is.
+    const v = url.searchParams.get("v");
+    url.pathname = moved === "/" ? `${BASE}/` : `${BASE}${moved}/`;
+    url.search = v === "lean" || v === "graph" ? `?v=${v}` : "";
     url.hash = "";
     replaceEntry(url);
   } else if (moved) {
