@@ -1,0 +1,61 @@
+name = "bsmtlib"
+version = "0.1.0"
+defaultTargets = ["BSmtLib", "BSmtLibSpec", "BSmtLibSpecFacts", "BSmtLibFacts"]
+
+# the library
+[[lean_lib]]
+name = "BSmtLib"
+
+# the trusted specification of SMT-LIB
+[[lean_lib]]
+name = "BSmtLibSpec"
+roots = ["BSmtLibSpec"]
+
+# what the specification satisfies by itself, and its checks against the standard's examples;
+# not trusted
+[[lean_lib]]
+name = "BSmtLibSpecFacts"
+roots = ["BSmtLibSpec.Facts"]
+
+# what the library satisfies with respect to the specification: the lexers, the parsers and the
+# readers, and what its public API satisfies, stated without the specification; the chain of
+# lexers from the specification to the library's lexer is built with it, and the checks that the
+# Rust crate makes with `assert!` on its tables (`BSmtLib.Facts.Asserts`)
+[[lean_lib]]
+name = "BSmtLibFacts"
+roots = ["BSmtLib.Facts", "BSmtLib.Facts.Names", "BSmtLib.Facts.Asserts"]
+
+# the lexing mode of rust/benches/parse.rs, run with `lake exe bench-parse`
+[[lean_exe]]
+name = "bench-parse"
+root = "Benches.Parse"
+
+# writes the generated module of re-exports, `BSmtLib/Reexports.lean`, run with
+# `lake exe reexports`
+[[lean_exe]]
+name = "reexports"
+root = "BSmtLib.Facts.WriteReexports"
+
+# writes the generated list of the public items of the Rust crate, `BSmtLib/Facts/RustItems.lean`,
+# from its JSON documentation, run with `lake exe rust-items <json>`
+[[lean_exe]]
+name = "rust-items"
+root = "Tools.WriteRustItems"
+
+# the fused script reader against the port: timing and differential checks, run with
+# `lake exe bench-fused-parser`
+[[lean_exe]]
+name = "bench-fused-parser"
+root = "Benches.FusedParser"
+
+# the audit, see `Audit.Main`: `lake exe audit` builds the tree from clean and audits its
+# declarations, its axioms, its constructs and its panics, then has `leanchecker` and nanoda
+# re-check it; `lake exe audit --fast` audits the declarations of the build there is
+[[lean_exe]]
+name = "audit"
+root = "Audit.Main"
+
+# the declaration audit, which the executable `audit` runs; no library imports it
+[[lean_lib]]
+name = "Audit"
+roots = ["Audit.Declarations"]

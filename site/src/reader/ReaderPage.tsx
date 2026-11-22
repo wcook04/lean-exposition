@@ -10,6 +10,7 @@
 // signals (page/signal.ts) that the few small things showing them read. A chosen treatment
 // elsewhere still opens as a visit over the paper, which stays where it was.
 
+import site from "@instance/site";
 import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Alignment } from "../api/lean";
 import type { PaperStructure, Stage } from "../api/types";
@@ -1648,7 +1649,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       live = false;
     };
   }, [stage, pdfOwn]);
-  const pdfOn = !!route.pdf && !!pdfMarks;
+  // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
+  // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
+  const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
+  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
   const pdfPage = useRef<number | null>(null);
   const onPdfPage = useCallback((page: number) => {
     pdfPage.current = page;
@@ -1826,7 +1830,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               Show changes
             </button>
           )}
-          {pdfMarks && (
+          {pdfMarks && !pdfOnly && (
             <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
               <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
               <button type="button" aria-pressed={pdfOn} onClick={() => showPdf(true)}>PDF</button>
@@ -1898,7 +1902,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             }
           />
         )}
-        <div hidden={pdfOn}>
+        <div hidden={pdfOn || pdfOnly}>
         <PaperBody
           ref={bodyRef}
           stage={stage}

@@ -1,0 +1,53 @@
+{
+ "schema_version": "1.0",
+ "id": "pcp-reading-guide",
+ "repository": "https://github.com/troyjlee/tcs-formalizations",
+ "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+ "via": "wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139, papers/pcp-reading-guide/lean",
+ "license": "NOASSERTION",
+ "files": [
+  {
+   "path": "upstream/lean/PCP/Complexity/CostModel.lean",
+   "sha256": "61004144561944c3ed8d18a6a4ad3ed22db29f34cda6e9f5f3888e3d06bff0eb",
+   "bytes": 5983
+  },
+  {
+   "path": "upstream/lean/PCP/Complexity/Machine.lean",
+   "sha256": "640230c1838bffb7442c52575b34f9322c3da3f90fedcfd2ed57c3e1fc763dc0",
+   "bytes": 6470
+  },
+  {
+   "path": "upstream/lean/PCP/Complexity/NP.lean",
+   "sha256": "b23701ce674baccb03d4333ce8327e81119f55e7c1a2f02488db7787b51ee861",
+   "bytes": 1995
+  },
+  {
+   "path": "upstream/lean/PCP/Theorem.lean",
+   "sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+   "bytes": 3279
+  },
+  {
+   "path": "upstream/lean/PCP/Verifier/Definition.lean",
+   "sha256": "9251c711540860428f8227a9d8e08c1e02eaf68fd7b054acdaac340f2b360f11",
+   "bytes": 10779
+  },
+  {
+   "path": "upstream/lean/lake-manifest.json",
+   "sha256": "cf701e06ca307d54b90245845a2a6e6a16a119f5225e784e8e30f4c830d9e456",
+   "bytes": 3159
+  },
+  {
+   "path": "upstream/lean/lakefile.toml",
+   "sha256": "c5aa1f2f41e37852dcd82729617156dd1a020decb1e2826ad184a432f1359149",
+   "bytes": 1445
+  },
+  {
+   "path": "upstream/lean/lean-toolchain",
+   "sha256": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+   "bytes": 29
+  }
+ ],
+ "lean_roots": [
+  "PCP"
+ ]
+}

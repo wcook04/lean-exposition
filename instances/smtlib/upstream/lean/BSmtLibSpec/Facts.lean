@@ -1,0 +1,44 @@
+module
+
+public import BSmtLibSpec.Facts.Lexicon
+public import BSmtLibSpec.Facts.Lexer
+public import BSmtLibSpec.Facts.Grammar
+public import BSmtLibSpec.Facts.Parser
+public import BSmtLibSpec.Facts.Reader
+
+@[expose] public section
+
+/-!
+# Checks of the formalism
+
+Proofs that the specification formalism (`BSmtLibSpec`) means what it says. They are not part of the
+formalism and are not trusted.
+
+- Examples:
+  - the standard's own examples and lists, of the lexicon and of the grammar;
+  - what a lexer fed in slices hands over;
+  - the calls the traversal makes for a few scripts.
+- The lexicon: every input has at most one tokenisation.
+- A lexer fed in slices:
+  - what its properties ask for exists;
+  - a correct lexer hands over more as it is fed more or the end of the input;
+  - a correct lexer is correct on whole inputs.
+- Composition: reading can stop at the `)` of a command and start again on the rest, possibly
+  in another version.
+- A lexer and its consumers:
+  - what a lexer does with a consumer is determined;
+  - the input after a version switch is located as in the whole input.
+- Round trips: the tokens of an input can be printed back, exactly with the whitespace and
+  comments between them and in a canonical layout without them, and are read back from what is
+  printed.
+- The grammar:
+  - the tokens of a tree determine the tree;
+  - every file has at most one reading, from which it is reproduced.
+- The traversal, for every handler:
+  - it makes the calls of a parser that goes by the items it receives;
+  - its calls rebuild the script;
+  - its calls are placed by the items before them.
+- Readers:
+  - the calls on a file determine the file;
+  - a reader that lexes then parses reads files, and finishes only on files.
+-/

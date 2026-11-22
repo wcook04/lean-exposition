@@ -327,6 +327,21 @@ Not yet built:
 - a Comparator pane, which waits for the receipt at the authors' final commit;
 - topic filter addresses (`/topic/<id>/`).
 
+## Status, 22 November 2026: the remaining Proof Reader papers
+
+PCP, the coupled spring page, Contextual Embeddings and the SMT-LIB standard are library papers, converted by `scripts/from_proof_reader.py`. The engine and converter gained these, each optional in the instance format:
+
+- **Results the paper states without a number.** A result Proof Reader titles in words keeps the number the paper prints for it ("Lemma 4.1 (standard low-degree test)" gives `/lemma-4.1/`); one with no printed number keeps its claim id as its address (`/claim-source-13/`), so the old claim address maps onto it exactly. `--goal document` makes the document itself the map's root for a paper that numbers no results (SMT-LIB).
+- **A fourth document.** A build carries three documents. A paper with more names the others as documents read in another build (`documents[]` entries with `href` and no slot), and the Read menu links to them. The other build is an instance served at its own `path` under the paper (`pcp-reading-guide` at `/pcp/reading-guide/`). Publishing and CI keep such nested folders when the paper's folder is replaced (`.library-paper` marks), and the library's 404 page sends their addresses to their own shell.
+- **Companion phrase and Lean addresses.** `/<page>/@<tie>` and `/<page>/lean/<name>` open a phrase or a declaration on a companion page (`addresses.json` `pages`).
+- **Not found.** A phrase address that names no phrase opens the document at its top with a "Not found" line, never a guessed place.
+- **PDF-only documents.** A document whose only form is the authors' PDF (`pdf_only`) opens in the PDF with no Text toggle. Its phrases, cards and search come from an index of the passages Proof Reader quotes from it, in page order, which is never shown as text.
+- **Converter input.** Proof Reader's own passage markers and YAML front matter are stripped; GitHub heading fragments in links between pages become section numbers; other relative links resolve against the page's repository URL; quotes are found through inline Markdown markup (code, emphasis, links); `--authors`, `--companion-credit`, a noun per companion, `--path` and `--external`.
+- **Checks.** `authored/check.json` may list declarations whose bodies use only Mathlib (`no_uses`). `check_library_paper.py` has `--no-pdf` and `--pdf-only`, accepts result addresses after a phrase click, and checks the "Not found" line.
+- **Redirects.** `scripts/proof_reader_redirects.py` writes `redirects/proof-reader.json` and the stub Proof Reader loads first (`web/public/library-redirects.js`), only for pages whose library address answers 200.
+
+The Physlib gauge-theory map stays on Proof Reader. Its page is an API map, not a paper: its addresses `@lean-N`, `@ref-N` and `@index` name Physlib's own reference lists, and its dependency map is drawn from module imports. The engine has no `api-map` document kind yet, and a conversion as a plain document would break those addresses.
+
 ## Adapted editions (built 22 November 2026, off for every paper)
 
 The design is docs/reader-design.md, "Adapted editions". What is built:

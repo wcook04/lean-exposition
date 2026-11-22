@@ -25,6 +25,12 @@ export function AddressNotice({ route }: { route: Route }) {
     return { bytes: bytes.length, lines: bytes.reduce((n, byte) => (byte === 10 ? n + 1 : n), 1) };
   }, [paper, wantsPaper]);
   const retired = route.view === "read" ? retiredLink(route.retired) : null;
+  if (route.view === "read" && route.missing && !route.node)
+    return (
+      <p className="address-notice" role="status" data-missing={route.missing}>
+        Not found: no phrase in this document has the address @{route.missing}.
+      </p>
+    );
   if (route.view === "read" && route.retired && retired) return <RetiredNotice id={route.retired} retired={retired.retired} nearest={retired.nearest} stage={route.stage} />;
   const words = addressProblem(asked, (id) => graph.nodes.has(id) || (asked.view === "read" && id.startsWith(PHRASE_RECORD)), size);
   return words ? (

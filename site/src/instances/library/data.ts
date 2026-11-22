@@ -4,14 +4,21 @@ import current from "./current.json";
 
 /** A PDF of a document; `label` names it in the header ("PDF with changes marked"). */
 export interface LibraryPdf { file: string; sha256?: string; bytes?: number; url?: string; name?: string; alias?: string; label?: string }
+/**
+ * One document of the paper. A document in this build has a slot: one of the three accounts (long,
+ * short, expository) or a companion's own page name (digest, library-07). A document of the same paper
+ * read in another build (a fourth document, or the page a guide belongs to) has no slot and an `href`,
+ * its address under the library root ("pcp/reading-guide/").
+ */
 export interface LibraryDocument {
   id: string;
-  /** One of the three accounts (long, short, expository), or a companion's own page name (digest, library-07). */
-  slot: string;
+  slot?: string;
+  href?: string;
   slug: string;
   title: string;
   noun: string;
   main?: boolean;
+  pdf_only?: boolean;
   /** The authors' PDF. `name` and `alias` publish it under pdf/ by those names (a reader that moved into the library keeps its PDF addresses). */
   pdf?: LibraryPdf;
   /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
@@ -78,6 +85,8 @@ export interface ReaderSettings {
 export interface LibraryInstance {
   schema: string;
   id: string;
+  /** Where the paper is served under the library root, when not at its id ("pcp/reading-guide"). */
+  path?: string;
   title: string;
   short_title: string;
   authors: string[];
@@ -89,7 +98,7 @@ export interface LibraryInstance {
   licence?: string;
   host: string;
   review: string;
-  source: { proof_reader?: { repository: string; commit: string; page: string }; upstream: { repository: string; commit: string; paper?: string }; lean_scope?: string };
+  source: { proof_reader?: { repository: string; commit: string; page: string }; upstream: { repository: string; commit: string; paper?: string | null }; lean_scope?: string };
   documents: LibraryDocument[];
   families: { id: string; name: string }[];
   topics: { id: string; name: string; description: string; family: string | null }[];
@@ -108,5 +117,7 @@ export interface LibraryInstance {
 }
 
 export const PAPER = current as LibraryInstance;
-export const MAIN = PAPER.documents.find((d) => d.main) ?? PAPER.documents[0];
+export const MAIN = (PAPER.documents.find((d) => d.main) ?? PAPER.documents[0]) as LibraryDocument & { slot: NonNullable<LibraryDocument["slot"]> };
+/** The documents this build carries. */
+export const BUILT = PAPER.documents.filter((d): d is LibraryDocument & { slot: NonNullable<LibraryDocument["slot"]> } => !!d.slot);
 export const LIBRARY_ROOT = "https://wcook04.github.io/library/";

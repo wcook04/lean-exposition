@@ -1,0 +1,32 @@
+{
+ "schema": 1,
+ "names": {
+  "PCP.InNP": "Membership through bounded witnesses",
+  "PCP.Language": "Languages over binary strings",
+  "PCP.Machine.PolyTimeAlg": "Polynomial time for each step",
+  "PCP.Machine.PolyTimeRel": "Polynomial time for witness checking",
+  "PCP.Machine.Sym": "Bits and separators",
+  "PCP.Machine.encodeAnswer": "Writing decisions and query addresses",
+  "PCP.Machine.encodeBool": "Writing an acceptance bit",
+  "PCP.Machine.encodePair": "Separating input and witness",
+  "PCP.Machine.encodeTriple": "Separating input, randomness and answers",
+  "PCP.Machine.ofBits": "Writing a binary string",
+  "PCP.NPCertificate": "Bounded witnesses and a checker",
+  "PCP.ProofOracle": "The proof bit sequence",
+  "PCP.QueryTree": "Adaptive proof queries",
+  "PCP.QueryTree.addresses": "All queried proof addresses",
+  "PCP.QueryTree.eval": "Evaluating a proof query tree",
+  "PCP.QueryTree.ofStep": "Capping a sequence of queries",
+  "PCP.Verifier": "Randomized proof query trees",
+  "PCP.Verifier.CanonicalRandomness": "A fixed logarithmic randomness budget",
+  "PCP.Verifier.CompleteAt": "A proof accepted with certainty",
+  "PCP.Verifier.ImplementedBy": "Matching the bounded verifier tree",
+  "PCP.Verifier.ReadsBelow": "A bound on proof addresses",
+  "PCP.Verifier.SoundAt": "Acceptance bounds for all proofs",
+  "PCP.Verifier.accProb": "Acceptance probability",
+  "PCP.Verifier.acceptingRandomness": "Accepting random strings",
+  "PCP.VerifierAlg": "A query or a decision",
+  "PCP.bitsOfFin": "Random bits from an index",
+  "PCP.np_subset_pcp": "The forward PCP theorem"
+ }
+}

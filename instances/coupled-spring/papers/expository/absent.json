@@ -1,0 +1,28 @@
+{
+ "schema_version": "1.2",
+ "stage": "expository",
+ "state": "scaffold",
+ "path": "papers/expository.md",
+ "content_sha256": "7a4cface1f8270176d07bf3e6d5d76ef20a47ce6d11709a033d595653b9a97b6",
+ "graph_sha256": "6b02dcee97244b9fb3d7a23e2a9ae1440743abb5c1ffc9caf212ffabfab70749",
+ "selected_goal_ids": [
+  "coupled-spring.claim-local-minimum"
+ ],
+ "claim_ids": [],
+ "citation_ids": [
+  "cite.coupled-spring.claim-local-minimum",
+  "cite.coupled-spring.claim-second-derivative-test",
+  "cite.lean.coupled_spring_potential",
+  "cite.lean.second_derivative_test_analyticAt"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "coupled-spring.claim-local-minimum",
+  "coupled-spring.claim-second-derivative-test",
+  "lean.coupled_spring_potential",
+  "lean.second_derivative_test_analyticAt"
+ ],
+ "passages": [],
+ "review_state": "not_reviewed",
+ "review_notes": []
+}

@@ -1,0 +1,9 @@
+{
+ "not_joined": {
+  "pcp.claim-source-13": "The reverse inclusion, PCP(O(log n), O(1)) contained in NP, is the other direction of the equivalence; the forward theorem does not use it.",
+  "pcp.claim-reference-np-equivalence": "The equivalence of the formalization's NP with the reference NP class checks the definition the theorem is stated with; the forward theorem does not use it."
+ },
+ "no_uses": {
+  "PCP.Algebraic.Hadamard.linearEncode": "Its body, a sum of coordinate projections, uses only Mathlib (LinearMap.proj); Proof Reader's Lean report does not list it."
+ }
+}

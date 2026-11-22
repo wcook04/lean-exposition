@@ -1,0 +1,129 @@
+{
+ "schema_version": "1.2",
+ "stage": "short",
+ "state": "draft",
+ "path": "papers/short.md",
+ "content_sha256": "1f3040d96bc4fe8c1559b3c5840a5ee977566f85a8e17d7d839d20147c5807e9",
+ "graph_sha256": "6b02dcee97244b9fb3d7a23e2a9ae1440743abb5c1ffc9caf212ffabfab70749",
+ "selected_goal_ids": [
+  "coupled-spring.claim-local-minimum"
+ ],
+ "claim_ids": [
+  "coupled-spring.claim-local-minimum",
+  "coupled-spring.claim-second-derivative-test",
+  "coupled-spring.claim-cubic-local-not-global",
+  "coupled-spring.claim-global-minimum"
+ ],
+ "citation_ids": [
+  "cite.coupled-spring.claim-cubic-local-not-global",
+  "cite.coupled-spring.claim-global-minimum",
+  "cite.coupled-spring.claim-local-minimum",
+  "cite.coupled-spring.claim-second-derivative-test",
+  "cite.lean.coupled_spring_potential",
+  "cite.lean.second_derivative_test_analyticAt"
+ ],
+ "assumption_ids": [],
+ "unresolved_ids": [
+  "coupled-spring.claim-cubic-local-not-global",
+  "coupled-spring.claim-global-minimum",
+  "coupled-spring.claim-local-minimum",
+  "coupled-spring.claim-second-derivative-test",
+  "lean.coupled_spring_potential",
+  "lean.second_derivative_test_analyticAt"
+ ],
+ "passages": [
+  {
+   "anchor": "front",
+   "text_sha256": "80d3457255cb602c5f2a37d7c5bb1b2a437c99651950cd53254e3e9b4304f927",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Front matter: context with no numbered result."
+  },
+  {
+   "anchor": "sec-1",
+   "text_sha256": "70cf7f1714807e4fb7d3341251d0794ecfec1dbe363cdd5367ada32a3569d75c",
+   "claim_ids": [
+    "coupled-spring.claim-local-minimum",
+    "coupled-spring.claim-second-derivative-test"
+   ],
+   "citation_ids": [
+    "cite.coupled-spring.claim-local-minimum",
+    "cite.coupled-spring.claim-second-derivative-test",
+    "cite.lean.coupled_spring_potential",
+    "cite.lean.second_derivative_test_analyticAt"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "1. What the test requires: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-2",
+   "text_sha256": "129eec016d6d83a110202b767e6d84901d0dc75b30c9f1a2edc466ef5da7ed2e",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "2. How the test turns a positive Hessian into a minimum: context with no numbered result."
+  },
+  {
+   "anchor": "sec-3",
+   "text_sha256": "971ec9b9acb99b37d3cc15261ecb154087b686ca14fb060e194433bf70a59b12",
+   "claim_ids": [
+    "coupled-spring.claim-cubic-local-not-global"
+   ],
+   "citation_ids": [
+    "cite.coupled-spring.claim-cubic-local-not-global"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "3. A remainder that matters: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-4",
+   "text_sha256": "de103039dec3c51fd6c292baa50eafcb84457fb90e1743e341b49e25f82cb80e",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "4. A hypothesis the proof does not need: context with no numbered result."
+  },
+  {
+   "anchor": "sec-5",
+   "text_sha256": "261bc1885d2ed97318edd3d03cd95bdd75ed0ea794d5c150c4e3b7f5fe5830c2",
+   "claim_ids": [
+    "coupled-spring.claim-global-minimum"
+   ],
+   "citation_ids": [
+    "cite.coupled-spring.claim-global-minimum"
+   ],
+   "assumption_ids": [],
+   "evidence_class": "source_argument",
+   "rationale": "5. Where the three squares come from: states or proves the listed results."
+  },
+  {
+   "anchor": "sec-6",
+   "text_sha256": "17a944587e2e0b69ec871cc72a19af6d46f7cf646dd528cdd1d485264c9c853d",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "6. What the potential says about motion: context with no numbered result."
+  },
+  {
+   "anchor": "sec-sources-and-review",
+   "text_sha256": "aa3ee31e2a8254807f81dcab70e8d5038815094536f157f64560355e410065f8",
+   "claim_ids": [],
+   "citation_ids": [],
+   "assumption_ids": [],
+   "evidence_class": "context",
+   "rationale": "Sources and review: context with no numbered result."
+  }
+ ],
+ "review_state": "not_reviewed",
+ "review_notes": [
+  "Converted from Proof Reader; the links were made with AI and no mathematician has reviewed them.",
+  "Each passage is one section of the paper; its claim ids are the numbered results stated inside it."
+ ]
+}

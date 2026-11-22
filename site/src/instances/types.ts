@@ -127,6 +127,10 @@ export interface SiteInstance {
     pages?: Record<string, string>;
     /** `id` names the companion's folder in its source (`<id>/paper.md`), so links between companions resolve. */
     companions?: { slot: string; id?: string; title: string; group: string; group_title: string; order: number }[];
+    /** Documents of the same paper read in another build (a fourth document, served at its own address); the Read menu links to them. */
+    external?: { title: string; job: string; href: string }[];
+    /** Documents read only in the authors' PDF: no reading copy, so no Text toggle. */
+    pdfOnly?: InstanceStage[];
   };
   /**
    * An adapted edition of the main document (instances/<paper>/adapted/, docs/reader-design.md

@@ -1,0 +1,234 @@
+{
+ "files": {
+  "checks/CubicPerturbation.lean": "20e1851e1acb8e4a0f769ed12efc7ee90eb37bf57c2cb049933921505b3716b0",
+  "checks/GlobalMinimum.lean": "682be32222b21bdd810a120acfa4363da8755e9625efdd2380bbe5939104ef09",
+  "checks/WithoutSmoothness.lean": "664fd8ea7f6e9442b793e3c9cb5d2a76e0a229ff6bfb6f88466846c5c7e15aae"
+ },
+ "checks": [
+  {
+   "name": "cubicPerturbation",
+   "keyword": "def",
+   "line": 4,
+   "end_line": 6,
+   "code": "/-- The coupled spring potential plus the cubic `x₀³`. -/\nnoncomputable def cubicPerturbation (x : EuclideanSpace ℝ (Fin 2)) : ℝ :=\n  couplingPotential x + (x 0) ^ 3",
+   "doc": "The coupled spring potential plus the cubic `x₀³`.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cube_iteratedFDeriv_two_zero",
+   "keyword": "theorem",
+   "line": 8,
+   "end_line": 15,
+   "code": "/-- The cubic `x₀³` has zero second derivative at the origin. -/\nlemma cube_iteratedFDeriv_two_zero (a b : EuclideanSpace ℝ (Fin 2)) :\n    iteratedFDeriv ℝ 2 (fun x : EuclideanSpace ℝ (Fin 2) => (x 0) ^ 3) 0 ![a, b] = 0 := by\n  have hcomp : (fun x : EuclideanSpace ℝ (Fin 2) => (x 0) ^ 3)\n      = (fun t : ℝ => t ^ 3) ∘ (EuclideanSpace.proj (𝕜 := ℝ) (0 : Fin 2)) := rfl\n  have hcd : ContDiff ℝ ⊤ (fun t : ℝ => t ^ 3) := contDiff_id.pow 3\n  rw [hcomp, (EuclideanSpace.proj (𝕜 := ℝ) (0 : Fin 2)).iteratedFDeriv_comp_right hcd _ le_top]\n  simp [iteratedFDeriv_apply_eq_iteratedDeriv_mul_prod, iteratedDeriv_pow]",
+   "doc": "The cubic `x₀³` has zero second derivative at the origin.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_iteratedFDeriv_two_zero",
+   "keyword": "theorem",
+   "line": 17,
+   "end_line": 29,
+   "code": "/-- At the origin the second derivative of the perturbed potential is that of the coupled\nspring potential. -/\nlemma cubicPerturbation_iteratedFDeriv_two_zero (a b : EuclideanSpace ℝ (Fin 2)) :\n    iteratedFDeriv ℝ 2 cubicPerturbation 0 ![a, b]\n      = iteratedFDeriv ℝ 2 couplingPotential 0 ![a, b] := by\n  have hU : ContDiffAt ℝ 2 couplingPotential (0 : EuclideanSpace ℝ (Fin 2)) :=\n    (couplingPotential_analyticAt 0).contDiffAt\n  have hg : ContDiffAt ℝ 2 (fun x : EuclideanSpace ℝ (Fin 2) => (x 0) ^ 3) 0 :=\n    ((EuclideanSpace.proj (𝕜 := ℝ) (0 : Fin 2)).contDiff.pow 3).contDiffAt\n  have hsplit : cubicPerturbation\n      = couplingPotential + fun x : EuclideanSpace ℝ (Fin 2) => (x 0) ^ 3 := rfl\n  rw [hsplit, iteratedFDeriv_add_apply hU hg]\n  simp [cube_iteratedFDeriv_two_zero]",
+   "doc": "At the origin the second derivative of the perturbed potential is that of the coupled spring potential.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_analyticAt",
+   "keyword": "theorem",
+   "line": 31,
+   "end_line": 37,
+   "code": "/-- The perturbed potential is analytic at every point. -/\nlemma cubicPerturbation_analyticAt (z : EuclideanSpace ℝ (Fin 2)) :\n    AnalyticAt ℝ cubicPerturbation z := by\n  have h0 : AnalyticAt ℝ (fun x : EuclideanSpace ℝ (Fin 2) => x 0) z :=\n    (EuclideanSpace.proj (𝕜 := ℝ) 0).analyticAt z\n  show AnalyticAt ℝ (fun x => couplingPotential x + (x 0) ^ 3) z\n  exact (couplingPotential_analyticAt z).add (h0.pow 3)",
+   "doc": "The perturbed potential is analytic at every point.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_gradient_zero",
+   "keyword": "theorem",
+   "line": 39,
+   "end_line": 50,
+   "code": "/-- The gradient of the perturbed potential vanishes at the origin. -/\nlemma cubicPerturbation_gradient_zero :\n    gradient cubicPerturbation (0 : EuclideanSpace ℝ (Fin 2)) = 0 := by\n  have h0 : HasFDerivAt (fun x : EuclideanSpace ℝ (Fin 2) => x 0)\n      (EuclideanSpace.proj (𝕜 := ℝ) 0) (0 : EuclideanSpace ℝ (Fin 2)) :=\n    (EuclideanSpace.proj (𝕜 := ℝ) 0).hasFDerivAt\n  have hz : ∀ i : Fin 2, (0 : EuclideanSpace ℝ (Fin 2)) i = 0 := fun i => rfl\n  have hzero : HasFDerivAt cubicPerturbation (0 : EuclideanSpace ℝ (Fin 2) →L[ℝ] ℝ) 0 := by\n    refine ((couplingPotential_hasFDerivAt 0).add (h0.pow 3)).congr_fderiv ?_\n    simp only [hz]\n    simp\n  simp [gradient, hzero.fderiv]",
+   "doc": "The gradient of the perturbed potential vanishes at the origin.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_posDef",
+   "keyword": "theorem",
+   "line": 52,
+   "end_line": 64,
+   "code": "/-- The second-derivative quadratic map of the perturbed potential is positive definite at\nthe origin. -/\nlemma cubicPerturbation_posDef :\n    (iteratedFDerivQuadraticMap cubicPerturbation (0 : EuclideanSpace ℝ (Fin 2))).PosDef := by\n  intro y hy\n  have h0 : (!₂[0, 0] : EuclideanSpace ℝ (Fin 2)) = 0 := by\n    ext i\n    fin_cases i <;> simp\n  have hU := couplingPotential_posDef y hy\n  rw [h0] at hU\n  show 0 < iteratedFDeriv ℝ 2 cubicPerturbation 0 ![y, y]\n  rw [cubicPerturbation_iteratedFDeriv_two_zero]\n  exact hU",
+   "doc": "The second-derivative quadratic map of the perturbed potential is positive definite at the origin.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_isLocalMin",
+   "keyword": "theorem",
+   "line": 66,
+   "end_line": 71,
+   "code": "/-- Adding `x₀³` keeps a local minimum at the origin. The proof applies the analytic\nsecond-derivative test from PhyslibAlpha, the test that proves the original theorem. -/\ntheorem cubicPerturbation_isLocalMin :\n    IsLocalMin cubicPerturbation (0 : EuclideanSpace ℝ (Fin 2)) :=\n  second_derivative_test_analyticAt cubicPerturbation_gradient_zero\n    (cubicPerturbation_analyticAt 0) cubicPerturbation_posDef",
+   "doc": "Adding `x₀³` keeps a local minimum at the origin. The proof applies the analytic second-derivative test from PhyslibAlpha, the test that proves the original theorem.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_strict_near_origin",
+   "keyword": "theorem",
+   "line": 73,
+   "end_line": 109,
+   "code": "/-- Near the origin the minimum is strict: if `|x₀| < 1/4` and `x ≠ 0`, the perturbed\npotential is positive, because it is at least `(x₁ + x₀/2)² + x₀²/2`. -/\ntheorem cubicPerturbation_strict_near_origin :\n    ∀ᶠ x in nhds (0 : EuclideanSpace ℝ (Fin 2)),\n      x ≠ 0 → cubicPerturbation 0 < cubicPerturbation x := by\n  have hc : Continuous (fun x : EuclideanSpace ℝ (Fin 2) => x 0) :=\n    (EuclideanSpace.proj (𝕜 := ℝ) (0 : Fin 2)).continuous\n  have ht : Filter.Tendsto (fun x : EuclideanSpace ℝ (Fin 2) => x 0) (nhds 0) (nhds 0) := by\n    simpa using hc.tendsto (0 : EuclideanSpace ℝ (Fin 2))\n  have hnear : ∀ᶠ x in nhds (0 : EuclideanSpace ℝ (Fin 2)), |x 0| < 1 / 4 := by\n    filter_upwards [ht.eventually (Metric.ball_mem_nhds (0 : ℝ) (by norm_num : (0 : ℝ) < 1 / 4))]\n      with x hx\n    simpa [Metric.mem_ball, Real.dist_eq] using hx\n  filter_upwards [hnear] with x hx hne\n  have hW0 : cubicPerturbation (0 : EuclideanSpace ℝ (Fin 2)) = 0 := by\n    simp [cubicPerturbation, couplingPotential]\n  rw [hW0]\n  have hlo : -(1 / 4 : ℝ) < x 0 := (abs_lt.mp hx).1\n  have hprod : 0 ≤ (x 0) ^ 2 * (x 0 + 1 / 4) := mul_nonneg (sq_nonneg _) (by linarith)\n  have hbound : (x 1 + x 0 / 2) ^ 2 + (x 0) ^ 2 / 2 ≤ cubicPerturbation x := by\n    unfold cubicPerturbation couplingPotential\n    nlinarith [hprod]\n  by_contra hlt\n  have hle : cubicPerturbation x ≤ 0 := not_lt.mp hlt\n  have hs : 0 ≤ (x 1 + x 0 / 2) ^ 2 := sq_nonneg _\n  have h0 : x 0 = 0 := by\n    have h0sq : (x 0) ^ 2 = 0 := by nlinarith [sq_nonneg (x 0)]\n    exact (pow_eq_zero_iff two_ne_zero).mp h0sq\n  have h1 : x 1 = 0 := by\n    have h1sq : (x 1 + x 0 / 2) ^ 2 = 0 := by nlinarith [sq_nonneg (x 0)]\n    have h1lin : x 1 + x 0 / 2 = 0 := (pow_eq_zero_iff two_ne_zero).mp h1sq\n    linarith\n  apply hne\n  ext i\n  fin_cases i\n  · simpa using h0\n  · simpa using h1",
+   "doc": "Near the origin the minimum is strict: if `|x₀| < 1/4` and `x ≠ 0`, the perturbed potential is positive, because it is at least `(x₁ + x₀/2)² + x₀²/2`.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "cubicPerturbation_not_global",
+   "keyword": "theorem",
+   "line": 111,
+   "end_line": 116,
+   "code": "/-- The origin is not a global minimum after adding `x₀³`: the value at `(-2, 0)` is `-4`. -/\ntheorem cubicPerturbation_not_global :\n    cubicPerturbation (!₂[-2, 0] : EuclideanSpace ℝ (Fin 2))\n      < cubicPerturbation (0 : EuclideanSpace ℝ (Fin 2)) := by\n  simp [cubicPerturbation, couplingPotential]\n  norm_num",
+   "doc": "The origin is not a global minimum after adding `x₀³`: the value at `(-2, 0)` is `-4`.",
+   "file": "checks/CubicPerturbation.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "couplingPotential_eq_sq_add_sq",
+   "keyword": "theorem",
+   "line": 3,
+   "end_line": 7,
+   "code": "/-- The coupled spring potential equals `(x₀ + x₁/2)² + (3/4) x₁²` at every point. -/\ntheorem couplingPotential_eq_sq_add_sq (x : EuclideanSpace ℝ (Fin 2)) :\n    couplingPotential x = (x 0 + x 1 / 2) ^ 2 + 3 / 4 * (x 1) ^ 2 := by\n  unfold couplingPotential\n  ring",
+   "doc": "The coupled spring potential equals `(x₀ + x₁/2)² + (3/4) x₁²` at every point.",
+   "file": "checks/GlobalMinimum.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "couplingPotential_origin",
+   "keyword": "theorem",
+   "line": 9,
+   "end_line": 14,
+   "code": "/-- The coupled spring potential is zero at the origin. -/\ntheorem couplingPotential_origin :\n    couplingPotential (!₂[0, 0] : EuclideanSpace ℝ (Fin 2)) = 0 := by\n  first\n    | simp [couplingPotential]\n    | norm_num [couplingPotential]",
+   "doc": "The coupled spring potential is zero at the origin.",
+   "file": "checks/GlobalMinimum.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "couplingPotential_origin_le",
+   "keyword": "theorem",
+   "line": 16,
+   "end_line": 20,
+   "code": "/-- At every point the coupled spring potential is at least its value at the origin. -/\ntheorem couplingPotential_origin_le (x : EuclideanSpace ℝ (Fin 2)) :\n    couplingPotential (!₂[0, 0] : EuclideanSpace ℝ (Fin 2)) ≤ couplingPotential x := by\n  rw [couplingPotential_origin, couplingPotential_eq_sq_add_sq]\n  positivity",
+   "doc": "At every point the coupled spring potential is at least its value at the origin.",
+   "file": "checks/GlobalMinimum.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "couplingPotential_pos",
+   "keyword": "theorem",
+   "line": 22,
+   "end_line": 46,
+   "code": "/-- Away from the origin the coupled spring potential is strictly positive. -/\ntheorem couplingPotential_pos (x : EuclideanSpace ℝ (Fin 2)) (hx : x ≠ 0) :\n    0 < couplingPotential x := by\n  rw [couplingPotential_eq_sq_add_sq]\n  by_contra h\n  have hs : 0 ≤ (x 0 + x 1 / 2) ^ 2 := sq_nonneg _\n  have ht : 0 ≤ (x 1) ^ 2 := sq_nonneg _\n  have h1 : x 1 = 0 := by\n    have h1sq : (x 1) ^ 2 = 0 := by linarith\n    exact (pow_eq_zero_iff two_ne_zero).mp h1sq\n  have h0 : x 0 = 0 := by\n    have h0sq : (x 0 + x 1 / 2) ^ 2 = 0 := by linarith\n    have h0lin : x 0 + x 1 / 2 = 0 := (pow_eq_zero_iff two_ne_zero).mp h0sq\n    linarith\n  apply hx\n  ext i\n  fin_cases i\n  · first\n      | simpa using h0\n      | (simp; exact h0)\n      | exact h0\n  · first\n      | simpa using h1\n      | (simp; exact h1)\n      | exact h1",
+   "doc": "Away from the origin the coupled spring potential is strictly positive.",
+   "file": "checks/GlobalMinimum.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "couplingPotential_origin_lt",
+   "keyword": "theorem",
+   "line": 48,
+   "end_line": 53,
+   "code": "/-- At every point other than the origin the coupled spring potential is larger than at the\norigin. -/\ntheorem couplingPotential_origin_lt (x : EuclideanSpace ℝ (Fin 2)) (hx : x ≠ 0) :\n    couplingPotential (!₂[0, 0] : EuclideanSpace ℝ (Fin 2)) < couplingPotential x := by\n  rw [couplingPotential_origin]\n  exact couplingPotential_pos x hx",
+   "doc": "At every point other than the origin the coupled spring potential is larger than at the origin.",
+   "file": "checks/GlobalMinimum.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  },
+  {
+   "name": "isLocalMin_of_posDef_of_littleo_without_smoothness",
+   "keyword": "theorem",
+   "line": 5,
+   "end_line": 26,
+   "code": "/-- The little-o form of the second-derivative test holds without the smoothness hypothesis:\nthe proof of `isLocalMin_of_posDef_of_littleo` with its use of that hypothesis removed. -/\ntheorem isLocalMin_of_posDef_of_littleo_without_smoothness {V : Type*} [NormedAddCommGroup V]\n    [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] {f : V → ℝ} {x₀ : V}\n    (h : (fun x => f x - ∑ i ∈ range 3, 1 / (i)! * iteratedFDeriv ℝ i f x₀ fun _ => x - x₀)\n      =o[nhds x₀] fun x => ‖x - x₀‖ ^ 2) (h₀ : gradient f x₀ = 0)\n    (hf : (iteratedFDerivQuadraticMap f x₀).PosDef) : IsLocalMin f x₀ := by\n  have ⟨C,hC⟩ := coercive_of_posdef hf\n  simp only [Asymptotics.IsLittleO, Asymptotics.IsBigOWith] at h\n  apply (h (half_pos hC.1)).mono\n  intro x\n  have hx := hC.2 (x - x₀)\n  simp only [continuousBilinearMapOfContinuousMultilinearMap, MultilinearMap.toFun_eq_coe,\n    coe_coe, ContinuousLinearMap.coe_mk', LinearMap.coe_mk,\n    AddHom.coe_mk] at hx\n  rw [mul_assoc,show ![x - x₀, x - x₀] = fun _ => x - x₀ by\n    ext i; fin_cases i <;> simp] at hx\n  have hx₀ : inner ℝ (gradient f x₀) (x - x₀) = fderiv ℝ f x₀ (x - x₀) := by simp [gradient]\n  simp only [h₀, inner_zero_left, map_sub] at hx₀\n  simp only [norm_pow, norm_norm]\n  rw [← pow_two] at hx\n  exact le_of_littleO hx <| sub_eq_zero.mp hx₀.symm",
+   "doc": "The little-o form of the second-derivative test holds without the smoothness hypothesis: the proof of `isLocalMin_of_posDef_of_littleo` with its use of that hypothesis removed.",
+   "file": "checks/WithoutSmoothness.lean",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "status": "checked"
+  }
+ ]
+}

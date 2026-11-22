@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "passages": {
+  "pcp-short-reference-np-context": "pcp-short-forward-statement",
+  "pcp-short-concrete-reference-np": "pcp-short-reference-np",
+  "pcp-expository-forward-statement": "pcp-expository-theorem"
+ },
+ "claims": {
+  "claim-1": "theorem-1.1",
+  "claim-2": "lemma-2.1",
+  "claim-4": "lemma-4.1",
+  "claim-5": "lemma-4.3",
+  "claim-6": "theorem-4.6",
+  "claim-7": "theorem-5.1",
+  "claim-8": "lemma-5.2",
+  "source-11": "claim-source-11",
+  "source-12": "claim-source-12",
+  "claim-10": "claim-10",
+  "source-13": "claim-source-13",
+  "reference-np-equivalence": "claim-reference-np-equivalence",
+  "derived-zero": "claim-derived-zero",
+  "vanishing-certificate": "claim-vanishing-certificate",
+  "point-line": "theorem-4.5"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "meaning": "Plain titles of two to six words for the PCP declarations whose Proof Reader title is longer; AI-drafted, from the longer title.",
+ "titles": {
+  "PCP.Algebraic.ThreeColorVerifier.test_honestProof": "The honest proof always passes",
+  "PCP.Algebraic.GridVanishing.exists_decomposition": "Decomposing a grid-vanishing polynomial",
+  "PCP.Algebraic.Hadamard.exists_field_function_of_average_rejectionRate": "One field function fits both",
+  "PCP.Algebraic.ThreeColorAlgebra.cube_eq_one_iff": "Colours as cube roots of unity",
+  "PCP.oracleOfWitness_prefix": "A proof keeps its prefix",
+  "PCP.Algebraic.ThreeColorVerifier.branchRejectionRate_le": "Each check's rejection is bounded"
+ }
+}
