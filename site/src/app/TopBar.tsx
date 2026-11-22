@@ -27,7 +27,7 @@ interface Props {
 const MENU: Stage[] = (site.readMenu as Stage[] | undefined) ?? STAGE_ORDER;
 
 /** The line under a menu item: the instance's own words where it gives them, else the account's job. */
-const menuJob = (s: Stage): string => site.readMenuJobs?.[s] ?? (site.readMenu ? "" : (ACCOUNT_JOBS[s] ?? ""));
+const menuJob = (s: Stage): string => site.readMenuJobs?.[s] ?? ACCOUNT_JOBS[s] ?? "";
 
 /** One line on what each account is for, as the Read menu says it. */
 export const ACCOUNT_JOBS: Record<Stage, string> = {

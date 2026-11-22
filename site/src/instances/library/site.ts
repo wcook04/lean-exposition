@@ -46,7 +46,10 @@ export function frontCreditLine(credit: string, review: string): string {
 }
 const isAdapted = (d: (typeof PAPER.documents)[number]) => !!d.adapted || d.kind === "adapted";
 /** The documents a reader opens from Read: the authors' paper, its own levels where it has them, and an adapted edition. */
-const READ_MENU = [MAIN, ...PAPER.documents.filter((d) => d !== MAIN && (isAdapted(d) || (PAPER.levels ?? []).includes(d.slot)))].map((d) => d.slot);
+const READ_MENU = [
+  ...(PAPER.levels?.length ? PAPER.levels.filter((slot) => PAPER.documents.some((d) => d.slot === slot)) : [MAIN.slot]),
+  ...PAPER.documents.filter(isAdapted).map((d) => d.slot),
+];
 /** Compare's levels: the Lean, then the paper's own documents in the three level slots, never one it lacks. */
 const LEVEL_SLOTS = ["long", "short", "expository"] as const;
 const COMPARE_LEVELS = ["lean" as const, ...LEVEL_SLOTS.filter((slot) => PAPER.documents.some((d) => d.slot === slot && !isAdapted(d) && (d.main || (PAPER.levels ?? []).includes(slot))))];
@@ -163,7 +166,7 @@ const site = {
   frontCredit: { [MAIN.slot]: frontCreditLine(CREDIT, PAPER.review) },
   readMenu: READ_MENU,
   readMenuJobs: Object.fromEntries(
-    PAPER.documents.filter((d) => READ_MENU.includes(d.slot)).map((d) => [d.slot, isAdapted(d) ? "An adapted edition, every change marked" : d.main && !PAPER.levels?.length ? `By ${BY}` : ""]),
+    PAPER.documents.filter((d) => READ_MENU.includes(d.slot)).map((d) => [d.slot, isAdapted(d) ? "An adapted edition, every change marked" : d.main && !PAPER.levels?.length ? `By ${BY}` : undefined]),
   ),
   compareLevels: COMPARE_LEVELS,
   // A paper with one account calls it the authors' paper; with its own levels, their names stand.
