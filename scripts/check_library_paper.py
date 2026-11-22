@@ -70,9 +70,11 @@ def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
     card.wait_for(timeout=15000)
     check(f"{tag} mark click", "AI-assessed" in card.inner_text(), page.url)
     page.get_by_role("button", name="Graph", exact=True).first.click()
-    page.wait_for_selector(".map-pane__graphview .fg[data-cards]", timeout=15000)
-    nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0)
-    check(f"{tag} graph view", nodes > 0, f"{nodes} cards drawn")
+    # Four or more neighbours are drawn; fewer are named in one line over the Lean, with no canvas.
+    page.wait_for_selector(".map-pane__graphview .fg[data-cards], .map-pane__few", timeout=15000)
+    few = page.get_attribute(".map-pane__few", "data-neighbours") if page.locator(".map-pane__few").count() else None
+    nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0) if few is None else 0
+    check(f"{tag} graph view", nodes > 0 or few is not None, f"{nodes} cards drawn" if few is None else f"{few} neighbours, named without a drawing")
     if args.shots:
         page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
     page.goto(base + f"@{args.phrase}")
