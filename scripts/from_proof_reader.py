@@ -247,6 +247,32 @@ def assessment(comparisons: dict, name: str) -> dict:
     return {"fidelity": c["fidelity"], "note": (c.get("note") or "").strip()}
 
 
+def md_escape(text: str) -> str:
+    """Text from a PDF's text layer as literal Markdown: no character starts markup or maths."""
+    text = re.sub(r"([\\`*_\[\]<>#$|~])", r"\\\1", text)
+    return re.sub(r"(?m)^(\s*)(\d+)\.(\s)", r"\1\2\\.\3", re.sub(r"(?m)^(\s*)([-+])(\s)", r"\1\\\2\3", text))
+
+
+def pdf_index(title: str, passages: list[dict]) -> str:
+    """An index of a PDF's quoted passages: one heading per section, the quotes in page order."""
+    rows = sorted(passages, key=lambda p: (p.get("page", 0), passages.index(p)))
+    for p in rows:
+        p["quote"] = md_escape(re.sub(r"\s+", " ", p["quote"]).strip())
+    # A quote that repeats another, or lies inside a longer one, is not printed again: its phrase is
+    # found inside the one printed, and shares or nests in its tie.
+    quotes = [p["quote"] for p in rows]
+    out, section, printed = [f"# {title}\n"], None, set()
+    for p in rows:
+        if p["quote"] in printed or any(p["quote"] in q and p["quote"] != q for q in quotes):
+            continue
+        printed.add(p["quote"])
+        if p.get("section") != section:
+            section = p.get("section")
+            out.append(f"\n## {section} {md_escape(p.get('title') or '')}".rstrip() + "\n")
+        out.append(f"\n{p['quote']}\n")
+    return "".join(out)
+
+
 def plain_index(text: str) -> tuple[str, list[int]]:
     """The text a reader sees, without Markdown's inline markup (code ticks, emphasis, link targets,
     escapes, HTML tags, footnote marks), and for each of its characters the offset in the source."""
@@ -554,7 +580,14 @@ def main() -> None:
     page, out, slot = args.page, args.out, args.slot
     toml = tomllib.loads((page / "paper.toml").read_text())
     links = json.loads((page / "links.json").read_text())
-    md = (page / toml["paper"].get("markdown", "paper.md")).read_text()
+    pdf_only = not toml["paper"].get("markdown") and not (page / "paper.md").is_file()
+    if pdf_only:
+        # A PDF with no reading copy (a standard): the reader shows the PDF itself, and this index of
+        # the passages Proof Reader quotes from it, in the PDF's order and under its section numbers,
+        # carries the phrases, cards and search. It is never shown as the document's text.
+        md = pdf_index(toml["paper"]["title"], links["passages"])
+    else:
+        md = (page / toml["paper"].get("markdown", "paper.md")).read_text()
     report = {k: [] for k in ("quote_not_unique", "lean_not_in_index", "verdict_without_note",
                               "statement_without_lean", "merged", "merged_assessments_differ", "unassessed",
                               "result_label_not_found", "result_without_statement", "long_title_without_override")}
@@ -954,6 +987,25 @@ def main() -> None:
                 same["evidence_ids"] = sorted(set(same["evidence_ids"]) | {eid})
             else:
                 edges.append({"from": a, "to": b, "kind": "supports", "evidence_ids": [eid]})
+    # A document that numbers no results (a standard): its root is the document itself, linked to the
+    # Lean each passage defines or states, so the map has a top and every declaration a place on it.
+    if args.goal == "document" and goal not in nodes:
+        node(goal, "goal", title, "unverified", source_id="paper", locator=title,
+             statement=f"{title}: the document as a whole. It numbers no results; each passage links the Lean that states it.",
+             citation_ids=[], boundary="The document itself, as the map's root. Its links to the Lean were made with AI and have not been reviewed by the authors.")
+        eid = f"link.{goal}"
+        evidence[eid] = {"id": eid, "kind": "semantic_review", "status": "not_run", "command": [],
+                         "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+                         "source_ids": ["proof_reader"], "subject_ids": [goal],
+                         "details": "The Lean the document's passages define or state, as Proof Reader links them. Made with AI; not reviewed by the authors."}
+        nodes[goal]["evidence_ids"].append(eid)
+        for t in ties:
+            for row in t["lean"]:
+                if row["relation"] in ("states", "defines") and (found := lean.resolve(row["name"])):
+                    did = add_decl(*found)
+                    if not any(e["from"] == goal and e["to"] == did for e in edges):
+                        edges.append({"from": goal, "to": did, "kind": "formalizes", "evidence_ids": [eid]})
+                        evidence[eid]["subject_ids"] = sorted(set(evidence[eid]["subject_ids"]) | {did})
     on_map = {n[len("lean."):] for n in nodes if n.startswith("lean.")}
     if facts and on_map:
         evidence["lean_dependencies"] = {
@@ -1260,7 +1312,7 @@ def main() -> None:
                    "upstream": {"repository": upstream_repo, "commit": upstream_rev, "paper": toml["paper"].get("url")},
                    "lean_scope": toml["lean"].get("scope", "")},
         "documents": [{"id": "paper", "slot": slot, "slug": "", "title": title, "noun": toml["paper"].get("noun", "paper"),
-                       "main": True, **({"pdf": pdf} if pdf else {})}, *companion_docs] + ([guide] if guide else [])
+                       "main": True, **({"pdf": pdf} if pdf else {}), **({"pdf_only": True} if pdf_only else {})}, *companion_docs] + ([guide] if guide else [])
                      + [{"id": "external:" + href, "href": href, "slug": "", "title": t, "noun": n or "page"}
                         for href, t, n in ((x.split("|") + ["", ""])[:3] for x in args.external)],
         **({"comparator": comparator} if comparator else {}),

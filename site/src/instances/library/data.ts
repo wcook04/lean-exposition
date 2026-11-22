@@ -7,7 +7,7 @@ import current from "./current.json";
  * another build (a fourth document, or the page a guide belongs to) has no slot and an `href`, its
  * address under the library root ("pcp/reading-guide/").
  */
-export interface LibraryDocument { id: string; slot?: "long" | "short" | "expository"; href?: string; slug: string; title: string; noun: string; main?: boolean; pdf?: { file: string; sha256: string; bytes: number; url: string } }
+export interface LibraryDocument { id: string; slot?: "long" | "short" | "expository"; href?: string; slug: string; title: string; noun: string; main?: boolean; pdf_only?: boolean; pdf?: { file: string; sha256: string; bytes: number; url: string } }
 export interface LibraryInstance {
   schema: string;
   id: string;

@@ -415,12 +415,19 @@ def write_assets(out: Path) -> str:
 def main() -> None:
     out = Path(sys.argv[1])
     only = set(sys.argv[2:])
-    instances = {}
+    instances, mounts = {}, []
     for path in sorted((ROOT / "instances").glob("*/instance.json")):
         inst = json.loads(path.read_text())
+        # A paper served inside another's folder (a document of it, "pcp/reading-guide") is not listed
+        # on its own; its addresses are answered by its own shell when the folder is published.
+        if inst.get("path") and "/" in inst["path"]:
+            if (out / inst["path"] / "index.html").exists():
+                mounts.append(inst["path"])
+            continue
         if only and inst["id"] not in only:
             continue
         instances[inst["id"]] = inst
+        mounts.append(inst["id"])
     listing = json.loads((ASSETS / "papers.json").read_text())["papers"]
     listed = {p["id"] for p in listing if p.get("library")}
     # A library paper published but not yet in papers.json is listed after the others, without a sentence.
@@ -432,6 +439,9 @@ def main() -> None:
     shards: dict[str, str] = {}
     titles: list[dict] = []
     for item in listing:
+        if item.get("library") and not instances.get(item["id"]) and item.get("href"):
+            # A paper moving to the library that is not published yet keeps its entry on its current site.
+            item = {k: v for k, v in item.items() if k != "library"}
         if item.get("library"):
             inst = instances.get(item["id"])
             if not inst:
@@ -479,9 +489,11 @@ def main() -> None:
     # GitHub Pages answers every missing path with this one file. An address inside a paper
     # (a phrase /@id or a Lean name /lean/<name>) is that paper's reader: load the paper's own
     # shell in place, at the same address. Anything else gets the list of papers.
-    ids = json.dumps(sorted(instances))
-    boot = (f"<script>(function(){{var ids={ids};var m=location.pathname.match(/^\\/library\\/([a-z0-9-]+)\\//);"
-            "if(!m||ids.indexOf(m[1])<0)return;document.documentElement.style.visibility='hidden';"
+    # The longest mounted path that the address starts with names the paper ("pcp/reading-guide" before "pcp").
+    ids = json.dumps(sorted(mounts, key=lambda m: (-len(m), m)))
+    boot = (f"<script>(function(){{var ids={ids};var m=null;for(var i=0;i<ids.length;i++)"
+            "if(location.pathname.indexOf('/library/'+ids[i]+'/')===0){m=[0,ids[i]];break}"
+            "if(!m)return;document.documentElement.style.visibility='hidden';"
             "fetch('/library/'+m[1]+'/404.html').then(function(r){return r.ok?r.text():null}).then(function(t){"
             "if(!t){document.documentElement.style.visibility='';return}document.open();document.write(t);document.close();})"
             ".catch(function(){document.documentElement.style.visibility=''});})();</script>")

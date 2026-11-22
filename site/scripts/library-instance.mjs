@@ -30,7 +30,15 @@ const phrases = {};
 // place of the tie at its statement block (the tie index's `canonical`), so /theorem-1.1/ lands on
 // the theorem itself.
 const results = {};
+// A companion page's phrases, by its slug: /<slug>/@<tie id> opens the phrase on that page.
+const pages = {};
 const main = instance.documents.find((doc) => doc.main) ?? instance.documents[0];
+for (const doc of instance.documents.filter((d) => !d.main && d.slot && d.slug)) {
+  const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
+  if (!existsSync(path)) continue;
+  const table = (pages[doc.slug] = {});
+  for (const tie of JSON.parse(readFileSync(path, "utf8")).ties ?? []) if (tie.phrase) table[tie.phrase] = { record: tie.record ?? null, at: tie.at };
+}
 for (const doc of instance.documents.filter((d) => d.main)) {
   const path = resolve(import.meta.dirname, "../public/edition/ties", `${doc.slot}.json`);
   if (!existsSync(path)) continue;
@@ -66,5 +74,11 @@ for (const [from, to] of [["generated/lean-notes.json", "lean-notes.json"], ["ge
   if (existsSync(source)) copyFileSync(source, target);
   else if (existsSync(target)) rmSync(target);
 }
-writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results }));
+// A companion phrase merged into another keeps its id as an address of the phrase that holds it.
+if (existsSync(aliases)) {
+  const table = JSON.parse(readFileSync(aliases, "utf8"));
+  for (const page of Object.values(pages))
+    for (const [old, host] of Object.entries(table.passages ?? {})) if (page[host] && !page[old]) page[old] = { ...page[host], host };
+}
+writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, pages }));
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets)`);

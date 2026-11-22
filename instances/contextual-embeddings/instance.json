@@ -1,0 +1,155 @@
+{
+ "schema": "library-instance/1",
+ "id": "contextual-embeddings",
+ "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution",
+ "short_title": "Contextual Embeddings",
+ "authors": [
+  "Samantha Frohlich",
+  "Jessica Foster",
+  "G. A. Kavvos",
+  "Meng Wang"
+ ],
+ "venue": "Proc. ACM Program. Lang. 10, PLDI, Article 191 (June 2026)",
+ "credit_lines": [],
+ "companion_credit": "Paper and Lean by Samantha Frohlich, Jessica Foster, G. A. Kavvos and Meng Wang, from their repository https://doi.org/10.5281/zenodo.19081887 at .",
+ "licence": "CC BY 4.0",
+ "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
+ "review": "The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
+ "source": {
+  "proof_reader": {
+   "repository": "https://github.com/wcook04/proof-reader",
+   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "page": "contextual-embeddings"
+  },
+  "upstream": {
+   "repository": "https://doi.org/10.5281/zenodo.19081887",
+   "commit": "",
+   "paper": "https://doi.org/10.1145/3808269"
+  },
+  "lean_scope": "This page links to Lean/CE.lean, the proof described in section 3.3. The two levelled files in the artifact, described in section 6.3, are separate Lean modules and are not linked here."
+ },
+ "documents": [
+  {
+   "id": "paper",
+   "slot": "short",
+   "slug": "",
+   "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution",
+   "noun": "paper",
+   "main": true,
+   "pdf": {
+    "file": "paper.pdf",
+    "sha256": "5e63bee4f8721874bbe425e45222c250c8b1ceaade0eead4b2dc74645bb422c8",
+    "bytes": 626873,
+    "url": "https://doi.org/10.1145/3808269"
+   }
+  }
+ ],
+ "families": [
+  {
+   "id": "first-order-representation",
+   "name": "First-order representation"
+  },
+  {
+   "id": "contextual-representation",
+   "name": "Contextual representation"
+  },
+  {
+   "id": "conversion",
+   "name": "Conversion between representations"
+  },
+  {
+   "id": "isomorphism",
+   "name": "Isomorphism and its assumptions"
+  }
+ ],
+ "topics": [
+  {
+   "id": "types-contexts",
+   "name": "Types and contexts",
+   "description": "Guest types and snoc contexts specify the types and available variables of the simply typed lambda calculus.",
+   "family": "first-order-representation"
+  },
+  {
+   "id": "de-bruijn-indices",
+   "name": "Typed de Bruijn indices",
+   "description": "Top and Pop locate a variable of a given type within its context.",
+   "family": "first-order-representation"
+  },
+  {
+   "id": "first-order-terms",
+   "name": "First-order terms",
+   "description": "Variables, abstraction, application and the unit term form the first-order embedding.",
+   "family": "first-order-representation"
+  },
+  {
+   "id": "singleton-variables",
+   "name": "Singleton variable markers",
+   "description": "A singleton marker saves the context and type of the most recently introduced variable.",
+   "family": "contextual-representation"
+  },
+  {
+   "id": "context-extension",
+   "name": "Context extension",
+   "description": "The identity and extension instances recover a de Bruijn index from the binding and use contexts.",
+   "family": "contextual-representation"
+  },
+  {
+   "id": "contextual-terms",
+   "name": "Contextual terms",
+   "description": "Contextual terms use host functions for abstraction and reification for variable occurrences.",
+   "family": "contextual-representation"
+  },
+  {
+   "id": "unembedding",
+   "name": "Unembedding contextual terms",
+   "description": "Unembedding translates contextual syntax to first-order syntax while preserving context and guest type.",
+   "family": "conversion"
+  },
+  {
+   "id": "contextualisation",
+   "name": "Contextualising first-order terms",
+   "description": "Contextualisation translates first-order syntax back to contextual syntax.",
+   "family": "conversion"
+  },
+  {
+   "id": "variable-conversion",
+   "name": "Converting individual variables",
+   "description": "An existential variable package separates conversion of indices from conversion of whole terms.",
+   "family": "conversion"
+  },
+  {
+   "id": "term-round-trips",
+   "name": "Term round trips",
+   "description": "The two term equations express recovery of the original representation after both conversions.",
+   "family": "isomorphism"
+  },
+  {
+   "id": "index-round-trips",
+   "name": "Index round trips",
+   "description": "The variable equations relate de Bruijn indices to their existential packages and support the term equations.",
+   "family": "isomorphism"
+  },
+  {
+   "id": "closed-world-assumption",
+   "name": "Closed world assumption",
+   "description": "The reverse conversion relies on the assumption that reification uses only the identity and context-extension instances.",
+   "family": "isomorphism"
+  }
+ ],
+ "topic_order": [
+  "types-contexts",
+  "de-bruijn-indices",
+  "first-order-terms",
+  "singleton-variables",
+  "context-extension",
+  "contextual-terms",
+  "unembedding",
+  "contextualisation",
+  "variable-conversion",
+  "term-round-trips",
+  "index-round-trips",
+  "closed-world-assumption"
+ ],
+ "goal": "contextual-embeddings.claim-isomorphism",
+ "main_lean": "isoL"
+}

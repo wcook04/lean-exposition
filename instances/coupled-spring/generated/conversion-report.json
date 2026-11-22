@@ -1,0 +1,42 @@
+{
+ "summary": {
+  "quote_not_unique": 0,
+  "lean_not_in_index": 0,
+  "verdict_without_note": 0,
+  "statement_without_lean": 5,
+  "merged": 0,
+  "merged_assessments_differ": 0,
+  "unassessed": 0,
+  "result_label_not_found": 4,
+  "result_without_statement": 0,
+  "long_title_without_override": 0,
+  "ties": 24,
+  "titled": 18,
+  "names": 31,
+  "results": 4,
+  "sections": 6,
+  "lean_files": 3,
+  "unnamed": 0
+ },
+ "quote_not_unique": [],
+ "lean_not_in_index": [],
+ "verdict_without_note": [],
+ "statement_without_lean": [
+  "completed-square",
+  "cubic-local-minimum",
+  "cubic-strict",
+  "cubic-not-global",
+  "global-minimum"
+ ],
+ "merged": [],
+ "merged_assessments_differ": [],
+ "unassessed": [],
+ "result_label_not_found": [
+  "claim-local-minimum",
+  "claim-global-minimum",
+  "claim-second-derivative-test",
+  "claim-cubic-local-not-global"
+ ],
+ "result_without_statement": [],
+ "long_title_without_override": []
+}

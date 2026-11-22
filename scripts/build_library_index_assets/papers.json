@@ -1,6 +1,6 @@
 {
  "schema": "library-index-papers/1",
- "meaning": "The library index's list of papers, in the order the page shows them. An entry with \"library\": true is a paper built here from instances/<id>/; its title, authors, credit and pages come from its instance.json and its counts from its published edition, so the entry adds only the sentence. Every other entry is a paper still on its current site: its title, authors, sentence and pages are taken from that site's own front matter (proof-reader papers/*/paper.toml and links.json, the lean-exposition examples, quartic-query-lean's README and site), and its counts were read from the files named in counted_from. Credit lines here never name Anthropic; the full credit is on each paper's own page.",
+ "meaning": "The library index's list of papers, in the order the page shows them. An entry with \"library\": true is a paper built here from instances/<id>/; its title, authors, credit and pages come from its instance.json and its counts from its published edition, so the entry adds only the sentence; one that still carries its current site's fields (href, pages, counts) is shown from them until its library copy is published. Every other entry is a paper still on its current site: its title, authors, sentence and pages are taken from that site's own front matter (proof-reader papers/*/paper.toml and links.json, the lean-exposition examples, quartic-query-lean's README and site), and its counts were read from the files named in counted_from. Credit lines here never name Anthropic; the full credit is on each paper's own page.",
  "papers": [
   {
    "id": "euler",
@@ -70,6 +70,7 @@
   },
   {
    "id": "pcp",
+   "library": true,
    "title": "Constant-query verification by algebraic encoding",
    "authors": ["Will Cook, with AI assistance (explanatory reconstruction)"],
    "sentence": "The PCP theorem: every language in NP has a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and soundness error at most one half, by the algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard.",
@@ -87,6 +88,7 @@
   },
   {
    "id": "contextual-embeddings",
+   "library": true,
    "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution",
    "authors": ["Samantha Frohlich", "Jessica Foster", "G. A. Kavvos", "Meng Wang"],
    "sentence": "Uses instance resolution to define a context-directed isomorphism between a higher-order interface for bound variables and a first-order representation, and proves the round trip in Lean.",
@@ -99,6 +101,7 @@
   },
   {
    "id": "smtlib",
+   "library": true,
    "title": "The SMT-LIB Standard: Version 2.7",
    "authors": ["Clark Barrett", "Pascal Fontaine", "Cesare Tinelli"],
    "sentence": "The reference standard for SMT-LIB 2.7, read beside BSmtLib, a Lean formalisation of its lexicon, grammar and parser.",
@@ -111,6 +114,7 @@
   },
   {
    "id": "coupled-spring",
+   "library": true,
    "title": "The minimum of the coupled spring potential",
    "authors": ["Bjørn Kjos-Hanssen (the Lean)", "AI agents under Will Cook’s direction (the page)"],
    "sentence": "The coupled spring potential U(x₀, x₁) = x₀² + x₀x₁ + x₁² has a local minimum at the origin, proved in PhyslibAlpha by a general second-derivative test.",

@@ -34,6 +34,9 @@ let retiredLinks: Record<string, RetiredAddress> = {};
  */
 let resultTargets: Record<string, readonly [tie: string, block: string]> = {};
 const byPlace = new Map<string, string>();
+/** Each companion page's phrases, by the page's slug: `/<slug>/@<tie id>`. */
+let pagePhrases: Record<string, Record<string, PhraseAddress>> = {};
+const pageByPlace = new Map<string, string>();
 
 export const LIBRARY = site.library ?? null;
 
@@ -44,15 +47,24 @@ export async function loadLibraryAddresses(base: string): Promise<void> {
     const response = await fetch(`${base}/addresses.json`);
     if (response.ok) {
       const table = await response.json();
-      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {});
+      setLibraryAddresses(table.phrases ?? {}, table.retired ?? {}, table.results ?? {}, table.pages ?? {});
     }
   } catch {
     // The paper still opens; a phrase address then lands at the top of the paper.
   }
 }
 
-export function setLibraryAddresses(table: Record<string, PhraseAddress>, retired: Record<string, RetiredAddress> = {}, results: Record<string, readonly [string, string]> = {}): void {
+export function setLibraryAddresses(
+  table: Record<string, PhraseAddress>,
+  retired: Record<string, RetiredAddress> = {},
+  results: Record<string, readonly [string, string]> = {},
+  pages: Record<string, Record<string, PhraseAddress>> = {},
+): void {
   phrases = table;
+  pagePhrases = pages;
+  pageByPlace.clear();
+  for (const [slug, rows] of Object.entries(pages))
+    for (const [id, row] of Object.entries(rows)) if (!row.host) pageByPlace.set(`${slug}|${row.record ?? `phrase:${id}`}|${row.at}`, id);
   retiredLinks = retired;
   resultTargets = results;
   byPlace.clear();
@@ -77,12 +89,22 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
     if (row) return { ...common, node: row.record ?? `phrase:${row.host ?? id}`, at: row.at };
     // A retired link opens the paper with its notice; it never lands on a neighbouring phrase.
     if (retiredLinks[id]) return { ...common, retired: id };
-    return { ...common, node: `phrase:${id}` };
+    // An id no phrase has: the paper opens at its top and says so, never at a guessed place.
+    return { ...common, missing: id };
   }
   const lean = path.match(/^\/lean\/(.+)$/);
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
   const page = path.match(/^\/([a-z0-9-]+)$/);
-  if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]] };
+  if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]], node: q.get("n") ?? undefined, at: q.get("l") ?? undefined };
+  // A companion page's phrase (/<slug>/@<tie id>) and a declaration read beside it (/<slug>/lean/<name>).
+  const inPage = path.match(/^\/([a-z0-9-]+)\/(@[^/]+|lean\/.+)$/);
+  if (inPage && lib.pages?.[inPage[1]]) {
+    const stage = lib.pages[inPage[1]];
+    if (inPage[2].startsWith("lean/")) return { ...common, stage, decl: decodeURIComponent(inPage[2].slice(5)), lean: v === "graph" ? undefined : true };
+    const id = decodeURIComponent(inPage[2].slice(1));
+    const row = pagePhrases[inPage[1]]?.[id];
+    return row ? { ...common, stage, node: row.record ?? `phrase:${row.host ?? id}`, at: row.at } : { ...common, stage, missing: id };
+  }
   const result = path.match(/^\/([a-z]+-[0-9a-z.-]+)$/);
   // A numbered result lands on its canonical target, the statement block, never an earlier mention.
   if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] };
@@ -104,11 +126,28 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
   if (!lib || route.beside) return null;
   // A retired link keeps its own address while its notice shows.
   if (route.retired && !route.node && !route.decl && route.stage === lib.main) return `${base}/@${encodeURIComponent(route.retired)}`;
+  // A phrase address that names nothing keeps its address while its notice shows.
+  if (route.missing && !route.node && !route.decl) {
+    const slug = route.stage === lib.main ? "" : Object.entries(lib.pages ?? {}).find(([, stage]) => stage === route.stage)?.[0];
+    if (slug !== undefined) return `${base}${slug ? `/${slug}` : ""}/@${encodeURIComponent(route.missing)}`;
+  }
   if (route.stage !== lib.main) {
     // A companion page of the paper: its slug, with the reader's own parameters.
     const slug = Object.entries(lib.pages ?? {}).find(([, stage]) => stage === route.stage)?.[0];
     if (!slug) return null;
     const q = new URLSearchParams();
+    const view = route.lean ? "lean" : route.graph ? "graph" : null;
+    const tail = route.anchor ? `#${encodeURIComponent(route.anchor)}` : "";
+    const phrase = route.node && route.at ? pageByPlace.get(`${slug}|${route.node}|${route.at}`) : route.node?.startsWith("phrase:") ? route.node.slice(7) : undefined;
+    if (phrase && pagePhrases[slug]?.[phrase]) {
+      if (view) q.set("v", view);
+      if (route.decl) q.set("d", route.decl);
+      return `${base}/${slug}/@${encodeURIComponent(phrase)}${q.size ? `?${q}` : ""}${tail}`;
+    }
+    if (route.decl && !route.node) {
+      if (route.graph) q.set("v", "graph");
+      return `${base}/${slug}/lean/${encodeURIComponent(route.decl).replace(/%2E/g, ".")}${q.size ? `?${q}` : ""}${tail}`;
+    }
     if (route.node) q.set("n", route.node);
     if (route.at) q.set("l", route.at);
     if (route.lean) q.set("v", "lean");

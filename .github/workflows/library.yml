@@ -74,15 +74,18 @@ jobs:
         run: python scripts/private_guard.py site/dist instances/${{ matrix.paper }}
       - name: Check ${{ matrix.paper }} in a browser at 1440x900 and 2560x1440
         run: |
-          mkdir -p serve/library && cp -R site/dist serve/library/${{ matrix.paper }}
+          # A paper is served at its id, or at its instance's own path (a document of another paper: pcp/reading-guide).
+          at=$(python -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' instances/${{ matrix.paper }}/instance.json)
+          echo "AT=$at" >> "$GITHUB_ENV"
+          mkdir -p "serve/library/$(dirname "$at")" && cp -R site/dist "serve/library/$at"
           python scripts/build_library_index.py serve/library ${{ matrix.paper }}
           python scripts/serve_library.py serve 47311 &
           sleep 2
-          python scripts/check_library_paper.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --shots shots --budget 10 $(cat instances/${{ matrix.paper }}/check.args 2>/dev/null || true)
+          python scripts/check_library_paper.py "http://127.0.0.1:47311/library/$at/" --shots shots --budget 10 $(cat instances/${{ matrix.paper }}/check.args 2>/dev/null || true)
       - name: Check ${{ matrix.paper }} is still while left alone, graph open and closed, 1100 to 2600 pixels wide
         run: |
-          curl -sf -o /dev/null http://127.0.0.1:47311/library/${{ matrix.paper }}/ || { python scripts/serve_library.py serve 47311 & sleep 2; }
-          python site/scripts/check-idle.py http://127.0.0.1:47311/library/${{ matrix.paper }}/ --sweep 1100 2600 300 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
+          curl -sf -o /dev/null "http://127.0.0.1:47311/library/$AT/" || { python scripts/serve_library.py serve 47311 & sleep 2; }
+          python site/scripts/check-idle.py "http://127.0.0.1:47311/library/$AT/" --sweep 1100 2600 300 $(cat instances/${{ matrix.paper }}/idle.args 2>/dev/null || true)
       - uses: actions/upload-artifact@v4
         with:
           name: library-${{ matrix.paper }}
@@ -114,9 +117,15 @@ jobs:
           curl --fail --silent --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/meta | python3 -c 'import json,sys; print("\n".join("github.com " + k for k in json.load(sys.stdin)["ssh_keys"]))' >> "$HOME/.ssh/known_hosts"
           export GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes"
           git clone --depth 1 git@github.com:wcook04/library.git pub
-          for dir in built/library-*; do
+          # Papers served inside another's folder (pcp/reading-guide) go in after the folders they sit in,
+          # and replacing a paper's folder keeps the folders of the papers inside it (each marked .library-paper).
+          for dir in $(ls -d built/library-* | while read d; do p=${d#built/library-}; at=$(python3 -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "instances/$p/instance.json"); echo "$(echo "$at" | tr -cd / | wc -c) $d"; done | sort -n | cut -d' ' -f2); do
             paper=${dir#built/library-}
-            rm -rf "pub/$paper" && cp -R "$dir/site/dist" "pub/$paper"
+            at=$(python3 -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "instances/$paper/instance.json")
+            keep=$(mktemp -d)
+            if [ -d "pub/$at" ]; then for d in "pub/$at"/*/; do [ -f "$d.library-paper" ] && mv "$d" "$keep/"; done; fi
+            rm -rf "pub/$at" && mkdir -p "$(dirname "pub/$at")" && cp -R "$dir/site/dist" "pub/$at" && echo "$paper" > "pub/$at/.library-paper"
+            for d in "$keep"/*/; do [ -d "$d" ] && mv "$d" "pub/$at/"; done
           done
           python3 scripts/build_library_index.py pub $(cd pub && ls -d */ | tr -d /)
           python3 scripts/private_guard.py pub

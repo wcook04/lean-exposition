@@ -1,0 +1,3336 @@
+{
+ "schema": "phrase-ties/1",
+ "paper": "short",
+ "meaning": "Each tie names the phrase of the paper that a Lean declaration states, as read side by side for Proof Reader (wcook04/proof-reader 79fe18157a1d, papers/smtlib-2-7). Titles, reading notes, topics and comparisons are AI-drafted or AI-assessed; no mathematician has reviewed them.",
+ "families": [
+  {
+   "id": "source-text",
+   "name": "Source text"
+  },
+  {
+   "id": "lexical-tokens",
+   "name": "Lexical tokens"
+  },
+  {
+   "id": "sexpressions",
+   "name": "S-expressions"
+  },
+  {
+   "id": "identifiers-sorts",
+   "name": "Identifiers and sorts"
+  },
+  {
+   "id": "attributes",
+   "name": "Attributes"
+  },
+  {
+   "id": "terms",
+   "name": "Terms"
+  },
+  {
+   "id": "commands-scripts",
+   "name": "Commands and scripts"
+  }
+ ],
+ "topic_order": [
+  "source-text-tokenization",
+  "character-classes",
+  "numeric-literals",
+  "string-literals",
+  "symbols-keywords",
+  "sexpressions-constants",
+  "indexed-identifiers",
+  "attribute-syntax",
+  "sort-expressions",
+  "term-grammar",
+  "variables-scope",
+  "pattern-matching",
+  "term-annotations",
+  "scripts-interaction",
+  "declarations-definitions",
+  "command-syntax-options"
+ ],
+ "parts": [
+  {
+   "name": "",
+   "lines": [
+    1,
+    229
+   ],
+   "source_commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "topics": [
+    {
+     "id": "source-text-tokenization",
+     "name": "Source text and tokenization",
+     "description": "Source files are divided into lexical tokens, with whitespace and comments separating them.",
+     "family": "source-text"
+    },
+    {
+     "id": "character-classes",
+     "name": "Character classes",
+     "description": "The lexical rules distinguish whitespace, printable characters, digits, and ASCII letters.",
+     "family": "source-text"
+    },
+    {
+     "id": "numeric-literals",
+     "name": "Numeric literals",
+     "description": "Numerals, decimals, hexadecimal literals, and binary literals each have a prescribed spelling.",
+     "family": "lexical-tokens"
+    },
+    {
+     "id": "string-literals",
+     "name": "String literals",
+     "description": "Double quotes delimit strings, and doubling an interior quote gives the language’s single lexical escape.",
+     "family": "lexical-tokens"
+    },
+    {
+     "id": "symbols-keywords",
+     "name": "Symbols and reserved words",
+     "description": "Symbols, keywords, and reserved words supply the names and fixed vocabulary of the language.",
+     "family": "lexical-tokens"
+    },
+    {
+     "id": "sexpressions-constants",
+     "name": "S-expressions and constants",
+     "description": "Special constants and other atoms combine into possibly empty parenthesized S-expressions.",
+     "family": "sexpressions"
+    },
+    {
+     "id": "indexed-identifiers",
+     "name": "Indexed identifiers",
+     "description": "Identifiers are symbols, optionally qualified by one or more numeral or symbol indices.",
+     "family": "identifiers-sorts"
+    },
+    {
+     "id": "attribute-syntax",
+     "name": "Attribute syntax",
+     "description": "An attribute consists of a keyword with an optional special constant, symbol, or parenthesized list as its value.",
+     "family": "attributes"
+    },
+    {
+     "id": "sort-expressions",
+     "name": "Sort expressions",
+     "description": "Sort expressions are identifiers, optionally applied to one or more sort expressions.",
+     "family": "identifiers-sorts"
+    },
+    {
+     "id": "term-grammar",
+     "name": "Term grammar",
+     "description": "Terms combine constants, identifiers, applications, abstractions, quantifiers, local definitions, matches, and annotations.",
+     "family": "terms"
+    },
+    {
+     "id": "variables-scope",
+     "name": "Variables and scope",
+     "description": "Local variable declarations associate names with terms or sorts and determine the scope of their occurrences.",
+     "family": "terms"
+    },
+    {
+     "id": "pattern-matching",
+     "name": "Pattern matching",
+     "description": "Flat constructor patterns, variable patterns, and wildcards describe the cases of a match expression.",
+     "family": "terms"
+    },
+    {
+     "id": "term-annotations",
+     "name": "Term annotations",
+     "description": "Attributes attach additional information to a term without changing its logical meaning.",
+     "family": "attributes"
+    },
+    {
+     "id": "scripts-interaction",
+     "name": "Scripts and solver interaction",
+     "description": "Scripts sequence commands that control a solver and request its responses.",
+     "family": "commands-scripts"
+    },
+    {
+     "id": "declarations-definitions",
+     "name": "Declarations and definitions",
+     "description": "Sort, datatype, constructor, selector, and function declarations describe the components introduced by commands.",
+     "family": "commands-scripts"
+    },
+    {
+     "id": "command-syntax-options",
+     "name": "Command syntax and options",
+     "description": "Command productions specify their arguments, including option attributes and information flags.",
+     "family": "commands-scripts"
+    }
+   ],
+   "titles": {
+    "BSmtLibSpec.Grammar.Script": "Commands with reading-mode changes",
+    "BSmtLibSpec.Grammar.Syntax.IsAttribute": "Matching attributes to their tokens",
+    "BSmtLibSpec.Grammar.Syntax.IsCommand": "Matching commands to their tokens",
+    "BSmtLibSpec.Grammar.Syntax.IsSExpr": "Matching S-expressions to their tokens",
+    "BSmtLibSpec.Grammar.Syntax.IsSort": "Matching sorts to their tokens",
+    "BSmtLibSpec.Grammar.Syntax.IsTerm": "Matching terms to their tokens",
+    "BSmtLibSpec.Grammar.Tree.Attribute": "Keyword with an optional value",
+    "BSmtLibSpec.Grammar.Tree.Attribute.Valid": "Conditions on attribute contents",
+    "BSmtLibSpec.Grammar.Tree.Attribute.tokens": "Writing a keyword and optional value",
+    "BSmtLibSpec.Grammar.Tree.AttributeValue": "Constants, symbols or S-expression lists",
+    "BSmtLibSpec.Grammar.Tree.AttributeValue.Valid": "Conditions on attribute values",
+    "BSmtLibSpec.Grammar.Tree.AttributeValue.tokens": "Writing an attribute's value",
+    "BSmtLibSpec.Grammar.Tree.Command": "Concrete forms of script commands",
+    "BSmtLibSpec.Grammar.Tree.Command.Valid": "Version and command grammar conditions",
+    "BSmtLibSpec.Grammar.Tree.Command.tokens": "Writing complete command token sequences",
+    "BSmtLibSpec.Grammar.Tree.ConstructorDec": "Constructor name with selectors",
+    "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid": "Conditions on constructor selectors",
+    "BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens": "Writing a constructor and selectors",
+    "BSmtLibSpec.Grammar.Tree.DatatypeDec": "Datatype parameters and constructors",
+    "BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid": "Datatype grammar requires a constructor",
+    "BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens": "Writing datatype declarations",
+    "BSmtLibSpec.Grammar.Tree.FunctionDec": "Function parameters and result sort",
+    "BSmtLibSpec.Grammar.Tree.FunctionDec.Valid": "Conditions on function signatures",
+    "BSmtLibSpec.Grammar.Tree.FunctionDec.tokens": "Writing a function's declared signature",
+    "BSmtLibSpec.Grammar.Tree.FunctionDef": "Function signature with a defining term",
+    "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid": "Conditions on function definitions",
+    "BSmtLibSpec.Grammar.Tree.FunctionDef.tokens": "Writing a function's signature and body",
+    "BSmtLibSpec.Grammar.Tree.Identifier": "Symbol with optional indices",
+    "BSmtLibSpec.Grammar.Tree.Identifier.Valid": "Allowed indices within an identifier",
+    "BSmtLibSpec.Grammar.Tree.Identifier.tokens": "Writing simple and indexed identifiers",
+    "BSmtLibSpec.Grammar.Tree.Index": "Numerals or symbols as indices",
+    "BSmtLibSpec.Grammar.Tree.Index.Valid": "Versions allowing symbolic indices",
+    "BSmtLibSpec.Grammar.Tree.Index.tokens": "Writing a numeral or symbol index",
+    "BSmtLibSpec.Grammar.Tree.Pattern": "Single or constructor match patterns",
+    "BSmtLibSpec.Grammar.Tree.Pattern.Valid": "Grammatical conditions on match patterns",
+    "BSmtLibSpec.Grammar.Tree.Pattern.tokens": "Writing a flat match pattern",
+    "BSmtLibSpec.Grammar.Tree.QualIdentifier": "Identifier with optional sort",
+    "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid": "Conditions on qualified identifiers",
+    "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens": "Writing a sort-qualified identifier",
+    "BSmtLibSpec.Grammar.Tree.Quantifier.word": "Universal or existential keyword",
+    "BSmtLibSpec.Grammar.Tree.SExpr": "Atoms and parenthesised expressions",
+    "BSmtLibSpec.Grammar.Tree.SExpr.Valid": "Version limits on S-expression syntax",
+    "BSmtLibSpec.Grammar.Tree.SExpr.tokens": "Writing an S-expression as tokens",
+    "BSmtLibSpec.Grammar.Tree.SelectorDec": "Selector name with result sort",
+    "BSmtLibSpec.Grammar.Tree.SelectorDec.Valid": "Grammatical conditions on selector sorts",
+    "BSmtLibSpec.Grammar.Tree.SelectorDec.tokens": "Writing a selector with its sort",
+    "BSmtLibSpec.Grammar.Tree.Sort": "Sort identifiers with sort arguments",
+    "BSmtLibSpec.Grammar.Tree.Sort.Valid": "Grammatical conditions within a sort",
+    "BSmtLibSpec.Grammar.Tree.Sort.tokens": "Writing a sort as tokens",
+    "BSmtLibSpec.Grammar.Tree.SortDec": "Sort name with declared arity",
+    "BSmtLibSpec.Grammar.Tree.SortDec.tokens": "Writing a sort name and arity",
+    "BSmtLibSpec.Grammar.Tree.SortedVar": "Variable name paired with sort",
+    "BSmtLibSpec.Grammar.Tree.SortedVar.Valid": "Grammatical conditions on variable sorts",
+    "BSmtLibSpec.Grammar.Tree.SortedVar.tokens": "Writing a variable with its sort",
+    "BSmtLibSpec.Grammar.Tree.SpecConstant": "Five forms of literal token",
+    "BSmtLibSpec.Grammar.Tree.SpecConstant.token": "Single token for a literal",
+    "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard": "Named symbols or match wildcards",
+    "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid": "Versions allowing match wildcards",
+    "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token": "Writing a symbol or wildcard",
+    "BSmtLibSpec.Grammar.Tree.Term": "Concrete forms of term syntax",
+    "BSmtLibSpec.Grammar.Tree.Term.Valid": "Grammatical conditions on term forms",
+    "BSmtLibSpec.Grammar.Tree.Term.ValidBindings": "Conditions on let definitions",
+    "BSmtLibSpec.Grammar.Tree.Term.ValidCases": "Grammatical conditions on match cases",
+    "BSmtLibSpec.Grammar.Tree.Term.bindingTokens": "Writing variable definitions in let",
+    "BSmtLibSpec.Grammar.Tree.Term.caseTokens": "Writing patterns with their case bodies",
+    "BSmtLibSpec.Grammar.Tree.Term.tokens": "Writing a term as tokens",
+    "BSmtLibSpec.Lexicon.SourceFile": "Source characters allowed per version",
+    "BSmtLibSpec.Lexicon.Token.content": "Decoding the contents of tokens",
+    "BSmtLibSpec.Lexicon.Tokenization": "Splitting input into lexical tokens",
+    "BSmtLibSpec.Lexicon.Tokenization.From": "Tokenisation from a specified offset",
+    "BSmtLibSpec.Lexicon.addedBasicReservedWords": "New reserved words by version",
+    "BSmtLibSpec.Lexicon.addedCommandNames": "New command names by version",
+    "BSmtLibSpec.Lexicon.basicReservedWords": "General reserved words by version",
+    "BSmtLibSpec.Lexicon.binary": "Binary literal token syntax",
+    "BSmtLibSpec.Lexicon.categoryRegex": "Token spelling rules by category",
+    "BSmtLibSpec.Lexicon.commandNames": "Available command names by version",
+    "BSmtLibSpec.Lexicon.comment": "Semicolon comment ending with newline",
+    "BSmtLibSpec.Lexicon.decimal": "Decimal point token syntax",
+    "BSmtLibSpec.Lexicon.digit": "Decimal digit characters",
+    "BSmtLibSpec.Lexicon.hexadecimal": "Hexadecimal literal token syntax",
+    "BSmtLibSpec.Lexicon.keyword": "Colon-prefixed attribute, option names",
+    "BSmtLibSpec.Lexicon.letter": "Uppercase and lowercase ASCII letters",
+    "BSmtLibSpec.Lexicon.lineBreak": "Line feed or carriage return",
+    "BSmtLibSpec.Lexicon.numeral": "Nonnegative integer token syntax",
+    "BSmtLibSpec.Lexicon.printableChar": "Printable bytes in the grammar",
+    "BSmtLibSpec.Lexicon.quotedSymbol": "Names enclosed in vertical bars",
+    "BSmtLibSpec.Lexicon.reserved": "Matching a reserved word",
+    "BSmtLibSpec.Lexicon.simpleSymbol": "Unquoted names excluding reserved words",
+    "BSmtLibSpec.Lexicon.string": "Quoted strings with doubled quotes",
+    "BSmtLibSpec.Lexicon.symbolPunctuation": "Punctuation permitted in simple symbols",
+    "BSmtLibSpec.Lexicon.unescape": "Decode doubled quotation marks",
+    "BSmtLibSpec.Lexicon.whiteSpaceChar": "Tab, newline, carriage return, space",
+    "BSmtLibSpec.Lexicon.whitespace": "Repeated spaces and complete comments",
+    "BSmtLibSpec.Parser.Traversal.Received.OfVersion": "Reserved tokens allowed by a version"
+   },
+   "notes": {
+    "BSmtLibSpec.Grammar.Script": "Each command must satisfy the grammatical conditions of the version in force where it begins. A version declaration changes that version for later commands, and a command that stops reading may occur only last. The relation does not enforce well-sortedness, solver execution modes or the official benchmark requirement that version metadata occur exactly once as the first command.",
+    "BSmtLibSpec.Grammar.Syntax.IsCommand": "This relation combines the token sequence of a command with the command's version-dependent grammatical conditions. It therefore includes the grammar's nonempty and equal-length list requirements. It describes a recognised command, not its execution: no assertion stack, model, satisfiability result or solver response is part of the relation.",
+    "BSmtLibSpec.Grammar.Syntax.IsSExpr": "A token sequence represents a specified S-expression exactly when that expression satisfies the selected version's grammatical condition and writing it yields those tokens. The relation is about tokens already supplied to the grammar, not arbitrary source characters. In particular, recognising legal spellings and decoding quoted literals are responsibilities of the preceding lexical stage.",
+    "BSmtLibSpec.Grammar.Syntax.IsSort": "A token sequence represents a specified sort when the sort satisfies the selected version's grammatical condition and is written by exactly that sequence. This matches the displayed syntax production at the token level. It does not establish that the sort's symbols are declared or applied with their declared arities; those are separate semantic requirements.",
+    "BSmtLibSpec.Grammar.Syntax.IsTerm": "A token sequence represents a specified term when that term satisfies the grammatical restrictions for the selected version and writing it yields those tokens. The condition combines the term forms with their required nonempty lists. It does not require a signature or prove well-sortedness, variable scope, substitution laws or logical equivalences between term forms.",
+    "BSmtLibSpec.Grammar.Tree.AttributeValue": "Attribute values have three represented forms: a special constant, a symbol, or a list of S-expressions. A keyword or reserved word cannot appear as a lone value, though either may occur inside a list when the version permits it. This follows the displayed production; the prose description as S-expressions other than keywords is less restrictive about reserved words.",
+    "BSmtLibSpec.Grammar.Tree.Command.Valid": "The command must be available in the selected version and satisfy the grammar's nonemptiness, list-length and recursive syntax conditions. Version 2.7 admits arbitrary terms as check-sat-assuming arguments; versions 2.5 and 2.6 admit only propositional literals. These conditions do not require Boolean assumptions, maintain an assertion stack, enforce solver execution modes or determine command responses.",
+    "BSmtLibSpec.Grammar.Tree.Command.tokens": "The formal definition writes the tokens of each represented command, including names, arguments and parentheses. It also represents the older literal-only form of check-sat-assuming separately from the version 2.7 form with term arguments. The token sequence alone does not establish version availability, the required list lengths, or the operational effects of executing a command.",
+    "BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid": "The datatype declaration must contain at least one constructor, and each constructor's selector sorts must satisfy their grammatical conditions. This does not establish the paper's requirements on distinct names, matching numbers of sort parameters, permitted recursive occurrences or well-foundedness of mutually recursive datatypes. Those restrictions need information beyond the syntax of this declaration.",
+    "BSmtLibSpec.Grammar.Tree.FunctionDec.Valid": "This condition checks the grammatical form of each parameter sort and the result sort. It does not establish that those sorts exist in the current signature, that parameters have distinct names, or that the function name is fresh. The formal definition is one part of recognising declaration syntax, rather than the full test required before introducing a function.",
+    "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid": "The parameter sorts, result sort and defining term must satisfy their grammatical conditions. The definition does not check that the term has the declared result sort, that its variables are in scope, or that recursive references are permitted. In particular, the difference between ordinary and recursive function definitions is not settled by this condition alone.",
+    "BSmtLibSpec.Grammar.Tree.Index.Valid": "Numeral indices are admitted in every supported version; symbol indices are admitted from version 2.5 onward. This condition does not check the characters of the numeral or symbol. The choice of 2.5 follows the paper's change log, although Appendix A's historical note gives 2.6. Both alternatives are available for the version 2.7 page.",
+    "BSmtLibSpec.Grammar.Tree.Pattern.Valid": "A single symbol or wildcard must be available in the selected version. A constructor pattern must have at least one argument, and every argument must be a permitted symbol or wildcard. The formal condition does not check constructor names, argument sorts, distinct pattern variables or coverage of a datatype's constructors. These are additional requirements in the paper.",
+    "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid": "The formal condition requires the identifier's indices and any attached sort to satisfy their grammatical conditions in the selected version. It does not determine the symbol's rank or check that the attached sort is one of its possible result sorts. Those are requirements of well-sortedness in the paper, which are not supplied by this grammatical condition.",
+    "BSmtLibSpec.Grammar.Tree.SExpr.Valid": "This condition restricts reserved-word atoms to versions 2.6 and 2.7 and requires the word to belong to that version's reserved set. Lists must satisfy the same condition recursively. Other atoms are admitted without further tests here because their spelling belongs to the lexical stage. The declaration supplies version restrictions, not the whole definition of S-expression syntax.",
+    "BSmtLibSpec.Grammar.Tree.Sort.Valid": "A sort satisfies this condition when its identifier has permitted indices and all its argument sorts satisfy the same grammatical condition. It does not consult a signature, check the declared arity of a sort symbol, or distinguish a sort parameter from a sort constructor. The paper's rules for well-formed sorts require that additional information.",
+    "BSmtLibSpec.Grammar.Tree.Term": "The represented application form has a qualified identifier in function position, as in the main term production. Section 3.9 additionally permits omitting @ when applying any term of monomorphic map sort, allowing a term in that position. That broader shorthand is not represented here; it can instead be written with explicit @. The representation also allows empty lists, with required nonemptiness checked separately.",
+    "BSmtLibSpec.Grammar.Tree.Term.Valid": "The formal definition enforces nonempty lists where the grammar uses one or more repetitions, permits match from version 2.6 and lambda from version 2.7, and applies grammatical conditions recursively. It does not check variable scope, distinct let variables, sort compatibility, exhaustive match cases or the logical meaning of annotations. A term satisfying it is grammatically admissible at this stage, not necessarily well sorted.",
+    "BSmtLibSpec.Grammar.Tree.Term.ValidBindings": "This condition applies the grammatical term restrictions to the defining term in each let binding. It imposes no nonemptiness condition on the whole list and does not require the variable names to be distinct. Nonemptiness is handled by the enclosing let-expression rule. The standard's parallel substitution semantics and distinct-name requirement are not established here.",
+    "BSmtLibSpec.Grammar.Tree.Term.ValidCases": "For each match case, the formal condition requires the pattern and its body to satisfy their grammatical restrictions in the selected version. It does not require the list of cases to be nonempty; that is handled by the enclosing match-expression rule. It also does not establish exhaustive matching, distinct variables, compatible sorts or the semantics of choosing a case.",
+    "BSmtLibSpec.Grammar.Tree.Term.tokens": "The formal definition writes the tokens of every represented term, including applications, let expressions, abstractions, quantifiers, matches and annotations. Lists may be empty in the representation, so writing tokens alone does not establish the grammar's nonemptiness conditions. The separate grammatical condition supplies those restrictions. Neither operation assigns logical meaning to the resulting term.",
+    "BSmtLibSpec.Lexicon.SourceFile": "Version 2.0 requires every byte in a source file to be below 128. For versions 2.5, 2.6 and 2.7, this particular condition imposes no restriction. It neither decodes Unicode nor establishes that an input is a valid encoding. Lexical and grammatical conditions are defined separately, and tokenisation does not automatically include this source-file condition.",
+    "BSmtLibSpec.Lexicon.Token.content": "The formal definition removes the delimiters of strings and quoted symbols, decodes the appropriate string escapes, removes the colon of a keyword, and removes the #x or #b prefix of hexadecimal or binary literals. Other token text is preserved. These are conventions for what the parser receives; the declaration does not assign the logical meaning of a literal or establish symbol equality.",
+    "BSmtLibSpec.Lexicon.Tokenization": "Tokenisation starts at byte offset zero and applies the version-dependent lexical rules across the entire input. Spaces and comments are omitted from the token list. The formalization also requires delimiters after non-parenthesis tokens and accepts a final comment without a newline. These choices make the relation more specific than the paper's statement that whitespace separates tokens.",
+    "BSmtLibSpec.Lexicon.Tokenization.From": "The input is split into recognised tokens separated by whitespace and comments, beginning at a supplied byte offset. Each token's position includes the preceding whitespace. Non-parenthesis tokens obey the formalization's additional delimiter rule, and a final comment may end without a newline. This relation describes tokenisation; it does not enforce Unicode encoding validity or the separate source-file restriction for version 2.0.",
+    "BSmtLibSpec.Lexicon.addedCommandNames": "The formal definition lists commands when they first become available and later combines those lists across versions. It includes define-funs-rec from version 2.5 onward, and declare-sort-parameter and define-const in version 2.7. Appendix B's reserved-command list omits define-funs-rec, although the command appears in the command grammar and the main text says every command name is reserved.",
+    "BSmtLibSpec.Lexicon.comment": "A comment begins with a semicolon and contains no line feed or carriage return before its terminating line-breaking character. The terminating character is part of the matched sequence. Whether the semicolon lies outside a string or quoted symbol is determined when the surrounding input is tokenised. A separate rule admits a final comment that reaches the end of input without a line break.",
+    "BSmtLibSpec.Lexicon.decimal": "A decimal consists of a numeral, a decimal point, zero or more zeroes, and a final numeral. Consequently there is at least one digit on each side of the point, and leading zeroes are allowed only in the fractional part. The definition recognises spelling; it does not interpret the token as a rational number, floating-point value or any other theory-specific object.",
+    "BSmtLibSpec.Lexicon.keyword": "The formal definition accepts a colon followed by any nonempty sequence of letters, digits and the punctuation permitted in simple symbols. Thus a keyword may begin with a digit or use a reserved word after the colon. This follows the older rule and the paper's example :56, but is broader than the stated version 2.7 production requiring a simple symbol after the colon.",
+    "BSmtLibSpec.Lexicon.numeral": "A numeral is either the single digit 0 or a nonempty string of decimal digits whose first digit is not 0. This is a lexical rule: it rejects leading zeroes such as 01 and does not attach a numerical interpretation. As the paper explains for special constants, the surrounding theory supplies their meaning when they occur as terms.",
+    "BSmtLibSpec.Lexicon.printableChar": "The formal definition accepts one byte with value from 32 to 126 or from 128 to 255. This matches the bounded ranges printed in Appendix B. The main text instead speaks of Unicode characters from 128 onward. A character encoded in several bytes can pass the byte-based rules, but the formal definition does not decode or validate that encoding.",
+    "BSmtLibSpec.Lexicon.quotedSymbol": "A quoted symbol has a vertical bar at each end and may contain printable bytes or white space in between, except for vertical bars and backslashes. Empty quoted symbols are permitted. This rule recognises their spelling only. Obtaining the symbol's name removes the enclosing bars, while the syntax representation separately remembers that the spelling was quoted.",
+    "BSmtLibSpec.Lexicon.simpleSymbol": "A simple symbol is a nonempty sequence of ASCII letters, digits and the listed punctuation, with no initial digit and no spelling reserved by the selected version. Names beginning with @ or a dot are still recognised as symbols. Their restriction to solver use concerns where such names may be introduced; it is not imposed by this lexical definition.",
+    "BSmtLibSpec.Lexicon.string": "String literals have opening and closing double quotes. Between them, the formal definition permits printable bytes and the four white space characters, with each internal double quote represented twice. A backslash has no escaping role in this rule. The same spelling rule is used for versions 2.5, 2.6 and 2.7; version 2.0 has a separate rule.",
+    "BSmtLibSpec.Lexicon.unescape": "Given the interior of a string literal, the formal definition replaces each pair of adjacent double quotes by one double quote and preserves every other byte. Removing the surrounding quotes is performed separately when token contents are obtained. This operation assumes the intended use on a recognised string interior; it does not itself test whether the input was a well-formed literal.",
+    "BSmtLibSpec.Parser.Traversal.Received.OfVersion": "For a reserved-word token, this condition requires membership in the reserved set of the selected version. Every other token or end-of-input item is accepted by this condition. It is therefore only the version-dependent reserved-word check, relying on the lexical stage for permitted spellings. It does not establish that the item is legal at its current grammatical position."
+   },
+   "partial": true
+  }
+ ],
+ "ties": [
+  {
+   "id": "2-7-p023-02",
+   "from": "The syntax rules in this chapter are given directly with respect to streams of lexical tokens from the set defined in this section. The whole set of concrete syntax rules is also available for easy reference in Appendix B. SMT-LIB source files consist of Unicode characters in any 8-bit encoding, such as UTF- 8. Most lexical tokens defined below are limited to US-ASCII printable characters, namely, characters 32dec to 126dec . The remaining printable characters, mostly used for non-English alphabet letters (characters 128dec and beyond), are allowed in string literals, quoted symbols, and comments. A comment is any character sequence not contained within a string literal or a quoted sym- bol (see later) that begins with the semi-colon character ; and ends with the first subsequent",
+   "to": "The syntax rules in this chapter are given directly with respect to streams of lexical tokens from the set defined in this section. The whole set of concrete syntax rules is also available for easy reference in Appendix B. SMT-LIB source files consist of Unicode characters in any 8-bit encoding, such as UTF- 8. Most lexical tokens defined below are limited to US-ASCII printable characters, namely, characters 32dec to 126dec . The remaining printable characters, mostly used for non-English alphabet letters (characters 128dec and beyond), are allowed in string literals, quoted symbols, and comments. A comment is any character sequence not contained within a string literal or a quoted sym- bol (see later) that begins with the semi-colon character ; and ends with the first subsequent",
+   "role": "definition",
+   "topic": "source-text-tokenization",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.SourceFile",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper requires Unicode source text in an 8-bit encoding; the formal definition accepts every byte sequence in version 2.7. It removes the older ASCII restriction but does not establish that the bytes encode Unicode text."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.Tokenization.From",
+     "file": "BSmtLibSpec/Lexicon/Tokenization.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper introduces token streams and whitespace; the formal definition also requires explicit token delimiters and permits a final comment without a line break. These are additional parsing conventions, so this is not a literal transcription of the quoted rules."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.comment",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes a semicolon followed by characters up to and including the first line feed or carriage return. This completes the comment rule whose sentence continues onto the next page."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.printableChar",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper speaks of Unicode characters from 128 onward; the formal definition recognizes individual bytes from 32 to 126 or 128 to 255. This models an encoded byte stream and does not validate its Unicode encoding."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-01",
+   "from": "line-breaking character, i.e., 10dec or 13dec . Both comments and consecutive white space char- acters occurring outside a string literal or a symbol (see later) are considered whitespace. The only lexical function of whitespace is to break the source text into tokens.1 The lexical tokens of the language are the parenthesis characters ( and ), the elements of the syntactic categories ⟨numeral ⟩ , ⟨decimal ⟩ , ⟨hexadecimal ⟩ , ⟨binary ⟩ , ⟨string ⟩ , ⟨symbol ⟩ , ⟨keyword ⟩ , as well as a number of reserved words, all defined below together with a few auxil- iary syntactic categories.",
+   "to": "line-breaking character, i.e., 10dec or 13dec . Both comments and consecutive white space char- acters occurring outside a string literal or a symbol (see later) are considered whitespace. The only lexical function of whitespace is to break the source text into tokens.1 The lexical tokens of the language are the parenthesis characters ( and ), the elements of the syntactic categories ⟨numeral ⟩ , ⟨decimal ⟩ , ⟨hexadecimal ⟩ , ⟨binary ⟩ , ⟨string ⟩ , ⟨symbol ⟩ , ⟨keyword ⟩ , as well as a number of reserved words, all defined below together with a few auxil- iary syntactic categories.",
+   "role": "definition",
+   "topic": "source-text-tokenization",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.Tokenization",
+     "file": "BSmtLibSpec/Lexicon/Tokenization.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition starts tokenization at offset zero, treats whitespace as separators, and adds a delimiter requirement after non-parenthesis tokens. It also allows an unterminated final comment; the quotation does not specify these extra conventions."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.Tokenization.From",
+     "file": "BSmtLibSpec/Lexicon/Tokenization.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition tracks token positions while discarding separating whitespace. It additionally requires delimiters after non-parenthesis tokens and allows a comment to end at end of input, neither of which is stated in the quotation."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.categoryRegex",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition assigns recognition rules to parentheses, numeric literals, strings, symbols, keywords, and reserved words. Simple and quoted symbols are represented separately; the keyword rule has the broader spelling discussed at the keyword passage."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.comment",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition ends a semicolon comment at the first line feed or carriage return, matching the sentence continued here. Recognition of comments within the source is handled separately from recognition of string literals and quoted symbols."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.lineBreak",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition allows exactly character codes 10 and 13 as comment-ending line breaks, as stated in the paper."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.whitespace",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes any concatenation of whitespace characters and line-terminated comments, including an empty concatenation. This supplies the separators described in the paper."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-02",
+   "from": "White Space Characters. A ⟨white\\_space\\_char ⟩ is one of the following characters: 9dec (tab), 10dec (line feed), 13dec (carriage return), and 32dec (space).",
+   "to": "White Space Characters. A ⟨white\\_space\\_char ⟩ is one of the following characters: 9dec (tab), 10dec (line feed), 13dec (carriage return), and 32dec (space).",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.whiteSpaceChar",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly tab, line feed, carriage return, and space: character codes 9, 10, 13, and 32."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-03",
+   "from": "Printable Characters. A ⟨printable\\_char ⟩ is any character from 32dec to 126dec (US-ASCII) and from 128dec on.2",
+   "to": "Printable Characters. A ⟨printable\\_char ⟩ is any character from 32dec to 126dec (US-ASCII) and from 128dec on.2",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.printableChar",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper allows characters from 128 onward without an upper bound; the formal definition works on bytes and ends that range at 255. It agrees with the byte range printed in Appendix B, but does not itself describe or validate Unicode code points."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-04",
+   "from": "Digits. A ⟨digit ⟩ is any character from 48dec to 57dec (0 through 9)",
+   "to": "Digits. A ⟨digit ⟩ is any character from 48dec to 57dec (0 through 9)",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.digit",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly the ASCII digits 0 through 9, with codes 48 through 57."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-05",
+   "from": "Letters. A ⟨letter ⟩ is any character from 65dec to 90dec (English alphabet letters A through Z) and from 97dec to 122dec (English alphabet letters a through z).( 3 )",
+   "to": "Letters. A ⟨letter ⟩ is any character from 65dec to 90dec (English alphabet letters A through Z) and from 97dec to 122dec (English alphabet letters a through z).( 3 )",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.letter",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly the two ASCII letter ranges A through Z and a through z, with codes 65–90 and 97–122."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-06",
+   "from": "Numerals. A ⟨numeral ⟩ is the digit 0 or a non-empty sequence of digits not starting with 0 .",
+   "to": "Numerals. A ⟨numeral ⟩ is the digit 0 or a non-empty sequence of digits not starting with 0 .",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.numeral",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition allows 0 by itself or a nonempty sequence of decimal digits whose first digit is not 0. Leading zeros are excluded from longer numerals."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-07",
+   "from": "Decimals. A ⟨decimal ⟩ is a token of the form ⟨numeral ⟩.0∗ ⟨numeral ⟩ .",
+   "to": "Decimals. A ⟨decimal ⟩ is a token of the form ⟨numeral ⟩.0∗ ⟨numeral ⟩ .",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.decimal",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition is a numeral, a decimal point, zero or more zeros, and another numeral. Thus there is at least one digit after the point, while zeros may begin the fractional part."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-08",
+   "from": "Hexadecimals. A ⟨hexadecimal ⟩ is a non-empty case-insensitive sequence of digits and letters from A to F preceded by the (case sensitive) characters \\#x .",
+   "to": "Hexadecimals. A ⟨hexadecimal ⟩ is a non-empty case-insensitive sequence of digits and letters from A to F preceded by the (case sensitive) characters \\#x .",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.hexadecimal",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition requires the lowercase prefix #x followed by one or more digits or letters A–F or a–f. Only the hexadecimal digits are case-insensitive."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-10",
+   "from": "Binaries. A ⟨binary ⟩ is a non-empty sequence of the characters 0 and 1 preceded by the char- acters \\#b .",
+   "to": "Binaries. A ⟨binary ⟩ is a non-empty sequence of the characters 0 and 1 preceded by the char- acters \\#b .",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.binary",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition requires the lowercase prefix #b followed by one or more characters, each either 0 or 1."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p024-12",
+   "from": "String literals. A ⟨string ⟩ (literal) is any sequence of characters from ⟨printable\\_char ⟩ or ⟨white\\_space\\_char ⟩ delimited by the double quote character \" (34dec ). The character \" can itself occur within a string literal only if duplicated. In other words, after an initial \" that starts a literal, a lexer should treat the sequence \"\" as an escape sequence denoting a single occurrence of \" within the literal.",
+   "to": "String literals. A ⟨string ⟩ (literal) is any sequence of characters from ⟨printable\\_char ⟩ or ⟨white\\_space\\_char ⟩ delimited by the double quote character \" (34dec ). The character \" can itself occur within a string literal only if duplicated. In other words, after an initial \" that starts a literal, a lexer should treat the sequence \"\" as an escape sequence denoting a single occurrence of \" within the literal.",
+   "role": "definition",
+   "topic": "string-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.string",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition implements the surrounding quotes and doubled-quote escape exactly, but its permitted contents are bytes rather than Unicode characters. The quoted character-set requirement therefore needs a separate encoding assumption."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.unescape",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition replaces each doubled quote in a literal’s contents by one quote and leaves other bytes unchanged. It defines the escape’s meaning; removing the surrounding delimiters is a separate step."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p025-04",
+   "from": "SMT-LIB string literals are akin to raw strings in certain programming languages. How- ever, they have only one escape sequence: \"\" . This means, for example and in contrast to most programming languages, that within a ⟨string ⟩ the character sequences \\\\n, \\\\012, \\\\x0A, and \\\\u0008 are not escape sequences (all denoting the new line character), but regular sequences denoting their individual characters.( 4 )",
+   "to": "SMT-LIB string literals are akin to raw strings in certain programming languages. How- ever, they have only one escape sequence: \"\" . This means, for example and in contrast to most programming languages, that within a ⟨string ⟩ the character sequences \\\\n, \\\\012, \\\\x0A, and \\\\u0008 are not escape sequences (all denoting the new line character), but regular sequences denoting their individual characters.( 4 )",
+   "role": "definition",
+   "topic": "string-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.string",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition gives only doubled quotes a special role inside a string literal. A backslash is an ordinary permitted character, so the backslash sequences mentioned in the paper are not lexical escapes."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.unescape",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition collapses doubled quotes and makes no changes to backslash sequences. This matches the paper’s rule that such sequences retain their individual characters."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p025-05",
+   "from": "Reserved words. The language uses a number of reserved words, sequences of printable char- acters that are to be treated as individual tokens. The basic set of reserved words consists of the following:",
+   "to": "Reserved words. The language uses a number of reserved words, sequences of printable char- acters that are to be treated as individual tokens. The basic set of reserved words consists of the following:",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.addedBasicReservedWords",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper introduces the complete basic set of reserved words; the formal definition lists only the words added by each version. For version 2.7 alone it returns lambda, so the earlier additions must be included to recover the full set."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.basicReservedWords",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition collects all basic reserved words introduced up to the selected version. At version 2.7 this includes the literal-category words, punctuation, and language words listed immediately after the quotation."
+    },
+    {
+     "name": "BSmtLibSpec.Parser.Traversal.Received.OfVersion",
+     "file": "BSmtLibSpec/Parser/Traversal.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes reserved words as lexical tokens; the formal definition checks whether an already classified reserved word belongs to the selected version. It accepts other kinds of input without this check and does not define token recognition."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p025-08",
+   "from": "Additionally, each command name in the scripting language defined in Section 3.11 (set-logic, set-option, . . . ) is also a reserved word.( 5 ) The syntactic category ⟨reserved ⟩ denotes any reserved word.",
+   "to": "Additionally, each command name in the scripting language defined in Section 3.11 (set-logic, set-option, . . . ) is also a reserved word.( 5 ) The syntactic category ⟨reserved ⟩ denotes any reserved word.",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.addedCommandNames",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper includes every command name among the reserved words; the formal definition lists only the commands newly introduced in each version. Accumulating those lists is a separate operation."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.commandNames",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition collects all command names introduced by version 2.7, including define-funs-rec. This matches the statement that every command name is reserved."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.reserved",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly a basic reserved word or a command name for the selected version. This matches the paper’s combined reserved-word category."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p025-09",
+   "from": "Symbols. A ⟨symbol ⟩ is either a simple symbol or a quoted symbol. A simple symbol is any non-empty sequence of elements of ⟨letter ⟩ and ⟨digit ⟩ and the characters \\~ ! @ \\$ % ^ & \\* \\_ - + = \\< \\> . ? /",
+   "to": "Symbols. A ⟨symbol ⟩ is either a simple symbol or a quoted symbol. A simple symbol is any non-empty sequence of elements of ⟨letter ⟩ and ⟨digit ⟩ and the characters \\~ ! @ \\$ % ^ & \\* \\_ - + = \\< \\> . ? /",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.simpleSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognises nonempty sequences of ASCII letters, digits and exactly these punctuation characters, excluding an initial digit and reserved words. The two exclusions are stated in the next sentence, which has its own link."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.symbolPunctuation",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition is exactly the seventeen punctuation characters listed here, in the same order."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p025-11",
+   "from": "that does not start with a digit and is not a reserved word.3",
+   "to": "that does not start with a digit and is not a reserved word.3",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.simpleSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition excludes an initial digit and excludes every reserved word of the selected version. These are exactly the two restrictions stated in this continuation of the simple-symbol definition."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p025-14",
+   "from": "A quoted symbol is any sequence of whitespace characters and printable characters that starts and ends with \\| and does not contain \\| or \\\\ .( 6 )",
+   "to": "A quoted symbol is any sequence of whitespace characters and printable characters that starts and ends with \\| and does not contain \\| or \\\\ .( 6 )",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.quotedSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition uses enclosing vertical bars and excludes interior bars and backslashes, matching those restrictions. Its contents are bytes in the permitted ranges, however, so the paper’s Unicode character requirement is not established by this definition alone."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p026-03",
+   "from": "Symbols are case sensitive. They are used mainly as operators or identifiers. Conven- tionally, arithmetic characters and the like are used, individually or in combination, as operator names; in contrast, alpha-numeric symbols, possibly with punctuation char- acters and underscores, are used as identifiers. But, as in LISP, this usage is only rec- ommended (for human readability), not prescribed. For additional flexibility, arbitrary sequences of whitespace and printable characters (except for \\| and \\\\) enclosed in verti- cal bars are also allowed as symbols. Following Common Lisp’s conventions, enclosing a simple symbol in vertical bars does not produce a new symbol. This means for instance that abc and \\|abc\\| are the same symbol. Simple symbols starting with the character @ or . are reserved for solver use.4 Solvers can use them respectively as identifiers for abstract values and solver-generated function symbols other than abstract values.",
+   "to": "Symbols are case sensitive. They are used mainly as operators or identifiers. Conven- tionally, arithmetic characters and the like are used, individually or in combination, as operator names; in contrast, alpha-numeric symbols, possibly with punctuation char- acters and underscores, are used as identifiers. But, as in LISP, this usage is only rec- ommended (for human readability), not prescribed. For additional flexibility, arbitrary sequences of whitespace and printable characters (except for \\| and \\\\) enclosed in verti- cal bars are also allowed as symbols. Following Common Lisp’s conventions, enclosing a simple symbol in vertical bars does not produce a new symbol. This means for instance that abc and \\|abc\\| are the same symbol. Simple symbols starting with the character @ or . are reserved for solver use.4 Solvers can use them respectively as identifiers for abstract values and solver-generated function symbols other than abstract values.",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.Token.content",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition removes the surrounding bars from a quoted symbol and leaves a simple symbol unchanged, without changing case. Thus abc and |abc| have identical name contents; restrictions on solver-generated names are a separate matter."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.quotedSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition recognizes the spelling of a quoted symbol; it does not state that quoted and unquoted names have the same identity or reserve names beginning with @ or a dot for solvers. Those are additional claims in the quotation."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.simpleSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition recognizes permissible simple-symbol spellings. It does not identify quoted and unquoted names or enforce the quoted restriction that names beginning with @ or a dot belong to solvers."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p026-04",
+   "from": "Keywords. A ⟨keyword ⟩ is a token of the form :⟨simple\\_symbol ⟩ . Elements of this category have a special use in the language. They are used as attribute names or option names (see later).",
+   "to": "Keywords. A ⟨keyword ⟩ is a token of the form :⟨simple\\_symbol ⟩ . Elements of this category have a special use in the language. They are used as attribute names or option names (see later).",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.keyword",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper specifies a colon followed by a simple symbol; the formal definition also permits an initial digit or a reserved word after the colon, such as :56 or :let. This follows the older keyword rule and the paper’s own :56 example, rather than the displayed production literally."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p026-06",
+   "from": "An S-expression is either a non-parenthesis token or a (possibly empty) sequence of S-ex- pressions enclosed in parentheses. Every syntactic category of the SMT-LIB language is a specialization of the category ⟨s\\_expr ⟩ defined by the production rules below.",
+   "to": "An S-expression is either a non-parenthesis token or a (possibly empty) sequence of S-ex- pressions enclosed in parentheses. Every syntactic category of the SMT-LIB language is a specialization of the category ⟨s\\_expr ⟩ defined by the production rules below.",
+   "role": "definition",
+   "topic": "sexpressions-constants",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines atoms and parenthesized lists; the formal definition only restricts which reserved words may occur in an already represented S-expression. It supplies version conditions rather than the entire S-expression definition."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes an atom as one token and a list as parentheses around its members, allowing an empty list. This matches the quoted construction of S-expressions; it is not a theorem about every other syntactic category."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p026-07",
+   "from": "⟨spec\\_constant ⟩ ::= ⟨numeral ⟩ \\| ⟨decimal ⟩ \\| ⟨hexadecimal ⟩ \\| ⟨binary ⟩ \\| ⟨string ⟩",
+   "to": "⟨spec\\_constant ⟩ ::= ⟨numeral ⟩ \\| ⟨decimal ⟩ \\| ⟨hexadecimal ⟩ \\| ⟨binary ⟩ \\| ⟨string ⟩",
+   "role": "definition",
+   "topic": "sexpressions-constants",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SpecConstant",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition distinguishes the same five special-constant alternatives: numeral, decimal, hexadecimal, binary, and string. Recognition of each literal’s spelling is supplied by the lexical rules.",
+     "assessments": [
+      {
+       "phrase": "2-7-p026-07",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition distinguishes the same five special-constant alternatives: numeral, decimal, hexadecimal, binary, and string. Recognition of each literal’s spelling is supplied by the lexical rules."
+      },
+      {
+       "phrase": "2-7-p105-12",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition distinguishes the same five special-constant alternatives: numeral, decimal, hexadecimal, binary, and string. Recognition of each literal’s spelling is supplied by the lexical rules."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SpecConstant.token",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition turns each of the five kinds of special constant into its corresponding single token. It preserves the alternatives listed in the production, with lexical spelling handled separately.",
+     "assessments": [
+      {
+       "phrase": "2-7-p026-07",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition turns each of the five kinds of special constant into its corresponding single token. It preserves the alternatives listed in the production, with lexical spelling handled separately."
+      },
+      {
+       "phrase": "2-7-p105-12",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition turns each of the five kinds of special constant into its corresponding single token. It preserves the alternatives listed in the production, with lexical spelling handled separately."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p105-12"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p026-07",
+     "quote": "⟨spec\\_constant ⟩ ::= ⟨numeral ⟩ \\| ⟨decimal ⟩ \\| ⟨hexadecimal ⟩ \\| ⟨binary ⟩ \\| ⟨string ⟩",
+     "role": "definition",
+     "topic": "sexpressions-constants"
+    },
+    {
+     "id": "2-7-p105-12",
+     "quote": "⟨spec\\_constant ⟩ ::= ⟨numeral ⟩ \\| ⟨decimal ⟩ \\| ⟨hexadecimal ⟩ \\| ⟨binary ⟩ \\| ⟨string ⟩",
+     "role": "definition",
+     "topic": "sexpressions-constants"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p026-08",
+   "from": "⟨s\\_expr ⟩ ::= \\| ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ⟨reserved ⟩ \\| ⟨keyword ⟩ ( ⟨s\\_expr ⟩∗ )",
+   "to": "⟨s\\_expr ⟩ ::= \\| ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ⟨reserved ⟩ \\| ⟨keyword ⟩ ( ⟨s\\_expr ⟩∗ )",
+   "role": "definition",
+   "topic": "sexpressions-constants",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Syntax.IsSExpr",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as an S-expression exactly when it writes a constant, symbol, reserved word, keyword or parenthesised list of S-expressions, every reserved word being one the version reserves. This matches the five alternatives; the spelling of each token is checked by the lexical rules.",
+     "assessments": [
+      {
+       "phrase": "2-7-p026-08",
+       "fidelity": "same",
+       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as an S-expression exactly when it writes a constant, symbol, reserved word, keyword or parenthesised list of S-expressions, every reserved word being one the version reserves. This matches the five alternatives; the spelling of each token is checked by the lexical rules."
+      },
+      {
+       "phrase": "2-7-p105-13",
+       "fidelity": "same",
+       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as an S-expression exactly when it writes a constant, symbol, reserved word, keyword or parenthesised list of S-expressions, every reserved word being one the version reserves. This matches the five alternatives; the spelling of each token is checked by the lexical rules."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SExpr.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production lists five alternatives; the formal condition adds only that a reserved word, at any depth, is one the version reserves and occurs from version 2.6 on. It is a side condition on S-expressions already built, not the production itself.",
+     "assessments": [
+      {
+       "phrase": "2-7-p026-08",
+       "fidelity": "different",
+       "fidelity_note": "The production lists five alternatives; the formal condition adds only that a reserved word, at any depth, is one the version reserves and occurs from version 2.6 on. It is a side condition on S-expressions already built, not the production itself."
+      },
+      {
+       "phrase": "2-7-p105-13",
+       "fidelity": "different",
+       "fidelity_note": "The production lists five alternatives; the formal condition adds only that a reserved word, at any depth, is one the version reserves and occurs from version 2.6 on. It is a side condition on S-expressions already built, not the production itself."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SExpr",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition has exactly the five alternatives: constant, symbol, reserved word, keyword, and a list of S-expressions that may be empty, as the star allows. It stores spellings without checking them; the lexical rules check those.",
+     "assessments": [
+      {
+       "phrase": "2-7-p026-08",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition has exactly the five alternatives: constant, symbol, reserved word, keyword, and a list of S-expressions that may be empty, as the star allows. It stores spellings without checking them; the lexical rules check those."
+      },
+      {
+       "phrase": "2-7-p105-13",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition has exactly the five alternatives: constant, symbol, reserved word, keyword, and a list of S-expressions that may be empty, as the star allows. It stores spellings without checking them; the lexical rules check those."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SExpr.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes each atom as one token and a list as its S-expressions in order between parentheses, as the production reads. Which reserved words a version allows is checked by a separate condition.",
+     "assessments": [
+      {
+       "phrase": "2-7-p026-08",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes each atom as one token and a list as its S-expressions in order between parentheses, as the production reads. Which reserved words a version allows is checked by a separate condition."
+      },
+      {
+       "phrase": "2-7-p105-13",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes each atom as one token and a list as its S-expressions in order between parentheses, as the production reads. Which reserved words a version allows is checked by a separate condition."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p105-13"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p026-08",
+     "quote": "⟨s\\_expr ⟩ ::= \\| ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ⟨reserved ⟩ \\| ⟨keyword ⟩ ( ⟨s\\_expr ⟩∗ )",
+     "role": "definition",
+     "topic": "sexpressions-constants"
+    },
+    {
+     "id": "2-7-p105-13",
+     "quote": "⟨s\\_expr ⟩ ::= \\| ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ⟨reserved ⟩ \\| ⟨keyword ⟩ ( ⟨s\\_expr ⟩∗ )",
+     "role": "definition",
+     "topic": "sexpressions-constants"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p027-02",
+   "from": "Identifiers are used mostly as function and sort symbols. When defining certain SMT-LIB theories it is convenient to have indexed identifiers as well. Instead of having a special token syntax for that, indexed identifiers are defined more systematically as the application of the reserved word \\_ to a symbol and one or more indices. Indices can be numerals or symbols.( 7 )",
+   "to": "Identifiers are used mostly as function and sort symbols. When defining certain SMT-LIB theories it is convenient to have indexed identifiers as well. Instead of having a special token syntax for that, indexed identifiers are defined more systematically as the application of the reserved word \\_ to a symbol and one or more indices. Indices can be numerals or symbols.( 7 )",
+   "role": "definition",
+   "topic": "indexed-identifiers",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes an unindexed name as its symbol and an indexed name as a parenthesized underscore, symbol, and nonempty list of indices. This matches the construction described in the paper."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Index.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes an index as either a numeral token or a symbol token, exactly the two index forms named in the paper."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p027-03",
+   "from": "⟨index ⟩ ::= ⟨numeral ⟩ \\| ⟨symbol ⟩",
+   "to": "⟨index ⟩ ::= ⟨numeral ⟩ \\| ⟨symbol ⟩",
+   "role": "definition",
+   "topic": "indexed-identifiers",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Index.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines the two index forms; the formal definition only says that symbolic indices require version 2.5 or later. At version 2.7 it imposes no further condition on either form.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-03",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines the two index forms; the formal definition only says that symbolic indices require version 2.5 or later. At version 2.7 it imposes no further condition on either form."
+      },
+      {
+       "phrase": "2-7-p105-14",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines the two index forms; the formal definition only says that symbolic indices require version 2.5 or later. At version 2.7 it imposes no further condition on either form."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Index",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition has exactly the two index alternatives in the production: a numeral or a symbol. Their lexical spellings are handled separately.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition has exactly the two index alternatives in the production: a numeral or a symbol. Their lexical spellings are handled separately."
+      },
+      {
+       "phrase": "2-7-p105-14",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition has exactly the two index alternatives in the production: a numeral or a symbol. Their lexical spellings are handled separately."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Index.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes a numeral index as a numeral token and a symbol index as a symbol token, matching the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes a numeral index as a numeral token and a symbol index as a symbol token, matching the production."
+      },
+      {
+       "phrase": "2-7-p105-14",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes a numeral index as a numeral token and a symbol index as a symbol token, matching the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p105-14"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p027-03",
+     "quote": "⟨index ⟩ ::= ⟨numeral ⟩ \\| ⟨symbol ⟩",
+     "role": "definition",
+     "topic": "indexed-identifiers"
+    },
+    {
+     "id": "2-7-p105-14",
+     "quote": "⟨index ⟩ ::= ⟨numeral ⟩ \\| ⟨symbol ⟩",
+     "role": "definition",
+     "topic": "indexed-identifiers"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p027-04",
+   "from": "⟨identifier ⟩ ::= ⟨symbol ⟩ \\| ( \\_ ⟨symbol ⟩ ⟨index ⟩+ )",
+   "to": "⟨identifier ⟩ ::= ⟨symbol ⟩ \\| ( \\_ ⟨symbol ⟩ ⟨index ⟩+ )",
+   "role": "definition",
+   "topic": "indexed-identifiers",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Identifier.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines plain and indexed identifiers; the formal definition checks only that the supplied indices are available in the selected version. It does not define the underscore or parentheses in the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-04",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines plain and indexed identifiers; the formal definition checks only that the supplied indices are available in the selected version. It does not define the underscore or parentheses in the production."
+      },
+      {
+       "phrase": "2-7-p105-15",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines plain and indexed identifiers; the formal definition checks only that the supplied indices are available in the selected version. It does not define the underscore or parentheses in the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Identifier",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition stores a symbol together with a list of indices. An empty list represents the plain alternative, and a nonempty list represents the indexed alternative.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-04",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition stores a symbol together with a list of indices. An empty list represents the plain alternative, and a nonempty list represents the indexed alternative."
+      },
+      {
+       "phrase": "2-7-p105-15",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition stores a symbol together with a list of indices. An empty list represents the plain alternative, and a nonempty list represents the indexed alternative."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes the symbol alone when there are no indices, and otherwise writes the underscore, symbol, and indices inside parentheses. This enforces the production’s nonempty indexed form.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-04",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the symbol alone when there are no indices, and otherwise writes the underscore, symbol, and indices inside parentheses. This enforces the production’s nonempty indexed form."
+      },
+      {
+       "phrase": "2-7-p105-15",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the symbol alone when there are no indices, and otherwise writes the underscore, symbol, and indices inside parentheses. This enforces the production’s nonempty indexed form."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p105-15"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p027-04",
+     "quote": "⟨identifier ⟩ ::= ⟨symbol ⟩ \\| ( \\_ ⟨symbol ⟩ ⟨index ⟩+ )",
+     "role": "definition",
+     "topic": "indexed-identifiers"
+    },
+    {
+     "id": "2-7-p105-15",
+     "quote": "⟨identifier ⟩ ::= ⟨symbol ⟩ \\| ( \\_ ⟨symbol ⟩ ⟨index ⟩+ )",
+     "role": "definition",
+     "topic": "indexed-identifiers"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p027-08",
+   "from": "Several syntactic categories in the language contain attributes. These are generally pairs con- sisting of an attribute name and an associated value, although attributes with no value are also allowed. Attribute names belong to the ⟨keyword ⟩ category. Attribute values are in general S- expressions other than keywords, although most predefined attributes use a more restricted category for their values.",
+   "to": "Several syntactic categories in the language contain attributes. These are generally pairs con- sisting of an attribute name and an associated value, although attributes with no value are also allowed. Attribute names belong to the ⟨keyword ⟩ category. Attribute values are in general S- expressions other than keywords, although most predefined attributes use a more restricted category for their values.",
+   "role": "definition",
+   "topic": "attribute-syntax",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes an attribute’s keyword followed by its value when one is present, and just the keyword otherwise. This matches the paper’s allowance of attributes with or without values."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The prose describes attribute values as S-expressions other than keywords; the formal definition also excludes bare reserved words. It agrees with the narrower production immediately below the prose: a special constant, a symbol, or a parenthesized list."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p027-09",
+   "from": "⟨attribute\\_value ⟩ ::= ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ( ⟨s\\_expr ⟩∗ )",
+   "to": "⟨attribute\\_value ⟩ ::= ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ( ⟨s\\_expr ⟩∗ )",
+   "role": "definition",
+   "topic": "attribute-syntax",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.AttributeValue.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production defines three forms of attribute value; the formal definition checks only the version conditions inside a list value. Special constants and symbols pass without any additional condition here.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-09",
+       "fidelity": "different",
+       "fidelity_note": "The production defines three forms of attribute value; the formal definition checks only the version conditions inside a list value. Special constants and symbols pass without any additional condition here."
+      },
+      {
+       "phrase": "2-7-p106-02",
+       "fidelity": "different",
+       "fidelity_note": "The production defines three forms of attribute value; the formal definition checks only the version conditions inside a list value. Special constants and symbols pass without any additional condition here."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.AttributeValue",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition gives the same three alternatives: a special constant, a symbol, or a possibly empty list of S-expressions. A bare keyword or reserved word is not an alternative.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-09",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition gives the same three alternatives: a special constant, a symbol, or a possibly empty list of S-expressions. A bare keyword or reserved word is not an alternative."
+      },
+      {
+       "phrase": "2-7-p106-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition gives the same three alternatives: a special constant, a symbol, or a possibly empty list of S-expressions. A bare keyword or reserved word is not an alternative."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.AttributeValue.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes a constant or symbol as one token and a list between parentheses. These are precisely the three forms in the quoted production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-09",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes a constant or symbol as one token and a list between parentheses. These are precisely the three forms in the quoted production."
+      },
+      {
+       "phrase": "2-7-p106-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes a constant or symbol as one token and a list between parentheses. These are precisely the three forms in the quoted production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-02"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p027-09",
+     "quote": "⟨attribute\\_value ⟩ ::= ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ( ⟨s\\_expr ⟩∗ )",
+     "role": "definition",
+     "topic": "attribute-syntax"
+    },
+    {
+     "id": "2-7-p106-02",
+     "quote": "⟨attribute\\_value ⟩ ::= ⟨spec\\_constant ⟩ \\| ⟨symbol ⟩ \\| ( ⟨s\\_expr ⟩∗ )",
+     "role": "definition",
+     "topic": "attribute-syntax"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p027-10",
+   "from": "⟨attribute ⟩ ::= ⟨keyword ⟩ \\| ⟨keyword ⟩ ⟨attribute\\_value ⟩",
+   "to": "⟨attribute ⟩ ::= ⟨keyword ⟩ \\| ⟨keyword ⟩ ⟨attribute\\_value ⟩",
+   "role": "definition",
+   "topic": "attribute-syntax",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Syntax.IsAttribute",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition relates an attribute to a keyword token with an optional value, subject to the value’s grammar conditions. This matches the quoted token-level production; keyword spelling is handled by the lexicon.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-10",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition relates an attribute to a keyword token with an optional value, subject to the value’s grammar conditions. This matches the quoted token-level production; keyword spelling is handled by the lexicon."
+      },
+      {
+       "phrase": "2-7-p106-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition relates an attribute to a keyword token with an optional value, subject to the value’s grammar conditions. This matches the quoted token-level production; keyword spelling is handled by the lexicon."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Attribute.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production specifies a keyword with an optional value; the formal definition only checks the value’s version conditions when a value exists. It does not itself describe the attribute’s token sequence.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-10",
+       "fidelity": "different",
+       "fidelity_note": "The production specifies a keyword with an optional value; the formal definition only checks the value’s version conditions when a value exists. It does not itself describe the attribute’s token sequence."
+      },
+      {
+       "phrase": "2-7-p106-03",
+       "fidelity": "different",
+       "fidelity_note": "The production specifies a keyword with an optional value; the formal definition only checks the value’s version conditions when a value exists. It does not itself describe the attribute’s token sequence."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Attribute",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition consists of a keyword and an optional attribute value, matching the two alternatives in the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-10",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition consists of a keyword and an optional attribute value, matching the two alternatives in the production."
+      },
+      {
+       "phrase": "2-7-p106-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition consists of a keyword and an optional attribute value, matching the two alternatives in the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes the keyword alone or followed by its value, exactly as in the quoted production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p027-10",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the keyword alone or followed by its value, exactly as in the quoted production."
+      },
+      {
+       "phrase": "2-7-p106-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the keyword alone or followed by its value, exactly as in the quoted production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-03"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p027-10",
+     "quote": "⟨attribute ⟩ ::= ⟨keyword ⟩ \\| ⟨keyword ⟩ ⟨attribute\\_value ⟩",
+     "role": "definition",
+     "topic": "attribute-syntax"
+    },
+    {
+     "id": "2-7-p106-03",
+     "quote": "⟨attribute ⟩ ::= ⟨keyword ⟩ \\| ⟨keyword ⟩ ⟨attribute\\_value ⟩",
+     "role": "definition",
+     "topic": "attribute-syntax"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p028-02",
+   "from": "A major subset of the SMT-LIB language is the language of well-sorted terms, used to represent logical expressions. Such terms are typed, or sorted in first-order logic terminology; that is, each is associated with a (unique) sort. The set of sorts consists itself of sort terms. In essence, a sort is a sort symbol, a sort parameter, or a sort symbol applied to a sequence of sort terms. Syntactically, a sort symbol can be either the distinguished symbol Bool or any ⟨identifier ⟩ . A sort parameter can be any ⟨symbol ⟩ (which in turn, is an ⟨identifier ⟩ ).",
+   "to": "A major subset of the SMT-LIB language is the language of well-sorted terms, used to represent logical expressions. Such terms are typed, or sorted in first-order logic terminology; that is, each is associated with a (unique) sort. The set of sorts consists itself of sort terms. In essence, a sort is a sort symbol, a sort parameter, or a sort symbol applied to a sequence of sort terms. Syntactically, a sort symbol can be either the distinguished symbol Bool or any ⟨identifier ⟩ . A sort parameter can be any ⟨symbol ⟩ (which in turn, is an ⟨identifier ⟩ ).",
+   "role": "definition",
+   "topic": "sort-expressions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Sort.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper discusses sorts assigned to terms and the distinction between sort symbols and parameters; the formal definition only writes the syntax of a sort expression. It neither assigns sorts to terms nor distinguishes parameters from declared sort symbols."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p028-03",
+   "from": "⟨sort ⟩ ::= ⟨identifier ⟩ \\| ( ⟨identifier ⟩ ⟨sort ⟩+ )",
+   "to": "⟨sort ⟩ ::= ⟨identifier ⟩ \\| ( ⟨identifier ⟩ ⟨sort ⟩+ )",
+   "role": "definition",
+   "topic": "sort-expressions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Syntax.IsSort",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition relates a sort expression to either its identifier alone or an identifier applied to a nonempty list of sort expressions, subject to version conditions. This matches the concrete grammar; declaration arities are a separate requirement.",
+     "assessments": [
+      {
+       "phrase": "2-7-p028-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition relates a sort expression to either its identifier alone or an identifier applied to a nonempty list of sort expressions, subject to version conditions. This matches the concrete grammar; declaration arities are a separate requirement."
+      },
+      {
+       "phrase": "2-7-p106-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition relates a sort expression to either its identifier alone or an identifier applied to a nonempty list of sort expressions, subject to version conditions. This matches the concrete grammar; declaration arities are a separate requirement."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Sort.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production defines how sort expressions are written; the formal definition recursively checks version conditions in identifiers and arguments. It does not state the parenthesized form or check a declared sort symbol’s arity.",
+     "assessments": [
+      {
+       "phrase": "2-7-p028-03",
+       "fidelity": "different",
+       "fidelity_note": "The production defines how sort expressions are written; the formal definition recursively checks version conditions in identifiers and arguments. It does not state the parenthesized form or check a declared sort symbol’s arity."
+      },
+      {
+       "phrase": "2-7-p106-01",
+       "fidelity": "different",
+       "fidelity_note": "The production defines how sort expressions are written; the formal definition recursively checks version conditions in identifiers and arguments. It does not state the parenthesized form or check a declared sort symbol’s arity."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Sort",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition builds a sort expression from an identifier and a list of sort arguments. The empty list represents the identifier alone, and a nonempty list represents application.",
+     "assessments": [
+      {
+       "phrase": "2-7-p028-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition builds a sort expression from an identifier and a list of sort arguments. The empty list represents the identifier alone, and a nonempty list represents application."
+      },
+      {
+       "phrase": "2-7-p106-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition builds a sort expression from an identifier and a list of sort arguments. The empty list represents the identifier alone, and a nonempty list represents application."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Sort.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes the identifier alone when it has no arguments, and otherwise places the identifier and its arguments inside parentheses. This matches both alternatives of the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p028-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the identifier alone when it has no arguments, and otherwise places the identifier and its arguments inside parentheses. This matches both alternatives of the production."
+      },
+      {
+       "phrase": "2-7-p106-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the identifier alone when it has no arguments, and otherwise places the identifier and its arguments inside parentheses. This matches both alternatives of the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-01"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p028-03",
+     "quote": "⟨sort ⟩ ::= ⟨identifier ⟩ \\| ( ⟨identifier ⟩ ⟨sort ⟩+ )",
+     "role": "definition",
+     "topic": "sort-expressions"
+    },
+    {
+     "id": "2-7-p106-01",
+     "quote": "⟨sort ⟩ ::= ⟨identifier ⟩ \\| ( ⟨identifier ⟩ ⟨sort ⟩+ )",
+     "role": "definition",
+     "topic": "sort-expressions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-01",
+   "from": "Abstractly, terms are constructed out of constant symbols in the ⟨spec\\_constant ⟩ category (numerals, decimals, strings, etc.), variables, function symbols, five kinds of binders (introduced by the reserved words lambda, let, forall, exists, and match), and an annotation operator: the reserved word !. In its simplest form, a term is a special constant symbol, a variable, a function symbol, or the application of a function symbol to one or more terms. More complex terms include one or more binders. Concretely, a variable can be any ⟨symbol ⟩ , while a function symbol can be any ⟨identifier ⟩ (i.e., a symbol or an indexed symbol). As a consequence, contextual information is needed during parsing to know whether an identifier is to be treated as a variable or a function sym- bol. For variables, this information is provided by the binders let, lambda, forall, exists, and match, which are the only mechanism to introduce variables. Function symbols, in con- trast, are predefined, as explained later. Recall that every function symbol f is separately associated with one or more ranks, each specifying the sorts of f ’s arguments and result. To simplify sort checking, a function symbol in a term can be annotated with one of its result sorts τ. Such an annotated function symbol is a qualified identifier of the form (as f τ).",
+   "to": "Abstractly, terms are constructed out of constant symbols in the ⟨spec\\_constant ⟩ category (numerals, decimals, strings, etc.), variables, function symbols, five kinds of binders (introduced by the reserved words lambda, let, forall, exists, and match), and an annotation operator: the reserved word !. In its simplest form, a term is a special constant symbol, a variable, a function symbol, or the application of a function symbol to one or more terms. More complex terms include one or more binders. Concretely, a variable can be any ⟨symbol ⟩ , while a function symbol can be any ⟨identifier ⟩ (i.e., a symbol or an indexed symbol). As a consequence, contextual information is needed during parsing to know whether an identifier is to be treated as a variable or a function sym- bol. For variables, this information is provided by the binders let, lambda, forall, exists, and match, which are the only mechanism to introduce variables. Function symbols, in con- trast, are predefined, as explained later. Recall that every function symbol f is separately associated with one or more ranks, each specifying the sorts of f ’s arguments and result. To simplify sort checking, a function symbol in a term can be annotated with one of its result sorts τ. Such an annotated function symbol is a qualified identifier of the form (as f τ).",
+   "role": "definition",
+   "topic": "term-grammar",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes variable scope, function ranks, and term forms; the formal definition enforces version availability and nonempty repetitions in the grammar. It does not determine which names are variables or whether a term has the required sort."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes either an identifier or its qualification by a result sort as (as f τ), matching the final clause. It does not determine which result sorts a function actually has."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes the listed term forms as tokens. It does not resolve variable names, assign function ranks, or enforce the nonempty lists and scope conditions discussed in the quotation."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-02",
+   "from": "⟨qual\\_identifier ⟩ ::= ⟨identifier ⟩ \\| ( as ⟨identifier ⟩ ⟨sort ⟩ )",
+   "to": "⟨qual\\_identifier ⟩ ::= ⟨identifier ⟩ \\| ( as ⟨identifier ⟩ ⟨sort ⟩ )",
+   "role": "definition",
+   "topic": "term-grammar",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines the two spellings of a qualified identifier; the formal definition only checks version conditions in its identifier and optional sort. It does not compare the annotation with the function’s actual result sort.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-02",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines the two spellings of a qualified identifier; the formal definition only checks version conditions in its identifier and optional sort. It does not compare the annotation with the function’s actual result sort."
+      },
+      {
+       "phrase": "2-7-p106-04",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines the two spellings of a qualified identifier; the formal definition only checks version conditions in its identifier and optional sort. It does not compare the annotation with the function’s actual result sort."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition distinguishes an ordinary identifier from an identifier annotated by a sort, exactly the two alternatives shown.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition distinguishes an ordinary identifier from an identifier annotated by a sort, exactly the two alternatives shown."
+      },
+      {
+       "phrase": "2-7-p106-04",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition distinguishes an ordinary identifier from an identifier annotated by a sort, exactly the two alternatives shown."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes an identifier alone or writes as, the identifier, and its sort inside parentheses, matching the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes an identifier alone or writes as, the identifier, and its sort inside parentheses, matching the production."
+      },
+      {
+       "phrase": "2-7-p106-04",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes an identifier alone or writes as, the identifier, and its sort inside parentheses, matching the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-04"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p030-02",
+     "quote": "⟨qual\\_identifier ⟩ ::= ⟨identifier ⟩ \\| ( as ⟨identifier ⟩ ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "term-grammar"
+    },
+    {
+     "id": "2-7-p106-04",
+     "quote": "⟨qual\\_identifier ⟩ ::= ⟨identifier ⟩ \\| ( as ⟨identifier ⟩ ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "term-grammar"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-03",
+   "from": "⟨var\\_binding ⟩ ::= ( ⟨symbol ⟩ ⟨term ⟩ )",
+   "to": "⟨var\\_binding ⟩ ::= ( ⟨symbol ⟩ ⟨term ⟩ )",
+   "role": "definition",
+   "topic": "variables-scope",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.ValidBindings",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines one parenthesized symbol–term pair; the formal definition checks the component terms in an entire list of such pairs, including an empty list. It is a condition on repeated bindings, not the single-pair production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-03",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines one parenthesized symbol–term pair; the formal definition checks the component terms in an entire list of such pairs, including an empty list. It is a condition on repeated bindings, not the single-pair production."
+      },
+      {
+       "phrase": "2-7-p106-05",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines one parenthesized symbol–term pair; the formal definition checks the component terms in an entire list of such pairs, including an empty list. It is a condition on repeated bindings, not the single-pair production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.bindingTokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper gives one symbol–term pair; the formal definition concatenates the parenthesized pairs for a whole list. A one-element list gives the displayed form, but the declaration’s scope is the repetition used by let.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-03",
+       "fidelity": "different",
+       "fidelity_note": "The paper gives one symbol–term pair; the formal definition concatenates the parenthesized pairs for a whole list. A one-element list gives the displayed form, but the declaration’s scope is the repetition used by let."
+      },
+      {
+       "phrase": "2-7-p106-05",
+       "fidelity": "different",
+       "fidelity_note": "The paper gives one symbol–term pair; the formal definition concatenates the parenthesized pairs for a whole list. A one-element list gives the displayed form, but the declaration’s scope is the repetition used by let."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-05"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p030-03",
+     "quote": "⟨var\\_binding ⟩ ::= ( ⟨symbol ⟩ ⟨term ⟩ )",
+     "role": "definition",
+     "topic": "variables-scope"
+    },
+    {
+     "id": "2-7-p106-05",
+     "quote": "⟨var\\_binding ⟩ ::= ( ⟨symbol ⟩ ⟨term ⟩ )",
+     "role": "definition",
+     "topic": "variables-scope"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-04",
+   "from": "⟨sorted\\_var ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+   "to": "⟨sorted\\_var ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+   "role": "definition",
+   "topic": "variables-scope",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SortedVar.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines a parenthesized variable name and sort; the formal definition checks only the sort expression’s version conditions. It does not define the pair’s spelling or resolve the variable name.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-04",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines a parenthesized variable name and sort; the formal definition checks only the sort expression’s version conditions. It does not define the pair’s spelling or resolve the variable name."
+      },
+      {
+       "phrase": "2-7-p106-06",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines a parenthesized variable name and sort; the formal definition checks only the sort expression’s version conditions. It does not define the pair’s spelling or resolve the variable name."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SortedVar",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition pairs a variable’s symbol with its sort expression, matching the two components of the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-04",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition pairs a variable’s symbol with its sort expression, matching the two components of the production."
+      },
+      {
+       "phrase": "2-7-p106-06",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition pairs a variable’s symbol with its sort expression, matching the two components of the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition places the variable’s symbol and sort expression inside parentheses, exactly as specified.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-04",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition places the variable’s symbol and sort expression inside parentheses, exactly as specified."
+      },
+      {
+       "phrase": "2-7-p106-06",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition places the variable’s symbol and sort expression inside parentheses, exactly as specified."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-06"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p030-04",
+     "quote": "⟨sorted\\_var ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "variables-scope"
+    },
+    {
+     "id": "2-7-p106-06",
+     "quote": "⟨sorted\\_var ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "variables-scope"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-05",
+   "from": "⟨symbol\\_⟩ ::= ⟨symbol ⟩ \\| \\_",
+   "to": "⟨symbol\\_⟩ ::= ⟨symbol ⟩ \\| \\_",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines a symbol-or-wildcard category; the formal definition only requires version 2.7 when the wildcard is used. The alternatives themselves are defined separately.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-05",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines a symbol-or-wildcard category; the formal definition only requires version 2.7 when the wildcard is used. The alternatives themselves are defined separately."
+      },
+      {
+       "phrase": "2-7-p106-07",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines a symbol-or-wildcard category; the formal definition only requires version 2.7 when the wildcard is used. The alternatives themselves are defined separately."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes an ordinary symbol as its symbol token and the wildcard as the reserved underscore token, matching the two alternatives.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-05",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes an ordinary symbol as its symbol token and the wildcard as the reserved underscore token, matching the two alternatives."
+      },
+      {
+       "phrase": "2-7-p106-07",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes an ordinary symbol as its symbol token and the wildcard as the reserved underscore token, matching the two alternatives."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-07"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p030-05",
+     "quote": "⟨symbol\\_⟩ ::= ⟨symbol ⟩ \\| \\_",
+     "role": "definition",
+     "topic": "pattern-matching"
+    },
+    {
+     "id": "2-7-p106-07",
+     "quote": "⟨symbol\\_⟩ ::= ⟨symbol ⟩ \\| \\_",
+     "role": "definition",
+     "topic": "pattern-matching"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-06",
+   "from": "⟨pattern ⟩ ::= ⟨symbol\\_⟩ \\| ( ⟨symbol ⟩ ⟨symbol\\_⟩+ )",
+   "to": "⟨pattern ⟩ ::= ⟨symbol\\_⟩ \\| ( ⟨symbol ⟩ ⟨symbol\\_⟩+ )",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper gives the complete pattern production; the formal definition requires a nonempty argument list for a constructor pattern and checks wildcard availability. Parentheses and the distinction between a single symbol and a constructor pattern are defined separately."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines whole patterns; the formal definition only restricts the symbol-or-wildcard component, requiring version 2.7 for a wildcard. It says nothing about constructor patterns or their argument lists."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper requires at least one argument in a parenthesized constructor pattern; the formal definition also allows an empty argument list. A separate grammatical condition excludes that extra case."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines both single-symbol patterns and constructor patterns; the formal definition supplies only a symbol or wildcard, the component used inside those patterns."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes the two pattern forms, but can also write a parenthesized constructor without arguments. The paper’s plus sign excludes that case, which is ruled out only by a separate grammatical condition."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper specifies complete patterns; the formal definition emits just a symbol or an underscore. This explains one pattern component rather than the whole production."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-07",
+   "from": "⟨match\\_case ⟩ ::= ( ⟨pattern ⟩ ⟨term ⟩ )",
+   "to": "⟨match\\_case ⟩ ::= ( ⟨pattern ⟩ ⟨term ⟩ )",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines one pattern–term pair; the formal definition checks the patterns and terms of a whole list of cases, allowing the list to be empty. It does not itself specify one case’s parentheses.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-07",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines one pattern–term pair; the formal definition checks the patterns and terms of a whole list of cases, allowing the list to be empty. It does not itself specify one case’s parentheses."
+      },
+      {
+       "phrase": "2-7-p106-09",
+       "fidelity": "different",
+       "fidelity_note": "The paper defines one pattern–term pair; the formal definition checks the patterns and terms of a whole list of cases, allowing the list to be empty. It does not itself specify one case’s parentheses."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.caseTokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper gives a single parenthesized pattern–term pair; the formal definition writes a sequence of such pairs. A one-case list gives the displayed form, while the full declaration handles the repetition inside match.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-07",
+       "fidelity": "different",
+       "fidelity_note": "The paper gives a single parenthesized pattern–term pair; the formal definition writes a sequence of such pairs. A one-case list gives the displayed form, while the full declaration handles the repetition inside match."
+      },
+      {
+       "phrase": "2-7-p106-09",
+       "fidelity": "different",
+       "fidelity_note": "The paper gives a single parenthesized pattern–term pair; the formal definition writes a sequence of such pairs. A one-case list gives the displayed form, while the full declaration handles the repetition inside match."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-09"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p030-07",
+     "quote": "⟨match\\_case ⟩ ::= ( ⟨pattern ⟩ ⟨term ⟩ )",
+     "role": "definition",
+     "topic": "pattern-matching"
+    },
+    {
+     "id": "2-7-p106-09",
+     "quote": "⟨match\\_case ⟩ ::= ( ⟨pattern ⟩ ⟨term ⟩ )",
+     "role": "definition",
+     "topic": "pattern-matching"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p030-08",
+   "from": "⟨spec\\_constant ⟩ ⟨qual\\_identifier ⟩ ( ⟨qual\\_identifier ⟩ ⟨term ⟩+ ) ( let ( ⟨var\\_binding ⟩+ ) ⟨term ⟩ ) ( lambda ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( forall ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( exists ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( match ⟨term ⟩ ( ⟨match\\_case ⟩+ ) ) ( ! ⟨term ⟩ ⟨attribute ⟩+ )",
+   "to": "⟨spec\\_constant ⟩ ⟨qual\\_identifier ⟩ ( ⟨qual\\_identifier ⟩ ⟨term ⟩+ ) ( let ( ⟨var\\_binding ⟩+ ) ⟨term ⟩ ) ( lambda ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( forall ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( exists ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( match ⟨term ⟩ ( ⟨match\\_case ⟩+ ) ) ( ! ⟨term ⟩ ⟨attribute ⟩+ )",
+   "role": "definition",
+   "topic": "term-grammar",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Syntax.IsTerm",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a term exactly when it writes one of these nine forms with every list marked + nonempty. Earlier versions also exclude lambda and, before 2.6, match. Well-sortedness and the other conditions of the following subsections are not part of the production and are not checked.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-08",
+       "fidelity": "same",
+       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a term exactly when it writes one of these nine forms with every list marked + nonempty. Earlier versions also exclude lambda and, before 2.6, match. Well-sortedness and the other conditions of the following subsections are not part of the production and are not checked."
+      },
+      {
+       "phrase": "2-7-p106-10",
+       "fidelity": "same",
+       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a term exactly when it writes one of these nine forms with every list marked + nonempty. Earlier versions also exclude lambda and, before 2.6, match. Well-sortedness and the other conditions of the following subsections are not part of the production and are not checked."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal condition supplies what the written forms leave out: each list marked + is nonempty, match needs version 2.6 and lambda version 2.7, and every part meets its own condition. It does not describe the forms themselves.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-08",
+       "fidelity": "different",
+       "fidelity_note": "The formal condition supplies what the written forms leave out: each list marked + is nonempty, match needs version 2.6 and lambda version 2.7, and every part meets its own condition. It does not describe the forms themselves."
+      },
+      {
+       "phrase": "2-7-p106-10",
+       "fidelity": "different",
+       "fidelity_note": "The formal condition supplies what the written forms leave out: each list marked + is nonempty, match needs version 2.6 and lambda version 2.7, and every part meets its own condition. It does not describe the forms themselves."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition has these alternatives, with forall and exists as one case that records the quantifier. Its lists may be empty, so it also represents forms the production excludes, such as an application with no arguments; a separate condition rules those out.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-08",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition has these alternatives, with forall and exists as one case that records the quantifier. Its lists may be empty, so it also represents forms the production excludes, such as an application with no arguments; a separate condition rules those out."
+      },
+      {
+       "phrase": "2-7-p106-10",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition has these alternatives, with forall and exists as one case that records the quantifier. Its lists may be empty, so it also represents forms the production excludes, such as an application with no arguments; a separate condition rules those out."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes each form as the production reads, but it also writes empty lists, such as a let with no bindings. The plus signs of the production are enforced only by the separate condition.",
+     "assessments": [
+      {
+       "phrase": "2-7-p030-08",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes each form as the production reads, but it also writes empty lists, such as a let with no bindings. The plus signs of the production are enforced only by the separate condition."
+      },
+      {
+       "phrase": "2-7-p106-10",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes each form as the production reads, but it also writes empty lists, such as a let with no bindings. The plus signs of the production are enforced only by the separate condition."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Quantifier.word",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition gives only the word forall or exists that begins two of these alternatives. It is a component of the term production, not the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p106-10",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition gives only the word forall or exists that begins two of these alternatives. It is a component of the term production, not the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p106-10"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p030-08",
+     "quote": "⟨spec\\_constant ⟩ ⟨qual\\_identifier ⟩ ( ⟨qual\\_identifier ⟩ ⟨term ⟩+ ) ( let ( ⟨var\\_binding ⟩+ ) ⟨term ⟩ ) ( lambda ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( forall ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( exists ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( match ⟨term ⟩ ( ⟨match\\_case ⟩+ ) ) ( ! ⟨term ⟩ ⟨attribute ⟩+ )",
+     "role": "definition",
+     "topic": "term-grammar"
+    },
+    {
+     "id": "2-7-p106-10",
+     "quote": "⟨spec\\_constant ⟩ ⟨qual\\_identifier ⟩ ( ⟨qual\\_identifier ⟩ ⟨term ⟩+ ) ( let ( ⟨var\\_binding ⟩+ ) ⟨term ⟩ ) ( lambda ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( forall ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( exists ( ⟨sorted\\_var ⟩+ ) ⟨term ⟩ ) ( match ⟨term ⟩ ( ⟨match\\_case ⟩+ ) ) ( ! ⟨term ⟩ ⟨attribute ⟩+ )",
+     "role": "definition",
+     "topic": "term-grammar"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p031-02",
+   "from": "Variables are introduced by means of one of the five binders. Each binder allows the intro- duction of one or more variables with local scope.",
+   "to": "Variables are introduced by means of one of the five binders. Each binder allows the intro- duction of one or more variables with local scope.",
+   "role": "definition",
+   "topic": "variables-scope",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper states that introduced variables have local scope; the formal definition only imposes grammar and version conditions. In particular, it does not define which occurrences are bound by which variable introduction."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes local scope for introduced variables; the formal definition only writes the surrounding term syntax. It does not state any rule for free occurrences, scope, or shadowing."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p031-03",
+   "from": "Lambda. This binder corresponds to the abstraction binder of higher-order logic. It takes a non-empty list of variables, which abbreviates a sequential nesting of lambda abstractions. Specifically, a term of the form",
+   "to": "Lambda. This binder corresponds to the abstraction binder of higher-order logic. It takes a non-empty list of variables, which abbreviates a sequential nesting of lambda abstractions. Specifically, a term of the form",
+   "role": "definition",
+   "topic": "variables-scope",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper identifies a nonempty variable list with nested lambda abstractions; the formal definition requires the list to be nonempty and version 2.7 to be selected. It does not state the semantic equivalence with nested abstractions."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper says that a list of lambda variables abbreviates nested abstractions; the formal definition merely writes that list and body. It does not expand the abstraction or establish the equivalence."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p031-07",
+   "from": "Exists and forall quantifiers. These binders correspond to the usual universal and existential quantifiers of first-order logic, except that each variable they quantify is also associated with a sort. Both binders have a non-empty list of variables, which abbreviates a sequential nesting of quantifiers. Specifically, a formula of the form",
+   "to": "Exists and forall quantifiers. These binders correspond to the usual universal and existential quantifiers of first-order logic, except that each variable they quantify is also associated with a sort. Both binders have a non-empty list of variables, which abbreviates a sequential nesting of quantifiers. Specifically, a formula of the form",
+   "role": "definition",
+   "topic": "variables-scope",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper gives quantified variables sorts and interprets their list as nested quantifiers; the formal definition requires a nonempty list with grammatical sort expressions. It establishes neither sorting nor the nested-quantifier semantics."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SortedVar.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes one variable together with its sort in parentheses. The paper’s passage additionally describes a nonempty sequence of variables and its interpretation as nested quantifiers, which this declaration does not state."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p032-10",
+   "from": "Match. Similarly to pattern matching statements in functional programming languages or in certain interactive theorem provers, the match binder is used to perform pattern matching on values of an algebraic data type (see Section 4.2.3). It has the form",
+   "to": "Match. Similarly to pattern matching statements in functional programming languages or in certain interactive theorem provers, the match binder is used to perform pattern matching on values of an algebraic data type (see Section 4.2.3). It has the form",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes pattern matching on datatype values; the formal definition permits match from version 2.6 and checks its syntactic components. It does not require the scrutinized term to have a datatype sort or define how a case is selected."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes pattern matching on datatype values; the formal definition writes a match expression and its cases. It does not identify a datatype or specify evaluation of the selected case."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p033-01",
+   "from": "where t is a term of some datatype sort δ and, for each i = 1, . . . , m + 1, pi is a pattern for δ, and ti a term of some sort τ. A pattern p in turn is either a variable x of sort δ, the wildcard \\_, a nullary constructor c of δ, or a term of the form (c x1 · · · xk ), where c is a constructor of δ of rank τ1 · · · τk δ with k \\> 0, and x1 , . . . , xk are distinct variables of respective sort τ1 , . . . , τk .( 8 ) An exception is the wildcard \\_ which can only occur in place of one or more of the variables x1 , . . . , xk . This variable acts as a wildcard, with each occurrence matching any term of any sort, hence effectively behaving as a fresh variable. The list p1 , . . . pm+1 may contain more than one pattern with the same constructor or more than one pattern consisting of a variable.( 9 ) However, it must contain a pattern consisting of a variable, unless every constructor of δ occurs in one of the patterns.( 10 ) The recommended choice for a single variable pattern is \\_, when the variable is not used in the corresponding return term.( 11 ) The term ti in (3.6) can contain free occurrences of the variables occurring in pattern pi , if any. The scope of those variables is the term ti .",
+   "to": "where t is a term of some datatype sort δ and, for each i = 1, . . . , m + 1, pi is a pattern for δ, and ti a term of some sort τ. A pattern p in turn is either a variable x of sort δ, the wildcard \\_, a nullary constructor c of δ, or a term of the form (c x1 · · · xk ), where c is a constructor of δ of rank τ1 · · · τk δ with k \\> 0, and x1 , . . . , xk are distinct variables of respective sort τ1 , . . . , τk .( 8 ) An exception is the wildcard \\_ which can only occur in place of one or more of the variables x1 , . . . , xk . This variable acts as a wildcard, with each occurrence matching any term of any sort, hence effectively behaving as a fresh variable. The list p1 , . . . pm+1 may contain more than one pattern with the same constructor or more than one pattern consisting of a variable.( 9 ) However, it must contain a pattern consisting of a variable, unless every constructor of δ occurs in one of the patterns.( 10 ) The recommended choice for a single variable pattern is \\_, when the variable is not used in the corresponding return term.( 11 ) The term ti in (3.6) can contain free occurrences of the variables occurring in pattern pi , if any. The scope of those variables is the term ti .",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper requires constructor ranks, correctly sorted distinct variables, and exhaustive cases. The formal definition only requires constructor patterns to have arguments and wildcards to be available in the selected version; it does not express those semantic restrictions."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.ValidCases",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper requires matching sorts, distinct pattern variables, exhaustiveness, and local scope. The formal definition checks each pattern and result term separately for grammar, even for an empty list, without imposing those requirements across the cases."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper specifies the meaning and legality of patterns, including distinct variables and exhaustiveness. The formal definition only writes a pattern’s tokens; it checks neither constructor declarations nor any relationship between cases."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p033-05",
+   "from": "Remark 5 (No nested patterns). Nested patterns, where the arguments of a constructor can be themselves non-variable patterns, are not allowed.( 12 ) This implies in particular that in a pattern of the form (c s1 · · · sk ), where s1 , . . . , sk are symbols, those symbols are always to be parsed as variables.",
+   "to": "Remark 5 (No nested patterns). Nested patterns, where the arguments of a constructor can be themselves non-variable patterns, are not allowed.( 12 ) This implies in particular that in a pattern of the form (c s1 · · · sk ), where s1 , . . . , sk are symbols, those symbols are always to be parsed as variables.",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition permits only symbols or wildcards as constructor-pattern arguments, with no place for a nested constructor pattern. This matches the paper’s flat-pattern restriction."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes constructor-pattern arguments only as individual symbols or wildcards. It has no operation that inserts a nested pattern as an argument, matching the stated restriction."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p033-06",
+   "from": "The reserved word \\_ is used both to construct indexed terms and as a wildcard in match patterns.",
+   "to": "The reserved word \\_ is used both to construct indexed terms and as a wildcard in match patterns.",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Identifier.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper names two uses of the reserved word _. The formal definition writes only the first: an indexed identifier as an opening parenthesis, _, the symbol and its indices, with an identifier that has no indices written as the bare symbol."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes patterns, where the wildcard may stand alone or as a constructor argument. This is the second use named here; indexed identifiers are written by a separate definition."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes a pattern position as its symbol or as the token _. It gives the wildcard use only, one token at a time."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p036-07",
+   "from": "Remark 8. A term of the form (as f τ) is allowed even if the symbol f is non-ambiguous, as long as τ matches the return sort of f .",
+   "to": "Remark 8. A term of the form (as f τ) is allowed even if the symbol f is non-ambiguous, as long as τ matches the return sort of f .",
+   "role": "definition",
+   "topic": "term-grammar",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper requires τ to match the return sort of f, even when f is unambiguous; the formal definition only checks the grammar of f and τ. It has no signature or function rank with which to test that requirement."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes (as f τ) for any supplied identifier and sort expression. It does not require τ to be f’s return sort, the substantive condition in the paper’s remark."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p036-08",
+   "from": "Every term t can be optionally annotated with one or more attributes α1 , . . . , αn using the wrapper expression (! t α1 · · · αn ). Term attributes have no logical meaning—semantically, (! t α1 · · · αn ) is equivalent to t—but they are a convenient mechanism for adding meta- logical information for SMT solvers.",
+   "to": "Every term t can be optionally annotated with one or more attributes α1 , . . . , αn using the wrapper expression (! t α1 · · · αn ). Term attributes have no logical meaning—semantically, (! t α1 · · · αn ) is equivalent to t—but they are a convenient mechanism for adding meta- logical information for SMT solvers.",
+   "role": "definition",
+   "topic": "term-annotations",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper states both nonempty term annotations and their lack of logical effect. The formal definition requires one or more grammatical attributes, but does not state that the annotated term has the same meaning as the original."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes the annotation wrapper around a term. It does not require the attribute list to be nonempty or prove the paper’s semantic equivalence between the annotated and unannotated term."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p050-04",
+   "from": "Scripts are sequences of commands. In line with the LISP-like syntax, all commands look like LISP-function applications, with a command name applied to zero or more arguments. To facilitate processing, each command takes a constant number of arguments, although some of these arguments can be (parenthesis-delimited) lists of variable length. The full list of commands is provided in Figure 3.7. The intended use of scripts is to communicate with an SMT-solver in a read-eval-print loop: until a termination condition occurs, the solver reads the next command, acts on it, outputs a response, and repeats. Possible responses vary from a single symbol to a list of attributes, to complex expressions like proofs. The command set-option takes as an argument expressions of the syntactic category ⟨option ⟩ , which have the same form as attributes with values. Options with the predefined keywords listed in Figure 3.8 have a prescribed usage and semantics. Additional, solver- specific options are also allowed. The command get-info takes as argument expressions of the syntactic category ⟨info\\_flag ⟩ which are flags with the same form as keywords. The standard flags listed in Figure 3.9 have",
+   "to": "Scripts are sequences of commands. In line with the LISP-like syntax, all commands look like LISP-function applications, with a command name applied to zero or more arguments. To facilitate processing, each command takes a constant number of arguments, although some of these arguments can be (parenthesis-delimited) lists of variable length. The full list of commands is provided in Figure 3.7. The intended use of scripts is to communicate with an SMT-solver in a read-eval-print loop: until a termination condition occurs, the solver reads the next command, acts on it, outputs a response, and repeats. Possible responses vary from a single symbol to a list of attributes, to complex expressions like proofs. The command set-option takes as an argument expressions of the syntactic category ⟨option ⟩ , which have the same form as attributes with values. Options with the predefined keywords listed in Figure 3.8 have a prescribed usage and semantics. Additional, solver- specific options are also allowed. The command get-info takes as argument expressions of the syntactic category ⟨info\\_flag ⟩ which are flags with the same form as keywords. The standard flags listed in Figure 3.9 have",
+   "role": "definition",
+   "topic": "scripts-interaction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Script",
+     "file": "BSmtLibSpec/Grammar/Script.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes command sequences and their read-eval-print interaction; the formal definition restricts a sequence by version changes and termination at exit. It does not define solver state, execution, responses, or the semantics of options."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes commands as parenthesized names and arguments. The paper also describes execution, replies, and prescribed option meanings; none of those behaviours is supplied by a function that writes command tokens."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-01",
+   "from": "⟨sort\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨numeral ⟩ )",
+   "to": "⟨sort\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨numeral ⟩ )",
+   "role": "definition",
+   "topic": "declarations-definitions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SortDec",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition represents a sort declaration by its symbol and the numeral giving its arity. The characters of that numeral are checked by the lexical rules, separately from this representation.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition represents a sort declaration by its symbol and the numeral giving its arity. The characters of that numeral are checked by the lexical rules, separately from this representation."
+      },
+      {
+       "phrase": "2-7-p109-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition represents a sort declaration by its symbol and the numeral giving its arity. The characters of that numeral are checked by the lexical rules, separately from this representation."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SortDec.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes the sort symbol and arity numeral inside parentheses, exactly as shown in the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the sort symbol and arity numeral inside parentheses, exactly as shown in the production."
+      },
+      {
+       "phrase": "2-7-p109-01",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the sort symbol and arity numeral inside parentheses, exactly as shown in the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-01"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-01",
+     "quote": "⟨sort\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨numeral ⟩ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    },
+    {
+     "id": "2-7-p109-01",
+     "quote": "⟨sort\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨numeral ⟩ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-02",
+   "from": "⟨selector\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+   "to": "⟨selector\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+   "role": "definition",
+   "topic": "declarations-definitions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SelectorDec.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production defines a selector name and sort inside parentheses; the formal definition only checks the sort expression’s version conditions. It is one component of the grammar rather than the whole production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-02",
+       "fidelity": "different",
+       "fidelity_note": "The production defines a selector name and sort inside parentheses; the formal definition only checks the sort expression’s version conditions. It is one component of the grammar rather than the whole production."
+      },
+      {
+       "phrase": "2-7-p109-02",
+       "fidelity": "different",
+       "fidelity_note": "The production defines a selector name and sort inside parentheses; the formal definition only checks the sort expression’s version conditions. It is one component of the grammar rather than the whole production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SelectorDec",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition represents a selector declaration by its symbol and sort expression, the two components of the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition represents a selector declaration by its symbol and sort expression, the two components of the production."
+      },
+      {
+       "phrase": "2-7-p109-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition represents a selector declaration by its symbol and sort expression, the two components of the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SelectorDec.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes a selector’s symbol and sort expression inside parentheses, matching the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes a selector’s symbol and sort expression inside parentheses, matching the production."
+      },
+      {
+       "phrase": "2-7-p109-02",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes a selector’s symbol and sort expression inside parentheses, matching the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-02"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-02",
+     "quote": "⟨selector\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    },
+    {
+     "id": "2-7-p109-02",
+     "quote": "⟨selector\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-03",
+   "from": "⟨constructor\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨selector\\_dec ⟩∗ )",
+   "to": "⟨constructor\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨selector\\_dec ⟩∗ )",
+   "role": "definition",
+   "topic": "declarations-definitions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production gives a symbol and zero or more selector declarations; the formal definition only checks the sort expressions within those selectors. It does not itself state the constructor declaration’s spelling.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-03",
+       "fidelity": "different",
+       "fidelity_note": "The production gives a symbol and zero or more selector declarations; the formal definition only checks the sort expressions within those selectors. It does not itself state the constructor declaration’s spelling."
+      },
+      {
+       "phrase": "2-7-p109-03",
+       "fidelity": "different",
+       "fidelity_note": "The production gives a symbol and zero or more selector declarations; the formal definition only checks the sort expressions within those selectors. It does not itself state the constructor declaration’s spelling."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.ConstructorDec",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition consists of a constructor symbol and a possibly empty list of selector declarations, exactly the components allowed by the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition consists of a constructor symbol and a possibly empty list of selector declarations, exactly the components allowed by the production."
+      },
+      {
+       "phrase": "2-7-p109-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition consists of a constructor symbol and a possibly empty list of selector declarations, exactly the components allowed by the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition places the constructor symbol and its zero or more selector declarations inside parentheses, matching the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition places the constructor symbol and its zero or more selector declarations inside parentheses, matching the production."
+      },
+      {
+       "phrase": "2-7-p109-03",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition places the constructor symbol and its zero or more selector declarations inside parentheses, matching the production."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-03"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-03",
+     "quote": "⟨constructor\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨selector\\_dec ⟩∗ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    },
+    {
+     "id": "2-7-p109-03",
+     "quote": "⟨constructor\\_dec ⟩ ::= ( ⟨symbol ⟩ ⟨selector\\_dec ⟩∗ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-04",
+   "from": "⟨datatype\\_dec ⟩ ::= ( ⟨constructor\\_dec ⟩+ ) \\| ( par ( ⟨symbol ⟩+ ) ( ⟨constructor\\_dec ⟩+ ) )",
+   "to": "⟨datatype\\_dec ⟩ ::= ( ⟨constructor\\_dec ⟩+ ) \\| ( par ( ⟨symbol ⟩+ ) ( ⟨constructor\\_dec ⟩+ ) )",
+   "role": "definition",
+   "topic": "declarations-definitions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.DatatypeDec.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper gives both forms of datatype declaration; the formal definition requires a nonempty constructor list and grammatical selector sorts. The distinction between the plain form and the par form is supplied by the separate representation and spelling.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-04",
+       "fidelity": "different",
+       "fidelity_note": "The paper gives both forms of datatype declaration; the formal definition requires a nonempty constructor list and grammatical selector sorts. The distinction between the plain form and the par form is supplied by the separate representation and spelling."
+      },
+      {
+       "phrase": "2-7-p109-04",
+       "fidelity": "different",
+       "fidelity_note": "The paper gives both forms of datatype declaration; the formal definition requires a nonempty constructor list and grammatical selector sorts. The distinction between the plain form and the par form is supplied by the separate representation and spelling."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.DatatypeDec",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production requires at least one constructor; the formal definition permits an empty constructor list. That additional case is excluded only by a separate grammar condition.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-04",
+       "fidelity": "different",
+       "fidelity_note": "The production requires at least one constructor; the formal definition permits an empty constructor list. That additional case is excluded only by a separate grammar condition."
+      },
+      {
+       "phrase": "2-7-p109-04",
+       "fidelity": "different",
+       "fidelity_note": "The production requires at least one constructor; the formal definition permits an empty constructor list. That additional case is excluded only by a separate grammar condition."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.DatatypeDec.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes either a constructor list or its par form, but can write an empty constructor list in either case. The paper’s plus sign rules this out; the nonempty requirement is imposed separately.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-04",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes either a constructor list or its par form, but can write an empty constructor list in either case. The paper’s plus sign rules this out; the nonempty requirement is imposed separately."
+      },
+      {
+       "phrase": "2-7-p109-04",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes either a constructor list or its par form, but can write an empty constructor list in either case. The paper’s plus sign rules this out; the nonempty requirement is imposed separately."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-04"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-04",
+     "quote": "⟨datatype\\_dec ⟩ ::= ( ⟨constructor\\_dec ⟩+ ) \\| ( par ( ⟨symbol ⟩+ ) ( ⟨constructor\\_dec ⟩+ ) )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    },
+    {
+     "id": "2-7-p109-04",
+     "quote": "⟨datatype\\_dec ⟩ ::= ( ⟨constructor\\_dec ⟩+ ) \\| ( par ( ⟨symbol ⟩+ ) ( ⟨constructor\\_dec ⟩+ ) )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-05",
+   "from": "⟨function\\_dec ⟩ ::= ( ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ )",
+   "to": "⟨function\\_dec ⟩ ::= ( ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ )",
+   "role": "definition",
+   "topic": "declarations-definitions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.FunctionDec.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production specifies a function name, parameter list, and result sort; the formal definition only checks the grammar of those sorts. It does not state the parentheses and sequence shown in the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-05",
+       "fidelity": "different",
+       "fidelity_note": "The production specifies a function name, parameter list, and result sort; the formal definition only checks the grammar of those sorts. It does not state the parentheses and sequence shown in the production."
+      },
+      {
+       "phrase": "2-7-p109-05",
+       "fidelity": "different",
+       "fidelity_note": "The production specifies a function name, parameter list, and result sort; the formal definition only checks the grammar of those sorts. It does not state the parentheses and sequence shown in the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.FunctionDec",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition represents a function name, zero or more sorted parameters, and a result sort, matching the components of the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-05",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition represents a function name, zero or more sorted parameters, and a result sort, matching the components of the production."
+      },
+      {
+       "phrase": "2-7-p109-05",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition represents a function name, zero or more sorted parameters, and a result sort, matching the components of the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.FunctionDec.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition surrounds the function declaration with parentheses and separately parenthesizes its possibly empty parameter list, as the production requires.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-05",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition surrounds the function declaration with parentheses and separately parenthesizes its possibly empty parameter list, as the production requires."
+      },
+      {
+       "phrase": "2-7-p109-05",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition surrounds the function declaration with parentheses and separately parenthesizes its possibly empty parameter list, as the production requires."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-05"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-05",
+     "quote": "⟨function\\_dec ⟩ ::= ( ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    },
+    {
+     "id": "2-7-p109-05",
+     "quote": "⟨function\\_dec ⟩ ::= ( ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ )",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-06",
+   "from": "⟨function\\_def ⟩ ::= ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ ⟨term⟩",
+   "to": "⟨function\\_def ⟩ ::= ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ ⟨term⟩",
+   "role": "definition",
+   "topic": "declarations-definitions",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The production defines the sequence making up a function definition; the formal definition checks only the grammar of parameter sorts, result sort, and body. It neither writes that sequence nor requires the body to have the stated result sort.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-06",
+       "fidelity": "different",
+       "fidelity_note": "The production defines the sequence making up a function definition; the formal definition checks only the grammar of parameter sorts, result sort, and body. It neither writes that sequence nor requires the body to have the stated result sort."
+      },
+      {
+       "phrase": "2-7-p109-06",
+       "fidelity": "different",
+       "fidelity_note": "The production defines the sequence making up a function definition; the formal definition checks only the grammar of parameter sorts, result sort, and body. It neither writes that sequence nor requires the body to have the stated result sort."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.FunctionDef",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition consists of a function name, zero or more sorted parameters, a result sort, and a body term. These are exactly the four components in the production.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-06",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition consists of a function name, zero or more sorted parameters, a result sort, and a body term. These are exactly the four components in the production."
+      },
+      {
+       "phrase": "2-7-p109-06",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition consists of a function name, zero or more sorted parameters, a result sort, and a body term. These are exactly the four components in the production."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.FunctionDef.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition writes the name, parenthesized parameter list, result sort, and body in that order. It adds no outer parentheses, matching this production’s role inside a command.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-06",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the name, parenthesized parameter list, result sort, and body in that order. It adds no outer parentheses, matching this production’s role inside a command."
+      },
+      {
+       "phrase": "2-7-p109-06",
+       "fidelity": "same",
+       "fidelity_note": "The formal definition writes the name, parenthesized parameter list, result sort, and body in that order. It adds no outer parentheses, matching this production’s role inside a command."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-06"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-06",
+     "quote": "⟨function\\_def ⟩ ::= ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ ⟨term⟩",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    },
+    {
+     "id": "2-7-p109-06",
+     "quote": "⟨function\\_def ⟩ ::= ⟨symbol ⟩ ( ⟨sorted\\_var ⟩∗ ) ⟨sort ⟩ ⟨term⟩",
+     "role": "definition",
+     "topic": "declarations-definitions"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-07",
+   "from": "( assert ⟨term ⟩ ) ( check-sat ) ( check-sat-assuming ( ⟨term ⟩∗ ) ) ( declare-const ⟨symbol ⟩ ⟨sort ⟩ ) ( declare-datatype ⟨symbol ⟩ ⟨datatype\\_dec ⟩ ) ( declare-datatypes ( ⟨sort\\_dec ⟩ n+1 ) ( ⟨datatype\\_dec ⟩ n+1 ) ) ( declare-fun ⟨symbol ⟩ ( ⟨sort ⟩∗ ) ⟨sort ⟩ ) ( declare-sort ⟨symbol ⟩ ⟨numeral ⟩ ) ( declare-sort-parameter ⟨symbol ⟩ ) ( define-const ⟨symbol ⟩ ⟨sort ⟩ ⟨term ⟩ ) ( define-fun ⟨function\\_def ⟩ ) ( define-fun-rec ⟨function\\_def ⟩ ) ( define-funs-rec ( ⟨function\\_dec ⟩ n+1 ) ( ⟨term ⟩ n+1 ) ) ( define-sort ⟨symbol ⟩ ( ⟨symbol ⟩∗ ) ⟨sort ⟩ ) ( echo ⟨string ⟩ ) ( exit ) ( get-assertions ) ( get-assignment ) ( get-info ⟨info\\_flag ⟩ ) ( get-model ) ( get-option ⟨keyword ⟩ ) ( get-proof ) ( get-unsat-assumptions ) ( get-unsat-core ) ( get-value ( ⟨term ⟩+ ) ) ( pop ⟨numeral ⟩ ) ( push ⟨numeral ⟩ ) ( reset ) ( reset-assertions ) ( set-info ⟨attribute ⟩ ) ( set-logic ⟨symbol ⟩ ) ( set-option ⟨option ⟩ )",
+   "to": "( assert ⟨term ⟩ ) ( check-sat ) ( check-sat-assuming ( ⟨term ⟩∗ ) ) ( declare-const ⟨symbol ⟩ ⟨sort ⟩ ) ( declare-datatype ⟨symbol ⟩ ⟨datatype\\_dec ⟩ ) ( declare-datatypes ( ⟨sort\\_dec ⟩ n+1 ) ( ⟨datatype\\_dec ⟩ n+1 ) ) ( declare-fun ⟨symbol ⟩ ( ⟨sort ⟩∗ ) ⟨sort ⟩ ) ( declare-sort ⟨symbol ⟩ ⟨numeral ⟩ ) ( declare-sort-parameter ⟨symbol ⟩ ) ( define-const ⟨symbol ⟩ ⟨sort ⟩ ⟨term ⟩ ) ( define-fun ⟨function\\_def ⟩ ) ( define-fun-rec ⟨function\\_def ⟩ ) ( define-funs-rec ( ⟨function\\_dec ⟩ n+1 ) ( ⟨term ⟩ n+1 ) ) ( define-sort ⟨symbol ⟩ ( ⟨symbol ⟩∗ ) ⟨sort ⟩ ) ( echo ⟨string ⟩ ) ( exit ) ( get-assertions ) ( get-assignment ) ( get-info ⟨info\\_flag ⟩ ) ( get-model ) ( get-option ⟨keyword ⟩ ) ( get-proof ) ( get-unsat-assumptions ) ( get-unsat-core ) ( get-value ( ⟨term ⟩+ ) ) ( pop ⟨numeral ⟩ ) ( push ⟨numeral ⟩ ) ( reset ) ( reset-assertions ) ( set-info ⟨attribute ⟩ ) ( set-logic ⟨symbol ⟩ ) ( set-option ⟨option ⟩ )",
+   "role": "definition",
+   "topic": "command-syntax-options",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Syntax.IsCommand",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a command exactly when it writes one of these forms, with the paired lists of declare-datatypes and define-funs-rec of equal nonzero length and the terms of get-value nonempty. Option and information-flag arguments are checked as attributes and keywords, which their final alternatives allow.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-07",
+       "fidelity": "same",
+       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a command exactly when it writes one of these forms, with the paired lists of declare-datatypes and define-funs-rec of equal nonzero length and the terms of get-value nonempty. Option and information-flag arguments are checked as attributes and keywords, which their final alternatives allow."
+      },
+      {
+       "phrase": "2-7-p109-07",
+       "fidelity": "same",
+       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a command exactly when it writes one of these forms, with the paired lists of declare-datatypes and define-funs-rec of equal nonzero length and the terms of get-value nonempty. Option and information-flag arguments are checked as attributes and keywords, which their final alternatives allow."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal condition supplies what the written forms leave out: the versions that have each command, the nonempty lists, and equal lengths for the paired lists marked n+1. It also admits the older literal form of check-sat-assuming in versions 2.5 and 2.6. It does not describe the forms themselves.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-07",
+       "fidelity": "different",
+       "fidelity_note": "The formal condition supplies what the written forms leave out: the versions that have each command, the nonempty lists, and equal lengths for the paired lists marked n+1. It also admits the older literal form of check-sat-assuming in versions 2.5 and 2.6. It does not describe the forms themselves."
+      },
+      {
+       "phrase": "2-7-p109-07",
+       "fidelity": "different",
+       "fidelity_note": "The formal condition supplies what the written forms leave out: the versions that have each command, the nonempty lists, and equal lengths for the paired lists marked n+1. It also admits the older literal form of check-sat-assuming in versions 2.5 and 2.6. It does not describe the forms themselves."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition has a case for each of these commands and one more, the version 2.5 and 2.6 form of check-sat-assuming with propositional literals. Its lists may be empty or of unequal length; a separate condition excludes those forms.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-07",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition has a case for each of these commands and one more, the version 2.5 and 2.6 form of check-sat-assuming with propositional literals. Its lists may be empty or of unequal length; a separate condition excludes those forms."
+      },
+      {
+       "phrase": "2-7-p109-07",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition has a case for each of these commands and one more, the version 2.5 and 2.6 form of check-sat-assuming with propositional literals. Its lists may be empty or of unequal length; a separate condition excludes those forms."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes each command as the production reads, its name and arguments between parentheses. It writes lists of any length, so the repetitions and equal lengths marked here are enforced only by the separate condition.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-07",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes each command as the production reads, its name and arguments between parentheses. It writes lists of any length, so the repetitions and equal lengths marked here are enforced only by the separate condition."
+      },
+      {
+       "phrase": "2-7-p109-07",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes each command as the production reads, its name and arguments between parentheses. It writes lists of any length, so the repetitions and equal lengths marked here are enforced only by the separate condition."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-07"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-07",
+     "quote": "( assert ⟨term ⟩ ) ( check-sat ) ( check-sat-assuming ( ⟨term ⟩∗ ) ) ( declare-const ⟨symbol ⟩ ⟨sort ⟩ ) ( declare-datatype ⟨symbol ⟩ ⟨datatype\\_dec ⟩ ) ( declare-datatypes ( ⟨sort\\_dec ⟩ n+1 ) ( ⟨datatype\\_dec ⟩ n+1 ) ) ( declare-fun ⟨symbol ⟩ ( ⟨sort ⟩∗ ) ⟨sort ⟩ ) ( declare-sort ⟨symbol ⟩ ⟨numeral ⟩ ) ( declare-sort-parameter ⟨symbol ⟩ ) ( define-const ⟨symbol ⟩ ⟨sort ⟩ ⟨term ⟩ ) ( define-fun ⟨function\\_def ⟩ ) ( define-fun-rec ⟨function\\_def ⟩ ) ( define-funs-rec ( ⟨function\\_dec ⟩ n+1 ) ( ⟨term ⟩ n+1 ) ) ( define-sort ⟨symbol ⟩ ( ⟨symbol ⟩∗ ) ⟨sort ⟩ ) ( echo ⟨string ⟩ ) ( exit ) ( get-assertions ) ( get-assignment ) ( get-info ⟨info\\_flag ⟩ ) ( get-model ) ( get-option ⟨keyword ⟩ ) ( get-proof ) ( get-unsat-assumptions ) ( get-unsat-core ) ( get-value ( ⟨term ⟩+ ) ) ( pop ⟨numeral ⟩ ) ( push ⟨numeral ⟩ ) ( reset ) ( reset-assertions ) ( set-info ⟨attribute ⟩ ) ( set-logic ⟨symbol ⟩ ) ( set-option ⟨option ⟩ )",
+     "role": "definition",
+     "topic": "command-syntax-options"
+    },
+    {
+     "id": "2-7-p109-07",
+     "quote": "( assert ⟨term ⟩ ) ( check-sat ) ( check-sat-assuming ( ⟨term ⟩∗ ) ) ( declare-const ⟨symbol ⟩ ⟨sort ⟩ ) ( declare-datatype ⟨symbol ⟩ ⟨datatype\\_dec ⟩ ) ( declare-datatypes ( ⟨sort\\_dec ⟩ n+1 ) ( ⟨datatype\\_dec ⟩ n+1 ) ) ( declare-fun ⟨symbol ⟩ ( ⟨sort ⟩∗ ) ⟨sort ⟩ ) ( declare-sort ⟨symbol ⟩ ⟨numeral ⟩ ) ( declare-sort-parameter ⟨symbol ⟩ ) ( define-const ⟨symbol ⟩ ⟨sort ⟩ ⟨term ⟩ ) ( define-fun ⟨function\\_def ⟩ ) ( define-fun-rec ⟨function\\_def ⟩ ) ( define-funs-rec ( ⟨function\\_dec ⟩ n+1 ) ( ⟨term ⟩ n+1 ) ) ( define-sort ⟨symbol ⟩ ( ⟨symbol ⟩∗ ) ⟨sort ⟩ ) ( echo ⟨string ⟩ ) ( exit ) ( get-assertions ) ( get-assignment ) ( get-info ⟨info\\_flag ⟩ ) ( get-model ) ( get-option ⟨keyword ⟩ ) ( get-proof ) ( get-unsat-assumptions ) ( get-unsat-core ) ( get-value ( ⟨term ⟩+ ) ) ( pop ⟨numeral ⟩ ) ( push ⟨numeral ⟩ ) ( reset ) ( reset-assertions ) ( set-info ⟨attribute ⟩ ) ( set-logic ⟨symbol ⟩ ) ( set-option ⟨option ⟩ )",
+     "role": "definition",
+     "topic": "command-syntax-options"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p051-08",
+   "from": "⟨script ⟩ ::= ⟨command ⟩∗",
+   "to": "⟨script ⟩ ::= ⟨command ⟩∗",
+   "role": "definition",
+   "topic": "scripts-interaction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Script",
+     "file": "BSmtLibSpec/Grammar/Script.lean",
+     "relation": "defines",
+     "fidelity": "weaker",
+     "fidelity_note": "For command spellings satisfying the lexical rules, the production permits any finite command sequence. The formal definition additionally follows version changes, checks commands against the current version, and requires exit to be last; it therefore describes a narrower class than the repetition alone.",
+     "assessments": [
+      {
+       "phrase": "2-7-p051-08",
+       "fidelity": "weaker",
+       "fidelity_note": "For command spellings satisfying the lexical rules, the production permits any finite command sequence. The formal definition additionally follows version changes, checks commands against the current version, and requires exit to be last; it therefore describes a narrower class than the repetition alone."
+      },
+      {
+       "phrase": "2-7-p109-08",
+       "fidelity": "weaker",
+       "fidelity_note": "For command spellings satisfying the lexical rules, the production permits any finite command sequence. The formal definition additionally follows version changes, checks commands against the current version, and requires exit to be last; it therefore describes a narrower class than the repetition alone."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p109-08"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p051-08",
+     "quote": "⟨script ⟩ ::= ⟨command ⟩∗",
+     "role": "definition",
+     "topic": "scripts-interaction"
+    },
+    {
+     "id": "2-7-p109-08",
+     "quote": "⟨script ⟩ ::= ⟨command ⟩∗",
+     "role": "definition",
+     "topic": "scripts-interaction"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p052-02",
+   "from": ":diagnostic-output-channel ⟨string ⟩ :global-declarations ⟨b\\_value ⟩ :interactive-mode ⟨b\\_value ⟩ :print-success ⟨b\\_value ⟩ :produce-assertions ⟨b\\_value ⟩ :produce-assignments ⟨b\\_value ⟩ :produce-models ⟨b\\_value ⟩ :produce-proofs ⟨b\\_value ⟩ :produce-unsat-assumptions ⟨b\\_value ⟩ :produce-unsat-cores ⟨b\\_value ⟩ :random-seed ⟨numeral ⟩ :regular-output-channel ⟨string ⟩ :reproducible-resource-limit ⟨numeral ⟩ :verbosity ⟨numeral ⟩ ⟨attribute ⟩",
+   "to": ":diagnostic-output-channel ⟨string ⟩ :global-declarations ⟨b\\_value ⟩ :interactive-mode ⟨b\\_value ⟩ :print-success ⟨b\\_value ⟩ :produce-assertions ⟨b\\_value ⟩ :produce-assignments ⟨b\\_value ⟩ :produce-models ⟨b\\_value ⟩ :produce-proofs ⟨b\\_value ⟩ :produce-unsat-assumptions ⟨b\\_value ⟩ :produce-unsat-cores ⟨b\\_value ⟩ :random-seed ⟨numeral ⟩ :regular-output-channel ⟨string ⟩ :reproducible-resource-limit ⟨numeral ⟩ :verbosity ⟨numeral ⟩ ⟨attribute ⟩",
+   "role": "definition",
+   "topic": "command-syntax-options",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Attribute.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "Every listed option is a keyword followed by a string, a Boolean value or a numeral, and the last alternative is any attribute, so as written text the options are exactly the attributes. The formal definition writes an attribute as its keyword, followed by its value when it has one; it does not single out the named options.",
+     "assessments": [
+      {
+       "phrase": "2-7-p052-02",
+       "fidelity": "same",
+       "fidelity_note": "Every listed option is a keyword followed by a string, a Boolean value or a numeral, and the last alternative is any attribute, so as written text the options are exactly the attributes. The formal definition writes an attribute as its keyword, followed by its value when it has one; it does not single out the named options."
+      },
+      {
+       "phrase": "2-7-p108-03",
+       "fidelity": "same",
+       "fidelity_note": "Every listed option is a keyword followed by a string, a Boolean value or a numeral, and the last alternative is any attribute, so as written text the options are exactly the attributes. The formal definition writes an attribute as its keyword, followed by its value when it has one; it does not single out the named options."
+      }
+     ]
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes whole commands; set-option is written with its argument as an attribute, which covers every listed option. It does not define the option category on its own or the meaning of each option.",
+     "assessments": [
+      {
+       "phrase": "2-7-p052-02",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes whole commands; set-option is written with its argument as an attribute, which covers every listed option. It does not define the option category on its own or the meaning of each option."
+      },
+      {
+       "phrase": "2-7-p108-03",
+       "fidelity": "different",
+       "fidelity_note": "The formal definition writes whole commands; set-option is written with its argument as an attribute, which covers every listed option. It does not define the option category on its own or the meaning of each option."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p108-03"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p052-02",
+     "quote": ":diagnostic-output-channel ⟨string ⟩ :global-declarations ⟨b\\_value ⟩ :interactive-mode ⟨b\\_value ⟩ :print-success ⟨b\\_value ⟩ :produce-assertions ⟨b\\_value ⟩ :produce-assignments ⟨b\\_value ⟩ :produce-models ⟨b\\_value ⟩ :produce-proofs ⟨b\\_value ⟩ :produce-unsat-assumptions ⟨b\\_value ⟩ :produce-unsat-cores ⟨b\\_value ⟩ :random-seed ⟨numeral ⟩ :regular-output-channel ⟨string ⟩ :reproducible-resource-limit ⟨numeral ⟩ :verbosity ⟨numeral ⟩ ⟨attribute ⟩",
+     "role": "definition",
+     "topic": "command-syntax-options"
+    },
+    {
+     "id": "2-7-p108-03",
+     "quote": ":diagnostic-output-channel ⟨string ⟩ :global-declarations ⟨b\\_value ⟩ :interactive-mode ⟨b\\_value ⟩ :print-success ⟨b\\_value ⟩ :produce-assertions ⟨b\\_value ⟩ :produce-assignments ⟨b\\_value ⟩ :produce-models ⟨b\\_value ⟩ :produce-proofs ⟨b\\_value ⟩ :produce-unsat-assumptions ⟨b\\_value ⟩ :produce-unsat-cores ⟨b\\_value ⟩ :random-seed ⟨numeral ⟩ :regular-output-channel ⟨string ⟩ :reproducible-resource-limit ⟨numeral ⟩ :verbosity ⟨numeral ⟩ ⟨attribute ⟩",
+     "role": "definition",
+     "topic": "command-syntax-options"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p052-04",
+   "from": ":all-statistics \\| :assertion-stack-levels \\| :authors :error-behavior \\| :name \\| :reason-unknown :version \\| ⟨keyword ⟩",
+   "to": ":all-statistics \\| :assertion-stack-levels \\| :authors :error-behavior \\| :name \\| :reason-unknown :version \\| ⟨keyword ⟩",
+   "role": "definition",
+   "topic": "command-syntax-options",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "Every listed flag is a keyword, and the last alternative is any keyword, so the flags are exactly the keywords. The formal definition writes whole commands; get-info is written with one keyword after it. It does not define the flags on their own or their meanings.",
+     "assessments": [
+      {
+       "phrase": "2-7-p052-04",
+       "fidelity": "different",
+       "fidelity_note": "Every listed flag is a keyword, and the last alternative is any keyword, so the flags are exactly the keywords. The formal definition writes whole commands; get-info is written with one keyword after it. It does not define the flags on their own or their meanings."
+      },
+      {
+       "phrase": "2-7-p108-01",
+       "fidelity": "different",
+       "fidelity_note": "Every listed flag is a keyword, and the last alternative is any keyword, so the flags are exactly the keywords. The formal definition writes whole commands; get-info is written with one keyword after it. It does not define the flags on their own or their meanings."
+      }
+     ]
+    }
+   ],
+   "replaces": [
+    "2-7-p108-01"
+   ],
+   "merged": [
+    {
+     "id": "2-7-p052-04",
+     "quote": ":all-statistics \\| :assertion-stack-levels \\| :authors :error-behavior \\| :name \\| :reason-unknown :version \\| ⟨keyword ⟩",
+     "role": "definition",
+     "topic": "command-syntax-options"
+    },
+    {
+     "id": "2-7-p108-01",
+     "quote": ":all-statistics \\| :assertion-stack-levels \\| :authors :error-behavior \\| :name \\| :reason-unknown :version \\| ⟨keyword ⟩",
+     "role": "definition",
+     "topic": "command-syntax-options"
+    }
+   ]
+  },
+  {
+   "id": "2-7-p052-06",
+   "from": "a prescribed usage and semantics. Additional, solver-specific flags are also allowed. Exam- ples of the latter might be, for instance, flags such as :time and :memory, referring to used resources, or :decisions, :conflicts, and :restarts, referring to typical statistics for current SMT solvers. For more on error behavior, the meanings of the various options and info names, and the semantics of the various commands, see Chapter 4. We highlight a few salient points here and provide a couple of examples.",
+   "to": "a prescribed usage and semantics. Additional, solver-specific flags are also allowed. Exam- ples of the latter might be, for instance, flags such as :time and :memory, referring to used resources, or :decisions, :conflicts, and :restarts, referring to typical statistics for current SMT solvers. For more on error behavior, the meanings of the various options and info names, and the semantics of the various commands, see Chapter 4. We highlight a few salient points here and provide a couple of examples.",
+   "role": "definition",
+   "topic": "scripts-interaction",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Command.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper describes prescribed and solver-specific information flags and refers to their semantics. The formal definition only writes get-info with a keyword argument, leaving both the flag’s meaning and the solver’s response unspecified."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p104-01",
+   "from": "Predefined symbols These symbols have a predefined meaning in Version 2.7. Note that they are not reserved words. For instance, they could also be used in principle as user-defined sort or function symbols in scripts. Bool continued-execution error false immediate-exit incomplete logic memout sat success theory true unknown unsupported unsat",
+   "to": "Predefined symbols These symbols have a predefined meaning in Version 2.7. Note that they are not reserved words. For instance, they could also be used in principle as user-defined sort or function symbols in scripts. Bool continued-execution error false immediate-exit incomplete logic memout sat success theory true unknown unsupported unsat",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.reserved",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "At version 2.7 the formal reserved-word set excludes every predefined symbol in this list. This supports the distinction between predefined symbols and reserved words; their predefined meanings are not supplied by the lexical definition."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.simpleSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition admits each listed spelling as a simple symbol at version 2.7. It does not assign their predefined meanings, but it agrees that the spellings are not excluded as reserved words."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p104-03",
+   "from": "⟨white\\_space\\_char ⟩ ::= 9dec \\| 10dec \\| 13dec \\| 32dec",
+   "to": "⟨white\\_space\\_char ⟩ ::= 9dec \\| 10dec \\| 13dec \\| 32dec",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.whiteSpaceChar",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly tab, line feed, carriage return, and space: character codes 9, 10, 13, and 32."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p104-04",
+   "from": "⟨printable\\_char ⟩ ::= 32dec \\| · · · \\| 126dec \\| 128dec \\| · · · \\| 255dec",
+   "to": "⟨printable\\_char ⟩ ::= 32dec \\| · · · \\| 126dec \\| 128dec \\| · · · \\| 255dec",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.printableChar",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly the two byte ranges printed here: 32–126 and 128–255. Unlike the broader Unicode wording in Section 3.1, this appendix production has the same finite bounds as the formal definition."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p104-05",
+   "from": "⟨digit ⟩ ::= 0 \\| ··· \\| 9",
+   "to": "⟨digit ⟩ ::= 0 \\| ··· \\| 9",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.digit",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly the ASCII digits 0 through 9, with codes 48 through 57."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p104-06",
+   "from": "⟨letter ⟩ ::= A \\| ··· \\| Z \\| a \\| ··· \\| z",
+   "to": "⟨letter ⟩ ::= A \\| ··· \\| Z \\| a \\| ··· \\| z",
+   "role": "definition",
+   "topic": "character-classes",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.letter",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition recognizes exactly the two ASCII letter ranges A through Z and a through z, with codes 65–90 and 97–122."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-03",
+   "from": "⟨numeral ⟩ ::= 0 \\| a non-empty sequence of digits not starting with 0",
+   "to": "⟨numeral ⟩ ::= 0 \\| a non-empty sequence of digits not starting with 0",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.numeral",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition allows 0 by itself or a nonempty sequence of decimal digits whose first digit is not 0. Leading zeros are excluded from longer numerals."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-04",
+   "from": "⟨decimal ⟩ ::= ⟨numeral ⟩.0∗ ⟨numeral ⟩",
+   "to": "⟨decimal ⟩ ::= ⟨numeral ⟩.0∗ ⟨numeral ⟩",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.decimal",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition is a numeral, a decimal point, zero or more zeros, and another numeral. Thus there is at least one digit after the point, while zeros may begin the fractional part."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-05",
+   "from": "⟨hexadecimal ⟩ ::= \\#x followed by a non-empty sequence of digits and letters from A to F , capitalized or not",
+   "to": "⟨hexadecimal ⟩ ::= \\#x followed by a non-empty sequence of digits and letters from A to F , capitalized or not",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.hexadecimal",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition requires the lowercase prefix #x followed by one or more digits or letters A–F or a–f. Only the hexadecimal digits are case-insensitive."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-06",
+   "from": "⟨binary ⟩ ::= \\#b followed by a non-empty sequence of 0 and 1 characters",
+   "to": "⟨binary ⟩ ::= \\#b followed by a non-empty sequence of 0 and 1 characters",
+   "role": "definition",
+   "topic": "numeric-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.binary",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition requires the lowercase prefix #b followed by one or more characters, each either 0 or 1."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-07",
+   "from": "⟨string ⟩ ::= sequence of whitespace and printable characters in double quotes with escape sequence \"\"",
+   "to": "⟨string ⟩ ::= sequence of whitespace and printable characters in double quotes with escape sequence \"\"",
+   "role": "definition",
+   "topic": "string-literals",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.string",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "Using the appendix’s byte-based character ranges, the formal definition permits whitespace and printable contents between double quotes, with every interior quote doubled. This matches the displayed lexical rule."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.unescape",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition replaces each doubled quote in the contents by one quote and leaves every other byte unchanged. This supplies the escape interpretation named in the production, separately from recognizing the literal’s delimiters."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-08",
+   "from": "⟨simple\\_symbol ⟩ ::= a non-empty sequence of letters, digits and the characters",
+   "to": "⟨simple\\_symbol ⟩ ::= a non-empty sequence of letters, digits and the characters",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.simpleSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The selected production ends before its punctuation list and restrictions. The formal definition also specifies those characters, excludes an initial digit, and excludes reserved words; the complete source span is needed for an exact comparison."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.symbolPunctuation",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The quotation stops before the punctuation characters themselves. The formal definition gives their precise set, so the following lines of the production should be included."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-09",
+   "from": "⟨symbol ⟩ ::= \\| ⟨simple\\_symbol ⟩ a sequence of whitespace and printable characters that starts and ends with \\| and does not otherwise include \\| or \\\\",
+   "to": "⟨symbol ⟩ ::= \\| ⟨simple\\_symbol ⟩ a sequence of whitespace and printable characters that starts and ends with \\| and does not otherwise include \\| or \\\\",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.quotedSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "same",
+     "fidelity_note": "The formal definition is the second alternative: a vertical bar, then whitespace and printable characters other than a vertical bar or backslash, then a vertical bar. Its printable characters are the byte ranges Appendix B prints for that category."
+    },
+    {
+     "name": "BSmtLibSpec.Lexicon.simpleSymbol",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition is the first alternative only, a simple symbol; the quoted alternative is a separate definition. Together the two give the production."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p105-10",
+   "from": "⟨keyword ⟩ ::= :⟨simple\\_symbol ⟩",
+   "to": "⟨keyword ⟩ ::= :⟨simple\\_symbol ⟩",
+   "role": "definition",
+   "topic": "symbols-keywords",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Lexicon.keyword",
+     "file": "BSmtLibSpec/Lexicon.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper specifies a colon followed by a simple symbol; the formal definition also permits an initial digit or a reserved word after the colon, such as :56 or :let. This follows the older keyword rule and the paper’s own :56 example, rather than the displayed production literally."
+    }
+   ]
+  },
+  {
+   "id": "2-7-p106-08",
+   "from": "⟨pattern⟩ ::= ⟨symbol\\_⟩ \\| ( ⟨symbol ⟩ ⟨symbol\\_⟩+ )",
+   "to": "⟨pattern⟩ ::= ⟨symbol\\_⟩ \\| ( ⟨symbol ⟩ ⟨symbol\\_⟩+ )",
+   "role": "definition",
+   "topic": "pattern-matching",
+   "status": "new",
+   "lean": [
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper gives the complete pattern production; the formal definition requires a nonempty argument list for a constructor pattern and checks wildcard availability. Parentheses and the distinction between a single symbol and a constructor pattern are defined separately."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines whole patterns; the formal definition only restricts the symbol-or-wildcard component, requiring version 2.7 for a wildcard. It says nothing about constructor patterns or their argument lists."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper requires at least one argument in a parenthesized constructor pattern; the formal definition also allows an empty argument list. A separate grammatical condition excludes that extra case."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard",
+     "file": "BSmtLibSpec/Grammar/Tree.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper defines both single-symbol patterns and constructor patterns; the formal definition supplies only a symbol or wildcard, the component used inside those patterns."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.Pattern.tokens",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The formal definition writes the two pattern forms, but can also write a parenthesized constructor without arguments. The paper’s plus sign excludes that case, which is ruled out only by a separate grammatical condition."
+    },
+    {
+     "name": "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token",
+     "file": "BSmtLibSpec/Grammar/Syntax.lean",
+     "relation": "defines",
+     "fidelity": "different",
+     "fidelity_note": "The paper specifies complete patterns; the formal definition emits just a symbol or an underscore. This explains one pattern component rather than the whole production."
+    }
+   ]
+  }
+ ],
+ "removed": []
+}

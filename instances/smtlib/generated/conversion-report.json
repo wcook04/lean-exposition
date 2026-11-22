@@ -1,0 +1,124 @@
+{
+ "summary": {
+  "quote_not_unique": 0,
+  "lean_not_in_index": 0,
+  "verdict_without_note": 0,
+  "statement_without_lean": 0,
+  "merged": 23,
+  "merged_assessments_differ": 0,
+  "unassessed": 0,
+  "result_label_not_found": 0,
+  "result_without_statement": 0,
+  "long_title_without_override": 0,
+  "ties": 73,
+  "titled": 94,
+  "names": 297,
+  "results": 0,
+  "sections": 11,
+  "lean_files": 62,
+  "unnamed": 0
+ },
+ "quote_not_unique": [],
+ "lean_not_in_index": [],
+ "verdict_without_note": [],
+ "statement_without_lean": [],
+ "merged": [
+  [
+   "2-7-p026-07",
+   "2-7-p105-12"
+  ],
+  [
+   "2-7-p026-08",
+   "2-7-p105-13"
+  ],
+  [
+   "2-7-p027-03",
+   "2-7-p105-14"
+  ],
+  [
+   "2-7-p027-04",
+   "2-7-p105-15"
+  ],
+  [
+   "2-7-p027-09",
+   "2-7-p106-02"
+  ],
+  [
+   "2-7-p027-10",
+   "2-7-p106-03"
+  ],
+  [
+   "2-7-p028-03",
+   "2-7-p106-01"
+  ],
+  [
+   "2-7-p030-02",
+   "2-7-p106-04"
+  ],
+  [
+   "2-7-p030-03",
+   "2-7-p106-05"
+  ],
+  [
+   "2-7-p030-04",
+   "2-7-p106-06"
+  ],
+  [
+   "2-7-p030-05",
+   "2-7-p106-07"
+  ],
+  [
+   "2-7-p030-07",
+   "2-7-p106-09"
+  ],
+  [
+   "2-7-p030-08",
+   "2-7-p106-10"
+  ],
+  [
+   "2-7-p051-01",
+   "2-7-p109-01"
+  ],
+  [
+   "2-7-p051-02",
+   "2-7-p109-02"
+  ],
+  [
+   "2-7-p051-03",
+   "2-7-p109-03"
+  ],
+  [
+   "2-7-p051-04",
+   "2-7-p109-04"
+  ],
+  [
+   "2-7-p051-05",
+   "2-7-p109-05"
+  ],
+  [
+   "2-7-p051-06",
+   "2-7-p109-06"
+  ],
+  [
+   "2-7-p051-07",
+   "2-7-p109-07"
+  ],
+  [
+   "2-7-p051-08",
+   "2-7-p109-08"
+  ],
+  [
+   "2-7-p052-02",
+   "2-7-p108-03"
+  ],
+  [
+   "2-7-p052-04",
+   "2-7-p108-01"
+  ]
+ ],
+ "merged_assessments_differ": [],
+ "unassessed": [],
+ "result_label_not_found": [],
+ "result_without_statement": [],
+ "long_title_without_override": []
+}

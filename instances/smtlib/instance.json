@@ -1,0 +1,197 @@
+{
+ "schema": "library-instance/1",
+ "id": "smtlib",
+ "title": "The SMT-LIB Standard: Version 2.7",
+ "short_title": "SMT-LIB 2.7 and BSmtLib",
+ "authors": [
+  "Clark Barrett",
+  "Pascal Fontaine",
+  "Cesare Tinelli"
+ ],
+ "venue": "Reference document, release 2026-09-09",
+ "credit_lines": [
+  "The SMT-LIB Standard, Version 2.7 (release 2026-09-09), by Clark Barrett, Pascal Fontaine and Cesare Tinelli, hosted verbatim with its copyright and permission notice (page 2). BSmtLib, its Lean formalisation of the lexicon, grammar and parser, by Jan Onderka, Armin Biere and Henrik Böving, at 42b45c2 (MIT OR Apache-2.0). The links from the standard's passages to the Lean, the plain titles and the comparisons were made with AI and have not been reviewed by the authors."
+ ],
+ "companion_credit": "Paper and Lean by Clark Barrett, Pascal Fontaine and Cesare Tinelli, from their repository onderjan/blazing-smtlib at 42b45c2.",
+ "licence": "Verbatim copies only; the copyright and permission notice is on page 2 of the PDF",
+ "host": "Hosted by Will Cook in his reading library, with credit to the authors.",
+ "review": "The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI and have not been reviewed by the authors. No mathematician has reviewed them.",
+ "source": {
+  "proof_reader": {
+   "repository": "https://github.com/wcook04/proof-reader",
+   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "page": "smtlib-2-7"
+  },
+  "upstream": {
+   "repository": "https://github.com/onderjan/blazing-smtlib",
+   "commit": "42b45c20b0045495a40b9eaf0a717e0f1c976bed",
+   "paper": "https://smt-lib.org/papers/smt-lib-reference-v2.7-r2026-09-09.pdf"
+  },
+  "lean_scope": "Lean 4.34.1 compiled the BSmtLibSpec library of BSmtLib, by Jan Onderka, Armin Biere and Henrik Böving, unchanged at 42b45c2. The example proofs under BSmtLibSpec/Facts are shown as source."
+ },
+ "documents": [
+  {
+   "id": "paper",
+   "slot": "short",
+   "slug": "",
+   "title": "The SMT-LIB Standard: Version 2.7",
+   "noun": "standard",
+   "main": true,
+   "pdf": {
+    "file": "paper.pdf",
+    "sha256": "c01167d7eb9241a02ceb8c93cd37e4854cb8a38529157e0b72b1cdc8ecb4a8fc",
+    "bytes": 713335,
+    "url": "https://smt-lib.org/papers/smt-lib-reference-v2.7-r2026-09-09.pdf"
+   },
+   "pdf_only": true
+  }
+ ],
+ "families": [
+  {
+   "id": "source-text",
+   "name": "Source text"
+  },
+  {
+   "id": "lexical-tokens",
+   "name": "Lexical tokens"
+  },
+  {
+   "id": "sexpressions",
+   "name": "S-expressions"
+  },
+  {
+   "id": "identifiers-sorts",
+   "name": "Identifiers and sorts"
+  },
+  {
+   "id": "attributes",
+   "name": "Attributes"
+  },
+  {
+   "id": "terms",
+   "name": "Terms"
+  },
+  {
+   "id": "commands-scripts",
+   "name": "Commands and scripts"
+  }
+ ],
+ "topics": [
+  {
+   "id": "source-text-tokenization",
+   "name": "Source text and tokenization",
+   "description": "Source files are divided into lexical tokens, with whitespace and comments separating them.",
+   "family": "source-text"
+  },
+  {
+   "id": "character-classes",
+   "name": "Character classes",
+   "description": "The lexical rules distinguish whitespace, printable characters, digits, and ASCII letters.",
+   "family": "source-text"
+  },
+  {
+   "id": "numeric-literals",
+   "name": "Numeric literals",
+   "description": "Numerals, decimals, hexadecimal literals, and binary literals each have a prescribed spelling.",
+   "family": "lexical-tokens"
+  },
+  {
+   "id": "string-literals",
+   "name": "String literals",
+   "description": "Double quotes delimit strings, and doubling an interior quote gives the language’s single lexical escape.",
+   "family": "lexical-tokens"
+  },
+  {
+   "id": "symbols-keywords",
+   "name": "Symbols and reserved words",
+   "description": "Symbols, keywords, and reserved words supply the names and fixed vocabulary of the language.",
+   "family": "lexical-tokens"
+  },
+  {
+   "id": "sexpressions-constants",
+   "name": "S-expressions and constants",
+   "description": "Special constants and other atoms combine into possibly empty parenthesized S-expressions.",
+   "family": "sexpressions"
+  },
+  {
+   "id": "indexed-identifiers",
+   "name": "Indexed identifiers",
+   "description": "Identifiers are symbols, optionally qualified by one or more numeral or symbol indices.",
+   "family": "identifiers-sorts"
+  },
+  {
+   "id": "attribute-syntax",
+   "name": "Attribute syntax",
+   "description": "An attribute consists of a keyword with an optional special constant, symbol, or parenthesized list as its value.",
+   "family": "attributes"
+  },
+  {
+   "id": "sort-expressions",
+   "name": "Sort expressions",
+   "description": "Sort expressions are identifiers, optionally applied to one or more sort expressions.",
+   "family": "identifiers-sorts"
+  },
+  {
+   "id": "term-grammar",
+   "name": "Term grammar",
+   "description": "Terms combine constants, identifiers, applications, abstractions, quantifiers, local definitions, matches, and annotations.",
+   "family": "terms"
+  },
+  {
+   "id": "variables-scope",
+   "name": "Variables and scope",
+   "description": "Local variable declarations associate names with terms or sorts and determine the scope of their occurrences.",
+   "family": "terms"
+  },
+  {
+   "id": "pattern-matching",
+   "name": "Pattern matching",
+   "description": "Flat constructor patterns, variable patterns, and wildcards describe the cases of a match expression.",
+   "family": "terms"
+  },
+  {
+   "id": "term-annotations",
+   "name": "Term annotations",
+   "description": "Attributes attach additional information to a term without changing its logical meaning.",
+   "family": "attributes"
+  },
+  {
+   "id": "scripts-interaction",
+   "name": "Scripts and solver interaction",
+   "description": "Scripts sequence commands that control a solver and request its responses.",
+   "family": "commands-scripts"
+  },
+  {
+   "id": "declarations-definitions",
+   "name": "Declarations and definitions",
+   "description": "Sort, datatype, constructor, selector, and function declarations describe the components introduced by commands.",
+   "family": "commands-scripts"
+  },
+  {
+   "id": "command-syntax-options",
+   "name": "Command syntax and options",
+   "description": "Command productions specify their arguments, including option attributes and information flags.",
+   "family": "commands-scripts"
+  }
+ ],
+ "topic_order": [
+  "source-text-tokenization",
+  "character-classes",
+  "numeric-literals",
+  "string-literals",
+  "symbols-keywords",
+  "sexpressions-constants",
+  "indexed-identifiers",
+  "attribute-syntax",
+  "sort-expressions",
+  "term-grammar",
+  "variables-scope",
+  "pattern-matching",
+  "term-annotations",
+  "scripts-interaction",
+  "declarations-definitions",
+  "command-syntax-options"
+ ],
+ "goal": "smtlib.document",
+ "main_lean": null
+}

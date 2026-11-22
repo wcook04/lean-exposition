@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "what": "Comparator judged the author's proof of one statement against a challenge file that imports only Mathlib.",
+  "run": "https://github.com/wcook04/proof-reader/actions/runs/44083674739",
+  "date": "2026-11-17",
+  "commit": "d95cb112e72c3c0b248ca3b5fa6500532080d566",
+  "physlib_commit": "be0a9eef7dac78da524bfbde91c812340b194610",
+  "lake": "Lake version 5.0.0-src+eb6cafb (Lean version 4.35.0)",
+  "toolchain": "leanprover/lean4:v4.35.0",
+  "sandbox": "bubblewrap 0.9.0",
+  "mode": "standard (Lean's default kernel); sandboxed with bubblewrap; --paranoid was not completed",
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "accepted": {
+    "config": "comparator.json",
+    "theorem_names": [
+      "coupled_spring_potential"
+    ],
+    "exit": 0,
+    "output": [
+      "Build completed successfully (2483 jobs).",
+      "Build completed successfully (2570 jobs).",
+      "Running Lean default kernel on solution",
+      "Lean default kernel accepts the solution",
+      "Your solution is okay!"
+    ]
+  },
+  "rejected_control": {
+    "config": "negative/comparator.json",
+    "change": "IsLocalMax in place of IsLocalMin",
+    "exit": 1,
+    "output": [
+      "Build completed successfully (2483 jobs).",
+      "Build completed successfully (2570 jobs).",
+      "error: Challenge and solution theorem statement do not match: 'coupled_spring_potential'"
+    ]
+  },
+  "sha256": {
+    "Challenge.lean": "2c6ac53b79d2a6baf6ec525c6ce5dcaedd0a8324511eb1214660a07c8e8b991a",
+    "Solution.lean": "6b6c074b46493179f80c97b599b8b25ae99ec213049f0fa371cd5a35ed66c15b",
+    "comparator.json": "653d28755169ffa69f6f3e922a7c3c0354d69569768c11c399646d47fe96c3f2",
+    "negative/Challenge.lean": "af04bf644ea611f706967af4bcb68ef1a52b3479275bed68318e6a55fee5a6a8"
+  },
+  "imports": "The challenge imports two Mathlib files and nothing from Physlib, so every word of its statement is defined in Mathlib.",
+  "limits": "Comparator establishes that the solution proves exactly the challenge's statement using only the permitted axioms. The challenge imports only Mathlib. It does not say that the statement means what the page says."
+}

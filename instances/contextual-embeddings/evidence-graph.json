@@ -1,0 +1,176 @@
+{
+ "schema_version": "1.2",
+ "id": "contextual-embeddings-library-edition",
+ "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution",
+ "selected_goals": [
+  "contextual-embeddings.claim-isomorphism"
+ ],
+ "sources": [
+  {
+   "id": "lean:CE.lean",
+   "kind": "file",
+   "url": "https://doi.org/10.5281/zenodo.19081887/blob//lean/CE.lean",
+   "revision": "",
+   "license": "NOASSERTION",
+   "redistribution": "vendored",
+   "sha256": "413610454511548fedd68a73f2b0d7d4e1708e8d98a24cca6cdf8b31ee476ec4",
+   "path": "upstream/lean/CE.lean"
+  },
+  {
+   "id": "paper",
+   "kind": "file",
+   "url": "https://doi.org/10.1145/3808269",
+   "revision": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only",
+   "sha256": "dd4ef7bee6fd085e9cc66291a4488f69f1a308ed77409570f1cdd8acf8df3a8d"
+  },
+  {
+   "id": "proof_reader",
+   "kind": "repository",
+   "url": "https://github.com/wcook04/proof-reader",
+   "revision": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "license": "MIT",
+   "redistribution": "reference_only"
+  },
+  {
+   "id": "upstream",
+   "kind": "repository",
+   "url": "https://doi.org/10.5281/zenodo.19081887",
+   "revision": "",
+   "license": "NOASSERTION",
+   "redistribution": "reference_only"
+  }
+ ],
+ "citations": [
+  {
+   "id": "cite.contextual-embeddings.claim-isomorphism",
+   "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution, unembed and contextualise form an isomorphism",
+   "url": "https://doi.org/10.1145/3808269",
+   "source_id": "paper",
+   "locator": "unembed and contextualise form an isomorphism, Section 3.3"
+  },
+  {
+   "id": "cite.lean.isoL",
+   "title": "isoL",
+   "url": "https://doi.org/10.5281/zenodo.19081887/blob//lean/CE.lean#L199",
+   "source_id": "lean:CE.lean",
+   "locator": "CE.lean, line 199"
+  },
+  {
+   "id": "cite.lean.isoR",
+   "title": "isoR",
+   "url": "https://doi.org/10.5281/zenodo.19081887/blob//lean/CE.lean#L210",
+   "source_id": "lean:CE.lean",
+   "locator": "CE.lean, line 210"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "contextual-embeddings.claim-isomorphism",
+   "kind": "goal",
+   "label": "unembed and contextualise form an isomorphism",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [
+    "link.contextual-embeddings.claim-isomorphism"
+   ],
+   "citation_ids": [
+    "cite.contextual-embeddings.claim-isomorphism"
+   ],
+   "source_id": "paper",
+   "locator": "unembed and contextualise form an isomorphism, Section 3.3",
+   "statement": "We have proven that `unembed` and `contextualise` form an isomorphism in Lean 4",
+   "boundary": "A result as the authors number it. Its links to the Lean were made with AI for Proof Reader and have not been reviewed by the authors."
+  },
+  {
+   "id": "lean.isoL",
+   "kind": "declaration",
+   "label": "isoL",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.isoL"
+   ],
+   "source_id": "lean:CE.lean",
+   "declaration": "isoL",
+   "statement": "Recover a first-order term",
+   "locator": "CE.lean, line 199",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  },
+  {
+   "id": "lean.isoR",
+   "kind": "declaration",
+   "label": "isoR",
+   "status": "unverified",
+   "assumption_ids": [],
+   "evidence_ids": [],
+   "citation_ids": [
+    "cite.lean.isoR"
+   ],
+   "source_id": "lean:CE.lean",
+   "declaration": "isoR",
+   "statement": "Recover a contextual term",
+   "locator": "CE.lean, line 210",
+   "boundary": "Status unverified in this edition: no build or extraction receipt of this tool binds it."
+  }
+ ],
+ "edges": [
+  {
+   "from": "contextual-embeddings.claim-isomorphism",
+   "to": "lean.isoL",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.contextual-embeddings.claim-isomorphism"
+   ]
+  },
+  {
+   "from": "contextual-embeddings.claim-isomorphism",
+   "to": "lean.isoR",
+   "kind": "formalizes",
+   "evidence_ids": [
+    "link.contextual-embeddings.claim-isomorphism"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "lean_dependencies",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Lean's report of the authors' compiled modules, made on GitHub Actions for Proof Reader; outside observation",
+   "source_ids": [
+    "proof_reader",
+    "upstream"
+   ],
+   "subject_ids": [
+    "lean.isoL",
+    "lean.isoR"
+   ],
+   "details": "Each edge joins two declarations on the map when the first uses the second directly or through declarations not drawn here: type dependencies from Lean's report, proof dependencies from the report where recorded and otherwise from the proof's text."
+  },
+  {
+   "id": "link.contextual-embeddings.claim-isomorphism",
+   "kind": "semantic_review",
+   "status": "not_run",
+   "command": [],
+   "tool": "Links made with AI for Proof Reader; carried by scripts/from_proof_reader.py",
+   "source_ids": [
+    "proof_reader"
+   ],
+   "subject_ids": [
+    "contextual-embeddings.claim-isomorphism",
+    "lean.isoL",
+    "lean.isoR"
+   ],
+   "details": "Proof Reader's links.json at 79fe18157a1d names these Lean declarations for unembed and contextualise form an isomorphism. The links were made with AI and have not been reviewed by the authors."
+  }
+ ],
+ "scope": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution, by Samantha Frohlich, Jessica Foster, G. A. Kavvos, Meng Wang, with their Lean at https://doi.org/10.5281/zenodo.19081887 , as read for Proof Reader (wcook04/proof-reader 79fe18157a1d3c7821a4c03b84b8af2e439a5139). The numbered results are the authors'; their links to the Lean were made with AI.",
+ "extraction_status": "not_run",
+ "notes": [
+  "Converted by scripts/from_proof_reader.py. Every record is unverified: this edition ran no Lean build or extraction. The phrase ties, titles, notes and comparisons are AI-drafted or AI-assessed."
+ ]
+}

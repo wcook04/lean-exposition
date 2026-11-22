@@ -47,6 +47,49 @@ NOTICE = """() => [...document.querySelectorAll('.account-line, .outline__job')]
   .map(e => (e.closest('.outline') || e).textContent).join(' ')"""
 
 
+def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
+    """A document read only in its PDF: the PDF opens with its phrases marked, no Text toggle, and a
+    mark opens the phrase's card, Lean and graph; phrase, Lean and unknown addresses open what they name."""
+    page.wait_for_selector(".pdf-view__mark[data-tone], .pdf-view__mark", timeout=60000)
+    first = time.monotonic() - start
+    check(f"{tag} load", first <= args.budget, f"first PDF mark after {first:.2f}s (budget {args.budget}s)")
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(1500)
+    check(f"{tag} no text toggle", not page.locator(".view-toggle").count(), "a Text | PDF toggle on a PDF-only paper")
+    check(f"{tag} AI notice shown", args.notice in page.evaluate(NOTICE), f"no front-matter line containing {args.notice!r}")
+    marks = page.locator(".pdf-view__mark").count()
+    check(f"{tag} marks on the PDF", marks >= 3, f"{marks} marks")
+    if args.shots:
+        args.shots.mkdir(parents=True, exist_ok=True)
+        page.screenshot(path=str(args.shots / f"top-{tag}.png"))
+    mark = page.locator(".pdf-view__mark").first
+    mark.scroll_into_view_if_needed()
+    mark.click()
+    page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
+    card = page.locator(".phrase-card").first
+    card.wait_for(timeout=15000)
+    check(f"{tag} mark click", "AI-assessed" in card.inner_text(), page.url)
+    page.get_by_role("button", name="Graph", exact=True).first.click()
+    page.wait_for_selector(".map-pane__graphview .fg[data-cards]", timeout=15000)
+    nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0)
+    check(f"{tag} graph view", nodes > 0, f"{nodes} cards drawn")
+    if args.shots:
+        page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
+    page.goto(base + f"@{args.phrase}")
+    page.wait_for_selector(".pdf-view__mark.is-selected", timeout=60000)
+    sel = page.locator(".pdf-view__mark.is-selected").first.bounding_box()
+    check(f"{tag} address phrase", sel is not None and 0 <= sel["y"] <= height and page.url.endswith(f"@{args.phrase}"), page.url)
+    page.goto(base + f"lean/{args.decl}")
+    page.wait_for_timeout(4000)
+    check(f"{tag} address lean", args.decl.rsplit(".", 1)[-1] in page.inner_text("body"), page.url)
+    page.goto(base + "@no-such-phrase-here")
+    page.wait_for_selector(".address-notice[data-missing]", timeout=60000)
+    check(f"{tag} unknown phrase says not found", "Not found" in page.inner_text(".address-notice[data-missing]"), page.url)
+    link = page.locator("a", has_text="Open PDF").first
+    href = link.get_attribute("href") if link.count() else None
+    check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and link.get_attribute("target") == "_blank"), f"href={href}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("base")
@@ -58,6 +101,8 @@ def main() -> int:
     ap.add_argument("--section", default="5.6")
     ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
     ap.add_argument("--notice", default="made with AI", help="words of the AI notice the front matter must show at every width")
+    ap.add_argument("--no-pdf", action="store_true", help="the paper has no PDF: no Open PDF link and no PDF view to check")
+    ap.add_argument("--pdf-only", action="store_true", help="the paper is read only in its PDF: no Text toggle, the PDF view opens at its top")
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
     args = ap.parse_args()
@@ -79,6 +124,10 @@ def main() -> int:
             page.on("pageerror", lambda e: errors.append(str(e)))
             start = time.monotonic()
             page.goto(base)
+            if args.pdf_only:
+                pdf_only_checks(page, base, tag, width, height, args, check, start)
+                context.close()
+                continue
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             first = time.monotonic() - start
             page.wait_for_load_state("networkidle")
@@ -126,7 +175,7 @@ def main() -> int:
                 page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
             # Each kind of address.
             for kind, path, expect in (
-                ("result", f"{args.result}/", "Theorem"),
+                ("result", f"{args.result}/", "" if args.result.startswith("claim-") else "Theorem"),
                 ("phrase", f"@{args.phrase}", "AI-assessed"),
                 ("lean", f"lean/{args.decl}", args.decl.rsplit(".", 1)[-1]),
             ):
@@ -155,8 +204,17 @@ def main() -> int:
                 const top = (el) => el ? Math.round(el.getBoundingClientRect().top) : null;
                 return { label: top(label), pin: top(pin) };
             }""", title)
-            check(f"{tag} result lands on its statement", place["label"] is not None and 0 <= place["label"] <= height
-                  and (place["pin"] is None or place["pin"] >= place["label"] - 2), f"{title}: {place}")
+            # A result the paper prints without a number has no bold label to land on.
+            if not args.result.startswith("claim-"):
+                check(f"{tag} result lands on its statement", place["label"] is not None and 0 <= place["label"] <= height
+                      and (place["pin"] is None or place["pin"] >= place["label"] - 2), f"{title}: {place}")
+            # An address that names no phrase opens the paper with a "not found" line, never a guessed place.
+            probe.goto(base + "@no-such-phrase-here")
+            probe.wait_for_selector(".paper .tie", timeout=60000)
+            probe.wait_for_timeout(2000)
+            missing = probe.locator(".address-notice[data-missing]")
+            check(f"{tag} unknown phrase says not found", missing.count() and "Not found" in missing.inner_text()
+                  and not probe.locator(".paper .tie[data-pin]").count(), probe.url)
             # A retired phrase link opens its notice and lights no other phrase.
             with urllib.request.urlopen(base + "addresses.json") as response:
                 retired = sorted(json.loads(response.read()).get("retired") or {})
@@ -171,9 +229,12 @@ def main() -> int:
             fresh.close()
             # Open PDF.
             link = page.locator("a", has_text="Open PDF").first
+            if args.no_pdf:
+                check(f"{tag} no pdf link", not link.count(), "an Open PDF link on a paper without a PDF")
             href = link.get_attribute("href") if link.count() else None
             target = link.get_attribute("target") if link.count() else None
-            check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and target == "_blank"), f"href={href} target={target}")
+            if not args.no_pdf:
+                check(f"{tag} open pdf link", bool(href and href.split("#")[0].endswith(".pdf") and target == "_blank"), f"href={href} target={target}")
             if href:
                 url = href if href.startswith("http") else page.url.split("/library/")[0] + href
                 with urllib.request.urlopen(url.split("#")[0]) as response:
@@ -256,17 +317,18 @@ def main() -> int:
             context.close()
         # A failure in the pane beside the paper stays in the pane: its code is made to throw, and the
         # paper, its phrases and the page itself must still be there, with the pane's own notice.
+        ready = ".pdf-view__mark" if args.pdf_only else ".paper .tie[data-tone]"
         context = browser.new_context(viewport={"width": 1440, "height": 900})
         context.route(re.compile(r".*/assets/MapPane-[^/]*\.js$"), lambda route: route.fulfill(status=200, content_type="text/javascript", body="throw new Error('injected map pane failure');"))
         page = context.new_page()
         page.goto(base + f"@{args.phrase}?v=graph")
-        page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+        page.wait_for_selector(ready, timeout=60000)
         try:
             page.wait_for_selector(".graph-boundary", timeout=15000)
             contained = True
         except Exception:
             contained = False
-        kept = page.locator(".paper .tie").count() > 0 and not page.locator(".page-guard").count()
+        kept = page.locator(".paper .tie, .pdf-view__mark").count() > 0 and not page.locator(".page-guard").count()
         check("pane failure contained", contained and kept, f"pane notice {contained}, paper kept {kept}")
         context.close()
         # Narrow windows and phones: the header's visible parts never overlap, Search and Menu lie
@@ -277,7 +339,7 @@ def main() -> int:
             context = browser.new_context(viewport={"width": width, "height": height}, is_mobile=width < 500, has_touch=width < 500)
             page = context.new_page()
             page.goto(base)
-            page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
+            page.wait_for_selector(ready, timeout=60000)
             boxes = page.evaluate("""() => [...document.querySelector('.topbar').querySelectorAll('a, button')]
                 .filter(e => e.offsetParent && getComputedStyle(e).visibility !== 'hidden')
                 .map(e => { const r = e.getBoundingClientRect(); return [e.textContent.trim().slice(0, 24), r.left, r.right, r.top, r.bottom]; })
@@ -303,12 +365,14 @@ def main() -> int:
             context.close()
         # The PDF view's strip: the paper's name, the Text and PDF toggle and the step controls never
         # overlap, at a laptop's width and in narrower windows.
-        for width, height in ((1440, 900), (1000, 800), (800, 700)):
+        for width, height in (() if args.no_pdf else ((1440, 900), (1000, 800), (800, 700))):
             tag = f"{width}x{height} pdf"
             context = browser.new_context(viewport={"width": width, "height": height})
             page = context.new_page()
             page.goto(base + "?view=pdf&page=1")
-            page.wait_for_selector(".reader-strip .view-toggle", timeout=60000)
+            page.wait_for_selector(".pdf-view" if args.pdf_only else ".reader-strip .view-toggle", timeout=60000)
+            if args.pdf_only:
+                check(f"{tag} no text toggle", not page.locator(".view-toggle").count(), "a Text | PDF toggle on a PDF-only paper")
             page.wait_for_timeout(1500)
             clash = page.evaluate("""() => {
                 const els = [...document.querySelectorAll('.reader-strip .crumbs li, .reader-strip .reader-strip__hint, .reader-strip .view-toggle, .reader-strip > button, .reader-strip .reader-strip__steps, .reader-strip .sections-toggle')]

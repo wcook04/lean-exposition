@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "names": {
+  "Ctx": "Contexts as snoc lists",
+  "Index": "Typed de Bruijn indices",
+  "ProxyTop": "Most recent variable",
+  "ProxyVar": "A variable with its reification",
+  "ReifyIndex": "Reification between contexts",
+  "STLC": "Simply typed first-order terms",
+  "STLCCtx": "Terms with contextual variables",
+  "Ty": "Unit and function types",
+  "closedWorld": "Assume only two instance forms",
+  "contextualise": "Convert to contextual terms",
+  "fromIndex": "Index to packaged variable",
+  "fromVar": "Packaged variable to contextual term",
+  "indexIsoL": "Recover an original index",
+  "indexIsoR": "Recover a packaged variable",
+  "instReifyIndexRefl": "Reification without context growth",
+  "instReifyIndexSnoc": "Reification after one context extension",
+  "isoL": "Recover a first-order term",
+  "isoR": "Recover a contextual term",
+  "toCVar": "Index to contextual variable",
+  "unembed": "Convert to first-order terms",
+  "varTop": "Package the most recent variable",
+  "weakenPVar": "Extend a variable’s use context"
+ }
+}

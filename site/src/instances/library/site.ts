@@ -128,6 +128,7 @@ const site = {
   library: {
     paper: PAPER.id,
     main: MAIN.slot,
+    pdfOnly: BUILT.filter((d) => d.pdf_only).map((d) => d.slot),
     pages: Object.fromEntries(BUILT.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
     external: PAPER.documents
       .filter((d) => d.href && !d.slot)
