@@ -11,7 +11,9 @@ import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
 import { useReferences } from "./RefInset";
-import { estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
+import { DESKTOP_MEASURE, estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
+import { sectionAidFor } from "../engine";
+import site from "@instance/site";
 import type { Statements } from "./statements";
 
 export interface Links {
@@ -416,7 +418,14 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
   // The same height before and after the text arrives, so rendering a part far away moves nothing.
-  const reserved = useMemo(() => estimateHeight(part), [part]);
+  const reserved = useMemo(() => {
+    const aids = site.sectionAids?.[doc.stage];
+    const aided = aids ? part.headings.filter((heading) => heading.level >= 2 && sectionAidFor(aids, heading.title)).length : 0;
+    // The column's width as the page is laid out now: half the window beside the pane from 1024 to 1359px.
+    const wide = typeof window === "undefined" ? DESKTOP_MEASURE : window.innerWidth;
+    const measure = wide >= 1024 && wide < 1360 ? Math.min(DESKTOP_MEASURE, wide / 2) : DESKTOP_MEASURE;
+    return estimateHeight(part, aided, measure);
+  }, [part, doc.stage]);
   const textSize = useMemo(() => ({ "--part-h": `${reserved}px` }) as React.CSSProperties, [reserved]);
 
   if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
