@@ -207,8 +207,14 @@
   color: var(--ink-2);
 }
 
-.phrase-card__text .nowrap {
+/* A formula keeps its punctuation, but itself may still break between terms, as in the paper:
+   a long one never runs past a narrow pane. */
+.phrase-card .nowrap {
   white-space: nowrap;
+}
+
+.phrase-card .nowrap > .katex {
+  white-space: normal;
 }
 
 .phrase-card code {
