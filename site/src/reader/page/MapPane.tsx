@@ -8,7 +8,7 @@
 // the dock under it showing one card in detail. The whole proof map stays one button away,
 // in the same place. Lean is the Lean of the subject, the whole height of the pane. Where the
 // paragraph or selection has no Lean linked to it, either view shows the whole proof map instead,
-// with one line saying so: never an empty notice, never a guess presented as its Lean. Under
+// headed only "Whole proof map": no notice, and nothing on it presented as that paragraph's Lean. Under
 // 1280px the same page opens as a sheet; under 600px of width the graph folds to one line.
 
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
@@ -27,7 +27,6 @@ import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
 import { passageTopics, statementFor, type TieModel } from "../ties";
 import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
-import { nearestWithLean } from "./unlinked";
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
@@ -330,8 +329,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // The Lean view with nothing to show, or the graph with no subject of its own: the whole map, in
   // the view the reader chose, until a linked paragraph or a click gives it a subject again.
   const unlinked = !leanSlot && (mode === "lean" ? !preview && !hasLean(leanOpen) : !fresh);
-  const unlinkedAt = held ? passageStart(ties, held.anchor) : readAt;
-  const near = useMemo(() => (unlinked ? nearestWithLean(ties, unlinkedAt, (id) => onGraph(id) && graph.nodes.get(id)?.kind !== "declaration") : null), [unlinked, ties, unlinkedAt, onGraph, graph]);
 
   // ---- The whole proof map, one button away ------------------------------------------------
 
@@ -339,7 +336,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const showWhole = whole || unlinked;
   const treeRef = useRef<MapViewHandle>(null);
   useKeptCamera(treeRef, useCallback((id: string) => graph.nodes.has(id), [graph]));
-  const subjectRecords = useMemo(() => (unlinked ? (near ? [near] : []) : current?.subject.kind === "records" ? [...current.subject.ids] : []), [unlinked, near, current]);
+  // Shown for want of Lean, the map marks no step: nothing on it stands for the paragraph.
+  const subjectRecords = useMemo(() => (unlinked ? [] : current?.subject.kind === "records" ? [...current.subject.ids] : []), [unlinked, current]);
   const goal = useMemo(
     () => (!subjectRecords.length || subjectRecords.some((id) => reachOf(home).has(id)) ? home : (chooseGoal(subjectRecords, candidates, reachOf, home) ?? home)),
     [subjectRecords, reachOf, home, candidates],
@@ -606,10 +604,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}`}>
           <div className="map-pane__drawing">
             {unlinked && (
-              <p className="map-pane__unlinked" role="status">
-                Nothing in the Lean is linked to {pin ? "the words you chose" : "this paragraph"}, so here is the whole proof map.
-                {near && " The highlighted step is the nearest one with Lean."}
-              </p>
+              <h3 className="map-pane__unlinked">Whole proof map</h3>
             )}
             <GraphBoundary scope={showWhole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
           </div>

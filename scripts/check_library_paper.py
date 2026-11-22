@@ -84,6 +84,8 @@ PANE = """() => {
   return {
     unlinked: !!canvas,
     cards: canvas ? canvas.querySelectorAll('.tree [data-card]').length : 0,
+    edges: canvas ? [...canvas.querySelectorAll('.tree__links path.link')].filter(p => (p.getAttribute('d') || '').length > 4).length : 0,
+    sources: pane ? [...pane.querySelectorAll('.map-pane__lean [title]')].map(e => e.getAttribute('title')).join(' | ') : '',
     lines: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line').length : 0,
     lit: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line.is-lit').length : 0,
     raw: pane?.querySelector('.map-pane__lean .lean-page__raw')?.getAttribute('title') ?? '',
@@ -122,7 +124,7 @@ TO_LINE = """(words) => {
 }"""
 
 
-def unlinked_checks(browser, base, args, check) -> None:
+def unlinked_checks(browser, base, args, check, report_skip) -> None:
     """Every unlinked paragraph named (--unlinked PAGE|WORDS) shows the whole proof map in the Lean
     view, in Auto (scrolled to) and Manual (clicked, and the clicked address loaded cold); every
     linked one named (--linked PAGE|WORDS) and the phrase and result addresses show their declaration."""
@@ -140,8 +142,8 @@ def unlinked_checks(browser, base, args, check) -> None:
 
     def unlinked_ok(state):
         dead = [d for d in DEAD_ENDS if d in state["text"]]
-        return state["unlinked"] and state["cards"] > 0 and not dead and not state["topics"] and state["lean"] == "Lean", \
-            f"canvas {state['unlinked']}, {state['cards']} cards, view {state['lean']!r}, dead ends {dead}, step lists {state['topics']}"
+        return state["unlinked"] and state["cards"] > 0 and state["edges"] > 0 and not dead and not state["topics"] and state["lean"] == "Lean", \
+            f"canvas {state['unlinked']}, {state['cards']} cards, {state['edges']} lines, view {state['lean']!r}, dead ends {dead}, step lists {state['topics']}"
 
     def linked_ok(state):
         return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"]) and state["lean"] == "Lean",
@@ -153,9 +155,13 @@ def unlinked_checks(browser, base, args, check) -> None:
             page.screenshot(path=str(args.shots / f"{name}.png"))
 
     def open_page(page, where):
-        page.goto(where)
+        """Opens the page; False where it is not served (a document a later pull request adds)."""
+        response = page.goto(where)
+        if response is not None and response.status == 404:
+            return False
         page.wait_for_selector(".paper .tie", timeout=90000)
         page.wait_for_timeout(1500)
+        return True
 
     def find_unlinked(doc):
         """The first words of the first paragraph without phrases that, clicked, has nothing in the Lean linked."""
@@ -230,18 +236,24 @@ def unlinked_checks(browser, base, args, check) -> None:
         doc = doc.strip("/") + "/" if doc.strip("/") else ""
         context = browser.new_context(viewport={"width": 1440, "height": 900})
         page = context.new_page()
-        open_page(page, base + doc + "?v=lean")
+        if not open_page(page, base + doc + "?v=lean"):
+            report_skip(f"unlinked {doc or 'paper'} opening, cold")
+            context.close()
+            continue
         ok, detail = unlinked_ok(pane(page, True))
         check(f"unlinked {doc or 'paper'} opening, cold", ok, detail)
         shoot(page, f"unlinked-cold-{doc.strip('/') or 'paper'}")
         context.close()
     # A numbered display clicked on the Lean view (its equation number, "1.1"): its declaration.
     for spec in args.linked_equation:
-        doc, tag = spec.split("|", 1)
+        doc, tag, *source = spec.split("|")
         doc = doc.strip("/") + "/" if doc.strip("/") else ""
         context = browser.new_context(viewport={"width": 1440, "height": 900})
         page = context.new_page()
-        open_page(page, base + doc + "?v=lean")
+        if not open_page(page, base + doc + "?v=lean"):
+            report_skip(f"linked {doc or 'paper'} equation ({tag})")
+            context.close()
+            continue
         point = page.evaluate("""(tag) => {
           const box = [...document.querySelectorAll('.paper .math-display')].find(d => d.textContent.replace(/\\s+/g, '').includes('(' + tag + ')'));
           if (!box) return null;
@@ -251,8 +263,12 @@ def unlinked_checks(browser, base, args, check) -> None:
         }""", tag)
         if point:
             page.mouse.click(point["x"], point["y"])
-        ok, detail = linked_ok(pane(page, False, 30000))
-        check(f"linked {doc or 'paper'} equation ({tag})", bool(point) and ok, detail if point else f"no display numbered ({tag})")
+        state = pane(page, False, 30000)
+        ok, detail = linked_ok(state)
+        # Where named, the declaration's file and lines, as its source link states them ("Defs.lean, lines 26 to 33").
+        at_source = not source or source[0] in state["sources"]
+        check(f"linked {doc or 'paper'} equation ({tag})", bool(point) and ok and at_source,
+              (detail + ("" if at_source else f"; not at {source[0]!r}: {state['sources'][:200]}")) if point else f"no display numbered ({tag})")
         shoot(page, f"linked-equation-{doc.strip('/') or 'paper'}-{tag}")
         context.close()
     # The stable linked addresses, opened on the Lean view: a phrase and a numbered result show a declaration.
@@ -385,9 +401,9 @@ def main() -> int:
     ap.add_argument("--linked", action="append", default=[], metavar="PAGE|WORDS",
                     help="a paragraph linked to Lean: clicked, and its address opened cold, the Lean view shows its declaration")
     ap.add_argument("--unlinked-cold", action="append", default=[], metavar="PAGE",
-                    help="a page (empty for the paper) whose opening has nothing tied: opened cold on the Lean view, it shows the whole proof map")
-    ap.add_argument("--linked-equation", action="append", default=[], metavar="PAGE|NUMBER",
-                    help="a numbered display (\"1.1\") tied to Lean: clicked on the Lean view, it shows its declaration")
+                    help="a page (empty for the paper) whose opening has nothing tied: opened cold on the Lean view, it shows the whole proof map; skipped where PAGE is not served")
+    ap.add_argument("--linked-equation", action="append", default=[], metavar="PAGE|NUMBER[|SOURCE]",
+                    help="a numbered display (\"1.1\") tied to Lean, optionally with its file and lines (\"Defs.lean, lines 26 to 33\"): clicked on the Lean view, it shows that declaration; skipped where PAGE is not served")
     ap.add_argument("--lean-addresses", action="store_true", help="the phrase and result addresses, opened on the Lean view, show a declaration")
     ap.add_argument("--companion", action="append", default=[], metavar="PAGE[/@ID]",
                     help="a companion page (or a phrase address on it) that must open its own text, never the edition error")
@@ -717,7 +733,7 @@ def main() -> int:
         if not args.pdf_only:
             selection_checks(browser, base, args, check)
         if args.unlinked or args.linked or args.unlinked_cold or args.linked_equation or args.lean_addresses:
-            unlinked_checks(browser, base, args, check)
+            unlinked_checks(browser, base, args, check, lambda name: report.__setitem__(name, {"ok": True, "detail": "page not served in this build"}))
         # Each companion named opens its own text with its phrases, from its own edition, never the
         # edition error; a phrase address on one also opens that phrase's card.
         for width, height in SIZES:
