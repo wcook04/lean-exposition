@@ -19,8 +19,17 @@ git -C "$pub" fetch -q origin 2>/dev/null || true
 git -C "$pub" checkout -q main 2>/dev/null || git -C "$pub" checkout -q -b main
 git -C "$pub" reset -q --hard origin/main 2>/dev/null || true
 if [ "$paper" != "--index" ]; then
-  rm -rf "${pub:?}/$paper"
-  cp -R site/dist "$pub/$paper"
+  # Served at its id, or at its instance's own path (a document of another paper: pcp/reading-guide).
+  # Replacing a paper's folder keeps the folders of the papers served inside it (marked .library-paper).
+  at=$("$PY" -c 'import json,sys; i=json.load(open(sys.argv[1])); print(i.get("path") or i["id"])' "instances/$paper/instance.json")
+  keep=$(mktemp -d)
+  if [ -d "$pub/$at" ]; then for d in "$pub/$at"/*/; do [ -f "$d.library-paper" ] && mv "$d" "$keep/"; done; fi
+  rm -rf "${pub:?}/$at"
+  mkdir -p "$(dirname "$pub/$at")"
+  cp -R site/dist "$pub/$at"
+  echo "$paper" > "$pub/$at/.library-paper"
+  for d in "$keep"/*/; do [ -d "$d" ] && mv "$d" "$pub/$at/"; done
+  rm -rf "$keep"
 fi
 # Papers are the top-level folders; _index/ holds the index's own files.
 published=$(cd "$pub" && ls -d */ 2>/dev/null | tr -d / | { grep -v '^_' || true; } | tr '\n' ' ')
