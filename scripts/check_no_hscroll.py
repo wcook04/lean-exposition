@@ -185,6 +185,8 @@ def main() -> int:
                 expand = page.locator(".math-cue:not([hidden]) .math-cue__expand").first
                 if expand.count():
                     expand.scroll_into_view_if_needed()
+                    source_font = expand.evaluate("""button => parseFloat(getComputedStyle(
+                        button.parentElement.previousElementSibling.querySelector('.katex')).fontSize)""")
                     expand.click()
                     page.wait_for_selector("dialog.modal--formula[open]", timeout=5000)
                     page.wait_for_timeout(400)
@@ -195,16 +197,29 @@ def main() -> int:
                       return { sideways, out: +(Math.max(0, ...parts) - mr.right).toFixed(1), wide: +(d.getBoundingClientRect().width / innerWidth).toFixed(3),
                         box: Math.round(mr.width), fit: m.dataset.fit || '', form: m.dataset.form || '', number: n ? Math.round(n.getBoundingClientRect().width) : 0,
                         katex: k ? Math.round(k.getBoundingClientRect().width) : 0, align: m.dataset.align || '', font: k ? getComputedStyle(k.querySelector('.katex')).fontSize : '' }; }""")
+                    dialog = page.locator("dialog.modal--formula[open]")
+                    nested_expand = dialog.get_by_role("button", name="Show the formula larger").count()
+                    expanded_font = float(inside["font"].removesuffix("px"))
+                    shrank = expanded_font + 0.1 < source_font
                     if args.shots:
                         args.shots.mkdir(parents=True, exist_ok=True)
                         page.screenshot(path=str(args.shots / f"{slot}-expand-{width}.png"))
+                    resized_font = None
+                    if width == 390 and inside["fit"] == "squeezed":
+                        page.set_viewport_size({"width": 768, "height": height})
+                        page.wait_for_timeout(400)
+                        resized_font = dialog.locator(".math-display > .katex-display > .katex").evaluate(
+                            "el => parseFloat(getComputedStyle(el).fontSize)")
+                    stale_size = resized_font is not None and resized_font <= expanded_font
                     page.keyboard.press("Escape")
                     page.wait_for_timeout(300)
                     closed = page.locator("dialog.modal--formula[open]").count() == 0
-                    bad = inside["sideways"] or inside["out"] > 1 or inside["wide"] < 0.9 or not closed
-                    print(f"{'FAIL' if bad else 'ok  '} {tag}: Expand {inside}, closed by Escape {closed}", flush=True)
+                    if resized_font is not None:
+                        page.set_viewport_size({"width": width, "height": height})
+                    bad = inside["sideways"] or inside["out"] > 1 or inside["wide"] < 0.9 or shrank or nested_expand or stale_size or not closed
+                    print(f"{'FAIL' if bad else 'ok  '} {tag}: Expand {inside} from {source_font}px, resized font {resized_font}, nested Expand {nested_expand}, closed by Escape {closed}", flush=True)
                     if bad:
-                        failures.append(f"{tag}: Expand {inside}, closed by Escape {closed}")
+                        failures.append(f"{tag}: Expand {inside} from {source_font}px, resized font {resized_font}, nested Expand {nested_expand}, closed by Escape {closed}")
                 if args.shots:
                     args.shots.mkdir(parents=True, exist_ok=True)
                     for label in page.evaluate(WIDEST, labels):
