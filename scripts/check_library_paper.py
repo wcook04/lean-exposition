@@ -53,7 +53,7 @@ def main() -> int:
     ap.add_argument("--shots", type=Path)
     ap.add_argument("--budget", type=float, default=8.0)
     ap.add_argument("--phrase", default="e01.abstract.bounded-velocity")
-    ap.add_argument("--result", default="theorem-1.1")
+    ap.add_argument("--result", default="theorem-1.1", help="a numbered result's address; empty for a paper with none (the SK short paper)")
     ap.add_argument("--decl", default="TorusEuler.EulerSingularityWitness")
     ap.add_argument("--section", default="5.6")
     ap.add_argument("--raw-check", action="append", default=[], help="a Lean name whose card must show no raw TeX")
@@ -126,7 +126,7 @@ def main() -> int:
                 page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
             # Each kind of address.
             for kind, path, expect in (
-                ("result", f"{args.result}/", "Theorem"),
+                *((("result", f"{args.result}/", "Theorem"),) if args.result else ()),
                 ("phrase", f"@{args.phrase}", "AI-assessed"),
                 ("lean", f"lean/{args.decl}", args.decl.rsplit(".", 1)[-1]),
             ):
@@ -144,7 +144,7 @@ def main() -> int:
             # if any, is not an introduction before it.
             fresh = browser.new_context(viewport={"width": width, "height": height})
             probe = fresh.new_page()
-            probe.goto(base + f"{args.result}/")
+            probe.goto(base + (f"{args.result}/" if args.result else ""))
             probe.wait_for_selector(".paper .tie", timeout=60000)
             probe.wait_for_timeout(2500)
             title = " ".join(w.capitalize() if i == 0 else w.upper() if re.fullmatch(r"[a-z](\.\d+)*", w) else w
@@ -155,8 +155,9 @@ def main() -> int:
                 const top = (el) => el ? Math.round(el.getBoundingClientRect().top) : null;
                 return { label: top(label), pin: top(pin) };
             }""", title)
-            check(f"{tag} result lands on its statement", place["label"] is not None and 0 <= place["label"] <= height
-                  and (place["pin"] is None or place["pin"] >= place["label"] - 2), f"{title}: {place}")
+            if args.result:
+                check(f"{tag} result lands on its statement", place["label"] is not None and 0 <= place["label"] <= height
+                      and (place["pin"] is None or place["pin"] >= place["label"] - 2), f"{title}: {place}")
             # A retired phrase link opens its notice and lights no other phrase.
             with urllib.request.urlopen(base + "addresses.json") as response:
                 retired = sorted(json.loads(response.read()).get("retired") or {})

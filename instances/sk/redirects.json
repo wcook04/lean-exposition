@@ -22,7 +22,11 @@
  ],
  "files": [
   "pdf",
-  "verification"
+  "verification",
+  "short/paper.pdf",
+  "long/reasoning-record.pdf",
+  "expository/main.pdf",
+  "favicon.svg"
  ],
  "examples": [
   [
@@ -100,6 +104,14 @@
   [
    "https://wcook04.github.io/lean-exposition-site/llms.txt",
    "https://wcook04.github.io/library/sk/llms.txt"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/lean/",
+   "https://wcook04.github.io/library/sk/lean/"
+  ],
+  [
+   "https://wcook04.github.io/lean-exposition-site/read/expository/#app:lean",
+   "https://wcook04.github.io/library/sk/exposition/#app:lean"
   ]
  ]
 }

@@ -22,7 +22,11 @@
  ],
  "files": [
   "pdf",
-  "verification"
+  "verification",
+  "short/paper.pdf",
+  "long/reasoning-record.pdf",
+  "expository/main.pdf",
+  "favicon.svg"
  ],
  "examples": [
   [
@@ -100,6 +104,14 @@
   [
    "https://wcook04.github.io/erdos-257-reader/llms.txt",
    "https://wcook04.github.io/library/erdos-257/llms.txt"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/lean/",
+   "https://wcook04.github.io/library/erdos-257/lean/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/expository/#app:lean",
+   "https://wcook04.github.io/library/erdos-257/exposition/#app:lean"
   ]
  ]
 }

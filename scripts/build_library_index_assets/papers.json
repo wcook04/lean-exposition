@@ -20,21 +20,8 @@
   },
   {
    "id": "sk",
-   "title": "Why the Sherrington–Kirkpatrick order parameter has no gaps",
-   "authors": ["OpenAI (the proof and its Lean)", "Will Cook, using AI (the three papers)"],
-   "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1.",
-   "credit": "The proof and its Lean are OpenAI’s. Hong-Bin Chen first proved that a minimising order parameter has no gaps.",
-   "where": "On its current site, SK Reader.",
-   "href": "https://wcook04.github.io/lean-exposition-site/",
-   "counts": {"phrases": 707, "statements": 250, "lean": 399},
-   "colours": "examples/qaoa-sk/alignment/colours-short.json",
-   "colour_phrases": "examples/qaoa-sk/alignment/phrases-short.json",
-   "counted_from": "lean-exposition examples/qaoa-sk/alignment/phrases-*.json",
-   "pages": [
-    {"title": "Short paper", "href": "https://wcook04.github.io/lean-exposition-site/read/short/"},
-    {"title": "Exposition", "href": "https://wcook04.github.io/lean-exposition-site/read/expository/"},
-    {"title": "Long record", "href": "https://wcook04.github.io/lean-exposition-site/read/long/"}
-   ]
+   "library": true,
+   "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1."
   },
   {
    "id": "quartic",

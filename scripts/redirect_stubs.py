@@ -124,6 +124,7 @@ def write(paper: str, out: Path, dist: Path | None) -> int:
         source = (dist / name) if dist else None
         if not source or not source.exists():
             raise SystemExit(f"{name}: not in the library build {dist}; build the paper first")
+        (out / name).parent.mkdir(parents=True, exist_ok=True)
         if source.is_dir():
             shutil.copytree(source, out / name)
             copied += sum(1 for p in (out / name).rglob("*") if p.is_file())
