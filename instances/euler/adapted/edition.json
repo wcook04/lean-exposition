@@ -13,14 +13,14 @@
   "group": "edition",
   "group_title": "Adapted edition",
   "order": 0,
-  "credit": "Reading edition, 22 November 2026. Will Cook adapted the authors' 20 November manuscript (revision fd3a158) with AI assistance. The proof and numbered results are the authors'. This edition reorganizes the exposition, annotates the figures and adds calculations, including the fixed-particle integral after Corollary 8.3. The authors' Lean formalization follows their manuscript.",
+  "credit": "Adapted by Will Cook with AI assistance from the authors' manuscript.",
   "published": true,
   "pdf": {
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "sha256": "1e2af1ed54ea68d195a0e83cb067d4f294daf43602411384f0bbb35256dd729f",
-   "bytes": 819113
+   "sha256": "55f27c96dbbafc6016e9ddcbe290e2fdda90cb002b4d0d2ffcbe20c0378b5915",
+   "bytes": 821178
   },
   "aux_pdf": {
    "file": "aux.pdf",
@@ -30,49 +30,49 @@
    "bytes": 139966
   },
   "release": {
-   "version": 4,
+   "version": 5,
    "date": "2026-11-22",
    "notes": [
-    "Revises the introduction and the proof explanations in response to two expert readings.",
-    "Identifies the source edition and explains why the wave growth, pressure bound, and stage estimates are needed together."
+    "Explains how the wave turns after its amplitude peak and which shear is available for the next launch.",
+    "Corrects the level-by-level forcing description and derives the terminal spatial Hölder bound."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "euler-adapted-v4.pdf",
+   "name": "euler-adapted-v5.pdf",
    "label": "Reading copy",
-   "bytes": 568096,
-   "sha256": "ca25777bd699484e49e83bb04fa8179fb6bed70f960d76df7a065026567794bb"
-  },
-  "aux_reading_pdf": {
-   "file": "aux-reading.pdf",
-   "name": "euler-adapted-auxiliary-v4.pdf",
-   "label": "Auxiliary note",
-   "bytes": 108998,
-   "sha256": "f9953ce5a7ebee0d455fa06f44ebb374d52a142f11485202d5f7565d91ed2cd1"
-  },
-  "source_overlay": {
-   "file": "source-overlay.zip",
-   "name": "euler-adapted-v4-source-overlay.zip",
-   "label": "TeX revisions against the authors’ source",
-   "bytes": 72691,
-   "sha256": "abf2f1f886f769677f354f3cf71ebaa7e7681fd22c38a4f97498946333913506"
+   "sha256": "fd93dd08d460a5d2599993c15ca37debac75f757bbfd17b9069e7e84a751f199",
+   "bytes": 570843
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 110323,
-    "sha256": "8643513e7667d01700c0583eef9f677c83f22042dd4f181b02df104de6d3fd17"
+    "sha256": "f0907c67160358c15599c1708ae6835b0709cb70fff37ec60feaeffe30ee5e57",
+    "bytes": 110323
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 139462,
-    "sha256": "4e57d43d11f6083f80454b1eb1308759b5d7d5aa0be029fe905f5a4d196c5002"
+    "sha256": "d31ec85bf42341324f011b47fd8a7299f68c039be670840fbd4faa1fcc28110c",
+    "bytes": 139462
    }
+  },
+  "aux_reading_pdf": {
+   "file": "aux-reading.pdf",
+   "name": "euler-adapted-auxiliary-v5.pdf",
+   "label": "Auxiliary note",
+   "sha256": "2d1938d2a9d58b34a8a94d3eeaec6bb82fffa6cd86ef262b7623b59acf09ea7e",
+   "bytes": 108998
+  },
+  "source_overlay": {
+   "file": "source-overlay.zip",
+   "name": "euler-adapted-v5-source-overlay.zip",
+   "label": "TeX revisions against the authors’ source",
+   "sha256": "cb626ff46545c28dad963db639307a46c1f425ac5861cf9a79c24ea32d5cb47d",
+   "bytes": 73264
   }
  }
 }

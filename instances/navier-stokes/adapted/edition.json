@@ -19,39 +19,38 @@
    "file": "paper.pdf",
    "name": "adapted-edition-marked.pdf",
    "label": "PDF with change record",
-   "sha256": "ef3a3efe6c06badc32d0b99e73d2c1f94769ecbf65995385ee20b22b8746cd9c",
-   "bytes": 1207055
+   "sha256": "f6ddb259bddeb50494af6f4975ec541d73ab05299d27ce9d24db574cf82ea462",
+   "bytes": 1208319
   },
   "release": {
-   "version": 3,
+   "version": 4,
    "date": "2026-11-22",
    "notes": [
-    "Clarifies the blow-up rate, the convergence norms, and the roles of the whole-space correction and torus localization.",
-    "Expands the certificate and cell estimates and distinguishes the computed fields from the verification reported by the authors.",
-    "The optional change PDF lists the editorial changes in an appendix with links back to the paper."
+    "Introduces the scalar recurrence before the spectral argument.",
+    "Works through the cell flux moment and the weighted Fourier estimate in Appendix B."
    ]
   },
   "reading_pdf": {
    "file": "reading.pdf",
-   "name": "navier-stokes-adapted-v3.pdf",
+   "name": "navier-stokes-adapted-v4.pdf",
    "label": "Reading copy",
-   "bytes": 1146937,
-   "sha256": "d649f9388d4dcc53c844192c371e0b306596e1763527101d113c6a021ade33e4"
+   "sha256": "3481157269c104087941cfbe8c168b347bb875f062b12e74bd1d8b7e5c59236a",
+   "bytes": 1148901
   },
   "result_comparison": {
    "reading": {
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 56498,
-    "sha256": "58d98e0eea11ab45ac06a90c8570b47f72e8af73349164ae1300044cc8d5f690"
+    "sha256": "6976a72d97a3332b447c1665076b7bb90d11270024b8f56ec494e8fbda0a6606",
+    "bytes": 56499
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 109570,
-    "sha256": "72fdc686d01c9bef6dc2ecc4fc2eb85e4ea89e6cf9bd948ec9506cd1a302bd91"
+    "sha256": "24391101c1320d1b4743875c86f9fb873159f85786940b946ce80014c4bffaab",
+    "bytes": 109572
    }
   }
  }

@@ -3,8 +3,8 @@
  "stage": "adapted",
  "state": "draft",
  "path": "papers/adapted.md",
- "content_sha256": "c7fffb0eccd3430e21be6d7107dc32f5b8ccff3ba4826e1ddaf6253aad2e9bac",
- "graph_sha256": "78fb1dcf3db34550feddb54e58e2b09e9848ed2d98ee4a31d4fd450ae4f1bb11",
+ "content_sha256": "9db458383f733a4fe57ee2bb6ea9c975087429706fb905b5c20e3592ea87038a",
+ "graph_sha256": "362b14f1b2aab30d298ba8bf02c59247aa0632f89b95797cfe399dc62dc2c0d4",
  "selected_goal_ids": [
   "navier-stokes.theorem-1.1"
  ],
@@ -470,7 +470,7 @@
   },
   {
    "anchor": "sec-finite-time-blow-up-for-the-navier-stokes-equations",
-   "text_sha256": "2306b2b5e279c72dec31cec18b7a94c06feedc5c00d163642f9e0f66cfd12f82",
+   "text_sha256": "7a928a6c62d1ffd46f04a5d42c4cf4b8ed73a8749bbb38862443a6cabdfc0772",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],
@@ -488,7 +488,7 @@
   },
   {
    "anchor": "sec-1",
-   "text_sha256": "b9fd2c89f808b34c5912fbce10751f9949db3e465c767e41a1d47e8ebaad3664",
+   "text_sha256": "18b0edf17bd2ec82f492aac0ed1252d51ca662ed6c4f9e0ab38b05f707cfb07d",
    "claim_ids": [
     "navier-stokes.theorem-1.1"
    ],
@@ -983,7 +983,7 @@
   },
   {
    "anchor": "sec-7",
-   "text_sha256": "b91c9106e9df30ff509f12437355410d45e73e56b820cf2654139dbe81bce534",
+   "text_sha256": "1600e0068cc7db52d88b3d8367be8e83e2fcbc3ff9667f6af957554de16c46c9",
    "claim_ids": [
     "navier-stokes.theorem-7.1",
     "navier-stokes.corollary-7.2",
@@ -1152,7 +1152,7 @@
   },
   {
    "anchor": "sec-appendix-b",
-   "text_sha256": "94b07dce8b13c4d12aed41625086e795d59081011a950fc9e00e315182c9517b",
+   "text_sha256": "74e8b80ab871913ee09c846c6e7d9580633f638a5fbd90a52e530a492a53886a",
    "claim_ids": [
     "navier-stokes.proposition-b.1",
     "navier-stokes.lemma-b.2",
@@ -1328,7 +1328,7 @@
   },
   {
    "anchor": "sec-appendix-c",
-   "text_sha256": "52c72734a8bdbc74b1070b83723a8fc320395ed5afa0f2d11cb25b7b69ecd8d5",
+   "text_sha256": "9918218dd7534009636a9c846bb4968a731738f5ffd94b75dca209e90bd66ca8",
    "claim_ids": [],
    "citation_ids": [],
    "assumption_ids": [],

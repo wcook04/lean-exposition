@@ -4,7 +4,7 @@ Follow the links to the original and adapted statements and any Lean declaration
 
 ### Theorem 1.1
 
-[Authors’ statement](../?l=b4441-5170) · [Adapted statement](../adapted/?l=b2886-3615)
+[Authors’ statement](../?l=b4441-5170) · [Adapted statement](../adapted/?l=b2875-3604)
 
 **Same mathematical strength.** This statement gives the smooth odd Euler solution with finite maximal time, bounded velocity, vorticity blow-up, the two divergent integrals and both off-origin limits. It makes uniqueness of the maximal velocity and its lifespan explicit.
 
@@ -16,7 +16,7 @@ Follow the links to the original and adapted statements and any Lean declaration
 
 ### Remark 1.2
 
-[Authors’ statement](../?l=b5171-5388) · [Adapted statement](../adapted/?l=b4197-4498)
+[Authors’ statement](../?l=b5171-5388) · [Adapted statement](../adapted/?l=b4028-4329)
 
 **In the adapted edition.** The revised remark specifies a smooth extension of the field through the terminal time away from the origin. The Euler equations are imposed for the pre-terminal solution.
 
@@ -26,7 +26,7 @@ Follow the links to the original and adapted statements and any Lean declaration
 
 ### Lemma 1.3
 
-[Authors’ statement](../?l=b34337-34525) · [Adapted statement](../adapted/?l=b39817-40005)
+[Authors’ statement](../?l=b34337-34525) · [Adapted statement](../adapted/?l=b39797-39985)
 
 **Lean is stronger.** Let $b\ge1$ be an integer and $K(s)=320b(s+1)$. Assume $\mathcal B(s)>0$ and $\log\mathcal B(s)\ge4K(s+1)^3$ for $s\ge1$, $q_1=1$, $\lambda_0\ge\mathcal B(1)$, $\lambda_j=\lambda_{j-1}^{K(q_j)}$, and $q_{j+1}=\max\{1\le s\le q_j+1:\mathcal B(s)\le\lambda_{j-1}\}$ for $j\ge1$. The formal statement proves $q_j\le q_{j+1}\le q_j+1$, $q_j\to\infty$, and $4\log\lambda_{j+2}\le(\log\lambda_{j-1})^2$ for every $j\ge1$. The last formula is exactly (1.15), since $L_i=4\log\lambda_{i+1}$. The maximum is the greatest admissible integer. In the paper, $\mathcal B$ is also nondecreasing and dominates the fixed-order analytic constants, and $b$ is fixed by the later construction. The formal statement does not assume these two conditions; it proves the same three assertions from $\mathcal B(s)>0$ and the lower bound (1.13) alone. Frequencies are real, while derivative orders and the exponents $K(s)$ are nonnegative integers; the hypotheses force the relevant frequencies to be positive.
 
@@ -34,7 +34,7 @@ Follow the links to the original and adapted statements and any Lean declaration
 
 ### Lemma 2.1
 
-[Authors’ statement](../?l=b36920-37555) · [Adapted statement](../adapted/?l=b43123-43758)
+[Authors’ statement](../?l=b36920-37555) · [Adapted statement](../adapted/?l=b43103-43738)
 
 **Lean is stronger.** Let $J$ be an interval on which relative time derivatives are unique. The formal statement assumes a differentiable spatial linear map $D(t)$ with $\operatorname{tr}D=0$ and symmetric $D'+D^2$, together with $k'=-D^Tk$ and $\mathbf a'=-D\mathbf a+2(k\cdot D\mathbf a)k/|k|^2$. For differentiable $F$ and any primitive $P'=F$, it proves that $u(t,x)=D(t)x+\mathbf a(t)F(k(t)\cdot x)$ is divergence free and satisfies the Euler momentum equation on $\mathbb R^3$ whenever $k\cdot\mathbf a=0$ throughout $J$. The pressure is exactly $-x\cdot(D'+D^2)x/2-p_{\rm w}P(k\cdot x)$. The needed time and spatial differentiability of the velocity and spatial differentiability of the pressure are included. If $k,\mathbf a$ are nonzero and perpendicular at one $t_0\in J$, these properties persist at every $t\in J$, including times before $t_0$.
 
@@ -44,7 +44,7 @@ The paper assumes smooth $D$, a smooth odd one-periodic profile with $F'(0)=1$, 
 
 ### Lemma 2.2
 
-[Authors’ statement](../?l=b39275-39820) · [Adapted statement](../adapted/?l=b45892-46437)
+[Authors’ statement](../?l=b39275-39820) · [Adapted statement](../adapted/?l=b45872-46417)
 
 **Lean is stronger.** For nonzero perpendicular paths $k,\mathbf a\in\mathbb R^3$ satisfying $k\prime=-B^Tk$ and $\mathbf a\prime=-B\mathbf a+2(k\cdot B\mathbf a)k/|k|^2$ on a time set $J$, with $\operatorname{tr}B=0$, define $E_1=k/|k|$, $E_2=\mathbf a/|\mathbf a|$, $E_3=E_1\times E_2$, $B_{ij}=E_i\cdot BE_j$, and $\sigma=|k||\mathbf a|$. The formal statement gives an orthonormal frame and precisely the four identities $E_1'=-B_{12}E_2-B_{13}E_3$, $E_2'=B_{12}E_1-B_{32}E_3$, $E_3'=B_{13}E_1+B_{32}E_2$, and $(\log\sigma)'=B_{33}$. The three frame positions correspond in order to the paper’s subscripts $1,2,3$. Nonvanishing and perpendicularity are explicit hypotheses at every time in the set under consideration; a defined normalized triple alone would not guarantee orthonormality.
 
@@ -54,7 +54,7 @@ The paper assumes a smooth background $B$ on an interval. The formal statement d
 
 ### Lemma 2.3
 
-[Authors’ statement](../?l=b45839-46988) · [Adapted statement](../adapted/?l=b52927-54076)
+[Authors’ statement](../?l=b45839-46988) · [Adapted statement](../adapted/?l=b52908-54057)
 
 **Lean is stronger.** Let $B,E_c$ be continuous on compact $I\ni t_0$, with $\operatorname{tr}B=0$. On $I$, let $k_p,\mathbf a_p\ne0$, $k_p\cdot\mathbf a_p=0$, $k_p'=-B^Tk_p$, $\mathbf a_p'=-B\mathbf a_p+2(k_p\cdot B\mathbf a_p)k_p/|k_p|^2$. Physical derivatives are relative to $I$. Put $E_1=k_p/|k_p|$, $E_2=\mathbf a_p/|\mathbf a_p|$, $E_3=E_1\times E_2$, $B_{ij}=E_i\cdot BE_j$, $\sigma_p=|k_p||\mathbf a_p|$, $\sigma=\sigma_p(t_0)$, $\nu=B_{12}(t_0)>0$, $\eta=B_{32}(t_0)>0$, $r=\sqrt{2\sigma\nu}$, $S=\sigma/r$, $\varepsilon=\eta/\nu$, $\tau=r(t-t_0)$. Assume $T\ge2$, $[t_0,t_0+T/r]\subset I$, and $k'=-M^Tk$ on $I$, $k(t_0)=\lambda E_3(t_0)$, $\lambda>0$, where $M=B+\mathbf a_p\otimes k_p+E_c$. On $0\le\tau\le T$, require $B_{12}=\nu$, $B_{32}=\eta$, all other frame entries zero, and $E_c=0$. Define $\zeta=(k\cdot E_1,Sk\cdot E_2,k\cdot E_3)/\lambda$ and $\alpha=(S\mathbf a\cdot E_1,\mathbf a\cdot E_2,S\mathbf a\cdot E_3)$. Then $|k_p||\mathbf a_p|=\sigma$ and $\zeta'=(-(1+1/(2S^2))\zeta_2,-\varepsilon\zeta_3,\varepsilon\zeta_2/(2S^2))$. Every transverse amplitude solving $\mathbf a'=-M\mathbf a+2(k\cdot M\mathbf a)k/|k|^2$ satisfies $\alpha_1'=-\alpha_2+\zeta_1\Pi$, $\alpha_2'=-(1-1/(2S^2))\alpha_1+\varepsilon(\zeta_1\alpha_1+\zeta_2\alpha_2)/(2S^2\zeta_3)+\zeta_2\Pi/S^2$, where $\zeta_3\ne0$ and $\Pi=[2\zeta_2\alpha_1+(\zeta_1+\varepsilon\zeta_3)\alpha_2]/[\zeta_1^2+\zeta_2^2/S^2+\zeta_3^2]$.
 
@@ -66,7 +66,7 @@ The statement additionally includes $\zeta_3\ne0$ beyond that common threshold. 
 
 ### Lemma 2.4
 
-[Authors’ statement](../?l=b52505-53272) · [Adapted statement](../adapted/?l=b59738-60505)
+[Authors’ statement](../?l=b52505-53272) · [Adapted statement](../adapted/?l=b59719-60486)
 
 **Lean is stronger.** Let $B,E_c$ be continuous on compact $I\ni t_0$, with $\operatorname{tr}B=0$. On $I$, let $k_p,\mathbf a_p\ne0$, $k_p\cdot\mathbf a_p=0$, $k_p'=-B^Tk_p$, $\mathbf a_p'=-B\mathbf a_p+2(k_p\cdot B\mathbf a_p)k_p/|k_p|^2$. Physical derivatives are relative to $I$. Put $E_1=k_p/|k_p|$, $E_2=\mathbf a_p/|\mathbf a_p|$, $E_3=E_1\times E_2$, $B_{ij}=E_i\cdot BE_j$, $\sigma_p=|k_p||\mathbf a_p|$, $\sigma=\sigma_p(t_0)$, $\nu=B_{12}(t_0)>0$, $\eta=B_{32}(t_0)>0$, $r=\sqrt{2\sigma\nu}$, $S=\sigma/r$, $\varepsilon=\eta/\nu$, $\tau=r(t-t_0)$. Assume $T\ge2$, $[t_0,t_0+T/r]\subset I$, and $k'=-M^Tk$ on $I$, $k(t_0)=\lambda E_3(t_0)$, $\lambda>0$, where $M=B+\mathbf a_p\otimes k_p+E_c$. Define $\delta=\sup_I|B_{12}/\nu-1|+\sup_I|B_{32}/\eta-1|+\sup_I\|B\|/r+\sup_I\|E_c\|/\nu$. For sufficiently large integer $C_0$, assume $C_0\varepsilon\le1$ and $C_0T^{C_0}\delta\le\varepsilon$. With $\zeta=(k\cdot E_1,Sk\cdot E_2,k\cdot E_3)/\lambda$ and $\varphi=\arctan(\varepsilon\tau^2/2)$, the formal statement gives $|\zeta-(\tan\varphi,-\varepsilon\tau,1)|$, $||k|^2\cos^2\varphi/\lambda^2-1|\le CT^p\delta\le1/2$, $1/2\le\zeta_3\le3/2$, $|\zeta|\le3T^2$, and $|\sigma_p/\sigma-1|\le2T\delta$. One continuous $\mathcal E$ satisfies $\|\mathcal E\|\le CT^p\delta$ and $\alpha'=[-\bigl(\begin{smallmatrix}\varepsilon\tau\sin2\varphi&\cos^2\varphi(1-\varepsilon\tan\varphi)\\1&0\end{smallmatrix}\bigr)+\mathcal E]\alpha$ for every $\mathbf a'=-M\mathbf a+2(k\cdot M\mathbf a)k/|k|^2$, $k\cdot\mathbf a=0$ on $I$, where $\alpha=(S\mathbf a\cdot E_1,\mathbf a\cdot E_2)$. Absolute $C$ and integers $p,N$ precede $C_0\ge N$ and all data. Bounds concern $[0,T]$; vector norms are Euclidean, pair operator norms use the maximum norm.
 
@@ -76,7 +76,7 @@ The comparison with the printed lemma concerns three specific choices. First, th
 
 ### Lemma 2.5
 
-[Authors’ statement](../?l=b59901-60598) · [Adapted statement](../adapted/?l=b67311-68008)
+[Authors’ statement](../?l=b59901-60598) · [Adapted statement](../adapted/?l=b67292-67989)
 
 **Same mathematical strength.** For $0<\varepsilon\le1$, let $\varphi=\arctan(\varepsilon\tau^2/2)$ and consider $Y'=\cos^2\varphi(1-\varepsilon\tan\varphi)-\varepsilon\tau\sin(2\varphi)Y-Y^2$, $Y(0)=1$, on $[0,\infty)$. There is a unique solution on that half-line, with $|Y|\le1$ and $Y=(1+e)\cos\varphi-\varepsilon\tau\sin(2\varphi)/4$ for one function $0\le e\le\varepsilon/8$. Its amplitude $a_{\rm ref}=\exp\int_0^\tau Y$ equals $\sqrt{\cos\varphi}\exp\int_0^\tau(1+e)\cos\varphi$. It has its global maximum at the unique zero $\tau_m$ of $Y$, with $2\le\varepsilon\tau_m\le3$, positive $Y$ before and negative $Y$ after, and $\log a_{\rm ref}(\tau_m)\ge\varepsilon^{-1/2}-1$. The formal statement therefore retains all the conclusions of Lemma 2.5. It makes uniqueness on $[0,\infty)$ explicit, matching the paper’s reference to “the solution,” and uses one common deviation $e$ in both representations. The equation, bounds and uniqueness concern only $\tau\ge0$, with a right derivative at zero; negative-time values are unrestricted. The statement does not assert that the perturbed amplitude has its maximum at the reference turning time.
 
@@ -84,7 +84,7 @@ The comparison with the printed lemma concerns three specific choices. First, th
 
 ### Lemma 2.6
 
-[Authors’ statement](../?l=b65832-66700) · [Adapted statement](../adapted/?l=b73400-74268)
+[Authors’ statement](../?l=b65832-66700) · [Adapted statement](../adapted/?l=b73493-74361)
 
 **Lean is stronger.** Let $B,E_c$ be continuous on compact $I\supset[t_0,t_0+T/r]$, with $\operatorname{tr}B=0$ and nonzero perpendicular preceding wave data satisfying $k_p\prime=-B^Tk_p$, $\mathbf a_p\prime=-B\mathbf a_p+2(k_p\cdot B\mathbf a_p)k_p/|k_p|^2$. Set $E_1=\widehat{k_p}$, $E_2=\widehat{\mathbf a_p}$ and $E_3=E_1\times E_2$; $B_{ij}=E_i\cdot BE_j$. Physical derivatives are relative to $I$; for interval $I$, endpoint derivatives are one-sided. Put $\sigma=|k_p(t_0)||\mathbf a_p(t_0)|$, $\nu=B_{12}(t_0)>0$, $\eta=B_{32}(t_0)>0$, $r=\sqrt{2\sigma\nu}$, $S=\sigma/r$, $\varepsilon=\eta/\nu$, and $\delta=\sup_I|B_{12}/\nu-1|+\sup_I|B_{32}/\eta-1|+\sup_I\|B\|/r+\sup_I\|E_c\|/\nu$. Assume $T\ge2$ and $C_0\varepsilon\le1$, $C_0T^{C_0}\delta\le\varepsilon$ for sufficiently large integer $C_0$. In physical time, the new wave solves $k'=-M^Tk$, $\mathbf a'=-M\mathbf a+2(k\cdot M\mathbf a)k/|k|^2$, $k\cdot\mathbf a=0$, with $M=B+\mathbf a_p\otimes k_p+E_c$, $k(t_0)=\lambda E_3(t_0)$, $\lambda>0$, and $\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$. Use $\tau=r(t-t_0)$, $\alpha_1=S\mathbf a\cdot E_1$, $\alpha_2=\mathbf a\cdot E_2$, $\varphi=\arctan(\varepsilon\tau^2/2)$, and $a_{\rm ref}=\exp\int_0^\tau Y$ with $Y\prime=\cos^2\varphi(1-\varepsilon\tan\varphi)-\varepsilon\tau\sin(2\varphi)Y-Y^2$, $Y(0)=1$, on $[0,\infty)$. The formal statement gives $\alpha_2>0$, $|\alpha_1/\alpha_2+Y|\le CT^p\delta$, $\alpha_2\le|\mathbf a|\le(1+CT^p\delta)\alpha_2$, and $|\log(|\mathbf a|/a_{\rm ref})|\le\varepsilon$ at every $\tau\in[0,T]$. It also supplies an invertible linear propagator from $k(\tau_1)^\perp$ onto $k(\tau_2)^\perp$ for $0\le\tau_1\le\tau_2\le T$, agreeing with every transverse amplitude solution and satisfying $\|\Phi\|\le252\exp(1)S|\mathbf a(\tau_2)|/|\mathbf a(\tau_1)|$ in the Euclidean operator norm. These retain all conclusions of Lemma 2.6 and specify its propagator constant. The generalization is from smooth $B$ on the physical interval to continuous $B$ on a compact set containing it. For a larger set, the four suprema defining $\delta$ are also taken over that set, so the smallness condition must still be checked there. The absolute factor $C$, integer exponent $p$ and integer threshold for $C_0$ are chosen before the wave data. The paper’s $CT^C$ notation is recovered by enlarging an absolute constant for $T\ge2$.
 
@@ -92,7 +92,7 @@ The comparison with the printed lemma concerns three specific choices. First, th
 
 ### Lemma 2.7
 
-[Authors’ statement](../?l=b70210-70766) · [Adapted statement](../adapted/?l=b77938-78494)
+[Authors’ statement](../?l=b70210-70766) · [Adapted statement](../adapted/?l=b78031-78587)
 
 **Lean is stronger.** Let $B,E_c$ be continuous on compact $I\supset[t_0,t_0+T/r]$, with $\operatorname{tr}B=0$ and nonzero perpendicular preceding wave data satisfying $k_p\prime=-B^Tk_p$, $\mathbf a_p\prime=-B\mathbf a_p+2(k_p\cdot B\mathbf a_p)k_p/|k_p|^2$. Set $E_1=\widehat{k_p}$, $E_2=\widehat{\mathbf a_p}$ and $E_3=E_1\times E_2$; $B_{ij}=E_i\cdot BE_j$. Physical derivatives are relative to $I$; for interval $I$, endpoint derivatives are one-sided. Put $\sigma=|k_p(t_0)||\mathbf a_p(t_0)|$, $\nu=B_{12}(t_0)>0$, $\eta=B_{32}(t_0)>0$, $r=\sqrt{2\sigma\nu}$, $S=\sigma/r$, $\varepsilon=\eta/\nu$, and $\delta=\sup_I|B_{12}/\nu-1|+\sup_I|B_{32}/\eta-1|+\sup_I\|B\|/r+\sup_I\|E_c\|/\nu$. Assume $T\ge2$ and $C_0\varepsilon\le1$, $C_0T^{C_0}\delta\le\varepsilon$ for sufficiently large integer $C_0$. In physical time, the new wave solves $k'=-M^Tk$, $\mathbf a'=-M\mathbf a+2(k\cdot M\mathbf a)k/|k|^2$, $k\cdot\mathbf a=0$, with $M=B+\mathbf a_p\otimes k_p+E_c$, $k(t_0)=\lambda E_3(t_0)$, $\lambda>0$, and $\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$. Use $\tau=r(t-t_0)$ and $\varphi=\arctan(\varepsilon\tau^2/2)$. Define the new frame by $E_{1,+}=k/|k|$, $E_{2,+}=\mathbf a/|\mathbf a|$, $E_{3,+}=E_{1,+}\times E_{2,+}$ and its couplings by $\nu_+=E_{1,+}\cdot ME_{2,+}$, $\eta_+=E_{3,+}\cdot ME_{2,+}$. The formal statement gives $\nu_+\ge\varepsilon\nu/2$ on $[0,T]$. For $\sqrt2/\varepsilon\le\tau\le T$, it proves $|\nu_+/\nu-1|\le\varepsilon$ and $|(\eta_+/\nu_+)/\cos\varphi-1|\le1/2$. These are exactly the quantitative conclusions of Lemma 2.7, with the same reference angle. The statement is more general in requiring only continuous $B$ and permitting a larger compact observation set; the error $\delta$ must be measured on that set. It does not identify the reference angle with the actual perturbed wave angle, and its conclusion retains the fixed tolerance $1/2$, rather than the intermediate $O(\varepsilon)$ relative-error claim in the paper’s proof. The universal integer threshold for $C_0$ is chosen before all physical wave data. Here hats denote division by Euclidean length.
 
@@ -100,7 +100,7 @@ The comparison with the printed lemma concerns three specific choices. First, th
 
 ### Proposition 2.8
 
-[Authors’ statement](../?l=b77292-78108) · [Adapted statement](../adapted/?l=b84681-85497)
+[Authors’ statement](../?l=b77292-78108) · [Adapted statement](../adapted/?l=b84774-85590)
 
 **Lean is stronger.** Let $B,E_c$ be continuous on compact $I\supset[t_0,t_0+T/r]$, with $\operatorname{tr}B=0$ and nonzero perpendicular preceding wave data satisfying $k_p\prime=-B^Tk_p$, $\mathbf a_p\prime=-B\mathbf a_p+2(k_p\cdot B\mathbf a_p)k_p/|k_p|^2$. Set $E_1=\widehat{k_p}$, $E_2=\widehat{\mathbf a_p}$ and $E_3=E_1\times E_2$; $B_{ij}=E_i\cdot BE_j$. Physical derivatives are relative to $I$; for interval $I$, endpoint derivatives are one-sided. Put $\sigma=|k_p(t_0)||\mathbf a_p(t_0)|$, $\nu=B_{12}(t_0)>0$, $\eta=B_{32}(t_0)>0$, $r=\sqrt{2\sigma\nu}$, $S=\sigma/r$, $\varepsilon=\eta/\nu$, and $\delta=\sup_I|B_{12}/\nu-1|+\sup_I|B_{32}/\eta-1|+\sup_I\|B\|/r+\sup_I\|E_c\|/\nu$. Assume $T\ge2$ and $C_0\varepsilon\le1$, $C_0T^{C_0}\delta\le\varepsilon$ for sufficiently large integer $C_0$. In physical time, the new wave solves $k'=-M^Tk$, $\mathbf a'=-M\mathbf a+2(k\cdot M\mathbf a)k/|k|^2$, $k\cdot\mathbf a=0$, with $M=B+\mathbf a_p\otimes k_p+E_c$, $k(t_0)=\lambda E_3(t_0)$, $\lambda>0$, and $\mathbf a(t_0)=-E_1(t_0)/S+E_2(t_0)$. Use $\tau=r(t-t_0)$ and $\varphi=\arctan(\varepsilon\tau^2/2)$. Here a reference slope means any solution of $Y\prime=\cos^2\varphi(1-\varepsilon\tan\varphi)-\varepsilon\tau\sin2\varphi\,Y-Y^2$, $Y(0)=1$, on $[0,\infty)$. Such a solution is used to characterize the output $\tau_m$; it is not a supplied input to the proposition. Define $E_{1,+}=k/|k|$, $E_{2,+}=\mathbf a/|\mathbf a|$, $E_{3,+}=E_{1,+}\times E_{2,+}$, $\nu_+=E_{1,+}\cdot ME_{2,+}$ and $\eta_+=E_{3,+}\cdot ME_{2,+}$. Assume $0<\varepsilon_+\le\varepsilon/32$ and $H=2/\sqrt{\varepsilon\varepsilon_+}\le T$. The formal statement identifies the unique nonnegative zero $\tau_m$ of every reference slope, with $\tau_m\ge2/\varepsilon$, and supplies a crossing $\eta_+/\nu_+=\varepsilon_+$ in $[\tau_m,H]$. It chooses one attained maximum $A=\max_{[0,T]}|\mathbf a|$. At every crossing in that interval, $\exp(-1)/(4\sqrt{\varepsilon\varepsilon_+})\le|\mathbf a||k|/(\lambda A)\le18\exp(3)/\sqrt{\varepsilon\varepsilon_+}$. On $[0,1]$ it gives $|\mathbf a|\le\exp(3-1/\sqrt\varepsilon)A$. These retain Proposition 2.8 with explicit absolute strength factors and the same early-time factor. Continuous $B$ and a larger compact observation set are permitted, with $\delta$ measured on that set. The proposition does not state uniqueness of a crossing or locate the perturbed amplitude maximum at $\tau_m$. A separate older formal theorem locates a crossing strictly inside the bracket and uses the weaker symmetric lower factor $1/(18\exp(3))$; that is not the exact lower constant of the current formal statement. The universal integer threshold for $C_0$ is chosen before all physical wave data. Here hats denote division by Euclidean length.
 
@@ -108,7 +108,7 @@ The comparison with the printed lemma concerns three specific choices. First, th
 
 ### Lemma 3.1
 
-[Authors’ statement](../?l=b88218-88505) · [Adapted statement](../adapted/?l=b97457-97837)
+[Authors’ statement](../?l=b88218-88505) · [Adapted statement](../adapted/?l=b97550-97930)
 
 **In the adapted edition.** The revised statement specifies periodicity of the primitives, integer derivative orders and uniformity of the constants in the cutoff width.
 
@@ -118,7 +118,7 @@ The comparison with the printed lemma concerns three specific choices. First, th
 
 ### Lemma 4.1
 
-[Authors’ statement](../?l=b93841-94250) · [Adapted statement](../adapted/?l=b103899-104308)
+[Authors’ statement](../?l=b93841-94250) · [Adapted statement](../adapted/?l=b103992-104401)
 
 **Same mathematical strength.** Let $0<T\le1$, let $u$ be a smooth divergence-free velocity on $[0,T]\times\mathbb T^3$, and let $X$ be its flow with $X(0,a)=a$. Write $F=D_aX$, $M=(\nabla u)\circ X$, $H^\#=-(M_t+M^2)$, $K=F^TF$ and $\Omega=F^T(M^T-M)F$. Suppose $w\cdot H^\#(t,a)w\le|w|^2$ for every $t,a,w$; symmetry of $H^\#$ and an Euler equation for $u$ are not assumed.
 
@@ -130,7 +130,7 @@ The formal statement uses periodic lifts to $\mathbb R^3$ for the torus and repr
 
 ### Theorem 4.2
 
-[Authors’ statement](../?l=b95322-95900) · [Adapted statement](../adapted/?l=b106205-106783)
+[Authors’ statement](../?l=b95322-95900) · [Adapted statement](../adapted/?l=b106298-106876)
 
 **Lean is stronger.** On $I=[0,T]$, $0<T\le1$, let $U$ be smooth, unit-periodic and divergence free, $X$ its flow from time zero, $F=D_aX$, $M=(DU)\circ X$, $K=F^TF$, $\Omega=F^T(M^T-M)F$, and $H^\#=-(M_t+M^2)\le I$ as quadratic forms. Assume $\|F^{-1}\|_\infty\le D\ge1$, $\|M\|_\infty\le L$, $\|K\|_\infty\le K_0$, $\|D_aK\|_\infty\le K_1$, $\|\Omega\|_\infty\le\Omega_0$, $\|D_a\Omega\|_\infty\le\Omega_1$, with nonnegative bounds.
 
@@ -144,7 +144,7 @@ For smooth periodic Eulerian $f$, take $g=F^T(f\circ X)$ and $L_{\rm src}=-Jg$. 
 
 ### Proposition 5.1
 
-[Authors’ statement](../?l=b105919-106506) · [Adapted statement](../adapted/?l=b116709-117320)
+[Authors’ statement](../?l=b105919-106506) · [Adapted statement](../adapted/?l=b117062-117673)
 
 **In the adapted edition.** The transport estimate now explicitly assumes spatial smoothness of the field and a nonnegative amplitude bound.
 
@@ -158,7 +158,7 @@ For every $0<\ell_*\le\mathsf D^{-C}$, summing the derivatives with weights $\el
 
 ### Proposition 5.2
 
-[Authors’ statement](../?l=b110085-110359) · [Adapted statement](../adapted/?l=b121102-121376)
+[Authors’ statement](../?l=b110085-110359) · [Adapted statement](../adapted/?l=b121455-121729)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -172,7 +172,7 @@ The derivative loss is exactly one, as in (5.12). Once $a$ is fixed, one integer
 
 ### Lemma 5.3
 
-[Authors’ statement](../?l=b114386-114676) · [Adapted statement](../adapted/?l=b125492-125782)
+[Authors’ statement](../?l=b114386-114676) · [Adapted statement](../adapted/?l=b125845-126135)
 
 **Different formulation.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -190,7 +190,7 @@ The numerical powers, initial-value term and pressure factor agree with (5.19)�
 
 ### Proposition 5.4
 
-[Authors’ statement](../?l=b124798-126025) · [Adapted statement](../adapted/?l=b136355-137582)
+[Authors’ statement](../?l=b124798-126025) · [Adapted statement](../adapted/?l=b136809-138036)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -218,7 +218,7 @@ The final convention is $V_{P+1}=B_{P+1}=0$, hence $Y_{P+1}=Z_{P+1}=C_{P+1}$. Ou
 
 ### Lemma 5.5
 
-[Authors’ statement](../?l=b128740-129419) · [Adapted statement](../adapted/?l=b139753-140432)
+[Authors’ statement](../?l=b128740-129419) · [Adapted statement](../adapted/?l=b140207-140886)
 
 **Different formulation.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -236,7 +236,7 @@ For the leading field $A_1=g\mathbf aF_h$, the formal statement itself supplies 
 
 ### Theorem 5.6
 
-[Authors’ statement](../?l=b131772-132886) · [Adapted statement](../adapted/?l=b142915-144029)
+[Authors’ statement](../?l=b131772-132886) · [Adapted statement](../adapted/?l=b143369-144483)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -268,7 +268,7 @@ These are the powers and index ranges of (5.34)–(5.38). The same expansion sat
 
 ### Lemma 5.7
 
-[Authors’ statement](../?l=b140709-141500) · [Adapted statement](../adapted/?l=b152489-153280)
+[Authors’ statement](../?l=b140709-141500) · [Adapted statement](../adapted/?l=b152943-153734)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -286,7 +286,7 @@ The paper's smooth continuation across cell faces is represented by the globally
 
 ### Lemma 5.8
 
-[Authors’ statement](../?l=b142791-143611) · [Adapted statement](../adapted/?l=b154919-155739)
+[Authors’ statement](../?l=b142791-143611) · [Adapted statement](../adapted/?l=b155373-156193)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -318,7 +318,7 @@ The powers, parity, divergence assertion and activation factor agree with (5.46)
 
 ### Lemma 5.9
 
-[Authors’ statement](../?l=b145788-146157) · [Adapted statement](../adapted/?l=b157666-158068)
+[Authors’ statement](../?l=b145788-146157) · [Adapted statement](../adapted/?l=b158120-158522)
 
 **In the adapted edition.** The pressure Hessian bound explicitly uses the order on quadratic forms.
 
@@ -352,7 +352,7 @@ Both conclusions retain their different time intervals. The formal statement has
 
 ### Lemma 5.10
 
-[Authors’ statement](../?l=b151324-151615) · [Adapted statement](../adapted/?l=b163313-163604)
+[Authors’ statement](../?l=b151324-151615) · [Adapted statement](../adapted/?l=b163767-164058)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -384,7 +384,7 @@ The inverse derivative means the derivative of the transition from time $t$ back
 
 ### Proposition 5.11
 
-[Authors’ statement](../?l=b155361-156485) · [Adapted statement](../adapted/?l=b167472-168596)
+[Authors’ statement](../?l=b155361-156485) · [Adapted statement](../adapted/?l=b167926-169050)
 
 **Lean is stronger.** Let $0<T\le1$, $\mathsf D\ge2$ and $\lambda\ge1$. The parent $U$ is a smooth odd divergence-free field on $[0,T]\times\mathbb T^3$, with Fourier support $|\xi|\le2\mathsf D$ and flow $X$. The bounds $\|\nabla U\|_\infty,\|D_aX\|_\infty,\|(D_aX)^{-1}\|_\infty\le\mathsf D$ hold. For a smooth periodic pressure $p_U$, set $R_U=U_t+U\cdot\nabla U+\nabla p_U$; require $R_U$ odd, supported in $|\xi|\le4\mathsf D$, $\|R_U\|_\infty\le\lambda^{-5/2}$, and $D^2p_U-\nabla R_U\le I$ as quadratic forms. The formal statement imposes these conditions directly. The paper selects the zero-mean Poisson pressure; the formal statement permits any pressure meeting the displayed conditions, without separately requiring $\operatorname{div}R_U=0$.
 
@@ -404,7 +404,7 @@ The exponent $2-P$ is an integer, so it is negative when $P>2$; it is not subtra
 
 ### Lemma 6.1
 
-[Authors’ statement](../?l=b161088-161298) · [Adapted statement](../adapted/?l=b173285-173495)
+[Authors’ statement](../?l=b161088-161298) · [Adapted statement](../adapted/?l=b173739-173949)
 
 **Same mathematical strength.** Let $U_0(x)=\sin(2\pi x_2)(e_1+\rho e_3)$ and $B_\rho=2\pi(e_1+\rho e_3)\otimes e_2$. Assume $0<\rho\le1$, $\lambda\ge1$, $T>0$ and $T\|B_\rho\|\le1/8$. The frequency restriction is the standing assumption of §5.1. The formal statement first asserts existence of central paths $\kappa,\mathbf a$ on $[0,T]$ satisfying $\kappa_t=-B_\rho^T\kappa$ and $\mathbf a_t=-(I-2P_\kappa)B_\rho\mathbf a$, where $P_\kappa$ is orthogonal projection onto $\mathbb R\kappa$. They remain nonzero and perpendicular, start with $\kappa(0)=\lambda e_1$ and $\mathbf a(0)=c e_2$ for some $c>0$, and attain $\max_{[0,T]}|\mathbf a|=\lambda^{-3/4}$.
 
@@ -416,7 +416,7 @@ The formal object records only the data at the origin, which are exactly what th
 
 ### Theorem 7.1
 
-[Authors’ statement](../?l=b168661-169000) · [Adapted statement](../adapted/?l=b181931-182270)
+[Authors’ statement](../?l=b168661-169000) · [Adapted statement](../adapted/?l=b182385-182724)
 
 **Different formulation.** The formal theorem constructs a single sequence of approximate velocities with the principal bounds of Theorem 7.1 and also identifies the expansion and truncation used at each step. Its parameter quantifiers and some identifications of the central wave differ from the paper's contextual description.
 
@@ -436,7 +436,7 @@ Two contextual equalities remain missing from the exported conditions. The local
 
 ### Proposition 8.1
 
-[Authors’ statement](../?l=b184468-184935) · [Adapted statement](../adapted/?l=b198443-198915)
+[Authors’ statement](../?l=b184468-184935) · [Adapted statement](../adapted/?l=b198897-199369)
 
 **In the adapted edition.** The compact time interval explicitly has a nonnegative endpoint.
 
@@ -446,7 +446,7 @@ Two contextual equalities remain missing from the exported conditions. The local
 
 ### Proposition 8.2
 
-[Authors’ statement](../?l=b186220-186374) · [Adapted statement](../adapted/?l=b200246-200400)
+[Authors’ statement](../?l=b186220-186374) · [Adapted statement](../adapted/?l=b200700-200854)
 
 **Lean is stronger.** For the smooth Euler limit of the common construction, the formal statement gives both printed conclusions: one finite bound for the velocity throughout $[0,T_\infty)$ and the full limit $|\operatorname{curl}u(t,0)|\to\infty$. It additionally supplies fixed real constants $c>0,C$ and an index $J$ such that, for every $j\ge J$ and every $t\in[t_j,t_{j+1})$, $|\operatorname{curl}u(t,0)|\ge c\lambda_{j-1}^{1/8}-C\lambda_{j-1}^{1/32}-C$. This bound is for the limiting solution, whereas (8.2) bounds the approximation and uses the older-gradient term $\lambda_{j-2}^9$. The constants are independent of the late index and time. The velocity norm is the essential supremum on the unit cell. The stronger interval estimate, together with crossing-duration bounds, supplies the direct integral argument in the formal Corollary 8.3; a divergent pointwise limit alone would not suffice.
 
@@ -454,7 +454,7 @@ Two contextual equalities remain missing from the exported conditions. The local
 
 ### Corollary 8.3
 
-[Authors’ statement](../?l=b189054-189169) · [Adapted statement](../adapted/?l=b203434-203549)
+[Authors’ statement](../?l=b189054-189169) · [Adapted statement](../adapted/?l=b203888-204003)
 
 **In the adapted edition.** The edition adds a direct integration argument after the proof using the periodic Beale–Kato–Majda criterion. It combines the lower curl bound with a lower bound on the length of each late crossing interval.
 
@@ -464,7 +464,7 @@ Two contextual equalities remain missing from the exported conditions. The local
 
 ### Proposition 8.4
 
-[Authors’ statement](../?l=b189856-190037) · [Adapted statement](../adapted/?l=b205006-205187)
+[Authors’ statement](../?l=b189856-190037) · [Adapted statement](../adapted/?l=b205596-205777)
 
 **Same mathematical strength.** For the Euler limit of the common construction, the formal statement gives both limits in Proposition 8.4. For every compact $K$ avoiding the torus origin and every integer $m\ge0$, $u(t)$ and $\partial_tu(t)$ converge uniformly with all spatial derivatives through order $m$ as $t\uparrow T_\infty$. The torus is represented by periodic functions on $\mathbb R^3$, so a compact observation set avoids every integer lattice point. For each field, compact set and order, the limit is represented by a $C^m$ function on an open neighbourhood of that set. The time derivative is taken within $[0,T_\infty)$, including a right derivative at zero. These are local spatial limits of the velocity and its first time derivative. The statement does not assert that every construction admits one jointly smooth extension through the terminal time; the auxiliary note proves that stronger conclusion after a suitable choice of the construction.
 
@@ -472,7 +472,7 @@ Two contextual equalities remain missing from the exported conditions. The local
 
 ### Theorem A.1
 
-[Authors’ statement](../?l=b192595-193093) · [Adapted statement](../adapted/?l=b208037-208535)
+[Authors’ statement](../?l=b192595-193093) · [Adapted statement](../adapted/?l=b209541-210039)
 
 **Lean is stronger.** On $I=[0,1]$ and $\mathbb T^3=\mathbb R^3/\mathbb Z^3$, let $K(t,a)$ be symmetric and $\Omega(t,a)$ skew-symmetric. Assume $K\ge\kappa I$ for $\kappa>0$ and $\int_0^1(Kz_t\cdot z_t+\Omega z_t\cdot z)\,dt\ge\mu\int_0^1|z_t|^2\,dt$ for every label $a$ and $z\in H^1_0(I;\mathbb R^3)$, with $\mu>0$. The formal numbered statement retains both symmetry assumptions.
 
@@ -486,7 +486,7 @@ The formal $C^{0,1/2}$ norm is the maximum of the supremum norm and the half-Hö
 
 ### Lemma A.2
 
-[Authors’ statement](../?l=b194285-195191) · [Adapted statement](../adapted/?l=b210132-211038)
+[Authors’ statement](../?l=b194285-195191) · [Adapted statement](../adapted/?l=b211636-212542)
 
 **Lean is stronger.** There are two settings: $H=\mathbb R^3$ with $\mathcal R=\mathbb P$, the spatial Leray projection; or $H=L^2(0,1;\mathbb R^3)$ with $\mathcal R=\mathbb P\mathcal Q$, where $\mathcal Qw=w-\int_0^1w(t)\,dt$. Let $B(a)$ be a field of bounded linear operators on $H$, with a supplied bound $L_B\ge0$ such that $\|B(a)-B(b)\|\le L_Bd(a,b)$. Suppose $\langle B(a)w,w\rangle\ge\mu\|w\|^2$ for $\mu>0$ and every label, for all $w$ in the first setting and all zero-time-mean $w$ in the second. Symmetry of $B$ is not required.
 
@@ -500,7 +500,7 @@ The paper assumes $B\in C^{1,1/2}$ already for the base inverse. The formal stat
 
 ### Lemma B.1
 
-[Authors’ statement](../?l=b203508-204329) · [Adapted statement](../adapted/?l=b220071-220956)
+[Authors’ statement](../?l=b203508-204329) · [Adapted statement](../adapted/?l=b221575-222460)
 
 **In the adapted edition.** The derivative commutation is stated for smooth fields and a cutoff scale fixed in time.
 
@@ -516,7 +516,7 @@ Spatial commutation is explicit at every complex order and at first real coordin
 
 ### Lemma D.1
 
-[Authors’ statement](../?l=b209031-209781) · [Adapted statement](../adapted/?l=b226103-226887)
+[Authors’ statement](../?l=b209031-209781) · [Adapted statement](../adapted/?l=b227607-228391)
 
 **In the adapted edition.** The revised statement makes the integer derivative order and label and phase smoothness explicit.
 
@@ -532,7 +532,7 @@ For phase-independent fields and $\gamma=1$, the product estimate also holds in 
 
 ### Lemma D.2
 
-[Authors’ statement](../?l=b210879-210966) · [Adapted statement](../adapted/?l=b227985-228096)
+[Authors’ statement](../?l=b210879-210966) · [Adapted statement](../adapted/?l=b229489-229600)
 
 **In the adapted edition.** The revised statement explicitly assumes a derivative scale of at least one.
 
@@ -542,7 +542,7 @@ For phase-independent fields and $\gamma=1$, the product estimate also holds in 
 
 ### Lemma D.3
 
-[Authors’ statement](../?l=b212500-213780) · [Adapted statement](../adapted/?l=b229630-230953)
+[Authors’ statement](../?l=b212500-213780) · [Adapted statement](../adapted/?l=b231134-232457)
 
 **In the adapted edition.** The zero-order estimate is a hypothesis on every admissible solution with its own forcing and prescribed data.
 
@@ -552,7 +552,7 @@ For phase-independent fields and $\gamma=1$, the product estimate also holds in 
 
 ### Auxiliary note · Theorem 1.1
 
-[Authors’ statement](../?l=b231757-232158) · [Adapted statement](../adapted/?l=b249467-249868)
+[Authors’ statement](../?l=b231757-232158) · [Adapted statement](../adapted/?l=b250971-251372)
 
 **Lean statement only.** This proposition ranges over admissible cutoffs and threshold functions meeting both the spatial and time-derivative bounds. It describes the wider smooth space-time extension claim, with no proof attached to this declaration.
 
@@ -564,7 +564,7 @@ For phase-independent fields and $\gamma=1$, the product estimate also holds in 
 
 ### Auxiliary note · Lemma 1.2
 
-[Authors’ statement](../?l=b233476-233771) · [Adapted statement](../adapted/?l=b250745-251139)
+[Authors’ statement](../?l=b233476-233771) · [Adapted statement](../adapted/?l=b252249-252643)
 
 **In the adapted edition.** The revised statement chooses the starting index after fixing the derivative orders and the construction. It specifies one-sided time derivatives at the endpoints.
 
@@ -578,7 +578,7 @@ For phase-independent fields and $\gamma=1$, the product estimate also holds in 
 
 ### Auxiliary note · Lemma 1.3
 
-[Authors’ statement](../?l=b234101-234471) · [Adapted statement](../adapted/?l=b251557-251927)
+[Authors’ statement](../?l=b234101-234471) · [Adapted statement](../adapted/?l=b253061-253431)
 
 **Lean statement only.** The open statement allows every admissible cutoff and every construction with the listed stage and threshold hypotheses. It chooses the exponent and starting index for the velocity and residual bounds after fixing the time-derivative order.
 

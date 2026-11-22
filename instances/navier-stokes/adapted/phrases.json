@@ -55,7 +55,7 @@
    "name": "",
    "lines": [
     1,
-    2108
+    2118
    ],
    "source_commit": "3858afbe00b23dd8bba13ffa41409310b712723d",
    "topics": [
@@ -1482,30 +1482,6 @@
    ]
   },
   {
-   "id": "s1-viscosity",
-   "from": "Here $u$ is the velocity, $p$ is the pressure, and the viscosity is normalized to one: if $(u,p)$ solves (1.1), then $(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ solves the equations with viscosity $\\nu>0$, so that the results of this paper hold, after this change of variables, for every viscosity.",
-   "to": "Here $u$ is the velocity, $p$ is the pressure, and the viscosity is normalized to one: if $(u,p)$ solves (1.1), then $(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ solves the equations with viscosity $\\nu>0$, so that the results of this paper hold, after this change of variables, for every viscosity.",
-   "role": "explanation",
-   "topic": "statement",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.BreakdownOnSpace",
-     "file": "Breakdown/Defs.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. It does not prove that change of variables or that the target holds."
-    },
-    {
-     "name": "Breakdown.BreakdownOnTorus",
-     "file": "Breakdown/Defs.lean",
-     "relation": "part",
-     "fidelity": "different",
-     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. It does not prove that change of variables or that the target holds."
-    }
-   ]
-  },
-  {
    "id": "s1-domains",
    "from": "Whether smooth solutions of (1.1) with finite energy, or smooth solutions on the torus $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, can develop singularities in finite time is the regularity problem for the Navier–Stokes equations",
    "to": "Whether smooth solutions of (1.1) with finite energy, or smooth solutions on the torus $\\mathbb T^3=\\mathbb R^3/\\mathbb Z^3$, can develop singularities in finite time is the regularity problem for the Navier–Stokes equations",
@@ -1526,6 +1502,30 @@
      "relation": "states",
      "fidelity": "different",
      "fidelity_note": "The formal statement defines the following assertion; a proof requires a separate theorem. For each viscosity $\\nu>0$ there is a smooth field $u_0:\\mathbb R^3\\to\\mathbb R^3$ with $u_0(x+e_i)=u_0(x)$ for each coordinate vector $e_i$ and $\\operatorname{div}u_0=0$, such that no pair of globally defined functions $u(t,x),p(t,x)$ is jointly smooth on $[0,\\infty)\\times\\mathbb R^3$, has $u(0)=u_0$, satisfies $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$ and $\\operatorname{div}u=0$ for every $t>0$, and has $u(t,x+e_i)=u(t,x)$ for every $t\\ge0$. These periodic fields represent fields on $\\mathbb R^3/\\mathbb Z^3$. Periodicity is required of the velocity only. The excluded pressure may be any smooth scalar field on $\\mathbb R^3$, including a nonperiodic one. There is no separate energy condition, prescribed mean, blow-up time, two-sided rate, or comparison on a ball. Values at negative times have no role.\n\nThe formal statement specifies the periodic failure of a global smooth velocity and leaves pressure periodicity unrestricted."
+    }
+   ]
+  },
+  {
+   "id": "s1-viscosity",
+   "from": "For any $\\nu>0$ the change $(u,p)\\mapsto(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ gives the corresponding solution with viscosity $\\nu$.",
+   "to": "For any $\\nu>0$ the change $(u,p)\\mapsto(\\nu\\,u(\\nu t,x),\\nu^2 p(\\nu t,x))$ gives the corresponding solution with viscosity $\\nu$.",
+   "role": "explanation",
+   "topic": "statement",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.BreakdownOnSpace",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth compactly supported divergence-free $u_0$ on $\\mathbb R^3$ such that no jointly smooth $u,p$ on $[0,\\infty)\\times\\mathbb R^3$ has $u(0)=u_0$, solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$ for $t>0$, and obeys one finite bound on $\\int_{\\mathbb R^3}|u(t)|^2$ for all $t\\ge0$. It does not prove that change of variables or that the target holds."
+    },
+    {
+     "name": "Breakdown.BreakdownOnTorus",
+     "file": "Breakdown/Defs.lean",
+     "relation": "part",
+     "fidelity": "different",
+     "fidelity_note": "The paper states the change of variables $u_\\nu(t,x)=\\nu u(\\nu t,x)$ and $p_\\nu(t,x)=\\nu^2p(\\nu t,x)$. The formal statement instead defines the following all-viscosity target. For every $\\nu>0$, the conclusion gives a smooth divergence-free datum of period one in each spatial coordinate for which no jointly smooth global pair $u,p$ solves $\\partial_tu+(u\\cdot\\nabla)u=\\nu\\Delta u-\\nabla p$, $\\operatorname{div}u=0$, with that datum and period-one velocity. The equations hold at every $t>0$; smoothness and the datum include $t=0$. Pressure periodicity is unrestricted. It does not prove that change of variables or that the target holds."
     }
    ]
   },
@@ -3245,8 +3245,8 @@
   },
   {
    "id": "s1-conventions-projection",
-   "from": "It multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
-   "to": "It multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
+   "from": "In Fourier variables $\\mathbb P$ multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
+   "to": "In Fourier variables $\\mathbb P$ multiplies $\\hat f(\\xi)$, and on the torus $\\hat f(k)$, by the matrix $\\mathbb P_\\xi=I-|\\xi|^{-2}\\,\\xi\\otimes\\xi$, where $\\mathbb P_0=I$, so that on the torus it keeps the mean.",
    "role": "definition",
    "topic": "torus",
    "status": "new",
@@ -16538,23 +16538,6 @@
    ]
   },
   {
-   "id": "ns7-data-s038",
-   "from": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
-   "to": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
-   "role": "explanation",
-   "topic": "certificate",
-   "status": "new",
-   "lean": [
-    {
-     "name": "Breakdown.extended_certificate_orbit_proved",
-     "file": "Breakdown/Cert/ExtendedMain.lean",
-     "relation": "part",
-     "fidelity": "weaker",
-     "fidelity_note": "The endpoint proves weak-profile existence from certificate existence; the chosen parameter and force cancellation are hidden by its existential conclusion."
-    }
-   ]
-  },
-  {
    "id": "adapted.N4-37.1",
    "from": "where continuity is tested against each divergence-free",
    "to": "where continuity is tested against each divergence-free",
@@ -16586,6 +16569,23 @@
      "relation": "part",
      "fidelity": "unassessed",
      "fidelity_note": "The formal parameter step uses an inwardness condition to obtain a zero of the parameter map through the convex compact fixed-point theorem. The correction is constructed separately for each parameter."
+    }
+   ]
+  },
+  {
+   "id": "ns7-data-s038",
+   "from": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
+   "to": "Projection then fixes $\\alpha'$, and (7.30) cancels the total force.",
+   "role": "explanation",
+   "topic": "certificate",
+   "status": "new",
+   "lean": [
+    {
+     "name": "Breakdown.extended_certificate_orbit_proved",
+     "file": "Breakdown/Cert/ExtendedMain.lean",
+     "relation": "part",
+     "fidelity": "weaker",
+     "fidelity_note": "The endpoint proves weak-profile existence from certificate existence; the chosen parameter and force cancellation are hidden by its existential conclusion."
     }
    ]
   },

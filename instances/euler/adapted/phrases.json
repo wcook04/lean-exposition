@@ -54,7 +54,7 @@
    "name": "",
    "lines": [
     1,
-    1936
+    1941
    ],
    "source_commit": "0a556ace755b1d2f7e94797267e2b1f9781dfec3",
    "topics": [
@@ -3038,8 +3038,8 @@
   },
   {
    "id": "intro-amplification-new-frame",
-   "from": "Its own frame",
-   "to": "Its own frame",
+   "from": "In the new wave’s frame",
+   "to": "In the new wave’s frame",
    "role": "definition",
    "topic": "amplification",
    "status": "new",
@@ -3068,8 +3068,8 @@
   },
   {
    "id": "intro-amplification-new-couplings",
-   "from": "the two entries of the older gradient in that frame",
-   "to": "the two entries of the older gradient in that frame",
+   "from": "the two relevant entries of the older gradient are",
+   "to": "the two relevant entries of the older gradient are",
    "role": "definition",
    "topic": "amplification",
    "status": "new",
@@ -4149,8 +4149,8 @@
   },
   {
    "id": "adapted.E1-15A.1",
-   "from": "the velocity correction $V_2(t,X(t,a),s)$",
-   "to": "the velocity correction $V_2(t,X(t,a),s)$",
+   "from": "this equation determines $V_2(t,X(t,a),s)$ from zero initial data.",
+   "to": "this equation determines $V_2(t,X(t,a),s)$ from zero initial data.",
    "role": "explanation",
    "topic": "hierarchy",
    "status": "new",
@@ -5916,8 +5916,8 @@
   },
   {
    "id": "r5-reference-relative-comparison-overview",
-   "from": "The comparison must keep errors small *relative* to the growing solution to control the orientation of the amplified wave.",
-   "to": "The comparison must keep errors small *relative* to the growing solution to control the orientation of the amplified wave.",
+   "from": "Dividing out the growing reference amplitude in (2.15) lets us control the wave’s direction.",
+   "to": "Dividing out the growing reference amplitude in (2.15) lets us control the wave’s direction.",
    "role": "statement",
    "topic": "amplification",
    "status": "new",
@@ -5963,8 +5963,8 @@
   },
   {
    "id": "r5-reference-crossing-overview",
-   "from": "The resulting coupling estimates give a crossing and the shear available there (Proposition 2.8).",
-   "to": "The resulting coupling estimates give a crossing and the shear available there (Proposition 2.8).",
+   "from": "Proposition 2.8 then gives a crossing and the shear available there.",
+   "to": "Proposition 2.8 then gives a crossing and the shear available there.",
    "role": "statement",
    "topic": "amplification",
    "status": "new",
