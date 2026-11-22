@@ -1809,6 +1809,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0} phrases={isPhraseLayer(ties)} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          {side && <span className="edition-break" aria-hidden="true" />}
           {side && (
             <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
               <button type="button" aria-pressed={side === "authors"} onClick={() => switchEdition("authors")}>Authors’ paper</button>
