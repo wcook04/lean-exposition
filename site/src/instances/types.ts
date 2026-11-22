@@ -118,6 +118,22 @@ export interface SiteInstance {
   comparisonsHeld?: string;
   /** A library paper (instances/<paper>/): its id and main document, for its own addresses (app/libraryAddress.ts). */
   library?: { paper: string; main: InstanceStage; pages?: Record<string, InstanceStage> };
+  /**
+   * An adapted edition of the main document (instances/<paper>/adapted/, docs/reader-design.md
+   * "Adapted editions"): a changed version of the authors' text in its own slot, read beside the
+   * authors' own, with every change marked. Absent: the paper has none, or its flag is off.
+   */
+  adapted?: {
+    slot: InstanceStage;
+    /** The authors' document it adapts. */
+    of: InstanceStage;
+    /** The edition's credit, verbatim, for its header and About. */
+    credit: string;
+    /** The authors' paper online, linked beside the credit. */
+    authorsPaper?: string;
+    /** The edition's PDFs, each with its label ("PDF with changes marked"). */
+    pdfs: { label: string; name: string }[];
+  };
   recordKind: ((node: { id: string; kind: string; status: string }) => RecordKind) | null;
   /**
    * The `supports` links ("from→to", node ids) the edition derived from the Lean's dependencies

@@ -106,6 +106,12 @@ describe("library addresses", () => {
     expect(href).toBe(`${BASE}/how-the-lean-encodes-it/`);
   });
 
+  it("a companion page keeps its place, selection, view and PDF page in its address", () => {
+    const { route, href } = roundTrip(`${BASE}/how-the-lean-encodes-it/?n=euler.theorem-1.1&l=120&v=lean&view=pdf&page=4`);
+    expect(route).toMatchObject({ stage: "expository", node: "euler.theorem-1.1", at: "120", lean: true, pdf: true, page: 4 });
+    expect(href).toBe(`${BASE}/how-the-lean-encodes-it/?n=euler.theorem-1.1&l=120&v=lean&view=pdf&page=4`);
+  });
+
   it("any other reading state keeps the reader's own parameters at the paper's top", () => {
     const route = { view: "read" as const, stage: "short" as const, at: "120-134" };
     expect(libraryHref(route, BASE, lib)).toBe(`${BASE}/?l=120-134`);

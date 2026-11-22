@@ -2,7 +2,22 @@
 // current.json by scripts/library-instance.mjs before a build. No code here is a paper's own.
 import current from "./current.json";
 
-export interface LibraryDocument { id: string; slot: "long" | "short" | "expository"; slug: string; title: string; noun: string; main?: boolean; pdf?: { file: string; sha256: string; bytes: number; url: string } }
+export interface LibraryPdf { file: string; sha256: string; bytes: number; url?: string; name?: string; label?: string }
+export interface LibraryDocument {
+  id: string;
+  slot: "long" | "short" | "expository";
+  slug: string;
+  title: string;
+  noun: string;
+  main?: boolean;
+  pdf?: LibraryPdf;
+  /** An adapted edition of another document (`of`, its id), with its own credit and a second PDF. */
+  kind?: "adapted";
+  of?: string;
+  credit?: string;
+  published?: boolean;
+  aux_pdf?: LibraryPdf;
+}
 export interface LibraryInstance {
   schema: string;
   id: string;

@@ -1,0 +1,247 @@
+/* An adapted edition's changes layer (docs/reader-design.md, "Adapted editions"). Topic colour
+   says topic and amber says selection, so a change uses neither: a faint wash of ink under the
+   paragraph and, in its right margin, a dotted rule in ink headed by a small open square, the
+   button "See what changed here". Everything stays inside the paragraph's own box, because
+   .part__text clips what stands outside it (content-visibility). */
+:root {
+  --change-wash: color-mix(in oklab, var(--ink) 4.5%, transparent);
+  --change-rule: var(--ink-3);
+  --change-gutter: 22px;
+}
+
+/* Both texts of a paper with an adapted edition keep a right gutter on every block from the first
+   paint, so a mark or a square arriving with its part never moves a line. */
+.reader--edition .paper.prose .part__text > [data-line] {
+  box-sizing: border-box;
+  padding-right: var(--change-gutter);
+}
+
+.reader .paper.prose [data-change] {
+  position: relative;
+  background: var(--change-wash);
+  border-radius: 2px 0 0 2px;
+}
+
+/* The dotted rule, drawn over the gutter so it takes no room. */
+.reader .paper.prose [data-change]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-right: 2px dotted var(--change-rule);
+  pointer-events: none;
+}
+
+/* A run of changed paragraphs reads as one passage: the wash and the rule close the gap between them. */
+
+.change-mark,
+.change-counterpart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: var(--paper, transparent);
+  color: var(--ink-2);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.change-mark:hover,
+.change-mark:focus-visible,
+.change-counterpart:hover,
+.change-counterpart:focus-visible {
+  color: var(--ink);
+  outline: 2px solid var(--ink-2);
+  outline-offset: 1px;
+}
+
+/* The authors' paper carries no change marks: only a quiet square, in the same margin, on a
+   paragraph the edition changes, which opens that paragraph in the edition. */
+.reader .paper.prose [data-changed-in-edition] {
+  position: relative;
+}
+
+.change-counterpart {
+  color: var(--ink-3);
+  opacity: 0.75;
+}
+
+/* The switch between the two texts, and Show changes, in the reader's strip. */
+.edition-switch {
+  flex: none;
+}
+
+.reader-strip .changes-button {
+  flex: none;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 2px 10px;
+  border: 1px solid var(--rule, #ccc);
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* The pane's change card and list. */
+.change-card,
+.change-list {
+  display: grid;
+  gap: var(--space-3, 12px);
+  padding: var(--space-4, 16px);
+  max-width: 38rem;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+
+.change-card__head {
+  display: grid;
+  gap: 4px;
+}
+
+.change-card__head h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.change-card__state,
+.change-card__id,
+.change-card__count,
+.change-list__kind {
+  font-size: 13px;
+  line-height: 19.5px;
+  color: var(--ink-2);
+}
+
+.change-card__id {
+  margin-left: 0.4em;
+  font-family: var(--font-sans);
+}
+
+.change-card__controls,
+.change-card__walk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.change-card h4 {
+  margin: var(--space-2, 8px) 0 0;
+  font-size: 13px;
+  line-height: 19.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-transform: none;
+}
+
+.change-card__text {
+  padding: 8px 12px;
+  border-left: 2px solid var(--rule-strong);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 25.5px;
+  overflow-x: auto;
+}
+
+.change-card__text > :first-child { margin-top: 0; }
+.change-card__text > :last-child { margin-bottom: 0; }
+
+.change-card__none,
+.change-card__review {
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.change-card__note { margin: 0; }
+.change-card__note > p { margin: 0; }
+
+.change-card__facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.change-card__facts dt { color: var(--ink-2); }
+.change-card__facts dd { margin: 0; }
+.change-card__source + .change-card__source::before { content: "; "; }
+
+.change-list__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.change-list__row {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-left: 2px dotted var(--change-rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.change-list__row:hover,
+.change-list__row:focus-visible,
+.change-list__row[aria-current="true"] {
+  background: var(--change-wash);
+}
+
+.change-list__where { font-weight: 600; }
+
+/* The marked PDF: a change's mark is its bar's margin strip, outlined in dotted ink. */
+.pdf-view__change {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  border: 2px dotted #4a4452;
+  background: rgb(74 68 82 / 0.06);
+  cursor: pointer;
+}
+
+.pdf-view__change:hover,
+.pdf-view__change:focus-visible {
+  background: rgb(74 68 82 / 0.16);
+  outline: none;
+}
+
+.adapted-credit-link { white-space: nowrap; }
+
+/* The two texts' switch and Show changes take a second row of the strip, so the strip never
+   runs past the paper's column into the pane, at any width. */
+@media all {
+  .reader-strip:has(.edition-switch) {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .reader-strip > .edition-switch {
+    order: 20;
+    margin-left: 0;
+  }
+  .reader-strip > .changes-button {
+    order: 21;
+  }
+  .reader-strip > .edition-switch + .changes-button,
+  .reader-strip > .edition-switch {
+    flex: none;
+  }
+}

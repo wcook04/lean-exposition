@@ -6,6 +6,8 @@ import type { SiteFacts } from "../../home/siteFacts.ts";
 import type { RecordKind, SiteInstance } from "../types.ts";
 import { PAPER, MAIN, LIBRARY_ROOT } from "./data.ts";
 
+const ADAPTED = PAPER.documents.find((d) => d.kind === "adapted");
+
 const n = (value: number) => value.toLocaleString("en-GB");
 const plain = (text: string) => text.replace(/\$([^$]+)\$/g, "$1");
 const authors = (list: string[]) => (list.length < 2 ? list.join("") : `${list.slice(0, -1).join(", ")} and ${list[list.length - 1]}`);
@@ -37,7 +39,10 @@ const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
 for (const doc of PAPER.documents)
-  paperNames[doc.slot] = doc.main
+  paperNames[doc.slot] = doc.kind === "adapted"
+    ? // The adapted edition's header carries its own credit, whole; the authors' paper keeps theirs.
+      { short: "Adapted edition", job: sentence(`${doc.title}, an adapted edition`), reader: doc.credit ?? "" }
+    : doc.main
     ? { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: CREDIT }
     : {
         short: doc.title,
@@ -97,7 +102,7 @@ const site = {
     ogImage: false,
   },
   defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.id}/`,
-  pdfs: Object.fromEntries(PAPER.documents.filter((d) => d.pdf).map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.slug ? `${d.slug}.pdf` : "paper.pdf" }])),
+  pdfs: Object.fromEntries(PAPER.documents.filter((d) => d.pdf).map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.pdf!.name ?? (d.slug ? `${d.slug}.pdf` : "paper.pdf") }])),
   publicObservations: [],
   publishReceipts: false,
   sitePages: [""],
@@ -126,6 +131,15 @@ const site = {
   paperStatus: PAPER.review ? sentence(PAPER.review) : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   library: { paper: PAPER.id, main: MAIN.slot, pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])) },
+  adapted: ADAPTED
+    ? {
+        slot: ADAPTED.slot,
+        of: (PAPER.documents.find((d) => d.id === ADAPTED.of) ?? MAIN).slot,
+        credit: ADAPTED.credit ?? "",
+        authorsPaper: PAPER.source.upstream.paper,
+        pdfs: [ADAPTED.pdf, ADAPTED.aux_pdf].filter((p): p is NonNullable<typeof p> => !!p).map((p) => ({ label: p.label ?? "PDF", name: p.name ?? p.file })),
+      }
+    : undefined,
   recordKind,
   leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
   levelGoals: null,

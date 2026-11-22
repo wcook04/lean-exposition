@@ -82,7 +82,8 @@ export function parseLibraryPath(path: string, q: URLSearchParams, hash: string 
   const lean = path.match(/^\/lean\/(.+)$/);
   if (lean) return { ...common, decl: decodeURIComponent(lean[1]), lean: v === "graph" ? undefined : true };
   const page = path.match(/^\/([a-z0-9-]+)$/);
-  if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]] };
+  // A companion page (or an adapted edition) reads the reader's own parameters, as its href writes them.
+  if (page && lib.pages?.[page[1]]) return { ...common, stage: lib.pages[page[1]], node: q.get("n") ?? undefined, at: q.get("l") ?? undefined };
   const result = path.match(/^\/([a-z]+-[0-9a-z.]+)$/);
   // A numbered result lands on its canonical target, the statement block, never an earlier mention.
   if (result && RESULT.test(result[1])) return { ...common, node: `${lib.paper}.${result[1]}`, at: resultTargets[result[1]]?.[0] };
@@ -114,6 +115,8 @@ export function libraryHref(route: Read, base: string, lib = LIBRARY): string | 
     if (route.lean) q.set("v", "lean");
     else if (route.graph) q.set("v", "graph");
     if (route.decl) q.set("d", route.decl);
+    if (route.pdf) q.set("view", "pdf");
+    if (route.pdf && route.page) q.set("page", String(route.page));
     return `${base}/${slug}/${q.size ? `?${q}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
   }
   const q = new URLSearchParams();

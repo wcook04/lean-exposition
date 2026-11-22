@@ -8,6 +8,16 @@ PY=${PYTHON:-python3}
 I=instances/$paper
 pair() { if [ -f "$I/papers/$1/paper.md" ]; then echo "$I/papers/$1/paper.md $I/papers/$1/correspondence.json"; else echo "$I/papers/$1/absent.md $I/papers/$1/absent.json"; fi; }
 rm -rf "build/$paper-edition"
+# An adapted edition (instances/<paper>/adapted/, scripts/adapted_edition.py) is built only when its
+# edition.json says published, or for a local preview with LX_PREVIEW_ADAPTED=1. It is put into its
+# document slot for the build and taken out again afterwards, whatever the build's outcome.
+LX_ADAPTED=0
+if "$PY" scripts/adapted_edition.py enabled "$paper"; then
+  LX_ADAPTED=1
+  "$PY" scripts/adapted_edition.py stage "$paper"
+  trap '"$PY" scripts/adapted_edition.py unstage "$paper"' EXIT
+fi
+export LX_ADAPTED
 # Topic colours are computed once per shared topic list over every paper that uses it, and stored
 # beside each phrases file (alignment/colours-<slot>.json); this keeps them current.
 node site/scripts/topic-colours.ts
@@ -27,7 +37,9 @@ fi
 rm -rf site/public/pdf-marks
 for slot in long short expository; do
   if [ -f "$I/papers/$slot/paper.pdf" ] && [ -f "$I/papers/$slot/paper.md" ]; then
-    "$PY" scripts/pdf_marks.py "$I/papers/$slot/paper.pdf" "$I/papers/$slot/paper.md" "site/public/edition/ties/$slot.json" "site/public/pdf-marks/$slot.json"
+    # An adapted edition's PDF marks its changes; its change map places them (scripts/adapted_edition.py).
+    changes=""; [ -f "$I/alignment/changes-$slot.json" ] && changes="$I/alignment/changes-$slot.json"
+    "$PY" scripts/pdf_marks.py "$I/papers/$slot/paper.pdf" "$I/papers/$slot/paper.md" "site/public/edition/ties/$slot.json" "site/public/pdf-marks/$slot.json" $changes
   fi
 done
 cd site
@@ -43,6 +55,9 @@ import json, shutil, sys
 from pathlib import Path
 paper = sys.argv[1]
 inst = json.loads(Path(f"instances/{paper}/instance.json").read_text())
+import os
+if os.environ.get("LX_ADAPTED") == "1":
+    inst["documents"].append(json.loads(Path(f"instances/{paper}/adapted/edition.json").read_text())["document"])
 main = next(d for d in inst["documents"] if d.get("main"))
 dist = Path("site/dist")
 shell = (dist / "read" / main["slot"] / "index.html").read_text()
@@ -56,6 +71,12 @@ pages = [d for d in inst["documents"] if not d.get("main") and d.get("slug")]
 for doc in pages:
     (dist / doc["slug"]).mkdir(exist_ok=True)
     (dist / doc["slug"] / "index.html").write_text((dist / "read" / doc["slot"] / "index.html").read_text())
+# An adapted edition's other files: the auxiliary note's PDF with changes marked.
+for doc in pages:
+    aux = doc.get("aux_pdf")
+    if aux:
+        (dist / "pdf").mkdir(exist_ok=True)
+        shutil.copy(Path(f"instances/{paper}/adapted/{aux['file']}"), dist / "pdf" / aux["name"])
 print(f"static addresses: / and {len(results)} results and {len(pages)} pages")
 PYEOF
 # Put back the tracked placeholder that library-instance.mjs replaced.
