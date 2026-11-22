@@ -147,7 +147,7 @@ export function parseRoute(url: URL): Route {
       declModule: q.get("dm") ?? undefined,
     };
   }
-  const read = path.match(/^\/read\/([a-z]+)$/);
+  const read = path.match(/^\/read\/([a-z0-9-]+)$/);
   if (read && isStage(read[1])) {
     const beside = q.get("beside");
     const [bStage, ...bAnchor] = beside ? beside.split(":") : [];

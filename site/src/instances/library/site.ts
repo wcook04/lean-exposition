@@ -147,7 +147,7 @@ const site = {
     pages: Object.fromEntries(PAPER.documents.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
     companions: PAPER.documents
       .filter((d) => d.kind === "companion")
-      .map((d) => ({ slot: d.slot, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
+      .map((d) => ({ slot: d.slot, id: d.id, title: d.title, group: d.group ?? "", group_title: d.group_title ?? "", order: d.order ?? 0 }))
       .sort((a, b) => a.order - b.order),
   },
   recordKind,
