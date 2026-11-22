@@ -67,7 +67,7 @@ No view is ever blank. A paragraph with nothing tied to it says "No Lean is link
 - An overview over the corner of the area, shown whenever part of the drawing is out of view, shows the whole drawing and the part in view; clicking or dragging in it moves the view.
 - The buttons −, + and Fit change the zoom. Fit frames the drawing as it is and changes nothing else: an opened group stays open, and a panel of members stays open with its search and page.
 - The drawing is fitted when it opens, when the subject changes, on Fit, and when the pane itself changes size while the view is still the fitted one. The camera never changes the layout and the layout never moves the camera except by such a fit, so the drawing is completely still while nobody touches it. After the reader pans, zooms or opens a small group, the view is kept until the subject changes or Fit is pressed. Opening or closing a panel of members never moves the view.
-- Pointing at or focusing a node lights its line to the subject and shows the node's detail in the dock. A member of an open group, or of a panel of members, lights the group's line. Clicking a node makes it the subject.
+- Keyboard focus pans the drawing to bring a card into view. Pointing at or focusing a node lights its line to the subject and shows the node's detail in the dock. A member of an open group, or of a panel of members, lights the group's line. Clicking a node makes it the subject.
 - Pointing at a phrase or a sentence in the paper lights its node if it is drawn.
 
 ### A declaration that is not on the paper's map

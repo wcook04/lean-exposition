@@ -54,7 +54,7 @@
 .fg__scroll {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  overflow: clip;
   overscroll-behavior: contain;
   touch-action: none;
   cursor: grab;
