@@ -191,6 +191,11 @@ html.is-reading {
   white-space: nowrap;
 }
 
+.reader-strip__steps .num {
+  display: inline-block;
+  text-align: center;
+}
+
 .reader-strip__steps button {
   display: inline-grid;
   place-items: center;

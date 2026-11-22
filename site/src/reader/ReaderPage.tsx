@@ -2158,7 +2158,8 @@ function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties:
       <button type="button" aria-label="Previous tied statement" title="Previous tied statement (k)" onClick={() => onStep(-1)}>
         {arrow("M7.5 2.5L4 6l3.5 3.5")}
       </button>
-      <span className="num" aria-live="polite">
+      {/* As wide as its longest wording from the start, so a selection that changes it moves nothing beside it. */}
+      <span className="num" aria-live="polite" style={{ minWidth: `${`${isPhraseLayer(ties) ? "Link" : "Statement"} ${ties.stops.length} of ${ties.stops.length}`.length * 0.92}ch` }}>
         {isPhraseLayer(ties)
           ? place >= 0
             ? `Link ${place + 1} of ${ties.stops.length}`
