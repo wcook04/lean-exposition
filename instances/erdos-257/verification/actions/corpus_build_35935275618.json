@@ -1,0 +1,18 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Lean Convenience",
+  "repository": "wcook04/plectis-erdos-lean",
+  "run_id": 35935275618,
+  "run_attempt": 1,
+  "url": "https://github.com/wcook04/plectis-erdos-lean/actions/runs/35935275618",
+  "commit": "cc7e541cf2081c6fef5a5e377d52e365e33b01eb",
+  "branch": "palomar/comparator-cycle-20260923",
+  "event": "pull_request",
+  "started_at": "2026-09-23T23:46:50Z",
+  "completed_at": "2026-09-24T04:34:55Z",
+  "conclusion": "success",
+  "shows": "The Comparator corpus built at its evidence commit cc7e541.",
+  "does_not_show": "A build of the corpus; it is not a Comparator verdict.",
+  "description": "Lean Convenience at the Comparator corpus commit",
+  "jobs": null
+}

@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "scope": "Observed local tool compatibility, synthetic fixture checks and Minimal dependency extraction; no research-proof or manuscript certification",
+  "environment": {
+    "os": "Ubuntu 24.04",
+    "architecture": "aarch64",
+    "kernel": "6.8.0-142-generic",
+    "non_root": true,
+    "host_directory_mounts": 0
+  },
+  "lean": {
+    "version": "4.34.1",
+    "commit": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "official_archive_sha256": "fdb974c2cdb4627e090d5d4007b913e09d13c4868720fb5594e22808b3de9e37"
+  },
+  "tool_sources": {
+    "comparator": "d03acab154d269c06e60e4de7e4cc85deebff94b",
+    "lean4export": "076e8e57707e813375e8f9da8bf989799ace9680",
+    "landrun": "5ed4a3db3a4ad930d577215c6b9abaa19df7f99f"
+  },
+  "source_adaptation": "Comparator and exporter lean-toolchain files changed from 4.34.0 to 4.34.1 in disposable copies. No implementation patch; exporter dependency revision retained.",
+  "binary_sha256": {
+    "comparator": "3320b451a96d912bea42e4e55516e895cab7f05ee7f0e277b0caa026ebe58266",
+    "lean4export": "cf5d18bcb62e92bf3446a7f88c1d709dae77ba2ddca9cd049dfd46e94e84904f",
+    "landrun": "d173014636e18bdf2913d71ec7643fa6b479d5e9d1637a516e24fed0d2177903"
+  },
+  "tool_checks": [
+    {
+      "name": "comparator-build",
+      "returncode": 0,
+      "log_sha256": "7d1040d44bfab97ce777903ca7b2e8fa9cfcd6fa6ad7f1b0ca5ed21ae9bcd6d0"
+    },
+    {
+      "name": "exporter-tests",
+      "returncode": 0,
+      "log_sha256": "95eee511c93860cbf42b60aba556fae97c0067460d401242adc381212ef0aa1a"
+    },
+    {
+      "name": "upstream-three-core-tests",
+      "returncode": 0,
+      "log_sha256": "ede26f3135a0ee64a1f66a4498f66337946a9bed1d9d042881a8e43436908209"
+    }
+  ],
+  "fixture_count": 16,
+  "fixture_coverage": [
+    {
+      "fixture": "char_ofnat_issue",
+      "coverage": "fixture_export_blocked_missing_constant",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "def_hole",
+      "coverage": "positive_kernel_and_comparison_acceptance",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "def_hole_axiom_issue",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "def_hole_kind_mismatch",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "def_hole_type_mismatch",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "numeric_namespace",
+      "coverage": "positive_kernel_and_comparison_acceptance",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "olean_issue",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "opaque_value",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "primitive_issue",
+      "coverage": "fixture_export_blocked_missing_constant",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "proj_trick",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "quot_mismatch",
+      "coverage": "fixture_export_blocked_missing_constant",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "simple_axiom_issue",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "simple_kind_mismatch",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "simple_match",
+      "coverage": "positive_kernel_and_comparison_acceptance",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "simple_mismatch",
+      "coverage": "intended_invalid_proof_rejection",
+      "matched_exit_code": true
+    },
+    {
+      "fixture": "theorem_hole_issue",
+      "coverage": "positive_kernel_and_comparison_acceptance",
+      "matched_exit_code": true
+    }
+  ],
+  "fixture_log_sha256": {
+    "fixture-char_ofnat_issue": "b93b65ef1bc0eae5980770643d097187c50124efa82f983a02362428df41311e",
+    "fixture-def_hole": "4dbfe901c720eb668a009d65fc7fda72aa8f9072af89e04395c4eecec948854c",
+    "fixture-def_hole_axiom_issue": "0db19e7b2903e6eb912d3665f6dbec3cdfc52552b327972cb78591a415523575",
+    "fixture-def_hole_kind_mismatch": "c020583f9bb464f88e4e8837f5f6f80400bd13caa57e6951fa79166b09170f89",
+    "fixture-def_hole_type_mismatch": "ff0a16c43f26d54e394aaddfdb2d4702e29929b7037a7a9ffdcac5117f0dc6dc",
+    "fixture-numeric_namespace": "5a122729a8bcc6a45d643d8293e272315a4a6b33377deb2fea11e17fa988fc41",
+    "fixture-olean_issue": "7ba020d1073504cbaecf9cfdbf9ecd10431970987a12ffd1afb251cde6ba028b",
+    "fixture-opaque_value": "84910d8d2c059f367cd996dec86e52ea2d77e760f4e6b8a4dd214202304799cf",
+    "fixture-primitive_issue": "9f1328d6788c452425fc0d3b647fd0f13b99e828c46b78ef8b2f08b225fd181f",
+    "fixture-proj_trick": "28c69f0e21a37811183028b1203f9f99ebb20a89c601d7454a15f18d8a53f71b",
+    "fixture-quot_mismatch": "3b791abcacf2e0d6176b426b77e95c86631574f4ab4b38954709a5455c6ffd1d",
+    "fixture-simple_axiom_issue": "c483a061a1dd3bd397612687bd1ace0c3292c1670ca0a922da224b5567972095",
+    "fixture-simple_kind_mismatch": "ff4f8f3e50727e0cf34530d26748d71c8ed3f5fe1fbfd6af3d96e6a90e858580",
+    "fixture-simple_match": "dd04e5e1bdbe4aebea0489e8a4ff66e7cf51b4f43df32e0fa36bdb77c79cb285",
+    "fixture-simple_mismatch": "3b0a193e221b3700aeef7d006fa15d2f2315fe4e80f1126c40e3d3bc6d9e8848",
+    "fixture-theorem_hole_issue": "50d62740f51021f7b2c2ce77b32f4bce0fc7fe930d8a777c6a61c1bd329f639a"
+  },
+  "optional_nanoda": "not_run",
+  "sandbox": {
+    "landrun_version": "0.1.15",
+    "systemd_property": "RestrictAddressFamilies=~AF_UNIX",
+    "status": "passed",
+    "probes": [
+      {
+        "name": "ordinary-write-control",
+        "expected": "allow",
+        "returncode": 0,
+        "gate": {
+          "gate": "write",
+          "allowed": true
+        },
+        "matched": true
+      },
+      {
+        "name": "landrun-allowed-write",
+        "expected": "allow",
+        "returncode": 0,
+        "gate": {
+          "gate": "write",
+          "allowed": true
+        },
+        "matched": true
+      },
+      {
+        "name": "landrun-disallowed-write",
+        "expected": "deny",
+        "returncode": 73,
+        "gate": {
+          "gate": "write",
+          "errno": 13,
+          "allowed": false
+        },
+        "matched": true
+      },
+      {
+        "name": "ordinary-unix-socket-control",
+        "expected": "allow",
+        "returncode": 0,
+        "gate": {
+          "gate": "unix_socket",
+          "allowed": true
+        },
+        "matched": true
+      },
+      {
+        "name": "systemd-user-control",
+        "expected": "allow",
+        "returncode": 0,
+        "gate": {
+          "gate": "unix_socket",
+          "allowed": true
+        },
+        "matched": true
+      },
+      {
+        "name": "systemd-unix-socket-denied",
+        "expected": "deny",
+        "returncode": 73,
+        "gate": {
+          "gate": "unix_socket",
+          "errno": 97,
+          "allowed": false
+        },
+        "matched": true
+      },
+      {
+        "name": "ordinary-tcp-bind-control",
+        "expected": "allow",
+        "returncode": 0,
+        "gate": {
+          "gate": "tcp_bind",
+          "allowed": true
+        },
+        "matched": true
+      },
+      {
+        "name": "landrun-tcp-bind-denied",
+        "expected": "deny",
+        "returncode": 73,
+        "gate": {
+          "gate": "tcp_bind",
+          "errno": 13,
+          "allowed": false
+        },
+        "matched": true
+      },
+      {
+        "name": "ordinary-tcp-connect-control",
+        "expected": "allow",
+        "returncode": 0,
+        "gate": {
+          "gate": "tcp_connect",
+          "allowed": true
+        },
+        "matched": true
+      },
+      {
+        "name": "landrun-tcp-connect-denied",
+        "expected": "deny",
+        "returncode": 73,
+        "gate": {
+          "gate": "tcp_connect",
+          "errno": 13,
+          "allowed": false
+        },
+        "matched": true
+      }
+    ]
+  },
+  "extractor": {
+    "package_wheel_sha256": "6d38e6d502aa12a04275c5340df2815ee61a97b89600ce39e2477dc615119ffe",
+    "status": "passed",
+    "module": "Minimal",
+    "roots": [
+      "Minimal.result"
+    ],
+    "scope_complete": true,
+    "declarations": [
+      "Minimal.result",
+      "Minimal.swap"
+    ],
+    "source_changed": false,
+    "source_hashes": {
+      "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+      "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+      "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+      "lean-toolchain": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b"
+    },
+    "extractor_sha256": "e0ee28bb7ba2f6d8110339da8e65577e2a0de4aef860f9693c569ecadd56d65f",
+    "report_sha256": "8921a885b3e47245f72e0e6e88ade5a7f9b64008e56a6b2be37ecfc2fd53d48e",
+    "toolchain_adaptation": "Copied Minimal lean-toolchain changed from 4.35.0-rc2 to 4.34.1; other selected fixture bytes unchanged."
+  },
+  "limitations": [
+    "Three negative fixtures stop at missing-constant export failures and provide no intended semantic rejection coverage.",
+    "Sandbox probes exercise the named filesystem, TCP and Unix-socket operations; they do not establish general sandbox correctness.",
+    "Research-corpus Comparator checks are separate and not represented by this tool receipt.",
+    "Minimal extraction reports elaborated dependencies within its selected scope; it is not manuscript correspondence review."
+  ],
+  "status": "passed_with_fixture_limitations",
+  "observed_on": "2026-10-23"
+}

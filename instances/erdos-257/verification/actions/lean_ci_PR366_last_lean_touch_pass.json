@@ -1,0 +1,82 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Lean CI",
+  "repository": "wcook04/plectis-erdos",
+  "run_id": 37928349409,
+  "run_attempt": 1,
+  "url": "https://github.com/wcook04/plectis-erdos/actions/runs/37928349409",
+  "commit": "dd0130ac7b38013717ab8a4d29d93d31fc377ec2",
+  "branch": "codex/public-reading-experience-20261008",
+  "event": "pull_request",
+  "started_at": "2026-10-09T12:10:51Z",
+  "completed_at": "2026-10-09T12:21:03Z",
+  "conclusion": "success",
+  "shows": "Lean CI built the library roots Erdos249257 and ErdosProblems and ran its axiom audits and Comparator units at a commit whose #257 Lean trees equal the pin's.",
+  "does_not_show": "Its build reused cached outputs; which vendored modules were compiled in this run, and whether each paper statement is right, is not shown.",
+  "description": "Lean CI (PR #366 head); its build job took 31 s, and whether Lean work was skipped was not established",
+  "jobs": [
+    {
+      "job_id": "113812649249",
+      "name": "Classify pull-request scope",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:10:54Z",
+      "completed_at": "2026-10-09T12:12:24Z",
+      "seconds": 90,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "113813192795",
+      "name": "A truncated clone exits 2, never 1",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:12:27Z",
+      "completed_at": "2026-10-09T12:12:40Z",
+      "seconds": 13,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "113813192801",
+      "name": "First contact without Lean (macos-latest)",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:12:33Z",
+      "completed_at": "2026-10-09T12:13:07Z",
+      "seconds": 34,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "113813192949",
+      "name": "release-surfaces",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:12:27Z",
+      "completed_at": "2026-10-09T12:20:28Z",
+      "seconds": 481,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "113813192954",
+      "name": "First contact without Lean (ubuntu-latest)",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:12:26Z",
+      "completed_at": "2026-10-09T12:12:47Z",
+      "seconds": 21,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "113816046289",
+      "name": "build",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:20:31Z",
+      "completed_at": "2026-10-09T12:21:02Z",
+      "seconds": 31,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "113816046332",
+      "name": "external-verification",
+      "conclusion": "success",
+      "started_at": "2026-10-09T12:20:31Z",
+      "completed_at": "2026-10-09T12:20:44Z",
+      "seconds": 13,
+      "failed_or_cancelled_steps": ""
+    }
+  ]
+}

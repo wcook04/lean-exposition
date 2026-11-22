@@ -1,0 +1,82 @@
+{
+  "record_type": "github_actions_run",
+  "workflow": "Lean CI",
+  "repository": "wcook04/plectis-erdos",
+  "run_id": 36470042155,
+  "run_attempt": 1,
+  "url": "https://github.com/wcook04/plectis-erdos/actions/runs/36470042155",
+  "commit": "d71ae38fb3fa5e0578b32e358283bdf4e2fbd415",
+  "branch": "claude/landing-train-20260928",
+  "event": "pull_request",
+  "started_at": "2026-09-28T19:07:34Z",
+  "completed_at": "2026-09-28T19:54:57Z",
+  "conclusion": "success",
+  "shows": "Lean CI built the library roots Erdos249257 and ErdosProblems and ran its axiom audits and Comparator units at a commit whose #257 Lean trees equal the pin's.",
+  "does_not_show": "Its build reused cached outputs; which vendored modules were compiled in this run, and whether each paper statement is right, is not shown.",
+  "description": "Lean CI (PR #302 head; the nearest full CI run to the pin)",
+  "jobs": [
+    {
+      "job_id": "109089697893",
+      "name": "Classify pull-request scope",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:07:38Z",
+      "completed_at": "2026-09-28T19:08:32Z",
+      "seconds": 54,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "109090078172",
+      "name": "First contact without Lean (ubuntu-latest)",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:08:36Z",
+      "completed_at": "2026-09-28T19:08:57Z",
+      "seconds": 21,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "109090078185",
+      "name": "First contact without Lean (macos-latest)",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:08:38Z",
+      "completed_at": "2026-09-28T19:09:02Z",
+      "seconds": 24,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "109090078226",
+      "name": "release-surfaces",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:08:36Z",
+      "completed_at": "2026-09-28T19:13:29Z",
+      "seconds": 293,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "109090078298",
+      "name": "A truncated clone exits 2, never 1",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:08:37Z",
+      "completed_at": "2026-09-28T19:08:51Z",
+      "seconds": 14,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "109092025302",
+      "name": "build",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:13:32Z",
+      "completed_at": "2026-09-28T19:20:14Z",
+      "seconds": 402,
+      "failed_or_cancelled_steps": ""
+    },
+    {
+      "job_id": "109092025392",
+      "name": "external-verification",
+      "conclusion": "success",
+      "started_at": "2026-09-28T19:13:33Z",
+      "completed_at": "2026-09-28T19:54:56Z",
+      "seconds": 2483,
+      "failed_or_cancelled_steps": ""
+    }
+  ]
+}

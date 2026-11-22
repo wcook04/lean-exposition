@@ -36,14 +36,20 @@ const CREDIT = creditWithoutReview(PAPER.credit_lines, PAPER.review);
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
 // repository only (companion_credit).
+// A document that says what it does and who it is for (doc.job, doc.reader) keeps its own words.
 for (const doc of PAPER.documents)
   paperNames[doc.slot] = doc.main
-    ? { short: doc.title, job: sentence(`${doc.title}, by ${BY}`), reader: CREDIT }
+    ? { short: doc.title, job: doc.job ?? sentence(`${doc.title}, by ${BY}`), reader: doc.reader ?? CREDIT }
     : {
         short: doc.title,
-        job: sentence(`${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
-        reader: PAPER.companion_credit ? sentence(PAPER.companion_credit) : "",
+        job: doc.job ?? sentence(`${doc.title}: a ${doc.noun} to ${PAPER.title}, written for this reader with AI`),
+        reader: doc.reader ?? (PAPER.companion_credit ? sentence(PAPER.companion_credit) : ""),
       };
+
+// The settings of a paper that moved in from its own reader (instance.json "reader"); absent keeps the defaults.
+const R = PAPER.reader ?? {};
+const stepRecords = R.step_records ? new RegExp(R.step_records) : null;
+const absence = R.words?.leanAbsence;
 
 function readme(siteUrl: string, facts: SiteFacts): string {
   const at = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);
@@ -79,6 +85,7 @@ function recordKind(node: { id: string; kind: string; status: string }): RecordK
   if (node.kind === "declaration") return "declaration";
   if (node.status === "open") return "open";
   if (node.status === "external") return "cited";
+  if (stepRecords?.test(node.id)) return "step";
   return "result";
 }
 
@@ -97,30 +104,38 @@ const site = {
     ogImage: false,
   },
   defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.id}/`,
-  pdfs: Object.fromEntries(PAPER.documents.filter((d) => d.pdf).map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.slug ? `${d.slug}.pdf` : "paper.pdf" }])),
-  publicObservations: [],
-  publishReceipts: false,
+  pdfs: {
+    ...Object.fromEntries(
+      PAPER.documents
+        .filter((d) => d.pdf)
+        .map((d) => [d.slot, { file: `instances/${PAPER.id}/papers/${d.slot}/${d.pdf!.file}`, name: d.pdf!.name ?? (d.slug ? `${d.slug}.pdf` : "paper.pdf"), ...(d.pdf!.alias ? { alias: d.pdf!.alias } : {}) }]),
+    ),
+    ...(R.extra_pdfs ?? {}),
+  },
+  publicObservations: R.public_observations ?? [],
+  publishReceipts: R.publish_receipts ?? false,
   sitePages: [""],
   routeTitles: {
     map: "Argument map", compare: "Compare", lean: "Lean index", checks: "What ran", about: "About", search: "Search",
-    [`read/${MAIN.slot}`]: plain(MAIN.title),
+    ...Object.fromEntries(PAPER.documents.map((d) => [`read/${d.slot}`, plain(d.title)])),
   },
   readme,
   llms,
-  films: [],
+  films: R.films ?? [],
   hero: () => "",
-  linkCaveat: LINK_CAVEAT,
-  modelsStep: null,
-  theorem: { record: PAPER.goal, paper: MAIN.slot, pattern: null },
-  heroStep: null,
-  observation: null,
-  tieAudit: null,
+  linkCaveat: R.link_caveat ?? LINK_CAVEAT,
+  modelsStep: R.models_step ?? null,
+  theorem: R.theorem ?? { record: PAPER.goal, paper: MAIN.slot, pattern: null },
+  heroStep: R.hero_step ?? null,
+  observation: R.observation ?? null,
+  tieAudit: R.tie_audit ?? null,
   lean: {
     mainTheorem: PAPER.main_lean ?? null, valueTheorem: null, minimizer: null, challengeFile: null, valueChallengeFile: null,
     mainTree: null, valueModel: null, folderWords: {}, folderPrefix: "", moduleRoot: null, roots: null,
     owner: `${BY}’s`, ownerSource: `${BY}’s source`,
+    ...R.lean,
   },
-  regionTitles: {},
+  regionTitles: R.region_titles ?? {},
   paperNames,
   // The reader's accounts; companion documents are listed apart (library.companions), by group.
   stages: PAPER.documents.filter((d) => d.kind !== "companion").map((d) => d.slot),
@@ -137,20 +152,21 @@ const site = {
   },
   recordKind,
   leanDerivedSupports: new Set(PAPER.lean_derived_supports ?? []),
-  levelGoals: null,
+  levelGoals: R.level_goals ?? null,
   mainGoal: PAPER.goal,
-  leanLevelWho: `Statements and proofs by ${BY}`,
-  levelsLeanSnippet: null,
+  leanLevelWho: R.lean_level_who ?? `Statements and proofs by ${BY}`,
+  levelsLeanSnippet: R.levels_lean_snippet ?? null,
   words: {
     argumentFor: "Argument for",
     stepTerms: "A step is one record of the argument: a result as the authors number it, or a Lean declaration linked to it.",
-    leanAbsence: () => "No Lean declaration is linked to this step.",
     mapKeyIntro: "Each box is a numbered result of the paper or a Lean declaration linked to it. Select one to read it in the paper and in Lean.",
     extractionNote: "No run is recorded for this edition.",
     failureWords: {},
     valueModelNote: "",
     valueModelLink: "",
     checksTerms: "Lean is a programming language whose compiler rejects a proof with a wrong step. This edition reads the authors' Lean source; it records no run of its own.",
+    ...R.words,
+    leanAbsence: (id: string) => (absence ? (absence.prefixes?.find((rule) => id.startsWith(rule.prefix))?.text ?? absence.default) : "No Lean declaration is linked to this step."),
   },
   copySlots: null,
 } satisfies SiteInstance;

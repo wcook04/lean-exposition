@@ -1268,20 +1268,20 @@
     {
       "id": "paper.short.pdf",
       "kind": "file",
-      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/3368d1e69467aec111eb3244843ad3542171ff96/paper/257/erdos-257-mersenne-support-subseries.pdf",
-      "revision": "3368d1e69467aec111eb3244843ad3542171ff96",
+      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos-257-mersenne-support-subseries.pdf",
+      "revision": "a501de956765730ba4e6c9ad284e6d65855d533a",
       "license": "CC-BY-4.0",
       "redistribution": "reference_only",
-      "sha256": "1af62f16ead7d782bd5b5c8fe6caf162f513992827e5114b69c1a89676b39a69"
+      "sha256": "2667100d6ed7824b8653f69c7392a5e1a241505ae9285e097e95ea2f13ddcf43"
     },
     {
       "id": "paper.short.tex",
       "kind": "file",
-      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/3368d1e69467aec111eb3244843ad3542171ff96/paper/257/erdos-257-mersenne-support-subseries.tex",
-      "revision": "3368d1e69467aec111eb3244843ad3542171ff96",
+      "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a501de956765730ba4e6c9ad284e6d65855d533a/paper/257/erdos-257-mersenne-support-subseries.tex",
+      "revision": "a501de956765730ba4e6c9ad284e6d65855d533a",
       "license": "CC-BY-4.0",
       "redistribution": "reference_only",
-      "sha256": "dc3986fdadf0e875ef95894e7cab1eb36f42dddfcf2bceb1eea588e556a3fd0b"
+      "sha256": "08a800d07fe36361cb0f545bd8d3e6247060552c11efa98356fadf02aade36fb"
     },
     {
       "id": "plectis_erdos",

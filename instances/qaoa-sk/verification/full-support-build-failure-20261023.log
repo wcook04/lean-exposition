@@ -1,0 +1,13 @@
+Building ComparatorChallenges.SKFullSupport
+⚠ [8924/8924] Built ComparatorChallenges.SKFullSupport (8051s)
+warning: ComparatorChallenges/SKFullSupport.lean:90:8: declaration uses `sorry`
+Build completed successfully (8924 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, OAI.ZeroTemperatureSK.full_support, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from ComparatorChallenges.SKFullSupport
+Building OAI.Probability.SKSupport.Main
+✖ [8924/8924] Building OAI.Probability.SKSupport.Main (356s)
+trace: .> LEAN_PATH=/work/corpus/qaoa-sk/upstream/lean/.lake/packages/Cli/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/batteries/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/Qq/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/aesop/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/importGraph/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/plausible/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/mathlib/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean /work/toolchains/lean-4.34.1-linux_aarch64/bin/lean /work/corpus/qaoa-sk/upstream/lean/OAI/Probability/SKSupport/Main.lean -o /work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean/OAI/Probability/SKSupport/Main.olean -i /work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean/OAI/Probability/SKSupport/Main.ilean -c /work/corpus/qaoa-sk/upstream/lean/.lake/build/ir/OAI/Probability/SKSupport/Main.c --setup /work/corpus/qaoa-sk/upstream/lean/.lake/build/ir/OAI/Probability/SKSupport/Main.setup.json --json
+error: OAI/Probability/SKSupport/Main.lean:1:0: object file '/work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean/OAI/Probability/SKSupport/Diffusion/AbsIncrement.olean' of module OAI.Probability.SKSupport.Diffusion.AbsIncrement does not exist
+Some required targets logged failures:
+- OAI.Probability.SKSupport.Main
+error: build failed
+uncaught exception: Child exited with 1

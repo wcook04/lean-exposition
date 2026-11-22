@@ -1,0 +1,117 @@
+{
+ "schema": "library-redirects/1",
+ "meaning": "Every address of the old reader site https://wcook04.github.io/erdos-257-reader/ and the library address it opens: the old reading routes become the paper and its pages, the views keep their names, the PDFs and run receipts stay as files, and any other path keeps its place under the library paper. scripts/redirect_stubs.py writes the stubs from this table and tests the examples.",
+ "title": "Erdős 257 Reader",
+ "site": "https://wcook04.github.io/erdos-257-reader/",
+ "repository": "wcook04/erdos-257-reader",
+ "branch": "main",
+ "old_base": "/erdos-257-reader/",
+ "new": "https://wcook04.github.io/library/erdos-257/",
+ "pages": {
+  "short": "",
+  "long": "record/",
+  "expository": "exposition/"
+ },
+ "views": [
+  "map",
+  "compare",
+  "lean",
+  "checks",
+  "about",
+  "search"
+ ],
+ "files": [
+  "pdf",
+  "verification",
+  "short/paper.pdf",
+  "long/reasoning-record.pdf",
+  "expository/main.pdf",
+  "favicon.svg"
+ ],
+ "examples": [
+  [
+   "https://wcook04.github.io/erdos-257-reader/",
+   "https://wcook04.github.io/library/erdos-257/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/?g=short.res-reciprocal-support&n=x",
+   "https://wcook04.github.io/library/erdos-257/map/?g=short.res-reciprocal-support&n=x"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/#front-asked",
+   "https://wcook04.github.io/library/erdos-257/about/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/short/",
+   "https://wcook04.github.io/library/erdos-257/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/short/?n=a.b&l=b10-20&v=lean#3.1",
+   "https://wcook04.github.io/library/erdos-257/?n=a.b&l=b10-20&v=lean#3.1"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/long/",
+   "https://wcook04.github.io/library/erdos-257/record/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/long/?n=long.x&l=b1-2#part-1",
+   "https://wcook04.github.io/library/erdos-257/record/?n=long.x&l=b1-2#part-1"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/expository/?v=graph&n=exp.y",
+   "https://wcook04.github.io/library/erdos-257/exposition/?v=graph&n=exp.y"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/short/?beside=long:sec-2&l=b5-9",
+   "https://wcook04.github.io/library/erdos-257/read/short/?beside=long:sec-2&l=b5-9"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/map/",
+   "https://wcook04.github.io/library/erdos-257/map/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/map/?n=step.rational_gap&t=uses",
+   "https://wcook04.github.io/library/erdos-257/map/?n=step.rational_gap&t=uses"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/compare/?n=x&levels=short,long",
+   "https://wcook04.github.io/library/erdos-257/compare/?n=x&levels=short,long"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/lean/?d=Some.Decl&m=Some",
+   "https://wcook04.github.io/library/erdos-257/lean/?d=Some.Decl&m=Some"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/lean/?list=papers",
+   "https://wcook04.github.io/library/erdos-257/lean/?list=papers"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/checks/",
+   "https://wcook04.github.io/library/erdos-257/checks/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/about/#made-by",
+   "https://wcook04.github.io/library/erdos-257/about/#made-by"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/search/?q=lcm",
+   "https://wcook04.github.io/library/erdos-257/search/?q=lcm"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/edition/index.json",
+   "https://wcook04.github.io/library/erdos-257/edition/index.json"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/llms.txt",
+   "https://wcook04.github.io/library/erdos-257/llms.txt"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/lean/",
+   "https://wcook04.github.io/library/erdos-257/lean/"
+  ],
+  [
+   "https://wcook04.github.io/erdos-257-reader/read/expository/#app:lean",
+   "https://wcook04.github.io/library/erdos-257/exposition/#app:lean"
+  ]
+ ]
+}

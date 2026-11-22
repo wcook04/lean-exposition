@@ -1,0 +1,17 @@
+{
+  "command": [
+    "lean-exposition",
+    "audit-sources",
+    "examples/erdos257/source-lock.json",
+    "--root",
+    "examples/erdos257"
+  ],
+  "result": {
+    "status": "passed",
+    "revision": "3368d1e69467aec111eb3244843ad3542171ff96",
+    "files": 244,
+    "derived_files": 0,
+    "bytes": 5144102,
+    "lean_replay": "not_implied"
+  }
+}
