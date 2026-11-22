@@ -19,7 +19,7 @@
  "source": {
   "proof_reader": {
    "repository": "https://github.com/wcook04/proof-reader",
-   "commit": "79fe18157a1d3c7821a4c03b84b8af2e439a5139",
+   "commit": "0a556ace755b1d2f7e94797267e2b1f9781dfec3",
    "page": "euler"
   },
   "upstream": {
@@ -49,6 +49,13 @@
    "slot": "expository",
    "slug": "how-the-lean-encodes-it",
    "title": "How the Lean encodes it",
+   "noun": "guide"
+  },
+  {
+   "id": "start-here",
+   "slot": "long",
+   "slug": "start-here",
+   "title": "Start here",
    "noun": "guide"
   }
  ],

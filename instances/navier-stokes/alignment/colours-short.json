@@ -7,16 +7,16 @@
    "key": "0a0fe824d26ab452",
    "shared_by": 2,
    "lightness": {
-    "light": 0.54,
+    "light": 0.49,
     "dark": 0.66
    },
    "chroma": {
     "light": [
-     0.125,
+     0.098,
      0.213
     ],
     "dark": [
-     0.149,
+     0.135,
      0.213
     ]
    },
@@ -25,9 +25,9 @@
      "id": "theorems",
      "name": "The theorems",
      "named": true,
-     "hue": 18,
+     "hue": 15,
      "chroma": {
-      "light": 0.201,
+      "light": 0.179,
       "dark": 0.201
      },
      "topics": [
@@ -39,10 +39,10 @@
      "id": "torus",
      "name": "Passing to the torus",
      "named": true,
-     "hue": 57.43,
+     "hue": 68.93,
      "chroma": {
-      "light": 0.136,
-      "dark": 0.165
+      "light": 0.098,
+      "dark": 0.135
      },
      "topics": [
       "torus"
@@ -52,10 +52,10 @@
      "id": "profile-to-blowup",
      "name": "From a profile to blow-up",
      "named": true,
-     "hue": 120.86,
+     "hue": 129.36,
      "chroma": {
-      "light": 0.161,
-      "dark": 0.167
+      "light": 0.167,
+      "dark": 0.176
      },
      "topics": [
       "monodromy",
@@ -67,10 +67,10 @@
      "id": "certificate-to-profile",
      "name": "From a certificate to a profile",
      "named": true,
-     "hue": 160.29,
+     "hue": 169.79,
      "chroma": {
-      "light": 0.132,
-      "dark": 0.158
+      "light": 0.118,
+      "dark": 0.15
      },
      "topics": [
       "certificate",
@@ -81,10 +81,10 @@
      "id": "cell-data",
      "name": "Cell data",
      "named": true,
-     "hue": 223.71,
+     "hue": 226.71,
      "chroma": {
-      "light": 0.125,
-      "dark": 0.149
+      "light": 0.12,
+      "dark": 0.156
      },
      "topics": [
       "encoding",
@@ -96,7 +96,7 @@
      "id": "cell-estimates",
      "name": "Cell estimates",
      "named": true,
-     "hue": 275.14,
+     "hue": 276.14,
      "chroma": {
       "light": 0.213,
       "dark": 0.213
@@ -111,7 +111,7 @@
      "id": "cell-certificate",
      "name": "From cell data to the certificate",
      "named": true,
-     "hue": 326.57,
+     "hue": 325.57,
      "chroma": {
       "light": 0.201,
       "dark": 0.201
@@ -126,98 +126,98 @@
     "fractional": {
      "index": 0,
      "family": "theorems",
-     "light": "oklch(0.513 0.201 14.9)",
-     "dark": "oklch(0.633 0.201 14.9)"
+     "light": "oklch(0.440 0.176 10.9)",
+     "dark": "oklch(0.610 0.201 10.9)"
     },
     "statement": {
      "index": 1,
      "family": "theorems",
-     "light": "oklch(0.598 0.179 21.1)",
-     "dark": "oklch(0.718 0.176 21.1)"
+     "light": "oklch(0.560 0.179 19.1)",
+     "dark": "oklch(0.730 0.166 19.1)"
     },
     "torus": {
      "index": 2,
      "family": "torus",
-     "light": "oklch(0.565 0.136 57.4)",
-     "dark": "oklch(0.685 0.165 57.4)"
+     "light": "oklch(0.450 0.098 68.9)",
+     "dark": "oklch(0.620 0.135 68.9)"
     },
     "monodromy": {
      "index": 3,
      "family": "profile-to-blowup",
-     "light": "oklch(0.455 0.102 114.7)",
-     "dark": "oklch(0.575 0.130 114.7)"
+     "light": "oklch(0.370 0.089 121.1)",
+     "dark": "oklch(0.540 0.129 121.1)"
     },
     "mild": {
      "index": 4,
      "family": "profile-to-blowup",
-     "light": "oklch(0.540 0.129 120.9)",
-     "dark": "oklch(0.660 0.158 120.9)"
+     "light": "oklch(0.490 0.130 129.4)",
+     "dark": "oklch(0.660 0.176 129.4)"
     },
     "profile": {
      "index": 5,
      "family": "profile-to-blowup",
-     "light": "oklch(0.625 0.161 127.0)",
-     "dark": "oklch(0.745 0.167 127.0)"
+     "light": "oklch(0.610 0.167 137.6)",
+     "dark": "oklch(0.780 0.167 137.6)"
     },
     "certificate": {
      "index": 6,
      "family": "certificate-to-profile",
-     "light": "oklch(0.533 0.126 157.2)",
-     "dark": "oklch(0.653 0.154 157.2)"
+     "light": "oklch(0.500 0.104 165.7)",
+     "dark": "oklch(0.670 0.139 165.7)"
     },
     "coercive": {
      "index": 7,
      "family": "certificate-to-profile",
-     "light": "oklch(0.617 0.132 163.4)",
-     "dark": "oklch(0.737 0.158 163.4)"
+     "light": "oklch(0.620 0.118 173.9)",
+     "dark": "oklch(0.790 0.150 173.9)"
     },
     "encoding": {
      "index": 8,
      "family": "cell-data",
-     "light": "oklch(0.460 0.082 217.5)",
-     "dark": "oklch(0.580 0.103 217.5)"
+     "light": "oklch(0.330 0.059 218.5)",
+     "dark": "oklch(0.500 0.090 218.5)"
     },
     "quarter-plane": {
      "index": 9,
      "family": "cell-data",
-     "light": "oklch(0.545 0.102 223.7)",
-     "dark": "oklch(0.665 0.124 223.7)"
+     "light": "oklch(0.450 0.086 226.7)",
+     "dark": "oklch(0.620 0.119 226.7)"
     },
     "cells-tails": {
      "index": 10,
      "family": "cell-data",
-     "light": "oklch(0.630 0.125 229.9)",
-     "dark": "oklch(0.750 0.149 229.9)"
+     "light": "oklch(0.570 0.120 234.9)",
+     "dark": "oklch(0.740 0.156 234.9)"
     },
     "angular": {
      "index": 11,
      "family": "cell-estimates",
-     "light": "oklch(0.410 0.213 269.0)",
-     "dark": "oklch(0.530 0.213 269.0)"
+     "light": "oklch(0.410 0.213 267.9)",
+     "dark": "oklch(0.580 0.213 267.9)"
     },
     "tree": {
      "index": 12,
      "family": "cell-estimates",
-     "light": "oklch(0.495 0.190 275.1)",
-     "dark": "oklch(0.615 0.190 275.1)"
+     "light": "oklch(0.530 0.190 276.1)",
+     "dark": "oklch(0.700 0.158 276.1)"
     },
     "profile-change": {
      "index": 13,
      "family": "cell-estimates",
-     "light": "oklch(0.580 0.167 281.3)",
-     "dark": "oklch(0.700 0.161 281.3)"
+     "light": "oklch(0.650 0.167 284.4)",
+     "dark": "oklch(0.820 0.093 284.4)"
     },
     "adjoint": {
      "index": 14,
      "family": "cell-certificate",
-     "light": "oklch(0.503 0.201 323.5)",
-     "dark": "oklch(0.623 0.201 323.5)"
+     "light": "oklch(0.470 0.201 321.5)",
+     "dark": "oklch(0.640 0.201 321.5)"
     },
     "offset-certificate": {
      "index": 15,
      "family": "cell-certificate",
-     "light": "oklch(0.588 0.179 329.7)",
-     "dark": "oklch(0.708 0.179 329.7)"
+     "light": "oklch(0.590 0.179 329.7)",
+     "dark": "oklch(0.760 0.179 329.7)"
     }
    }
   }
