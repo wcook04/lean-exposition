@@ -288,7 +288,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   useLayoutEffect(() => {
     if (scroller.current) scroller.current.scrollTop = 0;
   }, [showing]);
-  // A phrase's card stays at the top; the tied lines are brought into view below it, as the Lean arrives.
+  // Bring the tied lines into view as the Lean arrives after a reader action.
   useEffect(() => {
     if (!phrase) return;
     const bring = () => {
@@ -297,10 +297,12 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       const box = scroller.current;
       const lit = box?.querySelector<HTMLElement>(".lean-line.is-lit");
       if (!box || !lit) return false;
-      // As far as the lines need, never past the head of the phrase's card.
+      // Where the comparison precedes the code, keep its heading in view.
       const card = box.querySelector<HTMLElement>(".phrase-card");
       const over = lit.getBoundingClientRect().bottom - box.getBoundingClientRect().bottom + 24;
-      const most = card ? card.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 8 : Infinity;
+      const most = card && (card.compareDocumentPosition(lit) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
+        ? card.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 8
+        : Infinity;
       if (over > 0) box.scrollTo({ top: Math.min(box.scrollTop + over, Math.max(0, most)), behavior: "instant" as ScrollBehavior });
       return true;
     };
@@ -330,6 +332,37 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       </div>
     );
   const inLean = Boolean(onOpenGraph);
+  const leanBlock = name && (
+    <LazyLeanBlock
+      key={`${row?.module ?? open.declModule ?? ""}:${name}`}
+      name={name}
+      module={row?.module ?? open.declModule}
+      relation={row?.relation ?? undefined}
+      note={row?.note}
+      fidelity={phrase ? undefined : (row ?? undefined)}
+      // Light the quoted proof lines when the passage names them.
+      quietLines={phrase && !(row?.proof_lines && row.lines && row.lines[0] >= row.proof_lines[0]) ? true : undefined}
+      clause={row?.clause}
+      lines={row?.lines}
+      compact
+      foldDependencies={inLean && phrase}
+      onName={onName}
+      noPapers
+      previewSlot={barLine && barShown ? barLine : foot}
+      below={
+        open.tie !== null ? (
+          ties.index.ties[open.tie]?.origin ? (
+            <>
+              <OriginLine origin={ties.index.ties[open.tie].origin} />
+              <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+            </>
+          ) : (
+            <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+          )
+        ) : undefined
+      }
+    />
+  );
   const choices = !open.decl && rows.length > 1 && !full && (
     <ul className="lean-page__rows" aria-label="Lean declarations of this step">
       {rows.map((item, i) => (
@@ -452,6 +485,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
               <div className="lean-wait is-compact">Loading the Lean source</div>
             ) : name ? (
               <>
+              {inLean && leanBlock}
               {phrase && row && (
                 <PhraseCard
                   key={inLean ? `${tie?.at}:${row.name}` : undefined}
@@ -469,35 +503,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
               )}
               {phrase && open.tie !== null && <OurStatements phrase={ties.index.ties[open.tie]?.phrase} />}
               {phrase && row && crumbs}
-              <LazyLeanBlock
-                key={`${row?.module ?? open.declModule ?? ""}:${name}`}
-                name={name}
-                module={row?.module ?? open.declModule}
-                relation={row?.relation ?? undefined}
-                note={row?.note}
-                fidelity={phrase ? undefined : (row ?? undefined)}
-                // The phrase's card stays in view above a lit statement; lit proof lines are scrolled to.
-                quietLines={phrase && !(row?.proof_lines && row.lines && row.lines[0] >= row.proof_lines[0]) ? true : undefined}
-                clause={row?.clause}
-                lines={row?.lines}
-                compact
-                foldDependencies={inLean && phrase}
-                onName={onName}
-                noPapers
-                previewSlot={barLine && barShown ? barLine : foot}
-                below={
-                  open.tie !== null ? (
-                    ties.index.ties[open.tie]?.origin ? (
-                      <>
-                        <OriginLine origin={ties.index.ties[open.tie].origin} />
-                        <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
-                      </>
-                    ) : (
-                      <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
-                    )
-                  ) : undefined
-                }
-              />
+              {!inLean && leanBlock}
               </>
             ) : alignment ? (
               <>
