@@ -1492,12 +1492,14 @@
 .tree[data-dense] .card[data-toned][data-lean] {
   background: var(--card-tone);
   border-color: color-mix(in srgb, var(--card-tone) 70%, black);
-  color: #16141d;
+  /* Near-black words on a light colour, white on a dark one. */
+  --card-ink: oklch(from var(--card-tone) clamp(0.16, (0.64 - l) * 1000, 0.98) 0.01 h);
+  color: var(--card-ink);
 }
 .tree[data-dense] .card[data-toned] .card__ctitle,
 .tree[data-dense] .card[data-toned] .card__csec,
 .tree[data-dense] .card[data-toned] .card__cmain {
-  color: #16141d;
+  color: var(--card-ink);
 }
 
 /* A fill map too crowded for a title's first word draws the tile as a chip of its topic colour;
@@ -1511,5 +1513,5 @@
 }
 /* A receding coloured tile keeps its colour, toward the ground. */
 .tree[data-dense] .card[data-toned].is-quiet {
-  background: color-mix(in oklab, var(--card-tone) 55%, var(--ground));
+  background: color-mix(in oklab, var(--card-tone) 82%, var(--ground));
 }

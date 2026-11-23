@@ -30,6 +30,7 @@ import { LensControl } from "./LensControl";
 import { WalkBar, useWalk } from "./WalkBar";
 import { leanLevelCounts, leanSentence, levelCounts, levelRecords, lensSentence } from "./levels";
 import { recordMark } from "./leanMarks";
+import { useRecordTones } from "./recordTones";
 import { declTitle } from "../model/declTitle";
 import { useLeanGraph } from "./useLeanGraph";
 import { leanWidth, neighbourhood } from "../model/leanGraph";
@@ -383,6 +384,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (route.lens) chooseAccount(route.lens);
   }, [route.lens]);
 
+  const toneOf = useRecordTones(route.lens as Stage | undefined);
   const changeLens = (stage: Stage | undefined) => go({ lens: stage, goal: undefined, edge: undefined }, true);
   const changeGoal = (id: string) => go({ goal: id, node: undefined, edge: undefined, trace: undefined });
   const collapse = () => {
@@ -653,6 +655,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             onSceneSettled={onSceneSettled}
             statusOf={recordMark}
             tileWidth={laptop ? LAPTOP_TILE_W : undefined}
+            toneOf={toneOf}
           />
           </GraphBoundary>
         ) : (
