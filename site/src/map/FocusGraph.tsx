@@ -11,6 +11,7 @@
 // Layout is the browser's own (columns of wrapped titles); the lines are measured from the
 // nodes after layout, so a title of any length, or one with typeset mathematics, is never cut.
 
+import { toneNumber } from "./topicTone";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { graphWheel } from "./graphWheel";
@@ -714,6 +715,7 @@ export function FocusGraph(props: FocusGraphProps) {
         data-seen={c.seen}
         aria-current={subject ? "true" : undefined}
         title={subject ? undefined : said}
+        data-topic-tone={toneNumber(c.tone)}
         style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
         onClick={() => choose(id)}
         onMouseEnter={() => hover(id)}
@@ -967,7 +969,8 @@ export function FocusGraph(props: FocusGraphProps) {
                     data-card={id}
                     data-role={c.role}
                     data-seen={c.seen}
-                    style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
+                    data-topic-tone={toneNumber(c.tone)}
+        style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
                     onClick={() => onSubject(id)}
                     onMouseEnter={() => hover(id)}
                     onMouseLeave={() => hover(null)}

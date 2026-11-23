@@ -52,7 +52,9 @@ function useRecentTones(): string[] {
     const fromEvent = (event: Event) => {
       const target = event.target as Element | null;
       const tie = target && typeof target.closest === "function" ? (target.closest(".paper .tie[data-tone]") as HTMLElement | null) : null;
-      bump(tie?.dataset.tone);
+      // A graph card (the Lean map or the Graph view) carries its topic as data-topic-tone.
+      const card = !tie && target && typeof target.closest === "function" ? (target.closest("[data-topic-tone]") as HTMLElement | null) : null;
+      bump(tie?.dataset.tone ?? card?.dataset.topicTone);
     };
     const pinned = () => bump((document.querySelector(".paper .tie[data-pin][data-tone]") as HTMLElement | null)?.dataset.tone);
     document.addEventListener("pointerover", fromEvent, { passive: true });

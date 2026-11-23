@@ -19,6 +19,7 @@
 // routed every frame, and one animation clock for cards, connectors and camera.
 // Camera input: d3-zoom. Screen-space parts (edge chips, notes) live in ./canvas.
 
+import { toneNumber } from "./topicTone";
 import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { select } from "d3-selection";
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from "d3-zoom";
@@ -2557,6 +2558,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               data-shape={mark?.shape}
               data-lean={mark && leanFill(mark) !== "none" ? leanFill(mark) : undefined}
               data-toned={dense && props.toneOf?.(id) ? "" : undefined}
+              data-topic-tone={toneNumber(props.toneOf?.(id))}
               className={cardClass(lid, node, leaf)}
               style={{ ["--card-tone" as string]: dense ? props.toneOf?.(id) : undefined, width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"
