@@ -375,6 +375,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   }, [structures, stage]);
   const litIds = useMemo(() => (subjectRecords.length ? new Set(subjectRecords) : null), [subjectRecords]);
   const previewIds = useMemo(() => (lit.length ? new Set(lit) : null), [lit]);
+  const toneOf = useCallback((id: string) => places.recordTone.get(id), [places]);
   const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 24, right: 16 }), []);
   useEffect(() => {
     if (!showWhole) return;
@@ -619,6 +620,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         persist={false}
         mode="overview"
         minScale={0.12}
+        fill
+        within={coverage.size ? coverage : undefined}
+        toneOf={toneOf}
         tileWidth={PANE_TILE_W}
         tileHeight={PANE_TILE_H}
         statusOf={recordMark}

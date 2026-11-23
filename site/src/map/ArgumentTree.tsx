@@ -146,6 +146,17 @@ export interface TreeProps {
   tileWidth?: number;
   /** The dense layout's tile height, for names that need a third line. */
   tileHeight?: number;
+  /**
+   * Fill the canvas: the dense layout spends the room its fitted drawing leaves empty. A map wider
+   * than the canvas gets taller tiles (titles wrap to more lines) and wider gaps between rows; a map
+   * taller than it gets wider tiles. Used where the whole argument is shown at once (the reader pane).
+   */
+  fill?: boolean;
+  /**
+   * A record's topic colour (any CSS colour). Dense tiles carry it as an edge; where a fill map is
+   * too crowded to hold a title's first word, the tile becomes a chip of that colour, read on hover.
+   */
+  toneOf?(id: string): string | undefined;
   /** Remember unfolded branches for the session (default). Off for a map that follows something else. */
   persist?: boolean;
   /** The reader moved the map themselves: a pan, a zoom, an unfold or an edge chip. */
@@ -205,6 +216,50 @@ function guessHeight(node: ArgNode, isRoot: boolean, compact: boolean): number {
   if (isRoot) return compact ? 76 : 200;
   if (compact) return 62;
   return node.kind === "declaration" ? 112 : 124;
+}
+
+/**
+ * How much a dense layout drawn to fill a canvas should grow: the room its uniform fit leaves
+ * empty, in world units. A wide map grows its tiles' height (up to three title lines on screen)
+ * and its row gaps; a tall map grows its tiles' width. Null when there is nothing worth filling.
+ */
+/** A title cut so short that less than three quarters of its first word is left. */
+function chipped(label: string, fit: { fits?: boolean; short?: string }): boolean {
+  if (fit.fits !== false || !fit.short) return false;
+  const first = label.trim().split(/\s+/)[0] ?? "";
+  const kept = fit.short.replace(/…$/, "").trim().split(/\s+/)[0] ?? "";
+  return first.length > 0 && kept.length < Math.ceil(first.length * 0.75);
+}
+
+export function fillRoom(l: Layout, vp: { width: number; height: number } | null): { dw: number; dh: number; gap: number } | null {
+  if (!vp || vp.width < 200 || vp.height < 150 || l.boxes.size < 3) return null;
+  const pad = 16;
+  const b = layoutBounds(l);
+  const W = b.x1 - b.x0 + 2 * pad;
+  const H = b.y1 - b.y0 + 2 * pad;
+  const kx = vp.width / W;
+  const ky = vp.height / H;
+  const rows = Math.max(1, l.rowHeight.filter((h) => h > 0).length);
+  const tiles = [...l.boxes.entries()].filter(([id]) => id !== l.root).map(([, r]) => r);
+  if (!tiles.length) return null;
+  const tileH = Math.min(...tiles.map((r) => r.h));
+  if (kx < ky) {
+    const k = Math.min(kx, 1);
+    const spare = vp.height / k - H;
+    if (spare < 8) return null;
+    // Three title lines at 13px, the tile's padding and border, on screen.
+    const want = (3 * 13 * 1.22 + 10) / k;
+    const dh = Math.max(0, Math.min(want - tileH, (spare * 0.55) / rows));
+    const gap = Math.max(0, Math.min((spare - dh * rows) / Math.max(1, rows - 1), 3 * (tileH + dh)));
+    return dh < 1 && gap < 1 ? null : { dw: 0, dh, gap: gap * 0.92 };
+  }
+  const k = Math.min(ky, 1);
+  const spareW = vp.width / k - W;
+  if (spareW < 8) return null;
+  // The widest row of cards sets the width; routing lanes between them do not grow.
+  const cols = Math.max(1, ...l.layers.map((layer) => layer.filter((id) => l.boxes.has(id)).length));
+  const dw = Math.max(0, Math.min(260, (spareW * 0.9) / cols));
+  return dw < 1 ? null : { dw, dh: 0, gap: 0 };
 }
 
 function hashSet(set: ReadonlySet<string>): string {
@@ -312,6 +367,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const denseRef = useRef(dense);
   denseRef.current = dense;
   const metrics = compact ? METRICS_COMPACT : dense ? METRICS_DENSE : METRICS;
+  const fillOn = dense && !!props.fill;
+  const fillRef = useRef(fillOn);
+  fillRef.current = fillOn;
   const onModeChangeRef = useRef(props.onModeChange);
   onModeChangeRef.current = props.onModeChange;
   const controlled = props.mode !== undefined;
@@ -462,10 +520,20 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         pin = r;
       } else pin = null;
     }
-    const { layout, plan } = layoutTree({ root: goal, nodes: split.nodes, edges: split.edges, size, metrics, prev: prevLayout, pin, keepOrder: hold });
+    const run = (sz: (lid: string) => Size, m: typeof metrics) =>
+      layoutTree({ root: goal, nodes: split.nodes, edges: split.edges, size: sz, metrics: m, prev: prevLayout, pin, keepOrder: hold });
+    let { layout, plan } = run(size, metrics);
+    const room = fillRoom(layout, fillOn ? { width: paneW - insets.left - insets.right, height: paneH - insets.top - insets.bottom } : null);
+    if (room) {
+      const grown = (lid: string): Size => {
+        const s0 = size(lid);
+        return lid === goal ? { w: s0.w, h: s0.h + room.dh } : { w: s0.w + room.dw, h: s0.h + room.dh };
+      };
+      ({ layout, plan } = run(grown, { ...metrics, gapMin: metrics.gapMin + room.gap }));
+    }
     return { layout, plan, skeleton: split.edges, shared: split.shared, implied: skel.implied, provisional, pin };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graph, goal, visible, skel, heights, compact, metrics, rootW, dense, lens]);
+  }, [graph, goal, visible, skel, heights, compact, metrics, rootW, dense, lens, fillOn, fillOn ? paneW : 0, fillOn ? paneH : 0, insets]);
   const layout = built.layout;
   /** For each assumption, the drawn cards that carry it as a tag. */
   const tagHolders = useMemo(() => {
@@ -579,7 +647,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const k = viewRef.current.k;
     const rep = repRef.current;
     const layout = builtRef.current.layout;
-    const box = denseRef.current ? DENSE_TILE : TILE;
+    const dense = denseRef.current;
     const prev = lastLineInputs.current;
     // A representation render, the camera frame and the statement observer can
     // all request the same fit. Their arithmetic and DOM reads are shared until
@@ -599,10 +667,16 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         m = { label, kind, title, t: measureTitle(title, label, kind) };
         measured.current.set(lid, m);
       }
+      // A narrow dense tile gives its words the padding: 10px at reading width, down to 3px.
+      const box = dense ? { ...DENSE_TILE, padX: Math.max(3, Math.min(DENSE_TILE.padX, Math.round(rect.w * k * 0.06))) } : TILE;
+      if (dense) el.style.setProperty("--pad-x", `${box.padX}px`);
       const section = el.hasAttribute("data-section") ? 14 : 0;
       const plate = kind === "root" && !denseRef.current ? fitPlate(m.t, rect.w, rect.h, k, statementH.current) : null;
       const fit = plate ?? fitTitle(m.t, rect.w, rect.h, k, kind, box, section);
       const statement = plate?.statement ?? false;
+      // In a fill map a title cut inside the first quarter of its first word reads as noise: the tile
+      // becomes a chip of its topic colour, and hovering it shows the card.
+      if (fillRef.current && dense && kind !== "root") el.toggleAttribute("data-chip", chipped(label, fit));
       if (fit.short || label !== el.dataset.full) shortened.current.add(lid);
       else shortened.current.delete(lid);
       const key = `${fit.size}|${fit.lines}|${statement}|${fit.short ?? ""}`;
@@ -1258,6 +1332,14 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
+
+  // A fill map is laid out for its canvas, so each new layout (the canvas measured, resized) is
+  // framed whole again, unless the reader has moved the map since.
+  useEffect(() => {
+    if (!fillOn || !ready || handMoved.current) return;
+    moveCamera(overviewView(layout), false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout, fillOn, ready]);
 
   /** Steps around one record: it and its drawn inputs at reading size, the record itself kept in view. */
   const aroundView = useCallback(
@@ -2474,8 +2556,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               data-section={section ?? undefined}
               data-shape={mark?.shape}
               data-lean={mark && leanFill(mark) !== "none" ? leanFill(mark) : undefined}
+              data-toned={dense && props.toneOf?.(id) ? "" : undefined}
               className={cardClass(lid, node, leaf)}
-              style={{ width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
+              style={{ ["--card-tone" as string]: dense ? props.toneOf?.(id) : undefined, width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"
               aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} steps that use it` : ""}${mark ? `, ${markWords(mark)}` : lean ? ", linked to Lean" : ""}`}
               title={clone ? node.label : undefined}

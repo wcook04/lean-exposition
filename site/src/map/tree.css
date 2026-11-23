@@ -780,7 +780,7 @@
 .tree[data-dense] .card__compact {
   gap: calc(1px / var(--k));
   /* DENSE_TILE in canvas/representation.ts. */
-  padding: calc(4px / var(--k)) calc(10px / var(--k));
+  padding: calc(4px / var(--k)) calc(var(--pad-x, 10px) / var(--k));
 }
 
 .tree[data-dense] .card--assumption {
@@ -1484,4 +1484,32 @@
 
 .goal-plate__actions a:hover {
   text-decoration-color: currentColor;
+}
+
+/* Topic colours on the overview's tiles (ArgumentTree `toneOf`): the whole tile in the colour the
+   record's phrases carry in the paper, with dark words on it. */
+.tree[data-dense] .card[data-toned],
+.tree[data-dense] .card[data-toned][data-lean] {
+  background: var(--card-tone);
+  border-color: color-mix(in srgb, var(--card-tone) 70%, black);
+  color: #16141d;
+}
+.tree[data-dense] .card[data-toned] .card__ctitle,
+.tree[data-dense] .card[data-toned] .card__csec,
+.tree[data-dense] .card[data-toned] .card__cmain {
+  color: #16141d;
+}
+
+/* A fill map too crowded for a title's first word draws the tile as a chip of its topic colour;
+   hovering it shows the card. A record with no topic keeps a quiet neutral chip. */
+.tree[data-dense] .card[data-chip] {
+  background: var(--card-tone, color-mix(in srgb, currentColor 22%, transparent));
+  border-color: transparent;
+}
+.tree[data-dense] .card[data-chip] .card__compact {
+  visibility: hidden;
+}
+/* A receding coloured tile keeps its colour, toward the ground. */
+.tree[data-dense] .card[data-toned].is-quiet {
+  background: color-mix(in oklab, var(--card-tone) 55%, var(--ground));
 }
