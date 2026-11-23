@@ -75,7 +75,7 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
           </ul>
           <p className="map-keypop__h">Cards</p>
           <ul className="map-keypop__channels">
-            <li>{site.words.mapKeyIntro}</li>
+            <li>{site.words.mapKeyIntro.replace(/^Each box\b/, "Each card")}</li>
             <li>A box is a definition and a rounded card a result.</li>
             <li>
               <span className="keyrow__tag" aria-hidden="true" /> An assumption is a tag on each result that assumes it.
