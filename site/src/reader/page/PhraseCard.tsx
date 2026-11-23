@@ -184,7 +184,7 @@ export function Verdict({ assessment, words }: { assessment: Pick<PhraseAssessme
   return (
     <p className="phrase-card__fidelity" data-fidelity={fidelity}>
       {lead}
-      <strong>{phraseVerdict(fidelity)}</strong>
+      <strong title={FIDELITY_MEANING[fidelity]}>{phraseVerdict(fidelity)}</strong>
       {note ? (
         <>
           : <span dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />
@@ -262,7 +262,7 @@ function LeanComparisons({ row, merged, phrase, opening, quoteBytes }: { row: Ph
         {scope && <p className="phrase-card__for">{scope}</p>}
         {isFidelity(fidelity) ? (
           <div className="phrase-card__fidelity" data-fidelity={fidelity}>
-            {(!secondary || !note) && <p className="phrase-card__judgment"><strong>{phraseVerdict(fidelity)}</strong>
+            {(!secondary || !note) && <p className="phrase-card__judgment"><strong title={FIDELITY_MEANING[fidelity]}>{phraseVerdict(fidelity)}</strong>
               {(!allAssessed || shown.length === 1 || (common && i === selected)) && <span className="phrase-card__who">AI-assessed</span>}
             </p>}
             {note && <p dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />}
@@ -294,7 +294,7 @@ const FIDELITY_MEANING: Record<Fidelity, string> = {
   same: "The formal statement asserts what the quoted words assert, after the translation the note states.",
   stronger: "The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference.",
   weaker: "The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference.",
-  different: "Neither implies the other as stated: for example, a definition linked to a sentence about a construction.",
+  different: "Neither statement implies the other as written. For example, Lean may give a definition where the paper describes a construction, or include a premise the paper states elsewhere.",
 };
 
 /**
@@ -411,7 +411,7 @@ function Explanation({ explanation, showOpen = true }: { explanation: PhraseExpl
       {showOpen && explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
       {sources.length > 0 && (
         <details className="phrase-card__sources">
-          <summary>{sources.length === 1 ? "The source this rests on" : `The ${sources.length} sources this rests on`}</summary>
+          <summary>{sources.length === 1 ? "Source cited (1)" : `Sources cited (${sources.length})`}</summary>
           <ul>
             {sources.map((source) => (
               <li key={`${source.ref}:${source.where ?? ""}`}>
@@ -479,7 +479,6 @@ export function PhraseCard({ row, role, note, quote, merged, phrase, names, expl
         {(row.source_review || row.relation === null) && row.note && <SourceBindingNote note={row.note} />}
         {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
         {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
-        {!sourceNote && <ComparisonLegend label={inLean ? "Comparison terms" : undefined} />}
       </div>
       {foldNotes ? (
         <details className="phrase-card__notes">

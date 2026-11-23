@@ -60,7 +60,7 @@ describe("phrase notes", () => {
   it("says each comparison in words", () => {
     expect(phraseVerdict("weaker")).toBe("Lean states less");
     expect(phraseVerdict("stronger")).toBe("Lean states more");
-    expect(phraseVerdict("different")).toBe("Lean states something different");
+    expect(phraseVerdict("different")).toBe("Lean states it differently");
     expect(phraseVerdict("same")).toBe("Lean states the same as this phrase");
   });
 

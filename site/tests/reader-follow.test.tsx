@@ -262,7 +262,7 @@ describe("MapPane", async () => {
     act(() => whole.click());
     expect(container.querySelector(".map-pane .tree")).not.toBeNull();
     expect(container.querySelector(".fg")).toBeNull();
-    act(() => [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Around this step")!.click());
+    act(() => [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Neighbours of this step")!.click());
     expect(container.querySelector(".fg")).not.toBeNull();
     show(null, { mode: "lean" });
     expect(container.querySelector(".fg")).toBeNull();

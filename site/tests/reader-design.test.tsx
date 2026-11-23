@@ -356,17 +356,11 @@ describe("the inspector's phrase card", async () => {
     expect(container.textContent).not.toContain("AI-assessed");
   });
 
-  it("gives the legend's six words, in the card's own words, once it is opened", () => {
+  it("explains the displayed verdict on hover", () => {
     act(() => root.render(<PhraseCard row={row({ fidelity: "weaker" })} note={undefined} />));
-    const legend = container.querySelector<HTMLDetailsElement>(".phrase-card__legend")!;
-    // Closed, it names no verdict, so no verdict's name stands beside a different comparison.
-    expect(legend.querySelectorAll("dt")).toHaveLength(0);
-    act(() => {
-      legend.open = true;
-      legend.dispatchEvent(new Event("toggle"));
-    });
-    const words = [...legend.querySelectorAll("dt")].map((dt) => dt.textContent);
-    expect(words).toEqual(["Lean states the same as this phrase", "Lean states more", "Lean states less", "Lean states something different", "Not assessed", "Withheld"]);
+    expect(container.querySelector(".phrase-card__legend")).toBeNull();
+    const verdict = [...container.querySelectorAll("strong")].find((el) => el.textContent === "Lean states less");
+    expect(verdict?.getAttribute("title")).toMatch(/more hypotheses, fewer conclusions or a looser bound/);
   });
 });
 

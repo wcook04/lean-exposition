@@ -1564,3 +1564,13 @@ html[data-right-sheet] {
 .map-pane .mode-toggle button[aria-label="Graph"] {
   min-width: 92px;
 }
+
+/* Prose in the side pane can use the available width at every pane size. */
+.map-pane {
+  --measure: none;
+  --evidence-measure: none;
+}
+
+.map-pane blockquote.phrase-card__quote {
+  max-width: none;
+}

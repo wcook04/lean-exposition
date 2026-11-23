@@ -29,7 +29,7 @@ export const FIDELITIES: readonly Fidelity[] = ["same", "stronger", "weaker", "d
 export function verdictWords(fidelity: Fidelity, noun = "paper"): string {
   if (fidelity === "same") return `Says the same as the ${noun}`;
   if (fidelity === "stronger") return `Says more than the ${noun}`;
-  if (fidelity === "different") return `Says something different from the ${noun}`;
+  if (fidelity === "different") return `States it differently from the ${noun}`;
   return `Says less than the ${noun}`;
 }
 
@@ -37,7 +37,7 @@ export function verdictWords(fidelity: Fidelity, noun = "paper"): string {
 export function fidelitySentence(fidelity: Fidelity): string {
   if (fidelity === "same") return "The Lean statement says the same as the paper.";
   if (fidelity === "stronger") return "The Lean statement says more than the paper.";
-  if (fidelity === "different") return "The Lean statement says something different from the paper.";
+  if (fidelity === "different") return "The Lean statement states it differently from the paper.";
   return "The Lean statement says less than the paper.";
 }
 
@@ -45,7 +45,7 @@ export function fidelitySentence(fidelity: Fidelity): string {
 export function phraseVerdict(fidelity: Fidelity): string {
   if (fidelity === "same") return "Lean states the same as this phrase";
   if (fidelity === "stronger") return "Lean states more";
-  if (fidelity === "different") return "Lean states something different";
+  if (fidelity === "different") return "Lean states it differently";
   return "Lean states less";
 }
 

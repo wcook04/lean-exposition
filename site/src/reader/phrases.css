@@ -713,13 +713,11 @@
 .map-pane .phrase-card, .map-pane .lean-page__body { min-width: 0; max-width: 100%; }
 
 
-/* The pane's explanations read like the paper beside them: its serif, mathematics at the
-   text's own size, a measure of about 68 characters and open leading. */
+/* The pane uses the paper's serif and keeps mathematics at the surrounding text size. */
 .map-pane .phrase-card :is(.phrase-card__compare, .phrase-card__notes > div) {
   font-family: var(--font-serif);
   font-size: 1.0625rem;
   line-height: 1.62;
-  max-width: 68ch;
   text-wrap: pretty;
   hyphens: auto;
 }
@@ -841,11 +839,6 @@
   margin: 0 0 var(--space-2);
 }
 
-/* In a wide pane its sentences keep a reading measure. */
-.map-pane .ours :is(p, .ours__title, .ours__open) {
-  max-width: 76ch;
-}
-
 .map-pane .ours > :last-child,
 .map-pane .ours__more > :last-child {
   margin-bottom: 0;
@@ -961,16 +954,6 @@
   background: var(--surface);
 }
 
-/* The hairline over the comparison runs the width of the card, like the one over the notes;
-   the sentences under it keep their measure. */
-.map-pane .phrase-card.phrase-card--lean > .phrase-card__compare {
-  max-width: none;
-}
-
-.map-pane .phrase-card.phrase-card--lean > .phrase-card__compare > * {
-  max-width: 68ch;
-}
-
 /* The small lines around the Lean source: links with a quiet underline, and room between the
    actions, what the declaration is, and the code. */
 .map-pane .lean-block__actions {
@@ -985,7 +968,6 @@
 }
 
 .map-pane .lean-block__relation {
-  max-width: 84ch;
   margin-top: var(--space-2);
   line-height: 1.5;
 }
@@ -996,7 +978,6 @@
 }
 
 .map-pane .tie-origin {
-  max-width: 84ch;
   margin-top: var(--space-3);
   line-height: 1.5;
 }
