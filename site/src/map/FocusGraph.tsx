@@ -266,23 +266,34 @@ export function FocusGraph(props: FocusGraphProps) {
     if (!d || !el || !w || !el.clientWidth || !el.clientHeight || !d.w || !d.h) return false;
     // The buttons stand over the bottom of the view: a fitted drawing stays above them.
     const vw = el.clientWidth, vh = el.clientHeight - TOOLS_ROOM;
-    const byH = (vh - 2 * FIT_MARGIN) / d.h, byW = (vw - 2 * FIT_MARGIN) / d.w;
+    // Fit what is drawn, not the world's box: the cards (and the column headings above them) can
+    // reach past the box the layout planned, and fitting the box left them hanging off one side.
+    const ext = d.boxes.length
+      ? {
+          x0: Math.min(0, ...d.boxes.map((b) => b.box.x)),
+          x1: Math.max(d.w, ...d.boxes.map((b) => b.box.x + b.box.w)),
+          y0: Math.min(0, ...d.boxes.map((b) => b.box.y)),
+          y1: Math.max(d.h, ...d.boxes.map((b) => b.box.y + b.box.h)),
+        }
+      : { x0: 0, x1: d.w, y0: 0, y1: d.h };
+    const dw = ext.x1 - ext.x0, dh = ext.y1 - ext.y0;
+    const byH = (vh - 2 * FIT_MARGIN) / dh, byW = (vw - 2 * FIT_MARGIN) / dw;
     if (byH < MIN_READ && !openedNow.current && tightNow.current < 6) {
       setTight((t) => Math.min(6, t + 1));
       return false;
     }
     const k = Math.max(FIT_FLOOR, Math.min(FIT_MAX, byH, byW));
-    let x = (vw - d.w * k) / 2, y = (vh - d.h * k) / 2;
+    let x = vw / 2 - ((ext.x0 + ext.x1) / 2) * k, y = vh / 2 - ((ext.y0 + ext.y1) / 2) * k;
     // Stacked on a phone the drawing reads from its top: what uses the subject, the subject, what it uses.
     if (w.classList.contains("fg__world--narrow")) y = FIT_MARGIN;
-    else if (d.w * k > vw || d.h * k > vh) {
+    else if (dw * k > vw || dh * k > vh) {
       // Even grouped it is larger than the view: the subject is in the middle, and the rest is a pan away.
       const f = d.boxes.filter((b) => b.band === "subject").map((b) => b.box);
       if (f.length) {
         const left = Math.min(...f.map((b) => b.x)), right = Math.max(...f.map((b) => b.x + b.w));
         const top = Math.min(...f.map((b) => b.y)), bottom = Math.max(...f.map((b) => b.y + b.h));
-        if (d.w * k > vw) x = vw / 2 - ((left + right) / 2) * k;
-        if (d.h * k > vh) y = Math.min(FIT_MARGIN - top * k + 12, vh / 2 - ((top + bottom) / 2) * k);
+        if (dw * k > vw) x = vw / 2 - ((left + right) / 2) * k;
+        if (dh * k > vh) y = Math.min(FIT_MARGIN - top * k + 12, vh / 2 - ((top + bottom) / 2) * k);
       }
     }
     setCam({ x, y, k });
@@ -564,11 +575,14 @@ export function FocusGraph(props: FocusGraphProps) {
   // A new drawing is fitted while the view is the fitted one; otherwise the camera only keeps some of it in view.
   useLayoutEffect(() => {
     if (!drawn) return;
-    // A drawing is fitted once for its subject; re-measuring it later (a hover, a font arriving)
-    // keeps the camera, so nothing moves under the pointer.
-    if (auto.current && !openedNow.current && fittedKey.current !== key) {
+    // A re-measured drawing (a new subject or width, fonts or typeset titles arriving) is fitted
+    // afresh, except under the pointer: there a hover re-measures it while the dock beside it changes
+    // height, and refitting would move the card away and loop. A new subject or width always refits.
+    const fitFor = `${key}|${size.w}`;
+    const held = fittedKey.current === fitFor && !!scroller.current?.matches(":hover");
+    if (auto.current && !openedNow.current && !held) {
       fitNow();
-      fittedKey.current = key;
+      fittedKey.current = fitFor;
     } else applyCam();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawn]);

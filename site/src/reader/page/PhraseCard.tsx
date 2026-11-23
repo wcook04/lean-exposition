@@ -276,7 +276,7 @@ const FIDELITY_MEANING: Record<Fidelity, string> = {
   same: "The formal statement asserts what the quoted words assert, after the translation the note states.",
   stronger: "The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference.",
   weaker: "The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference.",
-  different: "Neither implies the other as stated: for example, a definition linked to a sentence about a construction.",
+  different: "Neither implies the other as written: for example, a definition linked to a sentence about a construction, or a Lean premise with an assumption the paper states elsewhere. It does not mean either one is wrong.",
 };
 
 /**
