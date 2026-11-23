@@ -167,6 +167,7 @@ export function FocusGraph(props: FocusGraphProps) {
   const scroller = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
+  const pendingSize = useRef(false);
   const [drawn, setDrawn] = useState<Drawn | null>(null);
   const [hot, setHot] = useState<string | null>(null);
   /** The sentence of a use the paper's text states, while it is pointed at or after a click. */
@@ -451,11 +452,27 @@ export function FocusGraph(props: FocusGraphProps) {
   useLayoutEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    const read = () => setSize((s) => (s.w === el.clientWidth && s.h === el.clientHeight ? s : { w: el.clientWidth, h: el.clientHeight }));
-    read();
+    const apply = () => setSize((s) => (s.w === el.clientWidth && s.h === el.clientHeight ? s : { w: el.clientWidth, h: el.clientHeight }));
+    // While the pointer is on the drawing, a change of the pane's size (the dock under it showing a
+    // hovered card's preview) waits until the pointer leaves: refitting under the pointer would move
+    // the card away, end the preview, resize the pane back and refit again, in a loop.
+    const read = () => {
+      if (el.matches(":hover")) pendingSize.current = true;
+      else apply();
+    };
+    const leave = () => {
+      if (!pendingSize.current) return;
+      pendingSize.current = false;
+      apply();
+    };
+    apply();
     const ro = new ResizeObserver(read);
     ro.observe(el);
-    return () => ro.disconnect();
+    el.addEventListener("pointerleave", leave);
+    return () => {
+      ro.disconnect();
+      el.removeEventListener("pointerleave", leave);
+    };
   }, []);
 
   // The lines, measured from the nodes as the browser laid them out.

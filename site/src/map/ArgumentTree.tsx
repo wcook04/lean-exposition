@@ -1890,17 +1890,36 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       wheelEnd = window.setTimeout(scheduleSettle, 160);
     };
     wrap.addEventListener("wheel", onWheel, { passive: false });
-    const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
+    const applySize = (width: number, height: number) => {
       sizeRef.current = { width, height };
       setPaneW(Math.round(width));
       setPaneH(Math.round(height));
       if (width > 10 && height > 10) setReady(true);
       refreshChips();
+    };
+    // While the pointer is on the map, a new size of the canvas (the dock under it showing a hovered
+    // card's preview) waits until the pointer leaves: re-laying out or refitting under the pointer
+    // would move the card away, end the preview, resize the canvas back and repeat, in a loop.
+    let pendingSize: { width: number; height: number } | null = null;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (readyRef.current && wrap.matches(":hover")) {
+        pendingSize = { width, height };
+        return;
+      }
+      applySize(width, height);
     });
+    const onLeaveSize = () => {
+      if (!pendingSize) return;
+      const p = pendingSize;
+      pendingSize = null;
+      applySize(p.width, p.height);
+    };
+    wrap.addEventListener("pointerleave", onLeaveSize);
     observer.observe(wrap);
     return () => {
       observer.disconnect();
+      wrap.removeEventListener("pointerleave", onLeaveSize);
       wrap.removeEventListener("wheel", onWheel);
       window.clearTimeout(wheelEnd);
       s.on(".zoom", null);
