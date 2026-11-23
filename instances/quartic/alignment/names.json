@@ -74,7 +74,7 @@
   "QuarticQuery.Paper.dummyAvg": "Independent zero positions and address strings",
   "QuarticQuery.Paper.eq_19": "The original erased-zero upper bound",
   "QuarticQuery.Paper.eq_23": "Three events bound the distinguishing advantage",
-  "QuarticQuery.Paper.erasedZero_eq_expectedZeros_div": "Erased-zero probability from the expected discovery count",
+  "QuarticQuery.Paper.erasedZero_eq_expectedZeros_div": "Erased-zero probability via expected discoveries",
   "QuarticQuery.Paper.huangMatrix": "Huang’s recursively signed cube adjacency matrix",
   "QuarticQuery.Paper.huangMatrix_transpose": "Huang’s signed cube matrix is symmetric",
   "QuarticQuery.Paper.quantumComparison_query_bound": "The bit-query cost of one comparison",
