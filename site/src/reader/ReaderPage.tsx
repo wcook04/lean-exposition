@@ -82,7 +82,7 @@ import {
   type ReadingPosition,
   type VisitOrigin,
 } from "./page/position";
-import { PdfView, atOnPage, loadPdfMarks, pageAtByte, type PdfMarks } from "./pdf/PdfView";
+import { PdfView, atOnPage, loadPdfMarks, pageAtByte, pdfSectionId, type PdfMarks } from "./pdf/PdfView";
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
@@ -249,6 +249,31 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   useTopicColours(ties.index.topics);
   const stage = route.stage;
   const structure = paper.structure;
+  const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
+  const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
+  const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
+  // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
+  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
+  useEffect(() => {
+    let live = true;
+    // Only a document with the authors' PDF has its phrases placed on one.
+    if (!pdfOwn) {
+      setPdfMarks(null);
+      return;
+    }
+    void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
+    return () => {
+      live = false;
+    };
+  }, [stage, pdfOwn]);
+  // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
+  // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
+  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
+  const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
+  const pdfStops = useMemo(() => ties.stops.filter((t) => pdfByAt.has(ties.index.ties[t].at)), [ties, pdfByAt]);
+  const pdfPage = useRef<number | null>(null);
+  const pdfY = useRef(0);
+  const [pdfPick, setPdfPick] = useState(0);
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
   // From 1280px the paper moves left and the argument map stands beside it, the
@@ -449,6 +474,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const jumpTo = useCallback(
     async (anchor: string, options: { smooth?: boolean; focus?: boolean } = {}) => {
+      if (anchor.startsWith(pdfSectionId(""))) return true;
       const body = bodyRef.current;
       if (!body) return false;
       const hit = resolveAnchor(doc, anchor);
@@ -629,6 +655,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.setTimeout(show, 3000);
       void going.then(show, show);
     };
+    if (pdfOnly || route.pdf) {
+      lastHref.current = window.location.href;
+      return () => { root.style.overflowAnchor = previousAnchor; };
+    }
     if (initial.saved) {
       void restorePosition(initial.saved);
       if (at) void landSlice(at, { scroll: false, follow: !route.node && !route.decl, node: route.node });
@@ -678,6 +708,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     selfAt.current = null;
     // A jump puts the reader somewhere new: the line is theirs again.
     if (!own) stepped.current = false;
+    if (pdfOnly || route.pdf) return;
     const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
     // Back restores the saved paper position and its exact followed slice independently.
     const restoreFollow = !!saved && !!route.at && !route.node && !route.decl;
@@ -884,7 +915,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const run = () => {
       frame = 0;
       const body = bodyRef.current;
-      if (!body) return;
+      if (!body || pdfOn || pdfOnly) return;
       const top = readingTop();
       const line = readingLine();
       let part = partAt(body, doc.parts.length, line);
@@ -988,7 +1019,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfOn, pdfOnly]);
 
   // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
@@ -1047,8 +1078,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   /** Where in the paper something is, for the pane's band: "§5.6", a heading, or the opening. */
   const placeWords = useCallback(
-    (anchor: string | undefined, at?: string) => subjectPlace(structure, doc, anchor, at),
-    [structure, doc],
+    (anchor: string | undefined, at?: string) => {
+      const section = pdfOnly && at ? ties.index.ties.find((tie) => tie.at === at)?.section : null;
+      return section ? `§${section}` : subjectPlace(structure, doc, anchor, at);
+    },
+    [structure, doc, pdfOnly, ties],
   );
 
   const originHere = useCallback(
@@ -1326,6 +1360,21 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   /** Move to the next tied statement: to the reading line, as though the reader had scrolled there. */
   const step = useCallback(
     (by: 1 | -1) => {
+      if (pdfOn) {
+        const ordered = pdfStops;
+        const followed = pinRef.current?.tie ?? current.current;
+        const i = followed === null ? -1 : ordered.indexOf(ties.stops[ties.place[followed]]);
+        const page = pdfPage.current ?? 1;
+        const next = i >= 0 ? ordered[i + by] : (by > 0 ? ordered : [...ordered].reverse()).find((t) => {
+          const box = pdfByAt.get(ties.index.ties[t].at)?.boxes[0];
+          return box && (box[0] === page ? (box[2] - pdfY.current) * by >= 0 : (box[0] - page) * by > 0);
+        });
+        if (next === undefined) return;
+        const tie = ties.index.ties[next];
+        const mark = pdfByAt.get(tie.at);
+        if (mark) navigate({ ...hereRef.current, anchor: undefined, node: undefined, decl: undefined, at: tie.at, pdf: true, page: mark.boxes[0][0] });
+        return;
+      }
       // Between statements the step starts from where the reader is, not from the paper's start.
       const at = signals.part.get();
       const pinned = pinRef.current?.tie;
@@ -1346,7 +1395,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         }
       });
     },
-    [ties, statements, signals, landSlice, releaseInPlace],
+    [ties, statements, signals, landSlice, releaseInPlace, pdfOn, pdfStops, pdfByAt],
   );
 
   useEffect(() => {
@@ -1681,32 +1730,45 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const names = PAPER_NAMES[stage];
   const status = statusWords(structure.state, structure.review_state);
-  const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
-  const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
   const pdfLabel = side === "adapted" ? ADAPTED?.pdfs[0]?.label : undefined;
   const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages, label: pdfLabel } : undefined;
-  // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
-  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
-  useEffect(() => {
-    let live = true;
-    // Only a document with the authors' PDF has its phrases placed on one.
-    if (!pdfOwn) {
-      setPdfMarks(null);
-      return;
-    }
-    void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
-    return () => {
-      live = false;
+  const pdfSections = pdfOn ? pdfMarks?.sections : undefined;
+  const pdfOutline = useMemo(() => pdfSections?.map((section) => {
+    const parent = section.section.split(".").slice(0, -1).join(".");
+    return {
+      id: pdfSectionId(section.section), title: section.title,
+      level: section.section.split(".").length + 1, part: 0,
+      parent: parent ? pdfSectionId(parent) : null,
     };
-  }, [stage, pdfOwn]);
-  // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
-  // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
-  const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
-  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
-  const pdfPage = useRef<number | null>(null);
-  const onPdfPage = useCallback((page: number) => {
+  }), [pdfSections]);
+  const pdfSection = pdfSections?.find((section) => pdfSectionId(section.section) === route.anchor);
+  const pdfCounts = useMemo(() => {
+    const counts = new Map((pdfSections ?? []).map((s) => [pdfSectionId(s.section), { lean: 0, all: 0, topics: s.topic ? [s.topic] : [] }]));
+    for (const tie of ties.index.ties) {
+      const path = tie.section?.split(".") ?? [];
+      while (path.length) {
+        const item = counts.get(pdfSectionId(path.join(".")));
+        if (item) {
+          item.all++;
+          if (tie.lean) item.lean++;
+          if (tie.topic && !item.topics.includes(tie.topic)) item.topics.push(tie.topic);
+        }
+        path.pop();
+      }
+    }
+    return counts;
+  }, [pdfSections, ties]);
+  const onPdfPosition = useCallback((page: number, at: string | undefined, section: string | undefined, y: number) => {
     pdfPage.current = page;
-  }, []);
+    pdfY.current = y;
+    const tie = at ? statementAt(undefined, at) : null;
+    const part = tie === null ? 0 : statements.partOf(tie);
+    current.current = tie;
+    currentSegment.current = tie === null ? null : ties.segmentsOf[tie][0];
+    signals.part.set(part);
+    signals.heading.set(section ? pdfSectionId(section) : null);
+    signals.follow.set({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part });
+  }, [signals, statements, statementAt, ties]);
   // A PDF page can contain many paragraphs. Remember the exact text position for a
   // round trip on the same page. A new PDF selection or a different page takes precedence.
   const textReturn = useRef<ReadingPosition | null>(null);
@@ -1791,7 +1853,27 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
   const outlineColumn = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
-  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine, topics: ties.index.topics, families: ties.index.families, parts: ties.index.parts };
+  const sectionRoute = (id: string): ReadRoute | undefined => {
+    const section = pdfSections?.find((entry) => pdfSectionId(entry.section) === id);
+    if (section) return { ...here, anchor: id, at: undefined, node: undefined, beside: undefined, pdf: true, page: section.page };
+  };
+  const sectionsProps = {
+    entries: pdfOutline ?? outline,
+    counts: pdfOutline ? pdfCounts : countsRef,
+    doc,
+    onJump(id: string) {
+      const target = sectionRoute(id);
+      if (target) go(target);
+      else jumpWithHistory(id, true);
+    },
+    hrefOf: pdfOutline ? (id: string) => routeHref(sectionRoute(id)!) : undefined,
+    onLine(line: number) {
+      const page = pdfMarks?.pageStarts ? pageAtByte(pdfMarks, doc.byteOfLine(line)) : null;
+      if (pdfOn && page) go({ ...here, anchor: undefined, at: String(line), node: undefined, beside: undefined, pdf: true, page });
+      else jumpToLine(line);
+    },
+    topics: ties.index.topics, families: ties.index.families, parts: ties.index.parts,
+  };
   const visitOriginPassage = route.beside
     ? visit && visit.stage === stage
       ? (visit.anchor ?? null)
@@ -1802,6 +1884,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const paneProps = {
     stage,
+    pdfOn,
+    pdfPick,
     structures,
     signals,
     ties,
@@ -2012,10 +2096,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             marks={pdfMarks}
             at={route.at}
             page={route.page}
-            onPage={onPdfPage}
-            onPick={(id, mark, page) =>
-              navigate({ ...route, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined })
-            }
+            section={pdfSection}
+            readingLine={readingLine}
+            onPosition={onPdfPosition}
+            onPick={(id, mark, page) => {
+              setPdfPick((n) => n + 1);
+              navigate({ ...route, anchor: undefined, decl: undefined, declModule: undefined, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
+            }}
           />
         )}
         <div hidden={pdfOn || pdfOnly}>
@@ -2069,11 +2156,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                             current={current}
                             onJump={(id) => {
                               setSectionsSide(false);
-                              jumpWithHistory(id, true);
+                              sectionsProps.onJump(id);
                             }}
                             onLine={(line) => {
                               setSectionsSide(false);
-                              jumpToLine(line);
+                              sectionsProps.onLine(line);
                             }}
                           />
                         )}
@@ -2133,11 +2220,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 current={current}
                 onJump={(id) => {
                   setSectionsOpen(false);
-                  jumpWithHistory(id, true);
+                  sectionsProps.onJump(id);
                 }}
                 onLine={(line) => {
                   setSectionsOpen(false);
-                  jumpToLine(line);
+                  sectionsProps.onLine(line);
                 }}
               />
             )}

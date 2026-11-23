@@ -354,7 +354,9 @@ export function Dependencies({ decl, module, shell, onWalk }: { decl: LeanDeclar
   const uses = useMemo(() => usesOf(decl, module), [decl, module]);
   return (
     <div className="lean-deps">
-      <p className="lean-deps__source">{dependencyWords(decl.dependency_source ?? shell.modules.dependency_source)}. After each name come its kind and the step of the argument it belongs to, where it has one.</p>
+      <p className="lean-deps__source">{shell.modules.scope === "paper_linked"
+        ? shell.modules.dependency_note
+        : `${dependencyWords(decl.dependency_source ?? shell.modules.dependency_source)}.`} After each name come its kind and the step of the argument it belongs to, where it has one.</p>
       <DependencyList title="Names its statement uses" names={uses.statement} decl={decl} shell={shell} onWalk={onWalk} />
       {uses.proof.length > 0 && <DependencyList title="Names its proof uses" names={uses.proof} decl={decl} shell={shell} onWalk={onWalk} />}
       <DependencyList title="Declarations that use it" names={decl.used_by} decl={decl} shell={shell} onWalk={onWalk} />
@@ -364,11 +366,38 @@ export function Dependencies({ decl, module, shell, onWalk }: { decl: LeanDeclar
 
 const SORRY = /\bsorry\b/;
 
+function AxiomNames({ names }: { names: string[] }) {
+  return names.map((name, k) => (
+    <span key={name}>
+      {k > 0 && (k === names.length - 1 ? " and " : ", ")}
+      <code>{name}</code>
+    </span>
+  ));
+}
+
 /** Axioms and `sorry`: Lean's report where this edition has one, and the text scan said to be one. */
 export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: LeanModule }) {
   const facts = compiled(decl);
   const says = useMemo(() => {
+    if (decl.archive_check) {
+      const { axioms, print_href, replay_href } = decl.archive_check;
+      return (
+        <>
+          The <a href={replay_href}>kernel replay</a> accepted this theorem in the paper authors’ build of the original archive.{" "}
+          <a href={print_href}><code>#print axioms</code></a> reports {axioms.length ? <AxiomNames names={axioms} /> : "no axioms"}.
+          {!axioms.includes("sorryAx") && <> The list contains no <code>sorryAx</code>.</>}
+        </>
+      );
+    }
     if (decl.kind === "axiom") return <>Assumed, not proved. Lean takes this as given.</>;
+    if (decl.graph_axioms) {
+      const { axioms, href } = decl.graph_axioms;
+      return (
+        <>
+          The <a href={href}>compiled dependency graph</a> reaches {axioms.length ? <><AxiomNames names={axioms} /> from this declaration</> : "no axiom declarations from here"}.
+        </>
+      );
+    }
     if (facts.axioms) {
       const names = facts.axioms.filter((name) => name !== "sorryAx");
       return (
@@ -379,13 +408,7 @@ export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: Lea
             </>
           ) : null}
           Lean reports {names.length ? "that it depends on the axioms " : "that it depends on no axioms."}
-          {names.map((name, k) => (
-            <span key={name}>
-              {k > 0 && (k === names.length - 1 ? " and " : ", ")}
-              <code>{name}</code>
-            </span>
-          ))}
-          {names.length ? "." : ""}
+          {names.length ? <><AxiomNames names={names} />.</> : null}
         </>
       );
     }
@@ -557,7 +580,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
         </p>
       )}
 
-      <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
+      <CodeView code={statement} moduleName={module.module} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
       {where.map((body) => (
         <section className="lean-where" key={body.row.name} aria-label={`Where ${body.row.short} says`}>
           <p className="lean-where__label">
@@ -578,7 +601,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
       )}
       {proof && (
         <div className="lean-block__proof">
-          <CodeView code={proof} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
+          <CodeView code={proof} moduleName={module.module} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
         </div>
       )}
       {!bare && !row && <LeanFacts decl={decl} module={module} />}

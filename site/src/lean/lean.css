@@ -29,6 +29,15 @@
 
 /* ------------------------------------------------------------------ code */
 
+.lean-line-annotations {
+  margin: 0.2rem 0 0.45rem 2.5rem;
+  white-space: normal;
+  font: var(--fs-sm, 0.875rem)/1.5 var(--sans, system-ui);
+  color: var(--ink-2);
+}
+.lean-line-annotations summary { width: fit-content; cursor: pointer; }
+.lean-line-annotations p { margin: 0.35rem 0; }
+
 .lean-code {
   padding: var(--space-2) var(--space-3) var(--space-2) var(--space-1);
   background: var(--lean-code-ground);

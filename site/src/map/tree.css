@@ -728,6 +728,10 @@
   display: block;
 }
 
+.card--root[data-title-only] .card__cmain {
+  display: none;
+}
+
 .card--root .card__ctitle {
   font-family: var(--font-serif);
   font-size: calc(var(--title, 18px) / var(--k));
@@ -1497,7 +1501,7 @@
 /* Topic colours on the overview's tiles (ArgumentTree `toneOf`), drawn like the reader's local
    graph: the card keeps the page's dark card, with a bar of the topic's colour down its left edge
    and bold words on the left. A step the paper does not name (a Lean helper) takes a softer bar
-   of the step it serves. The bar narrows when the card is too small for words. */
+   of the step it serves. Once the title is hidden, the same colour fills the tile. */
 .tree[data-dense]:not([data-world-text]) .card[data-lean]:not([data-toned]) {
   background: var(--card);
   border-color: var(--card-border);
@@ -1507,17 +1511,17 @@
 }
 .tree[data-dense] .card[data-toned],
 .tree[data-dense] .card[data-toned][data-lean] {
-  --topic-rail: calc(5px / var(--k));
+  --topic-accent: var(--card-tone);
   background: var(--card);
   border-color: color-mix(in oklab, var(--card-tone) 30%, var(--card-border));
-  box-shadow: inset var(--topic-rail) 0 0 var(--card-tone);
+  box-shadow: inset calc(5px / var(--k)) 0 0 var(--topic-accent);
   --card-ink: var(--ink);
   color: var(--ink);
 }
 .tree[data-dense] .card[data-toned="inherited"] {
   border-style: dashed;
   border-color: var(--card-border);
-  box-shadow: inset var(--topic-rail) 0 0 color-mix(in oklab, var(--card-tone) 55%, var(--card));
+  --topic-accent: color-mix(in oklab, var(--card-tone) 55%, var(--card));
 }
 .tree[data-dense] .card[data-toned].is-quiet {
   background: color-mix(in oklab, var(--card) 70%, var(--ground));
@@ -1541,9 +1545,10 @@
   padding-left: calc((var(--pad-x, 10px) + 5px) / var(--k));
 }
 
-/* Keep the card surface and narrow the topic bar at overview scale. */
+/* This is the same per-tile state that hides the title below. */
 .tree[data-dense] .card[data-toned][data-chip] {
-  --topic-rail: min(calc(2px / var(--k)), 8px);
+  background: var(--topic-accent);
+  box-shadow: none;
 }
 .tree[data-dense] .card[data-chip] .card__compact {
   visibility: hidden;

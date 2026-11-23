@@ -2,7 +2,7 @@
 // steps of this argument it uses, as plain words: the one chosen is underlined.
 
 import type { Account as Stage } from "../api/types";
-import { PAPER_NAMES } from "../app/papers";
+import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { LENS_ORDER, type LevelCounts } from "./levels";
 
 export type LensUnit = "records" | "declarations";
@@ -15,7 +15,7 @@ const COUNTS: Record<LensUnit, string> = {
 export function LensControl({ lens, counts, unit = "records", onLens }: { lens?: Stage; counts: Pick<LevelCounts, "all" | Stage>; unit?: LensUnit; onLens(stage: Stage | undefined): void }) {
   const choices: { id?: Stage; label: string; n: number }[] = [
     { label: "All", n: counts.all },
-    ...LENS_ORDER.map((id) => ({ id, label: PAPER_NAMES[id].short, n: counts[id] })),
+    ...LENS_ORDER.filter((id) => STAGE_ORDER.includes(id)).map((id) => ({ id, label: PAPER_NAMES[id].short, n: counts[id] })),
   ];
   return (
     <div className="map-lensbox">

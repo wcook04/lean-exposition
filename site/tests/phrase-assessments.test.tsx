@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { MergedPhrase, PhraseLean } from "../src/api/lean";
 import { FidelityLine } from "../src/compare/Fidelity";
-import { assessmentsOf, PhraseCard, phraseOpening } from "../src/reader/page/PhraseCard";
+import { assessmentsOf, BriefPhraseCard, PhraseCard, phraseOpening } from "../src/reader/page/PhraseCard";
 
 const row = (over: Partial<PhraseLean>): PhraseLean => ({
   name: "Demo.widget_round", module: "Demo.Basic", line: 4, end_line: 4, lines: [4, 4], relation: "states", note: "", ...over,
@@ -27,6 +27,49 @@ describe("the phrase card's comparison", () => {
       expect(text(html)).not.toMatch(/same/i);
       expect(html).toContain('data-fidelity="unassessed"');
     }
+  });
+
+  it("gives a source-only mention the same link note in every card", () => {
+    const mention = row({ relation: null, note: "The paper names `widget_round` here." });
+    const cards = [
+      <BriefPhraseCard row={mention} role="mention" />,
+      <PhraseCard row={mention} role="mention" note={undefined} />,
+      <PhraseCard row={mention} role="mention" note="A separate reading note." inLean />,
+    ];
+    for (const card of cards) {
+      const html = renderToStaticMarkup(card);
+      expect(html).toContain("The paper names <code>widget_round</code> here.");
+      expect(html).not.toMatch(/Not assessed|States this result|Comparison terms|How the Lean compares/i);
+    }
+    expect(renderToStaticMarkup(cards[2])).toContain("A separate reading note.");
+  });
+
+  it("keeps a theorem statement's missing comparison and an assessed mention's verdict", () => {
+    const statement = row({ relation: null, note: "The source binding covers only the first clause." });
+    const assessed = { ...statement, fidelity: "different" as const, fidelity_note: "The theorem is about the diagonal." };
+    const statementHtml = renderToStaticMarkup(<PhraseCard row={statement} role="statement" note={undefined} inLean />);
+    expect(statementHtml).toContain("Not assessed");
+    expect(statementHtml).toContain(statement.note);
+    for (const role of ["mention", "statement"] as const) {
+      expect(renderToStaticMarkup(<BriefPhraseCard row={assessed} role={role} />)).toContain(assessed.fidelity_note);
+      expect(renderToStaticMarkup(<PhraseCard row={assessed} role={role} note={undefined} inLean />)).toContain(assessed.fidelity_note);
+    }
+  });
+
+  it.each([
+    ["statement", null, "`VWin` allows the window to depend on the prime pair."],
+    ["derivation", "part", "The Lean argument supplies a separately proved `countZ` input."],
+  ] as const)("uses a reviewed %s's scoped note in brief and expanded cards", (role, relation, note) => {
+    const reviewed = row({ relation, note, source_review: true });
+    const unassessed = row({ relation, note });
+    const brief = renderToStaticMarkup(<BriefPhraseCard row={reviewed} role={role} />);
+    const expanded = renderToStaticMarkup(<PhraseCard row={reviewed} role={role} note={undefined} inLean />);
+    for (const card of [brief, expanded]) {
+      expect(text(card)).toContain(note.replaceAll("`", ""));
+      expect(card).not.toMatch(/Not assessed|No comparison|Comparison terms/);
+    }
+    expect(renderToStaticMarkup(<BriefPhraseCard row={unassessed} role={role} />)).toContain("Not assessed");
+    expect(renderToStaticMarkup(<PhraseCard row={unassessed} role={role} note={undefined} inLean />)).toContain("Not assessed");
   });
 
   it("shows every phrase's own comparison in a merged tie, each with its words", () => {

@@ -32,6 +32,21 @@ describe("the Lean graph", () => {
     expect(uses.some((u) => u.from === "a" && u.to === "c")).toBe(false);
   });
 
+  it("uses recorded type edges and helper paths without loading source text", () => {
+    const a = {
+      ...fact("a", ["b", "c"]),
+      text: undefined,
+      statementUses: new Set(["b"]),
+      usesPaths: new Map([["c", ["indexedHelper"]]]),
+    };
+    const facts = table(a, fact("b", []), fact("c", []));
+    const linked = new Map([["a", "M"], ["b", "M"], ["c", "M"]]);
+    expect(leanUses({ facts, linked })).toEqual([
+      { from: "a", to: "b", kind: "lean_type_dependency", helpers: [] },
+      { from: "a", to: "c", kind: "lean_via", helpers: ["indexedHelper"] },
+    ]);
+  });
+
   it("leaves out what a longer chain says and anything that closes a cycle", () => {
     const u = (from: string, to: string) => ({ from, to, kind: "supports" as const, helpers: [] });
     const { kept, left } = simplifyUses(["a", "b", "c"], [u("a", "b"), u("b", "c"), u("a", "c"), u("c", "a")]);

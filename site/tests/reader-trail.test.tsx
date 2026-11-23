@@ -240,6 +240,30 @@ describe("the Lean page", async () => {
     expect(button("Open its Lean")).toBeUndefined();
   });
 
+  it("opens a PDF mention's exact source from a brief card with the same note", async () => {
+    const note = "This paper reference links to `full_support` in Lean.";
+    const row = { ...lean, relation: null, note };
+    const mention = tieModel({
+      meaning: "",
+      segments: [[0, 5, [0]]],
+      ties: [{ record, role: "mention", lean: true, name: row.name, module: row.module, lines: row.lines, anchor: null, at: "b0-5", rows: [row] }],
+      passages: [],
+    });
+    const onOpenLean = vi.fn();
+    const onBrief = vi.fn();
+    show({ record, tie: 0 }, { ties: mention, brief: true, onBrief, onOpenLean });
+    await act(async () => {});
+    const briefText = container.querySelector(".phrase-card--brief")?.textContent;
+    expect(briefText).toBe("This paper reference links to full_support in Lean.");
+    act(() => button("Open its Lean")!.click());
+    expect(onOpenLean).toHaveBeenCalledTimes(1);
+
+    show({ record, tie: 0 }, { ties: mention, onOpenGraph: () => {} });
+    expect(container.querySelector(".phrase-card--lean")?.textContent).toContain(briefText);
+    expect(container.querySelector(".lean-page__source")?.getAttribute("href")).toContain("file=4-9");
+    expect(container.querySelector("[data-testid=lean]")?.textContent).toBe(`${row.name} 5-6`);
+  });
+
   it("following a statement with no Lean says so, even where its step has Lean elsewhere", () => {
     const told = tieModel({
       meaning: "",

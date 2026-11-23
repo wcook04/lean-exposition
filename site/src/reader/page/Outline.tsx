@@ -21,6 +21,7 @@ interface Props {
   /** The paper, for search. */
   doc?: PreparedDocument;
   onJump(id: string): void;
+  hrefOf?(id: string): string;
   /** Go to a source line found by search. */
   onLine?(line: number): void;
   /** Phrase layer: the paper's topics and its parts, for the colour key. */
@@ -266,7 +267,7 @@ const Chevron = ({ open }: { open: boolean }) => (
   </svg>
 );
 
-export function Sections({ entries, current, counts, doc, onJump, onLine, topics, families, parts }: Props) {
+export function Sections({ entries, current, counts, doc, onJump, hrefOf, onLine, topics, families, parts }: Props) {
   // A section's subsections are folded, except along the way to the place being read; a reader's
   // own opening or closing of a section holds until they change it.
   const chain = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
@@ -303,7 +304,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, topics
               </button>
             )}
             <a
-              href={`#${encodeURIComponent(entry.id)}`}
+              href={hrefOf?.(entry.id) ?? `#${encodeURIComponent(entry.id)}`}
               aria-current={entry.id === current ? "location" : undefined}
               onClick={(event) => {
                 if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

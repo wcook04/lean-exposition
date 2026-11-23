@@ -165,6 +165,27 @@ describe("axioms and sorry", () => {
     const view = await render(<LeanFacts decl={reported} module={module} />);
     expect(view.textContent).toBe("Lean reports that it depends on the axioms propext, Classical.choice and Quot.sound.");
   });
+
+  it("shows the exact archive reports in the paper's compact Lean block", async () => {
+    const archive = decl({ archive_check: {
+      axioms: ["propext", "Classical.choice", "Quot.sound"],
+      print_href: "https://example.test/check.txt#L24",
+      replay_href: "https://example.test/replay-targets.txt#L1",
+    } });
+    const view = await render(<DeclView decl={archive} module={module} shell={shell} relation="states" compact noTerms noDependencies noPapers />);
+    const facts = view.querySelector(".lean-block__facts")!;
+    expect(facts.textContent).toContain("accepted this theorem in the paper authors’ build of the original archive");
+    expect(facts.textContent).toContain("#print axioms reports propext, Classical.choice and Quot.sound. The list contains no sorryAx.");
+    expect([...facts.querySelectorAll<HTMLAnchorElement>("a")].map((link) => link.href))
+      .toEqual([archive.archive_check!.replay_href, archive.archive_check!.print_href]);
+  });
+
+  it("attributes a graph result to the dependency data", async () => {
+    const counted = decl({ graph_axioms: { axioms: ["propext"], href: "https://example.test/release" } });
+    const view = await render(<LeanFacts decl={counted} module={module} />);
+    expect(view.textContent).toBe("The compiled dependency graph reaches propext from this declaration.");
+    expect(view.querySelector("a")?.getAttribute("href")).toBe("https://example.test/release");
+  });
 });
 
 describe("the host seam", () => {

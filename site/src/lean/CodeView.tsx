@@ -3,8 +3,9 @@
 // Tab reaches one name in a block and the arrow keys walk the rest, so a long proof does
 // not cost a reader hundreds of tab stops.
 
-import { memo, useEffect, useRef, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
+import { Fragment, memo, useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { routeHref } from "../app/router";
+import { Prose } from "./ReadingStrip";
 import { mathlibUrl, resolveName, type NameTarget, type Scope } from "./resolve";
 import { tokenLines, type LeanToken } from "./tokenize";
 
@@ -79,15 +80,55 @@ export interface CodeViewProps {
   onOpen(target: NameTarget, element: HTMLElement, event: MouseEvent): void;
   /** Whether a source line is lit. */
   lit?: (line: number) => boolean;
+  /** The pinned source module, for editions that carry line annotations. */
+  moduleName?: string;
+}
+
+type LineAnnotation = { lines: [number, number]; title: string } & (
+  { url: string; text: string; authors: string[]; licence: string } | { at: string; record: string }
+);
+type AnnotationIndex = Record<string, LineAnnotation[]>;
+let annotationsPending: Promise<AnnotationIndex> | undefined;
+
+function useLineAnnotations(moduleName: string | undefined): LineAnnotation[] | undefined {
+  const [index, setIndex] = useState<AnnotationIndex>();
+  useEffect(() => {
+    if (!moduleName || import.meta.env.VITE_PROOF_SOURCE !== "true") return;
+    let alive = true;
+    annotationsPending ??= fetch(`${import.meta.env.BASE_URL}lean-line-annotations.json`)
+      .then((response) => response.ok ? response.json() : {})
+      .catch(() => ({}));
+    void annotationsPending.then((value) => { if (alive) setIndex(value); });
+    return () => { alive = false; };
+  }, [moduleName]);
+  return moduleName ? index?.[moduleName] : undefined;
+}
+
+function LineAnnotations({ line, entries }: { line: number; entries: LineAnnotation[] }) {
+  return <details className="lean-line-annotations">
+    <summary className="linklike">Annotations for line {line}</summary>
+    {entries.map((entry, i) => "url" in entry ? (
+      <div key={i}>
+        <p><Prose text={entry.text} /></p>
+        <a href={entry.url}>{entry.title}</a> · {entry.authors.join(" and ")} · {entry.licence}
+      </div>
+    ) : <p key={i}><a href={routeHref({ view: "read", stage: "short", at: entry.at, node: entry.record, pdf: true })}>{entry.title}</a></p>)}
+  </details>;
 }
 
 function hrefOf(target: NameTarget): string {
   return target.kind === "decl" ? routeHref({ view: "lean", module: target.row.module, decl: target.row.name }) : mathlibUrl(target.name);
 }
 
-export const CodeView = memo(function CodeView({ code, label, onRead, onOpen, lit: isLit }: CodeViewProps) {
+export const CodeView = memo(function CodeView({ code, label, onRead, onOpen, lit: isLit, moduleName }: CodeViewProps) {
   const root = useRef<HTMLDivElement>(null);
   const lit = useRef<HTMLElement | null>(null);
+  const annotations = useLineAnnotations(moduleName);
+  const byLine = new Map<number, LineAnnotation[]>();
+  for (const entry of annotations ?? []) {
+    const row = code.lines.find((line) => entry.lines[0] <= line.n && line.n <= entry.lines[1]);
+    if (row) byLine.set(row.n, [...(byLine.get(row.n) ?? []), entry]);
+  }
 
   const nameAt = (node: EventTarget | null) => {
     const element = (node as Element | null)?.closest?.("a[data-t]") as HTMLElement | null;
@@ -151,32 +192,35 @@ export const CodeView = memo(function CodeView({ code, label, onRead, onOpen, li
       }}
     >
       {code.lines.map((line) => (
-        <div className={`lean-line${isLit?.(line.n) ? " is-lit" : ""}`} data-line={line.n} key={line.n}>
-          <span className="lean-line__n" aria-hidden="true">
-            {line.n}
-          </span>
-          <code className="lean-line__c" style={{ "--i": line.indent } as React.CSSProperties}>
-            {line.parts.map((part, k) => {
-              if (part.target === undefined) {
-                return part.className ? (
-                  <span key={k} className={part.className}>
+        <Fragment key={line.n}>
+          <div className={`lean-line${isLit?.(line.n) ? " is-lit" : ""}`} data-line={line.n}>
+            <span className="lean-line__n" aria-hidden="true">
+              {line.n}
+            </span>
+            <code className="lean-line__c" style={{ "--i": line.indent } as React.CSSProperties}>
+              {line.parts.map((part, k) => {
+                if (part.target === undefined) {
+                  return part.className ? (
+                    <span key={k} className={part.className}>
+                      {part.text}
+                    </span>
+                  ) : (
+                    part.text
+                  );
+                }
+                const tabIndex = first ? 0 : -1;
+                first = false;
+                return (
+                  <a key={k} className={part.className} data-t={part.target} href={hrefOf(code.targets[part.target])} tabIndex={tabIndex} {...(code.targets[part.target].kind === "mathlib" ? { "data-external": "", target: "_blank", rel: "noreferrer" } : null)}>
                     {part.text}
-                  </span>
-                ) : (
-                  part.text
+                  </a>
                 );
-              }
-              const tabIndex = first ? 0 : -1;
-              first = false;
-              return (
-                <a key={k} className={part.className} data-t={part.target} href={hrefOf(code.targets[part.target])} tabIndex={tabIndex} {...(code.targets[part.target].kind === "mathlib" ? { "data-external": "", target: "_blank", rel: "noreferrer" } : null)}>
-                  {part.text}
-                </a>
-              );
-            })}
-            {line.parts.length === 0 && "​"}
-          </code>
-        </div>
+              })}
+              {line.parts.length === 0 && "​"}
+            </code>
+          </div>
+          {byLine.has(line.n) && <LineAnnotations line={line.n} entries={byLine.get(line.n)!} />}
+        </Fragment>
       ))}
     </div>
   );

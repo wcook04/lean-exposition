@@ -295,7 +295,7 @@ function Cell({ id, level, record, href }: { id: string; level: Level; record: R
         <span className="bench-slice__role">{roleWords(first.role)}</span>
         <span className="bench-slice__section">{sectionLabel(first.section)}</span>
       </header>
-      <LazyStatementSlice statement={first} />
+      <LazyStatementSlice statement={first} withComparisons />
       {first.note && <p className="bench-slice__note">{first.note}</p>}
       <p className="tcell__foot">
         <a href={statementHref(first, id)}>Read in context</a>

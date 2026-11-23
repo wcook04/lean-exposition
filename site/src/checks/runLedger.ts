@@ -32,6 +32,8 @@ export interface RunRow {
   doesNotShow: string | null;
   /** The receipt's path under the site's base, when one is published. */
   receipt: string | null;
+  /** Exact log lines for declarations named in an upstream report, by edition record id. */
+  targetLinks?: Record<string, string>;
   /** Comparator only. */
   entry?: string;
   theorems?: string[];
@@ -193,6 +195,33 @@ function evidenceRow(evidence: EvidenceInput, published: string | null): RunRow 
   };
 }
 
+/** An observed upstream run with links to its pinned source logs. */
+function upstreamRow(evidence: EvidenceInput, receipt: Record<string, unknown>, published: string | null): RunRow {
+  const label = str(receipt.where);
+  const repository = str(receipt.repository)?.match(/^https:\/\/github\.com\/([\w.-]+\/[\w.-]+)$/)?.[1] ?? null;
+  const repo = repoUrl(repository);
+  const sha = str(receipt.commit);
+  const source = repo && sha ? `${repo}/blob/${sha}/` : null;
+  const logs = Array.isArray(receipt.logs) ? receipt.logs.map((log) => str(log?.url)).filter((url): url is string => Boolean(source && url?.startsWith(source))) : [];
+  const targetLinks = Array.isArray(receipt.targets) ? Object.fromEntries(receipt.targets.flatMap((target) => {
+    const id = str(target?.record);
+    const url = str(target?.url);
+    return id && url && /^.+#L\d+$/.test(url) && logs.includes(url.split("#")[0]) ? [[id, url]] : [];
+  })) : undefined;
+  const date = dateWords(str(receipt.date));
+  return {
+    ...evidenceRow(evidence, published),
+    where: label ? { label, url: logs[0] ?? null } : null,
+    commit: sha ? { sha, url: repo ? `${repo}/commit/${sha}` : null } : null,
+    date: date?.text ?? null,
+    dateKey: date?.key ?? null,
+    outcome: str(receipt.outcome) ?? "",
+    shows: str(receipt.shows),
+    doesNotShow: str(receipt.does_not_show),
+    targetLinks,
+  };
+}
+
 /** The status a listed receipt gives itself, as one of the site's four outcomes. */
 function receiptStatus(receipt: Record<string, unknown>): string {
   const verification = (receipt.verification ?? {}) as Record<string, unknown>;
@@ -251,6 +280,7 @@ export function buildRunLedger(
     }
     if (receipt.record_type === "github_actions_run") rows.push(actionsRow(record, receipt, published));
     else if (receipt.record_type === "comparator_receipt" || receipt.schema === "palomar_replay_receipt_v1") rows.push(comparatorRow(record.id, record, receipt, published, record.status));
+    else if (receipt.record_type === "upstream_run_observation") rows.push(upstreamRow(record, receipt, published));
     else rows.push(evidenceRow(record, published));
   }
   const order: RunType[] = ["github_actions_run", "comparator_receipt", "evidence"];

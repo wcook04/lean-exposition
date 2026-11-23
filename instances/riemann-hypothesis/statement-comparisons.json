@@ -1,0 +1,269 @@
+{
+  "paper_revision": "dd9bfc30bf9fc605251a22aa41004d1e22cc303b",
+  "lean_revision": "8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116",
+  "reviews": [
+    {
+      "passage": "st:rh",
+      "name": "riemannHypothesis",
+      "fidelity": "same",
+      "note": "`Main.lean` uses Mathlib’s `RiemannHypothesis`. It quantifies over a complex zero of ζ, excludes all negative even integers $-2(n+1)$ and the pole at $s=1$, and concludes $\\operatorname{Re}s=1/2$. These are the hypotheses and conclusion of Statement 2.1.",
+      "evidence": "Paper verification.tex 48–54; Main.lean 4; pinned lake-manifest.json; Mathlib RiemannZeta.lean 163–164.",
+      "explanation": {
+        "text": "The paper spells out the proposition that the theorem in `Main.lean` names by its Mathlib identifier.",
+        "citations": [
+          {
+            "ref": "mathlib-rh",
+            "title": "Mathlib’s definition of RiemannHypothesis",
+            "url": "https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/NumberTheory/LSeries/RiemannZeta.lean#L163-L164",
+            "where": "RiemannZeta.lean, lines 163–164"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "st:grh",
+      "name": "LFunction_ne_zero_of_half_lt_re",
+      "fidelity": "same",
+      "note": "Unfolding `DirichletLNonvanishingRightOfHalf` gives the same complex Dirichlet characters and the same condition $\\operatorname{Re}s>1/2$. Lean’s `NeZero N` on a natural modulus means $N\\ge1$. The disjunction `χ ≠ 1 ∨ s ≠ 1` excludes exactly the trivial-character case at $s=1$.",
+      "evidence": "Paper verification.tex 55–58, 65–68; Main.lean 8; Statements.lean 6–8."
+    },
+    {
+      "passage": "st:strip",
+      "name": "LFunction_eq_zero_re",
+      "fidelity": "same",
+      "note": "`DirichletLZerosOnLine` quantifies over every character of every positive modulus, including imprimitive characters. A zero in the same open strip $0<\\operatorname{Re}s<1$ has $\\operatorname{Re}s=1/2$.",
+      "evidence": "Paper verification.tex 59–68; Main.lean 10; Statements.lean 10–12."
+    },
+    {
+      "passage": "st:landau",
+      "name": "Deduction.zeroFree_of_rpow_window",
+      "fidelity": "same",
+      "note": "`CharFamily` stores the admissible characters and their positive weights, and `Gm F` is their weighted real sum. Lean’s $\\delta$ is the paper’s $\\omega$. The hypothesis uses the same closed windows above arbitrarily large starting scales, and `ZeroFree` asserts nonvanishing for every family member with $\\operatorname{Re}s>\\theta$.",
+      "evidence": "Paper analytic.tex 4–24; ZeroFreeOfRpowWindow.lean 11–14; CharFamily.lean 10–39."
+    },
+    {
+      "passage": "st:balance",
+      "name": "Deduction.ch_balance",
+      "fidelity": "stronger",
+      "note": "Unfolding `De` gives the paper’s weighted sum over the characters and over $g$ outside $\\Phi$. Lean proves the identity for an arbitrary complex-valued correction `ell`. Taking `ell` to be the logarithmic derivatives gives the printed formula. Lean also makes the finite cutoff $N$ explicit, bounding every $a/w(\\rho)$.",
+      "evidence": "Paper analytic.tex 48–79; ChBalance.lean 200–202; FirstPrimeNeSecondPrime.lean 65–96."
+    },
+    {
+      "passage": "st:core",
+      "name": "Deduction.ch_core",
+      "fidelity": "different",
+      "note": "Unfolding `GmA` and `SigA` gives the printed bound with the same exponent and the same omitted-character sum. Lean takes a general correction `ell` where the paper uses logarithmic derivatives. It also explicitly restricts the number of lifts by $x^{1/2-\\varepsilon}\\le m\\le x^{1/2+\\varepsilon/2}$.",
+      "evidence": "Paper analytic.tex 86–126, 157–164; ChCore.lean 343–351; SplitInertia.lean 26–62; SChain.lean 50–58."
+    },
+    {
+      "passage": "st:F",
+      "name": "Formalism.HN.TheoremF",
+      "fidelity": "same",
+      "note": "The same slope bound includes the $-\\log|I|$ term and the zero case at $u_F=0$. Lean makes positive total source rank and nonnegative frame error parameters explicit, and encodes the added summand as extra matrix rows.",
+      "evidence": "Paper lattices.tex 155–177; StatementFrameF.lean 26–62; StatementFR.lean 9–22."
+    },
+    {
+      "passage": "st:key",
+      "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5",
+      "fidelity": "same",
+      "note": "Expanding `SDiv` and `Lam5` gives the displayed cancellation with the same $c(L_a+m^2L_a/k)$ correction. Lean states $v>0$, $f>0$, and positivity of the weights explicitly.",
+      "evidence": "Paper lattices.tex 264–283; LevelOfCongruence.lean 17–19, 105–111; WeightedMeanData.lean 125–129, 170–216; MeanBoundSecondForm.lean 86–88, 107–109."
+    },
+    {
+      "passage": "st:cm2",
+      "name": "Formalism.L2.Th1.CM.CM2",
+      "fidelity": "weaker",
+      "note": "The CM and prime hypotheses, fourth- and sixth-power rescaling, and unit discriminant agree. Lean places the integral invariants in the completion of the maximal unramified extension. The paper asks for them in the algebraic extension itself.",
+      "evidence": "Paper divisibility.tex 40–46; CMGoodModels/Statement.lean 8–15, 38–47."
+    },
+    {
+      "passage": "st:cm3",
+      "name": "Formalism.L2.Th1.CM.CM3",
+      "fidelity": "different",
+      "note": "Lean requires integral coefficients after composition with the same height-two logarithm for every specified good model at an inert prime. Its unit and coefficients lie in the completed maximal unramified field. The paper leaves the choice of model implicit and names the algebraic extension.",
+      "evidence": "Paper divisibility.tex 12–16, 47–52; CMGoodModels/Statement.lean 14–15, 32–40, 49–55."
+    },
+    {
+      "passage": "st:vwin",
+      "name": "UpperTheory.Top.VVle",
+      "fidelity": "weaker",
+      "note": "For fixed field, twist cutoff, and bound, `VVle` requires finite length for each prime and twist and bounds every finite sum over primes. The summands are nonnegative, so this captures the full sum. The scale and window conditions are in `VWin`.",
+      "evidence": "Paper cohomology.tex 7–29; ExistsPageN.lean 12–17; GaloisCohomology/Statement.lean 50–78."
+    },
+    {
+      "passage": "st:vwin",
+      "name": "UpperTheory.Top.VWin",
+      "note": "`VWin` fixes exponent 401 and quantifies over each primitive character, $0<\\varepsilon<1/52$, and each cyclotomic layer choice satisfying `PageN`. For each eligible prime pair at $X^{1/J}$, the window may depend on that pair. Its bound holds for every matching host at each scale in the window. The paper leaves this order of host choices implicit.",
+      "evidence": "Paper cohomology.tex 22–30 and hosts.tex 4–24; ExistsPageN.lean 19–49."
+    },
+    {
+      "passage": "three-inputs",
+      "name": "UpperTheory.Top.every_character_of_green_v_win",
+      "fidelity": "same",
+      "note": "The displayed implication has the same three inputs and EveryCharacter conclusion. The paper abbreviates HypsAlt, whose Lean type specifies closedness for LinkN and DefiniteSideCondition.",
+      "evidence": "PDF p. 11; overview.tex 6–13; TopPlug.lean 16–18. Top.imprimitive wraps the primitive-character theorem with the same arguments."
+    },
+    {
+      "passage": "three-inputs",
+      "name": "UpperTheory.Top.zero_free_all_of_green_v_win",
+      "note": "This is the primitive-character step named before the display. It uses the three inputs and concludes ZeroFreeAll, which the wrapper extends to EveryCharacter.",
+      "evidence": "PDF p. 11; overview.tex 6–13; TopPlug.lean 12–18; ExplicitFormulaErrorOfHostConditions.lean 11–18. The proof uses Top.zeroFreeAll_of_topG with la = 3/2 and gets hosts from supplyChi."
+    },
+    {
+      "passage": "landau-proof-idea",
+      "name": "Deduction.landau_window",
+      "note": "The proof bounds Laplace coefficients with a concentrated kernel. It uses a positive residue at an isolated real pole or the residue norm at a shifted complex center.",
+      "evidence": "PDF p. 13; analytic.tex 35–43; landauWindow.lean 40–73 and 83–166; LandauCoeff.lean 10–12; landauTails.lean 80–104 sets k = ceil((1+δ/2)σU); LandauDichotomy.lean 24–28, 32–55 splits on a pole to the right of a pole-free disk versus an isolated real pole, so nearest-zero reality alone does not characterize the branch."
+    },
+    {
+      "passage": "landau-proof-idea",
+      "name": "Deduction.lemmaL",
+      "note": "This step supplies pole data for the character family, applies the window argument to its zeros, and invokes known nonvanishing for real part at least one.",
+      "evidence": "PDF p. 13; analytic.tex 35–43; lemmaL.lean 13–22; poleData.lean 22–29, 248–252 and 338–380 provide analytical pole data, including the real-residue positivity."
+    },
+    {
+      "passage": "level-character-weights",
+      "name": "Formalism.HC.Level.wt",
+      "fidelity": "same",
+      "note": "The weight in (4.2) is one for the distinguished character and the reciprocal of three times the level parameter plus one otherwise.",
+      "evidence": "PDF p. 13; analytic.tex 26–33; ExplicitFormulaErrorOfHostConditions.lean 8–9 and 36; PrimePairSizeCondition.lean 39–45 specifies the optional odd real character in the kept set."
+    },
+    {
+      "passage": "level-character-weights",
+      "name": "Formalism.HC.Level.Gm",
+      "fidelity": "same",
+      "note": "This is the sum in (4.2). It starts with the trivial-character term and adds weighted real parts over the other kept characters.",
+      "evidence": "PDF p. 13; analytic.tex 26–33 and 4–16 for G and Gψ; ExplicitFormulaErrorOfHostConditions.lean 32–38; Analytic.lean 11–24; StatementOC.lean 11–13. The max in sumLamChi agrees with y/n−1 within the cutoff n≤floor(y)."
+    },
+    {
+      "passage": "level-character-weights",
+      "name": "Formalism.HC.zeroFreeOn_of_levels",
+      "note": "This combines levels already shown zero-free. Each requested primitive character inherits zero-freeness from a level that contains it.",
+      "evidence": "PDF p. 13; analytic.tex 33; ExplicitFormulaErrorOfHostConditions.lean 14, 24–26 and 45–48. The proof of zero-freeness for a level from estimates belongs to TopWin.lean 117–128 onward."
+    },
+    {
+      "passage": "character-orthogonality",
+      "name": "Deduction.ch_balance",
+      "note": "The proof expands the count by character orthogonality and identifies the remaining weighted character sums. The resulting complex identity is exact.",
+      "evidence": "PDF p. 13; analytic.tex 80–84; ChBalance.lean 200–223 invokes askExp and identifies De; 236–256 uses colour_sum to isolate the quadratic term. askExp rewrites the prime-power count by splitting unramified and ramified cases, 138–186."
+    },
+    {
+      "passage": "apply-count-balance",
+      "name": "Deduction.ch_core",
+      "note": "The main analytic reduction delegates the termwise use of the count identity to CharacterBalanceMoves.core.",
+      "evidence": "PDF p. 14; first sentence of analytic.tex 128; ChCore.lean 440 calls the helper whose lines 304–312 apply ch_balance per summand."
+    },
+    {
+      "passage": "apply-count-balance",
+      "name": "Deduction.CharacterBalanceMoves.core",
+      "note": "For each size and lift, the proof applies the exact count identity and takes its real part before summing the resulting bounds.",
+      "evidence": "PDF p. 14; first sentence of analytic.tex 128; ChCore.lean 304–312 uses sum_le_sum over t and j and congrArg Complex.re (ch_balance ...)."
+    },
+    {
+      "passage": "average-kept-characters",
+      "name": "Deduction.ch_core",
+      "note": "The proof uses the common weight for kept characters nontrivial on H and weight one for those trivial on H. It bounds omitted characters by absolute values.",
+      "evidence": "PDF p. 14; analytic.tex 128–131, with weight exception specified at line 108 and in condition (1); ChCore.lean 228–269 moves each kept term to x and uses the character-average estimate, 270–281 bounds an omitted term by its norm plus the movement error, and 419–439 sums the estimates into GmA − SigA with slack."
+    },
+    {
+      "passage": "rank-lost-at-a-filtration-cut",
+      "name": "Formalism.HN.frameB_share",
+      "note": "For positive u, this bounds the share of slope entries below the cut. Theorem F converts their count to lost rank and handles u = 0 separately.",
+      "evidence": "PDF p. 18; lattices.tex 186–189; FrameHermSharpB.lean 25–28, 62–75; TheoremFSharp.lean 11–33 handles nonnegative u and 225–242 converts the bound on height-adjusted slopes to rank loss."
+    },
+    {
+      "passage": "eleven-size-clauses",
+      "name": "Formalism.LFunctionChainParameters.LChain.SizeData₂",
+      "note": "SizeData₂ is the conjunction of the eleven size conditions. ChainTied requires this conjunction for the data at its chosen scale.",
+      "evidence": "PDF p. 16; lattices.tex 51–52; SChain.lean 17–19 contains eleven conjuncts; TieGlobal.lean 97–114 introduces the scale x and requires the predicate at line 109."
+    },
+    {
+      "passage": "st:cong",
+      "name": "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at",
+      "note": "The four terms correspond in BaseSizes.lean:68–93. The printed statement uses t₀ = ⌊x^401⌋, while Lean uses the record's block width R.t and requires a continuous rank-r representation over O whose fraction-field decomposition uses the record's specified characters. The host construction bounds R.t by ⌊x^401⌋.",
+      "fidelity": "different"
+    },
+    {
+      "passage": "st:supply",
+      "name": "UpperTheory.Top.supplyChi",
+      "note": "SupplyChi.lean:8–9 has the same premise VWinAt ψ 401. Its HostExW conclusion gives uniform host constants for each 0 < ε < 1/52 and hosts on arbitrarily late windows [Y,Y^(3/2)] carrying both EAtH and the cohomology bound at the actual block width.",
+      "fidelity": "stronger"
+    },
+    {
+      "passage": "st:pairs",
+      "name": "UpperTheory.Top.PairEx",
+      "note": "PairGood.lean:18–30 has the printed exponents and window. It bounds the primitive character inducing the twist on units modulo 2M₀qd. The printed χ is the twist itself, with no primitive-induction clause. Lean fixes the box height as 8M₀ exp(Y^(ε/5)) exp(j Y^(ε/5)(log Y)^2).",
+      "fidelity": "different"
+    },
+    {
+      "passage": "why-counts-windowed",
+      "name": "UpperTheory.Top.supplyChi",
+      "note": "SupplyChi.lean:8–11 takes only VWinAt ψ 401. Its proof invokes supplyOfAdm, which gets windows of exponent 3/2 through winPairs and the proved good-pair supply."
+    },
+    {
+      "passage": "why-counts-windowed",
+      "name": "UpperTheory.Top.VWin",
+      "note": "ExistsPageN.lean:44–49 packages VWinAt ψ 401 for each primitive ψ. VWinAt supplies the square window for eligible prime pairs and each choice of PageN schedule. WinPairs.lean:34–52 fits the rescaled exponent-3/2 window inside it."
+    },
+    {
+      "passage": "cohomology-square-root-slack",
+      "name": "UpperTheory.Top.divinN_of_hypV",
+      "note": "DivinNOfHypV.lean:126–130 uses √b ≤ b before giving the bound to divinN_at. The argument uses only b at that step, while the theorem still takes the stronger HypV record."
+    },
+    {
+      "passage": "hecke-lift-subset",
+      "name": "Formalism.MainNotions.N.ZN",
+      "note": "DataN.lean:1292–1294 requires a base-change parameter containing the particular rank-one block (μ_C twisted by η_T⁻¹, R.t). The printed criterion is the presence of a block of length t₀, where the paper sets t₀ = ⌊x^401⌋.",
+      "fidelity": "different"
+    },
+    {
+      "passage": "congruence-ideal-and-length",
+      "name": "Formalism.BasicNotions.ccIdeal",
+      "note": "For the ideal clause, DataN.lean:25–27 defines the kernel of simultaneous evaluation at the eigensystems outside Z.",
+      "fidelity": "same"
+    },
+    {
+      "passage": "congruence-ideal-and-length",
+      "name": "Formalism.BasicNotions.NData.etaLoc",
+      "note": "DataN.lean:212–220 uses Zgood and its complement in both eigenspace expressions. The printed quotient uses the full lift set Z. Lean also divides the module length by length(O/ℓ), as in DataN.lean:32–33.",
+      "fidelity": "different"
+    },
+    {
+      "passage": "assemble-cohomology-counts",
+      "name": "UpperTheory.V.HV.Core.of_four_alt",
+      "note": "HVCore.lean:18–22 passes the four named count hypotheses to vwin_of_counts along with the bound from Ferrero–Washington, the odd bound from ML.iv, and a separately proved countZ input."
+    },
+    {
+      "passage": "quadratic-subfield-of-host",
+      "name": "Formalism.HC.HostRaw",
+      "note": "For the quadratic-field clause, HostRaw records sqd² = −d and the sign action, with K defined as ℚ(sqd). ConjEMemHostFIff.lean:209–212 identifies the fixing subgroup with φ.Psi.",
+      "fidelity": "same"
+    },
+    {
+      "passage": "estimates-for-auxiliary-twists",
+      "name": "QH.meanSqK",
+      "note": "meanSqK.lean:51–54 states the mean-square result over primes in the admissible progression on [Y,Y^K]. StagePow.lean:49–54 uses it inside the argument that selects good prime pairs."
+    },
+    {
+      "passage": "estimates-for-auxiliary-twists",
+      "name": "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box",
+      "note": "CountZAll.lean:13–15 proves a count of primitive characters of modulus at most Q with a zero in Re(s) > 1 − 1/400, |Im(s)| ≤ Q. CountBadCore.lean:18–24 uses it in selecting the prime pairs."
+    },
+    {
+      "passage": "frame:52:1",
+      "name": "GlobalTheory.rowMainEqP_of_siegelWeil",
+      "note": "The surrounding sentence describes an off-diagonal main term. The cited theorem concludes `RowMainEqP`, whose formula uses a repeated index (`Y.tO u u`). Its proof uses Siegel–Weil and Bessel uniqueness.",
+      "fidelity": "different"
+    },
+    {
+      "passage": "offpath:5:1",
+      "name": "riemannHypothesis",
+      "note": "Main.lean:4 is the root declaration for the dependency cone described in the passage. The cone is a property of compiled dependencies."
+    },
+    {
+      "passage": "cohomology:100:1",
+      "name": "UpperTheory.V.ML.iv",
+      "note": "Iv.lean:4–6 takes Poitou–Tate duality and unramified orthogonality and concludes PsiBound, as the paper says."
+    }
+  ]
+}

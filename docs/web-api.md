@@ -6,6 +6,177 @@ passage correspondences and navigation witnesses. A client can build a graph
 explorer, a paper reader or an agent tool against the same data. This package
 does not supply a frontend.
 
+## Riemann Hypothesis paper backend
+
+The RH backend packages Qui Vincit and Fable's version 1.5 exposition and
+one-page outline under CC BY 4.0. It pins the paper and Lean separately. The
+paper data are static. The full compiled graph uses a separate read-only index
+that is about 1.8 GB.
+
+Download `decls.parquet`, `decl_edges.parquet`, `constants.parquet` and
+`edges.parquet` from [the compiled dependency release][rh-dependencies].
+Clone [the paper repository][rh-paper]. From the Lean Exposition checkout,
+use Python 3.11 or newer with NumPy, PyArrow, SciPy and PyPDF, Node 22.18 or
+newer for the shared reader palette, and Poppler's `pdftotext`:
+
+```sh
+python scripts/build_rh_index.py /path/to/dataset build/rh-index
+python scripts/build_rh_paper.py /path/to/paper-checkout /path/to/dataset/decls.parquet build/rh-index
+PYTHONPATH=src python scripts/serve_library.py instances/riemann-hypothesis/edition 43843 --proof-index build/rh-index
+curl http://127.0.0.1:43843/paper/manifest.json
+curl 'http://127.0.0.1:43843/api/proof/neighbourhood?name=Deduction.zeroFree_of_rpow_window'
+```
+
+The paper build reads the pinned Git revision, verifies both PDF hashes and
+checks Lean declaration names and line spans against the pinned export.
+Use `--out` to stage the static assets elsewhere. The server puts the static
+paper and graph API on one origin for local checks.
+
+For an existing index, use the four pinned Parquet files to add the statement
+neighbourhoods without rebuilding the full adjacency.
+
+```sh
+python scripts/build_rh_index.py /path/to/dataset build/rh-index --statement-neighbourhoods-only
+```
+
+### Connect the Library reader
+
+The Library site uses the same reader and argument map as the Euler and
+Navier–Stokes editions. After generating the paper and proof index above,
+install the site's npm dependencies and build the RH edition.
+
+```sh
+npm ci --prefix site
+PYTHONPATH=src python scripts/build_rh_library.py \
+  --proof-index build/rh-index --lean-source /path/to/rh-lean-checkout
+```
+
+For the standalone GitHub Pages candidate, add `--public` to the same
+command. Serve the build as `/riemann-hypothesis-reader/` and keep its
+`404.html` for deep links. This build exports module metadata and fetches
+Lean source directly from the pinned community repository. It checks the
+SHA-256 of each file before displaying it. The public build does not bundle
+the Lean source files or require a proof server.
+
+To preview the built reader and the module API on one origin, serve them
+together with the paper manifest.
+
+```sh
+preview=$(mktemp -d)
+mkdir -p "$preview/library"
+ln -s "$PWD/site/dist" "$preview/library/riemann-hypothesis"
+ln -s "$PWD/instances/riemann-hypothesis/edition/paper" "$preview/paper"
+cp site/dist/404.html "$preview/library/404.html"
+PYTHONPATH=src python scripts/serve_library.py "$preview" 43843 \
+  --proof-index build/rh-index --lean-source /path/to/rh-lean-checkout
+```
+
+Open `http://127.0.0.1:43843/library/riemann-hypothesis/`. The Map page
+uses direct compiled references and recorded predecessor paths between the
+paper-linked declarations in the proof. An edge can pass through intermediate
+declarations. The Lean graph uses these paths without loading the module text.
+Opening Lean fetches the pinned module and offers notes and reviewed PDF links
+at the corresponding lines. The full compiled graph stays on the server. On a
+hosted reader, route `/api/proof/` to that server on the reader's origin.
+
+The edition's `reader.json` supplies the display title for every paper-linked
+declaration. The map, reader and Lean API use those titles. The Lean names
+identify the source declarations and their links.
+
+| Reader surface | Input and join |
+| --- | --- |
+| PDF | Pass `paper.pdf` and `pdf-marks.json` to the existing PDF view. Its mark ID opens `passages.json.passages[id]` first, then `annotations.json.annotations[id]`. The first contains whole passages and the second contains individual Lean references. |
+| Topics | Pass `topics.json.topics` to the existing topic colour helper. `tone` identifies the same colour in the PDF marks and graph. `sections.json` gives each numbered section its topic and PDF page. |
+| Lean | Each target supplies its full name, module, pinned file URL and declaration lines. Inspected boundaries supply `statement_lines` and, when present, `proof_lines`. Each passage also links to its source TeX lines. |
+| Lean checks | `lean-checks.json` binds two sources to the paper edition. `archive` links to the paper authors’ `#print axioms` and kernel replay results for the five named theorems in `Main`. `graph` gives axiom declarations reachable in the compiled dependency graph for each linked declaration in the RH proof. The Lean module API projects these as `archive_check` and `graph_axioms`. |
+| Lean notes | `lean-notes.json.notes` uses the Library reader's existing full-name to `{text}` format. `sources[name]` keeps individual excerpts, attribution, note source links and `lean_lines` for a line-specific inspector. |
+| Lean line selection and search | `lean-lines.json.modules[module]` lists declarations by source line. A row's `canonical` is the preferred PDF address for the declaration. Its `links` give source ranges, topic, role and mark ID. Its `notes` point by zero-based index into `lean-notes.json.sources[name]`. |
+| Graph and reverse links | For a target with `in_proof: true`, use the full Lean name with `/api/proof/neighbourhood`. `lean-notes.json.bindings[name]` supplies its source, topics, whole passage IDs and clickable PDF mark IDs. The same topics can label graph nodes. |
+
+The existing Euler and Navier–Stokes editions ship longer notes and reading aids
+as separate files. The PCP readers use compact declaration notes. The RH reader
+can load the PDF marks and topic palette with the paper, then load the line
+index and note sources when a reader opens Lean, searches for a declaration,
+or follows a graph node back to the paper.
+
+### Serve inline Lean for the paper
+
+Install Lean Exposition in the server's Python environment. With a local Git
+checkout containing the archived Lean commit, start the server with
+`--lean-source`. The server reads the pinned Git blobs for the modules named
+by the generated paper links and checks those links against the paper manifest
+and compiled proof at startup.
+
+```sh
+PYTHONPATH=src python scripts/serve_library.py instances/riemann-hypothesis/edition 43843 \
+  --proof-index build/rh-index --lean-source /path/to/rh-lean-checkout
+curl http://127.0.0.1:43843/api/proof/lean/modules
+curl 'http://127.0.0.1:43843/api/proof/lean/module?name=Main'
+```
+
+`/api/proof/manifest` advertises `lean_sources` when configured. `lean/modules`
+gives the folder index and `lean/names` the compact declaration rows. The
+`declarations` field in `lean/names` includes display titles, statement boundaries, module
+paths and direct type and value references within this catalogue. It carries
+no Lean source text. Request one module from `lean/module?name=…` when its
+source is needed. Its payload
+matches the [Lean module contract](#serve-the-lean-index-and-record-alignment)
+and includes `paper_links` for the matching PDF marks and Lean notes. RH
+endpoints return these data objects directly.
+
+Each response includes the Lean and paper revisions and the paper manifest
+hash. Pass that hash as `manifest` on a Lean source request to get **409** if
+the server has opened another paper edition. A module outside the paper-linked
+catalogue returns **404**. The module's `uses` and `used_by` list direct compiled
+references among the linked declarations. The full adjacency remains available
+through the proof neighbourhood API.
+
+The module response can also give each declaration a `neighbourhood`. It shows
+up to 12 named dependencies and 12 named users, preferring project declarations
+and paper links. Each neighbour lists the recorded `kinds` (`type`, `value` or
+both). The `counts` give totals before the display limit. The `dataset` and
+`scope` identify the compiled evidence.
+
+| Scope | Recorded references |
+| --- | --- |
+| `riemann_hypothesis_closure` | Direct constant references in the Riemann Hypothesis theorem's closure. |
+| `published_theorem_export` | Direct constant references for statements from the other theorems in the same export. |
+| `compiled_project_declarations` | Direct references between project declarations in Main's compiled environment. The export groups some auxiliary constants into their owning declarations. |
+
+An absent `neighbourhood` means that the configured index cannot supply this
+view. An empty list with a zero count means the recorded scope contains no
+neighbours in that direction.
+
+Each declaration's `signature_source`
+records whether its statement boundary came from the paper alignment, the
+Lean source parser, or the full declaration range.
+
+For example, `st:landau` opens PDF page 13 and links to the statement on Lean
+lines 11–13 and the proof on lines 13–14. Looking up the same declaration in
+`bindings` returns that passage and its Landau topic. A mark's `at` is a UTF-8
+interval in `paper.txt`, the PDF word stream. A whole passage's `reference_ids`
+also lists the individual ties inside its highlight. Those references use
+`covered_by` to point back to the containing mark.
+
+Curated sentence links can specify `focus_lines` and a `focus_note` on each
+Lean target. The line index marks those links `reviewed_span`. Other links
+carry a broader declaration or statement range. For a selected line, give
+matching reviewed spans priority over the declaration's canonical address.
+The PDF placement records whether the mark uses a unique section match, a
+reviewed name in context, or the boundaries of a reviewed passage.
+A passage's `compiled_edges`
+lists direct type or proof dependencies checked against the pinned graph on
+each build. For the sentence that applies the count identity, the two
+recorded proof edges run through `CharacterBalanceMoves.core` before
+`ch_balance`.
+
+The build writes unresolved declaration names and ambiguous PDF placements to
+`build/rh-paper-review.json`. A resolved pointer identifies where to look.
+Statement fidelity remains unassessed until reviewed.
+
+[rh-dependencies]: https://github.com/james-shore/rh-proof-dependencies/releases/tag/v0.2.1
+[rh-paper]: https://github.com/vincitamore/riemann-lean-account
+
 ## Run a captured edition
 
 Install the package with Python 3.11 or newer from the repository root, then

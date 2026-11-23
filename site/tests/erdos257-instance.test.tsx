@@ -86,6 +86,34 @@ describe("the table of runs, from evidence records and their receipts", () => {
     expect(conclusionStatus("timed_out")).toBe("unavailable");
   });
 
+  it("links the upstream run log and published receipt for an interrupted check", async () => {
+    const repository = "https://github.com/example-owner/archive";
+    const commit = "c".repeat(40);
+    const log = `${repository}/blob/${commit}/verify/results/sample.txt`;
+    const path = "verification/archive-sample.json";
+    const check: EvidenceInput = {
+      id: "archive.sample", kind: "platform_observation", status: "unavailable",
+      tool: "Sample runs", receipt_path: path,
+    };
+    const result = buildRunLedger([check], (file) => file === path ? {
+      record_type: "upstream_run_observation", repository, commit, date: "2026-11-22",
+      where: "The authors’ archive run", logs: [{ url: log }],
+      targets: [{ record: "decl.checked", url: `${log}#L42` },
+                { record: "decl.unrelated", url: `${repository}/blob/${commit}/other.txt#L12` }],
+      outcome: "The memory limit stopped one check",
+      shows: "The other 500 names were accepted.",
+      does_not_show: "The interrupted process gave no verdict.",
+    } : null);
+    expect(result.missing).toEqual([]);
+    expect(result.groups[0].rows[0].targetLinks).toEqual({ "decl.checked": `${log}#L42` });
+    const page = await render(<RunTable ledger={result} />);
+    const links = [...page.querySelectorAll("a")].map((link) => link.getAttribute("href"));
+    expect(links).toEqual(expect.arrayContaining([log, `${repository}/commit/${commit}`]));
+    expect(links.some((href) => href?.endsWith("/" + path))).toBe(true);
+    expect(page.textContent).toContain("The memory limit stopped one check");
+    expect(page.textContent).toContain("The interrupted process gave no verdict.");
+  });
+
   it("reads Palomar replay receipts: entry, theorems, kernels, axioms and a failure's stage", () => {
     const rows = ledger().groups[1].rows;
     const failed = rows.find((r) => r.entry === "E257_07")!;

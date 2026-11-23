@@ -4,7 +4,7 @@ import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { hasReferenceLink, prepareDocument, renderSlice } from "../src/reader/engine";
 import { documentFixture, structureFixture } from "./fixtures";
-import type { AlignedStatement } from "../src/api/lean";
+import type { AlignedStatement, StatementLean } from "../src/api/lean";
 
 const paths = { long: "long/reasoning-record.md", short: "short/paper.md", expository: "expository/main.md" };
 const input = { stage: "short", documentPath: paths.short, documentPaths: paths };
@@ -76,6 +76,34 @@ describe("LazyStatementSlice", () => {
     if (raw) expect(raw.textContent).toContain("$q(t)=t$");
     await vi.waitFor(() => expect(container.querySelector(".slice .katex")).not.toBeNull(), { timeout: 8000 });
     expect(container.querySelector(".slice-raw")).toBeNull();
+    act(() => root.unmount());
+  });
+
+  it("shows only the comparisons made against this slice, with the named declaration and source", async () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} unobserve() {} disconnect() {} });
+    const { StatementSlice } = await import("../src/compare/StatementSlice");
+    const lean: StatementLean = { name: "Main.riemannHypothesis", module: "Main", line: 4, end_line: 4, relation: "states", note: "",
+      fidelity: "same", fidelity_source: "ai", fidelity_note: "Unfold `RiemannHypothesis` to read the conditions." };
+    const statement: AlignedStatement = {
+      paper: "short", role: "statement", markdown: "The zeros in the statement have real part $1/2$.",
+      start_byte: 0, end_byte: 54, anchor: null, section: "2.3", heading_id: null, lean_source: "statement",
+      lean: [lean, { ...lean, name: "Main.other", fidelity: undefined }, {
+        ...lean, name: "Main.support", fidelity: undefined, source_review: true, note: "This lemma supplies one input.",
+      }],
+    };
+    const container = document.createElement("div");
+    const root = createRoot(container);
+    await act(async () => root.render(<StatementSlice statement={statement} withComparisons />));
+    expect(container.querySelectorAll("[data-fidelity]")).toHaveLength(1);
+    expect(container.querySelector("a[title='Main.riemannHypothesis']")?.getAttribute("href")).toContain("riemannHypothesis");
+    expect(container.querySelector("[data-fidelity='same'] code")?.textContent).toBe("RiemannHypothesis");
+    expect(container.querySelector("[data-source='ai']")?.textContent).toContain("AI agent");
+    expect(container.querySelector("[data-source-review='ai']")?.textContent).toContain("This lemma supplies one input.");
+    expect(container.querySelector("a[title='Main.other']")).toBeNull();
+
+    await act(async () => root.render(<StatementSlice statement={{ ...statement, lean_source: "record" }} withComparisons />));
+    expect(container.querySelector("[data-fidelity]")).toBeNull();
+    expect(container.querySelector("[data-source-review]")).toBeNull();
     act(() => root.unmount());
   });
 });

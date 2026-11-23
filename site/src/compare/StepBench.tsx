@@ -376,7 +376,7 @@ function SliceRow({ id, statement }: { id: string; statement: AlignedStatement }
         <span className="bench-slice__role">{roleWords(statement.role)}</span>
         <span className="bench-slice__section">{sectionLabel(statement.section)}</span>
       </header>
-      <LazyStatementSlice statement={statement} />
+      <LazyStatementSlice statement={statement} withComparisons />
       {statement.note && <p className="bench-slice__note">{statement.note}</p>}
       <a className="bench-slice__read" href={statementHref(statement, id)}>
         Read in context

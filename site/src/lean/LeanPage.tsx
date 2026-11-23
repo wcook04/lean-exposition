@@ -604,7 +604,7 @@ function FileView({ module, shell, slot, file, scroller }: { module: LeanModule;
         </p>
         <ModuleViews module={module.module} file />
       </header>
-      <CodeView code={code} label={`The whole of ${path}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={open} lit={range ? lit : undefined} />
+      <CodeView code={code} moduleName={module.module} label={`The whole of ${path}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={open} lit={range ? lit : undefined} />
       <ReadingFoot store={store} slot={slot} />
     </>
   );

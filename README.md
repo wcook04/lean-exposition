@@ -118,6 +118,7 @@ successfully, and reviewing the mathematics answer different questions.
 | [skills/](skills/) · [writing methods](skills/README.md) | The four writing methods |
 | [src/lean_exposition/](src/lean_exposition/) | The Python command-line tool, read-only [web backend](src/lean_exposition/web.py), schemas and templates |
 | [site/](site/) · [site guide](site/README.md) | The reading website's source |
+| [instances/](instances/) | Library editions and the [Riemann Hypothesis paper backend](docs/web-api.md#riemann-hypothesis-paper-backend) |
 | [docs/](docs/) · [documentation guide](docs/README.md) | Guides to authoring, verification, the file formats and research references |
 | [lean/](lean/) | A guide to the Lean extractor |
 | [tests/](tests/) | The Python test suite |

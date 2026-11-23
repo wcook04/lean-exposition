@@ -9,7 +9,7 @@
 
 import { OriginLine } from "../../compare/Fidelity";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import type { Alignment, PhraseLean, RecordAlignment, StatementLean } from "../../api/lean";
+import type { Alignment, RecordAlignment, StatementLean } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref, type Trace } from "../../app/router";
@@ -22,7 +22,7 @@ import { aidsArrived, loadAids } from "../aids";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
-import { assessmentsOf, declLight, dockDecl, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
+import { BriefPhraseCard, declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
 import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { quoteOfDisplay } from "./PaperBody";
@@ -65,7 +65,7 @@ interface Props {
   onOpenGraph?(): void;
   /** Stands where "No Lean is linked to this paragraph" would: where to start, before the paper's first link. */
   emptySlot?: ReactNode;
-  /** Under the drawing: a short card (title, the comparison's verdict, Open its Lean) until the reader opens it. */
+  /** Under the drawing: a short card until the reader opens it. */
   brief?: boolean;
   onBrief?(whole: boolean): void;
 }
@@ -208,10 +208,10 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
     };
   }, [settled, stage]);
   const holding = (!!tie?.rows && notes === undefined) || (!settled && alignment === null) || !aidsArrived() || !oursArrived();
-  const rows = useMemo(() => {
+  const rows = useMemo<StatementLean[]>(() => {
     // A statement with no Lean has none, whatever its step has elsewhere.
     if (tie && !tie.lean) return [];
-    if (tie?.rows) return tie.rows as unknown as StatementLean[];
+    if (tie?.rows) return tie.rows;
     const list = leanRows(alignment, record, at);
     if (list.length || !tie?.name || !tie.module) return list;
     // Before the alignment arrives the statement's own index row names its first declaration.
@@ -224,7 +224,9 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
     setChosen(0);
     setFull(false);
   }
-  const row = open.decl ? null : (rows[Math.min(chosen, rows.length - 1)] ?? null);
+  const rowIndex = Math.min(chosen, rows.length - 1);
+  const row = open.decl ? null : (rows[rowIndex] ?? null);
+  const phraseRow = phrase ? tie?.rows?.[rowIndex] : undefined;
   const name = open.decl ?? row?.name ?? null;
   // The graph above a phrase's card follows the declaration its card shows.
   useEffect(() => {
@@ -337,7 +339,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
           <button
             type="button"
             aria-pressed={i === Math.min(chosen, rows.length - 1)}
-            title={phrase ? `${item.name}. Pointing lights every phrase of this paper it states.` : item.name}
+            title={phrase ? `${item.name}. Pointing lights each phrase linked to this declaration.` : item.name}
             onClick={(e) => {
               setChosen(i);
               const menu = e.currentTarget.closest<HTMLDetailsElement>("details.lean-page__choices");
@@ -400,15 +402,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       )}
       {!slot && onBrief && !empty && (
         <div className="lean-page__brief">
-          {brief && phrase && row && (
-            <section className="phrase-card phrase-card--brief" aria-label="How the Lean compares with these words, in short">
-              {assessmentsOf(row as unknown as PhraseLean, tie?.merged)
-                .slice(0, 1)
-                .map(({ assessment }, i) => (
-                  <Verdict key={i} assessment={assessment} />
-                ))}
-            </section>
-          )}
+          {brief && phraseRow && <BriefPhraseCard row={phraseRow} role={tie?.role} merged={tie?.merged} />}
           <button type="button" className="lean-page__quiet" aria-expanded={!brief} onClick={() => onBrief(!!brief)}>
             {brief ? "Show the whole card" : "Show less, and give the graph the room"}
           </button>
@@ -452,13 +446,14 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
               <div className="lean-wait is-compact">Loading the Lean source</div>
             ) : name ? (
               <>
-              {phrase && row && (
+              {phraseRow && (
                 <PhraseCard
-                  key={inLean ? `${tie?.at}:${row.name}` : undefined}
+                  key={inLean ? `${tie?.at}:${phraseRow.name}` : undefined}
                   inLean={inLean}
                   quoteBytes={quoteBytes}
-                  row={row as unknown as PhraseLean}
-                  note={part?.notes[row.name]}
+                  row={phraseRow}
+                  role={tie?.role}
+                  note={part?.notes[phraseRow.name]}
                   quote={quote}
                   merged={tie?.merged}
                   phrase={tie?.phrase}
@@ -474,7 +469,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                 name={name}
                 module={row?.module ?? open.declModule}
                 relation={row?.relation ?? undefined}
-                note={row?.note}
+                note={phraseRow?.source_review && row?.relation ? undefined : row?.note}
                 fidelity={phrase ? undefined : (row ?? undefined)}
                 // The phrase's card stays in view above a lit statement; lit proof lines are scrolled to.
                 quietLines={phrase && !(row?.proof_lines && row.lines && row.lines[0] >= row.proof_lines[0]) ? true : undefined}

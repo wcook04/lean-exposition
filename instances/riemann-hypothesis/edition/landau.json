@@ -1,0 +1,198 @@
+{
+  "revision": "8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116",
+  "path": [
+    "riemannHypothesis",
+    "rhOfAll",
+    "allChi",
+    "UpperTheory.FinalTheorems.everyCharacter",
+    "UpperTheory.FinalTheorems.everyCharacter_of_row",
+    "UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin",
+    "UpperTheory.Lit.every_character_of_theta_integrals_local_matching",
+    "UpperTheory.Top.every_character_of_green_v_win",
+    "UpperTheory.Top.zero_free_all_of_green_v_win",
+    "UpperTheory.Top.zeroFreeAll_of_topG",
+    "UpperTheory.Comparison₂.formB",
+    "Deduction.zeroFree_of_rpow_window",
+    "Deduction.lemmaL",
+    "Deduction.landau_window"
+  ],
+  "nodes": [
+    {
+      "id": "riemannHypothesis",
+      "title": "Riemann Hypothesis",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L4"
+    },
+    {
+      "id": "rhOfAll",
+      "title": "Deduce RH from nonvanishing",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Supplements/Kernels/MainTheorems.lean#L9-L9"
+    },
+    {
+      "id": "allChi",
+      "title": "Nonvanishing for every character",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Supplements/Kernels/MainTheorems.lean#L7-L7"
+    },
+    {
+      "id": "UpperTheory.FinalTheorems.everyCharacter",
+      "title": "Prove nonvanishing for every character",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean#L10-L11"
+    },
+    {
+      "id": "UpperTheory.FinalTheorems.everyCharacter_of_row",
+      "title": "Use the Galois representation input",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean#L7-L8"
+    },
+    {
+      "id": "UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin",
+      "title": "Combine the literature inputs and window bound",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean#L810-L813"
+    },
+    {
+      "id": "UpperTheory.Lit.every_character_of_theta_integrals_local_matching",
+      "title": "Match theta integrals and local data",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/SiegelEisensteinSecondTermHypotheses.lean#L69-L73"
+    },
+    {
+      "id": "UpperTheory.Top.every_character_of_green_v_win",
+      "title": "Pass from primitive to all characters",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TopPlug.lean#L16-L18"
+    },
+    {
+      "id": "UpperTheory.Top.zero_free_all_of_green_v_win",
+      "title": "Give nonvanishing for primitive characters",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TopPlug.lean#L12-L15"
+    },
+    {
+      "id": "UpperTheory.Top.zeroFreeAll_of_topG",
+      "title": "Get a zero-free region from the families",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/ZeroFreeAllOfTopG.lean#L26-L34"
+    },
+    {
+      "id": "UpperTheory.Comparison₂.formB",
+      "title": "Apply the analytic criterion",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/PrimitiveCosets/Imports.lean#L8-L19"
+    },
+    {
+      "id": "Deduction.zeroFree_of_rpow_window",
+      "title": "Use a bound on arbitrarily large windows",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ZeroFreeOfRpowWindow.lean#L11-L14"
+    },
+    {
+      "id": "Deduction.lemmaL",
+      "title": "Apply the window estimate",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/lemmaL.lean#L13-L22"
+    },
+    {
+      "id": "Deduction.landau_window",
+      "title": "Windowed Landau lemma",
+      "topic": "Nonvanishing on windows",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/landauWindow.lean#L83-L166"
+    }
+  ],
+  "edges": [
+    {
+      "from": "riemannHypothesis",
+      "to": "rhOfAll",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "rhOfAll",
+      "to": "allChi",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "allChi",
+      "to": "UpperTheory.FinalTheorems.everyCharacter",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.FinalTheorems.everyCharacter",
+      "to": "UpperTheory.FinalTheorems.everyCharacter_of_row",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.FinalTheorems.everyCharacter_of_row",
+      "to": "UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin",
+      "to": "UpperTheory.Lit.every_character_of_theta_integrals_local_matching",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.Lit.every_character_of_theta_integrals_local_matching",
+      "to": "UpperTheory.Top.every_character_of_green_v_win",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.Top.every_character_of_green_v_win",
+      "to": "UpperTheory.Top.zero_free_all_of_green_v_win",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.Top.zero_free_all_of_green_v_win",
+      "to": "UpperTheory.Top.zeroFreeAll_of_topG",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.Top.zeroFreeAll_of_topG",
+      "to": "UpperTheory.Comparison₂.formB",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.Comparison₂.formB",
+      "to": "Deduction.zeroFree_of_rpow_window",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "Deduction.zeroFree_of_rpow_window",
+      "to": "Deduction.lemmaL",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "Deduction.lemmaL",
+      "to": "Deduction.landau_window",
+      "kinds": [
+        "value"
+      ]
+    }
+  ]
+}

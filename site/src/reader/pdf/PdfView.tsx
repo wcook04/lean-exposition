@@ -14,7 +14,9 @@ import "./pdf-view.css";
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 export interface PdfMark { at: string; tone: number | null; record: string | null; boxes: [number, number, number, number, number][] }
-export interface PdfMarks { pages: [number, number][]; marks: Record<string, PdfMark> }
+export interface PdfSection { section: string; title: string; page: number; y: number; topic: string }
+export const pdfSectionId = (section: string) => `pdf-section-${section}`;
+export interface PdfMarks { pages: [number, number][]; marks: Record<string, PdfMark>; sections?: PdfSection[]; pageStarts?: number[] }
 
 const marksLoaded = new Map<string, Promise<PdfMarks | null>>();
 /** The marks of a paper's PDF, or null when the build placed none. */
@@ -29,6 +31,10 @@ export function loadPdfMarks(url: string): Promise<PdfMarks | null> {
 
 /** The first page of the mark at or after a byte of the text, from the marks' places. */
 export function pageAtByte(marks: PdfMarks, byte: number): number | null {
+  if (marks.pageStarts) {
+    const next = marks.pageStarts.findIndex((start) => start > byte);
+    return next >= 0 ? Math.max(1, next) : marks.pageStarts.length;
+  }
   let best: { start: number; page: number } | null = null;
   for (const mark of Object.values(marks.marks)) {
     const start = Number(mark.at.slice(1).split("-")[0]);
@@ -55,11 +61,13 @@ interface Props {
   /** The selected phrase's place in the text (`b<start>-<end>`), if any. */
   at?: string;
   page?: number;
+  section?: PdfSection;
   onPick(id: string, mark: PdfMark, page: number): void;
-  onPage(page: number): void;
+  readingLine(): number;
+  onPosition(page: number, at: string | undefined, section: string | undefined, y: number): void;
 }
 
-export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) {
+export function PdfView({ url, marks, at, page, section, label, onPick, readingLine, onPosition }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -96,12 +104,17 @@ export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) 
   useEffect(() => {
     if (!width || !pdf) return;
     const target = selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
-    const pageEl = !target && page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
-    const el = target ?? pageEl;
+    const sectionEl = section ? box.current?.querySelector<HTMLElement>(`[data-section="${CSS.escape(section.section)}"]`) : null;
+    const pageEl = page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
+    const el = target ?? sectionEl ?? pageEl;
     if (!el) return;
     const first = !opened.current;
     opened.current = true;
-    el.scrollIntoView({ block: target ? "center" : "start", behavior: first ? "auto" : "smooth" });
+    const landAt = (behavior: ScrollBehavior) => {
+      if (target) window.scrollBy({ top: target.getBoundingClientRect().top - readingLine() + 1, behavior });
+      else el.scrollIntoView({ block: "start", behavior });
+    };
+    landAt(first ? "instant" : "smooth");
     // On first opening the reader is still settling its own place and may move the window; land
     // again until the target is in view, unless the reader has started scrolling by hand.
     if (!first) return;
@@ -112,7 +125,7 @@ export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) 
     window.addEventListener("touchstart", touch, { passive: true, once: true });
     const land = () => {
       const r = el.getBoundingClientRect();
-      if (!touched && (r.bottom < 0 || r.top > window.innerHeight)) el.scrollIntoView({ block: target ? "center" : "start" });
+      if (!touched && (r.bottom < 0 || r.top > window.innerHeight)) landAt("instant");
     };
     let frame = 0;
     const onScroll = () => {
@@ -131,21 +144,53 @@ export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) 
       window.removeEventListener("keydown", touch);
       window.removeEventListener("touchstart", touch);
     };
-  }, [width, pdf, selected, page]);
+  }, [width, pdf, selected, page, section, readingLine]);
 
   // Report the page at the reading line.
   useEffect(() => {
     const el = box.current;
     if (!el || !width) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) onPage(Number((entry.target as HTMLElement).dataset.page));
-      },
-      { rootMargin: "-30% 0px -60% 0px" },
-    );
-    el.querySelectorAll(".pdf-view__page").forEach((page) => observer.observe(page));
-    return () => observer.disconnect();
-  }, [width, onPage]);
+    const pages = Array.from(el.querySelectorAll<HTMLElement>(".pdf-view__page"));
+    if (!pages.length) return;
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const line = readingLine();
+      let lo = 0, hi = pages.length - 1;
+      while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (pages[mid].getBoundingClientRect().bottom < line) lo = mid + 1;
+        else hi = mid;
+      }
+      const page = lo + 1;
+      const rect = pages[lo].getBoundingClientRect();
+      const scale = width / marks.pages[lo][0];
+      const y = (line - rect.top) / scale;
+      let best: PdfMark | undefined;
+      let distance = Infinity;
+      for (const [, mark] of byPage.get(page) ?? []) {
+        for (const [p, , top, , bottom] of mark.boxes) {
+          if (p !== page) continue;
+          const gap = Math.max(0, top - y, y - bottom) * scale;
+          if (gap < distance && gap <= window.innerHeight * 0.32) {
+            distance = gap;
+            best = mark;
+          }
+        }
+      }
+      const section = marks.sections?.filter((s) => s.page < page || (s.page === page && s.y <= y + 2)).at(-1);
+      onPosition(page, best?.at, section?.section, y);
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(read); };
+    read();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [width, byPage, marks, readingLine, onPosition]);
 
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (
@@ -156,6 +201,9 @@ export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) 
           return (
             <section key={i} className="pdf-view__page" data-page={i + 1} style={{ height: Math.round(h * scale) }} aria-label={`Page ${i + 1}`}>
               {pdf && <PdfCanvas pdf={pdf} number={i + 1} width={width} />}
+              {marks.sections?.filter((heading) => heading.page === i + 1).map((heading) =>
+                <span key={heading.section} className="pdf-view__section" data-section={heading.section} style={{ top: heading.y * scale }} aria-hidden="true" />
+              )}
               {(byPage.get(i + 1) ?? []).map(([id, mark]) =>
                 mark.boxes
                   .filter((b) => b[0] === i + 1)

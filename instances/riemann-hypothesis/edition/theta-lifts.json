@@ -1,0 +1,86 @@
+{
+  "revision": "8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116",
+  "path": [
+    "riemannHypothesis",
+    "rhOfAll",
+    "allChi",
+    "UpperTheory.FinalTheorems.everyCharacter",
+    "UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter",
+    "UpperTheory.Gal.Int.galoisRepresentations_of_thetaLift"
+  ],
+  "nodes": [
+    {
+      "id": "riemannHypothesis",
+      "title": "Riemann Hypothesis",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L4"
+    },
+    {
+      "id": "rhOfAll",
+      "title": "Deduce RH from nonvanishing",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Supplements/Kernels/MainTheorems.lean#L9-L9"
+    },
+    {
+      "id": "allChi",
+      "title": "Nonvanishing for every character",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Supplements/Kernels/MainTheorems.lean#L7-L7"
+    },
+    {
+      "id": "UpperTheory.FinalTheorems.everyCharacter",
+      "title": "Prove nonvanishing for every character",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean#L10-L11"
+    },
+    {
+      "id": "UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter",
+      "title": "Construct the Galois representations",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/RowSrc.lean#L6-L6"
+    },
+    {
+      "id": "UpperTheory.Gal.Int.galoisRepresentations_of_thetaLift",
+      "title": "Galois representations via theta lifts",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/GaloisRepresentationsOfThetaLift.lean#L6-L6"
+    }
+  ],
+  "edges": [
+    {
+      "from": "riemannHypothesis",
+      "to": "rhOfAll",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "rhOfAll",
+      "to": "allChi",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "allChi",
+      "to": "UpperTheory.FinalTheorems.everyCharacter",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.FinalTheorems.everyCharacter",
+      "to": "UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter",
+      "to": "UpperTheory.Gal.Int.galoisRepresentations_of_thetaLift",
+      "kinds": [
+        "value"
+      ]
+    }
+  ]
+}

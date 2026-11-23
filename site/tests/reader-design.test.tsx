@@ -366,7 +366,7 @@ describe("the inspector's phrase card", async () => {
       legend.dispatchEvent(new Event("toggle"));
     });
     const words = [...legend.querySelectorAll("dt")].map((dt) => dt.textContent);
-    expect(words).toEqual(["Lean states the same as this phrase", "Lean states more", "Lean states less", "Lean states it differently", "Not assessed", "Withheld"]);
+    expect(words).toEqual(["Lean states the same as this phrase", "Lean states more", "Lean states less", "Lean states something different", "Not assessed", "Withheld"]);
   });
 });
 

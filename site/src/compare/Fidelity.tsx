@@ -3,10 +3,11 @@
 // only where the data carries the fields: an edition without them looks as before.
 
 import type { FidelityFields, TieOrigin } from "../api/lean";
+import type { ReactNode } from "react";
 import site from "@instance/site";
 import { fidelitySentence, fidelitySourceWords, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, originWords } from "./fidelityWords";
 
-export function FidelityLine({ row }: { row: FidelityFields | null | undefined }) {
+export function FidelityLine({ row, renderNote }: { row: FidelityFields | null | undefined; renderNote?: (note: string) => ReactNode }) {
   if (!row?.fidelity) return null;
   // A comparison held back, or none recorded: said as such, never as a verdict.
   if (row.fidelity === "held") {
@@ -27,7 +28,7 @@ export function FidelityLine({ row }: { row: FidelityFields | null | undefined }
   return (
     <p className={`fidelity fidelity--${row.fidelity}`} data-fidelity={row.fidelity}>
       <strong className="fidelity__verdict">{fidelitySentence(row.fidelity)}</strong>
-      {row.fidelity_note ? <> {row.fidelity_note}</> : null}{" "}
+      {row.fidelity_note ? <> {renderNote ? renderNote(row.fidelity_note) : row.fidelity_note}</> : null}{" "}
       <span className="fidelity__who" data-source={row.fidelity_source ?? "unrecorded"}>
         {fidelitySourceWords(row.fidelity_source)}
       </span>

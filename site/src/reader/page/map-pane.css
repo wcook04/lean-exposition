@@ -1564,29 +1564,3 @@ html[data-right-sheet] {
 .map-pane .mode-toggle button[aria-label="Graph"] {
   min-width: 92px;
 }
-
-/* The pane's words use the pane's whole width: no reading measure inside it, and the comparison
-   terms' names on one line where the pane has room. */
-.map-pane.map-pane {
-  --measure: none;
-  --evidence-measure: none;
-}
-.map-pane.map-pane :is(
-    blockquote.phrase-card__quote,
-    .phrase-card__compare,
-    .phrase-card__compare > *,
-    .phrase-card__notes > div,
-    .phrase-card__legend,
-    .ours p,
-    .ours__title,
-    .ours__open,
-    .lean-block__relation,
-    .tie-origin,
-    .lean-hood__note,
-    .lean-decl__words
-  ) {
-  max-width: none;
-}
-.map-pane.map-pane .phrase-card__legend dl > div {
-  grid-template-columns: minmax(6.5em, 15em) minmax(0, 1fr);
-}

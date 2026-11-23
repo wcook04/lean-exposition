@@ -1,0 +1,1223 @@
+{
+  "families": [
+    {
+      "id": "orientation",
+      "name": "Orientation"
+    },
+    {
+      "id": "analytic",
+      "name": "The analytic argument"
+    },
+    {
+      "id": "lattices",
+      "name": "Lattices and periods"
+    },
+    {
+      "id": "geometry",
+      "name": "Divisibility and frames"
+    },
+    {
+      "id": "arithmetic",
+      "name": "Cohomology and hosts"
+    },
+    {
+      "id": "context",
+      "name": "Sources and scope"
+    }
+  ],
+  "topics": [
+    {
+      "id": "overview",
+      "name": "Shape of the proof",
+      "family": "orientation",
+      "sections": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "formal-verification",
+      "name": "The formal statements and checks",
+      "family": "orientation",
+      "sections": [
+        "2"
+      ]
+    },
+    {
+      "id": "method",
+      "name": "Scope and directions",
+      "family": "orientation",
+      "sections": [
+        "12",
+        "13"
+      ]
+    },
+    {
+      "id": "landau",
+      "name": "The windowed Landau argument",
+      "family": "analytic",
+      "sections": [
+        "4.1"
+      ]
+    },
+    {
+      "id": "counts",
+      "name": "Counts and character sums",
+      "family": "analytic",
+      "sections": [
+        "4",
+        "4.2",
+        "4.3"
+      ]
+    },
+    {
+      "id": "scale",
+      "name": "Scale and the square-root bound",
+      "family": "analytic",
+      "sections": [
+        "4.4"
+      ]
+    },
+    {
+      "id": "slopes",
+      "name": "Slopes of Hermitian lattices",
+      "family": "lattices",
+      "sections": [
+        "5",
+        "5.1",
+        "5.2",
+        "5.4"
+      ]
+    },
+    {
+      "id": "periods",
+      "name": "Period terms and chaining",
+      "family": "lattices",
+      "sections": [
+        "5.5",
+        "5.6"
+      ]
+    },
+    {
+      "id": "inert-primes",
+      "name": "Divisibility at inert primes",
+      "family": "geometry",
+      "sections": [
+        "5.3",
+        "6"
+      ]
+    },
+    {
+      "id": "frames",
+      "name": "The Bessel–Poincaré frame",
+      "family": "geometry",
+      "sections": [
+        "7"
+      ]
+    },
+    {
+      "id": "cohomology",
+      "name": "Cohomological and congruence bounds",
+      "family": "arithmetic",
+      "sections": [
+        "8"
+      ]
+    },
+    {
+      "id": "galois",
+      "name": "Galois representations from theta lifts",
+      "family": "arithmetic",
+      "sections": [
+        "8.4"
+      ]
+    },
+    {
+      "id": "hosts",
+      "name": "Host fields and auxiliary characters",
+      "family": "arithmetic",
+      "sections": [
+        "9"
+      ]
+    },
+    {
+      "id": "literature",
+      "name": "Published inputs and sources",
+      "family": "context",
+      "sections": [
+        "10"
+      ]
+    },
+    {
+      "id": "off-path",
+      "name": "Results outside the final proof",
+      "family": "context",
+      "sections": [
+        "11"
+      ]
+    }
+  ],
+  "statements": {
+    "st:rh": {
+      "title": "Riemann Hypothesis",
+      "names": [
+        "riemannHypothesis"
+      ],
+      "pdf_page": 4,
+      "pdf_from": [
+        "Statement",
+        "2.1",
+        "(riemannHypothesis)."
+      ],
+      "pdf_before": [
+        "The",
+        "statement",
+        "is",
+        "the",
+        "proposition"
+      ]
+    },
+    "st:grh": {
+      "title": "Nonvanishing for Dirichlet L-functions",
+      "names": [
+        "LFunction_ne_zero_of_half_lt_re"
+      ],
+      "pdf_page": 4,
+      "pdf_from": [
+        "Statement",
+        "2.2",
+        "(LFunction_ne_zero_of_half_lt_re)."
+      ],
+      "pdf_before": [
+        "Statement",
+        "2.3",
+        "(LFunction_eq_zero_re)."
+      ]
+    },
+    "st:strip": {
+      "title": "Zeros in the critical strip",
+      "names": [
+        "LFunction_eq_zero_re"
+      ],
+      "pdf_page": 4,
+      "pdf_from": [
+        "Statement",
+        "2.3",
+        "(LFunction_eq_zero_re)."
+      ],
+      "pdf_before": [
+        "The",
+        "remaining",
+        "two",
+        "are"
+      ]
+    },
+    "st:landau": {
+      "title": "Landau on windows",
+      "names": [
+        "Deduction.zeroFree_of_rpow_window"
+      ],
+      "pdf_page": 13,
+      "pdf_from": [
+        "Statement",
+        "4.1",
+        "(zeroFree_of_rpow_window)."
+      ],
+      "pdf_before": [
+        "In",
+        "the",
+        "application",
+        "the",
+        "family"
+      ],
+      "route": "../landau.json"
+    },
+    "st:balance": {
+      "title": "The exact identity for the count",
+      "names": [
+        "Deduction.ch_balance"
+      ],
+      "pdf_page": 13,
+      "pdf_from": [
+        "Statement",
+        "4.2",
+        "(ch_balance)."
+      ],
+      "pdf_before": [
+        "This",
+        "is",
+        "orthogonality",
+        "of",
+        "characters"
+      ]
+    },
+    "st:core": {
+      "title": "From the count to the analytic bound",
+      "names": [
+        "Deduction.ch_core"
+      ],
+      "pdf_page": 14,
+      "pdf_from": [
+        "Statement",
+        "4.3",
+        "(ch_core)."
+      ],
+      "pdf_before": [
+        "The",
+        "proof",
+        "applies",
+        "Statement",
+        "4.2"
+      ]
+    },
+    "st:F": {
+      "title": "The slope inequality for a nearly tight frame",
+      "names": [
+        "Formalism.HN.TheoremF"
+      ],
+      "pdf_page": 17,
+      "pdf_from": [
+        "Statement",
+        "5.1",
+        "(TheoremF)."
+      ],
+      "pdf_before": [
+        "The",
+        "classical",
+        "slope",
+        "inequality",
+        "says"
+      ],
+      "pdf_end_page": 18
+    },
+    "st:key": {
+      "title": "The lattice and analytic main terms agree",
+      "names": [
+        "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5"
+      ],
+      "pdf_page": 19,
+      "pdf_from": [
+        "Statement",
+        "5.2",
+        "(key_identity5)."
+      ],
+      "pdf_before": [
+        "The",
+        "log(π/v)",
+        "inside",
+        "log"
+      ]
+    },
+    "st:cm2": {
+      "title": "Good reduction of the CM curve",
+      "names": [
+        "Formalism.L2.Th1.CM.CM2"
+      ],
+      "pdf_page": 20,
+      "pdf_from": [
+        "Statement",
+        "6.1",
+        "(CM2)."
+      ],
+      "pdf_before": [
+        "Statement",
+        "6.2",
+        "(CM3)."
+      ]
+    },
+    "st:cm3": {
+      "title": "Integrality at inert primes",
+      "names": [
+        "Formalism.L2.Th1.CM.CM3"
+      ],
+      "pdf_page": 20,
+      "pdf_from": [
+        "Statement",
+        "6.2",
+        "(CM3)."
+      ],
+      "pdf_before": [
+        "Statement",
+        "6.1",
+        "is",
+        "good",
+        "reduction"
+      ]
+    },
+    "st:vwin": {
+      "title": "The cohomological bound on windows",
+      "names": [
+        "UpperTheory.Top.VVle",
+        "UpperTheory.Top.VWin"
+      ],
+      "pdf_page": 22,
+      "pdf_from": [
+        "Statement",
+        "8.1",
+        "(VVle,",
+        "VWin)."
+      ],
+      "pdf_before": [
+        "Nothing",
+        "is",
+        "averaged",
+        "or",
+        "discarded:"
+      ]
+    },
+    "st:cong": {
+      "title": "The congruence ideal bound",
+      "names": [
+        "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at"
+      ],
+      "pdf_page": 23,
+      "pdf_from": [
+        "Statement",
+        "8.2",
+        "(CongBound_at)."
+      ],
+      "pdf_before": [
+        "This",
+        "is",
+        "a",
+        "bound",
+        "of",
+        "the",
+        "type"
+      ]
+    },
+    "st:supply": {
+      "title": "Supply of host fields",
+      "names": [
+        "UpperTheory.Top.supplyChi"
+      ],
+      "pdf_page": 25,
+      "pdf_from": [
+        "Statement",
+        "9.1",
+        "(supplyChi)."
+      ],
+      "pdf_before": [
+        "The",
+        "only",
+        "assumption",
+        "about"
+      ]
+    },
+    "st:pairs": {
+      "title": "Existence of good pairs of primes",
+      "names": [
+        "UpperTheory.Top.PairEx"
+      ],
+      "pdf_page": 25,
+      "pdf_from": [
+        "Statement",
+        "9.2",
+        "(PairEx)."
+      ],
+      "pdf_before": [
+        "There",
+        "is",
+        "no",
+        "circle,",
+        "for",
+        "a",
+        "reason"
+      ]
+    }
+  },
+  "passages": {
+    "landau-proof-idea": {
+      "title": "How the windowed Landau proof works",
+      "role": "explanation",
+      "section": "4.1",
+      "source": {
+        "file": "paper/sections/analytic.tex",
+        "line": 35,
+        "end_line": 43
+      },
+      "names": [
+        "Deduction.landau_window",
+        "Deduction.lemmaL"
+      ],
+      "pdf_page": 13,
+      "pdf_from": [
+        "Landau’s",
+        "classical",
+        "theorem",
+        "[Lan05]"
+      ],
+      "pdf_before": [
+        "The",
+        "theorem",
+        "is",
+        "applied",
+        "with"
+      ],
+      "route": "../landau.json"
+    },
+    "character-orthogonality": {
+      "title": "Where character orthogonality enters the count",
+      "role": "explanation",
+      "section": "4.2",
+      "source": {
+        "file": "paper/sections/analytic.tex",
+        "line": 80,
+        "end_line": 84
+      },
+      "names": [
+        "Deduction.ch_balance"
+      ],
+      "pdf_page": 13,
+      "pdf_from": [
+        "This",
+        "is",
+        "orthogonality",
+        "of",
+        "characters"
+      ],
+      "pdf_before": [
+        "4.3.",
+        "From",
+        "the",
+        "count"
+      ],
+      "pdf_end_page": 14
+    },
+    "why-counts-windowed": {
+      "title": "Why the host construction gives windows",
+      "role": "explanation",
+      "section": "9.2",
+      "source": {
+        "file": "paper/sections/hosts.tex",
+        "line": 32,
+        "end_line": 34
+      },
+      "names": [
+        "UpperTheory.Top.supplyChi",
+        "UpperTheory.Top.VWin"
+      ],
+      "pdf_page": 25,
+      "pdf_from": [
+        "The",
+        "only",
+        "assumption",
+        "about"
+      ],
+      "pdf_before": [
+        "9.3.",
+        "The",
+        "auxiliary",
+        "characters"
+      ]
+    },
+    "three-inputs": {
+      "title": "The three inputs of the proof",
+      "section": "3",
+      "role": "explanation",
+      "source": {
+        "file": "paper/sections/overview.tex",
+        "line": 6,
+        "end_line": 13
+      },
+      "tex_anchor": "A theorem",
+      "names": [
+        "UpperTheory.Top.every_character_of_green_v_win",
+        "UpperTheory.Top.zero_free_all_of_green_v_win"
+      ],
+      "focus": {
+        "UpperTheory.Top.every_character_of_green_v_win": {
+          "lines": [
+            16,
+            18
+          ],
+          "note": "The wrapper keeps the three hypotheses and extends the primitive-character result to every character."
+        },
+        "UpperTheory.Top.zero_free_all_of_green_v_win": {
+          "lines": [
+            12,
+            15
+          ],
+          "note": "The primitive-character theorem applies the window exponent three halves and obtains hosts from supplyChi."
+        }
+      },
+      "pdf_page": 11,
+      "pdf_from": [
+        "A",
+        "theorem",
+        "(zero_free_all_of_green_v_win)"
+      ],
+      "pdf_before": [
+        "each",
+        "of",
+        "which",
+        "is",
+        "in",
+        "turn"
+      ],
+      "compiled_edges": [
+        [
+          "UpperTheory.Top.every_character_of_green_v_win",
+          "UpperTheory.Top.zero_free_all_of_green_v_win",
+          "value"
+        ]
+      ]
+    },
+    "level-character-weights": {
+      "title": "How a level weights its characters",
+      "section": "4.1",
+      "role": "definition",
+      "source": {
+        "file": "paper/sections/analytic.tex",
+        "line": 26,
+        "end_line": 33
+      },
+      "tex_anchor": "In the application the family",
+      "names": [
+        "Formalism.HC.Level.wt",
+        "Formalism.HC.Level.Gm",
+        "Formalism.HC.zeroFreeOn_of_levels"
+      ],
+      "focus": {
+        "Formalism.HC.Level.wt": {
+          "lines": [
+            36,
+            36
+          ],
+          "note": "The distinguished character has weight one. The other weights are reciprocals of three times the level parameter plus one."
+        },
+        "Formalism.HC.Level.Gm": {
+          "lines": [
+            38,
+            38
+          ],
+          "note": "The weighted sum adds the trivial character contribution separately."
+        },
+        "Formalism.HC.zeroFreeOn_of_levels": {
+          "lines": [
+            45,
+            48
+          ],
+          "note": "To obtain zero-freeness for an individual character, the proof chooses a zero-free level that contains it."
+        }
+      },
+      "pdf_page": 13,
+      "pdf_from": [
+        "In",
+        "the",
+        "application",
+        "the",
+        "family",
+        "is",
+        "a",
+        "level"
+      ],
+      "pdf_before": [
+        "Landau’s",
+        "classical",
+        "theorem"
+      ],
+      "compiled_edges": [
+        [
+          "Formalism.HC.Level.Gm",
+          "Formalism.HC.Level.wt",
+          "value"
+        ]
+      ]
+    },
+    "apply-count-balance": {
+      "title": "Applying the count identity at each size",
+      "section": "4.3",
+      "role": "derivation",
+      "source": {
+        "file": "paper/sections/analytic.tex",
+        "line": 128,
+        "end_line": 128
+      },
+      "tex_anchor": "The proof applies",
+      "names": [
+        "Deduction.ch_core",
+        "Deduction.CharacterBalanceMoves.core"
+      ],
+      "focus": {
+        "Deduction.ch_core": {
+          "lines": [
+            440,
+            440
+          ],
+          "note": "The main reduction calls the helper that applies the count identity."
+        },
+        "Deduction.CharacterBalanceMoves.core": {
+          "lines": [
+            304,
+            312
+          ],
+          "note": "The helper applies ch_balance for each size and lift, then takes real parts."
+        }
+      },
+      "pdf_page": 14,
+      "pdf_from": [
+        "The",
+        "proof",
+        "applies",
+        "Statement",
+        "4.2"
+      ],
+      "pdf_before": [
+        "Condition",
+        "(1)",
+        "says"
+      ],
+      "compiled_edges": [
+        [
+          "Deduction.ch_core",
+          "Deduction.CharacterBalanceMoves.core",
+          "value"
+        ],
+        [
+          "Deduction.CharacterBalanceMoves.core",
+          "Deduction.ch_balance",
+          "value"
+        ]
+      ]
+    },
+    "average-kept-characters": {
+      "title": "Averaging over the kept characters",
+      "section": "4.3",
+      "role": "derivation",
+      "source": {
+        "file": "paper/sections/analytic.tex",
+        "line": 128,
+        "end_line": 131
+      },
+      "tex_anchor": "Condition (1) says",
+      "names": [
+        "Deduction.ch_core"
+      ],
+      "focus": {
+        "Deduction.ch_core": {
+          "lines": [
+            419,
+            432
+          ],
+          "note": "A one-character estimate is summed over the top places and rearranged into the kept sum and its absolute-value error."
+        }
+      },
+      "pdf_page": 14,
+      "pdf_from": [
+        "Condition",
+        "(1)",
+        "says",
+        "that",
+        "the",
+        "sizes"
+      ],
+      "pdf_before": [
+        "The",
+        "outcome",
+        "is"
+      ],
+      "compiled_edges": [
+        [
+          "Deduction.ch_core",
+          "Deduction.CharacterBalanceMoves.one_char",
+          "value"
+        ]
+      ]
+    },
+    "rank-lost-at-a-filtration-cut": {
+      "title": "The rank lost at a filtration cut",
+      "section": "5.4",
+      "role": "derivation",
+      "source": {
+        "file": "paper/sections/lattices.tex",
+        "line": 186,
+        "end_line": 189
+      },
+      "tex_anchor": "The proof runs level",
+      "names": [
+        "Formalism.HN.frameB_share"
+      ],
+      "focus": {
+        "Formalism.HN.frameB_share": {
+          "lines": [
+            25,
+            28
+          ],
+          "note": "The conclusion bounds the fraction of slopes below the threshold by u divided by u plus tau."
+        }
+      },
+      "pdf_page": 18,
+      "pdf_from": [
+        "The",
+        "proof",
+        "runs",
+        "level",
+        "by",
+        "level."
+      ],
+      "pdf_before": [
+        "the",
+        "classical",
+        "inequality,",
+        "in",
+        "its"
+      ]
+    },
+    "cohomology-square-root-slack": {
+      "title": "Where the square-root bound is weakened",
+      "section": "8.2",
+      "role": "derivation",
+      "source": {
+        "file": "paper/sections/cohomology.tex",
+        "line": 48,
+        "end_line": 50
+      },
+      "tex_anchor": "weakens",
+      "names": [
+        "UpperTheory.Top.divinN_of_hypV"
+      ],
+      "focus": {
+        "UpperTheory.Top.divinN_of_hypV": {
+          "lines": [
+            126,
+            129
+          ],
+          "note": "The proof extracts the cohomological bound and passes it to divinN_at after weakening the square-root bound to b."
+        }
+      },
+      "pdf_page": 23,
+      "pdf_from": [
+        "The",
+        "lemma",
+        "that",
+        "passes",
+        "from",
+        "one",
+        "to",
+        "the",
+        "other"
+      ],
+      "pdf_before": [
+        "The",
+        "Sha",
+        "lengths",
+        "in",
+        "the",
+        "record"
+      ],
+      "compiled_edges": [
+        [
+          "UpperTheory.Top.divinN_of_hypV",
+          "UpperTheory.Top.vvRecord",
+          "value"
+        ],
+        [
+          "UpperTheory.Top.divinN_of_hypV",
+          "Real.sqrt_le_self_iff",
+          "value"
+        ]
+      ]
+    },
+    "hecke-lift-subset": {
+      "title": "Which eigensystems count as lifts",
+      "section": "8.2",
+      "role": "definition",
+      "source": {
+        "file": "paper/sections/cohomology.tex",
+        "line": 57,
+        "end_line": 60
+      },
+      "tex_anchor": "whose parameter contains a block",
+      "names": [
+        "Formalism.MainNotions.N.ZN"
+      ],
+      "focus": {
+        "Formalism.MainNotions.N.ZN": {
+          "lines": [
+            1292,
+            1294
+          ],
+          "note": "Membership requires a point with the prescribed parameter block of length R.t."
+        }
+      },
+      "pdf_page": 23,
+      "pdf_from": [
+        "A",
+        "subset",
+        "Z",
+        "⊂",
+        "X",
+        "consists"
+      ],
+      "pdf_before": [
+        "The",
+        "congruence",
+        "ideal",
+        "is",
+        "the",
+        "kernel"
+      ]
+    },
+    "congruence-ideal-and-length": {
+      "title": "The congruence ideal and local length",
+      "section": "8.2",
+      "role": "definition",
+      "source": {
+        "file": "paper/sections/cohomology.tex",
+        "line": 60,
+        "end_line": 64
+      },
+      "tex_anchor": "congruence ideal} is the kernel",
+      "names": [
+        "Formalism.BasicNotions.ccIdeal",
+        "Formalism.BasicNotions.NData.etaLoc"
+      ],
+      "focus": {
+        "Formalism.BasicNotions.ccIdeal": {
+          "lines": [
+            25,
+            27
+          ],
+          "note": "The product map evaluates at the eigensystems outside the lift subset. Its kernel is the ideal."
+        },
+        "Formalism.BasicNotions.NData.etaLoc": {
+          "lines": [
+            219,
+            220
+          ],
+          "note": "The local length is the length of the quotient of MtUp by MtLow."
+        }
+      },
+      "pdf_page": 23,
+      "pdf_from": [
+        "The",
+        "congruence",
+        "ideal",
+        "is",
+        "the",
+        "kernel"
+      ],
+      "pdf_before": [
+        "Statement",
+        "8.2",
+        "(CongBound_at)."
+      ],
+      "compiled_edges": [
+        [
+          "Formalism.BasicNotions.NData.etaLoc",
+          "Formalism.BasicNotions.NData.MtUp",
+          "value"
+        ],
+        [
+          "Formalism.BasicNotions.NData.etaLoc",
+          "Formalism.BasicNotions.NData.MtLow",
+          "value"
+        ]
+      ]
+    },
+    "assemble-cohomology-counts": {
+      "title": "Assembling the cohomology bound",
+      "section": "8.3",
+      "role": "derivation",
+      "source": {
+        "file": "paper/sections/cohomology.tex",
+        "line": 91,
+        "end_line": 95
+      },
+      "tex_anchor": "One theorem assembles",
+      "names": [
+        "UpperTheory.V.HV.Core.of_four_alt"
+      ],
+      "focus": {
+        "UpperTheory.V.HV.Core.of_four_alt": {
+          "lines": [
+            18,
+            22
+          ],
+          "note": "The conclusion is VWin. Its proof combines four count bounds with the even and odd cohomological inputs."
+        }
+      },
+      "pdf_page": 23,
+      "pdf_from": [
+        "One",
+        "theorem",
+        "assembles",
+        "Statement",
+        "8.1"
+      ],
+      "pdf_before": [
+        "The",
+        "odd",
+        "part.",
+        "For",
+        "a",
+        "character"
+      ],
+      "compiled_edges": [
+        [
+          "UpperTheory.V.HV.Core.of_four_alt",
+          "UpperTheory.V.FW.ferreroWashington",
+          "value"
+        ],
+        [
+          "UpperTheory.V.HV.Core.of_four_alt",
+          "UpperTheory.V.HV.vwin_of_counts",
+          "value"
+        ],
+        [
+          "UpperTheory.V.HV.Core.of_four_alt",
+          "UpperTheory.V.Odd.thmBcFree_of",
+          "value"
+        ],
+        [
+          "UpperTheory.V.HV.Core.of_four_alt",
+          "UpperTheory.V.ML.iv",
+          "value"
+        ]
+      ]
+    },
+    "quadratic-subfield-of-host": {
+      "title": "The quadratic subfield of the host",
+      "section": "9.1",
+      "role": "definition",
+      "source": {
+        "file": "paper/sections/hosts.tex",
+        "line": 14,
+        "end_line": 16
+      },
+      "tex_anchor": "The host contains",
+      "names": [
+        "Formalism.HC.HostRaw"
+      ],
+      "focus": {
+        "Formalism.HC.HostRaw": {
+          "lines": [
+            29,
+            31
+          ],
+          "note": "These fields give a square root of minus d and determine how the Galois group acts on it."
+        }
+      },
+      "pdf_page": 25,
+      "pdf_from": [
+        "The",
+        "host",
+        "contains"
+      ],
+      "pdf_before": [
+        "The",
+        "sizes",
+        "are",
+        "fixed",
+        "by",
+        "two",
+        "parameters"
+      ]
+    },
+    "estimates-for-auxiliary-twists": {
+      "title": "Estimates used for the auxiliary twists",
+      "section": "9.3",
+      "role": "explanation",
+      "source": {
+        "file": "paper/sections/hosts.tex",
+        "line": 56,
+        "end_line": 59
+      },
+      "tex_anchor": "The archive proves the statement",
+      "names": [
+        "QH.meanSqK",
+        "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box"
+      ],
+      "focus": {
+        "QH.meanSqK": {
+          "lines": [
+            51,
+            54
+          ],
+          "note": "This is the mean-square statement on a power window under the stated conditions on the moduli."
+        },
+        "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box": {
+          "lines": [
+            13,
+            15
+          ],
+          "note": "This declaration proves the named zero-density bound used in the exposition."
+        }
+      },
+      "pdf_page": 25,
+      "pdf_from": [
+        "The",
+        "archive",
+        "proves",
+        "the",
+        "statement",
+        "from",
+        "a",
+        "mean-square"
+      ],
+      "pdf_before": [
+        "9.4.",
+        "Two",
+        "combinatorial",
+        "devices."
+      ]
+    },
+    "eleven-size-clauses": {
+      "title": "The eleven clauses in the lattice argument",
+      "section": "5.2",
+      "role": "definition",
+      "source": {
+        "file": "paper/sections/lattices.tex",
+        "line": 51,
+        "end_line": 52
+      },
+      "tex_anchor": "The final theorem requires",
+      "names": [
+        "Formalism.LFunctionChainParameters.LChain.SizeData₂"
+      ],
+      "focus": {
+        "Formalism.LFunctionChainParameters.LChain.SizeData₂": {
+          "lines": [
+            17,
+            19
+          ],
+          "note": "This predicate is the conjunction of the eleven size clauses used by ChainTied."
+        }
+      },
+      "pdf_page": 16,
+      "pdf_from": [
+        "The",
+        "final",
+        "theorem",
+        "requires,",
+        "for",
+        "the",
+        "family"
+      ],
+      "pdf_before": [
+        "Four",
+        "of",
+        "them",
+        "make",
+        "the",
+        "chain:"
+      ],
+      "compiled_edges": [
+        [
+          "Formalism.MainNotions.ChainTied",
+          "Formalism.LFunctionChainParameters.LChain.SizeData₂",
+          "value"
+        ]
+      ]
+    }
+  },
+  "reviewed_references": {
+    "cohomology:68:1": "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.WeightTie",
+    "cohomology:69:1": "Formalism.MainNotions.N.HG",
+    "cohomology:70:1": "Formalism.MainNotions.N.GoodR",
+    "cohomology:60:1": "Formalism.MainNotions.N.ZN",
+    "analytic:33:1": "Formalism.HC.Level.Gm",
+    "lattices:52:1": "Formalism.LFunctionChainParameters.LChain.SizeData₂",
+    "lattices:265:1": "Formalism.MainNotions.StandardLattice.ClassNumberFormula₂",
+    "cohomology:100:1": "UpperTheory.V.ML.iv"
+  },
+  "text_literals": {
+    "verification:28:1": "module",
+    "verification:99:1": "simp",
+    "verification:100:1": "abel",
+    "verification:163:1": "module",
+    "verification:378:1": "shuf"
+  },
+  "statement_ends": {
+    "riemannHypothesis": 4,
+    "LFunction_ne_zero_of_half_lt_re": 8,
+    "LFunction_eq_zero_re": 10,
+    "Deduction.zeroFree_of_rpow_window": 13,
+    "Deduction.landau_window": 84,
+    "Deduction.ch_balance": 202,
+    "Deduction.ch_core": 351,
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5": 107,
+    "UpperTheory.Top.supplyChi": 9,
+    "UpperTheory.Top.zero_free_all_of_green_v_win": 13,
+    "UpperTheory.Top.every_character_of_green_v_win": 17,
+    "Deduction.CharacterBalanceMoves.core": 289,
+    "UpperTheory.Top.divinN_of_hypV": 118,
+    "Formalism.HN.frameB_share": 28,
+    "QH.meanSqK": 54,
+    "Formalism.HC.zeroFreeOn_of_levels": 45,
+    "UpperTheory.V.HV.Core.of_four_alt": 18
+  },
+  "reviewed_pdf_references": {
+    "lattices:52:1": {
+      "page": 16,
+      "tokens": [
+        "clauses",
+        "(SizeData",
+        "2",
+        ").",
+        "Four"
+      ],
+      "span": [
+        1,
+        3
+      ]
+    },
+    "lattices:65:2": {
+      "page": 16,
+      "tokens": [
+        "(Ga,",
+        "Fo,",
+        "Ee).",
+        "Further,"
+      ],
+      "span": [
+        1,
+        2
+      ]
+    },
+    "lattices:265:1": {
+      "page": 19,
+      "tokens": [
+        "(ClassNumberFormula",
+        "2",
+        ").",
+        "A",
+        "lower",
+        "bound"
+      ],
+      "span": [
+        0,
+        2
+      ]
+    },
+    "frame:52:1": {
+      "page": 21,
+      "tokens": [
+        "Bessel",
+        "models",
+        "(rowMainEqP_of_",
+        "siegelWeil)."
+      ],
+      "span": [
+        2,
+        4
+      ]
+    },
+    "offpath:5:1": {
+      "page": 27,
+      "tokens": [
+        "archive:",
+        "the",
+        "cone",
+        "of",
+        "riemannHypothesis",
+        "is",
+        "the"
+      ],
+      "span": [
+        4,
+        5
+      ]
+    }
+  }
+}

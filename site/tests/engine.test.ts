@@ -4,11 +4,11 @@ import { graphFixture } from "./fixtures";
 import { reach, usesOf, visibleEdges, visibleSet, routeTo } from "../src/map/treeModel";
 import { transitiveReduction } from "../src/map/engine/skeleton";
 import { layoutScope, recordOf, splitSharedLeaves } from "../src/map/engine/occurrences";
-import { layoutTree } from "../src/map/engine/layout";
+import { layoutBounds, layoutTree } from "../src/map/engine/layout";
 import { route, roundedPath, samplePolyline, type Plan, type Routed } from "../src/map/engine/router";
 import { isotonic, spacedWithin } from "../src/map/engine/pav";
 import { twoLayerCrossings } from "../src/map/engine/order";
-import { METRICS, type EngineEdge, type Layout } from "../src/map/engine/types";
+import { METRICS, METRICS_DENSE, type EngineEdge, type Layout } from "../src/map/engine/types";
 
 const graph = graphFixture();
 const GOALS = ["full_support", "scalar_value", "qaoa_thermodynamic_first"];
@@ -35,6 +35,22 @@ const allOpen = (goal: string) => new Set([...reach(graph, goal)].filter((id) =>
 function frame(layout: Layout) {
   return { boxes: layout.boxes, dummyX: (k: string) => layout.dummies.get(k)!.x };
 }
+
+it("fits a broad overview into bands without changing its dependencies", () => {
+  const leaves = Array.from({ length: 64 }, (_, i) => String(i));
+  const edges = leaves.map((id) => e("goal", id));
+  const { layout } = layoutTree({
+    root: "goal", nodes: ["goal", ...leaves], edges, size: () => ({ w: 160, h: 64 }),
+    metrics: METRICS_DENSE, balanceOverview: true,
+  });
+  const bounds = layoutBounds(layout);
+  const aspect = (bounds.x1 - bounds.x0) / (bounds.y1 - bounds.y0);
+  expect(aspect).toBeGreaterThan(0.6);
+  expect(aspect).toBeLessThan(1.6);
+  expect(layout.edges).toEqual(edges);
+  expect(layout.boxes.size).toBe(65);
+  for (const edge of edges) expect(layout.rank.get(edge.to)!).toBeGreaterThan(layout.rank.get(edge.from)!);
+});
 
 describe("transitive reduction", () => {
   it("drops an edge that a longer path implies", () => {

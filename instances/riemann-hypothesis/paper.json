@@ -1,0 +1,15 @@
+{
+  "version": "1.5",
+  "repository": "https://github.com/vincitamore/riemann-lean-account",
+  "revision": "dd9bfc30bf9fc605251a22aa41004d1e22cc303b",
+  "title": "The argument of a formal proof of the Riemann Hypothesis",
+  "authors": [
+    "Qui Vincit",
+    "Fable"
+  ],
+  "license": "CC-BY-4.0",
+  "source_files": {
+    "main.pdf": "802d16e339551439de6fec97308cbd4a88b0dd33c4a8d93265d4a6615c95fc75",
+    "one-page.pdf": "136de06e65e731b216a59d037735ed9029dc9f090452b29f63bbff388bb0d25a"
+  }
+}

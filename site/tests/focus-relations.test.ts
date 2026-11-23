@@ -91,6 +91,24 @@ describe("a declaration with no recorded route", () => {
 });
 
 describe("Lean uses are split as Lean records them", () => {
+  it("shows typed dependencies beyond the paper catalogue and reports the size of a limited view", () => {
+    const ref = (name: string, kinds: string[]) => ({ name, kinds, display_title: name, kind: "definition", origin: "project" });
+    const x = decl("A.x", { neighbourhood: {
+      source: "compiled_lean", scope: "riemann_hypothesis_closure", limit: 2,
+      dependencies: [ref("PropX", ["type"]), ref("proofOfX", ["value"])],
+      users: [ref("A.user", ["type", "value"])], counts: { dependencies: 2, users: 3 },
+    } });
+    const { shell, module } = lean([x]);
+    const focus = focusOn({ kind: "decl", name: "A.x" }, input({ shell, module: () => module }));
+    expect(focus.subjects).toEqual(["decl:A.x"]);
+    expect(focus.cards.get("decl:proofOfX")?.reference?.name).toBe("proofOfX");
+    expect(focus.edges.map(({ from, to, kind }) => [from, to, kind])).toEqual([
+      ["decl:A.x", "decl:PropX", "statement"], ["decl:A.x", "decl:proofOfX", "proof"],
+      ["decl:A.user", "decl:A.x", "statement"], ["decl:A.user", "decl:A.x", "proof"],
+    ]);
+    expect(focus.neighbourhoodNote).toContain("1 of 3 users");
+  });
+
   it("takes statement and proof uses, and users, from the compiled facts", () => {
     const x = decl("A.x", {
       uses: ["A.s", "A.p"],

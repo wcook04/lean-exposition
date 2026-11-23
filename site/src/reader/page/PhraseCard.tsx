@@ -4,7 +4,7 @@
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
+import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic, type StatementRole } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
@@ -211,6 +211,24 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
   return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
 }
 
+function showsSourceNote(row: PhraseLean, role: StatementRole | undefined): boolean {
+  return Boolean(row.note) && !row.fidelity && !row.assessments?.length &&
+    (row.source_review === true || (role === "mention" && row.relation === null));
+}
+
+function SourceBindingNote({ note }: { note: string }) {
+  return <p dangerouslySetInnerHTML={{ __html: noteHtml(note).html }} />;
+}
+
+export function BriefPhraseCard({ row, role, merged }: { row: PhraseLean; role?: StatementRole; merged?: readonly MergedPhrase[] }) {
+  const sourceNote = showsSourceNote(row, role);
+  return (
+    <section className="phrase-card phrase-card--brief" aria-label={sourceNote ? "Linked Lean source" : "How the Lean compares with these words, in short"}>
+      {sourceNote ? <SourceBindingNote note={row.note} /> : <Verdict assessment={assessmentsOf(row, merged)[0].assessment} />}
+    </section>
+  );
+}
+
 /** Name a displayed formula by its printed number, or show the formula itself when it has none. */
 function comparisonScope(quote: string | undefined, words: string | null): ReactNode {
   if (!words) return null;
@@ -276,7 +294,7 @@ const FIDELITY_MEANING: Record<Fidelity, string> = {
   same: "The formal statement asserts what the quoted words assert, after the translation the note states.",
   stronger: "The formal statement has fewer hypotheses, more conclusions or a sharper bound; the note names the difference.",
   weaker: "The formal statement has more hypotheses, fewer conclusions or a looser bound; the note names the difference.",
-  different: "Neither implies the other as written: for example, a definition linked to a sentence about a construction, or a Lean premise with an assumption the paper states elsewhere. It does not mean either one is wrong.",
+  different: "Neither implies the other as stated: for example, a definition linked to a sentence about a construction.",
 };
 
 /**
@@ -413,8 +431,8 @@ function Explanation({ explanation, showOpen = true }: { explanation: PhraseExpl
   );
 }
 
-export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
-  const shown = assessmentsOf(row, merged);
+export function PhraseCard({ row, role, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes }: { row: PhraseLean; role?: StatementRole; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
+  const sourceNote = showsSourceNote(row, role);
   const leanNote = useLeanNote(row.name);
   const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
   const opening = useMemo(() => inLean && quote && typeof document !== "undefined" ? longQuoteOpening(quote) : null, [inLean, quote]);
@@ -436,7 +454,7 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
   );
   const foldNotes = inLean && Boolean(explanation?.text || note);
   return (
-    <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label="These words and how the Lean compares with them">
+    <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label={sourceNote ? "These words and their linked Lean source" : "These words and how the Lean compares with them"}>
       {opening ? (
         <details className="phrase-card__passage" onToggle={(e) => { if (e.currentTarget.open && quoteRef.current) fitNow(quoteRef.current); }}>
           <summary><span className="phrase-card__passage-label">Full passage in the paper</span><span className="phrase-card__quote phrase-card__opening" dangerouslySetInnerHTML={{ __html: noteHtml(opening).html }} /></summary>
@@ -445,18 +463,23 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
       ) : passage}
       {!inLean && explanation?.text && <Explanation explanation={explanation} />}
       <div className="phrase-card__compare">
-        {!inLean && <p className="phrase-card__label">Comparison with these words</p>}
-        {!inLean && merged && merged.length > 1 && (
-          <p className="phrase-card__merged" data-merged={merged.length}>
-            These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
-          </p>
+        {!sourceNote && (
+          <>
+            {!inLean && <p className="phrase-card__label">Comparison with these words</p>}
+            {!inLean && merged && merged.length > 1 && (
+              <p className="phrase-card__merged" data-merged={merged.length}>
+                These words hold {merged.length} overlapping phrases of the source, merged into one link. Each comparison below names the phrase it was made for.
+              </p>
+            )}
+            {inLean ? <LeanComparisons row={row} merged={merged} phrase={phrase} opening={opening} quoteBytes={quoteBytes} /> : assessmentsOf(row, merged).map(({ assessment, words }, i) => (
+              <Verdict key={i} assessment={assessment} words={words} />
+            ))}
+          </>
         )}
-        {inLean ? <LeanComparisons row={row} merged={merged} phrase={phrase} opening={opening} quoteBytes={quoteBytes} /> : shown.map(({ assessment, words }, i) => (
-          <Verdict key={i} assessment={assessment} words={words} />
-        ))}
+        {(row.source_review || row.relation === null) && row.note && <SourceBindingNote note={row.note} />}
         {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
         {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
-        <ComparisonLegend label={inLean ? "Comparison terms" : undefined} />
+        {!sourceNote && <ComparisonLegend label={inLean ? "Comparison terms" : undefined} />}
       </div>
       {foldNotes ? (
         <details className="phrase-card__notes">

@@ -384,7 +384,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (route.lens) chooseAccount(route.lens);
   }, [route.lens]);
 
-  const { toneOf, topicOf } = useRecordTones(route.lens as Stage | undefined);
+  const { toneOf, topicOf } = useRecordTones(route.lens as Stage | undefined, graph);
   const changeLens = (stage: Stage | undefined) => go({ lens: stage, goal: undefined, edge: undefined }, true);
   const changeGoal = (id: string) => go({ goal: id, node: undefined, edge: undefined, trace: undefined });
   const collapse = () => {
@@ -616,6 +616,8 @@ export function MapPage({ route }: { route: MapRoute }) {
             copyLeaves={false}
             tileWidth={LEAN_TILE_W}
             tileHeight={LEAN_TILE_H}
+            toneOf={toneOf}
+            topicOf={topicOf}
             minScale={phone ? LEAN_PHONE_K : LEAN_MIN_K}
             worldText
             onSceneSettled={onSceneSettled}

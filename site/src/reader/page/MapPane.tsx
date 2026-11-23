@@ -70,6 +70,8 @@ export interface HeldParagraph {
 
 interface Props {
   stage: Stage;
+  pdfOn?: boolean;
+  pdfPick?: number;
   structures: Structures;
   /** What changes as the reader reads; the page re-renders here, never above. */
   signals: ReaderSignals;
@@ -124,7 +126,7 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, graphRequested, onMode, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, graphRequested, onMode, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -206,6 +208,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const fresh = useMemo((): { subject: Subject; why: Why } | null => {
     if (decl) return { subject: { kind: "decl", name: decl }, why: "decl" };
     if (pin) {
+      if (pdfOn && pinTie?.rows?.length) {
+        const row = pinTie.rows.find((r) => r.name === shown?.name) ?? pinTie.rows[0];
+        return { subject: { kind: "decl", name: row.name }, why: "pin" };
+      }
       if (onGraph(pin.record)) return { subject: asSubject(pin.record), why: "pin" };
       if (pin.tie !== null && pinTie?.rows?.length) {
         const steps = showSteps ? stepsNear(pin.tie) : [];
@@ -219,11 +225,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       return held.decl ? { subject: { kind: "decl", name: held.decl }, why: "paragraph" } : null;
     }
     // Following: the statement under the reading line, its step or else its declaration.
-    if (followRecord && onGraph(followRecord)) return { subject: asSubject(followRecord), why: "follow" };
     const first = follow.tie !== null ? ties.index.ties[follow.tie].rows?.[0]?.name : undefined;
+    if (pdfOn && first) return { subject: { kind: "decl", name: first }, why: "follow" };
+    if (followRecord && onGraph(followRecord)) return { subject: asSubject(followRecord), why: "follow" };
     if (first) return { subject: { kind: "decl", name: first }, why: "follow" };
     return null;
-  }, [decl, pin, pinTie, onGraph, asSubject, showSteps, stepsNear, shown, held, followRecord, follow.tie, ties]);
+  }, [decl, pin, pinTie, pdfOn, onGraph, asSubject, showSteps, stepsNear, shown, held, followRecord, follow.tie, ties]);
   // A paragraph with nothing tied to it keeps the last subject, and the line over the drawing says whose it is.
   // Before anything has been tied, the statement nearest the reading position, or else the main result,
   // so the graph is never blank and never draws a whole passage at once.
@@ -286,9 +293,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const previewTimer = useRef(0);
   const onCardHover = useCallback((id: string | null) => {
     window.clearTimeout(previewTimer.current);
-    if (!id) return setPreviewCard(null);
+    if (!id || cardOf(id)?.reference) return setPreviewCard(null);
     previewTimer.current = window.setTimeout(() => setPreviewCard(id), POINT_DWELL);
-  }, []);
+  }, [cardOf]);
   useEffect(() => () => window.clearTimeout(previewTimer.current), []);
   useEffect(() => setPreviewCard(null), [subjectKey, mode]);
 
@@ -353,12 +360,13 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // the view the reader chose, until a linked paragraph or a click gives it a subject again.
   // Only a paragraph actually open (read at the line, clicked or pinned) can be unlinked; with
   // nothing open the graph keeps its opening neighbourhood.
-  const opened = !!(pin || decl || held || anchor);
+  const opened = !!(pdfOn || pin || decl || held || anchor);
   const unlinked = !leanSlot && opened && (mode === "lean" ? !preview && !hasLean(leanOpen) : !fresh);
 
   // ---- The whole proof map, one button away ------------------------------------------------
 
   const [whole, setWhole] = useState(false);
+  useEffect(() => setWhole(false), [pin?.record, pin?.tie, decl, held, pdfPick]);
   const showWhole = whole || unlinked;
   const treeRef = useRef<MapViewHandle>(null);
   useKeptCamera(treeRef, useCallback((id: string) => graph.nodes.has(id), [graph]));
@@ -371,21 +379,24 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const coverage = useMemo(() => {
     const ids = new Set<string>();
     for (const p of structures[stage]?.paper.passages ?? []) for (const id of [...p.claim_ids, ...p.assumption_ids]) ids.add(id);
+    if (pdfOn) {
+      for (const id of places.recordAt.keys()) ids.add(id);
+      for (const node of graph.nodes.values()) {
+        if (node.declaration && places.declAt.has(node.declaration)) ids.add(node.id);
+      }
+    }
     return ids;
-  }, [structures, stage]);
+  }, [structures, stage, pdfOn, places, graph]);
   const litIds = useMemo(() => (subjectRecords.length ? new Set(subjectRecords) : null), [subjectRecords]);
   const previewIds = useMemo(() => (lit.length ? new Set(lit) : null), [lit]);
-  const toneOf = useCallback((id: string) => places.recordTone.get(id), [places]);
-  const topicOf = useCallback((id: string) => places.recordTopic.get(id), [places]);
+  const toneOf = useCallback((id: string) => places.recordTone.get(id) ?? places.declTone.get(graph.nodes.get(id)?.declaration ?? ""), [places, graph]);
+  const topicOf = useCallback((id: string) => places.recordTopic.get(id) ?? places.declTopic.get(graph.nodes.get(id)?.declaration ?? ""), [places, graph]);
   const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 24, right: 16 }), []);
   useEffect(() => {
     if (!showWhole) return;
     const open = window.setTimeout(() => treeRef.current?.expandAll(), 0);
     const frame = window.setTimeout(() => {
-      // Shown for want of Lean, the map opens whole; opened by the button, on the subject.
-      const ids = unlinked && !whole ? [] : subjectRecords.filter((id) => reachOf(goal).has(id));
-      if (ids.length) treeRef.current?.focusIds(ids);
-      else treeRef.current?.fitAll(false);
+      treeRef.current?.fitAll(false);
     }, 80);
     return () => {
       window.clearTimeout(open);
@@ -521,7 +532,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // The graph has to earn its space. With no neighbour there is nothing to draw, and with one to
   // three a line of names says it all: the drawing is kept for four or more (docs/reader-design.md).
   const neighbours = counts.uses + counts.usedBy;
-  const drawn = !!focus && neighbours >= DRAW_FROM;
+  const drawn = !!focus && (pdfOn ? focus.subjects.length > 0 : neighbours >= DRAW_FROM);
   const few = mode === "graph" && !showWhole && !drawn;
   // Under the drawing the dock is a short card until the reader opens it.
   const [dockWide, setDockWide] = useState(false);
@@ -620,9 +631,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         insets={insets}
         persist={false}
         mode="overview"
-        minScale={0.12}
+        minScale={0.06}
         fill
-        within={coverage.size ? coverage : undefined}
+        within={!pdfOn && coverage.size ? coverage : undefined}
         toneOf={toneOf}
         topicOf={topicOf}
         tileWidth={PANE_TILE_W}
@@ -630,7 +641,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         statusOf={recordMark}
         litIds={litIds}
         previewIds={previewIds}
-        coverage={coverage}
+        coverage={coverage.size ? coverage : undefined}
         onSelect={onTreeSelect}
         onHover={onTreeHover}
         onTrace={onTrace}
@@ -654,7 +665,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       route={focus.route}
       routeNote={focus.routeNote}
       routeLabel={focus.routeLabel}
-      label={label}
+      label={focus.neighbourhoodNote ?? label}
       lit={lit}
       held={previewCard}
       onSubject={onSubject}
@@ -673,7 +684,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         <ModeToggle mode={mode} onMode={(next) => {
           if (next === "graph") setUnfolded(true);
           onMode(next);
-        }} leanButtonRef={leanButtonRef} graphCount={focus && !showWhole ? neighbours : null} />
+        }} leanButtonRef={leanButtonRef} graphCount={focus && !focus.missing.length && !showWhole ? neighbours : null} />
         {mode === "graph" && !fill && !unlinked && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}

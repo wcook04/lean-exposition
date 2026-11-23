@@ -9,7 +9,8 @@
 // A card's id is the declaration's full name; the goal stays the argument's own record.
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { LeanModule, LeanModules } from "../api/lean";
+import type { AlignmentCore, LeanModule, LeanModules } from "../api/lean";
+import type { LeanIndex } from "../lean/resolve";
 import { alignmentResource, useAlignment } from "../compare/useAlignment";
 import type { ArgGraph, ArgNode } from "../model/graph";
 import { buildLeanGraph, linkedDeclarations, type LeanFacts, type LeanGraph } from "../model/leanGraph";
@@ -105,6 +106,26 @@ async function loadReach(linked: ReadonlyMap<string, string>, locate: Locate, pr
   return modules;
 }
 
+function compiledFacts(names: LeanIndex, steps: AlignmentCore["steps"]) {
+  const byName = new Map(names.rows.map((row) => [row.name, {
+    ...row, uses: [] as string[], usesPaths: new Map<string, string[]>(), usesModules: {} as Record<string, string>,
+    statementUses: new Set<string>(), statement: "",
+  }]));
+  for (const { route, statement_use } of Object.values(steps ?? {})) {
+    if (!route || route.length < 2) continue;
+    const from = byName.get(route[0]), to = byName.get(route[route.length - 1]);
+    if (!from || !to) continue;
+    from.uses.push(to.name);
+    from.usesPaths.set(to.name, route.slice(1, -1));
+    from.usesModules[to.name] = to.module;
+    if (statement_use) from.statementUses.add(to.name);
+  }
+  return (name: string, module: string) => {
+    const row = byName.get(name);
+    return row?.module === module ? row : undefined;
+  };
+}
+
 export function useLeanGraph({ enabled, graph, goal, records }: LeanGraphOptions): LeanGraphState {
   const alignment = useAlignment();
   const [state, setState] = useState<LeanGraphState>({ status: "idle", done: 0 });
@@ -122,12 +143,17 @@ export function useLeanGraph({ enabled, graph, goal, records }: LeanGraphOptions
       const { findDecl } = await import("../lean/resolve");
       const { modules: index, index: names } = await shellResource();
       const locate: Locate = (name, near) => findDecl(names, name, near)?.module;
-      const reached = await loadReach(linked, locate, (done) => alive && setState((s) => (s.status === "ready" ? s : { status: "loading", done })));
       const files = new Map(index.folders.flatMap((f) => f.modules.map((row) => [row.module, row.path.slice(row.path.lastIndexOf("/") + 1)] as const)));
-      const facts = (name: string, module: string) => {
-        const m = reached.get(module);
-        return m && factsOf(m, locate).get(name);
-      };
+      let facts: (name: string, module: string) => LeanFacts | undefined;
+      if (index.scope === "paper_linked") {
+        facts = compiledFacts(names, aligned.steps);
+      } else {
+        const reached = await loadReach(linked, locate, (done) => alive && setState((s) => (s.status === "ready" ? s : { status: "loading", done })));
+        facts = (name, module) => {
+          const m = reached.get(module);
+          return m && factsOf(m, locate).get(name);
+        };
+      }
       const lean = buildLeanGraph({
         goal,
         goalLabel: graph.nodes.get(goal)?.label ?? goal,
@@ -141,7 +167,7 @@ export function useLeanGraph({ enabled, graph, goal, records }: LeanGraphOptions
       const marks = new Map<string, LeanMark>();
       for (const [name, module] of linked) {
         const fact = facts(name, module);
-        if (fact) marks.set(name, markOfDeclaration(fact.kind, /\bsorry\b/.test(fact.text)));
+        if (fact?.text !== undefined) marks.set(name, markOfDeclaration(fact.kind, /\bsorry\b/.test(fact.text)));
       }
       const markOf = (id: string, node: ArgNode) => marks.get(id) ?? (node.kind === "goal" ? recordMark(id, node) : null);
       if (alive) setState({ status: "ready", graph: lean, markOf, source: index.dependency_source, note: index.dependency_note });

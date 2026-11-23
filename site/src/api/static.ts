@@ -11,6 +11,8 @@ export interface StaticIndex {
   responses: Record<string, string>;
   documents: Record<string, string>;
   search: string;
+  /** An edition that loads pinned Lean text independently of the main capture. */
+  proof_source?: { revision: string; paper_revision: string; paper_manifest_sha256: string; raw_base?: string };
   /** Whole-edition files, in version 1 editions only. */
   records?: string;
   summaries?: string;
@@ -197,6 +199,38 @@ async function serve(indexName: string, url: string, edition?: Snapshot): Promis
   const envelope = (data: Row) => Response.json({ api_version: index.api_version, snapshot: index.snapshot, data });
   if (pin && pin !== index.snapshot.manifest_sha256) {
     return Response.json({ error: { code: "edition_mismatch", message: "Reload to open the published edition." } }, { status: 409 });
+  }
+  if (route === "/lean/module" && index.proof_source) {
+    const source = index.proof_source;
+    const name = params.get("name") ?? "";
+    let module: Row;
+    if (source.raw_base) {
+      const file = index.responses[key(route, new URLSearchParams({ name }))];
+      if (!file) return Response.json({ error: { code: "not_found", message: "No linked Lean file has that name." } }, { status: 404 });
+      module = await load<Row>(file);
+    } else {
+      const query = new URLSearchParams({ name, manifest: source.paper_manifest_sha256 });
+      const response = await fetch(`/api/proof/lean/module?${query}`);
+      if (!response.ok) return response;
+      module = await response.json();
+    }
+    if (module.module !== name || module.revision !== source.revision || module.paper_revision !== source.paper_revision ||
+        module.paper_manifest_sha256 !== source.paper_manifest_sha256) {
+      return Response.json({ error: { code: "edition_mismatch", message: "Reload to open the current Lean edition." } }, { status: 409 });
+    }
+    if (!source.raw_base) return envelope(module);
+    const path = String(module.path).split("/").map(encodeURIComponent).join("/");
+    const upstream = await fetch(source.raw_base + path);
+    if (!upstream.ok) {
+      return Response.json({ error: { code: "source_unavailable", message: "The pinned Lean file could not be fetched from GitHub." } }, { status: 502 });
+    }
+    const bytes = await upstream.arrayBuffer();
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    const hex = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+    if (hex !== module.sha256) {
+      return Response.json({ error: { code: "edition_mismatch", message: "The Lean file does not match the published edition." } }, { status: 409 });
+    }
+    return envelope({ ...module, source: new TextDecoder().decode(bytes) });
   }
   const document = route.match(/^\/papers\/([^/]+)\/document$/);
   if (document && index.documents[document[1]]) return new Response(await documentFile(index.documents[document[1]]));

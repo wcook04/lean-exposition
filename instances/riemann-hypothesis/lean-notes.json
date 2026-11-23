@@ -1,0 +1,215 @@
+{
+  "excerpts": {
+    "Deduction.zeroFree_of_rpow_window": [
+      {
+        "title": "The positive weights in the family",
+        "file": "landau-hosts.md",
+        "lines": [
+          42,
+          42
+        ],
+        "lean_lines": [
+          11,
+          11
+        ]
+      }
+    ],
+    "Deduction.landau_window": [
+      {
+        "title": "The two cases of the pole argument",
+        "file": "landau-hosts.md",
+        "lines": [
+          54,
+          54
+        ],
+        "lean_lines": [
+          90,
+          91
+        ]
+      },
+      {
+        "title": "Why the argument is windowed",
+        "file": "landau-hosts.md",
+        "lines": [
+          63,
+          63
+        ],
+        "lean_lines": [
+          88,
+          88
+        ],
+        "evidence": "Contributor interpretation of the proof"
+      }
+    ],
+    "Formalism.HN.TheoremF": [
+      {
+        "title": "Theorem F and its sharper form",
+        "file": "lattice-theory.md",
+        "lines": [
+          25,
+          28
+        ],
+        "lean_lines": [
+          61,
+          62
+        ]
+      }
+    ],
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5": [
+      {
+        "title": "Where the two main terms agree",
+        "file": "main-term.md",
+        "lines": [
+          170,
+          170
+        ],
+        "lean_lines": [
+          105,
+          107
+        ]
+      }
+    ],
+    "UpperTheory.Top.VVle": [
+      {
+        "title": "What the cohomological length measures",
+        "file": "congruence-sha.md",
+        "lines": [
+          65,
+          65
+        ],
+        "lean_lines": [
+          14,
+          17
+        ]
+      }
+    ],
+    "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at": [
+      {
+        "title": "Where the congruence bound comes from",
+        "file": "congruence-sha.md",
+        "lines": [
+          105,
+          107
+        ],
+        "lean_lines": [
+          91,
+          93
+        ]
+      }
+    ],
+    "UpperTheory.Top.supplyChi": [
+      {
+        "title": "The construction behind supplyChi",
+        "file": "hosts.md",
+        "lines": [
+          60,
+          60
+        ],
+        "lean_lines": [
+          11,
+          16
+        ]
+      }
+    ],
+    "UpperTheory.Top.PairEx": [
+      {
+        "title": "The two prime choices",
+        "file": "hosts.md",
+        "lines": [
+          73,
+          73
+        ],
+        "lean_lines": [
+          28,
+          30
+        ]
+      }
+    ],
+    "Formalism.MainNotions.LocalQuadraticParts.adm2": [
+      {
+        "title": "The exact integrality statement",
+        "file": "divisibility-trace.md",
+        "lines": [
+          13,
+          13
+        ],
+        "lean_lines": [
+          207,
+          210
+        ]
+      }
+    ],
+    "Formalism.HN.frameB_share": [
+      {
+        "title": "How the cut rank is bounded",
+        "file": "lattice-theory.md",
+        "lines": [
+          39,
+          39
+        ],
+        "lean_lines": [
+          25,
+          28
+        ]
+      }
+    ],
+    "UpperTheory.Top.divinN_of_hypV": [
+      {
+        "title": "Where the proof spends the cohomological bound",
+        "file": "congruence-sha.md",
+        "lines": [
+          164,
+          167
+        ],
+        "lean_lines": [
+          126,
+          129
+        ]
+      }
+    ],
+    "Formalism.LFunctionChainParameters.LChain.SizeData₂": [
+      {
+        "title": "Where ChainTied gets the eleven clauses",
+        "file": "lattices.md",
+        "lines": [
+          8,
+          8
+        ],
+        "lean_lines": [
+          17,
+          19
+        ]
+      }
+    ]
+  },
+  "references": {
+    "Deduction.landau_window": [
+      {
+        "title": "The windowed Landau theorem in an independent exposition",
+        "url": "https://ishaan2006.github.io/rh-lean-reproduction/#the-windowed-landau-theorem",
+        "authors": [
+          "ishaan2006"
+        ],
+        "evidence": "Independent exposition"
+      },
+      {
+        "title": "The analytic endgame in the community reader’s map",
+        "url": "https://github.com/leanprover-community/riemann-hypothesis/issues/5",
+        "authors": [
+          "JoseClaudioSJr"
+        ],
+        "evidence": "Community reading of the source"
+      }
+    ],
+    "Formalism.MainNotions.LocalQuadraticParts.adm2": [
+      {
+        "title": "A worked example of the divisibility compensation",
+        "url": "https://github.com/leanprover-community/riemann-hypothesis/issues/77",
+        "authors": [
+          "uos1231234"
+        ],
+        "evidence": "Related community explanation"
+      }
+    ]
+  }
+}

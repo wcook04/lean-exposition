@@ -12,7 +12,7 @@
 // nodes after layout, so a title of any length, or one with typeset mathematics, is never cut.
 
 import { toneNumber } from "./topicTone";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type HTMLAttributes, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { graphWheel } from "./graphWheel";
 import "./focus-graph.css";
@@ -27,6 +27,8 @@ export interface FGCard {
   /** The raw Lean name, shown on the subject and in the dock. */
   name?: string;
   role: FGRole;
+  /** A named neighbour outside the reader's source catalogue. */
+  reference?: { href?: string; name: string };
   /** A short tag before the title: "Theorem 2.1", "Lemma 4.5". */
   kicker?: string;
   /** The topic colour this card shares with its phrases in the paper (any CSS colour). */
@@ -37,6 +39,12 @@ export interface FGCard {
   section?: string;
   /** Where the paper states it, against the reading position. */
   seen?: "before" | "here" | "later";
+}
+
+function CardControl({ card, onChoose, ...props }: HTMLAttributes<HTMLElement> & { card: FGCard; onChoose(): void }) {
+  if (!card.reference) return <button {...props} type="button" onClick={onChoose} />;
+  if (card.reference.href) return <a {...props} href={card.reference.href} target="_blank" rel="noreferrer" title={card.reference.name} />;
+  return <span {...props} title={card.reference.name} />;
 }
 
 /**
@@ -108,7 +116,7 @@ export interface FocusGraphProps {
 
 interface Box { x: number; y: number; w: number; h: number }
 interface Seg { d: string; cls: string; kind: string; edge?: string; why?: string; href?: string }
-interface Drawn { w: number; h: number; segs: Seg[]; paths: Record<string, string>; boxes: { id: string; box: Box; band: string }[] }
+interface Drawn { w: number; h: number; bounds: Box; segs: Seg[]; paths: Record<string, string>; boxes: { id: string; box: Box; band: string }[] }
 type Side = "users" | "uses";
 /**
  * A neighbour: the relation its line shows (the first of RELATION_ORDER it has), every relation it
@@ -209,7 +217,9 @@ export function FocusGraph(props: FocusGraphProps) {
     if (w.style.transform !== t) w.style.transform = t;
     const d = drawnRef.current;
     const vw = el.clientWidth, vh = el.clientHeight;
-    const over = !!d && (c.x < -2 || c.y < -2 || c.x + d.w * c.k > vw + 2 || c.y + d.h * c.k > vh + 2);
+    const bounds = d?.bounds;
+    const over = !!bounds && (c.x + bounds.x * c.k < -2 || c.y + bounds.y * c.k < -2 ||
+      c.x + (bounds.x + bounds.w) * c.k > vw + 2 || c.y + (bounds.y + bounds.h) * c.k > vh + 2);
     if (over !== overflowNow.current) { overflowNow.current = over; setOverflow(over); }
     const b = miniView.current, m = miniScale.current;
     if (b && d && m.x) {
@@ -268,24 +278,17 @@ export function FocusGraph(props: FocusGraphProps) {
     const vw = el.clientWidth, vh = el.clientHeight - TOOLS_ROOM;
     // Fit what is drawn, not the world's box: the cards (and the column headings above them) can
     // reach past the box the layout planned, and fitting the box left them hanging off one side.
-    const ext = d.boxes.length
-      ? {
-          x0: Math.min(0, ...d.boxes.map((b) => b.box.x)),
-          x1: Math.max(d.w, ...d.boxes.map((b) => b.box.x + b.box.w)),
-          y0: Math.min(0, ...d.boxes.map((b) => b.box.y)),
-          y1: Math.max(d.h, ...d.boxes.map((b) => b.box.y + b.box.h)),
-        }
-      : { x0: 0, x1: d.w, y0: 0, y1: d.h };
-    const dw = ext.x1 - ext.x0, dh = ext.y1 - ext.y0;
+    const { x: left, y: top, w: dw, h: dh } = d.bounds;
+    if (!dw || !dh) return false;
     const byH = (vh - 2 * FIT_MARGIN) / dh, byW = (vw - 2 * FIT_MARGIN) / dw;
     if (byH < MIN_READ && !openedNow.current && tightNow.current < 6) {
       setTight((t) => Math.min(6, t + 1));
       return false;
     }
     const k = Math.max(FIT_FLOOR, Math.min(FIT_MAX, byH, byW));
-    let x = vw / 2 - ((ext.x0 + ext.x1) / 2) * k, y = vh / 2 - ((ext.y0 + ext.y1) / 2) * k;
+    let x = (vw - dw * k) / 2 - left * k, y = (vh - dh * k) / 2 - top * k;
     // Stacked on a phone the drawing reads from its top: what uses the subject, the subject, what it uses.
-    if (w.classList.contains("fg__world--narrow")) y = FIT_MARGIN;
+    if (w.classList.contains("fg__world--narrow")) y = FIT_MARGIN - top * k;
     else if (dw * k > vw || dh * k > vh) {
       // Even grouped it is larger than the view: the subject is in the middle, and the rest is a pan away.
       const f = d.boxes.filter((b) => b.band === "subject").map((b) => b.box);
@@ -558,7 +561,18 @@ export function FocusGraph(props: FocusGraphProps) {
       segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "use"} fg__inner`, kind: e.kind ?? "use", edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
     });
     // The world's own size: offsetWidth is not scaled by the camera.
-    setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, boxes });
+    // A one-sided PDF neighbourhood can leave a whole column of unused layout space.
+    // Include the visible labels as well as the cards, so Fit frames both.
+    const occupied = boxes.map(({ box }) => box);
+    for (const el of w.querySelectorAll(".fg__sidehead, .fg__sidekinds, .fg__edge-note, .fg__subjects--many")) {
+      occupied.push(box(el));
+    }
+    const x = Math.min(...occupied.map((b) => b.x)), y = Math.min(...occupied.map((b) => b.y));
+    const bounds = occupied.length ? {
+      x, y, w: Math.max(...occupied.map((b) => b.x + b.w)) - x,
+      h: Math.max(...occupied.map((b) => b.y + b.h)) - y,
+    } : F;
+    setDrawn({ w: w.offsetWidth, h: w.offsetHeight, bounds, segs, paths, boxes });
   }, [model, many]);
 
   useLayoutEffect(() => {
@@ -578,7 +592,9 @@ export function FocusGraph(props: FocusGraphProps) {
     // A re-measured drawing (a new subject or width, fonts or typeset titles arriving) is fitted
     // afresh, except under the pointer: there a hover re-measures it while the dock beside it changes
     // height, and refitting would move the card away and loop. A new subject or width always refits.
-    const fitFor = `${key}|${size.w}`;
+    // A pinned PDF declaration is drawn before its module request resolves.
+    // Its arriving neighbours need the same initial fit as a new selection.
+    const fitFor = JSON.stringify([key, size.w, model.left, model.right]);
     const held = fittedKey.current === fitFor && !!scroller.current?.matches(":hover");
     if (auto.current && !openedNow.current && !held) {
       fitNow();
@@ -727,9 +743,9 @@ export function FocusGraph(props: FocusGraphProps) {
     const cls = ["fg__card", `fg__card--${c.role}`, subject ? "is-subject" : "", litSet.has(id) ? "is-lit" : "", held === id ? "is-held" : "", hot === id ? "is-hot" : "", subject && hotOf?.has(id) ? "is-related" : ""].filter(Boolean).join(" ");
     const said = `${c.kicker ?? words(c.role).one}${c.seen === "later" ? ", stated later in the paper" : c.seen === "before" ? ", already read" : ""}`;
     return (
-      <button
+      <CardControl
         key={id}
-        type="button"
+        card={c}
         className={cls}
         data-card={id}
         data-band={band}
@@ -740,7 +756,7 @@ export function FocusGraph(props: FocusGraphProps) {
         title={subject ? undefined : said}
         data-topic-tone={toneNumber(c.tone)}
         style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
-        onClick={() => choose(id)}
+        onChoose={() => choose(id)}
         onMouseEnter={() => hover(id)}
         onMouseLeave={() => hover(null)}
         onFocus={() => hover(id)}
@@ -752,7 +768,7 @@ export function FocusGraph(props: FocusGraphProps) {
           {renderTitle ? renderTitle(c) : c.title}
         </span>
         {subject && !many && c.name && <code className="fg__name">{c.name.replace(/([._])/g, "$1\u200b")}</code>}
-      </button>
+      </CardControl>
     );
   };
 
@@ -986,15 +1002,15 @@ export function FocusGraph(props: FocusGraphProps) {
               const c = card(id)!;
               return (
                 <li key={id}>
-                  <button
-                    type="button"
+                  <CardControl
+                    card={c}
                     className={`fg__member fg__member--${c.role}${hot === id ? " is-hot" : ""}`}
                     data-card={id}
                     data-role={c.role}
                     data-seen={c.seen}
                     data-topic-tone={toneNumber(c.tone)}
         style={c.tone ? ({ "--fg-tone": c.tone } as React.CSSProperties) : undefined}
-                    onClick={() => onSubject(id)}
+                    onChoose={() => onSubject(id)}
                     onMouseEnter={() => hover(id)}
                     onMouseLeave={() => hover(null)}
                     onFocus={() => hover(id)}
@@ -1003,7 +1019,7 @@ export function FocusGraph(props: FocusGraphProps) {
                     {c.kicker && <span className="fg__memberkicker">{c.kicker}</span>}
                     <span className="fg__membertitle">{renderTitle ? renderTitle(c) : c.title}</span>
                     <span className="fg__memberkind">{words(c.role).one}</span>
-                  </button>
+                  </CardControl>
                 </li>
               );
             })}

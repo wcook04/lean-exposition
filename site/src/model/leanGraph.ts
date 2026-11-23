@@ -31,10 +31,13 @@ export interface LeanFacts {
   uses: readonly string[];
   /** The module of each use declared elsewhere. */
   usesModules?: Readonly<Record<string, string>>;
+  /** Compiled paths that have already passed through declarations outside the source catalogue. */
+  usesPaths?: ReadonlyMap<string, string[]>;
+  statementUses?: ReadonlySet<string>;
   /** The lines of its statement, for telling a statement's uses from a proof's. */
   statement: string;
   /** Its whole text. */
-  text: string;
+  text?: string;
 }
 
 export interface LeanInput {
@@ -98,12 +101,14 @@ export function leanUses(input: Pick<LeanInput, "linked" | "facts">): LeanUse[] 
         for (const name of fact.uses) {
           if (seen.has(name)) continue;
           seen.add(name);
+          const helpers = [...path, ...(fact.usesPaths?.get(name) ?? [])];
+          const statement = start.statementUses?.has(name) ?? namedIn(start.statement, name);
           if (linked.has(name)) {
-            uses.push({ from, to: name, helpers: path, kind: path.length ? "lean_via" : namedIn(start.statement, name) ? "lean_type_dependency" : "supports" });
+            uses.push({ from, to: name, helpers, kind: helpers.length ? "lean_via" : statement ? "lean_type_dependency" : "supports" });
             continue;
           }
           const inner = facts(name, fact.usesModules?.[name] ?? fact.module);
-          if (inner) next.push({ fact: inner, path: [...path, name] });
+          if (inner) next.push({ fact: inner, path: [...helpers, name] });
         }
       }
       frontier = next;

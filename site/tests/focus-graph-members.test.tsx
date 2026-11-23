@@ -104,6 +104,27 @@ describe("a large group opens as a list of its members", () => {
     expect(document.activeElement).toBe(head());
   });
 
+  it("frames a one-sided neighbourhood using the space its cards and labels occupy", () => {
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(520);
+    vi.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(400);
+    vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockReturnValue(1000);
+    vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(240);
+    // The layout reserves 1000px. All visible cards and labels lie between x=30 and x=490.
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (this: Element) {
+      const world = this.closest<HTMLElement>(".fg__world");
+      const k = Number(world?.style.transform.match(/scale\(([^)]+)\)/)?.[1] ?? 1);
+      if (this === world) return new DOMRect(0, 0, 1000 * k, 240 * k);
+      return this.closest(".fg__side") ? new DOMRect(310 * k, 70 * k, 180 * k, 60 * k)
+        : new DOMRect(30 * k, 50 * k, 150 * k, 80 * k);
+    });
+    draw();
+    const transform = $(".fg__world")!.style.transform;
+    const match = transform.match(/translate\(([-.\d]+)px, .*?scale\(([-.\d]+)\)/)!;
+    const x = Number(match[1]), k = Number(match[2]);
+    expect(x + (30 + 490) / 2 * k).toBeCloseTo(260, 0);
+    expect(x + 490 * k).toBeLessThanOrEqual(503);
+  });
+
   it("zooms over the drawing and leaves wheel events over the member list and toolbar alone", () => {
     draw();
     const wheel = (el: Element, deltaY: number) => {

@@ -31,6 +31,8 @@ export interface LayoutInput {
   edges: readonly EngineEdge[];
   size(id: string): Size;
   metrics: Metrics;
+  /** Wrap very broad dependency ranks into bands in the overview. */
+  balanceOverview?: boolean;
   prev?: Layout | null;
   /** A card to keep in place (the one being unfolded or folded). */
   pin?: string | null;
@@ -78,6 +80,29 @@ export function computeRanks(root: string, nodes: readonly string[], edges: read
 export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
   const { root, nodes, edges, metrics, prev, pin } = input;
   const rank = computeRanks(root, nodes, edges);
+  let wrapped = false;
+  if (input.balanceOverview && nodes.length >= 40) {
+    const bands = new Map<number, string[]>();
+    for (const [id, r] of rank) {
+      const band = bands.get(r) ?? [];
+      band.push(id);
+      bands.set(r, band);
+    }
+    const tile = input.size(nodes.find((id) => id !== root) ?? root);
+    const rowHeight = tile.h + gapFor(2, metrics);
+    const columns = Math.max(4, Math.round(Math.sqrt(nodes.length * rowHeight / (tile.w + metrics.sepCard))));
+    // A deep graph already has room for its branches. Wrap only panoramas.
+    const widest = Math.max(...Array.from(bands.values(), (band) => band.length));
+    if (widest * (tile.w + metrics.sepCard) > 2 * bands.size * (tile.h + metrics.gapMin)) {
+      let first = 0;
+      for (const r of [...bands.keys()].sort((a, b) => a - b)) {
+        const band = bands.get(r)!;
+        if (band.length > columns) wrapped = true;
+        band.forEach((id, i) => rank.set(id, first + Math.floor(i / columns)));
+        first += Math.ceil(band.length / columns);
+      }
+    }
+  }
   const depth = Math.max(0, ...rank.values());
 
   // Dummies and the segment graph.
@@ -202,6 +227,23 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
     return (up.get(b) ?? []).some((n) => above.has(n.id));
   };
   const extraGap = (left: string, right: string) => (isAux(left) && !isDummyKey(right) && !isAux(right) && shareParent(left, right) ? AUX_GAP * (metrics.sepCard / 28) : 0);
+  // Long dummy chains can pull consecutive bands sideways. Give each ordered
+  // band a centred home while letting the solver straighten its connectors.
+  if (wrapped) {
+    for (const layer of ordered.layers) {
+      let cursor = 0;
+      const centres = layer.map((id, i) => {
+        if (i > 0) {
+          const left = layer[i - 1];
+          cursor += (isDummyKey(left) || isDummyKey(id) ? metrics.sepDummy : metrics.sepCard) + extraGap(left, id);
+        }
+        const centre = cursor + width(id) / 2;
+        cursor += width(id);
+        return centre;
+      });
+      layer.forEach((id, i) => anchors.set(id, { x0: centres[i] - cursor / 2, lambda: 2 }));
+    }
+  }
   const xs = assignX({
     layers: ordered.layers,
     width,
@@ -270,6 +312,7 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
 
   const rowHeight = ordered.layers.map((layer) => Math.max(0, ...layer.filter((id) => !isDummyKey(id)).map((id) => input.size(id).h)));
   const layout: Layout = {
+    balanced: wrapped,
     root,
     metrics,
     edges: [...edges],

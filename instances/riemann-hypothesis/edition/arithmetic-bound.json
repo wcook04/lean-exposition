@@ -1,0 +1,86 @@
+{
+  "revision": "8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116",
+  "path": [
+    "riemannHypothesis",
+    "rhOfAll",
+    "allChi",
+    "UpperTheory.FinalTheorems.everyCharacter",
+    "UpperTheory.FinalTheorems.everyCharacter_of_row",
+    "UpperTheory.One.vwin_of_row"
+  ],
+  "nodes": [
+    {
+      "id": "riemannHypothesis",
+      "title": "Riemann Hypothesis",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L4"
+    },
+    {
+      "id": "rhOfAll",
+      "title": "Deduce RH from nonvanishing",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Supplements/Kernels/MainTheorems.lean#L9-L9"
+    },
+    {
+      "id": "allChi",
+      "title": "Nonvanishing for every character",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Supplements/Kernels/MainTheorems.lean#L7-L7"
+    },
+    {
+      "id": "UpperTheory.FinalTheorems.everyCharacter",
+      "title": "Prove nonvanishing for every character",
+      "topic": "The conclusion",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean#L10-L11"
+    },
+    {
+      "id": "UpperTheory.FinalTheorems.everyCharacter_of_row",
+      "title": "Use the Galois representation input",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean#L7-L8"
+    },
+    {
+      "id": "UpperTheory.One.vwin_of_row",
+      "title": "Arithmetic window bound",
+      "topic": "Arithmetic inputs",
+      "href": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/VwinOfRow.lean#L4-L5"
+    }
+  ],
+  "edges": [
+    {
+      "from": "riemannHypothesis",
+      "to": "rhOfAll",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "rhOfAll",
+      "to": "allChi",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "allChi",
+      "to": "UpperTheory.FinalTheorems.everyCharacter",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.FinalTheorems.everyCharacter",
+      "to": "UpperTheory.FinalTheorems.everyCharacter_of_row",
+      "kinds": [
+        "value"
+      ]
+    },
+    {
+      "from": "UpperTheory.FinalTheorems.everyCharacter_of_row",
+      "to": "UpperTheory.One.vwin_of_row",
+      "kinds": [
+        "value"
+      ]
+    }
+  ]
+}

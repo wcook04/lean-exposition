@@ -13,7 +13,7 @@
 // dashed line where only the statement names the declaration. Citations are not dependencies.
 
 import site from "@instance/site";
-import type { Alignment, LeanDeclaration, LeanKind, LeanModule } from "../../api/lean";
+import type { Alignment, LeanDeclaration, LeanKind, LeanModule, LeanNeighbour } from "../../api/lean";
 import { compiled } from "../../lean/data";
 import type { Stage } from "../../api/types";
 import type { FGCard, FGEdge, FGRelation, FGRole, FGRoleWords } from "../../map/FocusGraph";
@@ -58,6 +58,7 @@ export interface Focus {
   routeNote?: string;
   /** The words before the route's steps: how many links, and which kind each is. */
   routeLabel?: string;
+  neighbourhoodNote?: string;
   /** The Lean modules this drawing needs and has not loaded yet. */
   missing: string[];
   /** Words for the groups, where this paper's data asks for them. */
@@ -439,6 +440,25 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
       const edge = (graph.out.get(consumer) ?? []).find((e) => e.to === prerequisite && (e.kind === "supports" || e.kind === "assumes"));
       return edge ? (argumentEdge(edge, consumer, prerequisite).kind ?? "argument") : "argument";
     });
+  /** Full compiled edges may lead to names outside this paper's smaller source catalogue. */
+  const compiledNeighbours = (id: string, data: NonNullable<LeanDeclaration["neighbourhood"]>) => {
+    const add = (ref: LeanNeighbour, user: boolean) => {
+      const other = tools.declCard(ref.name);
+      if (other === id) return;
+      if (tools.rowOf(ref.name)) put(other);
+      else cards.set(other, {
+        id: other, name: ref.name, title: ref.display_title, role: DEFINITION_KINDS.includes(ref.kind as LeanKind) ? "definition" : "helper",
+        reference: { name: ref.name, href: ref.href },
+      });
+      const ends = user ? { from: other, to: id } : { from: id, to: other };
+      if (ref.kinds.includes("type")) edges.push({ ...ends, kind: "statement" });
+      if (ref.kinds.includes("value")) edges.push({ ...ends, kind: "proof" });
+      if (!ref.kinds.includes("type") && !ref.kinds.includes("value")) edges.push({ ...ends, kind: "use" });
+    };
+    for (const ref of data.dependencies) add(ref, false);
+    for (const ref of data.users) add(ref, true);
+  };
+  let neighbourhoodNote: string | undefined;
   let routeLabel: string | undefined;
   let route: string[] | null = null;
   let routeNote: string | undefined;
@@ -449,7 +469,19 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
     const id = tools.declCard(subject.name);
     subjects = put(id) ? [id] : [];
     const decl = declaration(subject.name);
-    if (decl) {
+    if (decl?.neighbourhood) {
+      const data = decl.neighbourhood;
+      compiledNeighbours(id, data);
+      if (data.dependencies.length < data.counts.dependencies || data.users.length < data.counts.users) {
+        neighbourhoodNote = `Showing ${data.dependencies.length} of ${data.counts.dependencies} dependencies and ${data.users.length} of ${data.counts.users} users in the compiled index.`;
+      } else if (!data.dependencies.length && !data.users.length) {
+        neighbourhoodNote = "The compiled index records no direct neighbours for this declaration.";
+      }
+      if (data.scope === "compiled_project_declarations") {
+        const scope = "This project index groups generated auxiliary constants with their source declaration.";
+        neighbourhoodNote = neighbourhoodNote ? `${neighbourhoodNote} ${scope}` : scope;
+      }
+    } else if (decl) {
       leanUses(id, decl, new Set());
       // Lean's own split says whether each user names this one in its statement or its proof; without
       // it (a text scan), only the user's own statement could say, and its module is not loaded.
@@ -534,7 +566,7 @@ export function focusOn(subject: Subject, input: FocusInput, tools: FocusTools =
   }
   // Where the paper states the subject is the reading position itself.
   for (const id of subjects) cards.set(id, { ...cards.get(id)!, seen: undefined });
-  return { subjects, cards, edges, route, routeNote, routeLabel, missing: [...missing], roles: leanWords };
+  return { subjects, cards, edges, route, routeNote, routeLabel, neighbourhoodNote, missing: [...missing], roles: leanWords };
 }
 
 /** The modules a subject's drawing reads, so they can be fetched before it is drawn. */

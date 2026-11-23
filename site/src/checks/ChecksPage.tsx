@@ -30,6 +30,7 @@ import {
 import { RecordList } from "./RecordTiles";
 import { ChecksIntro, ChecksNote } from "@instance/ChecksIntro";
 import site from "@instance/site";
+import { RUN_LEDGER } from "virtual:run-ledger";
 import { RunTable } from "./RunTable";
 import "./checks.css";
 
@@ -40,6 +41,7 @@ const STATUS_ORDER = ["failed", "unavailable", "not_run", "passed"];
 /** The outcome columns of the table, in the order a reader takes them. */
 const COUNT_COLUMNS = ["passed", "failed", "unavailable", "not_run"] as const;
 const COLUMN_NAMES: Record<string, string> = { passed: "Passed", failed: "Failed", unavailable: "Unavailable", not_run: "Not run" };
+const runRows = new Map(RUN_LEDGER.groups.flatMap((group) => group.rows.map((row) => [row.id, row] as const)));
 
 type Target =
   | { type: "none" }
@@ -228,7 +230,7 @@ function Established({ cards }: { cards: EvidenceCard[] }) {
           {date ? `; the run record of that build is dated ${date.text}` : ""}.{" "}
         </>
       ) : passedBuilds.length === 0 ? (
-        <>No Lean build is recorded as passed. </>
+        <>There is no passing build record for this edition’s Lean source. </>
       ) : null}
       {hashes && hashes.cards.length > 0 && <>The cited files match their recorded hashes in {countsInWords(hashes.counts)} checks. </>}
       {comparator && comparator.cards.length > 0 && (
@@ -279,6 +281,11 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
     return ((record?.evidence_ids as string[] | undefined) ?? []).map((e) => byId.get(e)).filter((c): c is EvidenceCard => !!c);
   }, [record, map]);
   const groups = useMemo(() => groupByKind(cards).filter((g) => g.cards.length > 0), [cards]);
+  const archiveReports = cards.flatMap((card) => {
+    const run = runRows.get(card.id);
+    const url = run?.targetLinks?.[id];
+    return run && url ? [{ id: card.id, label: run.what, url }] : [];
+  });
   // No scroll on arrival: the rows follow the heading and the edition note, which must be read first.
   const formalNode = formal ? graph.nodes.get(formal) : null;
 
@@ -305,6 +312,16 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
         )}
         <a href={routeHref({ view: "map", node: id })}>Open it on the argument map</a>
       </p>
+      {archiveReports.length > 0 && (
+        <p className="checks__intro">
+          These reports name this theorem in the paper authors’ build of the original archive. {" "}
+          {archiveReports.map((report, index) => (
+            <span key={report.id}>
+              {index > 0 && " · "}<a href={report.url}>{report.label}</a>
+            </span>
+          ))}
+        </p>
+      )}
       {groups.length > 0 && (
         <CheckTable
           caption={`Run records attached to ${plainOf(node.label) ?? node.label}, by kind`}
@@ -644,6 +661,7 @@ function EvidenceRow({
   const hidden = subjects.length - visibleSubjects.length;
   const kindTitle = CHECK_KINDS[card.kind]?.title ?? card.kind.replace(/_/g, " ");
   const canExpand = clipped || hidden > 0 || (record?.command?.length ?? 0) > 0 || (record?.source_ids?.length ?? 0) > 0 || (!!compact && !!record?.receipt_path);
+  const receipt = record?.receipt_path && runRows.get(card.id)?.receipt;
 
   return (
     <li ref={rowRef} id={`check-${card.id}`} className={`ev${compact ? " ev--compact" : ""}${selected ? " is-selected" : ""}`}>
@@ -711,8 +729,11 @@ function EvidenceRow({
             )}
             {record.receipt_path && (!compact || expanded) && (
               <p className="ev__receipt">
-                The output saved for this run is in the repository file{" "}
-                <code className="lean" translate="no">{record.receipt_path}</code>, which this site does not serve.
+                {receipt ? (
+                  <a href={`${import.meta.env.BASE_URL}${receipt}`}>Read the run receipt</a>
+                ) : (
+                  <>The evidence record names the repository file <code className="lean" translate="no">{record.receipt_path}</code>.</>
+                )}
                 {expanded && record.receipt_sha256 && (
                   <>
                     {" "}

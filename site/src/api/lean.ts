@@ -29,6 +29,7 @@ export interface LeanFolder {
 
 export interface LeanModules {
   revision: string;
+  scope?: "paper_linked";
   /** Prefix for a repository line link, or the DOI of an archived source. */
   base_url: string;
   toolchain: string;
@@ -48,6 +49,16 @@ export interface LeanNames {
   names: LeanNameRow[];
 }
 
+/** One direct compiled reference in the selected declaration's neighbourhood. */
+export interface LeanNeighbour {
+  name: string;
+  display_title: string;
+  kind: string;
+  origin: string;
+  kinds: string[];
+  href?: string;
+}
+
 export interface LeanDeclaration {
   name: string;
   short: string;
@@ -61,8 +72,20 @@ export interface LeanDeclaration {
   private: boolean;
   uses: string[];
   used_by: string[];
+  neighbourhood?: {
+    source: string;
+    scope: string;
+    dependencies: LeanNeighbour[];
+    users: LeanNeighbour[];
+    counts: { dependencies: number; users: number };
+    limit: number;
+  };
   /** Set where an elaborated report covers this declaration. */
   dependency_source?: "source_text" | "elaborated";
+  /** Declaration-specific results from the paper authors' build of the original archive. */
+  archive_check?: { axioms: string[]; print_href: string; replay_href: string };
+  /** Axiom nodes reachable in the pinned compiled dependency graph. */
+  graph_axioms?: { axioms: string[]; href: string };
 }
 
 export interface LeanModule {
@@ -131,8 +154,12 @@ export interface AlignedLean extends FidelityFields {
   clause_lines?: LineRange;
 }
 
-/** The Lean one statement means. `relation` is null for a name the record does not list. */
-export type StatementLean = Omit<AlignedLean, "relation"> & { relation: LeanRelation | null };
+/** The Lean one statement names, with a relation where one is recorded. */
+export type StatementLean = Omit<AlignedLean, "relation"> & {
+  relation: LeanRelation | null;
+  /** The link note records a scoped source review without a fidelity verdict. */
+  source_review?: true;
+};
 
 export type StatementRole = "statement" | "definition" | "explanation" | "derivation" | "example" | "mention";
 
@@ -208,13 +235,13 @@ export interface Alignment {
   /** Plain titles of declarations, by full name, where authored. A title says what to call it, not what it proves. */
   names?: Record<string, string>;
   /** For a step between two records with Lean links, keyed by `ArgEdge.key`: the chain of names found in the source, or null. */
-  steps?: Record<string, { route: string[] | null }>;
+  steps?: Record<string, { route: string[] | null; statement_use?: boolean }>;
 }
 
 /**
- * One Lean row of a phrase tie: a declaration that states the phrase, the lines that do,
- * and how it compares with the phrase, as an AI agent judged it. `note` is the row's link
- * note (at most 25 words), `plain` the declaration's title in this part of this paper.
+ * One Lean row of a phrase tie: the declaration, the linked lines, and any relation or
+ * comparison with the phrase. `note` explains the link, including a source-only mention.
+ * `plain` is the declaration's title in this part of the paper.
  */
 export interface PhraseLean extends FidelityFields {
   name: string;
@@ -225,8 +252,9 @@ export interface PhraseLean extends FidelityFields {
   /** The return named these lines; otherwise `lines` is the whole statement. */
   exact_lines?: boolean;
   proof_lines?: LineRange;
-  relation: LeanRelation;
+  relation: LeanRelation | null;
   note: string;
+  source_review?: StatementLean["source_review"];
   plain?: string;
   /** In a tie that holds several overlapping phrases: every phrase's own comparison of this Lean. */
   assessments?: PhraseAssessment[];
@@ -320,8 +348,8 @@ export interface Tie {
   role: StatementRole;
   /** Whether the statement has any Lean. The other Lean fields are null when it has none. */
   lean: boolean;
-  /** How the first Lean row stands to the statement: `part` means it covers only part of it. */
-  relation?: LeanRelation;
+  /** How the first Lean row stands to the statement, or null for a source link without a relation. */
+  relation?: LeanRelation | null;
   /** Where a statement has no Lean, what its authors say about that. */
   note?: string;
   /** The most direct declaration; the rest are on the statement with this `at` in the alignment. */
@@ -332,6 +360,8 @@ export interface Tie {
   lines: LineRange | null;
   anchor: string | null;
   at: string;
+  /** Section in the source PDF, when the edition supplies its own PDF index. */
+  section?: string | null;
   /** Who made the tie (see AlignedStatement.origin); absent in editions that do not say. */
   origin?: import("../compare/fidelityWords").TieOrigin;
   /** What the first Lean row says against the statement (see FidelityFields). */

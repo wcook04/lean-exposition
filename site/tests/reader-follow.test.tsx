@@ -166,6 +166,20 @@ describe("MapPane", async () => {
   const argument = (id: string, side: "out" | "in") =>
     (side === "out" ? graph.out : graph.in).get(id)!.filter((e) => e.kind === "supports" || e.kind === "assumes").map((e) => (side === "out" ? e.to : e.from));
 
+  it("returns from the whole PDF map to a reselected statement even when it has no recorded edges", () => {
+    const isolated = [...graph.nodes.values()].find((node) => node.kind !== "declaration" &&
+      !(graph.in.get(node.id) ?? []).length && !(graph.out.get(node.id) ?? []).length);
+    expect(isolated).toBeDefined();
+    const props = { pdfOn: true, pin: { record: isolated!.id, tie: null }, pdfPick: 1 };
+    show(null, props);
+    expect(drawn("subject")).toEqual([isolated!.id]);
+    act(() => container.querySelector<HTMLButtonElement>(".map-pane__whole")!.click());
+    expect(container.querySelector(".tree")).not.toBeNull();
+    show(null, { ...props, pdfPick: 2 });
+    expect(container.querySelector(".tree")).toBeNull();
+    expect(drawn("subject")).toEqual([isolated!.id]);
+  });
+
   it("opens on one statement near the reading position, every record that uses it on the left and every record it uses on the right", () => {
     show(null);
     const subject = drawn("subject");

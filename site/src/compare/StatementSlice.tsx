@@ -6,11 +6,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { AlignedStatement } from "../api/lean";
 import type { Stage } from "../api/types";
+import { routeHref } from "../app/router";
+import { Prose } from "../lean/ReadingStrip";
 import { documentPaths, loadDocument } from "../reader/documents";
 import { hasReferenceLink, renderSlice, type PreparedDocument } from "../reader/engine";
 import { mountFigures } from "../reader/mount";
 import { freshSlots, markWideMaths } from "../reader/page/PaperBody";
 import { withoutIds } from "../reader/page/model";
+import { FidelityLine } from "./Fidelity";
 import { onIdle } from "./idle";
 import "../reader/reader-content.css";
 import "../reader/reader-page.css";
@@ -20,6 +23,8 @@ export interface StatementSliceProps {
   statement: AlignedStatement;
   /** Narrower type for side panels and the map pane. */
   compact?: boolean;
+  /** Show source reviews made against this exact passage. */
+  withComparisons?: boolean;
 }
 
 const references = new Map<Stage, PreparedDocument["references"]>();
@@ -45,7 +50,7 @@ export function primeSlice(statement: AlignedStatement): void {
 }
 
 /** One exact slice of a paper, typeset as the reader typesets it. */
-export function StatementSlice({ statement, compact }: StatementSliceProps) {
+export function StatementSlice({ statement, compact, withComparisons }: StatementSliceProps) {
   const needsPaper = hasReferenceLink(statement.markdown) && !references.has(statement.paper);
   const [, setLoaded] = useState(0);
   useEffect(() => {
@@ -80,5 +85,24 @@ export function StatementSlice({ statement, compact }: StatementSliceProps) {
     };
   }, [html]);
 
-  return <div ref={ref} className={`slice prose${compact ? " slice--compact" : ""}`} dangerouslySetInnerHTML={{ __html: html }} />;
+  const comparisons = withComparisons && statement.lean_source !== "record"
+    ? statement.lean?.filter((row) => row.fidelity || (row.source_review && row.note)) : undefined;
+  return (
+    <>
+      <div ref={ref} className={`slice prose${compact ? " slice--compact" : ""}`} dangerouslySetInnerHTML={{ __html: html }} />
+      {comparisons?.map((row) => (
+        <div className="bench-slice__note" key={row.name}>
+          <a href={routeHref({ view: "lean", module: row.module, decl: row.name })} title={row.name}>
+            <code>{row.name.split(".").at(-1)}</code>
+          </a>
+          {row.fidelity ? <FidelityLine row={row} renderNote={(note) => <Prose text={note} />} /> : (
+            <p className="fidelity" data-source-review="ai">
+              <Prose text={row.note} />
+              <span className="fidelity__who">AI source review</span>
+            </p>
+          )}
+        </div>
+      ))}
+    </>
+  );
 }

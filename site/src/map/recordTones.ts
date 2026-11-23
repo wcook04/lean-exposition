@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Stage } from "../api/types";
 import type { PhraseTopic } from "../api/lean";
+import type { ArgGraph } from "../model/graph";
 import { STAGE_ORDER } from "../app/papers";
 import { loadTies, tieModel } from "../reader/ties";
 import { paperPlaces } from "../reader/page/focusModel";
@@ -13,6 +14,8 @@ import { useTopicColours } from "../reader/topicColours";
 interface Tones {
   of: Map<string, string>;
   topic: Map<string, string>;
+  declTone: Map<string, string>;
+  declTopic: Map<string, string>;
   topics?: readonly PhraseTopic[];
 }
 
@@ -24,7 +27,7 @@ function tonesFor(stage: Stage): Promise<Tones | null> {
     p = loadTies(stage).then((index) => {
       if (!index?.topics?.length) return null;
       const places = paperPlaces(tieModel(index));
-      return { of: places.recordTone, topic: places.recordTopic, topics: index.topics };
+      return { of: places.recordTone, topic: places.recordTopic, declTone: places.declTone, declTopic: places.declTopic, topics: index.topics };
     });
     cache.set(stage, p);
   }
@@ -34,7 +37,7 @@ function tonesFor(stage: Stage): Promise<Tones | null> {
 type Lookup = ((id: string) => string | undefined) | undefined;
 
 /** A record's topic colour (`var(--tone-N)`) and topic name; undefined until loaded. */
-export function useRecordTones(lens: Stage | undefined): { toneOf: Lookup; topicOf: Lookup } {
+export function useRecordTones(lens: Stage | undefined, graph: ArgGraph): { toneOf: Lookup; topicOf: Lookup } {
   const [tones, setTones] = useState<Tones | null>(null);
   useEffect(() => {
     let live = true;
@@ -54,8 +57,11 @@ export function useRecordTones(lens: Stage | undefined): { toneOf: Lookup; topic
   }, [lens]);
   useTopicColours(tones?.topics);
   return useMemo(() => {
-    const of = tones?.of;
-    const topic = tones?.topic;
-    return { toneOf: of ? (id: string) => of.get(id) : undefined, topicOf: topic ? (id: string) => topic.get(id) : undefined };
-  }, [tones]);
+    if (!tones) return { toneOf: undefined, topicOf: undefined };
+    const nameOf = (id: string) => graph.nodes.get(id)?.declaration ?? id;
+    return {
+      toneOf: (id: string) => tones.of.get(id) ?? tones.declTone.get(nameOf(id)),
+      topicOf: (id: string) => tones.topic.get(id) ?? tones.declTopic.get(nameOf(id)),
+    };
+  }, [tones, graph]);
 }
