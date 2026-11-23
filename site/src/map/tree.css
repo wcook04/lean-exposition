@@ -1541,9 +1541,21 @@
   padding-left: calc((var(--pad-x, 10px) + 5px) / var(--k));
 }
 
-/* Keep the card surface and narrow the topic bar at overview scale. */
-.tree[data-dense] .card[data-toned][data-chip] {
-  --topic-rail: min(calc(2px / var(--k)), 8px);
+/* Too small for words (zoomed out, or too narrow), a card is a chip filled with its topic's colour:
+   no bar, no dark surface. Zoomed in far enough to read, it is the dark card with the bar again.
+   Specific enough to win over the coloured-card rules above (data-lean, is-quiet, inherited). */
+.tree[data-dense] .card.card[data-toned][data-chip],
+.tree[data-dense] .card.card[data-toned][data-chip][data-lean],
+.tree[data-dense] .card.card[data-toned][data-chip].is-quiet {
+  background: var(--card-tone);
+  border-color: transparent;
+  border-style: solid;
+  box-shadow: none;
+}
+.tree[data-dense] .card.card[data-toned="inherited"][data-chip],
+.tree[data-dense] .card.card[data-toned="inherited"][data-chip][data-lean],
+.tree[data-dense] .card.card[data-toned="inherited"][data-chip].is-quiet {
+  background: color-mix(in oklab, var(--card-tone) 62%, var(--ground));
 }
 .tree[data-dense] .card[data-chip] .card__compact {
   visibility: hidden;
