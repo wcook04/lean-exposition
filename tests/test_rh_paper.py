@@ -22,6 +22,13 @@ class RHPaperPointers(unittest.TestCase):
 
         cls.builder = build_rh_paper
 
+    def test_reader_note_preserves_original_source(self):
+        source = {"title": "Coefficient bound", "markdown": "**[L1]** Source wording.",
+                  "reading_note": "The coefficient bound applies on each selected window."}
+        projected = self.builder.reader_notes({"Deduction.bound": [source]})
+        self.assertEqual(projected["Deduction.bound"]["text"], source["reading_note"])
+        self.assertEqual(source["markdown"], "**[L1]** Source wording.")
+
     def test_tex_subscript_is_part_of_declaration_name(self):
         with patch.object(self.builder, "blob", side_effect=[
             r"\input{sections/lattices}".encode(),

@@ -354,7 +354,11 @@ def note_sources(args, config, targets):
             declaration_first, declaration_last = targets[name]["lines"]
             if not declaration_first <= first <= last <= declaration_last:
                 raise ValueError(f"Note {path}:{start}-{end} targets lines outside {name}")
+            reading_note = entry.get("reading_note")
+            if reading_note is not None and (not isinstance(reading_note, str) or not reading_note.strip()):
+                raise ValueError(f"Invalid reading note for {name} at {path}:{start}-{end}")
             data[name].append({"title": entry["title"], "markdown": "\n".join(text[start - 1:end]),
+                               **({"reading_note": reading_note} if reading_note else {}),
                                "url": url, "authors": config["authors"], "license": config["license"],
                                "lean_lines": [first, last],
                                "evidence": entry.get("evidence", "Contributor reading of the source")})
@@ -366,7 +370,7 @@ def note_sources(args, config, targets):
 
 
 def reader_notes(sources):
-    """Project the excerpts into the Library reader's existing note format."""
+    """Project reading notes while preserving the original excerpts in the source records."""
     notes = {}
     for name, entries in sources.items():
         excerpts = [entry for entry in entries if "markdown" in entry]
@@ -374,6 +378,9 @@ def reader_notes(sources):
             continue
         paragraphs = []
         for entry in excerpts:
+            if entry.get("reading_note"):
+                paragraphs.append(entry["reading_note"])
+                continue
             author_credit = " and ".join(entry["authors"])
             text = re.sub(r"\*+(\[[\w-]+\])\*+", r"\1", entry["markdown"]).replace("**", "")
             paragraphs.append(f'{entry["title"]}\n\n{text}\n\n{author_credit} · {entry["license"]}')

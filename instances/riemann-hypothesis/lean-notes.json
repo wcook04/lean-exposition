@@ -11,7 +11,8 @@
         "lean_lines": [
           11,
           11
-        ]
+        ],
+        "reading_note": "The positivity in `CharFamily` applies to the weights on the characters. The real summands that `Gm` adds, and its prime-power coefficients, may have either sign. The last line calls `windowHyp_of_rpow` to turn the one-sided bound into the integral hypothesis needed by `lemmaL`."
       }
     ],
     "Deduction.landau_window": [
@@ -25,7 +26,8 @@
         "lean_lines": [
           90,
           91
-        ]
+        ],
+        "reading_note": "Read the two patterns after `rcases` as geometric conditions on the poles. The first gives a pole-free disk at the real center $\\sigma$ and a pole whose horizontal distance from $\\sigma$ is smaller than the disk’s radius. The second gives a disk at $\\sigma$ containing just one pole, on the real axis."
       },
       {
         "title": "Why the argument is windowed",
@@ -38,7 +40,8 @@
           88,
           88
         ],
-        "evidence": "Contributor interpretation of the proof"
+        "evidence": "Contributor interpretation of the proof",
+        "reading_note": "Line 88 gets the estimate that will serve both branches. For each requested lower cutoff it gives a later log-window start $U$ and one differentiation order $k\\ge U$. The same $k$ works for every vertical shift, which lets the next lines choose the shift after inspecting the poles."
       }
     ],
     "Formalism.HN.TheoremF": [
@@ -52,7 +55,8 @@
         "lean_lines": [
           61,
           62
-        ]
+        ],
+        "reading_note": "In lines 61–62, `muDef` is the target lattice’s mean slope. Compare the conclusion with `TheoremFSharp` in the same file. The proof of `theoremF_of_sharp` obtains the displayed version by subtracting $\\log |I|$ from the sharp lower bound, since the nonempty index set has $|I|\\ge 1$."
       }
     ],
     "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5": [
@@ -66,7 +70,8 @@
         "lean_lines": [
           105,
           107
-        ]
+        ],
+        "reading_note": "`Lam5` is the lower bound for the logarithm of the level in `Count5`. It includes the counting error with a minus sign, so subtracting `sumA` times `Lam5` gives the added error on the right. The proof unfolds `Lam5` and obtains the equality by a linear combination of the earlier `key_identity`."
       }
     ],
     "UpperTheory.Top.VVle": [
@@ -80,7 +85,8 @@
         "lean_lines": [
           14,
           17
-        ]
+        ],
+        "reading_note": "For each prime $\\ell$ and twist $1\\le e<t$, the first clause requires finite $\\mathbb Z_\\ell$-length for the classes that restrict to zero at every place above $\\ell$. In the second clause, toNat reads those finite lengths as integers before the sum over an arbitrary finite set of primes."
       }
     ],
     "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at": [
@@ -94,7 +100,8 @@
         "lean_lines": [
           91,
           93
-        ]
+        ],
+        "reading_note": "Read IsRankRPart over the fraction field as the decomposition of the lift into a rank-$r$ summand $\\rho$ and the prescribed characters. The Selmer term sPi uses $\\rho$ twisted by the inverse of the first character, with coefficients in the quotient of the fraction-field space by its lattice."
       }
     ],
     "UpperTheory.Top.supplyChi": [
@@ -108,7 +115,8 @@
         "lean_lines": [
           11,
           16
-        ]
+        ],
+        "reading_note": "The goal left by the call to supplyOfAdm is to supply admissible ranks. The proof substitutes the scale's value of $\\varepsilon$, then uses admissibleClassesTwistedChar to obtain ranks with the required sizes and admissibility for the input field."
       }
     ],
     "UpperTheory.Top.PairEx": [
@@ -122,7 +130,8 @@
         "lean_lines": [
           28,
           30
-        ]
+        ],
+        "reading_note": "Fix the modulus, $\\varepsilon$ and the window exponent before reading the large-$Y$ quantifier. Each $Y$ gets one pair that works throughout its window. The existence proof picks $q$ from a nonempty set of first primes, then $d$ from a nonempty set that depends on that $q$."
       }
     ],
     "Formalism.MainNotions.LocalQuadraticParts.adm2": [
@@ -136,7 +145,8 @@
         "lean_lines": [
           207,
           210
-        ]
+        ],
+        "reading_note": "For each allowed pair of inputs $\\phi,F$, the equality supplies a coefficient-field value for the column period. If this value is nonzero, its valuation is at least the rounded exponent used to divide the lattice at $w$."
       }
     ],
     "Formalism.HN.frameB_share": [
@@ -150,7 +160,8 @@
         "lean_lines": [
           25,
           28
-        ]
+        ],
+        "reading_note": "Count each entry below $s-\\tau$ as a deficit of at least $u+\\tau$ from the common upper bound $s+u$. The mean bound allows a total deficit of at most $u$ times the number of entries. In the next lemma, counting slopes below the cut gives the rank lost at the filtration step."
       }
     ],
     "UpperTheory.Top.divinN_of_hypV": [
@@ -164,7 +175,8 @@
         "lean_lines": [
           126,
           129
-        ]
+        ],
+        "reading_note": "The tuple from vvRecord has three components. The proof uses finiteness to apply the link estimate, passes summability to divinN_at, and passes the numerical bound to that lemma after enlarging it to $b$."
       }
     ],
     "Formalism.LFunctionChainParameters.LChain.SizeData₂": [
@@ -178,7 +190,8 @@
         "lean_lines": [
           17,
           19
-        ]
+        ],
+        "reading_note": "Unfold this proposition to see the eleven clauses imposed on one chain datum at the chosen scale. ChainTied supplies them together, and each_unit_bound_statement uses them to bound ASK by the sum of a main term and an error for each outer index."
       }
     ]
   },

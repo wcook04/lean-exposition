@@ -244,7 +244,9 @@ def reading_data(paper, assets, catalogue, names, main, reviews):
         for row in rows:
             sources = notes["sources"].get(row["name"], [])
             line_annotations[module].extend(
-                {"lines": source["lean_lines"], "title": source["title"], "text": source["markdown"],
+                {"lines": source["lean_lines"], "title": source["title"],
+                 "text": source.get("reading_note", source["markdown"]),
+                 **({"adapted": True} if "reading_note" in source else {}),
                  "url": source["url"], "authors": source["authors"], "licence": source["license"]}
                 for source in sources if source.get("lean_lines")
             )

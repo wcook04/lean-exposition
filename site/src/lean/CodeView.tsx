@@ -85,7 +85,7 @@ export interface CodeViewProps {
 }
 
 type LineAnnotation = { lines: [number, number]; title: string } & (
-  { url: string; text: string; authors: string[]; licence: string } | { at: string; record: string }
+  { url: string; text: string; authors: string[]; licence: string; adapted?: boolean } | { at: string; record: string }
 );
 type AnnotationIndex = Record<string, LineAnnotation[]>;
 let annotationsPending: Promise<AnnotationIndex> | undefined;
@@ -110,6 +110,7 @@ function LineAnnotations({ line, entries }: { line: number; entries: LineAnnotat
     {entries.map((entry, i) => "url" in entry ? (
       <div key={i}>
         <p><Prose text={entry.text} /></p>
+        {entry.adapted && "Original note · "}
         <a href={entry.url}>{entry.title}</a> · {entry.authors.join(" and ")} · {entry.licence}
       </div>
     ) : <p key={i}><a href={routeHref({ view: "read", stage: "short", at: entry.at, node: entry.record, pdf: true })}>{entry.title}</a></p>)}
