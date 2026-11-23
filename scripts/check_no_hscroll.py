@@ -167,6 +167,9 @@ def main() -> int:
                     page.wait_for_timeout(600)
                     page.locator(f'.prose .math-display.tie[data-t="{picked}"]').first.click(position={"x": 30, "y": 10})
                     page.wait_for_timeout(1500)
+                    passage = page.locator(".lean-page__body > .phrase-card__passage:visible").first
+                    if passage.count() and passage.get_attribute("open") is None:
+                        passage.locator(":scope > summary").click()
                     card = page.evaluate("""() => { const q = document.querySelector('.phrase-card__quote'); if (!q || !q.getClientRects().length) return null;
                         const cs = getComputedStyle(q); const r = q.getBoundingClientRect(); const right = r.left + q.clientLeft + q.clientWidth - parseFloat(cs.paddingRight);
                         const d = q.querySelector('.math-display'); const parts = d ? [d.querySelector('.katex-html'), ...d.querySelectorAll('.katex-html > .katex-base, :scope > .math-number')].filter(p => p && p.getClientRects().length) : [];
