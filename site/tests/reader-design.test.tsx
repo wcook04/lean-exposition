@@ -265,7 +265,7 @@ describe("the subject band", async () => {
 // ---------------------------------------------------------------- phrase card
 
 describe("the inspector's phrase card", async () => {
-  const { PhraseCard } = await import("../src/reader/page/PhraseCard");
+  const { NoteBody, PaperPassage, PhraseCard } = await import("../src/reader/page/PhraseCard");
   const row = (over: Partial<PhraseLean>): PhraseLean => ({ name: "Euler.first", module: "Euler", ...over }) as PhraseLean;
   const fidelityText = () => container.querySelector(".phrase-card__fidelity")!.textContent!;
 
@@ -279,27 +279,42 @@ describe("the inspector's phrase card", async () => {
     expect([...card.querySelectorAll(".phrase-card__conventions summary")].map((s) => s.textContent)).toEqual(["Natural subtraction", "Real division"]);
   });
 
-  it("keeps the Lean comparison and unresolved qualifications visible beside a long passage", () => {
-    const quote = `Given every smooth velocity field, ${"the solution remains smooth ".repeat(12)}<em>on the common interval</em>.`;
-    act(() => root.render(<PhraseCard inLean row={row({ fidelity: "stronger", fidelity_note: "Only on the common interval." })}
-      quote={quote} note="The complete reading note."
-      explanation={{ text: "The paper's argument.", grounded: false, open: "The endpoint remains open." }} />));
+  it("shows the Lean comparison and reading notes ahead of the optional passage", () => {
+    const quote = "Every smooth velocity field remains smooth <em>on the common interval</em>.";
+    act(() => root.render(<>
+      <PhraseCard inLean row={row({ fidelity: "stronger", fidelity_note: "Only on the common interval." })}
+        quote={quote} note="The complete reading note."
+        explanation={{ text: "The paper's argument.", grounded: false, open: "The endpoint remains open." }} />
+      <PaperPassage quote={quote} collapsible />
+    </>));
     const disclosure = container.querySelector<HTMLDetailsElement>(".phrase-card__passage")!;
     expect(disclosure.open).toBe(false);
-    expect(disclosure.querySelector("summary")!.textContent).toContain("Given every smooth velocity field");
+    expect(disclosure.querySelector("summary")!.textContent).toBe("Full passage in the paper");
+    expect(disclosure.previousElementSibling?.classList.contains("phrase-card")).toBe(true);
     expect(disclosure.querySelector("blockquote")!.innerHTML).toBe(quote);
+    expect(container.querySelector(".phrase-card blockquote")).toBeNull();
     expect(container.querySelector(".phrase-card__fidelity")!.closest("details")).toBeNull();
     expect(fidelityText()).toContain("Only on the common interval.");
     expect(container.querySelector(".phrase-card__open")!.closest("details")).toBeNull();
-    expect(container.querySelector(".phrase-card__notes")!.textContent).toContain("The complete reading note.");
+    const notes = container.querySelector<HTMLDetailsElement>(".phrase-card__notes")!;
+    expect(notes.open).toBe(true);
+    expect(notes.textContent).toContain("The complete reading note.");
   });
 
-  it("shows a short phrase in full and keeps a verdict on one of its parts attached to that part", () => {
+  it("can start with the full reading note even when it has a summary", () => {
+    act(() => root.render(<NoteBody text="The complete reading note." summary="Short version." initiallyOpen />));
+    expect(container.querySelector("p")!.textContent).toContain("The complete reading note.");
+    expect(container.querySelector("button")!.getAttribute("aria-expanded")).toBe("true");
+    act(() => container.querySelector("button")!.click());
+    expect(container.querySelector("p")!.textContent).toContain("Short version.");
+  });
+
+  it("keeps a verdict on part of a selected phrase attached to that part", () => {
     const quote = "Every maximal solution agrees on the common interval.";
     act(() => root.render(<PhraseCard inLean quote={quote} phrase="whole" note={undefined}
       merged={[{ id: "whole", quote }, { id: "part", quote: "on the common interval" }]}
       row={row({ assessments: [{ phrase: "part", fidelity: "weaker", fidelity_note: "Only for a shorter interval." }] })} />));
-    expect(container.querySelector("blockquote")!.textContent).toBe(quote);
+    expect(container.querySelector("blockquote")).toBeNull();
     expect(container.querySelector(".phrase-card__passage")).toBeNull();
     expect(container.querySelector(".phrase-card__notes")).toBeNull();
     expect(container.querySelector(".phrase-card__for")!.textContent).toBe("For “on the common interval”");

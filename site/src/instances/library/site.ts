@@ -153,7 +153,6 @@ const site = {
   },
   publicObservations: R.public_observations ?? [],
   publishReceipts: R.publish_receipts ?? false,
-  leanNotesOpen: R.lean_notes_open,
   sitePages: [""],
   routeTitles: {
     map: "Argument map", compare: "Compare", lean: "Lean index", checks: "What ran", about: "About", search: "Search",

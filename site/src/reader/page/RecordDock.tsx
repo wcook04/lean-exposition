@@ -22,7 +22,7 @@ import { aidsArrived, loadAids } from "../aids";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
-import { BriefPhraseCard, declLight, dockDecl, PhraseCard, usePhraseNotes } from "./PhraseCard";
+import { BriefPhraseCard, declLight, dockDecl, PaperPassage, PhraseCard, usePhraseNotes } from "./PhraseCard";
 import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { quoteOfDisplay } from "./PaperBody";
@@ -243,7 +243,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
         : "";
   // The paper's phrases of a declaration light while its card is pointed at, and go out with it.
   useLayoutEffect(() => () => declLight.set(null), []);
-  // The phrase's own words, as the paper sets them, for the head of its card.
+  // The phrase's own words, as the paper sets them.
   const [quote, setQuote] = useState<string | null>(null);
   const segments = phrase && open.tie !== null ? ties.segmentsOf[open.tie] : undefined;
   const quoteBytes = segments?.length
@@ -506,6 +506,9 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   See what this uses, and what uses it, in the graph
                 </button>
               </p>
+            )}
+            {inLean && !full && !holding && phrase && row && quote && (
+              <PaperPassage key={tie?.at} quote={quote} collapsible />
             )}
           </div>
         </div>

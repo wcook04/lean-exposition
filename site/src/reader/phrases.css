@@ -621,9 +621,13 @@
   padding-inline: 0;
 }
 
-.phrase-card__opening {
-  display: block;
-  margin-top: var(--space-1);
+.lean-page__body > .phrase-card__passage {
+  margin-top: var(--space-3);
+  container-type: inline-size;
+}
+
+.phrase-card__passage > blockquote {
+  margin-top: var(--space-2);
 }
 
 .phrase-card__passage > summary {
@@ -638,10 +642,6 @@
 
 .phrase-card__passage > summary:hover .phrase-card__passage-label {
   text-decoration-color: currentColor;
-}
-
-.phrase-card__passage[open] .phrase-card__opening {
-  display: none;
 }
 
 .phrase-card__assessment + .phrase-card__assessment,
@@ -689,22 +689,16 @@
   line-height: 1.5;
 }
 
-/* The quotation's prose has a reading measure. Its typeset displays and any Expand control
-   use the full width available to the card, including when the inspector changes width. */
-.phrase-card--lean {
-  container-type: inline-size;
-}
-
-.phrase-card--lean blockquote.phrase-card__quote {
+.phrase-card__passage blockquote.phrase-card__quote {
   max-width: 82ch;
 }
 
-.phrase-card--lean blockquote.phrase-card__quote :is(.math-display, .math-cue) {
+.phrase-card__passage blockquote.phrase-card__quote :is(.math-display, .math-cue) {
   inline-size: calc(100cqi - var(--space-3) - var(--sel-rail));
 }
 
 /* The paper's button hangs into its margin. A dock display reaches the scroll edge. */
-.phrase-card--lean .math-cue__expand {
+.phrase-card__passage .math-cue__expand {
   margin-inline-end: 0;
 }
 
@@ -1001,6 +995,6 @@
 }
 
 /* A display quoted in a pane card never reaches past the quotation's own measure. */
-.phrase-card--lean blockquote.phrase-card__quote :is(.math-display, .math-cue) {
+.phrase-card__passage blockquote.phrase-card__quote :is(.math-display, .math-cue) {
   max-inline-size: 100%;
 }

@@ -357,7 +357,7 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
                        "title": paper["title"], "pdf": {"file": "paper.pdf", "sha256": manifest["files"]["paper.pdf"],
                                                        "bytes": (paper_dir / "paper.pdf").stat().st_size}}],
         "reader": {
-            "publish_receipts": True, "lean_notes_open": True,
+            "publish_receipts": True,
             "lean": {"owner": "Alpöge’s", "ownerSource": "the pinned Lean community import"},
         },
     }

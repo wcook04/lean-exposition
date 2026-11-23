@@ -107,8 +107,8 @@ export function noteHtml(text: string): { html: string; errors: string[] } {
  * A reading note in a card: its summary first when it has one, with a "more" control that expands
  * the whole note in place; a note without a summary shows whole, as before.
  */
-export function NoteBody({ text, summary, className = "phrase-card__text" }: { text: string; summary?: string; className?: string }) {
-  const [open, setOpen] = useState(false);
+export function NoteBody({ text, summary, className = "phrase-card__text", initiallyOpen = false }: { text: string; summary?: string; className?: string; initiallyOpen?: boolean }) {
+  const [open, setOpen] = useState(initiallyOpen);
   if (!summary || summary.trim() === text.trim()) return <p className={className} dangerouslySetInnerHTML={{ __html: noteHtml(text).html }} />;
   return (
     <>
@@ -431,11 +431,7 @@ function Explanation({ explanation, showOpen = true }: { explanation: PhraseExpl
   );
 }
 
-export function PhraseCard({ row, role, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes }: { row: PhraseLean; role?: StatementRole; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
-  const sourceNote = showsSourceNote(row, role);
-  const leanNote = useLeanNote(row.name);
-  const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
-  const opening = useMemo(() => inLean && quote && typeof document !== "undefined" ? longQuoteOpening(quote) : null, [inLean, quote]);
+export function PaperPassage({ quote, collapsible = false }: { quote: string; collapsible?: boolean }) {
   // A quoted display formula is fitted to the card like one in the paper: it never scrolls sideways.
   const quoteRef = useRef<HTMLQuoteElement>(null);
   useLayoutEffect(() => {
@@ -444,23 +440,34 @@ export function PhraseCard({ row, role, note, quote, merged, phrase, names, expl
     // Fitted in the frame the quotation first paints, as a part of the paper is.
     fitNow(quoteRef.current);
     return stop;
-  }, [quote, opening]);
-  const passage = quote && <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />;
+  }, [quote]);
+  const passage = <blockquote ref={quoteRef} className="phrase-card__quote" aria-label="The words in the paper" dangerouslySetInnerHTML={{ __html: quote }} />;
+  if (!collapsible) return passage;
+  return (
+    <details className="phrase-card__passage" onToggle={(e) => {
+      if (e.currentTarget.open && quoteRef.current) fitNow(quoteRef.current);
+    }}>
+      <summary><span className="phrase-card__passage-label">Full passage in the paper</span></summary>
+      {passage}
+    </details>
+  );
+}
+
+export function PhraseCard({ row, role, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes }: { row: PhraseLean; role?: StatementRole; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
+  const sourceNote = showsSourceNote(row, role);
+  const leanNote = useLeanNote(row.name);
+  const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
+  const opening = useMemo(() => inLean && quote && typeof document !== "undefined" ? longQuoteOpening(quote) : null, [inLean, quote]);
   const readingNote = note && (
     <div className="phrase-card__note">
       <p className="phrase-card__label">Reading note <span>AI-drafted</span></p>
-      <NoteBody text={note} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
+      <NoteBody text={note} initiallyOpen={inLean} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
     </div>
   );
   const foldNotes = inLean && Boolean(explanation?.text || note);
   return (
     <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label={sourceNote ? "These words and their linked Lean source" : "These words and how the Lean compares with them"}>
-      {opening ? (
-        <details className="phrase-card__passage" onToggle={(e) => { if (e.currentTarget.open && quoteRef.current) fitNow(quoteRef.current); }}>
-          <summary><span className="phrase-card__passage-label">Full passage in the paper</span><span className="phrase-card__quote phrase-card__opening" dangerouslySetInnerHTML={{ __html: noteHtml(opening).html }} /></summary>
-          {passage}
-        </details>
-      ) : passage}
+      {!inLean && quote && <PaperPassage quote={quote} />}
       {!inLean && explanation?.text && <Explanation explanation={explanation} />}
       <div className="phrase-card__compare">
         {!sourceNote && (
@@ -481,7 +488,7 @@ export function PhraseCard({ row, role, note, quote, merged, phrase, names, expl
         {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
       </div>
       {foldNotes ? (
-        <details className="phrase-card__notes" open={site.leanNotesOpen}>
+        <details className="phrase-card__notes" open>
           <summary>{explanation?.citations?.length ? "Reading notes and sources" : "Reading notes"}</summary>
           {explanation?.text && <Explanation explanation={explanation} showOpen={false} />}
           {readingNote}

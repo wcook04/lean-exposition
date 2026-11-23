@@ -130,7 +130,6 @@ export interface SiteInstance {
   /** The reader's line on who made the document and its links, in place of the draft and review words; absent keeps them. */
   paperStatus?: string;
   /** Start the reading-note disclosure open in the Lean pane. */
-  leanNotesOpen?: boolean;
   /** Shown where a comparison would be, when the paper's comparisons are held (fidelity "held"). */
   comparisonsHeld?: string;
   /**
