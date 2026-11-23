@@ -1515,3 +1515,13 @@
 .tree[data-dense] .card[data-toned].is-quiet {
   background: color-mix(in oklab, var(--card-tone) 82%, var(--ground));
 }
+
+/* A step the paper never names takes the colour of the step it serves, softer. */
+.tree[data-dense] .card[data-toned="inherited"] {
+  background: color-mix(in oklab, var(--card-tone) 62%, var(--ground));
+  border-color: color-mix(in oklab, var(--card-tone) 55%, var(--ground));
+  --card-ink: oklch(from color-mix(in oklab, var(--card-tone) 62%, var(--ground)) clamp(0.16, (0.64 - l) * 1000, 0.98) 0.01 h);
+}
+.tree[data-dense] .card[data-toned="inherited"].is-quiet {
+  background: color-mix(in oklab, var(--card-tone) 48%, var(--ground));
+}

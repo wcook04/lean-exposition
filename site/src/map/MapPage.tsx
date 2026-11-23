@@ -656,6 +656,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             statusOf={recordMark}
             tileWidth={laptop ? LAPTOP_TILE_W : undefined}
             toneOf={toneOf}
+            fill="gaps"
           />
           </GraphBoundary>
         ) : (
