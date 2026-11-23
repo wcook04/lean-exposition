@@ -432,6 +432,7 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
         doc = work / "papers/short"
         doc.mkdir(parents=True)
         (doc / "paper.pdf").symlink_to(paper_dir / "paper.pdf")
+        subprocess.run(["node", "scripts/check-tex.mjs", INSTANCE.name], cwd=SITE, check=True)
         with ExitStack() as stack:
             for path, replacement in {
                 INSTANCE / "evidence-graph.json": bundle / "graph.json",

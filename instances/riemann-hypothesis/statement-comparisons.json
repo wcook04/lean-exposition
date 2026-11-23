@@ -1752,13 +1752,13 @@
     {
       "passage": "offpath:60:1",
       "name": "Formalism.RiemannHypothesisOfLowerBounds",
-      "note": "The proposed route to RH requires the difference between the smoothed zeta and character prime sums to be bounded below by −Cx^(1/2+ε), for every nontrivial real character in a chosen family and each ε > 0. The corresponding L-functions must have no common zero to the right of the critical line, and the implication is outside the final dependency cone.",
+      "note": "The proposed route to RH requires the difference between the smoothed zeta and character prime sums to be bounded below by $-Cx^{1/2+\\varepsilon}$ for every nontrivial real character in a chosen family and each $\\varepsilon>0$. The corresponding $L$-functions must have no common zero to the right of the critical line. The implication is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:60. Lean 8b83d5e src/Formalism/StatementOC.lean:65–71, src/Formalism/StatementOC.lean:10–21. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.RiemannHypothesisOfLowerBounds."
     },
     {
       "passage": "offpath:60:2",
       "name": "Formalism.CMTypeGaloisData.RiemannHypothesisOfHalfLinks",
-      "note": "In this proposed reduction to RH, each sufficiently large scale requires at least √x lifts, a bound for the weighted character sums, and a bad-prime error of order x^(1/2+ε). The named implication is outside the final dependency cone.",
+      "note": "In this proposed reduction to RH, each sufficiently large scale $x$ requires at least $\\sqrt{x}$ lifts, a bound for the weighted character sums, and a bad-prime error of order $x^{1/2+\\varepsilon}$. The implication is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:60. Lean 8b83d5e src/Formalism/HalfLinks/Statement.lean:144–149, src/Formalism/HalfLinks/Statement.lean:118–126. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.CMTypeGaloisData.RiemannHypothesisOfHalfLinks."
     },
     {
@@ -1770,13 +1770,13 @@
     {
       "passage": "offpath:61:2",
       "name": "Formalism.WeightedSieveThreeParameter.WeightedSieveImpliesRHThreeParameter",
-      "note": "This proposed weighted-sieve route to RH allows an exceptional set of discriminants and slack in the comparison with Jacobi prime sums. Both allowances must contribute errors of order at most x^(1/2+ε) at every sufficiently large x for each ε > 0, and this proposition is outside the final dependency cone.",
+      "note": "This proposed weighted-sieve route to RH allows an exceptional set of discriminants and slack in the comparison with Jacobi prime sums. Both allowances must contribute errors of order at most $x^{1/2+\\varepsilon}$ at every sufficiently large $x$ for each $\\varepsilon>0$. The proposition is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:61. Lean 8b83d5e src/Formalism/WideWeightTheorem/Statement.lean:66–83, src/Formalism/WideWeightTheorem/Statement.lean:11–12. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.WeightedSieveThreeParameter.WeightedSieveImpliesRHThreeParameter."
     },
     {
       "passage": "offpath:62:1",
       "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthBoundGivesRiemannHypothesis",
-      "note": "Lean proves that the older host and growth-inequality data would imply RH if available at every sufficiently large x for each sufficiently small ε > 0. This conditional proof supplies the character-sum identity via colour_balance and sits outside the final dependency cone.",
+      "note": "Lean proves that the older host and growth-inequality data would imply RH if available at every sufficiently large $x$ for each sufficiently small $\\varepsilon>0$. This conditional proof supplies the character-sum identity via `colour_balance` and sits outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:62, paper/sections/analytic.tex:20–23, 35–46. Lean 8b83d5e src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:139–141, src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:124–129, src/Formalism/SizeWindowBrackets/ChainSlopeWindows/LipschitzWeightAndMinimum.lean:663–664. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthBoundGivesRiemannHypothesis."
     },
     {
@@ -1788,13 +1788,13 @@
     {
       "passage": "offpath:65:1",
       "name": "Formalism.B.ZetaQuarterPowerCorollary",
-      "note": "This proposed implication requires data for a CM type and its dual at every sufficiently large scale, with the number of lifts of order x^(1/4) and bounds on the bad primes and averaging error. Its conclusion is ζ(s) ≠ 0 for Re(s) > 3/4, and the implication is outside the final dependency cone.",
+      "note": "This proposed implication requires data for a CM type and its dual at every sufficiently large scale $x$, with the number of lifts of order $x^{1/4}$ and bounds on the bad primes and averaging error. It concludes that $\\zeta(s)\\ne 0$ for $\\operatorname{Re}s>3/4$. The implication is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:65. Lean 8b83d5e src/Formalism/ProductFormula/StatementOCCM.lean:137–151. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.B.ZetaQuarterPowerCorollary."
     },
     {
       "passage": "offpath:68:1",
       "name": "Formalism.LFunctionChainParameters.characterSumData.AskMainBalance",
-      "note": "This proposition expresses the deviation of a weighted prime-power count from its main term as a sum over characters, for hosts ramified at most at 2 and two odd primes. Lean proves this form in colour_balance, and the final theorem uses the version with a finite set of primes in place of 2 and the first odd prime.",
+      "note": "This proposition expresses the deviation of a weighted prime-power count from its main term as a sum over characters, for hosts ramified at most at $2$ and two odd primes. Lean proves this form in `colour_balance`. The final theorem uses the version with a finite set of primes in place of $2$ and the first odd prime.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:68, paper/sections/analytic.tex:48–84. Lean 8b83d5e src/Formalism/SizeWindowBrackets/FirstPrimeNeSecondPrime.lean:98–101, src/Formalism/SizeWindowBrackets/FirstPrimeNeSecondPrime.lean:47–59. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.LFunctionChainParameters.characterSumData.AskMainBalance."
     },
     {
@@ -1818,13 +1818,13 @@
     {
       "passage": "offpath:71:2",
       "name": "Deduction.ch_core",
-      "note": "Under the host and size hypotheses, a bound for the prime-power count at each translate controls the weighted sum over kept characters by x^(1/2+(C+3)ε) plus the sum of the absolute values for omitted characters. The compiled proof uses this estimate to bound the growth of the character sums at each level.",
+      "note": "Under the host and size hypotheses, a bound for the prime-power count at each translate controls the weighted sum over kept characters by $x^{1/2+(C+3)\\varepsilon}$ plus the sum of the absolute values for omitted characters. The compiled proof uses this estimate to bound the growth of the character sums at each level.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:71, paper/sections/analytic.tex:102–151. Lean 8b83d5e src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChCore.lean:342–442, src/Development/AutomorphicArithmetic/DedekindLFunctions/SplitInertia.lean:26–40. Paper dd9bfc30 verify/results/cut-in.txt.xz records T Deduction.ch_core."
     },
     {
       "passage": "offpath:72:1",
       "name": "Deduction.CH.HostFactsS",
-      "note": "The compiled proof uses this host record to impose trivial inertia outside a finite set S and a distinguished prime d. At primes in S both inertia and Frobenius lie in the index-two subgroup that defines the CM type, and at d the inertia group has order two with a specified generator.",
+      "note": "The compiled proof uses this host record to impose trivial inertia outside a finite set $S$ and a distinguished prime $d$. At primes in $S$, both inertia and Frobenius lie in the index-two subgroup that defines the CM type. At $d$, the inertia group has order two with a specified generator.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:72, paper/sections/analytic.tex:48–59. Lean 8b83d5e src/Development/AutomorphicArithmetic/DedekindLFunctions/SplitInertia.lean:14–22. Paper dd9bfc30 verify/results/cut-in.txt.xz records I Deduction.CH.HostFactsS."
     },
     {
@@ -1836,13 +1836,13 @@
     {
       "passage": "offpath:75:1",
       "name": "Formalism.DworkPowerSeriesWeights.thmBGauss",
-      "note": "Lean proves an upper bound for the p-adic norm of every coefficient of a polynomial obtained by pairing products of minors with an integral-jet series times a quadratic exponential. The bound depends on the minor sizes and the selected positions, and this theorem sits outside the final dependency cone.",
+      "note": "Lean proves an upper bound for the $p$-adic norm of every coefficient of a polynomial obtained by pairing products of minors with an integral-jet series times a quadratic exponential. The bound depends on the minor sizes and the selected positions. The theorem is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:75. Lean 8b83d5e src/Formalism/GaussJetBounds/FinalB.lean:232, src/Formalism/GaussJetBounds/StatementY.lean:9–29, src/Formalism/GaussJetBounds/GaussJetProofs/GaussB.lean:70–101. Paper dd9bfc30 verify/results/cut-out.txt.xz records T Formalism.DworkPowerSeriesWeights.thmBGauss."
     },
     {
       "passage": "offpath:76:1",
       "name": "Formalism.L2.KerInert.JetsInert",
-      "note": "This proposition asserts integrality of the theta-kernel jets for admitted lattices at inert primes p ≥ 5, and Lean derives it under auxiliary hypotheses on the local model and bases. The compiled RH proof uses kernel integrality and a separate jet bound to obtain divisibility of the periods.",
+      "note": "This proposition asserts integrality of the theta-kernel jets for admitted lattices at inert primes $p\\ge 5$. Lean derives it under auxiliary hypotheses on the local model and bases. The compiled RH proof uses kernel integrality and a separate jet bound to obtain divisibility of the periods.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:76, paper/sections/divisibility.tex:61–70. Lean 8b83d5e src/Formalism/LocalToGlobal/InertKernelTheory/StatementInt.lean:26–34, src/Formalism/LocalToGlobal/InertKernelTheory/InertCoprimeLemmas/JetsModel.lean:108–112. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.L2.KerInert.JetsInert."
     },
     {
@@ -1854,13 +1854,13 @@
     {
       "passage": "offpath:77:2",
       "name": "Formalism.B.DetGain",
-      "note": "For a nonzero integer determinant Δ, if each local gain gₚ is at most the exponent of p in |Δ|, then the sum of gₚ log p over those primes is at most log |Δ|. This proposition records the product-formula estimate outside the final dependency cone.",
+      "note": "Let $\\Delta$ be a nonzero integer determinant. If each local gain $g_p$ is at most the exponent of $p$ in $|\\Delta|$, then $\\sum_p g_p\\log p\\le\\log|\\Delta|$, with the sum over the specified primes. This product-formula estimate is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:77. Lean 8b83d5e src/Formalism/ProductFormula/StatementOCCM.lean:157–160. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.B.DetGain."
     },
     {
       "passage": "offpath:79:1",
       "name": "Formalism.ThetaLiftIndependence.DetChain",
-      "note": "Suppose several operators act by scalars on matching direct-sum blocks of equal dimension. If another operator acts on each block by κ times the product of their scalars, its determinant is κ to the total dimension times the product of their determinants, a formulation outside the final dependency cone.",
+      "note": "Suppose several operators act by scalars on matching direct-sum blocks of equal dimension. If another operator acts on each block by $\\kappa$ times the product of their scalars, its determinant is $\\kappa$ raised to the total dimension, times the product of their determinants. This formulation is outside the final dependency cone.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:79, paper/sections/lattices.tex:199–207. Lean 8b83d5e src/Formalism/ThetaLiftIndependence/Statement.lean:266–276. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.ThetaLiftIndependence.DetChain."
     },
     {
@@ -1878,13 +1878,13 @@
     {
       "passage": "offpath:81:1",
       "name": "UpperTheory.V.Af.NumberSp4",
-      "note": "This proposition asks for one size-controlled nonzero integer whose ℓ-adic absolute value is at most the product of the Frobenius trace differences from the Eisenstein trace, measured ℓ-adically on admissible GSp₄ representations. It is outside the final dependency cone, where a unitary-group congruence number plays this role.",
+      "note": "This proposition asks for one size-controlled nonzero integer whose $\\ell$-adic absolute value is at most the product of the $\\ell$-adic absolute values of the differences between the Frobenius traces of admissible $\\mathrm{GSp}_4$ representations and the Eisenstein trace. The proposition is outside the final dependency cone. The compiled proof uses a unitary-group congruence number.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:81, paper/sections/cohomology.tex:114–131. Lean 8b83d5e src/Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/CongruenceNumberRankThree.lean:142–151. Paper dd9bfc30 verify/results/cut-out.txt.xz records D UpperTheory.V.Af.NumberSp4."
     },
     {
       "passage": "offpath:81:2",
       "name": "UpperTheory.V.Af.CongruenceNumberRankThree",
-      "note": "In the first U(3) formulation, one size-controlled integer bounds the sum of ℓ-adic valuations of the Frobenius trace differences from an Eisenstein trace for every ℓ ≠ 2,p. Lean derives this formulation under separate hypotheses, and the compiled RH argument uses the version with different admissibility conditions.",
+      "note": "In the first $\\mathrm{U}(3)$ formulation, one size-controlled integer bounds the sum of $\\ell$-adic valuations of the Frobenius trace differences from an Eisenstein trace for every coefficient prime $\\ell\\notin\\{2,p\\}$. Lean derives this formulation under separate hypotheses, and the compiled RH argument uses the version with different admissibility conditions.",
       "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:81, paper/sections/cohomology.tex:114–131. Lean 8b83d5e src/Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/CongruenceNumberRankThree.lean:125–140, src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/NumberU3US.lean:27–45, src/Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/TemperedLocalComponents/CongruenceNumberRankThree.lean:14–63. Paper dd9bfc30 verify/results/cut-out.txt.xz records D UpperTheory.V.Af.CongruenceNumberRankThree."
     },
     {

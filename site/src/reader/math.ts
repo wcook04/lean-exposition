@@ -150,3 +150,64 @@ export function renderTex(tex: string, display: boolean): MathResult {
     };
   }
 }
+
+interface NoteMarkup {
+  html: string;
+  errors: readonly string[];
+}
+
+// Following the paper can show the same note on consecutive renders and on a return visit.
+const notes = new Map<string, NoteMarkup>();
+
+/**
+ * A reading note as HTML: `$…$` typeset by KaTeX, `name` as code, the rest as text.
+ * `errors` lists any formula KaTeX could not set; the formula then shows as its source.
+ */
+export function noteHtml(text: string): NoteMarkup {
+  const cached = notes.get(text);
+  if (cached) return cached;
+  let html = "";
+  const errors: string[] = [];
+  let i = 0;
+  while (i < text.length) {
+    const c = text[i];
+    if (c === "\\" && text[i + 1] === "$") {
+      html += "$";
+      i += 2;
+    } else if (c === "$") {
+      let j = i + 1;
+      while (j < text.length && !(text[j] === "$" && text[j - 1] !== "\\")) j++;
+      if (j === text.length) {
+        html += escapeHtml(text.slice(i));
+        errors.push("Unmatched $ in annotation");
+        break;
+      }
+      const math = renderTex(text.slice(i + 1, j), false);
+      if (math.error) errors.push(math.error);
+      // Punctuation straight after a formula keeps to its line.
+      const glued = /^[.,;:!?)\]’”]+/.exec(text.slice(j + 1))?.[0] ?? "";
+      html += glued ? `<span class="nowrap">${math.html}${escapeHtml(glued)}</span>` : math.html;
+      i = j + 1 + glued.length;
+    } else if (c === "`") {
+      const j = text.indexOf("`", i + 1);
+      if (j < 0) {
+        html += escapeHtml(text.slice(i));
+        break;
+      }
+      html += `<code>${escapeHtml(text.slice(i + 1, j))}</code>`;
+      i = j + 1;
+    } else {
+      let j = i;
+      while (j < text.length && text[j] !== "$" && text[j] !== "`" && !(text[j] === "\\" && text[j + 1] === "$")) j++;
+      const plain = text.slice(i, j);
+      const command = /\\[A-Za-z]+/.exec(plain);
+      if (command) errors.push(`TeX command outside $…$: ${command[0]}`);
+      html += escapeHtml(plain);
+      i = j;
+    }
+  }
+  const markup = { html, errors };
+  if (notes.size === 128) notes.delete(notes.keys().next().value!);
+  notes.set(text, markup);
+  return markup;
+}

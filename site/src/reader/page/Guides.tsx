@@ -10,7 +10,8 @@ import { routeHref } from "../../app/router";
 import type { RouteStep, ShowcaseCard } from "../aids";
 import { useDocument } from "../documents";
 import { TonesSwitch } from "./Outline";
-import { ComparisonLegend, noteHtml } from "./PhraseCard";
+import { noteHtml } from "../math";
+import { ComparisonLegend } from "./PhraseCard";
 
 function Head({ title, onClose }: { title: string; onClose(): void }) {
   return (

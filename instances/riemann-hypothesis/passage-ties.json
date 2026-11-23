@@ -537,7 +537,7 @@
             12,
             15
           ],
-          "note": "The primitive-character theorem applies the window exponent three halves and obtains hosts from supplyChi."
+          "note": "The primitive-character theorem uses window exponent $3/2$ and obtains hosts from `supplyChi`."
         }
       },
       "pdf_page": 11,
@@ -583,7 +583,7 @@
             36,
             36
           ],
-          "note": "The distinguished character has weight one. The other weights are reciprocals of three times the level parameter plus one."
+          "note": "The distinguished character has weight $1$. The other characters have weight $(3o+1)^{-1}$, where $o$ is the level parameter."
         },
         "Formalism.HC.Level.Gm": {
           "lines": [
@@ -651,7 +651,7 @@
             304,
             312
           ],
-          "note": "The helper applies ch_balance for each size and lift, then takes real parts."
+          "note": "The helper applies `ch_balance` for each size and lift, then takes real parts."
         }
       },
       "pdf_page": 14,
@@ -743,7 +743,7 @@
             25,
             28
           ],
-          "note": "The conclusion bounds the fraction of slopes below the threshold by u divided by u plus tau."
+          "note": "The number of slopes below $s-\\tau$ is at most the total number of slopes times $u/(u+\\tau)$."
         }
       },
       "pdf_page": 18,
@@ -782,7 +782,7 @@
             126,
             129
           ],
-          "note": "The proof extracts the cohomological bound and passes it to divinN_at after weakening the square-root bound to b."
+          "note": "The proof extracts the cohomological bound and passes it to `divinN_at` after weakening $\\sqrt{b}$ to $b$."
         }
       },
       "pdf_page": 23,
@@ -837,7 +837,7 @@
             1292,
             1294
           ],
-          "note": "Membership requires a point with the prescribed parameter block of length R.t."
+          "note": "Membership requires a point with the prescribed parameter block of length `R.t`."
         }
       },
       "pdf_page": 23,
@@ -885,7 +885,7 @@
             219,
             220
           ],
-          "note": "The local length is the length of the quotient of MtUp by MtLow."
+          "note": "The local length is the length of the quotient of `MtUp` by `MtLow`."
         }
       },
       "pdf_page": 23,
@@ -934,7 +934,7 @@
             18,
             22
           ],
-          "note": "The conclusion is VWin. Its proof combines four count bounds with the even and odd cohomological inputs."
+          "note": "The conclusion is `VWin`. Its proof combines four count bounds with the even and odd cohomological inputs."
         }
       },
       "pdf_page": 23,
@@ -995,7 +995,7 @@
             29,
             31
           ],
-          "note": "These fields give a square root of minus d and determine how the Galois group acts on it."
+          "note": "These fields give a square root of $-d$ and determine how the Galois group acts on it."
         }
       },
       "pdf_page": 25,
@@ -1081,7 +1081,7 @@
             17,
             19
           ],
-          "note": "This predicate is the conjunction of the eleven size clauses used by ChainTied."
+          "note": "This predicate is the conjunction of the eleven size clauses used by `ChainTied`."
         }
       },
       "pdf_page": 16,

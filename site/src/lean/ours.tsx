@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from "react";
 import site from "@instance/site";
-import { noteHtml } from "../reader/page/PhraseCard";
+import { noteHtml } from "../reader/math";
 import { isFidelity, phraseVerdict } from "../compare/fidelityWords";
 import { libraryChecks, type LaterCheck } from "../app/libraryAddress";
 import "./ours.css";

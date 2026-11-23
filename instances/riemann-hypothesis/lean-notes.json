@@ -86,7 +86,7 @@
           14,
           17
         ],
-        "reading_note": "For each prime $\\ell$ and twist $1\\le e<t$, the first clause requires finite $\\mathbb Z_\\ell$-length for the classes that restrict to zero at every place above $\\ell$. In the second clause, toNat reads those finite lengths as integers before the sum over an arbitrary finite set of primes."
+        "reading_note": "For each prime $\\ell$ and twist $1\\le e<t$, the first clause requires finite $\\mathbb Z_\\ell$-length for the classes that restrict to zero at every place above $\\ell$. In the second clause, `toNat` reads those finite lengths as integers before the sum over an arbitrary finite set of primes."
       }
     ],
     "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at": [
@@ -101,12 +101,12 @@
           91,
           93
         ],
-        "reading_note": "Read IsRankRPart over the fraction field as the decomposition of the lift into a rank-$r$ summand $\\rho$ and the prescribed characters. The Selmer term sPi uses $\\rho$ twisted by the inverse of the first character, with coefficients in the quotient of the fraction-field space by its lattice."
+        "reading_note": "Read `IsRankRPart` over the fraction field as the decomposition of the lift into a rank-$r$ summand $\\rho$ and the prescribed characters. The Selmer term `sPi` uses $\\rho$ twisted by the inverse of the first character, with coefficients in the quotient of the fraction-field space by its lattice."
       }
     ],
     "UpperTheory.Top.supplyChi": [
       {
-        "title": "The construction behind supplyChi",
+        "title": "Finding admissible ranks for the host",
         "file": "hosts.md",
         "lines": [
           60,
@@ -116,7 +116,7 @@
           11,
           16
         ],
-        "reading_note": "The goal left by the call to supplyOfAdm is to supply admissible ranks. The proof substitutes the scale's value of $\\varepsilon$, then uses admissibleClassesTwistedChar to obtain ranks with the required sizes and admissibility for the input field."
+        "reading_note": "The call to `supplyOfAdm` leaves the admissible ranks to be supplied. The proof substitutes the scale's value of $\\varepsilon$, then uses `admissibleClassesTwistedChar` to obtain ranks with the required sizes and admissibility for the input field."
       }
     ],
     "UpperTheory.Top.PairEx": [
@@ -176,12 +176,12 @@
           126,
           129
         ],
-        "reading_note": "The tuple from vvRecord has three components. The proof uses finiteness to apply the link estimate, passes summability to divinN_at, and passes the numerical bound to that lemma after enlarging it to $b$."
+        "reading_note": "The tuple from `vvRecord` has three components. The proof uses finiteness to apply the link estimate, then passes summability and the numerical bound to `divinN_at` after weakening $\\sqrt{b}$ to $b$."
       }
     ],
     "Formalism.LFunctionChainParameters.LChain.SizeData₂": [
       {
-        "title": "Where ChainTied gets the eleven clauses",
+        "title": "The eleven clauses used in the lattice bound",
         "file": "lattices.md",
         "lines": [
           8,
@@ -191,7 +191,7 @@
           17,
           19
         ],
-        "reading_note": "Unfold this proposition to see the eleven clauses imposed on one chain datum at the chosen scale. ChainTied supplies them together, and each_unit_bound_statement uses them to bound ASK by the sum of a main term and an error for each outer index."
+        "reading_note": "Unfold this proposition to see the eleven clauses imposed on one chain datum at the chosen scale. `ChainTied` supplies them together, and `each_unit_bound_statement` uses them to bound `ASK` by the sum of a main term and an error for each outer index."
       }
     ]
   },

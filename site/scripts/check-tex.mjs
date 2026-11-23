@@ -1,56 +1,86 @@
 #!/usr/bin/env node
-// Every formula a library paper's cards show must typeset: titles, reading notes and summaries,
-// and comparison notes. Each $...$ is rendered with KaTeX; text outside formulas may hold no
-// backslash command and no unmatched $. Fails naming each field that would show raw TeX.
-// Usage: check-tex.mjs <paper>   (from site/)
+// Check reader annotations with the same KaTeX renderer the reader uses.
+// Usage: node scripts/check-tex.mjs <paper>   (from site/)
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import katex from "katex";
+import { noteHtml } from "../src/reader/math.ts";
 
 const paper = process.argv[2];
-const root = resolve(import.meta.dirname, "../../instances", paper);
+const root = resolve(import.meta.dirname, "../../instances", paper ?? "");
+if (!paper || !existsSync(root)) throw new Error("Name an existing reader instance");
 const read = (rel) => (existsSync(resolve(root, rel)) ? JSON.parse(readFileSync(resolve(root, rel), "utf8")) : null);
 const fields = [];
-const names = read("alignment/names.json");
-for (const [name, title] of Object.entries(names?.names ?? {})) fields.push([`title ${name}`, title]);
-// Every document's phrases: the three accounts and any companion documents (phrases-<page>.json).
-const slots = existsSync(resolve(root, "alignment"))
-  ? readdirSync(resolve(root, "alignment")).filter((f) => /^phrases-.+\.json$/.test(f)).map((f) => f.slice(8, -5))
-  : [];
-for (const slot of slots) {
-  const phrases = read(`alignment/phrases-${slot}.json`);
-  for (const part of phrases?.parts ?? []) {
-    for (const [name, t] of Object.entries(part.titles ?? {})) fields.push([`${slot} title ${name}`, t]);
-    for (const [name, n] of Object.entries(part.notes ?? {})) fields.push([`${slot} note ${name}`, n]);
-  }
-  for (const tie of phrases?.ties ?? []) for (const row of tie.lean ?? []) if (row.fidelity_note) fields.push([`comparison ${tie.id} ${row.name}`, row.fidelity_note]);
+
+function explanation(where, note) {
+  if (!note) return;
+  fields.push([where, note.text], [`${where} (open question)`, note.open]);
+  for (const citation of note.citations ?? []) fields.push([`${where} (citation)`, citation.supports]);
 }
-for (const [name, note] of Object.entries(read("generated/lean-notes.json")?.notes ?? {})) {
-  fields.push([`lean note ${name}`, note.text]);
-  if (note.summary) fields.push([`lean summary ${name}`, note.summary]);
-}
-const problems = [];
-for (const [where, text] of fields) {
-  if (typeof text !== "string") continue;
-  const parts = text.split(/(?<!\\)\$/);
-  if (parts.length % 2 === 0) {
-    problems.push(`${where}: an unmatched $`);
-    continue;
+
+function phrases(file) {
+  const data = read(file);
+  if (!data) return;
+  fields.push([`${file}: main result`, data.main_result]);
+  for (const part of data.parts ?? []) {
+    for (const [name, text] of Object.entries(part.titles ?? {})) fields.push([`${file}: title ${name}`, text]);
+    for (const [name, text] of Object.entries(part.notes ?? {})) fields.push([`${file}: note ${name}`, text]);
   }
-  parts.forEach((part, k) => {
-    if (k % 2) {
-      try {
-        katex.renderToString(part, { throwOnError: true, output: "html", strict: "ignore" });
-      } catch (error) {
-        problems.push(`${where}: $${part.slice(0, 50)}$ does not typeset (${String(error.message).slice(0, 80)})`);
+  for (const tie of data.ties ?? []) {
+    const where = `${file}: ${tie.id}`;
+    explanation(where, tie.explanation);
+    for (const row of tie.lean ?? []) {
+      const declaration = `${where} ${row.name}`;
+      fields.push([declaration, row.fidelity_note], [declaration, row.link_note], [declaration, row.matters?.line]);
+      for (const assessment of row.assessments ?? []) {
+        fields.push([`${declaration} for ${assessment.phrase}`, assessment.fidelity_note]);
       }
-    } else if (/\\[A-Za-z]+/.test(part.replace(/`[^`]*`/g, ""))) {
-      problems.push(`${where}: a TeX command outside $...$: ${part.match(/\\[A-Za-z]+/)[0]}`);
     }
-  });
+  }
 }
+
+for (const [name, title] of Object.entries(read("alignment/names.json")?.names ?? {})) {
+  fields.push([`title ${name}`, title]);
+}
+const alignment = resolve(root, "alignment");
+if (existsSync(alignment)) {
+  for (const name of readdirSync(alignment)) {
+    if (/^phrases-.+\.json$/.test(name)) phrases(`alignment/${name}`);
+    if (/(?:^|-)results\.json$|^records\.json$/.test(name)) {
+      const data = read(`alignment/${name}`);
+      for (const [id, record] of Object.entries(data.records ?? data.results ?? {})) {
+        for (const place of [record, ...(record.statements ?? [])]) {
+          for (const row of place.lean ?? []) {
+            fields.push([`${name}: ${id} ${row.name}`, row.fidelity_note], [`${name}: ${id} ${row.name}`, row.note]);
+          }
+        }
+      }
+    }
+  }
+}
+const adapted = read("adapted/edition.json")?.document?.slot;
+if (adapted && !existsSync(resolve(alignment, `phrases-${adapted}.json`))) phrases("adapted/phrases.json");
+
+for (const [name, note] of Object.entries(read("generated/lean-notes.json")?.notes ?? {})) {
+  fields.push([`Lean note ${name}`, note.text], [`Lean summary ${name}`, note.summary]);
+}
+for (const review of read("statement-comparisons.json")?.reviews ?? []) {
+  const where = `comparison ${review.passage} ${review.name}`;
+  fields.push([where, review.fidelity_note], [where, review.note]);
+  explanation(where, review.explanation);
+}
+for (const [name, excerpts] of Object.entries(read("lean-notes.json")?.excerpts ?? {})) {
+  for (const excerpt of excerpts) fields.push([`Lean excerpt ${name}`, excerpt.reading_note]);
+}
+
+const localTies = read("passage-ties.json");
+for (const [id, passage] of Object.entries(localTies?.passages ?? {})) {
+  for (const focus of Object.values(passage.focus ?? {})) fields.push([`paper passage ${id}`, focus.note]);
+}
+
+const prose = fields.filter(([, text]) => typeof text === "string" && text.length > 0);
+const problems = prose.flatMap(([where, text]) => noteHtml(text).errors.map((error) => `${where}: ${error}`));
 if (problems.length) {
-  console.error(`${paper}: ${problems.length} field(s) would show raw TeX:\n${problems.slice(0, 20).map((p) => `  - ${p}`).join("\n")}`);
+  console.error(`${paper}: ${problems.length} annotation error(s):\n${problems.slice(0, 30).map((p) => `  - ${p}`).join("\n")}`);
   process.exit(1);
 }
-console.log(`${paper}: ${fields.length} titles, notes and comparisons typeset`);
+console.log(`${paper}: ${prose.length} annotation fields checked with the reader renderer`);

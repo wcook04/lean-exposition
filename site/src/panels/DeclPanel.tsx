@@ -2,6 +2,7 @@
 // name in any sheet walks to. The declaration itself comes first, then what it is linked to
 // in the argument. Each walk is one history entry, so Back returns to the sheet it left.
 
+import { noteHtml } from "../reader/math";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { routeHref } from "../app/router";
 import { useAlignment } from "../compare/useAlignment";
@@ -125,7 +126,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
                       </button>
                       <span className="rels__meta">{RELATION_WORDS[row.relation]}</span>
                     </span>
-                    {row.note && <p className="panel__note">{row.note}</p>}
+                    {row.note && <p className="panel__note" dangerouslySetInnerHTML={{ __html: noteHtml(row.note).html }} />}
                   </li>
                 ))}
               </ul>
