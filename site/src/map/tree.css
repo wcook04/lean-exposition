@@ -1498,6 +1498,13 @@
    graph: the card keeps the page's dark card, with a bar of the topic's colour down its left edge
    and bold words on the left. A step the paper does not name (a Lean helper) takes a softer bar
    of the step it serves. The bar narrows when the card is too small for words. */
+.tree[data-dense]:not([data-world-text]) .card[data-lean]:not([data-toned]) {
+  background: var(--card);
+  border-color: var(--card-border);
+}
+.tree[data-dense]:not([data-world-text]) .card[data-lean]:not([data-toned]).is-quiet {
+  background: color-mix(in oklab, var(--card) 70%, var(--ground));
+}
 .tree[data-dense] .card[data-toned],
 .tree[data-dense] .card[data-toned][data-lean] {
   --topic-rail: calc(5px / var(--k));
@@ -1542,10 +1549,9 @@
   visibility: hidden;
 }
 
-/* On a coloured card the colour is its topic, so its Lean status is a dot in the top right corner,
-   a constant 7px on screen: filled when linked Lean proves it, a ring when it has some of it,
-   none when no Lean is linked. The dot is hidden at overview scale. */
-.tree[data-dense] .card[data-toned][data-lean]::before {
+/* Argument cards carry Lean status in the top right corner, even before topic data loads.
+   The 7px dot is filled for whole and a ring for part. Small cards omit the dot. */
+.tree[data-dense]:not([data-world-text]) .card[data-lean]::before {
   content: "";
   position: absolute;
   top: calc(5px / var(--k));
@@ -1557,10 +1563,10 @@
   border: calc(1.5px / var(--k)) solid var(--lean-fill-line, var(--ink));
   pointer-events: none;
 }
-.tree[data-dense] .card[data-toned][data-lean="whole"]::before {
+.tree[data-dense]:not([data-world-text]) .card[data-lean="whole"]::before {
   background: var(--lean-fill-line, var(--ink));
 }
-.tree[data-dense] .card[data-toned][data-chip]::before {
+.tree[data-dense]:not([data-world-text]) .card[data-chip]::before {
   display: none;
 }
 
