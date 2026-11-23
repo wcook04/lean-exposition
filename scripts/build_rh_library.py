@@ -312,24 +312,49 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
     alignment, ties, marks, line_annotations = reading_data(text, assets, catalogue, names, reader["root"], reviews)
     alignment["steps"] = steps
     paper = manifest["paper"]
+    lean = manifest["lean"]
+    first_statement = marks["marks"]["st:rh"]
+    start = "?" + urlencode({"n": GOAL, "l": first_statement["at"], "v": "lean",
+                              "view": "pdf", "page": first_statement["boxes"][0][0]})
+    overview_page = next(section["page"] for section in assets["sections.json"]["sections"] if section["section"] == "3")
     config = {
         "schema": "library-instance/1", "id": INSTANCE.name, "title": paper["title"], "short_title": "The Riemann Hypothesis",
+        "description": "Read Qui Vincit and Fable’s account of Alpöge’s Riemann Hypothesis formalization with links from the paper to the Lean statements and proof dependencies.",
         "authors": paper["authors"], "venue": f'Version {paper["version"]}', "licence": paper["license"],
         "credit_lines": [f'The paper by {" and ".join(paper["authors"])} is shared under {paper["license"]}.'],
         "host": ("Independent reader by Will Cook, candidate edition." if public else
                  "Hosted by Will Cook in his reading library."),
-        "review": "An AI agent compared selected passages with the pinned Lean. The comparisons are source readings. Lean kernel checks are reported separately.",
+        "review": "Select a highlighted passage to see the corresponding Lean and what the passage does in the argument. AI-assisted comparisons describe how the paper and Lean statements line up. What ran links to the recorded archive checks.",
         "goal": GOAL, "main_lean": reader["root"],
         "levels": ["short"], "level_names": {"short": "Paper"},
         "families": assets["topics.json"]["families"], "topics": assets["topics.json"]["topics"],
         "topic_order": [topic["id"] for topic in assets["topics.json"]["topics"]],
         "source": {"upstream": {"repository": paper["repository"], "commit": paper["revision"],
-                                "paper": f'{paper["repository"]}/blob/{paper["revision"]}/main.pdf'},
-                   "lean_scope": "The map covers the paper-linked declarations in the compiled proof. An edge can pass through intermediate declarations."},
+                                "paper": f'{paper["repository"]}/blob/{paper["revision"]}/paper/main.pdf'},
+                   "lean": {"authors": "Levent Alpöge with Claude", "repository": lean["upstream"], "commit": lean["revision"]},
+                   "lean_scope": "The whole proof map uses James Shore’s compiled dependency data and displays declarations linked from the paper. A line may represent a chain through declarations omitted from the map. Open a statement’s Graph pane to see its immediate Lean dependencies."},
+        "about": [{
+            "heading": "Where to start",
+            "paragraphs": [
+                "Start with Statement 2.1, where the authors spell out the Riemann Hypothesis. "
+                "Section 3 then separates the problem into an analytic half and an arithmetic half. "
+                "The arithmetic half establishes a bound for a weighted count of prime powers. "
+                "The analytic half uses the bound to rule out zeros of Dirichlet $L$-functions to the right of the critical line, with a pole exception for the trivial character at $s=1$.",
+                "In Section 4, watch for the two errors $x/m$ and $m$. "
+                "Here $x$ is the scale of the count and $m$ is the length of the theta-lift chain. "
+                "Choosing $m$ near $\\sqrt{x}$ balances those terms. The bound on the ranks of the lattices controls the third error term. "
+                "The windowed Landau theorem is the step from the bound on prime powers to nonvanishing.",
+            ],
+            "links": [
+                {"label": "Read Statement 2.1 beside its Lean", "href": start},
+                {"label": "Read Section 3, The shape of the proof", "href": f"?view=pdf&page={overview_page}#pdf-section-3"},
+                {"label": "Open the whole proof map", "href": "map/"},
+            ],
+        }],
         "documents": [{"id": "paper", "slot": "short", "slug": "", "noun": "paper", "main": True, "pdf_only": True,
                        "title": paper["title"], "pdf": {"file": "paper.pdf", "sha256": manifest["files"]["paper.pdf"],
                                                        "bytes": (paper_dir / "paper.pdf").stat().st_size}}],
-        "reader": {"publish_receipts": True},
+        "reader": {"publish_receipts": True, "lean": {"owner": "Alpöge’s", "ownerSource": "the pinned Lean community import"}},
     }
     scratch = ROOT / "build"
     scratch.mkdir(exist_ok=True)

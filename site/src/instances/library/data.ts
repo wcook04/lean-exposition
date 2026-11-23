@@ -97,6 +97,7 @@ export interface LibraryInstance {
   path?: string;
   title: string;
   short_title: string;
+  description?: string;
   authors: string[];
   venue: string;
   credit_lines: string[];
@@ -106,7 +107,12 @@ export interface LibraryInstance {
   licence?: string;
   host: string;
   review: string;
-  source: { proof_reader?: { repository: string; commit: string; page: string }; upstream: { repository: string; commit: string; paper?: string | null }; lean_scope?: string };
+  source: {
+    proof_reader?: { repository: string; commit: string; page: string };
+    upstream: { repository: string; commit: string; paper?: string | null };
+    lean?: { authors: string; repository: string; commit: string };
+    lean_scope?: string;
+  };
   documents: LibraryDocument[];
   /** Compare's columns besides the Lean, by document slot, when the paper has several accounts of one argument. */
   levels?: string[];

@@ -66,6 +66,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
     };
   }, [route.anchor]);
   const up = PAPER.source.upstream;
+  const lean = PAPER.source.lean;
   return (
     <article className="about" ref={page}>
       <header className="about__intro">
@@ -100,7 +101,14 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           Their repository: <Out href={`${up.repository}/tree/${up.commit}`}>{up.repository.replace("https://github.com/", "")} at {up.commit.slice(0, 7)}</Out>.
           {up.paper ? <> The authors’ <Out href={up.paper}>paper</Out>.</> : null}
         </p>
-        {PAPER.licence ? <p>Licence of the paper and its Lean: {PAPER.licence}.</p> : null}
+        {PAPER.licence && (
+          <p>{lean ? `The paper is licensed under ${PAPER.licence}.` : `Licence of the paper and its Lean: ${PAPER.licence}.`}</p>
+        )}
+        {lean && (
+          <p>Lean formalization by {lean.authors}. The reader opens files from the{" "}
+            <Out href={`${lean.repository}/tree/${lean.commit}`}>pinned Lean community import</Out>.
+          </p>
+        )}
         {PAPER.source.lean_scope ? <p>{PAPER.source.lean_scope}</p> : null}
         <p>{PAPER.host} <a href={LIBRARY_ROOT}>The library</a> lists every paper it holds.</p>
       </section>

@@ -133,10 +133,12 @@ const site = {
   papers: `instances/${PAPER.id}/papers`,
   editionTitle: plain(PAPER.title),
   html: {
-    description: `${plain(PAPER.title)}, by ${BY}, read sentence by sentence beside its Lean.`,
+    description: PAPER.description ?? `${plain(PAPER.title)}, by ${BY}, read sentence by sentence beside its Lean.`,
     ogTitle: plain(PAPER.title),
-    ogDescription: `By ${BY}. Each phrase opens the Lean that states it.`,
-    noscript: `The paper and its Lean are in the repository under <code>instances/${PAPER.id}/</code>.`,
+    ogDescription: PAPER.description ?? `By ${BY}. Each phrase opens the Lean that states it.`,
+    noscript: PAPER.source.lean
+      ? "The reader uses JavaScript to open the paper, show the proof map and load the pinned Lean files."
+      : `The paper and its Lean are in the repository under <code>instances/${PAPER.id}/</code>.`,
     ogImage: false,
   },
   defaultSiteUrl: `${LIBRARY_ROOT}${PAPER.path ?? PAPER.id}/`,

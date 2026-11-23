@@ -6,16 +6,34 @@
       "passage": "st:rh",
       "name": "riemannHypothesis",
       "fidelity": "same",
-      "note": "`Main.lean` uses Mathlib’s `RiemannHypothesis`. It quantifies over a complex zero of ζ, excludes all negative even integers $-2(n+1)$ and the pole at $s=1$, and concludes $\\operatorname{Re}s=1/2$. These are the hypotheses and conclusion of Statement 2.1.",
+      "note": "Statement 2.1 expands Mathlib’s `RiemannHypothesis`, the exact type of the theorem in `Main.lean`. The variables, the exclusions $s=-2(n+1)$ and $s=1$, and the conclusion $\\operatorname{Re}s=1/2$ agree.",
       "evidence": "Paper verification.tex 48–54; Main.lean 4; pinned lake-manifest.json; Mathlib RiemannZeta.lean 163–164.",
       "explanation": {
-        "text": "The paper spells out the proposition that the theorem in `Main.lean` names by its Mathlib identifier.",
+        "text": "Where can the Riemann zeta function vanish? Its known zeros at $-2,-4,-6,\\ldots$ are called trivial zeros. The point $s=1$ is a pole, where the meromorphic function blows up. The Riemann Hypothesis puts every other zero on the vertical line $\\operatorname{Re}s=1/2$. The location matters for counting primes. In the smoothed count used in the paper, a zero $\\rho$ contributes a term proportional to $x^\\rho$. A zero farther to the right has a larger real part and gives a faster-growing term. Alpöge’s proof rules out zeros to the right of the line for all Dirichlet $L$-functions, including $\\zeta$ at modulus one. The zeta functional equation rules out a remaining zero to the left by reflecting it to $1-s$.",
         "citations": [
           {
             "ref": "mathlib-rh",
             "title": "Mathlib’s definition of RiemannHypothesis",
             "url": "https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/NumberTheory/LSeries/RiemannZeta.lean#L163-L164",
             "where": "RiemannZeta.lean, lines 163–164"
+          },
+          {
+            "ref": "riemann-1859",
+            "title": "Riemann’s 1859 memoir",
+            "url": "https://www.claymath.org/library/historical/riemann/english/4.pdf",
+            "where": "Manuscript sheet 4, English translation"
+          },
+          {
+            "ref": "zeta-smoothed-prime-count",
+            "title": "The smoothed prime-power sum",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L4-L18",
+            "where": "Section 4.1, equation (4.1)"
+          },
+          {
+            "ref": "zeta-reflection",
+            "title": "Reflecting a zeta zero to the right half-plane",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/GammaFactorNonvanishing/RhOfRight.lean#L5-L62",
+            "where": "RhOfRight.lean, lines 5–62"
           }
         ]
       }
@@ -24,246 +42,1856 @@
       "passage": "st:grh",
       "name": "LFunction_ne_zero_of_half_lt_re",
       "fidelity": "same",
-      "note": "Unfolding `DirichletLNonvanishingRightOfHalf` gives the same complex Dirichlet characters and the same condition $\\operatorname{Re}s>1/2$. Lean’s `NeZero N` on a natural modulus means $N\\ge1$. The disjunction `χ ≠ 1 ∨ s ≠ 1` excludes exactly the trivial-character case at $s=1$.",
-      "evidence": "Paper verification.tex 55–58, 65–68; Main.lean 8; Statements.lean 6–8."
+      "note": "Unfold `DirichletLNonvanishingRightOfHalf` in `Statements.lean`. A natural modulus with `NeZero N` is positive, and `χ ≠ 1 ∨ s ≠ 1` gives the same pole exception as Statement 2.2. Both quantify over all characters, including those induced from smaller moduli.",
+      "evidence": "Paper verification.tex 55–58, 65–68; Main.lean 8; Statements.lean 6–8.",
+      "explanation": {
+        "text": "A Dirichlet character weights the terms of the zeta series according to their residue classes. Every such character comes from a primitive character at its conductor, the smallest modulus that induces it. After proving nonvanishing at the primitive level, the argument uses a finite product to recover the $L$-function at the original modulus. Each extra factor has the form $1-\\chi_*(p)p^{-s}$, where $\\chi_*$ is the primitive character. For $\\operatorname{Re}s>0$, the term subtracted from $1$ has modulus at most $p^{-\\operatorname{Re}s}<1$, so these factors cannot introduce zeros in the half-plane of the theorem.",
+        "citations": [
+          {
+            "ref": "grh-half-plane-statement",
+            "title": "The Dirichlet nonvanishing theorem",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/verification.tex#L55-L58",
+            "where": "Statement 2.2"
+          },
+          {
+            "ref": "imprimitive-euler-factors",
+            "title": "Passing from primitive to arbitrary characters",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/Imprimitive.lean#L5-L35",
+            "where": "Imprimitive.lean, lines 5–35"
+          }
+        ]
+      }
     },
     {
       "passage": "st:strip",
       "name": "LFunction_eq_zero_re",
       "fidelity": "same",
-      "note": "`DirichletLZerosOnLine` quantifies over every character of every positive modulus, including imprimitive characters. A zero in the same open strip $0<\\operatorname{Re}s<1$ has $\\operatorname{Re}s=1/2$.",
-      "evidence": "Paper verification.tex 59–68; Main.lean 10; Statements.lean 10–12."
+      "note": "Lean’s `DirichletLZerosOnLine` has the same open strip and quantifies over all complex Dirichlet characters modulo every positive $N$. The primitive-only theorem named just below the display adds `χ.IsPrimitive`.",
+      "evidence": "Paper verification.tex 59–68; Main.lean 10; Statements.lean 10–12.",
+      "explanation": {
+        "text": "To rule out a zero on the left side of the strip, first pass to the primitive character inducing the given character. The extra Euler factors are nonzero for $\\operatorname{Re}s>0$, so the zero must come from the primitive $L$-function. The functional equation then gives a zero for the inverse primitive character at $1-s$. For instance, real part $1/3$ would become $2/3$, where Statement 2.2 gives nonvanishing. The restriction to the open strip matters because extra Euler factors can vanish on its left boundary.",
+        "citations": [
+          {
+            "ref": "dirichlet-strip-boundary",
+            "title": "Why the critical strip is open",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/verification.tex#L59-L68",
+            "where": "Statement 2.3 and the paragraph below"
+          },
+          {
+            "ref": "dirichlet-strip-reflection",
+            "title": "Induction and reflection in the strip",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/ClaimStrip.lean#L23-L73",
+            "where": "ClaimStrip.lean, lines 23–73"
+          }
+        ]
+      }
     },
     {
       "passage": "st:landau",
       "name": "Deduction.zeroFree_of_rpow_window",
       "fidelity": "same",
-      "note": "`CharFamily` stores the admissible characters and their positive weights, and `Gm F` is their weighted real sum. Lean’s $\\delta$ is the paper’s $\\omega$. The hypothesis uses the same closed windows above arbitrarily large starting scales, and `ZeroFree` asserts nonvanishing for every family member with $\\operatorname{Re}s>\\theta$.",
-      "evidence": "Paper analytic.tex 4–24; ZeroFreeOfRpowWindow.lean 11–14; CharFamily.lean 10–39."
+      "note": "Lean’s `CharFamily` requires positive weights and admits only nontrivial characters or the character of modulus one. Its `Gm` sums the same weighted real parts. With $\\delta=\\omega$, Lean’s closed interval and the requirement of arbitrarily late windows match Statement 4.1. The conclusion quantifies over each member of the family.",
+      "evidence": "Paper analytic.tex 4–24; ZeroFreeOfRpowWindow.lean 11–14; CharFamily.lean 10–39.",
+      "explanation": {
+        "text": "The proof obtains its prime-power estimates at scales where it can construct suitable auxiliary fields. This lemma is what makes those estimates enough. With $\\omega=1/2$, each chosen window must contain the whole interval from $Y$ to $Y^{3/2}$, and the starts $Y$ can be arbitrarily large. A zero with real part above $\\theta$ would give a pole in the Laplace transform of the smoothed sum. The window estimate controls high Taylor coefficients tightly enough to exclude that pole, even though it bounds the sum only from above. In the application, one can choose $\\theta$ arbitrarily close to $1/2$ from above.",
+        "citations": [
+          {
+            "ref": "landau-rpow-windows",
+            "title": "The window hypothesis and its application",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L16-L46",
+            "where": "Section 4.1"
+          },
+          {
+            "ref": "landau-window-growth",
+            "title": "The coefficient bound from a window",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/landauWindow.lean#L40-L73",
+            "where": "landauWindow.lean, lines 40–73"
+          }
+        ]
+      }
     },
     {
       "passage": "st:balance",
       "name": "Deduction.ch_balance",
       "fidelity": "stronger",
-      "note": "Unfolding `De` gives the paper’s weighted sum over the characters and over $g$ outside $\\Phi$. Lean proves the identity for an arbitrary complex-valued correction `ell`. Taking `ell` to be the logarithmic derivatives gives the printed formula. Lean also makes the finite cutoff $N$ explicit, bounding every $a/w(\\rho)$.",
-      "evidence": "Paper analytic.tex 48–79; ChBalance.lean 200–202; FirstPrimeNeSecondPrime.lean 65–96."
+      "note": "`De` expands to the double sum in Statement 4.2. Lean permits any complex correction `ell`, which appears in both `MAIN` and the character sums. The paper uses logarithmic derivatives at $1$. The explicit integer cutoff $N$ can be chosen above all ratios $a/w(\\rho)$, beyond which the count has zero weight.",
+      "evidence": "Paper analytic.tex 48–79; ChBalance.lean 200–202; FirstPrimeNeSecondPrime.lean 65–96.",
+      "explanation": {
+        "text": "For an unramified prime power, the count first asks whether its Frobenius lies outside the subgroup $\\Phi$. Each class outside $\\Phi$ has a partner of weight $w$ that sets its cutoff $a/w$. Rewriting the test for that class by character orthogonality turns its prime-power sum into a linear combination of the $G_\\psi$ at the same cutoff. Subtracting the explicit main term gives the identity. This is the point where an upper bound for the arithmetic count becomes an upper bound for a real part of a combination of analytic sums.",
+        "citations": [
+          {
+            "ref": "balance-count-identity",
+            "title": "The weighted count and the balance identity",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L48-L84",
+            "where": "Section 4.2 and Statement 4.2"
+          },
+          {
+            "ref": "balance-main-term",
+            "title": "Subtracting the main term",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChBalance.lean#L200-L256",
+            "where": "ChBalance.lean, lines 200–256"
+          }
+        ]
+      }
     },
     {
       "passage": "st:core",
       "name": "Deduction.ch_core",
       "fidelity": "different",
-      "note": "Unfolding `GmA` and `SigA` gives the printed bound with the same exponent and the same omitted-character sum. Lean takes a general correction `ell` where the paper uses logarithmic derivatives. It also explicitly restricts the number of lifts by $x^{1/2-\\varepsilon}\\le m\\le x^{1/2+\\varepsilon/2}$.",
-      "evidence": "Paper analytic.tex 86–126, 157–164; ChCore.lean 343–351; SplitInertia.lean 26–62; SChain.lean 50–58."
+      "note": "`GmA` and `SigA` give the kept sum and the omitted-character error, with the same exponent as Statement 4.3. Lean allows a general correction `ell` and requires $x^{1/2-\\varepsilon}\\le m\\le x^{1/2+\\varepsilon/2}$ explicitly. The printed size conditions do not state these two lift bounds.",
+      "evidence": "Paper analytic.tex 86–126, 157–164; ChCore.lean 343–351; SplitInertia.lean 26–62; SChain.lean 50–58.",
+      "explanation": {
+        "text": "At each scale $x$, the proof uses the count identity to replace the individual count errors by character sums. It averages over the sizes and lifts to estimate the weighted sum of the characters it wants to retain. After dividing by the amount of data in the average, the three main costs are of order $x/m$, $m$, and $k/|H|^2$, up to small powers of $x$. Taking the number of lifts $m$ near $\\sqrt{x}$ balances the first two, and the bound $k\\le |H|^2x^{1/2-\\varepsilon}$ controls the third. This calculation explains the exponent $1/2$ in the analytic bound. The omitted characters still have to be controlled when the proof chooses the auxiliary field.",
+        "citations": [
+          {
+            "ref": "analytic-costs",
+            "title": "Balancing the three error terms",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L157-L181",
+            "where": "Section 4.4"
+          },
+          {
+            "ref": "analytic-omit-host",
+            "title": "How an adapted field controls omitted characters",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L139-L150",
+            "where": "Section 4.3, after Statement 4.3"
+          },
+          {
+            "ref": "analytic-assemble-bound",
+            "title": "Combining the character and size estimates",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChCore.lean#L419-L442",
+            "where": "ChCore.lean, lines 419–442"
+          }
+        ]
+      }
     },
     {
       "passage": "st:F",
       "name": "Formalism.HN.TheoremF",
       "fidelity": "same",
-      "note": "The same slope bound includes the $-\\log|I|$ term and the zero case at $u_F=0$. Lean makes positive total source rank and nonnegative frame error parameters explicit, and encodes the added summand as extra matrix rows.",
-      "evidence": "Paper lattices.tex 155–177; StatementFrameF.lean 26–62; StatementFR.lean 9–22."
+      "note": "Lean’s `cc` is the lattice $P$, and its reference slope `s` satisfies the paper’s rank-weighted inequality for $\\bar\\mu$. The `Sum.inl` rows of `Ball` represent the original map in the chosen bases. The remaining rows take values in the added summand and count toward the codimension bound. Lean makes the positive total source rank and the nonnegativity of $e_F$ and $\\eta_F$ explicit. It writes the conclusion as one formula, which gives zero for the logarithmic term at $u_F=0$ under Lean’s real division convention.",
+      "evidence": "Paper lattices.tex 155–177; StatementFrameF.lean 26–62; StatementFR.lean 9–22.",
+      "explanation": {
+        "text": "Rescaling the source lattices raises their slopes. The proof needs that gain to reach the period lattice $P$, even though some of the maps may cover the same directions. At one infinite place, the Hilbert–Schmidt bound controls how far the weighted maps are from isometries, and the trace bound controls how unevenly their images cover the enlarged target. Cut each source at slope $\\bar\\mu-\\tau+h_i$. The usual slope inequality places the surviving images in the part of $P$ of slope at least $\\bar\\mu-\\tau$. The frame estimates bound the rank that can be missing there. Integrating over $0\\le\\tau\\le HH$ gives the logarithmic error in the lower bound for the mean slope of $P$.",
+        "citations": [
+          {
+            "ref": "rh-frame-proof",
+            "title": "The filtration argument for the period lattice",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/lattices.tex#L180-L197",
+            "where": "lattices.tex, lines 180–197"
+          },
+          {
+            "ref": "rh-frame-statement",
+            "title": "The matrix formulation of the slope bound",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/HarderNarasimhan/StatementFrameF.lean#L26-L62",
+            "where": "StatementFrameF.lean, lines 26–62"
+          },
+          {
+            "ref": "bost-slope-inequality",
+            "title": "Bost, Algebraic leaves of algebraic foliations over number fields",
+            "url": "https://www.numdam.org/article/PMIHES_2001__93__161_0.pdf",
+            "where": "§4.1, Propositions 4.5 and 4.6"
+          }
+        ]
+      }
     },
     {
       "passage": "st:key",
       "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5",
       "fidelity": "same",
-      "note": "Expanding `SDiv` and `Lam5` gives the displayed cancellation with the same $c(L_a+m^2L_a/k)$ correction. Lean states $v>0$, $f>0$, and positivity of the weights explicitly.",
-      "evidence": "Paper lattices.tex 264–283; LevelOfCongruence.lean 17–19, 105–111; WeightedMeanData.lean 125–129, 170–216; MeanBoundSecondForm.lean 86–88, 107–109."
+      "note": "`SDiv` is the period sum and `Lam5` is the entire displayed lower bound for $\\log T(u)$. Substitution gives the printed identity with $c$, $L_a$ and $\\ell_g$ represented by `C.cCount`, `D.La` and `D.lg`. The Lean lemma explicitly assumes $v>0$, $f>0$ and $w_{u_0,j}(\\rho)>0$ for every lift and index $\\rho$. It uses the lower-bound expression on its own, so it requires no hypothesis about the actual prime $T(u)$.",
+      "evidence": "Paper lattices.tex 264–283; LevelOfCongruence.lean 17–19, 105–111; WeightedMeanData.lean 125–129, 170–216; MeanBoundSecondForm.lean 86–88, 107–109.",
+      "explanation": {
+        "text": "The period estimate subtracts $(\\sum_t a_t)\\log T(u)$, so a lower bound from counting forms gives an upper bound for the slope of the period lattice. Insert the count and expand $\\log(w_j(\\rho)v/\\pi)$. The $\\log(v/\\pi)$ from the count cancels the $\\log(\\pi/v)$ from the CM period, leaving the logarithms of the lift weights and the $L$-function term in the analytic main term. The count also subtracts $m\\ell_g\\sum_t a_t$. This offsets the contribution of the rescaling correction $\\mathrm{Ee}(u)$ when the two slope bounds are combined. The explicit $c(L_a+m^2L_a/k)\\sum_t a_t$ is the cost of using a lower bound for the level.",
+        "citations": [
+          {
+            "ref": "rh-period-to-count",
+            "title": "The CM period, the dimension count and the cancellation",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/lattices.tex#L252-L286",
+            "where": "lattices.tex, lines 252–286"
+          },
+          {
+            "ref": "rh-main-term-identity",
+            "title": "The period and level terms in the slope estimates",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/ChainSlopeWindows/LevelOfCongruence.lean#L105-L128",
+            "where": "LevelOfCongruence.lean, lines 105–128"
+          }
+        ]
+      }
     },
     {
       "passage": "st:cm2",
       "name": "Formalism.L2.Th1.CM.CM2",
       "fidelity": "weaker",
-      "note": "The CM and prime hypotheses, fourth- and sixth-power rescaling, and unit discriminant agree. Lean places the integral invariants in the completion of the maximal unramified extension. The paper asks for them in the algebraic extension itself.",
-      "evidence": "Paper divisibility.tex 40–46; CMGoodModels/Statement.lean 8–15, 38–47."
+      "note": "Both statements rescale $g_2$ and $g_3$ by the fourth and sixth powers of one nonzero scalar, require integral invariants and require $g_2^3-27g_3^2$ for the rescaled model to be a unit. `IsGoodModel` places the rescaled invariants in the closure in $\\mathbb C_\\ell$ of the field generated by roots of unity of order prime to $\\ell$. The paper specifies the algebraic maximal unramified extension itself. Lean quantifies over the same primes $\\ell\\ge5$ with $\\ell\\nmid d$, before imposing inertness in the next statement.",
+      "evidence": "Paper divisibility.tex 40–46; CMGoodModels/Statement.lean 8–15, 38–47.",
+      "explanation": {
+        "text": "First choose a Weierstrass equation for the CM elliptic curve whose reduction at $\\ell$ stays smooth. The same scalar changes the two invariants with weights four and six. Integrality lets the equation be reduced modulo $\\ell$, and a unit discriminant ensures the reduced cubic is nonsingular. This gives the integral model on which the next step studies the formal group at the origin. Serre and Tate give the classical potential good-reduction result for abelian varieties with complex multiplication. The candidate uses this specific rescaled equation to prove integrality of the theta kernel at inert primes.",
+        "citations": [
+          {
+            "ref": "rh-cm-good-reduction",
+            "title": "Good models and their use in the theta kernel",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/divisibility.tex#L38-L65",
+            "where": "divisibility.tex, lines 38–65"
+          },
+          {
+            "ref": "rh-good-model",
+            "title": "The conditions on the rescaled invariants",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/LocalToGlobal/TorsionIntegrality/CMGoodModels/Statement.lean#L38-L47",
+            "where": "Statement.lean, lines 38–47"
+          },
+          {
+            "ref": "serre-tate-good-reduction",
+            "title": "Serre and Tate, Good reduction of abelian varieties",
+            "url": "https://annals.math.princeton.edu/1968/88-3/p05",
+            "where": "Theorem 6(a), p. 503"
+          }
+        ]
+      }
     },
     {
       "passage": "st:cm3",
       "name": "Formalism.L2.Th1.CM.CM3",
       "fidelity": "different",
-      "note": "Lean requires integral coefficients after composition with the same height-two logarithm for every specified good model at an inert prime. Its unit and coefficients lie in the completed maximal unramified field. The paper leaves the choice of model implicit and names the algebraic extension.",
-      "evidence": "Paper divisibility.tex 12–16, 47–52; CMGoodModels/Statement.lean 14–15, 32–40, 49–55."
+      "note": "Lean writes inertness as the absence of a square root of $-d$ in $\\mathbb Z/\\ell\\mathbb Z$. For each specified pair of invariants satisfying `IsGoodModel`, it asks for a norm-one scalar such that every coefficient of `uSer` after substitution by the scaled `ltLog` has norm at most one. The paper leaves the choice of good model implicit. Lean places the scalar and coefficients in the completion of the maximal unramified extension, where the paper specifies the algebraic extension.",
+      "evidence": "Paper divisibility.tex 12–16, 47–52; CMGoodModels/Statement.lean 14–15, 32–40, 49–55.",
+      "explanation": {
+        "text": "At an inert prime the CM curve has supersingular reduction. The formal group at its origin has height two, and the paper writes the complex uniformizing coordinate as a unit times its Lubin–Tate logarithm. Substituting that logarithm into the local series gives an integral series in the formal parameter. To take derivatives in the logarithmic coordinate, the argument uses the inverse series. Its denominators cost at most $r/(\\ell^2-1)$ in order $r$, while the derivative contributes $r!$. The difference gives the leading valuation $r\\ell/(\\ell^2-1)$, up to logarithmic loss. Applied to the integral theta kernel, this is the source of the odd-power sum $r/\\ell+r/\\ell^3+\\cdots$ in the divisibility gain.",
+        "citations": [
+          {
+            "ref": "rh-height-two-derivatives",
+            "title": "The height-two logarithm and the derivative estimate",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/divisibility.tex#L12-L35",
+            "where": "divisibility.tex, lines 12–35"
+          },
+          {
+            "ref": "rh-cm-kernel",
+            "title": "The formal group at an inert prime and integral theta kernels",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/divisibility.tex#L47-L65",
+            "where": "divisibility.tex, lines 47–65"
+          },
+          {
+            "ref": "rh-inert-model-series",
+            "title": "The local series, logarithm and coefficient conditions",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/LocalToGlobal/TorsionIntegrality/CMGoodModels/Statement.lean#L32-L55",
+            "where": "Statement.lean, lines 32–55"
+          },
+          {
+            "ref": "pollack-rubin-height-two",
+            "title": "Pollack and Rubin, The main conjecture for CM elliptic curves at supersingular primes",
+            "url": "https://annals.math.princeton.edu/wp-content/uploads/annals-v159-n1-p11.pdf",
+            "where": "§1, the formal group at the inert prime, p. 450"
+          }
+        ]
+      }
     },
     {
       "passage": "st:vwin",
       "name": "UpperTheory.Top.VVle",
       "fidelity": "weaker",
-      "note": "For fixed field, twist cutoff, and bound, `VVle` requires finite length for each prime and twist and bounds every finite sum over primes. The summands are nonnegative, so this captures the full sum. The scale and window conditions are in `VWin`.",
-      "evidence": "Paper cohomology.tex 7–29; ExistsPageN.lean 12–17; GaloisCohomology/Statement.lean 50–78."
+      "note": "`VVle E t B` fixes the host field, twist cutoff and upper bound. For each choice of algebraic closure and local data it first requires finite Sha length for every prime and $1\\le e<t$, then bounds the sum over each finite set of primes by $B$. The summands are nonnegative, so the supremum of the finite sums is the full sum in the paper. The scale-dependent choices of $t$ and $B$ and the window quantifiers belong to `VAt` and `VWin`.",
+      "evidence": "Paper cohomology.tex 7–29; ExistsPageN.lean 12–17; GaloisCohomology/Statement.lean 50–78.",
+      "explanation": {
+        "text": "The group $\\operatorname{Sha}(E,\\ell,e)$ consists of global cohomology classes that become trivial at each place above $\\ell$, with coefficients twisted by the $-e$ power of the cyclotomic character. The length of a finite such group is the base-$\\ell$ logarithm of its order. Multiplying by $\\log\\ell$ and summing therefore controls the total logarithmic size across primes and twists. The twists come from differences between the cyclotomic powers in the Galois representations of the lifts. Their total contributes to an upper bound for the logarithmic index of a sublattice at each lift level. The slope argument uses this bound to control the loss from passing to the sublattice. The lattice index estimate allows an error of size $b$. The contribution from the cohomological bound is only of order $\\sqrt b$. The window supplies this control at every scale of an interval, as required for the later zero-free argument.",
+        "citations": [
+          {
+            "ref": "rh-sha-definition",
+            "title": "The locally trivial cohomology groups and their total",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/cohomology.tex#L7-L29",
+            "where": "cohomology.tex, lines 7–29"
+          },
+          {
+            "ref": "rh-sha-consumer",
+            "title": "The lattice index and the source of the twists",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/cohomology.tex#L36-L85",
+            "where": "cohomology.tex, lines 36–85"
+          },
+          {
+            "ref": "rh-vvle-window",
+            "title": "The fixed-field estimate and its scale and window quantifiers",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/ExistsPageN.lean#L12-L49",
+            "where": "ExistsPageN.lean, lines 12–49"
+          },
+          {
+            "ref": "ribet-congruences-and-classes",
+            "title": "Ribet, A modular construction of unramified p-extensions of the field of p-th roots of unity",
+            "url": "https://math.berkeley.edu/~ribet/Articles/invent_34.pdf",
+            "where": "§§3–5, congruences and Galois extensions"
+          }
+        ]
+      }
     },
     {
       "passage": "st:vwin",
       "name": "UpperTheory.Top.VWin",
-      "note": "`VWin` fixes exponent 401 and quantifies over each primitive character, $0<\\varepsilon<1/52$, and each cyclotomic layer choice satisfying `PageN`. For each eligible prime pair at $X^{1/J}$, the window may depend on that pair. Its bound holds for every matching host at each scale in the window. The paper leaves this order of host choices implicit.",
+      "note": "`VWin` fixes the exponent $401$. For each primitive character, $0<\\varepsilon<1/52$ and a function choosing an admissible cyclotomic layer at every $x\\ge1$, Lean chooses $J$ and a starting scale $X_0$. For each $X\\ge X_0$ and each eligible prime pair at $X^{1/J}$, it then chooses $[Y,Y^2]\\subseteq[X^{1/J},X]$. The same pair is used throughout that window, and the bound is required for every matching host field at every scale in it. The paper abbreviates this order of choices.",
       "evidence": "Paper cohomology.tex 22–30 and hosts.tex 4–24; ExistsPageN.lean 19–49."
     },
     {
       "passage": "three-inputs",
       "name": "UpperTheory.Top.every_character_of_green_v_win",
       "fidelity": "same",
-      "note": "The displayed implication has the same three inputs and EveryCharacter conclusion. The paper abbreviates HypsAlt, whose Lean type specifies closedness for LinkN and DefiniteSideCondition.",
-      "evidence": "PDF p. 11; overview.tex 6–13; TopPlug.lean 16–18. Top.imprimitive wraps the primitive-character theorem with the same arguments."
+      "note": "`TopPlug.lean` has the displayed conclusion `EveryCharacter` and the same three inputs. The abbreviated third input is inhabitation of `HypsAlt` instantiated with the closedness condition for `LinkN` and with `DefiniteSideCondition`.",
+      "evidence": "PDF p. 11; overview.tex 6–13; TopPlug.lean 16–18. Top.imprimitive wraps the primitive-character theorem with the same arguments.",
+      "explanation": {
+        "text": "Where does the analytic theorem get its estimates? Green’s character formulas supply the local representation counts. The bound `VWin` on Galois cohomology gives the proof a supply of suitable auxiliary fields throughout long windows. The lattice assertions recorded in `HypsAlt` enter the proof of the inequalities at each available scale. The primitive-character argument combines those pieces into a bound for a smoothed prime sum on windows $[Y,Y^{3/2}]$, then uses the windowed Landau theorem to exclude zeros. The final passage to arbitrary characters uses the Euler factors at primes added to the modulus.",
+        "citations": [
+          {
+            "ref": "proof-shape",
+            "title": "The three inputs and how they enter the argument",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/overview.tex#L3-L32",
+            "where": "Section 3"
+          },
+          {
+            "ref": "green-vwin-assemble",
+            "title": "The primitive theorem and the all-character wrapper",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TopPlug.lean#L12-L18",
+            "where": "TopPlug.lean, lines 12–18"
+          },
+          {
+            "ref": "green-1955",
+            "title": "Green’s character formulas for finite general linear groups",
+            "url": "https://www.ams.org/tran/1955-080-02/S0002-9947-1955-0072878-2/S0002-9947-1955-0072878-2.pdf",
+            "where": "Introduction and Theorem 14"
+          }
+        ]
+      }
     },
     {
       "passage": "three-inputs",
       "name": "UpperTheory.Top.zero_free_all_of_green_v_win",
-      "note": "This is the primitive-character step named before the display. It uses the three inputs and concludes ZeroFreeAll, which the wrapper extends to EveryCharacter.",
+      "note": "This is the theorem named in the prose just before the display. Its conclusion `ZeroFreeAll` ranges over primitive characters and excludes zeros to the right of $1/2$. The displayed theorem takes the same inputs and applies `Top.imprimitive` to extend the conclusion.",
       "evidence": "PDF p. 11; overview.tex 6–13; TopPlug.lean 12–18; ExplicitFormulaErrorOfHostConditions.lean 11–18. The proof uses Top.zeroFreeAll_of_topG with la = 3/2 and gets hosts from supplyChi."
     },
     {
       "passage": "landau-proof-idea",
       "name": "Deduction.landau_window",
-      "note": "The proof bounds Laplace coefficients with a concentrated kernel. It uses a positive residue at an isolated real pole or the residue norm at a shifted complex center.",
-      "evidence": "PDF p. 13; analytic.tex 35–43; landauWindow.lean 40–73 and 83–166; LandauCoeff.lean 10–12; landauTails.lean 80–104 sets k = ceil((1+δ/2)σU); LandauDichotomy.lean 24–28, 32–55 splits on a pole to the right of a pole-free disk versus an isolated real pole, so nearest-zero reality alone does not characterize the branch."
+      "note": "The Lean split is between a pole closer to a shifted vertical center than the pole-free radius at the real center, and an isolated real pole inside a disk at the real center. Lean uses the norm of the residue in the shifted calculation and its positive real value in the real calculation.",
+      "evidence": "PDF p. 13; analytic.tex 35–43; landauWindow.lean 40–73 and 83–166; LandauCoeff.lean 10–12; landauTails.lean 80–104 sets k = ceil((1+δ/2)σU); LandauDichotomy.lean 24–28, 32–55 splits on a pole to the right of a pole-free disk versus an isolated real pole, so nearest-zero reality alone does not characterize the branch.",
+      "explanation": {
+        "text": "Write $v=\\log y$ and $U=\\log Y$. The multiplicative window becomes $[U,(1+\\omega)U]$. The $k$th Laplace coefficient at a real center $\\sigma$ weights the sum by $v^k e^{-\\sigma v}/k!$, which peaks at $k/\\sigma$. Choosing $k$ near $(1+\\omega/2)\\sigma U$ puts the peak in the middle of the window. The tail estimates and the upper bound on the window then limit the coefficient. An isolated pole at distance $d$ gives a term proportional to $d^{-k-1}$. The proof chooses the real or shifted center so this term grows faster relative to the bound as $k$ increases.",
+        "citations": [
+          {
+            "ref": "landau-proof-window",
+            "title": "The Laplace transform argument on windows",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L35-L46",
+            "where": "Section 4.1"
+          },
+          {
+            "ref": "landau-tail-choice",
+            "title": "Choosing the derivative order and bounding both tails",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/landauTails.lean#L80-L104",
+            "where": "landauTails.lean, lines 80–104"
+          },
+          {
+            "ref": "landau-nearest-pole",
+            "title": "The real-center and shifted-center arguments",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/landauWindow.lean#L83-L166",
+            "where": "landauWindow.lean, lines 83–166"
+          },
+          {
+            "ref": "landau-1905",
+            "title": "Landau’s 1905 theorem",
+            "url": "https://geodesic.mathdoc.fr/item/MAN_1905__61_158244/",
+            "where": "Mathematische Annalen 61, pp. 527–550"
+          }
+        ]
+      }
     },
     {
       "passage": "landau-proof-idea",
       "name": "Deduction.lemmaL",
-      "note": "This step supplies pole data for the character family, applies the window argument to its zeros, and invokes known nonvanishing for real part at least one.",
+      "note": "`lemmaL` turns the abstract pole result into an $L$-function theorem. It constructs the family’s pole data, uses `landau_window` for zeros in $0<\\operatorname{Re}s<1$, and applies the known nonvanishing theorem for the remaining region $\\operatorname{Re}s\\ge1$.",
       "evidence": "PDF p. 13; analytic.tex 35–43; lemmaL.lean 13–22; poleData.lean 22–29, 248–252 and 338–380 provide analytical pole data, including the real-residue positivity."
     },
     {
       "passage": "level-character-weights",
       "name": "Formalism.HC.Level.wt",
       "fidelity": "same",
-      "note": "The weight in (4.2) is one for the distinguished character and the reciprocal of three times the level parameter plus one otherwise.",
-      "evidence": "PDF p. 13; analytic.tex 26–33; ExplicitFormulaErrorOfHostConditions.lean 8–9 and 36; PrimePairSizeCondition.lean 39–45 specifies the optional odd real character in the kept set."
+      "note": "Equation (4.2) gives weight $1$ to the optional distinguished odd real character and $(3o+1)^{-1}$ to the other nontrivial characters. Lean tests for the distinguished character in `wt` and supplies the trivial term separately in `Gm`.",
+      "evidence": "PDF p. 13; analytic.tex 26–33; ExplicitFormulaErrorOfHostConditions.lean 8–9 and 36; PrimePairSizeCondition.lean 39–45 specifies the optional odd real character in the kept set.",
+      "explanation": {
+        "text": "The proof estimates one sum for a finite set of primitive characters, called a level. For example, if $o=2$, the coefficient on an ordinary nontrivial character is $1/7$, while the trivial term and any designated odd real character have coefficient $1$. In the count calculation the coefficient $1/(3o+1)$ comes from averaging over sizes for characters nontrivial on $H$. The host field is chosen so that only the trivial character and the designated one can restrict trivially to $H$ among the kept characters. All the level weights are positive, which lets the Landau argument exclude zeros for each member from a bound on their combined sum.",
+        "citations": [
+          {
+            "ref": "level-weight-definition",
+            "title": "The character sum for a level",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L26-L33",
+            "where": "Section 4.1, equation (4.2)"
+          },
+          {
+            "ref": "level-adapted-host",
+            "title": "Why the average gives the level weights",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L128-L147",
+            "where": "Section 4.3"
+          },
+          {
+            "ref": "level-weight-source",
+            "title": "The weights and the sum",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/ExplicitFormulaErrorOfHostConditions.lean#L30-L48",
+            "where": "ExplicitFormulaErrorOfHostConditions.lean, lines 30–48"
+          }
+        ]
+      }
     },
     {
       "passage": "level-character-weights",
       "name": "Formalism.HC.Level.Gm",
       "fidelity": "same",
-      "note": "This is the sum in (4.2). It starts with the trivial-character term and adds weighted real parts over the other kept characters.",
+      "note": "Lean writes the trivial contribution as `Formalism.Gz` and sums `wt ψ * (An.gChi ψ.χ y).re` over the kept set with the trivial character removed. The positive-part weight in `sumLamChi` agrees with $y/n-1$ on the summation range $n\\le\\lfloor y\\rfloor$.",
       "evidence": "PDF p. 13; analytic.tex 26–33 and 4–16 for G and Gψ; ExplicitFormulaErrorOfHostConditions.lean 32–38; Analytic.lean 11–24; StatementOC.lean 11–13. The max in sumLamChi agrees with y/n−1 within the cutoff n≤floor(y)."
     },
     {
       "passage": "level-character-weights",
       "name": "Formalism.HC.zeroFreeOn_of_levels",
-      "note": "This combines levels already shown zero-free. Each requested primitive character inherits zero-freeness from a level that contains it.",
-      "evidence": "PDF p. 13; analytic.tex 33; ExplicitFormulaErrorOfHostConditions.lean 14, 24–26 and 45–48. The proof of zero-freeness for a level from estimates belongs to TopWin.lean 117–128 onward."
+      "note": "The aggregation step assumes a zero-free level containing each requested primitive character and evaluates that level’s nonvanishing result at the requested member. The window argument proving zero-freeness for a level is a separate step in `TopWin.lean`.",
+      "evidence": "PDF p. 13; analytic.tex 33; ExplicitFormulaErrorOfHostConditions.lean 14, 24–26 and 45–48. The proof of zero-freeness for a level from estimates belongs to TopWin.lean 117–128 onward. For the windowed route, see TopWin.lean 68–93."
     },
     {
       "passage": "character-orthogonality",
       "name": "Deduction.ch_balance",
-      "note": "The proof expands the count by character orthogonality and identifies the remaining weighted character sums. The resulting complex identity is exact.",
-      "evidence": "PDF p. 13; analytic.tex 80–84; ChBalance.lean 200–223 invokes askExp and identifies De; 236–256 uses colour_sum to isolate the quadratic term. askExp rewrites the prime-power count by splitting unramified and ramified cases, 138–186."
+      "note": "`askExp` expands the weighted count and treats the exceptional ramified prime separately. After identifying `De`, `ch_balance` uses `colour_sum` to keep only the quotient character in the nontrivial correction to `MAIN`.",
+      "evidence": "PDF p. 13; analytic.tex 80–84; ChBalance.lean 200–223 invokes askExp and identifies De; 236–256 uses colour_sum to isolate the quadratic term. askExp rewrites the prime-power count by splitting unramified and ramified cases, 138–186.",
+      "explanation": {
+        "text": "Fix a group element $g$ outside $\\Phi$ and an unramified prime power with Frobenius $f$. In the sum over characters, $\\overline{\\psi(g)}\\psi(f)$ equals $1$ for every $\\psi$ when $f=g$. When $f\\ne g$, the character values sum to zero. Dividing by the group order therefore gives the indicator of $f=g$, which is the test the weighted count needs. At a ramified prime, the same operation is averaged over the inertia coset. The identity uses the full character sum before later steps estimate or drop any contributions.",
+        "citations": [
+          {
+            "ref": "frobenius-character-expansion",
+            "title": "The count as a sum of characters",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L61-L84",
+            "where": "Section 4.2"
+          },
+          {
+            "ref": "frobenius-ramification-split",
+            "title": "Expanding prime powers and separating ramified primes",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChBalance.lean#L130-L186",
+            "where": "ChBalance.lean, lines 130–186"
+          }
+        ]
+      }
     },
     {
       "passage": "apply-count-balance",
       "name": "Deduction.ch_core",
-      "note": "The main analytic reduction delegates the termwise use of the count identity to CharacterBalanceMoves.core.",
-      "evidence": "PDF p. 14; first sentence of analytic.tex 128; ChCore.lean 440 calls the helper whose lines 304–312 apply ch_balance per summand."
+      "note": "`ch_core` passes the summed count hypothesis and its lower bound for the character average to `CharacterBalanceMoves.core`. The resulting estimate, still multiplied by the size of the average, goes into the final size bound.",
+      "evidence": "PDF p. 14; first sentence of analytic.tex 128; ChCore.lean 440 calls the helper whose lines 304–312 apply ch_balance per summand.",
+      "explanation": {
+        "text": "For one translate, the count hypothesis bounds a sum over sizes and lifts. Each summand has its own size and weight, so the proof first substitutes the exact identity for that pair and takes real parts. The proof then estimates the contribution from the places whose weights lie close to $b$, where the arguments of $G_\\psi$ are close to $a_t/b$. It charges at most $2b/x$ per pair for the replacement and the discarded small-weight places. Adding over all pairs yields the extra $2|TT|mb/x$ in the inequality before normalization.",
+        "citations": [
+          {
+            "ref": "termwise-count-reduction",
+            "title": "Where the normalized count error comes from",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L119-L137",
+            "where": "Section 4.3, equation (4.5)"
+          },
+          {
+            "ref": "count-per-pair-error",
+            "title": "Applying the identity before summing the errors",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChCore.lean#L296-L320",
+            "where": "ChCore.lean, lines 296–320"
+          }
+        ]
+      }
     },
     {
       "passage": "apply-count-balance",
       "name": "Deduction.CharacterBalanceMoves.core",
-      "note": "For each size and lift, the proof applies the exact count identity and takes its real part before summing the resulting bounds.",
+      "note": "The helper proves the inequality for an arbitrary translate before averaging over all translates. For each size and lift it combines the real part of `ch_balance` with `th_le`, which contributes the $2b/x$ allowance.",
       "evidence": "PDF p. 14; first sentence of analytic.tex 128; ChCore.lean 304–312 uses sum_le_sum over t and j and congrArg Complex.re (ch_balance ...)."
     },
     {
       "passage": "average-kept-characters",
       "name": "Deduction.ch_core",
-      "note": "The proof uses the common weight for kept characters nontrivial on H and weight one for those trivial on H. It bounds omitted characters by absolute values.",
-      "evidence": "PDF p. 14; analytic.tex 128–131, with weight exception specified at line 108 and in condition (1); ChCore.lean 228–269 moves each kept term to x and uses the character-average estimate, 270–281 bounds an omitted term by its norm plus the movement error, and 419–439 sums the estimates into GmA − SigA with slack."
+      "note": "Lean first moves each evaluation from $a_t/b$ to $x$, then estimates the character coefficient. It uses the prescribed average for kept characters nontrivial on $H$ and the exact coefficient $1$ for those trivial on $H$. For omitted characters the estimate contributes their norms at $x$ plus the movement error.",
+      "evidence": "PDF p. 14; analytic.tex 128–131, with weight exception specified at line 108 and in condition (1); ChCore.lean 228–269 moves each kept term to x and uses the character-average estimate, 270–281 bounds an omitted term by its norm plus the movement error, and 419–439 sums the estimates into GmA − SigA with slack.",
+      "explanation": {
+        "text": "To see how a weight emerges, take one kept character and add and subtract its value at the common evaluation point $x$ in every summand. One error comes from replacing $G_\\psi(a_t/b)$ by $G_\\psi(x)$, small because $|a_t/b-x|\\le1$. Factoring out $G_\\psi(x)$ leaves the sum of the character values over the set of sizes $TT$. Condition (1) makes this coefficient close to $\\beta|TT|$ when the character is nontrivial on $H$. A character trivial on $H$ has coefficient exactly $|TT|$. Each omitted term has real part bounded below by the negative of its absolute value. This gives a lower bound for the full average in terms of the kept sum, which is how an upper bound on the average controls that sum.",
+        "citations": [
+          {
+            "ref": "kept-character-average",
+            "title": "The common character weight and the error for omitted terms",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L105-L137",
+            "where": "Section 4.3"
+          },
+          {
+            "ref": "character-average-decomposition",
+            "title": "Separating the movement error from the coefficient error",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChCore.lean#L228-L281",
+            "where": "ChCore.lean, lines 228–281"
+          }
+        ]
+      }
     },
     {
       "passage": "rank-lost-at-a-filtration-cut",
       "name": "Formalism.HN.frameB_share",
-      "note": "For positive u, this bounds the share of slope entries below the cut. Theorem F converts their count to lost rank and handles u = 0 separately.",
-      "evidence": "PDF p. 18; lattices.tex 186–189; FrameHermSharpB.lean 25–28, 62–75; TheoremFSharp.lean 11–33 handles nonnegative u and 225–242 converts the bound on height-adjusted slopes to rank loss."
+      "note": "`frameB_share` bounds the count strictly below the cut when $u>0$. `TheoremF` applies it to height-adjusted slope lists, converts the count to lost rank, and handles $u=0$ separately.",
+      "evidence": "PDF p. 18; lattices.tex 186–189; FrameHermSharpB.lean 25–28, 62–75; TheoremFSharp.lean 11–33 handles nonnegative u and 225–242 converts the bound on height-adjusted slopes to rank loss.",
+      "explanation": {
+        "text": "Count a slope once for each rank it represents. After the height adjustment, their average is at least $\\bar\\mu$ and each slope is at most $\\bar\\mu+u_F$. Compare every slope to that upper limit. The average shortfall is at most $u_F$, while every slope below $\\bar\\mu-\\tau$ uses at least $u_F+\\tau$ of shortfall. So only a fraction $u_F/(u_F+\\tau)$ can fall below the cut when $u_F>0$. The filtration keeps the rest of the rank. Its images under the period maps then give the target rank estimate used in the integral proof of the slope bound.",
+        "citations": [
+          {
+            "ref": "filtration-rank-loss",
+            "title": "Using the slope cut to estimate target rank",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/lattices.tex#L180-L197",
+            "where": "Section 5.2, proof of the slope inequality"
+          },
+          {
+            "ref": "filtration-cut-count",
+            "title": "Counting slopes strictly below the cut",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/HarderNarasimhan/HarderNarasimhanProofs/FrameHermSharpB.lean#L25-L75",
+            "where": "FrameHermSharpB.lean, lines 25–75"
+          },
+          {
+            "ref": "filtration-count-to-rank",
+            "title": "Turning the count into a rank bound",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/HarderNarasimhan/HarderNarasimhanProofs/TheoremFSharp.lean#L225-L246",
+            "where": "TheoremFSharp.lean, lines 225–246"
+          }
+        ]
+      }
     },
     {
       "passage": "eleven-size-clauses",
       "name": "Formalism.LFunctionChainParameters.LChain.SizeData₂",
-      "note": "SizeData₂ is the conjunction of the eleven size conditions. ChainTied requires this conjunction for the data at its chosen scale.",
-      "evidence": "PDF p. 16; lattices.tex 51–52; SChain.lean 17–19 contains eleven conjuncts; TieGlobal.lean 97–114 introduces the scale x and requires the predicate at line 109."
+      "note": "`SizeData₂` is a proposition on the slope data, constants and an auxiliary bound. Lines 17–19 list the eleven predicates side by side. In particular, `QuotientSlopeBoundsWith`, `LossBounds`, `SlopeIneq` and `DIV` supply the four displayed inequalities. `ChainTied` separately identifies the data’s scale with $x$ and requires all eleven predicates at line 109.",
+      "evidence": "PDF p. 16; lattices.tex 51–52; SChain.lean 17–19 contains eleven conjuncts; TieGlobal.lean 97–114 introduces the scale x and requires the predicate at line 109.",
+      "explanation": {
+        "text": "For each translate, the proof passes from the prime-power count to the slopes of rescaled lattices of forms, then to the slope of their common period lattice. Divisibility allows the rescaled forms to map into that lattice. The period estimate supplies an upper bound on the same slope that the frame argument bounds from below. To remove the terms in between, the proof bounds the slopes of the original lattices, compares the map heights together with their level terms, counts forms to bound the level prime, and compares the rescaling correction with the host’s level primes. Positivity and size bounds make the resulting errors uniform over the translates. This is how the count is bounded by the analytic main term plus an error before applying the analytic reduction.",
+        "citations": [
+          {
+            "ref": "rh-eleven-clause-chain",
+            "title": "The four links of the slope argument and the supporting clauses",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/lattices.tex#L51-L86",
+            "where": "lattices.tex, lines 51–86"
+          },
+          {
+            "ref": "rh-size-data-predicate",
+            "title": "The eleven predicates in the formal slope argument",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/SChain.lean#L13-L19",
+            "where": "SChain.lean, lines 13–19"
+          },
+          {
+            "ref": "rh-pointwise-slope-consumer",
+            "title": "The pointwise count bound takes all eleven hypotheses",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/ChainSlopeWindows/LevelOfCongruence.lean#L175-L189",
+            "where": "LevelOfCongruence.lean, lines 175–189"
+          }
+        ]
+      }
     },
     {
       "passage": "st:cong",
       "name": "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at",
-      "note": "The four terms correspond in BaseSizes.lean:68–93. The printed statement uses t₀ = ⌊x^401⌋, while Lean uses the record's block width R.t and requires a continuous rank-r representation over O whose fraction-field decomposition uses the record's specified characters. The host construction bounds R.t by ⌊x^401⌋.",
-      "fidelity": "different"
+      "note": "Both versions bound the valuation of the congruence ideal at a lift by four terms. Lean uses the block width `R.t` in both the range $0<e<R.t$ and the auxiliary-prime term. The paper puts $t_0=\\lfloor x^{401}\\rfloor$ there. Lean requires the rank-$r$ summand to be continuous over $\\mathcal O$ and prescribes the character summands via the data at the chosen place.",
+      "fidelity": "different",
+      "evidence": "Paper cohomology.tex 66–85. BaseSizes.lean 57–93. supplyOfAdmOf.lean 129–135 uses the bound on the constructed block width.",
+      "explanation": {
+        "text": "Suppose a lift and a form outside the lift subset are congruent at $\\ell$. The congruence lets Galois representation summands mix in an integral lattice, and that mixing gives extension classes to bound. Inside the character block, the ratio of two characters $e$ positions apart is a cyclotomic twist of exponent $e$ or $-e$, depending on the order. This explains the range of twists in the Sha term. Ribet's construction is a precedent for extracting Galois extensions from congruent forms.",
+        "citations": [
+          {
+            "ref": "cong-extensions",
+            "title": "How the character block produces the twists",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/cohomology.tex#L66-L85",
+            "where": "cohomology.tex, lines 66–85"
+          },
+          {
+            "ref": "cong-terms",
+            "title": "The decomposition and four contributions",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AbelianVarietyTheory/BlockTheory/NonGaloisCusps/BaseSizes.lean#L57-L93",
+            "where": "BaseSizes.lean, lines 57–93"
+          },
+          {
+            "ref": "ribet-congruence",
+            "title": "Ribet on congruences and unramified extensions",
+            "url": "https://math.berkeley.edu/~ribet/Articles/invent_34.pdf",
+            "where": "Inventiones Mathematicae 34 (1976), §§ 1 and 4"
+          }
+        ]
+      }
     },
     {
       "passage": "st:supply",
       "name": "UpperTheory.Top.supplyChi",
-      "note": "SupplyChi.lean:8–9 has the same premise VWinAt ψ 401. Its HostExW conclusion gives uniform host constants for each 0 < ε < 1/52 and hosts on arbitrarily late windows [Y,Y^(3/2)] carrying both EAtH and the cohomology bound at the actual block width.",
-      "fidelity": "stronger"
+      "note": "The premise is $VWinAt(\\psi,401)$. Lean fixes the constants and threshold for each $0<\\varepsilon<1/52$, then gives hosts at every scale above the threshold in a set containing arbitrarily late windows $[Y,Y^{3/2}]$. Each host carries both the explicit-formula input and the square-root cohomology bound at its actual block width.",
+      "fidelity": "stronger",
+      "evidence": "Paper hosts.tex 26–34. SupplyChi.lean 8–16. HostOfField.lean 17–23. ThinScalesIffHostBound.lean 118–123. Scales.lean 9–19.",
+      "explanation": {
+        "text": "The proof needs the analytic estimates and the cohomology bound on the same field at each scale. It first chooses the primes using the good-pair theorem, then applies the cohomology hypothesis to those primes and the chosen schedule of cyclotomic layers. The rank construction gives a block small enough for the cohomology estimate already available. The resulting field can therefore be used in both parts of the argument.",
+        "citations": [
+          {
+            "ref": "supply-inputs",
+            "title": "From the cohomology hypothesis to host data",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/HostOfField.lean#L17-L23",
+            "where": "HostOfField.lean, lines 17–23"
+          },
+          {
+            "ref": "supply-same-field",
+            "title": "The two bounds on the constructed field",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/ShortNorms/supplyOfAdmOf.lean#L110-L135",
+            "where": "supplyOfAdmOf.lean, lines 110–135"
+          }
+        ]
+      }
     },
     {
       "passage": "st:pairs",
       "name": "UpperTheory.Top.PairEx",
-      "note": "PairGood.lean:18–30 has the printed exponents and window. It bounds the primitive character inducing the twist on units modulo 2M₀qd. The printed χ is the twist itself, with no primitive-induction clause. Lean fixes the box height as 8M₀ exp(Y^(ε/5)) exp(j Y^(ε/5)(log Y)^2).",
-      "fidelity": "different"
+      "note": "Lean proves the same two numerical bounds on $[Y,Y^A]$ for the primitive character agreeing with the twist on integers coprime to $2M_0qd$. The paper writes the bounds for the twist itself and leaves the zero-free height implicit. Lean uses $8M_0\\exp(Y^{\\varepsilon/5})\\exp(jY^{\\varepsilon/5}(\\log Y)^2)$, with $j$ indicating the presence of the $d$-twist.",
+      "fidelity": "different",
+      "evidence": "Paper hosts.tex 42–59. PairGood.lean 9–30. TotientGaloisClasses/Analytic.lean 23–27. pairEx.lean 152–169.",
+      "explanation": {
+        "text": "The primes $q$ and $d$ are chosen after the base modulus and the window are fixed. Every nontrivial quadratic twist introduces $q$ or $d$ into the conductor. Even $Y^A$ is eventually much smaller than the smaller prime $q$. So the estimates concern short sums for a specially selected family. The bound on $L'/L$ controls the correction in $G_\\chi$, and the real-character clause excludes zeros in the stated box.",
+        "citations": [
+          {
+            "ref": "pairs-conductor",
+            "title": "Why the auxiliary twists have large conductors",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/hosts.tex#L37-L59",
+            "where": "hosts.tex, lines 37–59"
+          },
+          {
+            "ref": "pairs-selection",
+            "title": "The proof choosing the primes and fixing the window",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/MeanSquareBounds/pairEx.lean#L112-L130",
+            "where": "pairEx.lean, lines 112–130"
+          },
+          {
+            "ref": "pairs-g-definition",
+            "title": "The logarithmic derivative in the smoothed sum",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/Analytic.lean#L11-L27",
+            "where": "Analytic.lean, lines 11–27"
+          }
+        ]
+      }
     },
     {
       "passage": "why-counts-windowed",
       "name": "UpperTheory.Top.supplyChi",
-      "note": "SupplyChi.lean:8–11 takes only VWinAt ψ 401. Its proof invokes supplyOfAdm, which gets windows of exponent 3/2 through winPairs and the proved good-pair supply."
+      "note": "`supplyChi` takes only $VWinAt(\\psi,401)$. Its helper calls `winPairs` with the proved `QH.pairEx`, and the resulting windows enter the scale set in `HostExW`.",
+      "evidence": "Paper hosts.tex 32–34. SupplyChi.lean 8–16. supplyOfAdmOf.lean 24–29, 55–57. WinPairs.lean 34–58.",
+      "explanation": {
+        "text": "A single large scale would give only one value of the prime sum. The Landau argument integrates against a kernel concentrated in a whole interval on the logarithmic scale. The host proof starts with a square window $[W,W^2]$ and rescales by a fixed factor $k\\ge1$ to fit the required cyclotomic layer. For large $W$, the interval $[kW,(kW)^{3/2}]$ fits inside $[W,W^2]$. This gives the analytic argument all the scales it needs, arbitrarily far out.",
+        "citations": [
+          {
+            "ref": "window-fit",
+            "title": "Choosing the primes and fitting the shorter interval",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/WinPairs.lean#L34-L64",
+            "where": "WinPairs.lean, lines 34–64"
+          },
+          {
+            "ref": "window-landau",
+            "title": "Where the integral needs an interval of estimates",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/analytic.tex#L35-L46",
+            "where": "analytic.tex, lines 35–46"
+          }
+        ]
+      }
     },
     {
       "passage": "why-counts-windowed",
       "name": "UpperTheory.Top.VWin",
-      "note": "ExistsPageN.lean:44–49 packages VWinAt ψ 401 for each primitive ψ. VWinAt supplies the square window for eligible prime pairs and each choice of PageN schedule. WinPairs.lean:34–52 fits the rescaled exponent-3/2 window inside it."
+      "note": "`VWin` is $VWinAt(\\psi,401)$ for every primitive $\\psi$. For each $\\varepsilon$ and eligible schedule of cyclotomic layers, `VWinAt` chooses $J$, then gives a square window inside $[X^{1/J},X]$ for every sufficiently large $X$ and every prime pair eligible at $X^{1/J}$.",
+      "evidence": "Paper cohomology.tex 22–29 and hosts.tex 32–34. ExistsPageN.lean 39–49. WinPairs.lean 9–13, 26–35."
     },
     {
       "passage": "cohomology-square-root-slack",
       "name": "UpperTheory.Top.divinN_of_hypV",
-      "note": "DivinNOfHypV.lean:126–130 uses √b ≤ b before giving the bound to divinN_at. The argument uses only b at that step, while the theorem still takes the stronger HypV record."
+      "note": "`divinN_of_hypV` extracts summability and the stronger bound from `vvRecord`, then uses $\\sqrt b\\le b$ before calling `divinN_at`. The called lemma requires only the bound by $b$, along with the link, rank and logarithmic-size hypotheses.",
+      "evidence": "Paper cohomology.tex 36–53. DivinNOfHypV.lean 76–106, 117–130. GlobalTheoremInputs.lean 40–47, 59–63.",
+      "explanation": {
+        "text": "At each lift level the length of the congruence module contributes to a lattice-index estimate. The cohomology sum enters additively after factoring out the level rank. The other terms already give a budget scale $B_0=fmbx^\\varepsilon$, which is at least $b$. An upper bound of $b$ for the cohomology sum can therefore be absorbed into $B_0$ before the final index estimate.",
+        "citations": [
+          {
+            "ref": "square-root-absorb",
+            "title": "The budget that absorbs the cohomology sum",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/DivinNOfHypV.lean#L76-L106",
+            "where": "DivinNOfHypV.lean, lines 76–106"
+          },
+          {
+            "ref": "square-root-use",
+            "title": "The use of the stronger bound in this deduction",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/CharacterBoxes/DivinNOfHypV.lean#L117-L130",
+            "where": "DivinNOfHypV.lean, lines 117–130"
+          }
+        ]
+      }
     },
     {
       "passage": "hecke-lift-subset",
       "name": "Formalism.MainNotions.N.ZN",
-      "note": "DataN.lean:1292–1294 requires a base-change parameter containing the particular rank-one block (μ_C twisted by η_T⁻¹, R.t). The printed criterion is the presence of a block of length t₀, where the paper sets t₀ = ⌊x^401⌋.",
-      "fidelity": "different"
+      "note": "`ZN` requires an automorphic point giving the eigensystem and a base-change parameter containing the block $(1,\\mu_C\\ \\text{twisted by}\\ \\eta_T^{-1},R.t)$. The paper specifies a block of length $t_0=\\lfloor x^{401}\\rfloor$ without naming its rank-one character.",
+      "fidelity": "different",
+      "evidence": "Paper cohomology.tex 55–64. DataN.lean 1292–1300. supplyOfAdmOf.lean 129–135.",
+      "explanation": {
+        "text": "A Hecke eigensystem gives eigenvalues, but the lift criterion asks for more data. Find an automorphic point with those eigenvalues, pass to its base-change parameter, and look for the prescribed character block. The block identifies which eigenspaces the proof wants to separate from the others when it measures congruences.",
+        "citations": [
+          {
+            "ref": "zn-membership",
+            "title": "The witness and the prescribed base-change block",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/LevelLetterCocycles/DataN.lean#L1292-L1300",
+            "where": "DataN.lean, lines 1292–1300"
+          },
+          {
+            "ref": "zn-congruence",
+            "title": "Why the lift subset enters the congruence ideal",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/cohomology.tex#L55-L64",
+            "where": "cohomology.tex, lines 55–64"
+          }
+        ]
+      }
     },
     {
       "passage": "congruence-ideal-and-length",
       "name": "Formalism.BasicNotions.ccIdeal",
-      "note": "For the ideal clause, DataN.lean:25–27 defines the kernel of simultaneous evaluation at the eigensystems outside Z.",
-      "fidelity": "same"
+      "note": "`ccIdeal` takes the kernel of the simultaneous evaluations outside the supplied finite set $Z$. The record's `cc` applies it to the full lift set.",
+      "fidelity": "same",
+      "evidence": "Paper cohomology.tex 60–64. DataN.lean 25–30, 219–222.",
+      "explanation": {
+        "text": "Think of a Hecke operator as a function of its eigenvalues. Requiring it to vanish off $Z$ gives an integral way to isolate the lift eigensystems. On the lattice side, project an integral vector to the lift eigenspaces using the fraction-field decomposition. Its projection can fail to belong to the integral lattice there, even though the original vector was integral. The quotient measures this failure for the chosen set of eigensystems.",
+        "citations": [
+          {
+            "ref": "cong-quotient",
+            "title": "The ideal and the quotient of lattices",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/cohomology.tex#L55-L64",
+            "where": "cohomology.tex, lines 55–64"
+          },
+          {
+            "ref": "cong-local-norm",
+            "title": "The projected lattice and its integral sublattice",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/LevelLetterCocycles/DataN.lean#L205-L222",
+            "where": "DataN.lean, lines 205–222"
+          }
+        ]
+      }
     },
     {
       "passage": "congruence-ideal-and-length",
       "name": "Formalism.BasicNotions.NData.etaLoc",
-      "note": "DataN.lean:212–220 uses Zgood and its complement in both eigenspace expressions. The printed quotient uses the full lift set Z. Lean also divides the module length by length(O/ℓ), as in DataN.lean:32–33.",
-      "fidelity": "different"
+      "note": "`etaLoc` forms the two lattices using $Z_{\\mathrm{good}}$ and its complement. The printed quotient uses $Z$ and its complement. Lean normalizes the length of the quotient by $\\operatorname{length}_{\\mathcal O}(\\mathcal O/\\ell\\mathcal O)$.",
+      "fidelity": "different",
+      "evidence": "Paper cohomology.tex 60–64. DataN.lean 32–33, 199, 205–222."
     },
     {
       "passage": "assemble-cohomology-counts",
       "name": "UpperTheory.V.HV.Core.of_four_alt",
-      "note": "HVCore.lean:18–22 passes the four named count hypotheses to vwin_of_counts along with the bound from Ferrero–Washington, the odd bound from ML.iv, and a separately proved countZ input."
+      "note": "`of_four_alt` takes the literature record, `LemmaK`, and `CountI`, `CountII`, `CountIII`, `CountV`. The proof supplies the `ThmBab` input using Ferrero–Washington, converts `ML.iv` to the required odd bound, and supplies `CountZ` before calling `vwin_of_counts`.",
+      "evidence": "Paper cohomology.tex 90–112. HVCore.lean 18–22. JointWinOfCounts.lean 25–33.",
+      "explanation": {
+        "text": "Each count controls a class of primes and twists in the total length. The bounds need to hold at the same scales before they can be added. The assembly proof first obtains simultaneous windows for the inputs whose estimates depend on the scale, then incorporates the separate parity estimate. Ferrero–Washington supplies the vanishing of $\\mu$ for the cyclotomic-tower input. The crude finiteness bound covers twists outside that input's range.",
+        "citations": [
+          {
+            "ref": "coh-window-assembly",
+            "title": "How the windowed counts and parity estimate are combined",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/AutomorphicVarieties/HeightAndVanishing/JointWinOfCounts.lean#L25-L33",
+            "where": "JointWinOfCounts.lean, lines 25–33"
+          },
+          {
+            "ref": "coh-parity-and-tower",
+            "title": "The odd estimate and the cyclotomic-tower estimate",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/cohomology.tex#L90-L112",
+            "where": "cohomology.tex, lines 90–112"
+          },
+          {
+            "ref": "ferrero-washington",
+            "title": "Ferrero and Washington on the Iwasawa μ-invariant",
+            "url": "https://doi.org/10.2307/1971116",
+            "where": "Annals of Mathematics 109 (1979), pp. 377–395"
+          }
+        ]
+      }
     },
     {
       "passage": "quadratic-subfield-of-host",
       "name": "Formalism.HC.HostRaw",
-      "note": "For the quadratic-field clause, HostRaw records sqd² = −d and the sign action, with K defined as ℚ(sqd). ConjEMemHostFIff.lean:209–212 identifies the fixing subgroup with φ.Psi.",
-      "fidelity": "same"
+      "note": "`HostRaw` records an element squaring to $-d$ and its sign under Galois action. The field $K$ is generated by that element over $\\mathbb Q$. `galE_mem_Psi_iff` identifies the sign kernel with $\\phi.\\mathrm{Psi}$, written $\\Phi$ in the paper.",
+      "fidelity": "same",
+      "evidence": "Paper hosts.tex 4–16. ConjEMemHostFIff.lean 12–31, 60, 202–224.",
+      "explanation": {
+        "text": "An automorphism of $E$ acts on $\\sqrt{-d}$ by one of two signs. The automorphisms acting by $+1$ fix the whole field it generates, so the quadratic character in the analytic argument is the sign on this subfield. The period construction uses that same subfield as its imaginary quadratic base.",
+        "citations": [
+          {
+            "ref": "host-quadratic-action",
+            "title": "The field generator and the sign of its Galois action",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/ConjEMemHostFIff.lean#L23-L35",
+            "where": "ConjEMemHostFIff.lean, lines 23–35"
+          },
+          {
+            "ref": "host-quadratic-kernel",
+            "title": "The subgroup fixing the generator",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/ConjEMemHostFIff.lean#L202-L224",
+            "where": "ConjEMemHostFIff.lean, lines 202–224"
+          },
+          {
+            "ref": "host-quadratic-use",
+            "title": "Where the quadratic field and character are used",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/hosts.tex#L12-L16",
+            "where": "hosts.tex, lines 12–16"
+          }
+        ]
+      }
     },
     {
       "passage": "estimates-for-auxiliary-twists",
       "name": "QH.meanSqK",
-      "note": "meanSqK.lean:51–54 states the mean-square result over primes in the admissible progression on [Y,Y^K]. StagePow.lean:49–54 uses it inside the argument that selects good prime pairs."
+      "note": "`meanSqK` bounds the sum of squares over candidate primes in the admissible progression for every $y\\in[Y,Y^K]$, with the stated restrictions on prime divisors of the progression modulus. `stage` uses this bound to control how many candidates exceed the threshold anywhere in the window.",
+      "evidence": "Paper hosts.tex 53–59. PrimeSetTwoBounds.lean 18–27. meanSqK.lean 51–54. StagePow.lean 41–55, 155–169.",
+      "explanation": {
+        "text": "A prime can fail the bound at a different scale from its neighbours. The proof handles this by controlling the maximum of the smoothed sum on each dyadic interval using the mean square and an integral of the squared derivative. The upper bounds for the counts of bad primes form a geometric series over the dyadic intervals. Zero density controls the separate set whose twists have zeros near $1$. The combined count leaves primes that pass both tests.",
+        "citations": [
+          {
+            "ref": "twist-dyadic-max",
+            "title": "From the value at one endpoint to a bound on the interval",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/MeanSquareBounds/BadShare.lean#L118-L148",
+            "where": "BadShare.lean, lines 118–148"
+          },
+          {
+            "ref": "twist-dyadic-count",
+            "title": "The geometrically decaying count over dyadic intervals",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/MeanSquareBounds/BadShare.lean#L251-L315",
+            "where": "BadShare.lean, lines 251–315"
+          },
+          {
+            "ref": "twist-surviving-share",
+            "title": "Combining the counts of rejected candidates",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/MeanSquareBounds/StagePow.lean#L140-L169",
+            "where": "StagePow.lean, lines 140–169"
+          },
+          {
+            "ref": "bombieri-sieve",
+            "title": "Bombieri on the large sieve",
+            "url": "https://doi.org/10.1112/S0025579300005313",
+            "where": "Mathematika 12 (1965), pp. 201–225"
+          }
+        ]
+      }
     },
     {
       "passage": "estimates-for-auxiliary-twists",
       "name": "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box",
-      "note": "CountZAll.lean:13–15 proves a count of primitive characters of modulus at most Q with a zero in Re(s) > 1 − 1/400, |Im(s)| ≤ Q. CountBadCore.lean:18–24 uses it in selecting the prime pairs."
+      "note": "`zero_density_box` bounds by $CQ^{1/4}$ the number of primitive characters of modulus at most $Q$ with at least one zero in $\\operatorname{Re}s>1-1/400$, $|\\operatorname{Im}s|\\le Q$, for $Q\\ge3$. The application counts bad primes by assigning each one such a character whose modulus records that prime.",
+      "evidence": "Paper hosts.tex 53–59. CountSt.lean 7–11. CountZAll.lean 13–15. CountBadCore.lean 18–50."
     },
     {
       "passage": "frame:52:1",
       "name": "GlobalTheory.rowMainEqP_of_siegelWeil",
-      "note": "The surrounding sentence describes an off-diagonal main term. The cited theorem concludes `RowMainEqP`, whose formula uses a repeated index (`Y.tO u u`). Its proof uses Siegel–Weil and Bessel uniqueness.",
-      "fidelity": "different"
+      "note": "`rowMainEqP_of_siegelWeil` uses Siegel–Weil and Bessel uniqueness to prove `RowMainEqP`. The latter has one index $u$ and estimates $Y.tO\\,u\\,u$. The prose attributes an off-diagonal main term to this declaration. The bound for two indices is stated separately in `pbApplied`, with further hypotheses.",
+      "fidelity": "different",
+      "evidence": "Paper frame.tex 39–59. RowMainEqPOfSiegelWeil.lean 10–16. RowsPos.lean 43–47. TheoremS.lean 19–44.",
+      "explanation": {
+        "text": "The frame proof controls how much the images of two period maps overlap. After expanding their pairing, the Siegel–Weil mass formula expresses an average of theta series through local densities, while Bessel uniqueness reduces the main-term calculation to a scalar in the stated range. The linked equality applies to the repeated-index pairing. For two different indices, follow the separate estimate that bounds the squared norm after controlling the large, non-scalar and non-generic contributions.",
+        "citations": [
+          {
+            "ref": "frame-mass-method",
+            "title": "The mass formula and the two-index estimate in the paper",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/frame.tex#L39-L60",
+            "where": "frame.tex, lines 39–60"
+          },
+          {
+            "ref": "frame-diag-formula",
+            "title": "The repeated-index main term",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/LocalToGlobal/SiegelLatticeTheory/FlagStabilizerTensors/RowsPos.lean#L43-L47",
+            "where": "RowsPos.lean, lines 43–47"
+          },
+          {
+            "ref": "frame-pair-bound",
+            "title": "The norm bound with two indices",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/LocalToGlobal/SiegelLatticeTheory/FlagStabilizerTensors/TheoremS.lean#L19-L44",
+            "where": "TheoremS.lean, lines 19–44"
+          }
+        ]
+      }
     },
     {
       "passage": "offpath:5:1",
       "name": "riemannHypothesis",
-      "note": "Main.lean:4 is the root declaration for the dependency cone described in the passage. The cone is a property of compiled dependencies."
+      "note": "Section 11 uses the theorem on line 4 of `Main.lean` as the root of its count of compiled dependencies. It counts declarations by name.",
+      "evidence": "Main.lean 4; offpath.tex 3–37, 53–66; numbers.tex 41–52; cone-probe.txt; Shore release v0.2.1.",
+      "explanation": {
+        "text": "Begin with `riemannHypothesis` in `Main.lean`. Its statement names Mathlib’s `RiemannHypothesis` and its proof is `rhOfAll`. Follow the constants in both expressions, then repeat for each declaration you reach. The paper’s count also follows the links between an inductive type and its constructors, and from a projection to its structure. On the paper authors’ second build this gives 1,478,220 declarations. Of the archive’s 1,548,656 distinct theorem names, 473,641 fall outside this set even though the archive compiles them. For example, the conditional `WeightedSieveImpliesRH` is outside the set. The reader’s map uses James Shore’s compiled dependency data and shows only declarations linked from the paper.",
+        "citations": [
+          {
+            "ref": "riemannHypothesis",
+            "title": "riemannHypothesis",
+            "where": "Main.lean, lines 4",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L4"
+          },
+          {
+            "ref": "paper-offpath",
+            "title": "How the paper counts dependencies",
+            "where": "paper/sections/offpath.tex, lines 3–37",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/offpath.tex#L3-L37"
+          },
+          {
+            "ref": "paper-offpath-examples",
+            "title": "Conditional reductions outside the final proof",
+            "where": "paper/sections/offpath.tex, lines 53–66",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/offpath.tex#L53-L66"
+          },
+          {
+            "ref": "paper-cone-count",
+            "title": "Dependency count from the paper’s second build",
+            "where": "Recorded output",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/verify/results/cone-probe.txt"
+          },
+          {
+            "ref": "shore-data",
+            "title": "James Shore’s compiled dependency data",
+            "where": "Release v0.2.1",
+            "url": "https://github.com/james-shore/rh-proof-dependencies/releases/tag/v0.2.1"
+          }
+        ]
+      }
     },
     {
       "passage": "cohomology:100:1",
       "name": "UpperTheory.V.ML.iv",
-      "note": "Iv.lean:4–6 takes Poitou–Tate duality and unramified orthogonality and concludes PsiBound, as the paper says."
+      "note": "`ML.iv` takes Poitou–Tate duality and unramified orthogonality and concludes `PsiBound`. Unfolded, the bound applies to abelian CM fields with the indicated cyclotomic action and $\\ell\\ne2$, $\\ell\\nmid[E:\\mathbb Q]$. The character must have sign $(-1)^{e+1}$ at complex conjugation.",
+      "evidence": "Paper cohomology.tex 97–104. Iv.lean 4–6. ZeroMemUnrHom.lean 85–87, 97–103. KolStep.lean 135–140.",
+      "explanation": {
+        "text": "Look at one Galois character at a time. When its sign has the required parity, the argument bounds the cohomology length by the valuation of a generalized Bernoulli number multiplied by a denominator-clearing factor. The Kolyvagin derivative step relates the restriction of the next class to inertia at an auxiliary prime to the previous class evaluated at Frobenius there. Poitou–Tate duality and the orthogonality of unramified classes are the local-to-global inputs to the bound.",
+        "citations": [
+          {
+            "ref": "odd-bernoulli",
+            "title": "The character and the normalized Bernoulli number",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/AutomorphicVarieties/OddResidueBounds/ZeroMemUnrHom.lean#L71-L79",
+            "where": "ZeroMemUnrHom.lean, lines 71–79"
+          },
+          {
+            "ref": "odd-cohomology-bound",
+            "title": "The parity, local-prime restrictions and valuation",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/AutomorphicVarieties/OddResidueBounds/ZeroMemUnrHom.lean#L97-L103",
+            "where": "ZeroMemUnrHom.lean, lines 97–103"
+          },
+          {
+            "ref": "odd-derivative-step",
+            "title": "The inertia–Frobenius relation for derivative classes",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/AutomorphicVarieties/PrimitiveFrobeniusFixed/KolStep.lean#L135-L140",
+            "where": "KolStep.lean, lines 135–140"
+          },
+          {
+            "ref": "tate-icm-duality",
+            "title": "Tate on duality in Galois cohomology",
+            "url": "https://math.stanford.edu/~conrad/BSDseminar/refs/TateICM.pdf",
+            "where": "Proceedings of the 1962 International Congress of Mathematicians, pp. 288–295"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "verification:63:1",
+      "name": "riemannZeta_eq_zero_re",
+      "note": "Lean’s `RiemannZetaZerosOnLine` is definitionally equal to Mathlib’s `RiemannHypothesis`. Both headline declarations have the same proof term, `rhOfAll`.",
+      "evidence": "Paper verification.tex 63; Main.lean 4–6; Statements.lean 3–4; pinned Mathlib RiemannZeta.lean 163–164.",
+      "explanation": {
+        "text": "At modulus one the only Dirichlet character is the trivial character, and its $L$-function is $\\zeta$. The theorem for all Dirichlet characters therefore gives the right-half-plane statement for zeta directly. The proof term `rhOfAll` completes the argument using zeta’s functional equation. The two declarations expose the same result under the library’s hypothesis name and under an explicit zero statement.",
+        "citations": [
+          {
+            "ref": "zeta-headline-declarations",
+            "title": "The two headline zeta declarations",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L6",
+            "where": "Main.lean, lines 4–6"
+          },
+          {
+            "ref": "zeta-modulus-one",
+            "title": "The zeta case of the all-character theorem",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/GammaFactorNonvanishing/CritLine.lean#L29-L32",
+            "where": "CritLine.lean, lines 29–32"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "verification:64:1",
+      "name": "LFunction_eq_zero_re_of_isPrimitive",
+      "note": "The positive modulus, open strip, zero hypothesis, and conclusion agree with Statement 2.3. The extra hypothesis `χ.IsPrimitive` restricts this declaration to characters at their conductor.",
+      "evidence": "Paper verification.tex 59–64; Main.lean 10–12; Statements.lean 10–16; MainTheorems.lean 11–13.",
+      "explanation": {
+        "text": "A primitive character is given at its conductor, so its functional equation can be applied without first removing Euler factors from a larger modulus. A zero on the left side of the strip for $\\chi$ would reflect to a zero for $\\chi^{-1}$ at $1-s$. The same half-plane nonvanishing theorem excludes that reflected zero and any zero originally on the right.",
+        "citations": [
+          {
+            "ref": "primitive-strip-alias",
+            "title": "The primitive-character version of the strip theorem",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/verification.tex#L59-L68",
+            "where": "Statement 2.3 and the two aliases"
+          },
+          {
+            "ref": "primitive-strip-proof",
+            "title": "Reflecting a primitive character’s zeros",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/GammaFactorNonvanishing/CritLine.lean#L11-L27",
+            "where": "CritLine.lean, lines 11–27"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "verification:145:1",
+      "name": "riemannHypothesis",
+      "note": "The paper starts its dependency count at the theorem on line 4 of `Main.lean` and follows references in compiled declarations.",
+      "evidence": "verification.tex 142–154; Main.lean 1–4.",
+      "explanation": {
+        "text": "Read the two sides of `:=` on line 4. The type refers to Mathlib’s proposition and the value to `rhOfAll`. The count follows both kinds of reference recursively, together with the links between types and constructors and from projections to their structures. That measures what the named theorem uses inside the compiled environment.",
+        "citations": [
+          {
+            "ref": "riemannHypothesis",
+            "title": "riemannHypothesis",
+            "where": "Main.lean, lines 4",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L4"
+          },
+          {
+            "ref": "paper-cone-method",
+            "title": "The dependency cone",
+            "where": "paper/sections/verification.tex, lines 142–154",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/verification.tex#L142-L154"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "verification:204:1",
+      "name": "riemannHypothesis",
+      "note": "The paper’s replay report lists this theorem among the five checked and records three axioms for it.",
+      "evidence": "verification.tex 196–208; replay-targets.txt; numbers.tex 41, 114.",
+      "explanation": {
+        "text": "The replay report lists `Classical.choice`, `Quot.sound` and `propext` for each of the five headline theorems. Here the axioms were collected from terms in the environment rebuilt by the kernel. The replay also follows recursor rules and expansions of numerals and strings in its count, which gives 1,478,222 names for `riemannHypothesis` under that traversal.",
+        "citations": [
+          {
+            "ref": "riemannHypothesis",
+            "title": "riemannHypothesis",
+            "where": "Main.lean, lines 4",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Main.lean#L4-L4"
+          },
+          {
+            "ref": "paper-replay-targets",
+            "title": "Kernel replay results for the five headline theorems",
+            "where": "Recorded outcomes and axiom lists",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/verify/results/replay-targets.txt"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "overview:6:1",
+      "name": "Formalism.HC.ZeroFreeAll",
+      "note": "`ZeroFreeAll` is the proposition that every primitive Dirichlet $L$-function is nonzero for $\\operatorname{Re}s>1/2$.",
+      "evidence": "overview.tex 3–14; ExplicitFormulaErrorOfHostConditions.lean 11–18.",
+      "explanation": {
+        "text": "Unfold `ZeroFreeAll` to `ZeroFreeOn` with predicate `True`. The resulting quantifier covers every primitive character. Section 3 then points to the theorem that passes from primitive to arbitrary characters.",
+        "citations": [
+          {
+            "ref": "ZeroFreeAll",
+            "title": "ZeroFreeAll",
+            "where": "ExplicitFormulaErrorOfHostConditions.lean, lines 18",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/ExplicitFormulaErrorOfHostConditions.lean#L18-L18"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "overview:27:1",
+      "name": "Formalism.MainNotions.ChainTied",
+      "note": "`ChainTied` is an existence statement at the scale $x$. It requires witnesses that connect the lattices and the weighted count.",
+      "evidence": "overview.tex 24–32; TieGlobal.lean 97–114.",
+      "explanation": {
+        "text": "Read the variables introduced by the existential quantifier first. They include the length of the chain, the sets of sizes and places, and the weights. Later clauses fix how the lattice quantities are identified with the weighted count at that same scale. The window condition in Section 3 supplies such data at each scale in the selected windows.",
+        "citations": [
+          {
+            "ref": "ChainTied",
+            "title": "ChainTied",
+            "where": "TieGlobal.lean, lines 97–114",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/GlobalSchurBounds/TieGlobal.lean#L97-L114"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "overview:27:2",
+      "name": "Formalism.MainNotions.ChainTied",
+      "note": "The eleven inequalities described here are grouped under `SizeData₂`, one clause in the larger `ChainTied` definition.",
+      "evidence": "overview.tex 24–32; TieGlobal.lean 104–114; ChTop.lean 37–55.",
+      "explanation": {
+        "text": "Find `SizeData₂` at line 109. The neighbouring clauses set the error bounds, cohomological contributions, and remaining size conditions. With the identifications already in place, these hypotheses let the arithmetic bounds control the count used in the analytic argument.",
+        "citations": [
+          {
+            "ref": "ChainTied",
+            "title": "ChainTied",
+            "where": "TieGlobal.lean, lines 97–114",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/GlobalSchurBounds/TieGlobal.lean#L97-L114"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:56:1",
+      "name": "Deduction.CH.HostFactsS",
+      "note": "`HostFactsS` records the ramification and Frobenius conditions for a host field used in the character-sum identity.",
+      "evidence": "analytic.tex 48–66; SplitInertia.lean 14–22.",
+      "explanation": {
+        "text": "For a prime outside $S\\cup\\{d\\}$, look at `unram`. For a prime of $S$, `split_inertia` and `split_frob` put its inertia elements and chosen Frobenius in the subgroup $\\Phi$. The separate clause `inertia_d` allows two inertia elements at $d$. These assumptions specify which primes require special treatment in the count.",
+        "citations": [
+          {
+            "ref": "HostFactsS",
+            "title": "HostFactsS",
+            "where": "SplitInertia.lean, lines 14–22",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/SplitInertia.lean#L14-L22"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:91:1",
+      "name": "Deduction.CH.SizesA",
+      "note": "`SizesA` fixes the ranges of the weights and constrains the scales $a_t/w$.",
+      "evidence": "analytic.tex 86–100; SplitInertia.lean 42–48.",
+      "explanation": {
+        "text": "At a thick place, the weight is close to $b$ and $a_t/b$ is within 1 of $x$, so this part of the sum can be moved to the target scale. At a thin place, the smaller weight sends the sum to a much larger scale. The last clause bounds $a_t/w$ by the finite cutoff used in the count.",
+        "citations": [
+          {
+            "ref": "SizesA",
+            "title": "SizesA",
+            "where": "SplitInertia.lean, lines 42–48",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/SplitInertia.lean#L42-L48"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:98:1",
+      "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.ThinScales",
+      "note": "`ThinScales` bounds the smoothed sum for every host character at every $y\\ge X^{\\prime}/3$.",
+      "evidence": "analytic.tex 73–100; GrowthBoundGivesRiemannHypothesis.lean 55–56.",
+      "explanation": {
+        "text": "For a term from a thin place, set $y=a_t/w$. The bound on the character sum is $\\vartheta y$, so multiplying by the weight gives at most $\\vartheta a_t$. That cancellation is what permits one estimate for all the thin places.",
+        "citations": [
+          {
+            "ref": "ThinScales",
+            "title": "ThinScales",
+            "where": "GrowthBoundGivesRiemannHypothesis.lean, lines 55–56",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean#L55-L56"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:98:2",
+      "name": "Formalism.LFunctionChainParameters.LChain.CostWindows",
+      "note": "`CostWindows` sets two numerical tolerances, one on the thin-scale estimate and one on the spread of the thick weights.",
+      "evidence": "analytic.tex 86–100, 128–137; SChain.lean 50–51.",
+      "explanation": {
+        "text": "The first inequality controls the accumulated contribution from $|G_\\psi(y)|\\le\\vartheta y$ at thin places. The second controls the error from moving the thick terms to $x$ when their weights vary by up to $\\eta+1$. The reduced inequality in Section 4.3 includes the resulting allowance $2|TT|mb/x$.",
+        "citations": [
+          {
+            "ref": "CostWindows",
+            "title": "CostWindows",
+            "where": "SChain.lean, lines 50–51",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/SChain.lean#L50-L51"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:99:1",
+      "name": "Formalism.MainNotions.Lnk.Char_at",
+      "note": "`Char_at` links the values used for logarithmic derivatives at 1 to primitive Dirichlet characters and records conditional estimates.",
+      "evidence": "analytic.tex 95–100; QuadraticLogDerivCongr.lean 221–229.",
+      "explanation": {
+        "text": "The thin-scale clause uses $X^{\\prime}=\\exp(x^{\\varepsilon/3})$ and a tolerance $\\exp(-c_6 x^{\\varepsilon/8})$. Read the implication on lines 227–228 to see the host’s thin-scale hypothesis. The following clause concerns estimates at the single point $x$.",
+        "citations": [
+          {
+            "ref": "Char_at",
+            "title": "Char_at",
+            "where": "QuadraticLogDerivCongr.lean, lines 221–229",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/GlobalSchurBounds/QuadraticLogDerivCongr.lean#L221-L229"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:141:1",
+      "name": "Formalism.HC.HostRaw.ExceptionalCharacterKept",
+      "note": "`ExceptionalCharacterKept` specifies when the exceptional quadratic host character belongs among the kept characters.",
+      "evidence": "analytic.tex 139–145; Analytic.lean 158–159; GmAEq.lean 61–149.",
+      "explanation": {
+        "text": "Read the two cases for the optional distinguished character of the level. When present, that character is the primitive character inducing the exceptional host character. When absent, the exceptional host character is omitted from the kept set. This controls which terms in the average carry weight 1 before the comparison with the level.",
+        "citations": [
+          {
+            "ref": "ExceptionalCharacterKept",
+            "title": "ExceptionalCharacterKept",
+            "where": "Analytic.lean, lines 158–159",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/Analytic.lean#L158-L159"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:145:1",
+      "name": "UpperTheory.Comparison₂.gmA_eq",
+      "note": "`gmA_eq` identifies the weighted sum over kept host characters with the weighted sum for the level.",
+      "evidence": "analytic.tex 139–146; GmAEq.lean 61–149.",
+      "explanation": {
+        "text": "Each kept host character corresponds to a kept primitive character of the level. Their smoothed sums agree and the weights match, with $1/(3o+1)$ on the terms other than the trivial and designated quadratic cases. The theorem gives equality at every input $y$ once the host and level satisfy its compatibility hypotheses.",
+        "citations": [
+          {
+            "ref": "gmA_eq",
+            "title": "gmA_eq",
+            "where": "GmAEq.lean, lines 61–149",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/PrimitiveCosets/GmAEq.lean#L61-L149"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:146:1",
+      "name": "UpperTheory.Comparison₂.sigA_le",
+      "note": "`sigA_le` bounds the sum of the absolute values of the terms for host characters omitted from the kept set.",
+      "evidence": "analytic.tex 145–148; SigALe.lean 38–60; hosts.tex 36–59.",
+      "explanation": {
+        "text": "The proof bounds each omitted term at $x$ by $x^{1/2+\\varepsilon}$ and counts at most $4o$ terms, where $o$ is the level parameter. Section 9.3 explains how the host is chosen to secure the individual bounds for these short sums over auxiliary twists.",
+        "citations": [
+          {
+            "ref": "sigA_le",
+            "title": "sigA_le",
+            "where": "SigALe.lean, lines 38–60",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/PrimitiveCosets/SigALe.lean#L38-L60"
+          },
+          {
+            "ref": "paper-aux-twists",
+            "title": "The estimates for auxiliary twists",
+            "where": "paper/sections/hosts.tex, lines 36–59",
+            "url": "https://github.com/vincitamore/riemann-lean-account/blob/dd9bfc30bf9fc605251a22aa41004d1e22cc303b/paper/sections/hosts.tex#L36-L59"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:148:1",
+      "name": "UpperTheory.Comparison₂.core_gm",
+      "note": "`core_gm` combines the character-sum reduction and the two comparisons to bound the smoothed sum for the level.",
+      "evidence": "analytic.tex 139–155; CoreGm.lean 12–25, 47–74.",
+      "explanation": {
+        "text": "For an adapted host with the required lattice data, `ch_top` supplies the bound on the weighted count used by `ch_core`. Then `gmA_eq` substitutes the level’s sum and `sigA_le` bounds the discarded terms. For sufficiently large $x$, the fixed factor from those terms is absorbed into one further $x^\\varepsilon$, giving the exponent $1/2+(e_D+e_L+7)\\varepsilon$.",
+        "citations": [
+          {
+            "ref": "core_gm",
+            "title": "core_gm",
+            "where": "CoreGm.lean, lines 12–74",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/PrimitiveCosets/CoreGm.lean#L12-L74"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:155:1",
+      "name": "Deduction.ch_top",
+      "note": "`ch_top` gives the required upper bound for the excess of the weighted count over its main term at a chosen translate.",
+      "evidence": "analytic.tex 119–123, 148–155; SplitInertia.lean 50–52; ChTop.lean 37–72.",
+      "explanation": {
+        "text": "In the proof, lines 45–52 identify the excess in the count with the difference of two lattice quantities. Lines 53–55 apply the eleven inequalities and estimate the remaining error. The output is the bound on `gapA` that Section 4.3 needs for each translate.",
+        "citations": [
+          {
+            "ref": "ch_top",
+            "title": "ch_top",
+            "where": "ChTop.lean, lines 37–72",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChTop.lean#L37-L72"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:158:1",
+      "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.SizeWindows",
+      "note": "`SizeWindows` collects lower bounds on the averaging sets, upper and lower bounds on the chain length and rank, and a bound on the error bracket.",
+      "evidence": "analytic.tex 157–177; GrowthBoundGivesRiemannHypothesis.lean 109–117.",
+      "explanation": {
+        "text": "The two set-size conditions bound how much is lost when dividing by the number of sizes and by the density of thick places. The rank restriction $xm\\le k$ also gives $m^2/k\\le m/x$. These are the bounds used to reduce the bracket in Section 4.4 to terms of sizes $x/m$, $m$ and $k/n^2$ up to powers of $x^\\varepsilon$.",
+        "citations": [
+          {
+            "ref": "SizeWindows",
+            "title": "SizeWindows",
+            "where": "GrowthBoundGivesRiemannHypothesis.lean, lines 109–117",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean#L109-L117"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "analytic:177:1",
+      "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthSizeBound",
+      "note": "`GrowthSizeBound` names an implication between real inequalities. The input `Gx` is a real number.",
+      "evidence": "analytic.tex 128–137, 157–177; GrowthBoundGivesRiemannHypothesis.lean 119–122.",
+      "explanation": {
+        "text": "Take `Gx` to be the kept character sum minus the sum of absolute values of the discarded terms. Given the size conditions and the inequality before division, the conclusion is $\\mathrm{Gx}\\le x^{1/2+(C+3)\\varepsilon}$. The paper’s earlier calculation explains why choosing $m$ near $\\sqrt{x}$ gives this exponent.",
+        "citations": [
+          {
+            "ref": "GrowthSizeBound",
+            "title": "GrowthSizeBound",
+            "where": "GrowthBoundGivesRiemannHypothesis.lean, lines 119–122",
+            "url": "https://github.com/leanprover-community/riemann-hypothesis/blob/8b83d5e7b319ebc7b3be6e59ce3411ba2b09d116/src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean#L119-L122"
+          }
+        ]
+      }
+    },
+    {
+      "passage": "lattices:30:1",
+      "name": "GlobalTheory.Mem.Col2.GStep.Fi",
+      "note": "The space underlying $M_u$ consists of weight-representation-valued functions on the finitely many genus classes. At each class the value must be fixed by that class’s stabiliser.",
+      "evidence": "Paper lattices.tex 25–30. Lean PredMemGamRanks.lean 151–159."
+    },
+    {
+      "passage": "lattices:42:1",
+      "name": "Formalism.BasicNotions.DV.Iu",
+      "note": "The fractional ideal rescales the ramified lattice one prime at a time. At $\\lambda$ the exponent is $-\\lfloor e_\\lambda g(u,\\lambda)\\rfloor$, the negative of the valuation threshold for periods.",
+      "evidence": "Paper lattices.tex 31–42, 93–97. Lean DataDIVDefs.lean 17–20, with DataDIVDefs.lean 15–20."
+    },
+    {
+      "passage": "lattices:42:2",
+      "name": "Formalism.BasicNotions.DV.NprimeDef",
+      "note": "The lattice $N_u$ is generated by products of a scalar from the fractional ideal and a form from the sublattice ramified at $T(u)$. The admissibility bound allows those products to have integral periods even when the scalar introduces a denominator.",
+      "evidence": "Paper lattices.tex 31–42, 88–98. Lean DataDIVDefs.lean 22–24."
+    },
+    {
+      "passage": "lattices:42:3",
+      "name": "Formalism.BasicNotions.SizeData₂.sg",
+      "note": "The real number $g(u,\\lambda)$ adds the gains from the individual lifts, adds their first corrections, and subtracts their word-dependent corrections. Multiplication by the ramification index and rounding down turn this sum into the local valuation threshold.",
+      "evidence": "Paper lattices.tex 34–43, 93–97. Lean DataParams₂.lean 215–216, with DataParams₂.lean 205–216."
+    },
+    {
+      "passage": "lattices:65:1",
+      "name": "Formalism.BasicNotions.SizeData₂.Ga",
+      "note": "At each place the argument sums the gains of the lifts and subtracts the local cost $\\tau_\\lambda$. The place-weighted total $\\mathrm{Ga}(u_0)$ is the common quantity in the count bound and the lower slope bound for $N_u$.",
+      "evidence": "Paper lattices.tex 54–55, 62–70. Lean DataParams₂.lean 220, with DataParams₂.lean 203–213."
+    },
+    {
+      "passage": "lattices:65:2",
+      "name": "Formalism.BasicNotions.SizeData₂.Fo",
+      "note": "$\\mathrm{Fo}$ collects the word-independent rescaling corrections over the lifts and finite places. Subtracting it in the period inequality cancels the contribution it makes to the lower slope bound for $N_u$.",
+      "evidence": "Paper lattices.tex 55–60, 62–73. Lean DataParams₂.lean 218, with DataParams₂.lean 203–208."
+    },
+    {
+      "passage": "lattices:65:3",
+      "name": "Formalism.BasicNotions.SizeData₂.Ee",
+      "note": "$\\mathrm{Ee}(u)$ collects the word-dependent corrections and is subtracted in the lower bound for $\\mu(N_u)$. The dimension count for $T(u)$ gives another occurrence of its leading term, which can then be cancelled.",
+      "evidence": "Paper lattices.tex 55–56, 62–65, 73–85. Lean DataParams₂.lean 222, with DataParams₂.lean 203–208."
+    },
+    {
+      "passage": "lattices:77:1",
+      "name": "Formalism.RankGapBounds.WeightedMeanData.Data.Slopes",
+      "note": "The lower bound on the average slope of $M_u$ limits how much the starting lattice can cost in the gain inequality. The upper bound on its maximal slope separately controls the highest part of its Harder–Narasimhan filtration.",
+      "evidence": "Paper lattices.tex 68–78. Lean MeanBoundSecondForm.lean 139–141."
+    },
+    {
+      "passage": "lattices:78:1",
+      "name": "Formalism.RankGapBounds.WeightedMeanData.Data.HComp",
+      "note": "Two words in the same translate can have different map heights and different auxiliary level primes. The bound controls the variation of their combined quantity $h(u)+\\sum_t a_t\\log T(u)$, which appears when the level term is brought to the same side as the height.",
+      "evidence": "Paper lattices.tex 59–60, 76–85. Lean MeanBoundSecondForm.lean 126–129."
+    },
+    {
+      "passage": "lattices:79:1",
+      "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.Count5",
+      "note": "The dimension count forces a lower bound on $\\log T(u)$. Since the period bound contains $-\\sum_t a_t\\log T(u)$, this lower bound gives an upper bound on that contribution.",
+      "evidence": "Paper lattices.tex 76–85, 264–272. Lean QuotientSlopeBoundsWith.lean 27–32."
+    },
+    {
+      "passage": "lattices:79:2",
+      "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.EComp5",
+      "note": "The correction $\\mathrm{Ee}(u)$ differs from $m\\ell_g\\sum_t a_t$ by a controlled error. The same leading term, with a minus sign, appears when the lower bound on $\\log T(u)$ is inserted into the period inequality.",
+      "evidence": "Paper lattices.tex 76–85. Lean QuotientSlopeBoundsWith.lean 24–25."
+    },
+    {
+      "passage": "lattices:93:1",
+      "name": "Formalism.MainNotions.LocalQuadraticParts.adm2",
+      "note": "For a form in the unscaled lattice and an allowed integral test vector, a nonzero period has valuation at least $\\lfloor e_\\lambda g(u,\\lambda)\\rfloor$ at $\\lambda$. That is the threshold needed to multiply the form by the rescaling ideal while keeping its periods integral.",
+      "evidence": "Paper lattices.tex 88–98. Lean LocalQuadraticParts.lean 206–210."
+    },
+    {
+      "passage": "lattices:99:1",
+      "name": "Formalism.L2.G.Adm2InU.admissible_level_two",
+      "note": "The proof establishes the valuation threshold separately at the auxiliary level prime $T(u)$, at the two host primes, and at the remaining places. These local bounds make the period map integral on $N_u$.",
+      "evidence": "Paper lattices.tex 88–100. Lean AdmissibleAtGeneratorPlaces.lean 214–245, with WeightDegreeSizes.lean 861."
+    },
+    {
+      "passage": "lattices:102:1",
+      "name": "Formalism.MainNotions.G.gainP",
+      "note": "The local gain vanishes above the prime cutoff and at inert primes with $h_p=0$. In the orbit sum, each orbit contributes $\\max(g_0,0)$, with $g_U-\\mathrm{Pr}$ also included in the maximum on the orbits in $VV$.",
+      "evidence": "Paper lattices.tex 102–107, 117–137. Lean IsResidueClassZero.lean 353–358, with IsResidueClassZero.lean 263–268, 285–293."
+    },
+    {
+      "passage": "lattices:111:1",
+      "name": "Formalism.MainNotions.G.IsV",
+      "note": "At an inert prime the parity is measured by counting Frobenius steps from the chosen base point. The formula for $g_U$ charges the capacity deductions only at odd positions.",
+      "evidence": "Paper lattices.tex 106–120, 139–145. Lean IsResidueClassZero.lean 179–180, with IsResidueClassZero.lean 161–180, 254–258."
+    },
+    {
+      "passage": "lattices:116:1",
+      "name": "Formalism.MainNotions.G.capU",
+      "note": "The capacity is the adjusted weight at the partner reached after $e$ Frobenius steps, on the second copy for odd steps in the signal class. It caps the odd-position deduction in $g_U$ and is subtracted before taking the positive part in $g_0$.",
+      "evidence": "Paper lattices.tex 112–122. Lean IsResidueClassZero.lean 102, 131–132, 154–159, 230–258."
+    },
+    {
+      "passage": "lattices:123:1",
+      "name": "Formalism.MainNotions.G.gU",
+      "note": "On a single orbit, $g_U$ starts at $\\gamma_p$ times the sum of the reduced top weights. It subtracts the capacity-limited terms at odd positions and an orbit error, leaving the full geometric-series contribution at even positions before that error.",
+      "evidence": "Paper lattices.tex 116–124, 139–145. Lean IsResidueClassZero.lean 252–258."
+    },
+    {
+      "passage": "lattices:123:2",
+      "name": "Formalism.MainNotions.G.g0",
+      "note": "For each top place and each allowed odd exponent, $g_0$ counts only the positive excess of $\\alpha_t/p^e$ over the partner capacity. The orbit’s logarithmic correction is then subtracted from the sum.",
+      "evidence": "Paper lattices.tex 116–126, 139–145. Lean IsResidueClassZero.lean 245–250, with IsResidueClassZero.lean 241–244."
+    },
+    {
+      "passage": "lattices:126:1",
+      "name": "Formalism.MainNotions.G.Excl",
+      "note": "An odd step is excluded from $g_0$ when it is the first positive step to a different top place on the first copy of the orbit.",
+      "evidence": "Paper lattices.tex 121–126. Lean IsResidueClassZero.lean 238–239, with IsResidueClassZero.lean 235–236, 247–250."
+    },
+    {
+      "passage": "lattices:132:1",
+      "name": "Formalism.MainNotions.G.VV",
+      "note": "An orbit can use the $g_U$ estimate after its penalty only if it belongs to $VV$. To include the regular orbits, the construction requires a candidate inert prime, orbit length at least $x^{\\epsilon/4}$, and a smallness bound summed over the regular orbits.",
+      "evidence": "Paper lattices.tex 128–137. Lean IsResidueClassZero.lean 290–293, with IsResidueClassZero.lean 279–293, 355–358."
+    },
+    {
+      "passage": "lattices:137:1",
+      "name": "Formalism.MainNotions.G.Good",
+      "note": "The test constrains where the top places sit around one Frobenius orbit. It bounds their number in short windows and requires regularly recurring blocks with one even-position top place in every even cell and none in the odd cells.",
+      "evidence": "Paper lattices.tex 128–137. Lean IsResidueClassZero.lean 182–184, with UnramifiedQuadraticSetting.lean 239–252 and GoodOrbitIntervalTileCondition.lean 10–25."
+    },
+    {
+      "passage": "lattices:204:1",
+      "name": "Formalism.DivisorInequality.BoundsMu",
+      "note": "At the infinite places the determinant ratio for the composite lift factors into the ratios for its individual lifts and a scalar power. Together with the estimates at the finite places, this bounds the period-lattice slope above by an expression containing the normalised covolumes of the auxiliary lattices.",
+      "evidence": "Paper lattices.tex 199–207. Lean StatementObj.lean 17–75."
+    },
+    {
+      "passage": "lattices:208:1",
+      "name": "GlobalTheory.BigTop.lamLow_of_hypotheses_alt_alt",
+      "note": "The lower bounds for the theta-lift scalars come from the inner-product identities of the doubling method. The formal implication takes seven automorphic results as inputs, including Siegel–Weil and the unramified doubling-integral calculation.",
+      "evidence": "Paper lattices.tex 202–217. Lean LamLowOfPublished.lean 17–35."
+    },
+    {
+      "passage": "lattices:220:1",
+      "name": "Formalism.DivisionValues.divisor_inequality_assembly",
+      "note": "Up to the stated errors, the eigenvalue and kernel factorial terms cancel outside the top places, as do the covolume and kernel terms in $\\log\\Omega$. Summing over the lifts and adding the last map’s term $-\\sum_t a_t\\log T$ gives the right-hand side of the upper slope bound.",
+      "evidence": "Paper lattices.tex 219–227. Lean DivAssembly.lean 11–42, with StatementJ.lean 56–71."
+    },
+    {
+      "passage": "lattices:232:1",
+      "name": "Formalism.L2.Pj.Core.cuspA",
+      "note": "The cusp forms here are sections on the moduli space for the indefinite unitary group at the given lift. The auxiliary lattice $M'_j$ uses the integral forms in that space, with nonnegative valuations at points over finite places.",
+      "evidence": "Paper lattices.tex 229–233. Lean CuspidalL2Subspace.lean 47–48, with CuspFree.lean 14–21."
+    },
+    {
+      "passage": "lattices:233:1",
+      "name": "GlobalTheory.CovTop.Assembly.lcv_le",
+      "note": "To bound the normalised log covolume from above, the proof bounds the slope of the sublattice cut out by the orthogonal idempotent from below. The exponentially small rank share of the omitted summand controls the cost of the comparison with the full lattice.",
+      "evidence": "Paper lattices.tex 229–239. Lean CovolumeFromGramAndBounds.lean 39–84."
+    },
+    {
+      "passage": "lattices:240:1",
+      "name": "SelfIntersectionVolumeEstimates.topCovolSlim2_use_alt_alt",
+      "note": "The upper bound on the auxiliary covolumes uses arithmetic intersection theory on the moduli space. The theorem derives it from fifteen inputs, including arithmetic Hilbert–Samuel, toroidal compactification, and deformation theory.",
+      "evidence": "Paper lattices.tex 229–250. Lean TopCovolSlim2Use.lean 15–22, with LiftLambdaBound.lean 60–63."
+    },
+    {
+      "passage": "lattices:254:1",
+      "name": "GlobalTheory.chowla_selberg_eta",
+      "note": "The Chowla–Selberg identity takes the mean of $\\log(4\\pi\\,\\operatorname{Im}\\tau\\,|\\eta(\\tau)|^4)$ over imaginary quadratic ideal classes. Its value includes $-L'(1,\\chi_d)/L(1,\\chi_d)$, the quadratic $L$-function term in the period calculation.",
+      "evidence": "Paper lattices.tex 252–262. Lean DedekindZetaEqSumRealEisenstein.lean 222–243."
+    },
+    {
+      "passage": "lattices:265:1",
+      "name": "Formalism.MainNotions.StandardLattice.ClassNumberFormula₂",
+      "note": "Under the stated splitting and size conditions, the number of genus classes is a mass times an index times $(T^k-1)^f$. The dependence on $T$ is what lets the dimension argument turn a required size of the space of forms into a lower bound on the auxiliary prime.",
+      "evidence": "Paper lattices.tex 264–272. Lean StandardLattice.lean 453–456."
+    },
+    {
+      "passage": "lattices:267:1",
+      "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.Count5",
+      "note": "The lower bound has a sum of logarithms of the lift weights, the contribution $m\\ell_g$ from the two host primes, and an explicit error. Substituting it for $\\log T(u)$ makes the weight sum and the CM period give the analytic main term in the exact identity below.",
+      "evidence": "Paper lattices.tex 264–283. Lean QuotientSlopeBoundsWith.lean 27–32."
+    },
+    {
+      "passage": "lattices:284:1",
+      "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.EComp5",
+      "note": "The level bound contributes $-m\\ell_g\\sum_t a_t$ on the period side. When the inequalities are combined, it cancels the corresponding part of $\\mathrm{Ee}(u)$, leaving the error in their comparison.",
+      "evidence": "Paper lattices.tex 274–286. Lean QuotientSlopeBoundsWith.lean 24–25."
+    },
+    {
+      "passage": "lattices:298:1",
+      "name": "Formalism.LFunctionChainParameters.WeightedSlopeBounds.each_unit_bound_statement",
+      "note": "Combining the lower and upper slope bounds with the loss estimates bounds the weighted count by its main term plus error. The conclusion holds for each translate separately, as required by the analytic reduction.",
+      "evidence": "Paper lattices.tex 288–298. Lean LevelOfCongruence.lean 175–197, with QuotientSlopeBoundsWith.lean 72–75."
+    },
+    {
+      "passage": "divisibility:13:1",
+      "name": "Formalism.L2.Th1.CM.ltLog",
+      "note": "The height-two logarithm has a term of degree $\\ell^{2j}$ with coefficient $\\ell^{-j}$ for each $j\\ge 0$. At an inert prime it relates the integral parameter of the CM formal group to the coordinate used for differentiation.",
+      "evidence": "Paper divisibility.tex 12–18, 55–59. Lean Statement.lean 35–36."
+    },
+    {
+      "passage": "divisibility:18:1",
+      "name": "Formalism.DworkPowerSeriesWeights.LemmaSt",
+      "note": "Inverting the logarithm can cost at most $(r-1)/(\\ell^2-1)$ in valuation in degree $r$. Passing from a Taylor coefficient to a derivative supplies the valuation of $r!$, giving the rate $\\ell/(\\ell^2-1)$ per order up to logarithmic loss.",
+      "evidence": "Paper divisibility.tex 13–27. Lean Statement.lean 107–112, with GaussJetBounds/Statement.lean 17–23."
+    },
+    {
+      "passage": "divisibility:28:1",
+      "name": "Formalism.DworkPowerSeriesWeights.LemmaRA",
+      "note": "The multivariable estimate bounds the valuation of derivatives of an integral series after the inverse logarithmic substitution and multiplication by a signed exponential. The contribution from order $\\kappa_i$ in variable $i$ is $\\kappa_i(\\gamma_\\ell-\\varsigma_i)$, with the weights $\\varsigma_i$ constrained by the coefficients of the exponential’s argument.",
+      "evidence": "Paper divisibility.tex 26–36. Lean StatementG.lean 12–31, with GaussJetBounds/Statement.lean 25–31."
+    },
+    {
+      "passage": "divisibility:54:1",
+      "name": "GlobalTheory.Corev.CmTwoClosing.cmGoodModel_of_globalArtinReciprocity",
+      "note": "Global Artin reciprocity supplies the ideal class for the good-model argument. The resulting Weierstrass model has integral rescaled invariants and unit discriminant, so the theta kernel can be studied at good reduction.",
+      "evidence": "Paper divisibility.tex 38–56. Lean CmGoodModelOfGlobalArtinReciprocity.lean 10–11."
+    },
+    {
+      "passage": "divisibility:63:1",
+      "name": "Formalism.L2.KerInert.IntInert",
+      "note": "At an inert prime $\\ell\\ge 5$, the normalised theta kernel of an admitted pair of lattices has integral coefficients in the formal parameter. Differentiating in the logarithmic coordinate then supplies the divisibility for the jets used to express the periods.",
+      "evidence": "Paper divisibility.tex 61–65. Lean StatementInt.lean 18–24, with StatementInt.lean 9–16."
+    },
+    {
+      "passage": "divisibility:68:1",
+      "name": "PI.OrbBoundFW.prvF_of_orbitLetterBounds",
+      "note": "The jet estimates give a valuation lower bound orbit by orbit once the series meets the integrality and shape hypotheses. Indexing the variables along Frobenius orbits of CM embeddings gives a bound in terms of the orbit gain, its first correction, and a loss.",
+      "evidence": "Paper divisibility.tex 61–70. Lean PrvFOfOrbitLetterBounds.lean 17–59, with OrbitPlaces.lean 355–360."
+    },
+    {
+      "passage": "divisibility:75:1",
+      "name": "GlobalTheory.T.standard_weyl_lattices_fock_dual",
+      "note": "In the polynomial model, belonging to either integral Weyl lattice is equivalent to pairing integrally with every vector of the other lattice, within the given representation. This gives the integral pairings needed in the finite sum for a period.",
+      "evidence": "Paper divisibility.tex 72–77. Lean StandardWeylLatticesFockDualStatement.lean 13–15."
+    },
+    {
+      "passage": "divisibility:79:1",
+      "name": "minkowski_bound_rat",
+      "note": "The finite class sums involve denominators from the orders of stabilisers. Minkowski’s theorem controls these uniformly because the order of every finite subgroup of $\\operatorname{GL}_N(\\mathbb Q)$ divides the same explicit integer depending only on $N$.",
+      "evidence": "Paper divisibility.tex 73–80. Lean MinkowskiQ.lean 6, with PeriodIntegrals/MinkowskiQ.lean 11–13 and PeriodIntegrals/Minkowski.lean 5–7."
+    },
+    {
+      "passage": "frame:4:1",
+      "name": "Formalism.LFunctionChainParameters.MatrixLatticeEstimates.InputSG",
+      "note": "For each period map, the diagonal Gram block measures how far the weighted map is from an isometry. The other two tests bound the overlap of distinct maps on the scale $d_i d_j/D^*$ and cap the common target dimension at $(1+\\eta_1)D^*$.",
+      "evidence": "Paper paper/sections/frame.tex 3–16. Lean src/Formalism/SizeWindowBrackets/FrameTraceRatioFinEquiv.lean 15–35."
+    },
+    {
+      "passage": "frame:32:1",
+      "name": "Formalism.L2.SG.TermOp.KExpansion",
+      "note": "The two Poincaré series are paired by summing operators indexed by integral double cosets. The sum gives a single operator on the spaces of coefficient vectors, so each contribution to the Gram bounds can be estimated before reassembling the pairing.",
+      "evidence": "Paper paper/sections/frame.tex 29–33. Lean src/Formalism/LocalToGlobal/SiegelLatticeTheory/ClosedLocalOrbits/TermOpStmt.lean 21–27."
+    },
+    {
+      "passage": "frame:36:1",
+      "name": "Formalism.L2.SG.TermOp.IdBlocks.oot_eq",
+      "note": "The diagonal orbital integral for a unipotent representative is a scalar times the identity on the representation before normalization. Its scalar is a conjugated character value times the product of the two volumes divided by the representation dimension.",
+      "evidence": "Paper paper/sections/frame.tex 34–38. Lean src/Formalism/LocalToGlobal/SiegelLatticeTheory/ClosedLocalOrbits/GaugeLatticeShifts/IdBlocks.lean 672–680. Lean src/Formalism/LocalToGlobal/SiegelLatticeTheory/ClosedLocalOrbits/GaugeLatticeShifts/IdBlocks.lean 778–804."
+    },
+    {
+      "passage": "frame:41:1",
+      "name": "Formalism.L2.SG.KappaOffDiagonal.SchurNFC",
+      "note": "An off-diagonal orbital integral for a relevant degenerate coset must intertwine the two representations on the coset’s pointwise stabilizer. When their archimedean parameters differ at every place, the intertwining condition forces the operator to be zero.",
+      "evidence": "Paper paper/sections/frame.tex 39–42. Lean src/Formalism/LocalToGlobal/SiegelLatticeTheory/CokernelGLCounts/RankPointCounts/KappaOffDiagonal.lean 40–53."
+    },
+    {
+      "passage": "frame:46:1",
+      "name": "CompanionTheory.Lime.BM.UniqGap",
+      "note": "Fix the discrete series and the target type $\\pi_u$. In the stated gap range, two Bessel maps with the same character are linearly dependent on smooth vectors, so a nonzero map determines the others there up to scalar.",
+      "evidence": "Paper paper/sections/frame.tex 43–46. Lean src/CompanionTheory/AutomorphicTheory/LocalBesselUniqueness/BesselModels/AtFormAdmOneOfSteps.lean 15–26."
+    },
+    {
+      "passage": "frame:49:1",
+      "name": "HeckeCharacterZeroLocus.SiegelWeilU.SiegelDensities",
+      "note": "Fix a nonsingular Gram matrix for a frame with fewer vectors than half the dimension of the Hermitian space. Averaging the theta series for that Gram matrix gives the product of one archimedean density and the finite-place densities.",
+      "evidence": "Paper paper/sections/frame.tex 47–52. Lean src/Formalism/UnipotentAdelicQuotients/SiegelWeilUnitaryConvergent.lean 18–40."
+    },
+    {
+      "passage": "frame:54:1",
+      "name": "Formalism.L2.SG.TheoremS.pbApplied",
+      "note": "For sufficiently large rank, the three row estimates imply that the squared norm of the off-diagonal block is at most $1+b^{-6}$ times $d_ud_{u'}/D^*$. The large and nonscalar rows each have an error bound decaying with $kf\\log k$, while the nongeneric rows have a separate bound with the factor $2^{-(k-2r-5)}$.",
+      "evidence": "Paper paper/sections/frame.tex 54–61. Lean src/Formalism/LocalToGlobal/SiegelLatticeTheory/FlagStabilizerTensors/TheoremS.lean 19–49."
+    },
+    {
+      "passage": "frame:70:1",
+      "name": "Formalism.MainNotions.BesselId",
+      "note": "The same isometry of the common target works for every Bessel pairing, with a source isometry and a nonzero scalar allowed to depend on the word. The definition also requires that the abstract maps restrict to the given pairings over the coefficient field.",
+      "evidence": "Paper paper/sections/frame.tex 69–70. Lean src/Formalism/SharpRestriction/GlobalTheoremInputs.lean 65–67. Lean src/Formalism/LocalRingCardinality/RhoDetPrimeEqMuTildeMulChiPow.lean 364–365."
+    },
+    {
+      "passage": "cohomology:40:1",
+      "name": "Formalism.MainNotions.LinkN_at",
+      "note": "The weighted sum of the local lattice-index terms is bounded by the rank at lift level $j$ times two contributions. One comes from the scale and the lattice sizes, and the other is the sum of the Sha lengths weighted by $\\log\\ell$, assumed summable here.",
+      "evidence": "Paper paper/sections/cohomology.tex 36–44. Lean src/Formalism/SharpRestriction/GlobalTheoremInputs.lean 31–43."
+    },
+    {
+      "passage": "cohomology:46:1",
+      "name": "Formalism.LFunctionChainParameters.LChain.BNBounds",
+      "note": "The bracket estimates give separate upper bounds for the two size terms that enter the slope argument. The cap on $B_0$ scales with the number of infinite places and the number of levels, while the cap on $N_c$ also depends on the size of the thick set $T_2$.",
+      "evidence": "Paper paper/sections/cohomology.tex 44–50. Lean src/Formalism/SizeWindowBrackets/SChain.lean 33–36."
+    },
+    {
+      "passage": "cohomology:52:1",
+      "name": "UpperTheory.Top.vvRecord",
+      "note": "For each prime and twist in range, the proof identifies the length stored in the lattice record with the actual Galois-cohomology length. It then transfers the host’s Sha bound to the record, giving a summable prime series with the same upper bound.",
+      "evidence": "Paper paper/sections/cohomology.tex 48–53. Lean src/Development/AutomorphicArithmetic/CharacterBoxes/DivinNOfHypV.lean 17–57."
+    },
+    {
+      "passage": "cohomology:53:1",
+      "name": "Formalism.L2.DIV.inEta_num",
+      "note": "At each lift level, the sum over the twisted places is at most the full sum of local index terms in the lattice record. The bound on that full sum yields the uniform estimate $C x^\\varepsilon(B_0+N_c)$ times the reference rank for the twisted places.",
+      "evidence": "Paper paper/sections/cohomology.tex 46–53. Lean src/Formalism/LocalToGlobal/Divisibility/SumLeEtaSumNum.lean 60–74. Lean src/Formalism/LocalToGlobal/Divisibility/SumLeEtaSumNum.lean 28–55. Lean src/Formalism/LocalToGlobal/Divisibility/LiftLat.lean 251–253. Lean src/Formalism/LocalToGlobal/Divisibility/TwistedPlaceEtaSumLeExtended.lean 315."
+    },
+    {
+      "passage": "cohomology:99:1",
+      "name": "UpperTheory.V.Odd.PsiBound",
+      "note": "When $\\ell$ is odd and does not divide the field degree, the Sha eigenspace with complex-conjugation sign $(-1)^{e+1}$ has length bounded by the valuation of a scaled Bernoulli value. The sign reverses when the twist $e$ increases by one.",
+      "evidence": "Paper paper/sections/cohomology.tex 97–104. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/OddResidueBounds/ZeroMemUnrHom.lean 79–103."
+    },
+    {
+      "passage": "cohomology:102:1",
+      "name": "UpperTheory.V.ML.kolStep",
+      "note": "Add a new auxiliary prime $q$ to the list used to form the Kolyvagin derivative. Under the admissibility conditions, the new class on the specified inertia element at $q$ is a stated multiple of the old class on Frobenius at $q$.",
+      "evidence": "Paper paper/sections/cohomology.tex 97–104. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/PrimitiveFrobeniusFixed/KolStep.lean 135–140."
+    },
+    {
+      "passage": "cohomology:108:1",
+      "name": "UpperTheory.V.FW.sinnott",
+      "note": "Sinnott’s step works modulo a sufficiently high power of $\\ell$. If the difference of a function and its translate is supported on a fixed interval, and the sum of the function’s rescalings by the specified $\\ell$-adic units vanishes, the coefficients on that interval all vanish under the stated independence condition.",
+      "evidence": "Paper paper/sections/cohomology.tex 106–112. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/GaloisLibrary/FerreroWashingtonIndex/Sinnott.lean 10–44."
+    },
+    {
+      "passage": "cohomology:109:1",
+      "name": "UpperTheory.V.LemmaK",
+      "note": "For the twists outside the cyclotomic-tower estimate, the paper uses a bound on the logarithm of the order of the degree-two cohomology group. Its inputs are the twist, the degree and the absolute discriminant of a totally complex field containing the required roots of unity, including a primitive fourth root when $\\ell=2$.",
+      "evidence": "Paper paper/sections/cohomology.tex 106–112. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/GeneratorCountTuples/LemmaK.lean 9–17."
+    },
+    {
+      "passage": "cohomology:116:1",
+      "name": "UpperTheory.V.Z.J.NumberU3U_s",
+      "note": "One nonzero integer is chosen before the coefficient prime $\\ell$. At each $\\ell\\ne 2,p$, the sum of valuations of the nonzero differences between the admissible representations’ traces and the Eisenstein trace is at most the valuation of that integer, so the sum weighted by $\\log\\ell$ is at most its logarithmic size.",
+      "evidence": "Paper paper/sections/cohomology.tex 114–131. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/NumberU3US.lean 30–45."
+    },
+    {
+      "passage": "cohomology:133:1",
+      "name": "UpperTheory.V.Z.J.OneCharU_s",
+      "note": "Fix a character and a Galois element at which no admissible representation has the Eisenstein trace. The corresponding Sha length is finite and is bounded by twice the sum of the trace-difference valuations over a finite set of pairwise nonisomorphic admissible representations.",
+      "evidence": "Paper paper/sections/cohomology.tex 133–141. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/NumberU3US.lean 49–59."
+    },
+    {
+      "passage": "cohomology:137:1",
+      "name": "UpperTheory.V.Alg.LemmaM",
+      "note": "The length to bound is the weight $-1$ part of the cotangent space at the augmentation of a graded algebra. Under the five hypotheses, evaluating one element at a finite set of points that covers the specified ideal gives an upper bound of twice the sum of the resulting valuations.",
+      "evidence": "Paper paper/sections/cohomology.tex 137–142. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/OrbitVanishingLocal.lean 107–118."
+    },
+    {
+      "passage": "cohomology:144:1",
+      "name": "UpperTheory.V.Hi.hida_unitary_of_printed_hida",
+      "note": "Under the cited Hida hypotheses, the proof constructs an ideal of the universal ordinary determinant ring for the unitary group. The resulting quotient has dense arithmetic points satisfying the required purity and classicality conditions, and the construction supplies automorphy.",
+      "evidence": "Paper paper/sections/cohomology.tex 142–145. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/THidaU.lean 38–48. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/HidaU.lean 12–16. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/PointTheoremBaseObject.lean 32–38."
+    },
+    {
+      "passage": "cohomology:145:1",
+      "name": "UpperTheory.V.Z.Kato.Final.zetaUr",
+      "note": "For the specified ordinary newform and attached two-dimensional representation, the Kato argument supplies an integral cocycle unramified away from $\\ell$. At $\\ell$ its projection to the ordinary quotient is nontrivial in cohomology, and at suitable auxiliary primes it has lifts satisfying the stated Frobenius congruence.",
+      "evidence": "Paper paper/sections/cohomology.tex 142–145. Lean src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/KatoQuadraticCharacters/UnramifiedZeta/ZetaUr.lean 9–12. Lean src/Development/AbelianVarietyTheory/Statements/CuspidalUnitaryTwists/ZetaUr.lean 13–20. Lean src/Development/AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean 53–73 and 88–102."
+    },
+    {
+      "passage": "cohomology:152:1",
+      "name": "UpperTheory.Gal.Int.galoisRepresentations_of_thetaLift",
+      "note": "Assuming the definite theta-lift theorem, this step attaches a continuous semisimple $\\ell$-adic Galois representation to a regular algebraic, polarized cuspidal representation over a CM field. The archimedean type of the cuspidal representation prescribes the Hodge–Tate weights.",
+      "evidence": "Paper paper/sections/cohomology.tex 150–158. Lean src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/GaloisRepresentationsOfThetaLift.lean 6. Lean src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/TypeConditions/WeightsConjBis.lean 54–73."
+    },
+    {
+      "passage": "cohomology:160:1",
+      "name": "UpperTheory.GalStar.AwayB",
+      "note": "The Galois and automorphic Weil–Deligne parameters have the same dimension at places away from $\\ell$. A split character parameter with zero monodromy gives equality, while the stated tame square-free case over $\\mathbb Q_p$ with zero monodromy gives agreement of the characteristic polynomials on inertia.",
+      "evidence": "Paper paper/sections/cohomology.tex 160–165. Lean src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/TypeConditions/WeightsConjBis.lean 15–31."
+    },
+    {
+      "passage": "cohomology:168:1",
+      "name": "UpperTheory.TP.TLiftK",
+      "note": "The theta-lift hypothesis concerns pairs of definite unitary groups, with Hermitian source and skew-Hermitian target. Once the target rank is large enough, the lift is supplied for source representations satisfying the required weight inequality at each infinite place.",
+      "evidence": "Paper paper/sections/cohomology.tex 167–172. Lean src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/HalfIndexLattices/TLiftK.lean 12–23."
+    },
+    {
+      "passage": "cohomology:168:2",
+      "name": "UpperTheory.TP.K.tLiftK",
+      "note": "The definite theta-lift existence theorem is proved by applying the construction in the theta-kernel files. This is the argument supplied when the Galois-representation theorem asks for the lift as a hypothesis.",
+      "evidence": "Paper paper/sections/cohomology.tex 167–172. Lean src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/TLiftK.lean 4–5. Lean src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/GaloisRepresentationsOfThetaLift.lean 6."
+    },
+    {
+      "passage": "hosts:5:1",
+      "name": "UpperTheory.Top.IsChiField",
+      "note": "Read the four conditions on $r$ as a membership test for the subgroup fixing the host inside the cyclotomic field. The two quadratic-residue conditions specify the contributions of the auxiliary primes $q$ and $d$ to the field.",
+      "evidence": "Paper paper/sections/hosts.tex 3–16. Lean src/Development/AutomorphicArithmetic/CharacterBoxes/ExistsPageN.lean 19–25."
+    },
+    {
+      "passage": "hosts:18:1",
+      "name": "UpperTheory.Top.WinPair",
+      "note": "The auxiliary primes are chosen on the scale of the window parameter $Y$, so their size conditions stay fixed throughout the window. Besides the two logarithmic size bounds, the definition requires $d+1$ to be divisible by $q$ and all odd primes up to $Y^{\\varepsilon/5}$.",
+      "evidence": "Paper paper/sections/hosts.tex 18–24. Lean src/Development/AutomorphicArithmetic/CharacterBoxes/ExistsPageN.lean 27–37."
+    },
+    {
+      "passage": "hosts:18:2",
+      "name": "UpperTheory.Top.PageN",
+      "note": "At each scale $x$, the cyclotomic-layer parameter $2^{e_2}$ must lie between $x^{2+8\\varepsilon}$ and twice that value. The exponent $e_2$ can therefore vary with $x$ while the auxiliary primes are fixed for the window.",
+      "evidence": "Paper paper/sections/hosts.tex 18–24. Lean src/Development/AutomorphicArithmetic/CharacterBoxes/ExistsPageN.lean 39."
+    },
+    {
+      "passage": "hosts:63:1",
+      "name": "Formalism.FrobeniusOrbits.ThickExists.noRel_image",
+      "note": "Encode the lattice points on a Behrend sphere as integers in a base large enough that a relation with the bounded coefficients would hold digit by digit. Three distinct points on a sphere cannot be collinear, which rules out the relation.",
+      "evidence": "Paper paper/sections/hosts.tex 61–66. Lean src/Formalism/FrobeniusOrbits/FrobeniusOrbitsProofs/ThickExists.lean 85–144. Lean src/Formalism/FrobeniusOrbits/HostThickExists.lean 13–16."
+    },
+    {
+      "passage": "hosts:64:1",
+      "name": "Formalism.FrobeniusOrbits.hostThickExists",
+      "note": "The existence theorem adds a size guarantee to the Behrend construction. For an ambient size $n$ and a coefficient bound $L\\ge2$, it supplies a set with $4Ls<n$ for every element $s$, no forbidden three-point relations, and at least $(n/L)\\exp(-32\\sqrt{\\log n\\,\\log L})$ elements.",
+      "evidence": "Paper paper/sections/hosts.tex 61–66. Lean src/Formalism/FrobeniusOrbits/FrobeniusOrbitsProofs/ThickExists.lean 179–334. Lean src/Formalism/FrobeniusOrbits/HostThickExists.lean 30–32."
+    },
+    {
+      "passage": "offpath:60:1",
+      "name": "Formalism.RiemannHypothesisOfLowerBounds",
+      "note": "The proposed route to RH requires the difference between the smoothed zeta and character prime sums to be bounded below by −Cx^(1/2+ε), for every nontrivial real character in a chosen family and each ε > 0. The corresponding L-functions must have no common zero to the right of the critical line, and the implication is outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:60. Lean 8b83d5e src/Formalism/StatementOC.lean:65–71, src/Formalism/StatementOC.lean:10–21. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.RiemannHypothesisOfLowerBounds."
+    },
+    {
+      "passage": "offpath:60:2",
+      "name": "Formalism.CMTypeGaloisData.RiemannHypothesisOfHalfLinks",
+      "note": "In this proposed reduction to RH, each sufficiently large scale requires at least √x lifts, a bound for the weighted character sums, and a bad-prime error of order x^(1/2+ε). The named implication is outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:60. Lean 8b83d5e src/Formalism/HalfLinks/Statement.lean:144–149, src/Formalism/HalfLinks/Statement.lean:118–126. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.CMTypeGaloisData.RiemannHypothesisOfHalfLinks."
+    },
+    {
+      "passage": "offpath:61:1",
+      "name": "Formalism.WT.WeightedSieveImpliesRH",
+      "note": "This conditional route to RH asks for a Jacobi family and, at each eligible discriminant, host-field data whose weighted character sum is at most the Jacobi prime sum. These comparisons must be supplied at every sufficiently large scale with square-root-scale bad-prime errors, and the declaration sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:61. Lean 8b83d5e src/Formalism/JacobiWeightFamilies/Statement.lean:57–71. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.WT.WeightedSieveImpliesRH."
+    },
+    {
+      "passage": "offpath:61:2",
+      "name": "Formalism.WeightedSieveThreeParameter.WeightedSieveImpliesRHThreeParameter",
+      "note": "This proposed weighted-sieve route to RH allows an exceptional set of discriminants and slack in the comparison with Jacobi prime sums. Both allowances must contribute errors of order at most x^(1/2+ε) at every sufficiently large x for each ε > 0, and this proposition is outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:61. Lean 8b83d5e src/Formalism/WideWeightTheorem/Statement.lean:66–83, src/Formalism/WideWeightTheorem/Statement.lean:11–12. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.WeightedSieveThreeParameter.WeightedSieveImpliesRHThreeParameter."
+    },
+    {
+      "passage": "offpath:62:1",
+      "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthBoundGivesRiemannHypothesis",
+      "note": "Lean proves that the older host and growth-inequality data would imply RH if available at every sufficiently large x for each sufficiently small ε > 0. This conditional proof supplies the character-sum identity via colour_balance and sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:62, paper/sections/analytic.tex:20–23, 35–46. Lean 8b83d5e src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:139–141, src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:124–129, src/Formalism/SizeWindowBrackets/ChainSlopeWindows/LipschitzWeightAndMinimum.lean:663–664. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthBoundGivesRiemannHypothesis."
+    },
+    {
+      "passage": "offpath:62:2",
+      "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.RiemannHypothesisOfBalanceAndGrowthData",
+      "note": "Lean proves that a power bound for the smoothed zeta prime sum, hence RH, follows from the balance identity for each finite abelian group and from the required size and error estimates at every sufficiently large scale. This conditional proof sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:62. Lean 8b83d5e src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:131–134, src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:124–129, src/Formalism/SizeWindowBrackets/ChainSlopeWindows/LipschitzWeightAndMinimum.lean:615–623. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.LFunctionChainParameters.ThickSetMeanBounds.RiemannHypothesisOfBalanceAndGrowthData."
+    },
+    {
+      "passage": "offpath:65:1",
+      "name": "Formalism.B.ZetaQuarterPowerCorollary",
+      "note": "This proposed implication requires data for a CM type and its dual at every sufficiently large scale, with the number of lifts of order x^(1/4) and bounds on the bad primes and averaging error. Its conclusion is ζ(s) ≠ 0 for Re(s) > 3/4, and the implication is outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:65. Lean 8b83d5e src/Formalism/ProductFormula/StatementOCCM.lean:137–151. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.B.ZetaQuarterPowerCorollary."
+    },
+    {
+      "passage": "offpath:68:1",
+      "name": "Formalism.LFunctionChainParameters.characterSumData.AskMainBalance",
+      "note": "This proposition expresses the deviation of a weighted prime-power count from its main term as a sum over characters, for hosts ramified at most at 2 and two odd primes. Lean proves this form in colour_balance, and the final theorem uses the version with a finite set of primes in place of 2 and the first odd prime.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:68, paper/sections/analytic.tex:48–84. Lean 8b83d5e src/Formalism/SizeWindowBrackets/FirstPrimeNeSecondPrime.lean:98–101, src/Formalism/SizeWindowBrackets/FirstPrimeNeSecondPrime.lean:47–59. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.LFunctionChainParameters.characterSumData.AskMainBalance."
+    },
+    {
+      "passage": "offpath:69:1",
+      "name": "Formalism.LFunctionChainParameters.characterSumData.colour_balance",
+      "note": "Lean expands the weighted prime-power count by character orthogonality and isolates the trivial and quadratic character contributions to the main term. This proof of the balance identity for hosts ramified only among three specified primes is outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:69. Lean 8b83d5e src/Formalism/SizeWindowBrackets/ChainSlopeWindows/StronglyIrreducible.lean:695–765, src/Formalism/SizeWindowBrackets/FirstPrimeNeSecondPrime.lean:98–101. Paper dd9bfc30 verify/results/cut-out.txt.xz records T Formalism.LFunctionChainParameters.characterSumData.colour_balance."
+    },
+    {
+      "passage": "offpath:69:2",
+      "name": "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthInequalityForm",
+      "note": "Lean proves an inequality for the smoothed zeta prime sum from the earlier balance identity and bounds on the count and its errors. The compiled RH proof uses the reduction for a weighted family of characters.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:69, paper/sections/analytic.tex:110–137. Lean 8b83d5e src/Formalism/SizeWindowBrackets/GrowthBoundGivesRiemannHypothesis.lean:99–105, src/Formalism/SizeWindowBrackets/ChainSlopeWindows/LipschitzWeightAndMinimum.lean:594–613. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthInequalityForm."
+    },
+    {
+      "passage": "offpath:71:1",
+      "name": "Deduction.ch_balance",
+      "note": "For an eligible host, subtracting the explicit main term from the weighted prime-power count gives an exact combination of smoothed character prime sums. The compiled proof uses this identity in the form that takes a finite set of primes in place of the earlier version’s pair of primes.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:71, paper/sections/analytic.tex:55–84. Lean 8b83d5e src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChBalance.lean:200–260. Paper dd9bfc30 verify/results/cut-in.txt.xz records T Deduction.ch_balance."
+    },
+    {
+      "passage": "offpath:71:2",
+      "name": "Deduction.ch_core",
+      "note": "Under the host and size hypotheses, a bound for the prime-power count at each translate controls the weighted sum over kept characters by x^(1/2+(C+3)ε) plus the sum of the absolute values for omitted characters. The compiled proof uses this estimate to bound the growth of the character sums at each level.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:71, paper/sections/analytic.tex:102–151. Lean 8b83d5e src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChCore.lean:342–442, src/Development/AutomorphicArithmetic/DedekindLFunctions/SplitInertia.lean:26–40. Paper dd9bfc30 verify/results/cut-in.txt.xz records T Deduction.ch_core."
+    },
+    {
+      "passage": "offpath:72:1",
+      "name": "Deduction.CH.HostFactsS",
+      "note": "The compiled proof uses this host record to impose trivial inertia outside a finite set S and a distinguished prime d. At primes in S both inertia and Frobenius lie in the index-two subgroup that defines the CM type, and at d the inertia group has order two with a specified generator.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:72, paper/sections/analytic.tex:48–59. Lean 8b83d5e src/Development/AutomorphicArithmetic/DedekindLFunctions/SplitInertia.lean:14–22. Paper dd9bfc30 verify/results/cut-in.txt.xz records I Deduction.CH.HostFactsS."
+    },
+    {
+      "passage": "offpath:73:1",
+      "name": "Formalism.MainNotions.G.gainP",
+      "note": "The linked definition supplies the local divisibility gain for each prime and lift in the compiled RH argument, by summing the gains over Frobenius orbits and returning zero in the excluded cases. The three namesakes mentioned here live in other namespaces and sit outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:73, paper/sections/lattices.tex:88–112. Lean 8b83d5e src/Formalism/SharpRestriction/GrowthBounds/IsResidueClassZero.lean:353–358, src/Formalism/LocalToGlobal/GlobalTheory/IsResidueClassZero.lean:224–228, src/Formalism/SharpRestriction/InertJacobiLevels/TiesCore.lean:229–232. Paper dd9bfc30 verify/results/cut-in.txt.xz records D Formalism.MainNotions.G.gainP. verify/results/cut-out.txt.xz records Formalism.L2.GlobalTheoryTheory.Arith.Loc.gainP, Formalism.LFunctionChainParameters.LChain2.LossP.gainP, Formalism.MainNotions.Inhab.GC.gainP."
+    },
+    {
+      "passage": "offpath:75:1",
+      "name": "Formalism.DworkPowerSeriesWeights.thmBGauss",
+      "note": "Lean proves an upper bound for the p-adic norm of every coefficient of a polynomial obtained by pairing products of minors with an integral-jet series times a quadratic exponential. The bound depends on the minor sizes and the selected positions, and this theorem sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:75. Lean 8b83d5e src/Formalism/GaussJetBounds/FinalB.lean:232, src/Formalism/GaussJetBounds/StatementY.lean:9–29, src/Formalism/GaussJetBounds/GaussJetProofs/GaussB.lean:70–101. Paper dd9bfc30 verify/results/cut-out.txt.xz records T Formalism.DworkPowerSeriesWeights.thmBGauss."
+    },
+    {
+      "passage": "offpath:76:1",
+      "name": "Formalism.L2.KerInert.JetsInert",
+      "note": "This proposition asserts integrality of the theta-kernel jets for admitted lattices at inert primes p ≥ 5, and Lean derives it under auxiliary hypotheses on the local model and bases. The compiled RH proof uses kernel integrality and a separate jet bound to obtain divisibility of the periods.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:76, paper/sections/divisibility.tex:61–70. Lean 8b83d5e src/Formalism/LocalToGlobal/InertKernelTheory/StatementInt.lean:26–34, src/Formalism/LocalToGlobal/InertKernelTheory/InertCoprimeLemmas/JetsModel.lean:108–112. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.L2.KerInert.JetsInert."
+    },
+    {
+      "passage": "offpath:77:1",
+      "name": "Formalism.RankGapBounds.WeightedMeanData.Data.MeanBoundSecondForm",
+      "note": "This proposition bounds the mean of the weighted prime-power count by the mean of its main term plus an explicit error built from the lattice and slope estimates. It is the second form of the mean bound and sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:77. Lean 8b83d5e src/Formalism/RankGapBounds/MeanBoundSecondForm.lean:187–190, src/Formalism/RankGapBounds/MeanBoundSecondForm.lean:176–185. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.RankGapBounds.WeightedMeanData.Data.MeanBoundSecondForm."
+    },
+    {
+      "passage": "offpath:77:2",
+      "name": "Formalism.B.DetGain",
+      "note": "For a nonzero integer determinant Δ, if each local gain gₚ is at most the exponent of p in |Δ|, then the sum of gₚ log p over those primes is at most log |Δ|. This proposition records the product-formula estimate outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:77. Lean 8b83d5e src/Formalism/ProductFormula/StatementOCCM.lean:157–160. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.B.DetGain."
+    },
+    {
+      "passage": "offpath:79:1",
+      "name": "Formalism.ThetaLiftIndependence.DetChain",
+      "note": "Suppose several operators act by scalars on matching direct-sum blocks of equal dimension. If another operator acts on each block by κ times the product of their scalars, its determinant is κ to the total dimension times the product of their determinants, a formulation outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:79, paper/sections/lattices.tex:199–207. Lean 8b83d5e src/Formalism/ThetaLiftIndependence/Statement.lean:266–276. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.ThetaLiftIndependence.DetChain."
+    },
+    {
+      "passage": "offpath:79:2",
+      "name": "Formalism.ThetaLiftIndependence.DetBlocks",
+      "note": "If an operator acts by a scalar on each summand of a direct sum, its determinant is the product of those scalars raised to the dimensions of their summands. The declaration records the block calculation behind determinant factorisation and sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:79. Lean 8b83d5e src/Formalism/ThetaLiftIndependence/Statement.lean:260–264. Paper dd9bfc30 verify/results/cut-out.txt.xz records D Formalism.ThetaLiftIndependence.DetBlocks."
+    },
+    {
+      "passage": "offpath:80:1",
+      "name": "PI.BesselPeriodGGP.BesselPeriodGGP",
+      "note": "For discrete-series and coefficient representations satisfying the stated interlacing and half-integrality conditions, this proposition asks for translates of the lowest vector giving a nonzero Bessel-period integral. The named nonvanishing statement sits outside the final dependency cone.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:80. Lean 8b83d5e src/Formalism/PeriodIntegrals/BesselPeriodGGP.lean:105–120. Paper dd9bfc30 verify/results/cut-out.txt.xz records D PI.BesselPeriodGGP.BesselPeriodGGP."
+    },
+    {
+      "passage": "offpath:81:1",
+      "name": "UpperTheory.V.Af.NumberSp4",
+      "note": "This proposition asks for one size-controlled nonzero integer whose ℓ-adic absolute value is at most the product of the Frobenius trace differences from the Eisenstein trace, measured ℓ-adically on admissible GSp₄ representations. It is outside the final dependency cone, where a unitary-group congruence number plays this role.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:81, paper/sections/cohomology.tex:114–131. Lean 8b83d5e src/Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/CongruenceNumberRankThree.lean:142–151. Paper dd9bfc30 verify/results/cut-out.txt.xz records D UpperTheory.V.Af.NumberSp4."
+    },
+    {
+      "passage": "offpath:81:2",
+      "name": "UpperTheory.V.Af.CongruenceNumberRankThree",
+      "note": "In the first U(3) formulation, one size-controlled integer bounds the sum of ℓ-adic valuations of the Frobenius trace differences from an Eisenstein trace for every ℓ ≠ 2,p. Lean derives this formulation under separate hypotheses, and the compiled RH argument uses the version with different admissibility conditions.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:81, paper/sections/cohomology.tex:114–131. Lean 8b83d5e src/Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/CongruenceNumberRankThree.lean:125–140, src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/NumberU3US.lean:27–45, src/Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/TemperedLocalComponents/CongruenceNumberRankThree.lean:14–63. Paper dd9bfc30 verify/results/cut-out.txt.xz records D UpperTheory.V.Af.CongruenceNumberRankThree."
+    },
+    {
+      "passage": "offpath:83:1",
+      "name": "GlobalTheory.BigTop.lamLow_of_classicalTheorems",
+      "note": "Lean derives a lower bound on the theta-lift scalars from seven inputs, including the unitary Siegel–Weil formula and the doubling method. The compiled proof uses a different derivation whose doubling-method hypothesis is formulated through local zeta integrals.",
+      "evidence": "Paper dd9bfc30 paper/sections/offpath.tex:83, paper/sections/lattices.tex:208–217. Lean 8b83d5e src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LamLowOfPublished.lean:30–48, src/Development/AutomorphicArithmetic/Definitions/Divisors/TupleReadBaseTupleEqFamily.lean:531, src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/LamLowOfPublished.lean:17–19. Paper dd9bfc30 verify/results/cut-out.txt.xz records T GlobalTheory.BigTop.lamLow_of_classicalTheorems."
     }
   ]
 }

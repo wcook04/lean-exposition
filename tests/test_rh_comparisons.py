@@ -55,7 +55,8 @@ class RHComparisons(unittest.TestCase):
 
         mention = ties["offpath:5:1"]["rows"][0]
         self.assertIsNone(mention["relation"])
-        self.assertIn("root declaration", mention["note"])
+        self.assertIn("compiled dependencies", mention["note"])
+        self.assertTrue(ties["offpath:5:1"]["explanation"]["citations"])
         self.assertNotIn("fidelity", mention)
         self.assertTrue(mention["source_review"])
 
