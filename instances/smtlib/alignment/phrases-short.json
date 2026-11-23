@@ -1471,7 +1471,7 @@
      "file": "BSmtLibSpec/Grammar/Syntax.lean",
      "relation": "defines",
      "fidelity": "same",
-     "fidelity_note": "The formal definition writes either an identifier or its qualification by a result sort as (as f τ), matching the final clause. It does not determine which result sorts a function actually has."
+     "fidelity_note": "The formal definition writes either a bare identifier or its sort-qualified form `(as f τ)`, matching the final clause. The function’s permitted result sorts come from its declaration."
     },
     {
      "name": "BSmtLibSpec.Grammar.Tree.Term.tokens",
@@ -1910,17 +1910,17 @@
      "file": "BSmtLibSpec/Grammar/Syntax.lean",
      "relation": "defines",
      "fidelity": "same",
-     "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a term exactly when it writes one of these nine forms with every list marked + nonempty. Earlier versions also exclude lambda and, before 2.6, match. Well-sortedness and the other conditions of the following subsections are not part of the production and are not checked.",
+     "fidelity_note": "In version 2.7 a token sequence satisfies the formal definition of a term exactly when it writes one of these nine forms and each list that the grammar marks for one or more items is nonempty. Earlier versions exclude lambda, and versions before 2.6 also exclude match. The definition leaves well-sortedness and the conditions of the following subsections unchecked.",
      "assessments": [
       {
        "phrase": "2-7-p030-08",
        "fidelity": "same",
-       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a term exactly when it writes one of these nine forms with every list marked + nonempty. Earlier versions also exclude lambda and, before 2.6, match. Well-sortedness and the other conditions of the following subsections are not part of the production and are not checked."
+       "fidelity_note": "In version 2.7 a token sequence satisfies the formal definition of a term exactly when it writes one of these nine forms and each list that the grammar marks for one or more items is nonempty. Earlier versions exclude lambda, and versions before 2.6 also exclude match. The definition leaves well-sortedness and the conditions of the following subsections unchecked."
       },
       {
        "phrase": "2-7-p106-10",
        "fidelity": "same",
-       "fidelity_note": "In version 2.7 the formal definition accepts a token sequence as a term exactly when it writes one of these nine forms with every list marked + nonempty. Earlier versions also exclude lambda and, before 2.6, match. Well-sortedness and the other conditions of the following subsections are not part of the production and are not checked."
+       "fidelity_note": "In version 2.7 a token sequence satisfies the formal definition of a term exactly when it writes one of these nine forms and each list that the grammar marks for one or more items is nonempty. Earlier versions exclude lambda, and versions before 2.6 also exclude match. The definition leaves well-sortedness and the conditions of the following subsections unchecked."
       }
      ]
     },
@@ -1929,17 +1929,17 @@
      "file": "BSmtLibSpec/Grammar/Syntax.lean",
      "relation": "defines",
      "fidelity": "different",
-     "fidelity_note": "The formal condition supplies what the written forms leave out: each list marked + is nonempty, match needs version 2.6 and lambda version 2.7, and every part meets its own condition. It does not describe the forms themselves.",
+     "fidelity_note": "The formal condition requires a nonempty list wherever the production calls for one or more items. It also requires match to use version 2.6 or later, lambda to use version 2.7 or later, and each part to satisfy its own grammar conditions. The term forms themselves are defined separately.",
      "assessments": [
       {
        "phrase": "2-7-p030-08",
        "fidelity": "different",
-       "fidelity_note": "The formal condition supplies what the written forms leave out: each list marked + is nonempty, match needs version 2.6 and lambda version 2.7, and every part meets its own condition. It does not describe the forms themselves."
+       "fidelity_note": "The formal condition requires a nonempty list wherever the production calls for one or more items. It also requires match to use version 2.6 or later, lambda to use version 2.7 or later, and each part to satisfy its own grammar conditions. The term forms themselves are defined separately."
       },
       {
        "phrase": "2-7-p106-10",
        "fidelity": "different",
-       "fidelity_note": "The formal condition supplies what the written forms leave out: each list marked + is nonempty, match needs version 2.6 and lambda version 2.7, and every part meets its own condition. It does not describe the forms themselves."
+       "fidelity_note": "The formal condition requires a nonempty list wherever the production calls for one or more items. It also requires match to use version 2.6 or later, lambda to use version 2.7 or later, and each part to satisfy its own grammar conditions. The term forms themselves are defined separately."
       }
      ]
     },
@@ -2209,14 +2209,14 @@
      "file": "BSmtLibSpec/Grammar/Syntax.lean",
      "relation": "defines",
      "fidelity": "different",
-     "fidelity_note": "The paper requires τ to match the return sort of f, even when f is unambiguous; the formal definition only checks the grammar of f and τ. It has no signature or function rank with which to test that requirement."
+     "fidelity_note": "The paper requires the annotated sort $\\tau$ to match the result sort of $f$, even when the symbol is unambiguous. The formal definition checks the identifier and sort expression against the grammar. The comparison with a function’s declared rank lies outside that check."
     },
     {
      "name": "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens",
      "file": "BSmtLibSpec/Grammar/Syntax.lean",
      "relation": "defines",
      "fidelity": "different",
-     "fidelity_note": "The formal definition writes (as f τ) for any supplied identifier and sort expression. It does not require τ to be f’s return sort, the substantive condition in the paper’s remark."
+     "fidelity_note": "The formal definition writes `(as f τ)` for any supplied identifier and sort expression. The paper’s remark also requires the annotation to match the declared result sort of the function."
     }
    ]
   },
@@ -2785,17 +2785,17 @@
      "file": "BSmtLibSpec/Grammar/Syntax.lean",
      "relation": "defines",
      "fidelity": "different",
-     "fidelity_note": "The formal condition supplies what the written forms leave out: the versions that have each command, the nonempty lists, and equal lengths for the paired lists marked n+1. It also admits the older literal form of check-sat-assuming in versions 2.5 and 2.6. It does not describe the forms themselves.",
+     "fidelity_note": "The formal condition checks command availability by version, requires nonempty lists where specified, and requires equal lengths within each pair of lists marked $n+1$. It admits the older literal form of `check-sat-assuming` in versions 2.5 and 2.6. The command forms themselves are defined separately.",
      "assessments": [
       {
        "phrase": "2-7-p051-07",
        "fidelity": "different",
-       "fidelity_note": "The formal condition supplies what the written forms leave out: the versions that have each command, the nonempty lists, and equal lengths for the paired lists marked n+1. It also admits the older literal form of check-sat-assuming in versions 2.5 and 2.6. It does not describe the forms themselves."
+       "fidelity_note": "The formal condition checks command availability by version, requires nonempty lists where specified, and requires equal lengths within each pair of lists marked $n+1$. It admits the older literal form of `check-sat-assuming` in versions 2.5 and 2.6. The command forms themselves are defined separately."
       },
       {
        "phrase": "2-7-p109-07",
        "fidelity": "different",
-       "fidelity_note": "The formal condition supplies what the written forms leave out: the versions that have each command, the nonempty lists, and equal lengths for the paired lists marked n+1. It also admits the older literal form of check-sat-assuming in versions 2.5 and 2.6. It does not describe the forms themselves."
+       "fidelity_note": "The formal condition checks command availability by version, requires nonempty lists where specified, and requires equal lengths within each pair of lists marked $n+1$. It admits the older literal form of `check-sat-assuming` in versions 2.5 and 2.6. The command forms themselves are defined separately."
       }
      ]
     },

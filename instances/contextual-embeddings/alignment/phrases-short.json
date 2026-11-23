@@ -159,7 +159,7 @@
     "instReifyIndexSnoc": "Suppose reification is available from a binding context into a use context. Extending the use context by one guest type produces another reification by applying Pop to the previous result. The formal definition places this extended context directly in the instance head. It therefore shares the paper’s reification equation but does not reproduce the Haskell technique of deferring the context-shape equality until after instance selection.",
     "isoL": "For every first-order term $e$, in any context and at any guest type, $\\operatorname{unembed}(\\operatorname{contextualise}(e))=e$. No closed world assumption is used in this direction: contextualisation itself constructs the reification instances needed to recover each original index. The proof proceeds through the term’s constructors, using the first index round trip in the variable case. This is one half of the claimed isomorphism.",
     "isoR": "For every contextual term $e$, $\\operatorname{contextualise}(\\operatorname{unembed}(e))=e$, assuming the closed world condition on reification instances. The variable case uses recovery of the original existential package; the abstraction case uses function extensionality and the singleton marker. Together with the first-order round trip, this supplies the isomorphism under the assumption explicitly discussed in Section 3.3. It does not establish that module encapsulation enforces that assumption.",
-    "toCVar": "This definition composes the two variable conversions: first form the existential package associated with an index, then include that package as a contextual variable term. Both steps preserve the index’s guest type and use context. The definition is the variable branch of contextualisation; the separate index round-trip theorem explains why subsequent unembedding recovers the original index.",
+    "toCVar": "The equation $\\operatorname{toCVar}=\\operatorname{fromVar}\\circ\\operatorname{fromIndex}$ gives the variable branch of contextualisation. First package the index, then turn that package into a contextual variable. Both steps preserve the variable’s guest type and use context. The index round-trip theorem explains why unembedding recovers the original index.",
     "unembed": "Unembedding maps a contextual term to a first-order term in the same context and of the same guest type. Variables are converted with their stored reification; an abstraction’s function is applied to the unique marker for its new variable. Applications and the unit term are translated recursively. This conversion is defined without the closed world assumption, which is needed only for one of the round-trip proofs.",
     "varTop": "The newest-variable package uses the current nonempty context as both binding context and use context. Its marker identifies the last entry, and its reification is the identity-context instance, which returns Top. This is the base case for converting an index into a package. The guest type is arbitrary, provided it is the type of that final context entry.",
     "weakenPVar": "Weakening extends the use context by one type while keeping the saved binding context and marker unchanged. It also replaces the stored reification with the extension instance, so reifying the weakened package adds one Pop. The apparently unchanged package on both sides of the paper’s equation therefore has a different use context and a correspondingly extended reification."
@@ -1052,7 +1052,7 @@
      "file": "CE.lean",
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "The formal definition first converts an index to an existential variable package and then injects that package into the contextual term representation, matching the displayed composition."
+     "fidelity_note": "The formal definition agrees with the displayed composition $\\operatorname{toCVar}=\\operatorname{fromVar}\\circ\\operatorname{fromIndex}$. It first packages the index and then turns that package into a contextual variable."
     }
    ]
   },
@@ -1202,7 +1202,7 @@
      "file": "CE.lean",
      "relation": "part",
      "fidelity": "same",
-     "fidelity_note": "The passage names the reverse round trip, fromIndex after reify. The formal statement says that reifying a marker and converting the resulting index back returns the original package with its instance. Its proof uses the closed world assumption, which the paper introduces next for exactly this difficulty."
+     "fidelity_note": "The formal theorem gives the reverse variable round trip. Reify the saved marker with the package’s stored instance, then convert the resulting index back to recover the original package and its instance. The proof uses the closed world assumption introduced next in the paper."
     }
    ]
   },

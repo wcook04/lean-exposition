@@ -28,7 +28,7 @@
   },
   "claim-cubic-local-not-global": {
    "claim": "cubic-local-not-global",
-   "title": "Adding x₀³ keeps the local minimum, by the same test",
+   "title": "Adding the cube of the first coordinate keeps the local minimum by the same test",
    "section": "3",
    "tie": "cubic-local-minimum",
    "lean": []

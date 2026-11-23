@@ -4,6 +4,7 @@
 
 import type { FidelityFields, TieOrigin } from "../api/lean";
 import site from "@instance/site";
+import { noteHtml } from "../reader/math";
 import { fidelitySentence, fidelitySourceWords, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, originWords } from "./fidelityWords";
 
 export function FidelityLine({ row }: { row: FidelityFields | null | undefined }) {
@@ -12,7 +13,7 @@ export function FidelityLine({ row }: { row: FidelityFields | null | undefined }
   if (row.fidelity === "held") {
     return (
       <p className="fidelity fidelity--held" data-fidelity="held">
-        {site.comparisonsHeld ?? row.fidelity_note ?? "This comparison is held."}
+        <span dangerouslySetInnerHTML={{ __html: noteHtml(site.comparisonsHeld ?? row.fidelity_note ?? "This comparison is held.").html }} />
       </p>
     );
   }
@@ -27,7 +28,7 @@ export function FidelityLine({ row }: { row: FidelityFields | null | undefined }
   return (
     <p className={`fidelity fidelity--${row.fidelity}`} data-fidelity={row.fidelity}>
       <strong className="fidelity__verdict">{fidelitySentence(row.fidelity)}</strong>
-      {row.fidelity_note ? <> {row.fidelity_note}</> : null}{" "}
+      {row.fidelity_note && <> <span dangerouslySetInnerHTML={{ __html: noteHtml(row.fidelity_note).html }} /></>}{" "}
       <span className="fidelity__who" data-source={row.fidelity_source ?? "unrecorded"}>
         {fidelitySourceWords(row.fidelity_source)}
       </span>

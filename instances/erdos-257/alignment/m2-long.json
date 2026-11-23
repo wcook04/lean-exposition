@@ -4297,7 +4297,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. States the 'more precisely' clause: for every ε > 0 and N some m ≥ N has a displacement at m strictly between 0 and ε.",
+          "fidelity_note": "An AI agent read the two statements side by side. States the 'more precisely' clause: for every $\\varepsilon > 0$ and $N$ some $m \\ge N$ has a displacement at $m$ strictly between 0 and $\\varepsilon$.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         }
       ],
@@ -5590,7 +5590,7 @@
           "fidelity": "stronger",
           "fidelity_source": "ai",
           "note": "Evidence mapping: exact_or_stronger. Fidelity classified by rule from the recorded note.",
-          "fidelity_note": "The Lean statement takes a set $A\\subseteq\\N$ with a positive element and asks for $n+m\\in A\\iff n\\in A$ at every $n\\ge1$. The printed support is such a set, since it is nonempty and lies in $\\Npos$, so the Lean theorem gives the printed conclusion. It is more general only in allowing $0\\in A$, whose term is $0$ under the convention $1/0=0$."
+          "fidelity_note": "The Lean statement takes a set $A\\subseteq\\N$ with a positive element and asks for $n+m\\in A\\iff n\\in A$ at every $n\\ge1$. The printed support is such a set, since it is nonempty and lies in $\\mathbb N_{>0}$, so the Lean theorem gives the printed conclusion. It is more general only in allowing $0\\in A$, whose term is $0$ under the convention $1/0=0$."
         }
       ],
       "statements": [

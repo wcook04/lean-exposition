@@ -4,7 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { isFidelity, phraseVerdict } from "../src/compare/fidelityWords";
-import { noteHtml } from "../src/reader/page/PhraseCard";
+import { noteHtml } from "../src/reader/math";
 import { tieModel, phraseHint, isPhraseRecord, partAt } from "../src/reader/ties";
 import type { TieIndex } from "../src/api/lean";
 
@@ -36,6 +36,13 @@ describe("phrase notes", () => {
     expect(html).toContain("&lt;b&gt;");
     expect(html).toContain("$ sign");
     expect(noteHtml("$\\frac{1$").errors).toHaveLength(1);
+  });
+
+  it("reports broken math delimiters without dropping the prose", () => {
+    const { html, errors } = noteHtml("The bound is $x < 1");
+    expect(html).toBe("The bound is $x &lt; 1");
+    expect(errors).toHaveLength(1);
+    expect(noteHtml("Use `$x` as code.").errors).toEqual([]);
   });
 
   it("typesets every note of every phrase file", () => {

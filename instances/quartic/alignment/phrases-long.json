@@ -2075,7 +2075,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the algebra for arbitrary real weights with positive total W; the probability interpretation here additionally uses nonnegative weights."
+     "fidelity_note": "Lean proves the algebra for arbitrary real weights with positive total $W$; the probability interpretation here additionally uses nonnegative weights."
     }
    ]
   },
@@ -2691,7 +2691,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The first case makes the selected zero row false and all other X bits true."
+     "link_note": "The first case makes the selected zero row false and all other $X$ bits true."
     }
    ],
    "after": "<a id=\"CL-dummy\"></a>"
@@ -3048,7 +3048,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem assumes a finite seed type S ([Fintype S]) and a structural cap on every syntactic branch. The paper permits unrestricted independent advice and coins and states the cap for executions; transfer to these broader formulations is not in this theorem type."
+     "fidelity_note": "The theorem assumes a finite seed type $S$ (`[Fintype S]`) and a structural cap on every syntactic branch. The paper permits unrestricted independent advice and coins and states the cap for executions; transfer to these broader formulations is not in this theorem type."
     }
    ],
    "after": "<a id=\"CL-direct-product-statement\"></a>"
@@ -3138,7 +3138,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean bounds the uniform-column probability for every fixed query list of length at most G. The paper averages such lists over the dummy input law, which is not required by this theorem."
+     "fidelity_note": "Lean bounds the uniform-column probability for every fixed query list of length at most $G$. The paper averages such lists over the dummy input law, which is not required by this theorem."
     }
    ],
    "after": "<a id=\"CL-heavy\"></a>"
@@ -3228,7 +3228,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves a total cap of L over all target strings, which implies the paper’s separate cap of L for each string."
+     "fidelity_note": "Lean proves a total cap of $L$ over all target strings, which implies the paper’s separate cap of $L$ for each string."
     }
    ],
    "after": "<a id=\"CL-simulator\"></a>"
@@ -3574,7 +3574,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem averages over a finite seed type S. The paper’s unqualified independent outside information and coins allow more general random sources."
+     "fidelity_note": "The theorem averages over a finite seed type $S$. The paper’s unqualified independent outside information and coins allow more general random sources."
     }
    ],
    "after": "<a id=\"CL-independent-information\"></a>"
@@ -3775,7 +3775,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives the explicit base-two lower bound for every circuit realizing P, with one threshold independent of the circuit; the paper states it for its selected circuit family."
+     "fidelity_note": "Lean gives the explicit base-two lower bound for every circuit realizing $P$, with one threshold independent of the circuit; the paper states it for its selected circuit family."
     }
    ],
    "after": "<a id=\"CL-concrete-lower\"></a>"
@@ -3966,7 +3966,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies the unnormalized matrix W; the selected sentence defines four objects. The other three objects have separate definition links."
+     "fidelity_note": "This definition supplies the unnormalized matrix $W$; the selected sentence defines four objects. The other three objects have separate definition links."
     },
     {
      "name": "QuarticQuery.Forrelation.H",
@@ -3977,7 +3977,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies the normalized matrix H; the selected sentence defines four objects. The other three objects have separate definition links."
+     "fidelity_note": "This definition supplies the normalized matrix $H$; the selected sentence defines four objects. The other three objects have separate definition links."
     },
     {
      "name": "QuarticQuery.Forrelation.u",
@@ -3988,7 +3988,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies the uniform vector u; the selected sentence defines four objects. The other three objects have separate definition links."
+     "fidelity_note": "This definition supplies the uniform vector $u$; the selected sentence defines four objects. The other three objects have separate definition links."
     },
     {
      "name": "QuarticQuery.Forrelation.signDiag",
@@ -4760,7 +4760,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The paper uses the normalized Walsh matrix. The theorem proves the same test-function identity for every matrix H with orthonormal rows, under hH : RowsOrth H."
+     "fidelity_note": "The paper uses the normalized Walsh matrix. The theorem proves the same test-function identity for every matrix $H$ with orthonormal rows, under `hH : RowsOrth H`."
     }
    ]
   },
@@ -4892,7 +4892,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem expands Int as a finite path sum for arbitrary s. It has no derivative or Gaussian-average conclusion; those come from the separate analytic identity."
+     "fidelity_note": "The theorem expands `Int` as a finite path sum for arbitrary $s$. It has no derivative or Gaussian-average conclusion; those come from the separate analytic identity."
     },
     {
      "name": "QuarticQuery.ForrelationLower.exists_identity",
@@ -4903,7 +4903,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "This proof slice identifies the averaged derivative with the iterated Gaussian sum only for s in (0,1). The paper’s display is asserted for every s in [0,1], including both endpoints."
+     "fidelity_note": "This proof slice identifies the averaged derivative with the iterated Gaussian sum only for $s\\in(0,1)$. The paper’s display is asserted for every $s\\in[0,1]$, including both endpoints."
     }
    ]
   },
@@ -4989,7 +4989,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This theorem gives the uniform first moment zero. The selected display also gives the second moment 1/m, which is a separate theorem."
+     "fidelity_note": "This theorem gives the uniform first moment zero. The selected display also gives the second moment $1/m$, which is a separate theorem."
     },
     {
      "name": "QuarticQuery.ForrelationLower.ext_PhiF_sq",
@@ -5000,7 +5000,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This theorem gives the uniform second moment 1/m. The selected display also gives the first moment zero, which is a separate theorem."
+     "fidelity_note": "This theorem gives the uniform second moment $1/m$. The selected display also gives the first moment zero, which is a separate theorem."
     }
    ]
   },
@@ -5220,7 +5220,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The paper assumes centered factors and bounded coefficients in this section. The insertion identity itself holds for arbitrary factors and coefficients; its essential hypothesis is only that q is fresh."
+     "fidelity_note": "The paper assumes centered factors and bounded coefficients in this section. The insertion identity itself holds for arbitrary factors and coefficients; its essential hypothesis is only that $q$ is fresh."
     }
    ]
   },
@@ -6405,7 +6405,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem produces the nonzero eigenvector supported on U. It does not state the sentence’s preceding inequality for the sum of the two subspace dimensions."
+     "fidelity_note": "The theorem produces the nonzero eigenvector supported on $U$. It does not state the sentence’s preceding inequality for the sum of the two subspace dimensions."
     }
    ],
    "after": "<!-- quartic-passage R3-A-HUANG -->"
@@ -6473,7 +6473,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem concludes existence of a nonempty sensitive B⊆S under maximal-support hypotheses. It does not state the sentence’s intermediate restricted-function nonconstancy or identify B as the difference set of a particular witness assignment."
+     "fidelity_note": "The theorem concludes existence of a nonempty sensitive $B\\subseteq S$ under maximal-support hypotheses. It does not state the sentence’s intermediate restricted-function nonconstancy or identify $B$ as the difference set of a particular witness assignment."
     }
    ],
    "after": "<!-- quartic-passage R3-A-MIDRIJANIS -->"
@@ -6978,7 +6978,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "classicalValue defines the first ratio in (B.6). The second identity also needs the prefix mass product from (B.1) and cancellation of positive masses; it is not a conjunct of this declaration."
+     "fidelity_note": "`classicalValue` defines the first ratio in (B.6). The second identity also needs the prefix mass product from (B.1) and cancellation of positive masses; it is not a conjunct of this declaration."
     }
    ],
    "after": "<a id=\"CL-normalization\"></a>"
@@ -7179,7 +7179,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem covers finite independent seeds and uses recursive actualComplies. Display (B.8) uses terminal count inequalities and permits unrestricted independent advice; neither the count-equivalence wrapper nor arbitrary measurable-seed transfer is stated here."
+     "fidelity_note": "The theorem covers finite independent seeds and uses recursive `actualComplies`. Display (B.8) uses terminal count inequalities and permits unrestricted independent advice; neither the count-equivalence wrapper nor arbitrary measurable-seed transfer is stated here."
     }
    ],
    "after": "<a id=\"CL-joint-cap\"></a>"
@@ -7246,7 +7246,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Lean proves output preservation from recursive actualComplies. The paper derives that premise from the terminal-count event E; no count-compliance equivalence theorem is supplied in the packet."
+     "fidelity_note": "Lean proves output preservation from recursive `actualComplies`. The paper derives that premise from the terminal-count event $E$; no count-compliance equivalence theorem is supplied in the packet."
     }
    ],
    "after": "<a id=\"CL-joint-cap\"></a>"
@@ -7392,7 +7392,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The theorem gives a sharper bound for one arbitrary bounded real-leaf tree and permits any row-orthogonal matrix H. The selected display, with its following quantifier, covers every tree or convex mixture for the Walsh matrix. Mixture closure is a further averaging argument, not a quantifier of this theorem."
+     "fidelity_note": "The theorem gives a sharper bound for one arbitrary bounded real-leaf tree and permits any row-orthogonal matrix $H$. The selected display, with its following quantifier, covers every tree or convex mixture for the Walsh matrix. Mixture closure is a further averaging argument, not a quantifier of this theorem."
     }
    ]
   },
@@ -7715,7 +7715,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The bound by 50/49; the finite binomial-sum route is not its exported statement."
+     "link_note": "The statement gives the bound $50/49$. The finite binomial sum is a step in the paper’s derivation."
     }
    ]
   },
@@ -8085,7 +8085,7 @@
      ],
      "relation": "contains",
      "fidelity": "weaker",
-     "fidelity_note": "The concrete factorization theorem assumes a Boolean basis-label success predicate S and a basis origin o. The lemma’s surrounding statement allows any fixed free success projector; conversion of that interface is not in this declaration."
+     "fidelity_note": "The concrete factorization theorem assumes a Boolean basis-label success predicate $S$ and a basis origin $o$. The lemma’s surrounding statement allows any fixed free success projector; conversion of that interface is not in this declaration."
     }
    ],
    "after": "<!-- quartic-passage upper-amplification-statement -->"
@@ -8558,7 +8558,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The slice identity proves this controlled product for coordinate-subspace reflection signU S and a basis origin o. The paper’s display is stated under the broader fixed-projector interface."
+     "fidelity_note": "The slice identity proves this controlled product for coordinate-subspace reflection `signU S` and a basis origin $o$. The paper’s display is stated under the broader fixed-projector interface."
     }
    ],
    "after": "<!-- quartic-passage upper-returned-register -->"
@@ -8782,7 +8782,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "The definition explicitly sums the uniform exact-test law. The h/K count and its coherent orthogonality explanation are consequences, not separate conclusions of this definition."
+     "fidelity_note": "The definition explicitly sums the uniform exact-test law. The $h/K$ count and its coherent orthogonality explanation are consequences, not separate conclusions of this definition."
     }
    ],
    "after": "<!-- quartic-passage AC-uniform-sampler -->"
@@ -9934,7 +9934,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem permits any two isometries c,L into the finite target. The paper applies it to the oracle-compatible J and the particular entry map composed with a Hadamard."
+     "fidelity_note": "The theorem permits any two isometries $c,L$ into the finite target. The paper applies it to the oracle-compatible $J$ and the particular entry map composed with a Hadamard."
     }
    ],
    "after": "<!-- quartic-passage R3-01-BRIDGES -->"

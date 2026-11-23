@@ -65,6 +65,12 @@ describe("the phrase card's comparison", () => {
 });
 
 describe("a record's comparison line", () => {
+  it("typesets formulae and keeps Lean identifiers literal in a record comparison", () => {
+    const html = renderToStaticMarkup(<FidelityLine row={{ fidelity: "same", fidelity_note: "In `IsLocalMin`, $f(a)\\le f(x)$ nearby." }} />);
+    expect(html).toContain('class="katex"');
+    expect(html).toContain("<code>IsLocalMin</code>");
+  });
+
   it("says 'Not assessed' for an unassessed row and shows a 'same' note", () => {
     expect(text(renderToStaticMarkup(<FidelityLine row={{ fidelity: "unassessed" }} />))).toContain("Not assessed.");
     expect(text(renderToStaticMarkup(<FidelityLine row={{ fidelity: "same", fidelity_note: "With one caveat." }} />))).toContain("With one caveat.");

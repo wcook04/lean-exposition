@@ -500,7 +500,7 @@
      "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/paper/finite-time-blow-up-navier-stokes.pdf"
     }
    ],
-   "note": "States that Lipschitz selection is defined on the full homogeneous Sobolev ball about W(0), then restricts to compactly supported smooth data.",
+   "note": "States that Lipschitz selection is defined on the full homogeneous Sobolev ball about $W(0)$, then restricts to compactly supported smooth data.",
    "status": "marked",
    "adapted": [
     "1.1 A recurrent profile and its localization#6"
@@ -3830,7 +3830,7 @@
      "where": "lines 100–168"
     }
    ],
-   "note": "Uses the first occurrence of each forcing term in the recurrence to explain the exponent m+1 and the sign of the initial correction.",
+   "note": "Uses the first occurrence of each forcing term in the recurrence to explain the exponent $m+1$ and the sign of the initial correction.",
    "status": "marked",
    "adapted": [
     "4.4 Proof of Proposition 4.3#7"
@@ -7791,7 +7791,7 @@
      "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertTorus/IntegralEquationClosed.lean"
     }
    ],
-   "note": "Gives the scale-dependent temporal bound on the Eulerian velocity and the two integrable kernel estimates used to obtain it. Explains the intermediate L¹² estimate by the nonintegrable direct L⁶-to-L∞ time kernel.",
+   "note": "Gives the scale-dependent temporal bound on the Eulerian velocity and the two integrable kernel estimates used to obtain it. Explains the intermediate $L^{12}$ estimate by the nonintegrable direct $L^{6}-TO-L^{\\infty }$ time kernel.",
    "status": "marked",
    "adapted": [
     "7.10 Proof of Proposition 7.11#3"
@@ -8582,7 +8582,7 @@
      "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/paper/finite-time-blow-up-navier-stokes.pdf"
     }
    ],
-   "note": "Shows which argument recovers the missing L² bound on each domain in the proof of Lemma 2.3.",
+   "note": "Shows which argument recovers the missing $L^{2}$ bound on each domain in the proof of Lemma 2.3.",
    "status": "marked",
    "adapted": [
     "A.2 Proof of Lemma 2.3#2"
@@ -10232,7 +10232,7 @@
      "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/paper/finite-time-blow-up-navier-stokes.pdf"
     }
    ],
-   "note": "Uses δ for the mollifier radius throughout the graph approximation, reserving h for the decay weight in the same proof.",
+   "note": "Uses $\\delta$ for the mollifier radius throughout the graph approximation, reserving h for the decay weight in the same proof.",
    "status": "marked",
    "adapted": [
     "B.2 The multiplier inequality#19",
@@ -10294,7 +10294,7 @@
      "where": "lines 126–131"
     }
    ],
-   "note": "Keeps the remaining density estimate conditional on the complete cell assumptions, recalls the sign of c₀ when taking a square root, and keeps the row bound tied to its own scalar inequality.",
+   "note": "Keeps the remaining density estimate conditional on the complete cell assumptions, recalls the sign of $c_{0}$ when taking a square root, and keeps the row bound tied to its own scalar inequality.",
    "status": "marked",
    "adapted": [
     "B.2 The multiplier inequality#22"
@@ -12592,7 +12592,7 @@
      "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/paper/finite-time-blow-up-navier-stokes.pdf"
     }
    ],
-   "note": "Identifies the numerical, approximate, reference and exact fields, interprets the error in (7.38) via the L² vorticity difference, and explains why it does not give relative accuracy or certify an isosurface. Identifies the missing comparison at normalized phases before drawing a conclusion about pictured vorticity.",
+   "note": "Identifies the numerical, approximate, reference and exact fields, interprets the error in (7.38) via the $L^{2}$ vorticity difference, and explains why it does not give relative accuracy or certify an isosurface. Identifies the missing comparison at normalized phases before drawing a conclusion about pictured vorticity.",
    "status": "marked",
    "adapted": [
     "Appendix C The computation of the approximate profile#1"
@@ -13358,7 +13358,7 @@
      "where": "equation (1.2)"
     }
    ],
-   "note": "Separates the continuation that reaches g=1/2 from its subsequent reflection and refinement to rotational order nineteen.",
+   "note": "Separates the continuation that reaches $g=1/2$ from its subsequent reflection and refinement to rotational order nineteen.",
    "status": "marked",
    "adapted": [
     "C.3 Continuation and refinement#1",
@@ -13644,7 +13644,7 @@
      "url": "https://github.com/tristanbuckmaster/navier-stokes/blob/ad53419de079eb8f95f60313473374624a348546/lean/Breakdown/CertCell/StatementDefs.lean#L6130-L6142"
     }
    ],
-   "note": "Applies the similarity transport operator to a scalar oscillatory tail, deriving the coefficient 4π/S and the compatibility at parameters carrying that leading mode. Distinguishes the model field from the radial decay exponent of the adjoint fields and retains the separate residual requirement. Derives affine interior parameter dependence from the vanishing phase correction and distinguishes the exterior residual bound.",
+   "note": "Applies the similarity transport operator to a scalar oscillatory tail, deriving the coefficient $4\\pi /S$ and the compatibility at parameters carrying that leading mode. Distinguishes the model field from the radial decay exponent of the adjoint fields and retains the separate residual requirement. Derives affine interior parameter dependence from the vanishing phase correction and distinguishes the exterior residual bound.",
    "status": "marked",
    "adapted": [
     "C.4 Further fields of the certificate#3",

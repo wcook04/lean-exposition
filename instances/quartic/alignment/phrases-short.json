@@ -663,7 +663,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The constants and threshold are chosen after k, before the size parameter t."
+     "link_note": "The constants and threshold are chosen after $k$, before the size parameter $t$."
     }
    ]
   },
@@ -772,7 +772,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves this for every circuit realizing P; the prose discusses the specified circuit family."
+     "fidelity_note": "Lean proves this for every circuit realizing $P$; the prose discusses the specified circuit family."
     }
    ]
   },
@@ -815,7 +815,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The lower-bound conjunct uses the exact constant 1/400."
+     "link_note": "The lower-bound conjunct uses the exact constant $1/400$."
     }
    ]
   },
@@ -3905,7 +3905,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This theorem supplies only the case with a failed test e0: failed-test mass is at least 1/K. The zero-mass case when all tests pass is a separate theorem."
+     "fidelity_note": "This theorem supplies only the case with a failed test $e_0$: failed-test mass is at least $1/K$. The zero-mass case when all tests pass is a separate theorem."
     }
    ]
   },
@@ -5465,7 +5465,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Apply with the chosen fixed k and the two previously proved family bounds."
+     "link_note": "Apply with the chosen fixed $k$ and the two previously proved family bounds."
     }
    ]
   },

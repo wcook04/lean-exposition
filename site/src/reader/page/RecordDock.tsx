@@ -27,6 +27,7 @@ import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { quoteOfDisplay } from "./PaperBody";
 import { leanPage } from "./rightPage";
+import { noteHtml } from "../math";
 
 /** What is open: a step, its statement here when it has one, or a declaration walked to. */
 export interface LeanOpen {
@@ -403,9 +404,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
               </p>
             )}
             {plain && (
-              <h3 className="lean-page__title" tabIndex={-1}>
-                {plain}
-              </h3>
+              <h3 className="lean-page__title" tabIndex={-1} dangerouslySetInnerHTML={{ __html: noteHtml(plain).html }} />
             )}
             {(tie || name || topic) && (
               <p className="lean-page__meta">

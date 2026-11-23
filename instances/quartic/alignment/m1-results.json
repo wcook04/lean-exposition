@@ -40,7 +40,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Compared with OpenAI’s Lemma 3.1: One Proc amplify γ η is fixed before A and has syntactic all-branch call cap ≤138(√γ)⁻¹ log(1/η). Its phase-invariant state payoff law, zero wrong-state mass, conditional good-state law when success mass is nonzero, failure ≤η for p≥γ, and failure=1 for p=0 cover the row in the abstract Proc semantics. Proc.restart resets the branch vector; this theorem does not itself compile that semantics into the physical bit-query model or identify the output subsystem of the separate label-law implementation."
+     "fidelity_note": "For OpenAI’s Lemma 3.1, the abstract procedure `amplify γ η` is fixed before the preparation $A$. The procedure uses at most $138(\\sqrt{\\gamma})^{-1}\\log(1/\\eta)$ calls on every branch. The theorem gives the phase-invariant state payoff law, zero wrong-state mass, and the good-state law conditional on a nonzero success mass. The failure probability is at most $\\eta$ when $p\\ge\\gamma$, and equals $1$ when $p=0$. In the abstract `Proc` semantics, `Proc.restart` resets the branch vector. Compiling to the physical bit-query model and identifying the output subsystem of the label-law implementation are separate steps."
     }
    ],
    "statements": [
@@ -70,7 +70,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Compared with OpenAI’s Lemma 4.1: Row in full, with coins and side information as one finite S. Weight mu need not be normalised. Induction on sub-distributions, not the supermartingale."
+     "fidelity_note": "For OpenAI’s Lemma 4.1, this theorem treats the coins and side information as one finite seed type $S$. The input weight $\\mu$ need not be normalized. The Lean proof uses induction on subdistributions. The paper’s proof uses a supermartingale."
     },
     {
      "file": "QuarticQuery/LowerBound/DirectProduct.lean",
@@ -78,7 +78,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Compared with OpenAI’s Lemma 4.1: Row in full, with S and Omega separate and finite. Same proof route as direct_product_average."
+     "fidelity_note": "For OpenAI’s Lemma 4.1, this theorem uses separate finite types $S$ for side information and $\\Omega$ for coins. It applies `direct_product_average` to their product."
     }
    ],
    "statements": [
@@ -137,7 +137,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Compared with OpenAI’s Theorem 1.1: Its conjunction contains alphaTot=4, UniversalPower 4 and, for each fixed k≥2, one threshold and realizing-circuit family with quantum bound and strict floor lower bound. The conversion of floors to the equation (2) asymptotic is in ConstructionFamily. The Forrelation and quartic implementations use alternative routes."
+     "fidelity_note": "For OpenAI’s Theorem 1.1, the conjunction gives the optimal exponent $\\alpha_{\\mathrm{tot}}=4$, the universal quartic bound (`UniversalPower 4`), and, for each fixed $k\\ge2$, one threshold and a family of realizing circuits with the quantum bound and the strict lower bound using the floor. `ConstructionFamily` converts the floor bound to the asymptotic form in equation (2). The Forrelation and quartic implementations use alternative routes."
     }
    ],
    "statements": [

@@ -37,7 +37,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "The Lean theorem writes out the polynomial in a let expression and states IsLocalMin at the zero vector. That means U(0) ≤ U(x) on a neighbourhood. The global inequality has its own passage and proof."
+     "fidelity_note": "The Lean theorem defines the polynomial in a `let` expression and states `IsLocalMin` at the origin. Thus $U(0)\\le U(x)$ throughout some neighbourhood of the origin. The global inequality has its own passage and proof."
     }
    ],
    "statements": [
@@ -59,7 +59,7 @@
      "relation": "states",
      "fidelity": "same",
      "fidelity_source": "ai",
-     "fidelity_note": "Lean takes a finite-dimensional real inner product space, analyticity and zero gradient at the point, and PosDef of the map h ↦ D²f(a)[h,h]. Its conclusion is IsLocalMin, with a weak inequality on a neighbourhood."
+     "fidelity_note": "Lean assumes a finite-dimensional real inner product space, analyticity at $a$, a zero gradient at $a$, and positive definiteness of $h\\mapsto D^2f(a)[h,h]$. The conclusion `IsLocalMin` gives $f(a)\\le f(x)$ throughout some neighbourhood of $a$."
     }
    ],
    "statements": [

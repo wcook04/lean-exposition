@@ -1284,7 +1284,7 @@
  {
   "term": "Short intervals and period",
   "convention": "A similarity period $S>0$ is divided into a positive natural number $k$ of pieces. Set $\\mu=e^{-S/k}$ and $L=1-\\mu$. The short-interval profile is $a_n(t)=D_{(1-t)^{-1}}w(nS/k-\\log(1-t))$ on $[0,L]$; under the orbit hypothesis the formal statement proves $a_{n+k}=\\rho a_n$.",
-  "differs_from_paper": "The paper's $\\lambda=e^{-S}$ and $t_n=1-\\lambda^n$ count whole periods. Its n is therefore different from a short-interval index unless k=1.",
+  "differs_from_paper": "The paper's $\\lambda=e^{-S}$ and $t_n=1-\\lambda^n$ count whole periods. Its n is therefore different from a short-interval index unless $k=1$.",
   "cards": [
    "p::ns-s4-018",
    "p::ns-s4-020",
@@ -1487,7 +1487,7 @@
  },
  {
   "term": "Interior and exterior spectral projections",
-  "convention": "The counterclockwise contour integral $Q=(2\\pi i)^{-1}\\int_{|z|=r}(zI-M)^{-1}\\,dz$ is the interior projection when the complex space is Banach, r>0 and the circle lies in the resolvent set. The exterior projection is I−Q. The resolvent and contour integral have assigned zero values when the required inverse or integrability is absent.",
+  "convention": "The counterclockwise contour integral $Q=(2\\pi i)^{-1}\\int_{|z|=r}(zI-M)^{-1}\\,dz$ is the interior projection when the complex space is Banach, $r>0$ and the circle lies in the resolvent set. The exterior projection is $I-Q$. The resolvent and contour integral have assigned zero values when the required inverse or integrability is absent.",
   "differs_from_paper": "The paper names the exterior projection P and later its real restriction $P_{\\mathrm u}$. The linked contour definition names the interior one.",
   "cards": [
    "p::ns-s4-047",
@@ -1500,7 +1500,7 @@
  {
   "term": "Complexification of a real Hilbert space",
   "convention": "The complexification consists of pairs written x+iy, with $\\|x+iy\\|^2=\\|x\\|^2+\\|y\\|^2$, and a real operator T acts as $T_{\\mathbb C}(x+iy)=Tx+iTy$. The linked norm theorem proves $\\|T_{\\mathbb C}\\|\\le\\|T\\|$, while a separate linked theorem preserves compactness.",
-  "differs_from_paper": "The paper states equality of the operator norms. The reverse inequality follows from restriction to x+i0 and is not the conclusion of the linked inequality theorem.",
+  "differs_from_paper": "The paper states equality of the operator norms. The reverse inequality follows from restriction to $x+i0$ and is not the conclusion of the linked inequality theorem.",
   "cards": [
    "p::ns-s4-044",
    "decl::Breakdown.Spectral.Complexification.isCompactOperator_map",
@@ -1509,7 +1509,7 @@
  },
  {
   "term": "Residual and datum smallness",
-  "convention": "The interval correction assertion assumes $64\\|\\mathcal R\\|^2C_KL^{1/4}(\\rho+\\|\\xi\\|)\\le1$, where $\\|r_n\\|\\le\\theta^n\\rho$ bounds the residual and ξ is the datum displacement. It controls both correction components by $2\\|\\mathcal R\\|(\\rho+\\|\\xi\\|)$.",
+  "convention": "The interval correction assertion assumes $64\\|\\mathcal R\\|^2C_KL^{1/4}(\\rho+\\|\\xi\\|)\\le1$, where $\\|r_n\\|\\le\\theta^n\\rho$ bounds the residual and $\\xi$ is the datum displacement. It controls both correction components by $2\\|\\mathcal R\\|(\\rho+\\|\\xi\\|)$.",
   "differs_from_paper": "Lemma 4.8 uses the global norm of $e^{t\\Delta}\\chi-F^{\\mathrm a}$ and bounds only the curve component of the right inverse. The formal sum of separate bounds does not retain possible cancellation.",
   "cards": [
    "p::ns-s4-001",
@@ -2600,7 +2600,7 @@
  },
  {
   "term": "Profile-difference decomposition",
-  "convention": "The generic estimate assumes separate measurable sums Wᵃ−Wʳ=ΣZ_a and ∇Wᵃ−∇Wʳ=ΣA_a. It bounds the vectors Z_a pointwise and the matrices A_a in L² or L³. Individual identities A_a=∇Z_a are not required.",
+  "convention": "The generic estimate assumes separate measurable sums $W^{a}-W^{r}=\\Sigma Z_a$ and $\\nabla W^{a}-\\nabla W^{r}=\\Sigma A_a$. It bounds the vectors $Z_a$ pointwise and the matrices $A_a$ in $L^{2}$ or $L^{3}$. Individual identities $A_a=\\nabla Z_a$ are not required.",
   "differs_from_paper": "The two terms in the paper have those individual derivative identities; they form a special case.",
   "cards": [
    "decl::Breakdown.CertReduction.gapTransferBridgeHolds_proof",
@@ -2634,7 +2634,7 @@
  },
  {
   "term": "Spatial symmetry of test fields",
-  "convention": "For fixed Γ, a spatial field u is invariant almost everywhere under u(Ry)=Ru(y) for each (R,0)∈Γ. The class also requires u∈L⁶, divergence zero, a weak gradient in L² and weak second derivatives with Δu∈L². The empty symmetry set gives the unrestricted class.",
+  "convention": "For fixed $\\Gamma$, a spatial field u is invariant almost everywhere under $u(Ry)=Ru(y)$ for each $(R,0)\\in \\Gamma$. The class also requires $u\\in L^{6}$, divergence zero, a weak gradient in $L^{2}$ and weak second derivatives with $\\Delta u\\in L^{2}$. The empty symmetry set gives the unrestricted class.",
   "differs_from_paper": "Generic estimates are formulated for this parameterized class; choosing no symmetries recovers the broad spatial class used in Appendix B.4.",
   "cards": [
    "decl::Breakdown.CertReduction.convectionIdentity_holds",
@@ -2740,8 +2740,8 @@
  },
  {
   "term": "Natural polynomial cutoffs",
-  "convention": "Polynomial exponents and most degree cutoffs are nonnegative integers. Their subtraction stops at zero: for example 0−1=0. A range 0≤j<Q is empty at Q=0, while every zeroth power equals 1, including 0⁰. Separate bounds degᵣP≤d and deg_zP≤d′ imply total degree at most d+d′; that total-degree bound alone does not impose the two separate bounds.",
-  "differs_from_paper": "The raw formulas include small cutoffs that the paper excludes by separate assumptions. The classical mesh additionally uses an integer side degree d₀ and permits d₀=−1 or 0 on untested resolved modes, where the paper assumes d₀≥1.",
+  "convention": "Polynomial exponents and most degree cutoffs are nonnegative integers. Their subtraction stops at zero: for example $0-1=0$. A range $0\\le j<Q$ is empty at $Q=0$, while every zeroth power equals 1, including $0^{0}$. Separate bounds $deg_{r}P\\le d$ and $deg_zP\\le d'$ imply total degree at most d+d′; that total-degree bound alone does not impose the two separate bounds.",
+  "differs_from_paper": "The raw formulas include small cutoffs that the paper excludes by separate assumptions. The classical mesh additionally uses an integer side degree $d_{0}$ and permits $d_{0}=-1$ or 0 on untested resolved modes, where the paper assumes $d_{0}\\ge 1$.",
   "cards": [
    "decl::Breakdown.CellReduction.Instantiation.Internal.OffsetBall.defect_expands",
    "decl::Breakdown.CellReduction.Instantiation.IsAdjointShapeEntry",
@@ -2898,7 +2898,7 @@
  },
  {
   "term": "Inverse and inverse square root of a matrix",
-  "convention": "The ordinary inverse of a singular finite square matrix is assigned zero. The real Gram-matrix normalization applies λ↦1/√λ spectrally when the matrix is symmetric; zero and negative eigenvalues contribute zero. Positive definiteness gives the usual inverse-square-root normalization.",
+  "convention": "The ordinary inverse of a singular finite square matrix is assigned zero. The real Gram-matrix normalization applies $\\lambda \\mapsto 1/\\sqrt{\\lambda}$ spectrally when the matrix is symmetric; zero and negative eigenvalues contribute zero. Positive definiteness gives the usual inverse-square-root normalization.",
   "differs_from_paper": "The paper imposes the positivity needed for inverse Gram matrices. The raw formulas remain defined on singular or indefinite inputs without certifying an inverse or an optimization bound.",
   "cards": [
    "decl::Breakdown.CertCell.Instance.IsRowInstance",
@@ -2937,7 +2937,7 @@
  },
  {
   "term": "Closed cell indicators",
-  "convention": "A physical cell 𝒬=[r₁,r₂]×[z₁,z₂] stands for {(r,|y₃|)∈𝒬}. Cell-polynomial fields sum closed-cell indicators, so shared boundaries may receive contributions from multiple cells. Valid-mesh overlaps have volume zero, which is sufficient for integral identities.",
+  "convention": "A physical cell $\\mathcal{Q}=[r_{1},r_{2}]\\times [z_{1},z_{2}]$ stands for ${(r,|y_{3}|)\\in \\mathcal{Q}}$. Cell-polynomial fields sum closed-cell indicators, so shared boundaries may receive contributions from multiple cells. Valid-mesh overlaps have volume zero, which is sufficient for integral identities.",
   "differs_from_paper": "This agrees with the indicator sum in (B.10). It does not give a unique pointwise value from a single cell on a shared boundary, or continuity across that boundary.",
   "cards": [
    "decl::Breakdown.CellCert.CellAnalysis.IsCellBox",
@@ -2973,8 +2973,8 @@
  },
  {
   "term": "Reflection of a lattice harmonic",
-  "convention": "For ι=(ι₁,ι₂), put ι♭=(−ι₁,ι₂−ι₁). Below z=0 use the polynomial with label ι♭ at (r,−z). Vector components in the order (r,φ,z) receive signs (1,−1,−1), and a matrix entry receives the product of the two signs. The upper formula is used at z=0.",
-  "differs_from_paper": "This is the rule of Appendix B.1. It is a formula for values and does not by itself impose matching at z=0 or regularity there.",
+  "convention": "For $\\iota =(\\iota _{1},\\iota _{2})$, put $\\iota ^{\\flat }=(-\\iota _{1},\\iota _{2}-\\iota _{1})$. Below $z=0$ use the polynomial with label $\\iota ^{\\flat }$ at $(r,-z)$. Vector components in the order $(r,\\phi ,z)$ receive signs $(1,-1,-1)$, and a matrix entry receives the product of the two signs. The upper formula is used at $z=0$.",
+  "differs_from_paper": "This is the rule of Appendix B.1. It is a formula for values and does not by itself impose matching at $z=0$ or regularity there.",
   "cards": [
    "sfile::Breakdown.CertCell.CellLayerData.pinField",
    "sfile::Breakdown.CertCell.CellMatField.IsConjugateClosed",
@@ -3144,8 +3144,8 @@
  },
  {
   "term": "The parameter-dependent profile",
-  "convention": "The family is Wαᵃ=Wα⁰+∑ᵢαᵢWαⁱ. Each term uses fixed amplitude data but the common phase fα=f+(𝔨·α)f* depends on α. Thus the fields Wαⁱ multiplying αᵢ need not equal ∂αᵢWαᵃ. For L>0 and 0<σχ<1, if the transition χ vanishes on [0,σχ], then f*(|y|²)=0 for |y|≤Lσχ/(1−σχ), so the family agrees there with an affine combination of fixed fields. Agreement of phases is sufficient for this affine description.",
-  "differs_from_paper": "This is the dependence stated in (B.9). The fields Wαⁱ are coefficient fields in that representation and need not be parameter derivatives of the whole family.",
+  "convention": "The family is $W\\alpha ^{a}=W_{\\alpha }^{0}+\\sum _{i}\\alpha _{i}W_{\\alpha }^{i}$. Each term uses fixed amplitude data but the common phase $f\\alpha =f+(\\mathfrak{k}\\cdot \\alpha )f^{*}$ depends on $\\alpha$. Thus the fields $W_{\\alpha }^{i}$ multiplying $\\alpha _{i}$ need not equal $\\partial \\alpha _{i}W\\alpha ^{a}$. For $L>0$ and $0<\\sigma \\chi <1$, if the transition $\\chi$ vanishes on $[0,\\sigma \\chi ]$, then $f*(|y|^{2})=0$ for $|y|\\le L\\sigma \\chi /(1-\\sigma \\chi )$, so the family agrees there with an affine combination of fixed fields. Agreement of phases is sufficient for this affine description.",
+  "differs_from_paper": "This is the dependence stated in (B.9). The fields $W_{\\alpha }^{i}$ are coefficient fields in that representation and need not be parameter derivatives of the whole family.",
   "cards": [
    "decl::Breakdown.CellReduction.Instantiation.Internal.OffsetBall.defect_expands",
    "decl::Breakdown.CellReduction.Instantiation.IsAdjointShapeEntry",
@@ -3335,8 +3335,8 @@
  },
  {
   "term": "Weak perturbations and time representatives",
-  "convention": "A perturbation is represented by v,G,H,g on real normalized time and ℝ³, with joint measurability up to null sets and pointwise period one. For almost every time, G=∇v and H(a,eⱼ)=∂ₐ(Geⱼ) distributionally, div v=0 and v∈L⁶. Over a period, G,tr H,g are square integrable; G has the Frobenius norm. The tested identity is g=S⁻¹∂θv+½v+½(y·∇)v. Symmetries are imposed almost everywhere. The definition accepts every real S; its intended normalization uses S>0.",
-  "differs_from_paper": "The paper chooses a continuous representative in time in §7.1. The formal condition supplies particular measurable representatives and does not require that choice. It directly requires the trace of H, rather than the full Hessian, in L².",
+  "convention": "A perturbation is represented by v,G,H,g on real normalized time and $\\mathbb{R}^{3}$, with joint measurability up to null sets and pointwise period one. For almost every time, $G=\\nabla v$ and $H(a,e_{j})=\\partial _{a}(Ge_{j})$ distributionally, $\\operatorname{div} v=0$ and $v\\in L^{6}$. Over a period, G,tr H,g are square integrable; G has the Frobenius norm. The tested identity is $g=S^{-1}\\partial _{\\theta }v+\\tfrac12v+\\tfrac12(y\\cdot \\nabla )v$. Symmetries are imposed almost everywhere. The definition accepts every real S; its intended normalization uses $S>0$.",
+  "differs_from_paper": "The paper chooses a continuous representative in time in §7.1. The formal condition supplies particular measurable representatives and does not require that choice. It directly requires the trace of H, rather than the full Hessian, in $L^{2}$.",
   "cards": [
    "decl::Breakdown.Cert.ExtendedAdjointEnclosureHolds",
    "decl::Breakdown.Cert.Internal.AtProfile.coercive_at_profile",
@@ -3446,7 +3446,7 @@
  },
  {
   "term": "The five modal coefficients",
-  "convention": "The modal quadratic form uses the squared amplitudes of the Hessian, gradient of vorticity, vorticity, full gradient and velocity in (B.16). The evaluation helper takes the full-gradient argument before the vorticity argument, with its coefficients assigned accordingly. At c=3/50 and with no multiplier pieces, the five coefficients agree with the formulas printed below (B.16). The full piece coefficients are specified in the formal formulas.",
+  "convention": "The modal quadratic form uses the squared amplitudes of the Hessian, gradient of vorticity, vorticity, full gradient and velocity in (B.16). The evaluation helper takes the full-gradient argument before the vorticity argument, with its coefficients assigned accordingly. At $c=3/50$ and with no multiplier pieces, the five coefficients agree with the formulas printed below (B.16). The full piece coefficients are specified in the formal formulas.",
   "differs_from_paper": "The paper describes the added frequency terms and subtracted error terms but does not print their complete formulas. A claim of term-by-term agreement of all those error formulas cannot be settled by comparison with a second full printed expression.",
   "cards": [
    "decl::Breakdown.CoerciveWeak.densityNegWith",

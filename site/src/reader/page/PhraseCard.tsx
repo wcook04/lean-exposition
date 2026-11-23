@@ -8,7 +8,7 @@ import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type Phrase
 import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
-import { renderTex } from "../math";
+import { noteHtml, renderTex } from "../math";
 import { plainNumber } from "../texBreaks";
 import { fitNow, markWideMaths } from "./PaperBody";
 import site from "@instance/site";
@@ -60,48 +60,6 @@ export const dockDecl = new Signal<{ name: string; module: string } | null>(null
 
 /** A declaration pointed at in the Lean pane; the paper lights the phrases it states. */
 export const declLight = new Signal<string | null>(null);
-
-const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-
-/**
- * A reading note as HTML: `$…$` typeset by KaTeX, `name` as code, the rest as text.
- * `errors` lists any formula KaTeX could not set; the formula then shows as its source.
- */
-export function noteHtml(text: string): { html: string; errors: string[] } {
-  let html = "";
-  const errors: string[] = [];
-  let i = 0;
-  while (i < text.length) {
-    const c = text[i];
-    if (c === "\\" && text[i + 1] === "$") {
-      html += "$";
-      i += 2;
-    } else if (c === "$") {
-      let j = i + 1;
-      while (j < text.length && !(text[j] === "$" && text[j - 1] !== "\\")) j++;
-      const math = renderTex(text.slice(i + 1, j), false);
-      if (math.error) errors.push(math.error);
-      // Punctuation straight after a formula keeps to its line.
-      const glued = /^[.,;:!?)\]’”]+/.exec(text.slice(j + 1))?.[0] ?? "";
-      html += glued ? `<span class="nowrap">${math.html}${escapeHtml(glued)}</span>` : math.html;
-      i = j + 1 + glued.length;
-    } else if (c === "`") {
-      const j = text.indexOf("`", i + 1);
-      if (j < 0) {
-        html += escapeHtml(text.slice(i));
-        break;
-      }
-      html += `<code>${escapeHtml(text.slice(i + 1, j))}</code>`;
-      i = j + 1;
-    } else {
-      let j = i;
-      while (j < text.length && text[j] !== "$" && text[j] !== "`" && !(text[j] === "\\" && text[j + 1] === "$")) j++;
-      html += escapeHtml(text.slice(i, j));
-      i = j;
-    }
-  }
-  return { html, errors };
-}
 
 /**
  * A reading note in a card: its summary first when it has one, with a "more" control that expands
@@ -169,7 +127,7 @@ export function Verdict({ assessment, words }: { assessment: Pick<PhraseAssessme
     return (
       <p className="phrase-card__fidelity" data-fidelity="held">
         {lead}
-        {site.comparisonsHeld ?? note ?? "This comparison is held."}
+        <span dangerouslySetInnerHTML={{ __html: noteHtml(site.comparisonsHeld ?? note ?? "This comparison is held.").html }} />
       </p>
     );
   }

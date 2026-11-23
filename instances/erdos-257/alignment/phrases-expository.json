@@ -169,8 +169,8 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives the exact geometric tail after every natural-number cutoff n; the paper uses the case n = 0.",
-     "link_note": "Set the source cutoff n = 0."
+     "fidelity_note": "Lean gives the exact geometric tail after every natural-number cutoff $n$; the paper uses the case $n = 0$.",
+     "link_note": "Set the source cutoff $n = 0$."
     }
    ]
   },
@@ -192,7 +192,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here.",
+     "fidelity_note": "The cited proof lines use `p = r.num`, `q = r.den` and the witness integers $m,z$ chosen in this proof. The paper states the algebra or gap for arbitrary representations $\\frac pq$ and arbitrary integers $u,j$; that universally quantified statement is not declared here.",
      "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
     }
    ]
@@ -215,7 +215,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here. The local lower bound is for the absolute error, and specializes to a positive error as in the paper.",
+     "fidelity_note": "The cited proof lines use `p = r.num`, `q = r.den` and the witness integers $m,z$ chosen in this proof. The paper states the algebra or gap for arbitrary representations $\\frac pq$ and arbitrary integers $u,j$; that universally quantified statement is not declared here. The local lower bound is for the absolute error, and specializes to a positive error as in the paper.",
      "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
     }
    ]
@@ -238,7 +238,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Set b = 2; the indicator keeps precisely the selected exponents."
+     "link_note": "Set $b = 2$; the indicator keeps precisely the selected exponents."
     }
    ]
   },
@@ -260,7 +260,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Take F to be the finitely many selected exponents already read, and b = 2."
+     "link_note": "Take $F$ to be the finitely many selected exponents already read, and $b = 2$."
     }
    ]
   },
@@ -324,7 +324,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$."
     }
    ]
   },
@@ -396,7 +396,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Use b = 2 and A = {n₁, n₂, …}."
+     "link_note": "Use $b = 2$ and $A=\\{n_1,n_2,\\dots\\}$."
     }
    ],
    "replaces": [
@@ -421,7 +421,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows every integer base b ≥ 2, not only 2, and an infinite set A ⊆ ℕ. The paper uses the increasing enumeration of A with exponent 0 excluded; Lean normalizes the 0 term to 0."
+     "fidelity_note": "Lean allows every integer base $b \\ge 2$, not only 2, and an infinite set $A \\subseteq \\mathbb N$. The paper uses the increasing enumeration of $A$ with exponent 0 excluded; Lean normalizes the 0 term to 0."
     }
    ]
   },
@@ -486,8 +486,8 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives the exact geometric tail after every natural-number cutoff n; the paper uses the case n = 0.",
-     "link_note": "The row is 1/2 + 1/4 + 1/8 + …; set the source cutoff n = 0."
+     "fidelity_note": "Lean gives the exact geometric tail after every natural-number cutoff $n$; the paper uses the case $n = 0$.",
+     "link_note": "The row is $1/2 + 1/4 + 1/8 + \\dots$; set the source cutoff $n = 0$."
     }
    ]
   },
@@ -509,7 +509,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$."
     }
    ]
   },
@@ -552,7 +552,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here.",
+     "fidelity_note": "The cited proof lines use `p = r.num`, `q = r.den` and the witness integers $m,z$ chosen in this proof. The paper states the algebra or gap for arbitrary representations $\\frac pq$ and arbitrary integers $u,j$; that universally quantified statement is not declared here.",
      "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
     }
    ]
@@ -575,7 +575,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "The cited proof lines use p = r.num, q = r.den and the witness integers m,z chosen in this proof. The paper states the algebra or gap for arbitrary representations p/q and arbitrary integers u,j; that universally quantified statement is not declared here. The local lower bound is for the absolute error, and specializes to a positive error as in the paper.",
+     "fidelity_note": "The cited proof lines use `p = r.num`, `q = r.den` and the witness integers $m,z$ chosen in this proof. The paper states the algebra or gap for arbitrary representations $\\frac pq$ and arbitrary integers $u,j$; that universally quantified statement is not declared here. The local lower bound is for the absolute error, and specializes to a positive error as in the paper.",
      "link_note": "The proof uses the canonical rational numerator and denominator; this is a local ingredient, not the full general statement."
     }
    ]
@@ -598,7 +598,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The hypothesis h requires such witnesses for every positive q and permits 0 < |mξ − z| < 1/q. The paper uses the special case mξ − z > 0. The theorem is a criterion for irrationality, not a claim that arbitrary integers u,j satisfy this display."
+     "fidelity_note": "The hypothesis `h` requires such witnesses for every positive $q$ and permits $0<\\lvert m\\xi-z\\rvert<1/q$. The paper uses the special case $m\\xi - z > 0$. The theorem is a criterion for irrationality, not a claim that arbitrary integers $u,j$ satisfy this display."
     }
    ]
   },
@@ -620,8 +620,8 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2.",
-     "link_note": "At b = 2, displacementAtom 2 k n is the residue formula for ℓₙ(k)."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$.",
+     "link_note": "At $b = 2$, `displacementAtom 2 k n` is the residue formula for $\\ell_{n}(k)$."
     }
    ]
   },
@@ -653,7 +653,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "For n > 0, unfold at b = 2 to obtain (2^(k mod n) − 1)/(2^n − 1)."
+     "link_note": "For $n > 0$, unfold at $b = 2$ to obtain $\\frac{2^{k\\bmod n}-1}{2^n-1}$."
     }
    ],
    "after": "Here $k\\bmod n$ denotes the remainder $r$ on division by $n$, which lies between $0$ and $n-1$, and"
@@ -676,8 +676,8 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2.",
-     "link_note": "The paper’s R(k) is displacement 2 A k."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$.",
+     "link_note": "The paper’s $R(k)$ is `displacement 2 A k`."
     }
    ]
   },
@@ -699,7 +699,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source handles the sum over any finite set F and every integer base b ≥ 2. Set b = 2 and F = {n} for this one-exponent implication; the following words “and only then” are outside this tie."
+     "fidelity_note": "The source handles the sum over any finite set $F$ and every integer base $b \\ge 2$. Set $b = 2$ and $F = \\{n\\}$ for this one-exponent implication; the following words “and only then” are outside this tie."
     }
    ]
   },
@@ -721,7 +721,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$."
     }
    ]
   },
@@ -753,7 +753,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$."
     }
    ]
   },
@@ -819,7 +819,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Subtract the value at shift 0; hdA, hN and hNd mean n ∈ A, 0 < k and k < n."
+     "link_note": "Subtract the value at shift 0; `hdA`, `hN` and `hNd` mean $n \\in A$, $0 < k$ and $k < n$."
     }
    ]
   },
@@ -841,7 +841,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the assertion for every natural-number base b ≥ 2; the paper here fixes b = 2."
+     "fidelity_note": "Lean proves the assertion for every natural-number base $b \\ge 2$; the paper here fixes $b = 2$."
     }
    ]
   },
@@ -863,7 +863,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The proof gives zero for each selected atom whenever hdiv : ∀ d ∈ F, d ∣ N holds, for every finite F and integer base b≥2. Here the preceding unlinked clause supplies divisibility for the doubling exponents.",
+     "fidelity_note": "The proof gives zero for each selected atom whenever `hdiv : ∀ d ∈ F, d ∣ N` holds, for every finite $F$ and integer base $b\\ge2$. Here the preceding unlinked clause supplies divisibility for the doubling exponents.",
      "link_note": "Supplies the zero contribution once the divisibility in the paper has been established."
     }
    ],
@@ -887,7 +887,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "For b=2, N=k and A={n}, hfuture is k<n and the theorem gives the equality ell_n(k)=(2^k−1)/(2^n−1). It does not state either strict inequality in this display.",
+     "fidelity_note": "For $b=2$, $N=k$ and $A=\\{n\\}$, `hfuture` is $k<n$ and the theorem gives the equality $\\ell_n(k)=\\frac{2^k-1}{2^n-1}$. It does not state either strict inequality in this display.",
      "link_note": "For the singleton support {n}, gives the middle equality only."
     }
    ]
@@ -910,7 +910,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The arguments ((m + 1) * L) are Q, 2Q, …, MQ when L=Q and T=M."
+     "link_note": "The arguments $(m+1)L$ are $Q, 2Q, \\dots, MQ$ when $L=Q$ and $T=M$."
     }
    ]
   },
@@ -932,7 +932,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean applies to every finite F and every integer base b≥2 at any N divisible by all d∈F. Here take b=2 and N=mQ; d∣Q implies d∣mQ.",
+     "fidelity_note": "Lean applies to every finite $F$ and every integer base $b\\ge2$ at any $N$ divisible by all $d\\in F$. Here take $b=2$ and $N=mQ$; $d\\mid Q$ implies $d\\mid mQ$.",
      "link_note": "The same initial finite set has zero remainder at every candidate mQ."
     }
    ]
@@ -977,7 +977,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem covers any real family u i N whose columns satisfy hu : ∀ N, Summable (fun i => u i N). Take u n k = indicator A (displacementAtom 2 k) n, L=Q and T=M. The packet separately supplies hu and R(k)=∑ell_n(k).",
+     "fidelity_note": "The theorem covers any real family `u i N` whose columns satisfy `hu : ∀ N, Summable (fun i => u i N)`. Take `u n k = indicator A (displacementAtom 2 k) n`, $L=Q$ and $T=M$. The packet separately supplies `hu` and $R(k)=\\sum_{n\\in A}\\ell_n(k)$.",
      "link_note": "Specialize to the fractional-part rows; the equality is printed in the opposite direction."
     }
    ],
@@ -1001,7 +1001,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows any real values f on any nonempty finite set s and any real threshold c; it does not require nonnegativity. Take s=range M, f m=R((m+1)Q), c=1/q.",
+     "fidelity_note": "Lean allows any real values $f$ on any nonempty finite set $s$ and any real threshold $c$; it does not require nonnegativity. Take `s = range M`, $f(m)=R((m+1)Q)$, $c=1/q$.",
      "link_note": "One candidate from the same average lies below the chosen threshold."
     }
    ]
@@ -1024,7 +1024,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows all b≥2 and all finite F. In this paragraph the earlier choice d∣Q supplies hdiv at each N=mQ; the lemma does not make an arbitrary finite group vanish.",
+     "fidelity_note": "Lean allows all $b\\ge2$ and all finite $F$. In this paragraph the earlier choice $d\\mid Q$ supplies `hdiv` at each $N=mQ$; the lemma does not make an arbitrary finite group vanish.",
      "link_note": "Uses the divisibility requirement on Q stated above."
     }
    ]
@@ -1047,7 +1047,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the normalized geometric identity for every real B>1 and d>0. With B=2 and d=n, multiplying by 2^n−1 gives the paper’s sum of powers.",
+     "fidelity_note": "Lean proves the normalized geometric identity for every real $B>1$ and $d>0$. With $B=2$ and $d=n$, multiplying by $2^n-1$ gives the paper’s sum of powers.",
      "link_note": "This is the geometric identity before subtracting one from each numerator."
     }
    ]
@@ -1093,7 +1093,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The local h=d/g is the paper’s number c of samples in a cycle."
+     "link_note": "The local $h=d/g$ is the paper’s number $c$ of samples in a cycle."
     }
    ],
    "after": "### 6.2 Complete cycles give small averages"
@@ -1116,7 +1116,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The bijection e and hresidue identify the c sampled remainders with 0,g,…,n−g."
+     "link_note": "The bijection `e` and `hresidue` identify the $c$ sampled remainders with $0,g,\\dots,n-g$."
     }
    ]
   },
@@ -1160,7 +1160,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "hcop states Nat.Coprime q h, where q=Q/g and h=n/g."
+     "link_note": "`hcop` states `Nat.Coprime q h`, where $q=Q/g$ and $h=n/g$."
     }
    ]
   },
@@ -1182,7 +1182,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "hcancel removes the coprime multiplier q=Q/g from the congruence modulo h=n/g."
+     "link_note": "`hcancel` removes the coprime multiplier $q=Q/g$ from the congruence modulo $h=n/g$."
     }
    ]
   },
@@ -1259,7 +1259,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The proof reindexes the powers over every complete sampled orbit for arbitrary positive Q,n. For Q=4,n=6 it is the displayed permutation; subtracting the common constant per term and dividing by the unchanged count preserves the fractional-part mean.",
+     "fidelity_note": "The proof reindexes the powers over every complete sampled orbit for arbitrary positive $Q,n$. For $Q=4,n=6$ it is the displayed permutation; subtracting the common constant per term and dividing by the unchanged count preserves the fractional-part mean.",
      "link_note": "The argument reorders values for comparison; it does not change the candidate exponents."
     }
    ]
@@ -1293,7 +1293,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The hypothesis hnowrap : K*Q<d is precisely MQ<n."
+     "link_note": "The hypothesis `hnowrap : K*Q<d` is precisely $MQ<n$."
     }
    ]
   },
@@ -1326,7 +1326,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives this sum decomposition for any real sequence whose aligned length-h blocks all have the same sum hblock. Here h=n, N=MQ and x j=ell_n(j+1); periodicity supplies hblock.",
+     "fidelity_note": "Lean gives this sum decomposition for any real sequence whose aligned length-h blocks all have the same sum `hblock`. Here $h=n$, $N=MQ$ and $x_j=\\ell_n(j+1)$; periodicity supplies `hblock`.",
      "link_note": "Natural division counts the complete blocks and natural remainder counts the unfinished entries."
     }
    ]
@@ -1349,8 +1349,8 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "Lean handles all finite sets of divisors at every b≥2. Specialize F={1}, b=2 and N=k; 1 divides every k, so its single remainder is zero.",
-     "link_note": "The special n=1 row is zero for every candidate."
+     "fidelity_note": "Lean handles all finite sets of divisors at every $b\\ge2$. Specialize $F=\\{1\\}$, $b=2$ and $N=k$; 1 divides every $k$, so its single remainder is zero.",
+     "link_note": "The special $n=1$ row is zero for every candidate."
     }
    ]
   },
@@ -1372,7 +1372,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The proof uses the same removal principle; it does not establish the paper’s 2Q/n estimate."
+     "link_note": "The proof uses the same removal principle; it does not establish the paper’s $2Q/n$ estimate."
     }
    ]
   },
@@ -1394,7 +1394,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean lemma applies to every finite set F of exponents and every integer base b ≥ 2, provided each d ∈ F divides N; this passage applies it to the stated base-2 prefix."
+     "fidelity_note": "The Lean lemma applies to every finite set $F$ of exponents and every integer base $b \\ge 2$, provided each $d \\in F$ divides $N$; this passage applies it to the stated base-2 prefix."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1417,7 +1417,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean lemma applies to every finite set F of exponents and every integer base b ≥ 2, provided each d ∈ F divides N; this passage applies it to the stated base-2 prefix."
+     "fidelity_note": "The Lean lemma applies to every finite set $F$ of exponents and every integer base $b \\ge 2$, provided each $d \\in F$ divides $N$; this passage applies it to the stated base-2 prefix."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1440,7 +1440,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero.",
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero.",
      "link_note": "Opens the same conclusion, reached by the separate formal proof."
     }
    ],
@@ -1464,7 +1464,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1555,7 +1555,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The cited declaration proves irrationality of the full series for every integer base b ≥ 2; this phrase concerns base 2."
+     "fidelity_note": "The cited declaration proves irrationality of the full series for every integer base $b \\ge 2$; this phrase concerns base 2."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1579,8 +1579,8 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean states the exact geometric tail after every natural cutoff; set its n=0 for this sum.",
-     "link_note": "The source index k starts at zero, so its exponent k+1 is the paper’s j."
+     "fidelity_note": "Lean states the exact geometric tail after every natural cutoff; set $n=0$ for this sum.",
+     "link_note": "The source index $k$ starts at zero, so its exponent $k+1$ is the paper’s $j$."
     }
    ]
   },
@@ -1602,7 +1602,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1625,7 +1625,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1648,7 +1648,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1671,7 +1671,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "<a id=\"app:split\"></a>"
@@ -1694,7 +1694,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The source uses q = Q/g and h = n/g for the paper’s u and c."
+     "link_note": "The source uses $q = Q/g$ and $h = n/g$ for the paper’s $u$ and $c$."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1763,7 +1763,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean theorem gives the equality for the full sum directly, for every set A and every Q,K, including zero under its conventions. Subtract S_A from its shifted sums when K > 0 to obtain the paper’s equality."
+     "fidelity_note": "The Lean theorem gives the equality for the full sum directly, for every set $A$ and every $Q,K$, including zero under its conventions. Subtract $S_A$ from its shifted sums when $K > 0$ to obtain the paper’s equality."
     }
    ],
    "after": "<a id=\"app:proof\"></a>"
@@ -1787,8 +1787,8 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives the normalized identity for every real B>1 and positive d. Set B=b and d=n, then multiply by the positive denominator b^n−1.",
-     "link_note": "The source divides both sides of this geometric identity by b^n−1."
+     "fidelity_note": "Lean gives the normalized identity for every real $B>1$ and positive $d$. Set $B=b$ and $d=n$, then multiply by the positive denominator $b^n-1$.",
+     "link_note": "The source divides both sides of this geometric identity by $b^n-1$."
     }
    ]
   },
@@ -1810,7 +1810,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The statement agrees for positive exponents at all integer bases b ≥ 2. Lean also allows exponent 0, which contributes zero; this link supports the conclusion, not the finite proof just described."
+     "fidelity_note": "The statement agrees for positive exponents at all integer bases $b \\ge 2$. Lean also allows exponent 0, which contributes zero; this link supports the conclusion, not the finite proof just described."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -1909,7 +1909,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -2000,7 +2000,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean bounds the average of ell_n(mQ) + 1/(2^n−1) by 2(Q+1)/n, for Q,K > 0; subtracting its nonnegative baseline gives the paper’s fractional-part bound."
+     "fidelity_note": "Lean bounds the average of $\\ell_n(mQ)+\\frac{1}{2^n-1}$ by $\\frac{2(Q+1)}{n}$, for $Q,K > 0$; subtracting its nonnegative baseline gives the paper’s fractional-part bound."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -2101,7 +2101,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source bounds the shifted mean itself by the selected reciprocal term for every Q,d. Subtracting its nonnegative baseline bounds the fractional-part mean, for the paper’s n > t."
+     "fidelity_note": "The source bounds the shifted mean itself by the selected reciprocal term for every $Q,d$. Subtracting its nonnegative baseline bounds the fractional-part mean, for the paper’s $n > t$."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -2147,7 +2147,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The proof obtains 0 < u N − u 0 < 1 for every base b ≥ 2. Its identity u N − u 0 = v(T N − T 0) is vR_b(N); the paper writes qR(k) at base 2.",
+     "fidelity_note": "The proof obtains $0<u(N)-u(0)<1$ for every base $b \\ge 2$. Its identity $u(N)-u(0)=v(T(N)-T(0))$ is $vR_b(N)$; the paper writes $qR(k)$ at base 2.",
      "link_note": "The denominator is v in Lean; the integer difference is v times the total remainder."
     }
    ],
@@ -2194,7 +2194,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement allows every integer base b ≥ 2, while this passage uses b = 2; its exponent-zero convention adds only zero."
+     "fidelity_note": "The Lean statement allows every integer base $b \\ge 2$, while this passage uses $b = 2$; its exponent-zero convention adds only zero."
     }
    ],
    "after": "## 7. Combining the estimates"
@@ -2240,7 +2240,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean lemma applies to every finite set F of exponents and every integer base b ≥ 2, provided each d ∈ F divides N; this passage applies it to the stated base-2 prefix."
+     "fidelity_note": "The Lean lemma applies to every finite set $F$ of exponents and every integer base $b \\ge 2$, provided each $d \\in F$ divides $N$; this passage applies it to the stated base-2 prefix."
     }
    ],
    "after": "## 7. Combining the estimates"

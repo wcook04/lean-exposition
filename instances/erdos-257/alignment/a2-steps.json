@@ -180,7 +180,7 @@
           "note": "Along lcm-prefix moduli the orbit-mean sums tend to the zero-shift sum.",
           "fidelity": "weaker",
           "fidelity_source": "ai",
-          "fidelity_note": "Base two only; the zero-shift support sum is X_A(2)."
+          "fidelity_note": "Base two only; the zero-shift support sum is $X_A(2)$."
         }
       ],
       "statements": [

@@ -38,7 +38,8 @@ import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./p
 import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
-import { dockDecl, noteHtml, prefetchPhraseNotes } from "./PhraseCard";
+import { noteHtml } from "../math";
+import { dockDecl, prefetchPhraseNotes } from "./PhraseCard";
 import { loadComparator } from "../../lean/comparatorMark";
 import { loadLeanNotes } from "../../lean/noteSummaries";
 import { loadOurs } from "../../lean/ours";

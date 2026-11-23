@@ -309,7 +309,7 @@
     "Erdos249257.greedyMersenneRemainder": "The real remainder after processing the first $N$ exponents. It starts at `x`; at step $N+1$, the rule subtracts $w_{N+1}$ exactly when the current remainder is at least that weight. Otherwise the remainder is unchanged. The definition makes sense for every real `x`, although the paper works with $x\\ge0$. A nonnegative remainder is not by itself evidence that its limit is zero or that the target is represented.",
     "Erdos249257.greedyMersenneSupport": "The set $A_x$ of positive exponents chosen by the greedy rule for target $x$. An exponent $n$ belongs when $w_n\\le r_{n-1}(x)$. The condition `0 < n` removes the artificial zero index. This support is fixed by the target and the rule; the later divisor counts must all be computed from this same set. The definition does not assert that its sum equals the target.",
     "Erdos249257.greedySupport_supportValue_eq": "Applying the greedy rule to a represented sum recovers the entire positive support that produced it. The hypothesis `hA0 : 0 ∉ A` removes the zero index, which carries no weight. At each exponent the strict inequality $R_n<w_n$ forces the correct choice, since later terms cannot replace a missed weight. Finite and infinite supports are treated alike; no assumption about the target’s rationality is used.",
-    "Erdos249257.irrational_erdosSum_full_support": "The full series $\\sum_{n\\ge1}1/(b^n-1)$ is irrational for every integer base $b\\ge2$. The theorem's only hypothesis is `hb : 2 ≤ b`. Its sum is indexed by k+1 in Lean. This is the full-support result referenced in the paper. It does not state that every infinite subseries is irrational, and its conclusion does not require the small-displacement criterion used for the paper's support classes.",
+    "Erdos249257.irrational_erdosSum_full_support": "The full series $\\sum_{n\\ge1}1/(b^n-1)$ is irrational for every integer base $b\\ge2$. The theorem's only hypothesis is `hb : 2 ≤ b`. Its sum is indexed by $k+1$ in Lean. This is the full-support result referenced in the paper. It does not state that every infinite subseries is irrational, and its conclusion does not require the small-displacement criterion used for the paper's support classes.",
     "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Every infinite support $A$ with $\\sum_{a\\in A}1/a<\\infty$ gives an irrational value $X_A(b)$ at each integer base $b\\ge2$. The hypotheses are `hb : 2 ≤ b`, `hA : A.Infinite`, and `hsum : Summable (reciprocalSupportTerm A)`. No coprimality assumption is present. The source obtains small binary displacements and transfers them to base $b$, then contradicts the positive integer gap forced by a rational value. Its all-base conclusion agrees with Theorem A.1; its proof is not the printed all-base averaging calculation.",
     "Erdos249257.isClosed_mersenneAchievementSet": "The Mersenne achievement set is closed in the real line. Consequently a convergent sequence of finite subseries values has its limit in the same set, even if the finite supports are not nested or otherwise compatible. Lean obtains closedness from compactness of the binary-selector space and continuity of its sum map. This result supplies a representing support at the limit, without by itself proving that support is infinite.",
     "Erdos249257.lastTwentyOneSkip_erdosBorwein_fatalInterval": "If $M$ is the last exponent skipped by the actual greedy rule for $1/21$, its finite skipped-prefix approximation satisfies $0<a_M-E<\\operatorname{gap}_M$. The hypothesis `hlast` includes both that $M$ is skipped and that no later exponent is skipped. The theorem gives the strict interval, not an arithmetic contradiction. Ruling out this interval is the additional input requested by Problem D.7.",
@@ -341,7 +341,7 @@
     "Erdos249257.supportCoeff": "The number $c_A(n)$ of positive divisors of $n$ belonging to the selected exponents $A$. Lean filters `n.divisors` by membership in `A` and takes its cardinality; this is finite even when $A$ is infinite. At zero the divisor set is empty. These are power-series coefficients before carrying, not membership indicators or base-two digits, and they may exceed one. For a greedy target, substitute the same support $A_x$ at every index; unrelated coefficient choices need not come from a support.",
     "Erdos249257.supportCoeff_le_card_divisors": "The coefficient $c_A(n)$ is at most the total number $\\tau(n)$ of positive divisors of $n$. There is no hypothesis on $A$ or $n$: filtering a finite set cannot increase its cardinality. The coefficient is a natural number, so its nonnegativity is already supplied by its type. This bound concerns the coefficients before carrying; it does not assert that they lie between zero and $b-1$.",
     "Erdos249257.supportCoeff_le_two_mul_sqrt": "The divisor count of any support satisfies $c_A(n)\\le2\\lfloor\\sqrt n\\rfloor$. Selected divisors are a subset of all divisors, and divisors of $n$ can be paired on opposite sides of $\\sqrt n$. The theorem uses the integer square root `Nat.sqrt`; the paper’s real bound $2\\sqrt n$ follows from this sharper integer estimate. It applies to finite or infinite supports and requires no membership assumption.",
-    "Erdos249257.supportCoeff_pos_of_mem_dvd": "If $a\\in A$ divides a positive integer $n$, then $c_A(n)>0$. The hypotheses `ha`, `hdvd` and `hn` record membership, divisibility and n ≠ 0. Thus choosing any positive $a$ in a nonempty support makes every positive multiple of $a$ a nonzero coefficient. The lemma supplies this positivity; the density $1/a$ of those multiples is a separate counting fact.",
+    "Erdos249257.supportCoeff_pos_of_mem_dvd": "If $a\\in A$ divides a positive integer $n$, then $c_A(n)>0$. The hypotheses `ha`, `hdvd` and `hn` record membership, divisibility and $n \\ne 0$. Thus choosing any positive $a$ in a nonempty support makes every positive multiple of $a$ a nonzero coefficient. The lemma supplies this positivity; the density $1/a$ of those multiples is a separate counting fact.",
     "Erdos249257.tendsto_cesaroMean_shiftedMersenneAtom_mul": "For positive $Q$ and $d$, the averages of $w_{2,d}(Q),w_{2,d}(2Q),\\ldots$ tend to $g/[d(2^g-1)]$, where $g=\\gcd(Q,d)$. Lean requires `hQ : 0 < Q` and `hd : 0 < d`. The function `cesaroMean` averages the first $K$ values; `atTop` means $K\\to\\infty$. A complete orbit has $d/g$ terms. This declaration fixes the base at two, so it supplies only the binary case of the paper’s formula for arbitrary integer $b$.",
     "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul": "For a fixed positive modulus $Q$, the binary averages of the complete support tail tend to the sum of the binary orbit means. Lean assumes `hsum : Summable (reciprocalSupportTerm A)` and `hQ : 0 < Q`. It uses the summable majorant $2(Q+1)\\mathbf1_A(d)/d$ before interchanging the exponent sum and the averaging limit. This is the first limit of Appendix A at base two. The modulus stays fixed throughout this limit; its later growth is handled separately.",
     "Erdos249257.tendsto_tsum_shiftedSupportOrbitMean_periodLcm": "If $\\sum_{d\\in A}1/d$ converges, the sum of the binary orbit means at $Q_t=\\operatorname{lcm}(1,\\ldots,t)$ tends to the binary support sum at shift zero. The only explicit hypothesis is `hsum : Summable (reciprocalSupportTerm A)`. Each fixed exponent eventually divides $Q_t$, and the uniform bound $1/d$ permits the limit to pass through the sum. The zero-shift sum is $X_A(2)$. This declaration is the second limit at base two; it does not state the arbitrary-base limit printed in (9).",
@@ -370,7 +370,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_eq_integerHalfCarry": "The paper’s terminal carry $K_A(M)$ equals `integerHalfCarry A (M - 1)`. The equality holds for every set `A` and natural `M`; the paper uses it for $M\\ge1$. The shift is necessary because the recursive Lean carry starts at time zero with value one, whereas the paper calls that value $K_A(1)$. Use this identity whenever comparing bounds or recurrence indices across the two notations.",
     "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_inter_Iic_bounds": "For a support omitting exponent $1$ and summing to $1/2$, every prefix carry at depth $M\\ge1$ lies between $0$ and $2\\sqrt M+4$. The hypotheses `hone`, `hvalue` and `hM` are explicit. The prefix carry equals the full support’s scaled coefficient tail, which is nonnegative and obeys the universal square-root bound. This supplies suitable approximants from an existing representation, the converse direction of Theorem D.2.",
     "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_inter_Iic_eq_binaryCoeffTail": "If a support omits exponent $1$ and has sum $1/2$, the terminal carry of its prefix through $M\\ge1$ equals the scaled coefficient tail of the full support. The binders `hone`, `hvalue` and `hM` record these assumptions. Lean’s prefix is `A ∩ Set.Iic M`; for a positive support it is the paper’s $A_M$. The coefficients on the right belong to the full set, because truncation changes none of the coefficients through $M$.",
-    "ErdosProblems.Erdos257.PaperCompleteR21.framePotential_eq_tsum": "For a finite set $F$ of positive exponents, the finite sum of geometric tails equals $U_F(N)=\\sum_{r\\ge1}2^{-r}f_F(N+r)$. The hypothesis `hF : 0 ∉ F` ensures every exponent is positive. Lean writes r+1 because the sum is indexed by natural numbers beginning at zero. This identity connects `framePotential`, defined through modular fractions, with the shifted divisor-count tail used in the paper.",
+    "ErdosProblems.Erdos257.PaperCompleteR21.framePotential_eq_tsum": "For a finite set $F$ of positive exponents, the finite sum of geometric tails equals $U_F(N)=\\sum_{r\\ge1}2^{-r}f_F(N+r)$. The hypothesis `hF : 0 ∉ F` ensures every exponent is positive. Lean writes $r+1$ because the sum is indexed by natural numbers beginning at zero. This identity connects `framePotential`, defined through modular fractions, with the shifted divisor-count tail used in the paper.",
     "ErdosProblems.Erdos257.PaperCompleteR21.incidenceCount": "The count $f_F(n)$ of elements of a finite set $F$ that divide $n$. Lean filters F by the relation `a ∣ n` and takes the cardinality. For positive $F$ and positive $n$, this is the finite-support instance of $c_A(n)$. $F$ is already a `Finset`, so finiteness is part of its type rather than a separate hypothesis. This count may exceed one when several selected exponents divide the same integer.",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_exact_row_integerHalfCarry_eq_one": "An exact quotient row with target $2^{M-1}-1$ has terminal carry exactly $1$. The hypotheses require $M\\ge1$, a finite support of exponents at least two, and the displayed equality for its quotient sum. There is no upper bound on those exponents in this theorem. The paper’s finite rows are a special case, with all exponents at most $M$. This identifies exact rows as a particular terminal approximation.",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_floor_quotient_geometric_sum": "For $d\\ge2$, $q_M(d)=\\sum_{j=1}^{\\lfloor M/d\\rfloor}2^{M-jd}$. The binder `hd : 2 ≤ d` ensures that the omitted fraction is strictly below one. Thus this integer quotient is precisely the coefficient-prefix contribution of choosing exponent $d$. The case $d=1$ is excluded: then the omitted fraction equals one, so the displayed geometric truncation would miss that final unit.",
@@ -381,7 +381,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.FinitePrimeWeighted": "The condition that a support has finite weighted sum for some finite nonempty set of primes. Lean chooses `P : Finset ℕ`, requires `P.Nonempty` and `∀ p ∈ P, Nat.Prime p`, then requires `Summable (Set.indicator A (primeWeightedTerm b P))`. One prime set serves the entire support; its prime powers may grow with the exponent. Choosing a different prime set for each exponent would change the condition. This declaration defines a summability hypothesis, not its irrationality consequence.",
     "ErdosProblems.Erdos257.PaperCompleteR7.HasStrengthenedPositiveCover": "The property that a support $A$ lies inside the union of some `PositiveCoverData` whose total cost satisfies (V). It quantifies over one complete sequence of finite sets, exponents and majorants. The finite sets may overlap, and their union may contain exponents outside $A$. This is the paper's class $\\mathcal C$; failure of one proposed cover does not establish that $A$ is outside this class.",
     "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "A sequence of finite sets $F_j$, exponents $0<\\alpha_j\\le1$ and nonnegative coefficients $c_{j,d}$ that majorise $f_{F_j}(n)^{\\alpha_j}$. The fields `frame_positive`, `exponent_bounds`, `coefficient_nonneg` and `majorises` are assumptions on this data. The field `column_summable` requires each $C_j=\\sum_d c_{j,d}/d$ to be finite. This structure does not assert irrationality or summability of the total cover cost. Its natural index $j$ corresponds to the paper's $j+1$.",
-    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.StrengthenedCostSummable": "The hypothesis (V): the sum of $C_j2^{j\\alpha_j}/(2^{\\alpha_j}-1)$ over positive indices is finite. Lean uses a sequence indexed by natural numbers and therefore writes j+1 in the power of two. The denominator comes from the mean estimate for the shifted geometric tail at base $2^{\\alpha_j}$. This declaration defines a proposition; the theorem `strengthenedPositiveCoverClaim` supplies its irrationality consequence.",
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.StrengthenedCostSummable": "The hypothesis (V): the sum of $C_j2^{j\\alpha_j}/(2^{\\alpha_j}-1)$ over positive indices is finite. Lean uses a sequence indexed by natural numbers and therefore writes $j+1$ in the power of two. The denominator comes from the mean estimate for the shifted geometric tail at base $2^{\\alpha_j}$. This declaration defines a proposition; the theorem `strengthenedPositiveCoverClaim` supplies its irrationality consequence.",
     "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.cost": "The number $C_j=\\sum_{d\\ge1}c_{j,d}/d$ attached to one finite set in the cover. The field `column_summable` of the data ensures this series converges. The factor $1/d$ is the mean of the divisibility indicator for $d$. Lean includes a zero index, whose contribution vanishes by total division. This is the cost before applying the exponent-dependent factor in condition (V).",
     "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "The contribution of exponent $d$ to the displacement at index $N$: $(b^{N\\bmod d}-1)/(b^d-1)$. Lean defines it by subtracting `shiftedRadixAtom b 0 d` from `shiftedRadixAtom b N d`. This is the paper's $d_a(m)$ with $d=a$ and $N=m$. In contrast, `kernelWeight` has numerator $b^{N\\bmod d}$ without the subtraction of one. That larger quantity is used to bound averages.",
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "At an integer base $b\\ge2$, the displacement is the sum over $A$ of its nonnegative single-exponent contributions. Lean assumes only `hb : 2 ≤ b`; `Set.indicator A` restricts the infinite sum to $A$. Each `displacementAtom b N d` is the shifted term minus its value at zero. This theorem supplies the first equality in display (D). Its statement does not supply the second equality or the explicit double sum defining $J_{b,A}(N)$.",
@@ -604,7 +604,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "The paper defines X_A(b) for every real b>1; this definition takes b : ℕ. The formula agrees at integer bases."
+     "fidelity_note": "The paper defines $X_A(b)$ for every real $b>1$; this definition takes $b\\in\\mathbb N$. The formula agrees at integer bases."
     }
    ]
   },
@@ -626,7 +626,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem covers integer b≥2 and proves convergence using the envelope 2b^{-a}; it does not state the displayed real-base envelope."
+     "fidelity_note": "The theorem covers integer $b\\ge2$ and proves convergence using the envelope $2b^{-a}$; it does not state the displayed real-base envelope."
     }
    ]
   },
@@ -798,7 +798,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "Specialise b=2 for the displayed summand. This definition does not itself assert the convergence of its sum."
+     "fidelity_note": "Specialise $b=2$ for the displayed summand. This definition does not itself assert the convergence of its sum."
     }
    ]
   },
@@ -875,7 +875,7 @@
      ],
      "relation": "defines",
      "fidelity": "stronger",
-     "fidelity_note": "The definition gives the coprime-layer support for any finite prime set C; C={2} is exactly A_star."
+     "fidelity_note": "The definition gives the coprime-layer support for any finite prime set $C$; $C=\\{2\\}$ is exactly $A_\\star$."
     }
    ]
   },
@@ -897,7 +897,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "The second conjunct applies to every positive weighted support; the preceding summability calculation instantiates it at A_star."
+     "fidelity_note": "The second conjunct applies to every positive weighted support; the preceding summability calculation instantiates it at $A_\\star$."
     }
    ]
   },
@@ -919,7 +919,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem treats every nonempty finite prime set C; specialise C={2} to obtain this support."
+     "fidelity_note": "The theorem treats every nonempty finite prime set $C$; specialise $C=\\{2\\}$ to obtain this support."
     }
    ]
   },
@@ -941,7 +941,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Specialise B=2, u=1, v=h in the positive-integer ratio inequality; the theorem permits all real B>1 and 1≤u≤v."
+     "fidelity_note": "Specialise $B=2, u=1, v=h$ in the positive-integer ratio inequality; the theorem permits all real $B>1$ and $1\\le u\\le v$."
     }
    ]
   },
@@ -1040,7 +1040,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This theorem gives the first atom-sum equality for integer b≥2. It does not state the explicit J double sum or the second equality in (D)."
+     "fidelity_note": "This theorem gives the first atom-sum equality for integer $b\\ge2$. It does not state the explicit $J$ double sum or the second equality in (D)."
     }
    ]
   },
@@ -1083,7 +1083,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The proof identifies qΔ with a positive difference of integers under assumed rationality."
+     "link_note": "The proof identifies $q\\Delta$ with a positive difference of integers under assumed rationality."
     }
    ]
   },
@@ -1169,7 +1169,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean bounds the larger numerator B^{tQ mod a}, without subtracting 1, and permits every real B>1. The same bound follows for d_a."
+     "fidelity_note": "Lean bounds the larger numerator $B^{tQ\\bmod a}$, without subtracting 1, and permits every real $B>1$. The same bound follows for $d_a$."
     }
    ]
   },
@@ -1191,7 +1191,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The same equality is proved for all real B>1, beyond integer bases b≥2."
+     "fidelity_note": "The same equality is proved for all real $B>1$, beyond integer bases $b\\ge2$."
     }
    ]
   },
@@ -1213,7 +1213,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "Lean bounds a finite set F of far exponents and the larger kernel B^{N mod a}/(B^a−1); the display sums displacement atoms over the possibly infinite tail of A."
+     "fidelity_note": "Lean bounds a finite set $F$ of far exponents and the larger kernel $\\frac{B^{N\\bmod a}}{B^a-1}$; the display sums displacement atoms over the possibly infinite tail of $A$."
     }
    ]
   },
@@ -1235,7 +1235,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean bounds the larger shifted kernel for every real B≥2 whenever N<d; set N=tQ, d=a."
+     "fidelity_note": "Lean bounds the larger shifted kernel for every real $B\\ge2$ whenever $N<d$; set $N=tQ, d=a$."
     }
    ]
   },
@@ -1257,7 +1257,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Take C=2^Q in the general bound ∑_{t=1}^T C^t≤2C^T and divide by 2^{QT}."
+     "fidelity_note": "Take $C=2^Q$ in the general bound $\\sum_{t=1}^T C^t\\le2C^T$ and divide by $2^{QT}$."
     }
    ]
   },
@@ -1345,7 +1345,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The paper uses Q=L∏p^{floor(log_p H)} and G=floor(H/max P); Lean defines Q=L(∏p)^H and uses G=2^H."
+     "fidelity_note": "The paper uses $Q=L\\prod_{p\\in P}p^{\\lfloor\\log_p H\\rfloor}$ and $G=\\lfloor H/\\max P\\rfloor$; Lean defines $Q=L(\\prod_{p\\in P}p)^H$ and uses $G=2^H$."
     }
    ]
   },
@@ -1388,7 +1388,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem holds for all real B>1, not only integer b≥2."
+     "fidelity_note": "The theorem holds for all real $B>1$, not only integer $b\\ge2$."
     }
    ]
   },
@@ -1410,7 +1410,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "Lean proves h(a)∣gcd(Q,a) or 2^H≤gcd(Q,a) for Q=L(∏p)^H; it does not use this paragraph’s size-truncated modulus or G=floor(H/max P)."
+     "fidelity_note": "Lean proves $h(a)\\mid\\gcd(Q,a)$ or $2^H\\le\\gcd(Q,a)$ for $Q=L(\\prod_{p\\in P}p)^H$; it does not use this paragraph’s size-truncated modulus or $G=\\lfloor H/\\max P\\rfloor$."
     }
    ]
   },
@@ -1432,7 +1432,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "Lean bounds the mean by (1+2Q/M) times the residual weighted mass plus [G(Q+2M)+Q+1]/(b^G−1)+4·2^{-M}; the displayed logarithmic error and modulus schedule differ."
+     "fidelity_note": "Lean bounds the mean by $(1+2Q/M)$ times the residual weighted mass plus $\\frac{G(Q+2M)+Q+1}{b^G-1}+4\\cdot 2^{-M}$; the displayed logarithmic error and modulus schedule differ."
     }
    ]
   },
@@ -1485,7 +1485,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The extraction lemma applies to any real-valued function and any threshold, not only displacement and 2ε."
+     "fidelity_note": "The extraction lemma applies to any real-valued function and any threshold, not only displacement and $2\\varepsilon$."
     }
    ]
   },
@@ -1529,7 +1529,7 @@
      ],
      "relation": "defines",
      "fidelity": "stronger",
-     "fidelity_note": "Set C={2} in the general coprime-layer support."
+     "fidelity_note": "Set $C=\\{2\\}$ in the general coprime-layer support."
     }
    ]
   },
@@ -1551,7 +1551,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem proves uniqueness of layers for every nonempty finite prime set C; C={2} gives the two-adic assertion."
+     "fidelity_note": "The theorem proves uniqueness of layers for every nonempty finite prime set $C$; $C=\\{2\\}$ gives the two-adic assertion."
     }
    ]
   },
@@ -1573,7 +1573,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Specialise D=Q=2 and replace Lean’s k+1 by the paper’s k≥1; the theorem gives 1/(2Q) for general D,Q>0."
+     "fidelity_note": "Specialise $D=Q=2$ and replace Lean’s $k+1$ by the paper’s $k\\ge1$; the theorem gives $\\frac{1}{2Q}$ for general $D,Q>0$."
     }
    ]
   },
@@ -1595,7 +1595,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The divergence theorem holds for every nonempty finite prime set C; here C={2}."
+     "fidelity_note": "The divergence theorem holds for every nonempty finite prime set $C$; here $C=\\{2\\}$."
     }
    ]
   },
@@ -1617,7 +1617,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The weighted-summability theorem applies at every integer base and to every pair of prime sets C,P with nonempty intersection; use C=P={2}."
+     "fidelity_note": "The weighted-summability theorem applies at every integer base and to every pair of prime sets $C,P$ with nonempty intersection; use $C=P=\\{2\\}$."
     },
     {
      "name": "ErdosProblems.Erdos257.not_summable_reciprocal_witnessClauseSupport",
@@ -1628,7 +1628,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The divergence theorem covers every nonempty finite prime set C, including C={2}."
+     "fidelity_note": "The divergence theorem covers every nonempty finite prime set $C$, including $C=\\{2\\}$."
     }
    ]
   },
@@ -1716,7 +1716,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This defines the selected-divisor count c_A(n); it does not also state the series identity in the display."
+     "fidelity_note": "This defines the selected-divisor count $c_A(n)$; it does not also state the series identity in the display."
     },
     {
      "name": "Erdos249257.erdosSupportSeries_eq_tsum_supportCoeff",
@@ -1727,7 +1727,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This states the Lambert expansion using supportCoeff for natural bases b≥2. It does not define the count in this declaration or cover every real base b>1 allowed by the opening notation.",
+     "fidelity_note": "This states the Lambert expansion using `supportCoeff` for natural bases $b\\ge2$. It does not define the count in this declaration or cover every real base $b>1$ allowed by the opening notation.",
      "link_note": "The expansion is proved here for integer bases; supportCoeff gives its coefficient definition."
     }
    ]
@@ -1814,7 +1814,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "For q=2 and P={3,5}, this gives the even-n case; it assumes q divides n and does not include the odd-n zero case."
+     "fidelity_note": "For $q=2$ and $P=\\{3,5\\}$, this gives the even-$n$ case; it assumes $q$ divides $n$ and does not include the odd-$n$ zero case."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.cube_incidence_zero",
@@ -1825,7 +1825,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "For q=2 this gives the odd-n zero case; it does not give the product formula when n is even."
+     "fidelity_note": "For $q=2$ this gives the odd-$n$ zero case; it does not give the product formula when $n$ is even."
     }
    ]
   },
@@ -1847,7 +1847,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Specialising q=2 and P={3,5} yields the fractional-count expansion; the declaration does not also state the displayed cost C."
+     "fidelity_note": "Specialising $q=2$ and $P=\\{3,5\\}$ yields the fractional-count expansion; the declaration does not also state the displayed cost $C$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.cubeCoefficient_cost",
@@ -1858,7 +1858,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Specialising q=2 and P={3,5} gives the cost C; the declaration does not state the fractional-count identity in the same display."
+     "fidelity_note": "Specialising $q=2$ and $P=\\{3,5\\}$ gives the cost $C$; the declaration does not state the fractional-count identity in the same display."
     }
    ]
   },
@@ -1880,7 +1880,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem gives the exact finite mean over every positive period divisible by d, with any real weight w; the paper uses w=1."
+     "fidelity_note": "The theorem gives the exact finite mean over every positive period divisible by $d$, with any real weight $w$; the paper uses $w=1$."
     }
    ]
   },
@@ -2030,7 +2030,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition gives w_{B,d}; it does not define the dyadic mean in the second part of the display."
+     "fidelity_note": "This definition gives $w_{B,d}$; it does not define the dyadic mean in the second part of the display."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean",
@@ -2041,7 +2041,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition gives the dyadic mean; the separate kernelWeight definition gives w_{B,d}."
+     "fidelity_note": "This definition gives the dyadic mean; the separate `kernelWeight` definition gives $w_{B,d}$."
     }
    ]
   },
@@ -2084,7 +2084,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The complete-cycle identity holds for every real B>1 and positive L,d, without B≤2 or the current regime d≤LT."
+     "fidelity_note": "The complete-cycle identity holds for every real $B>1$ and positive $L,d$, without $B\\le2$ or the current regime $d\\le LT$."
     }
    ]
   },
@@ -2106,7 +2106,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This states the first inequality, with its gcd-dependent expression; the next simplification to B−1 is a separate theorem."
+     "fidelity_note": "This states the first inequality, with its gcd-dependent expression; the next simplification to $B-1$ is a separate theorem."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_mean_add_error",
@@ -2139,7 +2139,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem assumes only B>1 and 2N<d at the sampled point N; it does not require B≤2 or a prescribed progression."
+     "fidelity_note": "The theorem assumes only $B>1$ and $2N<d$ at the sampled point $N$; it does not require $B\\le2$ or a prescribed progression."
     }
    ]
   },
@@ -2182,7 +2182,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This gives the displayed equality under LT<d, but none of the following upper bounds."
+     "fidelity_note": "This gives the displayed equality under $LT<d$, but none of the following upper bounds."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_transition",
@@ -2193,7 +2193,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This gives the final bound 2L/[d(B−1)], not the equality and intermediate bound in the same display."
+     "fidelity_note": "This gives the final bound $\\frac{2L}{d(B-1)}$, not the equality and intermediate bound in the same display."
     }
    ]
   },
@@ -2215,7 +2215,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem bounds (B^n−1)/(B^d−1) for every B>1 and 0≤n≤d, so n=LT is one instance."
+     "fidelity_note": "The theorem bounds $\\frac{B^n-1}{B^d-1}$ for every $B>1$ and $0\\le n\\le d$, so $n=LT$ is one instance."
     }
    ]
   },
@@ -2237,7 +2237,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem also allows the bases B_i and divisors d_i to vary with the index, provided the corresponding nonnegative total cost is summable."
+     "fidelity_note": "The theorem also allows the bases $B_i$ and divisors $d_i$ to vary with the index, provided the corresponding nonnegative total cost is summable."
     }
    ]
   },
@@ -2280,7 +2280,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This identifies U_j with the finite modular-tail sum, but does not define V_j."
+     "fidelity_note": "This identifies $U_j$ with the finite modular-tail sum, but does not define $V_j$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.coverPotential",
@@ -2291,7 +2291,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This defines V_j, but does not define the divisor-count tail U_j."
+     "fidelity_note": "This defines $V_j$, but does not define the divisor-count tail $U_j$."
     }
    ]
   },
@@ -2313,7 +2313,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem states only the endpoint U_j(N)^α_j≤V_j(N). It proves it by recurrence comparison and does not state the two intermediate infinite sums."
+     "fidelity_note": "The theorem states only the endpoint $U_j(N)^{\\alpha_j}\\le V_j(N)$. It proves it by recurrence comparison and does not state the two intermediate infinite sums."
     }
    ]
   },
@@ -2335,7 +2335,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The declaration states Δ_{2,F}(N)≤U_F(N); it does not state the equality Δ_{2,F}(N)=U_F(N)−X_F(2) also printed here."
+     "fidelity_note": "The declaration states $\\Delta_{2,F}(N)\\le U_F(N)$; it does not state the equality $\\Delta_{2,F}(N)=U_F(N)-X_F(2)$ also printed here."
     }
    ]
   },
@@ -2357,7 +2357,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem cancels any finite support at any integer base b≥2 when all its exponents divide N; it is not restricted to the binary cover prefix."
+     "fidelity_note": "The theorem cancels any finite support at any integer base $b\\ge2$ when all its exponents divide $N$; it is not restricted to the binary cover prefix."
     }
    ]
   },
@@ -2379,7 +2379,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The sum identity holds for every real ε; the proof here assumes ε>0 to make the allowances positive."
+     "fidelity_note": "The sum identity holds for every real $\\varepsilon$; the proof here assumes $\\varepsilon>0$ to make the allowances positive."
     }
    ]
   },
@@ -2401,7 +2401,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean theorem gives a tail below any positive δ; the displayed choice δ=1/4 is a special case."
+     "fidelity_note": "The Lean theorem gives a tail below any positive $\\delta$; the displayed choice $\\delta=1/4$ is a special case."
     }
    ]
   },
@@ -2487,7 +2487,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem gives the final upper bound Δ_{2,C.host}(N)≤ε. It does not state the intermediate sum of U_j or strict positivity for infinite A."
+     "fidelity_note": "The theorem gives the final upper bound $\\Delta_{2,C.\\mathrm{host}}(N)\\le\\varepsilon$. It does not state the intermediate sum of $U_j$ or strict positivity for infinite $A$."
     }
    ]
   },
@@ -2509,7 +2509,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The pinned theorem gives Δ_{b,A}(N)≤2Δ_{2,A}(N) only for natural b≥2. It neither removes the factor 2 nor quantifies over all real bases."
+     "fidelity_note": "The pinned theorem gives $\\Delta_{b,A}(N)\\le2\\Delta_{2,A}(N)$ only for natural $b\\ge2$. It neither removes the factor 2 nor quantifies over all real bases."
     }
    ]
   },
@@ -2650,7 +2650,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The union displacement inequality holds for any two supports at every integer base b≥2, not only for the binary mixed construction."
+     "fidelity_note": "The union displacement inequality holds for any two supports at every integer base $b\\ge2$, not only for the binary mixed construction."
     }
    ]
   },
@@ -2747,7 +2747,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This defines K for the chosen weighted cover; it does not define the separate scalar function Ψ."
+     "fidelity_note": "This defines $K$ for the chosen weighted cover; it does not define the separate scalar function $\\Psi$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.coverGauge",
@@ -2758,7 +2758,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This defines Ψ through scalarCoverCosts; it does not define K or optimise over whole covers."
+     "fidelity_note": "This defines $\\Psi$ through `scalarCoverCosts`; it does not define $K$ or optimise over whole covers."
     }
    ]
   },
@@ -2780,7 +2780,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This gives K≥the mean of Ψ(f_F), in fact on every positive initial interval. It does not also state the logarithmic lower bound."
+     "fidelity_note": "This gives that $K$ bounds the mean of $\\Psi(f_F)$ from above, in fact on every positive initial interval. It does not also state the logarithmic lower bound."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.exp_one_mul_log_le_coverGauge",
@@ -2791,7 +2791,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This gives e log t≤Ψ(t) pointwise for t≥1. It does not state its averaged version, the t=0 case, or the separate cover-cost inequality."
+     "fidelity_note": "This gives $e\\log t\\le\\Psi(t)$ pointwise for $t\\ge1$. It does not state its averaged version, the $t=0$ case, or the separate cover-cost inequality."
     }
    ]
   },
@@ -2813,7 +2813,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration gives the exact count floor(X/d). Division by X>0 and the upper bound 1/d are not in its statement."
+     "fidelity_note": "This declaration gives the exact count $\\lfloor X/d\\rfloor$. Division by $X>0$ and the upper bound $1/d$ are not in its statement."
     }
    ]
   },
@@ -2835,7 +2835,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem also includes α=0; the paper uses 0<α≤1."
+     "fidelity_note": "The theorem also includes $\\alpha=0$; the paper uses $0<\\alpha\\le1$."
     }
    ]
   },
@@ -2900,7 +2900,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Taking R_k=2^k/4 gives disjoint odd-prime blocks with R_k≤S_k≤R_k+1; the printed upper inequality is strict."
+     "fidelity_note": "Taking $R_k=2^k/4$ gives disjoint odd-prime blocks with $R_k\\le S_k\\le R_k+1$; the printed upper inequality is strict."
     }
    ]
   },
@@ -2944,7 +2944,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem gives the equality R_j/q_j for a divisor block, but not membership in [1,4/3), which depends on the printed choice of P_j."
+     "fidelity_note": "The theorem gives the equality $R_j/q_j$ for a divisor block, but not membership in $[1,4/3)$, which depends on the printed choice of $P_j$."
     }
    ]
   },
@@ -3010,7 +3010,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "For positive integer h the theorem works at every real base B>1, whereas the surrounding paper argument fixes an integer b≥2."
+     "fidelity_note": "For positive integer $h$ the theorem works at every real base $B>1$, whereas the surrounding paper argument fixes an integer $b\\ge2$."
     }
    ]
   },
@@ -3032,7 +3032,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem proves full-support irrationality at every integer base b≥2; the surrounding paragraph considers base two."
+     "fidelity_note": "The theorem proves full-support irrationality at every integer base $b\\ge2$; the surrounding paragraph considers base two."
     }
    ]
   },
@@ -3181,7 +3181,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration defines w_{b,d}(N), the first component of the display; it does not define the support sum T_N.",
+     "fidelity_note": "This declaration defines $w_{b,d}(N)$, the first component of the display; it does not define the support sum $T_N$.",
      "link_note": "Defines the individual shifted term; subtract its value at zero to obtain displacement."
     },
     {
@@ -3193,7 +3193,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration is the summand restricted to A; the displayed T_N is its infinite sum, not this individual term.",
+     "fidelity_note": "This declaration is the summand restricted to $A$; the displayed $T_N$ is its infinite sum, not this individual term.",
      "link_note": "Restricts the term to the selected exponents; the displayed tail sums these terms."
     }
    ]
@@ -3216,7 +3216,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The paper fixes any integer b≥2 and also includes the reciprocal upper bound; this declaration proves only the limit identity at b=2.",
+     "fidelity_note": "The paper fixes any integer $b\\ge2$ and also includes the reciprocal upper bound; this declaration proves only the limit identity at $b=2$.",
      "link_note": "Proves the limit identity at base two."
     },
     {
@@ -3228,8 +3228,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The declaration proves only the final ≤1/d inequality at b=2, not the preceding limit identity or its arbitrary-base version.",
-     "link_note": "Bounds the binary orbit mean by 1/d."
+     "fidelity_note": "The declaration proves only the final $\\le1/d$ inequality at $b=2$, not the preceding limit identity or its arbitrary-base version.",
+     "link_note": "Bounds the binary orbit mean by $1/d$."
     }
    ]
   },
@@ -3251,7 +3251,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The paper proves the whole counting identity and the upper bound (Q+2)/d for any integer b≥2. Lean states only a binary upper bound 2(Q+1)/d; it supplies neither the counting identity nor the sharper constant.",
+     "fidelity_note": "The paper proves the whole counting identity and the upper bound $\\frac{Q+2}{d}$ for any integer $b\\ge2$. Lean states only a binary upper bound $\\frac{2(Q+1)}{d}$; it supplies neither the counting identity nor the sharper constant.",
      "link_note": "Provides a sufficient binary majorant with a larger constant."
     }
    ]
@@ -3274,7 +3274,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This target proves the convergence statement only at b=2 and uses 2(Q+1)/d. The sentence specifies (Q+2)/d and the previously fixed arbitrary base b.",
+     "fidelity_note": "This target proves the convergence statement only at $b=2$ and uses $\\frac{2(Q+1)}d$. The sentence specifies $\\frac{Q+2}d$ and the previously fixed arbitrary base $b$.",
      "link_note": "Takes the first limit with Q fixed, at base two."
     }
    ]
@@ -3318,7 +3318,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The paper states convergence to X_A(b) for the fixed arbitrary integer base b≥2. Both shiftedSupportOrbitMean and shiftedSupportAtom in the source are binary, so this target proves only b=2.",
+     "fidelity_note": "The paper states convergence to $X_A(b)$ for the fixed arbitrary integer base $b\\ge2$. Both `shiftedSupportOrbitMean` and `shiftedSupportAtom` in the source are binary, so this target proves only $b=2$.",
      "link_note": "Proves the second limit at base two."
     }
    ]
@@ -3427,7 +3427,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean coprimality theorem also permits F=∅; Theorem B.1 assumes F is nonempty.",
+     "fidelity_note": "The Lean coprimality theorem also permits $F=\\varnothing$; Theorem B.1 assumes $F$ is nonempty.",
      "link_note": "Coprimality holds even for the empty finite sum."
     }
    ]
@@ -3535,7 +3535,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The prose fixes any chosen cyclotomic prime ℓ and the full e=v_ℓ(b^n−1). This source supplies some prime q and some s with exact order n, without that identification.",
+     "fidelity_note": "The prose fixes any chosen cyclotomic prime $\\ell$ and the full $e=v_\\ell(b^n-1)$. This source supplies some prime $q$ and some $s$ with exact order $n$, without that identification.",
      "link_note": "Supplies an exact-order prime power, without the printed full-valuation identification."
     }
    ]
@@ -3602,7 +3602,7 @@
      ],
      "relation": "proof",
      "fidelity": "different",
-     "fidelity_note": "The proof constructs an integer scaled tail for a general coefficient sequence with c(n)≤n; its local z is a prefix and its u is the paper’s z. The displayed finite-prefix sum is not written in this local proof."
+     "fidelity_note": "The proof constructs an integer scaled tail for a general coefficient sequence with $c(n)\\le n$; its local $z$ is a prefix and its $u$ is the paper’s $z$. The displayed finite-prefix sum is not written in this local proof."
     }
    ]
   },
@@ -3624,7 +3624,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The unscaled identity holds for every natural coefficient sequence with c(n)≤n; multiplying by v gives the paper’s specialization."
+     "fidelity_note": "The unscaled identity holds for every natural coefficient sequence with $c(n)\\le n$; multiplying by $v$ gives the paper’s specialization."
     }
    ]
   },
@@ -3690,7 +3690,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The source proves T(L−1)≥c(L)/2 for coefficient sequences with c(n)≤n; the paper additionally substitutes c_A(L)≥k from its preceding common-multiple step."
+     "fidelity_note": "The source proves $T(L-1)\\ge c(L)/2$ for coefficient sequences with $c(n)\\le n$; the paper additionally substitutes $c_A(L)\\ge k$ from its preceding common-multiple step."
     }
    ]
   },
@@ -3787,8 +3787,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "link_note": "The full weight tail R_N, independent of any target.",
-     "fidelity_note": "This definition supplies only R_N in the two-object display; the achievement set is a separate definition."
+     "link_note": "The full weight tail $R_N$, independent of any target.",
+     "fidelity_note": "This definition supplies only $R_N$ in the two-object display; the achievement set is a separate definition."
     }
    ]
   },
@@ -3810,7 +3810,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source proves only R_N<w_N for N>0. It does not state the two preceding quantitative bounds in the displayed chain."
+     "fidelity_note": "The source proves only $R_N<w_N$ for $N>0$. It does not state the two preceding quantitative bounds in the displayed chain."
     }
    ]
   },
@@ -3994,7 +3994,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Lean uses selector coordinate k for exponent k+1."
+     "link_note": "Lean uses selector coordinate $k$ for exponent $k+1$."
     }
    ]
   },
@@ -4100,7 +4100,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies P_0 and the recurrence for P_N; it does not define the displayed Q_N."
+     "fidelity_note": "This definition supplies $P_0$ and the recurrence for $P_N$; it does not define the displayed $Q_N$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR20.paperIntegerDefect",
@@ -4111,7 +4111,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies Q_N using the already defined coefficient prefix; the recurrence for P_N is a separate definition."
+     "fidelity_note": "This definition supplies $Q_N$ using the already defined coefficient prefix; the recurrence for $P_N$ is a separate definition."
     }
    ]
   },
@@ -4133,7 +4133,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The source directly states P_N≤floor(2^N x), which ensures Q_N≥0; it does not state the intermediate inequality involving X_{A_x}(2)."
+     "fidelity_note": "The source directly states $P_N\\le \\lfloor 2^N x\\rfloor$, which ensures $Q_N\\ge0$; it does not state the intermediate inequality involving $X_{A_x}(2)$."
     }
    ]
   },
@@ -4155,7 +4155,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source states only Q_{N+1}≥2Q_N−c_x(N+1) for x≥0. Equation (10) additionally specifies the floor digit and its value in {0,1}."
+     "fidelity_note": "The source states only $Q_{N+1}\\ge2Q_N-c_x(N+1)$ for $x\\ge0$. Equation (10) additionally specifies the floor digit and its value in $\\{0,1\\}$."
     }
    ]
   },
@@ -4177,7 +4177,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The source splits a general coefficient series into its real prefix and scaled tail. The displayed floor identity additionally substitutes the greedy value, defines δ and takes the floor."
+     "fidelity_note": "The source splits a general coefficient series into its real prefix and scaled tail. The displayed floor identity additionally substitutes the greedy value, defines $\\delta$ and takes the floor."
     }
    ]
   },
@@ -4266,7 +4266,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source bounds Q_N by 2√N+4 under x≥0 and membership, but does not include the intermediate coefficient-tail inequality in this display."
+     "fidelity_note": "The source bounds $Q_N$ by $2\\sqrt N+4$ under $x\\ge0$ and membership, but does not include the intermediate coefficient-tail inequality in this display."
     },
     {
      "name": "Erdos249257.binaryCoeffTail_supportCoeff_le_two_sqrt_add_four",
@@ -4277,7 +4277,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This source proves the final coefficient-tail bound for any support; it does not assert the preceding inequalities relating that tail to Q_N."
+     "fidelity_note": "This source proves the final coefficient-tail bound for any support; it does not assert the preceding inequalities relating that tail to $Q_N$."
     }
    ]
   },
@@ -4299,7 +4299,7 @@
      ],
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "The source directly proves c_A(n)≤2 Nat.sqrt n and does not state the displayed intermediate τ(n) inequality. Its integer bound implies the real square-root bound."
+     "fidelity_note": "The source directly proves $c_A(n)\\le 2\\lfloor\\sqrt n\\rfloor$ and does not state the displayed intermediate $\\tau(n)$ inequality. Its integer bound implies the real square-root bound."
     }
    ]
   },
@@ -4342,7 +4342,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source concludes 3/4∉𝒜. The selected prose also records the explicit interval R_1<2/3<3/4<1 used to explain this example."
+     "fidelity_note": "The source concludes $3/4\\notin\\mathcal A$. The selected prose also records the explicit interval $R_1<2/3<3/4<1$ used to explain this example."
     }
    ]
   },
@@ -4364,7 +4364,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies q_M(d) only; T_M in the same display has a separate definition."
+     "fidelity_note": "This definition supplies $q_M(d)$ only; $T_M$ in the same display has a separate definition."
     },
     {
      "name": "Erdos249257.twentyOneQuotientTarget",
@@ -4375,7 +4375,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies T_M only; q_M(d) in the same display has a separate definition."
+     "fidelity_note": "This definition supplies $T_M$ only; $q_M(d)$ in the same display has a separate definition."
     }
    ]
   },
@@ -4397,7 +4397,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "The source requires d≥2, exactly as this clause does."
+     "link_note": "The source requires $d\\ge2$, exactly as this clause does."
     }
    ]
   },
@@ -4482,7 +4482,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source assumes 2≤R and states sum+s_R=T_{2R}; the paper does not restrict this display to R≥2. Natural-valuedness gives s_R≥0."
+     "fidelity_note": "The source assumes $2\\le R$ and states $\\text{sum}+s_R=T_{2R}$; the paper does not restrict this display to $R\\ge2$. Natural-valuedness gives $s_R\\ge0$."
     }
    ]
   },
@@ -4593,7 +4593,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This source converts cofinal bounds s_R≤2^R into normalized decay and does not itself conclude membership."
+     "fidelity_note": "This source converts cofinal bounds $s_R\\le2^R$ into normalized decay and does not itself conclude membership."
     },
     {
      "name": "Erdos249257.one_div_twenty_one_mem_mersenneAchievementSet_of_cofinalGreedyDecay",
@@ -4604,7 +4604,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source only requires normalized (s_R+2R+1)/4^R→0 along R→∞, a weaker hypothesis than cofinal s_R≤2^R. R≥2 can be ensured by dropping finitely many ranks."
+     "fidelity_note": "The source only requires normalized $\\frac{s_R+2R+1}{4^R}\\to0$ along $R\\to\\infty$, a weaker hypothesis than cofinal $s_R\\le2^R$. $R\\ge2$ can be ensured by dropping finitely many ranks."
     }
    ]
   },
@@ -4647,7 +4647,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Under F_21, the support equality includes the newly selected exponent."
+     "link_note": "Under $F_{21}$, the support equality includes the newly selected exponent."
     }
    ]
   },
@@ -4669,7 +4669,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Requires F_21 and sufficiently large R; both pulse terms are expanded."
+     "link_note": "Requires $F_{21}$ and sufficiently large $R$; both pulse terms are expanded."
     }
    ]
   },
@@ -4733,7 +4733,7 @@
      ],
      "relation": "proof",
      "fidelity": "different",
-     "fidelity_note": "The source is the exact signed fractional-error identity for a finite admissible quotient support. It does not state the paper’s centered absolute bound (R+1)/4^R; obtaining that bound requires bounding the discarded fractions and support size."
+     "fidelity_note": "The source is the exact signed fractional-error identity for a finite admissible quotient support. It does not state the paper’s centered absolute bound $\\frac{R+1}{4^R}$; obtaining that bound requires bounding the discarded fractions and support size."
     }
    ]
   },
@@ -4777,7 +4777,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source identity holds for every d≥2 and M, independently of membership in D_R."
+     "fidelity_note": "The source identity holds for every $d\\ge2$ and $M$, independently of membership in $D_R$."
     }
    ]
   },
@@ -4820,7 +4820,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Apply with the source R equal to the paper’s R+1; its assumption is R+1≥2."
+     "link_note": "Apply with the source $R$ equal to the paper’s $R+1$; its assumption is $R+1\\ge2$."
     }
    ]
   },
@@ -4863,7 +4863,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Boolean words encode the finite subset; integer s≥0 becomes a natural remainder."
+     "link_note": "Boolean words encode the finite subset; integer $s\\ge0$ becomes a natural remainder."
     }
    ]
   },
@@ -4906,8 +4906,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "link_note": "Use terminalPaperCarry A m = integerHalfCarry A (m−1).",
-     "fidelity_note": "The source states the successor recurrence for the shifted Lean carry. The paper also gives the initial value K_A(1)=1, which comes from the recursive definition."
+     "link_note": "Use `terminalPaperCarry A m = integerHalfCarry A (m−1)`.",
+     "fidelity_note": "The source states the successor recurrence for the shifted Lean carry. The paper also gives the initial value $K_A(1)=1$, which comes from the recursive definition."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_eq_integerHalfCarry",
@@ -5009,7 +5009,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "Encode A_j by its finite word; hM and hone give M_j≥1 and omission of exponent 1."
+     "link_note": "Encode $A_j$ by its finite word; `hM` and `hone` give $M_j\\ge1$ and omission of exponent 1."
     }
    ]
   },
@@ -5031,7 +5031,7 @@
      ],
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "The source directly proves c_A(n)≤2 Nat.sqrt n. It does not state the intermediate divisor-function inequality; its integer square-root bound implies the final real bound."
+     "fidelity_note": "The source directly proves $c_A(n)\\le 2\\lfloor\\sqrt n\\rfloor$. It does not state the intermediate divisor-function inequality; its integer square-root bound implies the final real bound."
     }
    ]
   },
@@ -5053,7 +5053,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source states that the achievement set is closed. Existence of a representing support additionally uses the convergence of the finite support values to 1/2 established in the surrounding argument."
+     "fidelity_note": "The source states that the achievement set is closed. Existence of a representing support additionally uses the convergence of the finite support values to $1/2$ established in the surrounding argument."
     }
    ]
   },
@@ -5075,7 +5075,7 @@
      ],
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "The source rules out a finite positive support of value 1/2. Applying it to a support supplied by closedness establishes the infinitude claimed in the prose."
+     "fidelity_note": "The source rules out a finite positive support of value $1/2$. Applying it to a support supplied by closedness establishes the infinitude claimed in the prose."
     }
    ]
   },
@@ -5097,7 +5097,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source only assumes a finite D with d≥2 and M≥1; it does not require d≤M. The paper’s K_D(M) is the source integerHalfCarry at M−1."
+     "fidelity_note": "The source only assumes a finite $D$ with $d\\ge2$ and $M\\ge1$; it does not require $d\\le M$. The paper’s $K_D(M)$ is the source `integerHalfCarry` at $M-1$."
     }
    ]
   },
@@ -5197,7 +5197,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source gives the equality of the prefix carry and the full coefficient tail, assuming omission of 1, value 1/2 and M≥1. It does not itself state the final square-root inequality."
+     "fidelity_note": "The source gives the equality of the prefix carry and the full coefficient tail, assuming omission of 1, value $1/2$ and $M\\ge1$. It does not itself state the final square-root inequality."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_inter_Iic_bounds",
@@ -5208,7 +5208,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source gives 0≤K_{A∩Iic M}(M)≤2√M+4 with the same hypotheses. The displayed equality with the tail is in the preceding source."
+     "fidelity_note": "The source gives $0\\le K_{A\\cap[0,M]}(M)\\le 2\\sqrt M+4$ with the same hypotheses. The displayed equality with the tail is in the preceding source."
     }
    ]
   },
@@ -5528,7 +5528,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This definition supplies gap_M=w_M−R_M, but does not itself assert strict positivity."
+     "fidelity_note": "This definition supplies $\\operatorname{gap}_M=w_M-R_M$, but does not itself assert strict positivity."
     },
     {
      "name": "Erdos249257.mersenneGap_pos",
@@ -5584,7 +5584,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source proves existence of a suitable prime-power witness. The sentence specifies every prime ℓ dividing Φ_n(b) and e equal to the full valuation; that universal identification is not this theorem’s conclusion."
+     "fidelity_note": "The source proves existence of a suitable prime-power witness. The sentence specifies every prime $\\ell$ dividing $\\Phi_n(b)$ and $e$ equal to the full valuation; that universal identification is not this theorem’s conclusion."
     }
    ]
   },
@@ -5627,7 +5627,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows every positive even exponent n. The display is the specialization n=2^j, j≥1, with the added one moved to the other side."
+     "fidelity_note": "Lean allows every positive even exponent $n$. The display is the specialization $n=2^j, j\\ge1$, with the added one moved to the other side."
     }
    ]
   },
@@ -5691,8 +5691,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration rewrites each cost value for t>0. It does not by itself prove equality of the two infima or the correspondence of the admissible intervals.",
-     "link_note": "Rewrites the objective after y=2^α."
+     "fidelity_note": "This declaration rewrites each cost value for $t>0$. It does not by itself prove equality of the two infima or the correspondence of the admissible intervals.",
+     "link_note": "Rewrites the objective after $y=2^\\alpha$."
     }
    ]
   },
@@ -5714,8 +5714,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration proves only the 1≤t≤4 branch of the whole displayed formula.",
-     "link_note": "Proves the branch Ψ(t)=t for 1≤t≤4."
+     "fidelity_note": "This declaration proves only the $1\\le t\\le4$ branch of the whole displayed formula.",
+     "link_note": "Proves the branch $\\Psi(t)=t$ for $1\\le t\\le4$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.coverGauge_eq_large",
@@ -5726,8 +5726,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration proves only the t>4 branch of the whole displayed formula.",
-     "link_note": "Proves the branch above four; the other row covers t≤4."
+     "fidelity_note": "This declaration proves only the $t>4$ branch of the whole displayed formula.",
+     "link_note": "Proves the branch above four; the other row covers $t\\le4$."
     }
    ]
   },
@@ -5793,7 +5793,7 @@
      ],
      "relation": "defines",
      "fidelity": "different",
-     "fidelity_note": "The paper directly allows finite or countable covers. This definition ranges over ℕ-indexed covers with strictly positive weights; finite-frame costs are compared through padding and a limit in PositiveWeightPadding.lean.",
+     "fidelity_note": "The paper directly allows finite or countable covers. This definition ranges over $\\mathbb N$-indexed covers with strictly positive weights; finite-frame costs are compared through padding and a limit in `PositiveWeightPadding.lean`.",
      "link_note": "The source uses countably indexed positive weights and handles finite frames by a limiting argument."
     }
    ]
@@ -5858,7 +5858,7 @@
      ],
      "relation": "states",
      "fidelity": "different",
-     "fidelity_note": "Lean gives these bounds for its infimum over countably indexed strictly positive-weight covers, whereas the paper directly includes finite covers. PositiveWeightPadding compares a single finite frame with that infimum; a general equality of the two cover-class infima is not asserted here. Lean also permits q>0 and common prime factors between q and P.",
+     "fidelity_note": "Lean gives these bounds for its infimum over countably indexed strictly positive-weight covers, whereas the paper directly includes finite covers. `PositiveWeightPadding` compares a single finite frame with that infimum; a general equality of the two cover-class infima is not asserted here. Lean also permits $q>0$ and common prime factors between $q$ and $P$.",
      "link_note": "Gives these bounds for the countably indexed cover infimum, with fewer restrictions on q."
     }
    ]
@@ -5881,8 +5881,8 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The prose states the mean E[Z | q divides n]=S. Lean states the unconditional finite mean of the qp-divisibility count as S/q. Dividing by the frequency 1/q identifies the conditional mean.",
-     "link_note": "States the unconditional mean S/q before conditioning."
+     "fidelity_note": "The prose states the mean $\\mathbb E[Z\\mid q\\mid n]=S$. Lean states the unconditional finite mean of the $qp$-divisibility count as $S/q$. Dividing by the frequency $1/q$ identifies the conditional mean.",
+     "link_note": "States the unconditional mean $S/q$ before conditioning."
     }
    ]
   },
@@ -5904,7 +5904,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves this inequality for every real z, whereas the paragraph works with z≥0."
+     "fidelity_note": "Lean proves this inequality for every real $z$, whereas the paragraph works with $z\\ge0$."
     }
    ]
   },
@@ -5926,8 +5926,8 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "Lean bounds q^{-1}∏(1+z/p) by exp(zS)/q. The display divides by z and specializes to z=1/S; it also calls this a cover cost, which uses the separate cube-majorant construction.",
-     "link_note": "Supplies the product estimate before dividing by z=1/S."
+     "fidelity_note": "Lean bounds $q^{-1}\\prod_{p\\in P}(1+z/p)$ by $\\exp(zS)/q$. The display divides by $z$ and specializes to $z=1/S$; it also calls this a cover cost, which uses the separate cube-majorant construction.",
+     "link_note": "Supplies the product estimate before dividing by $z=1/S$."
     }
    ]
   },

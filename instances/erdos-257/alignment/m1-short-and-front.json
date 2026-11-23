@@ -11,7 +11,7 @@
           "relation": "states",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Same hypothesis and conclusion, with the paper's A ⊆ ℕ>0 written as 0 ∉ A.",
+          "fidelity_note": "An AI agent read the two statements side by side. Same hypothesis and conclusion, with the paper's $A\\subseteq\\mathbb N_{>0}$ written as $0 \\notin A$.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         }
       ],
@@ -56,7 +56,7 @@
           "relation": "part",
           "fidelity": "weaker",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Only the case of a cover satisfying (V), its index starting at 0; the positive-weight variant the theorem also allows is arbitraryWeightMixedSupport_allBase_hereditary. Stated with the paper's E ⊆ ℕ>0 written as 0 ∉ E.",
+          "fidelity_note": "An AI agent read the two statements side by side. Only the case of a cover satisfying (V), its index starting at 0; the positive-weight variant the theorem also allows is `arbitraryWeightMixedSupport_allBase_hereditary`. Stated with the paper's $E\\subseteq\\mathbb N_{>0}$ written as $0 \\notin E$.",
           "note": "The papers' evidence record marks this pair exact or stronger.",
           "clause": "∀ E V : Set ℕ, 0 ∉ E → FinitePrimeWeighted 2 E →\n    HasStrengthenedPositiveCover V →\n    ∀ A : Set ℕ, A ⊆ E ∪ V → A.Infinite →\n      ∀ b : ℕ, 2 ≤ b → Irrational (erdosSupportSeries b A)",
           "clause_file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",
@@ -68,7 +68,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. The positive-weight variant of the cover condition, with weights η_j > 0 summing to 1.",
+          "fidelity_note": "An AI agent read the two statements side by side. The positive-weight variant of the cover condition, with weights $\\eta_j > 0$ summing to 1.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         }
       ],
@@ -107,7 +107,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Turns ranks with s_R ≤ 2^R into the decay hypothesis of the next declaration.",
+          "fidelity_note": "An AI agent read the two statements side by side. Turns ranks with $s_R \\le 2^R$ into the decay hypothesis of the next declaration.",
           "note": "The papers' evidence record marks this pair exact or stronger.",
           "clause": "∃ R : ℕ → ℕ,\n    Tendsto R atTop atTop ∧\n      (∀ k : ℕ, 2 ≤ R k) ∧\n      Tendsto\n        (fun k : ℕ =>\n          ((twentyOneEvenQuotientGreedyRemainder (R k) +\n              (2 * R k + 1) : ℕ) : ℝ) /\n            (2 : ℝ) ^ (2 * R k))\n        atTop (nhds 0)",
           "clause_file": "Erdos249257/TwentyOneQuotientGreedy.lean",
@@ -119,7 +119,7 @@
           "relation": "part",
           "fidelity": "stronger",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Concludes 1/21 ∈ 𝒜 from decay of (s(R) + 2R + 1)/4^R along some ranks, a weaker hypothesis than item 2's.",
+          "fidelity_note": "An AI agent read the two statements side by side. Concludes $1/21 \\in \\mathcal A$ from decay of $\\frac{s(R)+2R+1}{4^R}$ along some ranks, a weaker hypothesis than item 2's.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         },
         {
@@ -128,7 +128,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Item 3, first clause: eventually s_R > 2^R.",
+          "fidelity_note": "An AI agent read the two statements side by side. Item 3, first clause: eventually $s_R > 2^R$.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         },
         {
@@ -137,7 +137,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Item 3, the support step and the recurrence, written with natural-number subtraction, which agrees because s(R+1) > 2^(R+1) for large R.",
+          "fidelity_note": "An AI agent read the two statements side by side. Item 3, the support step and the recurrence, written with natural-number subtraction, which agrees because $s(R+1)>2^{R+1}$ for large $R$.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         }
       ],
@@ -160,7 +160,7 @@
           "relation": "part",
           "fidelity": "stronger",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. Coprimality of D_F and b, proved without assuming F nonempty.",
+          "fidelity_note": "An AI agent read the two statements side by side. Coprimality of $D_F$ and $b$, proved without assuming $F$ nonempty.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         },
         {
@@ -169,7 +169,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. The multiplicative order of b modulo the reduced denominator of the finite sum equals lcm(F), with the paper's F ⊆ ℕ>0 written as 0 ∉ F.",
+          "fidelity_note": "An AI agent read the two statements side by side. The multiplicative order of $b$ modulo the reduced denominator of the finite sum equals $\\operatorname{lcm}(F)$, with the paper's $F\\subseteq\\mathbb N_{>0}$ written as $0 \\notin F$.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         },
         {
@@ -178,7 +178,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. lcm(F) < D_F when lcm(F) ≥ 2.",
+          "fidelity_note": "An AI agent read the two statements side by side. $\\operatorname{lcm}(F)<D_F$ when $\\operatorname{lcm}(F)\\ge 2$.",
           "note": "The papers' evidence record marks this pair exact or stronger."
         }
       ],
@@ -292,7 +292,7 @@
           "relation": "part",
           "fidelity": "same",
           "fidelity_source": "ai",
-          "fidelity_note": "An AI agent read the two statements side by side. States the fixed-base irrationality and the all-base hereditary clause under (W), with the paper's A ⊆ ℕ>0 written as 0 ∉ A.",
+          "fidelity_note": "An AI agent read the two statements side by side. States the fixed-base irrationality and the all-base hereditary clause under (W), with the paper's $A\\subseteq\\mathbb N_{>0}$ written as $0 \\notin A$.",
           "note": "The papers' evidence record marks this pair exact or stronger.",
           "clause": "(∀ (b : ℕ) (A : Set ℕ), 2 ≤ b → 0 ∉ A → A.Infinite →\n    FinitePrimeWeighted b A → Irrational (erdosSupportSeries b A)) ∧\n  (∀ H : Set ℕ, 0 ∉ H → FinitePrimeWeighted 2 H →\n    ∀ A : Set ℕ, A ⊆ H → A.Infinite →\n      ∀ b : ℕ, 2 ≤ b → Irrational (erdosSupportSeries b A))",
           "clause_file": "ErdosProblems/Erdos257/PaperCompleteR7/AnalyticTargets.lean",

@@ -2105,7 +2105,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Defines q(M,d) using natural-number division."
+     "link_note": "Defines $q(M,d)$ using natural-number division."
     },
     {
      "name": "Erdos249257.localPrefixQuotient",
@@ -2116,7 +2116,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Defines the sum Q(D,M), after each individual division."
+     "link_note": "Defines the sum $Q(D,M)$, after each individual division."
     }
    ]
   },
@@ -2385,7 +2385,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The paper takes every integer base b≥2. This convergence theorem fixes b=2; it states the limit, not the trailing reciprocal bound."
+     "fidelity_note": "The paper takes every integer base $b\\ge2$. This convergence theorem fixes $b=2$; it states the limit, not the trailing reciprocal bound."
     },
     {
      "name": "Erdos249257.shiftedMersenneOrbitMean",
@@ -2396,7 +2396,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "Defines M_{Q,2}(d), whereas the displayed M_{Q,b}(d) has an arbitrary integer base."
+     "fidelity_note": "Defines $M_{Q,2}(d)$, whereas the displayed $M_{Q,b}(d)$ has an arbitrary integer base."
     },
     {
      "name": "Erdos249257.shiftedMersenneOrbitMean_le_reciprocal",
@@ -2407,7 +2407,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Bounds M_{Q,2}(d) by 1/d. It does not assert the preceding limit or quantify over b≥2."
+     "fidelity_note": "Bounds $M_{Q,2}(d)$ by $1/d$. It does not assert the preceding limit or quantify over $b\\ge2$."
     }
    ]
   },
@@ -2429,7 +2429,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "Lean bounds only the binary mean, by 2(Q+1)/d. The printed display bounds every integer-base mean by (Q+2)/d and includes an intermediate infinite sum."
+     "fidelity_note": "Lean bounds only the binary mean, by $\\frac{2(Q+1)}{d}$. The printed display bounds every integer-base mean by $\\frac{Q+2}{d}$ and includes an intermediate infinite sum."
     }
    ]
   },
@@ -2451,7 +2451,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The printed fixed-modulus limit uses every integer base b≥2. This dominated-convergence declaration uses shiftedSupportAtom, hence b=2."
+     "fidelity_note": "The printed fixed-modulus limit uses every integer base $b\\ge2$. This dominated-convergence declaration uses `shiftedSupportAtom`, hence $b=2$."
     }
    ]
   },
@@ -2494,7 +2494,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The paper states the outer limit for every integer base. The declaration proves it at b=2; the source transfers close returns to other bases afterwards."
+     "fidelity_note": "The paper states the outer limit for every integer base. The declaration proves it at $b=2$; the source transfers close returns to other bases afterwards."
     }
    ]
   },
@@ -2516,7 +2516,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "This proof chooses a common modulus, then a finite average and one term, at base two only. The sentence describes that procedure for arbitrary integer b≥2; the formal all-base proof instead transfers the binary return."
+     "fidelity_note": "This proof chooses a common modulus, then a finite average and one term, at base two only. The sentence describes that procedure for arbitrary integer $b\\ge2$; the formal all-base proof instead transfers the binary return."
     }
    ]
   },
@@ -2923,7 +2923,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The complete-orbit sum holds for every real B>1; the paper uses integer b≥2."
+     "fidelity_note": "The complete-orbit sum holds for every real $B>1$; the paper uses integer $b\\ge2$."
     }
    ]
   },
@@ -2966,7 +2966,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean bounds the larger term φ_a, before subtracting 1/(b^a−1), with the same right side, and permits every real B>1."
+     "fidelity_note": "Lean bounds the larger term $\\varphi_a$, before subtracting $\\frac{1}{b^a-1}$, with the same right side, and permits every real $B>1$."
     }
    ]
   },
@@ -2988,7 +2988,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "Lean states non-increase, v/(B^v−1)≤u/(B^u−1) for u≤v. It does not state the strict decrease established by the following positive-difference display, although it permits real B>1."
+     "fidelity_note": "Lean states non-increase, $\\frac{v}{B^v-1}\\le\\frac{u}{B^u-1}$ for $u\\le v$. It does not state the strict decrease established by the following positive-difference display, although it permits real $B>1$."
     }
    ]
   },
@@ -3010,7 +3010,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean bounds the larger shifted term φ_a(N) and allows every real base B≥2, with hNd : N<d. The paper uses N=tQ<a."
+     "fidelity_note": "Lean bounds the larger shifted term $\\varphi_a(N)$ and allows every real base $B\\ge2$, with `hNd : N<d`. The paper uses $N=tQ<a$."
     }
    ]
   },
@@ -3032,7 +3032,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The displayed sum ranges over the possibly infinite set {a∈A:a>QT}. This theorem sums over a finite F with hfar; an infinite-sum passage is still needed, although it bounds the larger shifted terms."
+     "fidelity_note": "The displayed sum ranges over the possibly infinite set $\\{a\\in A:a>QT\\}$. This theorem sums over a finite $F$ with `hfar`; an infinite-sum passage is still needed, although it bounds the larger shifted terms."
     }
    ]
   },
@@ -3054,7 +3054,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Lean states the rearrangement for arbitrary finite J and F. The display uses all a≥1 on the right; comparison with the infinite nonnegative sum is not in this declaration."
+     "fidelity_note": "Lean states the rearrangement for arbitrary finite $J$ and $F$. The display uses all $a\\ge1$ on the right; comparison with the infinite nonnegative sum is not in this declaration."
     }
    ]
   },
@@ -3076,7 +3076,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows any finite set J of dyadic exponents, not just M≤j<2M, and does not require Q>0."
+     "fidelity_note": "Lean allows any finite set $J$ of dyadic exponents, not just $M\\le j<2M$, and does not require $Q>0$."
     }
    ]
   },
@@ -3301,7 +3301,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean applies to every selected exponent a and every positive multiple n, not only a=min A."
+     "fidelity_note": "Lean applies to every selected exponent $a$ and every positive multiple $n$, not only $a=\\min A$."
     }
    ]
   },
@@ -3323,7 +3323,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The declaration identifies the scaled coefficient tail with shifted terms at b=2 only. The display has arbitrary integer b and also states the displacement decomposition."
+     "fidelity_note": "The declaration identifies the scaled coefficient tail with shifted terms at $b=2$ only. The display has arbitrary integer $b$ and also states the displacement decomposition."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement",
@@ -3334,7 +3334,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Its defining equality gives shifted sum = initial sum + displacement."
+     "link_note": "Its defining equality expresses the shifted sum as the initial sum plus the displacement."
     }
    ]
   },
@@ -3538,7 +3538,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The identity requires neither the cofactor cutoff nor coprimality with D_C; it holds for every nonzero m."
+     "fidelity_note": "The identity requires neither the cofactor cutoff nor coprimality with $D_C$; it holds for every nonzero $m$."
     }
    ]
   },
@@ -4064,7 +4064,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows a separate base B_i in (1,2] for every coefficient; the printed step uses one fixed base B."
+     "fidelity_note": "Lean allows a separate base $B_i$ in $(1,2]$ for every coefficient; the printed step uses one fixed base $B$."
     }
    ]
   },
@@ -4108,7 +4108,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the expansion for every positive q, finite prime set P and positive exponent α; the display specialises to q=2, P={3,5}, and α≤1."
+     "fidelity_note": "Lean proves the expansion for every positive $q$, finite prime set $P$ and positive exponent $\\alpha$; the display specialises to $q=2$, $P=\\{3,5\\}$, and $\\alpha\\le1$."
     }
    ]
   },
@@ -4130,7 +4130,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The cost identity is stated for arbitrary q, P and z; the paper substitutes q=2 and P={3,5}."
+     "fidelity_note": "The cost identity is stated for arbitrary $q$, $P$ and $z$; the paper substitutes $q=2$ and $P=\\{3,5\\}$."
     }
    ]
   },
@@ -4303,7 +4303,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "U_j is represented by its equal finite sum of residue kernels."
+     "link_note": "$U_j$ is represented by its equal finite sum of residue kernels."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.coverPotential",
@@ -4314,7 +4314,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Defines V_j at the fractional base B_j."
+     "link_note": "Defines $V_j$ at the fractional base $B_j$."
     }
    ]
   },
@@ -4357,7 +4357,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "States the endpoint inequality U_j raised to α_j is at most V_j."
+     "link_note": "States the endpoint inequality $U_j^{\\alpha_j}\\le V_j$."
     }
    ]
   },
@@ -4379,7 +4379,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "States the displayed upper bound by U_j; the equality is not its conclusion."
+     "link_note": "States the displayed upper bound by $U_j$; the equality is not its conclusion."
     }
    ]
   },
@@ -4401,7 +4401,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves zero displacement at every integer base b≥2, whereas this step uses base two."
+     "fidelity_note": "Lean proves zero displacement at every integer base $b\\ge2$, whereas this step uses base two."
     }
    ]
   },
@@ -4465,7 +4465,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "Choose δ=1/4; the zero-based tail index is shifted by one."
+     "link_note": "Choose $\\delta=1/4$; the zero-based tail index is shifted by one."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR8.coverScaledCost",
@@ -4476,7 +4476,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Defines each normalised summand in K_J."
+     "link_note": "Defines each normalised summand in $K_J$."
     }
    ]
   },
@@ -4540,7 +4540,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The bound (1+4L/M)K_J; the final strict threshold uses the previously chosen tail cost."
+     "link_note": "The bound $(1+4L/M)K_J$; the final strict threshold uses the previously chosen tail cost."
     }
    ]
   },
@@ -4604,7 +4604,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The final upper bound by ε; infinitude supplies positivity separately."
+     "link_note": "The final upper bound by $\\varepsilon$; infinitude supplies positivity separately."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos",
@@ -4658,7 +4658,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Lean assumes integer b≥2 and only proves the base-two comparison with factor 2. It does not state monotonicity on real b>1."
+     "fidelity_note": "Lean assumes integer $b\\ge2$ and only proves the base-two comparison with factor 2. It does not state monotonicity on real $b>1$."
     }
    ]
   },
@@ -4680,7 +4680,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source conclusion is Δ_b≤2Δ_2, with natural-number b≥2; the paper states Δ_b≤Δ_2 for every real b≥2."
+     "fidelity_note": "The source conclusion is $\\Delta_b\\le2\\Delta_2$, with natural-number $b\\ge2$; the paper states $\\Delta_b\\le\\Delta_2$ for every real $b\\ge2$."
     }
    ]
   },
@@ -4872,7 +4872,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The bound (1+4Q/M)K_J, with L replaced by Q. The displayed <1/8 is a later choice."
+     "link_note": "The bound $(1+4Q/M)K_J$, with $L$ replaced by $Q$. The displayed $<1/8$ is a later choice."
     }
    ]
   },
@@ -4915,7 +4915,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "Nonnegativity isolates each error; the source uses its own allocation ρ=ε/2."
+     "link_note": "Nonnegativity isolates each error; the source uses its own allocation $\\rho=\\varepsilon/2$."
     }
    ]
   },
@@ -5033,7 +5033,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The formal transfer uses Δ_b≤2Δ_2, not the sharper factor-one inequality cited in this sentence."
+     "fidelity_note": "The formal transfer uses $\\Delta_b\\le2\\Delta_2$, not the sharper factor-one inequality cited in this sentence."
     }
    ]
   },
@@ -5839,7 +5839,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The proof chooses m = a(N/a + 1) and proves N < m ≤ N+a; set a=a₀."
+     "link_note": "The proof chooses $m=a(\\lfloor N/a\\rfloor+1)$ and proves $N < m \\le N+a$; set $a=a_{0}$."
     }
    ]
   },
@@ -5882,7 +5882,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The bound holds for any positive a∈A, not only a₀=min A. Lean requires neither infinitude of A nor rationality of its series."
+     "fidelity_note": "The bound holds for any positive $a\\in A$, not only $a_0=\\min A$. Lean requires neither infinitude of $A$ nor rationality of its series."
     }
    ]
   },
@@ -6602,7 +6602,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean states the biconditional for every real x; the paper introduces it after assuming x≥0. The right-hand side retains nonnegativity."
+     "fidelity_note": "Lean states the biconditional for every real $x$; the paper introduces it after assuming $x\\ge0$. The right-hand side retains nonnegativity."
     }
    ]
   },
@@ -6870,7 +6870,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean permits every 1≤d≤k≤M (its cutoff is R); the paper uses 2≤d≤k≤M. The same bound is 2^(M−k)."
+     "fidelity_note": "Lean permits every $1\\le d\\le k\\le M$ (its cutoff is $R$); the paper uses $2\\le d\\le k\\le M$. The same bound is $2^{M-k}$."
     }
    ]
   },
@@ -6981,7 +6981,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean states the gap-dominance result for s≥2; the paper applies it for s≥3."
+     "fidelity_note": "Lean states the gap-dominance result for $s\\ge2$; the paper applies it for $s\\ge3$."
     }
    ]
   },
@@ -7004,7 +7004,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The displayed full-row case is k=M; Lean gives the quantitative bound 2^(M−k) for every cutoff k≤M."
+     "fidelity_note": "The displayed full-row case is $k=M$; Lean gives the quantitative bound $2^{M-k}$ for every cutoff $k\\le M$."
     }
    ]
   },
@@ -7071,7 +7071,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "Lean includes the real-support equality printed here and also equality with the exact rational halfGreedyPrefixSupport (c−1)."
+     "fidelity_note": "Lean includes the real-support equality printed here and also equality with the exact rational `halfGreedyPrefixSupport (c−1)`."
     }
    ],
    "replaces": [
@@ -7197,7 +7197,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The truncation theorem holds for every real target t; the paper uses t=1/2."
+     "fidelity_note": "The truncation theorem holds for every real target $t$; the paper uses $t=1/2$."
     }
    ]
   },
@@ -7391,7 +7391,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The upper bound holds for every support A and every tail index, without 1∉A; the paper uses index N+1."
+     "fidelity_note": "The upper bound holds for every support $A$ and every tail index, without $1\\notin A$; the paper uses index $N+1$."
     }
    ]
   },
@@ -7434,7 +7434,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the proposition now states 1 ∉ A, the hypothesis hone : 1 ∉ A of the Lean theorem, which takes constants C, D for C, C′ and the cofinal ∀ K, ∃ N ≥ K for “arbitrarily large N”. Earlier note: the proposition did not repeat Lemma 2.4’s exclusion of 1."
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the proposition now states $1 \\notin A$, the hypothesis `hone : 1 ∉ A` of the Lean theorem, which takes constants $C, D$ for $C, C'$ and the cofinal $\\forall K,\\ \\exists N\\ge K$ for “arbitrarily large N”. Earlier note: the proposition did not repeat Lemma 2.4’s exclusion of 1."
     }
    ]
   },
@@ -7501,7 +7501,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The proof bounds every finite greedy prefix for every nonnegative target x; the paper specializes to x=1/2."
+     "fidelity_note": "The proof bounds every finite greedy prefix for every nonnegative target $x$; the paper specializes to $x=1/2$."
     }
    ]
   },
@@ -7533,7 +7533,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The tail estimate holds for every support, not only one attaining 1/2."
+     "fidelity_note": "The tail estimate holds for every support, not only one attaining $1/2$."
     }
    ]
   },
@@ -7660,7 +7660,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean preserves every carry with N+1≤M for every support A and every cutoff M, not just an achieving support at a square depth."
+     "fidelity_note": "Lean preserves every carry with $N+1\\le M$ for every support $A$ and every cutoff $M$, not just an achieving support at a square depth."
     }
    ]
   },
@@ -7889,7 +7889,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves C_A(0)=0 for every support A, without restricting to the greedy support."
+     "fidelity_note": "Lean proves $C_A(0)=0$ for every support $A$, without restricting to the greedy support."
     }
    ]
   },
@@ -7911,7 +7911,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "The no-overshoot inequality holds for every nonnegative target x, with this passage using x=1/2."
+     "fidelity_note": "The no-overshoot inequality holds for every nonnegative target $x$, with this passage using $x=1/2$."
     }
    ]
   },
@@ -8095,7 +8095,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The cardinality statement explicitly assumes [Fintype Λ], a finite label set. The paper says any exact label-and-decoder system without restating this finiteness assumption."
+     "fidelity_note": "The cardinality statement explicitly assumes `[Fintype Λ]`, a finite label set. The paper says any exact label-and-decoder system without restating this finiteness assumption."
     }
    ],
    "replaces": [
@@ -8189,7 +8189,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean permits any finite set of positive exponents; it does not require S⊆{2,…,n−1}."
+     "fidelity_note": "Lean permits any finite set of positive exponents; it does not require $S\\subseteq \\{2,\\dots,n-1\\}$."
     }
    ]
   },
@@ -8328,7 +8328,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "Lean proves ∀d∃x, a depth-d straddle prefix for x with x outside the set. The counterexample target varies with d; it is not fixed to 1/2 as in the surrounding theorem."
+     "fidelity_note": "Lean proves that at every depth $d$ a target $x$ outside the set has a depth-$d$ straddle prefix. The counterexample target varies with $d$; it is not fixed to $1/2$ as in the surrounding theorem."
     }
    ],
    "replaces": [
@@ -8510,7 +8510,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The survival equivalence holds for every real target x, with the explicit condition 0≤x; one half satisfies that condition."
+     "fidelity_note": "The survival equivalence holds for every real target $x$, with the explicit condition $0\\le x$; one half satisfies that condition."
     }
    ]
   },
@@ -8826,7 +8826,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The concrete equivalence holds for every actual upper reset d≥5; the surrounding proposed hypothesis starts at d≥13."
+     "fidelity_note": "The concrete equivalence holds for every actual upper reset $d\\ge5$; the surrounding proposed hypothesis starts at $d\\ge13$."
     }
    ]
   },
@@ -8996,7 +8996,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The equivalence requires c≥4, D⊆[2,c) and a below-half value, but not the extra genuine-crossing deficit required in the surrounding supply condition."
+     "fidelity_note": "The equivalence requires $c\\ge4$, $D\\subseteq[2,c)$ and a below-half value, but not the extra genuine-crossing deficit required in the surrounding supply condition."
     }
    ]
   },
@@ -9165,7 +9165,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives separating gap 2^(M−R) for every 1≤d≤R≤M; the paper takes R=M=n and gap 1."
+     "fidelity_note": "Lean gives separating gap $2^{M-R}$ for every $1\\le d\\le R\\le M$; the paper takes $R=M=n$ and gap 1."
     }
    ]
   },
@@ -9208,7 +9208,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows any cutoff R≤M and every remainder A<2^(M−R); the full exact-row case takes R=M=n and A=0."
+     "fidelity_note": "Lean allows any cutoff $R\\le M$ and every remainder $A<2^{M-R}$; the full exact-row case takes $R=M=n$ and $A=0$."
     }
    ]
   },
@@ -9230,7 +9230,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "This is the necessary direction: every exact row has zero greedy remainder. Lean also allows cutoff R≤M and any remainder below 2^(M−R)."
+     "fidelity_note": "This is the necessary direction: every exact row has zero greedy remainder. Lean also allows cutoff $R\\le M$ and any remainder below $2^{M-R}$."
     },
     {
      "name": "Erdos249257.BooleanMobiusGreedyReduction.exists_exactFullMersenneHalfRowSupport_of_greedyRemainder_eq_zero",
@@ -9241,7 +9241,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The sufficient direction: a zero remainder at any endpoint M≥2 constructs an exact finite support."
+     "link_note": "The sufficient direction: a zero remainder at any endpoint $M\\ge2$ constructs an exact finite support."
     }
    ]
   },
@@ -9284,7 +9284,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the identity for every integer base b≥2; the paper displays the specialization b=2."
+     "fidelity_note": "Lean proves the identity for every integer base $b\\ge2$; the paper displays the specialization $b=2$."
     }
    ]
   },
@@ -9327,7 +9327,7 @@
      ],
      "relation": "proof",
      "fidelity": "stronger",
-     "fidelity_note": "A single positive element a∈A bounds every zero window by a−1; neither infinitude nor rationality is required."
+     "fidelity_note": "A single positive element $a\\in A$ bounds every zero window by $a-1$; neither infinitude nor rationality is required."
     }
    ]
   },
@@ -9349,7 +9349,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The bound h≤a−1 holds for every positive a∈A, not just a0=min A, and does not require A infinite."
+     "fidelity_note": "The bound $h\\le a-1$ holds for every positive $a\\in A$, not just $a_0=\\min A$, and does not require $A$ infinite."
     }
    ]
   },
@@ -9497,7 +9497,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean equality holds for every natural base b≥2; this passage discusses only base 2."
+     "fidelity_note": "The Lean equality holds for every natural base $b\\ge2$; this passage discusses only base 2."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note."
@@ -9925,7 +9925,7 @@
      ],
      "relation": "defines",
      "fidelity": "stronger",
-     "fidelity_note": "The definition gives the residual after n ranks for every real target x; the phrase specializes x=1/2 and n=k−1."
+     "fidelity_note": "The definition gives the residual after $n$ ranks for every real target $x$; the phrase specializes $x=1/2$ and $n=k-1$."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note.",
@@ -9970,7 +9970,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "The recursion is stated for every real target, not just 1/2; this is its selected branch."
+     "fidelity_note": "The recursion is stated for every real target, not just $1/2$; this is its selected branch."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note."
@@ -9992,7 +9992,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "The recursion is stated for every real target, not just 1/2; this is its omitted branch."
+     "fidelity_note": "The recursion is stated for every real target, not just $1/2$; this is its omitted branch."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note."
@@ -10058,7 +10058,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The natural-division identity is valid for all n,d; the paper uses n≥6 and 2≤d<n."
+     "fidelity_note": "The natural-division identity is valid for all $n,d$; the paper uses $n\\ge6$ and $2\\le d<n$."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note."
@@ -10102,7 +10102,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The formal selection rule is proved for every n≥5 and 2≤d<n; this definition uses rows n≥6."
+     "fidelity_note": "The formal selection rule is proved for every $n\\ge5$ and $2\\le d<n$; this definition uses rows $n\\ge6$."
     }
    ],
    "replaces": [
@@ -10148,7 +10148,7 @@
      ],
      "relation": "defines",
      "fidelity": "stronger",
-     "fidelity_note": "The definition permits any finite support D, not just the greedy take set. For the paper’s n≥6, its expanded integer expression equals rem(n)−2^n."
+     "fidelity_note": "The definition permits any finite support $D$, not just the greedy take set. For the paper’s $n\\ge6$, its expanded integer expression equals $\\operatorname{rem}(n)-2^n$."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note.",
@@ -10171,7 +10171,7 @@
      ],
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "The definition rowFullCarry n supplies K(2n), only the even-index specialization. No declaration for the displayed all-M definition was located."
+     "fidelity_note": "The definition `rowFullCarry n` supplies $K(2n)$, only the even-index specialization. No declaration for the displayed all-$M$ definition was located."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note."
@@ -10193,7 +10193,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean identity holds for every finite D⊆{2,…,n−1}; it does not require D to be the greedy take set."
+     "fidelity_note": "The Lean identity holds for every finite $D\\subseteq\\{2,\\dots,n-1\\}$; it does not require $D$ to be the greedy take set."
     }
    ],
    "replaces": [
@@ -10219,7 +10219,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The middle-weight identity needs only n≥2; the passage assumes n≥6."
+     "fidelity_note": "The middle-weight identity needs only $n\\ge2$; the passage assumes $n\\ge6$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR20.row_weight_above_middle",
@@ -10230,7 +10230,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The upper-half formula needs n≥2 and n<d≤2n; the passage assumes n≥6."
+     "fidelity_note": "The upper-half formula needs $n\\ge2$ and $n<d\\le2n$; the passage assumes $n\\ge6$."
     }
    ],
    "replaces": [
@@ -10256,7 +10256,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The sum identity needs only n≥2; the paper uses n≥6. Natural quotients equal the displayed floors."
+     "fidelity_note": "The sum identity needs only $n\\ge2$; the paper uses $n\\ge6$. Natural quotients equal the displayed floors."
     }
    ],
    "replaces": [
@@ -10282,7 +10282,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Identifies E−3/2 with the tail after rank one minus one half."
+     "link_note": "Identifies $E-3/2$ with the tail after rank one minus one half."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR20.mersenne_constant_decimal",
@@ -10319,7 +10319,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem applies to every finite D⊆{2,…,n−1}, not only the greedy set, and proves the sharper 0<η<n+2/3 as well."
+     "fidelity_note": "The theorem applies to every finite $D\\subseteq\\{2,\\dots,n-1\\}$, not only the greedy set, and proves the sharper $0<\\eta<n+2/3$ as well."
     }
    ],
    "replaces": [
@@ -10345,7 +10345,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The two implications hold for every real H and every finite admissible D; the paper restricts H>2n+2 and D to the greedy set."
+     "fidelity_note": "The two implications hold for every real $H$ and every finite admissible $D$; the paper restricts $H>2n+2$ and $D$ to the greedy set."
     }
    ],
    "replaces": [
@@ -10802,7 +10802,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The finite error bound is valid for every s≥3; the surrounding proof assumes s≥5."
+     "fidelity_note": "The finite error bound is valid for every $s\\ge3$; the surrounding proof assumes $s\\ge5$."
     }
    ],
    "replaces": [
@@ -11341,7 +11341,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Identifies C_D with the carry of the terminal-augmented finite support."
+     "link_note": "Identifies $C_D$ with the carry of the terminal-augmented finite support."
     }
    ],
    "replaces": [
@@ -11604,7 +11604,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The linked theorem states the equality, but does not itself conclude the displayed >0. That final inequality uses X_A(2)<1/2 and nonnegativity of the coefficient tail.",
+     "fidelity_note": "The linked theorem states the equality, but does not itself conclude the displayed $>0$. That final inequality uses $X_A(2)<1/2$ and nonnegativity of the coefficient tail.",
      "link_note": "Exact identity used in the positivity argument."
     }
    ],
@@ -11631,7 +11631,7 @@
      ],
      "relation": "defines",
      "fidelity": "stronger",
-     "fidelity_note": "The definition permits every real target x; the phrase specializes it to x=1/2."
+     "fidelity_note": "The definition permits every real target $x$; the phrase specializes it to $x=1/2$."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note.",
@@ -11704,7 +11704,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration concludes that the selected support G is infinite and X_G(2)=1/2. Infinitely many omitted ranks require the separate half-membership/skip equivalence.",
+     "fidelity_note": "This declaration concludes that the selected support $G$ is infinite and $X_G(2)=1/2$. Infinitely many omitted ranks require the separate half-membership/skip equivalence.",
      "link_note": "Provides the exact half value and infinitude of selected ranks."
     },
     {
@@ -12437,7 +12437,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The exponent t/2 is natural division in Lean, so the conclusion is D_t≥2^⌊t/2⌋. For odd t, integrality of D_t does not imply D_t≥2^(t/2) as a real-power bound; for example t=5 yields 4 versus ceil(√32)=6."
+     "fidelity_note": "The exponent $t/2$ is natural division in Lean, so the conclusion is $D_t\\ge 2^{\\lfloor t/2\\rfloor}$. For odd $t$, integrality of $D_t$ does not imply $D_t\\ge 2^{t/2}$ as a real-power bound; for example $t=5$ yields 4 versus $\\lceil\\sqrt{32}\\rceil=6$."
     }
    ],
    "replaces": [
@@ -12463,7 +12463,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The exact-denominator theorem holds for every natural t, not only t≥5, using the equivalent oddJordanScalar numerator expression."
+     "fidelity_note": "The exact-denominator theorem holds for every natural $t$, not only $t\\ge5$, using the equivalent `oddJordanScalar` numerator expression."
     }
    ],
    "replaces": [
@@ -12510,7 +12510,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The theorem gives the final 5/42 bound; the displayed expansion explains the same correction tail."
+     "link_note": "The theorem gives the final $5/42$ bound; the displayed expansion explains the same correction tail."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note."
@@ -12532,7 +12532,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The named declaration states only the strict >3/8 conclusion. The intermediate ≥8/21 follows from mersenneCorrectionTail_one_le, linked separately."
+     "fidelity_note": "The named declaration states only the strict $>3/8$ conclusion. The intermediate $\\ge8/21$ follows from `mersenneCorrectionTail_one_le`, linked separately."
     }
    ],
    "reason": "Attach the exact claim or object to its source statement; keep hypotheses and scope visible in the reading note.",
@@ -12947,7 +12947,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source additionally specifies S≥5, D<S, all members of u in {2,…,D−1}, and row-S support exactly u∪{D+1,…,S−1}. The paper’s “fixed lower prefix u” leaves these data unspecified."
+     "fidelity_note": "The source additionally specifies $S\\ge5$, $D<S$, all members of $u$ in $\\{2,\\dots,D-1\\}$, and row-$S$ support exactly $u\\cup\\{D+1,\\dots,S-1\\}$. The paper’s “fixed lower prefix u” leaves these data unspecified."
     }
    ],
    "replaces": [
@@ -12973,7 +12973,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source requires the same explicit row-S decomposition plus D≥2, and identifies the competitor as insert D u. Neither cutoff nor this competitor is explicitly defined in the sentence."
+     "fidelity_note": "The source requires the same explicit row-$S$ decomposition plus $D\\ge2$, and identifies the competitor as `insert D u`. Neither cutoff nor this competitor is explicitly defined in the sentence."
     }
    ],
    "replaces": [
@@ -13009,7 +13009,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The lower bound in Lean is 2^(−n)+(1/3)4^(−n)<R_n, which is stronger than 2^(−n)<R_n."
+     "fidelity_note": "The lower bound in Lean is $2^{-n}+\\tfrac13\\,4^{-n}<R_n$, which is stronger than $2^{-n}<R_n$."
     },
     {
      "name": "Erdos249257.mersenneTail_le_two_mul_weight",
@@ -13131,7 +13131,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The upper child is the second alternative, obtained by inserting rank d+1."
+     "link_note": "The upper child is the second alternative, obtained by inserting rank $d+1$."
     },
     {
      "name": "Erdos249257.positiveMersenneSupportValue_insert",
@@ -13806,7 +13806,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The factorization theorem permits values in any rational vector space W and produces w₀. For W=ℚ, evaluating at e identifies w₀ with ℓ_j(e)."
+     "fidelity_note": "The factorization theorem permits values in any rational vector space $W$ and produces $w_{0}$. For $W=\\mathbb Q$, evaluating at $e$ identifies $w_{0}$ with $\\ell_j(e)$."
     }
    ],
    "replaces": [
@@ -13857,7 +13857,7 @@
      ],
      "relation": "contains",
      "fidelity": "weaker",
-     "fidelity_note": "The formal equivalence has R:ℚ with R>0; the prose does not explicitly impose rationality."
+     "fidelity_note": "The formal equivalence has $R\\in\\mathbb Q$ with $R>0$; the prose does not explicitly impose rationality."
     }
    ],
    "replaces": [
@@ -13883,7 +13883,7 @@
      ],
      "relation": "contains",
      "fidelity": "weaker",
-     "fidelity_note": "The formal reciprocal identity quantifies R,q:ℚ. It proves this local rational identity under 0<R<q."
+     "fidelity_note": "The formal reciprocal identity quantifies $R,q\\in\\mathbb Q$. It proves this local rational identity under $0<R<q$."
     }
    ],
    "replaces": [
@@ -13935,7 +13935,7 @@
      ],
      "relation": "contains",
      "fidelity": "weaker",
-     "fidelity_note": "The formal width identity has q,m:ℚ, q>0, m≥1; the unrestricted real version is not its statement."
+     "fidelity_note": "The formal width identity has $q,m\\in\\mathbb Q$, $q>0$, $m\\ge1$; the unrestricted real version is not its statement."
     }
    ],
    "replaces": [
@@ -14464,7 +14464,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The source permits every integer p, without p>0; it still requires L>0."
+     "fidelity_note": "The source permits every integer $p$, without $p>0$; it still requires $L>0$."
     },
     {
      "name": "Erdos249257.divInt_mem_nextMersenneDyadicSliver_iff_excess",
@@ -14475,7 +14475,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The source permits every integer p and writes the upper inequality as 2E<p; it still requires L>0."
+     "fidelity_note": "The source permits every integer $p$ and writes the upper inequality as $2E<p$; it still requires $L>0$."
     }
    ],
    "replaces": [
@@ -14501,7 +14501,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The denominator sandwich only needs hND: coprimality of the unreduced numerator with D. The paper’s odd D and gcd(r,D)=1 imply hND via the second linked lemma; the first theorem does not itself require odd D."
+     "fidelity_note": "The denominator sandwich only needs `hND`: coprimality of the unreduced numerator with $D$. The paper’s odd $D$ and $\\gcd(r,D)=1$ imply `hND` via the second linked lemma; the first theorem does not itself require odd $D$."
     },
     {
      "name": "Erdos249257.dyadicResidualIntNumerator_coprime_oddDenominator",
@@ -14512,7 +14512,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "Derives the numerator-coprimality input from oddness of D and reducedness of r/D."
+     "link_note": "Derives the numerator-coprimality input from oddness of $D$ and reducedness of $r/D$."
     }
    ],
    "replaces": [
@@ -14634,7 +14634,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Commutation holds for arbitrary natural p,e,q,f,n and every g:ℕ→ℤ; no primality, positivity or coprimality assumptions are used."
+     "fidelity_note": "Commutation holds for arbitrary natural $p,e,q,f,n$ and every $g:\\mathbb N\\to\\mathbb Z$; no primality, positivity or coprimality assumptions are used."
     }
    ],
    "replaces": [
@@ -14946,7 +14946,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The natural-subtraction recurrence is valid for every AdjacentCut of a PerturbedFamily; it does not need the additional B<g hypothesis used for admissibility."
+     "fidelity_note": "The natural-subtraction recurrence is valid for every `AdjacentCut` of a `PerturbedFamily`; it does not need the additional $B<g$ hypothesis used for admissibility."
     }
    ],
    "replaces": [
@@ -14972,7 +14972,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration concludes only t(x_-)≤C′. The displayed intermediate bound and strict inequality follow from pulse_le, below_admissible and B<g, but are not its stated conclusion."
+     "fidelity_note": "This declaration concludes only $t(x_{-})\\le C'$. The displayed intermediate bound and strict inequality follow from `pulse_le`, `below_admissible` and $B<g$, but are not its stated conclusion."
     }
    ],
    "replaces": [
@@ -15218,7 +15218,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The declaration proves only the displayed finite error bound and assumes hn : 2 ≤ n. The paper permits depths n_N ≥ max{N,1} and also displays convergence to zero; the latter is a further analytic deduction."
+     "fidelity_note": "The declaration proves only the displayed finite error bound and assumes `hn : 2 ≤ n`. The paper permits depths $n_N\\ge\\max\\{N,1\\}$ and also displays convergence to zero; the latter is a further analytic deduction."
     }
    ],
    "replaces": [
@@ -15593,7 +15593,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This declaration concludes only (1/2 : ℝ) ∈ mersenneAchievementSet. Infinitude of a positive representing support is supplied by the separately linked odd-denominator theorem."
+     "fidelity_note": "This declaration concludes only `(1/2 : ℝ) ∈ mersenneAchievementSet`. Infinitude of a positive representing support is supplied by the separately linked odd-denominator theorem."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR21.paper_half_representing_support_is_infinite",
@@ -15793,7 +15793,7 @@
      ],
      "relation": "proof",
      "fidelity": "weaker",
-     "fidelity_note": "The declaration proves only c - 2 ≤ 2^(c - 4) for c ≥ 6, which supplies the final inequality. It does not state the full fractional-error estimate displayed in the paper."
+     "fidelity_note": "The declaration proves only $c-2\\le 2^{c-4}$ for $c \\ge 6$, which supplies the final inequality. It does not state the full fractional-error estimate displayed in the paper."
     }
    ],
    "replaces": [
@@ -15932,7 +15932,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source constructs a Boolean word for every natural length L and value V < 2^L. The phrase applies it only to L = c-2. It does not itself assign the digits to Mersenne exponents."
+     "fidelity_note": "The source constructs a Boolean word for every natural length $L$ and value $V < 2^L$. The phrase applies it only to $L = c-2$. It does not itself assign the digits to Mersenne exponents."
     }
    ],
    "replaces": [
@@ -16237,7 +16237,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source needs hn : 3 ≤ n and word alignment halign, but no skip hypothesis. The surrounding paper discusses actual skipped ranks."
+     "fidelity_note": "The source needs `hn : 3 ≤ n` and word alignment `halign`, but no skip hypothesis. The surrounding paper discusses actual skipped ranks."
     }
    ],
    "replaces": [
@@ -16379,7 +16379,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The Lean statement requires M ≥ 1 and every exponent d ≥ 2, but does not require the paper's upper support restriction d ≤ M."
+     "fidelity_note": "The Lean statement requires $M \\ge 1$ and every exponent $d \\ge 2$, but does not require the paper's upper support restriction $d \\le M$."
     }
    ],
    "replaces": [
@@ -16572,7 +16572,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source identity holds at every k ≥ 0 and J ≥ 0, whereas this theorem fixes a positive depth k."
+     "fidelity_note": "The source identity holds at every $k \\ge 0$ and $J \\ge 0$, whereas this theorem fixes a positive depth $k$."
     }
    ],
    "replaces": [
@@ -16598,7 +16598,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source proves monotonicity for every natural k, including zero; the paper has fixed k > 0."
+     "fidelity_note": "The source proves monotonicity for every natural $k$, including zero; the paper has fixed $k > 0$."
     }
    ],
    "replaces": [
@@ -16624,7 +16624,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source limit is stated for every k ≥ 0, not only the positive depths fixed by the paper."
+     "fidelity_note": "The source limit is stated for every $k \\ge 0$, not only the positive depths fixed by the paper."
     }
    ],
    "replaces": [
@@ -16701,7 +16701,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The bound holds for every set A ⊆ ℕ; the paper uses the finite frozen prefix D."
+     "fidelity_note": "The bound holds for every set $A \\subseteq \\mathbb N$; the paper uses the finite frozen prefix $D$."
     }
    ],
    "replaces": [
@@ -16752,7 +16752,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source proves rationality for every depth k, including zero, whereas the paper fixes a positive k with η > 0."
+     "fidelity_note": "The source proves rationality for every depth $k$, including zero, whereas the paper fixes a positive $k$ with $\\eta > 0$."
     }
    ],
    "replaces": [
@@ -16916,7 +16916,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The identification with supportCoeff assumes hn : 0 < n. The sentence does not explicitly state positivity of the endpoint, though it calls it a new endpoint."
+     "fidelity_note": "The identification with `supportCoeff` assumes `hn : 0 < n`. The sentence does not explicitly state positivity of the endpoint, though it calls it a new endpoint."
     }
    ],
    "replaces": [
@@ -17036,7 +17036,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The finite binary-word theorem holds for every length L, specialized here to L=c-2."
+     "fidelity_note": "The finite binary-word theorem holds for every length $L$, specialized here to $L=c-2$."
     }
    ],
    "replaces": [
@@ -17304,7 +17304,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source assumes hn : 2 ≤ n. The paper says an exact row at endpoint n without explicitly retaining that lower bound."
+     "fidelity_note": "The source assumes `hn : 2 ≤ n`. The paper says an exact row at endpoint $n$ without explicitly retaining that lower bound."
     }
    ],
    "after": "<a id=\"record:257bm-i9\"></a>"
@@ -17493,7 +17493,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The formal theorem allows M=0 under natural subtraction conventions; the paper starts with 1 ≤ M. The other word-length, quotient and remainder hypotheses agree."
+     "fidelity_note": "The formal theorem allows $M=0$ under natural subtraction conventions; the paper starts with $1 \\le M$. The other word-length, quotient and remainder hypotheses agree."
     }
    ],
    "after": "<a id=\"record:257bm-i11c\"></a>"
@@ -17730,7 +17730,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source allows every set A ⊆ ℕ, because its term at exponent zero is normalized to zero. The paper restricts A to positive exponents."
+     "fidelity_note": "The source allows every set $A \\subseteq \\mathbb N$, because its term at exponent zero is normalized to zero. The paper restricts $A$ to positive exponents."
     }
    ],
    "after": "<a id=\"record:257bm-i-bridge\"></a>"
@@ -17905,7 +17905,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source needs only one positive a ∈ A and a zero window, without the rational-value, infinite-support, denominator or ε hypotheses in the opening sentence."
+     "fidelity_note": "The source needs only one positive $a \\in A$ and a zero window, without the rational-value, infinite-support, denominator or $\\varepsilon$ hypotheses in the opening sentence."
     }
    ],
    "replaces": [
@@ -17953,7 +17953,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source includes n=0 with the empty divisor-set convention, while the paper assumes n positive. Both require k ≥ 1."
+     "fidelity_note": "The source includes $n=0$ with the empty divisor-set convention, while the paper assumes $n$ positive. Both require $k \\ge 1$."
     }
    ],
    "replaces": [
@@ -18277,7 +18277,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source proves the strict tail bound for all natural k, including zero; the paper assumes k ≥ 1."
+     "fidelity_note": "The source proves the strict tail bound for all natural $k$, including zero; the paper assumes $k \\ge 1$."
     }
    ],
    "after": "<a id=\"record:257hg-i3\"></a>"
@@ -18347,7 +18347,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The identity and positivity hold for every real t ≥ 2, not only the paper's t=2^k with integer k ≥ 1."
+     "fidelity_note": "The identity and positivity hold for every real $t \\ge 2$, not only the paper's $t=2^k$ with integer $k \\ge 1$."
     }
    ],
    "replaces": [
@@ -18686,7 +18686,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The exact two-stage remainder formula uses the PerturbedFamily structure bound B < 3g, without the paper's additional B < g assumption required for maximality."
+     "fidelity_note": "The exact two-stage remainder formula uses the `PerturbedFamily` structure bound $B < 3g$, without the paper's additional $B < g$ assumption required for maximality."
     }
    ],
    "replaces": [
@@ -18859,7 +18859,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This source declaration concerns two finite HalfWord extensions of one fixed prefix. The paper's opening sentence permits arbitrary supports differing at N+1; the separately linked insertion identity covers that wider setting."
+     "fidelity_note": "This source declaration concerns two finite `HalfWord` extensions of one fixed prefix. The paper's opening sentence permits arbitrary supports differing at $N+1$; the separately linked insertion identity covers that wider setting."
     }
    ],
    "after": "<a id=\"record:257bm-i17\"></a>"
@@ -18882,7 +18882,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source handles arbitrary sets A and any new d, including infinite supports. For positive m its indicator d ∈ m.divisors is the paper's divisibility condition with d=N+1."
+     "fidelity_note": "The source handles arbitrary sets $A$ and any new $d$, including infinite supports. For positive $m$ its indicator `d ∈ m.divisors` is the paper's divisibility condition with $d=N+1$."
     }
    ],
    "replaces": [
@@ -19384,7 +19384,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The source assumes hp,hD,hq > 0 and hband : IntBand p D q in addition to oddness. IntBand encodes the singleton take–skip–take two-thirds band; the paper says an unsafe run without restricting its length."
+     "fidelity_note": "The source assumes $p,D,q>0$ and `hband : IntBand p D q` in addition to oddness. `IntBand` encodes the singleton take–skip–take two-thirds band; the paper says an unsafe run without restricting its length."
     }
    ],
    "after": "<a id=\"record:257hg-k8\"></a>"
@@ -19611,7 +19611,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The declaration states only the final upper bound on the row-(s+1) rational remainder. It does not state the displayed equality 4^(s+1)ρ = 2^(s+2)+4Z_s; its proof uses other exact identities for that step."
+     "fidelity_note": "The declaration states only the final upper bound on the row-$(s+1)$ rational remainder. It does not state the displayed equality $4^{s+1}\\rho=2^{s+2}+4Z_s$; its proof uses other exact identities for that step."
     }
    ],
    "after": "<a id=\"prop:unsafe-middle-range-exactly-three\"></a>"
@@ -19766,7 +19766,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The rescaling identity assumes hj : j+1 ≤ d and hle, that the charge is at or below the selected boundary. The phrase does not retain these boundary and sign hypotheses."
+     "fidelity_note": "The rescaling identity assumes `hj : j+1 ≤ d` and `hle`, that the charge is at or below the selected boundary. The phrase does not retain these boundary and sign hypotheses."
     }
    ],
    "after": "<a id=\"prop:unsafe-middle-range-exactly-three\"></a>"
@@ -19789,7 +19789,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The theorem assumes j+1 ≤ d, so it excludes the final boundary j=d. Its pulse bound is supplied internally for the actual row; only the quarter-scale overshoot exclusion hO is an external arithmetic assumption."
+     "fidelity_note": "The theorem assumes $j+1 \\le d$, so it excludes the final boundary $j=d$. Its pulse bound is supplied internally for the actual row; only the quarter-scale overshoot exclusion `hO` is an external arithmetic assumption."
     }
    ],
    "after": "<a id=\"prop:unsafe-middle-range-exactly-three\"></a>"
@@ -20185,7 +20185,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "The actual exclusion needs htrue: every later terminal bit is selected, along with the late middle-branch hypotheses. It does not exclude cell −3 at every middle row; that future hypothesis arises inside the membership contradiction argument."
+     "fidelity_note": "The actual exclusion needs `htrue`: every later terminal bit is selected, along with the late middle-branch hypotheses. It does not exclude cell $-3$ at every middle row; that future hypothesis arises inside the membership contradiction argument."
     }
    ],
    "after": "<a id=\"removing-one-case-from-a-sufficient-tail-condition\"></a>"
@@ -21044,7 +21044,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "Lean gives the explicit lower bound 1/2 + 1/63, which implies the strict overshoot stated here."
+     "fidelity_note": "Lean gives the explicit lower bound $1/2 + 1/63$, which implies the strict overshoot stated here."
     }
    ]
   },
@@ -21067,7 +21067,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the row now names the two alternatives of the Lean disjunction, ExactLocalMersenneHalfRow (2n−1) or ∃ c, 4 ≤ c ≤ n with ExactLocalMersenneHalfRow (2c−2), under n ≥ 6 and an exact row at n. Earlier note: the row said repeated doubling, which the Lean does not supply."
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the row now names the two alternatives of the Lean disjunction, `ExactLocalMersenneHalfRow (2n−1)` or $\\exists c, 4 \\le c \\le n$ with `ExactLocalMersenneHalfRow (2c−2)`, under $n \\ge 6$ and an exact row at $n$. Earlier note: the row said repeated doubling, which the Lean does not supply."
     }
    ]
   },
@@ -21562,7 +21562,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The paper assumes positive weights only at ranks n ≥ 2; hvpos quantifies over every natural n, including the two unused indices 0 and 1. These unused values can be chosen positive, but the literal binder is broader."
+     "fidelity_note": "The paper assumes positive weights only at ranks $n \\ge 2$; `hvpos` quantifies over every natural $n$, including the two unused indices 0 and 1. These unused values can be chosen positive, but the literal binder is broader."
     }
    ]
   },
@@ -21630,7 +21630,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean states the shifted comparison for every n ≥ 0, including rank 1; this subsection starts at rank k ≥ 2."
+     "fidelity_note": "Lean states the shifted comparison for every $n \\ge 0$, including rank 1; this subsection starts at rank $k \\ge 2$."
     }
    ]
   },
@@ -22783,7 +22783,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean proves the finite-window decomposition for every coefficient sequence with c n ≤ n, not only the divisor coefficients of a frozen prefix."
+     "fidelity_note": "Lean proves the finite-window decomposition for every coefficient sequence with $c(n)\\le n$, not only the divisor coefficients of a frozen prefix."
     }
    ]
   },
@@ -22806,7 +22806,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The bound is uniform for every natural coefficient sequence c with c n ≤ n, not just frozen-prefix coefficients."
+     "fidelity_note": "The bound is uniform for every natural coefficient sequence c with $c(n)\\le n$, not just frozen-prefix coefficients."
     }
    ]
   },
@@ -23585,7 +23585,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "The cited conjunct excludes every real target x whenever a rank has remainder greater than its full tail; the paper states only x = 1/2."
+     "fidelity_note": "The cited conjunct excludes every real target $x$ whenever a rank has remainder greater than its full tail; the paper states only $x = 1/2$."
     }
    ]
   },
@@ -23917,7 +23917,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The identity assumes only r ≤ ρ; it holds for every natural m, whereas the paper restricts the family to m ≥ 2."
+     "fidelity_note": "The identity assumes only $r \\le \\rho$; it holds for every natural $m$, whereas the paper restricts the family to $m \\ge 2$."
     }
    ]
   },
@@ -23962,7 +23962,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The count holds for every m ≥ 0; the paper introduces this family at m ≥ 2."
+     "fidelity_note": "The count holds for every $m \\ge 0$; the paper introduces this family at $m \\ge 2$."
     }
    ]
   },
@@ -24007,7 +24007,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "The finite-state cardinality bound holds for every natural m, without the printed restriction m ≥ 2."
+     "fidelity_note": "The finite-state cardinality bound holds for every natural $m$, without the printed restriction $m \\ge 2$."
     }
    ]
   },
@@ -24733,7 +24733,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The range theorem allows every d ≥ 1 and M ≥ 0; the paper’s divisor sum uses d ≥ 2 and M ≥ 1."
+     "fidelity_note": "The range theorem allows every $d \\ge 1$ and $M \\ge 0$; the paper’s divisor sum uses $d \\ge 2$ and $M \\ge 1$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR21.ShortWindowDivisorPhase.dvd_add_iLeast",
@@ -24744,7 +24744,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The divisibility theorem allows every d ≥ 1 and M ≥ 0."
+     "fidelity_note": "The divisibility theorem allows every $d \\ge 1$ and $M \\ge 0$."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR21.ShortWindowDivisorPhase.not_dvd_of_lt_iLeast",
@@ -24755,7 +24755,7 @@
      ],
      "relation": "part",
      "fidelity": "stronger",
-     "fidelity_note": "The minimality theorem allows every d ≥ 1 and M ≥ 0."
+     "fidelity_note": "The minimality theorem allows every $d \\ge 1$ and $M \\ge 0$."
     }
    ]
   },
@@ -24962,7 +24962,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Defines the finite divisor sum; Q_D is the common-multiple period chosen in the paper."
+     "link_note": "Defines the finite divisor sum; $Q_D$ is the common-multiple period chosen in the paper."
     }
    ]
   },
@@ -24985,7 +24985,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean allows any shift N divisible by every d in [2,D], not only Q_D, and imposes no positive lower bounds on L or D."
+     "fidelity_note": "Lean allows any shift $N$ divisible by every $d$ in $[2,D]$, not only $Q_D$, and imposes no positive lower bounds on $L$ or $D$."
     }
    ]
   },
@@ -25404,7 +25404,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source bounds the coefficient tail for every support and every natural depth N, not just square depths of a support achieving 1/2."
+     "fidelity_note": "The source bounds the coefficient tail for every support and every natural depth $N$, not just square depths of a support achieving $1/2$."
     }
    ]
   },
@@ -25472,7 +25472,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source bounds the greedy support sum by any nonnegative real target x; the paper uses x = 1/2."
+     "fidelity_note": "The source bounds the greedy support sum by any nonnegative real target $x$; the paper uses $x = 1/2$."
     }
    ]
   },
@@ -25585,7 +25585,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the sentence now says what the Lean proves: for each even b ≥ 2, ¬ (∀ q > 0, ∃ N K L C, certificate), for the carry-aware schema (not_exists_carry_certificates_squarefreeSupport, which refutes q = b²) and for the digitwise schema (not_exists_digitwise_certificates_squarefreeSupport, through the carry form). Earlier note: “has an instance at any even base” negated individual certificates, which is stronger than the Lean."
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the sentence now says what the Lean proves: for each even $b \\ge 2$, $\\neg(\\forall q>0,\\ \\exists N,K,L,C,\\ \\text{certificate})$, for the carry-aware schema (`not_exists_carry_certificates_squarefreeSupport`, which refutes $q=b^2$) and for the digitwise schema (`not_exists_digitwise_certificates_squarefreeSupport`, through the carry form). Earlier note: “has an instance at any even base” negated individual certificates, which is stronger than the Lean."
     }
    ]
   },
@@ -25630,7 +25630,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source requires n ≠ 0. The unqualified incidence formula fails at n = 0 under the Lean convention supportCoeff A 0 = 0; its intended positive-index use is exact."
+     "fidelity_note": "The source requires $n \\ne 0$. The unqualified incidence formula fails at $n = 0$ under the Lean convention `supportCoeff A 0 = 0`; its intended positive-index use is exact."
     }
    ]
   },
@@ -25886,7 +25886,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The source permits every natural base b with hb : 2 ≤ b, while this implication fixes b=2. The certificate hypothesis hcert remains required."
+     "fidelity_note": "The source permits every natural base $b$ with `hb : 2 ≤ b`, while this implication fixes $b=2$. The certificate hypothesis `hcert` remains required."
     }
    ]
   },
@@ -25909,7 +25909,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the sentence now says what the Lean proves: for each even b ≥ 2, ¬ (∀ q > 0, ∃ N K L C, certificate). Earlier note: “no instance at any even base” negated individual certificates, which is stronger than the Lean."
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the sentence now says what the Lean proves: for each even $b \\ge 2$, $\\neg(\\forall q>0,\\ \\exists N,K,L,C,\\ \\text{certificate})$. Earlier note: “no instance at any even base” negated individual certificates, which is stronger than the Lean."
     }
    ]
   },
@@ -26000,7 +26000,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source additionally requires hx : 0 ≤ x. The sentence should say every nonnegative real target; the next clause already gives the correct nonnegative rational range."
+     "fidelity_note": "The source additionally requires `hx : 0 ≤ x`. The sentence should say every nonnegative real target; the next clause already gives the correct nonnegative rational range."
     }
    ]
   },
@@ -26045,7 +26045,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The harmless initial cutoff c≥4 is equivalent under the outer cofinal quantifier."
+     "link_note": "The harmless initial cutoff $c\\ge4$ is equivalent under the outer cofinal quantifier."
     },
     {
      "name": "ErdosProblems.Erdos257.PaperCompleteR21.paper_cpgs_equiv",
@@ -26079,7 +26079,7 @@
      ],
      "relation": "contains",
      "fidelity": "stronger",
-     "fidelity_note": "The second conjunct proves positive rational half-greedy remainder at every n : ℕ, not only at skipped ranks."
+     "fidelity_note": "The second conjunct proves positive rational half-greedy remainder at every $n\\in\\mathbb N$, not only at skipped ranks."
     }
    ]
   },
@@ -26730,7 +26730,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "For every upper reset d≥13 and every 0≤j≤d, as quantified immediately above."
+     "link_note": "For every upper reset $d\\ge13$ and every $0\\le j\\le d$, as quantified immediately above."
     }
    ]
   },
@@ -26964,7 +26964,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the table now says Lean proves the equivalence: half_mem_iff_cofinal_exact_rows states 1/2 ∈ 𝒜 ↔ CofinalExactLocalMersenneHalfRows, whose definition is exact finite quotient rows at arbitrarily large endpoints with no agreement between witnesses. Earlier note: the table said Lean proves only ⇒."
+     "fidelity_note": "Corrected 21 Nov 2026 after the paper was revised: the table now says Lean proves the equivalence: `half_mem_iff_cofinal_exact_rows` states $1/2\\in\\mathcal A$ if and only if `CofinalExactLocalMersenneHalfRows`, whose definition is exact finite quotient rows at arbitrarily large endpoints with no agreement between witnesses. Earlier note: the table said Lean proves only $\\implies$."
     }
    ]
   },
@@ -27162,7 +27162,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This structure is indexed by ℕ and requires column_summable and budget_summable. The paper also admits finite families and infinite-cost covers; finite families enter paperCoverCost separately.",
+     "fidelity_note": "This structure is indexed by $\\mathbb N$ and requires `column_summable` and `budget_summable`. The paper also admits finite families and infinite-cost covers; finite families enter `paperCoverCost` separately.",
      "link_note": "The countable finite-cost case; finite families are admitted separately in paperCoverCost."
     }
    ]
@@ -27186,7 +27186,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The cutoff, cost and probability conjuncts; H≥2 and A₀≥0 are stated immediately above."
+     "link_note": "The cutoff, cost and probability conjuncts; $H\\ge2$ and $A_{0}\\ge0$ are stated immediately above."
     }
    ],
    "replaces": [
@@ -27263,7 +27263,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "Take the prescribed product size Y=H²."
+     "link_note": "Take the prescribed product size $Y=H^{2}$."
     }
    ]
   },
@@ -27330,7 +27330,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "Choose a cutoff at least D and target a=4/D to obtain the upper bound 5/D."
+     "link_note": "Choose a cutoff at least $D$ and target $a=4/D$ to obtain the upper bound $5/D$."
     }
    ]
   },
@@ -27353,7 +27353,7 @@
      ],
      "relation": "proof",
      "fidelity": "same",
-     "link_note": "The simultaneous fresh-prime construction; target 4d/H and d≥1 give the displayed upper bound."
+     "link_note": "The simultaneous fresh-prime construction; target $4d/H$ and $d\\ge1$ give the displayed upper bound."
     }
    ]
   },
@@ -27550,7 +27550,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Use the reciprocal tag-mass bound to set c=5D/H."
+     "link_note": "Use the reciprocal tag-mass bound to set $c=5D/H$."
     }
    ]
   },
@@ -27630,7 +27630,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Uses μ≥4r for the displayed numerical bound."
+     "link_note": "Uses $\\mu\\ge4r$ for the displayed numerical bound."
     }
    ]
   },
@@ -27810,7 +27810,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "The source proves p−P₀/2^R ≤ D, a one-sided estimate independent of M. The paper asserts |D−p|≤2P₀/(M2^R). The direction and M-dependent constant differ; the source bound is sufficient for the formal argument."
+     "fidelity_note": "The source proves $p-\\frac{P_0}{2^R}\\le D$, a one-sided estimate independent of $M$. The paper asserts $\\lvert D-p\\rvert\\le\\frac{2P_0}{M\\,2^R}$. The direction and $M$-dependent constant differ; the source bound is sufficient for the formal argument."
     }
    ]
   },
@@ -28091,7 +28091,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Its conclusion gives U≤t under the stated envelope; the geometric-series calculation is in the proof."
+     "link_note": "Its conclusion gives $U\\le t$ under the stated envelope; the geometric-series calculation is in the proof."
     }
    ]
   },

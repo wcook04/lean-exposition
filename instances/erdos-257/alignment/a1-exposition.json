@@ -12,7 +12,7 @@
           "fidelity": "stronger",
           "fidelity_source": "ai",
           "note": "States every integer base b ≥ 2; at b = 2 it is Theorem 1.",
-          "fidelity_note": "Lean covers every integer base and A ⊆ ℕ, where exponent 0 contributes 0; the exposition's Appendix A.6 says so."
+          "fidelity_note": "Lean covers every integer base and $A \\subseteq \\mathbb N$, where exponent 0 contributes 0; the exposition's Appendix A.6 says so."
         }
       ],
       "statements": [

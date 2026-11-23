@@ -1167,7 +1167,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The omitted factors are a fixed power of the logarithm, with k fixed."
+     "link_note": "The omitted factors are a fixed power of the logarithm, with $k$ fixed."
     }
    ]
   },
@@ -1958,7 +1958,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The exact bound is polylogarithmic in m for fixed k and the chosen error."
+     "link_note": "The exact bound is polylogarithmic in $m$ for fixed $k$ and the chosen error."
     }
    ]
   },
@@ -2262,7 +2262,7 @@
      ],
      "relation": "contains",
      "fidelity": "same",
-     "link_note": "The joint and total successful masses, with positive W in this theorem."
+     "link_note": "The joint and total successful masses, with positive $W$ in this theorem."
     }
    ]
   },
@@ -2430,7 +2430,7 @@
      ],
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Stopping rule for the ideal process; the physical sampler need not compute W."
+     "link_note": "The ideal process stops when the total weight is zero. The physical sampler need not compute $W$."
     }
    ]
   },
@@ -2553,7 +2553,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The total accepted mass is W/m."
+     "link_note": "The total accepted mass is $W/m$."
     }
    ]
   },
@@ -3285,7 +3285,7 @@
      "file": "QuarticQuery/Forrelation/Promise.lean",
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem is an if-and-only-if for every k and t, whereas the phrase states sufficiency in the two-block example."
+     "fidelity_note": "The theorem is an if-and-only-if for every $k$ and $t$, whereas the phrase states sufficiency in the two-block example."
     }
    ]
   },
@@ -3305,7 +3305,7 @@
      "file": "QuarticQuery/Forrelation/Promise.lean",
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "The theorem is an if-and-only-if for every k and t, whereas this phrase states the sufficient small-value condition for two blocks."
+     "fidelity_note": "The theorem is an if-and-only-if for every $k$ and $t$, whereas this phrase states the sufficient small-value condition for two blocks."
     }
    ]
   },
@@ -5295,7 +5295,7 @@
      ],
      "relation": "states",
      "fidelity": "same",
-     "link_note": "For the exact promise problem, each fixed k has its own eventual threshold."
+     "link_note": "For the exact promise problem, each fixed $k$ has its own eventual threshold."
     }
    ]
   },
@@ -5455,7 +5455,7 @@
      ],
      "relation": "states",
      "fidelity": "stronger",
-     "fidelity_note": "Lean needs only a cap on target reads in the prefix before query j, rather than lightness over the entire run. Its explicit replay-consistency premises are supplied by the first-board construction."
+     "fidelity_note": "Lean needs only a cap on target reads in the prefix before query $j$, rather than lightness over the entire run. Its explicit replay-consistency premises are supplied by the first-board construction."
     }
    ]
   },
@@ -5962,7 +5962,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Read the quantifiers from k, to constants and threshold, to t."
+     "link_note": "Read the quantifiers from $k$, to constants and threshold, to $t$."
     }
    ]
   },
@@ -6399,7 +6399,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The list has at most T entries, each with a fresh verifier."
+     "link_note": "The list has at most $T$ entries, each with a fresh verifier."
     }
    ]
   },
@@ -6520,7 +6520,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Apply the arithmetic implication to the lower bound from Section 7; it assumes t at least eight."
+     "link_note": "Apply the arithmetic implication to the lower bound from Section 7. It assumes $t\\ge 8$."
     }
    ]
   },
@@ -6810,7 +6810,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Single-trial failure is at most 31/40 when q meets gamma."
+     "link_note": "Single-trial failure is at most $31/40$ when $q\\ge\\gamma$."
     },
     {
      "name": "QuarticQuery.Amplification.pow_trialCount_le",
@@ -6821,7 +6821,7 @@
      ],
      "relation": "part",
      "fidelity": "same",
-     "link_note": "The definition of N makes its geometric power at most eta."
+     "link_note": "The choice of $N$ gives $(31/40)^N\\le\\eta$."
     }
    ]
   },
@@ -6974,7 +6974,7 @@
      "file": "QuarticQuery/Forrelation/Repetition.lean",
      "relation": "part",
      "fidelity": "same",
-     "link_note": "Identifies c inverse with the power of two in the repetition definition."
+     "link_note": "Identifies $c^{-1}$ with the power of two in the repetition definition."
     }
    ]
   },
@@ -7368,7 +7368,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The source declaration averages over a finite seed type S via [Fintype S]. The prose permits jointly independent coins and data without stating a finite-seed restriction; the arbitrary-measurable-seed transfer is not supplied here."
+     "fidelity_note": "The source declaration averages over a finite seed type $S$ via `[Fintype S]`. The prose permits jointly independent coins and data without stating a finite-seed restriction; the arbitrary-measurable-seed transfer is not supplied here."
     }
    ]
   },
@@ -7678,7 +7678,7 @@
      ],
      "relation": "states",
      "fidelity": "weaker",
-     "fidelity_note": "The average over coins and other data is explicitly over a finite seed type S in this source theorem; the prose states no such restriction."
+     "fidelity_note": "The average over coins and other data is explicitly over a finite seed type $S$ in this source theorem; the prose states no such restriction."
     }
    ]
   },

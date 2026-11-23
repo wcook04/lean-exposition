@@ -68,7 +68,7 @@
     },
     {
      "verdict": "different",
-     "note": "The paper constructs the periodic trajectory and estimates (1.7); the formal conclusion gives, for every positive viscosity, smooth periodic solenoidal data admitting no global smooth solution with periodic velocity, with no periodicity restriction on its pressure. The premise includes additional profile decay, while the rate and the local comparison on B₁/₁₆ are absent from this conclusion.",
+     "note": "The paper constructs the periodic trajectory and estimates (1.7); the formal conclusion gives, for every positive viscosity, smooth periodic solenoidal data admitting no global smooth solution with periodic velocity, with no periodicity restriction on its pressure. The premise includes additional profile decay, while the rate and the local comparison on $B_{1}/_{16}$ are absent from this conclusion.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.breakdownOnTorus_of_profile",
@@ -132,7 +132,7 @@
    "comparisons": [
     {
      "verdict": "weaker",
-     "note": "For every prescribed dense class of initial data and every ε>0, the formal conclusion chooses one mild solution whose datum is within ε of W(0) and whose dilated error is at most C(1−t)^κ for some κ>0. Proposition 2.1 also chooses a fixed finite-dimensional correction space and treats every sufficiently close datum; that whole family is absent from this conclusion.",
+     "note": "For every prescribed dense class of initial data and every $\\varepsilon >0$, the formal conclusion chooses one mild solution whose datum is within $\\varepsilon$ of $W(0)$ and whose dilated error is at most $C(1-t)^\\kappa$ for some $\\kappa >0$. Proposition 2.1 also chooses a fixed finite-dimensional correction space and treats every sufficiently close datum; that whole family is absent from this conclusion.",
      "lean": [
       {
        "declaration": "Breakdown.TransferHolds",
@@ -146,7 +146,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "For every prescribed dense class of initial data and every ε>0, the formal conclusion chooses one mild solution whose datum is within ε of W(0) and whose dilated error is at most C(1−t)^κ for some κ>0. Proposition 2.1 also chooses a fixed finite-dimensional correction space and treats every sufficiently close datum; that whole family is absent from this conclusion.",
+     "note": "For every prescribed dense class of initial data and every $\\varepsilon >0$, the formal conclusion chooses one mild solution whose datum is within $\\varepsilon$ of $W(0)$ and whose dilated error is at most $C(1-t)^\\kappa$ for some $\\kappa >0$. Proposition 2.1 also chooses a fixed finite-dimensional correction space and treats every sufficiently close datum; that whole family is absent from this conclusion.",
      "lean": [
       {
        "declaration": "Breakdown.transferHolds_of_dichotomy",
@@ -186,7 +186,7 @@
    "comparisons": [
     {
      "verdict": "weaker",
-     "note": "The conclusion supplies a smooth periodic solenoidal datum and a mild trajectory whose inhomogeneous H¹ norm is unbounded on [0,T), for some T>0. Proposition 2.2 additionally gives T≤1, the two-sided rate, and local convergence to the profile.",
+     "note": "The conclusion supplies a smooth periodic solenoidal datum and a mild trajectory whose inhomogeneous $H^{1}$ norm is unbounded on [0,T), for some $T>0$. Proposition 2.2 additionally gives $T\\le 1$, the two-sided rate, and local convergence to the profile.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.TorusBlowup",
@@ -200,7 +200,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "The conclusion supplies a smooth periodic solenoidal datum and a mild trajectory whose inhomogeneous H¹ norm is unbounded on [0,T), for some T>0. Proposition 2.2 additionally gives T≤1, the two-sided rate, and local convergence to the profile.",
+     "note": "The conclusion supplies a smooth periodic solenoidal datum and a mild trajectory whose inhomogeneous $H^{1}$ norm is unbounded on [0,T), for some $T>0$. Proposition 2.2 additionally gives $T\\le 1$, the two-sided rate, and local convergence to the profile.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.torusBlowup_of_parts",
@@ -294,7 +294,7 @@
    "comparisons": [
     {
      "verdict": "weaker",
-     "note": "For all τ>0 and u,v∈X, the symmetric bilinear term is bounded by Cτ⁻³⁄⁴‖u‖X‖v‖X. This is (3.7), while Lemma 3.1 also states a projected-heat estimate for arbitrary L³⁄² forcing.",
+     "note": "For all $\\tau >0$ and $u,v\\in X$, the symmetric bilinear term is bounded by $C\\tau ^{\\tfrac{-3}\\{4\\}}\\Vert u\\Vert X\\Vert v\\Vert X$. This is (3.7), while Lemma 3.1 also states a projected-heat estimate for arbitrary $L^{\\tfrac\\{3\\}\\{2\\}}$ forcing.",
      "lean": [
       {
        "declaration": "Breakdown.Freq.BilinBound",
@@ -308,7 +308,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "The symmetric bilinear term exists for every positive heat time and satisfies Cτ⁻³⁄⁴‖u‖X‖v‖X. This gives the bilinear conclusion of Lemma 3.1 and the full inequality (3.7).",
+     "note": "The symmetric bilinear term exists for every positive heat time and satisfies $C\\tau ^{\\tfrac{-3}\\{4\\}}\\Vert u\\Vert X\\Vert v\\Vert X$. This gives the bilinear conclusion of Lemma 3.1 and the full inequality (3.7).",
      "lean": [
       {
        "declaration": "Breakdown.Freq.bilin_holds",
@@ -402,7 +402,7 @@
    "comparisons": [
     {
      "verdict": "stronger",
-     "note": "For two continuous curves on any compact interval, the Duhamel integral exists and is continuous up to both endpoints. The formal statement adds the estimate 4C_K(t−a)¹⁄⁴MN when t−a≤1, with M and N bounds for the input curves.",
+     "note": "For two continuous curves on any compact interval, the Duhamel integral exists and is continuous up to both endpoints. The formal statement adds the estimate $4C_K(t-a)^{\\tfrac\\{1\\}\\{4\\}}MN$ when $t-a\\le 1$, with M and N bounds for the input curves.",
      "lean": [
       {
        "declaration": "Breakdown.VarConstIntegralStatement",
@@ -416,7 +416,7 @@
     },
     {
      "verdict": "stronger",
-     "note": "For two continuous curves on any compact interval, the Duhamel integral exists and is continuous up to both endpoints. The formal statement adds the estimate 4C_K(t−a)¹⁄⁴MN when t−a≤1, with M and N bounds for the input curves.",
+     "note": "For two continuous curves on any compact interval, the Duhamel integral exists and is continuous up to both endpoints. The formal statement adds the estimate $4C_K(t-a)^{\\tfrac\\{1\\}\\{4\\}}MN$ when $t-a\\le 1$, with M and N bounds for the input curves.",
      "lean": [
       {
        "declaration": "Breakdown.varConstIntegral",
@@ -456,7 +456,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most $\\exp(-P/4)$. The same statement also provides inverses of the short-interval operators with norm at most $4/3$.",
      "lean": [
       {
        "declaration": "Breakdown.MonodromyStatement",
@@ -470,7 +470,7 @@
     },
     {
      "verdict": "different",
-     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most $\\exp(-P/4)$. The same statement also provides inverses of the short-interval operators with norm at most $4/3$.",
      "lean": [
       {
        "declaration": "Breakdown.monodromy",
@@ -510,7 +510,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The quadratic mild equation can be restarted from any intermediate time by the heat semigroup law and adjacent-interval integration. Lemma 3.5 and (3.13) allow independent continuous factors f and h in the forcing, a larger class than the quadratic choice f=h=u.",
+     "note": "The quadratic mild equation can be restarted from any intermediate time by the heat semigroup law and adjacent-interval integration. Lemma 3.5 and (3.13) allow independent continuous factors f and h in the forcing, a larger class than the quadratic choice $f=h=u$.",
      "lean": [
       {
        "declaration": "Breakdown.RestrictStatement",
@@ -524,7 +524,7 @@
     },
     {
      "verdict": "different",
-     "note": "The quadratic mild equation can be restarted from any intermediate time by the heat semigroup law and adjacent-interval integration. Lemma 3.5 and (3.13) allow independent continuous factors f and h in the forcing, a larger class than the quadratic choice f=h=u.",
+     "note": "The quadratic mild equation can be restarted from any intermediate time by the heat semigroup law and adjacent-interval integration. Lemma 3.5 and (3.13) allow independent continuous factors f and h in the forcing, a larger class than the quadratic choice $f=h=u$.",
      "lean": [
       {
        "declaration": "Breakdown.restrict",
@@ -592,7 +592,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The formal weak-to-mild implication assumes smooth decaying slices, continuity in X, and L²-continuous slice differences in addition to the weak test identity. Lemma 3.6 assumes only a continuous X-valued curve and the stated differentiability of its test pairings.",
+     "note": "The formal weak-to-mild implication assumes smooth decaying slices, continuity in X, and $L^{2}$-continuous slice differences in addition to the weak test identity. Lemma 3.6 assumes only a continuous X-valued curve and the stated differentiability of its test pairings.",
      "lean": [
       {
        "declaration": "Breakdown.Freq.MildOfWeak",
@@ -606,7 +606,7 @@
     },
     {
      "verdict": "different",
-     "note": "The formal weak-to-mild implication assumes smooth decaying slices, continuity in X, and L²-continuous slice differences in addition to the weak test identity. Lemma 3.6 assumes only a continuous X-valued curve and the stated differentiability of its test pairings.",
+     "note": "The formal weak-to-mild implication assumes smooth decaying slices, continuity in X, and $L^{2}$-continuous slice differences in addition to the weak test identity. Lemma 3.6 assumes only a continuous X-valued curve and the stated differentiability of its test pairings.",
      "lean": [
       {
        "declaration": "Breakdown.Freq.mild_holds",
@@ -646,7 +646,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The bilinear smoothing bound is Cτ⁻³⁄⁴ in the inhomogeneous unit-torus norm, for 0<τ≤1. Lemma 3.7 and (3.20) use mean-zero homogeneous spaces at every spatial period and all positive times.",
+     "note": "The bilinear smoothing bound is $C\\tau ^{\\tfrac{-3}\\{4\\}}$ in the inhomogeneous unit-torus norm, for $0<\\tau \\le 1$. Lemma 3.7 and (3.20) use mean-zero homogeneous spaces at every spatial period and all positive times.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.KernelSharpBound",
@@ -660,7 +660,7 @@
     },
     {
      "verdict": "different",
-     "note": "The bilinear smoothing bound is Cτ⁻³⁄⁴ in the inhomogeneous unit-torus norm, for 0<τ≤1. Lemma 3.7 and (3.20) use mean-zero homogeneous spaces at every spatial period and all positive times.",
+     "note": "The bilinear smoothing bound is $C\\tau ^{\\tfrac{-3}\\{4\\}}$ in the inhomogeneous unit-torus norm, for $0<\\tau \\le 1$. Lemma 3.7 and (3.20) use mean-zero homogeneous spaces at every spatial period and all positive times.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.kernelSharpBound",
@@ -728,7 +728,7 @@
     },
     {
      "verdict": "different",
-     "note": "A smooth profile with the additional derivative and pressure-gradient decay and continuous energy-space slices gives a mild physical curve on each compact interval [0,T], 0<T<1. Proposition 4.1 also bundles nonvanishing and discrete self-similarity on [0,1).",
+     "note": "A smooth profile with the additional derivative and pressure-gradient decay and continuous energy-space slices gives a mild physical curve on each compact interval [0,T], $0<T<1$. Proposition 4.1 also bundles nonvanishing and discrete self-similarity on [0,1).",
      "lean": [
       {
        "declaration": "Breakdown.PhysicalMild",
@@ -742,7 +742,7 @@
     },
     {
      "verdict": "different",
-     "note": "A smooth profile with the additional derivative and pressure-gradient decay and continuous energy-space slices gives a mild physical curve on each compact interval [0,T], 0<T<1. Proposition 4.1 also bundles nonvanishing and discrete self-similarity on [0,1).",
+     "note": "A smooth profile with the additional derivative and pressure-gradient decay and continuous energy-space slices gives a mild physical curve on each compact interval [0,T], $0<T<1$. Proposition 4.1 also bundles nonvanishing and discrete self-similarity on [0,1).",
      "lean": [
       {
        "declaration": "Breakdown.physicalMild_unconditional",
@@ -836,7 +836,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The right inverse acts on bounded sequences of short rescaled time intervals, returns an exceptional coordinate in a fixed finite-dimensional space, and lifts its initial correction into the chosen dense class. Proposition 4.3 writes the corresponding problem as one trajectory in Cκ([0,1);X).",
+     "note": "The right inverse acts on bounded sequences of short rescaled time intervals, returns an exceptional coordinate in a fixed finite-dimensional space, and lifts its initial correction into the chosen dense class. Proposition 4.3 writes the corresponding problem as one trajectory in $C_\\kappa([0,1);X)$.",
      "lean": [
       {
        "declaration": "Breakdown.StepDataStatement",
@@ -850,7 +850,7 @@
     },
     {
      "verdict": "different",
-     "note": "The right inverse acts on bounded sequences of short rescaled time intervals, returns an exceptional coordinate in a fixed finite-dimensional space, and lifts its initial correction into the chosen dense class. Proposition 4.3 writes the corresponding problem as one trajectory in Cκ([0,1);X).",
+     "note": "The right inverse acts on bounded sequences of short rescaled time intervals, returns an exceptional coordinate in a fixed finite-dimensional space, and lifts its initial correction into the chosen dense class. Proposition 4.3 writes the corresponding problem as one trajectory in $C_\\kappa([0,1);X)$.",
      "lean": [
       {
        "declaration": "Breakdown.stepData",
@@ -864,7 +864,7 @@
     },
     {
      "verdict": "different",
-     "note": "Under a finite-dimensional spectral splitting, invertibility of each short-interval operator, and a lift preserving the exceptional projection, a bounded right inverse solves the weighted sequence equations. Proposition 4.3 presents the result on the global Cκ trajectory space.",
+     "note": "Under a finite-dimensional spectral splitting, invertibility of each short-interval operator, and a lift preserving the exceptional projection, a bounded right inverse solves the weighted sequence equations. Proposition 4.3 presents the result on the global $C\\kappa$ trajectory space.",
      "lean": [
       {
        "declaration": "Breakdown.PeriodicInverseStatement",
@@ -878,7 +878,7 @@
     },
     {
      "verdict": "different",
-     "note": "Under a finite-dimensional spectral splitting, invertibility of each short-interval operator, and a lift preserving the exceptional projection, a bounded right inverse solves the weighted sequence equations. Proposition 4.3 presents the result on the global Cκ trajectory space.",
+     "note": "Under a finite-dimensional spectral splitting, invertibility of each short-interval operator, and a lift preserving the exceptional projection, a bounded right inverse solves the weighted sequence equations. Proposition 4.3 presents the result on the global $C\\kappa$ trajectory space.",
      "lean": [
       {
        "declaration": "Breakdown.periodicInverse",
@@ -892,7 +892,7 @@
     },
     {
      "verdict": "different",
-     "note": "For a finite-rank projection and a dense linear class, there is a bounded lift J into that class with PᵤJ=Pᵤ. Restricting J to the exceptional range gives the compact-data correction space used in Proposition 4.3.",
+     "note": "For a finite-rank projection and a dense linear class, there is a bounded lift J into that class with $P_{u}J=P_{u}$. Restricting J to the exceptional range gives the compact-data correction space used in Proposition 4.3.",
      "lean": [
       {
        "declaration": "Breakdown.SectionStatement",
@@ -906,7 +906,7 @@
     },
     {
      "verdict": "different",
-     "note": "For a finite-rank projection and a dense linear class, there is a bounded lift J into that class with PᵤJ=Pᵤ. Restricting J to the exceptional range gives the compact-data correction space used in Proposition 4.3.",
+     "note": "For a finite-rank projection and a dense linear class, there is a bounded lift J into that class with $P_{u}J=P_{u}$. Restricting J to the exceptional range gives the compact-data correction space used in Proposition 4.3.",
      "lean": [
       {
        "declaration": "Breakdown.exists_section",
@@ -946,7 +946,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most $\\exp(-P/4)$. The same statement also provides inverses of the short-interval operators with norm at most $4/3$.",
      "lean": [
       {
        "declaration": "Breakdown.MonodromyStatement",
@@ -960,7 +960,7 @@
     },
     {
      "verdict": "different",
-     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most exp(−P/4). The same statement also provides inverses of the short-interval operators with norm at most 4/3.",
+     "note": "After sufficiently short intervals are composed and the twist removed, the period map differs compactly from the free product, whose norm is at most $\\exp(-P/4)$. The same statement also provides inverses of the short-interval operators with norm at most $4/3$.",
      "lean": [
       {
        "declaration": "Breakdown.monodromy",
@@ -1000,7 +1000,7 @@
    "comparisons": [
     {
      "verdict": "stronger",
-     "note": "For a compact perturbation of an operator of norm at most b≤α<β, the spectral conclusion gives a commuting finite-rank projection and geometric bounds with α<r₁<r₂<β, together with surjectivity on the exceptional range. Taking α=b=exp(−S/4), β=1 and r₁<Θ<r₂ gives the two convergent series in (4.11).",
+     "note": "For a compact perturbation of an operator of norm at most $b\\le \\alpha <\\beta$, the spectral conclusion gives a commuting finite-rank projection and geometric bounds with $\\alpha <r_{1}<r_{2}<\\beta$, together with surjectivity on the exceptional range. Taking $\\alpha =b=\\exp(-S/4)$, $\\beta =1$ and $r_{1}<\\Theta <r_{2}$ gives the two convergent series in (4.11).",
      "lean": [
       {
        "declaration": "Breakdown.DichotomyHolds",
@@ -1014,7 +1014,7 @@
     },
     {
      "verdict": "stronger",
-     "note": "For a compact perturbation of an operator of norm at most b≤α<β, the spectral conclusion gives a commuting finite-rank projection and geometric bounds with α<r₁<r₂<β, together with surjectivity on the exceptional range. Taking α=b=exp(−S/4), β=1 and r₁<Θ<r₂ gives the two convergent series in (4.11).",
+     "note": "For a compact perturbation of an operator of norm at most $b\\le \\alpha <\\beta$, the spectral conclusion gives a commuting finite-rank projection and geometric bounds with $\\alpha <r_{1}<r_{2}<\\beta$, together with surjectivity on the exceptional range. Taking $\\alpha =b=\\exp(-S/4)$, $\\beta =1$ and $r_{1}<\\Theta <r_{2}$ gives the two convergent series in (4.11).",
      "lean": [
       {
        "declaration": "Breakdown.dichotomyHolds",
@@ -1054,7 +1054,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The weighted recurrence is xₙ₊₁=θ⁻¹(Mxₙ+cₙ). Display (4.14) writes the corresponding unweighted recurrence and also identifies its continuous-time trajectory and forcing.",
+     "note": "The weighted recurrence is $x_{n+1}=\\theta ^{-1}(Mx_{n}+c_{n})$. Display (4.14) writes the corresponding unweighted recurrence and also identifies its continuous-time trajectory and forcing.",
      "lean": [
       {
        "declaration": "Breakdown.orbitSeq",
@@ -1094,7 +1094,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "On [0,T], the bilinear Duhamel operator is bounded by 4C_K T¹⁄⁴ for T≤1, and the free heat-evolution operator has norm at most one. Lemma 4.7 expresses different, global Cκ estimates on [0,1).",
+     "note": "On [0,T], the bilinear Duhamel operator is bounded by $4C_K$ $T^{\\tfrac\\{1\\}\\{4\\}}$ for $T\\le 1$, and the free heat-evolution operator has norm at most one. Lemma 4.7 expresses different, global $C\\kappa$ estimates on [0,1).",
      "lean": [
       {
        "declaration": "Breakdown.PieceOperatorStatement",
@@ -1108,7 +1108,7 @@
     },
     {
      "verdict": "different",
-     "note": "On [0,T], the bilinear Duhamel operator is bounded by 4C_K T¹⁄⁴ for T≤1, and the free heat-evolution operator has norm at most one. Lemma 4.7 expresses different, global Cκ estimates on [0,1).",
+     "note": "On [0,T], the bilinear Duhamel operator is bounded by $4C_K$ $T^{\\tfrac\\{1\\}\\{4\\}}$ for $T\\le 1$, and the free heat-evolution operator has norm at most one. Lemma 4.7 expresses different, global $C\\kappa$ estimates on [0,1).",
      "lean": [
       {
        "declaration": "Breakdown.pieceOperator",
@@ -1148,7 +1148,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "For normalized time intervals, a right inverse and 64‖R‖²C_K L¹⁄⁴(ρ+‖ξ‖)≤1 give exact mild intervals with matching endpoints. Both the datum correction and each normalized error are bounded by 2‖R‖(ρ+‖ξ‖), while Lemma 4.8 uses the Cκ norm of the combined forcing e^{tΔ}χ−Fᵃ.",
+     "note": "For normalized time intervals, a right inverse and $64\\Vert R\\Vert ^{2}C_K$ $L^{\\tfrac\\{1\\}\\{4\\}}(\\rho +\\Vert \\xi \\Vert )\\le 1$ give exact mild intervals with matching endpoints. Both the datum correction and each normalized error are bounded by $2\\Vert R\\Vert (\\rho +\\Vert \\xi \\Vert )$, while Lemma 4.8 uses the $C\\kappa$ norm of the combined forcing $e^{t\\Delta }\\chi -F^{a}$.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.SeqPerturbation",
@@ -1162,7 +1162,7 @@
     },
     {
      "verdict": "different",
-     "note": "For normalized time intervals, a right inverse and 64‖R‖²C_K L¹⁄⁴(ρ+‖ξ‖)≤1 give exact mild intervals with matching endpoints. Both the datum correction and each normalized error are bounded by 2‖R‖(ρ+‖ξ‖), while Lemma 4.8 uses the Cκ norm of the combined forcing e^{tΔ}χ−Fᵃ.",
+     "note": "For normalized time intervals, a right inverse and $64\\Vert R\\Vert ^{2}C_K$ $L^{\\tfrac\\{1\\}\\{4\\}}(\\rho +\\Vert \\xi \\Vert )\\le 1$ give exact mild intervals with matching endpoints. Both the datum correction and each normalized error are bounded by $2\\Vert R\\Vert (\\rho +\\Vert \\xi \\Vert )$, while Lemma 4.8 uses the $C\\kappa$ norm of the combined forcing $e^{t\\Delta }\\chi -F^{a}$.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.seqPerturbation",
@@ -1256,7 +1256,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "Compactly supported L² forcing has arbitrarily small local projected-heat discrepancy, measured by δ times its L³⁄² norm, at sufficiently small scale and on a compact positive-time window. Lemma 6.1 gives an all-time CL⁻⁷⁄² estimate for the divergence of a W¹,¹ tensor, in terms of that tensor’s L¹ norm.",
+     "note": "Compactly supported $L^{2}$ forcing has arbitrarily small local projected-heat discrepancy, measured by $\\delta$ times its $L^{\\tfrac\\{3\\}\\{2\\}}$ norm, at sufficiently small scale and on a compact positive-time window. Lemma 6.1 gives an all-time $CL^{\\tfrac{-7}\\{2\\}}$ estimate for the divergence of a $W^{1},^{1}$ tensor, in terms of that tensor’s $L^{1}$ norm.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.HeatDivFreeComparison",
@@ -1270,7 +1270,7 @@
     },
     {
      "verdict": "different",
-     "note": "Compactly supported L² forcing has arbitrarily small local projected-heat discrepancy, measured by δ times its L³⁄² norm, at sufficiently small scale and on a compact positive-time window. Lemma 6.1 gives an all-time CL⁻⁷⁄² estimate for the divergence of a W¹,¹ tensor, in terms of that tensor’s L¹ norm.",
+     "note": "Compactly supported $L^{2}$ forcing has arbitrarily small local projected-heat discrepancy, measured by $\\delta$ times its $L^{\\tfrac\\{3\\}\\{2\\}}$ norm, at sufficiently small scale and on a compact positive-time window. Lemma 6.1 gives an all-time $CL^{\\tfrac{-7}\\{2\\}}$ estimate for the divergence of a $W^{1},^{1}$ tensor, in terms of that tensor’s $L^{1}$ norm.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.heatDivFreeComparison",
@@ -1310,7 +1310,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "For sufficiently small positive final time, the normalized approximate intervals have a uniform upper bound and pointwise lower norm bound c/2. This does not itself assert a norm identity under periodization or a rate for the corrected trajectory.",
+     "note": "For sufficiently small positive final time, the normalized approximate intervals have a uniform upper bound and pointwise lower norm bound $c/2$. This does not itself assert a norm identity under periodization or a rate for the corrected trajectory.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.ApproxSizes",
@@ -1324,7 +1324,7 @@
     },
     {
      "verdict": "different",
-     "note": "For sufficiently small positive final time, the normalized approximate intervals have a uniform upper bound and pointwise lower norm bound c/2. This does not itself assert a norm identity under periodization or a rate for the corrected trajectory.",
+     "note": "For sufficiently small positive final time, the normalized approximate intervals have a uniform upper bound and pointwise lower norm bound $c/2$. This does not itself assert a norm identity under periodization or a rate for the corrected trajectory.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.approxSizes",
@@ -1338,7 +1338,7 @@
     },
     {
      "verdict": "different",
-     "note": "For the normalized nth approximate interval, the residual is bounded by θⁿKT¹⁄⁴, assuming the profile bounds and λ¹⁄⁴<θ. Lemma 6.2 instead states a global Cκ residual bound of order L⁻¹⁄² on the large torus.",
+     "note": "For the normalized nth approximate interval, the residual is bounded by $\\theta ^{n}KT^{\\tfrac\\{1\\}\\{4\\}}$, assuming the profile bounds and $\\lambda ^{\\tfrac\\{1\\}\\{4\\}}<\\theta$. Lemma 6.2 instead states a global $C\\kappa$ residual bound of order $L^{\\tfrac{-1}\\{2\\}}$ on the large torus.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.ApproxResidualSmall",
@@ -1352,7 +1352,7 @@
     },
     {
      "verdict": "different",
-     "note": "For the normalized nth approximate interval, the residual is bounded by θⁿKT¹⁄⁴, assuming the profile bounds and λ¹⁄⁴<θ. Lemma 6.2 instead states a global Cκ residual bound of order L⁻¹⁄² on the large torus.",
+     "note": "For the normalized nth approximate interval, the residual is bounded by $\\theta ^{n}KT^{\\tfrac\\{1\\}\\{4\\}}$, assuming the profile bounds and $\\lambda ^{\\tfrac\\{1\\}\\{4\\}}<\\theta$. Lemma 6.2 instead states a global $C\\kappa$ residual bound of order $L^{\\tfrac{-1}\\{2\\}}$ on the large torus.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.approxResidualSmall",
@@ -1392,7 +1392,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "For any δ>0, the localized interaction and initial-data maps on the unit torus are within δ of their whole-space counterparts when the scale is sufficiently small. The statement gives no explicit power of the large period L in (6.11) or (6.15).",
+     "note": "For any $\\delta >0$, the localized interaction and initial-data maps on the unit torus are within $\\delta$ of their whole-space counterparts when the scale is sufficiently small. The statement gives no explicit power of the large period L in (6.11) or (6.15).",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.ComparisonSmall",
@@ -1406,7 +1406,7 @@
     },
     {
      "verdict": "different",
-     "note": "For any δ>0, the localized interaction and initial-data maps on the unit torus are within δ of their whole-space counterparts when the scale is sufficiently small. The statement gives no explicit power of the large period L in (6.11) or (6.15).",
+     "note": "For any $\\delta >0$, the localized interaction and initial-data maps on the unit torus are within $\\delta$ of their whole-space counterparts when the scale is sufficiently small. The statement gives no explicit power of the large period L in (6.11) or (6.15).",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.comparisonSmall",
@@ -1420,7 +1420,7 @@
     },
     {
      "verdict": "different",
-     "note": "Two localized comparisons within δ and an explicit smallness inequality transfer a bounded whole-space right inverse to an exact periodic right inverse. Lemma 6.3 first constructs a particular approximate inverse with a defect of order L⁻¹⁄².",
+     "note": "Two localized comparisons within $\\delta$ and an explicit smallness inequality transfer a bounded whole-space right inverse to an exact periodic right inverse. Lemma 6.3 first constructs a particular approximate inverse with a defect of order $L^{\\tfrac{-1}\\{2\\}}$.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.ShellInverseTransfer",
@@ -1434,7 +1434,7 @@
     },
     {
      "verdict": "different",
-     "note": "Two localized comparisons within δ and an explicit smallness inequality transfer a bounded whole-space right inverse to an exact periodic right inverse. Lemma 6.3 first constructs a particular approximate inverse with a defect of order L⁻¹⁄².",
+     "note": "Two localized comparisons within $\\delta$ and an explicit smallness inequality transfer a bounded whole-space right inverse to an exact periodic right inverse. Lemma 6.3 first constructs a particular approximate inverse with a defect of order $L^{\\tfrac{-1}\\{2\\}}$.",
      "lean": [
       {
        "declaration": "Breakdown.Periodic.shellInverseTransfer",
@@ -1474,7 +1474,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "Theorem 7.1 returns α, its period, a smooth profile and the bounds and symmetries of that same profile. This implication assumes the more restrictive certificate conditions and concludes only existence of a weak recurrent profile; its conclusion does not retain α or the bounds (7.38).",
+     "note": "Theorem 7.1 returns $\\alpha$, its period, a smooth profile and the bounds and symmetries of that same profile. This implication assumes the more restrictive certificate conditions and concludes only existence of a weak recurrent profile; its conclusion does not retain $\\alpha$ or the bounds (7.38).",
      "lean": [
       {
        "declaration": "Breakdown.extended_certificate_orbit_proved",
@@ -1578,7 +1578,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "For the constructed free solution, the result supplies a continuous periodic scalar representative of the gradient energy and an interval-integrated identity. Equation (7.42) is the almost-everywhere differential identity for arbitrary v ∈ D_S; (7.45) is its physical-time counterpart.",
+     "note": "For the constructed free solution, the result supplies a continuous periodic scalar representative of the gradient energy and an interval-integrated identity. Equation (7.42) is the almost-everywhere differential identity for arbitrary $v \\in D_S$; (7.45) is its physical-time counterpart.",
      "lean": [
       {
        "declaration": "Breakdown.Cert.freeEnergyLocalHolds_of",
@@ -1618,7 +1618,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "This result constructs the time-integral operator giving the gradient part of the free solution. Proposition 7.5 additionally states bijectivity on D_S, symmetry preservation and weak and local strong convergence; those conclusions require separate results.",
+     "note": "This result constructs the time-integral operator giving the gradient part of the free solution. Proposition 7.5 additionally states bijectivity on $D_S$, symmetry preservation and weak and local strong convergence; those conclusions require separate results.",
      "lean": [
       {
        "declaration": "Breakdown.Cert.exists_gradInvSpec",
@@ -1738,7 +1738,7 @@
    "comparisons": [
     {
      "verdict": "same",
-     "note": "For a certificate reduced to unit forcing weight and coincident reference and approximate profiles, the constrained linear problem has an inverse and is injective on the invariant subspace. This is the unique solve of Proposition 7.8 in the variable f = T_S v, with the compactness and coercivity results supplied as hypotheses.",
+     "note": "For a certificate reduced to unit forcing weight and coincident reference and approximate profiles, the constrained linear problem has an inverse and is injective on the invariant subspace. This is the unique solve of Proposition 7.8 in the variable $f = T_S$ v, with the compactness and coercivity results supplied as hypotheses.",
      "lean": [
       {
        "declaration": "Breakdown.Cert.extendedBorderedInvertibleHolds_of",
@@ -1778,7 +1778,7 @@
    "comparisons": [
     {
      "verdict": "same",
-     "note": "The estimate has the coefficients 1/w_* + 2S c₃/m and 2S/m of (7.55), initially for the essential supremum of the gradient norm of the constructed free solution. A continuous energy representative gives the pointwise supremum used in the paper.",
+     "note": "The estimate has the coefficients $1/w_* + 2S$ $c_{3}/m$ and $2S/m$ of (7.55), initially for the essential supremum of the gradient norm of the constructed free solution. A continuous energy representative gives the pointwise supremum used in the paper.",
      "lean": [
       {
        "declaration": "Breakdown.Cert.extendedSupBoundHolds_of",
@@ -1898,7 +1898,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The multiplier theorem gives existence, finite μ-seminorm, the stated norm bound and a comparison of positive and negative density integrals under explicit weak derivative and coefficient assumptions. Finite negative density converts that comparison into (B.20); the paper leaves some admissibility conditions implicit.",
+     "note": "The multiplier theorem gives existence, finite $\\mu$-seminorm, the stated norm bound and a comparison of positive and negative density integrals under explicit weak derivative and coefficient assumptions. Finite negative density converts that comparison into (B.20); the paper leaves some admissibility conditions implicit.",
      "lean": [
       {
        "declaration": "Breakdown.CoerciveWeak.pieceMultiplierDensityWeakHolds_proof",
@@ -1952,7 +1952,7 @@
    "comparisons": [
     {
      "verdict": "same",
-     "note": "The two density inequalities and the bounds c_M/√c≤c₁ and √(t/c)≤c₂ imply the a priori certificate estimate. With c=3/50 and t=1000, this is Lemma B.2 for the admitted weak perturbations.",
+     "note": "The two density inequalities and the bounds $c_M/\\sqrt{c}\\le c_{1}$ and $\\sqrt{t/c}\\le c_{2}$ imply the a priori certificate estimate. With $c=3/50$ and $t=1000$, this is Lemma B.2 for the admitted weak perturbations.",
      "lean": [
       {
        "declaration": "Breakdown.CoerciveWeak.extendedCoerciveClause_of_pieceData_proved",
@@ -1966,7 +1966,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "This combines the two density comparisons into the intermediate quadratic multiplier inequality. The final estimate (7.18) also uses the scalar bounds for c₁ and c₂ in (B.22), supplied in the subsequent coercive estimate.",
+     "note": "This combines the two density comparisons into the intermediate quadratic multiplier inequality. The final estimate (7.18) also uses the scalar bounds for $c_{1}$ and $c_{2}$ in (B.22), supplied in the subsequent coercive estimate.",
      "lean": [
       {
        "declaration": "Breakdown.CoerciveWeak.rowMultiplierInequality_of_pieceDensity",
@@ -2006,7 +2006,7 @@
    "comparisons": [
     {
      "verdict": "stronger",
-     "note": "The proof gives the positive- and negative-part identities separately, each with factor 4π. They imply (B.23) when its signed integral is defined and remain meaningful even before either part is known to be finite.",
+     "note": "The proof gives the positive- and negative-part identities separately, each with factor $4\\pi$. They imply (B.23) when its signed integral is defined and remain meaningful even before either part is known to be finite.",
      "lean": [
       {
        "declaration": "Breakdown.CertCell.modeDensityBridge_closed",
@@ -2020,7 +2020,7 @@
     },
     {
      "verdict": "stronger",
-     "note": "The assertion equates each nonnegative part of the space-time density integral to 4π times its quarter-plane counterpart. Subtracting when the negative part is finite recovers (B.23).",
+     "note": "The assertion equates each nonnegative part of the space-time density integral to $4\\pi$ times its quarter-plane counterpart. Subtracting when the negative part is finite recovers (B.23).",
      "lean": [
       {
        "declaration": "Breakdown.CertCell.DensityIdentity",
@@ -2088,7 +2088,7 @@
     },
     {
      "verdict": "different",
-     "note": "The conclusion is finiteness of the negative quarter-plane density for weak perturbations under coefficient lower bounds and reference-field regularity, without requiring the forcing equation. The 4π identity transfers it to I⁻; the remaining conclusions of Proposition B.4 are separate.",
+     "note": "The conclusion is finiteness of the negative quarter-plane density for weak perturbations under coefficient lower bounds and reference-field regularity, without requiring the forcing equation. The $4\\pi$ identity transfers it to $I^{-}$; the remaining conclusions of Proposition B.4 are separate.",
      "lean": [
       {
        "declaration": "Breakdown.CertCell.formNegFinite",
@@ -2197,7 +2197,7 @@
    "comparisons": [
     {
      "verdict": "different",
-     "note": "The ray-exterior inequality uses the constant 1/4+(|κι₁|−1)₊² and the admitted weak modes. Its radius must be measurable, homogeneous, bounded above and bounded away from zero, assumptions absent from the printed geometric description.",
+     "note": "The ray-exterior inequality uses the constant $1/4+(|\\kappa \\iota _{1}|-1)_{+}^{2}$ and the admitted weak modes. Its radius must be measurable, homogeneous, bounded above and bounded away from zero, assumptions absent from the printed geometric description.",
      "lean": [
       {
        "declaration": "Breakdown.CertCell.TailBand.modeRayInverseSquare",
@@ -2319,7 +2319,7 @@
     },
     {
      "verdict": "same",
-     "note": "The condition states finiteness of negative density and the lower bound (B.21), with c and the pinning weight as parameters. Taking c=3/50 and the pinning weight 1000 gives the printed constants, after subtracting the finite negative integral.",
+     "note": "The condition states finiteness of negative density and the lower bound (B.21), with c and the pinning weight as parameters. Taking $c=3/50$ and the pinning weight 1000 gives the printed constants, after subtracting the finite negative integral.",
      "lean": [
       {
        "declaration": "Breakdown.CoerciveWeak.RowRestClause",
@@ -2373,7 +2373,7 @@
     },
     {
      "verdict": "same",
-     "note": "The central and parameter-shift norms control the change in the quadratic convection form by c₃″‖u‖w². This supplies the second profile contribution to the lower bound in Lemma B.9.",
+     "note": "The central and parameter-shift norms control the change in the quadratic convection form by $c_{3}''\\Vert u\\Vert w^{2}$. This supplies the second profile contribution to the lower bound in Lemma B.9.",
      "lean": [
       {
        "declaration": "Breakdown.CertReduction.formShiftBridgeHolds_proof",
@@ -2387,7 +2387,7 @@
     },
     {
      "verdict": "same",
-     "note": "The reference strain lower bound and L³ gradient norm give the reference quadratic-form lower bound with c₃′ from (B.48). Combining it with the profile-shift estimate gives (7.22).",
+     "note": "The reference strain lower bound and $L^{3}$ gradient norm give the reference quadratic-form lower bound with $c_{3}'$ from (B.48). Combining it with the profile-shift estimate gives (7.22).",
      "lean": [
       {
        "declaration": "Breakdown.CertReduction.frozenFormBridgeHolds_of_convection",
@@ -2441,7 +2441,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "The theorem gives the almost-everywhere time-slice estimate for (v·∇)v paired with ψ, using either its L² or L³ norm. The period-integrated conclusion of Lemma B.10 is supplied by a separate integration step.",
+     "note": "The theorem gives the almost-everywhere time-slice estimate for $(v\\cdot \\nabla )v$ paired with $\\psi$, using either its $L^{2}$ or $L^{3}$ norm. The period-integrated conclusion of Lemma B.10 is supplied by a separate integration step.",
      "lean": [
       {
        "declaration": "Breakdown.CertReduction.adjointQuadTerm_of",
@@ -2495,7 +2495,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "The weighted Hardy bound 2‖|y|R′‖H≤n′ gives the dual estimate for the plain remainder. The finite harmonic remainder and their sum are separate parts of Lemma B.11.",
+     "note": "The weighted Hardy bound $2\\Vert |y|R'\\Vert H\\le n'$ gives the dual estimate for the plain remainder. The finite harmonic remainder and their sum are separate parts of Lemma B.11.",
      "lean": [
       {
        "declaration": "Breakdown.AdjointDefect.remainderPlainHolds_proof",
@@ -2509,7 +2509,7 @@
     },
     {
      "verdict": "weaker",
-     "note": "This proves the dual estimate for the finite harmonic remainder with coefficient (|k|+1/2)⁻² and the component weights 1/2,1/2,1. The plain remainder is combined with it in the full estimate of Lemma B.11.",
+     "note": "This proves the dual estimate for the finite harmonic remainder with coefficient $(|k|+1/2)^{-2}$ and the component weights $1/2,1/2,1$. The plain remainder is combined with it in the full estimate of Lemma B.11.",
      "lean": [
       {
        "declaration": "Breakdown.AdjointDefect.remainderAzimuthalHolds_proof",

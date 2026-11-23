@@ -1160,7 +1160,7 @@
       27,
       31
      ],
-     "fidelity_note": "The theorem bounds Φ(t,x)−|x| for every 0≤t≤1; evaluating it at t=1 gives this terminal equality."
+     "fidelity_note": "The theorem bounds $\\Phi(t,x)-|x|$ for every $0\\le t\\le1$; evaluating it at $t=1$ gives this terminal equality."
     }
    ]
   },
@@ -1576,7 +1576,7 @@
       52,
       55
      ],
-     "fidelity_note": "Joint continuity is proved for every order m, including m=0, whereas the phrase asks for positive orders."
+     "fidelity_note": "Joint continuity is proved for every order $m$, including $m=0$, whereas the phrase asks for positive orders."
     }
    ]
   },
@@ -1598,7 +1598,7 @@
       26,
       29
      ],
-     "fidelity_note": "The theorem quantifies only over the constructed sequence approxValue γ n. The sentence quantifies over arbitrary L1-convergent coefficients and smooth terminal approximations."
+     "fidelity_note": "The theorem quantifies only over the constructed sequence `approxValue γ n`. The sentence quantifies over arbitrary $L^1$-convergent coefficients and smooth terminal approximations."
     },
     {
      "name": "OAI.ZeroTemperatureSK.positiveValue_derivative_uniform",
@@ -1609,7 +1609,7 @@
       115,
       118
      ],
-     "fidelity_note": "This theorem covers only positiveValue γ n, the designated positive-step/log-cosh sequence, not every pair of approximating coefficient and terminal sequences."
+     "fidelity_note": "This theorem covers only `positiveValue γ n`, the designated positive-step/log-cosh sequence, not every pair of approximating coefficient and terminal sequences."
     }
    ]
   },
@@ -1631,7 +1631,7 @@
       38,
       45
      ],
-     "link_note": "Uniformity uses a coefficient cap D and a positive distance δ from terminal time."
+     "link_note": "Uniformity uses a coefficient cap $D$ and a positive distance $\\delta$ from terminal time."
     }
    ]
   },
@@ -1653,7 +1653,7 @@
       121,
       125
      ],
-     "fidelity_note": "The cited declaration gives a right derivative at every t<T, not an almost-everywhere two-sided derivative. The two notions must not be presented as identical."
+     "fidelity_note": "The cited declaration gives a right derivative at every $t<T$, not an almost-everywhere two-sided derivative. The two notions must not be presented as identical."
     }
    ]
   },
@@ -1959,7 +1959,7 @@
       125,
       127
      ],
-     "fidelity_note": "The theorem preserves any Lipschitz constant K for c≥0, not only the constant one."
+     "fidelity_note": "The theorem preserves any Lipschitz constant $K$ for $c\\ge0$, not only the constant one."
     }
    ]
   },
@@ -2014,7 +2014,7 @@
       16,
       34
      ],
-     "fidelity_note": "For each ε>0 it constructs a control with payoff at least F(0,x)−ε. It does not assert a control attaining F(0,x) exactly."
+     "fidelity_note": "For each $\\varepsilon>0$ it constructs a control with payoff at least $F(0,x)-\\varepsilon$. It does not assert a control attaining $F(0,x)$ exactly."
     }
    ]
   },
@@ -2058,7 +2058,7 @@
       185,
       190
      ],
-     "fidelity_note": "The comparison is one regular finite-step problem versus the |x|-terminal control value, not two arbitrary coefficient/terminal pairs."
+     "fidelity_note": "The comparison is one regular finite-step problem versus the control value with terminal datum $\\lvert x\\rvert$, not two arbitrary coefficient/terminal pairs."
     }
    ]
   },
@@ -2132,7 +2132,7 @@
       33,
       35
      ],
-     "fidelity_note": "The bound compares the specified approxValue γ n sequence to value W γ; it is not a theorem for every compatible sequence."
+     "fidelity_note": "The bound compares the specified `approxValue γ n` sequence to `value W γ`; it is not a theorem for every compatible sequence."
     },
     {
      "name": "OAI.ZeroTemperatureSK.approxError_limit",
@@ -2143,7 +2143,7 @@
       21,
       21
      ],
-     "fidelity_note": "It proves convergence of the particular error sequence approxError γ, with the prescribed coefficient grid and terminal smoothing."
+     "fidelity_note": "It proves convergence of the particular error sequence `approxError γ`, with the prescribed coefficient grid and terminal smoothing."
     }
    ]
   },
@@ -2428,7 +2428,7 @@
       163,
       168
      ],
-     "fidelity_note": "Only the prescribed positivePath approximants are covered. The bound is 2(positiveCoeffError+γ(T)Tδ)exp(rate·T), rather than the displayed sharper expression with ||γ_n||1 and no factor 2."
+     "fidelity_note": "Only the prescribed `positivePath` approximants are covered. The bound is $2\\bigl(\\mathrm{positiveCoeffError}+\\gamma(T)T\\delta\\bigr)\\exp(\\mathrm{rate}\\cdot T)$, rather than the displayed sharper expression with $\\lVert\\gamma_n\\rVert_1$ and no factor 2."
     }
    ]
   },
@@ -2450,7 +2450,7 @@
       108,
       112
      ],
-     "fidelity_note": "The declaration proves convergence of the specific sampleCoercive polynomial at continuity points of γ, not every polynomial in bounded derivatives."
+     "fidelity_note": "The declaration proves convergence of the specific `sampleCoercive` polynomial at continuity points of $\\gamma$, not every polynomial in bounded derivatives."
     }
    ]
   },
@@ -2472,7 +2472,7 @@
       119,
       119
      ],
-     "fidelity_note": "positiveCoeff γ n consists of sampled coefficients plus a positive offset and is bounded by positiveTerminal γ n. It need not equal c on the prescribed neighbourhood."
+     "fidelity_note": "`positiveCoeff γ n` consists of sampled coefficients plus a positive offset and is bounded by `positiveTerminal γ n`. It need not equal $c$ on the prescribed neighbourhood."
     }
    ]
   },
@@ -2494,7 +2494,7 @@
       50,
       52
      ],
-     "fidelity_note": "The theorem is for the chord sequence ε_n=1/(n+1) and the direction β−γ, with a uniform (3/2) variationTail bound."
+     "fidelity_note": "The theorem is for the chord sequence $\\varepsilon_n=1/(n+1)$ and the direction $\\beta-\\gamma$, with a uniform $\\tfrac32\\,\\mathrm{variationTail}$ bound."
     }
    ]
   },
@@ -2893,7 +2893,7 @@
       36,
       38
      ],
-     "fidelity_note": "The theorem bounds the truncated-strip drift by β(T), not pointwise by the smaller time-dependent β(t)."
+     "fidelity_note": "The theorem bounds the truncated-strip drift by $\\beta(T)$, not pointwise by the smaller time-dependent $\\beta(t)$."
     }
    ]
   },
@@ -2977,7 +2977,7 @@
       50,
       52
      ],
-     "fidelity_note": "Lean controls a truncated integral at each T for ε_n=1/(n+1), with an explicit tail error; this is not the exact full-time equality for every real ε>0."
+     "fidelity_note": "Lean controls a truncated integral at each $T$ for $\\varepsilon_n=1/(n+1)$, with an explicit tail error; this is not the exact full-time equality for every real $\\varepsilon>0$."
     }
    ]
   },
@@ -2999,7 +2999,7 @@
       58,
       59
      ],
-     "fidelity_note": "The convergence theorem covers only the specified sequence of chords, not the continuous ε↓0 family."
+     "fidelity_note": "The convergence theorem covers only the specified sequence of chords, not the continuous $\\varepsilon\\downarrow0$ family."
     },
     {
      "name": "OAI.ZeroTemperatureSK.mixedPath_error",
@@ -3032,7 +3032,7 @@
       87,
       90
      ],
-     "fidelity_note": "The source proves convergence of mixedQ along the prescribed chord sequence on a fixed strip; the full arbitrary-ε integrand limit is not its statement."
+     "fidelity_note": "The source proves convergence of `mixedQ` along the prescribed chord sequence on a fixed strip; the full arbitrary-$\\varepsilon$ integrand limit is not its statement."
     }
    ]
   },
@@ -3054,7 +3054,7 @@
       35,
       37
      ],
-     "fidelity_note": "The dominated-convergence statement fixes T<1 and the direction β−γ along the prescribed chord sequence."
+     "fidelity_note": "The dominated-convergence statement fixes $T<1$ and the direction $\\beta-\\gamma$ along the prescribed chord sequence."
     },
     {
      "name": "OAI.ZeroTemperatureSK.normalizedParisiDifference_eq",
@@ -3086,7 +3086,7 @@
       152,
       154
      ],
-     "fidelity_note": "The Lean limit is n→∞ with ε_n=1/(n+1) and η=β−γ. The display asserts the full real right derivative in every feasible integrable direction; a sequential limit alone does not state that derivative."
+     "fidelity_note": "The Lean limit is $n\\to\\infty$ with $\\varepsilon_n=1/(n+1)$ and $\\eta=\\beta-\\gamma$. The display asserts the full real right derivative in every feasible integrable direction; a sequential limit alone does not state that derivative."
     }
    ]
   },
@@ -3108,7 +3108,7 @@
       170,
       172
      ],
-     "fidelity_note": "The declaration states nonnegativity for every admissible competitor β through β−γ; it does not itself state an arbitrary-η right derivative."
+     "fidelity_note": "The declaration states nonnegativity for every admissible competitor $\\beta$ through $\\beta-\\gamma$; it does not itself state an arbitrary-$\\eta$ right derivative."
     }
    ]
   },
@@ -3173,7 +3173,7 @@
       47,
       49
      ],
-     "fidelity_note": "The theorem assumes 0<s<1. The paragraph also mentions one-sided interpretations at zero; this declaration does not supply that endpoint statement."
+     "fidelity_note": "The theorem assumes $0<s<1$. The paragraph also mentions one-sided interpretations at zero; this declaration does not supply that endpoint statement."
     }
    ]
   },
@@ -3195,7 +3195,7 @@
       21,
       26
      ],
-     "fidelity_note": "The constructor allows any finite nonnegative measure ν, not only a multiple of a Dirac mass."
+     "fidelity_note": "The constructor allows any finite nonnegative measure $\\nu$, not only a multiple of a Dirac mass."
     }
    ]
   },
@@ -3217,7 +3217,7 @@
       66,
       72
      ],
-     "fidelity_note": "The constructor removes any finite submeasure ν≤μ, including ε times the restriction to a compact set."
+     "fidelity_note": "The constructor removes any finite submeasure $\\nu\\le\\mu$, including $\\varepsilon$ times the restriction to a compact set."
     }
    ]
   },
@@ -3387,7 +3387,7 @@
       262,
       268
      ],
-     "fidelity_note": "The deterministic result includes s=0 once q(s)=s and a right derivative are supplied; it is not restricted to interior SK support points."
+     "fidelity_note": "The deterministic result includes $s=0$ once $q(s)=s$ and a right derivative are supplied; it is not restricted to interior SK support points."
     }
    ]
   },
@@ -3766,8 +3766,8 @@
       139,
       143
      ],
-     "fidelity_note": "The linear heat equation holds for any C² datum g with exponential bounds on g,g′,g″. Taking g=exp(cΦ(b,·)) and forward variance τ=b−t gives the paper’s h; the chain rule reverses the time-derivative sign.",
-     "link_note": "The formal heat variable is remaining variance τ=b−t; decreasing it gives the backward sign."
+     "fidelity_note": "The linear heat equation holds for any $C^{2}$ datum $g$ with exponential bounds on $g,g',g''$. Taking $g=\\exp(c\\Phi(b,\\cdot))$ and forward variance $\\tau=b-t$ gives the paper’s $h$; the chain rule reverses the time-derivative sign.",
+     "link_note": "The formal heat variable is remaining variance $\\tau=b-t$; decreasing it gives the backward sign."
     }
    ]
   },
@@ -3811,7 +3811,7 @@
       20,
       21
      ],
-     "fidelity_note": "The formal score is x/forwardTime a t minus the derivative of forwardCorrection. The logarithm of the forward density factor g is not the defining object in this declaration."
+     "fidelity_note": "The formal score is `x / forwardTime a t` minus the derivative of `forwardCorrection`. The logarithm of the forward density factor $g$ is not the defining object in this declaration."
     }
    ]
   },
@@ -3910,7 +3910,7 @@
       204,
       222
      ],
-     "fidelity_note": "The Lean result allows an arbitrary nonnegative diffusion coefficient κ (hk); the paper specializes to κ=1/2. It also spells out the classical continuity and derivative hypotheses."
+     "fidelity_note": "The Lean result allows an arbitrary nonnegative diffusion coefficient $\\kappa$ (`hk`); the paper specializes to $\\kappa=1/2$. It also spells out the classical continuity and derivative hypotheses."
     }
    ]
   },
@@ -3954,7 +3954,7 @@
       148,
       151
      ],
-     "fidelity_note": "The lemma applies to any regular Lipschitz datum with strictly positive second derivative and any c≥0, not only the finite-step terminal datum used here."
+     "fidelity_note": "The lemma applies to any regular Lipschitz datum with strictly positive second derivative and any $c\\ge0$, not only the finite-step terminal datum used here."
     }
    ]
   },
@@ -3998,7 +3998,7 @@
       55,
       56
      ],
-     "link_note": "A scaling 0<α≤1 preserves all five backward shape conditions."
+     "link_note": "A scaling $0<\\alpha\\le1$ preserves all five backward shape conditions."
     }
    ]
   },
@@ -4063,7 +4063,7 @@
       18,
       19
      ],
-     "fidelity_note": "burgersRate is w/2+r v, namely rH on a smooth Burgers solution; it does not define the quotient H or its extension at zero."
+     "fidelity_note": "`burgersRate` is $w/2+r v$, namely $rH$ on a smooth Burgers solution; it does not define the quotient $H$ or its extension at zero."
     }
    ]
   },
@@ -4085,7 +4085,7 @@
       82,
       84
      ],
-     "link_note": "The theorem proves rH≤0; r>0 on the positive half-line gives H≤0."
+     "link_note": "The theorem proves $rH\\le0$; $r>0$ on the positive half-line gives $H\\le0$."
     }
    ]
   },
@@ -4107,7 +4107,7 @@
       124,
       129
      ],
-     "link_note": "The nonnegative Wronskian is r²H_x, with r>0 here."
+     "link_note": "The nonnegative Wronskian is $r^{2}H_x$, with $r>0$ here."
     }
    ]
   },
@@ -4183,7 +4183,7 @@
       15,
       17
      ],
-     "link_note": "forwardTime a τ is the absolute time t=a+τ of the current segment."
+     "link_note": "`forwardTime a τ` is the absolute time $t=a+\\tau$ of the current segment."
     }
    ]
   },
@@ -4270,7 +4270,7 @@
       13,
       14
      ],
-     "fidelity_note": "ratioWronskian is r s_x−s r_x=r s ρ; neither logarithmic slope d_s,d_r nor the quotient ρ is defined by this declaration."
+     "fidelity_note": "`ratioWronskian` is $r s_x-s r_x=r s \\rho$; neither logarithmic slope $d_s,d_r$ nor the quotient $\\rho$ is defined by this declaration."
     }
    ]
   },
@@ -4292,7 +4292,7 @@
       77,
       79
      ],
-     "link_note": "The lemma states x r′(x)≤r(x); the integral representation is not its conclusion."
+     "link_note": "The lemma states $x r'(x)\\le r(x)$; the integral representation is not its conclusion."
     }
    ]
   },
@@ -4314,7 +4314,7 @@
       102,
       110
      ],
-     "link_note": "It propagates r s ρ≥0; r,s>0 on this half-line recover the ratio sign."
+     "link_note": "It propagates $r s \\rho\\ge0$; $r,s>0$ on this half-line recover the ratio sign."
     }
    ]
   },
@@ -4358,7 +4358,7 @@
       124,
       129
      ],
-     "fidelity_note": "The declaration states the nonnegative Wronskian rj only for x≥0 on a positive uniform finite mesh; it does not itself state the reflected quotient j≥0 for every real x."
+     "fidelity_note": "The declaration states the nonnegative Wronskian $rj$ only for $x\\ge0$ on a positive uniform finite mesh; it does not itself state the reflected quotient $j\\ge0$ for every real $x$."
     }
    ]
   },
@@ -4424,7 +4424,7 @@
       149,
       149
      ],
-     "fidelity_note": "certJ defines s_x−(s/r)v. The display also defines H and ρ, which are not declared here; equality with sρ uses s≠0 on the positive half-line."
+     "fidelity_note": "`certJ` defines $s_x-(s/r)v$. The display also defines $H$ and $\\rho$, which are not declared here; equality with $s\\rho$ uses $s\\ne0$ on the positive half-line."
     }
    ]
   },
@@ -4466,7 +4466,7 @@
       148,
       148
      ],
-     "link_note": "certB is the paper’s lowercase b, not its B=b−2v."
+     "link_note": "`certB` is the paper’s lowercase $b$, not its $B=b-2v$."
     },
     {
      "name": "OAI.ZeroTemperatureSK.Heat.certL",
@@ -4487,7 +4487,7 @@
       181,
       188
      ],
-     "link_note": "Its last two inequalities contain B and S₁ in expanded form."
+     "link_note": "Its last two inequalities contain $B$ and $S_{1}$ in expanded form."
     }
    ]
   },
@@ -4509,7 +4509,7 @@
       181,
       188
      ],
-     "link_note": "All seven sign conditions hold at x>0; reflection and zero are separate steps."
+     "link_note": "All seven sign conditions hold at $x>0$; reflection and zero are separate steps."
     }
    ]
   },
@@ -4531,7 +4531,7 @@
       105,
       113
      ],
-     "link_note": "The proof rewrites the full flux with continuous quotient extensions; r(0)=0 makes the two representatives agree."
+     "link_note": "The proof rewrites the full flux with continuous quotient extensions; $r(0)=0$ makes the two representatives agree."
     }
    ]
   },
@@ -4553,7 +4553,7 @@
       55,
       58
      ],
-     "fidelity_note": "DF₂ defines the chain-rule expression only for F₂ using these five directional coefficients; it is not a theorem establishing the displayed derivatives of five functions."
+     "fidelity_note": "`DF₂` defines the chain-rule expression only for $F_{2}$ using these five directional coefficients; it is not a theorem establishing the displayed derivatives of five functions."
     }
    ]
   },
@@ -4575,7 +4575,7 @@
       159,
       161
      ],
-     "fidelity_note": "Lean proves this derivative identity only for the particular certificate polynomial F₂ and at x where r x≠0 (hne), with the density derivative supplied by hρ."
+     "fidelity_note": "Lean proves this derivative identity only for the particular certificate polynomial $F_{2}$ and at $x$ where $r(x)\\ne0$ (`hne`), with the density derivative supplied by `hρ`."
     }
    ]
   },
@@ -4597,7 +4597,7 @@
       117,
       121
      ],
-     "fidelity_note": "The source proves exponential growth bounds only for F₂ and WF₂, assuming bounded smooth r and regular s; it does not prove polynomial growth for every polynomial F."
+     "fidelity_note": "The source proves exponential growth bounds only for $F_{2}$ and $W(F_2)$, assuming bounded smooth $r$ and regular $s$; it does not prove polynomial growth for every polynomial $F$."
     }
    ]
   },
@@ -4619,7 +4619,7 @@
       43,
       44
      ],
-     "fidelity_note": "This lemma states decay at +∞ of exp(−d x²)g(x) for ExponentialBound g and d>0; the negative-end limit and the identification of the flux are separate steps."
+     "fidelity_note": "This lemma states decay at $+\\infty$ of $\\exp(-dx^2)g(x)$ for `ExponentialBound g` and $d>0$; the negative-end limit and the identification of the flux are separate steps."
     }
    ]
   },
@@ -4641,7 +4641,7 @@
       112,
       122
      ],
-     "fidelity_note": "The scalar-model theorem proves zero integral for its specific polynomial W₂, under derivative, growth and weighted-integrability hypotheses; it is not a theorem for every polynomial F."
+     "fidelity_note": "The scalar-model theorem proves zero integral for its specific polynomial $W_{2}$, under derivative, growth and weighted-integrability hypotheses; it is not a theorem for every polynomial $F$."
     }
    ]
   },
@@ -4795,7 +4795,7 @@
       22,
       22
      ],
-     "link_note": "The Lean name T denotes T₁=v(g₀R+h₀j)."
+     "link_note": "The Lean name `T` denotes $T_{1}=v(g_{0}R+h_{0}j)$."
     }
    ]
   },
@@ -4817,7 +4817,7 @@
       25,
       25
      ],
-     "link_note": "F₂ is stored as four monomials minus the auxiliary polynomial F₁."
+     "link_note": "$F_{2}$ is stored as four monomials minus the auxiliary polynomial $F_{1}$."
     }
    ]
   },
@@ -4839,7 +4839,7 @@
       52,
       52
      ],
-     "fidelity_note": "F₂b is defined to be 2Q+T; this declaration alone does not prove it is the partial derivative or state the coefficient-of-z cancellation."
+     "fidelity_note": "`F₂b` is defined to be $2Q+T$; this declaration alone does not prove it is the partial derivative or state the coefficient-of-$z$ cancellation."
     },
     {
      "name": "OAI.ZeroTemperatureSK.Certificate.hasDerivAt_F₂",
@@ -4872,7 +4872,7 @@
       53,
       53
      ],
-     "fidelity_note": "F₂j defines x₀v²+h b v, but contains no nonnegativity hypothesis or inequality. Nonnegativity uses v,b≥0 and the positive rational coefficients."
+     "fidelity_note": "`F₂j` defines $x_0v^2+hbv$, but contains no nonnegativity hypothesis or inequality. Nonnegativity uses $v,b\\ge0$ and the positive rational coefficients."
     }
    ]
   },
@@ -5031,7 +5031,7 @@
       92,
       94
      ],
-     "link_note": "The remainder retains at least its positive v⁴ monomial."
+     "link_note": "The remainder retains at least its positive $v^{4}$ monomial."
     }
    ]
   },
@@ -5064,7 +5064,7 @@
       196,
       198
      ],
-     "link_note": "This lowers the rational coefficient to 1/1000."
+     "link_note": "This lowers the rational coefficient to $1/1000$."
     }
    ]
   },
@@ -5086,7 +5086,7 @@
       124,
       124
      ],
-     "fidelity_note": "The theorem proves only 1/1000 < 1661507/1521000000. It does not state the exact subtraction identity 1661507/1521000000−1/1000=140507/1521000000."
+     "fidelity_note": "The theorem proves only $\\frac{1}{1000}<\\frac{1661507}{1521000000}$. It does not state the exact subtraction identity $\\frac{1661507}{1521000000}-\\frac{1}{1000}=\\frac{140507}{1521000000}$."
     }
    ]
   },
@@ -5108,7 +5108,7 @@
       135,
       139
      ],
-     "link_note": "Unfold the jet polynomials and divide by c²; c>0 is assumed in this paragraph."
+     "link_note": "Unfold the jet polynomials and divide by $c^{2}$; $c>0$ is assumed in this paragraph."
     },
     {
      "name": "OAI.ZeroTemperatureSK.coercivePolynomial_scaled",
@@ -5172,7 +5172,7 @@
       135,
       139
      ],
-     "link_note": "The formal inequality is multiplied by c²; after unfolding, c>0 permits the stated division."
+     "link_note": "The formal inequality is multiplied by $c^{2}$; after unfolding, $c>0$ permits the stated division."
     }
    ]
   },
@@ -5237,7 +5237,7 @@
       108,
       112
      ],
-     "link_note": "The coercive polynomial expectation converges at a continuity point of γ."
+     "link_note": "The coercive polynomial expectation converges at a continuity point of $\\gamma$."
     },
     {
      "name": "OAI.ZeroTemperatureSK.sampleQuartic_integral_limit",
@@ -5292,7 +5292,7 @@
       135,
       139
      ],
-     "fidelity_note": "The support-model declaration still requires ht : ContinuousAt γ.val t and therefore cannot be applied at a jump. The prose supplies an additional approximation argument; this link is a scope comparison, not a proof of the extension."
+     "fidelity_note": "The support-model declaration still requires `ht : ContinuousAt γ.val t` and therefore cannot be applied at a jump. The prose supplies an additional approximation argument; this link is a scope comparison, not a proof of the extension."
     }
    ]
   },
@@ -5346,7 +5346,7 @@
       51,
       52
      ],
-     "fidelity_note": "The formal quartic moment is positive at every positive time for any admissible coefficient; no positive plateau is required. Here v=cΦ_xx and c>0 transfers that positivity."
+     "fidelity_note": "The formal quartic moment is positive at every positive time for any admissible coefficient; no positive plateau is required. Here $v=c\\,\\partial_x^2\\Phi$ and $c>0$ transfers that positivity."
     }
    ]
   },
@@ -5368,7 +5368,7 @@
       65,
       68
      ],
-     "link_note": "The c²-multiplied bound yields this lower bound for c>0."
+     "link_note": "The $c^{2}$-multiplied bound yields this lower bound for $c>0$."
     },
     {
      "name": "OAI.ZeroTemperatureSK.stripThird_pos",
@@ -5442,7 +5442,7 @@
       77,
       79
      ],
-     "fidelity_note": "The theorem gives strictly positive probability to every nonempty open interval at t>0, for every admissible coefficient. It does not assert existence or pointwise positivity of a density."
+     "fidelity_note": "The theorem gives strictly positive probability to every nonempty open interval at $t>0$, for every admissible coefficient. It does not assert existence or pointwise positivity of a density."
     }
    ]
   },
@@ -5677,7 +5677,7 @@
       53,
       54
      ],
-     "link_note": "The proof integrates q(t)−t<0 and contradicts the nonnegative contact potential."
+     "link_note": "The proof integrates $q(t)-t<0$ and contradicts the nonnegative contact potential."
     }
    ]
   },
@@ -5741,7 +5741,7 @@
       124,
       129
      ],
-     "link_note": "The conclusion gives C>0 and the explicit near-terminal conditions on T."
+     "link_note": "The conclusion gives $C>0$ and the explicit near-terminal conditions on $T$."
     }
    ]
   },
@@ -5807,7 +5807,7 @@
       124,
       129
      ],
-     "fidelity_note": "The formal theorem gives an existential C>0 and a square-root lower bound. It does not state the density integral or identify its constant with 2mκ from this proof."
+     "fidelity_note": "The formal theorem gives an existential $C>0$ and a square-root lower bound. It does not state the density integral or identify its constant with $2m\\kappa$ from this proof."
     }
    ]
   },
@@ -5850,7 +5850,7 @@
       53,
       54
      ],
-     "link_note": "The forbidden plateau height is any c≥0, including zero."
+     "link_note": "The forbidden plateau height is any $c\\ge0$, including zero."
     }
    ]
   },
@@ -5872,7 +5872,7 @@
       42,
       44
      ],
-     "link_note": "The conclusion is γ(x)=γ(y); the Stieltjes increment identity is a hypothesis of the model."
+     "link_note": "The conclusion is $\\gamma(x)=\\gamma(y)$; the Stieltjes increment identity is a hypothesis of the model."
     }
    ]
   },
@@ -5946,7 +5946,7 @@
       437,
       449
      ],
-     "link_note": "The proof supplies contact at both endpoints, using q(0)=0 in the initial case."
+     "link_note": "The proof supplies contact at both endpoints, using $q(0)=0$ in the initial case."
     }
    ]
   },
@@ -5968,7 +5968,7 @@
       376,
       380
      ],
-     "link_note": "Strict convexity gives q′(t)<max(q′(a),q′(b))≤1; the explicit chord weights are not stored."
+     "link_note": "Strict convexity gives $q'(t)<\\max(q'(a),q'(b))\\le1$; the explicit chord weights are not stored."
     }
    ]
   },
@@ -6053,7 +6053,7 @@
       443,
       449
      ],
-     "link_note": "The support branch obtains the left endpoint slope from hcontact, including a=0."
+     "link_note": "The support branch obtains the left endpoint slope from `hcontact`, including $a=0$."
     }
    ]
   },
@@ -6202,7 +6202,7 @@
       26,
       27
      ],
-     "link_note": "The equality is written additively in ENNReal; nonnegativity of γ converts it to the displayed real increment."
+     "link_note": "The equality is written additively in `ENNReal`; nonnegativity of $\\gamma$ converts it to the displayed real increment."
     },
     {
      "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support",
@@ -6213,7 +6213,7 @@
       47,
       48
      ],
-     "link_note": "Full support supplies the strict inequality γ(a)<γ(b)."
+     "link_note": "Full support supplies the strict inequality $\\gamma(a)<\\gamma(b)$."
     }
    ]
   },
@@ -6324,7 +6324,7 @@
       21,
       25
      ],
-     "fidelity_note": "The conclusion is only I(T)≤groundStateValue for 0<T<1 under scalar contact. It does not state the upper tail bound 1−T; the support-to-scalar transport is also not supplied.",
+     "fidelity_note": "The conclusion is only that $I(T)$ is at most `groundStateValue` for $0<T<1$ under scalar contact. It does not state the upper tail bound $1-T$; the support-to-scalar transport is also not supplied.",
      "link_note": "Only the nonnegative-tail inequality appears in this statement."
     }
    ]
@@ -6461,7 +6461,7 @@
       101
      ],
      "fidelity_note": "The paper uses the support-model minimizer and diffusion of Theorem 5.1. This declaration uses SKValue.BrownianSpace, SKValue.OrderParameter and the scalar control-value functions; the common-witness transport listed in §12.3 is not supplied. The lemma also takes eventual differentiability hd and convergence hU; it makes no atomlessness assumption.",
-     "link_note": "The product identity includes the event X₁=0."
+     "link_note": "The product identity includes the event $X_{1}=0$."
     }
    ]
   },
@@ -6483,7 +6483,7 @@
       57,
       66
      ],
-     "fidelity_note": "The scalar type has γ(s)·E[u(s,X_s)²] in the integral. The displayed γ(s)s requires substituting contact q(s)=s, as well as the model identification from §12.3.",
+     "fidelity_note": "The scalar type has $\\gamma(s)\\mathbb E[u(s,X_s)^2]$ in the integral. The displayed $\\gamma(s)s$ requires substituting contact $q(s)=s$, as well as the model identification from §12.3.",
      "link_note": "Before contact, the integrand contains the gradient second moment."
     }
    ]
@@ -6551,7 +6551,7 @@
       94,
       102
      ],
-     "fidelity_note": "The scalar type already substitutes contact and has ∫tγ(t)dt, rather than the displayed ∫γ(t)E[u(t,X_t)²]dt. The support-model witness transport is separate.",
+     "fidelity_note": "The scalar type already substitutes contact and has $\\int t\\gamma(t)\\,dt$, rather than the displayed $\\int\\gamma(t)\\mathbb E[u(t,X_t)^2]\\,dt$. The support-model witness transport is separate.",
      "link_note": "The scalar terminal product formula has contact already substituted."
     }
    ]
@@ -6620,7 +6620,7 @@
       370,
       375
      ],
-     "fidelity_note": "The type states E[(f(t)−U)²]→0 as t↑1. It does not state the exact finite-time value 1−T.",
+     "fidelity_note": "The type states $\\mathbb E[(f(t)-U)^2]\\to0$ as $t\\uparrow1$. It does not state the exact finite-time value $1-T$.",
      "link_note": "Mean-square convergence only; the paper computes the exact error separately."
     }
    ]
@@ -6643,7 +6643,7 @@
       21,
       25
      ],
-     "fidelity_note": "The conclusion gives I(T)≤P* for 0<T<1 in the scalar model. It does not state the covariance identity or P*−I(T)≤1−T.",
+     "fidelity_note": "The conclusion gives $I(T)\\le P_*$ for $0<T<1$ in the scalar model. It does not state the covariance identity or $P_*-I(T)\\le1-T$.",
      "link_note": "Only the lower end of the tail interval is supplied."
     }
    ]
@@ -6666,7 +6666,7 @@
       27,
       32
      ],
-     "fidelity_note": "This supplies only the conditional-expectation input to the exact 1−T calculation. The calculation additionally uses terminal_square and the martingale secondMoment field.",
+     "fidelity_note": "This supplies only the conditional-expectation input to the exact $1-T$ calculation. The calculation additionally uses `terminal_square` and the martingale `secondMoment` field.",
      "link_note": "The projection identity is one input; the exact finite-time error is a further calculation."
     }
    ]
@@ -6772,7 +6772,7 @@
      "file": "OAI/Probability/SKSupport/Regularity/ClosedTime.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The support-model Euler path; formal Gaussian coordinate j is the paper’s Zⱼ₊₁."
+     "link_note": "The support-model Euler path; formal Gaussian coordinate $j$ is the paper’s $Z_{j+1}$."
     }
    ]
   },
@@ -6842,7 +6842,7 @@
       140,
       145
      ],
-     "fidelity_note": "The source gives the same Δ(γ(T)−γ(0)) bound for every bounded mesh control and power k. Taking the control equal to one and using monotonicity identifies the displayed coefficient-error integral.",
+     "fidelity_note": "The source gives the same $\\Delta(\\gamma(T)-\\gamma(0))$ bound for every bounded mesh control and power $k$. Taking the control equal to one and using monotonicity identifies the displayed coefficient-error integral.",
      "link_note": "A general mesh-control quadrature bound; specialize the control to one."
     }
    ]
@@ -6923,7 +6923,7 @@
      "file": "OAI/Probability/SKSupport/Regularity/ClosedTime.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "A₀ is zero by definition; Aⱼ pairs the rounded spin with gⱼ."
+     "link_note": "$A_{0}$ is zero by definition; $A_j$ pairs the rounded spin with $g_j$."
     },
     {
      "name": "OAI.ZeroTemperatureSK.gaussianCoeffB",
@@ -6952,7 +6952,7 @@
       181,
       182
      ],
-     "link_note": "The only numerical hypothesis is |v|≤1."
+     "link_note": "The only numerical hypothesis is $\\lvert v\\rvert\\le1$."
     }
    ]
   },
@@ -7019,15 +7019,15 @@
       44,
       46
      ],
-     "fidelity_note": "This mean-square residual limit holds for every GradientStrip with 0<T≤1, not only the particular minimizing SK coefficient."
+     "fidelity_note": "This mean-square residual limit holds for every `GradientStrip` with $0<T\\le1$, not only the particular minimizing SK coefficient."
     },
     {
      "name": "OAI.SKValue.finiteRawMartingale",
      "file": "OAI/Probability/SKValue/Equations/FiniteRounded.lean",
      "relation": "defines",
      "fidelity": "weaker",
-     "fidelity_note": "The definition supplies M_N as a finite Gaussian martingale sum. It contains no convergence claim; gradientMeshError_tendsto_zero supplies the mean-square approximation.",
-     "link_note": "Definition of M_N only; the other row supplies convergence."
+     "fidelity_note": "The definition supplies $M_N$ as a finite Gaussian martingale sum. It contains no convergence claim; `gradientMeshError_tendsto_zero` supplies the mean-square approximation.",
+     "link_note": "Definition of $M_N$ only; the other row supplies convergence."
     }
    ]
   },
@@ -7115,7 +7115,7 @@
       90,
       93
      ],
-     "fidelity_note": "The type bounds the squared ℓ² error by gradientMeshError; the o(1) term also needs gradientMeshError_tendsto_zero.",
+     "fidelity_note": "The type bounds the squared $\\ell^2$ error by `gradientMeshError`; the $o(1)$ term also needs `gradientMeshError_tendsto_zero`.",
      "link_note": "A quantitative bound for the A-vector error; convergence is supplied separately."
     }
    ]
@@ -7161,7 +7161,7 @@
       44,
       46
      ],
-     "link_note": "The formal error is e_N squared; nonnegativity turns its limit into e_N→0."
+     "link_note": "The formal error is $e_N$ squared; nonnegativity turns its limit into $e_N\\to0$."
     }
    ]
   },
@@ -7183,7 +7183,7 @@
       84,
       94
      ],
-     "link_note": "The formal inequalities are squared norms, each bounded by e_N²."
+     "link_note": "The formal inequalities are squared norms, each bounded by $e_N^2$."
     }
    ]
   },
@@ -7227,7 +7227,7 @@
       107,
       113
      ],
-     "fidelity_note": "The source bounds the squared norm by (√T D)² for every N>0 under its strip curvature bound, rather than only sufficiently large N."
+     "fidelity_note": "The source bounds the squared norm by $(\\sqrt T\\,D)^2$ for every $N>0$ under its strip curvature bound, rather than only sufficiently large $N$."
     }
    ]
   },
@@ -7249,7 +7249,7 @@
       47,
       59
      ],
-     "fidelity_note": "The type states eventual positivity and convergence to ∫f; it does not state the intermediate shifted Riemann-sum equality with o(1). Its generic strip and moment-approximation hypotheses are supplied separately.",
+     "fidelity_note": "The type states eventual positivity and convergence to $\\int f$; it does not state the intermediate shifted Riemann-sum equality with $o(1)$. Its generic strip and moment-approximation hypotheses are supplied separately.",
      "link_note": "The final convergence is formalized; the intermediate asymptotic equality is not this theorem’s conclusion."
     }
    ]
@@ -7295,7 +7295,7 @@
       21,
       25
      ],
-     "fidelity_note": "The source states only I(T)≤P* under scalar-model contact. The upper bound 1−T is a paper deduction from nonnegative curvature and the unit second moment."
+     "fidelity_note": "The source states only $I(T)\\le P_*$ under scalar-model contact. The upper bound $1-T$ is a paper deduction from nonnegative curvature and the unit second moment."
     }
    ]
   },
@@ -7317,7 +7317,7 @@
       17,
       19
      ],
-     "fidelity_note": "The formal endpoint supplies two iterated limits. This tolerance-based choice of T followed by N is a deduction, and the endpoint uses scalar-model minimizer/diffusion witnesses.",
+     "fidelity_note": "The formal endpoint supplies two iterated limits. This tolerance-based choice of $T$ followed by $N$ is a deduction, and the endpoint uses scalar-model minimizer/diffusion witnesses.",
      "link_note": "Two ordered convergence clauses justify the choice, but do not state a numerical mesh threshold."
     }
    ]
@@ -7362,7 +7362,7 @@
       59,
       65
      ],
-     "fidelity_note": "The formal type bounds e_N² using K,L, Gaussian moments and γ(T)−γ(0). It does not state the displayed bound for e_N using δ_N,K_T,L_T,H.",
+     "fidelity_note": "The formal type bounds $e_N^2$ using $K,L$, Gaussian moments and $\\gamma(T)-\\gamma(0)$. It does not state the displayed bound for $e_N$ using $\\delta_N,K_T,L_T,H$.",
      "link_note": "A different explicit squared-residual estimate, with different strip constants."
     }
    ]
@@ -7417,7 +7417,7 @@
       190,
       191
      ],
-     "fidelity_note": "Curvature is nonnegative for every admissible coefficient and every 0≤t<1, not only for a minimizer."
+     "fidelity_note": "Curvature is nonnegative for every admissible coefficient and every $0\\le t<1$, not only for a minimizer."
     }
    ]
   },
@@ -7479,7 +7479,7 @@
       105,
       107
      ],
-     "link_note": "At every s∈[0,1], minimality and the supplied diffusion give G(s)≥0."
+     "link_note": "At every $s\\in[0,1]$, minimality and the supplied diffusion give $G(s)\\ge0$."
     }
    ],
    "after": "t,X_t)^2]$,\n$f(t)=q(t)-t$ and $G(t)=\\int_t^1f(s)\\,ds$. The source first obtains\n"
@@ -7502,7 +7502,7 @@
       124,
       126
      ],
-     "link_note": "For 0<s<1, the derivative is s−q(s)."
+     "link_note": "For $0<s<1$, the derivative is $s-q(s)$."
     }
    ]
   },
@@ -7568,7 +7568,7 @@
       10,
       11
      ],
-     "link_note": "The equality at zero follows from right continuity and constancy on (0,b); c>0 is the current case assumption."
+     "link_note": "The equality at zero follows from right continuity and constancy on $(0,b)$; $c>0$ is the current case assumption."
     }
    ]
   },
@@ -7590,7 +7590,7 @@
       10,
       11
      ],
-     "link_note": "The initial value γ(0)>0 is an explicit premise."
+     "link_note": "The initial value $\\gamma(0)>0$ is an explicit premise."
     }
    ]
   },
@@ -7612,7 +7612,7 @@
       137,
       139
      ],
-     "link_note": "For b=1, the bound f(t)≤1−t supplies a later point with smaller value."
+     "link_note": "For $b=1$, the bound $f(t)\\le1-t$ supplies a later point with smaller value."
     }
    ]
   },
@@ -7700,7 +7700,7 @@
       8,
       13
      ],
-     "link_note": "The zero-coefficient alternative has no assumption G(a)=0."
+     "link_note": "The zero-coefficient alternative has no assumption $G(a)=0$."
     }
    ]
   },
@@ -7743,7 +7743,7 @@
       75,
       77
      ],
-     "link_note": "The conclusion includes t=0 but excludes t=1."
+     "link_note": "The conclusion includes $t=0$ but excludes $t=1$."
     }
    ]
   },
@@ -7765,7 +7765,7 @@
       84,
       87
      ],
-     "link_note": "From q(t)=t and strip regularity, the curvature second moment equals one for 0≤t<1."
+     "link_note": "From $q(t)=t$ and strip regularity, the curvature second moment equals one for $0\\le t<1$."
     }
    ]
   },
@@ -7870,7 +7870,7 @@
       48,
       53
      ],
-     "link_note": "The product Gaussian has K+1 coordinates, and fⱼ may depend through coordinate j."
+     "link_note": "The product Gaussian has $K+1$ coordinates, and $f_j$ may depend through coordinate $j$."
     }
    ]
   },
@@ -7954,7 +7954,7 @@
      "file": "OAI/Probability/SKValue/GroundState/GaussianColumn.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The matrix coefficient at (i,j) is wᵢwⱼ/√2."
+     "link_note": "The matrix coefficient at $(i,j)$ is $\\frac{w_iw_j}{\\sqrt2}$."
     }
    ]
   },
@@ -8021,7 +8021,7 @@
       70,
       73
      ],
-     "link_note": "The hypothesis explicitly permits v=0 as well as a unit vector."
+     "link_note": "The hypothesis explicitly permits $v=0$ as well as a unit vector."
     }
    ]
   },
@@ -8147,7 +8147,7 @@
       59,
       60
      ],
-     "link_note": "The √n factor connects the full quadratic Gaussian field to the SK Hamiltonian normalization."
+     "link_note": "The $\\sqrt n$ factor connects the full quadratic Gaussian field to the SK Hamiltonian normalization."
     }
    ]
   },
@@ -8169,7 +8169,7 @@
       74,
       80
      ],
-     "link_note": "The theorem explicitly requires n>0 and divides by n√n."
+     "link_note": "The theorem explicitly requires $n>0$ and divides by $n\\sqrt n$."
     }
    ]
   },
@@ -8187,7 +8187,7 @@
      "file": "OAI/Probability/SKValue/GroundState/EmpiricalVectors.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The normalization is 1/√n, so empirical inner products are sample averages."
+     "link_note": "The normalization is $1/\\sqrt n$, so empirical inner products are sample averages."
     }
    ]
   },
@@ -8205,7 +8205,7 @@
      "file": "OAI/Probability/SKValue/GroundState/EmpiricalVectors.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The formal sequence first uses a zero direction to reveal z₀, then applies normalized Gram–Schmidt."
+     "link_note": "The formal sequence first uses a zero direction to reveal $z_{0}$, then applies normalized Gram–Schmidt."
     }
    ]
   },
@@ -8223,7 +8223,7 @@
      "file": "OAI/Probability/SKValue/GroundState/GramSchmidtLimit.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The sum removes precisely the earlier directions, indexed i<j."
+     "link_note": "The sum removes precisely the earlier directions, indexed $i<j$."
     }
    ]
   },
@@ -8262,7 +8262,7 @@
       170,
       174
      ],
-     "fidelity_note": "The type identifies the accumulated offset divided by n√n with the sum of all empirical column energies. The paper’s per-column scaling is an algebraic ingredient, not the whole declared equality.",
+     "fidelity_note": "The type identifies the accumulated offset divided by $n\\sqrt n$ with the sum of all empirical column energies. The paper’s per-column scaling is an algebraic ingredient, not the whole declared equality.",
      "link_note": "This formal statement gives the total normalization after summing columns."
     }
    ]
@@ -8351,7 +8351,7 @@
       56,
       61
      ],
-     "fidelity_note": "This theorem gives the strong law for inner products of raw empirical vectors. The v_{n,j} correlations in the display also require the Gram–Schmidt approximation; the display is not this type verbatim.",
+     "fidelity_note": "This theorem gives the strong law for inner products of raw empirical vectors. The $v_{n,j}$ correlations in the display also require the Gram–Schmidt approximation; the display is not this type verbatim.",
      "link_note": "The strong-law input for the empirical inner products."
     }
    ]
@@ -8374,7 +8374,7 @@
       21,
       25
      ],
-     "fidelity_note": "The lemma gives E[f_i z_{j+1}]=0. Empirical convergence and Gram–Schmidt replacement are separate steps needed for the displayed limit.",
+     "fidelity_note": "The lemma gives $\\mathbb E[f_i z_{j+1}]=0$. Empirical convergence and Gram–Schmidt replacement are separate steps needed for the displayed limit.",
      "link_note": "Supplies the limiting expectation, not the empirical convergence itself."
     }
    ]
@@ -8441,7 +8441,7 @@
       44,
       55
      ],
-     "fidelity_note": "The theorem concludes convergence for one fixed j<K. The paper’s finite sum follows by combining these K almost-sure limits on a common event; it is not the displayed theorem type.",
+     "fidelity_note": "The theorem concludes convergence for one fixed $j<K$. The paper’s finite sum follows by combining these $K$ almost-sure limits on a common event; it is not the displayed theorem type.",
      "link_note": "Each fixed column has the required almost-sure limit."
     }
    ]
@@ -8486,7 +8486,7 @@
       42,
       44
      ],
-     "fidelity_note": "The source gives |⟨C_v(w),z⟩|≤‖w‖²‖z‖ for zero-or-unit v. Residual contraction and ‖Ŝ_n‖=1 give the displayed looser 1+‖z‖² bound."
+     "fidelity_note": "The source gives $\\bigl\\lvert\\langle C_v(w),z\\rangle\\bigr\\rvert\\le\\lVert w\\rVert^2\\lVert z\\rVert$ for zero-or-unit $v$. Residual contraction and $\\lVert\\widehat S_n\\rVert=1$ give the displayed looser $1+\\lVert z\\rVert^2$ bound."
     }
    ]
   },
@@ -8575,7 +8575,7 @@
       14,
       17
      ],
-     "link_note": "The assumptions are 0≤T<1, N>0 and positive active second moments; there is no minimizer premise."
+     "link_note": "The assumptions are $0\\le T<1$, $N>0$ and positive active second moments; there is no minimizer premise."
     }
    ]
   },
@@ -8791,7 +8791,7 @@
      ],
      "relation": "part",
      "fidelity": "different",
-     "fidelity_note": "Lean defines log(sum_i exp(x_i)) for a finite index type, without the inverse-temperature substitution x_σ=βH_{n,J}(σ) or the factor 1/(nβ).",
+     "fidelity_note": "Lean defines $\\log\\sum_i\\exp(x_i)$ for a finite index type, without the inverse-temperature substitution $x_\\sigma=\\beta H_{n,J}(\\sigma)$ or the factor $1/(n\\beta)$.",
      "link_note": "The logarithmic partition function before the energy-per-spin normalization."
     }
    ]
@@ -8814,7 +8814,7 @@
      ],
      "relation": "defines",
      "fidelity": "stronger",
-     "fidelity_note": "The definition accepts every real weight vector on any finite index type; the paper specialises it to x_σ=βH_{n,J}(σ). Probability normalization uses a nonempty state space.",
+     "fidelity_note": "The definition accepts every real weight vector on any finite index type; the paper specialises it to $x_\\sigma=\\beta H_{n,J}(\\sigma)$. Probability normalization uses a nonempty state space.",
      "link_note": "Normalized exponential weights; the energy and entropy bounds are separate claims."
     }
    ]
@@ -8837,7 +8837,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "This row supplies only β max x ≤ log(sum exp(βx)); it does not state the upper bound. With the next row, division by nβ>0 and |{−1,1}^n|=2^n give the paper's first two-sided inequality.",
+     "fidelity_note": "This row supplies only $\\beta\\max_i x_i\\le\\log\\sum_i\\exp(\\beta x_i)$; it does not state the upper bound. With the next row, division by $n\\beta>0$ and $\\lvert\\{-1,1\\}^n\\rvert=2^n$ give the paper's first two-sided inequality.",
      "link_note": "Lower half of the free-energy bound; applies to any finite nonempty energy list."
     },
     {
@@ -8849,8 +8849,8 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "With hβ : 0 ≤ β, this row supplies only log(sum exp(βx)) ≤ β max x+log(card ι). Pair it with the lower bound and normalise by nβ>0; no Gibbs-mean entropy bound is stated.",
-     "link_note": "Upper half; log(card ι) becomes n log 2 for n binary spins."
+     "fidelity_note": "With `hβ : 0 ≤ β`, this row supplies only $\\log\\sum_{i\\in\\iota}\\exp(\\beta x_i)\\le\\beta\\max_{i\\in\\iota}x_i+\\log\\lvert\\iota\\rvert$. Pair it with the lower bound and normalise by $n\\beta>0$; no Gibbs-mean entropy bound is stated.",
+     "link_note": "Upper half; $\\log\\lvert\\iota\\rvert$ becomes $n\\log 2$ for $n$ binary spins."
     }
    ]
   },
@@ -8960,7 +8960,7 @@
       87,
       88
      ],
-     "link_note": "The final clause quantifies over every associated X and every t in Time=[0,1)."
+     "link_note": "The final clause quantifies over every associated $X$ and every $t$ in $[0,1)$."
     }
    ]
   },
@@ -9143,7 +9143,7 @@
       13,
       14
      ],
-     "link_note": "The caller provides hmin and hX for the same W, γ and X."
+     "link_note": "The caller provides `hmin` and `hX` for the same $W$, $\\gamma$ and $X$."
     }
    ]
   },
@@ -9209,7 +9209,7 @@
       84,
       87
      ],
-     "link_note": "Contact q(t)=t and strip regularity supply the unit second moment of a."
+     "link_note": "Contact $q(t)=t$ and strip regularity supply the unit second moment of $a$."
     }
    ]
   },
@@ -9270,7 +9270,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The N updates consume formal coordinates 0 through N−1; coordinate N is reserved for rounding."
+     "link_note": "The $N$ updates consume formal coordinates 0 through $N-1$; coordinate $N$ is reserved for rounding."
     }
    ]
   },
@@ -9288,7 +9288,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Formal j=0,…,N−1 corresponds to c₁,…,c_N."
+     "link_note": "Formal $j=0,\\dots,N-1$ corresponds to $c_{1},\\dots,c_N$."
     },
     {
      "name": "OAI.SKValue.FiniteGaussianConclusion",
@@ -9325,7 +9325,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "At i=N+1, coefficientB uses coordinate N."
+     "link_note": "At $i=N+1$, `coefficientB` uses coordinate $N$."
     }
    ]
   },
@@ -9343,7 +9343,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Finset.range (N+1) is exactly j=0,…,N."
+     "link_note": "`Finset.range (N+1)` is exactly $j=0,\\dots,N$."
     }
    ]
   },
@@ -9361,21 +9361,21 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "Within the active range, coordinate N j is the (j+1)st paper Gaussian."
+     "link_note": "Within the active range, coordinate `N j` is the $(j+1)$st paper Gaussian."
     },
     {
      "name": "OAI.SKValue.rawCoefficient",
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "This coefficient is a(tⱼ,Yⱼ), before multiplication by a fresh Gaussian."
+     "link_note": "This coefficient is $a(t_j,Y_j)$, before multiplication by a fresh Gaussian."
     },
     {
      "name": "OAI.SKValue.normalizer",
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The inverse square root of that coefficient’s second moment is cⱼ₊₁."
+     "link_note": "The inverse square root of that coefficient’s second moment is $c_{j+1}$."
     }
    ]
   },
@@ -9397,7 +9397,7 @@
       155,
       157
      ],
-     "link_note": "∀ᶠ N in atTop means one N₀ works for every later N and every j<N."
+     "link_note": "`∀ᶠ N in atTop` means one $N_{0}$ works for every later $N$ and every $j<N$."
     }
    ]
   },
@@ -9415,7 +9415,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "For t≥1 this function is exactly U, so the martingale extends beyond the original half-open interval."
+     "link_note": "For $t\\ge1$ this function is exactly $U$, so the martingale extends beyond the original half-open interval."
     }
    ]
   },
@@ -9553,7 +9553,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "This is a real-time function with shape conditions on [0,1); the restriction map itself is an obligation."
+     "link_note": "This is a real-time function with shape conditions on $[0,1)$; the restriction map itself is an obligation."
     }
    ]
   },
@@ -9575,7 +9575,7 @@
       33,
       38
      ],
-     "link_note": "Nonnegativity and monotonicity are imposed only on [0,1); integrability is stated on (0,1]."
+     "link_note": "Nonnegativity and monotonicity are imposed only on $[0,1)$; integrability is stated on $(0,1]$."
     }
    ]
   },
@@ -9593,14 +9593,14 @@
      "file": "OAI/Probability/SKSupport/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The support model leaves Ω and its measurable space as external parameters."
+     "link_note": "The support model leaves $Ω$ and its measurable space as external parameters."
     },
     {
      "name": "OAI.SKValue.BrownianSpace",
      "file": "OAI/Probability/SKValue/Model.lean",
      "relation": "defines",
      "fidelity": "same",
-     "link_note": "The scalar model bundles Ω and its measurable space along with the law and Brownian motion."
+     "link_note": "The scalar model bundles $Ω$ and its measurable space along with the law and Brownian motion."
     }
    ]
   },
@@ -9658,7 +9658,7 @@
       43,
       47
      ],
-     "link_note": "A pathwise payoff uses absolute time s from t to one and the elapsed control argument s−t."
+     "link_note": "A pathwise payoff uses absolute time $s$ from $t$ to one and the elapsed control argument $s-t$."
     }
    ]
   },
@@ -9793,7 +9793,7 @@
      ],
      "relation": "part",
      "fidelity": "weaker",
-     "fidelity_note": "Lean states only (1/1000 : ℝ) < 1661507/1521000000. The paper additionally states the exact difference 140507/1521000000; that equality is not the theorem's conclusion.",
+     "fidelity_note": "Lean states only $\\frac{1}{1000}<\\frac{1661507}{1521000000}$. The paper additionally states the exact difference $\\frac{140507}{1521000000}$; that equality is not the theorem's conclusion.",
      "link_note": "Strict positivity of the surplus; the displayed exact difference is further rational arithmetic."
     }
    ]

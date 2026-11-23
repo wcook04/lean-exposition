@@ -43,15 +43,15 @@
     "file": "result-comparison.md",
     "name": "result-comparison.md",
     "label": "Result-by-result comparison",
-    "bytes": 56499,
-    "sha256": "5554962acc65133f67abb73458550b59727671793ce482c29e73feeb7d2a96fc"
+    "bytes": 57077,
+    "sha256": "c67ef0acf8aa53575d06077a6f660beb7847f34073500968b97baa2414ada5d0"
    },
    "data": {
     "file": "result-comparison.json",
     "name": "result-comparison.json",
     "label": "Comparison data",
-    "bytes": 109572,
-    "sha256": "759b6daf7003200e9f6e2d885080c5cc140f32225ac88ff021a3a6a5ba3721a9"
+    "bytes": 110750,
+    "sha256": "0da3a0bb7f02577e8f4c5298d3ea5bb189b2203a143f44bedf3a1cfad2bc17a2"
    }
   }
  }
