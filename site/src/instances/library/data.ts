@@ -56,6 +56,7 @@ export interface AboutSection { heading: string; paragraphs?: string[]; links?: 
  */
 export interface ReaderSettings {
   publish_receipts?: boolean;
+  lean_notes_open?: boolean;
   public_observations?: { file: string; name: string }[];
   observation?: string | null;
   tie_audit?: string | null;

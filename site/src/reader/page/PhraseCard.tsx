@@ -481,7 +481,7 @@ export function PhraseCard({ row, role, note, quote, merged, phrase, names, expl
         {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
       </div>
       {foldNotes ? (
-        <details className="phrase-card__notes">
+        <details className="phrase-card__notes" open={site.leanNotesOpen}>
           <summary>{explanation?.citations?.length ? "Reading notes and sources" : "Reading notes"}</summary>
           {explanation?.text && <Explanation explanation={explanation} showOpen={false} />}
           {readingNote}
