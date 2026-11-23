@@ -168,6 +168,8 @@ export function FocusGraph(props: FocusGraphProps) {
   const world = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const pendingSize = useRef(false);
+  const fittedKey = useRef<string | null>(null);
+  const fitRef = useRef<(() => void) | null>(null);
   const [drawn, setDrawn] = useState<Drawn | null>(null);
   const [hot, setHot] = useState<string | null>(null);
   /** The sentence of a use the paper's text states, while it is pointed at or after a click. */
@@ -287,6 +289,9 @@ export function FocusGraph(props: FocusGraphProps) {
     }
     setCam({ x, y, k });
     return true;
+  };
+  fitRef.current = () => {
+    fitNow();
   };
 
   const words = useCallback((role: FGRole): FGRoleWords => ({ ...FG_ROLES[role], ...(props.roles?.[role] ?? {}) }), [props.roles]);
@@ -464,6 +469,7 @@ export function FocusGraph(props: FocusGraphProps) {
       if (!pendingSize.current) return;
       pendingSize.current = false;
       apply();
+      if (auto.current && !openedNow.current) fitRef.current?.();
     };
     apply();
     const ro = new ResizeObserver(read);
@@ -576,8 +582,14 @@ export function FocusGraph(props: FocusGraphProps) {
   // A new drawing is fitted while the view is the fitted one; otherwise the camera only keeps some of it in view.
   useLayoutEffect(() => {
     if (!drawn) return;
-    if (auto.current && !openedNow.current) fitNow();
-    else applyCam();
+    // Re-measured under the pointer (a hover can re-measure the drawing while the dock beside it
+    // changes size): keep the camera, and refit once the pointer leaves.
+    const held = fittedKey.current === key && !!scroller.current?.matches(":hover");
+    if (held) pendingSize.current = true;
+    if (auto.current && !openedNow.current && !held) {
+      fitNow();
+      fittedKey.current = key;
+    } else applyCam();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawn]);
 
