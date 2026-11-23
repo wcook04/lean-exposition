@@ -167,9 +167,7 @@ export function FocusGraph(props: FocusGraphProps) {
   const scroller = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const pendingSize = useRef(false);
   const fittedKey = useRef<string | null>(null);
-  const fitRef = useRef<(() => void) | null>(null);
   const [drawn, setDrawn] = useState<Drawn | null>(null);
   const [hot, setHot] = useState<string | null>(null);
   /** The sentence of a use the paper's text states, while it is pointed at or after a click. */
@@ -289,9 +287,6 @@ export function FocusGraph(props: FocusGraphProps) {
     }
     setCam({ x, y, k });
     return true;
-  };
-  fitRef.current = () => {
-    fitNow();
   };
 
   const words = useCallback((role: FGRole): FGRoleWords => ({ ...FG_ROLES[role], ...(props.roles?.[role] ?? {}) }), [props.roles]);
@@ -457,28 +452,15 @@ export function FocusGraph(props: FocusGraphProps) {
   useLayoutEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    const apply = () => setSize((s) => (s.w === el.clientWidth && s.h === el.clientHeight ? s : { w: el.clientWidth, h: el.clientHeight }));
-    // While the pointer is on the drawing, a change of the pane's size (the dock under it showing a
-    // hovered card's preview) waits until the pointer leaves: refitting under the pointer would move
-    // the card away, end the preview, resize the pane back and refit again, in a loop.
-    const read = () => {
-      if (el.matches(":hover")) pendingSize.current = true;
-      else apply();
-    };
-    const leave = () => {
-      if (!pendingSize.current) return;
-      pendingSize.current = false;
-      apply();
-      if (auto.current && !openedNow.current) fitRef.current?.();
-    };
+    // A change of the pane's height alone (the dock under it showing a hovered card's preview, or
+    // the reader dragging the dock) never moves the drawing: refitting under the pointer moved the
+    // card away, ended the preview and repeated. A new width, or a new subject, is laid out afresh.
+    const apply = () => setSize((s) => (s.w === el.clientWidth && (s.h === el.clientHeight || fittedKey.current !== null) ? s : { w: el.clientWidth, h: el.clientHeight }));
+    const read = apply;
     apply();
     const ro = new ResizeObserver(read);
     ro.observe(el);
-    el.addEventListener("pointerleave", leave);
-    return () => {
-      ro.disconnect();
-      el.removeEventListener("pointerleave", leave);
-    };
+    return () => ro.disconnect();
   }, []);
 
   // The lines, measured from the nodes as the browser laid them out.
@@ -582,11 +564,9 @@ export function FocusGraph(props: FocusGraphProps) {
   // A new drawing is fitted while the view is the fitted one; otherwise the camera only keeps some of it in view.
   useLayoutEffect(() => {
     if (!drawn) return;
-    // Re-measured under the pointer (a hover can re-measure the drawing while the dock beside it
-    // changes size): keep the camera, and refit once the pointer leaves.
-    const held = fittedKey.current === key && !!scroller.current?.matches(":hover");
-    if (held) pendingSize.current = true;
-    if (auto.current && !openedNow.current && !held) {
+    // A drawing is fitted once for its subject; re-measuring it later (a hover, a font arriving)
+    // keeps the camera, so nothing moves under the pointer.
+    if (auto.current && !openedNow.current && fittedKey.current !== key) {
       fitNow();
       fittedKey.current = key;
     } else applyCam();

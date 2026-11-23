@@ -1897,29 +1897,20 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       if (width > 10 && height > 10) setReady(true);
       refreshChips();
     };
-    // While the pointer is on the map, a new size of the canvas (the dock under it showing a hovered
-    // card's preview) waits until the pointer leaves: re-laying out or refitting under the pointer
-    // would move the card away, end the preview, resize the canvas back and repeat, in a loop.
-    let pendingSize: { width: number; height: number } | null = null;
+    // A change of the canvas's height alone (the dock under the map showing a hovered card's
+    // preview) never re-lays out or refits the map: doing that under the pointer moved the card away,
+    // ended the preview and repeated. The camera learns the new size; nothing moves.
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      if (readyRef.current && wrap.matches(":hover")) {
-        pendingSize = { width, height };
+      if (readyRef.current && Math.round(width) === Math.round(sizeRef.current.width)) {
+        sizeRef.current = { width, height };
         return;
       }
       applySize(width, height);
     });
-    const onLeaveSize = () => {
-      if (!pendingSize) return;
-      const p = pendingSize;
-      pendingSize = null;
-      applySize(p.width, p.height);
-    };
-    wrap.addEventListener("pointerleave", onLeaveSize);
     observer.observe(wrap);
     return () => {
       observer.disconnect();
-      wrap.removeEventListener("pointerleave", onLeaveSize);
       wrap.removeEventListener("wheel", onWheel);
       window.clearTimeout(wheelEnd);
       s.on(".zoom", null);
