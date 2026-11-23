@@ -1,7 +1,7 @@
 // The strip under the canvas.
 
 import type { RefObject } from "react";
-import { LeanGlyph } from "./LeanGlyph";
+import { LeanDot, TopicSwatch } from "./LeanGlyph";
 import { Sample } from "./Sample";
 
 /** Where the Lean graph's lines come from, in the words the index gives. */
@@ -45,13 +45,13 @@ export function MapStrip({ lean, captionRef, onFit, onNear }: { lean?: StripLean
         ) : (
           <ul className="map-legend" aria-label="Key to the argument">
             <li>
-              <LeanGlyph fill="whole" /> Linked Lean proved
+              <TopicSwatch colour="var(--tone-0, var(--lean-fill))" /> Colour: its topic
             </li>
             <li>
-              <LeanGlyph fill="part" /> Some of it linked
+              <LeanDot fill="whole" /> Lean proves it
             </li>
             <li>
-              <LeanGlyph fill="none" /> No Lean linked
+              <LeanDot fill="part" /> Some of it in Lean
             </li>
             <li>A box is a definition</li>
             <li>An AI agent made each link</li>

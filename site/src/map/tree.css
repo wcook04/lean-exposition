@@ -1525,3 +1525,25 @@
 .tree[data-dense] .card[data-toned="inherited"].is-quiet {
   background: color-mix(in oklab, var(--card-tone) 48%, var(--ground));
 }
+
+/* On a coloured card the fill is its topic, so its Lean status is a dot in the top right corner,
+   a constant 7px on screen: filled when linked Lean proves it, a ring when it has some of it,
+   none when no Lean is linked. A chip, too small to read, shows its colour alone. */
+.tree[data-dense] .card[data-toned][data-lean]::before {
+  content: "";
+  position: absolute;
+  top: calc(4px / var(--k));
+  right: calc(4px / var(--k));
+  width: calc(7px / var(--k));
+  height: calc(7px / var(--k));
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: calc(1.5px / var(--k)) solid var(--card-ink, #16141d);
+  pointer-events: none;
+}
+.tree[data-dense] .card[data-toned][data-lean="whole"]::before {
+  background: var(--card-ink, #16141d);
+}
+.tree[data-dense] .card[data-toned][data-chip]::before {
+  display: none;
+}

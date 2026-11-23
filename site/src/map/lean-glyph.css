@@ -27,3 +27,35 @@
   background: var(--lean-fill-part);
   border-color: color-mix(in oklab, var(--lean-fill-line) 55%, var(--card-border));
 }
+
+/* The Lean dot of a coloured card (tree.css), for the key: filled, ring, or nothing. */
+.lean-dot {
+  flex: none;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  box-sizing: border-box;
+  vertical-align: 0;
+}
+.lean-dot[data-fill="whole"] {
+  background: currentColor;
+}
+.lean-dot[data-fill="none"] {
+  border-style: dotted;
+  opacity: 0.45;
+}
+/* A topic swatch: a small card in a topic's colour, or a softer one for a step it serves. */
+.topic-swatch {
+  flex: none;
+  display: inline-block;
+  width: 26px;
+  height: 15px;
+  border-radius: 7px;
+  vertical-align: -3px;
+  background: var(--swatch);
+}
+.topic-swatch[data-soft] {
+  background: color-mix(in oklab, var(--swatch) 62%, var(--ground));
+}
