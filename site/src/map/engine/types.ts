@@ -94,6 +94,8 @@ export interface Dummy {
 }
 
 export interface Layout {
+  /** An overview whose broad ranks were wrapped into bands. */
+  balanced?: boolean;
   root: string;
   metrics: Metrics;
   edges: EngineEdge[];

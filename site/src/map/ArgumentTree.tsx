@@ -527,9 +527,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       } else pin = null;
     }
     const run = (sz: (lid: string) => Size, m: typeof metrics) =>
-      layoutTree({ root: goal, nodes: split.nodes, edges: split.edges, size: sz, metrics: m, prev: prevLayout, pin, keepOrder: hold });
+      layoutTree({ root: goal, nodes: split.nodes, edges: split.edges, size: sz, metrics: m, balanceOverview: dense, prev: prevLayout, pin, keepOrder: hold });
     let { layout, plan } = run(size, metrics);
-    const room = fillRoom(layout, fillOn ? { width: paneW - insets.left - insets.right, height: paneH - insets.top - insets.bottom } : null, props.fill === "gaps");
+    const room = fillRoom(layout, fillOn && !layout.balanced ? { width: paneW - insets.left - insets.right, height: paneH - insets.top - insets.bottom } : null, props.fill === "gaps");
     if (room) {
       const grown = (lid: string): Size => {
         const s0 = size(lid);
