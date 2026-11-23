@@ -379,9 +379,10 @@ STEP_STATE = r"""() => {
   const num = (el) => { const m = el && (el.getAttribute('aria-label') || '').match(/(\d+) of (\d+)/); return m ? Number(m[1]) : null; };
   const counter = document.querySelector('.reader-strip__steps .num')?.textContent ?? '';
   const m = counter.match(/(\d+) of (\d+)/);
+  const unpositioned = counter.trim().match(/^(\d+) (?:links|statements)$/);
   const graph = [...document.querySelectorAll('button[aria-pressed]')].find(b => b.textContent.trim() === 'Graph');
   return {
-    counter: m ? Number(m[1]) : null, total: m ? Number(m[2]) : null, text: counter,
+    counter: m ? Number(m[1]) : null, total: m ? Number(m[2]) : unpositioned ? Number(unpositioned[1]) : null, text: counter,
     pinned: num(document.querySelector('.paper .tie[data-pin][aria-label]')),
     lit: num(document.querySelector('.paper .tie[data-on][aria-label]')),
     anyPin: !!document.querySelector('.paper .tie[data-pin]'),
@@ -416,8 +417,12 @@ def step_checks(browser, base, check) -> None:
             page.wait_for_selector(".reader-strip__steps .num", timeout=30000)
             page.wait_for_timeout(2000)
             state = lambda: page.evaluate(STEP_STATE)
-            total = state()["total"]
-            if not total or total < 3:
+            initial = state()
+            total = initial["total"]
+            if total is None:
+                check(f"{tag} counter and selection agree", False, f"unrecognized counter: {initial['text']!r}")
+                continue
+            if total < 3:
                 report_skip = f"{total} tied statements: nothing to step between"
                 check(f"{tag} counter and selection agree", True, report_skip)
                 continue
@@ -442,6 +447,26 @@ def step_checks(browser, base, check) -> None:
                       f"graph {got['graph']}, y {got['y']}->{still['y']}, lit at {lit}, {got['url']}")
                 return got
 
+            def click_step(label):
+                # Locator.click() can scroll the sticky strip and change the current statement.
+                button = page.get_by_role("button", name=label)
+                point = button.evaluate("""el => {
+                    const r = el.getBoundingClientRect();
+                    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+                    return r.width && r.height && !el.matches(':disabled, [aria-disabled="true"]')
+                        && el.contains(document.elementFromPoint(x, y)) ? {x, y} : null;
+                }""")
+                if point is None:
+                    raise AssertionError(f"{label} is not clickable at its current position")
+                page.mouse.click(point["x"], point["y"])
+
+            actions = (
+                ("next button", lambda: click_step("Next tied statement"), 1),
+                ("previous button", lambda: click_step("Previous tied statement"), 0),
+                ("j", lambda: page.keyboard.press("j"), 1),
+                ("k", lambda: page.keyboard.press("k"), 0),
+            )
+
             if mode == "auto":
                 # Scroll by hand into the paper until the reading line follows an interior statement.
                 start = None
@@ -456,12 +481,9 @@ def step_checks(browser, base, check) -> None:
                     continue
                 got = state()
                 check(f"{tag} start follows the reading line", got["lit"] == start and not got["anyPin"], f"counter {start}, lit {got['lit']}")
-                for name, act, want in (("next button", lambda: page.get_by_role("button", name="Next tied statement").click(), start + 1),
-                                        ("previous button", lambda: page.get_by_role("button", name="Previous tied statement").click(), start),
-                                        ("j", lambda: page.keyboard.press("j"), start + 1),
-                                        ("k", lambda: page.keyboard.press("k"), start)):
+                for name, act, offset in actions:
                     act()
-                    landed(name, want, None)
+                    landed(name, start + offset, None)
                 continue
 
             # Manual: click phrases in reading order until one selects an interior statement.
@@ -491,10 +513,7 @@ def step_checks(browser, base, check) -> None:
             if graph.count():
                 graph.first.click()
                 page.wait_for_timeout(800)
-            for name, act, want in (("next button", lambda: page.get_by_role("button", name="Next tied statement").click(), start + 1),
-                                    ("previous button", lambda: page.get_by_role("button", name="Previous tied statement").click(), start),
-                                    ("j", lambda: page.keyboard.press("j"), start + 1),
-                                    ("k", lambda: page.keyboard.press("k"), start)):
+            for name, act, offset in actions:
                 if not state()["anyPin"]:
                     # Select the statement again before each step, so every step starts from a selection.
                     cur = state()["lit"]
@@ -514,7 +533,7 @@ def step_checks(browser, base, check) -> None:
                       f"selected {selected}, counter {away['counter']} after scrolling to y {away['y']}")
                 view = away["graph"]
                 act()
-                landed(name, want, view)
+                landed(name, start + offset, view)
         except Exception as error:  # noqa: BLE001 - a check, reported with its cause
             check(f"{tag} counter and selection agree", False, f"{type(error).__name__}: {error}")
         finally:

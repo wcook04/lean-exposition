@@ -1497,19 +1497,20 @@
 /* Topic colours on the overview's tiles (ArgumentTree `toneOf`), drawn like the reader's local
    graph: the card keeps the page's dark card, with a bar of the topic's colour down its left edge
    and bold words on the left. A step the paper does not name (a Lean helper) takes a softer bar
-   of the step it serves. Zoomed out past reading size, a card is a chip filled with its colour. */
+   of the step it serves. The bar narrows when the card is too small for words. */
 .tree[data-dense] .card[data-toned],
 .tree[data-dense] .card[data-toned][data-lean] {
+  --topic-rail: calc(5px / var(--k));
   background: var(--card);
   border-color: color-mix(in oklab, var(--card-tone) 30%, var(--card-border));
-  box-shadow: inset calc(5px / var(--k)) 0 0 var(--card-tone);
+  box-shadow: inset var(--topic-rail) 0 0 var(--card-tone);
   --card-ink: var(--ink);
   color: var(--ink);
 }
 .tree[data-dense] .card[data-toned="inherited"] {
   border-style: dashed;
   border-color: var(--card-border);
-  box-shadow: inset calc(5px / var(--k)) 0 0 color-mix(in oklab, var(--card-tone) 55%, var(--card));
+  box-shadow: inset var(--topic-rail) 0 0 color-mix(in oklab, var(--card-tone) 55%, var(--card));
 }
 .tree[data-dense] .card[data-toned].is-quiet {
   background: color-mix(in oklab, var(--card) 70%, var(--ground));
@@ -1533,14 +1534,9 @@
   padding-left: calc((var(--pad-x, 10px) + 5px) / var(--k));
 }
 
-/* A chip: the card too small to hold its words, filled with its colour. */
-.tree[data-dense] .card[data-chip] {
-  background: var(--card-tone, color-mix(in srgb, currentColor 22%, transparent));
-  border-color: transparent;
-  box-shadow: none;
-}
-.tree[data-dense] .card[data-chip][data-toned="inherited"] {
-  background: color-mix(in oklab, var(--card-tone) 55%, var(--ground));
+/* Keep the card surface and narrow the topic bar at overview scale. */
+.tree[data-dense] .card[data-toned][data-chip] {
+  --topic-rail: min(calc(2px / var(--k)), 8px);
 }
 .tree[data-dense] .card[data-chip] .card__compact {
   visibility: hidden;
@@ -1548,7 +1544,7 @@
 
 /* On a coloured card the colour is its topic, so its Lean status is a dot in the top right corner,
    a constant 7px on screen: filled when linked Lean proves it, a ring when it has some of it,
-   none when no Lean is linked. A chip shows its colour alone. */
+   none when no Lean is linked. The dot is hidden at overview scale. */
 .tree[data-dense] .card[data-toned][data-lean]::before {
   content: "";
   position: absolute;

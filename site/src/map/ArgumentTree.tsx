@@ -719,7 +719,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const fit = plate ?? fitTitle(m.t, rect.w, rect.h, k, kind, fitBox, section, dense ? DENSE_TITLE_SIZES : undefined);
       const statement = plate?.statement ?? false;
       // A title cut inside the first quarter of its first word (a crowded fill map, or the overview
-      // zoomed out past reading size) reads as noise: the tile becomes a chip of its topic colour,
+      // zoomed out past reading size) reads as noise: the tile hides its title,
       // and hovering it shows the card.
       if (dense && kind !== "root") el.toggleAttribute("data-chip", chipped(label, fit) || rect.w * k < 48 || rect.h * k < 16);
       if (fit.short || label !== el.dataset.full) shortened.current.add(lid);
@@ -1329,7 +1329,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   const floor = compact ? COMPACT_FLOOR : STEPS_FLOOR;
   /** The camera never goes below the scale at which a tile still shows its words. */
-  // The overview zooms out well past reading size: there its tiles become chips of their topic colour.
+  // The overview zooms out past reading size, where the tiles hide their titles.
   const minK = props.minScale ?? (dense ? DENSE_ZOOM_FLOOR : floorK(dense, compact));
   minKRef.current = minK;
 
