@@ -481,7 +481,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           {again}
         </>
       );
-    if (why === "decl") return <>{offMap ? "The Lean around the declaration you chose." : "The declaration you chose."}{again}</>;
+    if (why === "decl") return <>{offMap ? "Lean declarations that use, or are used by, the declaration you chose." : "The declaration you chose."}{again}</>;
     if (why === "pin") return <>The step you chose.{again}</>;
     if (why === "paragraph")
       return (
@@ -490,7 +490,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           {again}
         </>
       );
-    if (current.subject.kind === "decl") return <>The Lean around the declaration this paragraph is tied to.</>;
+    if (current.subject.kind === "decl") return <>Lean declarations that use, or are used by, the declaration linked to this paragraph.</>;
     return null;
   })();
 
@@ -668,7 +668,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   );
 
   return (
-    <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+    <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The Lean and the proof map" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
         <ModeToggle mode={mode} onMode={(next) => {
           if (next === "graph") setUnfolded(true);
@@ -676,7 +676,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         }} leanButtonRef={leanButtonRef} graphCount={focus && !showWhole ? neighbours : null} />
         {mode === "graph" && !fill && !unlinked && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
-            {whole ? "Around this step" : "Whole proof map"}
+            {whole ? "Neighbours of this step" : "Whole proof map"}
           </button>
         )}
         {narrow && unfolded && !whole && mode === "graph" && !fill && (

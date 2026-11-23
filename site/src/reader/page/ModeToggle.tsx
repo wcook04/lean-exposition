@@ -10,7 +10,7 @@ export type PaneMode = "graph" | "lean";
 export function ModeToggle({ mode, onMode, leanButtonRef, graphCount = null }: { mode: PaneMode; onMode(mode: PaneMode): void; leanButtonRef?: Ref<HTMLButtonElement>; graphCount?: number | null }) {
   return (
     <div className="mode-toggle" role="group" aria-label="What the right pane shows">
-      <button ref={leanButtonRef} type="button" aria-pressed={mode === "lean"} title="The words, how the Lean compares with them, and the Lean" onClick={() => onMode("lean")}>
+      <button ref={leanButtonRef} type="button" aria-pressed={mode === "lean"} title="The phrase, its comparison with the Lean, and the Lean" onClick={() => onMode("lean")}>
         Lean
       </button>
       <button

@@ -75,7 +75,7 @@ export const FG_ROLES: Record<FGRole, FGRoleWords> = {
   step: { order: 1, one: "Step", many: "Steps of the argument", uses: "Steps of the argument it uses", usedBy: "Steps of the argument that use it" },
   definition: { order: 2, one: "Definition", many: "Definitions", uses: "Definitions it uses", usedBy: "Definitions that use it" },
   cited: { order: 3, one: "Cited result", many: "Cited results", uses: "Cited results it uses", usedBy: "Cited results that use it" },
-  open: { order: 4, one: "Open question", many: "Open questions", uses: "Open questions it rests on", usedBy: "Open questions that use it" },
+  open: { order: 4, one: "Open question", many: "Open questions", uses: "Open questions it depends on", usedBy: "Open questions that use it" },
   helper: { order: 5, one: "Lean helper", many: "Lean helper lemmas", uses: "Lean helper lemmas it uses", usedBy: "Lean helper lemmas that use it" },
   library: { order: 6, one: "Library fact", many: "Library facts", uses: "Library facts it uses", usedBy: "Library facts that use it" },
 };

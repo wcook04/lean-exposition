@@ -1565,28 +1565,17 @@ html[data-right-sheet] {
   min-width: 92px;
 }
 
-/* The pane's words use the pane's whole width: no reading measure inside it, and the comparison
-   terms' names on one line where the pane has room. */
-.map-pane.map-pane {
+/* The pane's words use the pane's whole width: no reading measure anywhere inside it (several
+   phrase-card rules cap their children at 68 to 84ch with more specific selectors, so this wins
+   outright), and the comparison terms' names on one line where the pane has room. */
+.map-pane {
   --measure: none;
   --evidence-measure: none;
 }
-.map-pane.map-pane :is(
-    blockquote.phrase-card__quote,
-    .phrase-card__compare,
-    .phrase-card__compare > *,
-    .phrase-card__notes > div,
-    .phrase-card__legend,
-    .ours p,
-    .ours__title,
-    .ours__open,
-    .lean-block__relation,
-    .tie-origin,
-    .lean-hood__note,
-    .lean-decl__words
-  ) {
-  max-width: none;
+.map-pane :is(p, dl, dd, blockquote, section, details, div, span, li, ul, ol, h3, h4, a):not(.tree *):not(.fg__scroll *) {
+  max-width: none !important;
+  max-inline-size: none !important;
 }
-.map-pane.map-pane .phrase-card__legend dl > div {
+.map-pane .phrase-card__legend dl > div {
   grid-template-columns: minmax(6.5em, 15em) minmax(0, 1fr);
 }
