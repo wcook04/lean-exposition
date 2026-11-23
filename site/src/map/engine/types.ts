@@ -74,7 +74,7 @@ export const METRICS_COMPACT: Metrics = {
 
 /** The overview's tiles: tight ranks and siblings, so a whole argument reads on one screen. */
 export const METRICS_DENSE: Metrics = {
-  sepCard: 10,
+  sepCard: 16,
   sepDummy: 7,
   gapMin: 15,
   trackSp: 4,

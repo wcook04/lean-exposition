@@ -24,10 +24,10 @@ export const COMPACT_MIN_K = 0.6;
 export const MAX_K = 1.8;
 
 /** The dense layout's tiles, in world pixels. */
-export const DENSE_W = 190;
-export const DENSE_H = 46;
+export const DENSE_W = 232;
+export const DENSE_H = 60;
 /** With a paper lens on, a dense tile has a third line for the section. */
-export const DENSE_H_SECTION = 60;
+export const DENSE_H_SECTION = 74;
 export const DENSE_ROOT_W = 420;
 export const DENSE_ROOT_H = 64;
 
@@ -68,6 +68,14 @@ export const TITLE_SIZES: Record<TitleKind, { sizes: number[]; lineH: number }> 
   card: { sizes: steps(13, MIN_TEXT), lineH: 1.22 },
   lean: { sizes: steps(12, MIN_TEXT), lineH: 1.22 },
   root: { sizes: steps(24, MIN_TEXT), lineH: 1.2 },
+};
+
+/** Title sizes in the overview's dense tiles: read at the size of the reader's local graph (13.5px),
+ * larger where the tile has room, never below 12px (smaller than that the tile becomes a chip). */
+export const DENSE_TITLE_SIZES: Record<TitleKind, { sizes: number[]; lineH: number }> = {
+  card: { sizes: steps(15, 12), lineH: 1.25 },
+  lean: { sizes: steps(13, 12), lineH: 1.25 },
+  root: { sizes: steps(24, 12), lineH: 1.2 },
 };
 
 /** The plate's compact form adds the theorem's first sentence, this wide on screen, this far under the title. */
@@ -218,8 +226,8 @@ export interface TitleFit {
  * word, so a tile never stands empty. `reserve` is room kept for a line under
  * the title, in screen pixels.
  */
-export function fitTitle(t: MeasuredTitle, w: number, h: number, k: number, kind: TitleKind, box: TileBox = TILE, reserve = 0): TitleFit {
-  const { sizes, lineH } = TITLE_SIZES[kind];
+export function fitTitle(t: MeasuredTitle, w: number, h: number, k: number, kind: TitleKind, box: TileBox = TILE, reserve = 0, table = TITLE_SIZES): TitleFit {
+  const { sizes, lineH } = table[kind];
   const width = widthOf(w, k, kind, box);
   const room = roomOf(h, k, kind, box, reserve);
   if (kind === "root") {

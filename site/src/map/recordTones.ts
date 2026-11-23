@@ -2,7 +2,7 @@
 // colours of one account (the lens if one is chosen, else the first account whose phrases carry
 // topics), with that account's colour variables installed while the map is shown.
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Stage } from "../api/types";
 import type { PhraseTopic } from "../api/lean";
 import { STAGE_ORDER } from "../app/papers";
@@ -12,6 +12,7 @@ import { useTopicColours } from "../reader/topicColours";
 
 interface Tones {
   of: Map<string, string>;
+  topic: Map<string, string>;
   topics?: readonly PhraseTopic[];
 }
 
@@ -22,15 +23,18 @@ function tonesFor(stage: Stage): Promise<Tones | null> {
   if (!p) {
     p = loadTies(stage).then((index) => {
       if (!index?.topics?.length) return null;
-      return { of: paperPlaces(tieModel(index)).recordTone, topics: index.topics };
+      const places = paperPlaces(tieModel(index));
+      return { of: places.recordTone, topic: places.recordTopic, topics: index.topics };
     });
     cache.set(stage, p);
   }
   return p;
 }
 
-/** A record's topic colour (`var(--tone-N)`), or undefined; null until loaded. */
-export function useRecordTones(lens: Stage | undefined): ((id: string) => string | undefined) | undefined {
+type Lookup = ((id: string) => string | undefined) | undefined;
+
+/** A record's topic colour (`var(--tone-N)`) and topic name; undefined until loaded. */
+export function useRecordTones(lens: Stage | undefined): { toneOf: Lookup; topicOf: Lookup } {
   const [tones, setTones] = useState<Tones | null>(null);
   useEffect(() => {
     let live = true;
@@ -49,6 +53,9 @@ export function useRecordTones(lens: Stage | undefined): ((id: string) => string
     };
   }, [lens]);
   useTopicColours(tones?.topics);
-  const [of] = [tones?.of];
-  return of ? (id: string) => of.get(id) : undefined;
+  return useMemo(() => {
+    const of = tones?.of;
+    const topic = tones?.topic;
+    return { toneOf: of ? (id: string) => of.get(id) : undefined, topicOf: topic ? (id: string) => topic.get(id) : undefined };
+  }, [tones]);
 }

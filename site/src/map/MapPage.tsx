@@ -59,7 +59,7 @@ const WALK_KEYS = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
 /** Lean names break at their underscores, so a narrower tile than a record's holds them and the ranks stay on a monitor. */
 const LEAN_TILE_W = 168;
 /** On a laptop the sheet takes a third of the width: slimmer tiles keep the widest rank on the canvas. */
-const LAPTOP_TILE_W = 174;
+const LAPTOP_TILE_W = 204;
 const LEAN_TILE_H = 58;
 /** Far enough out to see the whole shape on a monitor; titles shorten there and the strip has them whole. */
 const LEAN_MIN_K = 0.3;
@@ -384,7 +384,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (route.lens) chooseAccount(route.lens);
   }, [route.lens]);
 
-  const toneOf = useRecordTones(route.lens as Stage | undefined);
+  const { toneOf, topicOf } = useRecordTones(route.lens as Stage | undefined);
   const changeLens = (stage: Stage | undefined) => go({ lens: stage, goal: undefined, edge: undefined }, true);
   const changeGoal = (id: string) => go({ goal: id, node: undefined, edge: undefined, trace: undefined });
   const collapse = () => {
@@ -656,7 +656,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             statusOf={recordMark}
             tileWidth={laptop ? LAPTOP_TILE_W : undefined}
             toneOf={toneOf}
-            fill="gaps"
+            topicOf={topicOf}
           />
           </GraphBoundary>
         ) : (

@@ -437,6 +437,14 @@
   border-radius: calc(13px / var(--k));
 }
 
+/* The overview's cards are cards, not pills: the local graph's 7px corners, 2px for a definition. */
+.tree[data-dense] .card[data-shape="round"] {
+  border-radius: calc(7px / var(--k));
+}
+.tree[data-dense] .card[data-shape="box"] {
+  border-radius: calc(2px / var(--k));
+}
+
 .card[data-lean="whole"] {
   background: var(--lean-fill);
   border-color: var(--lean-fill-line);
@@ -1486,64 +1494,94 @@
   text-decoration-color: currentColor;
 }
 
-/* Topic colours on the overview's tiles (ArgumentTree `toneOf`): the whole tile in the colour the
-   record's phrases carry in the paper, with dark words on it. */
+/* Topic colours on the overview's tiles (ArgumentTree `toneOf`), drawn like the reader's local
+   graph: the card keeps the page's dark card, with a bar of the topic's colour down its left edge
+   and bold words on the left. A step the paper does not name (a Lean helper) takes a softer bar
+   of the step it serves. Zoomed out past reading size, a card is a chip filled with its colour. */
 .tree[data-dense] .card[data-toned],
 .tree[data-dense] .card[data-toned][data-lean] {
-  background: var(--card-tone);
-  border-color: color-mix(in srgb, var(--card-tone) 70%, black);
-  /* Near-black words on a light colour, white on a dark one. */
-  --card-ink: oklch(from var(--card-tone) clamp(0.16, (0.64 - l) * 1000, 0.98) 0.01 h);
-  color: var(--card-ink);
+  background: var(--card);
+  border-color: color-mix(in oklab, var(--card-tone) 30%, var(--card-border));
+  box-shadow: inset calc(5px / var(--k)) 0 0 var(--card-tone);
+  --card-ink: var(--ink);
+  color: var(--ink);
+}
+.tree[data-dense] .card[data-toned="inherited"] {
+  border-style: dashed;
+  border-color: var(--card-border);
+  box-shadow: inset calc(5px / var(--k)) 0 0 color-mix(in oklab, var(--card-tone) 55%, var(--card));
+}
+.tree[data-dense] .card[data-toned].is-quiet {
+  background: color-mix(in oklab, var(--card) 70%, var(--ground));
 }
 .tree[data-dense] .card[data-toned] .card__ctitle,
 .tree[data-dense] .card[data-toned] .card__csec,
 .tree[data-dense] .card[data-toned] .card__cmain {
   color: var(--card-ink);
 }
+.tree[data-dense] .card[data-toned] .card__ctitle {
+  font-weight: 600;
+}
+.tree[data-dense] .card[data-toned="inherited"] .card__ctitle {
+  font-weight: 500;
+  color: var(--ink-2, var(--ink));
+}
+/* The words start at the bar, as in the local graph; the main result stays centred. */
+.tree[data-dense] .card[data-toned]:not(.card--root) .card__compact {
+  align-items: flex-start;
+  text-align: left;
+  padding-left: calc((var(--pad-x, 10px) + 5px) / var(--k));
+}
 
-/* A fill map too crowded for a title's first word draws the tile as a chip of its topic colour;
-   hovering it shows the card. A record with no topic keeps a quiet neutral chip. */
+/* A chip: the card too small to hold its words, filled with its colour. */
 .tree[data-dense] .card[data-chip] {
   background: var(--card-tone, color-mix(in srgb, currentColor 22%, transparent));
   border-color: transparent;
+  box-shadow: none;
+}
+.tree[data-dense] .card[data-chip][data-toned="inherited"] {
+  background: color-mix(in oklab, var(--card-tone) 55%, var(--ground));
 }
 .tree[data-dense] .card[data-chip] .card__compact {
   visibility: hidden;
 }
-/* A receding coloured tile keeps its colour, toward the ground. */
-.tree[data-dense] .card[data-toned].is-quiet {
-  background: color-mix(in oklab, var(--card-tone) 82%, var(--ground));
-}
 
-/* A step the paper never names takes the colour of the step it serves, softer. */
-.tree[data-dense] .card[data-toned="inherited"] {
-  background: color-mix(in oklab, var(--card-tone) 62%, var(--ground));
-  border-color: color-mix(in oklab, var(--card-tone) 55%, var(--ground));
-  --card-ink: oklch(from color-mix(in oklab, var(--card-tone) 62%, var(--ground)) clamp(0.16, (0.64 - l) * 1000, 0.98) 0.01 h);
-}
-.tree[data-dense] .card[data-toned="inherited"].is-quiet {
-  background: color-mix(in oklab, var(--card-tone) 48%, var(--ground));
-}
-
-/* On a coloured card the fill is its topic, so its Lean status is a dot in the top right corner,
+/* On a coloured card the colour is its topic, so its Lean status is a dot in the top right corner,
    a constant 7px on screen: filled when linked Lean proves it, a ring when it has some of it,
-   none when no Lean is linked. A chip, too small to read, shows its colour alone. */
+   none when no Lean is linked. A chip shows its colour alone. */
 .tree[data-dense] .card[data-toned][data-lean]::before {
   content: "";
   position: absolute;
-  top: calc(4px / var(--k));
-  right: calc(4px / var(--k));
+  top: calc(5px / var(--k));
+  right: calc(5px / var(--k));
   width: calc(7px / var(--k));
   height: calc(7px / var(--k));
   border-radius: 50%;
   box-sizing: border-box;
-  border: calc(1.5px / var(--k)) solid var(--card-ink, #16141d);
+  border: calc(1.5px / var(--k)) solid var(--lean-fill-line, var(--ink));
   pointer-events: none;
 }
 .tree[data-dense] .card[data-toned][data-lean="whole"]::before {
-  background: var(--card-ink, #16141d);
+  background: var(--lean-fill-line, var(--ink));
 }
 .tree[data-dense] .card[data-toned][data-chip]::before {
   display: none;
+}
+
+/* The topic of the card under the pointer, just above it, in the topic's colour. */
+.tree__topic-tip {
+  position: absolute;
+  z-index: 30;
+  transform: translate(-50%, calc(-100% - 6px));
+  max-width: 280px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font: 600 12px/1.3 var(--sans, system-ui);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  background: var(--card-tone);
+  color: oklch(from var(--card-tone) clamp(0.16, (0.64 - l) * 1000, 0.98) 0.01 h);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
 }

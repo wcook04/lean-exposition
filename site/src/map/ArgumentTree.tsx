@@ -40,7 +40,7 @@ import { graphWheel } from "./graphWheel";
 import { clampView, ensureVisible, fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
 import { CAMERA_MS, MOVE_MS, easeMove, lerp } from "./engine/motion";
 import { METRICS, METRICS_COMPACT, METRICS_DENSE, type EngineEdge, type Layout, type Rect, type Size } from "./engine/types";
-import { COMPACT_FLOOR, DENSE_H, DENSE_H_SECTION, DENSE_MIN_K, DENSE_ROOT_H, DENSE_ROOT_W, DENSE_TILE, DENSE_W, LEAN_BREAK, MAX_K, REF_PX, STEPS_FLOOR, STEPS_K, TILE, fitPlate, fitTitle, floorK, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
+import { COMPACT_FLOOR, DENSE_TITLE_SIZES, DENSE_H, DENSE_H_SECTION, DENSE_MIN_K, DENSE_ROOT_H, DENSE_ROOT_W, DENSE_TILE, DENSE_W, LEAN_BREAK, MAX_K, REF_PX, STEPS_FLOOR, STEPS_K, TILE, fitPlate, fitTitle, floorK, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
 import type { MapScene } from "./canvas/scene";
 import type { LeanMark } from "../model/leanStatus";
 import { leanFill, markWords } from "../model/leanStatus";
@@ -158,6 +158,8 @@ export interface TreeProps {
    * too crowded to hold a title's first word, the tile becomes a chip of that colour, read on hover.
    */
   toneOf?(id: string): string | undefined;
+  /** A record's topic name, shown above a card while the pointer is on it. */
+  topicOf?(id: string): string | undefined;
   /** Remember unfolded branches for the session (default). Off for a map that follows something else. */
   persist?: boolean;
   /** The reader moved the map themselves: a pan, a zoom, an unfold or an edge chip. */
@@ -250,8 +252,8 @@ export function fillRoom(l: Layout, vp: { width: number; height: number } | null
     const k = Math.min(kx, 1);
     const spare = vp.height / k - H;
     if (spare < 8) return null;
-    // Three title lines at 13px, the tile's padding and border, on screen.
-    const want = (3 * 13 * 1.22 + 10) / k;
+    // Two title lines at 15px, the tile's padding and border, on screen.
+    const want = (2 * 15 * 1.25 + 12) / k;
     const dh = gapsOnly ? 0 : Math.max(0, Math.min(want - tileH, (spare * 0.55) / rows));
     const gap = Math.max(0, Math.min((spare - dh * rows) / Math.max(1, rows - 1), (gapsOnly ? 6 : 3) * (tileH + dh)));
     return dh < 1 && gap < 1 ? null : { dw: 0, dh, gap: gap * 0.92 };
@@ -262,7 +264,7 @@ export function fillRoom(l: Layout, vp: { width: number; height: number } | null
   if (spareW < 8) return null;
   // The widest row of cards sets the width; routing lanes between them do not grow.
   const cols = Math.max(1, ...l.layers.map((layer) => layer.filter((id) => l.boxes.has(id)).length));
-  const dw = Math.max(0, Math.min(260, (spareW * 0.9) / cols));
+  const dw = Math.max(0, Math.min(180, (spareW * 0.9) / cols));
   return dw < 1 ? null : { dw, dh: 0, gap: 0 };
 }
 
@@ -544,7 +546,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
    * the colour of the nearest step above it that has one, so every card shows the topic it serves.
    */
   const toneOfCard = useMemo(() => {
-    const out = new Map<string, { tone: string; own: boolean }>();
+    const out = new Map<string, { tone: string; own: boolean; topic?: string }>();
     const of = props.toneOf;
     if (!of) return out;
     const parents = new Map<string, string[]>();
@@ -554,15 +556,27 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         if (!layout.boxes.has(lid)) continue;
         const own = of(recordOf(lid));
         if (own) {
-          out.set(lid, { tone: own, own: true });
+          out.set(lid, { tone: own, own: true, topic: props.topicOf?.(recordOf(lid)) });
           continue;
         }
         const from = (parents.get(lid) ?? []).map((p) => out.get(p)).find(Boolean);
-        if (from) out.set(lid, { tone: from.tone, own: false });
+        if (from) out.set(lid, { tone: from.tone, own: false, topic: from.topic });
       }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layout, built.skeleton, props.toneOf]);
+  }, [layout, built.skeleton, props.toneOf, props.topicOf]);
+  /** The topic label over the card under the pointer, in the wrap's coordinates. */
+  const [topicTip, setTopicTip] = useState<{ x: number; y: number; text: string; tone: string } | null>(null);
+  const topicTipRef = useRef(topicTip);
+  topicTipRef.current = topicTip;
+  const showTopicTip = (lid: string, el: HTMLElement) => {
+    const t = toneOfCard.get(lid);
+    const wrap = wrapRef.current;
+    if (!t?.topic || !wrap) return setTopicTip(null);
+    const r = el.getBoundingClientRect();
+    const w = wrap.getBoundingClientRect();
+    setTopicTip({ x: r.left - w.left + r.width / 2, y: r.top - w.top, text: t.own ? t.topic : `Serves: ${t.topic}`, tone: t.tone });
+  };
   /** For each assumption, the drawn cards that carry it as a tag. */
   const tagHolders = useMemo(() => {
     const m = new Map<string, string[]>();
@@ -698,9 +712,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       // A narrow dense tile gives its words the padding: 10px at reading width, down to 3px.
       const box = dense ? { ...DENSE_TILE, padX: Math.max(3, Math.min(DENSE_TILE.padX, Math.round(rect.w * k * 0.06))) } : TILE;
       if (dense) el.style.setProperty("--pad-x", `${box.padX}px`);
+      // A coloured card's words start after its 5px bar (tree.css), so they have that much less room.
+      const fitBox = dense && el.hasAttribute("data-toned") ? { ...box, padX: box.padX + 2.5 } : box;
       const section = el.hasAttribute("data-section") ? 14 : 0;
       const plate = kind === "root" && !denseRef.current ? fitPlate(m.t, rect.w, rect.h, k, statementH.current) : null;
-      const fit = plate ?? fitTitle(m.t, rect.w, rect.h, k, kind, box, section);
+      const fit = plate ?? fitTitle(m.t, rect.w, rect.h, k, kind, fitBox, section, dense ? DENSE_TITLE_SIZES : undefined);
       const statement = plate?.statement ?? false;
       // A title cut inside the first quarter of its first word (a crowded fill map, or the overview
       // zoomed out past reading size) reads as noise: the tile becomes a chip of its topic colour,
@@ -1825,6 +1841,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const scaleChanged = t.k !== viewRef.current.k;
         viewRef.current = { x: t.x, y: t.y, k: t.k };
         world.style.transform = `translate(${t.x}px, ${t.y}px) scale(${t.k})`;
+        if (topicTipRef.current) setTopicTip(null);
         // While the camera travels on its own, the representation is the one it lands in: a move
         // that passes through tile scale never flips cards to tiles and back (two images crossfading).
         const now = performance.now();
@@ -2443,6 +2460,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         onHover?.(null);
       }}
     >
+      {topicTip && (
+        <div className="tree__topic-tip" style={{ left: topicTip.x, top: topicTip.y, ["--card-tone" as string]: topicTip.tone }} aria-hidden="true">
+          {topicTip.text}
+        </div>
+      )}
       <div ref={worldRef} className="tree__world" style={{ width: Math.max(1, bounds.x1), height: Math.max(1, bounds.y1) }}>
         <svg className="tree__links" width={1} height={1} aria-hidden="true">
           {entering && enterMask && (
@@ -2606,8 +2628,14 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 if ((event.target as HTMLElement).matches?.(":focus-visible")) captionTile(lid);
               }}
               onBlur={() => showCaption("")}
-              onPointerEnter={() => setHovered(lid)}
-              onPointerLeave={() => setHovered(null)}
+              onPointerEnter={(event) => {
+                setHovered(lid);
+                if (dense) showTopicTip(lid, event.currentTarget);
+              }}
+              onPointerLeave={() => {
+                setHovered(null);
+                setTopicTip(null);
+              }}
             >
               <div className="card__full">
                 {node.kind !== "claim" && (
