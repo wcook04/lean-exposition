@@ -159,7 +159,10 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
             named = out / paper / "library-results.json"
         by_record = {}
         if named.exists():
-            by_record = {row["record"]: address for address, row in json.loads(named.read_text())["results"].items() if row.get("record")}
+            # A row names its record, or (a standalone artifact's library-results.json) is keyed by the
+            # address its record is named after: "<paper>.<address>".
+            by_record = {row.get("record") or f"{paper}.{address}": address
+                         for address, row in json.loads(named.read_text())["results"].items()}
         for rid, record in core_data.get("records", {}).items():
             # Standalone artifacts register phrase addresses and opt in to named
             # result routes through their own addresses.json.
