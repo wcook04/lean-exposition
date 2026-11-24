@@ -130,7 +130,7 @@ type Item =
   | { type: "group"; key: string; name: string; tone?: string; role?: FGRole; said?: string; ids: string[]; open: boolean; children: Item[] };
 /** How one side is divided when it does not fit: named parts, some of them drawn out as their own nodes. */
 interface Part { key: string; name: string; list: string[]; depth: number }
-type Plan = { flat: true } | { flat: false; parts: Part[]; out: ReadonlySet<string> };
+type Plan = { flat: true } | { flat: false; parts: Part[]; out: ReadonlySet<string>; previews: ReadonlyMap<string, number> };
 
 /** Below this scale a title is too small to read: a side that needs it is grouped further instead. */
 const MIN_READ = 0.85;
@@ -393,6 +393,8 @@ export function FocusGraph(props: FocusGraphProps) {
       return [...groups.entries()];
     };
     let parts: Part[] = by(ids, (c) => c.role).map(([role, list]) => ({ key: role, name: words(role as FGRole).many, list, depth: 0 }));
+    // Leave room for actual dependencies before subdividing the column into more headings.
+    const previewRoom = size.h && size.w ? Math.min(room * 0.38, 152) : 0;
     const total = (ps: Part[]) => ps.reduce((sum, p) => sum + headH(p.name), 0);
     // The pieces a part divides into, largest first: by topic, and a part that is one topic by file or section.
     const pieces = (p: Part): Part[] | null => {
@@ -420,7 +422,7 @@ export function FocusGraph(props: FocusGraphProps) {
           const merged: Part[] = [];
           for (const k of kept) { const same = merged.find((m) => m.name === k.name); if (same) same.list = [...same.list, ...k.list]; else merged.push({ ...k }); }
           const next = [...parts.slice(0, i), ...merged, ...parts.slice(i + 1)];
-          if (total(next) <= room) { parts = next; done = true; }
+          if (total(next) <= room - previewRoom) { parts = next; done = true; }
         }
         if (done) break;
       }
@@ -432,8 +434,26 @@ export function FocusGraph(props: FocusGraphProps) {
       const cost = p.list.reduce((sum, id) => sum + nodeH(id), 0) - headH(p.name);
       if (p.list.length === 1 || cost <= left) { out.add(p.key); left -= Math.max(0, cost); }
     }
-    return { flat: false, parts, out };
-  }, [card, words, sideW, H, tight, narrow]);
+    // Deal row space to the groups in turns. A wrapped title costs more than a short one.
+    // Each preview is a real child of its group; opening the header still exposes every member.
+    const previews = new Map<string, number>();
+    if (size.w && size.h) {
+      const grouped = parts.filter((p) => !out.has(p.key));
+      for (let row = 0; row < 4; row++) {
+        for (const part of grouped) {
+          if ((previews.get(part.key) ?? 0) !== row || row >= part.list.length - 1) continue;
+          const item = card(part.list[row])!;
+          const text = [item.kicker, item.title].filter(Boolean).join(" ");
+          const lines = Math.max(1, Math.ceil(text.length * 6.9 / Math.max(1, sideW - 46)));
+          const cost = 12 + lines * 17.5 + ITEM_GAP;
+          if (cost > left) continue;
+          previews.set(part.key, row + 1);
+          left -= cost;
+        }
+      }
+    }
+    return { flat: false, parts, out, previews };
+  }, [card, words, sideW, H, tight, narrow, size.w, size.h]);
 
   // While the reader has a group open or listed the division is kept as it was, so that the group stays where it is.
   const kept = useRef<{ key: string; users: Plan; uses: Plan } | null>(null);
@@ -452,7 +472,7 @@ export function FocusGraph(props: FocusGraphProps) {
       const tones = new Set(list.map((id) => card(id)!.tone));
       const kinds = new Set(list.map((id) => card(id)!.role));
       const isOpen = list.length <= LIST_ABOVE && open(path);
-      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, role: kinds.size === 1 ? [...kinds][0] : undefined, ids: list, open: isOpen, children: isOpen ? list.map(node) : [] };
+      return { type: "group", key: path, name, tone: tones.size === 1 ? [...tones][0] : undefined, role: kinds.size === 1 ? [...kinds][0] : undefined, ids: list, open: isOpen, children: (isOpen ? list : list.slice(0, how.previews.get(path) ?? 0)).map(node) };
     };
     const items = how.parts.flatMap((p) => (how.out.has(p.key) && !open(p.key) ? p.list.map(node) : [group(p.key, p.name, p.list)]));
     // Two groups of one name (one topic among the definitions and again among the lemmas) each say their kind.
@@ -805,6 +825,8 @@ export function FocusGraph(props: FocusGraphProps) {
             data-count={it.ids.length}
             data-kind={kind}
             data-opens={large ? "list" : "here"}
+            data-preview-count={it.open ? undefined : it.children.length || undefined}
+            aria-description={!it.open && it.children.length ? `${it.children.length} of ${it.ids.length} members shown. Open for the full group.` : undefined}
             aria-expanded={large ? isListed : it.open}
             title={large ? (isListed ? `Close the list of these members (${how})` : `List these ${it.ids.length} members (${how})`) : it.open ? `Fold these back into one group (${how})` : `Show these ${it.ids.length} cards here (${how})`}
             onClick={() => toggle(side, it.key, it.ids.length)}
@@ -813,7 +835,7 @@ export function FocusGraph(props: FocusGraphProps) {
             <span className="fg__count">{it.ids.length}</span>
             <span className="fg__sign" aria-hidden="true">{it.open ? "−" : "+"}</span>
           </button>
-          {it.open && <div className="fg__members">{renderItems(side, it.children, rels)}</div>}
+          {it.children.length > 0 && <div className="fg__members">{renderItems(side, it.children, rels)}</div>}
         </div>
       );
     });
@@ -822,8 +844,7 @@ export function FocusGraph(props: FocusGraphProps) {
   // and one line under the subject says that the side is empty.
   const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => ids.length > 0 && (
     <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: sideW }}>
-      <h4 className="fg__sidehead">{side === "users" ? (many ? "Use these" : "Use this") : (many ? "These use" : "This uses")} <span>{ids.length}</span></h4>
-      {!shortLabels && <p className="fg__sidekinds" data-band-kinds={side}>{relationCounts(countKinds(ids, rels))}</p>}
+      <h4 className="fg__sidehead">{side === "users" ? "Used by" : "Uses"} <span>{ids.length}</span></h4>
       {renderItems(side, items, rels)}
     </div>
   );
@@ -831,10 +852,7 @@ export function FocusGraph(props: FocusGraphProps) {
     <p className="fg__edge-note" data-band-note={side}>{side === "users" ? `Nothing drawn here uses ${many ? "these" : "this"}.` : `${many ? "These use" : "This uses"} nothing else drawn here.`}</p>
   );
 
-  // The key names the kinds of line actually drawn, a group's line included.
-  const kinds = new Set((drawn?.segs ?? []).map((s) => s.kind));
   const groups = (items: Item[]) => items.filter((it) => it.type === "group").length;
-  const roles = new Set([...model.left, ...model.right].map((id) => card(id)!.role));
 
   // The listed group, found among the groups on show; if it is no longer drawn, nothing is listed.
   const find = (items: Item[], path: string): Extract<Item, { type: "group" }> | null => {
@@ -1034,15 +1052,6 @@ export function FocusGraph(props: FocusGraphProps) {
           {paperNote.held && (
             <button type="button" className="fg__edge-why-close" aria-label="Close this sentence" onClick={() => setPaperNote(null)}>×</button>
           )}
-        </p>
-      )}
-      {model.subj.length > 0 && (
-        <p className="fg__key">
-          <span className="fg__keydir">Arrows run from a statement to what it uses.</span>
-          {RELATION_ORDER.filter((k) => kinds.has(k)).map((k) => <span key={k} data-key-kind={k}><i className={`fg__keyline fg__keyline--${k}`} /> {relation(k)}</span>)}
-          {(roles.has("helper") || roles.has("library")) && <span><i className="fg__keybox fg__keybox--helper" /> Lean helper</span>}
-          {roles.has("definition") && <span><i className="fg__keybox fg__keybox--definition" /> definition</span>}
-          {groups(leftItems) + groups(rightItems) > 0 && <span><i className="fg__keybox fg__keybox--group" /> group, opens its members</span>}
         </p>
       )}
     </div>
