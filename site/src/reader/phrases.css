@@ -345,6 +345,12 @@
   border-top: 1px solid var(--rule);
 }
 
+.map-pane__paired .passage-annotation {
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  border-top: 0;
+}
+
 .passage-annotation .passage-annotation__text {
   max-width: 68ch;
   margin: 0;

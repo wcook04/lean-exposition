@@ -639,10 +639,11 @@ html[data-right-sheet] {
   flex: 1;
 }
 
-/* Reserve only the graph's preferred height for a long declaration.
-   Give the graph the full remainder so its camera can centre the drawing there. */
+/* Reserve the graph's width-fitted height. The Lean takes only the space it needs.
+   At extreme sizes keep enough room for the annotation and Lean to scroll. */
 .map-pane__paired {
-  --paired-graph-size: calc(var(--paired-graph-paint, 100%) + var(--paired-graph-chrome, 0px));
+  --paired-graph-size: var(--paired-graph-paint, calc(40% - var(--paired-graph-chrome, 0px)));
+  --paired-graph-reserve: min(calc(var(--paired-graph-size) + var(--paired-graph-chrome, 0px)), max(40%, calc(100% - 9rem)));
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -651,7 +652,7 @@ html[data-right-sheet] {
 }
 .map-pane__paired > .lean-page {
   flex: 0 1 auto;
-  max-height: calc(100% - min(40%, var(--paired-graph-size)));
+  max-height: calc(100% - var(--paired-graph-reserve));
 }
 .map-pane__paired > .lean-page > .lean-page__scroll {
   flex: 0 1 auto;
@@ -661,7 +662,7 @@ html[data-right-sheet] {
   flex: 1 1 0;
   flex-direction: column;
   box-sizing: border-box;
-  min-height: min(40%, var(--paired-graph-size));
+  min-height: var(--paired-graph-reserve);
   min-width: 0;
   border-top: 1px solid var(--rule-control);
 }

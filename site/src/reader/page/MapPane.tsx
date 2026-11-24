@@ -697,6 +697,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             alignment={alignment}
             slot={preview ?? heldList}
             onOpenGraph={() => onMode("graph")}
+            annotationFirst={paired}
             onPick={(id) => onRecord?.(id)}
             onPoint={onPoint}
             onName={onName}

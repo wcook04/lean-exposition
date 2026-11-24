@@ -42,6 +42,7 @@ export interface LeanOpen {
 }
 
 interface Props {
+  annotationFirst?: boolean;
   open: LeanOpen;
   ties: TieModel;
   stage: Stage;
@@ -178,7 +179,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot, brief, onBrief }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot, brief, onBrief, annotationFirst }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -372,6 +373,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       lines={row?.lines}
       compact
       passageNote={annotation ? <PassageAnnotation text={annotation} creditInSources /> : undefined}
+      passageNoteFirst={annotationFirst}
       foldDependencies={inLean && phrase}
       onName={onName}
       noPapers

@@ -70,6 +70,7 @@ PAIRED_GEOMETRY = """() => {
     lean: leanBox,
     graph: box(split?.querySelector(':scope > .map-pane__local')),
     canvas: box(split?.querySelector('.map-pane__local .fg__scroll')),
+    rem: parseFloat(getComputedStyle(document.documentElement).fontSize),
     intrinsic,
     subjects: split?.querySelectorAll('.map-pane__local .fg__card[data-band="subject"]').length ?? 0,
   };
@@ -102,7 +103,8 @@ def paired_geometry(page: Page) -> tuple[bool, dict]:
     width_scale = min(1.15, (canvas["width"] - 2 * margin) / world_width)
     fitted_height = world_height * width_scale + 2 * margin
     preferred_graph = fitted_height + graph["height"] - canvas["height"]
-    minimum_graph = min(0.4 * pane["height"], preferred_graph)
+    graph_limit = max(0.4 * pane["height"], pane["height"] - 9 * layout["rem"])
+    minimum_graph = min(graph_limit, preferred_graph)
     expected_lean = min(layout["intrinsic"], pane["height"] - minimum_graph)
     expected_graph = pane["height"] - expected_lean
     layout.update(expected_lean=expected_lean, expected_graph=expected_graph)
