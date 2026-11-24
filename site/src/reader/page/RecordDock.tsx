@@ -347,7 +347,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       clause={row?.clause}
       lines={row?.lines}
       compact
-      passageNote={annotation ? <PassageAnnotation text={annotation} /> : undefined}
+      passageNote={annotation ? <PassageAnnotation text={annotation} creditInSources /> : undefined}
       foldDependencies={inLean && phrase}
       onName={onName}
       noPapers
