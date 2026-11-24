@@ -635,16 +635,24 @@ html[data-right-sheet] {
 
 /* The lower viewport gets its own camera. Only the text above it scrolls. */
 .map-pane__paired {
-  display: grid;
-  grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 0;
   min-width: 0;
 }
+.map-pane__paired > .lean-page {
+  flex: 0 1 auto;
+  max-height: 60%;
+}
+.map-pane__paired > .lean-page > .lean-page__scroll {
+  flex: 0 1 auto;
+}
 .map-pane__local {
   display: flex;
+  flex: 1 0 40%;
   flex-direction: column;
-  min-height: 0;
+  min-height: 40%;
   min-width: 0;
   border-top: 1px solid var(--rule-control);
 }

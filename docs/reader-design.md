@@ -169,8 +169,9 @@ recorded assessments. Older editions without edited annotations keep their origi
 comparison and reading notes.
 
 In Auto, an unlinked passage opens the graph. When the reader reaches a linked passage,
-the declaration, its folded proof and its annotation occupy the upper three fifths of the
-available space. The lower two fifths show the active declaration and its recorded neighbours.
+the declaration, its folded proof and its annotation take their natural height up to three
+fifths of the pane. The graph fills the space below, with at least two fifths for the active
+declaration and its recorded neighbours.
 Scrolling the text and panning the graph are independent. A declaration without recorded
 neighbours gets the full height. “Minimise graph” restores the full-height Lean and Graph tabs.
 “Combine views” returns to following the passage. Existing explicit view links still work.
