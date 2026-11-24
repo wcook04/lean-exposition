@@ -540,7 +540,8 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
   const guide = guideOpen && guideStage ? <GuidePanel stage={guideStage} onClose={() => setGuideOpen(false)} /> : null;
   const fill = !!leanSlot || !!guide;
-  const showToolbar = !!guideStage || (!fill && (tabbed || mode === "graph"));
+  const graphTools = mode === "graph" && !fill && !unlinked;
+  const showToolbar = !!guideStage || (!fill && tabbed) || graphTools;
   const visible = mode === "lean" ? leanOpen : dockOpen;
   useLayoutEffect(() => {
     let target: HTMLElement | null = null;
@@ -570,7 +571,6 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     signals.shownTie.set(shownTie === null ? null : { tie: shownTie, at: ties.index.ties[shownTie].at });
   }, [signals, shownTie, ties]);
   useLayoutEffect(() => () => signals.shownTie.set(null), [signals]);
-  const mapHref = routeHref({ view: "map", goal, node: subjectRecords[0] });
 
   const drawing = showWhole ? (
     <div className="map-pane__canvas" data-unlinked={unlinked ? "" : undefined}>
@@ -646,7 +646,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
           onMode(next);
         }} leanButtonRef={leanButtonRef} graphCount={focus && !focus.missing.length && !showWhole ? neighbours : null} />}
         {tabbed && !fill && !unlinked && <button type="button" className="map-pane__layout-button" onClick={combineViews}>Combine views</button>}
-        {mode === "graph" && !fill && !unlinked && (
+        {graphTools && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Neighbours of this step" : "Whole proof map"}
           </button>
@@ -661,17 +661,6 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
             How to read the Lean
           </button>
         )}
-        {mode === "graph" && !fill && <a
-          className="map-pane__open"
-          href={mapHref}
-          onClick={(event) => {
-            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-            event.preventDefault();
-            navigate({ view: "map", goal, node: subjectRecords[0] });
-          }}
-        >
-          Open the full map
-        </a>}
       </div>}
       {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
       {fill ? (

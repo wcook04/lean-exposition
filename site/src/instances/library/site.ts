@@ -53,8 +53,7 @@ const firstSentence = (text: string) => text.split(/(?<=[a-z0-9)\]'’][.!?])\s+
 
 /**
  * The paper's credit as one short line under its authors: who wrote the paper and its Lean and where they
- * are from (the credit's first clause), and that the links were made with AI. The reader adds "Full credit
- * in About" and the PDF; About carries the whole credit, the Anthropic sentence and the review.
+ * are from (the credit's first clause), and that the links were made with AI. The reader links to the full credit and the PDF. The credit page includes the Anthropic sentence and the review.
  */
 export function frontCreditLine(credit: string): string {
   const clause = firstSentence(credit).split(";")[0].replace(/[.!?]$/, "").trim();

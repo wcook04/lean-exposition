@@ -98,20 +98,6 @@
   color: var(--ground);
 }
 
-.map-pane__open {
-  flex: none;
-  white-space: nowrap;
-  color: var(--ink-2);
-  text-decoration: underline;
-  text-decoration-color: var(--rule-strong);
-  text-underline-offset: 0.2em;
-}
-
-.map-pane__open:hover {
-  color: var(--ink);
-  text-decoration-color: currentColor;
-}
-
 
 .map-pane__canvas {
   position: relative;
@@ -805,10 +791,6 @@ html[data-right-sheet] {
   background: var(--sunk);
 }
 
-.map-pane__bar .map-pane__open {
-  margin-left: auto;
-}
-
 /* Nothing in the Lean is linked to what is being read: the whole map, under its plain title. */
 .map-pane__unlinked {
   flex: none;
@@ -889,10 +871,6 @@ html[data-right-sheet] {
   flex-wrap: wrap;
   gap: 6px var(--space-2);
   padding: 7px var(--space-2) 7px var(--space-4);
-}
-
-.map-pane__bar .map-pane__open {
-  margin-left: auto;
 }
 
 /* In the pane the tabs are a little larger; the phone's strip keeps its own, where room is short. */

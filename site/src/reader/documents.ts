@@ -32,7 +32,7 @@ export function frontCreditHtml(stage: Stage): string | null {
   const pdfLink = pdf
     ? ` <a class="pdf-link" href="${escapeHtml(`${import.meta.env.BASE_URL}${pdf.path}`)}" target="_blank" rel="noopener">Open PDF, ${pdf.pages} ${pdf.pages === 1 ? "page" : "pages"}</a>.`
     : "";
-  return `${escapeHtml(words)} <a href="${escapeHtml(`${import.meta.env.BASE_URL}about/`)}">Full credit in About</a>.${pdfLink}`;
+  return `${escapeHtml(words)} <a href="${escapeHtml(`${import.meta.env.BASE_URL}about/#about-credit`)}">Full credit</a>.${pdfLink}`;
 }
 
 export interface LoadedDocument {
