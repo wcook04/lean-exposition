@@ -62,7 +62,14 @@ function SiteMenu({ route, onSearch }: { route: Route; onSearch(): void }) {
   const activeStage = route.view === "read" ? route.stage : null;
 
   useEffect(() => onSchemeChange(() => setLocalScheme(currentScheme())), []);
-  useEffect(() => setOpen(false), [route]);
+  // Following the paper replaces its URL as the reader moves. Keep an open menu
+  // through those updates, and close it on a different page, edition or history entry.
+  useEffect(() => setOpen(false), [route.view, activeStage]);
+  useEffect(() => {
+    const closeOnHistory = () => setOpen(false);
+    window.addEventListener("popstate", closeOnHistory);
+    return () => window.removeEventListener("popstate", closeOnHistory);
+  }, []);
   useEffect(() => {
     if (!open) return;
     const closeOutside = (event: PointerEvent) => {

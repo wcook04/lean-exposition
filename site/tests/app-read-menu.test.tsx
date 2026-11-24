@@ -49,6 +49,23 @@ describe("site menu", () => {
     expect(document.activeElement).toBe(button);
   });
 
+  it("keeps the menu open while the paper follows a reading position", async () => {
+    host = document.createElement("div");
+    document.body.append(host);
+    root = createRoot(host);
+    const renderPaper = (at?: string, stage = "short") =>
+      act(async () => root!.render(<TopBar route={{ view: "read", stage, at }} onSearch={() => undefined} />));
+
+    await renderPaper();
+    const menu = host.querySelector<HTMLButtonElement>(".menu-toggle")!;
+    await act(async () => menu.click());
+    await renderPaper("b397-535");
+    expect(menu.getAttribute("aria-expanded")).toBe("true");
+
+    await renderPaper(undefined, "long");
+    expect(menu.getAttribute("aria-expanded")).toBe("false");
+  });
+
   it("opens search from the disclosure and closes it", async () => {
     host = document.createElement("div");
     document.body.append(host);
