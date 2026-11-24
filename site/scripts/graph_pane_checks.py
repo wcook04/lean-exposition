@@ -156,13 +156,13 @@ PAINTED_GRAPH = r"""fg => {
       const grouped = id.startsWith('group:');
       const parts = column?.querySelectorAll(grouped ? ':scope > .fg__group > .fg__grouphead' : ':scope > .fg__card');
       const neighbour = [...(parts ?? [])].find(el => grouped ? el.dataset.group === id.slice(6) : el.dataset.card === id);
-      const source = from ? neighbour : subjects[0];
-      const target = from ? subjects[0] : neighbour;
+      const source = from ? subjects[0] : neighbour;
+      const target = from ? neighbour : subjects[0];
       const start = path.getPointAtLength(0).matrixTransform(matrix);
       const end = path.getPointAtLength(length).matrixTransform(matrix);
       const tolerance = 1.5 * Math.hypot(matrix.a, matrix.b);
-      if (!length || distanceToBorder(start, source, stacked ? 'left' : 'right') > tolerance
-          || distanceToBorder(end, target, 'left') > tolerance) detached.push(path.dataset.edge);
+      if (!length || distanceToBorder(start, source, 'left') > tolerance
+          || distanceToBorder(end, target, stacked ? 'left' : 'right') > tolerance) detached.push(path.dataset.edge);
     }
     // A marker is painted at the end of its curve, but is absent from the path's client rect.
     const marker = path.getAttribute('marker-end')?.match(/^url\(#([^)]+)\)$/)?.[1];
