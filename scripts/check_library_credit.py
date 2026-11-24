@@ -5,7 +5,7 @@
 
 At 1440x900 and 2560x1440: the paper opens and KaTeX renders; the credit line (read from FILE, exactly)
 appears exactly once on the paper's page and once on About, and on no companion page; a click on a
-numbered statement opens its card with an AI-assessed comparison and its Lean declaration; topic
+numbered statement opens a passage annotation or an AI-assessed comparison, with its Lean declaration; topic
 colours show (several distinct tones); Open PDF opens a new tab on a file served as application/pdf;
 the PDF toggle shows the authors' page; each companion opens with phrase ties. Exits 1 on any failure.
 """
@@ -124,7 +124,11 @@ with sync_playwright() as pw:
         compared = page.locator(".map-pane .phrase-card").first
         compared.wait_for(timeout=15000)
         card = compared.inner_text()
-        check(f"{tag} statement comparison", "AI-assessed" in card and ("Lean states" in card or "Lean says" in card or "same" in card.lower()), card[:200])
+        if compared.get_attribute("aria-label") == "Passage annotation":
+            valid = readable_card(compared)
+        else:
+            valid = "AI-assessed" in card and ("Lean states" in card or "Lean says" in card or "same" in card.lower())
+        check(f"{tag} statement reading in Graph", valid, card[:200])
         pane_button(page, "Lean").click()
         check(f"{tag} separate Lean address", "v=lean" in page.url, page.url)
         # The statement's phrase address, with no view named, opens the same card and Lean as a click.

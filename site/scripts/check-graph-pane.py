@@ -28,7 +28,7 @@ from urllib.parse import parse_qs, urljoin, urlsplit
 from playwright.sync_api import Locator, Page, sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from graph_pane_checks import check_graph_pane, check_groups, painted_fit  # noqa: E402
+from graph_pane_checks import GRAPH_SETTLED, check_graph_pane, check_groups, painted_fit  # noqa: E402
 
 DOCK = ".map-pane__dock"
 SIZES = [(1440, 900), (2560, 1440)]
@@ -54,31 +54,6 @@ def click_phrase(page: Page, nth: int) -> bool:
         return False
     page.mouse.click(box["x"] + 4, box["y"] + box["height"] / 2)
     return True
-
-
-GRAPH_SETTLED = """async graph => {
-  await document.fonts.ready;
-  let previous = '';
-  let since = performance.now();
-  const deadline = since + 6000;
-  while (performance.now() < deadline) {
-    await new Promise(requestAnimationFrame);
-    const world = graph.querySelector('.fg__world');
-    const viewport = graph.querySelector('.fg__scroll');
-    const bounds = viewport.getBoundingClientRect();
-    const signature = JSON.stringify([
-      bounds.left, bounds.top, bounds.width, bounds.height, world.style.transform,
-      ...[...world.querySelectorAll('.fg__wire')].map(wire => wire.getAttribute('d')),
-    ]);
-    if (signature !== previous) {
-      previous = signature;
-      since = performance.now();
-    } else if (performance.now() - since >= 250) {
-      return true;
-    }
-  }
-  return false;
-}"""
 
 
 def measure_painted(

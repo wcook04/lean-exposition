@@ -9,7 +9,7 @@ and the address names the phrase; topic colours show (several distinct tones); t
 draws; each kind of address (numbered result, phrase, Lean declaration, section) opens what it
 names; the Open PDF link opens the PDF in a new tab and the file is a PDF; display formulas lie
 inside their columns and never scroll; the front matter carries the AI notice (--notice). Then at 800, 1000, 390, 360 and
-320 px: the header's controls do not overlap and Search and Menu stay inside the window. A selected
+320 px: the header's controls do not overlap, and Menu opens Search within the window. A selected
 result and a selected phrase, in both schemes, keep their words' contrast and a quiet amber mark.
 A phrase at rest has a 1px underline, and a heavier one when hovered, focused or selected, in both
 schemes. The statement counter and the next/previous controls (buttons, j, k) start from a selected
@@ -430,9 +430,20 @@ def open_graph(page):
 
 
 def readable_card(card, notes_optional=False):
-    text = card.inner_text().lower()
+    text = card.inner_text().strip().lower()
     if card.get_attribute("aria-label") == "Passage annotation":
-        return "ai-written" in text and bool(card.locator(".passage-annotation__text").inner_text().strip())
+        return card.evaluate("""note => {
+            const body = note.querySelector(".passage-annotation__text");
+            const after = note.nextElementSibling;
+            const below = after?.matches("small.lean-block__credit")
+                ? after
+                : after?.querySelector(":scope > summary > small.lean-block__credit");
+            const within = note.querySelector("small.lean-block__credit");
+            const authored = credit => credit?.textContent.trim() === "AI-written annotation";
+            return !!body?.innerText.trim() && note.firstElementChild === body
+                && !note.querySelector(".phrase-card__label")
+                && (within ? body.nextElementSibling === within && !below && authored(within) : authored(below));
+        }""")
     return "ai-assessed" in text and (notes_optional or "reading note" in text)
 
 
@@ -860,7 +871,8 @@ def main() -> int:
             # The card's notes load after it opens: wait for the note before reading the card.
             if not args.notes_optional:
                 try:
-                    page.wait_for_function("() => /reading note|ai-written/i.test(document.querySelector('.phrase-card')?.innerText ?? '')", timeout=10000)
+                    page.wait_for_function("""() => !!document.querySelector('.map-pane .lean-block__credit')
+                        || /reading note/i.test(document.querySelector('.phrase-card')?.innerText ?? '')""", timeout=10000)
                 except Exception:
                     pass
             check(f"{tag} phrase click", readable_card(card, args.notes_optional), page.url)
@@ -1037,7 +1049,7 @@ def main() -> int:
         kept = page.locator(".paper .tie, .pdf-view__mark").count() > 0 and not page.locator(".page-guard").count()
         check("pane failure contained", contained and kept, f"pane notice {contained}, paper kept {kept}")
         context.close()
-        # Narrow windows and phones: the header's visible parts never overlap, Search and Menu lie
+        # Narrow windows and phones: the header's visible parts never overlap, Menu opens Search
         # inside the window, nothing scrolls sideways, a formula that fits does not scroll, the AI
         # notice is in the front matter, and the paper's phrases are there to tap.
         for width, height in ((800, 700), (1000, 800), (390, 844), (360, 740), (320, 640)):
@@ -1057,10 +1069,23 @@ def main() -> int:
             check(f"{tag} no sideways scroll", wide <= 1, f"{wide}px wider than the window")
             # Measured against the window asked for: a phone browser widens its layout to fit
             # what overflows, so innerWidth alone would follow a bar pushed off the screen.
-            ways = page.evaluate("""() => ['.search-trigger', '.menu-toggle'].map(s => document.querySelector('.topbar ' + s))
-                .filter(e => e && e.offsetParent).map(e => { const r = e.getBoundingClientRect(); return [e.className.split(' ').pop(), r.left, r.right, r.width, r.height]; })""")
-            outside = [w for w in ways if w[1] < 0 or w[2] > width + 0.5 or w[3] < 24 or w[4] < 24]
-            check(f"{tag} search and menu on screen", ways and not outside, f"{outside or 'no Search or Menu button'} in a {width}px window")
+            header = page.locator(".topbar")
+            menu = header.get_by_role("button", name="Menu", exact=True)
+            menu.wait_for(timeout=10000)
+            search = header.get_by_role("button", name="Search", exact=True)
+            hidden = not search.is_visible()
+            menu_box = menu.bounding_box()
+            search_box = None
+            if menu_box:
+                menu.click()
+                search_box = search.bounding_box() if search.count() else None
+                menu.press("Escape")
+            controls = {"Menu": menu_box, "Search": search_box}
+            outside = [name for name, box in controls.items()
+                       if not box or box["x"] < 0 or box["x"] + box["width"] > width + 0.5
+                       or box["width"] < 24 or box["height"] < 24]
+            check(f"{tag} Menu opens Search on screen", hidden and not outside and not search.is_visible(),
+                  f"closed Search initially hidden: {hidden}; outside {outside}; boxes {controls}")
             page.wait_for_timeout(1500)
             bad = page.evaluate(MATHS)
             check(f"{tag} display maths fit without scrolling", not bad, "; ".join(bad[:3]))

@@ -14,6 +14,30 @@ from __future__ import annotations
 from playwright.sync_api import Locator, Page
 
 
+GRAPH_SETTLED = """async graph => {
+  await document.fonts.ready;
+  let previous = '';
+  let since = performance.now();
+  const deadline = since + 6000;
+  while (performance.now() < deadline) {
+    await new Promise(requestAnimationFrame);
+    const world = graph.querySelector('.fg__world');
+    const viewport = graph.querySelector('.fg__scroll');
+    const bounds = viewport.getBoundingClientRect();
+    const signature = JSON.stringify([
+      bounds.left, bounds.top, bounds.width, bounds.height, world.style.transform,
+      ...[...world.querySelectorAll('.fg__wire')].map(wire => wire.getAttribute('d')),
+    ]);
+    if (signature !== previous) {
+      previous = signature;
+      since = performance.now();
+    } else if (performance.now() - since >= 250) {
+      return true;
+    }
+  }
+  return false;
+}"""
+
 PAIRED_GEOMETRY = """() => {
   const split = document.querySelector('.map-pane__paired');
   const box = (e) => {
@@ -32,7 +56,14 @@ PAIRED_GEOMETRY = """() => {
       e.getBoundingClientRect().bottom + px(getComputedStyle(e).marginBottom)));
     const style = getComputedStyle(scroll);
     const content = contentEnd - r.top + scroll.scrollTop + px(style.paddingBottom) + px(style.borderBottomWidth);
-    intrinsic = leanBox.height - r.height + content;
+    const leanStyle = getComputedStyle(lean);
+    const children = [...lean.children].filter(e => e.getClientRects().length);
+    const chrome = children.reduce((total, child) => {
+      const childStyle = getComputedStyle(child);
+      return total + (child === scroll ? 0 : child.getBoundingClientRect().height)
+        + px(childStyle.marginTop) + px(childStyle.marginBottom);
+    }, px(leanStyle.paddingTop) + px(leanStyle.paddingBottom) + px(leanStyle.borderTopWidth) + px(leanStyle.borderBottomWidth));
+    intrinsic = chrome + content + Math.max(0, children.length - 1) * px(leanStyle.rowGap);
   }
   return {
     pane: box(split),
@@ -46,22 +77,43 @@ PAIRED_GEOMETRY = """() => {
 
 
 def paired_geometry(page: Page) -> tuple[bool, dict]:
-    """Lean uses its content height up to three fifths, with the graph filling the rest."""
+    """The graph receives the height of its drawing and Lean uses the recovered space."""
+    page.wait_for_function("""() => document.querySelector('.map-pane__paired')
+                          ?.style.getPropertyValue('--paired-graph-paint')""", timeout=15000)
+    drawing = page.locator(".map-pane__paired .map-pane__local .fg").first
+    settled = drawing.evaluate(GRAPH_SETTLED)
     layout = page.evaluate(PAIRED_GEOMETRY)
     pane, lean, graph, canvas = (layout[key] for key in ("pane", "lean", "graph", "canvas"))
     if not all((pane, lean, graph, canvas)):
         return False, layout
-    intrinsic = layout["intrinsic"]
-    cap = 0.6 * pane["height"]
-    fits = (intrinsic is not None and lean["height"] >= 44 and graph["height"] >= 0.4 * pane["height"] - 2
-            and abs(lean["height"] - min(intrinsic, cap)) <= 2
-            and canvas["height"] >= 180 and canvas["width"] > 0
+    fitted, shape = painted_fit(drawing)
+    layout.update(settled=settled, painted=shape)
+    if "error" in shape or not shape["scale"] or layout["intrinsic"] is None:
+        return False, layout
+
+    left, right, top, bottom = shape["gap"]
+    world_width = (canvas["width"] - left - right) / shape["scale"]
+    world_height = (canvas["height"] - top - bottom) / shape["scale"]
+    if world_width <= 0 or world_height <= 0:
+        return False, layout
+    # Size from the physical paint and the width available before fitting in height.
+    # The SVG marker and stroke bounds allow a few pixels of variation at either end.
+    margin = 8
+    width_scale = min(1.15, (canvas["width"] - 2 * margin) / world_width)
+    fitted_height = world_height * width_scale + 2 * margin
+    preferred_graph = fitted_height + graph["height"] - canvas["height"]
+    minimum_graph = min(0.4 * pane["height"], preferred_graph)
+    expected_lean = min(layout["intrinsic"], pane["height"] - minimum_graph)
+    expected_graph = min(pane["height"] - expected_lean, preferred_graph)
+    layout.update(expected_lean=expected_lean, expected_graph=expected_graph)
+    fits = (abs(lean["height"] - expected_lean) <= 6 and abs(graph["height"] - expected_graph) <= 6
+            and canvas["height"] > 0 and canvas["width"] > 0
             and abs(lean["top"] - pane["top"]) <= 2 and abs(lean["bottom"] - graph["top"]) <= 2
-            and abs(graph["bottom"] - pane["bottom"]) <= 2
+            and graph["bottom"] <= pane["bottom"] + 2
             and all(abs(row[edge] - pane[edge]) <= 2 for row in (lean, graph) for edge in ("left", "right"))
             and graph["left"] <= canvas["left"] < canvas["right"] <= graph["right"] + 2
             and graph["top"] <= canvas["top"] < canvas["bottom"] <= graph["bottom"] + 2)
-    return fits and layout["subjects"] == 1, layout
+    return settled and fitted and fits and layout["subjects"] == 1, layout
 
 
 PAINTED_GRAPH = r"""fg => {
@@ -248,7 +300,14 @@ def check_graph_pane(page: Page, label: str, dock: str | None = None, expect_sub
 
 LIST_ABOVE = 8
 
-SUBJECT_BOX = "() => { const c = document.querySelector('.fg .fg__card[data-band=subject]'); if (!c) return null; const r = c.getBoundingClientRect(); return [r.left, r.top, r.width, r.height]; }"
+SUBJECT_BOX = """() => {
+  const c = document.querySelector('.fg .fg__card[data-band=subject]');
+  if (!c) return null;
+  const r = c.getBoundingClientRect();
+  const v = c.closest('.map-pane__paired') && c.closest('.fg__scroll').getBoundingClientRect();
+  return [r.left - (v?.left ?? 0), r.top - (v?.top ?? 0), r.width, r.height];
+}"""
+CANVAS_HEIGHT = "() => document.querySelector('.fg__scroll')?.getBoundingClientRect().height ?? 0"
 
 
 def _moved(a: list[float] | None, b: list[float] | None) -> float:
@@ -280,7 +339,9 @@ def check_groups(page: Page, label: str) -> list[str]:
 
 def _check_list(page: Page, label: str, head, name: str, count: int) -> list[str]:
     bad: list[str] = []
+    paired = page.locator(".map-pane__paired .fg").count() > 0
     before = page.evaluate(SUBJECT_BOX)
+    height_before = page.evaluate(CANVAS_HEIGHT)
     opened_before = page.evaluate("() => document.querySelector('.fg').dataset.opened")
     head.click()
     page.wait_for_timeout(400)
@@ -294,6 +355,8 @@ def _check_list(page: Page, label: str, head, name: str, count: int) -> list[str
     moved = _moved(before, page.evaluate(SUBJECT_BOX))
     if moved > 1:
         bad.append(f"{label}: listing the group {name} moved the subject by {moved:.1f}px")
+    if paired and page.evaluate(CANVAS_HEIGHT) < height_before - 1:
+        bad.append(f"{label}: listing the group {name} reduced the graph viewport")
     status = page.locator(".fg__liststatus").inner_text().strip()
     total = status.split(" of ")[-1].split(" ")[0] if " of " in status else ""
     if total != str(count):
@@ -358,9 +421,11 @@ def _check_list(page: Page, label: str, head, name: str, count: int) -> list[str
         bad.append(f"{label}: Back did not close the list of {name}")
     if not head.evaluate("(el) => el === document.activeElement"):
         bad.append(f"{label}: Back did not return focus to the group {name}")
-    moved = _moved(before_close, page.evaluate(SUBJECT_BOX))
+    moved = _moved(before if paired else before_close, page.evaluate(SUBJECT_BOX))
     if moved > 1:
-        bad.append(f"{label}: closing the list of {name} moved the subject by {moved:.1f}px")
+        bad.append(f"{label}: the subject moved by {moved:.1f}px after closing the list of {name}")
+    if paired and abs(page.evaluate(CANVAS_HEIGHT) - height_before) > 2:
+        bad.append(f"{label}: closing the list of {name} did not restore the fitted viewport height")
     if covered and not panel.count():
         _fit(page)
     if not bad:
