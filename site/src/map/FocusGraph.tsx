@@ -556,9 +556,18 @@ export function FocusGraph(props: FocusGraphProps) {
     for (const el of cards) {
       if (el.dataset.band === "subject") subjectBox.set(el.dataset.card!, box(el));
     }
+    // Keep the full arrowhead on a straight part of the line, including its base.
+    const approach = 16;
     const curve = (x1: number, y1: number, x2: number, y2: number) => {
-      const mx = (x1 + x2) / 2;
-      return `M${x1.toFixed(1)} ${y1.toFixed(1)} C${mx.toFixed(1)} ${y1.toFixed(1)}, ${mx.toFixed(1)} ${y2.toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+      const entry = x2 + approach;
+      const mx = (x1 + entry) / 2;
+      return `M${x1.toFixed(1)} ${y1.toFixed(1)} C${mx.toFixed(1)} ${y1.toFixed(1)}, ${mx.toFixed(1)} ${y2.toFixed(1)}, ${entry.toFixed(1)} ${y2.toFixed(1)} H${x2.toFixed(1)}`;
+    };
+    // In a stacked graph the wires approach from the left instead.
+    const loop = (x1: number, y1: number, x2: number, y2: number) => {
+      const m = Math.min(x1, x2) - approach - 6;
+      const entry = x2 - approach;
+      return `M${x1.toFixed(1)} ${y1.toFixed(1)} C${m.toFixed(1)} ${y1.toFixed(1)}, ${m.toFixed(1)} ${y2.toFixed(1)}, ${entry.toFixed(1)} ${y2.toFixed(1)} H${x2.toFixed(1)}`;
     };
     for (const side of ["users", "uses"] as const) {
       const col = w.querySelector(`.fg__side[data-band="${side}"]`);
@@ -589,8 +598,6 @@ export function FocusGraph(props: FocusGraphProps) {
         const spread = Math.min(e.to.h - 12, (n - 1) * 7);
         const ty = e.to.y + e.to.h / 2 + (n > 1 ? -spread / 2 + (spread * i) / (n - 1) : 0);
         const ny = e.b.y + e.b.h / 2;
-        // Stacked, every line runs in the left margin, from the left edge of one to the left edge of the other.
-        const loop = (x1: number, y1: number, x2: number, y2: number) => { const m = Math.min(x1, x2) - 16; return `M${x1.toFixed(1)} ${y1.toFixed(1)} C${m.toFixed(1)} ${y1.toFixed(1)}, ${m.toFixed(1)} ${y2.toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`; };
         // Edges are stored from consumer to input. Draw the arrow towards the consumer.
         const d = stackedNow
           ? (side === "users" ? loop(e.to.x, ty, e.b.x, ny) : loop(e.b.x, ny, e.to.x, ty))
@@ -615,10 +622,10 @@ export function FocusGraph(props: FocusGraphProps) {
       const x = (Math.max(a.x, b.x) + Math.min(a.x + a.w, b.x + b.w)) / 2;
       const endA = a.x + a.w, endB = b.x + b.w;
       const yA = a.y + a.h / 2, yB = b.y + b.h / 2;
-      const gutter = Math.max(endA, endB) + 13 + (i % 3) * 3;
+      const gutter = Math.max(endA, endB) + approach + 7 + (i % 3) * 3;
       const d = consecutive
         ? `M${x} ${b.y} V${a.y + a.h}`
-        : `M${endB} ${yB} C${gutter} ${yB}, ${gutter} ${yA}, ${endA} ${yA}`;
+        : `M${endB} ${yB} C${gutter} ${yB}, ${gutter} ${yA}, ${endA + approach} ${yA} H${endA}`;
       segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "use"} fg__inner`, kind: e.kind ?? "use", edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
     });
     setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, cardCount: cards.length });
@@ -987,12 +994,12 @@ export function FocusGraph(props: FocusGraphProps) {
           {drawn && (
             <svg className="fg__lines" width={drawn.w} height={drawn.h} aria-hidden="true">
               <defs>
-                {/* Set the tips back slightly from the card borders. */}
-                <marker id={arrowId} viewBox="0 0 12 10" refX="12" refY="5" markerWidth="11" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
-                  <path d="M1 1 L9 5 L1 9 Z" className="fg__arrow" />
+                {/* Set each tip back from the border. Its short stem joins even a dashed line to the base. */}
+                <marker id={arrowId} viewBox="0 0 17 10" refX="17" refY="5" markerWidth="16" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+                  <path d="M0.8 4.3 H6 V1 L14 5 L6 9 V5.7 H0.8 Z" className="fg__arrow" />
                 </marker>
-                <marker id={activeArrowId} viewBox="0 0 12 10" refX="12" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
-                  <path d="M1 1 L9 5 L1 9 Z" className="fg__arrow fg__arrow--hot" />
+                <marker id={activeArrowId} viewBox="0 0 17 10" refX="17" refY="5" markerWidth="17" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+                  <path d="M0.8 3.6 H6 V1 L14 5 L6 9 V6.4 H0.8 Z" className="fg__arrow fg__arrow--hot" />
                 </marker>
               </defs>
               {drawn.segs.map((s, i) => <path key={i} d={s.d} className={s.cls} data-edge={s.edge} markerEnd={`url(#${arrowId})`}><title>{relation(s.kind)}</title></path>)}
