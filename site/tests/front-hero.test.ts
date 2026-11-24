@@ -64,6 +64,8 @@ describe("the first screen", () => {
   it("keeps the first-screen routes behind a Menu disclosure", () => {
     const html = frameHtml("/");
     expect(html).toContain('<details class="site-menu">');
+    expect(html).toContain('data-paper-mark="qaoa-sk"');
+    expect(html).toMatch(/class="topbar__brand"[^>]*href="https:\/\/wcook04\.github\.io\/"[^>]*><img src="\/plectis\.svg"[^>]*>Will Cook/);
     for (const name of ["Short paper", "Exposition", "Long record", "Map", "Compare", "Lean index"]) expect(html).toContain(`>${name}</a>`);
     expect(html).not.toMatch(/What ran|About/);
   });

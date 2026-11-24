@@ -92,7 +92,7 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
 export { VIDEOS_ANCHOR };
 
 /** The bar, as the shared markup draws it with this site's name. */
-export const frameHtml = (base: string) => sharedFrame(base, SITE_NAME);
+export const frameHtml = (base: string) => sharedFrame(base, SITE_NAME, "qaoa-sk");
 
 /**
  * Five pictures of the site in use, in the order the short video goes through it. Each is a

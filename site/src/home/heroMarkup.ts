@@ -5,6 +5,8 @@
 // from the shared parts here.
 
 import type { SiteFilm } from "../app/siteFilms.ts";
+import family from "../app/family.json";
+import { paperMarkHtml } from "../app/paperMarks.ts";
 
 export const escapeHtml = (text: string) => text.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
 
@@ -43,7 +45,23 @@ export function filmHtml(film: SiteFilm, lead: boolean): string {
 }
 
 /** The title and available routes before the interactive shell loads. */
-export function frameHtml(base: string, siteName: string): string {
-  const link = (href: string, name: string) => `<li><a class="readmenu__item" href="${base}${href}">${name}</a></li>`;
-  return `<header class="topbar"><a class="topbar__title" href="${base}" translate="no">${escapeHtml(siteName)}</a><details class="site-menu"><summary class="control control--plain menu-toggle">Menu</summary><div class="site-menu__panel"><nav aria-label="Main"><ul class="site-menu__list">${link("read/short", "Short paper")}${link("read/expository", "Exposition")}${link("read/long", "Long record")}${link("map", "Map")}${link("compare", "Compare")}${link("lean", "Lean index")}</ul></nav></div></details></header>`;
+export function frameHtml(
+  base: string,
+  siteName: string,
+  paperId: string,
+  accounts: readonly [href: string, name: string][] = [["read/short/", "Short paper"], ["read/expository/", "Exposition"], ["read/long/", "Long record"]],
+): string {
+  const link = (href: string, name: string) => `<li><a class="readmenu__item" href="${escapeHtml(`${base}${href}`)}">${escapeHtml(name)}</a></li>`;
+  const mark = paperMarkHtml(paperId);
+  const { home, name } = family.owner;
+  return `<header class="topbar">
+<a class="skip-link" href="#main">Skip to content</a>
+<a class="topbar__title" href="${base}" translate="no">${mark ? `<span class="topbar__mark" aria-hidden="true">${mark}</span>` : ""}<span class="topbar__title-text">${escapeHtml(siteName)}</span></a>
+<div class="topbar__right">
+<details class="site-menu"><summary class="control control--plain menu-toggle"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Menu</summary>
+<div class="site-menu__panel"><nav aria-label="Main"><p class="site-menu__label" id="static-read">Read</p><ul class="site-menu__list" aria-labelledby="static-read">${accounts.map(([href, title]) => link(href, title)).join("")}</ul><ul class="site-menu__list site-menu__routes">${link("map/", "Map")}${link("compare/", "Compare")}${link("lean/", "Lean index")}</ul></nav></div>
+</details>
+<a class="topbar__brand" href="${escapeHtml(home)}" rel="author" translate="no"><img src="${base}plectis.svg" alt="" width="22" height="22">${escapeHtml(name)}</a>
+</div>
+</header>`;
 }
