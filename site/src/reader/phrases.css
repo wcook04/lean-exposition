@@ -338,6 +338,50 @@
   overflow-wrap: anywhere;
 }
 
+/* The selected wording has one annotated reading of its declaration. */
+.passage-annotation {
+  margin: var(--space-3) 0;
+  padding: var(--space-3) 0 var(--space-2);
+  border-top: 1px solid var(--rule);
+}
+
+.passage-annotation .passage-annotation__text {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--ink);
+  font: 400 var(--fs-base) / 1.65 var(--font-sans);
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.passage-annotation__text > code {
+  padding: 0.07em 0.28em;
+  border-radius: 0.25em;
+  background: color-mix(in oklab, var(--ink) 9%, var(--surface));
+  color: var(--ink);
+  font-variant-ligatures: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.lean-block__details {
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--rule);
+}
+
+.lean-block__details > summary {
+  width: fit-content;
+  padding: var(--space-2) 0;
+  color: var(--ink-2);
+  font: 500 var(--fs-sm) / var(--lh-ui) var(--font-sans);
+  cursor: pointer;
+}
+
+.lean-block__details > summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
 /* The legend and each convention: closed until asked for. */
 .phrase-card__legend,
 .phrase-card__conventions details {

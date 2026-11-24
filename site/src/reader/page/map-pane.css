@@ -2,8 +2,8 @@
    measure (at least half the window's width from 1280 to 1679px, where the outline folds
    into "Sections"), then the right page to the window's edge, full height under the top
    bar. From 1680px the outline returns, which leaves the graph the width it needs.
-   The pane has two views, Graph and Lean, each filling it. Graph is the focus graph
-   (src/map/focus-graph.css) with the dock under it. Below 1280px it opens as a sheet. */
+   Linked passages share their pane with their dependency graph. Below 1280px the same
+   layout opens in a sheet. */
 
 
 .reader.reader--follow {
@@ -633,6 +633,73 @@ html[data-right-sheet] {
   flex: 1;
 }
 
+/* The lower viewport gets its own camera. Only the text above it scrolls. */
+.map-pane__paired {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+.map-pane__paired > .lean-page {
+  flex: 0 1 auto;
+  max-height: 60%;
+}
+.map-pane__paired > .lean-page > .lean-page__scroll {
+  flex: 0 1 auto;
+}
+.map-pane__local {
+  display: flex;
+  flex: 1 0 40%;
+  flex-direction: column;
+  min-height: 40%;
+  min-width: 0;
+  border-top: 1px solid var(--rule-control);
+}
+.map-pane__local-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 2px var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+}
+.map-pane__local-head h3 {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+.map-pane__layout-button {
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: var(--fs-sm);
+  text-underline-offset: .2em;
+  cursor: pointer;
+}
+.map-pane__layout-button:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.map-pane__layout-button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+.map-pane__local .fg__key {
+  padding-block: 2px;
+}
+@media (max-height: 560px) {
+  /* The reader still has two independent work areas on a landscape phone. Both
+     headers stay with their content, and the graph keeps room for its cards. */
+  .map-pane__paired > .lean-page { overflow-y: auto; overscroll-behavior: contain; }
+  .map-pane__paired > .lean-page > .lean-page__scroll { flex: none; overflow: visible; }
+  .map-pane__local .fg__key { display: none; }
+}
 /* Graph: the drawing, a handle, and the dock under it (15% to 70% of the height, 30% at first). */
 .map-pane__graphview {
   --dock-share: 0.4;
@@ -1578,4 +1645,19 @@ html[data-right-sheet] {
 }
 .map-pane .phrase-card__legend dl > div {
   grid-template-columns: minmax(6.5em, 15em) minmax(0, 1fr);
+}
+
+/* A sheet already has a Back button. With no other controls the toolbar takes no room. */
+.right-sheet .map-pane__bar:not(:has(button, a)) { display: none; }
+.map-pane__local-head .fg__tools {
+  position: static;
+  margin-left: auto;
+  box-shadow: none;
+}
+.map-pane__local .fg__world--narrow { row-gap: 10px; }
+@media (max-height: 560px) and (min-width: 560px) {
+  .right-sheet .subject-band { min-height: 40px; padding-block: 2px; }
+  .right-sheet .subject-band__acts { flex: none; margin-left: auto; }
+  .right-sheet .map-pane__bar { padding-block: 0; }
+  .right-sheet .map-pane__guides .map-pane__guide { min-height: 28px; }
 }

@@ -40,8 +40,8 @@ Three rules follow, and the rest of this page applies them.
    the one loud mark on the paper.
 3. **The subject band** at the head of the pane: the state ("Selected words", "Following the
    paper"), and the place in the paper. It stays put in both views and while the graph pans.
-4. **The inspector**, in a fixed order (below): title and kind, the exact quotation, the
-   comparison with its whole qualification, the reading note, the Lean statement, then the graph.
+4. **The Lean pane.** The selected declaration comes first, followed by its proof control
+   and one annotation for these words. Its dependency graph occupies the lower part of the pane.
 5. **Controls and navigation**, in the sans, at 14px, never amber.
 
 ## States
@@ -148,49 +148,33 @@ depends on the pane's width alone, never on the state, so a change of state refl
 
 ## The inspector
 
-The same component fills the Lean view and sits under the drawing in the Graph view. In the
-Lean view the comparison and its qualifications come first after the quotation. The paper's
-explanation, sources, reading note and conventions open together. Wide inspectors place these
-notes beside the comparison. Narrow ones keep a single column. An unresolved point stays
-beside the comparison even when the notes are closed.
+The Lean pane opens with the active declaration and its source lines. Where a passage
+links to several declarations, the selector above the code changes both the declaration
+and its annotation. The proof starts folded. A proof-line link keeps its highlight so the
+reader can find the cited step by opening the proof.
 
-1. **Title, kind and identity.** The plain title in the serif at 20px. Under it one quiet
-   line: the kind in words ("Lean theorem", "Lean definition", "Paper result"), the exact Lean
-   name in the mono, and the topic's name with its swatch. A definition is called a definition
-   before anything is said about how it compares.
-2. **The exact quotation.** The selected words as the paper sets them, in the serif at 17px,
-   with the same margin rule as the selected words. In the Lean view a long passage shows its
-   opening words. “Full passage in the paper” opens its complete typeset quotation, including
-   display equations. Quoted displays and their Expand control use the available pane width
-   before fitting. The quotation scrolls with the inspector.
-3. **What these words say**, where the paper's data has it: three to five sentences in the
-   paper's notation, labelled "AI-drafted", with the sources it rests on behind one disclosure.
-   Where part of it is not settled from the sources, that part is said plainly under it ("Not
-   settled from the sources: ..."), with an ink rule and never the colour of a failure.
-4. **The comparison, with its whole qualification.** The verdict in words, then every sentence
-   of qualification the data carries, whatever the verdict, then "AI-assessed". A verdict of
-   *same* shows its note too. Where the data says whether the difference bears on the paper's
-   main result, the verdict ends with that as a question and its answer: "Does this affect
-   Theorem 1.1? No. This is a difference of convention." and the recorded line of why. An absent comparison says "Not assessed. No comparison of these
-   words with this Lean is recorded."; a withheld one gives the recorded reason. A link that
-   holds several overlapping phrases keeps each phrase's own comparison. In the Lean view,
-   when the verdicts agree, the assessment of the selected phrase leads and the others open
-   below it. Different verdicts stand together. Each comparison names its phrase by its
-   opening words or its printed equation number.
-   Neither is drawn as agreement. One line under it opens the legend (below).
-5. **The reading note**, labelled "AI-drafted": what the formal statement says, in the
-   paper's notation. Sans, 16px on a 24px line, at most 38rem wide however wide the pane.
-6. **Conventions used here**, where the paper has a glossary of formal conventions: each as a
-   disclosure that states the convention as mathematics, and how it differs from the paper's
-   where the glossary says.
-7. **The formal statement**: the Lean, mono at 14px on a 21px line, with the tied lines lit by
-   a narrow amber rule and a pale wash, and its Comparator line in the Comparator's own words.
-8. **The graph**: in the Lean view a link at the foot, "See what this uses, and what uses it,
-   in the graph"; in the Graph view the drawing itself, above.
+Each annotation belongs to one passage, declaration and edition. Read the surrounding
+paper, the declaration and any definitions needed to interpret its signature. Use the
+existing comparison, passage explanation and declaration note to answer the question
+raised by these particular words. A useful note identifies the formal clause, explains
+why a condition is needed, or gives the precise extent of the correspondence. Keep
+material differences in assumptions, conclusions and verification explicit. A definition
+can explain notation and a cited lemma can supply an input without proving the passage.
 
-Several declarations linked to the same words are a row of buttons between 1 and 2. The Lean
-view puts the row under “linked declarations” and links the current name and line range to its
-source file. Choosing a declaration changes its comparison and source.
+Mark exact Lean names with backticks and set mathematics in the paper's notation between
+dollar signs. The reader displays the names as inline code chips, typesets the mathematics
+with KaTeX, and labels the paragraph “AI-written”. Source links, checks, dependencies,
+conventions and the full quotation open under “Sources and details”. Compare retains the
+recorded assessments. Older editions without edited annotations keep their original
+comparison and reading notes.
+
+In Auto, an unlinked passage opens the graph. When the reader reaches a linked passage,
+the declaration, its folded proof and its annotation take their natural height up to three
+fifths of the pane. The graph fills the space below, with at least two fifths for the active
+declaration and its recorded neighbours.
+Scrolling the text and panning the graph are independent. A declaration without recorded
+neighbours gets the full height. “Minimise graph” restores the full-height Lean and Graph tabs.
+“Combine views” returns to following the passage. Existing explicit view links still work.
 
 ### The legend
 
@@ -265,7 +249,7 @@ system's highlight.
 
 The drawing is as specified in [the graph pane](graph-pane.md), with these changes.
 
-- **The graph earns its space.** The Graph tab carries the number of neighbours the subject has
+- **In the separate full-height Graph view**, the Graph tab carries the number of neighbours the subject has
   in the recorded graph ("Graph · 19"). With four or more, the drawing takes about two thirds of
   the pane, fitted to that area and enlarged up to 1.3 times where the neighbourhood is small,
   and the dock under it is a short card: the title, the comparison's verdict and "Open its
@@ -373,14 +357,14 @@ right, nothing over the text. Widths are CSS pixels of the window.
 | Window | Outline | Paper | Pane | Notes |
 | --- | --- | --- | --- | --- |
 | 390 | drawer | 350 | none beside | inspect and return, below |
-| 1100 | drawer | 550 | 479 | two columns from 1024; the graph is folded to a line at this pane width |
+| 1100 | drawer | 550 | 479 | two columns from 1024; graph cards fit the narrower viewport |
 | 1440 | drawer | 680 | 672 | |
 | 2000 | 208 | 689 | to the edge, at least 600 | |
-| 2560 | 208 | 755 | to the right edge | the comparison and notes sit side by side; equations and Lean can use the whole pane |
+| 2560 | 208 | 755 | to the right edge | the declaration and its annotation share one reading column above the graph |
 
 - The pane is sticky under the top bar and has one vertical scroller per view. Its gutter is
   stable, so content arriving never changes a width.
-- Under the drawing, the dock is a short card and the drawing has the rest, about two thirds
+- In the separate Graph view, the dock under the drawing is a short card and the drawing has the rest, about two thirds
   of the pane or more. Opened with "Show the whole card", the dock takes 40% of the Graph view,
   never less than 240px while the drawing keeps 260px, and its height can be drawn with the
   handle; where both cannot fit, the drawing folds to one line.
@@ -394,7 +378,7 @@ right, nothing over the text. Widths are CSS pixels of the window.
 
 1. **Read.** The paper alone. The hint and the reader-annotation notice are on the first screen.
 2. **Tap linked words.** The inspector opens over the whole screen under the top bar, at once,
-   with the quotation first. Its head is one row: "Back to paper" and the two tabs.
+   with the same split as on desktop. “Back to paper” returns to the selected words.
 3. **Back to paper** (or Escape) closes it. The paper is exactly where it was. A bar stays at
    the foot: the selection's state and place, which returns to the words; "View", which
    reopens the inspector; and the Auto | Manual switch, whose Auto lets the selection go. The paper reserves the

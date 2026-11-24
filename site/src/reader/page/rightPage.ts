@@ -2,6 +2,8 @@
 // built. Small on purpose: anything in the paper can import it.
 
 import type { ReactNode } from "react";
+import type { Alignment, Tie } from "../../api/lean";
+import type { PaneMode } from "./ModeToggle";
 import { Signal } from "./signal";
 
 /** The statement holding the reading line, once it has held it. */
@@ -9,7 +11,28 @@ export interface Followed {
   tie: number | null;
   /** The passage at the line. */
   anchor: string | null;
-  part: number;
+  /** Null until the reading position is measured. */
+  part: number | null;
+}
+
+/** The pane for a statement or an explicitly selected record, using its Lean dock's sources. */
+export function paneForStatement(tie: Tie | undefined, alignment: Alignment | null | undefined, record = tie?.record): PaneMode {
+  if (tie && !tie.lean) return "graph";
+  if (tie?.rows) return tie.rows.length ? "lean" : "graph";
+  // Older ties name their first declaration directly or get their rows from the alignment.
+  if (tie?.name && tie.module) return "lean";
+  if (!record) return "graph";
+  if (alignment === undefined) return "lean";
+  const row = alignment?.records[record];
+  const statement = tie && row?.statements.find((value) => value.at === tie.at);
+  return statement?.lean?.length || row?.lean.length ? "lean" : "graph";
+}
+
+/** An exact PDF mark remains the reading position until the reader scrolls. */
+export function pdfReadingAt(
+  marks: ReadonlyMap<string, unknown>, addressed: string | undefined, measured: string | undefined, scrolled: boolean,
+): string | undefined {
+  return !scrolled && addressed && marks.has(addressed) ? addressed : measured;
 }
 
 /** What the pointer has rested on. A card with no statement in this paper has only a record. */

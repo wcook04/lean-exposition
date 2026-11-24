@@ -169,6 +169,16 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
   return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
 }
 
+/** The note is edited for this passage and its active declaration. */
+export function PassageAnnotation({ text }: { text: string }) {
+  return (
+    <section className="phrase-card passage-annotation" aria-label="Passage annotation">
+      <p className="phrase-card__label">Annotation <span>AI-written</span></p>
+      <p className="passage-annotation__text" dangerouslySetInnerHTML={{ __html: noteHtml(text).html }} />
+    </section>
+  );
+}
+
 /** Name a displayed formula by its printed number, or show the formula itself when it has none. */
 function comparisonScope(quote: string | undefined, words: string | null): ReactNode {
   if (!words) return null;
@@ -280,7 +290,7 @@ export function ComparisonLegend({ label = "What do these words mean?" }: { labe
 }
 
 /** The paper's formal conventions that bear on this card, each opening to its statement as mathematics. */
-function Conventions({ keys }: { keys: readonly string[] }) {
+export function Conventions({ keys }: { keys: readonly string[] }) {
   const aids = useAids(keys.length > 0);
   const found = useMemo(() => conventionsFor(aids, keys), [aids, keys]);
   if (!found.length) return null;
@@ -341,7 +351,6 @@ function Matters({ matters, mainResult }: { matters: ComparisonMatters; mainResu
 
 /** What the quoted words say, in the paper's notation, with its sources; and what is not settled from them. */
 function Explanation({ explanation, showOpen = true }: { explanation: PhraseExplanation; showOpen?: boolean }) {
-  const sources = explanation.citations ?? [];
   return (
     <div className="phrase-card__explanation">
       <p className="phrase-card__label">
@@ -349,25 +358,31 @@ function Explanation({ explanation, showOpen = true }: { explanation: PhraseExpl
       </p>
       <p className="phrase-card__text" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.text).html }} />
       {showOpen && explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
-      {sources.length > 0 && (
-        <details className="phrase-card__sources">
-          <summary>{sources.length === 1 ? "Source cited (1)" : `Sources cited (${sources.length})`}</summary>
-          <ul>
-            {sources.map((source) => (
-              <li key={`${source.ref}:${source.where ?? ""}`}>
-                {source.url ? <a href={source.url}>{source.title}</a> : source.title}
-                {source.where && <>, {source.where}</>}
-                {source.supports && (
-                  <>
-                    : <span dangerouslySetInnerHTML={{ __html: noteHtml(source.supports).html }} />
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </details>
-      )}
+      <AnnotationSources explanation={explanation} />
     </div>
+  );
+}
+
+export function AnnotationSources({ explanation }: { explanation?: PhraseExplanation }) {
+  const sources = explanation?.citations ?? [];
+  if (!sources.length) return null;
+  return (
+    <details className="phrase-card__sources">
+      <summary>{sources.length === 1 ? "Source cited (1)" : `Sources cited (${sources.length})`}</summary>
+      <ul>
+        {sources.map((source) => (
+          <li key={`${source.ref}:${source.where ?? ""}`}>
+            {source.url ? <a href={source.url}>{source.title}</a> : source.title}
+            {source.where && <>, {source.where}</>}
+            {source.supports && (
+              <>
+                : <span dangerouslySetInnerHTML={{ __html: noteHtml(source.supports).html }} />
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }
 
@@ -404,6 +419,7 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
       <NoteBody text={note} initiallyOpen={inLean} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
     </div>
   );
+  if (row.annotation) return <PassageAnnotation text={row.annotation} />;
   const foldNotes = inLean && Boolean(explanation?.text || note);
   return (
     <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label="These words and how the Lean compares with them">

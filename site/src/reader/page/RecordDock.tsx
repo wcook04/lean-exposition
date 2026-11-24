@@ -18,11 +18,11 @@ import { paperAlignmentResource, shortTitle } from "../../compare/useAlignment";
 import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
 import { READER_ACT_MS, sinceInput } from "../../app/readerInput";
-import { aidsArrived, loadAids } from "../aids";
+import { aidsArrived, cardKeys, loadAids } from "../aids";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
-import { assessmentsOf, declLight, dockDecl, PaperPassage, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
+import { AnnotationSources, assessmentsOf, Conventions, declLight, dockDecl, PaperPassage, PassageAnnotation, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
 import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { quoteOfDisplay } from "./PaperBody";
@@ -333,6 +333,10 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       </div>
     );
   const inLean = Boolean(onOpenGraph);
+  const phraseAnnotation = phrase ? (row as unknown as PhraseLean | null)?.annotation : undefined;
+  const annotation = inLean && phraseAnnotation;
+  const relatedPaper = phrase && open.tie !== null && <OurStatements phrase={tie?.phrase} />;
+  const passage = inLean && quote && <PaperPassage key={tie?.at} quote={quote} collapsible />;
   const leanBlock = name && (
     <LazyLeanBlock
       key={`${row?.module ?? open.declModule ?? ""}:${name}`}
@@ -346,22 +350,26 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       clause={row?.clause}
       lines={row?.lines}
       compact
+      passageNote={annotation ? <PassageAnnotation text={annotation} /> : undefined}
       foldDependencies={inLean && phrase}
       onName={onName}
       noPapers
       previewSlot={barLine && barShown ? barLine : foot}
-      below={
-        open.tie !== null ? (
-          ties.index.ties[open.tie]?.origin ? (
+      below={open.tie !== null && (
+        <>
+          {ties.index.ties[open.tie].origin && <OriginLine origin={ties.index.ties[open.tie].origin} />}
+          <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+          {annotation && (
             <>
-              <OriginLine origin={ties.index.ties[open.tie].origin} />
-              <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+              <AnnotationSources explanation={tie?.explanation} />
+              <Conventions keys={cardKeys(tie?.phrase, names)} />
+              {relatedPaper}
+              {crumbs}
+              {passage}
             </>
-          ) : (
-            <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
-          )
-        ) : undefined
-      }
+          )}
+        </>
+      )}
     />
   );
   const choices = !open.decl && rows.length > 1 && !full && (
@@ -408,13 +416,13 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
             )}
             {(tie || name || topic) && (
               <p className="lean-page__meta">
-                {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
+                {tie && !annotation && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
                 {inLean && phrase && row ? (
                   <a className="lean-page__source" href={routeHref({ view: "lean", module: row.module, file: `${row.line}-${row.end_line}` })} title={`Open ${row.name} in its Lean file`}>
                     <code className="lean-page__raw">{lastName(row.name)}</code> · {row.line === row.end_line ? `line ${row.line}` : `lines ${row.line}–${row.end_line}`}
                   </a>
                 ) : name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
-                {topic && (
+                {topic && !annotation && (
                   <span className="lean-page__topic" data-tone={topic.tone} title={topic.description || undefined}>
                     <span className="phrase-card__swatch" aria-hidden="true" />
                     {topic.name}
@@ -432,7 +440,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       )}
       {!slot && onBrief && !empty && (
         <div className="lean-page__brief">
-          {brief && phrase && row && (
+          {brief && phrase && row && (phraseAnnotation ? <PassageAnnotation text={phraseAnnotation} /> : (
             <section className="phrase-card phrase-card--brief" aria-label="How the Lean compares with these words, in short">
               {assessmentsOf(row as unknown as PhraseLean, tie?.merged)
                 .slice(0, 1)
@@ -440,7 +448,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   <Verdict key={i} assessment={assessment} />
                 ))}
             </section>
-          )}
+          ))}
           <button type="button" className="lean-page__quiet" aria-expanded={!brief} onClick={() => onBrief(!!brief)}>
             {brief ? "Show the whole card" : "Show less, and give the graph the room"}
           </button>
@@ -485,7 +493,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
             ) : name ? (
               <>
               {inLean && leanBlock}
-              {phrase && row && (
+              {phrase && row && !annotation && (
                 <PhraseCard
                   key={inLean ? `${tie?.at}:${row.name}` : undefined}
                   inLean={inLean}
@@ -500,8 +508,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                   mainResult={ties.index.main_result}
                 />
               )}
-              {phrase && open.tie !== null && <OurStatements phrase={ties.index.ties[open.tie]?.phrase} />}
-              {phrase && row && crumbs}
+              {!annotation && relatedPaper}
+              {!annotation && phrase && row && crumbs}
               {!inLean && leanBlock}
               </>
             ) : alignment ? (
@@ -510,16 +518,14 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                 {open.tie !== null && <OriginLine origin={ties.index.ties[open.tie]?.origin} />}
               </>
             ) : null}
-            {onOpenGraph && name && !full && (
+            {onOpenGraph && name && !full && !annotation && (
               <p className="lean-page__tograph">
                 <button type="button" className="lean-page__quiet" onClick={onOpenGraph}>
                   See what this uses, and what uses it, in the graph
                 </button>
               </p>
             )}
-            {inLean && !full && !holding && phrase && row && quote && (
-              <PaperPassage key={tie?.at} quote={quote} collapsible />
-            )}
+            {!annotation && !full && !holding && phrase && row && passage}
           </div>
         </div>
       )}

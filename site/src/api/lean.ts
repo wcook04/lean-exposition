@@ -217,6 +217,8 @@ export interface Alignment {
  * note (at most 25 words), `plain` the declaration's title in this part of this paper.
  */
 export interface PhraseLean extends FidelityFields {
+  /** Edited note for this passage and this declaration in this edition. */
+  annotation?: string;
   name: string;
   module: string;
   line: number;

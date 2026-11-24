@@ -6,12 +6,12 @@
 // and its Lean rises over the graph, as one history entry whose address names the record
 // and the statement. Back: the browser's own, to the same pixel.
 //
-// Scrolling never sets state on this component. It writes attributes (statements.ts) and
-// signals (page/signal.ts) that the few small things showing them read. A chosen treatment
-// elsewhere still opens as a visit over the paper, which stays where it was.
+// Scrolling writes attributes (statements.ts) and signals (page/signal.ts). The reader
+// subscribes to the automatic pane mode, and small components read the other details.
+// A chosen treatment elsewhere still opens as a visit over the paper, which stays where it was.
 
 import site from "@instance/site";
-import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { Alignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
@@ -35,12 +35,12 @@ import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
-import { ModeToggle, type PaneMode } from "./page/ModeToggle";
+import type { PaneMode } from "./page/ModeToggle";
 import { applyTones, readTones } from "./page/panePrefs";
 import { RightSheet } from "./page/RightSheet";
 import { HeldBar } from "./page/HeldBar";
 import { READER_HINT } from "./skeleton";
-import { FOLLOW_HOLD, leanPage, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
+import { FOLLOW_HOLD, leanPage, paneForStatement, pdfReadingAt, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
@@ -268,6 +268,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
   // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
+  const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
@@ -291,7 +292,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const sheetShownRef = useRef(false);
   // The first screen is the paper: the map and the alignment arrive in idle time.
   const [paneReady, setPaneReady] = useState(false);
-  const [alignment, setAlignment] = useState<Alignment | null>(null);
+  const [loadedAlignment, setAlignment] = useState<Alignment | null>();
+  const alignment = loadedAlignment ?? null;
   useEffect(
     () =>
       whenIdle(() => {
@@ -306,7 +308,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const signals = useRef<ReaderSignals>({
     heading: new Signal<string | null>(null),
     part: new Signal(0),
-    follow: new Signal<Followed>({ tie: null, anchor: null, part: 0 }, sameFollow),
+    follow: new Signal<Followed>({ tie: null, anchor: null, part: null }, sameFollow),
     shownTie: new Signal<{ tie: number; at: string } | null>(null),
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
@@ -406,7 +408,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // Reading from the opening, every part the first screen can show is typeset in the first render,
     // so none of them is filled in, and its margin drawn, after the page has painted.
     if (start < 4) for (let i = 0; i < Math.min(7, doc.parts.length); i++) parts.add(i);
-    return { parts: [...parts], saved: savedPart !== null ? saved : null };
+    return { parts: [...parts], saved: savedPart !== null ? saved : null, slice: savedPart === null && (named !== null || !!lines) ? { tie: named } : null };
     // Computed once per mounted paper.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -803,22 +805,41 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // A statement with no Lean has nothing to open: what is known about that stands under it.
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
-  // A normal reading address opens in Lean. A Graph address and a selected
-  // statement with no Lean can still open the graph.
-  const mode: PaneMode = route.lean ? "lean" : route.graph || pinWithoutLean ? "graph" : "lean";
+  const requestedMode = route.lean ? "lean" : route.graph ? "graph" : undefined;
+  const selectedRecord = pin?.record ?? held?.records[0];
+  const selectedTieIndex = pin ? pin.tie : selectedRecord ? statementFor(ties, selectedRecord) : null;
+  const selectedDecl = route.decl ?? (!pin && !selectedRecord ? held?.decl : undefined);
+  const selectedMode = selectedDecl
+    ? "lean"
+    : pin || held
+      ? paneForStatement(selectedTieIndex === null ? undefined : ties.index.ties[selectedTieIndex], loadedAlignment, selectedRecord)
+      : undefined;
+  const fixedMode = requestedMode ?? selectedMode;
+  const getMode = () => {
+    if (fixedMode) return fixedMode;
+    const follow = signals.follow.get();
+    const read = follow.part === null ? initial.slice : follow;
+    if (!read) return "lean";
+    return paneForStatement(read.tie === null ? undefined : ties.index.ties[read.tie], loadedAlignment);
+  };
+  const mode = useSyncExternalStore(signals.follow.subscribe, getMode);
   const modeRef = useRef(mode);
   modeRef.current = mode;
-  // The view stays as the reader left it through Back and Forward: an entry keeps its subject,
-  // and the view is the one now on screen.
-  const viewKept = useRef(mode);
+  // After Back or Forward, keep an explicit tab choice. Auto follows the restored reading position.
+  const viewKept = useRef(requestedMode);
+  const viewEntry = useRef(keyRef.current);
   useEffect(() => {
-    if (arrivedBy() === "pop" && mode !== viewKept.current) {
-      const kept = viewKept.current;
+    const key = entryKey();
+    const fromPop = arrivedBy() === "pop" && key !== viewEntry.current;
+    viewEntry.current = key;
+    const kept = viewKept.current;
+    if (fromPop && kept && requestedMode !== kept) {
       navigate({ ...hereRef.current, graph: kept === "graph" || undefined, lean: kept === "lean" || undefined }, { replace: true });
       return;
     }
-    viewKept.current = mode;
-  }, [route, mode]);
+    viewKept.current = requestedMode;
+  }, [route, requestedMode]);
+
   useEffect(() => {
     if (!pin || pin.tie === null || !pinWithoutLean) return;
     const t = pin.tie;
@@ -987,7 +1008,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     /** The reader's own hand on the page gives the line back to the reader. */
     const onHand = () => {
       stepped.current = false;
-      if (hereRef.current.pdf) scrolledPdf.current = true;
+      if (hereRef.current.pdf || pdfOnly) scrolledPdf.current = true;
     };
     const onKeyScroll = (event: KeyboardEvent) => {
       if (SCROLL_KEYS.has(event.key)) onHand();
@@ -1114,8 +1135,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (!id) return releaseInPlace();
       const statement = statementFor(ties, id);
       selfAt.current = statement !== null ? ties.index.ties[statement].at : undefined;
-      // A card opens its step on the tab the pane is on; the tab never changes by itself.
-      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
+      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined });
     },
     [ties, releaseInPlace],
   );
@@ -1140,11 +1160,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const tie = ties.index.ties[t];
       selfAt.current = tie.at;
       const opened = nextOpened();
-      // A click changes the statement, not the mode: the pane stays on the mode it is in, and
-      // the address says which, so a statement with no Lean keeps a chosen Lean. A command that
-      // names its mode ("See its Lean") chooses that mode too.
-      const mode = want ?? modeRef.current;
-      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined });
+      const here = hereRef.current;
+      // "See its Lean" explicitly chooses Lean. Other selections keep the address's view choice.
+      const pane = want ? { graph: want === "graph" || undefined, lean: want === "lean" || undefined } : {};
+      go({ ...here, ...pane, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
       writeEntry(OPENED, opened);
       // A narrow window's inspector opens over the whole screen; the paper stays exactly where it is.
       setSheetCollapsed(false);
@@ -1224,10 +1243,26 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     navigate({ ...here, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined }, { replace: true });
   }, []);
 
+  /** Combining the views returns to the passage's automatic view. */
+  const combinePane = useCallback(() => {
+    const here = hereRef.current;
+    if (pdfOn && !scrolledPdf.current && here.at && pdfByAt.has(here.at)) {
+      // Focus or a layout change can shift an opened PDF mark without reading input.
+      const mark = paperRef.current?.querySelector(`.pdf-view [data-mark][data-at="${CSS.escape(here.at)}"]`);
+      if (mark) {
+        const delta = mark.getBoundingClientRect().top - readingLine() + 1;
+        if (Math.abs(delta) > 2) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
+      }
+    }
+    if (!here.graph && !here.lean) return;
+    viewKept.current = undefined;
+    if (here.at) selfAt.current = here.at;
+    navigate({ ...here, graph: undefined, lean: undefined }, { replace: true });
+  }, [pdfOn, pdfByAt, readingLine]);
+
   /**
    * Auto and Escape: let go of what was selected and follow the paper from where the
-   * reader now is. The paper does not move and the view stays; the browser's Back is the way to an
-   * earlier place.
+   * reader now is. The paper stays in place, and an explicit view choice stays in effect.
    */
   const closeLean = useCallback(() => {
     setHeld(null);
@@ -1601,13 +1636,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           })()
       : null;
 
-  /** From the map: the paper goes to the statement, and the graph stays where it is. */
+  /** From the map: the paper goes to the selected statement. */
   const openFromMap = useCallback(
     (id: string) => {
       const statement = statementFor(ties, id);
       const tie = statement !== null ? ties.index.ties[statement] : null;
-      // The step opens on the tab the pane is on: on the Graph tab, under the graph.
-      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined };
+      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined };
       if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
       const opened = nextOpened();
       go(to);
@@ -1616,11 +1650,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [go, ties, landSlice, nextOpened],
   );
 
-  /** A declaration's card: it becomes the subject, as one history entry, and the view stays. */
+  /** A declaration's card becomes the subject as one history entry. */
   const openDeclHere = useCallback(
     (name: string, module?: string) => {
       const opened = nextOpened();
-      go({ ...hereRef.current, node: undefined, at: undefined, decl: name, declModule: module, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined });
+      go({ ...hereRef.current, node: undefined, at: undefined, decl: name, declModule: module, beside: undefined });
       writeEntry(OPENED, opened);
     },
     [go, nextOpened],
@@ -1710,15 +1744,25 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfLabel = side === "adapted" ? ADAPTED?.pdfs[0]?.label : undefined;
   const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages, label: pdfLabel } : undefined;
   const pdfPage = useRef<number | null>(null);
-  const onPdfPosition = useCallback((page: number, at: string | undefined) => {
-    pdfPage.current = page;
-    const tie = at ? statementAt(undefined, at) : null;
+  const followPdf = useCallback((at: string | undefined) => {
+    const tie = statementAt(undefined, at);
     const part = tie === null ? 0 : statements.partOf(tie);
     current.current = tie;
     currentSegment.current = tie === null ? null : ties.segmentsOf[tie][0];
     signals.part.set(part);
     signals.follow.set({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part });
-  }, [signals, statementAt, statements, ties]);
+  }, [signals, statements, statementAt, ties]);
+  useLayoutEffect(() => {
+    if (!pdfOn) return;
+    scrolledPdf.current = false;
+    // Open exact statements before the PDF's smooth landing reports its reading line.
+    const at = pdfReadingAt(pdfByAt, route.at, undefined, false);
+    if (at) followPdf(at);
+  }, [pdfOn, route.at, route.page, pdfByAt, followPdf]);
+  const onPdfPosition = useCallback((page: number, at: string | undefined) => {
+    pdfPage.current = page;
+    followPdf(pdfReadingAt(pdfByAt, hereRef.current.at, at, scrolledPdf.current));
+  }, [pdfByAt, followPdf]);
   // A PDF page can contain many paragraphs. Remember the exact text position for a
   // round trip on the same page. A new PDF selection or a different page takes precedence.
   const textReturn = useRef<ReadingPosition | null>(null);
@@ -1833,6 +1877,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (land) void landSlice(ties.index.ties[t].at, { node: ties.index.ties[t].record, smooth: true });
     },
     onMode: setMode,
+    onCombine: combinePane,
     graphRequested: route.graph,
     mode,
     onName: openDecl,
@@ -1842,7 +1887,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
 
   /** Below 1024px, or with the pane turned off: the inspector over the whole screen, opened on demand. */
-  const sheetShown = !paneRoom && !route.beside && !sheetCollapsed && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl || !!held || (!!route.lean && !paneRoom));
+  const sheetShown = !paneRoom && !route.beside && !sheetCollapsed && (sheetOpen || !!pin || !!route.decl || !!held || !!requestedMode);
   sheetShownRef.current = sheetShown;
   const selectedTie = pin?.tie != null ? ties.index.ties[pin.tie] : null;
   const heldPlace = held ? placeWords(held.anchor ?? undefined) : selectedTie ? placeWords(selectedTie.anchor ?? undefined, selectedTie.at) : "";
@@ -1925,16 +1970,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           {!mid && (
-            <ModeToggle
-              mode={mode}
-              onMode={(next) => {
-                setMode(next);
-                // A phone has no pane beside the paper: Graph opens the graph as a sheet over its foot.
-                if (next === "graph") setSheetOpen(true);
-              }}
-            />
-          )}
-          {!mid && (
             <button type="button" className="sections-toggle" onClick={() => setSectionsOpen(true)}>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
@@ -1964,20 +1999,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </span>
           )}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
-          {mid && (
-            <button
-              type="button"
-              className="control reader-strip__map"
-              aria-pressed={paneRoom ? paneOn : undefined}
-              onClick={paneRoom ? toggleMap : () => setSheetOpen(true)}
-            >
-              <svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
-                <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
-                <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
-              </svg>
-              <span className="reader-strip__word">{paneOn ? "Hide pane" : "Show pane"}</span>
-            </button>
-          )}
+          <button
+            type="button"
+            className="control reader-strip__map"
+            aria-pressed={paneRoom ? paneOn : undefined}
+            aria-expanded={paneRoom ? undefined : sheetShown}
+            onClick={paneRoom ? toggleMap : () => {
+              setSheetCollapsed(false);
+              setSheetOpen(true);
+            }}
+          >
+            <svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
+              <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+              <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
+            </svg>
+            <span className="reader-strip__word">{paneOn ? "Hide pane" : "Show pane"}</span>
+          </button>
           {visit && !route.beside && (
             <div className="reader-strip__visit">
               <button type="button" className="control reader-strip__return" onClick={returnToOrigin}>
@@ -2028,9 +2065,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             page={route.page}
             readingLine={readingLine}
             onPosition={onPdfPosition}
-            onPick={(id, mark, page) =>
-              navigate({ ...route, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined })
-            }
+            onPick={(id, mark, page) => {
+              navigate({ ...route, anchor: undefined, decl: undefined, declModule: undefined, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined });
+            }}
           />
         )}
         <div hidden={pdfOn || pdfOnly}>
