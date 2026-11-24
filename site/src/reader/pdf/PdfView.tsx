@@ -198,6 +198,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
     window.addEventListener("wheel", touch, { passive: true, once: true });
     window.addEventListener("keydown", touch, { once: true });
     window.addEventListener("touchstart", touch, { passive: true, once: true });
+    window.addEventListener("pointerdown", touch, { passive: true, once: true });
     const land = () => {
       const r = el.getBoundingClientRect();
       if (!touched && (r.bottom < 0 || r.top > window.innerHeight)) landOn("instant" as ScrollBehavior);
@@ -218,6 +219,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       window.removeEventListener("wheel", touch);
       window.removeEventListener("keydown", touch);
       window.removeEventListener("touchstart", touch);
+      window.removeEventListener("pointerdown", touch);
     };
   }, [fitWidth, pdf, selected, page, position?.page, position?.y, marks, readingLine]);
 

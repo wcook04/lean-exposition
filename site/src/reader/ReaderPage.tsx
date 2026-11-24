@@ -466,13 +466,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   useEffect(() => () => restoring.current?.(), []);
 
   const restorePosition = useCallback(
-    async (position: ReadingPosition) => {
+    async (position: ReadingPosition, current = () => true) => {
       const body = bodyRef.current;
       const part = partOfPosition(position, { stage, edition, parts: doc.parts });
       if (!body || part === null) return false;
       await body.ensure([part - 1, part, part + 1]);
       const el = body.partElement(part);
-      if (!el) return false;
+      if (!el || !current()) return false;
       const line = position.top ?? readingTop();
       const y = () => scrollForPosition(el, position, line);
       window.scrollTo({ top: Math.max(0, y()), behavior: "instant" as ScrollBehavior });
@@ -1955,14 +1955,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     referenceOrigin.current = null;
     setAwayFromSelection(false);
     const navigation = ++referenceNavigation.current;
+    const current = () => referenceNavigation.current === navigation;
+    const finish = () => { if (current()) setReferencePin(null); };
     if (origin.format === "pdf") {
       pdfReferenceScroll(origin.position, navigation, () => {
         const view = pdfReferencePage(origin.position.page)?.closest<HTMLElement>(".pdf-view");
         if (view) view.scrollLeft = origin.left;
         scrolledPdf.current = origin.scrolled;
+        finish();
       });
     } else {
-      void restorePosition(origin.position);
+      void restorePosition(origin.position, current).then(finish);
     }
   };
 
