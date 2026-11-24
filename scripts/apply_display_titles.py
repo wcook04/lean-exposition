@@ -223,6 +223,54 @@ def project(artifact, mount, names, slots=None):
     return updates, indexes
 
 
+def graph_title_coverage(artifact, mount, updates=None):
+    """Check the names a dependency card can display, including declarations with no passage."""
+    edition = (artifact / mount / "edition").absolute()
+    if artifact not in edition.parents or edition.resolve() != edition:
+        raise ValueError(f"{edition}: invalid artifact mount")
+    _, index = read_capture(edition / "index.json")
+
+    def effective(path):
+        change = (updates or {}).get(path.relative_to(artifact))
+        return json.loads(change[0]) if change else read_capture(path)[1]
+
+    compiled = capture_file(edition, index, "/lean/names", "lean/names.json")
+    if compiled is None:
+        raise ValueError(f"{edition}: missing the compiled declaration name index")
+    rows = effective(compiled)["names"]
+    owners = defaultdict(set)
+    for name, _kind, module, *_ in rows:
+        owners[name].add(module)
+
+    sources = {}
+    for route, file in (("/alignment/core", "alignment/core.json"), ("/alignment", "alignment.json")):
+        path = capture_file(edition, index, route, file)
+        if path is not None:
+            sources[route] = effective(path)["names"]
+    if not sources:
+        raise ValueError(f"{edition}: missing the alignment titles")
+
+    missing, identifiers, inconsistent = [], [], []
+    for name in sorted(owners):
+        values = {titles.get(name) for titles in sources.values()}
+        if len(values) > 1:
+            inconsistent.append(name)
+        if None in values or "" in values:
+            missing.append(name)
+        short = name.rsplit(".", 1)[-1].replace("_", " ").casefold()
+        if any(value and value.casefold() in {name.casefold(), short} for value in values):
+            identifiers.append(name)
+    return {
+        "compiled_declarations": len(rows),
+        "unique_names": len(owners),
+        "names_in_multiple_modules": sorted(name for name, modules in owners.items() if len(modules) > 1),
+        "without_explicit_title": missing,
+        # An exact mathematical term may be a good title. These entries need editorial judgement.
+        "titles_repeating_identifier": identifiers,
+        "inconsistent_alignment_titles": inconsistent,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("artifact", type=Path, help="Git checkout of the published reader artifact")
@@ -230,6 +278,8 @@ def main():
     parser.add_argument("titles", type=Path, help="JSON with exact Lean names and optional per-slot titles")
     parser.add_argument("--mount", default=".", help="path beneath artifact containing edition/")
     parser.add_argument("--source-commit", action="append", required=True)
+    parser.add_argument("--audit-graph-titles", action="store_true",
+                        help="Include title coverage over the whole compiled Lean index in the receipt")
     args = parser.parse_args()
     try:
         artifact, output = args.artifact.resolve(), args.output.resolve()
@@ -257,6 +307,8 @@ def main():
                    "source_commits": args.source_commit, "title_source_sha256": digest(args.titles.read_bytes()),
                    "unchanged_edition_indexes": indexes,
                    "files": {str(path): row for path, (_, row) in files.items()}}
+        if args.audit_graph_titles:
+            receipt["graph_title_coverage"] = graph_title_coverage(artifact, args.mount, files)
         (output / "receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     except (KeyError, OSError, ValueError, subprocess.CalledProcessError) as exc:
         parser.exit(1, f"{exc}\n")
