@@ -244,6 +244,8 @@ export interface Alignment {
  * `plain` is the declaration's title in this part of the paper.
  */
 export interface PhraseLean extends FidelityFields {
+  /** Edited note for this passage and this declaration in this edition. */
+  annotation?: string;
   name: string;
   module: string;
   line: number;

@@ -6,6 +6,7 @@ import type { LeanDeclaration, LeanModule, LeanModules } from "../src/api/lean";
 import type { LeanShell } from "../src/lean/data";
 import { signatureText } from "../src/lean/data";
 import { DeclView, LeanFacts } from "../src/lean/LeanBlock";
+import { PassageAnnotation } from "../src/reader/page/PhraseCard";
 import { buildIndex } from "../src/lean/resolve";
 import { hasLeanHost, hostLean, showInHost } from "../src/lean/walk";
 import { paperBlocks, orderStatements, statementRows } from "../src/search/corpus";
@@ -47,6 +48,30 @@ describe("LeanBlock's props", () => {
     const view = await render(<DeclView decl={main} module={module} shell={shell} lines={[2, 2]} noTerms noDependencies noPapers />);
     expect([...view.querySelectorAll(".lean-line.is-lit")].map((line) => (line as HTMLElement).dataset.line)).toEqual(["2"]);
     expect(view.querySelector(".lean-block__proof")).not.toBeNull();
+  });
+
+  it("keeps a passage's proof folded and its one annotated reading directly below", async () => {
+    const view = await render(
+      <DeclView decl={main} module={module} shell={shell} lines={[2, 2]}
+        passageNote={<PassageAnnotation text="In `main`, $x$ is the input to `helper`." />}
+        noTerms noDependencies noPapers />
+    );
+    const code = view.querySelector(".lean-code")!;
+    const fold = view.querySelector<HTMLButtonElement>(".lean-fold")!;
+    const annotation = view.querySelector<HTMLElement>(".passage-annotation")!;
+    const details = view.querySelector<HTMLDetailsElement>(".lean-block__details")!;
+    expect(code.nextElementSibling).toBe(fold);
+    expect(fold.getAttribute("aria-expanded")).toBe("false");
+    expect(fold.nextElementSibling).toBe(annotation);
+    expect([...annotation.querySelectorAll("code")].map(el => el.textContent)).toEqual(["main", "helper"]);
+    expect(annotation.querySelector(".katex")).not.toBeNull();
+    expect(annotation.nextElementSibling).toBe(details);
+    expect(details.open).toBe(false);
+    expect(details.querySelector(".lean-block__actions")).not.toBeNull();
+    await act(async () => fold.click());
+    expect(view.querySelector(".lean-block__proof .lean-line.is-lit")).not.toBeNull();
+    expect(view.querySelectorAll(".passage-annotation")).toHaveLength(1);
+    await act(async () => fold.click());
   });
 
   it("takes several ranges, and leaves the proof folded for lines in the statement", async () => {
