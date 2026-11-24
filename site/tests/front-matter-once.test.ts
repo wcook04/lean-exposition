@@ -12,11 +12,11 @@ const sentences = (text: string) => text.split(/(?<=[.!?])\s+(?=[A-Z])/).map((t)
 describe("front matter", () => {
   const manifests = readdirSync(INSTANCES).filter((id) => existsSync(resolve(INSTANCES, id, "instance.json")));
 
-  it("checks each registered Library paper", () => {
+  it("checks each registered paper built by the Library", () => {
     const index = JSON.parse(readFileSync(resolve(__dirname, "../../scripts/build_library_index_assets/papers.json"), "utf8")) as {
-      papers: { id: string; library?: boolean }[];
+      papers: { id: string; library?: boolean; artifact?: boolean }[];
     };
-    const registered = index.papers.filter((paper) => paper.library).map((paper) => paper.id);
+    const registered = index.papers.filter((paper) => paper.library && !paper.artifact).map((paper) => paper.id);
     expect(registered.length).toBeGreaterThan(0);
     expect(manifests).toEqual(expect.arrayContaining(registered));
   });
