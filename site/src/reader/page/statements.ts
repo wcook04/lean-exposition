@@ -3,7 +3,7 @@
 // scrolls or moves the pointer: no React state, and nothing that invalidates layout.
 
 import type { PreparedPart } from "../engine";
-import { phraseHint, type TieModel } from "../ties";
+import type { TieModel } from "../ties";
 
 export type Light = "on" | "point" | "pin";
 
@@ -82,13 +82,12 @@ export class Statements {
     const found = Array.from(section.querySelectorAll<HTMLElement>(":scope > .part__text [data-t]")).map((el) => ({ el, segment: Number(el.dataset.t) }));
     if (!found.length) return;
     this.marks.set(part, found);
-    // A phrase carries its topic's colour, and says its topic and its Lean under the pointer.
+    // A phrase carries its topic's colour.
     for (const { el, segment } of found) {
       const t = this.model.index.segments[segment]?.[2][0];
       const tie = t === undefined ? undefined : this.model.index.ties[t];
       if (tie?.tone === undefined) continue;
       el.dataset.tone = String(tie.tone);
-      el.title = phraseHint(this.model, t!);
       if (this.decl && tie.rows?.some((row) => row.name === this.decl)) el.setAttribute("data-decl", "");
     }
     this.near?.observe(section);

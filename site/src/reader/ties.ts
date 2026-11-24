@@ -410,14 +410,6 @@ export function phraseTitle(model: TieModel, t: number): string {
   return first.plain ?? first.name.slice(first.name.lastIndexOf(".") + 1).replace(/_/g, " ");
 }
 
-/** What a phrase says under the pointer: its topic and its Lean. */
-export function phraseHint(model: TieModel, t: number): string {
-  const topic = topicOf(model, t);
-  const tie = model.index.ties[t];
-  const more = (tie.rows?.length ?? 0) > 1 ? ` and ${tie.rows!.length - 1} more` : "";
-  return `${topic ? `Topic: ${topic.name}. ` : ""}${tie.lean ? `Lean: ${phraseTitle(model, t)}${more}. Click to open it.` : "No Lean linked."}`;
-}
-
 /** The part of the paper a byte lies in, for a paper whose phrase topics come in parts. */
 export function partAt(model: TieModel, byte: number): number {
   const parts = model.index.parts ?? [];
