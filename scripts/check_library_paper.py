@@ -26,8 +26,12 @@ import sys
 import time
 import urllib.request
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from playwright.sync_api import sync_playwright
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site" / "scripts"))
+from graph_pane_checks import paired_geometry  # noqa: E402
 
 SIZES = [(1440, 900), (2560, 1440)]
 
@@ -84,16 +88,17 @@ SELECTION = r"""() => {
 PANE = """() => {
   const pane = document.querySelector('.map-pane');
   const canvas = pane?.querySelector('.map-pane__canvas[data-unlinked]');
+  const lean = pane?.querySelector('.map-pane__lean .lean-page, .map-pane__paired > .lean-page');
   return {
     unlinked: !!canvas,
     cards: canvas ? canvas.querySelectorAll('.tree [data-card]').length : 0,
     edges: canvas ? [...canvas.querySelectorAll('.tree__links path.link')].filter(p => (p.getAttribute('d') || '').length > 4).length : 0,
-    sources: pane ? [...pane.querySelectorAll('.map-pane__lean [title]')].map(e => e.getAttribute('title')).join(' | ') : '',
-    lines: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line').length : 0,
-    lit: pane ? pane.querySelectorAll('.map-pane__lean .lean-page .lean-line.is-lit').length : 0,
-    raw: pane?.querySelector('.map-pane__lean .lean-page__raw')?.getAttribute('title') ?? '',
-    title: pane?.querySelector('.map-pane__lean .lean-page__title')?.textContent ?? '',
-    lean: pane?.querySelector('.mode-toggle button[aria-pressed="true"]')?.textContent?.trim() ?? '',
+    sources: lean ? [...lean.querySelectorAll('[title]')].map(e => e.getAttribute('title')).join(' | ') : '',
+    lines: lean?.querySelectorAll('.lean-line').length ?? 0,
+    lit: lean?.querySelectorAll('.lean-line.is-lit').length ?? 0,
+    raw: lean?.querySelector('.lean-page__raw')?.getAttribute('title') ?? '',
+    title: lean?.querySelector('.lean-page__title')?.textContent ?? '',
+    view: pane?.dataset.view ?? '',
     topics: pane ? pane.querySelectorAll('.lean-page__topics').length : 0,
     text: pane?.innerText ?? '',
   };
@@ -128,14 +133,14 @@ TO_LINE = """(words) => {
 
 
 def unlinked_checks(browser, base, args, check, report_skip) -> None:
-    """Every unlinked paragraph named (--unlinked PAGE|WORDS) shows the whole proof map in the Lean
-    view, in Auto (scrolled to) and Manual (clicked, and the clicked address loaded cold); every
+    """Every unlinked paragraph named (--unlinked PAGE|WORDS) shows the whole proof map in Auto
+    (scrolled to) and Manual (clicked, and the clicked address loaded cold); every
     linked one named (--linked PAGE|WORDS) and the phrase and result addresses show their declaration."""
 
     def pane(page, want_unlinked, settle=15000):
         test = "() => { const p = document.querySelector('.map-pane'); return !!p && " + (
             "!!p.querySelector('.map-pane__canvas[data-unlinked] .tree [data-card]')" if want_unlinked
-            else "p.querySelectorAll('.map-pane__lean .lean-page .lean-line').length > 0") + "; }"
+            else "p.dataset.view === 'lean' && !!p.querySelector('.lean-page .lean-line')") + "; }"
         try:
             page.wait_for_function(test, timeout=settle)
         except Exception:
@@ -145,11 +150,11 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
 
     def unlinked_ok(state):
         dead = [d for d in DEAD_ENDS if d in state["text"]]
-        return state["unlinked"] and state["cards"] > 0 and state["edges"] > 0 and not dead and not state["topics"] and state["lean"] == "Lean", \
-            f"canvas {state['unlinked']}, {state['cards']} cards, {state['edges']} lines, view {state['lean']!r}, dead ends {dead}, step lists {state['topics']}"
+        return state["unlinked"] and state["cards"] > 0 and state["edges"] > 0 and not dead and not state["topics"] and state["view"] == "graph", \
+            f"canvas {state['unlinked']}, {state['cards']} cards, {state['edges']} lines, view {state['view']!r}, dead ends {dead}, step lists {state['topics']}"
 
     def linked_ok(state):
-        return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"] or state["sources"]) and state["lean"] == "Lean",
+        return (not state["unlinked"] and state["lines"] > 0 and bool(state["raw"] or state["sources"]) and state["view"] == "lean",
                 f"{state['lines']} Lean lines ({state['lit']} lit), declaration {state['raw']!r}, title {state['title']!r}, canvas {state['unlinked']}")
 
     def shoot(page, name):
@@ -170,7 +175,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
         """The first words of the first paragraph without phrases that, clicked, has nothing in the Lean linked."""
         context = browser.new_context(viewport={"width": 1440, "height": 900})
         page = context.new_page()
-        open_page(page, base + doc + "?v=lean")
+        open_page(page, base + doc)
         candidates = page.evaluate("""() => [...document.querySelectorAll('.paper p')]
             .filter(p => !p.querySelector('.tie') && p.textContent.trim().length > 80)
             .slice(0, 12).map(p => p.textContent.replace(/\\s+/g, ' ').trim().slice(0, 48))""")
@@ -202,7 +207,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
             errors = []
             page.on("pageerror", lambda e: errors.append(str(e)))
             # Auto: the paragraph brought to the reading line, nothing clicked.
-            open_page(page, base + doc + "?v=lean")
+            open_page(page, base + doc)
             if kind == "unlinked":
                 found = page.evaluate(TO_LINE, words)
                 page.wait_for_timeout(2500)
@@ -222,7 +227,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
                 pass
             ok, detail = judge(pane(page, kind == "unlinked"))
             at = page.url
-            check(f"{name} manual", ok and "v=lean" in at, f"{at}: {detail}")
+            check(f"{name} manual", ok and "v" not in dict(parse_qsl(urlsplit(at).query)), f"{at}: {detail}")
             shoot(page, f"{kind}-{n}-manual")
             # The address the click made, opened cold (for an unlinked paragraph, ?l=b<start>-<end>).
             cold = browser.new_context(viewport={"width": 1440, "height": 900})
@@ -236,12 +241,12 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
             cold.close()
             check(f"{name} no page errors", not errors, "; ".join(errors[:3]))
             context.close()
-    # A page opened cold on the Lean view whose opening has nothing tied: the whole map at once.
+    # A page opened cold whose opening has nothing tied: the whole map at once.
     for doc in args.unlinked_cold:
         doc = doc.strip("/") + "/" if doc.strip("/") else ""
         context = browser.new_context(viewport={"width": 1440, "height": 900})
         page = context.new_page()
-        if not open_page(page, base + doc + "?v=lean"):
+        if not open_page(page, base + doc):
             report_skip(f"unlinked {doc or 'paper'} opening, cold")
             context.close()
             continue
@@ -249,7 +254,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
         check(f"unlinked {doc or 'paper'} opening, cold", ok, detail)
         shoot(page, f"unlinked-cold-{doc.strip('/') or 'paper'}")
         context.close()
-    # An exact address of a paragraph with nothing tied, opened cold on the Lean view: the whole map,
+    # An exact address of a paragraph with nothing tied, opened cold: the whole map,
     # and the address and the map stay so with no reader action, never a neighbouring paragraph's Lean.
     for spec in args.unlinked_address:
         doc, at = spec.split("|")
@@ -257,7 +262,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
         name = f"unlinked {doc or 'paper'} address {at}"
         context = browser.new_context(viewport={"width": 1440, "height": 900})
         page = context.new_page()
-        if not open_page(page, base + doc + f"?l={at}&v=lean"):
+        if not open_page(page, base + doc + f"?l={at}"):
             report_skip(name)
             context.close()
             continue
@@ -310,7 +315,7 @@ def unlinked_checks(browser, base, args, check, report_skip) -> None:
         # The Lean source arrives after the declaration's heading ("Loading the Lean source…"):
         # wait for its lines and the pinned line lit, then judge.
         try:
-            page.wait_for_function("() => { const p = document.querySelector('.map-pane__lean .lean-page');"
+            page.wait_for_function("() => { const p = document.querySelector('.map-pane[data-view=lean] .lean-page');"
                                    " return !!p && p.querySelectorAll('.lean-line').length > 0 && !!p.querySelector('.lean-line.is-lit'); }",
                                    timeout=60000)
         except Exception:
@@ -380,13 +385,13 @@ STEP_STATE = r"""() => {
   const counter = document.querySelector('.reader-strip__steps .num')?.textContent ?? '';
   const m = counter.match(/(\d+) of (\d+)/);
   const unpositioned = counter.trim().match(/^(\d+) (?:links|statements)$/);
-  const graph = [...document.querySelectorAll('button[aria-pressed]')].find(b => b.textContent.trim() === 'Graph');
+  const graph = document.querySelector('.map-pane')?.dataset.view;
   return {
     counter: m ? Number(m[1]) : null, total: m ? Number(m[2]) : unpositioned ? Number(unpositioned[1]) : null, text: counter,
     pinned: num(document.querySelector('.paper .tie[data-pin][aria-label]')),
     lit: num(document.querySelector('.paper .tie[data-on][aria-label]')),
     anyPin: !!document.querySelector('.paper .tie[data-pin]'),
-    url: location.href, graph: graph ? graph.getAttribute('aria-pressed') === 'true' : null, y: Math.round(scrollY),
+    url: location.href, graph: graph === 'graph', y: Math.round(scrollY),
   };
 }"""
 
@@ -398,6 +403,82 @@ WORDS_POINT = """e => {
     }
     return null;
 }"""
+
+
+def graph_address(url):
+    parts = urlsplit(url)
+    query = [(key, value) for key, value in parse_qsl(parts.query, keep_blank_values=True) if key != "v"]
+    return urlunsplit(parts._replace(query=urlencode([*query, ("v", "graph")])))
+
+
+def pane_button(page, label):
+    return page.locator(".map-pane").get_by_role("button", name=label, exact=True).first
+
+
+def open_graph(page):
+    """Use the tabs if offered. A zero-neighbour declaration can also be opened by address."""
+    minimise = pane_button(page, "Minimise graph")
+    graph = pane_button(page, "Graph")
+    if minimise.is_visible():
+        minimise.click()
+        graph.wait_for(timeout=10000)
+    if graph.is_visible():
+        graph.click()
+    else:
+        page.goto(graph_address(page.url))
+    page.wait_for_selector('.map-pane[data-view="graph"]', timeout=15000)
+
+
+def readable_card(card, notes_optional=False):
+    text = card.inner_text().lower()
+    if card.get_attribute("aria-label") == "Passage annotation":
+        return "ai-written" in text and bool(card.locator(".passage-annotation__text").inner_text().strip())
+    return "ai-assessed" in text and (notes_optional or "reading note" in text)
+
+
+def check_passage_layout(page, base, tag, check):
+    """Check the default pair first, then exercise both restored tabs with the subject held."""
+    pane = page.locator(".map-pane")
+    check(f"{tag} phrase opens Lean", pane.get_attribute("data-view") == "lean", page.url)
+    check(f"{tag} default has no tabs", not pane.locator(".mode-toggle").count(), page.url)
+    subject = pane.locator(".lean-page__title").first.inner_text()
+    if pane.locator(".map-pane__paired").is_visible():
+        page.wait_for_selector('.map-pane__local .fg__card[data-band="subject"]', timeout=15000)
+        fit, geometry = paired_geometry(page)
+        check(f"{tag} combined Lean and graph fit", fit, str(geometry))
+        pane_button(page, "Minimise graph").click()
+        lean = pane_button(page, "Lean")
+        lean.wait_for(timeout=10000)
+        check(f"{tag} minimise restores Lean and Graph tabs",
+              pane_button(page, "Graph").is_visible() and not pane.locator(".map-pane__paired").count()
+              and pane.locator(".lean-page__title").first.inner_text() == subject, page.url)
+        lean.click()
+        check(f"{tag} separate Lean address", "v=lean" in page.url, page.url)
+    else:
+        # The separate Graph tab may show the paper's record. Check the exact Lean declaration
+        # when deciding whether the default view should have drawn its local dependencies.
+        link = pane.locator(".lean-page__source").first
+        source = link.get_attribute("title") if link.count() else None
+        decl = (source or "").removeprefix("Open ").removesuffix(" in its Lean file")
+        check(f"{tag} paired graph omitted only without dependencies", bool(decl) and declaration_has_no_neighbours(page, base, decl), source or "no declaration in the pane")
+    open_graph(page)
+    # The older Graph view draws four or more neighbours, or names a smaller set in one line.
+    graph = page.wait_for_selector('.map-pane__graphview .fg[data-cards]:not([data-cards="0"]), .map-pane__few', timeout=15000)
+    few = graph.get_attribute("data-neighbours")
+    nodes = int(graph.get_attribute("data-cards") or 0)
+    neighbours = int(few) if few is not None else sum(int(graph.get_attribute(name) or 0) for name in ("data-users", "data-uses"))
+    check(f"{tag} graph view", nodes > 0 or few is not None, f"{nodes} cards drawn, {neighbours} neighbours")
+    check(f"{tag} graph tab keeps the Lean subject", pane.locator(".lean-page__title").first.inner_text() == subject, page.url)
+
+
+def declaration_has_no_neighbours(page, base, decl):
+    probe = page.context.new_page()
+    try:
+        probe.goto(base + f"lean/{decl}?v=graph")
+        probe.wait_for_function("() => /\\d/.test(document.querySelector('.map-pane .mode-toggle__count')?.textContent ?? '')", timeout=15000)
+        return probe.locator('.map-pane .mode-toggle button[aria-label="Graph"]').get_attribute("data-empty") is not None
+    finally:
+        probe.close()
 
 
 def step_checks(browser, base, check) -> None:
@@ -509,10 +590,8 @@ def step_checks(browser, base, check) -> None:
             if start is None:
                 check(f"{tag} counter and selection agree", False, "no interior statement could be selected")
                 continue
-            graph = page.get_by_role("button", name="Graph", exact=True)
-            if graph.count():
-                graph.first.click()
-                page.wait_for_timeout(800)
+            open_graph(page)
+            page.wait_for_timeout(800)
             for name, act, offset in actions:
                 if not state()["anyPin"]:
                     # Select the statement again before each step, so every step starts from a selection.
@@ -651,13 +730,8 @@ def pdf_only_checks(page, base, tag, width, height, args, check, start) -> None:
     page.wait_for_function("() => /\\/@|[?&]n=/.test(location.href)", timeout=15000)
     card = page.locator(".phrase-card").first
     card.wait_for(timeout=15000)
-    check(f"{tag} mark click", "ai-assessed" in card.inner_text().lower(), page.url)
-    page.get_by_role("button", name="Graph", exact=True).first.click()
-    # Four or more neighbours are drawn; fewer are named in one line over the Lean, with no canvas.
-    page.wait_for_selector(".map-pane__graphview .fg[data-cards], .map-pane__few", timeout=15000)
-    few = page.get_attribute(".map-pane__few", "data-neighbours") if page.locator(".map-pane__few").count() else None
-    nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0) if few is None else 0
-    check(f"{tag} graph view", nodes > 0 or few is not None, f"{nodes} cards drawn" if few is None else f"{few} neighbours, named without a drawing")
+    check(f"{tag} mark click", readable_card(card, args.notes_optional), page.url)
+    check_passage_layout(page, base, tag, check)
     if args.shots:
         page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
     page.goto(base + f"@{args.phrase}")
@@ -697,13 +771,13 @@ def main() -> int:
     ap.add_argument("--notes-optional", action="store_true",
                     help="a phrase's declaration may have no reading note yet (the card then shows its comparison alone)")
     ap.add_argument("--unlinked", action="append", default=[], metavar="PAGE|WORDS",
-                    help="a paragraph (its first words, or * for the first such paragraph found; PAGE empty for the paper itself) linked to no Lean: the Lean view shows the whole proof map")
+                    help="a paragraph (its first words, or * for the first such paragraph found; PAGE empty for the paper itself) linked to no Lean: the automatic pane shows the whole proof map")
     ap.add_argument("--linked", action="append", default=[], metavar="PAGE|WORDS",
                     help="a paragraph linked to Lean: clicked, and its address opened cold, the Lean view shows its declaration")
     ap.add_argument("--unlinked-cold", action="append", default=[], metavar="PAGE",
-                    help="a page (empty for the paper) whose opening has nothing tied: opened cold on the Lean view, it shows the whole proof map; skipped where PAGE is not served")
+                    help="a page (empty for the paper) whose opening has nothing tied: opened cold, it shows the whole proof map; skipped where PAGE is not served")
     ap.add_argument("--unlinked-address", action="append", default=[], metavar="PAGE|bSTART-END",
-                    help="the exact address of a paragraph with nothing tied (\"b24558-26853\"): opened cold on the Lean view it shows the whole proof map and keeps its address; skipped where PAGE is not served")
+                    help="the exact address of a paragraph with nothing tied (\"b24558-26853\"): opened cold it shows the whole proof map and keeps its address; skipped where PAGE is not served")
     ap.add_argument("--linked-equation", action="append", default=[], metavar="PAGE|NUMBER[|SOURCE]",
                     help="a numbered display (\"1.1\") tied to Lean, optionally with its file and lines (\"Defs.lean, lines 26 to 33\"): clicked on the Lean view, it shows that declaration; skipped where PAGE is not served")
     ap.add_argument("--lean-addresses", action="store_true", help="the phrase and result addresses, opened on the Lean view, show a declaration")
@@ -783,43 +857,37 @@ def main() -> int:
                     args.shots.mkdir(parents=True, exist_ok=True)
                     page.screenshot(path=str(args.shots / f"click-no-card-{tag}.png"))
                 raise
-            text = card.inner_text()
             # The card's notes load after it opens: wait for the note before reading the card.
             if not args.notes_optional:
                 try:
-                    page.wait_for_function("() => (document.querySelector('.phrase-card') || {}).innerText?.toLowerCase().includes('reading note')", timeout=10000)
+                    page.wait_for_function("() => /reading note|ai-written/i.test(document.querySelector('.phrase-card')?.innerText ?? '')", timeout=10000)
                 except Exception:
                     pass
-            text = card.inner_text()
-            check(f"{tag} phrase click", "ai-assessed" in text.lower() and (args.notes_optional or "reading note" in text.lower()), page.url)
-            page.get_by_role("button", name="Lean", exact=True).first.click()
-            page.wait_for_selector(".phrase-card, .decl, pre, code", timeout=15000)
-            check(f"{tag} phrase Lean", "v=lean" in page.url, page.url)
-            page.get_by_role("button", name="Graph", exact=True).first.click()
-            page.wait_for_timeout(1500)
-            # Four or more neighbours are drawn; fewer are named in one line over the Lean, with no canvas.
-            page.wait_for_selector(".map-pane__graphview .fg[data-cards], .map-pane__few", timeout=15000)
-            few = page.get_attribute(".map-pane__few", "data-neighbours") if page.locator(".map-pane__few").count() else None
-            nodes = int(page.get_attribute(".map-pane__graphview .fg[data-cards]", "data-cards") or 0) if few is None else 0
-            check(f"{tag} graph view", nodes > 0 or few is not None, f"{nodes} cards drawn" if few is None else f"{few} neighbours, named without a drawing")
+            check(f"{tag} phrase click", readable_card(card, args.notes_optional), page.url)
+            check_passage_layout(page, base, tag, check)
             if args.shots:
                 page.screenshot(path=str(args.shots / f"phrase-{tag}.png"))
             # Each kind of address.
             for kind, path, expect in (
                 *((("result", f"{args.result}/", "" if args.result.startswith("claim-") else "Theorem"),) if args.result else ()),
-                ("phrase", f"@{args.phrase}", "AI-assessed"),
+                ("phrase", f"@{args.phrase}", ""),
                 ("lean", f"lean/{args.decl}", args.decl.rsplit(".", 1)[-1]),
             ):
                 page.goto(base + path)
                 page.wait_for_selector(".paper .tie", timeout=60000)
                 # The card's words load after the paper; wait for them rather than a fixed time.
-                try:
-                    page.wait_for_function("(w) => document.body.innerText.toLowerCase().includes(w.toLowerCase())", arg=expect, timeout=15000)
-                except Exception:
-                    pass
+                if kind == "phrase":
+                    card = page.locator(".map-pane .phrase-card").first
+                    card.wait_for(timeout=15000)
+                    found = readable_card(card, args.notes_optional)
+                else:
+                    try:
+                        page.wait_for_function("(w) => document.body.innerText.toLowerCase().includes(w.toLowerCase())", arg=expect, timeout=15000)
+                    except Exception:
+                        pass
+                    found = expect.lower() in page.inner_text("body").lower()
                 page.wait_for_timeout(500)
-                body = page.inner_text("body")
-                check(f"{tag} address {kind}", expect.lower() in body.lower() and page.url.rstrip("/").endswith(path.rstrip("/").split("?")[0]), page.url)
+                check(f"{tag} address {kind}", found and page.url.rstrip("/").endswith(path.rstrip("/").split("?")[0]), page.url)
             page.goto(base + "#" + args.section)
             page.wait_for_selector(".paper .tie", timeout=60000)
             page.wait_for_timeout(2000)

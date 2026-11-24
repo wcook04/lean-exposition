@@ -28,13 +28,11 @@ Five consequences follow for the design.
 
 ## The three views
 
-The pane has the views each reader already names: Graph, Lean and, where the reader has one, Passage. Each view fills the pane and does one job.
+When a linked passage has both Lean and recorded neighbours, the reader opens the Lean statement and passage annotation above the local dependency graph. The upper section takes the height its content needs, up to 60% of the available space. The graph fills the rest.
 
-- **Graph** is the drawing described below, with a dock under it.
-- **Lean** is the Lean of the subject, the whole height of the pane.
-- **Passage** is the reader's account of the paragraph: the same step in each paper and the comparison of statement and Lean.
+**Minimise graph** switches to separate Lean and Graph tabs. In that layout the Lean tab gives the statement the full pane and the Graph tab shows the drawing with its details dock. **Combine views** restores the automatic layout. Readers with a separate **Passage** view use it for the account of the paragraph across papers and the comparison of statement and Lean.
 
-All three views share one subject. Changing the view keeps the subject. A click on a paragraph, a phrase or a card changes the subject and never changes the view. Only the view buttons, and a control whose label names another view ("Open its Lean"), change the view.
+Switching between the views keeps the selected subject. In the automatic layout, choosing a passage can change what the pane shows according to its links.
 
 The subject is set, in this order of precedence, by:
 
@@ -45,17 +43,17 @@ The subject is set, in this order of precedence, by:
 
 A clicked subject holds until the reader clicks something else, presses Escape or chooses to follow the paper again. Escape returns the pane to following the paper.
 
-No view is ever blank. A paragraph with nothing tied to it says "No Lean is linked to this paragraph." in the dock and in the Lean view, and the graph keeps the last subject with a line saying which paragraph it belongs to.
+For a passage with no linked Lean, the Lean view says "No Lean is linked to this paragraph." The whole proof map can still be read on its own, with no local step selected for that passage.
 
 ## The Graph view
 
 ### The drawing
 
 - The subject is in the middle, with its kind, its whole title and its Lean name. A paragraph that states several steps has them all in the middle, inside one frame, each above the steps it uses, with the lines between them drawn.
-- The cards that use a subject are in a column on the left under "Use this" with their number. The cards a subject uses are in a column on the right under "This uses" with their number. A curved line with an arrowhead joins each to the subject.
+- The cards that use a subject are in a column on the left under "Use this" with their number. The cards a subject uses are in a column on the right under "This uses" with their number. A curved line with an arrowhead joins each to the subject. Its endpoints touch the card borders.
 - Within a column the paper's results come first, then steps, definitions, cited results, open questions, Lean helper lemmas and library facts.
-- A node is one line of plain words, wrapped onto a second line when the title is long. No title is truncated or clamped. Titles are 13.5 pixels at full size, and a fitted drawing is never set below 0.85 of it (a title stays at least 11.5 pixels): a drawing that would need less is grouped further instead.
-- The drawing fits its area when it opens: it is fitted until all of it is in view with a margin, zoomed out where it is larger than its area and enlarged up to 1.3 times where it is smaller, so a small neighbourhood fills a large pane. A column that would not fit is drawn as groups by topic, or by kind when the topics themselves would not fit; the smallest groups are then drawn out as their own nodes while there is room. Every neighbour is either a node on show or is counted by one group on show.
+- A node is one line of plain words, wrapped onto a second line when the title is long. No title is truncated or clamped. Titles are 13.5 pixels at full size. When the available height would shrink the drawing below 0.85 of full size, the reader tries further grouping before fitting.
+- On opening, the reader fits the cards, labels and connecting lines with a margin and centres the shape they draw. It enlarges a small neighbourhood up to 1.15 times its original size. Unused column space does not affect the fitted centre. A column can group its cards by topic or kind and show individual cards where there is room. Each neighbour appears as a card or is counted in one group.
 - Clicking a group of eight or fewer opens it in place: its members stand under its name, joined by a bracket, and the group stays in view. Clicking the group's name again folds it.
 - Clicking a group of more than eight lists its members in a panel over the side of the drawing the group is on (on the left for what uses the subject, on the right for what it uses), at most 360 pixels wide. The drawing, its size and the view of it do not change, and the subject does not move. The panel has the group's name and count, a button "Back to the graph", a field "Search these members" over the plain title, number and Lean name of every member of the group, a line such as "1–20 of 36 members" or "3 of 36 members match", twenty members to a page with Previous and Next, each with its whole title, its number and its kind. Pointing at a member previews it in the dock, as pointing at a node does; clicking it makes it the subject. Escape or "Back to the graph" closes the panel and returns the keyboard to the group's button. The search and the page of each group are kept until the subject changes. One panel is open at a time; it fades in over 160ms, at once under reduced motion.
 - Lines between two neighbours are left out. Clicking a neighbour puts it in the middle with its own neighbourhood.
@@ -64,7 +62,6 @@ No view is ever blank. A paragraph with nothing tied to it says "No Lean is link
 ### Moving about
 
 - The drawing's area is a canvas with no scroll bars: it never scrolls. Dragging or scrolling sideways pans the drawing. Scrolling up zooms in at the pointer and scrolling down zooms out, with a mouse or trackpad. A pinch, Ctrl or ⌘ with the wheel, and a double click also zoom at the pointer. A wheel over the paper or the member list scrolls that content. On the keyboard the arrows pan, + and − zoom and 0 fits. A pan always leaves part of the drawing in view, and focusing a card brings it into view.
-- An overview over the corner of the area, shown whenever part of the drawing is out of view, shows the whole drawing and the part in view; clicking or dragging in it moves the view.
 - The buttons −, + and Fit change the zoom. Fit frames the drawing as it is and changes nothing else: an opened group stays open, and a panel of members stays open with its search and page.
 - The drawing is fitted when it opens, when the subject changes, on Fit, and when the pane itself changes size while the view is still the fitted one. The camera never changes the layout and the layout never moves the camera except by such a fit, so the drawing is completely still while nobody touches it. After the reader pans, zooms or opens a small group, the view is kept until the subject changes or Fit is pressed. Opening or closing a panel of members never moves the view.
 - Keyboard focus pans the drawing to bring a card into view. Pointing at or focusing a node lights its line to the subject and shows the node's detail in the dock. A member of an open group, or of a panel of members, lights the group's line. Clicking a node makes it the subject.
@@ -87,11 +84,11 @@ The dock has a button to open the same declaration in the Lean view.
 
 ### The whole proof
 
-Where a reader has a map of the whole argument, a button over the drawing opens it in the same area, and a button there returns to the subject. The whole map pans and zooms, and its cards open as subjects.
+Where a reader has a map of the whole argument, **Whole proof map** in the Graph tab opens it in the same area. **Neighbours of this step** returns to the local graph. The whole map pans and zooms, and its cards open as subjects.
 
 ### Small screens
 
-Under 600 pixels of width the graph folds to one line that names the subject and counts what it uses and what uses it, with a button to unfold the drawing. The dock keeps the rest of the height.
+Under 600 pixels of width the separate local Graph view can fold to one line that names the subject and counts what it uses and what uses it, with a button to unfold the drawing. The dock keeps the rest of the height.
 
 ## Checks
 
@@ -103,7 +100,9 @@ Under 600 pixels of width the graph folds to one line that names the subject and
 - every title and group name is whole and, at the fitted zoom, at least 11 pixels;
 - there is a line for every node and group beside the subject;
 - the dock is never empty;
-- the largest group opens all its members. A group of more than eight opens a panel whose line counts the group, while the subject card moves by no more than a pixel as the panel opens and closes; paging through the panel reaches every member once, a search for the first member's first word finds that member, Fit leaves the panel open and "Back to the graph" closes it. A group of eight or fewer opens in place into exactly its count; when the drawing is then larger than its area, dragging pans it, the overview is shown and focusing each card brings it wholly into view; Fit leaves the group open.
+- the largest group opens all its members. A group of more than eight opens a panel whose line counts the group while the subject moves by no more than a pixel. Paging reaches each member once, search finds a member by its title, Fit leaves the panel open, and "Back to the graph" closes it. A smaller group opens all its members in place. When it overflows, dragging pans the drawing and keyboard focus brings each card into view. Fit leaves the group open.
+
+`check-graph-pane.py --painted-fit ADDRESS` checks the graph on a linked passage with one subject. It measures cards, labels, wires and arrowheads in the browser, checks the centre and margin after desktop and landscape resizes, and verifies that Fit restores the whole local graph after zooming and panning. It also checks that visible wire geometry meets the correct card borders throughout. Pass `--one-sided-cap` for a fixture whose neighbours all lie on one side and whose wide view reaches the 1.15 cap. The check also covers zooming in the combined view and the separate Graph tab and opening the whole proof map from that tab.
 
 `check-idle.py` asserts that the page, the graph included, makes no change at all while it is left alone (no mutation, address change, layout shift or scroll), across window widths, with classic scroll bars that take room.
 

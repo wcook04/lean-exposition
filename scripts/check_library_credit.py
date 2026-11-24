@@ -19,6 +19,8 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from check_library_paper import open_graph, pane_button, readable_card
+
 ap = argparse.ArgumentParser()
 ap.add_argument("base")
 ap.add_argument("--credit-file", type=Path, required=True)
@@ -111,22 +113,28 @@ with sync_playwright() as pw:
         el.click()
         page.wait_for_selector(".phrase-card", timeout=60000)
         page.wait_for_timeout(2500)
-        card = page.locator(".phrase-card").first.inner_text()
-        check(f"{tag} statement card", "AI-assessed" in card and ("Lean states" in card or "Lean says" in card or "same" in card.lower()), card[:200])
+        displayed = page.locator(".map-pane .phrase-card").first
+        check(f"{tag} statement card", readable_card(displayed, notes_optional=True), displayed.inner_text()[:200])
         page.screenshot(path=str(a.shots / f"statement-card-{tag}.png"))
-        page.get_by_role("button", name="Lean", exact=True).first.click()
-        page.wait_for_timeout(2500)
-        code = page.eval_on_selector_all("pre, .code, .lean-code, code", "els => els.map(e => e.innerText).join('\\n')")
-        check(f"{tag} statement lean", "v=lean" in page.url and ("theorem" in code or "def " in code or "structure" in code), page.url)
+        code = page.eval_on_selector_all(".map-pane .lean-block .lean-line", "els => els.map(e => e.innerText).join('\\n')")
+        check(f"{tag} statement lean", page.locator('.map-pane[data-view="lean"]').count() > 0
+              and ("theorem" in code or "def " in code or "structure" in code), page.url)
         page.screenshot(path=str(a.shots / f"statement-lean-{tag}.png"))
+        open_graph(page)
+        compared = page.locator(".map-pane .phrase-card").first
+        compared.wait_for(timeout=15000)
+        card = compared.inner_text()
+        check(f"{tag} statement comparison", "AI-assessed" in card and ("Lean states" in card or "Lean says" in card or "same" in card.lower()), card[:200])
+        pane_button(page, "Lean").click()
+        check(f"{tag} separate Lean address", "v=lean" in page.url, page.url)
         # The statement's phrase address, with no view named, opens the same card and Lean as a click.
         if a.statement_tie:
             page.goto(base + f"@{a.statement_tie}", wait_until="domcontentloaded")
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(4000)
-            card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
+            card = page.locator(".map-pane .phrase-card").first
             pane = page.evaluate("() => (document.querySelector('.lean-page') || {}).innerText || ''")
-            check(f"{tag} statement address", "AI-assessed" in card and "No Lean linked" not in pane, pane[:160])
+            check(f"{tag} statement address", card.count() and readable_card(card, notes_optional=True) and "No Lean linked" not in pane, pane[:160])
             page.screenshot(path=str(a.shots / f"statement-address-{tag}.png"))
         # Click a statement in the text itself.
         page.goto(base, wait_until="domcontentloaded")
@@ -136,7 +144,7 @@ with sync_playwright() as pw:
         tie.click()
         page.wait_for_selector(".phrase-card", timeout=20000)
         page.wait_for_timeout(1500)
-        check(f"{tag} click in text opens card", "AI-assessed" in page.locator(".phrase-card").first.inner_text(), page.url)
+        check(f"{tag} click in text opens card", readable_card(page.locator(".map-pane .phrase-card").first, notes_optional=True), page.url)
         page.screenshot(path=str(a.shots / f"click-{tag}.png"))
         # The graph at Proposition B.14 (route 3): the uses the paper's text states are dashed, keyed, and answer
         # the pointer with their sentence.
@@ -192,7 +200,7 @@ with sync_playwright() as pw:
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(4000)
             card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
-            check(f"{tag} companion phrase address", "AI-assessed" in card or "Topic" in card, f"{page.url} {card[:120]}")
+            check(f"{tag} companion phrase address", "AI-assessed" in card or "AI-written" in card or "Topic" in card, f"{page.url} {card[:120]}")
             page.screenshot(path=str(a.shots / f"companion-phrase-{tag}.png"))
         if a.companion_lean:
             cp, name = a.companion_lean
@@ -212,7 +220,7 @@ with sync_playwright() as pw:
             page.wait_for_selector(".paper .tie[data-tone]", timeout=60000)
             page.wait_for_timeout(4000)
             card = page.evaluate("() => (document.querySelector('.phrase-card') || {}).innerText || ''")
-            check(f"{tag} moved phrase address", page.url.split("?")[0].endswith(f"/{holder}/@{mid}") and ("AI-assessed" in card or "Topic" in card),
+            check(f"{tag} moved phrase address", page.url.split("?")[0].endswith(f"/{holder}/@{mid}") and ("AI-assessed" in card or "AI-written" in card or "Topic" in card),
                   f"{page.url} {card[:120]}")
         if a.later_check:
             cp, anchor = a.later_check

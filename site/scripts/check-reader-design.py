@@ -3,11 +3,12 @@
 
 It checks, each from a fresh browser with empty storage:
 
- 1. first visit: the pane opens on the Lean tab, the address has no `v=`, and the hint
+ 1. first visit: the pane has no separate view tabs, the address has no `v=`, and the hint
     (`.reader-hint`) is visible and whole, at 1440x900 and at 390x844;
  2. a click on linked words selects them (`.subject-band[data-state="words"]`, `data-pin`, a 2px
     underline) and does not scroll the paper;
- 3. Graph and back to Lean change neither the scroll, the subject nor the history;
+ 3. linked Lean and its local graph fit together by default. Minimise graph restores the tabs,
+    and Graph, Lean and Combine views retain the scroll, subject and history;
  4. Auto, and Escape, release the selection in place: no scroll, no history entry;
  5. "Return to selected words" brings the selection back into view and keeps it;
  6. a click on plain, unlinked words changes neither the state nor the address;
@@ -43,6 +44,8 @@ import sys
 import urllib.request
 
 from playwright.sync_api import Browser, Page, sync_playwright
+
+from graph_pane_checks import paired_geometry
 
 FAILURES: list[str] = []
 
@@ -103,7 +106,11 @@ def centre_click(page: Page, selector: str, text: str | None = None) -> bool:
 
 
 def pane_tab(page: Page, which: str) -> bool:
-    return centre_click(page, ".map-pane button[aria-pressed]", which)
+    return centre_click(page, ".map-pane .mode-toggle button", which)
+
+
+def minimise_graph(page: Page) -> bool:
+    return centre_click(page, ".map-pane__local-head button", "Minimise graph")
 
 
 # A point on the first line fragment of a linked phrase in the paper, inside the viewport and not
@@ -163,8 +170,8 @@ def first_visit(browser: Browser, base: str) -> None:
         page = open_page(browser, base, width, height, touch=width < 768)
         at = f"{width}x{height}"
         if width >= 768:
-            pressed = page.evaluate("[...document.querySelectorAll('.map-pane .mode-toggle button[aria-pressed=\"true\"]')].map(b => b.textContent.trim())")
-            check(pressed == ["Lean"], f"1 first visit {at}: the pressed tab is Lean", f"pressed {pressed}")
+            tabs = page.locator(".map-pane .mode-toggle button").count()
+            check(tabs == 0, f"1 first visit {at}: there are no separate view tabs", f"{tabs} tabs")
         check("v=" not in page.url, f"1 first visit {at}: the address has no v=", page.url)
         hint = page.evaluate(
             """() => { const e = document.querySelector('.reader-hint'); if (!e) return null;
@@ -197,9 +204,15 @@ def select_and_views(browser: Browser, base: str) -> None:
     check(bool(heights) and all(h == "2px" for h in heights), "2 the selected line is 2px", f"background-size {sizes[:3]}")
     check(abs(scroll_y(page) - y0) <= 1, "2 the click does not scroll the paper", f"scrollY {y0} -> {scroll_y(page)}")
 
-    # 3: Graph then Lean.
+    # 3: Open the two old tabs from the combined view, then return to the combined view.
     y1, h1 = scroll_y(page), history_length(page)
     title = page.evaluate("document.querySelector('.lean-page__title')?.textContent ?? null")
+    fit, geometry = paired_geometry(page)
+    check(fit, "3 Lean and its dependency graph fit together", str(geometry))
+    check(minimise_graph(page), "3 Minimise graph is available in the default view")
+    page.wait_for_timeout(500)
+    check(page.locator(".map-pane .mode-toggle button").count() == 2
+          and not page.locator(".map-pane__local").count(), "3 minimising restores the two separate views")
     ok = pane_tab(page, "Graph")
     page.wait_for_timeout(1500)
     ok = pane_tab(page, "Lean") and ok
@@ -210,6 +223,13 @@ def select_and_views(browser: Browser, base: str) -> None:
     check(title is not None and after == title, "3 Graph and back to Lean keep the subject", f"{title!r} -> {after!r}")
     check(state(page) == "words", "3 Graph and back to Lean keep the selection", f"state {state(page)}")
     check(history_length(page) == h1, "3 Graph and back to Lean add no history entry", f"history {h1} -> {history_length(page)}")
+    check(centre_click(page, ".map-pane__bar button", "Combine views"), "3 Combine views is available in the separate views")
+    page.wait_for_timeout(1200)
+    fit, geometry = paired_geometry(page)
+    check(fit and "v=" not in page.url, "3 combining restores the automatic pair", str(geometry))
+    check(scroll_y(page) == y1 and history_length(page) == h1 and state(page) == "words"
+          and page.locator(".lean-page__title").first.text_content() == title,
+          "3 combining keeps the selection, subject, scroll and history")
 
     # 5: Return to selected words.
     scroll_by(page, 1500)
@@ -355,10 +375,12 @@ def auto_manual(browser: Browser, base: str) -> None:
         else:
             check(False, "12 Manual is there to press while following")
         # The mode survives switching between Lean and Graph.
-        click_tie(page)
-        pane_tab(page, "Graph")
+        check(click_tie(page) is not None, "12 a second linked phrase is in view to click")
+        check(minimise_graph(page), "12 Minimise graph opens the separate views")
+        page.wait_for_timeout(500)
+        check(pane_tab(page, "Graph"), "12 the Graph tab can be selected")
         page.wait_for_timeout(1200)
-        pane_tab(page, "Lean")
+        check(pane_tab(page, "Lean"), "12 the Lean tab can be selected")
         page.wait_for_timeout(900)
         check(mode(page) == "Manual", "12 Manual survives Graph and back to Lean", f"mode {mode(page)}")
     page.context.close()
@@ -512,10 +534,9 @@ def graph_fit(browser: Browser, base: str) -> None:
     if not check(state(page) == "words", "10 words are selected before the graph", f"state {state(page)}"):
         page.context.close()
         return
-    pane_tab(page, "Graph")
-    page.wait_for_timeout(2000)
+    check(page.locator(".map-pane__local").is_visible(), "10 the selected Lean has a local graph")
     text = page.evaluate("document.querySelector('.subject-band')?.textContent")
-    if not check(centre_click(page, ".map-pane button", "Fit"), "10 the Graph view has Fit"):
+    if not check(centre_click(page, ".map-pane__local button", "Fit"), "10 the local graph has Fit"):
         page.context.close()
         return
     page.wait_for_timeout(800)
@@ -549,8 +570,7 @@ def reduced_motion(browser: Browser, base: str) -> None:
     seconds = lambda part: float(part.strip()[:-2]) / 1000 if part.strip().endswith("ms") else float(part.strip()[:-1])
     still = bool(durations) and all(all(seconds(part) <= 0.001 for part in d.split(",")) for d in durations)
     check(still, "11 reduced motion: a selected mark's transition is at most 1ms", f"transition-duration {sorted(set(durations))}")
-    pane_tab(page, "Graph")
-    page.wait_for_timeout(1500)
+    check(page.locator(".map-pane__local").is_visible(), "11 reduced motion: the local graph is visible")
     if page.locator('[data-opens="list"]').count():
         centre_click(page, '[data-opens="list"]')
         page.wait_for_timeout(50)
