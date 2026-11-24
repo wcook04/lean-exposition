@@ -6585,7 +6585,7 @@
   "TorusEuler.paper_mean_inverse": "A bounded inverse for the mean",
   "TorusEuler.paper_mean_inverse_smooth_force": "Smooth mean correction for smooth forcing",
   "TorusEuler.paper_mean_inverse_smooth_force_of_flow": "Smooth Eulerian mean correction over the parent flow",
-  "TorusEuler.paper_section_8_of_inductiveEulerStages": "Terminal Euler properties of the limit of the common sequence",
+  "TorusEuler.paper_section_8_of_inductiveEulerStages": "Bounded velocity and central vorticity blow-up for the limiting Euler flow",
   "TorusEuler.parentPressure_even_fderiv_of_odd": "Odd field has even derivative",
   "TorusEuler.parentResidualFourierBand_of_projectedMomentum": "The Fourier support of the residual",
   "TorusEuler.parentResidual_invCube_le_parentSmall": "Cubic decay gives parent smallness",
