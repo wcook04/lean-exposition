@@ -376,6 +376,12 @@
   text-decoration-color: currentColor;
 }
 
+.annotation-paper-reference[data-tone] {
+  /* The palette guarantees contrast for marks. Mix with ink for smaller link text. */
+  color: color-mix(in oklab, var(--tone, currentColor) 65%, var(--ink));
+  text-decoration-color: var(--tone, var(--ink-3));
+}
+
 .annotation-paper-reference:focus-visible,
 .lean-page__return:focus-visible {
   outline: var(--focus-ring);

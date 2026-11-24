@@ -173,6 +173,7 @@ export interface PaperReferenceTarget {
   line: number;
   page?: number;
   y?: number;
+  tone?: number;
 }
 
 export interface PaperReferenceProps {
@@ -228,6 +229,7 @@ function linkPaperReferences(html: string, { referenceTargets, paperReferenceHre
         const link = document.createElement("a");
         link.className = "annotation-paper-reference";
         link.dataset.paperReference = key;
+        if (target.tone !== undefined) link.dataset.tone = String(target.tone);
         link.href = paperReferenceHref?.(target) ?? `?l=${target.line}`;
         link.textContent = text.slice(start, end);
         linked.append(text.slice(cursor, start), link);

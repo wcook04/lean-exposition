@@ -94,7 +94,7 @@ describe("LeanBlock's props", () => {
 
   it("links resolvable equation lists, numbered statements and sections in annotation prose", async () => {
     const onPaperReference = vi.fn();
-    const first = { line: 18, page: 2, y: 0.3 };
+    const first = { line: 18, page: 2, y: 0.3, tone: 0 };
     const view = await render(<PassageAnnotation
       text={"Equations (1.1), (1.2)–(1.3) use Theorem 2.4, Lemmas 3.1 and 3.2, and §4. Compare (1.1–1.3), not 1.1 or (9.9). Code `(1.1)` and math $(1.1)$."}
       referenceTargets={{
@@ -110,6 +110,8 @@ describe("LeanBlock's props", () => {
       "Equations (1.1)", "(1.2)", "(1.3)", "Theorem 2.4", "Lemmas 3.1", "3.2", "§4", "1.1", "1.3",
     ]);
     expect(links[0].getAttribute("href")).toBe("/adapted/?l=18");
+    expect(links[0].dataset.tone).toBe("0");
+    expect(links[1].dataset.tone).toBeUndefined();
     expect(view.querySelector("code a, .katex a")).toBeNull();
     const click = new MouseEvent("click", { bubbles: true, cancelable: true });
     await act(async () => void links[0].dispatchEvent(click));
