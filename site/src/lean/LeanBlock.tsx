@@ -292,7 +292,7 @@ export function SourceLink({ decl, module, shell, showDeclaration }: { decl: Lea
       <a className="lean-action" href={routeHref({ view: "lean", module: module.module, file: `${decl.line}-${decl.end_line}` })}>
         {showDeclaration ? (
           <>
-            <code title={decl.name}><Breakable name={decl.short} /></code> · {decl.line === decl.end_line ? `line ${decl.line}` : `lines ${decl.line}–${decl.end_line}`}
+            <Breakable name={decl.short} /> · {decl.line === decl.end_line ? `line ${decl.line}` : `lines ${decl.line}–${decl.end_line}`}
           </>
         ) : "Whole file"}
       </a>
