@@ -615,6 +615,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
         insets={insets}
         persist={false}
         mode="overview"
+        colourOverview={site.library?.paper === "riemann-hypothesis"}
         minScale={0.06}
         fill
         within={!pdfOn && coverage.size ? coverage : undefined}

@@ -115,6 +115,7 @@
 .fg__card[data-seen="later"] .fg__title { color: color-mix(in srgb, var(--fg-ink) 70%, transparent); }
 .fg__card:hover, .fg__card:focus-visible, .fg__card.is-hot { border-color: var(--fg-accent); box-shadow: 0 0 0 1.5px var(--fg-accent); outline: none; }
 .fg__card.is-subject { display: flex; flex-direction: column; gap: 3px; padding: 8px 12px 9px 14px; border: 2px solid var(--fg-accent); border-radius: 9px; box-shadow: 0 2px 12px color-mix(in srgb, var(--fg-accent) 24%, transparent); }
+.fg__card.is-subject::before { inset: 0 auto 0 0; border-radius: 7px 0 0 7px; }
 .fg__card.is-subject .fg__title { font-size: 15.5px; font-weight: 650; line-height: 1.28; }
 .fg__kicker { font: 600 11.5px/1.3 var(--fg-sans); letter-spacing: 0.04em; text-transform: uppercase; color: var(--fg-muted); }
 .fg__name { font: 11px/1.35 var(--fg-mono); color: var(--fg-muted); background: none; padding: 0; overflow-wrap: break-word; }

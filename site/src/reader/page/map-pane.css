@@ -639,8 +639,8 @@ html[data-right-sheet] {
   flex: 1;
 }
 
-/* Let a long declaration use the space a wide, shallow graph gives back. For a
-   short declaration the graph can use all the remaining room for its cards. */
+/* Reserve only the graph's preferred height for a long declaration.
+   Give the graph the full remainder so its camera can centre the drawing there. */
 .map-pane__paired {
   --paired-graph-size: calc(var(--paired-graph-paint, 100%) + var(--paired-graph-chrome, 0px));
   display: flex;
@@ -662,7 +662,6 @@ html[data-right-sheet] {
   flex-direction: column;
   box-sizing: border-box;
   min-height: min(40%, var(--paired-graph-size));
-  max-height: var(--paired-graph-size);
   min-width: 0;
   border-top: 1px solid var(--rule-control);
 }

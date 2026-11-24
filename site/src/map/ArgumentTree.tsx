@@ -146,6 +146,8 @@ export interface TreeProps {
   tileWidth?: number;
   /** The dense layout's tile height, for names that need a third line. */
   tileHeight?: number;
+  /** Fit the overview as colour chips with a wider title card at the root. */
+  colourOverview?: boolean;
   /**
    * Fill the canvas: the dense layout spends the room its fitted drawing leaves empty. A map wider
    * than the canvas gets taller tiles (titles wrap to more lines) and wider gaps between rows; a map
@@ -226,6 +228,7 @@ function guessHeight(node: ArgNode, isRoot: boolean, compact: boolean): number {
  * and its row gaps; a tall map grows its tiles' width. Null when there is nothing worth filling.
  */
 const DENSE_ZOOM_FLOOR = 0.06;
+const COLOUR_OVERVIEW_SCALE = 0.4;
 
 /** A title cut so short that less than three quarters of its first word is left. */
 function chipped(label: string, fit: { fits?: boolean; short?: string }): boolean {
@@ -393,6 +396,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   modeRef.current = mode;
   /** Overview: the whole argument as tiles, at every scale. */
   const dense = !compact && mode === "overview";
+  const colourOverview = dense && !!props.colourOverview;
   const denseRef = useRef(dense);
   denseRef.current = dense;
   const metrics = compact ? METRICS_COMPACT : dense ? METRICS_DENSE : METRICS;
@@ -529,7 +533,12 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const id = recordOf(lid);
       const node = graph.nodes.get(id) ?? fullGraph.nodes.get(id)!;
       const isRoot = lid === goal;
-      if (dense) return isRoot ? { w: DENSE_ROOT_W, h: props.tileHeight ? props.tileHeight + 30 : DENSE_ROOT_H } : { w: props.tileWidth ?? DENSE_W, h: props.tileHeight ?? (lens ? DENSE_H_SECTION : DENSE_H) };
+      if (dense) {
+        if (!isRoot) return { w: props.tileWidth ?? DENSE_W, h: props.tileHeight ?? (lens ? DENSE_H_SECTION : DENSE_H) };
+        // A narrow pane fits the whole graph at a smaller scale, so the root needs more room in the layout.
+        if (colourOverview) return { w: paneW < 520 ? 960 : 680, h: 128 };
+        return { w: DENSE_ROOT_W, h: props.tileHeight ? props.tileHeight + 30 : DENSE_ROOT_H };
+      }
       const h = heights.get(lid);
       if (h === undefined) provisional = true;
       if (lid !== id) return { w: compact ? 184 : 176, h: h ?? (compact ? 54 : 96) };
@@ -563,7 +572,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const routed = route(plan, { boxes: layout.boxes, dummyX: (key) => layout.dummies.get(key)!.x });
     return { layout, plan, routed, paintedBounds: drawingBounds(layout, routed), skeleton: split.edges, shared: split.shared, implied: skel.implied, provisional, pin };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graph, goal, visible, skel, heights, compact, metrics, rootW, dense, lens, fillOn, fillOn ? paneW : 0, fillOn ? paneH : 0, insets]);
+  }, [graph, goal, visible, skel, heights, compact, metrics, rootW, dense, colourOverview, lens, fillOn, fillOn || colourOverview ? paneW : 0, fillOn ? paneH : 0, insets]);
   const layout = built.layout;
   /**
    * Each drawn card's topic colour: its own, or, for a step the paper never names (a Lean helper),
@@ -714,6 +723,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const rep = repRef.current;
     const layout = builtRef.current.layout;
     const dense = denseRef.current;
+    const colourOnly = colourOverview && k <= COLOUR_OVERVIEW_SCALE + 1e-4;
     const prev = lastLineInputs.current;
     // A representation render, the camera frame and the statement observer can
     // all request the same fit. Their arithmetic and DOM reads are shared until
@@ -745,8 +755,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       // A title cut inside the first quarter of its first word (a crowded fill map, or the overview
       // zoomed out past reading size) reads as noise: the tile hides its title,
       // and hovering it shows the card.
-      if (dense && kind === "root") el.toggleAttribute("data-title-only", rect.h * k < 44);
-      if (dense && kind !== "root") el.toggleAttribute("data-chip", chipped(label, fit) || rect.w * k < 48 || rect.h * k < 16);
+      if (dense && kind === "root") el.toggleAttribute("data-title-only", colourOnly || rect.h * k < 44);
+      if (dense && kind !== "root") el.toggleAttribute("data-chip", colourOnly || chipped(label, fit) || rect.w * k < 48 || rect.h * k < 16);
       if (fit.short || label !== el.dataset.full) shortened.current.add(lid);
       else shortened.current.delete(lid);
       const key = `${fit.size}|${fit.lines}|${statement}|${fit.short ?? ""}`;
@@ -759,7 +769,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       if (fit.short) title.dataset.short = fit.short;
       else delete title.dataset.short;
     }
-  }, []);
+  }, [colourOverview]);
   // The plate's sentence keeps one size on screen, so its height on screen changes only with its
   // text (it arrives once the papers load) and its fonts; each change refits the plate.
   const statementObserver = useRef<ResizeObserver | null>(null);
@@ -1359,9 +1369,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const vp = viewport();
     const { top, right, bottom, left } = vp.insets;
     const pad = 12;
-    return fitBounds(b.paintedBounds, { ...vp, insets: { top: top + pad, right: right + pad, bottom: bottom + pad, left: left + pad } }, { min: 0, max: 1.15 });
+    return fitBounds(b.paintedBounds, { ...vp, insets: { top: top + pad, right: right + pad, bottom: bottom + pad, left: left + pad } }, { min: 0, max: colourOverview ? COLOUR_OVERVIEW_SCALE : 1.15 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [colourOverview]);
   const minK = Math.min(props.minScale ?? (dense ? DENSE_ZOOM_FLOOR : floorK(dense, compact)), drawingView(built).k);
   minKRef.current = minK;
 
