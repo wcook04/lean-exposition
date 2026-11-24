@@ -377,6 +377,13 @@
   cursor: pointer;
 }
 
+.lean-block__credit {
+  margin-inline-start: var(--space-2);
+  color: var(--ink-3);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+}
+
 .lean-block__details > summary:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
