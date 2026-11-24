@@ -1,6 +1,6 @@
 {
  "schema": "library-index-papers/2",
- "meaning": "The library index's list of papers, in the order the page shows them. Order: the significance of the result, with work by other researchers before Will Cook's companion writing, and his own research last. tier places an entry in a section (lead, research, companion, own); kind names what the reader opens; provenance and provenance_label name who produced or supported the result (the colour is secondary to the label); credits give each role separately; versions are the direct choices shown on the entry, the first being the main one. An entry with \"library\": true is built here from instances/<id>/ (or, with \"artifact\": true, exported into the library by its own repository) and is listed only once published; its title, authors and counts come from its instance and edition. Any other entry keeps its current site's fields, read from the files named in counted_from.",
+ "meaning": "The library index's list of papers, in the order the page shows them. Order: the significance of the result, with work by other researchers before Will Cook's companion writing, and his own research last. tier places an entry in a section (lead, research, companion, own); kind names what the reader opens; provenance and provenance_label name who produced or supported the result (the colour is secondary to the label); credits give each role separately; versions are the direct choices shown on the entry, the first being the main one. An entry with \"library\": true is built here from instances/<id>/ (or, with \"artifact\": true, exported into the library by its own repository) and is listed only once published; its title, authors and counts come from its instance and edition. Any other entry keeps its current site's fields, read from the files named in counted_from. film names a short video in site/src/app/family.json; the entry offers it as its last version, with its running time.",
  "papers": [
   {
    "id": "navier-stokes",
@@ -221,7 +221,8 @@
      "label": "Publisher’s page",
      "href": "https://doi.org/10.1145/3808269"
     }
-   ]
+   ],
+   "film": "short-proof-reader"
   },
   {
    "id": "smtlib",
@@ -396,7 +397,8 @@
      "label": "Exposition",
      "href": "/library/quartic/exposition/"
     }
-   ]
+   ],
+   "film": "short-quartic"
   },
   {
    "id": "qaoa-sk",
@@ -433,7 +435,8 @@
      "label": "Exposition",
      "href": "/library/qaoa-sk/exposition/"
     }
-   ]
+   ],
+   "film": "short-sk-no-gap"
   },
   {
    "id": "coupled-spring",
@@ -517,7 +520,8 @@
      "label": "PDF",
      "href": "/library/erdos-257/pdf/short-paper.pdf"
     }
-   ]
+   ],
+   "film": "short-mathematics"
   },
   {
    "id": "erdos-1041",
@@ -849,7 +853,8 @@
      "label": "The maths map",
      "href": "https://wcook04.github.io/practical-formal-verification/map/#mathematics"
     }
-   ]
+   ],
+   "film": "short-mathematics-overview"
   }
  ],
  "film": {

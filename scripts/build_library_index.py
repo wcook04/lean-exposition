@@ -539,6 +539,17 @@ def family_film(want: dict) -> dict | None:
             "still": film["still"].split("/")[-1], "kicker": want.get("kicker", "")}
 
 
+def with_film(entry: dict, film_id: str | None) -> dict:
+    """Add the entry's short video (family.json) as its last version, with its running time."""
+    film = family_film({"id": film_id}) if film_id else None
+    if not film:
+        return entry
+    m, sec = divmod(film["seconds"], 60)
+    versions = list(entry.get("versions") or [])
+    versions.append({"label": f"Short video, {m}:{sec:02d}", "href": film["href"]})
+    return {**entry, "versions": versions}
+
+
 def main() -> None:
     out = Path(sys.argv[1])
     only = set(sys.argv[2:])
@@ -610,11 +621,12 @@ def main() -> None:
             }
             # The index's own editorial fields: section, labels, credits by role and the versions offered.
             entry.update({k: item[k] for k in EDITORIAL if k in item})
+            entry = with_film(entry, item.get("film"))
             if search:
                 (out / "_index" / "search" / f"{paper}.json").write_text(json.dumps(search, ensure_ascii=False, separators=(",", ":")))
                 shards[paper] = f"{BASE}_index/search/{paper}.json"
         else:
-            entry = dict(item)
+            entry = with_film(dict(item), item.get("film"))
         entries.append(entry)
         titles.append({"id": entry["id"], "title": entry["title"], "authors": names(entry["authors"]), "sentence": entry.get("sentence", ""),
                        "href": entry["href"], "here": not outbound(entry["href"]), "shard": shards.get(entry["id"]),
