@@ -11,7 +11,153 @@ list of a large group closed, a small group folded again.
 """
 from __future__ import annotations
 
-from playwright.sync_api import Page
+from playwright.sync_api import Locator, Page
+
+
+PAIRED_GEOMETRY = """() => {
+  const split = document.querySelector('.map-pane__paired');
+  const box = (e) => {
+    if (!e) return null;
+    const r = e.getBoundingClientRect();
+    return {top: r.top, bottom: r.bottom, left: r.left, right: r.right, width: r.width, height: r.height};
+  };
+  const lean = split?.querySelector(':scope > .lean-page');
+  const scroll = lean?.querySelector(':scope > .lean-page__scroll');
+  const leanBox = box(lean);
+  let intrinsic = null;
+  if (scroll && leanBox) {
+    const r = scroll.getBoundingClientRect();
+    const px = (value) => parseFloat(value) || 0;
+    const contentEnd = Math.max(r.top, ...[...scroll.children].filter(e => e.getClientRects().length).map(e =>
+      e.getBoundingClientRect().bottom + px(getComputedStyle(e).marginBottom)));
+    const style = getComputedStyle(scroll);
+    const content = contentEnd - r.top + scroll.scrollTop + px(style.paddingBottom) + px(style.borderBottomWidth);
+    intrinsic = leanBox.height - r.height + content;
+  }
+  return {
+    pane: box(split),
+    lean: leanBox,
+    graph: box(split?.querySelector(':scope > .map-pane__local')),
+    canvas: box(split?.querySelector('.map-pane__local .fg__scroll')),
+    intrinsic,
+    subjects: split?.querySelectorAll('.map-pane__local .fg__card[data-band="subject"]').length ?? 0,
+  };
+}"""
+
+
+def paired_geometry(page: Page) -> tuple[bool, dict]:
+    """Lean uses its content height up to three fifths, with the graph filling the rest."""
+    layout = page.evaluate(PAIRED_GEOMETRY)
+    pane, lean, graph, canvas = (layout[key] for key in ("pane", "lean", "graph", "canvas"))
+    if not all((pane, lean, graph, canvas)):
+        return False, layout
+    intrinsic = layout["intrinsic"]
+    cap = 0.6 * pane["height"]
+    fits = (intrinsic is not None and lean["height"] >= 44 and graph["height"] >= 0.4 * pane["height"] - 2
+            and abs(lean["height"] - min(intrinsic, cap)) <= 2
+            and canvas["height"] >= 180 and canvas["width"] > 0
+            and abs(lean["top"] - pane["top"]) <= 2 and abs(lean["bottom"] - graph["top"]) <= 2
+            and abs(graph["bottom"] - pane["bottom"]) <= 2
+            and all(abs(row[edge] - pane[edge]) <= 2 for row in (lean, graph) for edge in ("left", "right"))
+            and graph["left"] <= canvas["left"] < canvas["right"] <= graph["right"] + 2
+            and graph["top"] <= canvas["top"] < canvas["bottom"] <= graph["bottom"] + 2)
+    return fits and layout["subjects"] == 1, layout
+
+
+PAINTED_GRAPH = r"""fg => {
+  const viewport = fg.querySelector('.fg__scroll').getBoundingClientRect();
+  const world = fg.querySelector('.fg__world');
+  const boxes = [];
+  const detached = [];
+  const subjects = [...world.querySelectorAll('.fg__card[data-band="subject"]')];
+  const stacked = world.classList.contains('fg__world--narrow');
+  const distanceToBorder = (point, card, edge) => {
+    if (!card) return Infinity;
+    const rect = card.getBoundingClientRect();
+    return Math.hypot(point.x - rect[edge], Math.max(rect.top - point.y, point.y - rect.bottom, 0));
+  };
+  const put = (rect, kind, padX = 0, padY = padX) => {
+    if (!rect.width && !rect.height) return;
+    boxes.push({kind, left: rect.left - padX, top: rect.top - padY,
+                right: rect.right + padX, bottom: rect.bottom + padY});
+  };
+  for (const card of world.querySelectorAll('.fg__card, .fg__grouphead, .fg__subjects--many')) {
+    put(card.getBoundingClientRect(), 'card');
+  }
+  const range = document.createRange();
+  for (const label of world.querySelectorAll('.fg__sidehead, .fg__sidekinds, .fg__edge-note')) {
+    range.selectNodeContents(label);
+    for (const rect of range.getClientRects()) put(rect, 'label');
+  }
+  for (const path of world.querySelectorAll('.fg__lines .fg__wire, .fg__lines .fg__hotline')) {
+    const matrix = path.getScreenCTM();
+    const halfStroke = (parseFloat(getComputedStyle(path).strokeWidth) || 0) / 2;
+    put(path.getBoundingClientRect(), 'wire', Math.hypot(matrix.a, matrix.c) * halfStroke,
+        Math.hypot(matrix.b, matrix.d) * halfStroke);
+    const length = path.getTotalLength();
+    if (subjects.length === 1 && path.dataset.edge) {
+      // For one subject, resolve the neighbouring endpoint from its wire identity.
+      const [from, to] = path.dataset.edge.split('>');
+      const side = from ? 'users' : 'uses';
+      const id = from || to;
+      const column = world.querySelector('.fg__side[data-band="' + side + '"]');
+      const grouped = id.startsWith('group:');
+      const parts = column?.querySelectorAll(grouped ? ':scope > .fg__group > .fg__grouphead' : ':scope > .fg__card');
+      const neighbour = [...(parts ?? [])].find(el => grouped ? el.dataset.group === id.slice(6) : el.dataset.card === id);
+      const source = from ? neighbour : subjects[0];
+      const target = from ? subjects[0] : neighbour;
+      const start = path.getPointAtLength(0).matrixTransform(matrix);
+      const end = path.getPointAtLength(length).matrixTransform(matrix);
+      const tolerance = 1.5 * Math.hypot(matrix.a, matrix.b);
+      if (!length || distanceToBorder(start, source, stacked ? 'left' : 'right') > tolerance
+          || distanceToBorder(end, target, 'left') > tolerance) detached.push(path.dataset.edge);
+    }
+    // A marker is painted at the end of its curve, but is absent from the path's client rect.
+    const marker = path.getAttribute('marker-end')?.match(/^url\(#([^)]+)\)$/)?.[1];
+    const arrow = marker && path.ownerSVGElement.querySelector(`#${CSS.escape(marker)}`);
+    const glyph = arrow?.querySelector('path');
+    if (!arrow || !glyph || !length) continue;
+    const end = path.getPointAtLength(length);
+    const before = path.getPointAtLength(Math.max(0, length - 0.1));
+    const angle = Math.atan2(end.y - before.y, end.x - before.x);
+    const {x, y, width, height} = glyph.getBBox();
+    const viewBox = arrow.viewBox.baseVal;
+    const scale = Math.min(arrow.markerWidth.baseVal.value / viewBox.width,
+                           arrow.markerHeight.baseVal.value / viewBox.height);
+    const place = new DOMMatrix().translate(end.x, end.y).rotate(angle * 180 / Math.PI).scale(scale)
+      .translate(-arrow.refX.baseVal.value, -arrow.refY.baseVal.value);
+    const corners = [[x,y], [x+width,y], [x,y+height], [x+width,y+height]].map(([x,y]) =>
+      new DOMPoint(x,y).matrixTransform(place).matrixTransform(matrix));
+    const xs = corners.map(p => p.x), ys = corners.map(p => p.y);
+    put(DOMRect.fromRect({x: Math.min(...xs), y: Math.min(...ys),
+                         width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys)}), 'arrow');
+  }
+  if (!boxes.length) return {error: 'nothing painted in the local graph'};
+  const left = Math.min(...boxes.map(r => r.left)), right = Math.max(...boxes.map(r => r.right));
+  const top = Math.min(...boxes.map(r => r.top)), bottom = Math.max(...boxes.map(r => r.bottom));
+  const gap = [left - viewport.left, viewport.right - right, top - viewport.top, viewport.bottom - bottom];
+  const outside = boxes.filter(r => r.left < viewport.left - 1 || r.right > viewport.right + 1 ||
+                                    r.top < viewport.top - 1 || r.bottom > viewport.bottom + 1);
+  const transform = getComputedStyle(world).transform;
+  const scale = transform === 'none' ? 1 : new DOMMatrixReadOnly(transform).a;
+  return {view: [viewport.width, viewport.height], scale, gap, detached, outside: outside.map(r => r.kind),
+          counts: Object.fromEntries(['card', 'wire', 'arrow', 'label'].map(kind =>
+            [kind, boxes.filter(r => r.kind === kind).length])), sides: [+fg.dataset.users, +fg.dataset.uses],
+          subjects: subjects.map(card => card.dataset.card)};
+}"""
+
+
+def painted_fit(graph: Locator) -> tuple[bool, dict]:
+    """A fitted local camera shows and centres the painted content in both axes."""
+    shape = graph.evaluate(PAINTED_GRAPH)
+    if "error" in shape:
+        return False, shape
+    left, right, top, bottom = shape["gap"]
+    # Include the actual wire strokes and arrowheads in the enclosure. Their small asymmetric
+    # protrusions allow subpixel variation in the measured centre of the painted shape.
+    return (not shape["outside"] and min(shape["gap"]) >= 2
+            and max(abs(left - right), abs(top - bottom)) <= 6), shape
+
 
 MEASURE = r"""
 (dockSel) => {
@@ -23,12 +169,9 @@ MEASURE = r"""
   // The camera's scale: the drawing is moved and zoomed by a transform on the world.
   const t = getComputedStyle(world).transform;
   const zoom = t && t !== 'none' ? new DOMMatrixReadOnly(t).a : 1;
-  const drawing = world.getBoundingClientRect();
   const out = {subjects: 0, nodes: 0, groups: 0, grouped: 0, small: [], cut: [], blank: [], outside: [],
                users: +fg.dataset.users, uses: +fg.dataset.uses, opened: +fg.dataset.opened,
                lines: fg.querySelectorAll('.fg__lines path[data-edge]').length, tops: 0,
-               extraX: Math.round(Math.max(0, view.left - drawing.left, drawing.right - view.right)),
-               extraY: Math.round(Math.max(0, view.top - drawing.top, drawing.bottom - view.bottom)),
                bars: sc.offsetWidth - sc.clientWidth + sc.offsetHeight - sc.clientHeight,
                view: [Math.round(view.width), Math.round(view.height)], none: !!fg.querySelector('.fg__none')};
   const inside = (r) => r.top >= view.top - 1 && r.bottom <= view.bottom + 1 && r.left >= view.left - 1 && r.right <= view.right + 1;
@@ -71,6 +214,8 @@ def check_graph_pane(page: Page, label: str, dock: str | None = None, expect_sub
     if m.get("error"):
         return [f"{label}: {m['error']}"]
     bad: list[str] = []
+    if page.locator(".fg__mini").count():
+        bad.append(f"{label}: the reader graph has a miniature overview")
     if expect_subject and not m["subjects"]:
         bad.append(f"{label}: no subject card is drawn")
     if m["small"]:
@@ -82,10 +227,12 @@ def check_graph_pane(page: Page, label: str, dock: str | None = None, expect_sub
     if m["blank"]:
         bad.append(f"{label}: nodes with no title: {', '.join(m['blank'][:5])}")
     if not m["opened"]:
-        if m["extraY"] > 4 or m["extraX"] > 4:
-            bad.append(f"{label}: the drawing does not fit its area on opening (over by {max(0, m['extraX'])}px across, {max(0, m['extraY'])}px down)")
-        if m["outside"]:
-            bad.append(f"{label}: not wholly in view on opening: {', '.join(m['outside'][:5])}")
+        _, shape = painted_fit(page.locator(".fg").first)
+        if "error" in shape:
+            bad.append(f"{label}: {shape['error']}")
+        elif shape["outside"]:
+            outside = m["outside"] or shape["outside"]
+            bad.append(f"{label}: outside the graph viewport on opening: {', '.join(outside[:5])}")
         if m.get("loose", 0) + m["grouped"] != m["users"] + m["uses"]:
             bad.append(f"{label}: {m['users'] + m['uses']} neighbours, but the nodes and group counts on show come to {m.get('loose', 0) + m['grouped']}")
     if m["lines"] < m["tops"]:
@@ -232,7 +379,8 @@ def _check_in_place(page: Page, label: str, head, name: str, count: int) -> list
     if inside != count:
         bad.append(f"{label}: the group {name} counts {count} but opens into {inside}")
     sc = page.locator(".fg__scroll")
-    extra = sc.evaluate("(el) => { const v = el.getBoundingClientRect(), d = el.querySelector('.fg__world').getBoundingClientRect(); return Math.round(Math.max(0, v.top - d.top, d.bottom - v.bottom, v.left - d.left, d.right - v.right)); }")
+    _, shape = painted_fit(page.locator(".fg").first)
+    extra = max(0, round(-min(shape.get("gap", [0]))))
     if extra > 4:
         before = sc.evaluate("(el) => el.querySelector('.fg__world').style.transform")
         box = sc.bounding_box()
@@ -243,8 +391,8 @@ def _check_in_place(page: Page, label: str, head, name: str, count: int) -> list
         page.wait_for_timeout(200)
         if sc.evaluate("(el) => el.querySelector('.fg__world').style.transform") == before:
             bad.append(f"{label}: with the group {name} open, dragging does not pan the graph")
-        if page.locator(".fg__mini").count() == 0 and page.viewport_size["width"] > 600:
-            bad.append(f"{label}: the drawing overflows but there is no overview")
+        if page.locator(".fg__mini").count():
+            bad.append(f"{label}: panning the opened group {name} shows a miniature overview")
         hidden = page.evaluate(
             """async () => { const sc = document.querySelector('.fg__scroll'); const v = sc.getBoundingClientRect(); const out = [];
             for (const c of sc.querySelectorAll('.fg__card')) { c.focus(); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); const r = c.getBoundingClientRect();

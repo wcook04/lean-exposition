@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check that a reader is completely still while nobody touches it, and that `?l=` opens on its phrase.
 
-For each address, at each window width, with the graph tab open and then the Lean tab, the page
-is left alone after it settles and the check counts, over a few idle seconds: DOM mutations, URL
+For each address and width, the default reader and any available separate Graph and Lean views
+are left alone after settling. The check counts, over a few idle seconds: DOM mutations, URL
 changes (pushState, replaceState and the address itself), layout shifts and scroll events. Each
 must be zero (mutations may be allowed a small bound with --max-mutations). A loop between a
 layout and its own measurement (a scroll bar that comes and goes, a fit that answers itself)
@@ -71,8 +71,8 @@ RESET = "() => { window.__still = { muts: 0, net: 0, urls: 0, shifts: 0, scrolls
 
 def pane_tab(page: Page, which: str) -> bool:
     """Choose the right pane's Graph or Lean tab, as a reader would. False if the pane has no such tab."""
-    tab = page.locator(".map-pane button", has_text=which).first
-    if not tab.count() or not tab.is_visible():
+    tab = page.locator(".map-pane .mode-toggle").get_by_role("button", name=which, exact=True).first
+    if not tab.is_visible():
         return False
     tab.click()
     return True
@@ -141,15 +141,22 @@ def main() -> int:
             for width in widths:
                 page.set_viewport_size({"width": width, "height": args.height})
                 page.wait_for_timeout(args.settle)
-                for tab in ["Graph", "Lean"]:
-                    # The right pane shows from 1280px; below that the reader has no tabs to choose.
-                    has = pane_tab(page, tab)
-                    if not has and tab == "Lean":
-                        break
-                    if has:
+                minimise = page.get_by_role("button", name="Minimise graph", exact=True).first
+                combine = page.get_by_role("button", name="Combine views", exact=True).first
+                paired = minimise.is_visible()
+                default = "combined" if paired else "default"
+                for state in [default, "Graph", "Lean"]:
+                    if state == "Graph" and paired:
+                        minimise.click()
+                        page.wait_for_timeout(args.settle)
+                    if state in {"Graph", "Lean"}:
+                        if not pane_tab(page, state):
+                            if paired:
+                                bad.append(f"{path or '/'} at {width}px: minimising the graph did not expose {state}")
+                            continue
                         page.wait_for_timeout(args.settle)
                     got = idle(page, args.idle)
-                    label = f"{path or '/'} at {width}px, {tab if has else 'no pane'}"
+                    label = f"{path or '/'} at {width}px, {state}"
                     problems = []
                     if got["muts"] > args.max_mutations:
                         top = sorted(got["tops"].items(), key=lambda kv: -kv[1])[:3]
@@ -164,6 +171,11 @@ def main() -> int:
                         bad.append(f"{label}: " + ", ".join(problems))
                     else:
                         print(f"ok  {label}: still for {args.idle} ms", flush=True)
+                if paired:
+                    if combine.is_visible():
+                        combine.click()
+                    else:
+                        bad.append(f"{path or '/'} at {width}px: the separate views cannot be combined again")
             page.close()
         if args.at:
             page = browser.new_page(viewport={"width": widths[0], "height": args.height})

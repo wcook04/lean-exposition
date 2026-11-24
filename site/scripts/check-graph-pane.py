@@ -9,6 +9,12 @@ Escape returns to following the paper, and the dock under the graph is never emp
 
     python site/scripts/check-graph-pane.py http://127.0.0.1:8651/lean-exposition-site/ [--papers short long] [--shots DIR --name sk]
 
+For a focused check of a linked passage's painted graph, pass its reader address with
+``--painted-fit``. The Riemann result is a one-sided fixture in the real PDF reader:
+
+    python site/scripts/check-graph-pane.py http://127.0.0.1:47335/riemann-hypothesis-reader/ \
+      --painted-fit '?n=rh.result&l=b11474-11623&v=lean&view=pdf&page=4' --one-sided-cap
+
 Serve a static build first (any server that falls back to index.html for unknown paths). It
 needs Playwright for Python with Chromium installed. It exits 1 and names each failure.
 """
@@ -17,12 +23,12 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, urljoin, urlsplit
 
 from playwright.sync_api import Page, sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from graph_pane_checks import check_graph_pane, check_groups  # noqa: E402
+from graph_pane_checks import check_graph_pane, check_groups, painted_fit  # noqa: E402
 
 DOCK = ".map-pane__dock"
 SIZES = [(1440, 900), (2560, 1440)]
@@ -50,6 +56,89 @@ def click_phrase(page: Page, nth: int) -> bool:
     return True
 
 
+def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
+    """Check a real local graph in desktop and landscape viewports and after a manual fit."""
+    bad = []
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.goto(url, wait_until="domcontentloaded")
+    graph = page.locator(".map-pane__local .fg:visible").last
+
+    def measure(label: str, *, should_fit: bool = True) -> dict:
+        graph.wait_for(timeout=15000)
+        graph.locator(".fg__lines .fg__wire").first.wait_for(state="attached", timeout=15000)
+        settle(page)
+        result, shape = painted_fit(graph)
+        if shape.get("detached"):
+            bad.append(f"{label}: wires detached from their card borders: {shape['detached']}")
+        if result != should_fit:
+            bad.append(f"{label}: fitted={result}, expected {should_fit}, {shape}")
+        elif should_fit and shape["scale"] > 1.151:
+            bad.append(f"{label}: fitted past the 1.15 scale limit: {shape}")
+        else:
+            print(f"ok  {label}: {shape}", flush=True)
+        if page.locator(".fg__mini").count():
+            bad.append(f"{label}: the reader graph has a miniature overview")
+        return shape
+
+    initial = measure("painted fit at 1440×900")
+    if one_sided_cap and (sorted(initial.get("sides", []))[:1] != [0] or sum(initial.get("sides", [])) < 2):
+        bad.append(f"painted fit needs at least two neighbours on one side only: {initial}")
+    if len(initial.get("subjects", [])) != 1:
+        bad.append(f"painted fit needs exactly one subject to check wire attachments: {initial}")
+    if not all(initial.get("counts", {}).get(mark) for mark in ("card", "label", "wire", "arrow")):
+        bad.append(f"painted fit needs cards, labels, wires and arrowheads: {initial}")
+    if one_sided_cap and abs(initial.get("scale", 0) - 1.15) > 0.002:
+        bad.append(f"the wide fixture must reach the 1.15 scale limit: {initial}")
+    page.set_viewport_size({"width": 1180, "height": 760})
+    desktop = measure("painted fit after resizing the desktop pane to 1180×760")
+    if initial.get("view") == desktop.get("view") or initial.get("subjects") != desktop.get("subjects"):
+        bad.append(f"desktop resize must change the viewport while keeping the subject: {initial} → {desktop}")
+    page.set_viewport_size({"width": 844, "height": 390})
+    resized = measure("painted fit after resizing to 844×390")
+    if initial.get("view") == resized.get("view") or initial.get("subjects") != resized.get("subjects"):
+        bad.append(f"resize must change the viewport while keeping the subject: {initial} → {resized}")
+    canvas = graph.locator(".fg__scroll")
+    graph.get_by_role("button", name="Zoom in", exact=True).click()
+    for _ in range(3):
+        canvas.press("ArrowRight")
+    disturbed = measure("zoom and manual pan move the drawing out of fit", should_fit=False)
+    if not disturbed.get("outside"):
+        bad.append(f"zoomed graph never overflowed its viewport: {disturbed}")
+    graph.get_by_role("button", name="Fit", exact=True).click()
+    restored = measure("manual Fit reframes the painted graph")
+    if resized.get("subjects") != restored.get("subjects") or resized.get("sides") != restored.get("sides"):
+        bad.append(f"Fit changed the graph's subject or neighbours: {resized} → {restored}")
+    page.set_viewport_size({"width": 1440, "height": 900})
+    graph.get_by_role("button", name="Minimise graph", exact=True).click()
+    page.locator(".map-pane .mode-toggle").get_by_role("button", name="Graph", exact=True).click()
+    separate = page.locator('.map-pane[data-view="graph"] .fg:visible').last
+    separate.locator(".fg__lines .fg__wire").first.wait_for(state="attached", timeout=15000)
+    for _ in range(4):
+        separate.get_by_role("button", name="Zoom in", exact=True).click()
+    settle(page)
+    _, zoomed = painted_fit(separate)
+    if not zoomed.get("outside"):
+        bad.append(f"separate Graph tab never overflowed after zooming: {zoomed}")
+    if zoomed.get("detached"):
+        bad.append(f"separate Graph tab has detached wires after zooming: {zoomed['detached']}")
+    if page.locator(".fg__mini").count():
+        bad.append("the zoomed separate Graph tab has a miniature overview")
+    pane = page.locator('.map-pane[data-view="graph"]:visible').last
+    pane.get_by_role("button", name="Whole proof map", exact=True).click()
+    pane.locator('.tree[data-mode="overview"] .card').first.wait_for(state="attached", timeout=15000)
+    pane.get_by_role("button", name="Neighbours of this step", exact=True).click()
+    separate.wait_for(timeout=15000)
+    _, reopened = painted_fit(separate)
+    if initial.get("subjects") != reopened.get("subjects"):
+        bad.append(f"returning from the whole proof map changed the local subject: {initial} → {reopened}")
+    else:
+        print("ok  the separate Graph tab opens the whole proof map and returns to the same subject", flush=True)
+    if errors:
+        bad.append(f"painted fit: page errors: {'; '.join(errors[:3])}")
+    return bad
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("base", help="the served site's root, e.g. http://127.0.0.1:8651/lean-exposition-site/")
@@ -57,12 +146,22 @@ def main() -> int:
     parser.add_argument("--phrase", type=int, default=6, help="which coloured phrase to click")
     parser.add_argument("--shots", help="save a screenshot of each state into this folder")
     parser.add_argument("--name", default="site", help="file name prefix for --shots")
+    parser.add_argument("--painted-fit", metavar="ADDRESS", help="only check painted fit at this linked passage address, relative to base or absolute")
+    parser.add_argument("--one-sided-cap", action="store_true", help="also require a one-sided fixture that reaches the 1.15 cap at 1440×900")
     args = parser.parse_args()
+    if args.one_sided_cap and not args.painted_fit:
+        parser.error("--one-sided-cap requires --painted-fit")
     base = args.base.rstrip("/")
     failures: list[str] = []
     with sync_playwright() as p:
         browser = p.chromium.launch()
-        for width, height in SIZES:
+        if args.painted_fit:
+            page = browser.new_page(viewport={"width": 1440, "height": 900})
+            try:
+                failures += check_painted_fit(page, urljoin(base + "/", args.painted_fit), args.one_sided_cap)
+            finally:
+                page.close()
+        for width, height in (() if args.painted_fit else SIZES):
             for paper in args.papers:
                 page = browser.new_page(viewport={"width": width, "height": height})
                 errors: list[str] = []
