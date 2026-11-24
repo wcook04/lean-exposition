@@ -81,7 +81,7 @@ import {
   type ReadingPosition,
   type VisitOrigin,
 } from "./page/position";
-import { PdfView, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, type PdfLocation, type PdfMarks } from "./pdf/PdfView";
+import { PDF_FIT, PdfView, PdfZoom, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, type PdfLocation, type PdfMarks } from "./pdf/PdfView";
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
@@ -269,7 +269,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
-  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
+  const sourceText = pdfOnly && !!pdfMarks;
+  const pdfOn = !!route.pdf && !!pdfMarks;
+  const transcriptOn = sourceText && !pdfOn;
+  const pdfSurface = pdfOn || transcriptOn;
+  const [pdfZoom, setPdfZoom] = useState(PDF_FIT);
   const pdfDisclosure = pdfOn ? adaptedDisclosureHtml(stage) : null;
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
@@ -938,7 +942,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const run = () => {
       frame = 0;
       const body = bodyRef.current;
-      if (!body || pdfOn || pdfOnly) return;
+      if (!body || pdfSurface) return;
       const top = readingTop();
       const line = readingLine();
       let part = partAt(body, doc.parts.length, line);
@@ -1014,7 +1018,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     /** The reader's own hand on the page gives the line back to the reader. */
     const onHand = () => {
       stepped.current = false;
-      if (hereRef.current.pdf || pdfOnly) scrolledPdf.current = true;
+      if (hereRef.current.pdf || sourceText) scrolledPdf.current = true;
     };
     const onKeyScroll = (event: KeyboardEvent) => {
       if (SCROLL_KEYS.has(event.key)) onHand();
@@ -1042,7 +1046,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfOn, pdfOnly]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfSurface, sourceText]);
 
   // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
@@ -1753,12 +1757,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     signals.follow.set({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part });
   }, [signals, statements, statementAt, ties]);
   useLayoutEffect(() => {
-    if (!pdfOn) return;
+    if (!pdfSurface) return;
     scrolledPdf.current = false;
     // Open exact statements before the PDF's smooth landing reports its reading line.
     const at = pdfReadingAt(pdfByAt, route.at, undefined, false);
     if (at) followPdf(at);
-  }, [pdfOn, route.at, route.page, pdfByAt, followPdf]);
+  }, [pdfSurface, route.at, route.page, pdfByAt, followPdf]);
   const onPdfPosition = useCallback((page: number, at: string | undefined, byte?: number) => {
     pdfPage.current = page;
     pdfByte.current = byte;
@@ -1805,6 +1809,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const showPdf = (on: boolean) => {
     if (!pdfMarks || on === pdfOn) return;
     const next = new URL(window.location.href);
+    if (sourceText) {
+      if (on) next.searchParams.set("view", "pdf");
+      else next.searchParams.delete("view");
+      navigate(next.href, { replace: true });
+      return;
+    }
     if (on) {
       const position = measurePosition();
       const line = lineInView(paperRef.current, readingTop()) ?? (position ? doc.parts[position.part]?.lines.start : undefined) ?? null;
@@ -2005,7 +2015,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           <Crumbs signals={signals} outline={outline} place={!outlineColumn} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onJump={(id) => jumpWithHistory(id, true)} />
-          {(side || (pdfOwn && !pdfOnly)) && (
+          {(side || pdfOwn) && (
             <div className="reader-strip__formats">
               {side && (
                 <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
@@ -2013,7 +2023,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                   <button type="button" aria-pressed={side === "adapted"} onClick={() => switchEdition("adapted")}>Adapted edition</button>
                 </span>
               )}
-              {pdfOwn && !pdfOnly && (
+              {pdfOwn && (
                 <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
                   <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
                   <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
@@ -2021,6 +2031,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               )}
             </div>
           )}
+          {pdfOn && <PdfZoom level={pdfZoom} onChange={setPdfZoom} />}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {side === "adapted" && (
             <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
@@ -2078,15 +2089,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {editionNotice}
           </p>
         )}
-        {isPhraseLayer(ties) && ties.stops.length > 0 && !pdfOn && <p className="reader-hint">{READER_HINT}</p>}
+        {isPhraseLayer(ties) && ties.stops.length > 0 && !pdfSurface && <p className="reader-hint">{READER_HINT}</p>}
         {notice && (
           <p className="reader-notice" role="status">
             {notice}
           </p>
         )}
         {pdfOn && pdfDisclosure && <p className="account-line" dangerouslySetInnerHTML={{ __html: pdfDisclosure }} />}
-        {pdfOn && pdfMarks && (
+        {pdfSurface && pdfMarks && (
           <PdfView
+            transcript={transcriptOn}
+            zoomLevel={pdfZoom}
             url={pdfFile}
             label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
@@ -2099,11 +2112,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             onPosition={onPdfPosition}
             onPick={(id, mark, page) => {
               writeEntry("pdfOrigin", undefined);
-              navigate({ ...route, anchor: undefined, decl: undefined, declModule: undefined, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined });
+              navigate({ ...route, anchor: undefined, decl: undefined, declModule: undefined, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: pdfOn || undefined, page: pdfOn ? page : undefined, beside: undefined });
             }}
           />
         )}
-        <div hidden={pdfOn || pdfOnly}>
+        <div hidden={pdfSurface || pdfOnly}>
         <PaperBody
           ref={bodyRef}
           stage={stage}

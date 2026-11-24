@@ -460,6 +460,7 @@ async function paperFirstScreens(base: string, facts: SiteFacts, adapted: Adapte
     const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
     const screens: Record<string, string> = {};
     const renderOpening = (stage: string, data: ReadingIndex, slot: string) => {
+      if (INSTANCE.library?.pdfOnly?.includes(stage as never)) return;
       const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
       const [document, structure, ties] = openingFiles(data, slot);
       const { account, parts } = firstScreen(stage, edition(document), body(structure), body(ties), references);

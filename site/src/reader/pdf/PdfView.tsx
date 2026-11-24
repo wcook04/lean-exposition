@@ -10,6 +10,7 @@ import * as pdfjs from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import type { ReaderSignals } from "../page/rightPage";
+import { TranscriptPage, usePdfTranscript } from "./PdfTranscript";
 import "./pdf-view.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
@@ -90,7 +91,24 @@ export function atOnPage(marks: PdfMarks, page: number): string | null {
   return best?.at ?? null;
 }
 
+const PDF_ZOOM_LEVELS = [0.75, 0.9, 1, 1.15, 1.3, 1.5, 1.75, 2] as const;
+export const PDF_FIT = PDF_ZOOM_LEVELS.indexOf(1);
+
+export function PdfZoom({ level, onChange }: { level: number; onChange(level: number): void }) {
+  return (
+    <span className="view-toggle pdf-zoom" role="group" aria-label="PDF zoom">
+      <button type="button" aria-label="Zoom out" disabled={level === 0} onClick={() => onChange(level - 1)}>−</button>
+      <button type="button" aria-label="Fit PDF to width" onClick={() => onChange(PDF_FIT)}>
+        {Math.round(PDF_ZOOM_LEVELS[level] * 100)}%
+      </button>
+      <button type="button" aria-label="Zoom in" disabled={level === PDF_ZOOM_LEVELS.length - 1} onClick={() => onChange(level + 1)}>+</button>
+    </span>
+  );
+}
+
 interface Props {
+  transcript?: boolean;
+  zoomLevel: number;
   url: string;
   label?: string;
   marks: PdfMarks;
@@ -105,11 +123,32 @@ interface Props {
   onPosition(page: number, at: string | undefined, byte?: number): void;
 }
 
-export function PdfView({ url, marks, at, pinned, shownTie, page, position, label, onPick, readingLine, onPosition }: Props) {
+export function PdfView({ url, marks, at, pinned, shownTie, page, position, label, onPick, readingLine, onPosition, zoomLevel, transcript = false }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
-  const [width, setWidth] = useState(0);
+  const [fitWidth, setFitWidth] = useState(0);
+  const width = Math.round(fitWidth * (transcript ? 1 : PDF_ZOOM_LEVELS[zoomLevel]));
+  const transcriptData = usePdfTranscript(pdf, transcript);
+  const transcriptPages = transcriptData.pages;
+  const pagePosition = useRef<{page: number; y: number; x: number} | null>(null);
+  const previousZoom = useRef(zoomLevel);
+  const previousMode = useRef(transcript);
+
+  useLayoutEffect(() => {
+    if (!width || (transcript && !transcriptPages)) return;
+    if (previousZoom.current === zoomLevel && previousMode.current === transcript) return;
+    previousZoom.current = zoomLevel;
+    previousMode.current = transcript;
+    const view = box.current;
+    const location = pagePosition.current;
+    const el = location && view?.querySelector<HTMLElement>(`[data-page="${location.page}"]`);
+    if (!view || !el || !location) return;
+    const scale = width / marks.pages[location.page - 1][0];
+    const offset = transcript ? textOffset(el, location.y) : location.y * scale;
+    window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top + offset - readingLine(), behavior: "instant" });
+    view.scrollLeft = Math.max(0, location.x * width - view.clientWidth / 2);
+  }, [zoomLevel, width, marks, readingLine, transcript, transcriptPages]);
   const byPage = useMemo(() => {
     const out = new Map<number, [string, PdfMark][]>();
     for (const [id, mark] of Object.entries(marks.marks)) for (const p of new Set(mark.boxes.map((b) => b[0]))) out.set(p, [...(out.get(p) ?? []), [id, mark]]);
@@ -130,7 +169,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
   useEffect(() => {
     const el = box.current;
     if (!el) return;
-    const measure = () => setWidth(el.clientWidth);
+    const measure = () => setFitWidth(el.clientWidth);
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
@@ -140,7 +179,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
   // Open at the selected phrase, else at the page asked for.
   const opened = useRef(false);
   useEffect(() => {
-    if (!width || !pdf) return;
+    if (!fitWidth || !pdf || (transcript && !transcriptPages)) return;
     const target = !position && selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
     const pageEl = !target && page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
     const el = target ?? pageEl;
@@ -149,7 +188,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
     opened.current = true;
     const landOn = (behavior: ScrollBehavior) => {
       if (position) {
-        const y = position.y * width / marks.pages[position.page - 1][0];
+        const y = transcript ? textOffset(el, position.y) : position.y * el.clientWidth / marks.pages[position.page - 1][0];
         window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top + y - readingLine(), behavior });
       } else {
         el.scrollIntoView({ block: target ? "center" : "start", behavior });
@@ -185,12 +224,12 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       window.removeEventListener("keydown", touch);
       window.removeEventListener("touchstart", touch);
     };
-  }, [width, pdf, selected, page, position?.page, position?.y, marks, readingLine]);
+  }, [fitWidth, pdf, selected, page, position?.page, position?.y, marks, readingLine, transcript, transcriptPages]);
 
   // Report the page at the reading line.
   useEffect(() => {
     const el = box.current;
-    if (!el || !width) return;
+    if (!el || !width || (transcript && !transcriptPages)) return;
     const pages = Array.from(el.querySelectorAll<HTMLElement>(".pdf-view__page"));
     if (!pages.length) return;
     let frame = 0;
@@ -206,7 +245,8 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       const page = lo + 1;
       const rect = pages[lo].getBoundingClientRect();
       const scale = width / marks.pages[lo][0];
-      const y = (line - rect.top) / scale;
+      const y = transcript ? pdfYAtTextLine(pages[lo], line) : Math.max(0, Math.min(marks.pages[lo][1], (line - rect.top) / scale));
+      pagePosition.current = { page, y, x: (el.scrollLeft + el.clientWidth / 2) / width };
       let best: PdfMark | undefined;
       let distance = Infinity;
       for (const [, mark] of byPage.get(page) ?? []) {
@@ -225,12 +265,14 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
     read();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    el.addEventListener("scroll", schedule, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      el.removeEventListener("scroll", schedule);
     };
-  }, [width, byPage, marks, readingLine, onPosition]);
+  }, [width, byPage, marks, readingLine, onPosition, transcript, transcriptPages]);
 
   // Paint the existing click targets without re-rendering the pages or landing again.
   useLayoutEffect(() => {
@@ -252,16 +294,21 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       unsubscribe();
       lit?.forEach((mark) => mark.classList.remove("is-selected"));
     };
-  }, [width, marks, pinned, at, shownTie]);
+  }, [width, marks, pinned, at, shownTie, transcript, transcriptPages]);
 
+  if (transcript && transcriptData.failed) return <p role="alert">The source text could not be read. Switch to PDF to read the paper.</p>;
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (
-    <div className="pdf-view" ref={box} aria-label={label ?? "The authors’ PDF"}>
-      {width > 0 &&
+    <div className={`pdf-view${transcript ? " pdf-transcript paper" : ""}`} ref={box} aria-label={transcript ? "Full paper text" : label ?? "The authors’ PDF"}>
+      {transcript && !transcriptPages && <p role="status">Loading the full paper…</p>}
+      <div className="pdf-view__pages" style={{ width }}>
+      {width > 0 && (!transcript || transcriptPages) &&
         marks.pages.map(([w, h], i) => {
           const scale = width / w;
           return (
-            <section key={i} className="pdf-view__page" data-page={i + 1} style={{ height: Math.round(h * scale) }} aria-label={`Page ${i + 1}`}>
+            <section key={i} className="pdf-view__page" data-page={i + 1} style={transcript ? undefined : { height: Math.round(h * scale) }} aria-label={`Page ${i + 1}`}>
+              {transcript ? pdf && <TranscriptPage pdf={pdf} lines={transcriptPages?.[i] ?? []} page={i + 1}
+                pageWidth={w} pageHeight={h} marks={byPage.get(i + 1) ?? []} onPick={onPick} /> : <>
               {pdf && <PdfCanvas pdf={pdf} number={i + 1} width={width} />}
               {(byPage.get(i + 1) ?? []).map(([id, mark]) =>
                 mark.boxes
@@ -280,11 +327,26 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
                     />
                   )),
               )}
+              </>}
             </section>
           );
         })}
+      </div>
     </div>
   );
+}
+
+function textOffset(page: HTMLElement, pdfY: number): number {
+  const rows = Array.from(page.querySelectorAll<HTMLElement>("[data-pdf-y]"));
+  const row = rows.reduce<HTMLElement | undefined>((best, next) =>
+    !best || Math.abs(Number(next.dataset.pdfY) - pdfY) < Math.abs(Number(best.dataset.pdfY) - pdfY) ? next : best,
+  undefined);
+  return row ? row.getBoundingClientRect().top - page.getBoundingClientRect().top : 0;
+}
+
+function pdfYAtTextLine(page: HTMLElement, line: number): number {
+  const rows = Array.from(page.querySelectorAll<HTMLElement>("[data-pdf-y]"));
+  return Number(rows.find((row) => row.getBoundingClientRect().bottom >= line)?.dataset.pdfY ?? rows.at(-1)?.dataset.pdfY ?? 0);
 }
 
 /** One page, drawn when it comes within a screen of the view. */
