@@ -15,7 +15,6 @@ import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, use
 import type { Alignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
-import { BackControl } from "../app/BackControl";
 import { navigate, routeHref, walkEntry, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
@@ -37,7 +36,7 @@ import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import type { PaneMode } from "./page/ModeToggle";
 import { applyTones, readTones } from "./page/panePrefs";
-import { RightSheet } from "./page/RightSheet";
+import { PaneClose, RightSheet } from "./page/RightSheet";
 import { HeldBar } from "./page/HeldBar";
 import { READER_HINT } from "./skeleton";
 import { FOLLOW_HOLD, leanPage, paneForStatement, pdfReadingAt, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
@@ -82,7 +81,7 @@ import {
   type ReadingPosition,
   type VisitOrigin,
 } from "./page/position";
-import { PdfView, atOnPage, loadPdfMarks, pageAtByte, pdfSectionId, type PdfMarks } from "./pdf/PdfView";
+import { PdfView, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, pdfSectionId, type PdfLocation, type PdfMarks } from "./pdf/PdfView";
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
@@ -220,6 +219,7 @@ interface PdfOrigin {
   page: number;
   at?: string;
   textAt?: string;
+  pdfLocation?: PdfLocation;
   position: ReadingPosition | null;
   line: number | null;
 }
@@ -272,6 +272,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfStops = useMemo(() => ties.stops.filter((t) => pdfByAt.has(ties.index.ties[t].at)), [ties, pdfByAt]);
   const pdfPage = useRef<number | null>(null);
+  const pdfByte = useRef<number | undefined>(undefined);
   const pdfY = useRef(0);
   const [pdfPick, setPdfPick] = useState(0);
   const wide = useMedia("(min-width: 1360px)");
@@ -339,6 +340,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const bodyRef = useRef<BodyHandle>(null);
   const paperRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
+  const showPaneRef = useRef<HTMLButtonElement>(null);
+  const sectionsToggleRef = useRef<HTMLButtonElement>(null);
+  const outlineRef = useRef<HTMLElement>(null);
+  const outlinePosition = useRef<ReadingPosition | null>(null);
   const keyRef = useRef<string>("");
   const selfAnchor = useRef<string | undefined>(route.anchor);
   /** The `l` this page wrote itself, so the route effect does not land on it. */
@@ -362,6 +367,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [sheetCollapsed, setSheetCollapsed] = useState(false);
   const [chooser, setChooser] = useState<string | null>(null);
   const [sectionsOpen, setSectionsOpen] = useState(false);
+  const [outlineHidden, setOutlineHidden] = useState(false);
   /** Below 1680px the sections stand on the right page, where they cover no text. */
   const [sectionsSide, setSectionsSide] = useState(false);
   // ---- An adapted edition: the switch between the two texts and the changes layer.
@@ -1282,17 +1288,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     releaseInPlace();
   }, [releaseInPlace]);
 
-  const toggleMap = useCallback(() => {
-    showMap(!mapShown);
-    if (mapShown) closeLean();
-  }, [showMap, mapShown, closeLean]);
+  const closeMap = useCallback(() => {
+    showMap(false);
+    closeLean();
+    requestAnimationFrame(() => showPaneRef.current?.focus({ preventScroll: true }));
+  }, [showMap, closeLean]);
 
   /**
-   * "Back to paper" on a narrow window: the inspector closes over a selection that stays, with a
+   * Closing the pane on a narrow window: the inspector closes over a selection that stays, with a
    * bar at the foot to reopen it or let it go. With nothing selected there is nothing to keep.
    */
   const closeSheet = useCallback(() => {
     setSheetOpen(false);
+    requestAnimationFrame(() => showPaneRef.current?.focus({ preventScroll: true }));
     const here = hereRef.current;
     if (here.node || here.decl || heldRef.current) setSheetCollapsed(true);
     else if (here.lean || here.graph) navigate({ ...here, lean: undefined, graph: undefined }, { replace: true });
@@ -1803,8 +1811,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const at = pdfReadingAt(pdfByAt, route.at, undefined, false);
     if (at) followPdf(at);
   }, [pdfOn, route.at, route.page, pdfByAt, followPdf]);
-  const onPdfPosition = useCallback((page: number, at: string | undefined, section: string | undefined, y: number) => {
+  const onPdfPosition = useCallback((page: number, at: string | undefined, section: string | undefined, y: number, byte?: number) => {
     pdfPage.current = page;
+    pdfByte.current = byte;
     pdfY.current = y;
     signals.heading.set(section ? pdfSectionId(section) : null);
     followPdf(pdfReadingAt(pdfByAt, hereRef.current.at, at, scrolledPdf.current));
@@ -1835,10 +1844,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // A mark near the edge of a page can put the neighboring page under the observer
   // when the PDF centers it. Only the reader's own scroll chooses a different page.
   const pageInView = () => (scrolledPdf.current ? pdfPage.current : null) ?? route.page ?? carriedPdfPage ?? 1;
-  const samePdfOrigin = () => {
-    const origin = readEntry<PdfOrigin>("pdfOrigin");
-    return origin && origin.page === pageInView() && origin.at === route.at ? origin : null;
-  };
+  const pdfOrigin = pdfOn ? readEntry<PdfOrigin>("pdfOrigin") : null;
+  const samePdfOrigin = () =>
+    !scrolledPdf.current && pdfOrigin?.page === pageInView() && pdfOrigin.at === route.at ? pdfOrigin : null;
   const atInPdf = () => {
     const page = pageInView();
     if (route.at && page === route.page) return route.at;
@@ -1846,18 +1854,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
   const lineInPdf = () => {
     const at = atInPdf();
-    return samePdfOrigin()?.line ?? (at ? resolveAt(doc, at)?.start : undefined) ?? null;
+    return samePdfOrigin()?.line ?? (scrolledPdf.current && pdfByte.current !== undefined ? doc.lineOfByte(pdfByte.current) : undefined) ?? (at ? resolveAt(doc, at)?.start : undefined) ?? null;
   };
   const showPdf = (on: boolean) => {
     if (!pdfMarks || on === pdfOn) return;
     if (on) {
-      const line = lineInView(paperRef.current, readingTop());
-      const linePage = pageAtByte(pdfMarks, doc.byteOfLine(line ?? 1)) ?? 1;
-      const mark = route.at?.startsWith("b") ? Number(route.at.slice(1).split("-")[0]) : null;
-      const markPage = mark !== null ? pageAtByte(pdfMarks, mark) : null;
-      const page = markPage && (route.node || line === null) ? markPage : linePage;
-      const at = markPage === page ? route.at : undefined;
-      writeEntry("pdfOrigin", { page, at, textAt: route.at, position: measurePosition(), line } satisfies PdfOrigin);
+      const position = measurePosition();
+      const line = lineInView(paperRef.current, readingTop()) ?? (position ? doc.parts[position.part]?.lines.start : undefined) ?? null;
+      const source = line ?? (route.at ? resolveAt(doc, route.at)?.start : undefined);
+      const pdfLocation = source === undefined ? null : pdfLocationAtByte(pdfMarks, doc.byteOfLine(source));
+      const page = pdfLocation?.page ?? 1;
+      const at = route.at;
+      writeEntry("pdfOrigin", { page, at, textAt: route.at, pdfLocation: pdfLocation ?? undefined, position, line } satisfies PdfOrigin);
       pdfPage.current = page;
       scrolledPdf.current = false;
       navigate({ ...route, at, pdf: true, page }, { replace: true });
@@ -1868,8 +1876,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (origin?.position) {
         at = origin.textAt;
         selfAt.current = at;
-      } else if (origin?.line) {
-        at = String(origin.line);
+      } else {
+        const line = lineInPdf();
+        if (line !== null) at = String(line);
       }
       writeEntry("pdfOrigin", undefined);
       navigate({ ...route, pdf: undefined, page: undefined, at }, { replace: true });
@@ -1892,7 +1901,21 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const inspecting = !!inspect;
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
-  const outlineColumn = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
+  const outlineAvailable = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
+  const outlineColumn = outlineAvailable && !outlineHidden;
+  const setOutline = (open: boolean) => {
+    outlinePosition.current = pdfOn ? null : measurePosition();
+    setOutlineHidden(!open);
+    requestAnimationFrame(() => {
+      const focus = open ? outlineRef.current?.querySelector<HTMLElement>('input[type="search"]') : sectionsToggleRef.current;
+      focus?.focus({ preventScroll: true });
+    });
+  };
+  useLayoutEffect(() => {
+    const position = outlinePosition.current;
+    outlinePosition.current = null;
+    if (position) void restorePosition({ ...position, top: readingTop() });
+  }, [outlineColumn, readingTop, restorePosition]);
   const sectionRoute = (id: string): ReadRoute | undefined => {
     const section = pdfSections?.find((entry) => pdfSectionId(entry.section) === id);
     if (section) return { ...here, anchor: id, at: undefined, node: undefined, beside: undefined, pdf: true, page: section.page };
@@ -1989,8 +2012,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }}
     >
       {outlineColumn && (
-        <aside className="reader__outline" inert={route.beside ? true : undefined}>
-          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} />}</Heading>
+        <aside className="reader__outline" ref={outlineRef} inert={route.beside ? true : undefined}>
+          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} onCollapse={() => setOutline(false)} />}</Heading>
         </aside>
       )}
 
@@ -2027,9 +2050,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           </a>
         )}
         <div className="reader-strip" ref={stripRef}>
-          <ReaderBack signals={signals} outline={outline} stage={stage} open={!!route.node} />
           {mid && !outlineColumn && (
-            <button type="button" className="sections-toggle" aria-pressed={sectionsSide} onClick={() => setSectionsSide(!sectionsSide)}>
+            <button type="button" className="sections-toggle" ref={sectionsToggleRef} aria-expanded={sectionsSide} onClick={() => outlineAvailable ? setOutline(true) : setSectionsSide(!sectionsSide)}>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
@@ -2045,43 +2067,46 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           <Crumbs signals={signals} outline={outline} place={!outlineColumn} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onJump={(id) => jumpWithHistory(id, true)} />
-          {side && <span className="edition-break" aria-hidden="true" />}
-          {side && (
-            <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
-              <button type="button" aria-pressed={side === "authors"} onClick={() => switchEdition("authors")}>Authors’ paper</button>
-              <button type="button" aria-pressed={side === "adapted"} onClick={() => switchEdition("adapted")}>Adapted edition</button>
-            </span>
+          {(side || (pdfOwn && !pdfOnly)) && (
+            <div className="reader-strip__formats">
+              {side && (
+                <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
+                  <button type="button" aria-pressed={side === "authors"} onClick={() => switchEdition("authors")}>Authors’ paper</button>
+                  <button type="button" aria-pressed={side === "adapted"} onClick={() => switchEdition("adapted")}>Adapted edition</button>
+                </span>
+              )}
+              {pdfOwn && !pdfOnly && (
+                <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
+                  <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
+                  <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
+                </span>
+              )}
+            </div>
           )}
           {side === "adapted" && (
             <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
               Show changes
             </button>
           )}
-          {/* Drawn from the paper's own metadata (it has the authors' PDF), so the strip has its final
-              shape from its first paint; PDF answers once the phrases' places on it have loaded. */}
-          {pdfOwn && !pdfOnly && (
-            <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
-              <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
-              <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>
-            </span>
-          )}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
-          <button
-            type="button"
-            className="control reader-strip__map"
-            aria-pressed={paneRoom ? paneOn : undefined}
-            aria-expanded={paneRoom ? undefined : sheetShown}
-            onClick={paneRoom ? toggleMap : () => {
-              setSheetCollapsed(false);
-              setSheetOpen(true);
-            }}
-          >
-            <svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
-              <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
-              <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
-            </svg>
-            <span className="reader-strip__word">{paneOn ? "Hide pane" : "Show pane"}</span>
-          </button>
+          {!paneOn && !sheetShown && (
+            <button
+              type="button"
+              className="control reader-strip__map"
+              ref={showPaneRef}
+              aria-expanded={false}
+              onClick={paneRoom ? () => showMap(true) : () => {
+                setSheetCollapsed(false);
+                setSheetOpen(true);
+              }}
+            >
+              <svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
+                <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+                <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
+              </svg>
+              <span className="reader-strip__word">Show pane</span>
+            </button>
+          )}
           {visit && !route.beside && (
             <div className="reader-strip__visit">
               <button type="button" className="control reader-strip__return" onClick={returnToOrigin}>
@@ -2130,6 +2155,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             pinned={!!pin}
             shownTie={signals.shownTie}
             page={route.page}
+            position={!pdfSection && pdfOrigin?.page === route.page && pdfOrigin?.at === route.at ? pdfOrigin?.pdfLocation : undefined}
             section={pdfSection}
             readingLine={readingLine}
             onPosition={onPdfPosition}
@@ -2163,6 +2189,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
       {paneOn && (
         <div className="reader__map">
+          <PaneClose onClose={closeMap} />
           {paneReady && (
             <GraphBoundary scope={`pane beside ${route.stage}`}>
             <Suspense fallback={null}>
@@ -2378,14 +2405,6 @@ function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignal
       </button>
     </div>
   );
-}
-
-/** Back, in words that say what it does when the name of the place is where the reader already is. */
-function ReaderBack({ signals, outline, stage, open }: { signals: ReaderSignals; outline: OutlineEntry[]; stage: Stage; open: boolean }) {
-  const chain = chainOf(outline, useSignal(signals.heading));
-  const last = chain[chain.length - 1];
-  const here = `${PAPER_NAMES[stage].short}${last ? ` ${sectionNumber(last.title)}` : ""}`;
-  return <BackControl className="reader-strip__back" words={(label) => (label !== here ? `Back to ${label}` : open ? "Close statement" : "Back to your last place")} />;
 }
 
 /** A section's number as the strip shows it: "§1.2", "App. A", or nothing for a section with no number. */

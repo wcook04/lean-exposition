@@ -134,30 +134,3 @@
 .change-list__where { font-weight: 600; }
 
 .adapted-credit-link { white-space: nowrap; }
-
-/* The two texts' switch and Show changes take a second row of the strip, so the strip never
-   runs past the paper's column into the pane, at any width. */
-@media all {
-  .reader-strip:has(.edition-switch) {
-    flex-wrap: wrap;
-    row-gap: 6px;
-  }
-  /* A full-width break: the switch always starts the second row, and the first row keeps its room. */
-  .reader-strip > .edition-break {
-    order: 19;
-    flex-basis: 100%;
-    height: 0;
-    margin-top: -6px;
-  }
-  .reader-strip > .edition-switch {
-    order: 20;
-    margin-left: 0;
-  }
-  .reader-strip > .changes-button {
-    order: 21;
-  }
-  .reader-strip > .edition-switch + .changes-button,
-  .reader-strip > .edition-switch {
-    flex: none;
-  }
-}

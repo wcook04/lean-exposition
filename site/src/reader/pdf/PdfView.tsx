@@ -17,7 +17,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 export interface PdfMark { at: string; tone: number | null; record: string | null; boxes: [number, number, number, number, number][] }
 export interface PdfSection { section: string; title: string; page: number; y: number; topic: string }
 export const pdfSectionId = (section: string) => `pdf-section-${section}`;
-export interface PdfMarks { pages: [number, number][]; marks: Record<string, PdfMark>; sections?: PdfSection[]; pageStarts?: number[] }
+type PdfAnchor = [byte: number, page: number, y: number];
+export interface PdfLocation { page: number; y: number }
+export interface PdfMarks { pages: [number, number][]; marks: Record<string, PdfMark>; sections?: PdfSection[]; pageStarts?: number[]; positions?: PdfAnchor[] }
 
 const marksLoaded = new Map<string, Promise<PdfMarks | null>>();
 /** The marks of a paper's PDF, or null when the build placed none. */
@@ -30,18 +32,53 @@ export function loadPdfMarks(url: string): Promise<PdfMarks | null> {
   return value;
 }
 
-/** The first page of the mark at or after a byte of the text, from the marks' places. */
-export function pageAtByte(marks: PdfMarks, byte: number): number | null {
-  if (marks.pageStarts) {
-    const next = marks.pageStarts.findIndex((start) => start > byte);
-    return next >= 0 ? Math.max(1, next) : marks.pageStarts.length;
+/** Search the monotone PDF correspondence, with older mark-only editions as a fallback. */
+function anchorAfter(rows: readonly PdfAnchor[], before: (row: PdfAnchor) => boolean): number {
+  let lo = 0, hi = rows.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (before(rows[mid])) lo = mid + 1;
+    else hi = mid;
   }
-  let best: { start: number; page: number } | null = null;
+  return lo;
+}
+
+export function pdfLocationAtByte(marks: PdfMarks, byte: number): PdfLocation | null {
+  const rows = marks.positions;
+  if (rows?.length) {
+    const i = anchorAfter(rows, ([b]) => b < byte);
+    const left = rows[i - 1], right = rows[i];
+    if (left && right && left[1] === right[1]) {
+      return { page: left[1], y: left[2] + (right[2] - left[2]) * (byte - left[0]) / (right[0] - left[0]) };
+    }
+    const [, page, y] = !right || (left && byte - left[0] < right[0] - byte) ? left : right;
+    return { page, y };
+  }
+  let best: PdfLocation | null = null;
+  let distance = Infinity;
   for (const mark of Object.values(marks.marks)) {
-    const start = Number(mark.at.slice(1).split("-")[0]);
-    if (start >= byte && (!best || start < best.start)) best = { start, page: mark.boxes[0][0] };
+    const [start, end] = mark.at.slice(1).split("-").map(Number);
+    const box = mark.boxes[0];
+    const gap = Math.max(0, start - byte, byte - (end ?? start));
+    if (!box || gap >= distance) continue;
+    distance = gap;
+    best = { page: box[0], y: box[2] };
   }
-  return best?.page ?? null;
+  return best;
+}
+
+export function pageAtByte(marks: PdfMarks, byte: number): number | null {
+  return pdfLocationAtByte(marks, byte)?.page ?? null;
+}
+
+function byteAtPdfLocation(marks: PdfMarks, page: number, y: number): number | undefined {
+  const rows = marks.positions;
+  if (!rows?.length) return undefined;
+  const i = anchorAfter(rows, ([, p, top]) => p < page || (p === page && top < y));
+  const left = rows[i - 1], right = rows[i];
+  if (left?.[1] !== page) return right?.[1] === page ? right[0] : undefined;
+  if (right?.[1] !== page) return left[0];
+  return Math.round(left[0] + (right[0] - left[0]) * (y - left[2]) / (right[2] - left[2]));
 }
 
 /** The first mark on a page, as a place in the text (`b<start>-<end>`). */
@@ -64,13 +101,14 @@ interface Props {
   pinned: boolean;
   shownTie: ReaderSignals["shownTie"];
   page?: number;
+  position?: PdfLocation;
   section?: PdfSection;
   onPick(id: string, mark: PdfMark, page: number): void;
   readingLine(): number;
-  onPosition(page: number, at: string | undefined, section: string | undefined, y: number): void;
+  onPosition(page: number, at: string | undefined, section: string | undefined, y: number, byte?: number): void;
 }
 
-export function PdfView({ url, marks, at, pinned, shownTie, page, section, label, onPick, readingLine, onPosition }: Props) {
+export function PdfView({ url, marks, at, pinned, shownTie, page, position, section, label, onPick, readingLine, onPosition }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -106,15 +144,18 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, section, label
   const opened = useRef(false);
   useEffect(() => {
     if (!width || !pdf) return;
-    const target = selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
+    const target = !position && selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
     const sectionEl = section ? box.current?.querySelector<HTMLElement>(`[data-section="${CSS.escape(section.section)}"]`) : null;
     const pageEl = page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
-    const el = target ?? sectionEl ?? pageEl;
+    const el = position ? pageEl : target ?? sectionEl ?? pageEl;
     if (!el) return;
     const first = !opened.current;
     opened.current = true;
     const landAt = (behavior: ScrollBehavior) => {
-      if (target) window.scrollBy({ top: target.getBoundingClientRect().top - readingLine() + 1, behavior });
+      if (position) {
+        const y = position.y * width / marks.pages[position.page - 1][0];
+        window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top + y - readingLine(), behavior });
+      } else if (target) window.scrollBy({ top: target.getBoundingClientRect().top - readingLine() + 1, behavior });
       else el.scrollIntoView({ block: "start", behavior });
     };
     landAt(first ? "instant" : "smooth");
@@ -147,7 +188,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, section, label
       window.removeEventListener("keydown", touch);
       window.removeEventListener("touchstart", touch);
     };
-  }, [width, pdf, selected, page, section, readingLine]);
+  }, [width, pdf, selected, page, section, position?.page, position?.y, marks, readingLine]);
 
   // Report the page at the reading line.
   useEffect(() => {
@@ -182,7 +223,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, section, label
         }
       }
       const section = marks.sections?.filter((s) => s.page < page || (s.page === page && s.y <= y + 2)).at(-1);
-      onPosition(page, best?.at, section?.section, y);
+      onPosition(page, best?.at, section?.section, y, byteAtPdfLocation(marks, page, y));
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(read); };
     read();

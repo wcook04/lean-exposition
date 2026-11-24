@@ -12,6 +12,7 @@ import type { PreparedDocument, TextBlock } from "../engine";
 import type { PhraseFamily, PhrasePart, PhraseTopic } from "../../api/lean";
 import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
+import { PaneClose } from "./RightSheet";
 
 interface Props {
   entries: OutlineEntry[];
@@ -24,6 +25,7 @@ interface Props {
   hrefOf?(id: string): string;
   /** Go to a source line found by search. */
   onLine?(line: number): void;
+  onCollapse?(): void;
   /** Phrase layer: the paper's topics and its parts, for the colour key. */
   topics?: PhraseTopic[];
   families?: PhraseFamily[];
@@ -91,7 +93,6 @@ function PhraseKey({ topics, families, parts, part }: { topics: PhraseTopic[]; f
       key={topic.id}
       data-tone={topic.tone}
       data-current={current != null && String(topic.tone) === current ? "" : undefined}
-      style={current != null && String(topic.tone) === current ? { outline: "1.5px solid var(--tone)", outlineOffset: "2px", borderRadius: "4px" } : undefined}
       title={topic.description || undefined}
     >
       <span className="phrase-key__swatch" aria-hidden="true" />
@@ -145,7 +146,7 @@ function Snippet({ text, at, length }: { text: string; at: number; length: numbe
 }
 
 /** Search within this paper, including what has not rendered yet. `/` stays the site's search. */
-function PaperSearch({ doc, onLine, onQuery }: { doc: PreparedDocument; onLine(line: number): void; onQuery(active: boolean): void }) {
+function PaperSearch({ doc, onLine, onQuery, onCollapse }: { doc: PreparedDocument; onLine(line: number): void; onQuery(active: boolean): void; onCollapse?(): void }) {
   const [query, setQuery] = useState("");
   const needle = query.trim().toLowerCase();
   useEffect(() => onQuery(!!needle), [needle, onQuery]);
@@ -161,21 +162,24 @@ function PaperSearch({ doc, onLine, onQuery }: { doc: PreparedDocument; onLine(l
   }, [doc, needle]);
   return (
     <div className="paper-search" role="search">
-      <input
-        type="search"
-        value={query}
-        placeholder="Search this paper"
-        aria-label="Search this paper"
-        onChange={(event) => setQuery(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" && found[0]) onLine(found[0].block.line);
-          if (event.key === "Escape") {
-            event.stopPropagation();
-            setQuery("");
-            event.currentTarget.blur();
-          }
-        }}
-      />
+      <div className="paper-search__row">
+        <input
+          type="search"
+          value={query}
+          placeholder="Search this paper"
+          aria-label="Search this paper"
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && found[0]) onLine(found[0].block.line);
+            if (event.key === "Escape") {
+              event.stopPropagation();
+              setQuery("");
+              event.currentTarget.blur();
+            }
+          }}
+        />
+        {onCollapse && <PaneClose onClose={onCollapse} label="Hide sections" />}
+      </div>
       {needle.length >= 2 &&
         (found.length ? (
           <ul className="paper-search__found">
@@ -267,7 +271,7 @@ const Chevron = ({ open }: { open: boolean }) => (
   </svg>
 );
 
-export function Sections({ entries, current, counts, doc, onJump, hrefOf, onLine, topics, families, parts }: Props) {
+export function Sections({ entries, current, counts, doc, onJump, hrefOf, onLine, topics, families, parts, onCollapse }: Props) {
   // A section's subsections are folded, except along the way to the place being read; a reader's
   // own opening or closing of a section holds until they change it.
   const chain = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
@@ -284,7 +288,7 @@ export function Sections({ entries, current, counts, doc, onJump, hrefOf, onLine
   const part = (current ? counts?.get(current)?.part : undefined) ?? 0;
   return (
     <>
-    {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} />}
+    {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} onCollapse={onCollapse} />}
     <ol className="outline__list" hidden={searching}>
       {shown.map((entry) => {
         const count = counts?.get(entry.id);

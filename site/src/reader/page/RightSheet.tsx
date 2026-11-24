@@ -17,13 +17,18 @@ export function RightSheet({ onClose, children }: { onClose(): void; children: R
   }, []);
   return (
     <aside ref={ref} className="right-sheet" aria-label="The Lean and the graph for what you selected" tabIndex={-1}>
-      <button type="button" className="right-sheet__back" onClick={onClose}>
-        <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-          <path d="M7.5 2.5L4 6l3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        Back to paper
-      </button>
+      <PaneClose onClose={onClose} />
       {children}
     </aside>
+  );
+}
+
+export function PaneClose({ onClose, label = "Close pane" }: { onClose(): void; label?: string }) {
+  return (
+    <button type="button" className="reader-pane-close" aria-label={label} title={label} onClick={onClose}>
+      <svg viewBox="0 0 12 12" width="13" height="13" aria-hidden="true">
+        <path d="M2.5 2.5l7 7m0-7l-7 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    </button>
   );
 }

@@ -102,13 +102,8 @@ def md_tokens(text: str) -> list[tuple[str, int]]:
     return out
 
 
-def main() -> None:
+def align_pdf_text(text: str, words: list[dict]) -> tuple[list[int], dict[int, int]]:
     import difflib
-    from bisect import bisect_left
-    pdf, md, ties_path, out = map(Path, sys.argv[1:5])
-    sizes, every = pdf_words(pdf)
-    words = stream(every)
-    text = md.read_text(encoding="utf-8")
     byte_at = [0]
     for ch in text:
         byte_at.append(byte_at[-1] + len(ch.encode("utf-8")))
@@ -120,6 +115,16 @@ def main() -> None:
     for block in matcher.get_matching_blocks():
         for k in range(block.size):
             to_pdf[block.a + k] = block.b + k
+    return tok_bytes, to_pdf
+
+
+def main() -> None:
+    from bisect import bisect_left
+    pdf, md, ties_path, out = map(Path, sys.argv[1:5])
+    sizes, every = pdf_words(pdf)
+    words = stream(every)
+    text = md.read_text(encoding="utf-8")
+    tok_bytes, to_pdf = align_pdf_text(text, words)
     mapped = sorted(to_pdf)
     data = text.encode("utf-8")
     ties = json.loads(ties_path.read_text())["ties"]
@@ -148,13 +153,29 @@ def main() -> None:
             continue
         key = tie.get("phrase") or tie["at"]
         marks[key] = {"at": tie["at"], "tone": tie.get("tone"), "record": tie.get("record"), "boxes": lines(matched)}
-    result = {"schema": "pdf-marks/1", "pages": sizes, "marks": marks, "unplaced": unplaced}
+    result = {
+        "schema": "pdf-marks/1", "pages": sizes, "marks": marks, "unplaced": unplaced,
+        "positions": reading_positions(tok_bytes, to_pdf, words),
+    }
     if len(sys.argv) > 5:
         result["changes"], result["changes_unplaced"] = change_marks(every, sizes, json.loads(Path(sys.argv[5]).read_text()))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
     extra = f", {len(result['changes'])} changes placed, {len(result['changes_unplaced'])} not" if "changes" in result else ""
     print(f"pdf marks: {len(marks)} placed, {len(unplaced)} unplaced, {len(sizes)} pages{extra}")
+
+
+def reading_positions(tok_bytes: list[int], to_pdf: dict[int, int], words: list[dict]) -> list[list]:
+    """One source byte per aligned PDF line, in ascending source and PDF order."""
+    positions = []
+    previous = (0, 0.0)
+    for i in sorted(to_pdf):
+        word = words[to_pdf[i]]
+        point = (word["page"], round(word["box"][1], 1))
+        if point > previous:
+            positions.append([tok_bytes[i], *point])
+            previous = point
+    return positions
 
 
 def change_marks(every: list[dict], sizes: list[tuple[float, float]], table: dict) -> tuple[dict, list[str]]:

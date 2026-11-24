@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { sinceInput } from "../../app/readerInput";
 
-export const AUTO_TITLE = "Auto: the pane follows the passage you are reading";
+export const AUTO_TITLE = "Auto select: the pane follows the passage you are reading";
 export const MANUAL_TITLE = "Manual: the pane stays on what you selected";
 
 interface Props {
@@ -42,7 +42,7 @@ export function ModeSwitch({ manual, onAuto, onManual, className }: Props) {
         onClick={on ? undefined : act}
       >
         {on && pulse > 0 && <span key={pulse} className="mode-switch__pulse" aria-hidden="true" />}
-        {isManual ? "Manual" : "Auto"}
+        {isManual ? "Manual" : "Auto select"}
       </button>
     );
   };
