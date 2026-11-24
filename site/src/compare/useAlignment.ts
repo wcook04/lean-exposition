@@ -142,6 +142,12 @@ export function shortTitle(id: string, label: string): string {
   return (typeof line === "string" ? line : line?.short) || label;
 }
 
+/** The authored title for a paper argument card, where the reader supplies one. */
+export function graphRecordTitle(id: string): string | undefined {
+  const line = RECORD_INDEX[id];
+  return typeof line === "string" ? undefined : line?.graphTitle;
+}
+
 /** What each level does with a record, for its marks. Also in the bundle. */
 export function recordLine(id: string): RecordLine | undefined {
   const line = RECORD_INDEX[id];

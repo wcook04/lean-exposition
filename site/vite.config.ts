@@ -227,7 +227,7 @@ interface AuthoredRecord {
 /** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
 const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*|phrases-.*)\.json$/;
 
-export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
+export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string>; graphTitle?: string }> {
   const out: ReturnType<typeof recordIndex> = {};
   if (!existsSync(resolve(dir))) return out;
   const names = readdirSync(resolve(dir)).sort();
@@ -250,10 +250,23 @@ export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; le
   // where plain words exist.
   const namesPath = resolve(dir, "names.json");
   if (existsSync(namesPath)) {
-    const { names: plain } = JSON.parse(readFileSync(namesPath, "utf8")) as { names: Record<string, string> };
+    const { names: plain, record_titles: titles } = JSON.parse(readFileSync(namesPath, "utf8")) as {
+      names: Record<string, string>; record_titles?: Record<string, string>;
+    };
     for (const [name, title] of Object.entries(plain ?? {})) {
       const id = `lean.${name}`;
       if (!out[id]) out[id] = { short: title, lean: 0, relations: [], levels: {} };
+    }
+    if (titles && Object.keys(titles).length) {
+      const graph = JSON.parse(readFileSync(resolve(dir, "../evidence-graph.json"), "utf8")) as { nodes: { id: string }[] };
+      const ids = new Set(graph.nodes.map(({ id }) => id));
+      for (const [id, title] of Object.entries(titles)) {
+        if (!ids.has(id)) throw new Error(`${namesPath}: no graph record ${id}`);
+        if (typeof title !== "string" || !title || title.trim() !== title || /[\r\n]/.test(title)) {
+          throw new Error(`${namesPath}: invalid display title for ${id}`);
+        }
+        out[id] = { ...(out[id] ?? { short: "", lean: 0, relations: [], levels: {} }), graphTitle: title };
+      }
     }
   }
   // Statements added paper by paper count towards their records' levels.
@@ -273,7 +286,7 @@ function recordIndexModule(): Plugin {
     load(resolved) {
       if (resolved !== `\0${id}`) return null;
       const compact = Object.fromEntries(Object.entries(recordIndex()).map(([id, line]) => [
-        id, line.lean || line.relations.length || Object.keys(line.levels).length ? line : line.short,
+        id, line.graphTitle || line.lean || line.relations.length || Object.keys(line.levels).length ? line : line.short,
       ]));
       // Large editions have tens of thousands of title-only entries. Parse the
       // index as JSON instead of compiling each entry into JavaScript.

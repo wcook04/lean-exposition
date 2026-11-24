@@ -53,5 +53,8 @@
  "title_words": [
   2,
   11
- ]
+ ],
+ "record_titles": {
+  "contextual-embeddings.claim-isomorphism": "Unembedding and contextualising are inverse under the index reifier axiom"
+ }
 }

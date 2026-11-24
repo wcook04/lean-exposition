@@ -36,5 +36,9 @@
  "title_words": [
   2,
   12
- ]
+ ],
+ "record_titles": {
+  "coupled-spring.claim-cubic-local-not-global": "Cubic perturbation preserves the local minimum",
+  "coupled-spring.claim-global-minimum": "The origin uniquely minimizes the spring potential"
+ }
 }

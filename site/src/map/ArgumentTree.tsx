@@ -27,7 +27,7 @@ import { closure, type ArgEdge, type ArgGraph, type ArgNode } from "../model/gra
 import type { Trace } from "../app/router";
 import { kindName, relationPhrase } from "./labels";
 import { createPortal } from "react-dom";
-import { shortTitle as tileTitle } from "../compare/useAlignment";
+import { graphRecordTitle, shortTitle as tileTitle } from "../compare/useAlignment";
 import { hasLean } from "./levels";
 import { walkStep, type WalkKey } from "./walk";
 import { expandTo, lensArgument, neededExpansion, openBelow, pathFromGoal, reach, routeTo, scopedGraph, usesOf, visibleEdges, visibleSet, type ThroughEdge } from "./treeModel";
@@ -2633,7 +2633,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           // Plain words wherever they exist: a raw name shows only where nothing better does.
           const plainTitle = node.tile ?? tileTitle(id, "");
           const tileLean = node.kind === "declaration" && !(node.tilePlain ?? plainTitle);
-          const tile = node.kind === "declaration" ? plainTitle || node.label.slice(node.label.lastIndexOf(".") + 1) : tileTitle(id, node.label);
+          const recordTitle = graphRecordTitle(id);
+          const fullTitle = recordTitle ?? node.label;
+          const tile = node.kind === "declaration" ? plainTitle || node.label.slice(node.label.lastIndexOf(".") + 1) : recordTitle ?? tileTitle(id, node.label);
           const usedBy = built.shared.get(id) ?? 0;
           const mark = props.statusOf?.(id, node) ?? null;
           return (
@@ -2645,7 +2647,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               data-region={node.region}
               data-slot={node.origin.slot}
               data-kind={node.kind}
-              data-full={node.label}
+              data-full={fullTitle}
               data-section={section ?? undefined}
               data-shape={mark?.shape}
               data-lean={mark && leanFill(mark) !== "none" ? leanFill(mark) : undefined}
@@ -2654,8 +2656,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               className={cardClass(lid, node, leaf)}
               style={{ ["--card-tone" as string]: dense ? toneOfCard.get(lid)?.tone : undefined, width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"
-              aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} steps that use it` : ""}${mark ? `, ${markWords(mark)}` : lean ? ", linked to Lean" : ""}`}
-              title={clone ? node.label : undefined}
+              aria-label={`${fullTitle}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} steps that use it` : ""}${mark ? `, ${markWords(mark)}` : lean ? ", linked to Lean" : ""}`}
+              title={clone ? fullTitle : undefined}
               onClick={(event) => {
                 if ((event.target as Element).closest?.(".card__inputs, .card__usedby, .tag, a")) return;
                 walkLid.current = lid;
@@ -2688,9 +2690,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                   className={`card__open${isRoot ? " plate__title" : ""}`}
                   tabIndex={tab}
                   aria-pressed={id === selected}
-                  aria-label={`Open ${node.label}`}
+                  aria-label={`Open ${fullTitle}`}
                 >
-                  <span className={`card__title${tileLean ? " lean" : ""}`}>{tileLean ? <LeanName name={node.label} /> : node.kind === "declaration" ? tile : node.label}</span>
+                  <span className={`card__title${tileLean ? " lean" : ""}`}>{tileLean ? <LeanName name={node.label} /> : node.kind === "declaration" ? tile : fullTitle}</span>
                   {node.status === "open" && <span className="card__status"> (unresolved)</span>}
                 </button>
                 {tags.length > 0 && (

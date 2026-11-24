@@ -19,6 +19,8 @@ declare module "virtual:record-index" {
   export interface RecordLine {
     /** Two to five plain words for a tile. */
     short: string;
+    /** An authored argument-card title keyed by the graph's original record ID. */
+    graphTitle?: string;
     /** How many Lean declarations are linked to the record. */
     lean: number;
     /** How those declarations relate to the record: "states", "part" and so on, each once. */

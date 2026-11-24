@@ -186,6 +186,8 @@ without editing its file.
 
 `names.json`, optional, is `{ "schema": 1, "names": { "<full declaration name>": "<display title>" } }`. Every key must be a declaration in the index. The title reaches `names` in `/alignment` and `plain` on Lean rows and ties. The default is two to six words. `title_words: [minimum, maximum]` can extend the range if a declaration needs more words to name its mathematical object or hypotheses. Phrase parts can set their own `title_words` and give the same declaration a title matched to the passage.
 
+The same file can supply `record_titles`, a map from exact evidence-graph record IDs to argument card titles. The reader keeps the paper's printed reference number and uses the new words on the card.
+
 ## The dictionary
 
 `examples/qaoa-sk/alignment/dictionary.json` tells a reader of Lean what each

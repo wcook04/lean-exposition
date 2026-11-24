@@ -23,7 +23,7 @@ import { declTitle } from "../../model/declTitle";
 import { onlyPaperLogic, type ArgEdge, type ArgGraph, type ArgNode } from "../../model/graph";
 import { routeHref } from "../../app/router";
 import { namedIn } from "../../model/leanGraph";
-import { shortTitle } from "../../compare/useAlignment";
+import { graphRecordTitle, shortTitle } from "../../compare/useAlignment";
 import { isPhraseRecord, type TieModel } from "../ties";
 
 /** The card id of a declaration with no record of its own. */
@@ -155,7 +155,7 @@ export function printedNumber(label: string, stage: Stage): string | undefined {
 
 /** A record's title in plain words, without the printed number its kicker carries. */
 function recordTitle(node: ArgNode): string {
-  const short = shortTitle(node.id, node.label);
+  const short = graphRecordTitle(node.id) ?? shortTitle(node.id, node.label);
   // "Theorem 4.1 (mixed weighted and cover supports)": the words in the brackets.
   const m = /^(?:(?:Long record|Short paper|Exposition) )?(?:Theorem|Lemma|Corollary|Proposition|Problem|Definition|Remark|Conjecture|Question|Example|Claim) [A-Z]?\d*(?:\.\d+)*[a-z]? \((.+)\)$/.exec(short);
   const words = m ? m[1] : short;

@@ -2278,5 +2278,12 @@
  "title_words": [
   2,
   12
- ]
+ ],
+ "record_titles": {
+  "quartic.theorem-1": "The optimal randomized-to-quantum exponent is four",
+  "quartic.lemma-2": "Forrelation’s randomized lower bound, coherent decoder and exact promise circuit",
+  "quartic.lemma-4": "Bounded amplification preserves the successful label law",
+  "quartic.lemma-5": "Separate query caps bound joint success by βʳ",
+  "quartic.proposition-3": "Quantum tournament miss probability ≤2m/2ᵀ + Tε"
+ }
 }
