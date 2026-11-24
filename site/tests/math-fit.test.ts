@@ -97,6 +97,7 @@ describe("display fitting notifications", () => {
   });
 
   it("fits a display reached before the fonts arrive once they have, with their widths", async () => {
+    const flush = frames();
     vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
     let ready!: () => void;
     const previous = Object.getOwnPropertyDescriptor(document, "fonts");
@@ -119,6 +120,7 @@ describe("display fitting notifications", () => {
       formulaWidth = 600;
       ready();
       await Promise.resolve();
+      flush();
       // No broken form (the formula has no TeX to break): it shrinks to fit and offers Expand.
       expect(box.dataset.fit).toBe("squeezed");
       expect(box.dataset.unfitted).toBeUndefined();
