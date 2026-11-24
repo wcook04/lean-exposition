@@ -27,22 +27,49 @@ class LibraryIndexRow(unittest.TestCase):
         lines = ["121 linked statements in OpenAI’s paper"]
         self.assertEqual(index.count_lines({**ENTRY, "count_lines": lines}), lines)
 
-    def test_groups_in_order_without_strip_or_separators(self):
-        row = index.entry_html(ENTRY)
-        self.assertNotIn("strip", row)
-        self.assertNotIn(" · ", row)
-        self.assertNotIn("%", row)
-        labels = ["Linked material", "Recorded checks", "Credit and source"]
-        at = [row.index(f'<h4 class="paper__label">{label}</h4>') for label in labels]
+    def test_entry_prints_its_labels_versions_and_credits_in_words(self):
+        entry = {**ENTRY, "tier": "lead", "kind": "Authors’ paper · Adapted edition", "provenance": "anthropic",
+                 "provenance_label": "Supported by Anthropic",
+                 "credits": [["Paper and Lean", "A. Author"], ["Adapted edition", "W. Cook, with AI assistance"]],
+                 "versions": [{"label": "Authors’ paper", "href": "/library/p/", "note": "their text"},
+                              {"label": "Adapted edition", "href": "/library/p/adapted/"},
+                              {"label": "Original PDF", "href": "https://example.org/p.pdf"}]}
+        row = index.entry_html(entry)
+        # The provenance is a word on the entry; the colour class only repeats it.
+        self.assertIn("Supported by Anthropic", row)
+        self.assertIn("prov-anthropic", row)
+        self.assertIn(index.esc("Authors’ paper · Adapted edition"), row)
+        listed = row[row.index('<ul class="versions"'):]
+        at = [listed.index(index.esc(v["label"])) for v in entry["versions"]]
         self.assertEqual(at, sorted(at))
-        for text in (ENTRY["comparator"], ENTRY["credit"], ENTRY["where"]):
-            self.assertIn(index.esc(text), row)
+        self.assertIn('class="version version--main" href="/library/p/"', row)
+        self.assertIn("<dt>Paper and Lean</dt><dd>A. Author</dd>", row)
+        self.assertIn(index.esc(ENTRY["comparator"]), row)
 
-    def test_empty_groups_are_left_out(self):
-        row = index.entry_html({**ENTRY, "counts": {}, "comparator": None})
-        self.assertNotIn("Linked material", row)
-        self.assertNotIn("Recorded checks", row)
-        self.assertIn("Credit and source", row)
+    def test_without_versions_the_paper_and_its_pages_are_offered(self):
+        row = index.entry_html({**ENTRY, "pages": [{"title": "Exposition", "href": "/library/p/exposition/"}]})
+        self.assertIn('class="version version--main" href="/library/p/"', row)
+        self.assertIn('href="/library/p/exposition/"', row)
+        self.assertIn(index.esc(ENTRY["credit"]), row)
+
+    def test_sections_follow_the_tiers_in_order(self):
+        entries = [{**ENTRY, "id": i, "tier": t} for i, t in (("w", "own"), ("a", "lead"), ("b", "companion"), ("c", None))]
+        page = index.sections_html(entries)
+        at = [page.index(f'id="shelf-{t}"') for t in ("lead", "research", "companion", "own")]
+        self.assertEqual(at, sorted(at))
+        self.assertIn('id="key-title"', page)
+
+
+class Catalogue(unittest.TestCase):
+    def test_others_research_before_companions_before_own(self):
+        import json
+        papers = json.loads((Path(__file__).resolve().parents[1] / "scripts/build_library_index_assets/papers.json").read_text())["papers"]
+        rank = {"lead": 0, "research": 1, "companion": 2, "own": 3}
+        tiers = [rank[p["tier"]] for p in papers]
+        self.assertEqual(tiers, sorted(tiers))
+        self.assertEqual([p["id"] for p in papers[:3]], ["navier-stokes", "euler", "riemann-hypothesis"])
+        for p in papers:
+            self.assertTrue(p.get("provenance_label") and p.get("kind") and p.get("credits") and p.get("versions"), p["id"])
 
 
 class SearchScope(unittest.TestCase):

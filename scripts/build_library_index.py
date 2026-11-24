@@ -66,6 +66,7 @@ def plain_tex(text: str) -> str:
     text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text)
     text = text.replace("**", "").replace("$$", " ").replace("$", "")
     text = re.sub(r"\\(left|right|big|Big|bigl|bigr|Bigl|Bigr|,|;|!|quad|qquad)\b", " ", text)
+    text = re.sub(r"\\mathbb\s*\{?([RTZNQC])\}?", lambda m: BLACKBOARD[m[1]], text)
     text = re.sub(r"\\(mathrm|mathbf|mathcal|mathbb|operatorname|text|textbf|emph|mathit|boldsymbol)\{([^{}]*)\}", r"\2", text)
     text = re.sub(r"\\(begin|end)\{[^}]*\}|\\tag\{[^}]*\}|\\label\{[^}]*\}", " ", text)
     for tex, uni in TEX_SYMBOLS.items():
@@ -75,6 +76,8 @@ def plain_tex(text: str) -> str:
     text = text.replace("{", "").replace("}", "")
     return re.sub(r"\s+", " ", text).strip()
 
+
+BLACKBOARD = {"R": "ℝ", "T": "𝕋", "Z": "ℤ", "N": "ℕ", "Q": "ℚ", "C": "ℂ"}
 
 SUPERSCRIPT = str.maketrans("0123456789+-", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻")
 
@@ -234,34 +237,124 @@ def comparator_line(paper: str) -> str | None:
     return line
 
 
+def short_names(people: list[str], limit: int = 4) -> str:
+    """Up to `limit` names in full; a longer list names the first three and counts the rest."""
+    if len(people) <= limit:
+        return names(people)
+    return f"{', '.join(people[:3])} and {len(people) - 3} others"
+
+
+# The sections of the page, in order: (tier, heading, one sentence under it). An entry's tier is set
+# in papers.json; an entry without one is listed with the other researchers' papers.
+SECTIONS = [
+    ("lead", "Lead papers",
+     "Finite-time blow-up for the Navier–Stokes and Euler equations, each read beside the authors’ own Lean."),
+    ("research", "Other researchers’ papers, read beside their Lean",
+     "The authors’ text in the reader, with each linked phrase opening the Lean that states it."),
+    ("companion", "Explanations of results proved by others",
+     "Accounts by Will Cook, written with AI, of results whose proofs and Lean are other people’s. Where the "
+     "original paper or the formalizer’s own guide is in the library, it is the first choice on the entry."),
+    ("own", "Will Cook’s own research",
+     "Written with AI assistance. No independent mathematician has reviewed it."),
+]
+
+# Short names for the section links under the introduction.
+JUMP = {"lead": "Lead papers", "research": "Other researchers", "companion": "Explanations", "own": "Will Cook’s research"}
+
+# Who produced or supported the result. The colour only repeats the label printed on the entry.
+PROVENANCE = [
+    ("anthropic", "Supported by Anthropic"),
+    ("openai", "OpenAI"),
+    ("google", "Google DeepMind"),
+    ("academic", "Academic or open-source"),
+    ("community", "Community work"),
+    ("will", "Will Cook"),
+]
+
+VERSION_KEY = [
+    ("Authors’ paper", "the authors’ own text in the reader, with Lean links and notes added"),
+    ("Adapted edition", "a reading text changed by Will Cook with AI; every change is marked"),
+    ("Original PDF", "the source file on its own"),
+    ("Companion account", "Will Cook’s explanation, written with AI, of someone else’s result"),
+]
+
+
 def entry_html(entry: dict) -> str:
+    tier = entry.get("tier") or "research"
     href = entry["href"]
     away = outbound(href)
-    arrow = '<span class="out" aria-hidden="true">\u2197</span>' if away else ""
-    title = f'<h3 class="paper__title"><a href="{esc(href)}">{esc(entry["title"])}{arrow}</a></h3>'
-    by = f'<p class="paper__by">By {esc(names(entry["authors"]))}</p>'
-    sentence = f'<p class="paper__what">{esc(entry["sentence"])}</p>' if entry.get("sentence") else ""
-    pages = entry.get("pages") or []
-    pages_html = ""
-    if pages:
-        links = "".join(f'<li><a href="{esc(p["href"])}">{esc(p["title"])}</a></li>' for p in pages)
-        pages_html = f'<div class="paper__pages"><span class="paper__pages-label">{esc(entry.get("pages_label", "Also"))}</span><ul>{links}</ul></div>'
-    groups = []
-    counts = count_lines(entry)
-    if counts:
-        groups.append(("Linked material", '<ul class="paper__counts">' + "".join(f"<li>{esc(line)}</li>" for line in counts) + "</ul>"))
+    arrow = '<span class="out" aria-hidden="true">↗</span>' if away else ""
+    prov = entry.get("provenance", "")
+    tags = []
+    if entry.get("provenance_label"):
+        tags.append(f'<span class="tag tag--prov"><span class="tag__dot" aria-hidden="true"></span>{esc(entry["provenance_label"])}</span>')
+    if entry.get("kind"):
+        tags.append(f'<span class="tag tag--kind">{esc(entry["kind"])}</span>')
+    tags_html = f'<p class="entry__tags">{"".join(tags)}</p>' if tags else ""
+    heading = "h3"
+    title = f'<{heading} class="entry__title"><a href="{esc(href)}">{esc(entry["title"])}{arrow}</a></{heading}>'
+    by = ""
+    if tier in ("lead", "research") and entry.get("authors"):
+        by = f'<p class="entry__by">{esc(short_names(entry["authors"]))}</p>'
+    sentence = f'<p class="entry__what">{esc(entry["sentence"])}</p>' if entry.get("sentence") else ""
+
+    versions = entry.get("versions") or []
+    if not versions:
+        versions = [{"label": "Read", "href": href}] + [{"label": p["title"], "href": p["href"]} for p in entry.get("pages") or []]
+    items = []
+    for i, v in enumerate(versions):
+        out = '<span class="out" aria-hidden="true">↗</span>' if outbound(v["href"]) else ""
+        note = f'<span class="version__note">{esc(v["note"])}</span>' if v.get("note") and tier == "lead" else ""
+        cls = "version version--main" if i == 0 else "version"
+        items.append(f'<li><a class="{cls}" href="{esc(v["href"])}"><span class="version__label">{esc(v["label"])}{out}</span>{note}</a></li>')
+    versions_html = f'<ul class="versions" aria-label="Versions you can open">{"".join(items)}</ul>'
+
+    credits = entry.get("credits") or []
+    if credits:
+        rows = "".join(f'<div class="credit"><dt>{esc(role)}</dt><dd>{esc(who)}</dd></div>' for role, who in credits)
+        credits_html = f'<dl class="credits">{rows}</dl>'
+    elif entry.get("credit"):
+        credits_html = f'<p class="credits credits--line">{esc(entry["credit"])}</p>'
+    else:
+        credits_html = ""
+
+    facts = count_lines(entry)
+    facts_html = f'<p class="entry__facts">{esc(" · ".join(facts))}</p>' if facts else ""
+    checks = ""
     if entry.get("comparator"):
-        groups.append(("Recorded checks", f'<p class="paper__comparator">{esc(entry["comparator"])}</p>'))
-    credit = []
-    if entry.get("credit"):
-        credit.append(f'<p class="paper__credit">{esc(entry["credit"])}</p>')
-    if entry.get("where"):
-        credit.append(f'<p class="paper__where">{esc(entry["where"])}</p>')
-    if credit:
-        groups.append(("Credit and source", "".join(credit)))
-    meta = '<div class="paper__meta">' + "".join(
-        f'<div class="paper__group"><h4 class="paper__label">{label}</h4>{body}</div>' for label, body in groups) + "</div>"
-    return (f'<li class="paper" id="{esc(entry["id"])}"><div class="paper__main">{title}{by}{sentence}{pages_html}</div>{meta}</li>')
+        checks = (f'<details class="entry__checks"><summary>Recorded checks</summary>'
+                  f'<p>{esc(entry["comparator"])}</p></details>')
+    where = f'<p class="entry__where">{esc(entry["where"])}</p>' if entry.get("where") and away else ""
+    return (f'<li class="entry entry--{esc(tier)} prov-{esc(prov)}" id="{esc(entry["id"])}">'
+            f'<div class="entry__head">{tags_html}{title}{by}</div>'
+            f'<div class="entry__body">{sentence}{versions_html}</div>'
+            f'<div class="entry__meta">{credits_html}{facts_html}{checks}{where}</div></li>')
+
+
+def specimen_html(spec: dict | None) -> str:
+    """One real linked phrase of a paper beside the Lean declarations it opens, as the reader shows them."""
+    if not spec:
+        return ""
+    decls = "".join(
+        f'<li><p class="specimen__plain">{esc(row.get("plain", ""))}</p>'
+        f'<p class="specimen__name"><code translate="no">{esc(row["name"])}</code></p></li>' for row in spec["lean"])
+    first = spec["lean"][0]
+    compare = ""
+    if first.get("fidelity_note") and "$" not in first["fidelity_note"]:
+        compare = (f'<p class="specimen__compare"><span class="specimen__label">How the first one compares, written with AI</span>'
+                   f'{esc(first["fidelity_note"])}</p>')
+    return f"""<figure class="specimen" aria-labelledby="specimen-cap">
+<div class="specimen__pane specimen__pane--paper">
+<p class="specimen__label">The paper · {esc(spec["paper_title"])}</p>
+<p class="specimen__text"><a class="specimen__phrase" href="{esc(spec["href"])}">{esc(spec["text"])}</a></p>
+</div>
+<div class="specimen__pane specimen__pane--lean">
+<p class="specimen__label">The Lean this sentence opens</p>
+<ul class="specimen__decls">{decls}</ul>
+{compare}
+</div>
+<figcaption id="specimen-cap"><a href="{esc(spec["href"])}">Open this sentence in {esc(spec["paper_name"])} <span aria-hidden="true">→</span></a></figcaption>
+</figure>"""
 
 
 OWNER = """<a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="{base}_index/plectis.svg" alt="" width="26" height="26"><span class="fam-lockup__owner" translate="no">Will Cook</span></a>"""
@@ -284,8 +377,38 @@ def search_scope(papers: list[dict]) -> str:
     return "Covers " + ", ".join(parts) + "."
 
 
-def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash: str) -> str:
-    items = "\n".join(entry_html(e) for e in entries)
+def key_html() -> str:
+    prov = "".join(f'<li class="prov-{k}"><span class="tag__dot" aria-hidden="true"></span>{esc(label)}</li>' for k, label in PROVENANCE)
+    versions = "".join(f'<div class="key__row"><dt>{esc(label)}</dt><dd>{esc(text)}</dd></div>' for label, text in VERSION_KEY)
+    return (f'<section class="key" aria-labelledby="key-title"><h2 id="key-title" class="key__title">How each entry is labelled</h2>'
+            f'<div class="key__cols"><div><p class="key__head">Who produced or supported the result</p><ul class="key__prov">{prov}</ul></div>'
+            f'<div><p class="key__head">What you can open</p><dl class="key__versions">{versions}</dl></div></div></section>')
+
+
+def sections_html(entries: list[dict]) -> str:
+    known = {tier for tier, _, _ in SECTIONS}
+    out = []
+    for tier, heading, blurb in SECTIONS:
+        group = [e for e in entries if (e.get("tier") if e.get("tier") in known else "research") == tier]
+        if not group:
+            continue
+        items = "\n".join(entry_html(e) for e in group)
+        out.append(f'<section class="shelf shelf--{tier}" id="shelf-{tier}" aria-labelledby="shelf-{tier}-title">'
+                   f'<header class="shelf__head"><h2 id="shelf-{tier}-title">{esc(heading)}</h2><p>{esc(blurb)}</p></header>'
+                   f'<ol class="shelf__list">\n{items}\n</ol></section>')
+        if tier == "lead":
+            # The labels are explained once the reader has seen them on the two lead entries.
+            out.append(key_html())
+    return "\n".join(out)
+
+
+def jump_html(entries: list[dict]) -> str:
+    tiers = {e.get("tier") or "research" for e in entries}
+    links = "".join(f'<li><a href="#shelf-{tier}">{esc(JUMP[tier])}</a></li>' for tier, _, _ in SECTIONS if tier in tiers)
+    return f'<nav class="jump" aria-label="Sections"><ul>{links}</ul></nav>'
+
+
+def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash: str, spec: dict | None = None) -> str:
     data = json.dumps(search_meta, ensure_ascii=False).replace("</", "<\\/")
     notice = '<p class="notice">There is no page at this address. These are the papers.</p>' if missing else ""
     count = len(entries)
@@ -296,7 +419,7 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reading library</title>
-<meta name="description" content="Mathematics papers read beside their Lean proofs: {count} papers, from fluid blow-up to the PCP theorem, each phrase linked to the Lean that states it.">
+<meta name="description" content="Mathematics papers read beside their Lean proofs: {count} entries, from finite-time blow-up for the Navier–Stokes and Euler equations to the PCP theorem, each linked phrase opening the Lean that states it.">
 <meta name="author" content="Will Cook">
 <link rel="canonical" href="{SITE_URL}">
 <meta name="color-scheme" content="light dark">
@@ -313,34 +436,33 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 <header class="topbar">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="topbar__inner">
-<a class="fam-lockup__site" href="{BASE}" aria-label="Reading library, front page" aria-current="page"><span class="fam-lockup__name" translate="no">Reading library</span></a>
+<a class="fam-lockup__site lib-mark" href="{BASE}" aria-label="Reading library, front page" aria-current="page"><span class="fam-lockup__name" translate="no">Reading library</span></a>
 <div class="topbar__tools">{SCHEME}{OWNER.format(base=BASE)}</div>
 </div>
 </header>
 <main id="main" tabindex="-1">
 <section class="intro" aria-labelledby="library-title">
+<div class="intro__text">
 {notice}
 <h1 id="library-title">Mathematics papers, read beside their Lean</h1>
-<p class="lede">Each phrase that a Lean declaration states is underlined in its paper. Click it and that Lean opens beside the text, with a plain title, a comparison and a reading note.</p>
+<p class="lede">Each phrase of a paper that a Lean declaration states is underlined. Click it and the Lean opens beside the text, with a plain title, a comparison of what the paper and the Lean each say, and a reading note.</p>
+{jump_html(entries)}
 <form class="search" role="search" action="{BASE}" onsubmit="return false">
-<label class="search__label" for="q">Search the papers</label>
-<p class="search__scope" id="search-scope">{esc(scope)}</p>
+<label class="search__label" for="q">Search every paper</label>
 <div class="search__field">
 <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.4 10.4 L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
 <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="vorticity, Lemma 2.1, Navier–Stokes, theorem11" aria-describedby="search-scope search-status">
 <kbd class="kbd" aria-hidden="true">/</kbd>
 </div>
+<p class="search__scope" id="search-scope">{esc(scope)}</p>
 <p id="search-status" class="search__status" aria-live="polite"></p>
 <div id="search-results" class="results" hidden></div>
 </form>
+</div>
+{specimen_html(spec)}
+</section>
+{sections_html(entries)}
 <p class="caveat">The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI. The authors and other mathematicians have not reviewed them.</p>
-</section>
-<section class="papers" aria-labelledby="papers-title">
-<h2 id="papers-title">The papers</h2>
-<ol class="paper-list">
-{items}
-</ol>
-</section>
 </main>
 <footer class="foot">
 <p>Hosted by <a href="https://wcook04.github.io/">Will Cook</a>. Each paper is its authors’ work and is credited in full on its own page. The reader is <a href="https://github.com/wcook04/lean-exposition">lean-exposition</a>, under the MIT licence.</p>
@@ -402,6 +524,32 @@ def write_assets(out: Path) -> str:
     return hashlib.sha256((css + js).encode()).hexdigest()[:10]
 
 
+EDITORIAL = ("tier", "kind", "provenance", "provenance_label", "credits", "versions", "where")
+
+
+def specimen(out: Path, inst: dict, want: dict) -> dict | None:
+    """The first screen's example: one linked phrase of a published paper (its words as plain text), the
+    Lean declarations its record names with their plain titles, and the first one's AI comparison."""
+    paper = inst["id"]
+    root = out / paper / "edition"
+    index = edition_files(out, paper)
+    slot = want.get("slot", "short")
+    doc = index.get("documents", {}).get(slot)
+    ties_path = root / "ties" / f"{slot}.json"
+    core_path = root / "alignment" / "core.json"
+    if not doc or not ties_path.is_file() or not core_path.is_file():
+        return None
+    tie = next((t for t in json.loads(ties_path.read_text()).get("ties", []) if t.get("phrase") == want["phrase"]), None)
+    at = re.match(r"b(\d+)-(\d+)$", (tie or {}).get("at", ""))
+    if not tie or not at:
+        return None
+    text = plain_tex((root / doc).read_bytes()[int(at[1]):int(at[2])].decode("utf8", "replace"))
+    record = json.loads(core_path.read_text()).get("records", {}).get(tie.get("record", ""), {})
+    lean = record.get("lean") or [{"name": tie["name"], "plain": tie.get("plain", ""), "relation": tie.get("relation", "")}]
+    return {"text": text, "href": f"{BASE}{paper}/@{want['phrase']}", "lean": lean, "short": record.get("short", ""),
+            "paper_title": inst["title"], "paper_name": want.get("name", "the paper")}
+
+
 def main() -> None:
     out = Path(sys.argv[1])
     only = set(sys.argv[2:])
@@ -418,7 +566,10 @@ def main() -> None:
             continue
         instances[inst["id"]] = inst
         mounts.append(inst["id"])
-    listing = json.loads((ASSETS / "papers.json").read_text())["papers"]
+    listing_doc = json.loads((ASSETS / "papers.json").read_text())
+    listing = listing_doc["papers"]
+    listing_spec = listing_doc.get("specimen") or {}
+    spec = None
     # A standalone artifact keeps its source and build outside this repository.
     # It participates in the shelf when its verified export is already present.
     for item in listing:
@@ -469,6 +620,10 @@ def main() -> None:
                 "sentence": item.get("sentence", ""), "credit": inst.get("companion_credit", ""),
                 "counts": counts, "pages": pages, "comparator": item.get("comparator") or comparator_line(paper),
             }
+            # The index's own editorial fields: section, labels, credits by role and the versions offered.
+            entry.update({k: item[k] for k in EDITORIAL if k in item})
+            if listing_spec.get("paper") == paper and search:
+                spec = specimen(out, inst, listing_spec)
             if search:
                 (out / "_index" / "search" / f"{paper}.json").write_text(json.dumps(search, ensure_ascii=False, separators=(",", ":")))
                 shards[paper] = f"{BASE}_index/search/{paper}.json"
@@ -482,12 +637,13 @@ def main() -> None:
     asset_hash = write_assets(out)
     copy_fonts(out, list(instances))
     meta = {"papers": titles}
-    (out / "index.html").write_text(page_html(entries, meta, False, asset_hash))
+    (out / "index.html").write_text(page_html(entries, meta, False, asset_hash, spec))
 
-    catalog = {"schema": "library-catalog/2", "papers": [
+    catalog = {"schema": "library-catalog/3", "papers": [
         {"id": e["id"], "title": e["title"], "authors": e["authors"], "href": e["href"], "here": not outbound(e["href"]),
          "sentence": e.get("sentence", ""), "counts": e.get("counts") or {}, "comparator": e.get("comparator"),
-         "pages": e.get("pages", []), "search": shards.get(e["id"])}
+         "pages": e.get("pages", []), "search": shards.get(e["id"]),
+         **{k: e[k] for k in EDITORIAL if k in e and k != "where"}}
         for e in entries]}
     (out / "catalog.json").write_text(json.dumps(catalog, indent=1, ensure_ascii=False) + "\n")
 
@@ -502,7 +658,7 @@ def main() -> None:
             "fetch('/library/'+m[1]+'/404.html').then(function(r){return r.ok?r.text():null}).then(function(t){"
             "if(!t){document.documentElement.style.visibility='';return}document.open();document.write(t);document.close();})"
             ".catch(function(){document.documentElement.style.visibility=''});})();</script>")
-    missing = page_html(entries, meta, True, asset_hash).replace('<meta name="author"', '<meta name="robots" content="noindex">\n<meta name="author"')
+    missing = page_html(entries, meta, True, asset_hash, spec).replace('<meta name="author"', '<meta name="robots" content="noindex">\n<meta name="author"')
     (out / "404.html").write_text(missing.replace("</head>", boot + "\n</head>"))
     (out / ".nojekyll").write_text("")
     print(f"library index: {len(entries)} paper(s), {len(shards)} read here")

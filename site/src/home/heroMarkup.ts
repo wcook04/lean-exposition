@@ -6,6 +6,7 @@
 
 import type { SiteFilm } from "../app/siteFilms.ts";
 import family from "../app/family.json";
+import { LIBRARY_HOME, LIBRARY_NAME } from "../app/libraryHome.ts";
 import { paperMarkHtml } from "../app/paperMarks.ts";
 
 export const escapeHtml = (text: string) => text.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -56,7 +57,9 @@ export function frameHtml(
   const { home, name } = family.owner;
   return `<header class="topbar">
 <a class="skip-link" href="#main">Skip to content</a>
-<a class="topbar__title" href="${base}" translate="no">${mark ? `<span class="topbar__mark" aria-hidden="true">${mark}</span>` : ""}<span class="topbar__title-text">${escapeHtml(siteName)}</span></a>
+<a class="topbar__library" href="${LIBRARY_HOME}" translate="no" aria-label="${LIBRARY_NAME}, all papers">${mark ? `<span class="topbar__mark" aria-hidden="true">${mark}</span>` : ""}<span class="topbar__library-full">${LIBRARY_NAME}</span><span class="topbar__library-short" aria-hidden="true">Library</span></a>
+<span class="topbar__sep" aria-hidden="true">/</span>
+<a class="topbar__title" href="${base}" translate="no"><span class="topbar__title-text">${escapeHtml(siteName)}</span></a>
 <div class="topbar__right">
 <details class="site-menu"><summary class="control control--plain menu-toggle"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Menu</summary>
 <div class="site-menu__panel"><nav aria-label="Main"><p class="site-menu__label" id="static-read">Read</p><ul class="site-menu__list" aria-labelledby="static-read">${accounts.map(([href, title]) => link(href, title)).join("")}</ul><ul class="site-menu__list site-menu__routes">${link("map/", "Map")}${link("compare/", "Compare")}${link("lean/", "Lean index")}</ul></nav></div>

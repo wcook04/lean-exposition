@@ -1,53 +1,312 @@
 {
- "schema": "library-index-papers/1",
- "meaning": "The library index's list of papers, in the order the page shows them. An entry with \"library\": true is a paper built here from instances/<id>/; its title, authors, credit and pages come from its instance.json and its counts from its published edition, so the entry adds only the sentence; one that still carries its current site's fields (href, pages, counts) is shown from them until its library copy is published. Every other entry is a paper still on its current site: its title, authors, sentence and pages are taken from that site's own front matter (proof-reader papers/*/paper.toml and links.json, the lean-exposition examples, quartic-query-lean's README and site), and its counts were read from the files named in counted_from. Credit lines here never name Anthropic; the full credit is on each paper's own page.",
+ "schema": "library-index-papers/2",
+ "meaning": "The library index's list of papers, in the order the page shows them. Order: the significance of the result, with work by other researchers before Will Cook's companion writing, and his own research last. tier places an entry in a section (lead, research, companion, own); kind names what the reader opens; provenance and provenance_label name who produced or supported the result (the colour is secondary to the label); credits give each role separately; versions are the direct choices shown on the entry, the first being the main one. An entry with \"library\": true is built here from instances/<id>/ (or, with \"artifact\": true, exported into the library by its own repository) and is listed only once published; its title, authors and counts come from its instance and edition. Any other entry keeps its current site's fields, read from the files named in counted_from.",
+ "specimen": {
+  "paper": "navier-stokes",
+  "phrase": "s1-headline",
+  "slot": "short",
+  "name": "the Navier–Stokes paper"
+ },
  "papers": [
-  {
-   "id": "euler",
-   "library": true,
-   "sentence": "Constructs smooth periodic initial data for the three-dimensional incompressible Euler equations whose solution blows up in finite time, with the velocity bounded and the vorticity at the origin tending to infinity."
-  },
   {
    "id": "navier-stokes",
    "library": true,
-   "sentence": "Proves that there are smooth, compactly supported, divergence-free initial data on ℝ³, and smooth divergence-free data on the torus, whose solutions of the unforced three-dimensional Navier–Stokes equations blow up in finite time, with the profile obtained from a numerical certificate the authors will release."
+   "sentence": "Proves that there are smooth, compactly supported, divergence-free initial data on ℝ³, and smooth divergence-free data on the torus, whose solutions of the unforced three-dimensional Navier–Stokes equations blow up in finite time, with the profile obtained from a numerical certificate the authors will release.",
+   "tier": "lead",
+   "kind": "Authors’ paper · Adapted edition",
+   "provenance": "anthropic",
+   "provenance_label": "Supported by Anthropic",
+   "credits": [
+    [
+     "Paper and Lean",
+     "Levent Alpöge and Tristan Buckmaster"
+    ],
+    [
+     "Support",
+     "Their paper thanks Anthropic for supporting the collaboration and says they used Claude models throughout the work."
+    ],
+    [
+     "Adapted edition",
+     "Will Cook, with AI assistance. Every change is marked in the reader."
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Authors’ paper",
+     "href": "/library/navier-stokes/",
+     "note": "their text, linked to the Lean"
+    },
+    {
+     "label": "Adapted edition",
+     "href": "/library/navier-stokes/adapted/",
+     "note": "reading text changed, changes marked"
+    },
+    {
+     "label": "Original PDF",
+     "href": "/library/navier-stokes/pdf/paper.pdf"
+    }
+   ]
   },
   {
-   "id": "erdos-257",
+   "id": "euler",
    "library": true,
-   "sentence": "Proves that the sum of 1/(2ᵃ − 1) over an infinite set A is irrational when A satisfies a weighted summability condition, has a summable divisor cover, or lies in a union of one set of each kind, at every integer base b ≥ 2; Erdős’s question for every infinite A stays open.",
-   "comparator": "Comparator accepted all 51 statements replayed on GitHub Actions."
+   "sentence": "Constructs smooth periodic initial data for the three-dimensional incompressible Euler equations whose solution blows up in finite time, with the velocity bounded and the vorticity at the origin tending to infinity.",
+   "tier": "lead",
+   "kind": "Authors’ paper · Adapted edition",
+   "provenance": "anthropic",
+   "provenance_label": "Supported by Anthropic",
+   "credits": [
+    [
+     "Paper and Lean",
+     "Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu"
+    ],
+    [
+     "Support",
+     "Their paper thanks Anthropic for supporting the collaboration."
+    ],
+    [
+     "Adapted edition",
+     "Will Cook, with AI assistance. Changes are marked, and the estimates it adds are disclosed separately."
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Authors’ paper",
+     "href": "/library/euler/",
+     "note": "their text, linked to the Lean"
+    },
+    {
+     "label": "Adapted edition",
+     "href": "/library/euler/adapted/",
+     "note": "reading text changed, changes marked"
+    },
+    {
+     "label": "Original PDF",
+     "href": "/library/euler/pdf/paper.pdf"
+    }
+   ]
+  },
+  {
+   "id": "riemann-hypothesis",
+   "library": true,
+   "artifact": true,
+   "sentence": "An account of the argument in the Lean community’s Riemann Hypothesis project, with its passages linked to that Lean.",
+   "tier": "research",
+   "kind": "Community account · Community Lean",
+   "provenance": "community",
+   "provenance_label": "Community work",
+   "credits": [
+    [
+     "Account",
+     "Qui Vincit and Fable"
+    ],
+    [
+     "Lean",
+     "The Lean community’s riemann-hypothesis project"
+    ],
+    [
+     "Links and notes",
+     "Made with AI and not reviewed by the account’s authors"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Community account",
+     "href": "/library/riemann-hypothesis/",
+     "note": "linked to the Lean"
+    }
+   ]
+  },
+  {
+   "id": "talagrand-parisi",
+   "library": true,
+   "artifact": true,
+   "sentence": "Talagrand proves Parisi’s variational formula for the limiting free energy of a class of mean-field spin glass models. The linked Lean proof treats the Sherrington–Kirkpatrick case with exact quadratic covariance.",
+   "tier": "research",
+   "kind": "Authors’ paper · Independent Lean",
+   "provenance": "academic",
+   "provenance_label": "Academic",
+   "credits": [
+    [
+     "Paper",
+     "Michel Talagrand, Annals of Mathematics 163 (2006)"
+    ],
+    [
+     "Lean",
+     "Qiang Wu’s ParisiFormula project, for the Sherrington–Kirkpatrick case"
+    ],
+    [
+     "Notes and supplementary Lean",
+     "This reader, with AI assistance"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Authors’ paper",
+     "href": "/library/talagrand-parisi/",
+     "note": "linked to Wu’s Lean"
+    },
+    {
+     "label": "Original PDF",
+     "href": "/library/talagrand-parisi/pdf/paper.pdf"
+    }
+   ]
   },
   {
    "id": "quantum-programs",
    "library": true,
    "artifact": true,
    "sentence": "Links the paper’s account of five quantum algorithms to the Lean statements for their correctness, error and resource bounds.",
-   "comparator": "The authors report Comparator acceptance for all six challenges. The reader independently replayed the fixed-point arcsin and Grover Find-Any challenges."
-  },
-  {
-   "id": "talagrand-parisi",
-   "library": true,
-   "artifact": true,
-   "sentence": "Talagrand proves Parisi’s variational formula for the limiting free energy of a class of mean-field spin glass models. The linked Lean proof treats the Sherrington–Kirkpatrick case with exact quadratic covariance."
-  },
-  {
-   "id": "qaoa-sk",
-   "library": true,
-   "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1."
-  },
-  {
-   "id": "quartic",
-   "library": true,
-   "sentence": "For every power below four there is a total Boolean function whose randomized query complexity exceeds that power of its quantum query complexity, and four is the best possible exponent. Three accounts of OpenAI’s proof, each linked phrase by phrase to the Lean, which checks the optimal exponent with no hypothesis.",
-   "pages": [
+   "comparator": "The authors report Comparator acceptance for all six challenges. The reader independently replayed the fixed-point arcsin and Grover Find-Any challenges.",
+   "tier": "research",
+   "kind": "Authors’ paper",
+   "provenance": "google",
+   "provenance_label": "Google DeepMind and Google Quantum AI",
+   "credits": [
+    [
+     "Paper and Lean",
+     "Google DeepMind and Google Quantum AI"
+    ],
+    [
+     "Links, comparisons and notes",
+     "This reader, with AI assistance"
+    ]
+   ],
+   "versions": [
     {
-     "title": "OpenAI’s original paper",
-     "href": "/library/quartic/source/#/read/original"
+     "label": "Authors’ paper",
+     "href": "/library/quantum-programs/",
+     "note": "linked to the Lean"
     },
     {
-     "title": "Verification details",
-     "href": "/library/quartic/source/#/read/verification"
+     "label": "Original PDF",
+     "href": "/library/quantum-programs/pdf/paper.pdf"
+    }
+   ]
+  },
+  {
+   "id": "contextual-embeddings",
+   "library": true,
+   "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution",
+   "authors": [
+    "Samantha Frohlich",
+    "Jessica Foster",
+    "G. A. Kavvos",
+    "Meng Wang"
+   ],
+   "sentence": "Uses instance resolution to define a context-directed isomorphism between a higher-order interface for bound variables and a first-order representation, and proves the round trip in Lean.",
+   "counts": {
+    "phrases": 66,
+    "statements": 5,
+    "lean": 22
+   },
+   "counted_from": "wcook04/proof-reader 6092102, papers/contextual-embeddings/links.json",
+   "where": "On its current site, Proof Reader.",
+   "href": "https://wcook04.github.io/proof-reader/#/contextual-embeddings",
+   "tier": "research",
+   "kind": "Authors’ paper",
+   "provenance": "academic",
+   "provenance_label": "Academic",
+   "credits": [
+    [
+     "Paper and Lean",
+     "Samantha Frohlich, Jessica Foster, G. A. Kavvos and Meng Wang, from their PLDI 2026 artifact (CC BY 4.0)"
+    ],
+    [
+     "Links, titles and notes",
+     "This reader, with AI assistance"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Authors’ paper",
+     "href": "/library/contextual-embeddings/",
+     "note": "linked to the Lean"
+    },
+    {
+     "label": "Original PDF",
+     "href": "https://doi.org/10.1145/3808269"
+    }
+   ]
+  },
+  {
+   "id": "smtlib",
+   "library": true,
+   "title": "The SMT-LIB Standard: Version 2.7",
+   "authors": [
+    "Clark Barrett",
+    "Pascal Fontaine",
+    "Cesare Tinelli"
+   ],
+   "sentence": "The reference standard for SMT-LIB 2.7, read beside BSmtLib, a Lean formalisation of its lexicon, grammar and parser.",
+   "counts": {
+    "phrases": 97,
+    "lean": 94
+   },
+   "counted_from": "wcook04/proof-reader 6092102, papers/smtlib-2-7/links.json",
+   "where": "On its current site, Proof Reader.",
+   "href": "https://wcook04.github.io/proof-reader/#/smtlib-2-7",
+   "tier": "research",
+   "kind": "Standard · Independent Lean",
+   "provenance": "academic",
+   "provenance_label": "Academic",
+   "credits": [
+    [
+     "Standard",
+     "Clark Barrett, Pascal Fontaine and Cesare Tinelli"
+    ],
+    [
+     "Lean (BSmtLib)",
+     "Jan Onderka, Armin Biere and Henrik Böving"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Standard",
+     "href": "/library/smtlib/",
+     "note": "hosted verbatim, linked to BSmtLib"
+    },
+    {
+     "label": "Original PDF",
+     "href": "https://smt-lib.org/papers/smt-lib-reference-v2.7-r2026-09-09.pdf"
+    }
+   ]
+  },
+  {
+   "id": "physlib-gauge-theory",
+   "title": "Gauge theory: Physlib’s API map",
+   "authors": [
+    "The Physlib contributors"
+   ],
+   "sentence": "Physlib’s own map of its gauge theory formalisation, read beside the Lean files it cites.",
+   "credit": "API map and Lean by the Physlib contributors, at be0a9ee.",
+   "where": "On its current site, Proof Reader.",
+   "href": "https://wcook04.github.io/proof-reader/#/physlib-gauge-theory",
+   "counts": {
+    "phrases": 32,
+    "lean": 42
+   },
+   "counted_from": "wcook04/proof-reader 6092102, api-maps/physlib-gauge-theory/phrases.json and index.json",
+   "pages": [],
+   "tier": "research",
+   "kind": "API map",
+   "provenance": "academic",
+   "provenance_label": "Open-source project",
+   "credits": [
+    [
+     "API map and Lean",
+     "The Physlib contributors, at be0a9ee"
+    ],
+    [
+     "Plain titles",
+     "This reader, with AI assistance"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "API map",
+     "href": "https://wcook04.github.io/proof-reader/#/physlib-gauge-theory",
+     "note": "read beside the Lean it cites"
     }
    ]
   },
@@ -55,71 +314,216 @@
    "id": "pcp",
    "library": true,
    "title": "Constant-query verification by algebraic encoding",
-   "authors": ["Will Cook, with AI assistance (explanatory reconstruction)"],
+   "authors": [
+    "Will Cook, with AI assistance (explanatory reconstruction)"
+   ],
    "sentence": "The PCP theorem: every language in NP has a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and soundness error at most one half, by the algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard.",
    "credit": "Original algebraic proof by Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization by Troy Lee.",
    "where": "On its current site, Proof Reader.",
    "href": "https://wcook04.github.io/proof-reader/#/pcp-specialist",
-   "counts": {"phrases": 177, "statements": 23, "lean": 101},
+   "counts": {
+    "phrases": 177,
+    "statements": 23,
+    "lean": 101
+   },
    "comparator": "Comparator accepted the forward theorem, its converse and the equivalence with the reference NP class.",
    "counted_from": "wcook04/proof-reader 6092102, papers/pcp-*/links.json; Comparator from papers/pcp-specialist/paper.toml",
-   "pages": [
-    {"title": "The detailed account", "href": "https://wcook04.github.io/proof-reader/#/pcp-full-argument"},
-    {"title": "Checking a long proof by reading a few bits", "href": "https://wcook04.github.io/proof-reader/#/pcp-exposition"},
-    {"title": "Troy Lee’s reading guide", "href": "https://wcook04.github.io/proof-reader/#/pcp-reading-guide"}
+   "tier": "companion",
+   "kind": "Formalizer’s guide · Companion explanations",
+   "provenance": "academic",
+   "provenance_label": "Academic",
+   "credits": [
+    [
+     "Proof",
+     "Amireddy, Behera, Srinivasan, Sudan and Willumsgaard"
+    ],
+    [
+     "Lean and reading guide",
+     "Troy Lee"
+    ],
+    [
+     "Three companion accounts",
+     "Will Cook, with AI assistance"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Troy Lee’s guide",
+     "href": "/library/pcp/reading-guide/",
+     "note": "the formalizer’s own guide to his Lean"
+    },
+    {
+     "label": "Short account",
+     "href": "/library/pcp/"
+    },
+    {
+     "label": "Detailed account",
+     "href": "/library/pcp/full-argument/"
+    },
+    {
+     "label": "Exposition",
+     "href": "/library/pcp/exposition/"
+    }
    ]
   },
   {
-   "id": "contextual-embeddings",
+   "id": "quartic",
    "library": true,
-   "title": "Contextual Embeddings: Implementing Bound Variables Through Instance Resolution",
-   "authors": ["Samantha Frohlich", "Jessica Foster", "G. A. Kavvos", "Meng Wang"],
-   "sentence": "Uses instance resolution to define a context-directed isomorphism between a higher-order interface for bound variables and a first-order representation, and proves the round trip in Lean.",
-   "credit": "Paper and Lean by the authors, from their PLDI 2026 artifact, under CC BY 4.0.",
-   "where": "On its current site, Proof Reader.",
-   "href": "https://wcook04.github.io/proof-reader/#/contextual-embeddings",
-   "counts": {"phrases": 66, "statements": 5, "lean": 22},
-   "counted_from": "wcook04/proof-reader 6092102, papers/contextual-embeddings/links.json",
-   "pages": []
+   "sentence": "For every power below four there is a total Boolean function whose randomized query complexity exceeds that power of its quantum query complexity, and four is the best possible exponent. Three accounts of OpenAI’s proof, each linked phrase by phrase to the Lean, which checks the optimal exponent with no hypothesis.",
+   "tier": "companion",
+   "kind": "Original paper · Companion reconstruction · New Lean",
+   "provenance": "openai",
+   "provenance_label": "OpenAI",
+   "credits": [
+    [
+     "Theorem and proof",
+     "OpenAI"
+    ],
+    [
+     "Reconstruction, new Lean and three accounts",
+     "AI systems under Will Cook’s direction"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "OpenAI’s paper",
+     "href": "/library/quartic/source/#/read/original",
+     "note": "the original"
+    },
+    {
+     "label": "Short account",
+     "href": "/library/quartic/"
+    },
+    {
+     "label": "Full reconstruction",
+     "href": "/library/quartic/reconstruction/"
+    },
+    {
+     "label": "Exposition",
+     "href": "/library/quartic/exposition/"
+    }
+   ]
   },
   {
-   "id": "smtlib",
+   "id": "qaoa-sk",
    "library": true,
-   "title": "The SMT-LIB Standard: Version 2.7",
-   "authors": ["Clark Barrett", "Pascal Fontaine", "Cesare Tinelli"],
-   "sentence": "The reference standard for SMT-LIB 2.7, read beside BSmtLib, a Lean formalisation of its lexicon, grammar and parser.",
-   "credit": "BSmtLib by Jan Onderka, Armin Biere and Henrik Böving.",
-   "where": "On its current site, Proof Reader.",
-   "href": "https://wcook04.github.io/proof-reader/#/smtlib-2-7",
-   "counts": {"phrases": 97, "lean": 94},
-   "counted_from": "wcook04/proof-reader 6092102, papers/smtlib-2-7/links.json",
-   "pages": []
+   "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1.",
+   "tier": "companion",
+   "kind": "Companion papers on an existing Lean proof",
+   "provenance": "openai",
+   "provenance_label": "OpenAI",
+   "credits": [
+    [
+     "Proof and Lean",
+     "OpenAI"
+    ],
+    [
+     "Earlier full-support result",
+     "Hong-Bin Chen"
+    ],
+    [
+     "Three papers",
+     "Will Cook, with AI assistance"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "/library/qaoa-sk/"
+    },
+    {
+     "label": "Long record",
+     "href": "/library/qaoa-sk/record/"
+    },
+    {
+     "label": "Exposition",
+     "href": "/library/qaoa-sk/exposition/"
+    }
+   ]
   },
   {
    "id": "coupled-spring",
    "library": true,
    "title": "The minimum of the coupled spring potential",
-   "authors": ["Bjørn Kjos-Hanssen (the Lean)", "AI agents under Will Cook’s direction (the page)"],
+   "authors": [
+    "Bjørn Kjos-Hanssen (the Lean)",
+    "AI agents under Will Cook’s direction (the page)"
+   ],
    "sentence": "The coupled spring potential U(x₀, x₁) = x₀² + x₀x₁ + x₁² has a local minimum at the origin, proved in PhyslibAlpha by a general second-derivative test.",
    "credit": "Lean formalization by Bjørn Kjos-Hanssen, PhyslibAlpha in Physlib at be0a9ee.",
    "where": "On its current site, Proof Reader.",
    "href": "https://wcook04.github.io/proof-reader/#/coupled-spring",
-   "counts": {"phrases": 22, "statements": 13, "lean": 16},
+   "counts": {
+    "phrases": 22,
+    "statements": 13,
+    "lean": 16
+   },
    "comparator": "Comparator accepted the local-minimum theorem and rejected a control that asked for a local maximum.",
    "counted_from": "wcook04/proof-reader 6092102, papers/coupled-spring/links.json and README.md",
-   "pages": []
+   "pages": [],
+   "tier": "companion",
+   "kind": "Explanation of an existing Lean result",
+   "provenance": "academic",
+   "provenance_label": "Academic",
+   "credits": [
+    [
+     "Lean",
+     "Bjørn Kjos-Hanssen, in PhyslibAlpha (Physlib at be0a9ee)"
+    ],
+    [
+     "Explanation",
+     "AI agents under Will Cook’s direction"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Explanation",
+     "href": "/library/coupled-spring/",
+     "note": "linked to the Lean"
+    }
+   ]
   },
   {
-   "id": "physlib-gauge-theory",
-   "title": "Gauge theory: Physlib’s API map",
-   "authors": ["The Physlib contributors"],
-   "sentence": "Physlib’s own map of its gauge theory formalisation, read beside the Lean files it cites.",
-   "credit": "API map and Lean by the Physlib contributors, at be0a9ee.",
-   "where": "On its current site, Proof Reader.",
-   "href": "https://wcook04.github.io/proof-reader/#/physlib-gauge-theory",
-   "counts": {"phrases": 32, "lean": 42},
-   "counted_from": "wcook04/proof-reader 6092102, api-maps/physlib-gauge-theory/phrases.json and index.json",
-   "pages": []
+   "id": "erdos-257",
+   "library": true,
+   "sentence": "Proves that the sum of 1/(2ᵃ − 1) over an infinite set A is irrational when A satisfies a weighted summability condition, has a summable divisor cover, or lies in a union of one set of each kind, at every integer base b ≥ 2; Erdős’s question for every infinite A stays open.",
+   "comparator": "Comparator accepted all 51 statements replayed on GitHub Actions.",
+   "tier": "own",
+   "kind": "Original research",
+   "provenance": "will",
+   "provenance_label": "Will Cook",
+   "credits": [
+    [
+     "Paper, record, exposition and Lean",
+     "Will Cook, with AI assistance"
+    ],
+    [
+     "Question",
+     "Paul Erdős"
+    ],
+    [
+     "Review",
+     "No independent mathematician has reviewed the papers"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "/library/erdos-257/"
+    },
+    {
+     "label": "Long record",
+     "href": "/library/erdos-257/record/"
+    },
+    {
+     "label": "Exposition",
+     "href": "/library/erdos-257/exposition/"
+    },
+    {
+     "label": "PDF",
+     "href": "/library/erdos-257/pdf/short-paper.pdf"
+    }
+   ]
   }
  ]
 }
