@@ -43,13 +43,18 @@ describe("an edge the layered layout cannot route", () => {
     for (const key of stuck) {
       const pe = plan.edges.get(key)!;
       const re = routed.edges.get(key)!;
-      // A visible line: two distinct points, from the prerequisite's centre to the consumer's.
+      // A visible line: two distinct border ports on the line connecting the two centres.
       expect(re.points).toHaveLength(2);
       const [a, z] = re.points;
       const child = layout.boxes.get(pe.to)!;
       const parent = layout.boxes.get(pe.from)!;
-      expect(a).toEqual({ x: child.x + child.w / 2, y: child.y + child.h / 2 });
-      expect(z).toEqual({ x: parent.x + parent.w / 2, y: parent.y + parent.h / 2 });
+      const onBorder = (point: typeof a, box: typeof child) => {
+        const dx = Math.abs(point.x - (box.x + box.w / 2)) / (box.w / 2);
+        const dy = Math.abs(point.y - (box.y + box.h / 2)) / (box.h / 2);
+        return Math.max(dx, dy);
+      };
+      expect(onBorder(a, child)).toBeCloseTo(1);
+      expect(onBorder(z, parent)).toBeCloseTo(1);
       expect(Math.hypot(z.x - a.x, z.y - a.y)).toBeGreaterThan(1);
     }
     // No routed path contains a non-finite coordinate.

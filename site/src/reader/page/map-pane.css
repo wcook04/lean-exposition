@@ -134,8 +134,32 @@
 
 .map-pane__canvas {
   position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 0;
+}
+
+.map-pane__camera-tools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1px;
+  padding: 2px 12px;
+  border-top: 1px solid var(--rule);
+}
+
+.map-pane__camera-tools button {
+  padding: 5px 10px;
+  border: 0;
+  border-radius: var(--radius-s);
+  color: var(--ink);
+  background: transparent;
+  font: 500 var(--fs-sm)/1.2 var(--sans);
+  cursor: pointer;
+}
+
+.map-pane__camera-tools button:hover {
+  background: var(--sunk);
 }
 
 /* A different main result: the canvas crossfades (out, then the new one in). */
@@ -148,6 +172,8 @@
 }
 
 .map-pane__canvas .tree {
+  flex: 1;
+  min-height: 0;
   transition: opacity var(--t-state) var(--ease-out);
 }
 
