@@ -476,7 +476,15 @@ const typeset = (source: string) => katex.renderToString(source, { throwOnError:
 function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
   const id = "virtual:front-hero";
   const hero = INSTANCE.hero(base, facts, typeset);
-  const frame = frameHtml(base, INSTANCE.siteName);
+  const library = INSTANCE.library;
+  const accounts = library
+    ? (INSTANCE.readMenu ?? INSTANCE.stages ?? [library.main]).map((stage): [string, string] => {
+        const slug = Object.entries(library.pages ?? {}).find(([, slot]) => slot === stage)?.[0];
+        const href = stage === library.main ? "" : slug ? `${slug}/` : `read/${stage}/`;
+        return [href, INSTANCE.readMenuNames?.[stage] ?? INSTANCE.paperNames[stage].short];
+      })
+    : undefined;
+  const frame = frameHtml(base, INSTANCE.siteName, library?.paper ?? INSTANCE.id, accounts);
   const shell = (main: string) => `<div class="app">${frame}<main id="main" class="app__main">${main}</main></div>`;
   return {
     name: "first-screen",

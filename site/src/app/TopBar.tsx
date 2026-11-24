@@ -9,6 +9,8 @@ import { currentScheme, onSchemeChange, setScheme } from "./theme";
 import { EXTERNAL_DOCUMENTS, PAPER_NAMES, STAGE_ORDER } from "./papers";
 import { useMaybeEdition } from "./data";
 import { SITE_NAME } from "./siteName";
+import { FAMILY } from "./family";
+import { paperMarkHtml } from "./paperMarks";
 
 const EDITIONS: Stage[] = (site.readMenu as Stage[] | undefined) ?? STAGE_ORDER;
 const ONLY_EDITIONS = !!site.readMenu;
@@ -41,13 +43,23 @@ const DESTINATIONS = [
 
 export function TopBar({ route, onSearch }: { route: Route; onSearch(): void }) {
   const titleHref = site.library ? routeHref({ view: "read", stage: site.library.main }) : routeHref({ view: "home" });
+  const mark = paperMarkHtml(site.library?.paper ?? site.id);
   return (
     <header className="topbar">
       <a className="skip-link" href="#main">Skip to content</a>
-      <a className="topbar__title" href={titleHref} translate="no">{SITE_NAME}</a>
+      <a className="topbar__title" href={titleHref} translate="no">
+        {mark && <span className="topbar__mark" aria-hidden="true" dangerouslySetInnerHTML={{ __html: mark }} />}
+        <span className="topbar__title-text">{SITE_NAME}</span>
+      </a>
       {route.view !== "read" && <BackControl />}
       {(route.view === "lean" || route.view === "compare") && <div id={BAR_LINE} className="topbar__line" />}
-      <SiteMenu route={route} onSearch={onSearch} />
+      <div className="topbar__right">
+        <SiteMenu route={route} onSearch={onSearch} />
+        <a className="topbar__brand" href={FAMILY.owner.home} rel="author" translate="no">
+          <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="" width={22} height={22} />
+          {FAMILY.owner.name}
+        </a>
+      </div>
     </header>
   );
 }
