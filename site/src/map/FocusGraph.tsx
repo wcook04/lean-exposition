@@ -468,15 +468,22 @@ export function FocusGraph(props: FocusGraphProps) {
   useLayoutEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    // A change of the pane's height alone (the dock under it showing a hovered card's preview, or
-    // the reader dragging the dock) never moves the drawing: refitting under the pointer moved the
-    // card away, ended the preview and repeated. A new width, or a new subject, is laid out afresh.
-    const apply = () => setSize((s) => (s.w === el.clientWidth && (s.h === el.clientHeight || (!embedded && fittedKey.current !== null)) ? s : { w: el.clientWidth, h: el.clientHeight }));
-    const read = apply;
-    apply();
-    const ro = new ResizeObserver(read);
+    // A hover preview in the separate Graph tab can change the dock height. Keep the
+    // hovered card still, but refit on a viewport resize even with the pointer over it.
+    const measurePane = (viewportChanged: boolean) => {
+      const w = el.clientWidth, h = el.clientHeight;
+      const holdHover = !embedded && !viewportChanged && el.matches(":hover");
+      setSize((s) => s.w === w && (s.h === h || holdHover) ? s : { w, h });
+    };
+    const viewportResize = () => measurePane(true);
+    measurePane(true);
+    const ro = new ResizeObserver(() => measurePane(false));
     ro.observe(el);
-    return () => ro.disconnect();
+    window.addEventListener("resize", viewportResize);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", viewportResize);
+    };
   }, [embedded]);
 
   // The lines, measured from the nodes as the browser laid them out.
@@ -563,11 +570,16 @@ export function FocusGraph(props: FocusGraphProps) {
     model.inner.forEach((e, i) => {
       const a = subjectBox.get(e.from), b = subjectBox.get(e.to);
       if (!a || !b) return;
-      const bulge = 14 + (i % 3) * 9;
-      const x = a.x + a.w - 14 - (i % 4) * 12;
-      const d = b.y > a.y + a.h + 30 || b.y < a.y
-        ? `M${x} ${a.y + a.h} C${x + bulge * 3} ${a.y + a.h + 20}, ${x + bulge * 3} ${b.y - 20}, ${x} ${b.y}`
-        : `M${x} ${a.y + a.h} L${x} ${b.y}`;
+      // Neighbouring subjects can connect across their vertical gap. Longer and
+      // backward links use the outer edge so they never pass through another title.
+      const consecutive = model.subj.indexOf(e.to) === model.subj.indexOf(e.from) + 1;
+      const x = (Math.max(a.x, b.x) + Math.min(a.x + a.w, b.x + b.w)) / 2;
+      const endA = a.x + a.w, endB = b.x + b.w;
+      const yA = a.y + a.h / 2, yB = b.y + b.h / 2;
+      const gutter = Math.max(endA, endB) + 13 + (i % 3) * 3;
+      const d = consecutive
+        ? `M${x} ${a.y + a.h} V${b.y}`
+        : `M${endA} ${yA} C${gutter} ${yA}, ${gutter} ${yB}, ${endB} ${yB}`;
       segs.push({ d, cls: `fg__wire fg__edge fg__edge--${e.kind ?? "use"} fg__inner`, kind: e.kind ?? "use", edge: `${e.from}>${e.to}`, why: e.kind === "paper" ? e.why : undefined, href: e.kind === "paper" ? e.href : undefined });
     });
     setDrawn({ w: w.offsetWidth, h: w.offsetHeight, segs, paths, cardCount: cards.length });
