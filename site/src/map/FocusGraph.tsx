@@ -356,12 +356,10 @@ export function FocusGraph(props: FocusGraphProps) {
   const key = model.subj.join("|");
   const many = model.subj.length > 1;
   useLayoutEffect(() => { setOpened(new Set()); setTight(0); setHot(null); setListed(null); setLists({}); auto.current = true; }, [key]);
-  // A new size of the pane (never of the drawing) is laid out and fitted afresh while the view is the fitted one.
+  // Reconsider the grouping at the new pane size. The camera follows the drawing that commits.
   useLayoutEffect(() => {
     if (!size.w || !auto.current || openedNow.current) return;
     if (tightNow.current) setTight(0);
-    else fitNow();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size.w, size.h]);
 
   // The widths of the three columns, for the room there is. The height a column may take is the
@@ -612,32 +610,35 @@ export function FocusGraph(props: FocusGraphProps) {
     // Fonts and typeset titles can arrive after the first layout.
     const ro = new ResizeObserver(() => measure());
     ro.observe(w);
-    for (const c of w.querySelectorAll(".fg__card, .fg__grouphead, .fg__side, .fg__subjects")) ro.observe(c);
-    return () => ro.disconnect();
+    for (const c of w.querySelectorAll(".fg__card, .fg__grouphead, .fg__side, .fg__subjects, .fg__sidehead, .fg__sidekinds, .fg__edge-note")) ro.observe(c);
+    const fonts = w.ownerDocument.fonts;
+    fonts?.addEventListener("loadingdone", measure);
+    return () => {
+      ro.disconnect();
+      fonts?.removeEventListener("loadingdone", measure);
+    };
   }, [measure, key, leftItems, rightItems, sideW, subjectW]);
 
-  // A new drawing is fitted while the view is the fitted one; otherwise the camera only keeps some of it in view.
+  // The pane and its new SVG can commit in different frames. Fit the latest
+  // drawing and pane together, after both the HTML and SVG have laid out.
   useLayoutEffect(() => {
-    if (!drawn) return;
-    // A re-measured drawing (a new subject or width, fonts or typeset titles arriving) is fitted
-    // afresh, except under the pointer: there a hover re-measures it while the dock beside it changes
-    // height, and refitting would move the card away and loop. A new subject or width always refits.
-    const fitFor = `${key}|${size.w}`;
-    const held = !embedded && fittedKey.current === fitFor && !!scroller.current?.matches(":hover");
-    if (auto.current && !openedNow.current && !held) {
-      fitNow();
-      fittedKey.current = fitFor;
-      // A new path can still report the previous curve’s bounds until the browser paints.
-      // Fit once more after that paint, provided the reader has not moved the camera.
-      let frame = requestAnimationFrame(() => {
-        frame = requestAnimationFrame(() => {
-          if (auto.current && !openedNow.current) fitNow(true);
-        });
+    if (!drawn || !size.w || !size.h) return;
+    const fitFor = JSON.stringify([key, size.w, size.h, model.left, model.right]);
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        // A dock preview can redraw the separate graph under the pointer.
+        // A new subject, arriving neighbours or a genuine resize still merits a fit.
+        const held = !embedded && fittedKey.current === fitFor && scroller.current?.matches(":hover");
+        if (!auto.current || openedNow.current || held) {
+          applyCam();
+          return;
+        }
+        if (fitNow()) fittedKey.current = fitFor;
       });
-      return () => cancelAnimationFrame(frame);
-    } else applyCam();
+    });
+    return () => cancelAnimationFrame(frame);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drawn]);
+  }, [drawn, key, size.w, size.h, embedded, model.left, model.right]);
 
   // Drag to pan, two fingers to pinch. A drag that starts on a card and moves is a pan, not a click.
   const drag = useRef<{ x: number; y: number; cx: number; cy: number; far: boolean } | null>(null);
