@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 from urllib.parse import parse_qs, urljoin, urlsplit
 
-from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import Locator, Page, sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from graph_pane_checks import check_graph_pane, check_groups, painted_fit  # noqa: E402
@@ -56,6 +56,53 @@ def click_phrase(page: Page, nth: int) -> bool:
     return True
 
 
+GRAPH_SETTLED = """async graph => {
+  await document.fonts.ready;
+  let previous = '';
+  let since = performance.now();
+  const deadline = since + 6000;
+  while (performance.now() < deadline) {
+    await new Promise(requestAnimationFrame);
+    const world = graph.querySelector('.fg__world');
+    const viewport = graph.querySelector('.fg__scroll');
+    const bounds = viewport.getBoundingClientRect();
+    const signature = JSON.stringify([
+      bounds.left, bounds.top, bounds.width, bounds.height, world.style.transform,
+      ...[...world.querySelectorAll('.fg__wire')].map(wire => wire.getAttribute('d')),
+    ]);
+    if (signature !== previous) {
+      previous = signature;
+      since = performance.now();
+    } else if (performance.now() - since >= 250) {
+      return true;
+    }
+  }
+  return false;
+}"""
+
+
+def measure_painted(
+    graph: Locator, label: str, bad: list[str], *, should_fit: bool = True,
+) -> dict:
+    graph.wait_for(timeout=15000)
+    graph.locator(".fg__lines .fg__wire").first.wait_for(state="attached", timeout=15000)
+    settled = graph.evaluate(GRAPH_SETTLED)
+    result, shape = painted_fit(graph)
+    if not settled:
+        bad.append(f"{label}: the painted graph did not settle: {shape}")
+    if shape.get("detached"):
+        bad.append(f"{label}: wires detached from their card borders: {shape['detached']}")
+    if result != should_fit:
+        bad.append(f"{label}: fitted={result}, expected {should_fit}, {shape}")
+    elif should_fit and shape["scale"] > 1.151:
+        bad.append(f"{label}: fitted past the 1.15 scale limit: {shape}")
+    else:
+        print(f"ok  {label}: {shape}", flush=True)
+    if graph.locator(".fg__mini").count():
+        bad.append(f"{label}: the reader graph has a miniature overview")
+    return shape
+
+
 def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
     """Check a real local graph in desktop and landscape viewports and after a manual fit."""
     bad = []
@@ -63,25 +110,7 @@ def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(url, wait_until="domcontentloaded")
     graph = page.locator(".map-pane__local .fg:visible").last
-
-    def measure(label: str, *, should_fit: bool = True) -> dict:
-        graph.wait_for(timeout=15000)
-        graph.locator(".fg__lines .fg__wire").first.wait_for(state="attached", timeout=15000)
-        settle(page)
-        result, shape = painted_fit(graph)
-        if shape.get("detached"):
-            bad.append(f"{label}: wires detached from their card borders: {shape['detached']}")
-        if result != should_fit:
-            bad.append(f"{label}: fitted={result}, expected {should_fit}, {shape}")
-        elif should_fit and shape["scale"] > 1.151:
-            bad.append(f"{label}: fitted past the 1.15 scale limit: {shape}")
-        else:
-            print(f"ok  {label}: {shape}", flush=True)
-        if page.locator(".fg__mini").count():
-            bad.append(f"{label}: the reader graph has a miniature overview")
-        return shape
-
-    initial = measure("painted fit at 1440×900")
+    initial = measure_painted(graph, "painted fit on cold load at 1440×900", bad)
     if one_sided_cap and (sorted(initial.get("sides", []))[:1] != [0] or sum(initial.get("sides", [])) < 2):
         bad.append(f"painted fit needs at least two neighbours on one side only: {initial}")
     if len(initial.get("subjects", [])) != 1:
@@ -91,22 +120,22 @@ def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
     if one_sided_cap and abs(initial.get("scale", 0) - 1.15) > 0.002:
         bad.append(f"the wide fixture must reach the 1.15 scale limit: {initial}")
     page.set_viewport_size({"width": 1180, "height": 760})
-    desktop = measure("painted fit after resizing the desktop pane to 1180×760")
+    desktop = measure_painted(graph, "painted fit after resizing the desktop pane to 1180×760", bad)
     if initial.get("view") == desktop.get("view") or initial.get("subjects") != desktop.get("subjects"):
         bad.append(f"desktop resize must change the viewport while keeping the subject: {initial} → {desktop}")
     page.set_viewport_size({"width": 844, "height": 390})
-    resized = measure("painted fit after resizing to 844×390")
+    resized = measure_painted(graph, "painted fit after resizing to 844×390", bad)
     if initial.get("view") == resized.get("view") or initial.get("subjects") != resized.get("subjects"):
         bad.append(f"resize must change the viewport while keeping the subject: {initial} → {resized}")
     canvas = graph.locator(".fg__scroll")
     graph.get_by_role("button", name="Zoom in", exact=True).click()
     for _ in range(3):
         canvas.press("ArrowRight")
-    disturbed = measure("zoom and manual pan move the drawing out of fit", should_fit=False)
+    disturbed = measure_painted(graph, "zoom and manual pan move the drawing out of fit", bad, should_fit=False)
     if not disturbed.get("outside"):
         bad.append(f"zoomed graph never overflowed its viewport: {disturbed}")
     graph.get_by_role("button", name="Fit", exact=True).click()
-    restored = measure("manual Fit reframes the painted graph")
+    restored = measure_painted(graph, "manual Fit reframes the painted graph", bad)
     if resized.get("subjects") != restored.get("subjects") or resized.get("sides") != restored.get("sides"):
         bad.append(f"Fit changed the graph's subject or neighbours: {resized} → {restored}")
     page.set_viewport_size({"width": 1440, "height": 900})
@@ -116,10 +145,9 @@ def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
     separate.locator(".fg__lines .fg__wire").first.wait_for(state="attached", timeout=15000)
     for _ in range(4):
         separate.get_by_role("button", name="Zoom in", exact=True).click()
-    settle(page)
-    _, zoomed = painted_fit(separate)
+    _, zoomed = painted_fit(separate) if separate.evaluate(GRAPH_SETTLED) else (False, {})
     if not zoomed.get("outside"):
-        bad.append(f"separate Graph tab never overflowed after zooming: {zoomed}")
+        bad.append(f"separate Graph tab never settled into an overflowing view after zooming: {zoomed}")
     if zoomed.get("detached"):
         bad.append(f"separate Graph tab has detached wires after zooming: {zoomed['detached']}")
     if page.locator(".fg__mini").count():
@@ -156,9 +184,17 @@ def main() -> int:
     with sync_playwright() as p:
         browser = p.chromium.launch()
         if args.painted_fit:
+            url = urljoin(base + "/", args.painted_fit)
+            cold = browser.new_page(viewport={"width": 1180, "height": 760})
+            try:
+                cold.goto(url, wait_until="domcontentloaded")
+                graph = cold.locator(".map-pane__local .fg:visible").last
+                measure_painted(graph, "painted fit on independent cold load at 1180×760", failures)
+            finally:
+                cold.close()
             page = browser.new_page(viewport={"width": 1440, "height": 900})
             try:
-                failures += check_painted_fit(page, urljoin(base + "/", args.painted_fit), args.one_sided_cap)
+                failures += check_painted_fit(page, url, args.one_sided_cap)
             finally:
                 page.close()
         for width, height in (() if args.painted_fit else SIZES):
