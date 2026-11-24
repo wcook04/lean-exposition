@@ -616,9 +616,6 @@ mark {
   .shelf__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .shelf--own .shelf__list > :first-child {
-    grid-column: 1 / -1;
-  }
 }
 
 .shelf--own:last-of-type {
