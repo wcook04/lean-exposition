@@ -327,7 +327,7 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
         "credit_lines": [f'The paper by {" and ".join(paper["authors"])} is shared under {paper["license"]}.'],
         "host": ("Independent reader by Will Cook, candidate edition." if public else
                  "Hosted by Will Cook in his reading library."),
-        "review": "Select a highlighted passage to see the corresponding Lean and what the passage does in the argument. AI-assisted comparisons describe how the paper and Lean statements line up. What ran links to the recorded archive checks.",
+        "review": "Select a highlighted passage to see the corresponding Lean and what the passage does in the argument. AI-assisted comparisons describe how the paper and Lean statements line up.",
         "goal": GOAL, "main_lean": reader["root"],
         "levels": ["short"], "level_names": {"short": "Paper"},
         "families": assets["topics.json"]["families"], "topics": assets["topics.json"]["topics"],
