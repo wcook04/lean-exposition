@@ -520,6 +520,11 @@
   color: var(--ink);
 }
 
+.phrase-key li[data-current] {
+  background-color: color-mix(in oklab, var(--tone) 14%, transparent);
+  border-radius: var(--radius-s);
+}
+
 .phrase-key li .phrase-key__swatch {
   transform: translateY(-1px);
 }

@@ -197,7 +197,7 @@ describe("the subject band", async () => {
     const side = (name: string) => [...container.querySelectorAll<HTMLButtonElement>(".mode-switch__side")].find((b) => b.textContent === name)!;
     for (const state of ["following", "preview"] as const) {
       act(() => root.render(<SubjectBand state={state} place="§5.6" onResume={onResume} onManual={onManual} />));
-      expect(side("Auto").getAttribute("aria-pressed")).toBe("true");
+      expect(side("Auto select").getAttribute("aria-pressed")).toBe("true");
       expect(side("Manual").getAttribute("aria-pressed")).toBe("false");
     }
     act(() => side("Manual").click());
@@ -206,9 +206,9 @@ describe("the subject band", async () => {
     expect(side("Manual").disabled).toBe(true);
     act(() => root.render(<SubjectBand state="words" place="§5.6" onResume={onResume} />));
     expect(side("Manual").getAttribute("aria-pressed")).toBe("true");
-    expect(side("Auto").title).toBe("Auto: the pane follows the passage you are reading");
+    expect(side("Auto select").title).toBe("Auto select: the pane follows the passage you are reading");
     expect(side("Manual").title).toBe("Manual: the pane stays on what you selected");
-    act(() => side("Auto").click());
+    act(() => side("Auto select").click());
     expect(onResume).toHaveBeenCalledTimes(1);
   });
 

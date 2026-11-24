@@ -31,11 +31,6 @@
   content: none;
 }
 
-/* The strip keeps the height it has with a Back in it: the first open must not move the paper. */
-.reader .reader-strip {
-  min-height: 45px;
-}
-
 /* ---- Where a jump lands ------------------------------------------------------------ */
 
 .reader .paper.prose [data-landed] {
