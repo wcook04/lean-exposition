@@ -85,8 +85,10 @@ export interface LeanBlockProps {
   onName?(walk: LeanWalk): void;
   /** Fill the host's height: the head and the reading line stay, and the code scrolls between them. */
   fill?: boolean;
-  /** Where the reading line goes, in place of the block's own foot. */
-  previewSlot?: HTMLElement | null;
+  /** Where the name preview is shown, or false to hide it. */
+  previewSlot?: HTMLElement | null | false;
+  /** Keep the declaration’s source and related links in a single disclosure. */
+  foldSources?: boolean;
   /** Leave "In the papers" to the host. */
   noPapers?: boolean;
   /** Leave the name and its actions to the host. */
@@ -215,7 +217,7 @@ export function useStatementTargets(decl: LeanDeclaration, module: LeanModule, s
   return useMemo(() => [...code.targets, ...where.flatMap((body) => body.code.targets)], [code, where]);
 }
 
-export function Terms({ targets, onWalk }: { targets: NameTarget[]; onWalk?(row: DeclRow): void }) {
+export function Terms({ targets, onWalk, preview = true }: { targets: NameTarget[]; onWalk?(row: DeclRow): void; preview?: boolean }) {
   const terms = useMemo(() => {
     const seen = new Set<string>();
     const rows: Extract<NameTarget, { kind: "decl" }>[] = [];
@@ -230,7 +232,7 @@ export function Terms({ targets, onWalk }: { targets: NameTarget[]; onWalk?(row:
   return (
     <section className="lean-terms" aria-label="Names in this statement">
       <p className="lean-terms__title">
-        Names in this statement <span className="lean-terms__hint"><span className="hint-point">Point at a name to read it.</span><span className="hint-tap">Tap a name to open it.</span></span>
+        Names in this statement {preview && <span className="lean-terms__hint"><span className="hint-point">Point at a name to read it.</span><span className="hint-tap">Tap a name to open it.</span></span>}
       </p>
       <dl className="lean-terms__list">
         {terms.map(({ row, term }) => (
@@ -281,14 +283,18 @@ export function CopyName({ name }: { name: string }) {
 }
 
 /** This file on this site, at this declaration; Back returns from it. GitHub is the quiet second. */
-export function SourceLink({ decl, module, shell }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell }) {
+export function SourceLink({ decl, module, shell, showDeclaration }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell; showDeclaration?: boolean }) {
   const path = shell.paths.get(module.module)?.path ?? module.path;
   const href = leanSourceUrl(shell.modules, path, decl.line, decl.end_line);
   const archive = href === shell.modules.revision;
   return (
     <>
       <a className="lean-action" href={routeHref({ view: "lean", module: module.module, file: `${decl.line}-${decl.end_line}` })}>
-        Whole file
+        {showDeclaration ? (
+          <>
+            <code title={decl.name}><Breakable name={decl.short} /></code> · {decl.line === decl.end_line ? `line ${decl.line}` : `lines ${decl.line}–${decl.end_line}`}
+          </>
+        ) : "Whole file"}
       </a>
       <a className="lean-action lean-action--quiet" href={href} target="_blank" rel="noreferrer" title={`${path}, lines ${decl.line} to ${decl.end_line}${archive ? "" : `, at commit ${shell.modules.revision.slice(0, 7)}`}`}>
         {archive ? "Source archive" : "On GitHub"}
@@ -489,13 +495,15 @@ export interface DeclViewProps {
   pointed?: LeanBlockProps["pointed"];
   onName?(walk: LeanWalk): void;
   fill?: boolean;
-  previewSlot?: HTMLElement | null;
+  previewSlot?: HTMLElement | null | false;
+  /** Keep the declaration’s source and related links in a single disclosure. */
+  foldSources?: boolean;
   noPapers?: boolean;
   noHead?: boolean;
 }
 
-function PassageSources({ children }: { children?: ReactNode }) {
-  const credit = <small className="lean-block__credit">AI-written annotation</small>;
+function SourcesAndDetails({ children, annotated }: { children?: ReactNode; annotated: boolean }) {
+  const credit = annotated && <small className="lean-block__credit">AI-written annotation</small>;
   if (!children) return credit;
   return (
     <details className="lean-block__details">
@@ -505,7 +513,7 @@ function PassageSources({ children }: { children?: ReactNode }) {
   );
 }
 
-export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, fidelity, proofOpen, compact, depth = 0, row, noDependencies, foldDependencies, noTerms, clause, below, passageNote, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
+export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, fidelity, proofOpen, compact, depth = 0, row, noDependencies, foldDependencies, noTerms, clause, below, passageNote, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, foldSources, noPapers, noHead }: DeclViewProps) {
   // Open or folded belongs to the history entry, so Back finds the proof as it was left.
   const [proofChosen, setShowProof] = useEntryState<boolean | null>(`lean-proof:${module.module}:${decl.name}`, null);
   const store = useMemo(readingStore, []);
@@ -541,7 +549,11 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
 
   const allTargets = useMemo(() => [...statement.targets, ...where.flatMap((body) => body.code.targets)], [statement, where]);
 
-  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? store.read({ target, shell }) : store.clear()), [store, shell]);
+  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => {
+    if (previewSlot === false) return;
+    if (target && element) store.read({ target, shell });
+    else store.clear();
+  }, [store, shell, previewSlot]);
 
   const walk = onName ? (next: DeclRow) => onName(walkOf(next, decl.name)) : undefined;
   const plain = shell.plain.get(decl.name);
@@ -564,7 +576,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   const Title = depth > 0 ? "h3" : "h2";
   const path = shell.paths.get(module.module)?.path ?? module.path;
   const foldWord = isDefinition ? "Definition" : "Proof";
-  const showHead = !noHead;
+  const showSources = Boolean(passageNote || foldSources);
   const term = shell.terms.get(decl.name);
 
   const dependencies = !row && !noDependencies && !bare && <Dependencies decl={decl} module={module} shell={shell} onWalk={walk} />;
@@ -612,28 +624,28 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
     <>
       {!bare && !row && <LeanFacts decl={decl} module={module} />}
       {!row && !noPapers && !bare && <PapersLine name={decl.name} shell={shell} />}
-      {!row && !noTerms && !bare && <Terms targets={allTargets} onWalk={walk} />}
+      {!row && !noTerms && !bare && <Terms targets={allTargets} onWalk={walk} preview={previewSlot !== false} />}
       {foldDependencies && dependencies ? (
         <details className="lean-block__dependencies">
           <summary>Declaration dependencies</summary>
           {dependencies}
         </details>
       ) : dependencies}
-      {below}
+      {!showSources && below}
     </>
   );
 
   const sourceActions = !bare && (
     <p className="lean-block__actions">
-      <SourceLink decl={decl} module={module} shell={shell} />
+      <SourceLink decl={decl} module={module} shell={shell} showDeclaration={foldSources} />
       {!row && <CopyName name={decl.name} />}
     </p>
   );
   const body = (
     <>
-      {!passageNote && context}
+      {!showSources && context}
       <CodeView code={statement} moduleName={module.module} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
-      {!passageNote && definitions}
+      {!showSources && definitions}
       {foldLines > 0 && !bare && (
         <button type="button" className="lean-fold" aria-expanded={showProof} onClick={() => setShowProof(!showProof)}>
           {foldWord} <span className="lean-fold__mark" aria-hidden="true" /> <span className="lean-fold__lines">{lineWord(foldLines)}</span>
@@ -644,15 +656,16 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
           <CodeView code={proof} moduleName={module.module} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
         </div>
       )}
-      {passageNote ? (
+      {showSources ? (
         <>
           {passageNote}
-          <PassageSources>
+          <SourcesAndDetails annotated={Boolean(passageNote)}>
             {sourceActions}
+            {below}
             {context}
             {definitions}
             {sourceDetails}
-          </PassageSources>
+          </SourcesAndDetails>
         </>
       ) : sourceDetails}
     </>
@@ -660,7 +673,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
 
   return (
     <article ref={root} className={`lean-block${compact ? " is-compact" : ""}${row ? " is-row" : ""}${fill ? " is-fill" : ""}${bare ? " is-bare" : ""}`}>
-      {showHead && !passageNote && (
+      {!noHead && !showSources && (
         <header className="lean-block__head">
           <div className="lean-block__title">
             <p className="lean-block__kind">{parent ? `Field of ${parent.slice(parent.lastIndexOf(".") + 1)}` : kindWord(decl.kind)}</p>
@@ -699,7 +712,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
       ) : (
         body
       )}
-      {(!row || previewSlot) && <ReadingFoot store={store} slot={previewSlot} />}
+      {previewSlot !== false && (!row || previewSlot) && <ReadingFoot store={store} slot={previewSlot} />}
     </article>
   );
 });
@@ -747,7 +760,7 @@ function useModulesSettled(names: readonly string[]): boolean {
 }
 
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
-export function LeanBlock({ name, module: moduleName, relation, note, fidelity, proofOpen, compact, depth, noDependencies, foldDependencies, noTerms, clause, below, passageNote, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
+export function LeanBlock({ name, module: moduleName, relation, note, fidelity, proofOpen, compact, depth, noDependencies, foldDependencies, noTerms, clause, below, passageNote, bare, lines, quietLines, pointed, onName, fill, previewSlot, foldSources, noPapers, noHead }: LeanBlockProps) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
@@ -761,7 +774,7 @@ export function LeanBlock({ name, module: moduleName, relation, note, fidelity, 
     <>
       <p className="lean-note">{reason}</p>
       {passageNote}
-      {passageNote && <PassageSources>{below}</PassageSources>}
+      {(passageNote || foldSources) && <SourcesAndDetails annotated={Boolean(passageNote)}>{below}</SourcesAndDetails>}
     </>
   );
   if (state.status === "missing") return unavailable("This edition does not include the Lean source.");
@@ -770,5 +783,5 @@ export function LeanBlock({ name, module: moduleName, relation, note, fidelity, 
   if (!shell || loaded.status !== "ready" || (!passageNote && (!extras || !whereReady))) return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return unavailable(<>No declaration named <code>{name}</code> in {loaded.module.module}.</>);
-  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} fidelity={fidelity} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} foldDependencies={foldDependencies} noTerms={noTerms} clause={clause} below={below} passageNote={passageNote} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
+  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} fidelity={fidelity} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} foldDependencies={foldDependencies} noTerms={noTerms} clause={clause} below={below} passageNote={passageNote} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} foldSources={foldSources} noPapers={noPapers} noHead={noHead} />;
 }

@@ -228,6 +228,7 @@
   gap: 0 var(--space-3);
   margin: 0;
 }
+.lean-block__actions code { font: 0.95em var(--font-mono); overflow-wrap: anywhere; }
 .lean-block__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-3); align-items: baseline; }
 .lean-block__head > :not(.lean-block__title, .lean-block__actions) { grid-column: 1 / -1; }
 @container (max-width: 420px) {

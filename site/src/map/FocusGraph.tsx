@@ -889,7 +889,7 @@ export function FocusGraph(props: FocusGraphProps) {
   // and one line under the subject says that the side is empty.
   const renderSide = (side: Side, items: Item[], ids: string[], rels: Map<string, Rel>) => ids.length > 0 && (
     <div className="fg__side" data-band={side} data-total={ids.length} style={{ width: sideW }}>
-      <h4 className="fg__sidehead">{side === "users" ? "Used by" : "Uses"} <span>{ids.length}</span></h4>
+      <h4 className="fg__sidehead">{side === "users" ? "These use the centre" : "The centre uses these"} <span>{ids.length}</span></h4>
       {renderItems(side, items, rels)}
     </div>
   );
@@ -979,7 +979,7 @@ export function FocusGraph(props: FocusGraphProps) {
         ref={scroller}
         tabIndex={0}
         role="group"
-        aria-label="Graph: what uses this step, on the left, and what it uses, on the right. Drag to move, pinch or wheel to zoom; arrow keys move, plus and minus zoom, 0 fits."
+        aria-label="Dependency graph for the highlighted cards. Use the arrow keys to move, plus and minus to zoom, and 0 to fit."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
