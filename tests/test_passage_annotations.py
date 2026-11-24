@@ -115,6 +115,18 @@ class PassageAnnotations(unittest.TestCase):
             apply_annotations(self.instance, self.edition, write=True)
         self.assertNotIn(b"annotation", main.read_bytes())
 
+    def test_original_only_capture_can_have_an_adapted_source(self):
+        self.export()
+        write_json(self.instance / "adapted/edition.json", {"document": {"slot": "adapted"}, "published": True})
+        write_json(self.annotations / "short.json", {
+            "paragraph-1": {"Proof.result": "Result", "Proof.part": "Part"}, "paragraph-2": {"Proof.result": "Reuse"},
+        })
+        write_json(self.annotations / "adapted.json", {"paragraph-1": {"Proof.result": "An adapted note"}})
+        self.assertEqual(apply_annotations(self.instance, self.edition, complete=True), {"short": 3})
+        (self.edition / "docs/adapted").mkdir(parents=True)
+        with self.assertRaisesRegex(FileNotFoundError, "docs/adapted/index.json"):
+            apply_annotations(self.instance, self.edition, complete=True)
+
     def test_refuses_to_overwrite_content_addressed_export(self):
         hashed = self.export(filename=f"{'a' * 64}.json")
         original = hashed.read_bytes()

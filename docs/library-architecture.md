@@ -272,8 +272,9 @@ The first command checks that every exported phrase and Lean declaration pair
 has an authored note. The second applies those notes after validation. The
 script updates only the fixed-path tie JSONs named in the edition indexes and
 preserves the snapshot hashes. Omit `--complete` to check only authored pairs.
-An unpublished adapted draft participates when its preview is present in the
-export.
+An adapted document participates when the capture contains that companion
+edition. The normal build requires its companion index when the adapted edition
+is enabled.
 
 **Workflow `library.yml` in lean-exposition.** It runs on push to main, on PRs (build and test only) and on dispatch.
 

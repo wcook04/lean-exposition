@@ -50,16 +50,20 @@ if grep -q '"kind": "companion"' "$I/instance.json" || [ "$LX_ADAPTED" = 1 ]; th
   "$PY" scripts/build_companion_editions.py "$paper" "$LEAN_TREE" "build/$paper-companion-editions" --jobs "${COMPANION_JOBS:-3}"
   cp -R "build/$paper-companion-editions/docs" site/public/edition/
 fi
+adapted_slot=""
+if [ "$LX_ADAPTED" = 1 ]; then
+  adapted_slot=$("$PY" -c "import json; print(json.load(open('$I/adapted/edition.json'))['document']['slot'])")
+  if [ ! -f "site/public/edition/docs/$adapted_slot/index.json" ]; then
+    echo "$paper/$adapted_slot: missing the adapted edition index" >&2
+    exit 1
+  fi
+fi
 # Notes join to the final ties, including companion exports copied from the cache.
 if [ -d "$I/annotations" ]; then
   "$PY" scripts/apply_passage_annotations.py "$I" site/public/edition --complete --write
 fi
 # Place phrases on the same staged PDF the reader opens (needs poppler's pdftotext).
 rm -rf site/public/pdf-marks
-adapted_slot=""
-if [ "$LX_ADAPTED" = 1 ]; then
-  adapted_slot=$("$PY" -c "import json; print(json.load(open('$I/adapted/edition.json'))['document']['slot'])")
-fi
 for slot in long short expository $adapted_slot; do
   pdf="$I/papers/$slot/paper.pdf"
   if [ "$slot" = "$adapted_slot" ] && [ -f "$I/papers/$slot/reading.pdf" ]; then

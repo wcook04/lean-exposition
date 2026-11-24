@@ -51,7 +51,7 @@ def document_slots(instance, edition):
     if adapted.is_file():
         adapt = json.loads(adapted.read_bytes())
         slot = adapt["document"]["slot"]
-        if adapt.get("published") or (edition / "docs" / slot / "index.json").is_file():
+        if (edition / "docs" / slot).exists():
             slots[slot] = True
         else:
             hidden.add(slot)
