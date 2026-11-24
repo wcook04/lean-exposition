@@ -182,7 +182,6 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
-  const [foot, setFoot] = useState<HTMLElement | null>(null);
   const [full, setFull] = useState(false);
   const [chosen, setChosen] = useState(0);
   const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
@@ -333,6 +332,32 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   const annotation = inLean && phraseAnnotation;
   const relatedPaper = phrase && open.tie !== null && <OurStatements phrase={tie?.phrase} />;
   const passage = inLean && quote && <PaperPassage key={tie?.at} quote={quote} collapsible />;
+  const choices = !open.decl && rows.length > 1 && !full && (
+    <div className="lean-page__choices">
+      <p>{rows.length} linked declarations</p>
+      <ul className="lean-page__rows" aria-label="Lean declarations of this step">
+        {rows.map((item, i) => (
+          <li key={`${item.module}:${item.name}`}>
+            <button
+              type="button"
+              aria-pressed={i === Math.min(chosen, rows.length - 1)}
+              title={phrase ? `${item.name}. Pointing lights every phrase of this paper it states.` : item.name}
+              onClick={() => {
+                setChosen(i);
+                page.current?.querySelector<HTMLElement>(".lean-page__title")?.focus({ preventScroll: true });
+              }}
+              onPointerEnter={phrase ? () => declLight.set(item.name) : undefined}
+              onPointerLeave={phrase ? () => declLight.set(null) : undefined}
+              onFocus={phrase ? () => declLight.set(item.name) : undefined}
+              onBlur={phrase ? () => declLight.set(null) : undefined}
+            >
+              {phrase ? titleOf(item.name) : (item.plain ?? plainName(alignment, item.name))}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
   const leanBlock = name && (
     <LazyLeanBlock
       key={`${row?.module ?? open.declModule ?? ""}:${name}`}
@@ -350,50 +375,29 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       foldDependencies={inLean && phrase}
       onName={onName}
       noPapers
-      previewSlot={foot}
-      below={open.tie !== null && (
+      previewSlot={false}
+      foldSources
+      below={(
         <>
-          {ties.index.ties[open.tie].origin && <OriginLine origin={ties.index.ties[open.tie].origin} />}
-          <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
-          {annotation && (
+          {choices}
+          {open.tie !== null && (
             <>
-              <AnnotationSources explanation={tie?.explanation} />
-              <Conventions keys={cardKeys(tie?.phrase, names)} />
-              {relatedPaper}
-              {crumbs}
-              {passage}
+              {ties.index.ties[open.tie].origin && <OriginLine origin={ties.index.ties[open.tie].origin} />}
+              <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+              {annotation && (
+                <>
+                  <AnnotationSources explanation={tie?.explanation} />
+                  <Conventions keys={cardKeys(tie?.phrase, names)} />
+                  {relatedPaper}
+                  {crumbs}
+                  {passage}
+                </>
+              )}
             </>
           )}
         </>
       )}
     />
-  );
-  const choices = !open.decl && rows.length > 1 && !full && (
-    <ul className="lean-page__rows" aria-label="Lean declarations of this step">
-      {rows.map((item, i) => (
-        <li key={`${item.module}:${item.name}`}>
-          <button
-            type="button"
-            aria-pressed={i === Math.min(chosen, rows.length - 1)}
-            title={phrase ? `${item.name}. Pointing lights every phrase of this paper it states.` : item.name}
-            onClick={(e) => {
-              setChosen(i);
-              const menu = e.currentTarget.closest<HTMLDetailsElement>("details.lean-page__choices");
-              if (menu) {
-                menu.open = false;
-                menu.querySelector("summary")?.focus({ preventScroll: true });
-              }
-            }}
-            onPointerEnter={phrase ? () => declLight.set(item.name) : undefined}
-            onPointerLeave={phrase ? () => declLight.set(null) : undefined}
-            onFocus={phrase ? () => declLight.set(item.name) : undefined}
-            onBlur={phrase ? () => declLight.set(null) : undefined}
-          >
-            {phrase ? titleOf(item.name) : (item.plain ?? plainName(alignment, item.name))}
-          </button>
-        </li>
-      ))}
-    </ul>
   );
   return (
     // Until the alignment names this step's Lean, its title, buttons, list and body would all
@@ -410,15 +414,10 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
             {plain && (
               <h3 className="lean-page__title" tabIndex={-1} dangerouslySetInnerHTML={{ __html: noteHtml(plain).html }} />
             )}
-            {(tie || name || topic) && (
+            {!annotation && (tie || topic) && (
               <p className="lean-page__meta">
-                {tie && !annotation && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
-                {inLean && phrase && row ? (
-                  <a className="lean-page__source" href={routeHref({ view: "lean", module: row.module, file: `${row.line}-${row.end_line}` })} title={`Open ${row.name} in its Lean file`}>
-                    <code className="lean-page__raw">{lastName(row.name)}</code> · {row.line === row.end_line ? `line ${row.line}` : `lines ${row.line}–${row.end_line}`}
-                  </a>
-                ) : name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
-                {topic && !annotation && (
+                {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
+                {topic && (
                   <span className="lean-page__topic" data-tone={topic.tone} title={topic.description || undefined}>
                     <span className="phrase-card__swatch" aria-hidden="true" />
                     {topic.name}
@@ -457,12 +456,6 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       ) : brief && !empty ? null : (
         <div ref={scroller} className="lean-page__scroll" data-keep>
           {!(phrase && row && !full) && !holding && crumbs}
-          {inLean && choices ? (
-            <details className="lean-page__choices" key={tie?.at}>
-              <summary>{rows.length} linked declarations</summary>
-              {choices}
-            </details>
-          ) : choices}
           <div className="lean-page__body">
             {full && record ? (
               <RecordPanel
@@ -525,7 +518,6 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
           </div>
         </div>
       )}
-      {!slot && <div ref={setFoot} className="lean-slot lean-slot--compact lean-page__foot" />}
     </div>
   );
 }

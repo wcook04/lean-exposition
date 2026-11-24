@@ -649,13 +649,12 @@
   border-radius: var(--radius-s);
 }
 
-/* The Lean tab keeps the current declaration and its comparison in view. */
-.lean-page__choices {
-  margin: 0 var(--space-4);
+.lean-page__choices > p {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
 }
 
-.lean-page__source,
-.lean-page__choices > summary,
 .phrase-card__passage > summary,
 .phrase-card__notes > summary,
 .phrase-card__comparisons > summary,
@@ -670,12 +669,12 @@
   cursor: pointer;
 }
 
-:is(.lean-page__source, .lean-page__choices > summary, .phrase-card__passage > summary, .phrase-card__notes > summary, .phrase-card__comparisons > summary, .lean-block__dependencies > summary):hover {
+:is(.phrase-card__passage > summary, .phrase-card__notes > summary, .phrase-card__comparisons > summary, .lean-block__dependencies > summary):hover {
   color: var(--ink);
   text-decoration-color: currentColor;
 }
 
-:is(.lean-page__source, .lean-page__choices > summary, .phrase-card__passage > summary, .phrase-card__notes > summary, .phrase-card__comparisons > summary, .lean-block__dependencies > summary):focus-visible {
+:is(.phrase-card__passage > summary, .phrase-card__notes > summary, .phrase-card__comparisons > summary, .lean-block__dependencies > summary):focus-visible {
   outline: var(--focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-s);
@@ -858,7 +857,7 @@
 }
 
 /* Folds: one quiet row each. The marker says it opens, so the words need no underline at rest. */
-.map-pane :is(.lean-page__choices, .phrase-card__passage, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary {
+.map-pane :is(.phrase-card__passage, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary {
   color: var(--ink-2);
   font: 500 var(--fs-ui)/var(--lh-ui) var(--font-sans);
   text-decoration: none;
@@ -868,12 +867,12 @@
   text-decoration: none;
 }
 
-.map-pane :is(.lean-page__choices, .phrase-card__passage, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary::marker {
+.map-pane :is(.phrase-card__passage, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary::marker {
   color: var(--ink-3);
   font-size: 0.8em;
 }
 
-.map-pane :is(.lean-page__choices, .phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary:hover,
+.map-pane :is(.phrase-card__notes, .phrase-card__comparisons, .phrase-card__legend, .ours__more, .lean-block__dependencies) > summary:hover,
 .map-pane .phrase-card__passage > summary:hover .phrase-card__passage-label {
   color: var(--ink);
   text-decoration: underline;

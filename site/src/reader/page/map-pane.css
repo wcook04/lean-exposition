@@ -437,15 +437,6 @@
 }
 
 /* Shown only while a name is read, where the top bar has no room for it. */
-.lean-page__foot {
-  margin: 0;
-  padding-inline: var(--space-4);
-}
-
-.lean-page__foot:empty {
-  display: none;
-}
-
 .lean-page__plain {
   margin: var(--space-2) 0;
   font-size: var(--fs-ui);

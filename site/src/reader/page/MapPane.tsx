@@ -626,7 +626,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     <div className="map-pane__strip" role="group" aria-label="The graph, folded">
       <span className="map-pane__strip-title">{subjectTitle || (focus?.subjects.length ? `${focus.subjects.length} steps` : "Nothing drawn here")}</span>
       <span className="map-pane__strip-counts">
-        uses {counts.uses}{counts.usesHow && ` (${counts.usesHow})`}, used by {counts.usedBy}{counts.usedByHow && ` (${counts.usedByHow})`}
+        This uses {counts.uses}{counts.usesHow && ` (${counts.usesHow})`} · {counts.usedBy} {counts.usedBy === 1 ? "uses" : "use"} this{counts.usedByHow && ` (${counts.usedByHow})`}
       </span>
       <button type="button" onClick={() => setUnfolded(true)}>
         Show the graph
@@ -721,7 +721,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
                 if (!ids.length) return null;
                 return (
                   <span key={side} className="map-pane__fewside">
-                    <span className="map-pane__fewword">{side === "uses" ? "Uses" : "Used by"}</span>
+                    <span className="map-pane__fewword">{side === "uses" ? "The selection uses" : "These use the selection"}</span>
                     {ids.map((id, i) => (
                       <span key={id}>
                         {i > 0 && ", "}
