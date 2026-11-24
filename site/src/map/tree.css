@@ -733,6 +733,10 @@
   display: block;
 }
 
+.card--root[data-title-only] .card__cmain {
+  display: none;
+}
+
 .card--root .card__ctitle {
   font-family: var(--font-serif);
   font-size: calc(var(--title, 18px) / var(--k));

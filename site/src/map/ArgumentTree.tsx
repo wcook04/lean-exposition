@@ -745,6 +745,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       // A title cut inside the first quarter of its first word (a crowded fill map, or the overview
       // zoomed out past reading size) reads as noise: the tile hides its title,
       // and hovering it shows the card.
+      if (dense && kind === "root") el.toggleAttribute("data-title-only", rect.h * k < 44);
       if (dense && kind !== "root") el.toggleAttribute("data-chip", chipped(label, fit) || rect.w * k < 48 || rect.h * k < 16);
       if (fit.short || label !== el.dataset.full) shortened.current.add(lid);
       else shortened.current.delete(lid);
