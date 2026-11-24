@@ -494,6 +494,17 @@ export interface DeclViewProps {
   noHead?: boolean;
 }
 
+function PassageSources({ children }: { children?: ReactNode }) {
+  const credit = <small className="lean-block__credit">AI-written annotation</small>;
+  if (!children) return credit;
+  return (
+    <details className="lean-block__details">
+      <summary>Sources and details {credit}</summary>
+      {children}
+    </details>
+  );
+}
+
 export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, fidelity, proofOpen, compact, depth = 0, row, noDependencies, foldDependencies, noTerms, clause, below, passageNote, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
   // Open or folded belongs to the history entry, so Back finds the proof as it was left.
   const [proofChosen, setShowProof] = useEntryState<boolean | null>(`lean-proof:${module.module}:${decl.name}`, null);
@@ -636,13 +647,12 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
       {passageNote ? (
         <>
           {passageNote}
-          <details className="lean-block__details">
-            <summary>Sources and details</summary>
+          <PassageSources>
             {sourceActions}
             {context}
             {definitions}
             {sourceDetails}
-          </details>
+          </PassageSources>
         </>
       ) : sourceDetails}
     </>
@@ -751,7 +761,7 @@ export function LeanBlock({ name, module: moduleName, relation, note, fidelity, 
     <>
       <p className="lean-note">{reason}</p>
       {passageNote}
-      {passageNote && below && <details className="lean-block__details"><summary>Sources and details</summary>{below}</details>}
+      {passageNote && <PassageSources>{below}</PassageSources>}
     </>
   );
   if (state.status === "missing") return unavailable("This edition does not include the Lean source.");

@@ -192,7 +192,6 @@ export function BriefPhraseCard({ row, role, merged }: { row: PhraseLean; role?:
 export function PassageAnnotation({ text }: { text: string }) {
   return (
     <section className="phrase-card passage-annotation" aria-label="Passage annotation">
-      <p className="phrase-card__label">Annotation <span>AI-written</span></p>
       <p className="passage-annotation__text" dangerouslySetInnerHTML={{ __html: noteHtml(text).html }} />
     </section>
   );
