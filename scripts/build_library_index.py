@@ -257,11 +257,7 @@ def entry_html(entry: dict) -> str:
     return (f'<li class="paper" id="{esc(entry["id"])}"><div class="paper__main">{title}{by}{sentence}{pages_html}</div>{meta}</li>')
 
 
-LOCKUP = """<span class="fam-lockup">
-<a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="{base}_index/plectis.svg" alt="" width="26" height="26"><span class="fam-lockup__owner" translate="no">Will Cook</span></a>
-<span class="fam-lockup__rule" aria-hidden="true"></span>
-<a class="fam-lockup__site" href="{base}" aria-label="Reading library, front page" aria-current="page"><svg viewBox="0 0 32 32" aria-hidden="true" class="wordmark__mark"><path d="M4 27 L4 5 M4 27 L28 27" fill="none" stroke-width="2" stroke-linecap="round"/><path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" stroke-width="2.6" stroke-linecap="round"/><circle cx="16" cy="14" r="3"/></svg><span class="fam-lockup__name" translate="no">Reading library</span></a>
-</span>"""
+OWNER = """<a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="{base}_index/plectis.svg" alt="" width="26" height="26"><span class="fam-lockup__owner" translate="no">Will Cook</span></a>"""
 
 SCHEME = """<button type="button" class="scheme-toggle" aria-label="Switch to dark colours" data-scheme-toggle>
 <svg class="scheme-toggle__moon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.2 10.1A5.6 5.6 0 0 1 5.9 2.8a5.6 5.6 0 1 0 7.3 7.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
@@ -310,8 +306,8 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 <header class="topbar">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="topbar__inner">
-{LOCKUP.format(base=BASE)}
-<div class="topbar__tools">{SCHEME}</div>
+<a class="fam-lockup__site" href="{BASE}" aria-label="Reading library, front page" aria-current="page"><span class="fam-lockup__name" translate="no">Reading library</span></a>
+<div class="topbar__tools">{SCHEME}{OWNER.format(base=BASE)}</div>
 </div>
 </header>
 <main id="main" tabindex="-1">
