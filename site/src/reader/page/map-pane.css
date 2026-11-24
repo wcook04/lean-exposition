@@ -1001,7 +1001,6 @@ html[data-right-sheet] {
 .subject-band {
   flex: none;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 2px var(--space-4);
   min-height: var(--band-h);
@@ -1020,7 +1019,7 @@ html[data-right-sheet] {
 }
 
 .subject-band__state {
-  flex: 1 1 auto;
+  flex: 1 1 0;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
