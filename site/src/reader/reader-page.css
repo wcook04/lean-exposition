@@ -220,11 +220,12 @@ html.is-reading {
   align-items: center;
   flex-wrap: wrap;
   align-content: center;
-  gap: 4px var(--space-3);
+  gap: 4px var(--space-2);
   min-height: var(--strip-h);
   margin-bottom: var(--space-5);
   /* Reaches over the margin marks, so a passage's rule never shows beside it. */
   margin-inline: calc(-1 * var(--mark-x) - 4px) 0;
+  padding-block: max(0px, calc((var(--strip-h) - 31px) / 2));
   padding-left: calc(var(--mark-x) + 4px);
   background: var(--ground);
   border-bottom: 1px solid var(--rule);
@@ -796,6 +797,28 @@ html.is-reading {
 .sections-toggle[aria-expanded="true"] {
   color: var(--ink);
   border-color: var(--ink-3);
+}
+
+/* Leave room for both editions, the format switch and the passage steps. */
+@media (min-width: 701px) and (max-width: 1359px) {
+  .reader--follow .reader-strip:has(.edition-switch) > .sections-toggle {
+    gap: 0;
+    padding-inline: 6px;
+  }
+
+  .reader--follow .reader-strip:has(.edition-switch) > .sections-toggle span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1199px) {
+  .reader--follow .reader-strip {
+    column-gap: 5px;
+  }
 }
 
 /* A phone has one row of chrome, which goes while reading down. */
@@ -2072,4 +2095,10 @@ html.is-reading {
    (ReaderPage.tsx), so the top of the paper never shows and then jumps. */
 html.landing .paper {
   visibility: hidden;
+}
+
+@media (max-width: 340px) {
+  .reader-strip__formats > .view-toggle button {
+    padding-inline: 6px;
+  }
 }

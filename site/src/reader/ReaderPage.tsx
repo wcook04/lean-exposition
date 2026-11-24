@@ -15,7 +15,7 @@ import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, use
 import type { Alignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
-import { navigate, routeHref, walkEntry, type Route } from "../app/router";
+import { navigate, parseRoute, routeHref, walkEntry, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { hostLean, type LeanWalk } from "../lean/walk";
@@ -1858,6 +1858,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
   const showPdf = (on: boolean) => {
     if (!pdfMarks || on === pdfOn) return;
+    const next = new URL(window.location.href);
     if (on) {
       const position = measurePosition();
       const line = lineInView(paperRef.current, readingTop()) ?? (position ? doc.parts[position.part]?.lines.start : undefined) ?? null;
@@ -1868,7 +1869,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       writeEntry("pdfOrigin", { page, at, textAt: route.at, pdfLocation: pdfLocation ?? undefined, position, line } satisfies PdfOrigin);
       pdfPage.current = page;
       scrolledPdf.current = false;
-      navigate({ ...route, at, pdf: true, page }, { replace: true });
+      // A format change keeps the current history entry, including on older paper URLs.
+      next.searchParams.set("view", "pdf");
+      next.searchParams.set("page", String(page));
+      navigate(next.href, { replace: true });
     } else {
       const origin = samePdfOrigin();
       textReturn.current = origin?.position ?? null;
@@ -1881,7 +1885,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         if (line !== null) at = String(line);
       }
       writeEntry("pdfOrigin", undefined);
-      navigate({ ...route, pdf: undefined, page: undefined, at }, { replace: true });
+      next.searchParams.delete("view");
+      next.searchParams.delete("page");
+      if (at) next.searchParams.set("l", at);
+      else next.searchParams.delete("l");
+      const nextRoute = parseRoute(next);
+      // A named phrase or result can supply its position from the path itself.
+      // Use the paper's address if the PDF reader has since moved elsewhere.
+      const target = nextRoute.view === "read" && nextRoute.at === at
+        ? next.href
+        : { ...route, pdf: undefined, page: undefined, at };
+      navigate(target, { replace: true });
     }
   };
   // The adapted edition's credit stands beside a link to the authors' paper (and the auxiliary note's marked PDF).
@@ -2083,12 +2097,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               )}
             </div>
           )}
+          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {side === "adapted" && (
             <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
               Show changes
             </button>
           )}
-          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {!paneOn && !sheetShown && (
             <button
               type="button"
