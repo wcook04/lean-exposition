@@ -109,6 +109,38 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
+/** Plan the contents before fitting the graph. A shallow drawing may give space back to
+ * the text without reducing the budget used to choose visible neighbours on the next pass. */
+function usePairedGraphSize(active: boolean) {
+  const pair = useRef<HTMLDivElement>(null);
+  const [layoutHeight, setLayoutHeight] = useState<number>();
+  useLayoutEffect(() => {
+    const box = pair.current;
+    const lean = box?.firstElementChild;
+    if (!active || !box || !lean) return;
+    const header = box.querySelector(".map-pane__local-head");
+    const measure = () => {
+      const height = box.clientHeight;
+      if (!height) return;
+      const chrome = Math.ceil(header?.getBoundingClientRect().height ?? 0) + 1;
+      const available = Math.max(height * 0.4, height - lean.getBoundingClientRect().height);
+      box.style.setProperty("--paired-graph-chrome", chrome + "px");
+      setLayoutHeight(Math.max(1, Math.floor(available) - chrome));
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(box);
+    observer.observe(lean);
+    if (header) observer.observe(header);
+    return () => observer.disconnect();
+  }, [active]);
+  const onPaintedHeight = useCallback((height: number) => {
+    pair.current?.style.setProperty("--paired-graph-paint", Math.ceil(height) + "px");
+  }, []);
+  return { pair, layoutHeight, onPaintedHeight };
+}
+
 export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
@@ -540,6 +572,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
   const guide = guideOpen && guideStage ? <GuidePanel stage={guideStage} onClose={() => setGuideOpen(false)} /> : null;
   const fill = !!leanSlot || !!guide;
+  const graphSize = usePairedGraphSize(paired && !fill);
   const graphTools = mode === "graph" && !fill && !unlinked;
   const showToolbar = !!guideStage || (!fill && tabbed) || graphTools;
   const visible = mode === "lean" ? leanOpen : dockOpen;
@@ -615,6 +648,8 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     </div>
   ) : focus ? (
     <FocusGraph
+      layoutHeight={paired ? graphSize.layoutHeight : undefined}
+      onPaintedHeight={paired ? graphSize.onPaintedHeight : undefined}
       embeddedHeader={paired ? {
         title: "Dependency graph",
         action: <button type="button" ref={minimiseRef} className="map-pane__layout-button" onClick={minimiseGraph}>Minimise graph</button>,
@@ -668,7 +703,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" && !unlinked ? (
-        <div className={paired ? "map-pane__paired" : "map-pane__lean"}>
+        <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"}>
           <LeanDock
             open={leanOpen}
             ties={ties}

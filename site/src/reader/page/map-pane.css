@@ -626,8 +626,10 @@ html[data-right-sheet] {
   flex: 1;
 }
 
-/* The lower viewport gets its own camera. Only the text above it scrolls. */
+/* Let a long declaration use the space a wide, shallow graph gives back. For a
+   short declaration the graph can use all the remaining room for its cards. */
 .map-pane__paired {
+  --paired-graph-size: calc(var(--paired-graph-paint, 100%) + var(--paired-graph-chrome, 0px));
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -636,16 +638,18 @@ html[data-right-sheet] {
 }
 .map-pane__paired > .lean-page {
   flex: 0 1 auto;
-  max-height: 60%;
+  max-height: calc(100% - min(40%, var(--paired-graph-size)));
 }
 .map-pane__paired > .lean-page > .lean-page__scroll {
   flex: 0 1 auto;
 }
 .map-pane__local {
   display: flex;
-  flex: 1 0 40%;
+  flex: 1 1 0;
   flex-direction: column;
-  min-height: 40%;
+  box-sizing: border-box;
+  min-height: min(40%, var(--paired-graph-size));
+  max-height: var(--paired-graph-size);
   min-width: 0;
   border-top: 1px solid var(--rule-control);
 }
