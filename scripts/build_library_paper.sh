@@ -156,5 +156,9 @@ print(f"static addresses: / and {len(results)} results and {len(pages)} pages an
 PYEOF
 # Every figure the paper's documents reference (an adapted edition's included, while it is staged) is in the build.
 "$PY" scripts/check_figures.py "$paper" site/dist
+# Standalone editions can provide their own audited targets at build time.
+if [ ! -d site/dist/paper-references ]; then
+  "$PY" scripts/build_paper_references.py site/dist --instance site/src/instances/library/current.json
+fi
 # Put back the tracked placeholder that library-instance.mjs replaced.
 git checkout -- site/src/instances/library/current.json 2>/dev/null || true

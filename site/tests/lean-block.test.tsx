@@ -136,6 +136,20 @@ describe("LeanBlock's props", () => {
     ]);
   });
 
+  it("links printed reference abbreviations and lettered targets", async () => {
+    const view = await render(<PassageAnnotation
+      text="See Eq. (18)/(20), Appendix G.4, Fig. S11, Propositions 8.1–8.2, Lemma A.2, §2.2.1, and Equation (B.30)."
+      referenceTargets={{
+        "equation:18": { line: 18 }, "equation:20": { line: 20 }, "appendix:g.4": { line: 41 },
+        "figure:s11": { line: 52 }, "proposition:8.1": { line: 61 }, "proposition:8.2": { line: 62 },
+        "lemma:a.2": { line: 72 }, "section:2.2.1": { line: 82 }, "equation:b.30": { line: 91 },
+      }}
+    />);
+    expect([...view.querySelectorAll("a")].map((link) => link.textContent)).toEqual([
+      "Eq. (18)", "(20)", "Appendix G.4", "Fig. S11", "Propositions 8.1", "8.2", "Lemma A.2", "§2.2.1", "Equation (B.30)",
+    ]);
+  });
+
   it("takes several ranges, and leaves the proof folded for lines in the statement", async () => {
     const view = await render(<DeclView decl={main} module={module} shell={shell} lines={[[1, 1]]} noTerms noDependencies noPapers />);
     expect(view.querySelectorAll(".lean-line.is-lit").length).toBe(1);
