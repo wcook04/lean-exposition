@@ -552,7 +552,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll !== false) {
-          // Fit the parts the window can show before moving to the statement.
+          // Lay out the landing before measuring it. Its anchor holds through formula fitting.
           body.settle([part - 2, part - 1, part, part + 1, part + 2]);
         }
         if (options.scroll !== false || options.follow) {

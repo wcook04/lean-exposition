@@ -32,10 +32,7 @@ export interface BodyHandle {
   reanchor(force?: boolean): void;
   /** Hold this element where it is now (the target of a jump). */
   hold(el: Element): void;
-  /**
-   * Lay out these parts at their real height and fit their formulas now, wherever they are, so a
-   * jump measured into them lands where it stays: nothing in them changes as they come on screen.
-   */
+  /** Lay out the jump's parts at their real height. The scroll anchor holds through formula fitting. */
   settle(parts: number[]): void;
 }
 
@@ -83,8 +80,6 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const { stage, doc, structures, initial, topInset, inspected, statements, onReferenceLean } = props;
   const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
-  // The first render's parts, fixed for the life of the paper.
-  const [firstParts] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
   const renderedRef = useRef(rendered);
@@ -184,14 +179,8 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       },
       settle: (parts) => {
         for (const index of parts) {
-          const text = elements.current.get(index)?.querySelector<HTMLElement>(":scope > .part__text");
-          if (!text) continue;
-          // A part in the window is laid out at its real height already; one off it is held at its
-          // reserved height until it comes near, which is what the jump must not measure.
-          const r = text.getBoundingClientRect();
-          if (r.bottom > 0 && r.top < window.innerHeight) continue;
-          layOutWhole(stage, index);
-          fitters.get(text)?.(() => true, true);
+          const text = elements.current.get(index)?.querySelector(":scope > .part__text");
+          if (text) layOutWhole(stage, index);
         }
       },
       };
@@ -367,7 +356,6 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           stage={stage}
           doc={doc}
           rendered={rendered.has(part.index)}
-          placedLater={!firstParts.has(part.index)}
           structures={structures}
           lit={!!part.anchor && part.anchor === inspected}
           statements={statements}
@@ -417,15 +405,13 @@ interface PartProps {
   stage: Stage;
   doc: PreparedDocument;
   rendered: boolean;
-  /** Typeset after the first render: its formulas are fitted as it is placed. */
-  placedLater: boolean;
   structures: Structures;
   lit: boolean;
   statements?: Statements;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, placedLater, structures, lit, statements, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   // Tones, hints and bracket-joined formula pieces go into the markup before it is placed, so a part
   // arriving on the page is written once and then left still.
@@ -450,17 +436,13 @@ const Part = memo(function Part({ part, stage, doc, rendered, placedLater, struc
     if (!html || !rendered || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
-    // A part typeset only after the reader has passed it has its formulas fitted as it is placed,
-    // in the frame it first paints; they would otherwise wait for the reader to come back. Every
-    // other part's formulas are fitted as they come near and in idle time, a few at a time.
-    if (placedLater && textRef.current.getBoundingClientRect().bottom < 0) fitNow(textRef.current);
     statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
       statements?.adopt(part.index, null);
       unmount();
       unmark();
     };
-  }, [html, rendered, placedLater, statements, part.index]);
+  }, [html, rendered, statements, part.index]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
   // The same height before and after the text arrives, so rendering a part far away moves nothing.
@@ -758,26 +740,25 @@ const AHEAD_REACH = 2400;
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
 const FIT_MARGIN = "900px 0px";
 
-/** Formulas waiting to be fitted, across all parts: a few each frame, so scrolling never waits for a stack of them. */
-const fitQueue: (() => void)[] = [];
+/** A display's width read forces layout. Share a frame budget across all paper parts and quotes. */
+const visibleFits: (() => void)[] = [];
+const aheadFits: (() => void)[] = [];
 let fitFrame = 0;
-/** Formulas fitted per frame: near the reader they are fitted in a few frames once the fonts are in,
- * so the page is still soon after it first paints (check-idle --quiet-within). */
-const FIT_BUDGET_MS = 40;
+const FIT_BUDGET_MS = 12;
+
+function onScreen(rect: DOMRectReadOnly): boolean {
+  return rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight;
+}
+
+function queueFit(work: () => void, visible: boolean): void {
+  (visible ? visibleFits : aheadFits).push(work);
+  fitFrame ||= requestAnimationFrame(drainFits);
+}
 
 function drainFits() {
-  fitFrame = 0;
-  // A width measured in a fallback font is wrong for good: fit once, after the fonts are in.
-  if (katexLoading()) {
-    fitFrame = -1;
-    void katexReady().then(() => {
-      fitFrame = requestAnimationFrame(drainFits);
-    });
-    return;
-  }
   const until = performance.now() + FIT_BUDGET_MS;
-  while (fitQueue.length && performance.now() < until) fitQueue.shift()!();
-  if (fitQueue.length) fitFrame = requestAnimationFrame(drainFits);
+  while ((visibleFits.length || aheadFits.length) && performance.now() < until) (visibleFits.shift() ?? aheadFits.shift())!();
+  fitFrame = visibleFits.length || aheadFits.length ? requestAnimationFrame(drainFits) : 0;
 }
 
 /** Each part's formulas not yet fitted; it stops when `more` says so and reports whether it finished. */
@@ -894,8 +875,13 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
   const refitStale = () => {
     const boxes = [...stale];
     stale.clear();
-    boxes.forEach(forgetSizes);
-    boxes.forEach((box) => update(box, true));
+    boxes.forEach((box) => {
+      queueFit(() => {
+        if (!live) return;
+        forgetSizes(box);
+        update(box, true);
+      }, onScreen(box.getBoundingClientRect()));
+    });
   };
   const update = (box: HTMLElement, force = false) => {
     const width = box.clientWidth;
@@ -927,17 +913,18 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     }
     if (cue && cue.hidden !== !squeezed) cue.hidden = !squeezed;
   };
-  // Sizes are read once a frame, after every change of that frame, never inside the change itself.
+  // A viewport resize can report every display at once. Queue one current-width read per box.
   const resized = new Set<HTMLElement>();
-  let resizeFrame = 0;
   const observer = new ResizeObserver((entries) => {
-    entries.forEach((e) => resized.add(e.target as HTMLElement));
-    resizeFrame ||= requestAnimationFrame(() => {
-      resizeFrame = 0;
-      const boxes = [...resized];
-      resized.clear();
-      if (live) boxes.forEach((box) => update(box));
-    });
+    for (const entry of entries) {
+      const box = entry.target as HTMLElement;
+      if (resized.has(box)) continue;
+      resized.add(box);
+      queueFit(() => {
+        resized.delete(box);
+        if (live) update(box);
+      }, onScreen(box.getBoundingClientRect()));
+    }
   });
   const fitted = new Set<HTMLElement>();
   const fit = (box: HTMLElement) => {
@@ -979,8 +966,9 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
               if (!entry.isIntersecting) continue;
               near?.unobserve(entry.target);
               const box = entry.target as HTMLElement;
-              fitQueue.push(() => live && !fitted.has(box) && fit(box));
-              fitFrame ||= requestAnimationFrame(drainFits);
+              queueFit(() => {
+                if (live && !fitted.has(box)) fit(box);
+              }, onScreen(entry.boundingClientRect));
             }
           },
           // scrollMargin reaches the same way through a scrolling column or sheet.
@@ -988,15 +976,11 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
         );
   // The displays on the first screen are fitted now, before the page paints (this runs in a layout
   // effect), so nothing about them changes once it is shown; the rest are fitted as they come near.
-  const screen = typeof window === "undefined" ? 0 : window.innerHeight;
+  // Read visibility for the whole batch before any fit changes the layout.
+  const firstScreen = near ? new Set(boxes.filter((box) => onScreen(box.getBoundingClientRect()))) : null;
   for (const box of boxes) {
-    if (!near) {
-      fit(box);
-      continue;
-    }
-    const r = box.getBoundingClientRect();
-    if (r.height > 0 && r.bottom > 0 && r.top < screen) fit(box);
-    else near.observe(box);
+    if (!firstScreen || firstScreen.has(box)) fit(box);
+    else near?.observe(box);
   }
   let refitting = false;
   fitters.set(root, (more, everywhere) => {
@@ -1026,7 +1010,11 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     // or after three seconds in whatever font the browser fell back to.
     void Promise.race([katexFacesLoaded(), new Promise((resolve) => setTimeout(resolve, 3000))]).then(() => {
       if (!live) return;
-      waiting.forEach((box) => update(box, true));
+      waiting.forEach((box) => {
+        queueFit(() => {
+          if (live) update(box, true);
+        }, onScreen(box.getBoundingClientRect()));
+      });
       waiting.clear();
     });
   }
@@ -1043,7 +1031,6 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     fitters.delete(root);
     near?.disconnect();
     observer.disconnect();
-    cancelAnimationFrame(resizeFrame);
     cues.forEach((cue) => cue.remove());
   };
 }
