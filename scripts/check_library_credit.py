@@ -146,20 +146,21 @@ with sync_playwright() as pw:
         page.wait_for_timeout(1500)
         check(f"{tag} click in text opens card", readable_card(page.locator(".map-pane .phrase-card").first, notes_optional=True), page.url)
         page.screenshot(path=str(a.shots / f"click-{tag}.png"))
-        # The graph at Proposition B.14 (route 3): the uses the paper's text states are dashed, keyed, and answer
+        # The graph at Proposition B.14 (route 3): the uses the paper's text states are dashed, labelled, and answer
         # the pointer with their sentence.
         page.goto(base + "proposition-b.14/?v=graph", wait_until="domcontentloaded")
         page.wait_for_selector(".fg__card", timeout=60000)
         page.wait_for_timeout(2500)
         dashed = page.eval_on_selector_all(".fg__edge--paper", "els => els.length")
-        key = page.evaluate("() => (document.querySelector('.fg__key') || {}).innerText || ''")
+        tooltips = page.locator(".fg__wire.fg__edge--paper > title").all_text_contents()
         why = ""
         if page.locator(".fg__edge-hit").count():
             page.locator(".fg__edge-hit").first.dispatch_event("click")
             page.wait_for_timeout(500)
             why = page.evaluate("() => (document.querySelector('.fg__edge-why') || {}).innerText || ''")
-        check(f"{tag} paper-logic edges", dashed > 0 and ("the paper's proof uses this" in key or "the paper's proof states" in key) and "Read it in the paper" in why,
-              f"{dashed} dashed; key: {key[:80]}; why: {why[:120]}")
+        labelled = bool(tooltips) and all("the paper's proof states" in title for title in tooltips)
+        check(f"{tag} paper-logic edges", dashed > 0 and labelled and "Read it in the paper" in why,
+              f"{dashed} dashed; tooltips: {tooltips[:3]}; why: {why[:120]}")
         page.screenshot(path=str(a.shots / f"graph-routes-{tag}.png"))
         # PDF view.
         if not a.no_pdf:

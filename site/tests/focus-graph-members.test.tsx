@@ -7,10 +7,16 @@ import { FocusGraph, type FGCard, type FGEdge } from "../src/map/FocusGraph";
 
 let root: Root;
 let container: HTMLDivElement;
+const svgBox = Object.getOwnPropertyDescriptor(SVGElement.prototype, "getBBox");
 
 beforeEach(() => {
   (globalThis as Record<string, unknown>).IS_REACT_ACT_ENVIRONMENT = true;
   vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+  // jsdom supplies neither SVG geometry nor range bounds.
+  Object.defineProperty(SVGElement.prototype, "getBBox", { configurable: true, value: () => new DOMRect() });
+  const createRange = document.createRange.bind(document);
+  vi.spyOn(document, "createRange").mockImplementation(() =>
+    Object.defineProperty(createRange(), "getClientRects", { value: () => [] }));
   container = document.createElement("div");
   document.body.appendChild(container);
   root = createRoot(container);
@@ -21,6 +27,9 @@ afterEach(() => {
   container.remove();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
+  vi.useRealTimers();
+  if (svgBox) Object.defineProperty(SVGElement.prototype, "getBBox", svgBox);
+  else Reflect.deleteProperty(SVGElement.prototype, "getBBox");
 });
 
 // One subject that uses 36 definitions: too many for the column, so they are drawn as one group.
@@ -39,10 +48,15 @@ for (let i = 0; i < COUNT; i++) {
 const edges: FGEdge[] = [...cards.keys()].filter((id) => id !== "s").map((id) => ({ from: "s", to: id, kind: "proof" }));
 const card = (id: string) => cards.get(id);
 
-function draw(props: { onSubject?: (id: string) => void; onHover?: (id: string | null) => void; subjects?: string[] } = {}) {
+function draw(props: {
+  onSubject?: (id: string) => void;
+  onHover?: (id: string | null) => void;
+  subjects?: string[];
+  edges?: FGEdge[];
+} = {}) {
   act(() =>
     root.render(
-      <FocusGraph subjects={props.subjects ?? ["s"]} card={card} edges={edges} onSubject={props.onSubject ?? (() => {})} onHover={props.onHover} />,
+      <FocusGraph subjects={props.subjects ?? ["s"]} card={card} edges={props.edges ?? edges} onSubject={props.onSubject ?? (() => {})} onHover={props.onHover} />,
     ),
   );
 }
@@ -69,6 +83,64 @@ describe("a large group opens as a list of its members", () => {
     expect(head().dataset.count).toBe(String(COUNT));
     expect(head().dataset.opens).toBe("list");
     expect(head().getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("shows partial dependencies within a closed group and still lists all its members", () => {
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(760);
+    vi.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(430);
+    const onSubject = vi.fn();
+    draw({ onSubject });
+    const group = head();
+    const previews = $$(".fg__group .fg__members .fg__card");
+    expect(previews.length).toBeGreaterThan(0);
+    expect(previews.length).toBeLessThan(COUNT);
+    expect(group.dataset.count).toBe(String(COUNT));
+    expect(group.dataset.previewCount).toBe(String(previews.length));
+    expect(group.getAttribute("aria-description")).toBe(
+      `${previews.length} of ${COUNT} members shown. Open for the full group.`,
+    );
+    expect(group.getAttribute("aria-expanded")).toBe("false");
+    expect($$(".fg__side > .fg__card")).toHaveLength(0);
+    expect($$(".fg__wire[data-edge]")).toHaveLength(1);
+    click(previews[0]);
+    expect(onSubject).toHaveBeenCalledWith(previews[0].dataset.card);
+    click(group);
+    const first = members();
+    click(button("Next"));
+    expect(new Set([...first, ...members()])).toEqual(new Set(edges.map(({ to }) => to)));
+    expect($$(".fg__group .fg__members .fg__card").map((el) => el.dataset.card))
+      .toEqual(previews.map((el) => el.dataset.card));
+  });
+
+  it("allocates more preview rows to a group when the pane grows", () => {
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(760);
+    const height = vi.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(170);
+    draw();
+    const before = Number(head().dataset.previewCount);
+    height.mockReturnValue(430);
+    act(() => { window.dispatchEvent(new Event("resize")); });
+    expect(Number(head().dataset.previewCount)).toBeGreaterThan(before);
+    expect(head().dataset.count).toBe(String(COUNT));
+    expect(head().getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("opens a small previewed group into all its members and folds it back to the same preview", () => {
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(680);
+    vi.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(245);
+    const small = edges.slice(0, 8);
+    draw({ edges: small });
+    const shown = () => $$(".fg__group .fg__members .fg__card").map((el) => el.dataset.card);
+    const before = shown();
+    expect(before.length).toBeGreaterThan(0);
+    expect(before.length).toBeLessThan(small.length);
+    expect(head().dataset.opens).toBe("here");
+    click(head());
+    expect(head().getAttribute("aria-expanded")).toBe("true");
+    expect(head().dataset.previewCount).toBeUndefined();
+    expect(new Set(shown())).toEqual(new Set(small.map(({ to }) => to)));
+    click(head());
+    expect(head().getAttribute("aria-expanded")).toBe("false");
+    expect(shown()).toEqual(before);
   });
 
   it("lists the members beside the drawing and adds no node to it", () => {
@@ -102,6 +174,30 @@ describe("a large group opens as a list of its members", () => {
     expect($(".fg__scroll")!.hasAttribute("inert")).toBe(false);
     expect($(".fg__tools")!.hasAttribute("inert")).toBe(false);
     expect(document.activeElement).toBe(head());
+  });
+
+  it("frames a one-sided neighbourhood using the space its cards and labels occupy", () => {
+    vi.useFakeTimers({ toFake: ["requestAnimationFrame", "cancelAnimationFrame"] });
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(520);
+    vi.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(400);
+    vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockReturnValue(1000);
+    vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(240);
+    // The layout reserves 1000px. All visible cards and labels lie between x=30 and x=490.
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (this: Element) {
+      const world = this.closest<HTMLElement>(".fg__world");
+      const k = Number(world?.style.transform.match(/scale\(([^)]+)\)/)?.[1] ?? 1);
+      if (this === world) return new DOMRect(0, 0, 1000 * k, 240 * k);
+      return this.closest(".fg__side") ? new DOMRect(310 * k, 70 * k, 180 * k, 60 * k)
+        : new DOMRect(30 * k, 50 * k, 150 * k, 80 * k);
+    });
+    draw();
+    act(() => { vi.advanceTimersByTime(64); });
+    const transform = $(".fg__world")!.style.transform;
+    expect(transform).toContain("scale(");
+    const match = transform.match(/translate\(([-.\d]+)px, .*?scale\(([-.\d]+)\)/)!;
+    const x = Number(match[1]), k = Number(match[2]);
+    expect(x + (30 + 490) / 2 * k).toBeCloseTo(260, 0);
+    expect(x + 490 * k).toBeLessThanOrEqual(503);
   });
 
   it("zooms over the drawing and leaves wheel events over the member list and toolbar alone", () => {
@@ -212,14 +308,12 @@ describe("a large group opens as a list of its members", () => {
   });
 });
 
-describe("the key names the relations drawn", () => {
-  it("says which way arrows run and names each kind of line on show", () => {
+describe("the graph's labels", () => {
+  it("counts each side's neighbours and names the relation on the line itself", () => {
     draw();
-    const key = $(".fg__key")!.textContent!;
-    expect(key).toContain("Arrows run from a statement to what it uses.");
-    expect(key).toContain("Used in a Lean proof or body");
-    expect(key).not.toContain("Used in a Lean statement");
-    expect(key).toContain("group, opens its members");
+    expect($('.fg__side[data-band="uses"] .fg__sidehead')!.textContent).toBe("Uses 36");
+    expect($('.fg__side[data-band="users"]')).toBeNull();
+    expect($(".fg__key")).toBeNull();
     // Each line carries its relation's name, and a group's line is no heavier than any other.
     const line = $(".fg__lines path.fg__edge")!;
     expect(line.querySelector("title")!.textContent).toBe("Used in a Lean proof or body");

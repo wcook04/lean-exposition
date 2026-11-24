@@ -991,25 +991,22 @@ def main() -> int:
                 drawn = page.locator(".map-pane .link--unroutable").count()
                 noted = page.eval_on_selector_all(".map-pane [data-unroutable-count]", "els => els.reduce((n, e) => n + Number(e.dataset.unroutableCount), 0)")
                 check(f"{tag} unroutable edges counted", drawn == noted, f"{drawn} drawn, {noted} counted")
-            # The graph's words state what the data records: no "not a step of the argument" for a
-            # missing route, each side's count names its relations, and the key names every
-            # relation a line on the drawing shows.
+            # Each side gives its total, and each line names its relation in its own tooltip.
             page.goto(base + f"@{args.phrase}?v=graph")
             page.wait_for_selector(".fg", timeout=60000)
             page.wait_for_timeout(1500)
             words = page.evaluate("""() => {
                 const fg = document.querySelector('.fg');
-                const sides = [...fg.querySelectorAll('.fg__side')].map(s => [s.dataset.band, Number(s.dataset.total), (s.querySelector('.fg__sidekinds')?.textContent ?? '').trim()]);
-                const lines = new Set([...fg.querySelectorAll('.fg__edge')].map(e => [...e.classList].find(c => c.startsWith('fg__edge--') && c !== 'fg__edge--group')?.slice(10)).filter(Boolean));
-                const keyed = new Set([...fg.querySelectorAll('[data-key-kind]')].map(e => e.dataset.keyKind));
-                return { text: document.querySelector('.map-pane')?.innerText ?? '', sides, lines: [...lines], keyed: [...keyed] };
+                const sides = [...fg.querySelectorAll('.fg__side')].map(s => [s.dataset.band, Number(s.dataset.total), (s.querySelector('.fg__sidehead')?.textContent ?? '').trim()]);
+                const unnamed = [...fg.querySelectorAll('.fg__wire')].filter(line => !line.querySelector('title')?.textContent?.trim()).map(line => line.dataset.edge);
+                return { text: document.querySelector('.map-pane')?.innerText ?? '', sides, unnamed };
             }""")
             claim = re.search(r"not a step of the paper", words["text"], re.I)
             check(f"{tag} graph says missing data, not a claim", not claim, "found 'Not a step of the paper'" if claim else "")
-            unnamed = [band for band, total, how in words["sides"] if total and not re.match(r"\d+ (by|in) ", how)]
-            check(f"{tag} graph counts name their relations", words["sides"] and not unnamed, f"sides {words['sides']}")
-            unkeyed = [k for k in words["lines"] if k not in words["keyed"]]
-            check(f"{tag} graph key names every line's relation", not unkeyed, f"lines {words['lines']}, key {words['keyed']}")
+            labels = {"users": "Used by", "uses": "Uses"}
+            miscounted = [band for band, total, title in words["sides"] if title != f"{labels.get(band)} {total}"]
+            check(f"{tag} graph labels give each side's total", words["sides"] and not miscounted, f"sides {words['sides']}")
+            check(f"{tag} graph names every line's relation", not words["unnamed"], f"unnamed lines {words['unnamed']}")
             # Cards render their mathematics: no raw $ or backslash command left in the text a reader sees.
             raw = []
             for name in [args.decl, *args.raw_check]:
