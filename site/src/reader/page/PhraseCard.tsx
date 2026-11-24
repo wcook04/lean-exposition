@@ -170,10 +170,11 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
 }
 
 /** The note is edited for this passage and its active declaration. */
-export function PassageAnnotation({ text }: { text: string }) {
+export function PassageAnnotation({ text, creditInSources = false }: { text: string; creditInSources?: boolean }) {
   return (
     <section className="phrase-card passage-annotation" aria-label="Passage annotation">
       <p className="passage-annotation__text" dangerouslySetInnerHTML={{ __html: noteHtml(text).html }} />
+      {!creditInSources && <small className="lean-block__credit">AI-written annotation</small>}
     </section>
   );
 }

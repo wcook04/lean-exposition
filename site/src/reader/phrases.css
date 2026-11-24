@@ -378,10 +378,11 @@
 }
 
 .lean-block__credit {
-  margin-inline-start: var(--space-2);
   color: var(--ink-3);
-  font-size: var(--fs-xs);
-  font-weight: 400;
+  font: 400 var(--fs-xs) / var(--lh-ui) var(--font-sans);
+}
+.lean-block__details > summary .lean-block__credit {
+  margin-inline-start: var(--space-2);
 }
 
 .lean-block__details > summary:focus-visible {
