@@ -160,6 +160,7 @@ export function keptPieces(t: MeasuredTitle, size: number, width: number, lines:
   for (let i = 0; i < t.pieces.length; i++) {
     const p = t.pieces[i];
     const w = p.w * scale;
+    if (w > width + 0.01) break;
     const next = cur === 0 ? w : cur + p.gap * scale + w;
     if (next > width + 0.01) {
       if (line === lines) break;
