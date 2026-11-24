@@ -167,7 +167,7 @@ export function plan(layout: Layout): Plan {
   const tops = new Map<string, string[]>();
   const bottoms = new Map<string, string[]>();
   for (const pe of edges.values()) {
-    // An unroutable edge meets its cards at their centres and takes no port.
+    // An unroutable edge takes the perimeter intersection of its straight fallback.
     if (pe.unroutable) continue;
     if (!tops.has(pe.to)) tops.set(pe.to, []);
     tops.get(pe.to)!.push(pe.key);
@@ -509,6 +509,16 @@ export function arrowHead(tip: Pt, length: number, angleDeg = 40): Pt[] {
   return [{ x: base.x - s, y: base.y }, tip, { x: base.x + s, y: base.y }];
 }
 
+/** The intersection of a card border and a ray from its centre towards another card. */
+function borderTowards(card: Rect, other: Rect): Pt {
+  const x = card.x + card.w / 2;
+  const y = card.y + card.h / 2;
+  const dx = other.x + other.w / 2 - x;
+  const dy = other.y + other.h / 2 - y;
+  const steps = Math.max(Math.abs(dx) / (card.w / 2), Math.abs(dy) / (card.h / 2));
+  return steps > 0 ? { x: x + dx / steps, y: y + dy / steps } : { x, y: card.y };
+}
+
 export function route(p: Plan, frame: Frame): Routed {
   const m = p.metrics;
   const { boxes } = frame;
@@ -559,10 +569,9 @@ export function route(p: Plan, frame: Frame): Routed {
     const parent = boxes.get(pe.from);
     if (!child || !parent) continue;
     if (pe.unroutable) {
-      // No row runs between the two cards: one straight line from centre to centre, which the
-      // drawing marks as unroutable.
-      const a = { x: child.x + child.w / 2, y: child.y + child.h / 2 };
-      const z = { x: parent.x + parent.w / 2, y: parent.y + parent.h / 2 };
+      // No row runs between the two cards: draw the straight fallback between their borders.
+      const a = borderTowards(child, parent);
+      const z = borderTowards(parent, child);
       edges.set(pe.key, { key: pe.key, points: [a, z], junction: { x: (a.x + z.x) / 2, y: (a.y + z.y) / 2 }, own: [a, z] });
       continue;
     }
@@ -581,12 +590,12 @@ export function route(p: Plan, frame: Frame): Routed {
       if (atParent) {
         junction = { x: at.x, y: ty };
         ownEnd = turn ? pts.length - 1 : pts.length;
-        pts.push({ x: xt, y: parent.y + parent.h + (pe.arrow ? m.arrow : 0) });
+        pts.push({ x: xt, y: parent.y + parent.h + (pe.arrow ? m.arrow - 1 : 0) });
       } else pts.push({ x: xt, y: rowTop[g] });
     }
     const own = pe.bus ? [...pts.slice(0, ownEnd), junction] : pts;
     edges.set(pe.key, { key: pe.key, points: pts, junction, own });
-    if (!pe.bus && pe.arrow) heads.set(pe.key, arrowHead({ x: pts[pts.length - 1].x, y: parent.y + parent.h - 0.5 }, m.arrow));
+    if (!pe.bus && pe.arrow) heads.set(pe.key, arrowHead({ x: pts[pts.length - 1].x, y: parent.y + parent.h }, m.arrow));
   }
 
   const buses = new Map<string, RoutedBus>();
@@ -597,9 +606,9 @@ export function route(p: Plan, frame: Frame): Routed {
     const ty = b.rank + 1 < depth ? trackY(b.rank, b.track) : parent.y + parent.h + m.padTop;
     const stem = [
       { x, y: ty },
-      { x, y: parent.y + parent.h + m.arrow },
+      { x, y: parent.y + parent.h + m.arrow - 1 },
     ];
-    buses.set(b.parent, { parent: b.parent, stem, head: arrowHead({ x, y: parent.y + parent.h - 0.5 }, m.arrow) });
+    buses.set(b.parent, { parent: b.parent, stem, head: arrowHead({ x, y: parent.y + parent.h }, m.arrow) });
   }
   return { edges, buses, heads };
 }

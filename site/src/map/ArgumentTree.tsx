@@ -10,9 +10,8 @@
 // recorded support already joins two records, and says so.
 //
 // Every record always shows words (DESIGN.md). Past k = 0.8 a card shows its
-// title alone in a tile; the camera stops at the scale where a tile still holds
-// words at 11px. "Steps" opens at k = 1. "Overview" draws the whole argument in
-// a dense layout of tiles and pans when it is taller than the canvas.
+// title alone in a tile. "Steps" opens at reading size. "Overview" draws
+// the whole argument in a dense layout that fits the visible canvas.
 //
 // Layout, connectors and motion are this project's own engine (./engine): a
 // layered layout, an orthogonal connector router planned once per layout and
@@ -40,7 +39,7 @@ import { graphWheel } from "./graphWheel";
 import { clampView, ensureVisible, fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
 import { CAMERA_MS, MOVE_MS, easeMove, lerp } from "./engine/motion";
 import { METRICS, METRICS_COMPACT, METRICS_DENSE, type EngineEdge, type Layout, type Rect, type Size } from "./engine/types";
-import { COMPACT_FLOOR, DENSE_TITLE_SIZES, DENSE_H, DENSE_H_SECTION, DENSE_MIN_K, DENSE_ROOT_H, DENSE_ROOT_W, DENSE_TILE, DENSE_W, LEAN_BREAK, MAX_K, REF_PX, STEPS_FLOOR, STEPS_K, TILE, fitPlate, fitTitle, floorK, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
+import { COMPACT_FLOOR, DENSE_TITLE_SIZES, DENSE_H, DENSE_H_SECTION, DENSE_ROOT_H, DENSE_ROOT_W, DENSE_TILE, DENSE_W, LEAN_BREAK, MAX_K, REF_PX, STEPS_FLOOR, STEPS_K, TILE, fitPlate, fitTitle, floorK, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
 import type { MapScene } from "./canvas/scene";
 import type { LeanMark } from "../model/leanStatus";
 import { leanFill, markWords } from "../model/leanStatus";
@@ -62,7 +61,7 @@ export interface Insets {
 
 export interface MapViewHandle {
   fitAll(animate?: boolean): void;
-  /** The whole drawing, as large as it fits, never below the scale where tiles hold their words. */
+  /** Fit the current drawing inside the visible canvas. */
   fit(animate?: boolean): void;
   /** Move the camera by screen pixels, stopping where the drawing would leave the canvas. */
   panBy(dx: number, dy: number): void;
@@ -304,6 +303,8 @@ interface CameraLeg {
 interface Built {
   layout: Layout;
   plan: Plan;
+  routed: Routed;
+  paintedBounds: Bounds;
   /** Drawn edges between layout ids (records, or occurrences of shared leaves); keys are drawn keys. */
   skeleton: EngineEdge[];
   /** Records drawn as several occurrences, with their number of drawn consumers. */
@@ -311,6 +312,28 @@ interface Built {
   implied: Set<string>;
   provisional: boolean;
   pin: string | null;
+}
+
+/** The bounds of the painted cards, wires and arrowheads in world coordinates. */
+function drawingBounds(layout: Layout, routed: Routed): Bounds {
+  const bounds = { x0: Infinity, y0: Infinity, x1: -Infinity, y1: -Infinity };
+  const include = ({ x, y }: Pt) => {
+    bounds.x0 = Math.min(bounds.x0, x);
+    bounds.y0 = Math.min(bounds.y0, y);
+    bounds.x1 = Math.max(bounds.x1, x);
+    bounds.y1 = Math.max(bounds.y1, y);
+  };
+  for (const box of layout.boxes.values()) {
+    include(box);
+    include({ x: box.x + box.w, y: box.y + box.h });
+  }
+  for (const edge of routed.edges.values()) edge.points.forEach(include);
+  for (const bus of routed.buses.values()) {
+    bus.stem.forEach(include);
+    bus.head.forEach(include);
+  }
+  for (const head of routed.heads.values()) head.forEach(include);
+  return bounds;
 }
 
 export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function ArgumentTree(props, ref) {
@@ -351,8 +374,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const captionRefRef = useRef(props.captionRef);
   captionRefRef.current = props.captionRef;
   const minKRef = useRef(1);
-  /** The reader has panned or zoomed since the last Fit. */
-  const handMoved = useRef(false);
+  /** While the whole drawing is fitted, keep it fitted as the canvas or layout changes. */
+  const fitActive = useRef(false);
   const worldTextRef = useRef(props.worldText);
   worldTextRef.current = props.worldText;
   const compactRef = useRef(compact);
@@ -537,7 +560,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       };
       ({ layout, plan } = run(grown, { ...metrics, gapMin: metrics.gapMin + room.gap }));
     }
-    return { layout, plan, skeleton: split.edges, shared: split.shared, implied: skel.implied, provisional, pin };
+    const routed = route(plan, { boxes: layout.boxes, dummyX: (key) => layout.dummies.get(key)!.x });
+    return { layout, plan, routed, paintedBounds: drawingBounds(layout, routed), skeleton: split.edges, shared: split.shared, implied: skel.implied, provisional, pin };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph, goal, visible, skel, heights, compact, metrics, rootW, dense, lens, fillOn, fillOn ? paneW : 0, fillOn ? paneH : 0, insets]);
   const layout = built.layout;
@@ -915,7 +939,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       };
       // The cards have stopped and only the camera still moves: the lines stay as they are.
       if (!m?.routed) {
-        const routed = route(b.plan, { boxes, dummyX, ignoreRows: m && raw < 1 ? m.entering : undefined });
+        const routed = raw < 1 ? route(b.plan, { boxes, dummyX, ignoreRows: m?.entering }) : b.routed;
+        if (raw >= 1) for (const [key, dummy] of b.layout.dummies) shownDummy.current.set(key, dummy.x);
         lastRouted.current = routed;
         writePaths(routed, all, fadeIn, fadeOut);
         if (m && raw >= 1) m.routed = true;
@@ -1223,11 +1248,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       orderHome.current = null;
       lastWithin.current = within;
       if (!dense) lastSteps.current = layout;
-      boundsRef.current = layoutBounds(layout);
+      boundsRef.current = built.paintedBounds;
     }
     // A remembered scene: put the anchor card back exactly where it was.
     const restore = restoreRef.current;
-    if (restore) applyView(restoredView(restore, layout));
+    if (restore) applyView(restoredView(restore, built));
     refreshChips();
     if (!animate) scheduleSettle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1328,9 +1353,15 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const boxOf = (l: Layout, id: string, pad = 0): Bounds | null => boundsOf(l, [id], pad);
 
   const floor = compact ? COMPACT_FLOOR : STEPS_FLOOR;
-  /** The camera never goes below the scale at which a tile still shows its words. */
-  // The overview zooms out past reading size, where the tiles hide their titles.
-  const minK = props.minScale ?? (dense ? DENSE_ZOOM_FLOOR : floorK(dense, compact));
+  /** A fitted drawing gets room for strokes, arrowheads and card outlines in screen pixels. */
+  const drawingView = useCallback((b: Built): View => {
+    const vp = viewport();
+    const { top, right, bottom, left } = vp.insets;
+    const pad = 12;
+    return fitBounds(b.paintedBounds, { ...vp, insets: { top: top + pad, right: right + pad, bottom: bottom + pad, left: left + pad } }, { min: 0, max: 1.15 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const minK = Math.min(props.minScale ?? (dense ? DENSE_ZOOM_FLOOR : floorK(dense, compact)), drawingView(built).k);
   minKRef.current = minK;
 
   /** Reading scale for a box: k = 1, or down to the floor if that fits the box across; never lower. */
@@ -1364,29 +1395,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [graph, goal, within, compact, echo, boundsOf, floor],
   );
-
-  const overviewView = useCallback(
-    (l: Layout): View => {
-      const b = layoutBounds(l);
-      const box = { x0: b.x0 - 16, y0: b.y0 - 16, x1: b.x1 + 16, y1: b.y1 + 16 };
-      // As large as fits, never below the 11px floor: what does not fit then pans.
-      // A caller that sets its own floor (the reader pane) sees the whole map at once; zoom reads the words.
-      if (props.minScale != null) return fitBounds(box, viewport(), { max: 1, min: props.minScale, top: true });
-      if (denseRef.current) return frameBox(box, viewport(), { min: DENSE_MIN_K, max: 1.15, anchor: boxOf(l, goalRef.current), top: true });
-      return fitBounds(box, viewport(), { max: 1, min: floorK(false, compact) });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  // A fill map is laid out for its canvas, so each new layout (the canvas measured, resized) is
-  // framed whole again, unless the reader has moved the map since.
-  useEffect(() => {
-    // The Map page (fill "gaps") keeps its own camera; only a canvas that shows the whole map refits.
-    if (!fillOn || props.fill !== true || !ready || handMoved.current) return;
-    moveCamera(overviewView(layout), false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layout, fillOn, ready]);
 
   /** Steps around one record: it and its drawn inputs at reading size, the record itself kept in view. */
   const aroundView = useCallback(
@@ -1564,14 +1572,17 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       camera,
       expanded: [...expandedRef.current].sort(),
       mode: modeRef.current,
+      ...(fitActive.current ? { fitted: true } : {}),
       ...(a && anchorId ? { anchor: { id: anchorId, x: a.x * v.k + v.x, y: a.y * v.k + v.y } } : {}),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goal]);
   getSceneRef.current = getScene;
 
-  function restoredView(scene: MapScene, l: Layout): View {
-    const k = Math.max(props.minScale ?? floorK(scene.mode === "overview" && !compact, compact), scene.camera.k);
+  function restoredView(scene: MapScene, b: Built): View {
+    if (scene.fitted) return drawingView(b);
+    const l = b.layout;
+    const k = scene.camera.k;
     const aid = scene.anchor ? (l.boxes.has(scene.anchor.id) ? scene.anchor.id : pick(l, recordOf(scene.anchor.id))) : null;
     const a = aid ? l.boxes.get(aid) : undefined;
     if (a && scene.anchor) return { k, x: scene.anchor.x - a.x * k, y: scene.anchor.y - a.y * k };
@@ -1592,6 +1603,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const list = ids.filter((id) => goalReach.has(id));
       if (!list.length) return;
       pinRef.current = null;
+      fitActive.current = false;
       userMovedSinceAsk.current = true;
       const frame = revealFn(list, list[0]);
       if (list.every((id) => hasRec(builtRef.current.layout, id))) {
@@ -1632,6 +1644,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         return true;
       }
       focusReq.current = list;
+      fitActive.current = false;
       focusHeld.current = true;
       pinRef.current = null;
       userMoved.current = true;
@@ -1657,13 +1670,21 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     [goalReach, derived, focusFrame, graph, goal, within, moveCamera],
   );
 
+  const fitDrawing = (animate = true) => {
+    fitActive.current = true;
+    focusHeld.current = false;
+    userMovedSinceAsk.current = true;
+    pendingCamera.current = null;
+    moveCamera(drawingView(builtRef.current), animate, CAMERA_MS);
+  };
+
   useImperativeHandle(
     ref,
     () => ({
       fitAll: (animate = true) => {
         const l = builtRef.current.layout;
         if (mode === "overview" || compact) {
-          moveCamera(overviewView(l), animate);
+          fitDrawing(animate);
           return;
         }
         // Steps: the drawn branch at reading size, anchored on the selection (else the goal).
@@ -1673,20 +1694,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const anchor = (selected && pick(l, selected)) || goal;
         moveCamera(frameBox(box, viewport(), { min: k, max: k, anchor: boxOf(l, anchor, 24), top: true }), animate);
       },
-      fit: (animate = true) => {
-        handMoved.current = false;
-        const l = builtRef.current.layout;
-        const b = layoutBounds(l);
-        const pad = 16;
-        focusHeld.current = false;
-        userMovedSinceAsk.current = true;
-        pendingCamera.current = null;
-        const box = { x0: b.x0 - pad, y0: b.y0 - pad, x1: b.x1 + pad, y1: b.y1 + pad };
-        moveCamera(frameBox(box, viewport(), { min: minK, max: dense ? 1.15 : STEPS_K, anchor: boxOf(l, (selected && pick(l, selected)) || goal, 24), top: true }), animate, CAMERA_MS);
-      },
+      fit: fitDrawing,
       panBy: (dx, dy) => {
         const v = targetView();
         const b = boundsRef.current;
+        fitActive.current = false;
         const next = { k: v.k, x: v.x + dx, y: v.y + dy };
         userMovedSinceAsk.current = true;
         focusHeld.current = false;
@@ -1694,6 +1706,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         moveCamera(b ? clampView(next, b, viewport()) : next, true, CAMERA_MS);
       },
       fitNodes: (ids, animate = true, dur) => {
+        fitActive.current = false;
         const list = [...ids];
         const fn = (l: Layout) => {
           const b = boundsOf(l, list, compact ? 24 : 40);
@@ -1710,6 +1723,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const px = vp.insets.left + (vp.width - vp.insets.left - vp.insets.right) / 2;
         const py = vp.insets.top + (vp.height - vp.insets.top - vp.insets.bottom) / 2;
         const k = Math.max(minKRef.current, Math.min(MAX_K, v.k * factor));
+        fitActive.current = false;
         userMovedSinceAsk.current = true;
         const next = { k, x: px - ((px - v.x) / v.k) * k, y: py - ((py - v.y) / v.k) * k };
         moveCamera(boundsRef.current ? clampView(next, boundsRef.current, vp) : next, true, CAMERA_MS);
@@ -1746,6 +1760,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       getScene,
       restoreScene: (scene) => {
         restoreRef.current = scene;
+        fitActive.current = !!scene.fitted;
         fittedGoal.current = goal;
         userMoved.current = true;
         userMovedSinceAsk.current = true;
@@ -1759,7 +1774,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const next = new Set(scene.expanded.filter((id) => graph.nodes.has(id)));
           setExpanded((prev) => (prev.size === next.size && [...next].every((id) => prev.has(id)) ? prev : next));
         }
-        applyView(restoredView(scene, builtRef.current.layout));
+        applyView(restoredView(scene, builtRef.current));
         scheduleSettle();
       },
       revealIds: doRevealIds,
@@ -1771,7 +1786,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         setFocusId(lid);
         el.focus({ preventScroll: true });
         const v = revealFn([lid])(builtRef.current.layout);
-        if (v) moveCamera(v, true, CAMERA_MS);
+        if (v) {
+          fitActive.current = false;
+          moveCamera(v, true, CAMERA_MS);
+        }
         return true;
       },
       walk: (key) => {
@@ -1801,7 +1819,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [boundsOf, moveCamera, goalReach, goal, graph, within, derived, echo, expanded, startView, compact, mode, selected, getScene, doRevealIds, doFocusIds, revealFn, controlled, requestMode, overviewView, floor, allOpen, tagHolders, built],
+    [boundsOf, moveCamera, goalReach, goal, graph, within, derived, echo, expanded, startView, compact, mode, selected, getScene, doRevealIds, doFocusIds, revealFn, controlled, requestMode, drawingView, floor, allOpen, tagHolders, built],
   );
 
   // ---- Camera input -----------------------------------------------------------------
@@ -1828,7 +1846,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       })
       .on("zoom", (event: { transform: ZoomTransform; sourceEvent?: Event | null }) => {
         if (event.sourceEvent) {
-          handMoved.current = true;
+          fitActive.current = false;
           userMoved.current = true;
           userMovedSinceAsk.current = true;
           focusHeld.current = false;
@@ -1870,7 +1888,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const onWheel = (event: WheelEvent) => {
       if ((event.target as Element).closest?.(".tree__ui")) return;
       event.preventDefault();
-      handMoved.current = true;
+      fitActive.current = false;
+      userMoved.current = true;
       // The drawing moves under the pointer: what was named is no longer what it rests on.
       const caption = captionRefRef.current?.current;
       if (caption) caption.hidden = true;
@@ -1897,15 +1916,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       if (width > 10 && height > 10) setReady(true);
       refreshChips();
     };
-    // A change of the canvas's height alone (the dock under the map showing a hovered card's
-    // preview) never re-lays out or refits the map: doing that under the pointer moved the card away,
-    // ended the preview and repeated. The camera learns the new size; nothing moves.
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      if (readyRef.current && Math.round(width) === Math.round(sizeRef.current.width)) {
-        sizeRef.current = { width, height };
-        return;
-      }
       applySize(width, height);
     });
     observer.observe(wrap);
@@ -1938,7 +1950,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     lensSeen.current = within;
     if (!dense) return;
     userMovedSinceAsk.current = false;
-    pendingCamera.current = overviewView;
+    fitActive.current = true;
+    pendingCamera.current = () => drawingView(builtRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [within]);
 
@@ -1977,22 +1990,26 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       if (focusReq.current && built.provisional && !holdOver) return;
       fittedGoal.current = goal;
       if (!selected && !focusReq.current) userMoved.current = false;
-      const v = focusReq.current ? focusFrame(focusReq.current)(layout) : mode === "overview" ? overviewView(layout) : startView(layout);
+      fitActive.current = mode === "overview" && !focusReq.current;
+      const v = focusReq.current ? focusFrame(focusReq.current)(layout) : fitActive.current ? drawingView(built) : startView(layout);
       if (v) moveCamera(v, !first);
       setFramed(true);
-    } else if (!userMoved.current && !focusReq.current && !selected && !moving && mode === "steps" && !(compact && echo?.size) && !built.provisional) {
+    } else if (!fitActive.current && !userMoved.current && !focusReq.current && !selected && !moving && mode === "steps" && !(compact && echo?.size) && !built.provisional) {
       const v = startView(layout);
       if (v) moveCamera(v, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, goal, rootH, rootW, paneH, insets.bottom, insets.top, firstRowKey, holdOver, built.provisional]);
 
-  // With fixed titles the drawing stays framed as the canvas changes, until the reader moves it.
-  useEffect(() => {
-    if (!props.worldText || handMoved.current || !framedRef.current || !ready) return;
-    (ref as RefObject<MapViewHandle | null> | null)?.current?.fit();
+  useLayoutEffect(() => {
+    if (!ready || !framed || !fitActive.current || built.provisional || pendingCamera.current) return;
+    const fit = drawingView(built);
+    const target = targetView();
+    if (Math.abs(fit.x - target.x) > 0.5 || Math.abs(fit.y - target.y) > 0.5 || Math.abs(fit.k - target.k) > 0.001) {
+      moveCamera(fit, false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paneW, paneH, insets.bottom, ready]);
+  }, [ready, framed, built, paneW, paneH, insets]);
 
   // A held focus re-centres when the canvas is resized or an inspector opens or closes over it.
   useEffect(() => {
@@ -2040,8 +2057,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     }
     if (!ready || restoreRef.current) return;
     userMovedSinceAsk.current = false;
-    if (mode === "overview") moveCamera(overviewView(layout));
+    if (mode === "overview") fitDrawing();
     else {
+      fitActive.current = false;
       const v = selected && hasRec(layout, selected) ? aroundView(layout, selected) : startView(layout);
       if (v) moveCamera(v);
     }
@@ -2084,12 +2102,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   askViewRef.current = () => {
     const { ids, anchor } = askedIds();
     const l = builtRef.current.layout;
-    // Overview keeps the whole goal fitted until the reader moves the camera.
-    if (modeRef.current === "overview" && !compact && !ids.length) {
-      const v = overviewView(l);
-      const cur = viewRef.current;
-      return Math.abs(v.k - cur.k) > 0.002 || Math.abs(v.x - cur.x) > 2 || Math.abs(v.y - cur.y) > 2 ? v : null;
-    }
     if (!ids.length || !ids.every((id) => hasRec(l, id))) return null;
     if (selected && !edgeObj && !traced && hasRec(l, selected)) return calmView(l, selected);
     // Of a trace, the selection itself must be in view; the rest as far as the floor allows.
@@ -2115,8 +2127,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     userMovedSinceAsk.current = false;
     const v = askViewRef.current();
     walkOnly.current = false;
-    if (v) moveCamera(v, true, CAMERA_MS);
-    else scheduleSettle();
+    if (v) {
+      fitActive.current = false;
+      moveCamera(v, true, CAMERA_MS);
+    } else scheduleSettle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, selected, trace, traced, selectedEdge, edgeObj, layout, built.provisional, insets.right, insets.bottom, mode, paneW]);
 
@@ -2421,6 +2435,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const chipClick = (side: Side) => {
     const ids = chips.current.ids[side];
     if (!ids.length) return;
+    fitActive.current = false;
     userMovedSinceAsk.current = true;
     focusHeld.current = false;
     onUserMoveRef.current?.();
@@ -2462,6 +2477,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       data-mode={mode}
       data-dense={dense || undefined}
       data-world-text={props.worldText || undefined}
+      style={{ ["--tree-link-end" as string]: `url(#${uid}-link-end)` }}
       onPointerLeave={() => {
         setHover(null);
         setHoverEdge(null);
@@ -2477,6 +2493,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       )}
       <div ref={worldRef} className="tree__world" style={{ width: Math.max(1, bounds.x1), height: Math.max(1, bounds.y1) }}>
         <svg className="tree__links" width={1} height={1} aria-hidden="true">
+          <defs>
+            <marker id={`${uid}-link-end`} markerWidth="2" markerHeight="2" refX="1" refY="1">
+              <circle cx="1" cy="1" r="0.5" fill="context-stroke" />
+            </marker>
+          </defs>
           {entering && enterMask && (
             <defs>
               <mask id={`${uid}-enter`} maskUnits="userSpaceOnUse" x={-100000} y={-100000} width={200000} height={200000}>

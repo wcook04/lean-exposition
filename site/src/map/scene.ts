@@ -31,7 +31,7 @@ export function validScene(value: unknown, has: (id: string) => boolean): MapSce
   if (v.mode !== "steps" && v.mode !== "overview") return null;
   const a = v.anchor;
   const anchor = a && typeof a.id === "string" && has(a.id) && finite(a.x) && finite(a.y) ? { id: a.id, x: a.x, y: a.y } : undefined;
-  return { camera: { x: c.x, y: c.y, k: c.k }, expanded: [...v.expanded], mode: v.mode, ...(anchor ? { anchor } : {}) };
+  return { camera: { x: c.x, y: c.y, k: c.k }, expanded: [...v.expanded], mode: v.mode, ...(v.fitted === true ? { fitted: true } : {}), ...(anchor ? { anchor } : {}) };
 }
 
 /** The scene remembered for the current history entry, or null. */

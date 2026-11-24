@@ -7,6 +7,8 @@ export interface MapScene {
   camera: { x: number; y: number; k: number };
   expanded: string[];
   mode: MapMode;
+  /** A fitted scene follows the available canvas when it is restored. */
+  fitted?: boolean;
   /**
    * Optional: one drawn card and where it sat on screen. A layout rebuilt from
    * scratch may place cards a little differently from one grown step by step,

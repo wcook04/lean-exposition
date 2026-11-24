@@ -57,6 +57,11 @@
   stroke-dasharray: 0 calc(5px / var(--k));
 }
 
+/* A dashed run can finish in a gap. Its endpoint mark touches the card or arrowhead. */
+.link:is(.link--assumes, .link--formalizes, .link--unroutable, .link--lean_type_dependency, .link--lean_via) {
+  marker-end: var(--tree-link-end);
+}
+
 .link--formalizes {
   stroke: var(--rel-formalizes);
   stroke-dasharray: calc(6px / var(--k)) calc(4px / var(--k));

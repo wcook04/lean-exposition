@@ -364,22 +364,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const toneOf = useCallback((id: string) => places.recordTone.get(id), [places]);
   const topicOf = useCallback((id: string) => places.recordTopic.get(id), [places]);
   const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 24, right: 16 }), []);
-  useEffect(() => {
-    if (!showWhole) return;
-    const open = window.setTimeout(() => treeRef.current?.expandAll(), 0);
-    const frame = window.setTimeout(() => {
-      // Shown for want of Lean, the map opens whole; opened by the button, on the subject.
-      const ids = unlinked && !whole ? [] : subjectRecords.filter((id) => reachOf(goal).has(id));
-      if (ids.length) treeRef.current?.focusIds(ids);
-      else treeRef.current?.fitAll(false);
-    }, 80);
-    return () => {
-      window.clearTimeout(open);
-      window.clearTimeout(frame);
-    };
-    // Framed when it opens; afterwards the reader moves it.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showWhole, goal]);
   const onTreeHover = useCallback((id: string | null) => onPoint(id ? statementFor(ties, id) : null, id ?? undefined), [onPoint, ties]);
   const onTrace = useCallback((id: string) => navigate({ view: "map", goal, node: id, trace: "rests" }), [goal]);
   const onTreeSelect = useCallback((id: string | null) => id && onSubject(id), [onSubject]);
@@ -652,6 +636,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         onHover={onTreeHover}
         onTrace={onTrace}
       />
+      <div className="map-pane__camera-tools" role="group" aria-label="Whole proof map camera">
+        <button type="button" aria-label="Zoom out" onClick={() => treeRef.current?.zoomBy(1 / 1.25)}>−</button>
+        <button type="button" aria-label="Zoom in" onClick={() => treeRef.current?.zoomBy(1.25)}>+</button>
+        <button type="button" onClick={() => treeRef.current?.fit()}>Fit</button>
+      </div>
     </div>
   ) : folded ? (
     <div className="map-pane__strip" role="group" aria-label="The graph, folded">
