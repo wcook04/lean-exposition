@@ -45,8 +45,8 @@ export function accountLineHtml(words: string, pdf: string | null, pages: number
   return `<p class="account-line">${words} <a class="pdf-link" href="${pdf}" target="_blank" rel="noopener">Open PDF, ${pages} ${pages === 1 ? "page" : "pages"}</a></p>`;
 }
 
-/** What to do with a linked phrase: one sentence, whole at every width, at the head of a paper with linked phrases. */
-export const READER_HINT = "Select a marked phrase to see its Lean statement and how the two compare.";
+/** What to do with a linked phrase: shown whole at every width, at the head of a paper with linked phrases. */
+export const READER_HINT = "Auto select follows the paper as you scroll. Hover over a marked phrase to preview its Lean and see how the two compare. Click a phrase to keep it selected in Manual.";
 
 /** The hint as the first screen sets it; the page renders the same element (ReaderPage). */
 export function readerHintHtml(): string {
