@@ -1,4 +1,4 @@
-// The Read menu is a keyboard-complete menu button.
+// The header uses a disclosure with ordinary links and buttons.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
@@ -21,47 +21,45 @@ function key(target: Element, k: string) {
   target.dispatchEvent(new KeyboardEvent("keydown", { key: k, bubbles: true }));
 }
 
-describe("Read menu", () => {
-  it("opens, moves, jumps by letter, and closes back to its button", async () => {
+describe("site menu", () => {
+  it("keeps the public routes behind one disclosure, and Escape restores focus", async () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     host = document.createElement("div");
     document.body.append(host);
     root = createRoot(host);
     await act(async () => root!.render(<TopBar route={{ view: "read", stage: "short" }} onSearch={() => undefined} />));
-    const button = host.querySelector<HTMLButtonElement>('button[aria-haspopup="menu"]')!;
-    expect(button.getAttribute("aria-current")).toBe("page");
+
+    const button = host.querySelector<HTMLButtonElement>(".menu-toggle")!;
+    const panel = document.getElementById(button.getAttribute("aria-controls")!)!;
+    expect(button.textContent?.trim()).toBe("Menu");
     expect(button.getAttribute("aria-expanded")).toBe("false");
+    expect(panel.hidden).toBe(true);
 
     button.focus();
-    await act(async () => key(button, "ArrowDown"));
-    const items = [...host.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]')];
+    await act(async () => button.click());
+    const links = [...panel.querySelectorAll("a")];
     expect(button.getAttribute("aria-expanded")).toBe("true");
-    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long record, draft", "All papers and PDFs"]);
-    expect(items[1].getAttribute("aria-current")).toBe("page");
-    expect(document.activeElement).toBe(items[0]);
+    expect(panel.hidden).toBe(false);
+    expect(links.map((link) => link.textContent)).toEqual(["Exposition", "Short paper", "Long record (draft)", "All papers and PDFs", "Map", "Compare", "Lean index"]);
+    expect(links[1].getAttribute("aria-current")).toBe("page");
 
-    await act(async () => key(items[0], "ArrowDown"));
-    expect(document.activeElement).toBe(items[1]);
-    await act(async () => key(items[1], "ArrowUp"));
-    await act(async () => key(items[0], "ArrowUp"));
-    expect(document.activeElement).toBe(items[3]);
-    await act(async () => key(items[3], "e"));
-    expect(document.activeElement).toBe(items[0]);
-    await act(async () => key(items[0], "End"));
-    expect(document.activeElement).toBe(items[3]);
-
-    await act(async () => key(items[3], "Escape"));
-    expect(button.getAttribute("aria-expanded")).toBe("false");
+    links[0].focus();
+    await act(async () => key(links[0], "Escape"));
+    expect(panel.hidden).toBe(true);
     expect(document.activeElement).toBe(button);
   });
 
-  it("gives search and the phone menu names that do not depend on visible text", async () => {
+  it("opens search from the disclosure and closes it", async () => {
     host = document.createElement("div");
     document.body.append(host);
     root = createRoot(host);
-    await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
-    expect(host.querySelector('[aria-label="Search the papers, the steps and the Lean"]')).not.toBeNull();
-    expect(host.querySelector('button[aria-label="Menu"]')).not.toBeNull();
+    const onSearch = vi.fn();
+    await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={onSearch} />));
+    const menu = host.querySelector<HTMLButtonElement>(".menu-toggle")!;
+    await act(async () => menu.click());
     expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Map");
+    await act(async () => host!.querySelector<HTMLButtonElement>(".search-trigger")!.click());
+    expect(onSearch).toHaveBeenCalledOnce();
+    expect(menu.getAttribute("aria-expanded")).toBe("false");
   });
 });

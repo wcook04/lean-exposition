@@ -205,7 +205,7 @@ describe("MapPane", async () => {
 
   function show(anchor: string | null, props: Record<string, unknown> = {}) {
     act(() => signals.follow.set({ tie: null, anchor, part: 0 }));
-    act(() => root.render(<MapPane stage="expository" structures={structures} signals={signals} ties={ties} pin={null} mode="graph" onMode={() => {}} onHide={() => {}} onRecord={() => {}} onRelease={() => {}} onPoint={() => {}} {...props} />));
+    act(() => root.render(<MapPane stage="expository" structures={structures} signals={signals} ties={ties} pin={null} mode="graph" onMode={() => {}} onRecord={() => {}} onRelease={() => {}} onPoint={() => {}} {...props} />));
   }
   const drawn = (band: string) => [...container.querySelectorAll<HTMLElement>(`.fg__card[data-band="${band}"]`)].map((el) => el.dataset.card!);
   const argument = (id: string, side: "out" | "in") =>

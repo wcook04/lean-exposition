@@ -192,31 +192,16 @@ describe("the header's lockup", () => {
     host?.remove();
   });
 
-  it("opens with the Plectis plait to the home page, a rule, then this site's mark and name, and lists the five jobs", async () => {
+  it("uses the paper’s short title as a link in the header", async () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     const { TopBar } = await import("../src/app/TopBar");
     host = document.createElement("div");
     document.body.append(host);
     root = createRoot(host);
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
-    const lockup = host.querySelector(".topbar > .fam-lockup")!;
-    expect([...lockup.children].map((el) => el.className)).toEqual(["fam-lockup__home", "fam-lockup__rule", "fam-lockup__site"]);
-    const home = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__home")!;
-    expect(home.getAttribute("href")).toBe("https://wcook04.github.io/");
-    expect(home.getAttribute("rel")).toBe("author");
-    const plait = home.querySelector("img")!;
-    expect(plait.getAttribute("alt")).toBe("");
-    expect(home.querySelector(".fam-lockup__owner")!.textContent).toBe("Will Cook");
-    expect(plait.getAttribute("src")).toMatch(/^\/(lean-exposition-site\/)?plectis\.svg$/);
-    expect(lockup.querySelector(".fam-lockup__rule")!.getAttribute("aria-hidden")).toBe("true");
-    const own = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__site")!;
-    expect(own.getAttribute("href")).toBe("/");
-    expect(own.querySelector("svg.wordmark__mark")!.getAttribute("aria-hidden")).toBe("true");
-    expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("SK Reader");
-    expect(host.querySelector(".fam-ladder")).toBeNull();
-    const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
-    expect(jobs).toEqual(["Read", "Map", "Compare", "What ran", "Lean index"]);
-    expect(host.querySelector<HTMLAnchorElement>(".readmenu a[href='/#papers']")!.textContent).toContain("All papers and PDFs");
+    const title = host.querySelector<HTMLAnchorElement>(".topbar__title")!;
+    expect(title.getAttribute("href")).toBe("/");
+    expect(title.textContent).toBe("SK Reader");
   });
 
   it("serves the plait from beside the site, with nothing from another host", () => {

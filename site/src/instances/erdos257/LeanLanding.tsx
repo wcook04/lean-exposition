@@ -58,7 +58,7 @@ export function LeanLanding({ shell, slot }: { shell: LeanShell; slot: HTMLEleme
           : {count(modules.counts.modules)} modules and {count(modules.counts.declarations)} declarations.
         </p>
         <p className="lean-intro__checked">
-          {checked} <a href={routeHref({ view: "checks" })}>Every recorded run</a>
+          {checked}
         </p>
       </header>
       <div className="lean-landing">

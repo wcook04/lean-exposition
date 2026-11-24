@@ -61,8 +61,10 @@ describe("the first screen", () => {
     expect(html.indexOf("front__watch")).toBeLessThan(html.indexOf("rosetta__table"));
   });
 
-  it("draws the same five jobs as the top bar", () => {
+  it("keeps the first-screen routes behind a Menu disclosure", () => {
     const html = frameHtml("/");
-    for (const job of ["Read", "Map", "Compare", "What ran", "Lean index"]) expect(html).toContain(`>${job}</a>`);
+    expect(html).toContain('<details class="site-menu">');
+    for (const name of ["Short paper", "Exposition", "Long record", "Map", "Compare", "Lean index"]) expect(html).toContain(`>${name}</a>`);
+    expect(html).not.toMatch(/What ran|About/);
   });
 });

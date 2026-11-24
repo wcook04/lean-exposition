@@ -383,7 +383,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   visitRef.current = visit;
 
   /** The reading line: below the top bar and the location strip. */
-  const readingTop = useCallback(() => cssPx("--reader-top", cssPx("--topbar-h", 56)) + (stripRef.current?.offsetHeight ?? 0), []);
+  const readingTop = useCallback(() => cssPx("--reader-top", 0) + (stripRef.current?.offsetHeight ?? 0), []);
 
   // ---- Where the page opens ----------------------------------------------------------
 
@@ -1240,7 +1240,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [go, here, originHere, route.anchor, stage],
   );
 
-  const toggleMap = useCallback(() => showMap(!mapShown), [showMap, mapShown]);
   /**
    * The view buttons. A view change keeps the subject and adds no history entry: it replaces
    * the address's view, so Back and Escape never undo it.
@@ -1283,13 +1282,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     releaseInPlace();
   }, [releaseInPlace]);
 
-  /** "Return to selected words": the paper goes back to the selection, which stays selected. */
-  const returnToSelected = useCallback(() => {
-    const p = pinRef.current;
-    const block = heldRef.current?.block;
-    if (p?.tie != null) void landSlice(ties.index.ties[p.tie].at, { node: p.record, smooth: true });
-    else if (block?.isConnected) block.scrollIntoView({ block: "center", behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
-  }, [landSlice, ties]);
+  const toggleMap = useCallback(() => {
+    showMap(!mapShown);
+    if (mapShown) closeLean();
+  }, [showMap, mapShown, closeLean]);
 
   /**
    * "Back to paper" on a narrow window: the inspector closes over a selection that stays, with a
@@ -1304,11 +1300,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // Underlines carry their topics' colours unless this reader turned that off.
   useLayoutEffect(() => applyTones(readTones()), []);
-  /** "Hide pane": the paper alone. What was selected is let go, since nothing would show it. */
-  const hideMap = useCallback(() => {
-    showMap(false);
-    closeLean();
-  }, [showMap, closeLean]);
   // A selection made while the pane is hidden brings the pane back beside the paper, where there is
   // room for both; the reader's stored choice to hide it is left as it is.
   const subjectKey = `${route.node ?? ""}|${route.at ?? ""}|${route.decl ?? ""}|${held ? "p" : ""}`;
@@ -1947,7 +1938,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     onDecl: openDeclHere,
     held,
     onRelease: closeLean,
-    onReturn: returnToSelected,
     placeOf: placeWords,
     onOpenTie: (t: number, land?: boolean) => {
       openStatement(t);
@@ -2179,7 +2169,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <MapPane
                 {...paneProps}
                 inert={!!route.beside}
-                onHide={hideMap}
                 leanSlot={
                   changeView ? (
                     changeView
@@ -2223,7 +2212,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <RightSheet onClose={closeSheet}>
           <GraphBoundary scope={`sheet beside ${route.stage}`}>
             <Suspense fallback={<p className="right-sheet__wait">Loading the Lean</p>}>
-              <MapPane {...paneProps} inModal onHide={closeSheet} />
+              <MapPane {...paneProps} />
             </Suspense>
           </GraphBoundary>
         </RightSheet>
@@ -2233,7 +2222,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <HeldBar
           state={held ? "Selected paragraph" : route.decl ? "Selected declaration" : "Selected words"}
           place={heldPlace}
-          onReturn={pin?.tie != null || held ? returnToSelected : undefined}
           onView={() => setSheetCollapsed(false)}
           onResume={closeLean}
         />

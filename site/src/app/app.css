@@ -29,66 +29,34 @@ html[data-view="map"] .app {
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: var(--space-5);
-  height: var(--topbar-h);
-  padding: 0 var(--space-5);
+  gap: var(--space-3);
+  min-height: var(--topbar-h);
+  padding-inline: clamp(var(--space-3), 2vw, var(--space-5));
   background: var(--ground);
   border-bottom: 1px solid var(--rule);
 }
 
-/* The family's lockup (styles/family.css): the Plectis plait, a short upright rule,
-   then this site's mark and name. The lockup owns the layout and the name's type;
-   the site keeps its own mark, the rising graph in ink with its amber dot. */
-.topbar .fam-lockup {
-  flex: none;
+.app[data-view="read"] .topbar,
+.app[data-view="read"] .edition-banner {
+  position: static;
 }
 
-.wordmark__mark {
-  flex: none;
-  width: 22px;
-  height: 22px;
-}
-
-.wordmark__mark path {
-  stroke: var(--ink);
-}
-
-.wordmark__mark circle {
-  fill: var(--lit);
-}
-
-.topnav {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+.topbar__title {
   min-width: 0;
-  height: 100%;
-}
-
-/* A job in the bar: Argument, Read, Checks. The current one carries the
-   amber underline on the bar's bottom rule. */
-.topnav__job {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: var(--radius-m);
-  background: none;
-  color: var(--ink-2);
-  font: inherit;
-  font-size: var(--fs-ui);
-  font-weight: 500;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
   text-decoration: none;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  cursor: pointer;
-  transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
 }
 
-/* A line a page may fill while something is pointed at. It takes up the bar's free space
-   and adds no height, so filling it moves nothing. */
+.topbar__title:hover {
+  text-decoration: underline;
+}
+
+/* The Lean index and Compare use this space for a pointed name. */
 .topbar__line {
   flex: 1 1 0;
   min-width: 0;
@@ -97,69 +65,34 @@ html[data-view="map"] .app {
   align-items: center;
 }
 
-@media (max-width: 68.75em) {
-  .topbar__line {
-    display: none;
-  }
-}
-
-/* The index at the back of the book: there for those who want it, quieter than the jobs. */
-.topnav__job--quiet {
-  color: var(--ink-3);
-  font-size: var(--fs-sm);
-  font-weight: 400;
-}
-
-.topnav__job:hover,
-.readmenu__button[aria-expanded="true"] {
-  color: var(--ink);
-  background: color-mix(in oklab, var(--ink) 5%, transparent);
-}
-
-.topnav__job[aria-current="page"] {
-  color: var(--ink);
-}
-
-.topnav__job[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: calc((36px - var(--topbar-h)) / 2);
-  height: 2px;
-  background: var(--lit);
-  border-radius: 2px;
-}
-
-/* Read: a menu of the three accounts, each with its job. */
-.readmenu {
+.site-menu {
   position: relative;
+  flex: none;
+  margin-left: auto;
 }
 
-.readmenu__chev {
-  color: var(--ink-3);
-  transition: transform var(--t-state) var(--ease-out);
+.menu-toggle {
+  min-height: calc(var(--topbar-h) - 1px);
+  gap: var(--space-2);
 }
 
-.readmenu__chev.is-open {
-  transform: rotate(180deg);
-}
-
-.readmenu__menu {
+.site-menu__panel {
   position: absolute;
-  top: calc(100% + 10px);
-  left: -8px;
-  z-index: 50;
-  width: 22rem;
+  top: 100%;
+  right: 0;
+  width: min(21rem, calc(100vw - 2 * var(--space-3)));
+  max-height: calc(100dvh - var(--topbar-h) - var(--space-3));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--space-2);
   background: var(--surface);
   border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-l);
+  border-radius: var(--radius-m);
   box-shadow: var(--shadow-sheet);
   animation: menu-in var(--t-reveal) var(--ease-out);
 }
 
-.readmenu__menu[hidden] {
+.site-menu__panel[hidden] {
   display: none;
 }
 
@@ -170,15 +103,39 @@ html[data-view="map"] .app {
   }
 }
 
+.site-menu__label {
+  margin: var(--space-1) 0 0;
+  padding: var(--space-1) var(--space-3);
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.site-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-menu__routes,
+.site-menu__actions {
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--rule);
+}
+
 .readmenu__item {
   position: relative;
-  display: grid;
-  gap: 2px;
-  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: .25em;
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-m);
   color: var(--ink);
+  line-height: var(--lh-snug);
   text-decoration: none;
-  outline: none;
 }
 
 .readmenu__item:hover,
@@ -186,209 +143,41 @@ html[data-view="map"] .app {
   background: color-mix(in oklab, var(--ink) 6%, transparent);
 }
 
-.readmenu__item:focus-visible {
-  box-shadow: inset 0 0 0 2px var(--lit);
-}
-
 .readmenu__item[aria-current="page"]::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 10px;
-  bottom: 10px;
+  top: 8px;
+  bottom: 8px;
   width: 2px;
   border-radius: 2px;
   background: var(--lit);
 }
 
-.readmenu__name {
-  font-family: var(--font-serif);
-  font-size: var(--fs-card);
-  line-height: var(--lh-snug);
-}
-
 .readmenu__state {
-  font-weight: 400;
   color: var(--ink-2);
 }
 
-.readmenu__job {
-  font-size: var(--fs-sm);
-  line-height: var(--lh-snug);
-  color: var(--ink-2);
-}
-
-.topbar__tools {
-  margin-left: auto;
+.site-menu__actions {
   display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.topbar__about {
-  display: inline-flex;
-  align-items: center;
-  height: 34px;
-  padding: 0 10px;
-  margin-right: var(--space-2);
-  border-radius: var(--radius-m);
-  color: var(--ink-3);
-  font-size: var(--fs-sm);
-  text-decoration: none;
-  transition: color var(--t-hover) var(--ease-out);
-}
-
-.topbar__about:hover,
-.topbar__about[aria-current="page"] {
-  color: var(--ink);
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .search-trigger {
-  color: var(--ink-2);
-  gap: 8px;
+  gap: var(--space-2);
 }
 
-.search-trigger .kbd {
-  margin-left: 2px;
-}
-
-.menu-toggle,
-.phonemenu {
-  display: none;
-}
-
-@media (max-width: 67.5em) {
-  .search-trigger .kbd {
-    display: none;
-  }
-}
-
-/* Phones, tablets and narrow windows: brand, named Search, and one menu. Below 68.75em the
-   brand, a paper's own name and six links no longer fit on one line, and the links ran into each
-   other. The widths are in em, so a reader whose browser sets larger text gets the menu at a
-   wider window. */
 @media (max-width: 68.75em) {
-  .topbar {
-    gap: var(--space-3);
-    padding: 0 var(--space-4);
-  }
-  .topnav,
-  .topbar__about,
-  .topbar__scheme {
-    display: none;
-  }
-  /* Search and Menu are the bar's only ways on, so they never shrink or leave the screen:
-     the lockup gives way instead, its site name ending in an ellipsis (family.css). At
-     390px a fixed-width lockup pushed Search to x=389 and Menu to x=437. */
-  .topbar .fam-lockup {
-    flex: 0 1 auto;
-  }
-  .topbar__tools {
-    flex: none;
-  }
-  .menu-toggle {
-    display: inline-flex;
-    min-width: var(--target);
-    min-height: var(--target);
-    justify-content: center;
-  }
-  .search-trigger {
-    min-height: var(--target);
-  }
-  .phonemenu:not([hidden]) {
-    display: block;
-    position: absolute;
-    top: var(--topbar-h);
-    left: 0;
-    right: 0;
-    max-height: calc(100dvh - var(--topbar-h));
-    overflow-y: auto;
-    padding: var(--space-2) var(--space-4) var(--space-4);
-    background: var(--ground);
-    border-bottom: 1px solid var(--rule);
-    box-shadow: var(--shadow-sheet);
-    animation: menu-in var(--t-reveal) var(--ease-out);
-  }
-  .phonemenu__list,
-  .phonemenu__accounts {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .phonemenu__list > li + li {
-    border-top: 1px solid var(--rule);
-  }
-  .phonemenu__job {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: var(--target);
-    color: var(--ink);
-    font-size: var(--fs-base);
-    font-weight: 500;
-    text-decoration: none;
-  }
-  .phonemenu__job--head {
-    min-height: 36px;
-    padding-top: var(--space-2);
-  }
-  .phonemenu__job--quiet {
-    color: var(--ink-2);
-    font-weight: 400;
-  }
-  .phonemenu__job[aria-current]::before {
-    content: "";
-    position: absolute;
-    left: calc(-1 * var(--space-3));
-    top: 12px;
-    bottom: 12px;
-    width: 2px;
-    border-radius: 2px;
-    background: var(--lit);
-  }
-  .phonemenu__accounts {
-    padding-bottom: var(--space-2);
-  }
-  .phonemenu__accounts .readmenu__item {
-    padding: var(--space-2) 0 var(--space-2) var(--space-3);
-    min-height: var(--target);
-  }
-  .phonemenu__accounts .readmenu__item[aria-current="page"]::before {
-    left: 0;
-  }
-  .phonemenu__scheme {
-    margin-top: var(--space-3);
-    gap: var(--space-2);
-    min-height: var(--target);
-  }
-}
-
-/* Phones: the lockup keeps both links; Search keeps its icon and its name for
-   assistive technology, and the parts tighten so nothing leaves the bar. */
-@media (max-width: 30em) {
-  .wordmark__mark {
-    width: 20px;
-    height: 20px;
-  }
-  .search-trigger {
-    min-width: var(--target);
-    justify-content: center;
-    padding: 0;
-  }
-  .search-trigger__word {
+  .topbar__line {
     display: none;
   }
 }
 
-@media (max-width: 22.5em) {
-  .topbar {
-    gap: var(--space-2);
-  }
-  .topbar .fam-lockup__name {
-    font-size: 1rem;
-  }
-  .wordmark__mark {
-    display: none;
+@media (pointer: coarse) {
+  .readmenu__item,
+  .site-menu__actions button {
+    min-height: var(--target);
   }
 }
 
@@ -641,30 +430,4 @@ a.out::after {
   font-size: var(--fs-sm);
   color: var(--ink-2);
   overflow-wrap: anywhere;
-}
-
-/* A library paper's companion documents, by group, under its accounts: the menu scrolls when long. */
-.readmenu__menu:has(.readmenu__group) {
-  width: 26rem;
-  max-height: min(70vh, 40rem);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.readmenu__grouphead {
-  margin: var(--space-3) var(--space-2) var(--space-1);
-  font-size: var(--fs-xs, 0.75rem);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.readmenu__item--companion {
-  padding-block: 0.3rem;
-}
-
-.readmenu__item--companion .readmenu__name {
-  font-size: var(--fs-sm);
-  font-weight: 400;
 }

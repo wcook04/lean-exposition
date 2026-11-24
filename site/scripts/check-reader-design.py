@@ -10,7 +10,7 @@ It checks, each from a fresh browser with empty storage:
  3. linked Lean and its local graph fit together by default. Minimise graph restores the tabs,
     and Graph, Lean and Combine views retain the scroll, subject and history;
  4. Auto, and Escape, release the selection in place: no scroll, no history entry;
- 5. "Return to selected words" brings the selection back into view and keeps it;
+ 5. the old selection return control is absent;
  6. a click on plain, unlinked words changes neither the state nor the address;
  7. a paragraph's margin control selects the paragraph, lists its linked passages, and choosing
     one selects those words; Enter on the control does the same as a click;
@@ -231,15 +231,10 @@ def select_and_views(browser: Browser, base: str) -> None:
           and page.locator(".lean-page__title").first.text_content() == title,
           "3 combining keeps the selection, subject, scroll and history")
 
-    # 5: Return to selected words.
-    scroll_by(page, 1500)
-    centre_click(page, ".subject-band__act")
-    page.wait_for_timeout(2000)
-    inside = page.evaluate(
-        """() => [...document.querySelectorAll('.part__text [data-t][data-pin]')].some(e => [...e.getClientRects()].some(r => r.bottom > 0 && r.top < innerHeight && r.width > 0))"""
-    )
-    check(inside, "5 Return to selected words brings a selected mark into view")
-    check(state(page) == "words", "5 Return to selected words keeps the selection", f"state {state(page)}")
+    # 5: The selected location is still shown without a second jump control.
+    check(page.locator(".subject-band__act, .subject-band__place").count() == 0,
+          "5 the selected location has no extra return control")
+    check(state(page) == "words", "5 still holds the selected words", f"state {state(page)}")
 
     # 4: Auto, then Escape.
     for how in ("Auto", "Escape"):

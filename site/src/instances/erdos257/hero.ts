@@ -63,7 +63,7 @@ export function heroHtml(base: string, facts: SiteFacts, tex: (source: string) =
 <h1 id="front-title" class="front__title">${richHtml(COPY.title, tex).replace(/ − /g, "\u00a0−\u00a0")}</h1>
 <p class="front__lede">${richHtml(COPY.opening, tex)}</p>
 <p class="front__actions"><a class="front__primary" href="${base}read/short">Read the short paper</a><a class="front__secondary" href="${base}read/expository">Read the exposition</a></p>
-<p class="front__made">${richHtml(COPY.credit, tex)} <a href="${base}about">About this site</a></p>
+<p class="front__made">${richHtml(COPY.credit, tex)}</p>
 </div>
 ${watchHtml(films)}
 </section>${HERO_BREAK}

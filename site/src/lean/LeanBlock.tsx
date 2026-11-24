@@ -427,7 +427,7 @@ export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: Lea
               {k > 0 && ", "}
               <code>{axiom}</code>
             </span>
-          ))} for this theorem, and no <code>sorryAx</code>. <a href={routeHref({ view: "checks" })}>What ran</a>
+          ))} for this theorem, and no <code>sorryAx</code>. <a href={routeHref({ view: "checks" })}>Recorded checks</a>
         </>
       );
     }

@@ -105,7 +105,7 @@ export function destinationWords(item: SearchItem): string {
     case "passages":
       return `Opens the ${paper.toLowerCase()} at this passage`;
     case "evidence":
-      return "Opens on the What ran page";
+      return "Opens the recorded check";
     case "edges":
       return "Opens the step that uses it on the argument map";
     case "statements":

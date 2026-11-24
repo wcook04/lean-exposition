@@ -78,7 +78,7 @@
   --t-trace: 520ms; /* lighting a route, start to finish */
 
   /* Layout. */
-  --topbar-h: 56px;
+  --topbar-h: 45px;
   --bar-h: 52px;
   --panel-w: clamp(440px, 34vw, 560px);
   --dock-h: 152px;
