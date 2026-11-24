@@ -466,7 +466,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   useEffect(() => () => restoring.current?.(), []);
 
   const restorePosition = useCallback(
-    async (position: ReadingPosition, current = () => true) => {
+    async (position: ReadingPosition, current: () => boolean = () => true) => {
       const body = bodyRef.current;
       const part = partOfPosition(position, { stage, edition, parts: doc.parts });
       if (!body || part === null) return false;
