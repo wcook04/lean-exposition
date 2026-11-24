@@ -5,10 +5,11 @@
 // it in the text. The view opens at the selected phrase's page, else at `page`, and reports
 // the page in view so a switch back to the text lands at the same place.
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as pdfjs from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import type { PDFDocumentProxy } from "pdfjs-dist";
+import type { ReaderSignals } from "../page/rightPage";
 import "./pdf-view.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
@@ -60,6 +61,8 @@ interface Props {
   marks: PdfMarks;
   /** The selected phrase's place in the text (`b<start>-<end>`), if any. */
   at?: string;
+  pinned: boolean;
+  shownTie: ReaderSignals["shownTie"];
   page?: number;
   section?: PdfSection;
   onPick(id: string, mark: PdfMark, page: number): void;
@@ -67,7 +70,7 @@ interface Props {
   onPosition(page: number, at: string | undefined, section: string | undefined, y: number): void;
 }
 
-export function PdfView({ url, marks, at, page, section, label, onPick, readingLine, onPosition }: Props) {
+export function PdfView({ url, marks, at, pinned, shownTie, page, section, label, onPick, readingLine, onPosition }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -192,6 +195,28 @@ export function PdfView({ url, marks, at, page, section, label, onPick, readingL
     };
   }, [width, byPage, marks, readingLine, onPosition]);
 
+  // Paint the existing click targets without re-rendering the pages or landing again.
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el || !width) return;
+    let lit: NodeListOf<HTMLElement> | undefined;
+    let currentAt: string | undefined;
+    const paint = () => {
+      const next = pinned ? at : shownTie.get()?.at;
+      if (next === currentAt) return;
+      lit?.forEach((mark) => mark.classList.remove("is-selected"));
+      currentAt = next;
+      lit = next ? el.querySelectorAll<HTMLElement>(`[data-at="${CSS.escape(next)}"]`) : undefined;
+      lit?.forEach((mark) => mark.classList.add("is-selected"));
+    };
+    paint();
+    const unsubscribe = shownTie.subscribe(paint);
+    return () => {
+      unsubscribe();
+      lit?.forEach((mark) => mark.classList.remove("is-selected"));
+    };
+  }, [width, marks, pinned, at, shownTie]);
+
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (
     <div className="pdf-view" ref={box} aria-label={label ?? "The authors’ PDF"}>
@@ -211,7 +236,8 @@ export function PdfView({ url, marks, at, page, section, label, onPick, readingL
                     <button
                       key={`${id}-${k}`}
                       type="button"
-                      className={`pdf-view__mark tie${id === selected ? " is-selected" : ""}`}
+                      className="pdf-view__mark tie"
+                      data-at={mark.at}
                       data-mark={k === 0 ? id : undefined}
                       data-tone={mark.tone ?? undefined}
                       style={{ left: b[1] * scale - 1, top: b[2] * scale - 1, width: (b[3] - b[1]) * scale + 2, height: (b[4] - b[2]) * scale + 2 }}

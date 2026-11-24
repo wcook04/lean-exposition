@@ -119,7 +119,7 @@
 }
 
 /* Without a topic colour, pointing gives a light wash of the ink, never a grey block. */
-.paper .tie:not([data-tone]):is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin]) {
+.paper .tie:not([data-tone]):is([data-point], :hover, :focus-visible, [data-decl]):not([data-pin], [data-follow]) {
   background-color: color-mix(in oklab, var(--ink) 6%, transparent);
 }
 
@@ -129,30 +129,35 @@
   outline-offset: 1px;
 }
 
-.paper .tie[data-pin] {
+.paper .tie[data-pin],
+.paper .tie[data-follow] {
   background-color: var(--pin-wash);
   background-image: linear-gradient(var(--lit-line), var(--lit-line));
   background-size: calc(100% - 3px) 2px;
 }
 
 /* A whole selected statement has one amber rule in the margin. */
-.paper .tie[data-pin][data-pin-block] {
+.paper .tie[data-pin][data-pin-block],
+.paper .tie[data-follow][data-pin-block] {
   --tie-line: color-mix(in oklab, var(--tie-color) var(--tie-rest-line-opacity), transparent);
   background-image: linear-gradient(var(--tie-line), var(--tie-line));
   background-size: calc(100% - 3px) var(--tie-rule);
 }
 
-.paper .tie[data-pin][data-pin-block]:is(:hover, :focus-visible) {
+.paper .tie[data-pin][data-pin-block]:is(:hover, :focus-visible),
+.paper .tie[data-follow][data-pin-block]:is(:hover, :focus-visible) {
   --tie-line: color-mix(in oklab, var(--tie-color) 55%, transparent);
   background-size: calc(100% - 3px) 2px;
 }
 
-.paper .math-display.tie[data-pin] {
+.paper .math-display.tie[data-pin],
+.paper .math-display.tie[data-follow] {
   background-image: none;
   box-shadow: inset 2px 0 0 var(--lit-line);
 }
 
-.paper .math-display.tie[data-pin][data-pin-block] {
+.paper .math-display.tie[data-pin][data-pin-block],
+.paper .math-display.tie[data-follow][data-pin-block] {
   background-image: none;
   box-shadow: none;
 }
@@ -174,6 +179,7 @@
   .paper .para-pick:focus-visible,
   .paper .para-pick:focus-visible > span,
   .paper .tie[data-pin],
+  .paper .tie[data-follow],
   .paper .tie:focus-visible {
     outline: 2px solid Highlight;
   }
@@ -192,7 +198,8 @@
     border-left: 3px solid LinkText;
   }
 
-  .paper .tie[data-tone][data-pin] {
+  .paper .tie[data-tone][data-pin],
+  .paper .tie[data-tone][data-follow] {
     outline: 2px solid Highlight;
     outline-offset: 1px;
   }

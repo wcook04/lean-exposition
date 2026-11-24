@@ -36,7 +36,7 @@ import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
-import { applyTones, readTones, readView, saveView } from "./page/panePrefs";
+import { applyTones, readTones } from "./page/panePrefs";
 import { RightSheet } from "./page/RightSheet";
 import { HeldBar } from "./page/HeldBar";
 import { READER_HINT } from "./skeleton";
@@ -312,6 +312,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     heading: new Signal<string | null>(null),
     part: new Signal(0),
     follow: new Signal<Followed>({ tie: null, anchor: null, part: 0 }, sameFollow),
+    shownTie: new Signal<{ tie: number; at: string } | null>(null),
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
@@ -792,24 +793,30 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     path.setAttribute("d", `M${x0.toFixed(1)} ${y0.toFixed(1)}C${mid.toFixed(1)} ${y0.toFixed(1)} ${mid.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`);
   }, [statements, readingTop]);
 
+  useLayoutEffect(() => {
+    const paint = () => {
+      if (pin) {
+        statements.light("follow", null);
+        statements.light("pin", pin.tie);
+      } else {
+        statements.light("pin", null);
+        statements.light("follow", signals.shownTie.get()?.tie ?? null);
+      }
+    };
+    paint();
+    return signals.shownTie.subscribe(paint);
+  }, [pin, signals, statements]);
+
   useEffect(() => {
-    statements.light("pin", pin?.tie ?? null);
     statements.light("on", pin ? null : current.current);
     update.current();
   }, [pin, statements]);
 
   // A statement with no Lean has nothing to open: what is known about that stands under it.
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
-  const noLeanRef = useRef(pinWithoutLean);
-  noLeanRef.current = pinWithoutLean;
-  // The view is the one the address names. An address that names none opens the Lean view: the
-  // quotation, the comparison and the note, then the Lean (docs/reader-design.md). A statement with
-  // no Lean has nothing to compare, so it opens on the graph. Clicks keep the view; only the view
-  // buttons change it.
-  // A view this reader chose with the tabs before is the default in place of Lean; it is read once and is
-  // not written into the address, so an address names a view only when someone chose one for it.
-  const [chosenView] = useState(readView);
-  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : pinWithoutLean ? "graph" : (chosenView ?? "lean");
+  // A normal reading address opens in Lean. A Graph address and a selected
+  // statement with no Lean can still open the graph.
+  const mode: PaneMode = route.lean ? "lean" : route.graph || pinWithoutLean ? "graph" : "lean";
   const modeRef = useRef(mode);
   modeRef.current = mode;
   // The view stays as the reader left it through Back and Forward: an entry keeps its subject,
@@ -1225,7 +1232,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     setSectionsSide(false);
     const here = hereRef.current;
     viewKept.current = mode;
-    saveView(mode);
     if (mode === "lean" ? here.lean : here.graph) return;
     // Changing panes keeps the current slice at the reading line until the reader scrolls.
     if (here.at) selfAt.current = here.at;
@@ -2095,6 +2101,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
             at={route.at}
+            pinned={!!pin}
+            shownTie={signals.shownTie}
             page={route.page}
             section={pdfSection}
             readingLine={readingLine}

@@ -316,7 +316,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const openRecord = pin?.record ?? (decl ? recordOfDecl(alignment, decl) : null);
   const heldFirst = held?.records.find(onGraph) ?? null;
   const following = (): LeanOpen => {
-    if (followRecord) return { via: "follow", record: followRecord, tie: follow.tie, decl: null };
+    if (follow.tie !== null) return { via: "follow", record: followRecord, tie: follow.tie, decl: null };
     const topics = passageTopics(ties, anchor);
     return { via: "follow", record: null, tie: null, decl: null, topics: topics.length ? topics : passage };
   };
@@ -345,24 +345,9 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin, decl, openRecord, declModule, held, heldFirst, tools, ties, pointed, followRecord, follow.tie, anchor, passage]);
 
-  // ---- Nothing in the Lean linked: the whole proof map ------------------------------------------
-
-  // Whether the Lean view has a declaration to show for what it is on. A statement the Lean does
-  // not state, a step with no Lean and a paragraph with nothing tied have none.
-  const hasLean = (open: LeanOpen): boolean => {
-    if (open.decl || open.via === "point") return true;
-    const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
-    if (tie) return !!tie.lean;
-    if (!open.record) return false;
-    // Until the alignment arrives a step's Lean is not known: keep what is there.
-    return !alignment || !!alignment.records[open.record]?.lean.length;
-  };
-  // The Lean view with nothing to show, or the graph with no subject of its own: the whole map, in
-  // the view the reader chose, until a linked paragraph or a click gives it a subject again.
-  // Only a paragraph actually open (read at the line, clicked or pinned) can be unlinked; with
-  // nothing open the graph keeps its opening neighbourhood.
+  // The Graph tab can show the whole map when the passage has no neighbourhood.
   const opened = !!(pdfOn || pin || decl || held || anchor);
-  const unlinked = !leanSlot && opened && (mode === "lean" ? !preview && !hasLean(leanOpen) : !fresh);
+  const unlinked = mode === "graph" && !leanSlot && opened && !fresh;
 
   // ---- The whole proof map, one button away ------------------------------------------------
 
@@ -620,6 +605,13 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
       <GuidePanel stage={guideStage} onClose={() => setAside(null)} />
     ) : null;
   const fill = !!leanSlot || !!asideSlot;
+  const visible = mode === "lean" ? leanOpen : dockOpen;
+  const shownTie = fill || inert || unlinked || preview || visible.via === "pin" ? null : visible.tie;
+  // Commit the mark with the pane, after the scroll-follow transition has rendered.
+  useLayoutEffect(() => {
+    signals.shownTie.set(shownTie === null ? null : { tie: shownTie, at: ties.index.ties[shownTie].at });
+  }, [signals, shownTie, ties]);
+  useLayoutEffect(() => () => signals.shownTie.set(null), [signals]);
   const mapHref = routeHref({ view: "map", goal, node: subjectRecords[0] });
 
   const drawing = showWhole ? (

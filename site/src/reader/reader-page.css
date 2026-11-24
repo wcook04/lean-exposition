@@ -502,12 +502,13 @@ html.is-reading {
   background: var(--ink);
 }
 
-/* Followed: neutral ink. Amber is kept for what the reader selected. */
+/* The reading line can reach a mark before the pane settles on it. */
 .tick[data-on] {
   background: var(--follow-ink);
 }
 
-.tick[data-pin] {
+.tick[data-pin],
+.tick[data-follow] {
   width: var(--sel-rail);
   background: var(--sel-ink);
 }
@@ -524,8 +525,8 @@ html.is-reading {
   background-color: var(--tie-wash);
 }
 
-/* Following marks the margin only (the tick): the paper reads as a paper. */
-.paper .tie[data-pin] {
+.paper .tie[data-pin],
+.paper .tie[data-follow] {
   background-color: var(--pin-wash);
 }
 
