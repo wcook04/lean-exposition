@@ -15,6 +15,12 @@ For a focused check of a linked passage's painted graph, pass its reader address
     python site/scripts/check-graph-pane.py http://127.0.0.1:47335/riemann-hypothesis-reader/ \
       --painted-fit '?n=rh.result&l=b11474-11623&v=lean&view=pdf&page=4' --one-sided-cap
 
+The Euler recurrence illustrates a crowded side with individually visible group members:
+
+    python site/scripts/check-graph-pane.py http://127.0.0.1:47335/library/euler/ \
+      --painted-fit 'read/adapted/?n=phrase%3Ar2.thm56.parent-exponent&l=b146299-146427&v=lean' \
+      --require-group-previews
+
 Serve a static build first (any server that falls back to index.html for unknown paths). It
 needs Playwright for Python with Chromium installed. It exits 1 and names each failure.
 """
@@ -103,7 +109,46 @@ def measure_painted(
     return shape
 
 
-def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
+def check_group_previews(page: Page, graph: Locator) -> list[str]:
+    """Check the prerequisite groups' preview buttons and open the full member list."""
+    layout = graph.evaluate("""graph => {
+      const world = graph.querySelector('.fg__world');
+      const uses = world.querySelector('.fg__side[data-band="uses"]');
+      const groups = [...uses.querySelectorAll(':scope > .fg__group')];
+      const wires = [...world.querySelectorAll('.fg__wire')].map(wire => wire.dataset.edge);
+      const singleIds = [...uses.querySelectorAll(':scope > .fg__card')].map(card => card.dataset.card);
+      const shown = groups.map(group => {
+        const head = group.querySelector(':scope > .fg__grouphead');
+        const cards = [...group.querySelectorAll(':scope > .fg__members > button.fg__card')];
+        const groupWire = '>group:' + head.dataset.group;
+        return {
+          group: head.dataset.group, count: +head.dataset.count, previews: +(head.dataset.previewCount || 0),
+          expanded: head.getAttribute('aria-expanded'), cards: cards.map(card => card.dataset.card),
+          wires: wires.filter(edge => edge === groupWire).length,
+        };
+      });
+      return {total: +graph.dataset.uses, singleIds, groups: shown};
+    }""")
+    bad = []
+    groups = layout["groups"]
+    visible_ids = layout["singleIds"] + [card for group in groups for card in group["cards"]]
+    if not any(group["previews"] for group in groups):
+        return [f"the crowded prerequisite side did not show any group members: {layout}"]
+    if len(layout["singleIds"]) + sum(group["count"] for group in groups) != layout["total"]:
+        bad.append(f"prerequisite groups and singleton cards did not account for every use: {layout}")
+    if len(visible_ids) != len(set(visible_ids)):
+        bad.append(f"a prerequisite was drawn twice: {visible_ids}")
+    for group in groups:
+        if (group["previews"] != len(group["cards"]) or group["previews"] >= group["count"]
+                or group["expanded"] != "false" or group["wires"] != 1):
+            bad.append(f"incorrect group preview, expansion state or wire count: {group}")
+    bad.extend(check_groups(page, "prerequisite group previews"))
+    if not bad:
+        print(f"ok  prerequisite group previews, coverage, opening and search: {layout}", flush=True)
+    return bad
+
+
+def check_painted_fit(page: Page, url: str, one_sided_cap: bool, require_group_previews: bool) -> list[str]:
     """Check a real local graph in desktop and landscape viewports and after a manual fit."""
     bad = []
     errors = []
@@ -119,6 +164,8 @@ def check_painted_fit(page: Page, url: str, one_sided_cap: bool) -> list[str]:
         bad.append(f"painted fit needs cards, labels, wires and arrowheads: {initial}")
     if one_sided_cap and abs(initial.get("scale", 0) - 1.15) > 0.002:
         bad.append(f"the wide fixture must reach the 1.15 scale limit: {initial}")
+    if require_group_previews:
+        bad.extend(check_group_previews(page, graph))
     page.set_viewport_size({"width": 1180, "height": 760})
     desktop = measure_painted(graph, "painted fit after resizing the desktop pane to 1180×760", bad)
     if initial.get("view") == desktop.get("view") or initial.get("subjects") != desktop.get("subjects"):
@@ -176,9 +223,13 @@ def main() -> int:
     parser.add_argument("--name", default="site", help="file name prefix for --shots")
     parser.add_argument("--painted-fit", metavar="ADDRESS", help="only check painted fit at this linked passage address, relative to base or absolute")
     parser.add_argument("--one-sided-cap", action="store_true", help="also require a one-sided fixture that reaches the 1.15 cap at 1440×900")
+    parser.add_argument("--require-group-previews", action="store_true",
+                        help="also require visible prerequisite group members and check opening the full group")
     args = parser.parse_args()
     if args.one_sided_cap and not args.painted_fit:
         parser.error("--one-sided-cap requires --painted-fit")
+    if args.require_group_previews and not args.painted_fit:
+        parser.error("--require-group-previews requires --painted-fit")
     base = args.base.rstrip("/")
     failures: list[str] = []
     with sync_playwright() as p:
@@ -194,7 +245,7 @@ def main() -> int:
                 cold.close()
             page = browser.new_page(viewport={"width": 1440, "height": 900})
             try:
-                failures += check_painted_fit(page, url, args.one_sided_cap)
+                failures += check_painted_fit(page, url, args.one_sided_cap, args.require_group_previews)
             finally:
                 page.close()
         for width, height in (() if args.painted_fit else SIZES):
