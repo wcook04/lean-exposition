@@ -2,7 +2,8 @@
 """Write the Proof Reader redirect table: every Proof Reader page now read in the library, and how
 each of its old hash addresses maps to its library address (docs/library-architecture.md, section 6).
 
-    proof_reader_redirects.py PROOF_READER_CHECKOUT OUT.json [--js OUT.js] [--instance ID] [--ns-table REDIRECTS.json] [--offline]
+    proof_reader_redirects.py PROOF_READER_CHECKOUT OUT.json [--js OUT.js] [--instance ID]
+      [--ns-table REDIRECTS.json] [--verified-bookmarks BOOKMARKS.json] [--base-table TABLE.json] [--offline]
 
 Pages come from the library instances (instances/*/instance.json: the main document's Proof Reader
 page, and each companion document read from a single page) and, for Navier–Stokes, from the table of
@@ -17,6 +18,7 @@ For each page the table holds:
   retired   true for a removed companion whose old addresses open the original paper
   headings  old heading id (and each alias) -> the library's section anchor ("" for an unnumbered
             heading, which opens the page at its top); read from the live Proof Reader edition
+  bookmarks only these verified old record spellings move; the original reader keeps every other address
 The JS file holds the table and the mapping the stub runs before Proof Reader's own code.
 """
 from __future__ import annotations
@@ -74,6 +76,7 @@ JS = r"""// Proof Reader pages now read in the library: each old hash address go
 // the app, so a moved page never draws. An address the table does not know stays on Proof Reader.
 (function () {
   var T = __TABLE__;
+  var nativePaper = null;
   function dec(s) { try { return decodeURIComponent(s); } catch (e) { return s; } }
   function target(hash) {
     var m = /^#\/?([^\/#]+)(?:#([^#]+)|\/([^\/]*)(?:\/.*)?)?$/.exec(hash);
@@ -83,6 +86,13 @@ JS = r"""// Proof Reader pages now read in the library: each old hash address go
     var e = T[slug];
     if (e.retired) return e.to;
     var rec = m[2] !== undefined ? "@" + dec(m[2]) : m[3] ? dec(m[3]) : "";
+    if (e.bookmarks) {
+      // A visit to a retained view uses the original reader for the rest of that paper's visit.
+      if (nativePaper === slug) return null;
+      if (/^#\/?[^\/#]+\/[^/]*\//.test(hash)) return null;
+      if (!rec) return e.to;
+      return Object.prototype.hasOwnProperty.call(e.bookmarks, rec) ? e.to + e.bookmarks[rec] : null;
+    }
     if (!rec) return e.to;
     if (rec.charAt(0) === "@") {
       var k = rec.slice(1);
@@ -102,14 +112,22 @@ JS = r"""// Proof Reader pages now read in the library: each old hash address go
   function forward() {
     // A static /proof-reader/<slug>/ address may still carry an old heading fragment.
     var hash = location.hash;
+    var nativeHash = null;
     if (!/^#\//.test(hash)) {
       var page = /\/proof-reader\/([^\/]+)\/?$/.exec(location.pathname);
-      if (page) hash = "#/" + page[1] + hash;
+      if (page) {
+        hash = "#/" + page[1] + hash;
+        if (Object.prototype.hasOwnProperty.call(T, page[1]) && T[page[1]].bookmarks) nativeHash = hash;
+      }
     }
     var to = target(hash);
     if (to) {
       document.documentElement.style.visibility = "hidden";
       location.replace(to);
+    } else {
+      var slug = dec((/^#\/?([^\/#]+)/.exec(hash) || ["", ""])[1]);
+      nativePaper = Object.prototype.hasOwnProperty.call(T, slug) && T[slug].bookmarks ? slug : null;
+      if (nativeHash && location.hash) location.replace(location.pathname.replace(/[^/]+\/?$/, "") + nativeHash);
     }
   }
   window.addEventListener("hashchange", forward);
@@ -125,6 +143,8 @@ def main() -> int:
     ap.add_argument("--js", type=Path)
     ap.add_argument("--instance", action="append", help="only include the selected library instance; repeat to select several")
     ap.add_argument("--ns-table", type=Path, help="the Navier–Stokes companion pages' table (paper, pages)")
+    ap.add_argument("--verified-bookmarks", type=Path, help="only move these old pages and verified records; JSON keyed by old page then record")
+    ap.add_argument("--base-table", type=Path, help="preserve other entries in this existing table")
     ap.add_argument("--offline", action="store_true", help="write every page without checking that its library address is live")
     args = ap.parse_args()
     papers = args.proof_reader / "papers"
@@ -168,7 +188,22 @@ def main() -> int:
                 pages[slug] = {"to": f"{LIB}navier-stokes/", "root": f"{LIB}navier-stokes/", "claims": {}, "retired": True}
             else:
                 pages[slug] = {"to": f"{LIB}navier-stokes/{row['page']}/", "root": f"{LIB}navier-stokes/", "claims": claim_passages(slug)}
-    out, held = {}, []
+    if args.verified_bookmarks:
+        verified = json.loads(args.verified_bookmarks.read_text())
+        unknown = verified.keys() - pages.keys()
+        if unknown:
+            ap.error(f"no Library page for {', '.join(sorted(unknown))}")
+        pages = {
+            slug: {**pages[slug], "bookmarks": bookmarks}
+            for slug, bookmarks in verified.items()
+        }
+        for slug, row in pages.items():
+            for old, target in row["bookmarks"].items():
+                if not old or not isinstance(target, str) or not target.startswith(("?", "#", "@", "lean/")):
+                    ap.error(f"invalid verified bookmark for {slug}: {old!r} → {target!r}")
+    base = json.loads(args.base_table.read_text()) if args.base_table else {}
+    out = dict(base.get("pages", {}))
+    held = set(base.get("held", []))
     live_by_url: dict[str, bool] = {}
     for slug in sorted(pages):
         row = pages[slug]
@@ -177,10 +212,18 @@ def main() -> int:
             if url not in live_by_url:
                 live_by_url[url] = live(url)
             if not live_by_url[url]:
-                held.append(slug)
+                held.add(slug)
                 continue
-        row["headings"] = {} if row.get("retired") else headings(slug)
+        held.discard(slug)
+        older = out.get(slug)
+        if older and "bookmarks" in older and "bookmarks" not in row:
+            if (older["to"], older["root"]) != (row["to"], row["root"]):
+                ap.error(f"recheck verified bookmarks for moved Library page {slug}")
+            row["bookmarks"] = older["bookmarks"]
+        row["headings"] = {} if row.get("retired") or "bookmarks" in row else headings(slug)
         out[slug] = row
+    out = dict(sorted(out.items()))
+    held = sorted(held)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps({"schema": 1, "from": PR, "pages": out, "held": held}, indent=1, ensure_ascii=False) + "\n")
     if args.js:
