@@ -1,0 +1,995 @@
+{
+  "exp-intro-family": {
+    "QuarticQuery.theorem_1_1_unconditional": "Read the last conjunct in binder order. Fix $k\\ge2$, choose constants and a threshold, then let $t$ grow. The same circuit witness `C` defines `Fkm k t C` in both query inequalities."
+  },
+  "exp-intro-upper": {
+    "QuarticQuery.universalPower_four": "The constant in `UniversalPower 4` is chosen once for all input lengths and total functions. The proof obtains it by composing `R_le_D` with the deterministic quartic estimate."
+  },
+  "exp-1-bit-read-cost": {
+    "QuarticQuery.QueryTree.depth": "The largest number of input bits read on any path through a deterministic algorithm."
+  },
+  "exp-1-state": {
+    "QuarticQuery.State": "The complex vector space of amplitudes indexed by a position, an answer bit and a workspace value. The type `State ι w` permits arbitrary vectors. The condition $\\|\\psi_0\\|=1$ is imposed separately in `QLe` when choosing an algorithm's initial state.",
+    "QuarticQuery.QLe": "The state witness is `ψ₀` with norm one. The same vector initializes the program for every input, and the promised-answer condition is checked afterward."
+  },
+  "exp-1-measurement": {
+    "QuarticQuery.Upper.lawOf": "`lawOf` sums squared moduli over the basis configurations with a common output label. At label $b$ the summands are $|\\psi_z|^2$ for those $z$ with `out z = b`."
+  },
+  "exp-1-global-sign": {
+    "QuarticQuery.Upper.lawOf_smul": "`lawOf_smul` treats every complex scalar $a$ and gives the exact factor $|a|^2$. The sentence is its $a=-1$ case. `a • ψ` multiplies the entire vector, so this is about a common phase, not changing the signs of selected coordinates."
+  },
+  "exp-1-free-gates": {
+    "QuarticQuery.AdaptiveProgram": "A finite quantum program made from output steps, input-independent linear isometries, input-oracle calls and two-outcome measurements. The gate `U` in the `unitary` constructor is a fixed linear norm-preserving map. Only the `query` constructor reads the unknown input."
+  },
+  "exp-1-only-queries": {
+    "QuarticQuery.AdaptiveProgram.queryCap": "The maximum number of oracle calls on any branch of a quantum program. A `query` adds one. A `unitary` step adds nothing. And a measurement takes the larger cap of its two continuations."
+  },
+  "exp-1-phase-oracle": {
+    "QuarticQuery.Paper.construction_bitOracle_phase_kickback": "The binder `hminus` requires opposite amplitudes for the two answer-bit values at each position and workspace value. Under that condition the physical bit query acts by the phase $(-1)^{x_j}$."
+  },
+  "exp-1-total-function": {
+    "QuarticQuery.TotalBool": "A total Boolean function assigns either zero or one to every bit string indexed by `ι`. In Lean, `BitInput ι` is a function from positions to `Bool`, and the arrow in `BitInput ι → Bool` assigns one output to every such input."
+  },
+  "exp-1-randomized-complexity": {
+    "QuarticQuery.R": "The smallest query budget for which a randomized algorithm computes the partial function with error at most $1/3$ on every promised input. `sInf` takes the infimum of the natural-number budgets satisfying `RLe`.",
+    "QuarticQuery.RLe": "A finite random choice of decision trees whose worst-case depth is at most `budget` and whose success probability is at least $2/3$ on every promised input.",
+    "QuarticQuery.R_le_iff": "The inequality $R(f)\\le t$ holds exactly when there is a randomized algorithm satisfying the budget and correctness requirements in `RLe f t`."
+  },
+  "exp-1-worst-case-randomness": {
+    "QuarticQuery.RandomizedProgram.depth": "Every listed tree has positive probability by the fields of `RandomizedProgram`, so even a very unlikely tree counts."
+  },
+  "exp-1-quantum-complexity": {
+    "QuarticQuery.Q": "The smallest natural-number budget satisfying `QLe f t`: a quantum algorithm must have error at most $1/3$ on each promised input and obey its syntactic query cap on every branch. The expression `sInf` is the infimum over all feasible budgets.",
+    "QuarticQuery.QLe": "`QLe f budget` allows a constant answer or a normalized initial state and one `AdaptiveProgram`. The program’s cap is syntactic and the correctness condition is per promised input.",
+    "QuarticQuery.Q_le_iff": "The inequality $Q(f)\\le t$ is equivalent to the existence and correctness conditions in `QLe f t`."
+  },
+  "exp-1-free-computation": {
+    "QuarticQuery.QueryTree.depth": "The largest number of input bits read on any path through a deterministic algorithm.",
+    "QuarticQuery.AdaptiveProgram.queryCap": "A `unitary` node keeps the continuation’s cap. A `query` node adds one, and a `measure` node takes the maximum of its children’s caps. This definition accounts for quantum program branches."
+  },
+  "exp-1-universal-fourth-power": {
+    "QuarticQuery.universalPower_four": "Every total Boolean function satisfies $R(f)\\le20736(1+Q(f))^4$. The constant is independent of the function and its input length, which is exactly what `UniversalPower 4` requires."
+  },
+  "exp-1-summary-table-new-family": {
+    "QuarticQuery.theorem_1_1_unconditional": "`k` is chosen before the constants and threshold. The size parameter `t` then grows. The existential circuit `C` is shared by the quantum and classical conclusions."
+  },
+  "exp-1-summary-table-upper": {
+    "QuarticQuery.D_le_Q_pow_four": "The theorem gives $D(f) \\le 20736\\, Q(f)^4$ for every total $f$. Together with `R_le_D`, it yields the displayed bound on $R$.",
+    "QuarticQuery.R_le_D": "`R_le_D` holds for every partial Boolean function on a finite coordinate type, including the total functions in this row."
+  },
+  "exp-1-all-smaller-powers": {
+    "QuarticQuery.Paper.classical_Fkm_ratio": "`classical_Fkm_ratio` assumes $0 \\le \\alpha$ and $\\alpha/2 < 2-1/k$ for a fixed $k\\ge 2$. `exists_nat_exponent` chooses $k$ for $\\alpha<4$. Negative $\\alpha$ require the additional monotonicity observation, not stated by this declaration. A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities.",
+    "QuarticQuery.exists_nat_exponent": "For every real $\\alpha<4$, some integer $k\\ge2$ satisfies $\\alpha/2<2-1/k$, equivalently $\\alpha<4-2/k$. The only hypothesis is `hα : α < 4`. This numerical choice does not depend on the board size."
+  },
+  "exp-1-critical-exponent-definition": {
+    "QuarticQuery.alphaTot": "`sInf` takes the infimum over `UniversalPower`. Lean restricts to nonnegative exponents and uses the positive base $1+Q(f)$, which lies between $Q(f)$ and $2Q(f)$ when $Q(f)\\ge1$.",
+    "QuarticQuery.UniversalPower": "After `0 ≤ α`, the binder order chooses one positive $C$ before the length and the function. The expression `Real.rpow (1 + (Q (totalise f) : ℝ)) α` also covers zero-query functions."
+  },
+  "exp-1-critical-exponent-value": {
+    "QuarticQuery.alphaTot_eq_four_unconditional": "The proof supplies `ForrelationLower.bansalSinhaLower` to `alphaTot_eq_four_of_bansalSinha`. Open the latter to see the upper and lower inequalities for the infimum."
+  },
+  "exp-1-finite-family-parameters": {
+    "QuarticQuery.Fkm": "The addressed total function built from $k$-block Forrelation with $m=4^t$ columns, row-number length $\\ell=2t$ and address length $r=40t$. The circuit `C` remains an explicit parameter, so two different circuit encodings can define different board functions.",
+    "QuarticQuery.Paper.construction_equation_two": "The parameter binder takes `k` and `hk : 2 ≤ k` before the constants. `t` is the later size parameter, with $m=4^t$."
+  },
+  "exp-1-quantum-scale": {
+    "QuarticQuery.Paper.construction_equation_two": "The quantum term is the upper bound on `Q (totalise (Fkm k t Cir))`. Its square-root factor comes with a fixed logarithmic power chosen with $k$."
+  },
+  "exp-1-classical-scale": {
+    "QuarticQuery.Paper.construction_equation_two": "The lower-bound conjunct is eventual in $t$ for fixed $k\\ge2$. It has coefficient $c>0$ and denominator $(\\log_2 m)^2$, so the product in the passage gives the power of $m$ in the bound."
+  },
+  "exp-1-fourth-power-limit": {
+    "QuarticQuery.familyExponent_tendsto": "The sequence in Lean is `familyExponent`, namely $4-2/k$. In the separation argument the limit lets one choose a fixed $k$ for a proposed power below four before increasing the board size."
+  },
+  "exp-2-new-input": {
+    "QuarticQuery.BitLoc": "`BitLoc` indexes column strings, address inputs, pointers and gate transcripts. An arbitrary function from this coordinate type to `Bool` assigns every board bit, including all certificate storage.",
+    "QuarticQuery.addressedF": "`addressedF` takes a full assignment to `BitLoc`. The existential `∃ i s, WinsAt f C ℓ r x i s` uses the stored certificate at each proposed pair."
+  },
+  "exp-2-pointer-encoding": {
+    "QuarticQuery.pointerEquiv": "The fixed bijection between $\\ell$ Boolean digits and the $2^\\ell$ possible row numbers. Lean uses zero-based indices `Fin (2 ^ ℓ)`. The exposition labels rows starting at one."
+  },
+  "exp-2-pointer-read-budget": {
+    "QuarticQuery.Paper.construction_test_depth": "`construction_test_depth` states an upper bound of $2t+1$ for local tests on $m=4^t$ with $t\\ge 1$. It is not an equality or a lower bound for every pointer-following procedure. The binder `ht : 1 ≤ t` ensures this also covers gate tests, which may read three bits."
+  },
+  "exp-2-cells": {
+    "QuarticQuery.BitLoc": "The positions of all bits in an enlarged board: column-string bits, address-input bits, pointer bits and transcript bits. The four disjoint alternatives in `BitLoc` keep these kinds of positions separate."
+  },
+  "exp-2-computed-address": {
+    "QuarticQuery.trueAddress": "The function returns `Classical.choose (hdef h)` at coordinate $h$. It takes the promise witness as input and extracts the mathematical answer for that address question."
+  },
+  "exp-2-promise": {
+    "QuarticQuery.PartialBool": "A partial Boolean function returns `some false` or `some true` on its promise, and `none` outside it.",
+    "QuarticQuery.promised": "An input belongs to the promise exactly when the partial function gives it a defined Boolean value. The existential `∃ b, f x = some b` includes both prescribed zero and prescribed one."
+  },
+  "exp-2-full-address-count": {
+    "QuarticQuery.Paper.construction_eq6": "For $m=4^t$, the row number takes $\\ell=\\log_2m=2t$ bits and the full construction uses $r=\\lceil20\\log_2m\\rceil=40t$ address questions."
+  },
+  "exp-2-cell-cardinality": {
+    "QuarticQuery.Paper.construction_layout_cardinalities": "Use the third conjunct, `Fintype.card (Address (40 * t)) = 2 ^ (40 * t)`. The conversion to $m^{20}$ uses $m=4^t$."
+  },
+  "exp-2-input-cardinality": {
+    "QuarticQuery.Paper.construction_layout_cardinalities": "The middle conjunct counts `ForrelationCoord k t` by a finite product equivalence. A bit coordinate is a block index and a position in that block."
+  },
+  "exp-2-column-string": {
+    "QuarticQuery.readX": "The bit in row `j` of the ordinary string stored in column `i`."
+  },
+  "exp-2-table-x": {
+    "QuarticQuery.readX": "The bit in row `j` of the ordinary string stored in column `i`."
+  },
+  "exp-2-table-a": {
+    "QuarticQuery.readA": "The bit string for address question `h` in column `i`. Its coordinates have type `κ`, so one address input can contain many stored bits."
+  },
+  "exp-2-table-cell": {
+    "QuarticQuery.readPointerBit": "Digit `b` of the pointer in cell `s` of column `i` that points into another column `j`. The subtype `{j // j ≠ i}` records that only pointers to other columns are stored.",
+    "QuarticQuery.readTranscript": "The transcript in cell `s` of column `i` for address question `h`: one stored Boolean bit for each of the circuit's `S` gates."
+  },
+  "exp-2-table-true-address": {
+    "QuarticQuery.trueAddress": "An address is a Boolean vector indexed by `Fin r`. `apply_eq_trueAddress` identifies its $h$-th coordinate with the prescribed answer to `readA x i h`."
+  },
+  "exp-2-prescribed-p": {
+    "QuarticQuery.PartialBool": "A partial Boolean function returns `some false` or `some true` on its promise, and `none` outside it."
+  },
+  "exp-2-winning-column": {
+    "QuarticQuery.Paper.constructionWinner": "The definition places the all-ones condition before an existential promise witness `hdef`. Both certificate checks then use the same `trueAddress f x i hdef`."
+  },
+  "exp-2-winning-string": {
+    "QuarticQuery.WinsAt": "Column $i$ wins at address $s$ when its string is all ones, every address question has the prescribed value recorded in $s$, every transcript at that cell is correct, and its pointers find zeros in every other column."
+  },
+  "exp-2-winning-promise": {
+    "QuarticQuery.Paper.constructionWinner": "The witness `hdef` certifies `promised f (readA x i h)` for every address question $h$ in column $i$. It is passed directly to `trueAddress`.",
+    "QuarticQuery.trueAddress": "The argument `hdef` supplies a promised answer for each address input of the chosen column. Those witnesses make `trueAddress` available before the stored cell is inspected."
+  },
+  "exp-2-winning-transcripts": {
+    "QuarticQuery.Paper.constructionWinner": "For every `h`, the stored transcript must equal `circuitEval C (readA x i h)` as an entire vector. The address passed to `readTranscript` is computed from the promise witness."
+  },
+  "exp-2-winning-pointers": {
+    "QuarticQuery.Paper.constructionOutwardPointers": "For every column other than `i`, the pointer stored in cell `s` selects a row where that other column's string is zero. It describes a condition at any proposed cell `s`. The winning condition uses it at the true address."
+  },
+  "exp-2-boolean-answer": {
+    "QuarticQuery.addressedF": "`decide` turns the existence of a winning pair into a Boolean. The two existential variables are the column and its cell address."
+  },
+  "exp-2-certificate": {
+    "QuarticQuery.readPointerBit": "Digit `b` of the pointer in cell `s` of column `i` that points into another column `j`. The subtype `{j // j ≠ i}` records that only pointers to other columns are stored.",
+    "QuarticQuery.readTranscript": "The transcript in cell `s` of column `i` for address question `h`: one stored Boolean bit for each of the circuit's `S` gates."
+  },
+  "exp-2-unique-winner": {
+    "QuarticQuery.Paper.construction_unique_winner": "The hypotheses `hi` and `hj` assert that two proposed columns win. The outgoing zero pointer from one would contradict the all-one condition of the other, so the argument works for any circuit, independently of `CircuitRealises`."
+  },
+  "exp-2-promise-not-totality": {
+    "QuarticQuery.PartialBool": "The codomain is `Option Bool`. `some false` is a promised zero and `none` marks an input on which the partial function prescribes no answer.",
+    "QuarticQuery.addressedF": "The promise is checked within `WinsAt` for a proposed winner. `addressedF` returns a bit for every complete board, even when an undefined address prevents a column from winning."
+  },
+  "exp-2-decoder-promise-contract": {
+    "QuarticQuery.QLe": "The error bound in `QLe` is imposed whenever the partial function equals `some b`. The branch cap has no corresponding promise premise."
+  },
+  "exp-2-off-promise-cannot-win": {
+    "QuarticQuery.Paper.constructionWinner": "A single address input failing `promised` rules out the existential `hdef`. This prevents the column from winning even if the stored certificate would pass some tests."
+  },
+  "exp-3-rule": {
+    "QuarticQuery.Paper.quantumComparison_rule": "The smaller column wins if its pointer alone finds a zero, or if both pointer tests agree. Here `d₁` and `d₂` are disqualification bits: true means that the corresponding pointer finds a zero in the other column.",
+    "QuarticQuery.Paper.quantumComparison_disqualification": "The disqualification bit records whether the selected bit in the other column is zero. For an input `x`, a supplying column `i`, a chosen cell `s` and a different target column `j`, the theorem identifies `disq` with the negation of that target bit."
+  },
+  "exp-3-sorted": {
+    "QuarticQuery.Upper.cmpProb": "The probability that column $i$ is returned when it is compared with column $j$. The parameter `n` controls address-decoder repetitions.",
+    "QuarticQuery.Paper.quantumComparison_unordered_state": "For distinct columns, one circuit supplies both ordered comparison laws. The hypotheses are `hk : 1 ≤ k` and `hij : i ≠ j`. Neither column must win or satisfy the address promise."
+  },
+  "exp-3-self": {
+    "QuarticQuery.Paper.quantumComparison_self_zero_reads": "Comparing a column with itself can be implemented with zero reads. The theorem gives `Samples 0` for the law whose success probability is `cmpProb n x i i`."
+  },
+  "exp-3-winner": {
+    "QuarticQuery.Upper.cmpProb_winner": "The hypothesis `hw : WinsAt ... x i s` includes an all-one string and correct outgoing pointers. `hne : j ≠ i` selects an opponent."
+  },
+  "exp-3-cheap-comparison": {
+    "QuarticQuery.Paper.quantumComparison_query_bound": "The finite bound is for $t\\ge1$ and $0<\\varepsilon\\le1$. Its decoder term has the factor $2^{10k}$ and logarithm $\\ln(40t/\\varepsilon)$, which makes the fixed-$k$ dependence explicit."
+  },
+  "exp-3-costs": {
+    "QuarticQuery.Paper.quantumComparison_query_bound": "The comparison cost on the left is `2 * cmpCost` evaluated at the prescribed decoder repetitions. For fixed $k$ it contains logarithmic factors in the board size.",
+    "QuarticQuery.Paper.quantumTournament_cost_log": "Read `Tval m * stageCost m (Tval m) cc (epsval m)` as the list-generation cost. The bound scales with the supplied logical comparison budget `cc`.",
+    "QuarticQuery.Paper.quantumVerify_search_query_bound": "For $K\\ge2$ and $0<\\varepsilon<1/2$, `searchCost` covers the failed-test search at one fixed address. Address decoding is charged separately.",
+    "QuarticQuery.Paper.quantumVerify_list": "A list of candidates can be checked sequentially, stopping when one accepts. If `hv` supplies a verifier with physical query cap `cV` for each candidate, the list verifier has cap `L.length * cV`."
+  },
+  "exp-3-add": {
+    "QuarticQuery.Upper.budget": "The total physical query budget is the tournament budget plus the budget for checking its candidates. The parameters `n` and `K` are the decoder repetition count and number of tests."
+  },
+  "exp-3-fixed-drift": {
+    "QuarticQuery.Tournament.expected_weight_eq": "The identity allows arbitrary real weights with positive total. Setting all weights to one gives $(m-1)/2$ for fixed complementary comparisons. The hypotheses `ha : IsComparison a`, `hW : W = ∑ i, w i` and `hpos : 0 < W` provide complementary comparisons and a positive denominator."
+  },
+  "exp-4-aij": {
+    "QuarticQuery.Upper.cmpProb": "The probability that column $i$ is returned when it is compared with column $j$. The parameter `n` controls address-decoder repetitions."
+  },
+  "exp-4-complement": {
+    "QuarticQuery.Paper.quantumComparison_complementary": "For two different columns, the probability of returning the first plus the probability of returning the second is one. The only local hypothesis is `hij : i ≠ j`."
+  },
+  "exp-4-self": {
+    "QuarticQuery.Paper.quantumComparison_self": "The probability assigned to a self-comparison is zero."
+  },
+  "exp-4-dominant": {
+    "QuarticQuery.Paper.quantumWinner_dominates": "A winning column beats every different column with probability at least $1-\\varepsilon$. The hypotheses `hk` and `ht` require $k,t\\ge1$. `hε` and `hε1` require $0<\\varepsilon\\le1$. `hn` gives enough decoder repetitions.",
+    "QuarticQuery.Tournament.Dominant": "A candidate $s$ is dominant when it beats each different candidate with probability at least $1-\\varepsilon$. In `Dominant a ε s`, the function `a` gives the ordered comparison probabilities."
+  },
+  "exp-4-independent": {
+    "QuarticQuery.Paper.tensor_success_mass": "The formal product law concerns a fixed family of fresh tensor-register comparisons. Adaptive choices of later pairs are not asserted to be unconditionally independent. The state `tensorVector ψ t` contains one fresh register per comparison, and `tensorGood out t` accepts exactly when all their output bits are true."
+  },
+  "exp-4-weights": {
+    "QuarticQuery.Tournament.weight": "The weight of candidate $i$ after a pivot history is the product of its probabilities of defeating those pivots. Prepending a pivot `p` multiplies the old weight by `a i p`.",
+    "QuarticQuery.Tournament.total": "The total weight $W$ is the finite sum of the individual candidate weights. The definition `total w` takes any real-valued weight function on a finite candidate type."
+  },
+  "exp-4-draw": {
+    "QuarticQuery.Upper.stageLaw": "The outcome law of one draw: `some i` means candidate $i$ was drawn uniformly and passed every listed comparison, while `none` means rejection."
+  },
+  "exp-4-joint": {
+    "QuarticQuery.Paper.quantumStage_success": "Read the simultaneous equalities for the mass of label `some i` and the sum over all `some` labels. The rejected outcome is represented separately by `none`."
+  },
+  "exp-4-conditional": {
+    "QuarticQuery.Paper.quantumStage_success": "The ratio divides the successful mass of label $i$ by the sum of successful masses. `hW` makes that denominator positive after the uniform factor $1/m$ is cancelled."
+  },
+  "exp-4-update": {
+    "QuarticQuery.Tournament.weight": "The weight of candidate $i$ after a pivot history is the product of its probabilities of defeating those pivots. Prepending a pivot `p` multiplies the old weight by `a i p`."
+  },
+  "exp-4-halving-claim": {
+    "QuarticQuery.Tournament.expected_weight_le_half": "The expected total after a proportional-weight pivot is at most $W/2$. The assumptions are complementary comparisons, `hW` identifying $W$ with the sum of the weights, and `hpos : 0 < W`."
+  },
+  "exp-4-pair": {
+    "QuarticQuery.Tournament.two_mul_weighted_sum": "Pairing each ordered pair with its reverse gives $2\\sum_{p,i}w_pw_i a_{ip}=W^2-\\sum_iw_i^2$. The hypothesis `ha : IsComparison a` supplies complementarity for distinct candidates and zero on the diagonal."
+  },
+  "exp-4-drift": {
+    "QuarticQuery.Tournament.expected_weight_eq": "When pivot $p$ is chosen with probability $w_p/W$, the expected new total weight is $(W^2-\\sum_iw_i^2)/(2W)$. The hypotheses `ha : IsComparison a`, `hW : W = ∑ i, w i` and `hpos : 0 < W` provide complementary comparisons and a positive denominator.",
+    "QuarticQuery.Tournament.two_mul_weighted_sum": "Pairing each ordered pair with its reverse gives $2\\sum_{p,i}w_pw_i a_{ip}=W^2-\\sum_iw_i^2$. The hypothesis `ha : IsComparison a` supplies complementarity for distinct candidates and zero on the diagonal."
+  },
+  "exp-4-half-bound": {
+    "QuarticQuery.Tournament.expected_weight_le_half": "The assumptions are complementary comparisons, `hW` identifying $W$ with the sum of the weights, and `hpos : 0 < W`."
+  },
+  "exp-4-zero-stop": {
+    "QuarticQuery.Tournament.expectFrom": "The ideal tournament chooses its next pivot proportionally to the current weights and records an expectation after a fixed number of further stages. The terminal function `g` specifies what is being averaged."
+  },
+  "exp-4-many-pivots": {
+    "QuarticQuery.Tournament.expected_final_weight": "The hypotheses `hc : IsComparison a` and `ha : UnitValued a` ensure complementary comparisons and probabilities in $[0,1]$."
+  },
+  "exp-4-survival": {
+    "QuarticQuery.Tournament.dominant_weight_lb": "The declaration additionally assumes $0 \\le \\varepsilon \\le 1$ and $T\\varepsilon < 1/2$ to prove its further strict half bound. The printed product/Bernoulli estimate does not require $T\\varepsilon < 1/2$. The later chosen parameters satisfy it."
+  },
+  "exp-4-parameters": {
+    "QuarticQuery.Paper.quantumTournament_parameters": "Lean writes the first number as `Nat.clog 2 (1000 * m)`, the least natural $T$ for which $1000m\\le2^T$."
+  },
+  "exp-4-miss": {
+    "QuarticQuery.Tournament.ideal_tournament": "The hypotheses `hc` and `ha` give the comparison rules and `hd` gives dominance at the chosen error $\\varepsilon$."
+  },
+  "exp-4-positive": {
+    "QuarticQuery.Tournament.half_lt_total": "While a dominant candidate is absent, the total weight is greater than $1/2$. The theorem assumes probabilities in $[0,1]$, $0\\le\\varepsilon\\le1$, `hT : (T : ℝ) * ε < 1 / 2`, and a history of length at most $T$ that omits the candidate.",
+    "QuarticQuery.Paper.quantumStage_success": "The total successful mass given by the theorem is $W/m$ under `hW`. The strict lower bound $W>1/2$ comes from the separate unlisted-winner weight estimate."
+  },
+  "exp-4-keep-list": {
+    "QuarticQuery.Paper.quantumListLaw": "The recursive call changes `L` to `p :: L`, and both stopping cases return the current list. Thus a vertex already in the history survives either continuation."
+  },
+  "exp-4-required-law": {
+    "QuarticQuery.Paper.quantum_amplified_conditional": "The theorem takes any nonnegative label masses `q` with positive sum. Substituting $q_i=w_i/m$ makes the normalized law $w_i/W$."
+  },
+  "exp-4-uniform": {
+    "QuarticQuery.Paper.uniformIndex": "The uniform column state has amplitude $1/\\sqrt m$ on each of the $m$ column numbers."
+  },
+  "exp-4-fresh-workspace": {
+    "QuarticQuery.Paper.equation_15": "A uniform candidate register is combined with one complete fresh comparison state per pivot. The hypothesis `hF` supplies a coherent comparison family with a common logical read cap `c`."
+  },
+  "exp-4-flag": {
+    "QuarticQuery.Paper.tensorGood": "The acceptance flag is the conjunction of the success bits in all fresh comparison registers. In `tensorGood out t`, `out` reads the success bit from each retained register."
+  },
+  "exp-4-product-mass": {
+    "QuarticQuery.Paper.tensor_success_mass": "The probability mass of passing every comparison is the product of the individual success masses. The state `tensorVector ψ t` contains one fresh register per comparison, and `tensorGood out t` accepts exactly when all their output bits are true.",
+    "QuarticQuery.Paper.equation_15_index_law": "For a state with the tensor slices specified by `hv`, the probability mass of outputting candidate $i$ is the product of its comparison success masses divided by $m$. Its algebraic form allows arbitrary vectors. Applying it to the normalized preparation in `equation_15` makes the masses probabilities."
+  },
+  "exp-4-flip": {
+    "QuarticQuery.Amplification.Preparation.flipGood": "The success sign flip sends a vector $v$ to $v-2\\Pi v$, where $\\Pi$ is the orthogonal projector onto accepted states. The projector comes from `A.good` in the preparation data."
+  },
+  "exp-4-reflect": {
+    "QuarticQuery.Amplification.Preparation.grover_apply": "One amplification step sends $v$ to $2\\langle\\psi,Sv\\rangle\\psi-Sv$, where $\\psi=A|0\\rangle$ and $S$ flips the accepted component. The formula holds for every vector `v` and uses the unitary preparation and orthogonal success projector stored in `A`."
+  },
+  "exp-4-reverse": {
+    "QuarticQuery.Amplification.groverStep": "One amplification step first flips the successful component, then applies the inverse preparation, flips the starting state, reapplies the preparation, and negates the whole vector."
+  },
+  "exp-4-plane": {
+    "QuarticQuery.Paper.quantum_grover_state": "For $0<q<1$, the prepared state is $\\sin\\theta\\,g+\\cos\\theta\\,b$, where $g$ and $b$ are orthogonal unit vectors and $0<\\theta<\\pi/2$. The hypotheses `h0` and `h1` give these strict bounds on `A.prob`."
+  },
+  "exp-4-common-multiplier": {
+    "QuarticQuery.Amplification.Preparation.good_iterate": "After $u$ amplification iterations, the entire accepted component equals $\\sin((2u+1)\\theta)\\,g$. Here `g` is `A.goodState`, the normalized accepted part of the initial preparation.",
+    "QuarticQuery.Amplification.Preparation.flipGood": "The success sign flip sends a vector $v$ to $v-2\\Pi v$, where $\\Pi$ is the orthogonal projector onto accepted states. The projector comes from `A.good` in the preparation data.",
+    "QuarticQuery.Amplification.Preparation.grover_apply": "One amplification step sends $v$ to $2\\langle\\psi,Sv\\rangle\\psi-Sv$, where $\\psi=A|0\\rangle$ and $S$ flips the accepted component. The formula holds for every vector `v` and uses the unitary preparation and orthogonal success projector stored in `A`."
+  },
+  "exp-4-preserved-law": {
+    "QuarticQuery.Paper.quantum_amplified_conditional": "The proof sums the successful masses of `ampLaw f q` to get $1-f$. With $f<1$, this common multiplier cancels when conditioning on a successful label."
+  },
+  "exp-4-caption-direction": {
+    "QuarticQuery.Amplification.Preparation.iterate_eq": "The type gives the iterate explicitly, $\\sin((2u+1)\\theta)$ times $g$ plus $\\cos((2u+1)\\theta)$ times $b$. The words state only that the component along $g$ is rescaled by a common factor. Lean’s `A.iterate u` executes the preparation followed by the specified circuit iterations."
+  },
+  "exp-4-rotation-probability": {
+    "QuarticQuery.Amplification.Preparation.grover_rotation": "In the ordered basis $(g,b)$, one amplification step sends $(x,y)$ to $(x\\cos2\\theta+y\\sin2\\theta,\\ y\\cos2\\theta-x\\sin2\\theta)$. The assumptions `h0 : 0 < A.prob` and `h1 : A.prob < 1` ensure that both normalized directions exist.",
+    "QuarticQuery.Amplification.Preparation.norm_good_iterate_sq": "After $u$ iterations, success has probability $\\sin^2((2u+1)\\theta)$. The type states this as the squared norm of the projected successful component, `‖A.good (A.iterate u)‖ ^ 2`."
+  },
+  "exp-4-zero": {
+    "QuarticQuery.Paper.quantum_grover_zero": "If the initial success probability is zero, the successful component remains zero after every amplification iteration. The hypothesis is `h : A.prob = 0`. The iteration count is arbitrary."
+  },
+  "exp-4-bounded-schedule": {
+    "QuarticQuery.Paper.amplification_budget_le": "The padded schedule uses at most $138\\,\\gamma^{-1/2}\\ln(1/\\eta)$ calls to the preparation or its inverse. Its parameters satisfy $0<\\gamma\\le1/2$ and $0<\\eta<1/2$, expressed by `hγ`, `hγ1`, `hη` and `hη1`.",
+    "QuarticQuery.Paper.quantum_amplify_samples": "A coherent sampler with read cap `n` can be amplified while retaining all its workspace. For positive threshold `γ` and target error `η`, the theorem constructs a failure function `f` and a sampler with cap $N(2M+1)n$."
+  },
+  "exp-4-first-success": {
+    "QuarticQuery.Paper.quantum_amplified_conditional": "The equality is for the amplified law conditional on success. The bound $f<1$ ensures that the total mass in the `some` labels is positive.",
+    "QuarticQuery.Paper.quantumListLaw": "The continuation term multiplies $1-g(L)$ by the pivot law `weight a L p / total (weight a L)`. The chosen pivot is put at the head of the history."
+  },
+  "exp-4-stop": {
+    "QuarticQuery.Paper.quantumListLaw": "With zero stages left the law is `pt L out`. At a positive stage the term `g L * pt L out` puts the failure mass on the same list."
+  },
+  "exp-4-actual-miss": {
+    "QuarticQuery.Paper.quantumTournament": "The list theorem gives the sharper symbolic miss bound $2m/2^T + T\\varepsilon$. At $T = \\lceil \\log_2(1000m) \\rceil$, $2m/2^T \\le 1/500$. Assuming `hm : 2 ≤ Fintype.card Col`, complementary comparisons `hc` and coherent comparison samplers `hcmp`, it includes each dominant candidate with probability at least $1-2m/2^T-T\\varepsilon$."
+  },
+  "exp-4-query-cost": {
+    "QuarticQuery.Paper.quantumTournament_cost_log": "Unfolding `stageCost` gives the factor `2 * (Tval m)^2 * cc` after multiplying by the number of stages. The amplification estimate supplies the factor from the threshold $1/(2m)$."
+  },
+  "exp-5-quantum-property": {
+    "QuarticQuery.Paper.construction_lemma_2_1_ii_complete": "The law `L` is normalized on every input and its promised clause gives `1 - η ≤ L z b` when `P k t z = some b`. The same isometry is measured for both clauses."
+  },
+  "exp-5-classical-property": {
+    "QuarticQuery.Paper.construction_lemma_2_1_i": "For each fixed $k\\ge2$, all sufficiently large $t$ satisfy $L(k,t)<R(P_{k,t})$, where $m=4^t$ and $L$ is the construction’s explicit threshold of order $m^{1-1/k}/(\\log_2m)^2$."
+  },
+  "exp-5-exact-circuit-property": {
+    "QuarticQuery.Paper.construction_lemma_2_1_iii": "For each $k\\ge1$, there is a positive constant $S$ such that every $t\\ge1$ has a circuit with at most $S m(\\log_2m)^2$ gates realizing $P_{k,t}$."
+  },
+  "exp-5-address-question": {
+    "QuarticQuery.P": "The answer is an optional Boolean: either the digit one, the digit zero, or no defined digit."
+  },
+  "exp-5-bit-signs": {
+    "QuarticQuery.bitSign": "A stored zero becomes the integer $+1$, and a stored one becomes $-1$."
+  },
+  "exp-5-normalized-walsh": {
+    "QuarticQuery.Forrelation.H": "For $m=4^t$, the matrix $H$ is the real sign matrix $W$ multiplied by $2^{-t}=1/\\sqrt m$."
+  },
+  "exp-5-length-preservation": {
+    "QuarticQuery.Forrelation.H_mem_orthogonalGroup": "The theorem gives orthogonality for every natural $t$. This paragraph uses only the four-position case $t = 1$."
+  },
+  "exp-5-two-block-quantity": {
+    "QuarticQuery.Forrelation.Phi_eq_matrix_product": "The matrix-product identity holds for every $k \\ge 1$, every $t$, and every input. The phrase specializes to $k = 2$ and $t = 1$."
+  },
+  "exp-5-negative-example-value": {
+    "QuarticQuery.Forrelation.Phi_negativeWitness": "The two-block, four-position input called the negative witness has $\\Phi=-1$."
+  },
+  "exp-5-two-block-threshold": {
+    "QuarticQuery.Forrelation.delta": "The threshold for $k$ blocks is the positive real number $\\delta=2^{-5k}$."
+  },
+  "exp-5-promise-one": {
+    "QuarticQuery.Forrelation.P_eq_some_true_iff": "The theorem is an if-and-only-if for every $k$ and $t$, whereas the phrase states sufficiency in the two-block example."
+  },
+  "exp-5-promise-zero": {
+    "QuarticQuery.Forrelation.P_eq_some_false_iff": "The theorem is an if-and-only-if for every $k$ and $t$, whereas this phrase states the sufficient small-value condition for two blocks."
+  },
+  "exp-5-promise-undefined": {
+    "QuarticQuery.Forrelation.P_eq_none_iff": "The address question is undefined exactly when both promise tests fail: $\\Phi<\\delta$ and $|\\Phi|>\\delta/2$, expressed in Lean as the negations of the two weak inequalities."
+  },
+  "exp-5-negative-row-amplitude": {
+    "QuarticQuery.Forrelation.Phi_negativeWitness": "The two-block, four-position input called the negative witness has $\\Phi=-1$."
+  },
+  "exp-5-negative-example-undefined": {
+    "QuarticQuery.Forrelation.P_negativeWitness": "The explicit input with both blocks equal to $1000$ has no prescribed answer for $k=2$ and $m=4$."
+  },
+  "exp-5-range-of-quantity": {
+    "QuarticQuery.Forrelation.abs_Phi_le_one": "The hypothesis is only that there is at least one block. No promise assumption is needed."
+  },
+  "exp-5-bit-query-action": {
+    "QuarticQuery.bitOracle": "On a basis state consisting of an input position, an answer bit, and a workspace coordinate, the query flips the answer bit exactly when the stored input bit is one."
+  },
+  "exp-5-query-sign-kickback": {
+    "QuarticQuery.Paper.construction_bitOracle_phase_kickback": "The theorem allows arbitrary position/workspace amplitudes satisfying the minus-register relation, rather than only the stated product answer vector. The binder `hminus` says that the amplitude with answer bit one is the negative of the amplitude with answer bit zero, for every position and workspace value."
+  },
+  "exp-5-superposition-kickback": {
+    "QuarticQuery.Paper.construction_bitOracle_phase_kickback": "A bit-oracle call multiplies each position's amplitude by $(-1)^{x_i}$ when the answer register is prepared in the minus subspace. The binder `hminus` says that the amplitude with answer bit one is the negative of the amplitude with answer bit zero, for every position and workspace value."
+  },
+  "exp-5-signed-final-amplitude": {
+    "QuarticQuery.Paper.forr_walsh_state": "The proof names the zero basis index `o` and rewrites `F x (rket o)` as the complexification of the final Walsh transform. It then computes coordinate `o` using the all-positive Walsh row."
+  },
+  "exp-5-projection-probability": {
+    "QuarticQuery.Paper.forr_walsh_physical": "The `lawOf` conjunct tests equality with the distinguished basis index `o` after the final Walsh transform. The physical part uses the `ReadSpecOneQuery` candidate, which still lacks native elaboration."
+  },
+  "exp-5-two-query-trial": {
+    "QuarticQuery.Paper.forr_walsh_physical": "Specialize the sharp candidate to $k=2$. The state equality puts a Walsh gate after the signed word. The cap of two physical reads uses the unchecked `ReadSpecOneQuery` compiler."
+  },
+  "exp-5-projection-cannot-certify-promise": {
+    "QuarticQuery.Forrelation.Phi_negativeWitness": "For the concrete `negativeWitness` the proof computes numerator $-8$ and denominator $8$. The sign is lost in the squared projection probability, which is $1$ for this input.",
+    "QuarticQuery.Forrelation.P_negativeWitness": "`decide +kernel` computes the partial value at the same witness with $\\Phi=-1$ and returns the theorem `P 2 1 negativeWitness = none`. A large negative correlation falls outside both promised cases."
+  },
+  "exp-5-smallest-probability-wording": {
+    "QuarticQuery.Forrelation.successProb_of_true": "Lean proves $\\delta^2\\le$ `successProb z` for every promised one-input with any number $k\\ge1$ of blocks. The words state the case of two blocks, where $\\delta^2=2^{-20}$."
+  },
+  "exp-5-zero-probability-bound": {
+    "QuarticQuery.Forrelation.successProb_of_false": "`successProb_eq` identifies the measured probability with the square of the Forrelation amplitude for $k\\ge1$. A promised zero satisfies $|\\Phi|\\le\\delta/2$, whose square gives the bound $\\delta^2/4$."
+  },
+  "exp-5-count-threshold": {
+    "QuarticQuery.Upper.decodeProb": "The decoder’s probability of returning one is the upper binomial tail for $n$ trials, single-trial success probability $p$, and cutoff $n\\delta^2/2$."
+  },
+  "exp-5-repetition-count": {
+    "QuarticQuery.Forrelation.repetitions": "The repetition count is the natural-number ceiling of $16\\,2^{10k}\\ln(1/\\eta)$."
+  },
+  "exp-5-promised-decoder-accuracy": {
+    "QuarticQuery.Forrelation.threshold_correct": "For $k\\ge1$, $\\eta>0$, and any trial count $n$ at least the prescribed repetition count, the threshold test returns one with probability at least $1-\\eta$ on promised one-inputs and at most $\\eta$ on promised zero-inputs."
+  },
+  "exp-5-size-independent-decoder-cost": {
+    "QuarticQuery.Paper.construction_lemma_2_1_ii_complete": "The existential `A` is chosen before both `t` and `η`. It bounds the physical cost $2nk$ by $A(1+\\ln(1/\\eta))$ for every $0<\\eta<1/2$."
+  },
+  "exp-5-decoder-on-undefined-inputs": {
+    "QuarticQuery.Paper.construction_decoder_sharp": "The `decodeProb` law and continuation cap range over all inputs $z$. Only the accuracy clause requires `P k t z = some b`. The sharp physical cap comes from the unchecked one-query compiler."
+  },
+  "exp-5-input-blocks": {
+    "QuarticQuery.Paper.construction_equation_4": "There are exactly $km$ input coordinates, arranged as a block index and a position within that block."
+  },
+  "exp-5-walsh-entries": {
+    "QuarticQuery.Paper.construction_walsh_definitions": "The `walshSign` clause raises $-1$ to the count of positions where both index bits are set. Lean computes that count over `range (2 * t)`."
+  },
+  "exp-5-uniform-start": {
+    "QuarticQuery.Paper.construction_walsh_definitions": "The `u t i` conjunct assigns the reciprocal square root of the side length to each coordinate. The proof rewrites that square root to the power of two used in the definition."
+  },
+  "exp-5-block-sign-matrices": {
+    "QuarticQuery.Paper.construction_walsh_definitions": "The final conjunct forms `Matrix.diagonal` using `bitSign (z (h, i))` at coordinate $i$ in block $h$. The Boolean convention is given by the first conjunct."
+  },
+  "exp-5-full-signed-product": {
+    "QuarticQuery.Paper.construction_equation_3": "For $k\\ge1$, the Forrelation quantity is the uniform-vector inner product with the alternating block-sign and Walsh product, and its promise threshold is $2^{-5k}$.",
+    "QuarticQuery.Paper.forr_walsh_state": "In `hamp`, the proof rewrites $\\Phi$ by `Phi_eq_matrix_product` to obtain the amplitude at index `o`. The measurement law squares that coordinate in the final conjunct."
+  },
+  "exp-5-full-promise-threshold": {
+    "QuarticQuery.Forrelation.delta": "The threshold for $k$ blocks is the positive real number $\\delta=2^{-5k}$."
+  },
+  "exp-5-one-query-per-block": {
+    "QuarticQuery.Paper.forr_walsh_physical": "The sharp candidate adds at most $k$ to `next.queryCap` for each physical continuation. This cap depends on the unchecked `ReadSpecOneQuery` compiler."
+  },
+  "exp-5-classical-growth": {
+    "QuarticQuery.Paper.construction_lemma_2_1_i": "For each fixed $k\\ge2$, all sufficiently large $t$ satisfy $L(k,t)<R(P_{k,t})$, where $m=4^t$ and $L$ is the construction’s explicit threshold of order $m^{1-1/k}/(\\log_2m)^2$."
+  },
+  "exp-5-exact-circuit-growth": {
+    "QuarticQuery.Paper.construction_lemma_2_1_iii": "For each $k\\ge1$, there is a positive constant $S$ such that every $t\\ge1$ has a circuit with at most $S m(\\log_2m)^2$ gates realizing $P_{k,t}$."
+  },
+  "exp-5-logarithmic-address-length": {
+    "QuarticQuery.Paper.construction_eq6": "For $m=4^t$, the row number takes $\\ell=\\log_2m=2t$ bits and the full construction uses $r=\\lceil20\\log_2m\\rceil=40t$ address questions."
+  },
+  "exp-5-number-of-cells": {
+    "QuarticQuery.Paper.construction_layout_cardinalities": "The address type is a Boolean word of length $40t$. Every word indexes a stored cell, so its finite type counts all cells independently of which words the decoder can return."
+  },
+  "exp-5-capped-address-guessing": {
+    "QuarticQuery.Paper.classical_direct_product": "The product bound $\\beta^r$ assumes a mass-one input law and a depth-$L$ hardness bound $\\beta$ for one input. The premise `hT` requires a separate budget $L$ for every input on every branch, even if the tree interleaves its queries."
+  },
+  "exp-5-whole-address-error": {
+    "QuarticQuery.Paper.quantumDecode_correct": "`addrLaw_good` applies `one_sub_le_prod` to the $40t$ correct-bit masses. The error allowance $\\varepsilon/(40t)$ per bit gives whole-address error at most $\\varepsilon$."
+  },
+  "exp-5-follow-pointer": {
+    "QuarticQuery.Paper.quantumComparison_disqualification": "The disqualification bit records whether the selected bit in the other column is zero. For an input `x`, a supplying column `i`, a chosen cell `s` and a different target column `j`, the theorem identifies `disq` with the negation of that target bit."
+  },
+  "exp-5-winner-comparison-guarantee": {
+    "QuarticQuery.Paper.quantumWinner_dominates": "A winning column beats every different column with probability at least $1-\\varepsilon$. The hypotheses `hk` and `ht` require $k,t\\ge1$. `hε` and `hε1` require $0<\\varepsilon\\le1$. `hn` gives enough decoder repetitions."
+  },
+  "exp-5-retained-comparison-workspace": {
+    "QuarticQuery.Paper.quantumComparison_state": "For $k\\ge1$, any trial count, and any pair of columns, a finite coherent transformation has the comparison’s exact Boolean output law on every board."
+  },
+  "exp-5-comparison-query-cost": {
+    "QuarticQuery.Paper.quantumComparison_query_bound": "The factor two converts `cmpCost` into physical reads. The proof expands `quantumComparison_cost_exact` and uses the decoder estimate `quantumDecode_query_bound_real`.",
+    "QuarticQuery.Paper.quantumComparison_runs": "For $k\\ge1$, any trial count, and any two columns, a physical query program realizes the Boolean comparison law with worst-case cap twice its abstract circuit cost.",
+    "QuarticQuery.Paper.quantumComparison_state": "For $k\\ge1$, any trial count, and any pair of columns, a finite coherent transformation has the comparison’s exact Boolean output law on every board."
+  },
+  "exp-6-exact-integer-tests": {
+    "QuarticQuery.Paper.construction_integer_tests": "The first two equivalences translate the thresholds to integer comparisons. The third uses their disjunction for `promised (P k t) z`, and the fourth identifies the positive test with `some true`."
+  },
+  "exp-6-domain-bit": {
+    "QuarticQuery.Paper.construction_forr_output_bits": "For the constructed circuit with $k=l+1$, any transcript satisfying every gate equation has value output equal to the positive integer test and domain output equal to the disjunction of the positive and small-value tests."
+  },
+  "exp-6-value-bit": {
+    "QuarticQuery.Paper.construction_forr_output_bits": "For the constructed circuit with $k=l+1$, any transcript satisfying every gate equation has value output equal to the positive integer test and domain output equal to the disjunction of the positive and small-value tests."
+  },
+  "exp-6-ordered-circuit": {
+    "QuarticQuery.Circuit": "A circuit specifies its number of gates, a gate at each position, and the positions of its domain and value outputs."
+  },
+  "exp-6-fan-in-two-gates": {
+    "QuarticQuery.Gate": "A gate carries two optional predecessors and a Boolean truth table."
+  },
+  "exp-6-proposed-transcript": {
+    "QuarticQuery.GateConsistent": "A transcript is consistent when, at every gate, its listed output equals that gate’s truth table applied to its predecessor values."
+  },
+  "exp-6-local-gate-equation": {
+    "QuarticQuery.GateConsistent": "A transcript is consistent when, at every gate, its listed output equals that gate’s truth table applied to its predecessor values."
+  },
+  "exp-6-all-gates-correct": {
+    "QuarticQuery.Paper.construction_transcript_correct": "For any circuit and actual input, a proposed transcript is consistent if and only if it equals the recursively evaluated circuit transcript."
+  },
+  "exp-6-first-wrong-gate": {
+    "QuarticQuery.GateConsistent.unique": "Two transcripts satisfying all gate equations for the same circuit and input must agree at every position."
+  },
+  "exp-6-butterfly-recursion": {
+    "QuarticQuery.Forrelation.sum_walshN_succ": "The lemma is an exact recursion for any integer coefficient sequence and any bit length. The phrase describes the stage used for one input block.",
+    "QuarticQuery.Forrelation.wht": "The transform circuit on $2^{n+1}$ entries first recursively transforms the two halves, then constructs the coordinatewise sums and differences of their outputs."
+  },
+  "exp-6-altered-bit-fails": {
+    "QuarticQuery.Paper.construction_transcript_correct": "Consistency is equivalent to equality with the true transcript, so any unequal transcript fails somewhere, including changes to many bits at once."
+  },
+  "exp-6-transform-and-word-costs": {
+    "QuarticQuery.Forrelation.layers": "The circuit starts with the signs of one block, and each further block adds one Walsh transform followed by multiplication by its signs.",
+    "QuarticQuery.Forrelation.wht": "The transform circuit on $2^{n+1}$ entries first recursively transforms the two halves, then constructs the coordinatewise sums and differences of their outputs.",
+    "QuarticQuery.Paper.construction_circuit_costs": "For $k=l+1$ and $t\\ge1$, this theorem bounds the arithmetic word width, the cost of a fast Walsh transform, the layer cost, and the completed circuit size."
+  },
+  "exp-6-circuit-size-product": {
+    "QuarticQuery.Paper.construction_circuit_costs": "For $k=l+1$ and $t\\ge1$, this theorem bounds the arithmetic word width, the cost of a fast Walsh transform, the layer cost, and the completed circuit size.",
+    "QuarticQuery.Paper.construction_lemma_2_1_iii": "For each $k\\ge1$, there is a positive constant $S$ such that every $t\\ge1$ has a circuit with at most $S m(\\log_2m)^2$ gates realizing $P_{k,t}$."
+  },
+  "exp-6-fixed-cell-after-decoding": {
+    "QuarticQuery.Paper.quantumVerify_probability": "The acceptance probability of verifying column $i$ is the sum, over cell addresses $s$, of the decoder’s probability of selecting $s$ times the subsequent fixed-cell checker’s acceptance probability."
+  },
+  "exp-6-five-test-kinds": {
+    "QuarticQuery.TestIndex": "A test index selects a column-string position, a pointer destination, or a particular transcript together with either a gate index or one of its two output checks.",
+    "QuarticQuery.localTest": "For a fixed board, column, and candidate cell, the five kinds of local check ask for a one in the column string, a zero at a pointer destination, a consistent gate equation, domain output one, or value output equal to the matching address digit."
+  },
+  "exp-6-count-of-tests": {
+    "QuarticQuery.card_testIndex": "For arbitrary column bit length $2^\\ell$, address length $r$, and circuit size $S$, the number of test indices is $2^\\ell+(2^\\ell-1)+r(S+2)$.",
+    "QuarticQuery.Paper.construction_K_bound": "After rewriting with `construction_K_count`, the proof multiplies the circuit-size bound by $40t=20(2t)$, one factor for the address inputs of each cell. The extra $2t$ supplies the third power of the base-two logarithm."
+  },
+  "exp-6-local-test-query-cost": {
+    "QuarticQuery.localTestTree_depth_le": "For any circuit, selected column, cell, and test index, a decision tree evaluates that test with depth at most $\\max(3,\\ell+1)$."
+  },
+  "exp-6-uniform-test-failure": {
+    "QuarticQuery.Upper.testLaw_fail": "The law records a failed test index and uses a separate outcome for success."
+  },
+  "exp-6-search-finds-failure": {
+    "QuarticQuery.Paper.quantumVerify_fixedAddress": "Fix a column and one cell, and choose any positive error parameter $\\varepsilon$.",
+    "QuarticQuery.Paper.quantumVerify_search_query_bound": "The proof instantiates the amplification threshold at $1/K$. `testCost t` converts the resulting test-evaluation bound to physical reads at the fixed address."
+  },
+  "exp-6-one-sided-verification": {
+    "QuarticQuery.Paper.quantumVerify_fixedAddress": "Fix a column and one cell, and choose any positive error parameter $\\varepsilon$."
+  },
+  "exp-6-nonwinner-at-every-cell": {
+    "QuarticQuery.Paper.construction_local_dichotomy": "Under `hC : CircuitRealises C f`, the nonwinner clause has `∀ s` before `∃ e`. An off-promise decoder can return any address $s$, and the verifier still has a failed test at that address."
+  },
+  "exp-6-false-board-error": {
+    "QuarticQuery.Paper.quantumError_bound": "For $k,t\\ge1$, a circuit realizing the address function, and enough decoding trials (`hk`, `ht`, `hC`, `hn`), an actual board algorithm has false-board acceptance at most $T\\varepsilon$ and true-board rejection at most $2m/2^T+T\\varepsilon+\\varepsilon$."
+  },
+  "exp-6-true-board-error-sources": {
+    "QuarticQuery.Paper.quantumTournament": "The list-omission contribution is bounded by $2m/2^T + T\\varepsilon$, retaining the sharper symbolic term before the paper bounds it by $1/500$. Assuming `hm : 2 ≤ Fintype.card Col`, complementary comparisons `hc` and coherent comparison samplers `hcmp`, it includes each dominant candidate with probability at least $1-2m/2^T-T\\varepsilon$.",
+    "QuarticQuery.Paper.quantumError_bound": "For $k,t\\ge1$, a circuit realizing the address function, and enough decoding trials (`hk`, `ht`, `hC`, `hn`), an actual board algorithm has false-board acceptance at most $T\\varepsilon$ and true-board rejection at most $2m/2^T+T\\varepsilon+\\varepsilon$."
+  },
+  "exp-6-final-error-bound": {
+    "QuarticQuery.Paper.quantumError_numeric": "For at least two columns, the construction’s choices of the list length $T$ and small error parameter make $T\\varepsilon=1/1000$ and the complete true-board error expression $2m/2^T+T\\varepsilon+\\varepsilon$ strictly less than $1/3$."
+  },
+  "exp-6-final-quantum-bound": {
+    "QuarticQuery.Upper.Q_Fkm_le": "The conclusion bounds the total function built from `forrCircuit l t`. Its right side is `budgetConst (l + 1)` times $2^t(2t)^6$ for every $t\\ge1$."
+  },
+  "exp-7-L": {
+    "QuarticQuery.Lvalue": "The integer allowance $L=\\lfloor m^{1-1/k}/(\\log_2m)^2\\rfloor$ used in the classical lower bound."
+  },
+  "exp-7-disagreement-bound": {
+    "QuarticQuery.Paper.eq_23_randomized": "The left side is an absolute difference of acceptance probabilities. For $L\\ge1$ and a normalized hard law supported on the promise, the proof averages the deterministic estimate over `P.weight` with the same depth cap $G$ on every seed."
+  },
+  "exp-7-small-discrepancy": {
+    "QuarticQuery.discrepancy_parameters": "The Lean theorem supplies this inequality for $k\\ge 2$ and $t\\ge 8$, with $m=4^t$ and the defined $L$ and $G$. The preview sentence does not yet state that threshold."
+  },
+  "exp-7-zero-sampling": {
+    "QuarticQuery.Paper.dummyAvg": "The distribution of the first board, written as an expectation. The two products `prodW (prodW μ)` choose all address strings, while `prodW (unif ℓ)` chooses the zero positions."
+  },
+  "exp-7-address-sampling": {
+    "QuarticQuery.Paper.dummyAvg": "The distribution of the first board, written as an expectation. The two products `prodW (prodW μ)` choose all address strings, while `prodW (unif ℓ)` chooses the zero positions."
+  },
+  "exp-7-blank-cells": {
+    "QuarticQuery.dummy": "The first board determined by zero positions $J$ and address data $A$."
+  },
+  "exp-7-blank-replies": {
+    "QuarticQuery.dummy_update_of_aTarget_none": "Lean proves that replacing the target strings leaves every non-target location unchanged, including column-string bits and other columns as well as cell bits. The hypothesis `h : aTarget I q = none` says precisely that location $q$ is outside the target strings."
+  },
+  "exp-7-dummy-value": {
+    "QuarticQuery.addressedF_dummy": "The first board has function value zero, for every choice of zero positions and address strings."
+  },
+  "exp-7-independent-column": {
+    "QuarticQuery.coupledAvg": "The joint experiment for the two boards. In Lean, the final `avg (unif ℓ)` is the average over $I$."
+  },
+  "exp-7-plant-construction": {
+    "QuarticQuery.planted": "The second board agrees with the first except in the chosen column $I$: its column string becomes all ones, and its true-address cell receives transcripts `tr` and pointers to the zeros of the other columns. Off the promise, `trueAddr` uses false as a default, so winning also needs promised target strings."
+  },
+  "exp-7-planted-value": {
+    "QuarticQuery.addressedF_planted": "The planted board has value one when the target column’s address strings are promised and its stored gate outputs are correct."
+  },
+  "exp-7-decision-tree": {
+    "QuarticQuery.QueryTree": "A deterministic decision tree for reading bits."
+  },
+  "exp-7-first-difference": {
+    "QuarticQuery.QueryTree.exists_mem_path_ne": "The hypothesis `h : T.eval x ≠ T.eval y` is the output disagreement. `T.path x` lists the actual queries on the first input."
+  },
+  "exp-7-changed-locations": {
+    "QuarticQuery.eq_of_dummy_ne_planted": "The hypothesis `h` is the inequality of the two replies at the queried location $q$."
+  },
+  "exp-7-cell-overcount": {
+    "QuarticQuery.Paper.output_gap_abs_le_unsplit": "For a fixed tree and a fixed pair of boards, the indicator of different Boolean outputs is at most the indicator of finding the erased zero plus the indicator of visiting the planted cell."
+  },
+  "exp-7-Z": {
+    "QuarticQuery.Paper.discoveredZeros": "All adaptive choices are already incorporated in `T.path (dummy J A)`, the full list of locations queried on this particular board."
+  },
+  "exp-7-uniform-hit-count": {
+    "QuarticQuery.Paper.discoveredZeros_cast": "`foundZero` is zero or one, and the cast `: ℝ` lets the integer count be used in a probability calculation.",
+    "QuarticQuery.avg_unif": "An average over the $m=2^\\ell$ equally likely columns is the sum of the column values divided by $m$. This identity holds for any real-valued function `g`. Taking `g` to be the indicator of a discovered zero gives the conditional fraction $Z/m$ once the board and run are fixed."
+  },
+  "exp-7-erased-zero-identity": {
+    "QuarticQuery.Paper.erasedZero_eq_expectedZeros_div": "The probability of reading the erased zero is $\\mathbb E[Z]/m$. Lean expresses the left side through `coupledAvg` and the right side through `expectedZeros`."
+  },
+  "exp-7-unseen-uniform": {
+    "QuarticQuery.Paper.uniform_zero_given_transcript": "The assumptions `hτ : NoZeroSeen i τ` and `hpos : 0 < dummyTraceMass μ T τ` state these two requirements."
+  },
+  "exp-7-unseen-move": {
+    "QuarticQuery.Paper.observedPrefix_dummy_fiber": "A history containing no zero reply from column $i$ is compatible with placing its zero at row $j$ exactly when $j$ is unread and the same history is compatible with an all-one reference column. The hypothesis `hτ : NoZeroSeen i τ` is essential."
+  },
+  "exp-7-expected-zeros": {
+    "QuarticQuery.Paper.expectedZeros_le_four": "The hypotheses `hμ` and `hμ1` make the address-data weights a probability distribution, and `hT` bounds the tree’s depth."
+  },
+  "exp-7-erased-zero-bound": {
+    "QuarticQuery.Paper.eq_19": "The board uses normalized nonnegative address-data weights (`hμ`, `hμ1`), and the planted column is independently uniform."
+  },
+  "exp-7-query-index": {
+    "QuarticQuery.cellGuess": "The address already present in a proposed cell-query location. For a fixed target column $I$, `cellGuess I q` returns the cell label if $q$ names a pointer or transcript bit in that column, and returns `none` otherwise."
+  },
+  "exp-7-address-count": {
+    "QuarticQuery.aQueries": "The number of queries in a supplied list that read the address strings of column $i$. Repeated reads do contribute, because `countP` counts list occurrences."
+  },
+  "exp-7-heavy-definition": {
+    "QuarticQuery.Paper.HeavyColumn": "`aQueries` counts reads of the column’s address inputs along the whole dummy path, including repeats. A column can cross the threshold $L$ after the query being analyzed."
+  },
+  "exp-7-heavy-counting": {
+    "QuarticQuery.sum_aQueries_le": "The sum of the address-read counts over all columns is at most the length of the query list.",
+    "QuarticQuery.avg_heavy_le": "`hcount` charges $L$ per heavy column and bounds the total charge by the sum of `aQueries` over columns. `sum_aQueries_le` bounds that sum by the length of the run."
+  },
+  "exp-7-heavy-probability": {
+    "QuarticQuery.avg_heavy_le": "The proof uses `avg_unif` to divide the count of heavy columns by $m=2^\\ell$. The positive budget `hL : 1 ≤ L` permits the remaining division by $L$."
+  },
+  "exp-7-L-positive": {
+    "QuarticQuery.one_le_Lvalue": "The allowance $L$ is at least one whenever $k\\ge2$ and $m=4^t$ with $t\\ge8$."
+  },
+  "exp-7-forrelation-hardness": {
+    "QuarticQuery.ForrelationLower.bansalSinhaLower": "For each fixed $k\\ge2$, there is a threshold $t_0$ such that $R(P_{k,4^t})>L$ for all $t\\ge t_0$. The conclusion is the predicate `BansalSinhaLower`, whose definition fixes this quantifier order and the exact promise problem."
+  },
+  "exp-7-hardness-meaning": {
+    "QuarticQuery.lt_R_iff": "The strict lower bound $t<R(f)$ is equivalent to failure of every randomized query budget $s\\le t$. Here `¬ RLe f s` means that no randomized program of that depth succeeds with probability at least $2/3$ on every promised input."
+  },
+  "exp-7-hard-distribution": {
+    "QuarticQuery.exists_hard_distribution": "The lemma derives the same hard distribution from `¬RLe f L` for every natural $L$, including $L=0$. The paragraph has already assumed $L\\ge 1$."
+  },
+  "exp-7-predictor": {
+    "QuarticQuery.Paper.addressSimulator": "The predictor for a fixed target column and proposed query time. At time `t`, it extracts the proposed cell label without reading that cell."
+  },
+  "exp-7-generated-data": {
+    "QuarticQuery.coupledAvg": "The joint experiment for the two boards. In Lean, the final `avg (unif ℓ)` is the average over $I$."
+  },
+  "exp-7-predictor-abort": {
+    "QuarticQuery.simTree": "A replay tree with two separate counters: `t` counts original queries still to replay, and `c` counts target reads still allowed. An outside-target query uses the supplied `base` reply without spending target budget."
+  },
+  "exp-7-predictor-output": {
+    "QuarticQuery.Paper.addressSimulator": "The predictor for a fixed target column and proposed query time. Although its base argument includes `A`, only non-target replies use that base. Target replies come from the predictor’s input.",
+    "QuarticQuery.simTree": "A replay tree with two separate counters: `t` counts original queries still to replay, and `c` counts target reads still allowed. An outside-target query uses the supplied `base` reply without spending target budget."
+  },
+  "exp-7-replay-correctness": {
+    "QuarticQuery.eval_simTree": "The cap premise `hc` counts target reads in `(T.path x).take t`, before the prescribed query. `hbase` supplies all outside answers, and `hV` identifies the target reads with the unknown input."
+  },
+  "exp-7-joint-event-domination": {
+    "QuarticQuery.Paper.avg_reachedCellAt_le": "With all other board data fixed, the probability that the target column is light and its true cell is proposed at time `t` is at most the bound `ρ` for every separately capped address predictor. `hμ` gives nonnegative weights, `hdom` supplies promise support, and `hguess` supplies the predictor bound."
+  },
+  "exp-7-product-bound": {
+    "QuarticQuery.address_guess_le": "The hypothesis `hard` bounds every single-string tree of depth at most $L$ by $2/3$, while `hT : T.capped fun _ => L` enforces every separate cap on every branch."
+  },
+  "exp-7-total-cap": {
+    "QuarticQuery.Paper.addressSimulator_depth_le": "The predictor’s total number of target reads is at most $L$ on every branch."
+  },
+  "exp-7-total-implies-separate": {
+    "QuarticQuery.OutTree.capped_of_depth_le": "A tree with at most $n$ queries in total obeys any per-string allowance of at least $n$. The hypotheses are `hT : T.depth ≤ n` and `hc : ∀ j, n ≤ c j`."
+  },
+  "exp-7-transcript-factorization": {
+    "QuarticQuery.Paper.classical_transcript_product_law": "`hm` gives a positive prefix mass, which forces the recorded schedule to be consistent with `T`. Only the coordinate-wise answer restrictions then remain in the product on the right."
+  },
+  "exp-7-one-step-value": {
+    "QuarticQuery.Paper.classical_eq_16_transcript": "The hypothesis `hc : classicalQueriesTo τ h < L` says a query remains. `hμ` gives nonnegative weights."
+  },
+  "exp-7-time-union": {
+    "QuarticQuery.avg_reachedCell_le": "With the outside data fixed, the probability of visiting the true cell while the target column is light is at most $G\\rho$, provided every separately capped predictor succeeds with probability at most $\\rho$. The premise `hT : T.depth ≤ G` bounds the number of proposed query times."
+  },
+  "exp-7-tail": {
+    "QuarticQuery.twoThirds_pow_le": "For $m=4^t$ and $r=40t=20\\log_2m$, the product probability satisfies $(2/3)^r\\le m^{-10}$."
+  },
+  "exp-7-table-erased": {
+    "QuarticQuery.Paper.eq_19": "The board uses normalized nonnegative address-data weights (`hμ`, `hμ1`), and the planted column is independently uniform."
+  },
+  "exp-7-table-heavy": {
+    "QuarticQuery.avg_heavy_le": "The bound $G/(mL)$ is for a uniform column and a fixed list of length at most $G$. It can be averaged over the dummy board because it holds for every such list."
+  },
+  "exp-7-table-light": {
+    "QuarticQuery.avg_reachedCell_le": "With the outside data fixed, the probability of visiting the true cell while the target column is light is at most $G\\rho$, provided every separately capped predictor succeeds with probability at most $\\rho$. The premise `hT : T.depth ≤ G` bounds the number of proposed query times."
+  },
+  "exp-7-G-floor": {
+    "QuarticQuery.Paper.classical_eq_17_floor": "Lean’s definition uses natural-number division, and this theorem identifies the two forms exactly."
+  },
+  "exp-7-L-at-most-m": {
+    "QuarticQuery.Lvalue_le_mValue": "Lean proves $L\\le m$ already for $k\\ge 1$ and $t\\ge 1$. The exposition works with $k\\ge 2$ and sufficiently large $t$."
+  },
+  "exp-7-final-numeric": {
+    "QuarticQuery.Paper.classical_numeric_components": "The type states the weaker third-term bound $1/100$ and total bound $6/100<1/3$, rather than the displayed sharper third-term bound $1/(100m^8)$. The hypotheses are `hL1`, `hLm`, and `hG`. The parameters use $m=4^t$ and $r=40t$."
+  },
+  "exp-7-randomized-average": {
+    "QuarticQuery.Paper.paper_avg_abs_le_const": "If every value in a finite family has absolute value at most $c$, any nonnegative weighted average with total weight one also has absolute value at most $c$."
+  },
+  "exp-7-bounded-error-gap": {
+    "QuarticQuery.addressedF_not_RLe": "The premises are `hL : ¬ RLe f L`, `hL1 : 1 ≤ L`, `hdisc`, and a circuit realizing $f$."
+  },
+  "exp-7-classical-lower-bound": {
+    "QuarticQuery.Paper.prop_4_2": "Lean proves the stated eventual lower bound for every circuit realizing $P$, with a threshold independent of that circuit, rather than only the chosen circuit of $F_{k,m}$. Here $m=4^t$, and `totalise` simply presents the total Boolean function in the common partial-function query notation."
+  },
+  "exp-8-restoring-logarithms": {
+    "QuarticQuery.Paper.classical_power_log_tendsto": "The theorem applies to any positive coefficient and positive real power of $m$, divided by any fixed real logarithmic power, along $m=4^t$."
+  },
+  "exp-8-cubic-fails": {
+    "QuarticQuery.Paper.classical_Fkm_ratio": "For $k=3$, `classical_Fkm_ratio` gives divergence for every nonnegative $\\alpha<10/3$, including $\\alpha=3$. It treats all fixed $k\\ge 2$. A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities.",
+    "QuarticQuery.familyExponent_three": "Substituting $k=3$ into $4-2/k$ gives $10/3$."
+  },
+  "exp-8-three-block-exponent": {
+    "QuarticQuery.familyExponent_three": "Substituting $k=3$ into $4-2/k$ gives $10/3$."
+  },
+  "exp-8-one-family-two-bounds": {
+    "QuarticQuery.Paper.construction_equation_two": "For each fixed $k\\ge2$, sufficiently large boards have quantum cost at most $C\\sqrt m(\\log_2m)^b$ and randomized cost at least $c\\,m^{2-1/k}/(\\log_2m)^2$, with positive constants. Constants, the logarithmic exponent and the threshold are chosen before `t`."
+  },
+  "exp-8-explicit-constants": {
+    "QuarticQuery.Paper.construction_family_named": "One specified circuit family has $Q(F)\\le C_k\\sqrt m(\\log_2m)^6$ and $R(F)\\ge m^{2-1/k}/(400(\\log_2m)^2)$ for all sufficiently large $m=4^t$. Lean writes $k=l+1$ and assumes `hk : 2 ≤ l + 1`."
+  },
+  "exp-8-parameter-order": {
+    "QuarticQuery.Paper.construction_equation_two": "The constants and threshold precede `∀ t`. The realizing circuit `Cir` is chosen afterward and occurs in both the quantum and classical terms for that size."
+  },
+  "exp-8-family-power": {
+    "QuarticQuery.familyExponent": "The number $4-2/k$, obtained by measuring the classical power $m^{2-1/k}$ in units of the quantum scale $\\sqrt m$."
+  },
+  "exp-8-choose-k": {
+    "QuarticQuery.exists_nat_exponent": "Only $\\alpha<4$ is required to choose $k$. The arithmetic theorem also allows negative $\\alpha$. Nonnegativity is needed later in the ratio theorem. The only hypothesis is `hα : α < 4`. This numerical choice does not depend on the board size."
+  },
+  "exp-8-ratio-display": {
+    "QuarticQuery.Paper.classical_Fkm_ratio": "A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities."
+  },
+  "exp-8-beats-every-constant": {
+    "QuarticQuery.Paper.classical_Fkm_ratio": "A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities."
+  },
+  "exp-8-table-k2": {
+    "QuarticQuery.familyExponent_two": "Substituting $k=2$ into $4-2/k$ gives three. This is an exact arithmetic identity about `familyExponent`.",
+    "QuarticQuery.Paper.classical_Fkm_ratio": "The ratio theorem covers all fixed $k\\ge 2$ and nonnegative $\\alpha$ below $4-2/k$. This table entry uses $k=2$ in the surrounding nonnegative-exponent discussion. A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities."
+  },
+  "exp-8-table-k3": {
+    "QuarticQuery.familyExponent_three": "Substituting $k=3$ into $4-2/k$ gives $10/3$."
+  },
+  "exp-8-table-k4": {
+    "QuarticQuery.familyExponent_four": "Substituting $k=4$ into $4-2/k$ gives $7/2$."
+  },
+  "exp-8-table-k5": {
+    "QuarticQuery.Paper.classical_Fkm_ratio": "The ratio theorem covers every fixed $k\\ge 2$. This row uses $k=5$ and nonnegative $\\alpha<18/5$. Negative $\\alpha$ follow from $\\alpha=0$ by monotonicity. A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities."
+  },
+  "exp-8-deterministic-cost": {
+    "QuarticQuery.D": "The smallest worst-case depth of a deterministic decision tree that computes the function exactly on each promised input. In `DLe`, correctness is equality of the tree's output and the prescribed bit, with no allowed error."
+  },
+  "exp-8-universal-d-bound": {
+    "QuarticQuery.D_le_Q_pow_four": "The source gives the explicit uniform inequality $D(f) \\le 20736\\, Q(f)^4$ for every total function, with no asymptotic threshold."
+  },
+  "exp-8-r-below-d": {
+    "QuarticQuery.R_le_D": "The theorem applies to arbitrary partial Boolean functions on finite coordinate types, not only the total functions discussed here."
+  },
+  "exp-8-final-exponent": {
+    "QuarticQuery.alphaTot_eq_four_unconditional": "The endpoint invokes the conditional exponent theorem with the formal fixed-$k$ Forrelation lower bound. The family argument picks $k$ before sending $t$ to infinity."
+  },
+  "app-a1-control": {
+    "QuarticQuery.Paper.quantum_controlled_bit_query": "Given a register embedding `e` and read specification `R`, the theorem constructs a program wrapper `P` with exactly two extra queries before any continuation."
+  },
+  "app-a1-padding": {
+    "QuarticQuery.Paper.quantum_controlled_reads": "The hypothesis `hF : ∀ c, IsCirc n (F c)` requires that cap for every branch."
+  },
+  "app-a1-reverse": {
+    "QuarticQuery.Paper.quantum_inverse_reads": "The inverse of a coherent circuit has the same logical read cap as the circuit itself. The hypothesis `hF : IsCirc n F` gives a family of input-dependent isometries assembled from permitted gates and reads."
+  },
+  "app-a1-local-tests": {
+    "QuarticQuery.Upper.test_samples": "A uniform local-test label and its exact result can be prepared with cap $\\max(3,2t+1)$ logical reads. For fixed column `i` and cell `s`, `testLaw` returns a failed test’s own label, or no label if it passes."
+  },
+  "app-a1-comparison": {
+    "QuarticQuery.Paper.quantumComparison_query_bound": "The repetitions target error $\\varepsilon/(40t)$ per address bit. The additive $8t+4$ comes from the two pointer checks, with the physical compilation factor included."
+  },
+  "app-a1-tournament": {
+    "QuarticQuery.Paper.quantumTournament_cost_log": "The proof applies `amplification_budget_le` at $\\gamma=1/(2m)$ and multiplies the resulting cap by the cost of the comparisons and by the number of stages."
+  },
+  "app-a1-verification": {
+    "QuarticQuery.Paper.quantumVerify_search_query_bound": "This inequality uses $K\\ge2$ and $0<\\varepsilon<1/2$ to price one search among a fixed candidate’s local tests. The list verifier multiplies the per-candidate budget by its list length.",
+    "QuarticQuery.Paper.quantumVerify_list": "A list of candidates can be checked sequentially, stopping when one accepts. If `hv` supplies a verifier with physical query cap `cV` for each candidate, the list verifier has cap `L.length * cV`."
+  },
+  "app-a1-sum": {
+    "QuarticQuery.Upper.budget": "The total physical query budget is the tournament budget plus the budget for checking its candidates. The parameters `n` and `K` are the decoder repetition count and number of tests.",
+    "QuarticQuery.Paper.quantumComparison_query_bound": "This estimate supplies the per-comparison factor in the tournament term of the displayed sum. The decoder uses `repetitions k (ε / (40 * t : ℕ))`.",
+    "QuarticQuery.Paper.quantumTournament_cost_log": "The left side charges `Tval m` calls to `stageCost`. The theorem gives the tournament term of the sum, with `cc` still a parameter to be bounded using the comparison theorem.",
+    "QuarticQuery.Paper.quantumVerify_search_query_bound": "In the verification term, `testCost t` accounts for the input bits read by one local test. `searchCost` multiplies that budget by the amplification overhead for the $K$ tests."
+  },
+  "app-a1-polylog": {
+    "QuarticQuery.Upper.budget_le": "For $m=4^t$ and $t\\ge1$, the complete algorithm’s query budget is at most $C_k\\,2^t(2t)^6$. The hypothesis `hSz` bounds the chosen circuit size by `forrConstant k * mValue t * (2 * t) ^ 2`."
+  },
+  "app-a1-q": {
+    "QuarticQuery.Upper.Q_Fkm_le": "`budgetConst (l + 1)` is independent of $t$. The remaining factor $2^t(2t)^6$ is $\\sqrt m(\\log_2m)^6$ under $m=4^t$."
+  },
+  "app-a1-r": {
+    "QuarticQuery.rpow_le_of_Gvalue_lt": "A bound above the integer threshold $G$ implies the explicit lower estimate $m^{2-1/k}/(400(\\log_2m)^2)$. The assumptions are `hk : 2 ≤ k`, `ht : 8 ≤ t`, and `hr : Gvalue (mValue t) (Lvalue k t) < r`, with $m=4^t$."
+  },
+  "app-a2-reverse": {
+    "QuarticQuery.Amplification.groverStep": "One amplification step first flips the successful component, then applies the inverse preparation, flips the starting state, reapplies the preparation, and negates the whole vector.",
+    "QuarticQuery.Paper.quantum_inverse_reads": "The inverse of a coherent circuit has the same logical read cap as the circuit itself. The hypothesis `hF : IsCirc n F` gives a family of input-dependent isometries assembled from permitted gates and reads."
+  },
+  "app-a2-matrix": {
+    "QuarticQuery.Amplification.Preparation.grover_rotation": "In the ordered basis $(g,b)$, one amplification step sends $(x,y)$ to $(x\\cos2\\theta+y\\sin2\\theta,\\ y\\cos2\\theta-x\\sin2\\theta)$. The assumptions `h0 : 0 < A.prob` and `h1 : A.prob < 1` ensure that both normalized directions exist."
+  },
+  "app-a2-three-theta": {
+    "QuarticQuery.Amplification.Preparation.iterate_eq": "The source states the decomposition after every natural iteration count, including the first step used here. It also includes $q = 0$ and $q = 1$. Lean’s `A.iterate u` executes the preparation followed by the specified circuit iterations."
+  },
+  "app-a2-good-direction": {
+    "QuarticQuery.Amplification.Preparation.iterate_eq": "The type gives the iterate explicitly, $\\sin((2u+1)\\theta)$ times $g$ plus $\\cos((2u+1)\\theta)$ times $b$. The words state only that the component along $g$ is rescaled by a common factor. Lean’s `A.iterate u` executes the preparation followed by the specified circuit iterations.",
+    "QuarticQuery.Amplification.Preparation.good_iterate": "After $u$ amplification iterations, the entire accepted component equals $\\sin((2u+1)\\theta)\\,g$. Here `g` is `A.goodState`, the normalized accepted part of the initial preparation."
+  },
+  "app-a2-parameters": {
+    "QuarticQuery.Paper.quantum_grover_parameters": "The declaration exposes these definitions, so it places no probability assumptions on `γ` or `η`."
+  },
+  "app-a2-mixture": {
+    "QuarticQuery.Paper.quantum_grover_trial_distribution": "The hypothesis `hM : M ≠ 0` ensures that this is a probability distribution."
+  },
+  "app-a2-first": {
+    "QuarticQuery.Paper.quantum_grover_trial_recursion": "A trial chooses its iteration count, restarts from the initial state, runs the corresponding amplification circuit, and measures success. The displayed recursion is for `attempts M (n + 1)`."
+  },
+  "app-a2-cap": {
+    "QuarticQuery.Paper.quantum_grover_call_cap": "The complete bounded procedure makes at most $N(2M+1)$ calls to $A$ or $A^{-1}$ on every branch. The parameters `M` and `N` are computed from `γ` and `η`."
+  },
+  "app-a2-average": {
+    "QuarticQuery.Amplification.average_sin_sq": "The mean of $\\sin^2((2u+1)\\theta)$ over $u=0,\\ldots,M-1$ is exactly $1/2-\\sin(4M\\theta)/(4M\\sin2\\theta)$. The hypotheses `hM : M ≠ 0` and `hs : Real.sin (2 * θ) ≠ 0` make both divisions legitimate.",
+    "QuarticQuery.Amplification.Preparation.sin_two_angle": "The amplification angle satisfies $\\sin(2\\theta)=2\\sqrt{q(1-q)}$, where $q$ is the preparation’s success probability.",
+    "QuarticQuery.Amplification.average_sin_sq_ge_nine_twentieths": "The average success probability over the uniform iteration count is at least $9/20$. The assumptions are `hγ : 0 < γ`, `hM : 10 / Real.sqrt γ ≤ M` and `hs : Real.sqrt γ ≤ Real.sin (2 * θ)`."
+  },
+  "app-a2-sin": {
+    "QuarticQuery.Amplification.Preparation.sin_two_angle": "The amplification angle satisfies $\\sin(2\\theta)=2\\sqrt{q(1-q)}$, where $q$ is the preparation’s success probability."
+  },
+  "app-a2-failure": {
+    "QuarticQuery.Amplification.Preparation.trialFail_le": "The hypotheses are `hγ : 0 < γ` and `hp : γ ≤ A.prob`.",
+    "QuarticQuery.Amplification.pow_trialCount_le": "The prescribed repetition count satisfies $(31/40)^N\\le\\eta$ for every positive target error `η`. The hypothesis `h0 : 0 < η` permits the logarithms used in the definition of `trialCount`."
+  },
+  "app-a2-first-law": {
+    "QuarticQuery.Paper.quantum_amplify_samples": "A coherent sampler with read cap `n` can be amplified while retaining all its workspace. For positive threshold `γ` and target error `η`, the theorem constructs a failure function `f` and a sampler with cap $N(2M+1)n$.",
+    "QuarticQuery.Paper.quantum_amplified_conditional": "The quotient divides each `some b` mass by the total over successful labels. The cancellation assumes $\\sum_bq_b>0$ and $f<1$, so neither denominator vanishes."
+  },
+  "app-a2-below-threshold": {
+    "QuarticQuery.Paper.quantum_grover_call_cap": "The complete bounded procedure makes at most $N(2M+1)$ calls to $A$ or $A^{-1}$ on every branch. The parameters `M` and `N` are computed from `γ` and `η`."
+  },
+  "app-a3-one-query-per-block": {
+    "QuarticQuery.Paper.forr_walsh_physical": "The candidate gives `IsCirc k F` and a physical continuation with at most $k$ additional reads. The physical compiler in `ReadSpecOneQuery` still lacks a native elaboration check."
+  },
+  "app-a3-projection-probability": {
+    "QuarticQuery.Paper.forr_walsh_physical": "`F z (rket o)` is identified with the complexification of $H\\psi_z$. The following clause identifies the outcome law with `bern (Phi k t z ^ 2)`. The sharp physical compilation in the same signature remains a candidate."
+  },
+  "app-a3-promise-probability-gap": {
+    "QuarticQuery.Forrelation.successProb_of_true": "The proof rewrites the measured mass using `successProb_eq` and uses monotonicity of squaring above the positive threshold $\\delta$. A promised one therefore gives probability at least $\\delta^2$.",
+    "QuarticQuery.Forrelation.successProb_of_false": "`P_eq_some_false_iff` bounds the absolute amplitude by $\\delta/2$. Squaring gives at most $\\delta^2/4$ on a promised zero, a factor of four below the lower bound for a promised one."
+  },
+  "app-a3-repetition-count": {
+    "QuarticQuery.Forrelation.repetitions": "The repetition count is the natural-number ceiling of $16\\,2^{10k}\\ln(1/\\eta)$.",
+    "QuarticQuery.Forrelation.delta_sq": "The squared promise threshold is $\\delta^2=(2^{10k})^{-1}$."
+  },
+  "app-a3-success-count": {
+    "QuarticQuery.Upper.Samples.count": "If a coherent sampler costs $c$ queries and has Bernoulli success probability $p(x)$ on input $x$, repeating it $n$ times gives a sampler of the success count with cost $nc$ and the binomial distribution."
+  },
+  "app-a3-decision-threshold": {
+    "QuarticQuery.Upper.decodeProb": "The decoder’s probability of returning one is the upper binomial tail for $n$ trials, single-trial success probability $p$, and cutoff $n\\delta^2/2$."
+  },
+  "app-a3-large-mean-tail": {
+    "QuarticQuery.Forrelation.binomTail_large": "The theorem bounds the lower tail by $\\exp(-nc/16)$. It does not state the sharper $\\exp(-nc/8)$ intermediate bound printed here."
+  },
+  "app-a3-small-mean-tail": {
+    "QuarticQuery.Forrelation.binomTail_small": "For $n$ trials, $0\\le p\\le1$, and $p\\le c/4$, the upper binomial tail at the cutoff $nc/2$ is at most $\\exp(-nc/16)$."
+  },
+  "app-a3-error-after-repetition": {
+    "QuarticQuery.Forrelation.threshold_correct": "For $k\\ge1$, $\\eta>0$, and any trial count $n$ at least the prescribed repetition count, the threshold test returns one with probability at least $1-\\eta$ on promised one-inputs and at most $\\eta$ on promised zero-inputs."
+  },
+  "app-a3-physical-all-input-cap": {
+    "QuarticQuery.Paper.construction_decoder_sharp": "The candidate sets `n = repetitions k η` and adds at most `n * k` to every continuation’s cap. The clause has no promise hypothesis on $z$, and the one-query compiler still lacks a native elaboration check.",
+    "QuarticQuery.Paper.construction_lemma_2_1_ii_complete": "The compiled continuation clause charges at most $2nk$ additional physical reads for all inputs. `IsCirc (n * k) F` is the linked logical-read count."
+  },
+  "app-a3-reciprocal-scale": {
+    "QuarticQuery.Forrelation.delta_sq": "The squared promise threshold is $\\delta^2=(2^{10k})^{-1}$."
+  },
+  "app-a3-separate-trial-registers": {
+    "QuarticQuery.Paper.forr_walsh_tensor_physical": "For each number $q$ of trials, `tensorPreparation` uses a fresh position register for each copy of the same `F z`. The cited sharp physical cap $qk$ depends on the unchecked one-query compiler."
+  },
+  "app-a3-independent-outcome-law": {
+    "QuarticQuery.Paper.tensorVector_coord_product": "For a vector $v$, a trial count $n$, and a tuple of register positions, the amplitude of the repeated tensor vector is the product of the corresponding single-register amplitudes."
+  },
+  "app-a4-integer-normalization": {
+    "QuarticQuery.Paper.construction_N_phi": "For $k\\ge1$, the integer numerator equals the unnormalized sign-and-Walsh matrix calculation, and $\\Phi=N/M$ with $M>0$ and $M=m(\\sqrt m)^{k-1}$."
+  },
+  "app-a4-positive-integer-threshold": {
+    "QuarticQuery.Paper.construction_integer_tests": "The positive threshold uses the signed `forrelationNumerator` multiplied by $2^{5k}$. The comparison accepts equality with `forrelationDenominator`."
+  },
+  "app-a4-small-integer-threshold": {
+    "QuarticQuery.Paper.construction_integer_tests": "The small-value clause takes the absolute value of the integer numerator and multiplies it by $2^{5k+1}$. The extra factor two comes from the half-threshold in `delta k / 2`."
+  },
+  "app-a4-arithmetic-word-width": {
+    "QuarticQuery.Paper.construction_circuit_width": "For $k=l+1$ blocks and $t\\ge1$, the required word width plus one is at most $(3l+5)(2t)$."
+  },
+  "app-a4-absorbing-the-lower-bound-constant": {
+    "QuarticQuery.Paper.construction_bs_comparison_chain": "The statement proves the eventual strict comparison for every positive constant $c$ at fixed $k \\ge 2$. It does not state the ratio asymptotic of order $(\\log m)^{1+1/k}$."
+  },
+  "app-a4-column-storage-layout": {
+    "QuarticQuery.Paper.construction_column_layout": "A board coordinate consists of a column number and one of four kinds of local storage: a string position, a block-position coordinate in an address input, a pointer bit in a selected cell, or a transcript gate bit in a selected cell.",
+    "QuarticQuery.Paper.construction_layout_cardinalities": "The three conjuncts count rows, coordinates of one address input, and addresses. To obtain the storage expression, multiply the second count by $r$ and use the pointer and transcript fields of each cell."
+  },
+  "app-b-per-instance-cap": {
+    "QuarticQuery.OutTree.capped": "The rule that a tree respects the remaining query allowance of every input string."
+  },
+  "app-b-product-endpoint": {
+    "QuarticQuery.Paper.classical_direct_product": "The inputs share normalized nonnegative law $\\mu$ (`hμ`, `hμ1`), and `hT` enforces the separate caps."
+  },
+  "app-b-independent-seed": {
+    "QuarticQuery.Paper.classical_direct_product_average": "The source declaration averages over a finite seed type `S` via `[Fintype S]`. The prose permits jointly independent coins and data without stating a finite-seed restriction. The arbitrary-measurable-seed transfer is not supplied here. `hp` and `hp1` make that law a probability distribution, and `hT` requires every selected tree to satisfy the separate caps."
+  },
+  "app-b-consistency-sets": {
+    "QuarticQuery.Paper.classicalLocalConsistent": "The constraint imposed on one string $U_h$ by a recorded query history."
+  },
+  "app-b-adaptive-rectangle": {
+    "QuarticQuery.Paper.classical_prefix_iff": "A tuple produces a specified history exactly when the history follows the deterministic tree’s query schedule and every input separately satisfies its recorded bits. `classicalSchedule` records that legal sequence, and `classicalLocalConsistent` records each input’s constraints."
+  },
+  "app-b-conditional-product": {
+    "QuarticQuery.Paper.classical_transcript_product_law": "Each factor is `classicalLaw (classicalTranscriptWeight μ τ h)`. Lean allows a different prior `μ h` for each input and normalizes its surviving weight separately after a positive-mass history."
+  },
+  "app-b-continuation-value": {
+    "QuarticQuery.Paper.classicalTranscriptValue": "The value $V_h(\\tau)$: the best success probability for input $h$ after the recorded history, with its unused allowance remaining. `classicalValue` normalizes by the remaining probability mass.",
+    "QuarticQuery.Paper.classicalTranscriptValue_attained": "There exists a single-input decision tree attaining $V_h(\\tau)$ while using at most the remaining allowance $L-q_h(\\tau)$.",
+    "QuarticQuery.Paper.classicalTranscriptValue_bounds_tree": "Any tree using at most the remaining $L-q_h(\\tau)$ queries has conditional success at most $V_h(\\tau)$. The assumption `hμ` requires nonnegative prior weights for every input, and `hT` is the remaining-query cap."
+  },
+  "app-b-value-step": {
+    "QuarticQuery.Paper.classical_eq_16_transcript": "The hypothesis `hc : classicalQueriesTo τ h < L` says a query remains. `hμ` gives nonnegative weights."
+  },
+  "app-b-other-inputs-unchanged": {
+    "QuarticQuery.Paper.classical_transcriptWeight_append": "Appending one query and reply restricts the prior weight for the queried input $h$ to inputs having that reply. `Function.update` expresses this replacement of one component.",
+    "QuarticQuery.Paper.classical_budget_append": "After appending a query to input $h$, the vector of remaining allowances changes only at $h$, where one unit is subtracted."
+  },
+  "app-b-product-step": {
+    "QuarticQuery.Paper.classical_transcript_conditional_expectation": "`hm` requires a possible history, `hc` requires an unused query on the selected input, and `hμ` supplies nonnegative prior weights."
+  },
+  "app-b-initial-product": {
+    "QuarticQuery.Paper.classical_direct_product": "The inputs share normalized nonnegative law $\\mu$ (`hμ`, `hμ1`), and `hT` enforces the separate caps."
+  },
+  "app-b-leaf-independence": {
+    "QuarticQuery.guessSuccess_leaf": "Under a product input law, the success weight of a leaf returning word $s$ equals the product of the success weights of its separate constant answers $s_h$. `guessSuccess` asks that every input be promised and every answer be correct."
+  },
+  "app-b-leaf-value": {
+    "QuarticQuery.Paper.classicalTranscriptValue_bounds_tree": "Any tree using at most the remaining $L-q_h(\\tau)$ queries has conditional success at most $V_h(\\tau)$. The assumption `hμ` requires nonnegative prior weights for every input, and `hT` is the remaining-query cap."
+  },
+  "app-b-leaf-average": {
+    "QuarticQuery.Paper.classical_direct_product": "The inputs share normalized nonnegative law $\\mu$ (`hμ`, `hμ1`), and `hT` enforces the separate caps."
+  },
+  "app-b-finite-horizon": {
+    "QuarticQuery.Paper.classical_capped_depth_uniform": "The hypothesis `hT` is the separate-cap predicate, not a bound on the average number of queries."
+  },
+  "app-b-final-average": {
+    "QuarticQuery.Paper.classical_direct_product_average": "The average over coins and other data is explicitly over a finite seed type `S` in this source theorem. The prose states no such restriction. `hp` and `hp1` make that law a probability distribution, and `hT` requires every selected tree to satisfy the separate caps."
+  },
+  "app-b-example-two-counters": {
+    "QuarticQuery.simTree": "A replay tree with two separate counters: `t` counts original queries still to replay, and `c` counts target reads still allowed. An outside-target query uses the supplied `base` reply without spending target budget."
+  },
+  "app-d-four-block-answer": {
+    "QuarticQuery.familyExponent_four": "Substituting $k=4$ into $4-2/k$ gives $7/2$."
+  },
+  "app-d-four-block-strict-range": {
+    "QuarticQuery.Paper.classical_Fkm_ratio": "The theorem covers all fixed $k\\ge 2$ and nonnegative $\\alpha<4-2/k$. This application takes $k=4$. Negative $\\alpha$ follow from the $\\alpha=0$ case by monotonicity. A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities."
+  },
+  "app-e-measured-law": {
+    "QuarticQuery.Paper.quantum_amplified_conditional": "The conditional-law theorem permits arbitrary finite nonnegative label weights of positive mass and $0\\le f<1$. Here $q_i=w_i/m$, so normalisation gives $w_i/W$."
+  },
+  "app-e-measured-implementation": {
+    "QuarticQuery.Paper.quantum_amplified_label_law": "A coherent sampler with query cost `n` can be amplified to a bounded physical query program with output law `ampLaw`. The hypothesis `h : Samples n L` supplies the preparation. `hγ` and `hη` require positive success threshold and error target."
+  },
+  "app-e-retained-factor": {
+    "QuarticQuery.Upper.finalB_retained_original": "For the actual circuit `finalB`, the successful part of its output factors as an auxiliary vector times the original good-state vector. The binder `hM : 0 < M` requires a nonempty iteration selector."
+  },
+  "app-e-winning-promise": {
+    "QuarticQuery.Paper.constructionWinner": "The promise witness `hdef` has type `∀ h, promised f (readA x i h)`. Its scope is one column, so the definition permits arbitrary address inputs elsewhere on the board."
+  },
+  "app-e-one-circuit": {
+    "QuarticQuery.Paper.construction_equation_two": "For each fixed $k\\ge2$, sufficiently large boards have quantum cost at most $C\\sqrt m(\\log_2m)^b$ and randomized cost at least $c\\,m^{2-1/k}/(\\log_2m)^2$, with positive constants. Constants, the logarithmic exponent and the threshold are chosen before `t`."
+  },
+  "app-e-exponent-endpoint": {
+    "QuarticQuery.alphaTot_eq_four_unconditional": "The unconditional endpoint is a single application of `alphaTot_eq_four_of_bansalSinha`. Its argument is the proof of the one-address hardness used to construct the separating family.",
+    "QuarticQuery.universalPower_four": "Every total Boolean function satisfies $R(f)\\le20736(1+Q(f))^4$. The constant is independent of the function and its input length, which is exactly what `UniversalPower 4` requires."
+  }
+}

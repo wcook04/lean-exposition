@@ -1,0 +1,199 @@
+{
+  "language-code": {
+    "PCP.Language": "`List Bool` represents all finite binary strings, including the empty string. The result type `Prop` specifies membership without requiring a decision procedure for it."
+  },
+  "np-certificate-code": {
+    "PCP.NPCertificate": "The witness bound is evaluated at the length of the original input, and `check_polyTime` separately constrains how witnesses are checked. The equivalence requires a bounded accepting witness for each yes-input and rules one out for each no-input."
+  },
+  "in-np-code": {
+    "PCP.InNP": "`Nonempty` makes `InNP` a proposition about existence. An implementation of the checker lives in the certificate, and proving membership does not choose a distinguished checker among all possible certificates."
+  },
+  "language-prose": {
+    "PCP.Language": "The codomain is `Prop`, so the predicate specifies which strings belong to the language even before any algorithm is given. The later Boolean checker is a separate function on an input and a proposed witness."
+  },
+  "np-certificate-prose": {
+    "PCP.NPCertificate": "The checker’s time condition is on the Boolean function of both $x$ and $w$. The polynomial stored in `witnessBound` limits the sizes of the witnesses quantified over in the membership equivalence.",
+    "PCP.InNP": "`InNP` asserts that at least one certificate exists. The checker, its running-time predicate and its witness-length polynomial are all fields of `NPCertificate`."
+  },
+  "np-parameter-prose": {
+    "PCP.InNP": "The parameter $P$ is a predicate on Boolean checkers. `InNP` only requires a certificate relative to that predicate, so its meaning as a time class comes from the particular $P$ supplied by the theorem.",
+    "PCP.NPCertificate": "`check_polyTime` has type `P check`. This is the point where the abstract machine predicate enters the certificate. The field `witnessBound` stays a polynomial of input length for any choice of $P$.",
+    "PCP.Machine.PolyTimeRel": "`PolyTimeRel` uses a Mathlib machine computation for the encoded pair and Boolean output. Selecting it as the checker predicate makes the abstract certificate a concrete polynomial-time witness relation.",
+    "PCP.np_subset_pcp": "`np_subset_pcp` uses `Machine.PolyTimeRel` in its hypothesis. The reduction to three-colourability can therefore start with a witness checker implemented by a machine with a polynomial running-time bound."
+  },
+  "polytime-relation-code": {
+    "PCP.Machine.PolyTimeRel": "The machine computes the checker on the pair representation and produces one Boolean output. `Nonempty` says that a machine with the specified polynomial bound exists, without selecting a particular machine in the definition of the predicate."
+  },
+  "polynomial-time-prose": {
+    "PCP.Machine.PolyTimeRel": "The machine’s runtime polynomial is in the length of the encoded pair, $|x|+|w|+1$. The certificate’s separate witness-length polynomial in $|x|$ then bounds this runtime for the witnesses considered by `InNP`."
+  },
+  "pair-encoding-prose": {
+    "PCP.Machine.encodePair": "The separator is a symbol distinct from either bit, so it determines where the first list ends even if one list is empty. Its single tape cell accounts for the extra one in the encoded input length."
+  },
+  "proof-oracle-code": {
+    "PCP.ProofOracle": "Oracle replies are defined at every natural-number address. If the query trees have an address bound, any two oracles with the same prefix below that bound give the same verdict. The bound is a property of the verifier."
+  },
+  "query-tree-code": {
+    "PCP.QueryTree": "The constructors encode the depth bound in the type. A query consumes one level in both successor trees, while a leaf can inhabit `QueryTree d` for any remaining budget."
+  },
+  "tree-evaluation-code": {
+    "PCP.QueryTree.eval": "The address of the next query can depend on the supplied proof bit because `eval` recurses into just the selected subtree. The other subtree contributes no reads on that run."
+  },
+  "tree-addresses-code": {
+    "PCP.QueryTree.addresses": "`addresses` takes a union over both continuations, so it may contain addresses that no single execution reads together. This is the set on which `ReadsBelow` can impose a bound uniform in the proof."
+  },
+  "verifier-code": {
+    "PCP.Verifier": "For each input and seed, `Verifier` includes an abstract tree with a bound on its depth. Computing its steps in polynomial time requires the later implementation and cost conditions."
+  },
+  "proof-oracle-prose": {
+    "PCP.ProofOracle": "The soundness quantifier ranges over all such sequences, including ones without a computable description. An address bound is why one can nevertheless replace a complete sequence by a finite witness in the converse."
+  },
+  "query-tree-prose": {
+    "PCP.QueryTree": "The depth index is a bound along a path. A proof can steer the tree to different addresses, so a depth-$d$ tree can contain more than $d$ distinct addresses across its branches.",
+    "PCP.QueryTree.eval": "A leaf returns its supplied verdict before any further query. At an internal node the proof is read at the stored address and the returned bit chooses the remainder of the computation, giving the adaptivity in the prose."
+  },
+  "verifier-prose": {
+    "PCP.Verifier": "The type of the seed depends on $|x|$, while the type of the tree uses a fixed query budget `queries`. A logarithmic bound for the first quantity and polynomial-time computation of the tree’s steps are additional conditions."
+  },
+  "accepting-randomness-code": {
+    "PCP.Verifier.acceptingRandomness": "The filter holds both $x$ and $\\pi$ fixed while varying the seed. Repeating the count for each proof separately is what makes this definition suitable for `SoundAt`."
+  },
+  "acceptance-probability-code": {
+    "PCP.Verifier.accProb": "The cardinality and denominator are cast to rationals, so division gives the exact probability. At budget zero the denominator is still one, since there is one seed, the empty bit string."
+  },
+  "complete-at-code": {
+    "PCP.Verifier.CompleteAt": "The existential quantifier is outside the probability calculation. A single proof must make the fraction of accepting seeds equal to one, so any rejected seed would violate completeness."
+  },
+  "sound-at-code": {
+    "PCP.Verifier.SoundAt": "`SoundAt` first fixes a proof and then counts the accepting seeds for that proof. The same upper bound applies to every such choice, including arbitrary oracles with no honest encoding."
+  },
+  "reads-below-code": {
+    "PCP.Verifier.ReadsBelow": "The address set includes both possible continuations at every query. Thus $a<N$ constrains all possible answer histories at all seeds, which lets the converse use only the first $N$ bits."
+  },
+  "canonical-randomness-code": {
+    "PCP.Verifier.CanonicalRandomness": "The equality pins down `randomness` at every length from the same two constants. The $n+2$ term gives the formula a value at the empty input as well as at positive lengths."
+  },
+  "acceptance-probability-prose": {
+    "PCP.Verifier.accProb": "Because every seed has weight $2^{-k}$, counting accepts and dividing by $2^k$ gives the exact probability used in soundness and completeness. This is a rational inequality or equality over a finite run space."
+  },
+  "completeness-prose": {
+    "PCP.Verifier.CompleteAt": "Since every seed has positive mass, probability one requires every tree for the input to accept that same oracle. The oracle can depend on the input."
+  },
+  "soundness-prose": {
+    "PCP.Verifier.SoundAt": "The bound says that even a proof chosen to maximize acceptance at this input can reach at most $s$. In the main theorem the clause is applied to no-inputs with $s=1/2$."
+  },
+  "proof-bound-prose": {
+    "PCP.Verifier.ReadsBelow": "Any two oracles that agree below $N$ lead to the same answer at the first query and therefore to the same next query. Repeating this argument down every seed’s tree shows why the whole verdict depends only on that prefix."
+  },
+  "randomness-budget-prose": {
+    "PCP.Verifier.CanonicalRandomness": "An arbitrary function taking values zero and one would satisfy a constant upper bound yet could encode an arbitrary predicate of input length. The exact formula removes that dependence and makes the seed space available to the deterministic checker."
+  },
+  "verifier-algorithm-code": {
+    "PCP.VerifierAlg": "The three lists supply all the inputs for one step, including the ordered history of earlier replies. The sum type distinguishes a final verdict from a natural-number address to read next."
+  },
+  "implementation-code": {
+    "PCP.Verifier.ImplementedBy": "The equality unfolds from an empty history and applies to both branches after every query. At the query cutoff, `QueryTree.ofStep` replaces another request with rejection, so the clause states correspondence for capped execution."
+  },
+  "polytime-algorithm-code": {
+    "PCP.Machine.PolyTimeAlg": "`PolyTimeAlg` bounds computation of one response on an encoded triple. The input length in the machine bound includes the seed and answer history, so their resource bounds are used when bounding an entire run."
+  },
+  "efficiency-separate-prose": {
+    "PCP.Verifier": "The structure lists abstract trees and budgets. Those data alone can describe any family of allowed trees, which is why a separate implementation and cost bound are needed to use it as a polynomial-time verifier.",
+    "PCP.VerifierAlg": "`VerifierAlg` only specifies the next-action function’s inputs and output. Polynomial complexity is a property of a machine computing that function, so it enters through `PolyTimeAlg`.",
+    "PCP.Verifier.ImplementedBy": "`ImplementedBy` links the step function to the abstract verifier on each input and seed. This transfers the acceptance and address guarantees to its bounded executions, with the machine cost supplied independently.",
+    "PCP.Machine.PolyTimeAlg": "`PolyTimeAlg` bounds the time to compute each next action. A constant query bound then limits how many times the step is evaluated, including the final verdict step."
+  },
+  "algorithm-step-prose": {
+    "PCP.VerifierAlg": "One function consumes an answer history, so it can choose a later address using earlier bits. `Bool` returns a verdict directly, while `ℕ` requests a read and extends that history."
+  },
+  "implementation-prose": {
+    "PCP.Verifier.ImplementedBy": "The unfolding is capped at `V.queries`. At depth zero a verdict is kept and a further query becomes rejection. The equality therefore matches the whole bounded tree, including its verdicts at the cutoff."
+  },
+  "algorithm-time-prose": {
+    "PCP.Machine.PolyTimeAlg": "The runtime bound concerns one step on the encoded input, seed and history. In the main theorem the seed length is logarithmic and the history has bounded length, so this yields polynomial time for the full capped run."
+  },
+  "headline-statement": {
+    "PCP.np_subset_pcp": "The existential quantifiers precede every input-dependent clause. They provide one machine algorithm and one set of resource bounds for the language, and `ImplementedBy` transfers the verifier guarantees to that algorithm’s bounded runs."
+  },
+  "lean-hypothesis": {
+    "PCP.np_subset_pcp": "`hL` is an argument to the forward theorem. It supplies the witness certificate that is used for the reduction. The verifier with the stated bounds is the conclusion.",
+    "PCP.InNP": "Instantiating `InNP` with `Machine.PolyTimeRel` requires an `NPCertificate` whose checker meets this particular machine predicate. The certificate also gives the polynomial witness bound and the equivalence with language membership.",
+    "PCP.Machine.PolyTimeRel": "`Machine.PolyTimeRel` constrains the running time on the encoded pair $(x,w)$. The separate witness-length polynomial in `NPCertificate` controls how large that pair needs to be for a yes-input."
+  },
+  "clause-hypothesis": {
+    "PCP.Language": "Encoding binary strings as `List Bool` lets $L$ be a predicate on all finite strings, including the empty string. Its membership in the concrete NP class is an additional hypothesis.",
+    "PCP.InNP": "The assumption gives a single checker and witness bound that work for every input of the language. Individual accepting witnesses can still depend on the input.",
+    "PCP.Machine.PolyTimeRel": "The polynomial-time condition applies to the Boolean verification of a supplied witness. The bounded existential quantifier in `NPCertificate` is what relates that pairwise check to membership of a string in $L$.",
+    "PCP.np_subset_pcp": "The `hL` argument is necessary to obtain the reduction to three-colourability. The theorem constructs the PCP protocol from the concrete NP certificate, so it assumes the NP claim in the passage."
+  },
+  "lean-witnesses": {
+    "PCP.np_subset_pcp": "The order places $V$, `alg`, and the budgets outside the clauses that quantify over inputs. The theorem guarantees that all the later clauses hold for this one choice of verifier and implementation.",
+    "PCP.Verifier": "`Verifier` packages a seed budget, a query depth and the resulting tree family. It is one of the theorem’s existential witnesses, and the subsequent clauses constrain the particular family supplied.",
+    "PCP.VerifierAlg": "`VerifierAlg` specifies the type of the machine step chosen in the existential. `PolyTimeAlg` then imposes its cost, and `ImplementedBy` relates its repeated steps to the chosen trees."
+  },
+  "clause-witnesses": {
+    "PCP.Verifier": "The quantifier chooses one `Verifier`, so the three stored fields specify the protocol across all input lengths at once. The next clauses fix its budgets and its yes- and no-input behavior.",
+    "PCP.VerifierAlg": "The step algorithm chosen here takes an input on every invocation. The existential outside the input quantifiers ensures the same function computes the next action for all inputs, seeds and histories.",
+    "PCP.np_subset_pcp": "The same polynomial and constants work throughout the language because they are supplied together with $V$ before any occurrence of `∀ x`. A completeness proof can still vary with $x$ because it is quantified inside `CompleteAt`."
+  },
+  "lean-algorithm-time": {
+    "PCP.np_subset_pcp": "The cost clause applies to the very `alg` used in the next conjunct. This matters because a cheap step function would establish no efficiency guarantee for a verifier it does not implement.",
+    "PCP.Machine.PolyTimeAlg": "`Machine.PolyTimeAlg` bounds computing the step on the encoded input, seed and history, including writing its answer or next address. The query-depth bound is what limits repeated calls to that step."
+  },
+  "clause-algorithm-time": {
+    "PCP.Machine.PolyTimeAlg": "The machine-level bound applies to one next-action computation. Since the theorem bounds the seed and answer-history lengths, the cost polynomial for the encoded triple also bounds each call in terms of input length.",
+    "PCP.np_subset_pcp": "The theorem chooses `alg` with a polynomial-time computation and a matching bounded tree. Both parts are needed for the resource claim to cover the cost of computing the addresses on each run."
+  },
+  "lean-implementation": {
+    "PCP.np_subset_pcp": "This conjunct makes the machine-backed step function implement the verifier in the adjacent clauses. It applies at every input and seed, so the probabilistic guarantees for `V` carry over to the capped machine execution.",
+    "PCP.Verifier.ImplementedBy": "The random index is converted to its fixed-length bit string and unfolding begins with no replies. The equality is between entire bounded trees, including the branches inconsistent with an honest proof."
+  },
+  "clause-implementation": {
+    "PCP.Verifier.ImplementedBy": "Exact computation in `ImplementedBy` means equality with the tree unfolded through at most `V.queries` steps that request a bit. If the next action at the cutoff is another request, that node becomes a rejecting leaf.",
+    "PCP.np_subset_pcp": "In the theorem, the same `alg` from the polynomial-time clause agrees with `V` after applying `QueryTree.ofStep` at the fixed depth. This is the execution whose verdicts satisfy the theorem’s later probability bounds."
+  },
+  "lean-query-bound": {
+    "PCP.np_subset_pcp": "The theorem fixes $q$ once and defines the cap by `V.queries = q`. The query count is bounded per run, while the address bound is separately imposed on every reachable node.",
+    "PCP.Verifier": "The `run` field has result type `QueryTree queries`, so the equality sets the depth index on every returned tree. A leaf before depth $q$ can end the run after fewer reads."
+  },
+  "clause-query-bound": {
+    "PCP.Verifier": "The budget is stored once in the verifier and appears in the result type for every input and seed. It bounds a path even when distinct branches read different addresses.",
+    "PCP.QueryTree": "A query constructor decreases the remaining budget by one and a leaf uses no further reads. Consequently every execution takes at most $q$ queries, although the entire tree may branch to many more addresses.",
+    "PCP.np_subset_pcp": "The existentially chosen $q$ is independent of input length, which gives the $O(1)$ query bound. The polynomial address clause is still needed because a one-query tree can name an arbitrarily large position."
+  },
+  "lean-randomness": {
+    "PCP.np_subset_pcp": "The constants $a,b$ are supplied before the input clauses. Hence the exact formula determines the random seed type uniformly for the whole verifier, which is used when the converse enumerates seeds.",
+    "PCP.Verifier.CanonicalRandomness": "`CanonicalRandomness` is an equality at every natural-number length. Fixing $a,b$ therefore determines the budget as a function, including the value at length zero."
+  },
+  "clause-randomness": {
+    "PCP.Verifier.CanonicalRandomness": "The budget is fixed at each $n$, even if some runs can ignore part of the seed. The finite seed type still ranges over all bit strings of that length, giving the uniform denominator in `accProb`.",
+    "PCP.np_subset_pcp": "The exact formula with fixed natural-number coefficients gives the logarithmic part of the PCP claim. It also bounds the number of possible seeds by a polynomial, the quantity needed for deterministic enumeration in the converse."
+  },
+  "lean-proof-bound": {
+    "PCP.np_subset_pcp": "The polynomial is chosen once for the language and evaluated at each input’s length. It bounds every reachable address even though the tree can depend on the particular input and seed.",
+    "PCP.Verifier.ReadsBelow": "`ReadsBelow` requires all nodes at every seed to have address strictly below $p(|x|)$. This makes agreement on those $p(|x|)$ bits sufficient for identical acceptance on every seed."
+  },
+  "clause-proof-bound": {
+    "PCP.Verifier.ReadsBelow": "The address bound uses zero-based indices, so the first $p(|x|)$ bits include every address strictly below that value. No choice of answers can steer a run beyond the prefix.",
+    "PCP.np_subset_pcp": "The theorem places this bound alongside the constant query limit because they govern different quantities. A short execution may reach a far-off address, so the separate polynomial bound makes the proof prefix a polynomial-size witness."
+  },
+  "lean-completeness": {
+    "PCP.np_subset_pcp": "`V.CompleteAt x` is required whenever `L x` holds. It chooses a proof for that input while the verifier, algorithm and budgets were already fixed for the language.",
+    "PCP.Verifier.CompleteAt": "`CompleteAt` quantifies over proofs before evaluating their acceptance probabilities. One proof must therefore make all seeds accept, and the theorem requires such a choice for every yes-input."
+  },
+  "clause-completeness": {
+    "PCP.Verifier.CompleteAt": "The probability-one statement is equivalent to universal acceptance over the finite uniform seed type. A single rejecting seed on the proposed proof would lower its acceptance probability.",
+    "PCP.np_subset_pcp": "The completeness clause applies to the same verifier that has the address cap. An accepting oracle for a yes-input can therefore be agreed with on its accessible prefix to obtain a finite accepting witness."
+  },
+  "lean-soundness": {
+    "PCP.np_subset_pcp": "The premise `¬ L x` activates the soundness bound on a particular input. The same verifier that has perfect completeness on yes-inputs must reject at least half its seeds for every proof on that input.",
+    "PCP.Verifier.SoundAt": "`SoundAt` has a universal quantifier over proof oracles. Substituting $1/2$ means that after any oracle is fixed, at least half the uniformly drawn seeds reject."
+  },
+  "clause-soundness": {
+    "PCP.Verifier.SoundAt": "This is a bound on acceptance for every individual proof. Neither an honest encoding nor a computable origin for the proof is a premise of `SoundAt`.",
+    "PCP.np_subset_pcp": "A candidate prefix for a no-input can be extended to an arbitrary full oracle and still falls under this clause. It must therefore fail some seed, which is how the converse excludes false witnesses."
+  },
+  "pcp-summary": {
+    "PCP.np_subset_pcp": "`np_subset_pcp` proves the forward inclusion. Its `ReadsBelow` and implementation clauses make the asymptotic resource statement usable in the concrete machine model. Equality of the classes uses the separate converse."
+  }
+}

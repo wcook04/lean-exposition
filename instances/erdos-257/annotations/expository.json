@@ -1,0 +1,272 @@
+{
+  "exp.series.geometric-example": {
+    "Erdos249257.tsum_half_nat_add_succ": "In `tsum_half_nat_add_succ`, the summation index starts at $0$ and the first exponent is $n+1$. Setting $n=0$ gives the opening sum. The general formula gives $2^{-n}$ after omitting the first $n$ terms."
+  },
+  "exp.opening.integer-error": {
+    "Erdos249257.irrational_of_int_mul_near_int": "The proof defines the integer numerator `N` as $m p-zq$, with $p$ and $q$ given by `r.num` and `r.den`. The equality `hval` puts the error over $q$ for the two witness integers $m,z$."
+  },
+  "exp.opening.positive-gap": {
+    "Erdos249257.irrational_of_int_mul_near_int": "For the witness error $N/q$, `hN0` rules out $N=0$. The proof applies `Int.one_le_abs` and divides by $q>0$ to obtain the absolute gap $1/q$, which also bounds any positive error from below."
+  },
+  "exp.def.series": {
+    "Erdos249257.erdosSupportSeries": "With $b=2$, `Set.indicator A` contributes $1/(2^n-1)$ at each selected exponent and zero elsewhere. The symbol `∑'` in `erdosSupportSeries` sums this family over the natural numbers."
+  },
+  "exp.def.partial-sum": {
+    "Erdos249257.finiteErdosSum": "Take `F` to be the finite set of exponents reached so far and put $b=2$. The codomain `Rat` reflects that a partial sum of these rational summands is rational."
+  },
+  "exp.def.irrational": {
+    "Erdos249257.hasRationalValue_iff_not_irrational": "`HasRationalValue` asks for an integer numerator and a positive natural denominator. `hasRationalValue_iff_not_irrational` identifies the existence of such a fraction with the negation of `Irrational`."
+  },
+  "exp.series.geometric-partial": {
+    "Erdos249257.geom_sum_half": "The index set `Finset.Icc 1 K` includes both endpoints, so $K=N$ gives the first $N$ positive powers of $1/2$. The empty sum at $N=0$ also satisfies the displayed formula."
+  },
+  "exp.series.convergence": {
+    "Erdos249257.summable_erdosSupport_indicator": "The name `Summable` here applies to the Mersenne summands selected by `Set.indicator A`. The proof compares them with $2b^{-n}$ under $b\\ge2$, so convergence holds for every support at $b=2$ and requires no assumption on $\\sum_{n\\in A}1/n$."
+  },
+  "exp.thm-main.infinite": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The range $A=\\{n_1,n_2,\\ldots\\}$ of the strictly increasing sequence supplies `hA : A.Infinite`. The statement works directly with the set and uses no ordering of its elements."
+  },
+  "exp.thm-main.summability": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The assumption `hsum` requires summability of `reciprocalSupportTerm`, whose value is $1/n_k$ at the exponent $n_k$ and zero off the range. The strict increase makes each selected exponent occur once."
+  },
+  "exp.thm-main.series": {
+    "Erdos249257.erdosSupportSeries": "Use $b=2$ and take $A$ to be the range of $k\\mapsto n_k$. The indicator in `erdosSupportSeries` therefore includes each summand $1/(2^{n_k}-1)$ once."
+  },
+  "exp.thm-main#1": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The conclusion `Irrational (erdosSupportSeries b A)` specializes to the displayed claim at $b=2$. The theorem requires an infinite support and a summable reciprocal-exponent series for any natural base $b\\ge2$."
+  },
+  "exp.hypothesis.set-form": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Here $A$ is already the set of selected exponents. `Summable (reciprocalSupportTerm A)` says exactly that the sum of $1/n$ over its positive exponents is finite."
+  },
+  "exp.hypothesis.exponents": {
+    "Erdos249257.reciprocalSupportTerm": "`reciprocalSupportTerm A n` uses the exponent $n$ itself as the denominator at selected indices. Summing these terms yields the hypothesis $\\sum_{n\\in A}1/n<\\infty$."
+  },
+  "exp.hypothesis.doubling-reciprocals": {
+    "Erdos249257.tsum_half_nat_add_succ": "Set the cutoff `n` in `tsum_half_nat_add_succ` to $0$. The resulting geometric sum is the reciprocal-exponent sum for the doubling support $2,4,8,\\ldots$."
+  },
+  "exp.series.convergence-reminder": {
+    "Erdos249257.summable_erdosSupport_indicator": "At $b=2$, `summable_erdosSupport_indicator` gives convergence of $S_A$ for any selection $A$. In the proof the geometric comparison is uniform over all selections."
+  },
+  "exp.assume.rational": {
+    "Erdos249257.HasRationalValue": "The binder `∃ p : ℤ` chooses the integer numerator, and the separate condition `0 < v` makes the natural denominator positive. The equality in `HasRationalValue` is the paper’s $S=p/q$ with $v=q$."
+  },
+  "exp.gap.integer-numerator": {
+    "Erdos249257.irrational_of_int_mul_near_int": "At the highlighted lines, `hval` is the displayed common-denominator calculation with $u=m$, $j=z$, $p$ given by `r.num` and $q$ by `r.den`. These are the particular numerator, denominator and witnesses used in the proof."
+  },
+  "exp.gap.lower-bound": {
+    "Erdos249257.irrational_of_int_mul_near_int": "The highlighted `hge` is a bound on the absolute value of the error for the chosen witnesses and the reduced denominator `r.den`. When the error is positive, removing the absolute value gives $uS-j\\ge1/q$."
+  },
+  "exp.step.gap#1": {
+    "Erdos249257.irrational_of_int_mul_near_int": "For each positive $q$, the hypothesis `h` asks for two integers with a nonzero error of absolute value below $1/q$. It includes the displayed positive error case and allows the witnesses to depend on $q$."
+  },
+  "exp.remainders.nonnegative": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "The numerator of `displacementAtom` at a positive exponent $n$ is $b^{k\\bmod n}-1$. It is nonnegative under $b\\ge2$, which gives $\\ell_n(k)\\ge0$ at $b=2$."
+  },
+  "exp.def.fractional-contribution": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "`displacementAtom 2 k n` subtracts the unshifted term from the shifted term. For $n>0$ this gives $(2^{k\\bmod n}-1)/(2^n-1)$, the residue formula for $\\ell_n(k)$."
+  },
+  "exp.def.sum-contributions": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "`displacement_eq_tsum` moves the subtraction of the unshifted series inside the infinite sum. With $b=2$, its left side is $R(k)$ and the terms on its right are $\\ell_n(k)$ at the selected exponents."
+  },
+  "exp.remainders.divides-zero": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Set the finite set `F` to $\\{n\\}$ and the multiplier exponent `N` to $k$. The assumption `hdiv` makes $k\\bmod n=0$ and the singleton's contribution zero."
+  },
+  "exp.remainders.common-multiple": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "`hdiv` says every $d$ in the finite set `F` divides the chosen shift `N`. All those atoms then have numerator $b^0-1=0$, so their combined contribution vanishes."
+  },
+  "exp.remainders.convergence": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom": "`summable_displacementAtom` subtracts two summable shifted families under $b\\ge2$. In base two the resulting family is exactly the selected residue contributions defining $R(k)$."
+  },
+  "exp.def.total-remainder": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement": "`displacement 2 A k` is the shifted support sum minus the original series. Termwise subtraction gives $R(k)$, which adds the fractional contributions separately and can exceed $1$."
+  },
+  "exp.remainders.infinite-witness": {
+    "Erdos249257.binaryCoeffTail_supportCoeff_zero_strictMinimum": "The highlighted `hA.exists_gt N` extracts a selected exponent $d>N$ from the infinitude of $A$. Put $N=k$ to recover the index needed to prove strict positivity."
+  },
+  "exp.remainders.positive-contribution": {
+    "Erdos249257.shiftedSupportAtom_zero_lt_of_mem_of_lt": "The binders `hdA`, `hN` and `hNd` give $n\\in A$ and $0<k<n$. Thus $k\\bmod n=k$ and the strict comparison of shifted atoms means that $\\ell_n(k)>0$."
+  },
+  "exp.remainders.other-contributions": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "`displacementAtom_nonneg` applies separately to every exponent. Its inequality ensures that adding the remaining contributions preserves the strict gain from the one selected exponent above $k$."
+  },
+  "exp.doubling-zero-prefix": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Every early doubling exponent divides the chosen $k$, so `hdiv` holds with `F` equal to that finite group. The proof sets each remainder to zero before summing."
+  },
+  "exp.doubling-future-row": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_future_eq": "For a singleton support, `hfuture` is just $k<n$. With $b=2$ the identity gives $\\ell_n(k)=(2^k-1)/(2^n-1)$. The strict bounds on either side use separate estimates."
+  },
+  "exp.mean-sampling": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "The term at index `m` in `Finset.range T` is sampled at `((m + 1) * L)`. Taking $L=Q$ and $T=M$ starts at $Q$ and ends at $MQ$."
+  },
+  "exp.mean-zero-rows": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Take `F` to be the initial group. Because each $d\\in F$ divides $Q$, it divides every $mQ$, so `hdiv` makes the same group vanish in every column."
+  },
+  "exp.mean-definition": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "Put $f(k)=R(k)$, $L=Q$ and $T=M$ in `progressionMean`. Each value in this finite mean is the total of an entire column at a single exponent $mQ$."
+  },
+  "exp.step.average#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.tsum_progressionMean": "Take `u` to be the selected `displacementAtom` family at $b=2$. Each column is summable, giving `hu`. `tsum_progressionMean` then equates the sum of row means with the mean of column sums, with the sides reversed from (4)."
+  },
+  "exp.mean-small-column": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.exists_lt_of_mean_lt": "Apply `exists_lt_of_mean_lt` to `Finset.range M` and $f(m)=R((m+1)Q)$ with threshold $1/q$. Its witness is one index of the finite set, so all contributions in the chosen column use the same shift."
+  },
+  "exp.mean-zero-preview": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "For the already chosen finite group, divisibility by $Q$ supplies `hdiv` at each shift $mQ$. Its total contribution can therefore be removed before estimating the column mean."
+  },
+  "exp.cycle-geometric-sum": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.sum_cycle_weight_eq": "The Lean identity sums $B^i/(B^d-1)$ for $0\\le i<d$ and $B>1$. At $B=2$ and $d=n$, multiplying by $2^n-1$ recovers the unnormalized sum used here."
+  },
+  "exp.cycle-gcd-definition": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The proof defines `g := Nat.gcd Q d` using `d` for the row exponent $n$. This common factor is the spacing between the possible sampled remainders."
+  },
+  "exp.cycle-length-definition": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The local `h := d / g` becomes $c=n/g$ in the paper. The summation runs over `Finset.range (d / Nat.gcd Q d)`, so it contains exactly one cycle of samples."
+  },
+  "exp.cycle-residue-enumeration": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The bijection `e` permutes the integers $0,\\ldots,c-1$. The identity `hresidue` multiplies those values by $g$ to obtain the remainders of the $c$ sampled exponents modulo $n$."
+  },
+  "exp.cycle-period": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit_block": "The result `hperiod` says $n\\mid cQ$. The proof uses `hbperiod` to remove any whole number of increments $cQ$ from the exponent before taking its remainder modulo $n$."
+  },
+  "exp.cycle-coprime": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "After defining $q=Q/g$ and $h=n/g$, the proof obtains `hcop : Nat.Coprime q h` from `Nat.coprime_div_gcd_div_gcd`. Both quotients are taken by the same gcd."
+  },
+  "exp.cycle-cancellation": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The local equality `hcancel` uses coprimality to cancel $Q/g$ from a congruence modulo $n/g$. The remaining congruence compares the two sample indices incremented by one."
+  },
+  "exp.cycle-distinct": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "To prove `heinj`, the code cancels the coprime factor in the equality of reduced residues and then cancels the common offset $1$. Since both indices are less than $n/g$, congruence modulo $n/g$ implies equality."
+  },
+  "exp.cycle-exhaustion": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The set `Fin h` has the same size as the domain and codomain of `e`. Thus injectivity gives the bijection `hebij`, which, together with `hresidue`, shows that the first cycle exhausts the possible remainders once each.",
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit_block": "For each index within a later block, the proof removes a multiple of $n$ from the exponent before taking its remainder. This matches the first cycle term by term and preserves its enumeration."
+  },
+  "exp.cycle-reordering": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "`hsumPerm` reindexes the sum of powers by `e`. For $Q=4$ and $n=6$ this permutes the three remainders $4,2,0$ into $0,2,4$. Subtracting the same baseline per term and dividing by three preserves the equality of means."
+  },
+  "exp.incomplete-before-cycle": {
+    "Erdos249257.sum_shiftedMersenneAtom_mul_le_inv_pow_gap_of_lt": "With `K = M` and `d = n`, `hnowrap` says the largest sampled exponent $MQ$ is strictly less than $n$. Each sampled remainder is then the sampled exponent itself."
+  },
+  "exp.incomplete-decomposition": {
+    "Erdos249257.sum_range_eq_mul_blockSum_add_blockRemainder": "Use $x_j=\\ell_n(j+1)$, block length $n$ and $N=MQ$. Periodicity gives `hblock`. The quotient $N/n$ rounded down counts the whole blocks, and `blockRemainder` sums the first $N\\bmod n$ entries of the next block."
+  },
+  "exp.incomplete-unit-row": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Take `F` to be $\\{1\\}$. Because $1$ divides every shift, `hdiv` holds for every column and the single fractional contribution vanishes in any base $b\\ge2$."
+  },
+  "exp.incomplete-remove-entries": {
+    "Erdos249257.blockRemainder_le_blockSum": "The proof includes `Finset.range (N % h)` in the full block `Finset.range h`, then applies `Finset.sum_le_sum_of_subset_of_nonneg` using `hx0`. This is the removal step in the argument for the separate $2Q/n$ estimate."
+  },
+  "exp.combine.numeric-prefix-zero": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "The four displayed exponents divide $16$, hence also $16m$. That divisibility is the input `hdiv` that gives zero contribution at every candidate in this finite example."
+  },
+  "exp.combine.prefix-zero": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "The chosen $Q$ is a common multiple of the initial exponents, so `hdiv` holds for each sample $mQ$. The lemma makes the contribution from that finite group zero before any averaging."
+  },
+  "exp.combine.conclusion": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The formal theorem yields `Irrational (erdosSupportSeries 2 A)` from `hA` and `hsum` for an infinite support with summable reciprocal exponents. Its more general base parameter permits any natural $b\\ge2$."
+  },
+  "exp.combine.positivity-role": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos": "The hypothesis `hA` supplies a selected exponent beyond the positive shift `N`. Its atom contributes strictly positively, so the sum of all contributions remains positive by nonnegativity."
+  },
+  "exp.scope.all-bases": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The assumptions `hA` and `hsum` are the first two conditions in the display. Lean permits $0\\in A$, with both series assigning that index zero. For positive exponents the conclusion is the same for all natural bases $b\\ge2$."
+  },
+  "exp.scope.radix-fraction": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "At a positive exponent `d = n`, expanding the two `shiftedRadixAtom` values at `N = k` and at $0$ gives the displayed quotient. The exponent-zero branch of the atoms contributes zero."
+  },
+  "exp.scope.finite-selection": {
+    "Erdos249257.erdosSupportSeries_finset_eq_cast_finiteErdosSum": "`erdosSupportSeries_finset_eq_cast_finiteErdosSum` identifies a finite base-two selection with the real cast of a rational sum. Take `F` to be the finitely many retained square exponents. The later statement for all bases lies outside this lemma."
+  },
+  "exp.scope.full-series-irrational": {
+    "Erdos249257.irrational_erdosSupportSeries_univ": "`Set.univ` selects every exponent, so the theorem gives the full series at $b=2$. It applies to all natural bases $b\\ge2$ and treats the term at exponent zero as zero."
+  },
+  "exp.appendix.geometric-sum": {
+    "Erdos249257.tsum_half_nat_add_succ": "Setting the cutoff to $n=0$ leaves the exponents $k+1$ in `tsum_half_nat_add_succ`. The index $k=0$ gives the first term $2^{-1}$ and the terminal value is $1$."
+  },
+  "exp.appendix.convergence": {
+    "Erdos249257.summable_erdosSupport_indicator": "The only hypothesis on the summable Mersenne family is `hb : 2 ≤ b`. In particular the statement imposes no summability condition on the reciprocal exponents of the arbitrary set `A`."
+  },
+  "exp.appendix.nonnegative-terms": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "`displacementAtom b N d` is the shifted term minus its baseline at exponent $d$. At $b=2$, $N=k$ and $d=n>0$, its nonnegativity is precisely $\\ell_n(k)\\ge0$."
+  },
+  "exp.appendix.term-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_le_amplified": "The proof uses $N\\bmod d\\le N$ to bound the residue numerator by $b^N-1$. Set $b=2$, $N=k$ and $d=n$ to obtain the stated upper bound."
+  },
+  "exp.appendix.remainder-converges": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom": "At $b=2$ the family `Set.indicator A (displacementAtom b N)` is exactly the sequence of selected fractional contributions at shift $N$. The `Summable` conclusion justifies the sum $R(N)$ for every support."
+  },
+  "exp.appendix.reduced-coprime": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The proof names the two quotients `q` and `h`. The assertion `hcop : Nat.Coprime q h` is coprimality of the paper’s $u=Q/g$ and $c=n/g$ after removing their common factor $g$."
+  },
+  "exp.appendix.distinct-remainders": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The assertion `heinj` is injectivity of the map `e` sending each sample index to its reduced residue modulo $c$. Multiplying by the positive gcd $g$ preserves distinctness of the first $c$ sampled remainders."
+  },
+  "exp.appendix.every-cycle-remainder": {
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The identity `hresidue` writes each sampled remainder as $g$ times a value of `e`. Since `hebij` makes `e` a bijection on $0,\\ldots,c-1$, each possible multiple of $g$ below $n$ occurs once."
+  },
+  "exp.appendix.add-row-averages": {
+    "Erdos249257.tsum_cesaroMean_shiftedSupportAtom_mul": "`tsum_cesaroMean_shiftedSupportAtom_mul` interchanges the infinite row sum and finite average for shifted atoms. For $K>0$ each mean subtracts the same unshifted contribution, giving the fractional-part version in (4)."
+  },
+  "exp.appendix.radix-geometric-sum": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.sum_cycle_weight_eq": "Use `B` for $b$ and `d` for $n$ in `sum_cycle_weight_eq`. Multiplying the normalized identity by $b^n-1>0$ gives the paper’s geometric sum."
+  },
+  "exp.appendix.other-bases-conclusion": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The general base `b` is a parameter of the formal conclusion. `hA` requires infinitely many exponents and `hsum` requires their reciprocals to be summable. This is a statement-level link to the all-base result."
+  },
+  "exp.formal.theorem-statement": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The signature separates `hb` for the base bound, `hA` for infinite support and `hsum` for the sum of reciprocal exponents. The output is `Irrational (erdosSupportSeries b A)` for those same `b` and `A`."
+  },
+  "exp.formal.zero-convention": {
+    "Erdos249257.erdosSupportSeries": "At exponent $0$, the Mersenne denominator in `erdosSupportSeries` is $b^0-1=0$. Lean's real division gives zero there, including when $0$ is selected.",
+    "Erdos249257.reciprocalSupportTerm": "The division in `reciprocalSupportTerm A 0` has denominator $0$, so Lean assigns it zero even if $0\\in A$. The indicator also assigns zero when $0\\notin A$."
+  },
+  "exp.formal.base-transfer": {
+    "Erdos249257.shiftedRadixAtom_sub_zero_le_two_mul_binary_sub_zero": "The two differences of atoms subtract the baseline at shift zero. At every positive exponent the inequality therefore bounds the base-$b$ fractional contribution by twice the corresponding base-$2$ contribution, under $b\\ge2$."
+  },
+  "exp.formal.shifted-bridge": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "At base $2$, expanding `displacement` on the left gives the shifted sum minus $S_A$. The right side is the sum of separate fractional parts $R(k)$. Moving $S_A$ to the right gives the display."
+  },
+  "exp.formal.initial-value": {
+    "Erdos249257.tsum_shiftedSupportAtom_zero": "At shift zero the sum of `shiftedSupportAtom A 0 d` equals `erdosSupportSeries 2 A`. Every positive selected exponent has remainder zero, so its shifted numerator is $2^0=1$."
+  },
+  "exp.formal.row-limit": {
+    "Erdos249257.tendsto_cesaroMean_shiftedSupportAtom_mul": "With positive `Q` and the exponent `d` fixed, the theorem sends the length `K` to infinity. Its limit is the mean of the shifted cycle. Subtract the constant contribution at shift zero to obtain the fractional-part cycle mean."
+  },
+  "exp.formal.last-cycle": {
+    "Erdos249257.tendsto_cesaroMean_of_constant_blocks": "The sequence is between zero and one by `hx0` and `hx1`. The last incomplete block has fewer than $h$ entries, so its contribution to an average of length $N$ is bounded by $h/N$, which tends to zero."
+  },
+  "exp.formal.uniform-bound": {
+    "Erdos249257.cesaroMean_shiftedMersenneAtom_mul_le": "The bound $2(Q+1)/d$ is for the mean of `shiftedMersenneAtom` at $Q,2Q,\\ldots,KQ$, for positive $Q$ and $K$. At $d=n>0$, subtracting $1/(2^n-1)$ from each shifted value gives the fractional-part mean and can only lower it."
+  },
+  "exp.formal.interchange-limit": {
+    "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul": "The proof multiplies the summability assumption `hsum` by $2(Q+1)$ to obtain `hbound`. For this fixed $Q$ the resulting majorant covers every averaging length `K`, so the limit in `K` may pass through the sum over exponents."
+  },
+  "exp.formal.lcm-choice": {
+    "Erdos249257.TotientTailPeriodKiller.periodLcm": "`periodLcm` starts with $1$ and takes `Nat.lcm` with $t+1$ at the successor step. Thus `periodLcm t` is the prescribed modulus for the second limit."
+  },
+  "exp.formal.initial-means-zero": {
+    "Erdos249257.TotientTailPeriodKiller.dvd_periodLcm": "With $h=n$, the hypotheses `h1` and `ht` give $1\\le n\\le t$. The conclusion makes every observation at a multiple of `periodLcm t` divisible by that $n$.",
+    "Erdos249257.shiftedSupportOrbitMean_eq_zero_of_dvd": "At positive exponent $d$ dividing $Q$, `shiftedSupportOrbitMean` equals the value at shift zero. Subtracting that value makes the fractional-part mean zero."
+  },
+  "exp.formal.other-means-bound": {
+    "Erdos249257.shiftedSupportOrbitMean_le_reciprocalSupportTerm": "`reciprocalSupportTerm A d` is $1/d$ at selected positive exponents. It bounds the shifted mean for every `Q`, so the same bound applies after subtracting the nonnegative baseline and holds uniformly as $t$ grows."
+  },
+  "exp.formal.choose-witness": {
+    "Erdos249257.exists_shiftedSupportAtom_closeReturn_of_summable_reciprocal": "The proof first uses `houter` to choose a large `P` with small total mean for `periodLcm P`. At that fixed step it increases the averaging length until a finite average is within the required error."
+  },
+  "exp.formal.integer-gap": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "The integer `u N - u 0` is the denominator `v` times the increase of the shifted sum. At $b=2$, $N=k$ and $v=q$, it is $qR(k)$. The local results `hgapPos` and `hgapLt` put it strictly between $0$ and $1$."
+  },
+  "exp.answers.positive-witness": {
+    "Erdos249257.shiftedRadixSupportAtom_zero_strictMinimum": "The line `hA.exists_gt N` uses infinite support to choose an exponent $d\\in A$ above $N$. At $N=k$ this is the selected row whose shifted value strictly increases."
+  },
+  "exp.answers.nonnegative-others": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "For every remaining exponent the inequality `0 ≤ displacementAtom b N d` gives a nonnegative change when $b\\ge2$. Consequently those rows cannot cancel the strictly positive change at the chosen exponent."
+  },
+  "exp.answers.sqrt-test": {
+    "Erdos249257.irrational_of_int_mul_near_int": "`irrational_of_int_mul_near_int` applies once integers with a nonzero absolute error below $1/q$ are supplied for each positive $q$. The example uses positive errors. Its square-root recurrence supplies the witnesses separately in the paper."
+  },
+  "exp.answers.other-multiples": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "If every exponent in the finite initial group divides $P_j$, then it divides every multiple $N$ of $P_j$. That is precisely `hdiv`, which sets their total displacement to zero at all those multiples."
+  }
+}

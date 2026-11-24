@@ -29,7 +29,7 @@
     "src": "Installable Python runtime and packaged resources",
     "tests": "Executable regression tests",
     "site": "Reading website for one captured bundle: the argument map, paper reader and recorded checks, with web API and generated GitHub Pages transports",
-    "instances": "Library papers as data: one folder per paper (reading copy, phrase ties, graph, vendored Lean), built by scripts/build_library_paper.sh",
+    "instances": "Library papers as data: one folder per paper (reading copy, phrase ties, passage annotations, graph, vendored Lean), built by scripts/build_library_paper.sh",
     "redirects": "Redirect tables from old reader sites to library addresses, written by scripts/proof_reader_redirects.py"
   },
   "required_paths": [

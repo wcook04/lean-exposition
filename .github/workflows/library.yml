@@ -36,7 +36,7 @@ jobs:
           elif [ -z "${BEFORE:-}" ] || ! git cat-file -e "$BEFORE" 2>/dev/null || [ "${{ github.event_name }}" = workflow_dispatch ]; then papers="$all"
           else
             changed=$(git diff --name-only "$BEFORE" HEAD)
-            if echo "$changed" | grep -qE '^(site/|src/|scripts/(build_library|from_proof_reader|private_|check_library|serve_library|publish_library)|pyproject.toml)'; then papers="$all"
+            if echo "$changed" | grep -qE '^(site/|src/|scripts/(apply_passage_annotations|build_library|from_proof_reader|private_|check_library|serve_library|publish_library)|pyproject.toml)'; then papers="$all"
             else papers=$(echo "$changed" | sed -n 's#^instances/\([^/]*\)/.*#\1#p' | sort -u | tr '\n' ' '); fi
           fi
           json=$(printf '%s\n' $papers | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')

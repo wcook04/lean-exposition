@@ -1,0 +1,240 @@
+{
+  "pcp-long-intro-theorem": {
+    "PCP.np_subset_pcp": "Lean fixes an exact logarithmic seed budget and a polynomial bound on the reachable addresses in addition to a constant query bound. The address bound supplies the finite prefix used by the converse, even when the proof oracle is presented as a function on all natural numbers."
+  },
+  "pcp-long-forward-statement": {
+    "PCP.np_subset_pcp": "The witnesses to the outer existential include both `V` and the machine algorithm. The resource constants and `p` are fixed at that point, so none may depend on the particular input or the proof."
+  },
+  "pcp-long-final-target": {
+    "PCP.np_subset_pcp": "For each yes-input, `CompleteAt` chooses a proof before the acceptance probability is computed. Since every seed in the finite space has positive mass, the proof passes every seed. On a no-input the probability bound applies to each proof separately."
+  },
+  "pcp-long-reverse-statement": {
+    "PCP.pcp_subset_np_concrete": "A polynomial-time checker can store the `ReadsBelow` prefix and test all seeds. The exact logarithmic formula makes the enumeration polynomial, and a positive soundness gap guarantees a rejecting seed for every candidate on a no-input."
+  },
+  "pcp-long-schwartz-zippel": {
+    "PCP.Algebraic.eval_zero_agreement_le": "`eval_zero_agreement_le` uses the actual total degree in the numerator. Applied to the difference of two bounded-degree polynomials, it lets the proof infer polynomial identity from agreement on a sufficiently large fraction of points."
+  },
+  "pcp-long-algebra-grid-interpolation": {
+    "PCP.Algebraic.GridInterpolation.existsUnique_extension": "The degree bound is per variable, so interpolation in each coordinate gives a product basis indexed by the grid. This supplies uniqueness and gives the total-degree bound $k(h-1)$ when constructing the colouring and adjacency polynomials. The formal result also holds over infinite fields."
+  },
+  "pcp-long-hadamard-labels": {
+    "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map": "At a point where $g$ and $h$ differ, injectivity gives a binary coordinate label on which their values differ. Adding that label pairs agreeing queries with disagreeing queries. The premise $r\\ge1$ ensures the coordinate label is available."
+  },
+  "pcp-long-hadamard-labels-homogeneous": {
+    "PCP.Algebraic.Hadamard.relativeDistance_homogeneous_queries": "The pairing by a coordinate label stays inside the homogeneous linear labels. This proves the half-distance formula directly on the label distribution used by the difference check, even when that distribution is only a small part of the full label space."
+  },
+  "pcp-long-implementation-contracts": {
+    "PCP.Verifier.ImplementedBy": "`ImplementedBy` is equality of the full tree at each input and seed. A proof can supply any sequence of replies, so agreement only along the honest execution would be insufficient for transferring verifier soundness to the implementation.",
+    "PCP.QueryTree.ofStep": "At an internal node, `ofStep` recurses on the two histories obtained by appending zero and one. At depth zero it preserves a verdict and turns a further request into rejection, so every path meets the depth bound."
+  },
+  "pcp-long-proof-map-contracts": {
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg": "`polyTimeAlg` concerns the concrete machine cost of the query computation, including the work between reads. The constant query count alone would give no bound on that cost. The storage and repetition estimates enter in the proof of this machine-level assertion."
+  },
+  "pcp-long-colour-equations": {
+    "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne": "A cube root of one satisfies $u^4=u$. The fourth-power map preserves subtraction in characteristic two, so the difference also satisfies $(u-v)^4=u-v$. For a nonzero difference, cancellation gives the edge equation."
+  },
+  "pcp-long-grid-constraints": {
+    "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints": "`colorable_iff_exists_constraints` turns the fixed-polynomial argument into an existence theorem with the additional degree cap. Interpolation gives that cap for the extension of a colouring, and restricting any polynomial satisfying both identities gives the reverse implication.",
+    "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies": "The `edgeExtension` evaluates to one on grid edges and zero on grid nonedges, so the edge polynomial vanishes exactly when the edge equation holds on each edge. `Satisfies` also includes the separate vertex equation.",
+    "PCP.Algebraic.ThreeColorAlgebra.satisfies_iff": "The hypothesis that all vertex values cube to one permits `sub_cube_eq_one_iff_ne` to turn each cubic edge equation into inequality of the endpoint values. The equivalence is about field assignments to vertices before identifying the roots with the three named colours.",
+    "PCP.Algebraic.ThreeColorAlgebra.cube_eq_one_iff": "The primitive root gives three distinct candidates $1,\\omega,\\omega^2$. The cubic has at most three roots in a field, so these exhaust its solutions and identify the values allowed by the vertex equation."
+  },
+  "pcp-long-intro-roadmap": {
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate": "The degree ceiling on the certificate is needed to encode its honest line restrictions below the digit cutoff. On the grid the two identities alone force $A(X)=M(X,0)=0$. The nonempty-grid premise lets the forward construction retain the degree ceiling.",
+    "PCP.Algebraic.GridVanishing.exists_decomposition": "Monic division gives one quotient per coordinate, and grid interpolation makes the reduced remainder zero. The bound on each nonzero quotient gives $deg(Y_i U_i)ledeg A$ when $H$ is nonempty.",
+    "PCP.Algebraic.GridVanishing.IsCertificate.vanishesOn": "Under the two identities, a grid point makes every coordinate of $Z_H(X)$ zero, so the value of $A$ is zero there. This direction places no restriction on the degree of $M$ or its degree in the certificate variables."
+  },
+  "pcp-long-derived-constraints": {
+    "PCP.Algebraic.HadamardDerivedOracle.answer_encode": "`answer_encode` works for any transformation of degree at most the label degree and for affine observations. The shift by $R$ is cancelled by linearity in the label. The transformation itself can be nonlinear in the encoded field value."
+  },
+  "pcp-long-query-budget": {
+    "PCP.Algebraic.ThreeColorVerifier.queries_length_le": "The estimate is for the length of the entire query list for an arbitrary seed. Both addresses of a masked read count, even if some addresses coincide, so the ceiling is independent of the proof and graph."
+  },
+  "pcp-long-query-congruence": {
+    "PCP.Algebraic.ThreeColorVerifier.test_congr": "For a fixed seed, the hypothesis asks for equality only on `queries`. This is enough to compile the test into a list of reads followed by a verdict, and the equality applies to dishonest proofs as well."
+  },
+  "pcp-long-binary-test-statement": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "The small-error condition is on $J_c\\kappa$ because the binary test must first be compared with the field-valued point-versus-line test. Both conclusion clauses use the same polynomial, with homogeneous error needed separately for later linear tests."
+  },
+  "pcp-long-zero-on-grid-statement": {
+    "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound": "The derived constraint is required to be represented by a polynomial of degree at most $D_1$. The label-degree premise permits a composed query, and two masked reads contribute $2\\varepsilon$ before the certificate-correction factor is applied."
+  },
+  "pcp-long-completeness": {
+    "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true": "The polynomial extension and the two certificates are constructed from the same colouring. The bound on $5m(h-1)$ is a sufficient strict degree cutoff for encoding the honest line restrictions. Once the proof is chosen, the conclusion quantifies over every seed."
+  },
+  "pcp-long-soundness-statement": {
+    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable": "The lower bound applies to every received eight-table proof. The field-size comparison is used to decode the point-versus-line data, and the separate comparison involving $|H|$ limits the Schwartz–Zippel loss after substitution of the grid vanishing polynomials."
+  },
+  "pcp-long-decoding-contract": {
+    "PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt": "The proof uses the full rejection rate to bound each branch’s rate. First it fixes one nearby polynomial per pair of tables, then it uses the remaining checks to make their algebraic relations exact. The verifier never has to compute the nearby polynomials.",
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "This application decodes a single pair at a time. The bound on total rejection implies the small-error premise for each pair, which makes it possible to fix all four polynomials before passing to the consistency checks."
+  },
+  "pcp-long-proof-map-witnesses": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "For each of the four pairs the bound is $S_c$ times that pair’s own rejection rate, so $S_c\\kappa$ works for all four. The degree and distance guarantees alone leave the four polynomials unrelated until the remaining branches are used."
+  },
+  "pcp-long-difference-soundness": {
+    "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors": "Both vertex marginals are uniform, so changing the colour table can affect either of two reads at a cost of its homogeneous distance each time. There is only one read of the difference table. A union bound works even though all three reads use the same label."
+  },
+  "pcp-long-proof-map-correction": {
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le": "The correction estimate is for one prescribed target. It counts rejection and a wrong returned bit together and charges the corrector’s rejection rate at that target. The two calls in the grid test are handled by averaging this estimate at their respective targets.",
+    "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound": "A modified primary bit can change the zero-test verdict with probability at most $2\\varepsilon$. Because the oracle replacement changes the rejection rate before the two correction terms are charged, that loss appears inside the multiplier $1+2C_c$."
+  },
+  "pcp-long-gap": {
+    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable": "By contraposition, if the graph has no three-colouring then its rejection rate cannot be strictly below $g_c$. This gives a weak lower bound, including the case of equality."
+  },
+  "pcp-long-parameter-volume": {
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le": "Minimality of $\\nu$ bounds the preceding volume whenever $\\nu>2$. The factor four bounds the increase from one volume to the next. The maximum with eight accounts for the starting value at $\\nu=2$.",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one": "This form bounds the volume by one expression in $\\lceil\\log_2N\\rceil+1$, including the small-input case. The verifier needs this form to give a single logarithmic seed budget for every length."
+  },
+  "pcp-long-fair-bits-loss": {
+    "PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq": "All four parameters are uniform in $F$ under fair-bit sampling. Conditioned on their being nonzero, the draws have the distribution for the original test. The new verifier accepts when the condition fails, so only its probability multiplies the old rejection rate."
+  },
+  "pcp-long-base-verifier": {
+    "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees": "The base guarantees include a uniform address bound and exactly $32{,}000{,}000(\\lceil\\log_2(n+2)\\rceil+1)$ bits. The soundness clause uses $g_4/16$ since the probability that all four parameters are nonzero is at least $1/16$."
+  },
+  "pcp-long-amplification": {
+    "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees": "This instance uses the repetition count chosen for the graph verifier. Conditional on one fixed proof, the seeds are independent, so accepting all repetitions multiplies the acceptance probabilities. Each repetition reads within the original address bound."
+  },
+  "pcp-long-runtime": {
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg": "`polyTimeAlg` concerns the next-action algorithm on input, seed and answer history. A separate `ImplementedBy` equality connects that algorithm to the amplified abstract verifier, so the runtime and its intended protocol are both accounted for."
+  },
+  "pcp-long-np-tableau": {
+    "PCP.Machine.NPTableau.exists_accepts_iff": "The assignment includes the witness length as well as the bounded computation rows. The local transition conditions connect consecutive rows, which is why a satisfying tableau witnesses a run of the checker and the encoded witness length still obeys the original bound."
+  },
+  "pcp-long-clause-reduction": {
+    "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff": "Exactly one true bit per encoded variable identifies one alphabet symbol. Given those one-hot constraints, each Boolean local relation expresses the original relation on decoded symbols. This satisfiability equivalence is independent of the fixed-size assumptions needed to bound construction time."
+  },
+  "pcp-long-colouring-gadget": {
+    "PCP.Reduction.NAEThreeColor.colorable_iff": "The palette triangle assigns three distinct colours and determines the Boolean interpretation. Complementary literal vertices use the two Boolean colours, and each clause triangle extends exactly when its three designated literals are not all equal."
+  },
+  "pcp-long-reduction-runtime": {
+    "PCP.Reduction.NPThreeColorRuntime.of_inNP_program": "The program equation and charged-step bound are in the conclusion along with the graph map. Thus the result supplies a computable reduction with polynomial output length, which is needed to transport the graph verifier’s query and randomness bounds to inputs of the original language."
+  },
+  "pcp-long-proof-map-forward": {
+    "PCP.Algebraic.ThreeColorFinalAssembly.of_runtime": "The reduction and the amplified graph verifier already give the probability guarantees. The `hruntime` premise is needed to assert that their composition also has a concrete polynomial-time implementation. The preceding machine theorem supplies that premise.",
+    "PCP.np_subset_pcp": "`np_subset_pcp` closes the runtime premise and records the full resource bounds for the source language. The reduction preserves the yes or no status, so the graph verifier’s completeness and soundness clauses apply to the corresponding original input."
+  },
+  "pcp-long-proof-map-reverse": {
+    "PCP.finiteWitnessCheck": "`finiteWitnessCheck` interprets the finite string as an oracle with a zero tail. The soundness quantifier already ranges over that oracle, and the polynomial address bound means the chosen tail cannot affect a query.",
+    "PCP.oracleOfWitness_prefix": "`oracleOfWitness_prefix` requires $j<N$. Combined with `ReadsBelow`, it gives equality at every address along the verifier’s adaptive execution, so replacing the oracle by its prefix does not change a verdict on any seed."
+  },
+  "pcp-long-converse": {
+    "PCP.pcp_subset_np_concrete": "The converse supplies a polynomial-time implemented witness checker, as well as the equivalence with membership. The finite-prefix bound controls witness length, while the number of seeds controls the extra simulation cost."
+  },
+  "pcp-long-reference-np": {
+    "PCP.ReferenceNP.inNP_iff_mem": "`inNP_iff_mem` applies in both directions for every language. It lets a reference NP membership hypothesis enter the verifier construction and identifies the concrete witness class produced by the converse with the same reference class."
+  },
+  "pcp-long-algebra-line-characterization": {
+    "PCP.Algebraic.PolynomialLine.exists_polynomial_of_hasLowDegreeLines_finite": "The premise is that every affine-line restriction has low degree. The field-size inequality in the multivariate characterization prevents a high-total-degree function on the finite grid from having all of its line restrictions represented at degree at most $d$."
+  },
+  "pcp-long-algebra-weighted-plurality": {
+    "PCP.Algebraic.WeightedConstraint.correction_satisfies": "The numerical premise makes a union of the exceptional slope choices have probability below one, so there is a choice on which the weighted predictions for the correction identity all agree. Nodes need only be nonzero for the sampling changes of variables used here."
+  },
+  "pcp-long-algebra-generator-soundness": {
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close": "Generator nodes serve two roles. With their Lagrange weights they give the test identity, and the generator powers let exact solutions be identified along lines. The small-error premise is used to turn plurality correction into such an exact solution."
+  },
+  "pcp-long-standard-correction": {
+    "PCP.Algebraic.StandardLocalCorrection.failure_le": "For a fixed $u$, each point $u+a_i v$ is uniform when the slope is uniform because $a_i$ is nonzero. Distinct nodes give exact interpolation for the polynomial. A union bound on the $c+1$ sampled positions gives the estimate even at an atypical target."
+  },
+  "pcp-long-algebra-line-table-correction": {
+    "PCP.Algebraic.LineTableLocalCorrection.correct_wrong_le": "An incorrect supplied line value at the target makes the supplied restriction different from the polynomial’s true restriction. They can coincide at at most $d$ parameters. A bad point-table read costs at most $\\eta$ because a uniform slope at each nonzero parameter gives a uniform queried point. The estimate is for wrong acceptance."
+  },
+  "pcp-long-algebra-bivariate-statement": {
+    "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement": "The row and column approximants can be chosen independently. Their separate small-distance premises, with the field large enough for the reconstruction, force one polynomial of degree at most $d$ in each variable to be close to the entire table."
+  },
+  "pcp-long-algebra-column-selection": {
+    "PCP.Algebraic.BivariateColumnSelection.exists_good_columns": "The sum of the two global errors bounds the mean disagreement between rows and columns. Markov’s inequality leaves enough columns with discrepancy at most $1/10$ to choose $10d$ distinct ones. Polynomial degrees play no role in this selection."
+  },
+  "pcp-long-algebra-error-locator": {
+    "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations": "The formal certificate comes from solving the row interpolation equations with room for an error locator of degree $e$. Determinant degree bounds in the column variable give $(d+2e+1)D$, which yields the display at $e=2d$ and $D=d$."
+  },
+  "pcp-long-algebra-clean-rectangle": {
+    "PCP.Algebraic.BivariateCleanRectangle.exists_nonzero_columns": "Choose a nonzero coefficient of $E$ when expanded in $Y$. If a column specialization vanishes identically, its node is a root of that coefficient as a polynomial in $X$. The degree cap thus leaves at least $d+1$ usable columns."
+  },
+  "pcp-long-algebra-agreement-boost": {
+    "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul": "The coarse closeness bound is used to show that disagreeing degree-$d$ slices cannot occur too often. The threshold involving $2d/q$ accounts for the possible roots of a difference on a row and a column. Adding the original table-to-row error yields $4\\varepsilon$."
+  },
+  "pcp-long-algebra-point-line-statement": {
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection": "The comparison parameter ranges over the whole field. Neither the line table nor its indexing is assumed consistent. Under the field and rejection bounds the conclusion gives one polynomial on the point domain, including when the degree or domain dimension is zero."
+  },
+  "pcp-long-algebra-fixed-parameter": {
+    "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul": "When a line’s mean error is below $1/3$, the nearest degree-$d$ polynomial is unique under $q\\ge3d$. Shifting the base point then shifts that polynomial, which compares the error at a fixed parameter with the mean error. The fraction of lines above the uniqueness threshold is at most $3\\delta^\\prime$."
+  },
+  "pcp-long-algebra-crossing": {
+    "PCP.Algebraic.PointLineCrossing.crossing_eq_of_nearby_polynomial": "Given a nearby bivariate polynomial, the proof compares its slices through the crossing with the two selected approximants. If a slice differs, low degree forces disagreement outside a small root set. The numerical premise makes that much disagreement impossible under the supplied global and crossing errors.",
+    "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq": "`crossing_bestApproximation_eq` chooses nearest approximants along every row and column, then evaluates two at the selected crossing. The global bounds make a nearby bivariate polynomial available and the additional crossing bounds let the proof identify the two selected values."
+  },
+  "pcp-long-algebra-crossing-candidate": {
+    "PCP.Algebraic.CandidateCrossing.crossing_eq": "The selected row only has to be close to the received row. The nearestness requirement is on the selected column, where the corresponding slice of the nearby bivariate polynomial can be used as a competitor. This is the asymmetric form used in the ruled-surface argument."
+  },
+  "pcp-long-algebra-ruled-surface": {
+    "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds": "The comparison polynomial is chosen once for the fixed line. For each point on it, the endpoint and crossing estimates allow a ruled surface on which the candidate and the corrected function agree at that point. This gives a degree-$d$ representation of every line even for an arbitrary input lines table."
+  },
+  "pcp-long-algebra-point-line-constants": {
+    "PCP.Algebraic.PointLineConstants.field_bounds": "The single premise $q\\ge10^6d^3$ supplies the bivariate field bound, the conditions for reparametrization and line characterization, and the numerical crossing inequality. Positive $d$ is what yields the absolute floor of $10^6$."
+  },
+  "pcp-long-rigidity-budget": {
+    "PCP.Algebraic.PointLineConstants.rigidity_budget": "A bound strictly below one is enough to choose a ruled surface avoiding all exceptional events. `rigidity_budget` proves that strict inequality using the field and rejection thresholds. The decimal in the paper is a sharper evaluation of the same bound."
+  },
+  "pcp-long-algebra-degree-zero": {
+    "PCP.Algebraic.PointLineTest.exists_close_degree_zero": "For a degree-zero line, compare the values at $t$ and $t+1$ with the same supplied constant. At every fixed $t$ a uniform base and slope give two independent uniform points at those parameters. Averaging their disagreement gives a constant within $2\\delta$ of $f$."
+  },
+  "pcp-long-digit-decoder": {
+    "PCP.Algebraic.SetMultilinear.decode": "`decode` is a polynomial homomorphism sending each digit variable to its indicated power of $Y$. Because substitution happens in the polynomial ring, the construction requires neither finite evaluation sets nor field division."
+  },
+  "pcp-long-set-multilinear": {
+    "PCP.Algebraic.SetMultilinear.decode_encode": "For exponents below $b^c$, adding the $c$ digit contributions recovers each exponent. `decode_encode` therefore recovers the polynomial coefficient by coefficient and does not rely on agreement of evaluations over a finite field."
+  },
+  "pcp-long-digit-injectivity": {
+    "PCP.Algebraic.SetMultilinear.encode_injective_on": "On the restricted degree range, `decode` is a left inverse of `encode`. Applying it to an equality of two encodings proves equality of the original polynomials, with the degree hypotheses on both originals used for recovery."
+  },
+  "pcp-long-digit-evaluation": {
+    "PCP.Algebraic.SetMultilinear.eval_encode": "`eval_encode` evaluates the polynomial identity at the supplied point. The strict degree cutoff ensures that the digit representation is complete, so the same calculation applies at zero and at every other point."
+  },
+  "pcp-long-hadamard-composition": {
+    "PCP.Algebraic.HadamardComposition.encode_query": "An affine observation of $A(u)$ can be evaluated by one label on $u$. Field multiplication is bilinear in binary coordinates, and reducing powers at binary inputs gives a multilinear label of degree at most $r$."
+  },
+  "pcp-long-blr-proof": {
+    "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le": "The conclusion gives a linear functional on the space of labels, with no small-error threshold. A linear functional on labels need not be evaluation at a binary message. The unit and product tests are what later enforce that extra property."
+  },
+  "pcp-long-hadamard-self-correction": {
+    "PCP.Algebraic.Hadamard.selfCorrect_failure_le": "Translating by the requested label preserves the uniform distribution of the mask. The homomorphism property cancels the shift, so only the two events where a read differs from the homomorphism contribute to the error. This argument works for an arbitrary additive target group as in the statement."
+  },
+  "pcp-long-hadamard-soundness": {
+    "PCP.Algebraic.Hadamard.test_soundness": "The unit and product checks identify a linear functional on labels with evaluation at one binary vector. The affine check gives the second distance bound for that same vector. The coordinate isomorphism then gives the field value used in the paper."
+  },
+  "pcp-long-hadamard-row-decoding": {
+    "PCP.Algebraic.Hadamard.exists_field_function_of_average_rejectionRate": "A field value is chosen for each row, and the row bounds are averaged over points. High-error rows can be assigned any value because their rejection cost times $28$ is already at least one. This gives both distances for the same field-valued function without claiming it is a polynomial."
+  },
+  "pcp-long-binary-weighted-test": {
+    "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le": "The result upgrades rowwise field decoding to one polynomial using the weighted low-degree test. Both distances use the same polynomial, and the constant is large enough to cover rejection above the range of the small-error theorem by the trivial bound on distance."
+  },
+  "pcp-long-binary-inner-correction": {
+    "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le": "For each nonzero correction node the evaluation point is uniform under a uniform slope. A nonzero interpolation weight permutes the homogeneous labels, so each sampled read has error bounded by the homogeneous distance. The estimate averages over the label as well as the slope."
+  },
+  "pcp-long-encoded-line-test": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.queries_length_le": "The length bound counts the queries in the binary point-versus-line test at an arbitrary seed. Interpolation nodes can be passed to the query construction even when they fail the geometric hypotheses needed to prove its verdict reliable."
+  },
+  "pcp-long-encoded-line-completeness": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.test_eval": "The honest restriction has degree below $b^c$, so substituting at $\\Phi(z)$ in its encoded polynomial gives the true line value. Distinct test nodes and distinct nonzero correction nodes suffice for the exact evaluations at every seed."
+  },
+  "pcp-long-encoded-line-soundness": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "The small-error premise is on the comparison between the decoded lines and the decoded point function. The resulting point polynomial is used for both distance bounds. The $28$ term in $S_c$ comes from decoding the original point rows."
+  },
+  "pcp-long-outer-local-corrector": {
+    "PCP.Algebraic.BinaryLocalCorrection.run": "`run` returns `none` if the inner row test fails or if the corrected bit at the sampled nonzero parameter disagrees with the points table. Only after both checks pass does it return the bit predicted at the target parameter zero.",
+    "PCP.Algebraic.BinaryLocalCorrection.sample": "`sample` passes the coordinates of a product seed to `run`. The nonzero-parameter coordinate is uniform on the units, so a uniform outer slope still gives a uniform comparison point for each allowed parameter."
+  },
+  "pcp-long-local-corrector-honest": {
+    "PCP.Algebraic.BinaryLocalCorrection.queries_length_le": "The query list includes the inner row test, the point comparison and the predictions at both inner targets. Its uniform length bound $3c+9$ is also valid for received tables that fail the consistency checks."
+  },
+  "pcp-long-local-corrector-exact": {
+    "PCP.Algebraic.BinaryLocalCorrection.run_eval": "For an honest line table, `eval_encode` identifies the inner polynomial at the two special points with the outer restriction at $z$ and zero. Exact interpolation supplies both bits, so the returned optional value is `some` of the intended observation for every seed."
+  },
+  "pcp-long-outer-correction-soundness": {
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le": "The ideal bit is placed inside `some`, so `none` and a wrong bit both count as errors. After the target is fixed, the local rejection term governs correction on its particular lines, while disagreement of distinct decoded restrictions costs at most $D/[2(q-1)]$ with a random homogeneous label."
+  },
+  "pcp-long-zero-on-grid-soundness": {
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge": "Lean divides the grid inequality by $1+2C_c>0$ to bound the rejection rate itself. The two correction calls give the factor two on certificate-table distance. Substituting the grid vanishing polynomials can increase degree by a factor of $|H|$, which explains the field-size term."
+  }
+}
