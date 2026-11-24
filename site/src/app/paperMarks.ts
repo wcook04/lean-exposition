@@ -2,7 +2,7 @@
 // The same inline SVG is rendered by the static shell and the interactive header.
 const marks = {
   // Euler, Figure 1: k turns from E₃ toward E₁ under a strong shear.
-  euler: '<path d="M4 3v17h17" opacity=".45"/><path d="M4 20 17 7m-5 0h5v5M4 11a9 9 0 0 1 6 3"/>',
+  euler: '<path d="M7 20V4m-3 3 3-3 3 3" opacity=".6"/><path d="m7 20 13-9m-4-.5 4 .5-.9 3.9"/><path d="M7 12a8 8 0 0 1 6.5 3.5"/>',
   // Navier–Stokes, §5.1: the radial cutoff is one near the origin and falls to zero outside.
   "navier-stokes": '<path d="M3 19h18M12 19V4" opacity=".4"/><path d="M3 18c4 0 3-10 7-10h4c4 0 3 10 7 10"/><path d="M9 19V9m6 10V9" opacity=".33" stroke-dasharray="1 3"/>',
   // PCP, Theorem 1.1: the verifier reads only a few bits of a proof.
