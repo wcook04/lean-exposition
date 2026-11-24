@@ -144,17 +144,15 @@ describe("the pane's remembered choices", async () => {
     document.documentElement.removeAttribute("data-tones");
   });
 
-  it("remembers the tone switch and sets it on the root", () => {
-    expect(prefs.readTones()).toBe(true);
-    prefs.saveTones(false);
-    expect(prefs.readTones()).toBe(false);
-    expect(document.documentElement.getAttribute("data-tones")).toBe("off");
-    prefs.saveTones(true);
-    expect(prefs.readTones()).toBe(true);
-    expect(document.documentElement.hasAttribute("data-tones")).toBe(false);
-    prefs.applyTones(false);
-    expect(document.documentElement.getAttribute("data-tones")).toBe("off");
-    prefs.applyTones(true);
+  it.each(["fresh", "previously disabled"])("shows topic colours on a %s entry", (entry) => {
+    if (entry === "previously disabled") {
+      localStorage.setItem("lx-reader-tones", "off");
+      document.documentElement.setAttribute("data-tones", "off");
+    }
+    const tones = prefs.readTones();
+    prefs.applyTones(tones);
+    expect(tones).toBe(true);
+    expect(localStorage.getItem("lx-reader-tones")).toBeNull();
     expect(document.documentElement.hasAttribute("data-tones")).toBe(false);
   });
 });

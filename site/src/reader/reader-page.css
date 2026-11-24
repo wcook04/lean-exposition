@@ -828,7 +828,7 @@ html.is-reading {
   .reader-strip {
     top: 0;
     transition: transform var(--t-state) var(--ease-out);
-    /* Its controls need more than a phone's width (Graph and Lean, Sections, Text and PDF,
+    /* Its controls need more than a phone's width (Show pane, Sections, Text and PDF,
        "Statement 8 of 999"): the statement steps take a second row, flush right, instead of
        pushing the page sideways. */
     flex-wrap: wrap;
@@ -843,9 +843,6 @@ html.is-reading {
   .reader-strip:has(.back-control) .crumbs,
   .reader-strip:has(.back-control) .reader-strip__steps span {
     display: none;
-  }
-  .reader-strip .mode-toggle button {
-    min-width: 44px;
   }
   .reader-strip .crumbs {
     overflow: hidden;

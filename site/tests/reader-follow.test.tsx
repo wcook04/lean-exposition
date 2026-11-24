@@ -8,15 +8,59 @@ import { graphFixture, structureFixture } from "./fixtures";
 import { chooseGoal, neededExpansion, pathFromGoal, reach, scopedGraph, visibleSet } from "../src/map/treeModel";
 import { passageOf, passageRecords } from "../src/reader/page/model";
 import { Signal } from "../src/reader/page/signal";
-import type { Followed, Pointed } from "../src/reader/page/rightPage";
+import { paneForStatement, pdfReadingAt, type Followed, type Pointed } from "../src/reader/page/rightPage";
 import { tieModel } from "../src/reader/ties";
 import type { MapViewHandle } from "../src/map/ArgumentTree";
+import type { Alignment, PhraseLean, Tie } from "../src/api/lean";
 
 const graph = graphFixture();
 const goal = "full_support";
 const scoped = scopedGraph(graph, goal);
 const reachOf = (g: string) => reach(scopedGraph(graph, g), g);
 const insets = { top: 20, right: 20, bottom: 20, left: 20 };
+
+describe("the pane in automatic reading", () => {
+  const tie: Tie = { record: goal, at: "b10-20", anchor: "passage", role: "statement", lean: true, name: null, module: null, lines: null };
+  const decl: PhraseLean = { name: "Example.result", module: "Example", line: 5, end_line: 7, lines: [5, 7], relation: null, note: "" };
+  const alignment: Alignment = {
+    dictionary: [],
+    records: { [goal]: { short: "Full support", lean: [], statements: [{
+      at: tie.at, paper: "expository", role: "statement", markdown: "A result.",
+      start_byte: 10, end_byte: 20, anchor: tie.anchor, section: "", heading_id: null, lean: [decl],
+    }] } },
+  };
+
+  it("uses Graph when there's no declaration the pane can show", () => {
+    expect(paneForStatement(undefined, alignment)).toBe("graph");
+    expect(paneForStatement({ ...tie, lean: false }, alignment)).toBe("graph");
+    expect(paneForStatement({ ...tie, rows: [] }, alignment)).toBe("graph");
+    expect(paneForStatement({ ...tie, record: "unmapped" }, alignment)).toBe("graph");
+    expect(paneForStatement(tie, null)).toBe("graph");
+  });
+
+  it("uses Lean for phrase rows and legacy ties without waiting for supporting data", () => {
+    expect(paneForStatement({ ...tie, rows: [decl] }, null)).toBe("lean");
+    expect(paneForStatement({ ...tie, record: "", name: decl.name, module: decl.module }, null)).toBe("lean");
+    expect(paneForStatement(tie, undefined)).toBe("lean");
+    expect(paneForStatement(tie, alignment)).toBe("lean");
+  });
+
+  it("uses a record's declarations when the reader selected that record", () => {
+    const record = { ...alignment.records[goal], lean: [{ ...decl, relation: "states" as const }] };
+    const linked = { ...alignment, records: { [goal]: record } };
+    expect(paneForStatement(undefined, linked, goal)).toBe("lean");
+    expect(paneForStatement(undefined, linked)).toBe("graph");
+  });
+
+  it("follows an exact PDF mark through view changes and releases it on the reader's next scroll", () => {
+    const marks = new Map([[tie.at, {}], ["b30-40", {}]]);
+    expect(pdfReadingAt(marks, tie.at, undefined, false)).toBe(tie.at);
+    expect(pdfReadingAt(marks, tie.at, "b30-40", false)).toBe(tie.at);
+    expect(pdfReadingAt(marks, tie.at, "b30-40", true)).toBe("b30-40");
+    expect(pdfReadingAt(marks, tie.at, undefined, true)).toBeUndefined();
+    expect(pdfReadingAt(marks, "56", "b30-40", false)).toBe("b30-40");
+  });
+});
 
 describe("passage → records → main result", () => {
   const expository = structureFixture("expository");
@@ -252,36 +296,56 @@ describe("MapPane", async () => {
   it("keeps keyboard focus in the pane when Open its Lean replaces the graph dock", () => {
     const pin = { record: goal, tie: null };
     const onMode = vi.fn();
-    show(null, { pin, onMode });
+    show(null, { pin, onMode, graphRequested: true });
     const open = [...container.querySelectorAll<HTMLButtonElement>(".map-pane__dock button")].find((button) => button.textContent === "Open its Lean")!;
-    open.focus();
-    act(() => open.click());
+    act(() => {
+      open.focus();
+      open.click();
+    });
     expect(onMode).toHaveBeenCalledWith("lean");
     show(null, { pin, mode: "lean", onMode });
     expect(open.isConnected).toBe(false);
-    expect(document.activeElement).toBe(container.querySelector(".mode-toggle [aria-pressed='true']"));
+    expect(container.querySelector(".map-pane")!.contains(document.activeElement)).toBe(true);
   });
 
-  it("has one toggle; Lean fills the pane, and the whole proof map is one button away in Graph", () => {
+  it("combines a linked statement's Lean and graph, then offers the separate tabs and lets the reader recombine", () => {
     const onMode = vi.fn();
-    show(null, { onMode });
+    const onCombine = vi.fn();
+    const linkedTies = tieModel({
+      meaning: "",
+      passages: [],
+      segments: [[0, 5, [0]]],
+      ties: [{ record: goal, role: "statement", lean: true, name: "Example.result", module: "Example", lines: [1, 2], anchor: "contact-and-gap", at: "b0-5" }],
+    });
+    const props = { pin: { record: goal, tie: 0 }, ties: linkedTies, onMode, onCombine };
+    const button = (label: string) => [...container.querySelectorAll<HTMLButtonElement>("button")].find((item) => item.textContent === label)!;
+
+    show(null, { ...props, mode: "lean" });
+    expect(container.querySelector(".map-pane__paired .lean-page")).not.toBeNull();
+    expect(container.querySelector(".map-pane__paired .map-pane__local")).not.toBeNull();
+    expect(container.querySelector(".mode-toggle")).toBeNull();
+    expect(button("Combine views")).toBeUndefined();
+    act(() => button("Minimise graph").click());
+
+    expect(container.querySelector(".map-pane__local")).toBeNull();
+    expect(container.querySelector(".map-pane__lean .lean-page")).not.toBeNull();
     const words = [...container.querySelectorAll<HTMLButtonElement>(".mode-toggle button")];
-    // Lean stands first: it is the view a reader opens on (docs/reader-design.md).
-    // The Graph tab carries how many neighbours the subject has in the recorded graph.
     expect(words.map((w) => w.textContent!.replace(/ · \d+$/, ""))).toEqual(["Lean", "Graph"]);
-    expect(words[1].getAttribute("aria-label")).toBe("Graph");
-    act(() => words[0].click());
-    expect(onMode).toHaveBeenCalledWith("lean");
-    const whole = [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Whole proof map")!;
-    act(() => whole.click());
+    expect(document.activeElement).toBe(words[0]);
+    act(() => words[1].click());
+    expect(onMode).toHaveBeenCalledWith("graph");
+    show(null, { ...props, mode: "graph", graphRequested: true });
+    act(() => button("Whole proof map").click());
     expect(container.querySelector(".map-pane .tree")).not.toBeNull();
     expect(container.querySelector(".fg")).toBeNull();
-    act(() => [...container.querySelectorAll<HTMLButtonElement>(".map-pane__whole")].find((b) => b.textContent === "Neighbours of this step")!.click());
+    act(() => button("Neighbours of this step").click());
     expect(container.querySelector(".fg")).not.toBeNull();
-    show(null, { mode: "lean" });
-    expect(container.querySelector(".fg")).toBeNull();
-    expect(container.querySelector(".map-pane__lean .lean-page")).not.toBeNull();
-    expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe("Lean");
+    act(() => button("Combine views").click());
+    expect(onCombine).toHaveBeenCalledOnce();
+    show(null, { ...props, mode: "lean" });
+    expect(container.querySelector(".map-pane__paired .map-pane__local")).not.toBeNull();
+    expect(container.querySelector(".mode-toggle")).toBeNull();
+    expect(document.activeElement).toBe(button("Minimise graph"));
   });
 
   it("opens the drawing on a narrow pane when Graph is explicitly requested", () => {
