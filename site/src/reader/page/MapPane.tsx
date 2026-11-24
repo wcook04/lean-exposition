@@ -107,29 +107,26 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-/** Plan the contents before fitting the graph. A shallow drawing may give space back to
- * the text without reducing the budget used to choose visible neighbours on the next pass. */
+/** Choose visible neighbours against the opening split, independently of the space the
+ * fitted drawing and the Lean end up using. */
 function usePairedGraphSize(active: boolean) {
   const pair = useRef<HTMLDivElement>(null);
   const [layoutHeight, setLayoutHeight] = useState<number>();
   useLayoutEffect(() => {
     const box = pair.current;
-    const lean = box?.firstElementChild;
-    if (!active || !box || !lean) return;
+    if (!active || !box) return;
     const header = box.querySelector(".map-pane__local-head");
     const measure = () => {
       const height = box.clientHeight;
       if (!height) return;
       const chrome = Math.ceil(header?.getBoundingClientRect().height ?? 0) + 1;
-      const available = Math.max(height * 0.4, height - lean.getBoundingClientRect().height);
       box.style.setProperty("--paired-graph-chrome", chrome + "px");
-      setLayoutHeight(Math.max(1, Math.floor(available) - chrome));
+      setLayoutHeight(Math.max(1, Math.floor(height * 0.4) - chrome));
     };
     measure();
     if (typeof ResizeObserver === "undefined") return;
     const observer = new ResizeObserver(measure);
     observer.observe(box);
-    observer.observe(lean);
     if (header) observer.observe(header);
     return () => observer.disconnect();
   }, [active]);
@@ -689,7 +686,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" && !unlinked ? (
-        <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"}>
+        <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"} data-stable-fit={paired || undefined}>
           <LeanDock
             open={leanOpen}
             ties={ties}
