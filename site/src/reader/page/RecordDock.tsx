@@ -21,7 +21,7 @@ import { aidsArrived, cardKeys, loadAids } from "../aids";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { isPhraseRecord, leanTruth, phraseTitle, ROLE_WORDS, sameWords, statementFor, topicOf, type TieModel } from "../ties";
-import { AnnotationSources, assessmentsOf, Conventions, declLight, dockDecl, PaperPassage, PassageAnnotation, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
+import { AnnotationSources, assessmentsOf, Conventions, declLight, dockDecl, Explanation, PaperPassage, PassageAnnotation, PhraseCard, usePhraseNotes, Verdict } from "./PhraseCard";
 import { loadOurs, OurStatements, oursArrived } from "../../lean/ours";
 import { paperTarget, sectionNumber } from "./model";
 import { quoteOfDisplay } from "./PaperBody";
@@ -186,6 +186,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   const [full, setFull] = useState(false);
   const [chosen, setChosen] = useState(0);
   const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
+  const paperExplanation = tie && !tie.lean ? tie.explanation : undefined;
   const at = tie?.at ?? null;
   const record = open.record;
   // A phrase brings its own declarations, each with its comparison; its titles and notes load here.
@@ -404,7 +405,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   return (
     // Until the alignment names this step's Lean, its title, buttons, list and body would all
     // rearrange as it arrives: the page keeps its place in the sheet, undrawn, and is shown once, whole.
-    <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"} data-waiting={!slot && !alignment && !tie?.rows ? "" : undefined}>
+    <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={paperExplanation ? "Paper annotation" : plain ? `The Lean of ${plain}` : "The Lean"} data-waiting={!slot && !alignment && !tie?.rows ? "" : undefined}>
       {!slot && (
         <header className="lean-page__head">
           <div className="lean-page__names">
@@ -469,6 +470,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
                 onTrace={(trace: Trace | undefined) => navigate({ view: "map", node: record, trace })}
                 passageHref={passageHref}
               />
+            ) : paperExplanation ? (
+              <Explanation explanation={paperExplanation} />
             ) : empty ? (
               open.topics?.length ? (
                 <Passage records={open.topics} ties={ties} alignment={alignment} onPick={onPick} onPoint={onPoint} />

@@ -365,7 +365,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
 
   // The Graph tab can show the whole map when the passage has no neighbourhood.
   const opened = !!(pin || decl || held || anchor);
-  const unlinked = mode === "graph" && !leanSlot && opened && !fresh;
+  const selectedPassage = leanOpen.tie === null ? null : ties.index.ties[leanOpen.tie];
+  const paperExplanation = !!(!leanSlot && selectedPassage && !selectedPassage.lean && selectedPassage.explanation);
+  const unlinked = mode === "graph" && !leanSlot && opened && !fresh && !paperExplanation;
 
   // ---- The whole proof map, one button away ------------------------------------------------
 
@@ -688,7 +690,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         <div className="map-pane__fill">
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
-      ) : mode === "lean" && !unlinked ? (
+      ) : (mode === "lean" || (paperExplanation && !showWhole)) && !unlinked ? (
         <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"}>
           <LeanDock
             open={leanOpen}

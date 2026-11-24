@@ -350,7 +350,7 @@ function Matters({ matters, mainResult }: { matters: ComparisonMatters; mainResu
 }
 
 /** What the quoted words say, in the paper's notation, with its sources; and what is not settled from them. */
-function Explanation({ explanation, showOpen = true }: { explanation: PhraseExplanation; showOpen?: boolean }) {
+export function Explanation({ explanation, showOpen = true }: { explanation: PhraseExplanation; showOpen?: boolean }) {
   return (
     <div className="phrase-card__explanation">
       <p className="phrase-card__label">

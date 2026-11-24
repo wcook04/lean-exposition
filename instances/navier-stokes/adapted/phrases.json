@@ -3066,14 +3066,14 @@
   },
   {
    "id": "adapted.N1-11.barker-prange",
-   "from": "Thus no slice belongs to $L^3$.",
-   "to": "Thus no slice belongs to $L^3$.",
+   "from": "Thus no slice belongs to $L^3$. Since each belongs to $L^6$, interpolation excludes finite energy at every phase.",
+   "to": "Thus no slice belongs to $L^3$. Since each belongs to $L^6$, interpolation excludes finite energy at every phase.",
    "role": "explanation",
    "topic": "profile",
    "status": "new",
    "lean": [],
    "explanation": {
-    "text": "For a nonzero smooth ordinary backward DSS solution in the stated integrability class, the local cubic integral grows without bound as the ball radius tends to infinity at any fixed time.",
+    "text": "The factor $(T-t)^{-3/2}$ from cubing the velocity cancels the volume factor $(T-t)^{3/2}$. For a nonzero ordinary backward discretely self-similar profile with $R=I$, the Barker–Prange bound gives a logarithmic lower bound for the cubic integral in similarity variables. A slice in $L^2\\cap L^6$ would lie in $L^3$, so each slice of the reference profile has infinite energy.",
     "citations": [
      {
       "ref": "Barker–Prange, Corollary 1.1",
@@ -4930,34 +4930,6 @@
        "phrase": "pdf-item-theorem-3-1",
        "fidelity": "weaker",
        "fidelity_note": "For all $\\tau>0$ and $u,v\\in X=\\dot H^1_{\\mathrm{div}}$, this theorem supplies the bounded bilinear map $K(\\tau):X\\times X\\to X$ and one constant in $\\|K(\\tau)(u,v)\\|_X\\le C_K\\tau^{-3/4}\\|u\\|_X\\|v\\|_X$. This proves the bilinear conclusion (3.7), but Lemma 3.1 also gives the linear estimate for every $L^{3/2}$ force."
-      }
-     ]
-    },
-    {
-     "name": "Breakdown.Freq.bilinShift_holds",
-     "file": "Breakdown/FreqTr/Realization.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "For $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, $t\\ge0$ and $\\tau>0$, the formal theorem gives $e^{t\\Delta}K(\\tau)(u,v)=K(t+\\tau)(u,v)$, where $K(\\tau)(u,v)=-\\tfrac12e^{\\tau\\Delta}\\mathbb P[(u\\cdot\\nabla)v+(v\\cdot\\nabla)u]$. The paper states a heat-shift identity and continuity for every $L^{3/2}$ force; this theorem supplies the identity only for the bilinear forcing class.",
-     "assessments": [
-      {
-       "phrase": "pdf-item-theorem-3-1",
-       "fidelity": "weaker",
-       "fidelity_note": "For $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, $t\\ge0$ and $\\tau>0$, the formal theorem gives $e^{t\\Delta}K(\\tau)(u,v)=K(t+\\tau)(u,v)$, where $K(\\tau)(u,v)=-\\tfrac12e^{\\tau\\Delta}\\mathbb P[(u\\cdot\\nabla)v+(v\\cdot\\nabla)u]$. The paper states a heat-shift identity and continuity for every $L^{3/2}$ force; this theorem supplies the identity only for the bilinear forcing class."
-      }
-     ]
-    },
-    {
-     "name": "Breakdown.Freq.bilinCont_holds",
-     "file": "Breakdown/FreqTr/Realization.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "For each fixed pair $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, the formal theorem proves continuity of $\\tau\\mapsto K(\\tau)(u,v)$ on $(0,\\infty)$ in the homogeneous $H^1$ norm. The paper permits any $L^{3/2}$ forcing field and also states the heat-shift identity; neither extension is part of this continuity theorem.",
-     "assessments": [
-      {
-       "phrase": "pdf-item-theorem-3-1",
-       "fidelity": "weaker",
-       "fidelity_note": "For each fixed pair $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, the formal theorem proves continuity of $\\tau\\mapsto K(\\tau)(u,v)$ on $(0,\\infty)$ in the homogeneous $H^1$ norm. The paper permits any $L^{3/2}$ forcing field and also states the heat-shift identity; neither extension is part of this continuity theorem."
       }
      ]
     }
@@ -16886,8 +16858,8 @@
   },
   {
    "id": "adapted.N4-47.1",
-   "from": "multiply the expression inside the absolute value",
-   "to": "multiply the expression inside the absolute value",
+   "from": "The first bracket has absolute value at most $o_j$ by (7.34), and the second has the bound just obtained.",
+   "to": "The first bracket has absolute value at most $o_j$ by (7.34), and the second has the bound just obtained.",
    "role": "explanation",
    "topic": "certificate",
    "status": "new",
@@ -16897,8 +16869,8 @@
      "file": "Breakdown/Cert/ExtendedExistsZeroHeld.lean",
      "relation": "proof",
      "fidelity": "unassessed",
-     "fidelity_note": "The formal scalar step combines enclosures by a triangle inequality with a sign-adjusted pairing.",
-     "link_note": "The formal scalar step combines enclosures by a triangle inequality with a sign-adjusted pairing."
+     "fidelity_note": "Lean adds the offset and correction enclosures and cancels their common scalar term.",
+     "link_note": "Lean adds the offset and correction enclosures and cancels their common scalar term."
     }
    ]
   },
@@ -16929,7 +16901,7 @@
    "status": "new",
    "lean": [],
    "explanation": {
-    "text": "The public regularity theorem constructs the smooth profile and identifies its velocity almost everywhere in space at each time.",
+    "text": "Proposition 7.11 first obtains the mild equation from the weak formulation. The scaling bound in $L^6$ lets the authors pass through $L^{12}$ to $L^\\infty$, using the integrable kernel powers $\\tau^{-7/8}$ and $\\tau^{-3/4}$. This gives regularity on compact time intervals before the terminal time. The Chae–Wolf result then gives spatial decay for the backward discretely self-similar flow.",
     "citations": [
      {
       "ref": "NavierStokes.proposition_7_11",
@@ -17102,7 +17074,7 @@
    "status": "new",
    "lean": [],
    "explanation": {
-    "text": "The companion constructs a smooth profile at the supplied period and identifies its velocity with the given weak velocity almost everywhere at each time.",
+    "text": "At the parameter selected in Proposition 7.10, Proposition 7.11 identifies $W(S(\\alpha)\\theta)$ with $W_\\alpha^{\\mathrm a}+v$ in $X$ at every phase. The correction in Theorem 7.1 is therefore that same $v$. Substituting $\\beta=-\\beta^{\\mathrm a}(\\alpha)$ gives the penalty in (7.38), with the same pin values.",
     "citations": [
      {
       "ref": "NavierStokes.proposition_7_11",
@@ -17124,7 +17096,7 @@
    "status": "new",
    "lean": [],
    "explanation": {
-    "text": "For a weak profile and its continuous representative, the companion gives equality with the representative almost everywhere in space at each time. The paper uses this type of equality for the two sides of the symmetry identity.",
+    "text": "For each fixed phase the equality in $X$ gives equality almost everywhere in space. The two fields are continuous in the spatial variable. A nonzero difference at a point would persist on a ball of positive measure. This gives the symmetry at every spatial point for each phase.",
     "citations": [
      {
       "ref": "proof-reader-proposition_7_11",
@@ -17214,8 +17186,8 @@
   },
   {
    "id": "adapted.N4-54.1",
-   "from": "testing the weak equation",
-   "to": "testing the weak equation",
+   "from": "Subtracting an antiderivative leaves a distribution with zero derivative, hence a constant.",
+   "to": "Subtracting an antiderivative leaves a distribution with zero derivative, hence a constant.",
    "role": "explanation",
    "topic": "mild",
    "status": "new",
@@ -17225,7 +17197,7 @@
      "file": "Breakdown/Weak/ConstOfWeakDeriv.lean",
      "relation": "part",
      "fidelity": "unassessed",
-     "fidelity_note": "The formal distributional step identifies a weak time derivative by testing and controls its primitive up to constants. The paper gives the physical change of variables."
+     "fidelity_note": "Lean identifies a continuous scalar pairing with a constant plus the primitive of its continuous distributional derivative, with the sign fixed by the test identity."
     }
    ]
   },

@@ -5109,34 +5109,6 @@
        "fidelity_note": "For all $\\tau>0$ and $u,v\\in X=\\dot H^1_{\\mathrm{div}}$, this theorem supplies the bounded bilinear map $K(\\tau):X\\times X\\to X$ and one constant in $\\|K(\\tau)(u,v)\\|_X\\le C_K\\tau^{-3/4}\\|u\\|_X\\|v\\|_X$. This proves the bilinear conclusion (3.7), but Lemma 3.1 also gives the linear estimate for every $L^{3/2}$ force."
       }
      ]
-    },
-    {
-     "name": "Breakdown.Freq.bilinShift_holds",
-     "file": "Breakdown/FreqTr/Realization.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "For $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, $t\\ge0$ and $\\tau>0$, the formal theorem gives $e^{t\\Delta}K(\\tau)(u,v)=K(t+\\tau)(u,v)$, where $K(\\tau)(u,v)=-\\tfrac12e^{\\tau\\Delta}\\mathbb P[(u\\cdot\\nabla)v+(v\\cdot\\nabla)u]$. The paper states a heat-shift identity and continuity for every $L^{3/2}$ force; this theorem supplies the identity only for the bilinear forcing class.",
-     "assessments": [
-      {
-       "phrase": "pdf-item-theorem-3-1",
-       "fidelity": "weaker",
-       "fidelity_note": "For $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, $t\\ge0$ and $\\tau>0$, the formal theorem gives $e^{t\\Delta}K(\\tau)(u,v)=K(t+\\tau)(u,v)$, where $K(\\tau)(u,v)=-\\tfrac12e^{\\tau\\Delta}\\mathbb P[(u\\cdot\\nabla)v+(v\\cdot\\nabla)u]$. The paper states a heat-shift identity and continuity for every $L^{3/2}$ force; this theorem supplies the identity only for the bilinear forcing class."
-      }
-     ]
-    },
-    {
-     "name": "Breakdown.Freq.bilinCont_holds",
-     "file": "Breakdown/FreqTr/Realization.lean",
-     "relation": "states",
-     "fidelity": "weaker",
-     "fidelity_note": "For each fixed pair $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, the formal theorem proves continuity of $\\tau\\mapsto K(\\tau)(u,v)$ on $(0,\\infty)$ in the homogeneous $H^1$ norm. The paper permits any $L^{3/2}$ forcing field and also states the heat-shift identity; neither extension is part of this continuity theorem.",
-     "assessments": [
-      {
-       "phrase": "pdf-item-theorem-3-1",
-       "fidelity": "weaker",
-       "fidelity_note": "For each fixed pair $u,v\\in X=\\dot H^1_{\\mathrm{div}}(\\mathbb R^3)$, the formal theorem proves continuity of $\\tau\\mapsto K(\\tau)(u,v)$ on $(0,\\infty)$ in the homogeneous $H^1$ norm. The paper permits any $L^{3/2}$ forcing field and also states the heat-shift identity; neither extension is part of this continuity theorem."
-      }
-     ]
     }
    ],
    "replaces": [
