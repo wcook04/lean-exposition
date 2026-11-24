@@ -21,7 +21,7 @@ const insets = { top: 20, right: 20, bottom: 20, left: 20 };
 
 describe("the pane in automatic reading", () => {
   const tie: Tie = { record: goal, at: "b10-20", anchor: "passage", role: "statement", lean: true, name: null, module: null, lines: null };
-  const decl: PhraseLean = { name: "Example.result", module: "Example", line: 5, end_line: 7, lines: [5, 7], relation: null, note: "" };
+  const decl: PhraseLean = { name: "Example.result", module: "Example", line: 5, end_line: 7, lines: [5, 7], relation: "states", note: "" };
   const alignment: Alignment = {
     dictionary: [],
     records: { [goal]: { short: "Full support", lean: [], statements: [{
@@ -46,7 +46,7 @@ describe("the pane in automatic reading", () => {
   });
 
   it("uses a record's declarations when the reader selected that record", () => {
-    const record = { ...alignment.records[goal], lean: [{ ...decl, relation: "states" as const }] };
+    const record = { ...alignment.records[goal], lean: [decl] };
     const linked = { ...alignment, records: { [goal]: record } };
     expect(paneForStatement(undefined, linked, goal)).toBe("lean");
     expect(paneForStatement(undefined, linked)).toBe("graph");
