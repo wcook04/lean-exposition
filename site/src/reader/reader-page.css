@@ -51,11 +51,15 @@
   }
 }
 
-/* Headings land below the top bar and the location strip. A class the reader sets, not
+/* Headings land below the reading controls. A class the reader sets, not
    html:has(.reader): that puts every element of a long paper under a :has() on the root,
    and one change of hover then walks the whole document again. */
+html[data-view="read"] {
+  --reader-top: 0px;
+}
+
 html.is-reading {
-  scroll-padding-top: calc(var(--topbar-h) + 44px + var(--space-3));
+  scroll-padding-top: calc(44px + var(--space-3));
 }
 
 .reader-loading {
@@ -217,7 +221,7 @@ html.is-reading {
 .reader-strip {
   position: sticky;
   z-index: 6;
-  top: var(--topbar-h);
+  top: var(--reader-top);
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -813,17 +817,11 @@ html.is-reading {
 
 /* A phone has one row of chrome, which goes while reading down. */
 @media (max-width: 700px) {
-  html[data-view="read"] {
-    --reader-top: 0px;
-  }
   .reader-strip__hint {
     display: none;
   }
   .reader-strip:has(.reader-strip__hint) .crumbs ol {
     display: flex;
-  }
-  html[data-view="read"] .topbar {
-    position: static;
   }
   .reader-strip {
     top: 0;
@@ -1018,10 +1016,10 @@ html.is-reading {
    so the wheel and the trackpad move it alone and the paper stays where it is. */
 .reader__outline {
   position: sticky;
-  top: var(--topbar-h);
-  height: calc(100vh - var(--topbar-h));
-  height: calc(100dvh - var(--topbar-h));
-  max-height: calc(100dvh - var(--topbar-h));
+  top: var(--reader-top);
+  height: calc(100vh - var(--reader-top));
+  height: calc(100dvh - var(--reader-top));
+  max-height: calc(100dvh - var(--reader-top));
   min-width: 0;
   display: flex;
   overflow: hidden;
@@ -1178,8 +1176,8 @@ html.is-reading {
 
 .reader__inspector {
   position: sticky;
-  top: calc(var(--topbar-h) + var(--space-3));
-  height: calc(100vh - var(--topbar-h) - var(--space-5));
+  top: calc(var(--reader-top) + var(--space-3));
+  height: calc(100vh - var(--reader-top) - var(--space-5));
   min-width: 0;
   display: flex;
   background: var(--surface);
@@ -1733,7 +1731,7 @@ html.is-reading {
 .visit {
   position: fixed;
   z-index: 25;
-  inset: var(--topbar-h) 0 0 0;
+  inset: var(--reader-top) 0 0 0;
   display: flex;
   flex-direction: column;
   background: var(--ground);

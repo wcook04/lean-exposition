@@ -36,10 +36,3 @@
 .topbar .back-control {
   flex: 0 1 auto;
 }
-
-/* On a phone the control takes the place of the site's name, which the mark still stands for. */
-@media (max-width: 56.25em) {
-  .topbar:has(.back-control) .fam-lockup__name {
-    display: none;
-  }
-}

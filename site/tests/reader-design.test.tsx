@@ -1,6 +1,6 @@
 // The reader design (docs/reader-design.md): section aids set under their heads, the pane's
-// remembered choices, the subject band, the inspector's order and words, the conventions that bear
-// on a card, and the "Start here" guide.
+// remembered choices, the subject band, the inspector's order and words, and the conventions
+// that bear on a card.
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -181,7 +181,6 @@ describe("the subject band", async () => {
   const { SubjectBand } = await import("../src/reader/page/SubjectBand");
   const words = () => container.querySelector(".subject-band__words")!.textContent;
   const live = () => container.querySelector('[aria-live="polite"]')!.textContent;
-  const acts = () => [...container.querySelectorAll<HTMLButtonElement>(".subject-band__act")];
 
   it("says each state in words", () => {
     const expected = { following: "Following the paper", preview: "Preview", words: "Selected words", paragraph: "Selected paragraph", declaration: "Selected declaration" } as const;
@@ -192,14 +191,12 @@ describe("the subject band", async () => {
     }
   });
 
-  it("offers Return only for a selection, and Auto and Manual as one switch", () => {
+  it("keeps Auto and Manual as one switch", () => {
     const onResume = vi.fn();
-    const onReturn = vi.fn();
     const onManual = vi.fn();
     const side = (name: string) => [...container.querySelectorAll<HTMLButtonElement>(".mode-switch__side")].find((b) => b.textContent === name)!;
     for (const state of ["following", "preview"] as const) {
-      act(() => root.render(<SubjectBand state={state} place="§5.6" onResume={onResume} onReturn={onReturn} onManual={onManual} />));
-      expect(acts()).toHaveLength(0);
+      act(() => root.render(<SubjectBand state={state} place="§5.6" onResume={onResume} onManual={onManual} />));
       expect(side("Auto").getAttribute("aria-pressed")).toBe("true");
       expect(side("Manual").getAttribute("aria-pressed")).toBe("false");
     }
@@ -207,30 +204,18 @@ describe("the subject band", async () => {
     expect(onManual).toHaveBeenCalledTimes(1);
     act(() => root.render(<SubjectBand state="following" place="§5.6" />));
     expect(side("Manual").disabled).toBe(true);
-    act(() => root.render(<SubjectBand state="words" place="§5.6" onResume={onResume} onReturn={onReturn} />));
-    const [back] = acts();
-    expect(acts()).toHaveLength(1);
-    expect(back.textContent).toBe("Return to selected words");
+    act(() => root.render(<SubjectBand state="words" place="§5.6" onResume={onResume} />));
     expect(side("Manual").getAttribute("aria-pressed")).toBe("true");
     expect(side("Auto").title).toBe("Auto: the pane follows the passage you are reading");
     expect(side("Manual").title).toBe("Manual: the pane stays on what you selected");
     act(() => side("Auto").click());
     expect(onResume).toHaveBeenCalledTimes(1);
-    expect(onReturn).not.toHaveBeenCalled();
-    act(() => back.click());
-    expect(onReturn).toHaveBeenCalledTimes(1);
   });
 
-  it("makes the place a button only when it can return to it", () => {
+  it("shows the selected location as text", () => {
     act(() => root.render(<SubjectBand state="words" place="§5.6" onResume={() => {}} />));
     expect(container.querySelector("button.subject-band__place")).toBeNull();
     expect(container.textContent).toContain("in §5.6");
-    const onReturn = vi.fn();
-    act(() => root.render(<SubjectBand state="words" place="§5.6" onResume={() => {}} onReturn={onReturn} />));
-    const place = container.querySelector<HTMLButtonElement>("button.subject-band__place")!;
-    expect(place.textContent).toBe("in §5.6");
-    act(() => place.click());
-    expect(onReturn).toHaveBeenCalledTimes(1);
   });
 
   it("announces a change of state, not the first state nor a new title within one state", () => {
@@ -387,34 +372,5 @@ describe("the conventions that bear on a card", async () => {
     expect(conventionsFor(aids, [])).toEqual([]);
     expect(conventionsFor(aids, ["tie:nothing"])).toEqual([]);
     expect(conventionsFor({ glossary: [], showcase: [] }, ["tie:p1"])).toEqual([]);
-  });
-});
-
-// ---------------------------------------------------------------- start here
-
-describe("Start here", async () => {
-  const { StartHere } = await import("../src/reader/page/Guides");
-  const titles: Record<string, string> = { p1: "Theorem 1.1", p2: "Definition 2.1" };
-
-  it("lists every card with its title and why, and opens the one chosen", () => {
-    const onOpen = vi.fn();
-    act(() => root.render(<StartHere cards={AIDS.showcase} titleOf={(c) => titles[c]} onOpen={onOpen} />));
-    const items = [...container.querySelectorAll<HTMLButtonElement>(".guide-panel__cards button")];
-    expect(items).toHaveLength(2);
-    expect(items.map((b) => b.querySelector(".guide-panel__title")!.textContent)).toEqual(["Theorem 1.1", "Definition 2.1"]);
-    expect(items.map((b) => b.querySelector(".guide-panel__why")!.textContent)).toEqual(AIDS.showcase.map((c) => c.why));
-    act(() => items[1].click());
-    expect(onOpen).toHaveBeenCalledWith("p2");
-  });
-
-  it("has a Close button only when it can close", () => {
-    act(() => root.render(<StartHere cards={AIDS.showcase} titleOf={(c) => titles[c]} onOpen={() => {}} />));
-    expect([...container.querySelectorAll("button")].some((b) => b.textContent === "Close")).toBe(false);
-    const onClose = vi.fn();
-    act(() => root.render(<StartHere cards={AIDS.showcase} titleOf={(c) => titles[c]} onOpen={() => {}} onClose={onClose} />));
-    const close = [...container.querySelectorAll<HTMLButtonElement>("button")].find((b) => b.textContent === "Close")!;
-    expect(close).toBeTruthy();
-    act(() => close.click());
-    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

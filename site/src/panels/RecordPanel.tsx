@@ -90,7 +90,7 @@ const PANES: PaneSpec[] = [
   { id: "statement", title: "Lean" },
   { id: "explanation", title: "Papers" },
   { id: "argument", title: "Uses" },
-  { id: "sources", title: "What ran" },
+  { id: "sources", title: "Run records" },
 ];
 
 export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, passageHref, compact, onEcho, onEdge, leaving, section, panelRef, account, goalBody, onInputs, onBelow, onWalk }: Props) {

@@ -4,7 +4,6 @@ import type { Alignment } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
-import { PAPER_NAMES } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { FocusGraph, relationCounts, type FGCard, type FGRelation } from "../../map/FocusGraph";
 import { GraphBoundary } from "../../map/GraphBoundary";
@@ -19,8 +18,7 @@ import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, typ
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { SubjectBand, type SubjectState } from "./SubjectBand";
-import { GuidePanel, ProofRoute, StartHere } from "./Guides";
-import { cardKeys, cardTarget, useAids } from "../aids";
+import { GuidePanel } from "./Guides";
 import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
@@ -76,20 +74,15 @@ interface Props {
   /** Fills the pane while it is open: the passage inspector, or the sections. */
   leanSlot?: ReactNode;
   inert?: boolean;
-  /** The page fills a sheet, which has its own close control. */
-  inModal?: boolean;
-  onHide(): void;
   /** A record was chosen (a card, a link in the route): it becomes the subject. */
   onRecord?(id: string): void;
   /** A declaration was chosen: it becomes the subject. */
   onDecl?(name: string, module?: string): void;
   /** Auto (or Escape): let go of what was selected and follow the paper from where the reader is. The paper does not move. */
   onRelease(): void;
-  /** "Return to selected words": the paper goes back to the selection, which stays. */
-  onReturn?(): void;
   /** Where a passage is in the paper, in words: "§5.6", a heading. */
   placeOf?(anchor: string | undefined, at?: string): string;
-  /** Linked words were chosen in the pane (a paragraph's list, a showcase card): select them; `land` also brings the paper to them. */
+  /** Linked words were chosen in the pane (a paragraph’s list): select them; `land` also brings the paper to them. */
   onOpenTie?(tie: number, land?: boolean): void;
   /** From an opened statement to the Lean following the text. */
   onFollowText?(): void;
@@ -114,7 +107,7 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -499,13 +492,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const tabbed = separate || (mode === "graph" && !!graphRequested && !unlinked);
   const paired = mode === "lean" && !separate && !!fresh && neighbours > 0;
 
-  // ---- The subject band, and the two guides that can stand in the pane ----------------------
+  // ---- The subject band and the Lean guide ----------------------
 
-  const aids = useAids();
   const guideStage = site.library && stage === site.library.main ? site.library.guide : undefined;
-  const [aside, setAside] = useState<"start" | "guide" | "route" | null>(null);
+  const [guideOpen, setGuideOpen] = useState(false);
   // A guide is read with nothing else in mind: a new selection takes its place.
-  useEffect(() => setAside(null), [pin?.record, pin?.tie, decl, held]);
+  useEffect(() => setGuideOpen(false), [pin?.record, pin?.tie, decl, held]);
   // What a selection's card and Lean read from is fetched once the page has settled, so the first
   // selection's column, which waits for all of it to arrive together, comes at once.
   useEffect(() => {
@@ -532,54 +524,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined, pinTie.at) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
   const bandTitle = pin?.tie != null ? phraseTitle(ties, pin.tie) : decl ? plainName(alignment, decl) : subjectTitle;
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
-  /** A showcase card names linked words, a numbered result or a declaration: open whichever it is. */
-  const openCard = useCallback(
-    (card: string) => {
-      const { kind, id } = cardTarget(card);
-      setAside(null);
-      const phrase = kind === "tie" || kind === "bare" ? ties.order.find((n) => ties.index.ties[n].phrase === id) : undefined;
-      if (phrase !== undefined) return onOpenTie?.(phrase, true);
-      if (kind === "tie") return;
-      // A result opens at the words that state it, where the paper has them; else as a declaration.
-      const stated = kind === "result" ? ties.order.find((n) => ties.index.ties[n].role === "statement" && ties.index.ties[n].rows?.some((row) => row.name === id)) : undefined;
-      if (stated !== undefined) onOpenTie?.(stated, true);
-      else onDecl?.(id, tools.rowOf(id)?.module);
-    },
-    [ties, onOpenTie, onDecl, tools],
-  );
-  const cardTitle = useCallback(
-    (card: string) => {
-      const { kind, id } = cardTarget(card);
-      const t = kind === "tie" || kind === "bare" ? ties.order.find((n) => ties.index.ties[n].phrase === id) : undefined;
-      if (t !== undefined) return phraseTitle(ties, t);
-      return kind === "tie" ? id : plainName(alignment, id);
-    },
-    [ties, alignment],
-  );
-  // The paper's longer start-here page, where it has one, for the link under the summary.
-  const startPage = site.library?.pages?.["start-here"];
-  const startHref = startPage ? routeHref({ view: "read", stage: startPage }) : undefined;
-  // The paper's own short orientation where it has one; else what its main formal statement asserts.
-  const about = aids.summary ?? site.sectionAids?.[stage]?.[PAPER_NAMES[stage].short];
-  // Before the paper's first link (its title and authors) there is nothing to follow: the pane offers where to start.
-  const firstLink = ties.order.length ? startOf(ties.index.ties[ties.order[0]].at) : null;
-  const atFront = !holding && follow.tie === null && (readAt === null || readAt === undefined || firstLink === null || readAt < firstLink);
-  const frontSlot = atFront && aids.showcase.length > 0 ? <StartHere cards={aids.showcase} about={about} more={startHref} titleOf={cardTitle} onOpen={openCard} /> : undefined;
-  // Where the selection is one of the paper's showcase cards, the pane says which, with the way to the next.
-  const tourAt = useMemo(() => {
-    if (!aids.showcase.length || (!pinTie && !decl)) return -1;
-    const keys = new Set(cardKeys(pinTie?.phrase, decl ? [decl] : (pinTie?.rows ?? []).map((row) => row.name)));
-    return aids.showcase.findIndex((item) => keys.has(item.card));
-  }, [aids, pinTie, decl]);
-  const asideSlot =
-    aside === "start" ? (
-      <StartHere cards={aids.showcase} about={about} more={startHref} titleOf={cardTitle} onOpen={openCard} onClose={() => setAside(null)} />
-    ) : aside === "route" && aids.route ? (
-      <ProofRoute steps={aids.route} onOpen={openCard} onClose={() => setAside(null)} />
-    ) : aside === "guide" && guideStage ? (
-      <GuidePanel stage={guideStage} onClose={() => setAside(null)} />
-    ) : null;
-  const fill = !!leanSlot || !!asideSlot;
+  const guide = guideOpen && guideStage ? <GuidePanel stage={guideStage} onClose={() => setGuideOpen(false)} /> : null;
+  const fill = !!leanSlot || !!guide;
+  const showToolbar = !!guideStage || (!fill && (tabbed || mode === "graph"));
   const visible = mode === "lean" ? leanOpen : dockOpen;
   useLayoutEffect(() => {
     let target: HTMLElement | null = null;
@@ -679,7 +626,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
 
   return (
     <section ref={rootRef} tabIndex={-1} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The Lean and the proof map" inert={inert ? true : undefined}>
-      <div className="map-pane__bar">
+      {showToolbar && <div className="map-pane__bar">
         {tabbed && !fill && <ModeToggle mode={mode} onMode={(next) => {
           if (next === "graph") setUnfolded(true);
           onMode(next);
@@ -695,23 +642,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             Fold the graph
           </button>
         )}
-        <span className="map-pane__guides">
-          {(site.readingAids?.showcase ?? aids.showcase.length > 0) && (
-            <button type="button" className="map-pane__guide" aria-expanded={aside === "start"} onClick={() => setAside(aside === "start" ? null : "start")}>
-              Start here
-            </button>
-          )}
-          {(site.readingAids?.route ?? !!aids.route) && (
-            <button type="button" className="map-pane__guide" aria-expanded={aside === "route"} onClick={() => setAside(aside === "route" ? null : "route")}>
-              Follow the proof
-            </button>
-          )}
-          {guideStage && (
-            <button type="button" className="map-pane__guide" aria-expanded={aside === "guide"} onClick={() => setAside(aside === "guide" ? null : "guide")}>
-              How to read the Lean
-            </button>
-          )}
-        </span>
+        {guideStage && (
+          <button type="button" className="map-pane__guide" aria-expanded={guideOpen} onClick={() => setGuideOpen(!guideOpen)}>
+            How to read the Lean
+          </button>
+        )}
         {mode === "graph" && !fill && <a
           className="map-pane__open"
           href={mapHref}
@@ -723,31 +658,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         >
           Open the full map
         </a>}
-        {!inModal && (
-          <button type="button" className="map-pane__hide" aria-label="Hide the pane" onClick={onHide}>
-            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-              <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </button>
-        )}
-      </div>
-      {!fill && tourAt >= 0 && (
-        <p className="tour-line">
-          <span>
-            Start here, example {tourAt + 1} of {aids.showcase.length}
-          </span>
-          <button type="button" disabled={tourAt === 0} onClick={() => openCard(aids.showcase[tourAt - 1].card)}>
-            Previous
-          </button>
-          <button type="button" disabled={tourAt === aids.showcase.length - 1} onClick={() => openCard(aids.showcase[tourAt + 1].card)}>
-            Next
-          </button>
-        </p>
-      )}
-      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} onReturn={(pin?.tie != null || held?.block) && onReturn ? onReturn : undefined} />}
+      </div>}
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
-          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? asideSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
+          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" && !unlinked ? (
         <div className={paired ? "map-pane__paired" : "map-pane__lean"}>
@@ -757,7 +672,6 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             stage={stage}
             alignment={alignment}
             slot={preview ?? heldList}
-            emptySlot={frontSlot}
             onOpenGraph={() => onMode("graph")}
             onPick={(id) => onRecord?.(id)}
             onPoint={onPoint}

@@ -30,8 +30,8 @@
 
 .reader__map {
   position: sticky;
-  top: var(--topbar-h);
-  height: calc(100vh - var(--topbar-h));
+  top: var(--reader-top);
+  height: calc(100dvh - var(--reader-top));
   min-width: 0;
   /* 32px of column gap plus this: 48px between the paper and the map. */
   margin-left: 16px;
@@ -110,25 +110,6 @@
 .map-pane__open:hover {
   color: var(--ink);
   text-decoration-color: currentColor;
-}
-
-.map-pane__hide {
-  display: inline-grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  flex: none;
-  padding: 0;
-  border: 0;
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink-3);
-  cursor: pointer;
-}
-
-.map-pane__hide:hover {
-  color: var(--ink);
-  background: var(--sunk);
 }
 
 
@@ -914,14 +895,6 @@ html[data-right-sheet] {
   margin-left: auto;
 }
 
-.map-pane__bar .map-pane__hide {
-  margin-left: auto;
-}
-
-.map-pane__bar .map-pane__open + .map-pane__hide {
-  margin-left: 0;
-}
-
 /* In the pane the tabs are a little larger; the phone's strip keeps its own, where room is short. */
 .map-pane .mode-toggle button {
   min-width: 60px;
@@ -935,7 +908,6 @@ html[data-right-sheet] {
 
 .mode-toggle button:focus-visible,
 .map-pane__whole:focus-visible,
-.map-pane__hide:focus-visible,
 .lean-page__quiet:focus-visible,
 .lean-page__action:focus-visible {
   outline: var(--focus-ring);
@@ -1060,62 +1032,6 @@ html[data-right-sheet] {
   font-size: var(--fs-ui);
   font-weight: 600;
   color: var(--ink);
-}
-
-.subject-band__place {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ink-2);
-  font: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--rule-control);
-  text-underline-offset: 0.2em;
-  cursor: pointer;
-}
-
-.subject-band__place:hover {
-  color: var(--ink);
-  text-decoration-color: currentColor;
-}
-
-.subject-band__acts {
-  flex: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.subject-band__act {
-  min-height: 30px;
-  padding: 0 var(--space-3);
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--fs-ui);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: border-color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
-}
-
-.subject-band__act:hover {
-  border-color: var(--ink-2);
-  background: var(--sunk);
-}
-
-.subject-band__place:focus-visible,
-.subject-band__act:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 2px;
-  border-radius: var(--radius-s);
-}
-
-@media (pointer: coarse) {
-  .subject-band__act {
-    min-height: var(--target);
-  }
 }
 
 /* ---- The inspector: title and identity ----------------------------------------------- */
@@ -1263,13 +1179,7 @@ html[data-right-sheet] {
   color: var(--ink-3);
 }
 
-/* ---- Start here, and How to read the Lean -------------------------------------------- */
-
-.map-pane__guide[aria-pressed="true"] {
-  color: var(--ink);
-  border-color: var(--ink-3);
-  background: var(--sunk);
-}
+/* ---- How to read the Lean ---- */
 
 .guide-panel {
   padding: var(--space-3) 0 var(--space-5);
@@ -1310,61 +1220,6 @@ html[data-right-sheet] {
   color: var(--ink-2);
 }
 
-.guide-panel__cards {
-  display: grid;
-  gap: var(--space-2);
-  max-width: var(--evidence-measure);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.guide-panel__cards button {
-  display: grid;
-  grid-template-columns: 1.75rem minmax(0, 1fr);
-  gap: 2px var(--space-2);
-  width: 100%;
-  padding: var(--space-3);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-s);
-  background: var(--surface);
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-  transition: border-color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
-}
-
-.guide-panel__cards button:hover {
-  border-color: var(--ink-3);
-  background: var(--raised);
-}
-
-.guide-panel__cards button:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.guide-panel__n {
-  grid-row: 1 / span 2;
-  font-family: var(--font-serif);
-  font-size: var(--fs-h3);
-  line-height: 1.3;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink-3);
-}
-
-.guide-panel__title {
-  font-family: var(--font-serif);
-  font-size: var(--fs-card);
-  line-height: 1.35;
-}
-
-.guide-panel__why {
-  font-size: var(--fs-ui);
-  line-height: var(--lh-ui);
-  color: var(--ink-2);
-}
-
 .guide-panel__text {
   max-width: var(--evidence-measure);
   font-family: var(--font-sans);
@@ -1396,9 +1251,7 @@ html[data-right-sheet] {
 
 @media (prefers-reduced-motion: reduce) {
   .mode-toggle button,
-  .subject-band__act,
-  .para-links__list button,
-  .guide-panel__cards button {
+  .para-links__list button {
     transition: none;
   }
 }
@@ -1415,17 +1268,6 @@ html[data-right-sheet] {
   margin-bottom: var(--space-2);
 }
 
-.guide-panel__about {
-  max-width: var(--evidence-measure);
-  margin: 0 0 var(--space-3);
-  padding-left: var(--space-3);
-  border-left: 1px solid var(--rule-control);
-  font-size: var(--fs-ui);
-  line-height: 1.5;
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
-
 .lean-page__tograph {
   margin: var(--space-4) 0 0;
   padding-top: var(--space-3);
@@ -1438,74 +1280,6 @@ html[data-right-sheet] {
   display: none;
 }
 
-/* On a narrow window the band's two acts share one row under the state. */
-.right-sheet .subject-band__acts {
-  flex: 1 1 100%;
-}
-
-.right-sheet .subject-band__act {
-  min-height: 36px;
-}
-
-/* While the selection is one of the paper's showcase cards: which one, and the way to the next. */
-.tour-line {
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 36px;
-  margin: 0;
-  padding: 0 var(--space-3) 0 var(--space-4);
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.tour-line span {
-  flex: 1;
-}
-
-.tour-line button {
-  min-height: 26px;
-  padding: 0 var(--space-2);
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-}
-
-.tour-line button:disabled {
-  color: var(--ink-3);
-  border-color: var(--rule-strong);
-  cursor: default;
-}
-
-.tour-line button:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.guide-panel__cards .guide-panel__plain {
-  display: grid;
-  grid-template-columns: 1.75rem minmax(0, 1fr);
-  gap: 2px var(--space-2);
-  padding: var(--space-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-s);
-}
-
-.guide-panel__statement {
-  color: var(--ink);
-}
-
-.guide-panel__cards button > span:not(.guide-panel__n),
-.guide-panel__plain > span:not(.guide-panel__n) {
-  grid-column: 2;
-}
-
 /* A graph that failed to draw (map/GraphBoundary.tsx): its notice in the graph's place. */
 .graph-boundary {
   padding: 16px;
@@ -1515,19 +1289,6 @@ html[data-right-sheet] {
 }
 
 /* ---- The pane's bar: two tabs change the view; everything else on it is a quiet link -------- */
-
-.map-pane__bar .map-pane__guides {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px var(--space-4);
-  margin-left: auto;
-}
-
-.map-pane__bar .map-pane__guides ~ .map-pane__open,
-.map-pane__bar .map-pane__guides ~ .map-pane__hide {
-  margin-left: 0;
-}
 
 .map-pane__guide {
   min-height: 28px;
@@ -1674,7 +1435,6 @@ html[data-right-sheet] {
 }
 
 /* A sheet already has a Back button. With no other controls the toolbar takes no room. */
-.right-sheet .map-pane__bar:not(:has(button, a)) { display: none; }
 .map-pane__local-head .fg__tools {
   position: static;
   margin-left: auto;
@@ -1683,7 +1443,6 @@ html[data-right-sheet] {
 .map-pane__local .fg__world--narrow { row-gap: 10px; }
 @media (max-height: 560px) and (min-width: 560px) {
   .right-sheet .subject-band { min-height: 40px; padding-block: 2px; }
-  .right-sheet .subject-band__acts { flex: none; margin-left: auto; }
   .right-sheet .map-pane__bar { padding-block: 0; }
-  .right-sheet .map-pane__guides .map-pane__guide { min-height: 28px; }
+  .right-sheet .map-pane__guide { min-height: 28px; }
 }

@@ -42,8 +42,8 @@ export function filmHtml(film: SiteFilm, lead: boolean): string {
 </figure>`;
 }
 
-/** The frame as plain HTML, the same markup TopBar renders, so the bar is there before the scripts. */
+/** The title and available routes before the interactive shell loads. */
 export function frameHtml(base: string, siteName: string): string {
-  const job = (href: string, name: string, quiet = false) => `<a class="topnav__job${quiet ? " topnav__job--quiet" : ""}" href="${base}${href}">${name}</a>`;
-  return `<header class="topbar"><span class="fam-lockup"><a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="${base}plectis.svg" alt="" width="26" height="26" /><span class="fam-lockup__owner" translate="no">Will Cook</span></a><span class="fam-lockup__rule" aria-hidden="true"></span><a class="fam-lockup__site" href="${base}" aria-label="${siteName}, front page"><svg viewBox="0 0 32 32" aria-hidden="true" class="wordmark__mark"><path d="M4 27 L4 5 M4 27 L28 27" fill="none" stroke-width="2" stroke-linecap="round"></path><path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" stroke-width="2.6" stroke-linecap="round"></path><circle cx="16" cy="14" r="3"></circle></svg><span class="fam-lockup__name" translate="no">${siteName}</span></a></span><nav class="topnav" aria-label="Main">${job("read/short", "Read")}${job("map", "Map")}${job("compare", "Compare")}${job("checks", "What ran")}${job("lean", "Lean index", true)}</nav></header>`;
+  const link = (href: string, name: string) => `<li><a class="readmenu__item" href="${base}${href}">${name}</a></li>`;
+  return `<header class="topbar"><a class="topbar__title" href="${base}" translate="no">${escapeHtml(siteName)}</a><details class="site-menu"><summary class="control control--plain menu-toggle">Menu</summary><div class="site-menu__panel"><nav aria-label="Main"><ul class="site-menu__list">${link("read/short", "Short paper")}${link("read/expository", "Exposition")}${link("read/long", "Long record")}${link("map", "Map")}${link("compare", "Compare")}${link("lean", "Lean index")}</ul></nav></div></details></header>`;
 }

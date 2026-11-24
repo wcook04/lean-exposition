@@ -15,7 +15,6 @@ import { useEdition } from "../../app/data";
 import { navigate, routeHref, type Trace } from "../../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { paperAlignmentResource, shortTitle } from "../../compare/useAlignment";
-import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
 import { READER_ACT_MS, sinceInput } from "../../app/readerInput";
 import { aidsArrived, cardKeys, loadAids } from "../aids";
@@ -183,9 +182,6 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
-  // A pointed name is read in the top bar; where the bar has no room, in a row under the column.
-  const barLine = useBarLine();
-  const barShown = useBarLineShown();
   const [foot, setFoot] = useState<HTMLElement | null>(null);
   const [full, setFull] = useState(false);
   const [chosen, setChosen] = useState(0);
@@ -354,7 +350,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       foldDependencies={inLean && phrase}
       onName={onName}
       noPapers
-      previewSlot={barLine && barShown ? barLine : foot}
+      previewSlot={foot}
       below={open.tie !== null && (
         <>
           {ties.index.ties[open.tie].origin && <OriginLine origin={ties.index.ties[open.tie].origin} />}
