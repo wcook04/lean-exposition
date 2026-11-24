@@ -45,6 +45,7 @@ class PaperReferencesTest(unittest.TestCase):
             r"$$ x \tag{8} $$",
             "```",
             "**Remark 2.** A visible label after the code.",
+            "    **Theorem 8.** Indented code.",
         ])
         refs = choose_references(source_references(source), {}, False)
         self.assertEqual(

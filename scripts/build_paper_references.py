@@ -28,7 +28,7 @@ DISPLAY = re.compile(r"(?<!\\)(?P<boundary>\$\$|\\\[|\\\])|(?<!\\)\\tag\*?\s*\{(
 TAG = re.compile(rf"(?:{ORDINAL}|[A-Z])")
 FENCE = re.compile(r" {0,3}(`{3,}|~{3,})")
 INLINE_CODE = re.compile(r"(`+).*?\1")
-HTML_COMMENT = re.compile(r"<!--.*?(?:-->|\Z)", re.S)
+HTML_COMMENT = re.compile(r"<!--.*?(?:-->|$)")
 PDF_PAGE = re.compile(r'<page\b[^>]*\bwidth="([^"]+)"[^>]*\bheight="([^"]+)"[^>]*>(.*?)</page>', re.S)
 PDF_LINE = re.compile(r'<line\b[^>]*\byMin="([^"]+)"[^>]*>(.*?)</line>', re.S)
 PDF_WORD = re.compile(r'<word\b[^>]*\bxMin="([^"]+)"[^>]*\bxMax="([^"]+)"[^>]*>(.*?)</word>', re.S)
@@ -71,22 +71,12 @@ def source_references(text: str) -> dict[str, list[Reference]]:
     fence = display = None
     auxiliary = False
     appendix: tuple[str, int] | None = None
-    comments = iter(HTML_COMMENT.finditer(text))
-    comment = next(comments, None)
-    pos = 0
+    inside_comment = False
     for line, raw in enumerate(text.split("\n"), 1):
         row = raw.removesuffix("\r")
         start, offset = offset, offset + len(raw.encode("utf-8")) + 1
         end = start + len(row.encode("utf-8"))
-        line_pos, pos = pos, pos + len(raw) + 1
-        while comment is not None and comment.start() < pos:
-            lo = max(0, comment.start() - line_pos)
-            hi = min(len(row), comment.end() - line_pos)
-            row = row[:lo] + " " * (hi - lo) + row[hi:]
-            if comment.end() >= pos:
-                break
-            comment = next(comments, None)
-        if marker := FENCE.match(row):
+        if not inside_comment and (marker := FENCE.match(row)):
             token = marker[1]
             if fence is None:
                 fence = token
@@ -95,6 +85,17 @@ def source_references(text: str) -> dict[str, list[Reference]]:
             continue
         if fence:
             continue
+
+        row = INLINE_CODE.sub(lambda match: " " * len(match[0]), row)
+        if inside_comment:
+            close = row.find("-->")
+            if close == -1:
+                continue
+            row = " " * (close + 3) + row[close + 3:]
+            inside_comment = False
+        for comment in HTML_COMMENT.finditer(row):
+            row = row[:comment.start()] + " " * len(comment[0]) + row[comment.end():]
+            inside_comment = not comment[0].endswith("-->")
 
         if not display and (heading := HEADING.fullmatch(row)):
             title = heading[1]
@@ -112,8 +113,8 @@ def source_references(text: str) -> dict[str, list[Reference]]:
                         appendix = (number.casefold(), depth)
                     if section["appendix"] or (appendix and number.casefold().startswith(f"{appendix[0]}.")):
                         refs[reference_key("appendix", number)].append(ref)
-        if not display:
-            opening = row.lstrip()
+        opening = row.lstrip(" ")
+        if not display and len(row) - len(opening) <= 3:
             emphasis = re.match(r"\*{1,2}|_{1,2}", opening)
             if emphasis:
                 opening = opening[emphasis.end():]
@@ -130,8 +131,7 @@ def source_references(text: str) -> dict[str, list[Reference]]:
                     label_end = start + len(raw[:prefix].encode("utf-8"))
                     refs[key].append(Reference(line, start, label_end, hint_words(tail), auxiliary))
 
-        scrubbed = INLINE_CODE.sub(lambda m: " " * len(m[0]), row)
-        for token in DISPLAY.finditer(scrubbed):
+        for token in DISPLAY.finditer(row):
             boundary = token["boundary"]
             if boundary:
                 if boundary == display:
