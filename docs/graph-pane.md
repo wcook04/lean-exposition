@@ -49,7 +49,7 @@ For a passage with no linked Lean, the Lean view says "No Lean is linked to this
 
 ### The drawing
 
-- The subject is in the middle, with its kind, its whole title and its Lean name. A paragraph that states several steps has them all in the middle, inside one frame, each above the steps it uses, with the lines between them drawn.
+- The subject is in the column labelled "Centre", with its kind, its whole title and its Lean name. A paragraph that states several steps has them all in the middle, inside one frame, each above the steps it uses, with the lines between them drawn.
 - The cards that use a subject are in a column on the left under "These use the centre" with their number. The cards a subject uses are in a column on the right under "The centre uses these" with their number. A curved line with an arrowhead joins each to the subject. Its endpoints touch the card borders.
 - Within a column the paper's results come first, then steps, definitions, cited results, open questions, Lean helper lemmas and library facts.
 - A node is one line of plain words, wrapped onto a second line when the title is long. No title is truncated or clamped. Titles are 13.5 pixels at full size. When the available height would shrink the drawing below 0.85 of full size, the reader tries further grouping before fitting.

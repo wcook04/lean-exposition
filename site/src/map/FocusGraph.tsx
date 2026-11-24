@@ -1008,7 +1008,9 @@ export function FocusGraph(props: FocusGraphProps) {
             : <>
               {renderSide("users", leftItems, model.left, model.users)}
               <div className={`fg__subjects${many ? " fg__subjects--many" : ""}`} data-count={model.subj.length} style={{ width: stacked ? sideW : subjectW }}>
-                {many && <h4 className="fg__sidehead">{props.manyLabel ?? "Stated in this paragraph"} <span>{model.subj.length}</span></h4>}
+                <h4 className="fg__sidehead fg__centrehead">
+                  Centre{many && <> · {props.manyLabel ?? "Stated in this paragraph"} <span>{model.subj.length}</span></>}
+                </h4>
                 {model.subj.map((id) => renderCard(id, "subject"))}
                 {emptyNote("users", model.left)}
                 {emptyNote("uses", model.right)}

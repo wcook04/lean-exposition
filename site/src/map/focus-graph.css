@@ -78,9 +78,10 @@
 .fg__side[data-band="users"] { align-items: flex-end; }
 .fg__side[data-band="uses"] { align-items: flex-start; }
 .fg__sidehead { margin: 0 0 4px; font: 600 12px/1.3 var(--fg-sans); letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); }
-.fg__side > .fg__sidehead { font-size: 13px; letter-spacing: normal; text-transform: none; color: var(--fg-ink); }
+.fg__side > .fg__sidehead, .fg__centrehead { font-size: 13px; letter-spacing: normal; text-transform: none; color: var(--fg-ink); }
 .fg__sidehead span { margin-left: 4px; font-variant-numeric: tabular-nums; }
 .fg__side > .fg__sidehead span { color: var(--fg-muted); }
+.fg__centrehead { margin-bottom: -16px; }
 .fg__subjects { position: relative; display: flex; flex-direction: column; align-items: stretch; gap: 22px; flex: none; }
 .fg__subjects--many { box-sizing: border-box; padding: 8px 10px 12px; border: 1.5px solid color-mix(in srgb, var(--fg-accent) 55%, transparent); border-radius: 12px; }
 .fg__subjects--many .fg__sidehead { margin-bottom: -12px; color: var(--fg-ink); }
