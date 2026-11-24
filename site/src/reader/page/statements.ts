@@ -3,7 +3,7 @@
 // scrolls or moves the pointer: no React state, and nothing that invalidates layout.
 
 import type { PreparedPart } from "../engine";
-import { phraseHint, type TieModel } from "../ties";
+import type { TieModel } from "../ties";
 
 export type Light = "on" | "point" | "pin" | "follow";
 
@@ -179,8 +179,7 @@ export class Statements {
   }
 
   /**
-   * A part's HTML with each phrase's topic tone and pointer hint already in its markup, so placing it
-   * on the page writes nothing afterwards (adopt then finds every attribute in place).
+   * Give each phrase its topic colour before placing the part on the page.
    */
   decorate(html: string): string {
     if (typeof document === "undefined" || !html.includes("data-t=")) return html;
@@ -191,7 +190,6 @@ export class Statements {
       const tie = t === undefined ? undefined : this.model.index.ties[t];
       if (tie?.tone === undefined) continue;
       el.dataset.tone = String(tie.tone);
-      el.title = phraseHint(this.model, t!);
     }
     return box.innerHTML;
   }
@@ -213,17 +211,15 @@ export class Statements {
     const found = Array.from(section.querySelectorAll<HTMLElement>(":scope > .part__text [data-t]")).map((el) => ({ el, segment: Number(el.dataset.t) }));
     if (!found.length) return;
     this.marks.set(part, found);
-    // A phrase carries its topic's colour, and says its topic and its Lean under the pointer.
+    // A phrase carries its topic's colour.
     for (const { el, segment } of found) {
       const t = this.model.index.segments[segment]?.[2][0];
       const tie = t === undefined ? undefined : this.model.index.ties[t];
       if (tie?.tone === undefined) continue;
-      // Written only when they change: an identical write still records a mutation and invalidates
+      // Write the tone only when it changes. An identical write still records a mutation and invalidates
       // style, and a part is adopted again each time its text is placed.
       const tone = String(tie.tone);
       if (el.dataset.tone !== tone) el.dataset.tone = tone;
-      const hint = phraseHint(this.model, t!);
-      if (el.title !== hint) el.title = hint;
       if (this.decl && !el.hasAttribute("data-decl") && tie.rows?.some((row) => row.name === this.decl)) el.setAttribute("data-decl", "");
     }
     if (this.near) this.near.observe(section);
