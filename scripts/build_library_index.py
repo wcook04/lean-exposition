@@ -258,19 +258,22 @@ SECTIONS = [
      "Accounts by Will Cook, written with AI, of results whose proofs and Lean are other people’s. Where the "
      "original paper or the formalizer’s own guide is in the library, it is the first choice on the entry."),
     ("own", "Will Cook’s own research",
-     "Written with AI assistance. No independent mathematician has reviewed it."),
+     "Eight problems posed by Paul Erdős, researched with AI agents and written up through the funnel in the video "
+     "above: a short paper and a longer record for each, with Lean proofs of selected statements. Erdős #257 also "
+     "has a reader here. The answer for #1041 refutes one formal statement; the other seven problems remain open. "
+     "No independent mathematician has reviewed these papers."),
 ]
 
 # Short names for the section links under the introduction.
 JUMP = {"lead": "Lead papers", "research": "Other researchers", "companion": "Explanations", "own": "Will Cook’s research"}
 
-# Who produced or supported the result. The colour only repeats the label printed on the entry.
+# Who the credit goes to. The colour only repeats the label printed on the entry.
 PROVENANCE = [
-    ("anthropic", "Supported by Anthropic"),
+    ("anthropic", "Anthropic"),
     ("openai", "OpenAI"),
     ("google", "Google DeepMind"),
-    ("academic", "Academic or open-source"),
-    ("community", "Community work"),
+    ("academic", "Academic authors or open-source projects"),
+    ("community", "The Lean community"),
     ("will", "Will Cook"),
 ]
 
@@ -334,29 +337,18 @@ def entry_html(entry: dict) -> str:
             f'<div class="entry__meta">{credits_html}{facts_html}{checks}{where}</div></li>')
 
 
-def specimen_html(spec: dict | None) -> str:
-    """One real linked phrase of a paper beside the Lean declarations it opens, as the reader shows them."""
-    if not spec:
+def film_html(film: dict | None) -> str:
+    """The funnel video in the family's film-slot markup (styles/family.css): the still and the title
+    open the same YouTube address, and only the title is in the Tab order."""
+    if not film:
         return ""
-    decls = "".join(
-        f'<li><p class="specimen__plain">{esc(row.get("plain", ""))}</p>'
-        f'<p class="specimen__name"><code translate="no">{esc(row["name"])}</code></p></li>' for row in spec["lean"])
-    first = spec["lean"][0]
-    compare = ""
-    if first.get("fidelity_note") and "$" not in first["fidelity_note"]:
-        compare = (f'<p class="specimen__compare"><span class="specimen__label">How the first one compares, written with AI</span>'
-                   f'{esc(first["fidelity_note"])}</p>')
-    return f"""<figure class="specimen" aria-labelledby="specimen-cap">
-<div class="specimen__pane specimen__pane--paper">
-<p class="specimen__label">The paper · {esc(spec["paper_title"])}</p>
-<p class="specimen__text"><a class="specimen__phrase" href="{esc(spec["href"])}">{esc(spec["text"])}</a></p>
-</div>
-<div class="specimen__pane specimen__pane--lean">
-<p class="specimen__label">The Lean this sentence opens</p>
-<ul class="specimen__decls">{decls}</ul>
-{compare}
-</div>
-<figcaption id="specimen-cap"><a href="{esc(spec["href"])}">Open this sentence in {esc(spec["paper_name"])} <span aria-hidden="true">→</span></a></figcaption>
+    m, sec = divmod(film["seconds"], 60)
+    spoken = " ".join(x for x in (f"{m} minute{'s' if m != 1 else ''}" if m else "", f"{sec} second{'s' if sec != 1 else ''}" if sec else "") if x)
+    open_ = f'href="{esc(film["href"])}" target="_blank" rel="noopener noreferrer"'
+    return f"""<figure class="film-slot intro__film">
+<a class="film-slot__frame" {open_} aria-hidden="true" tabindex="-1"><img src="{BASE}_index/films/{film["still"]}-640.webp" srcset="{BASE}_index/films/{film["still"]}-640.webp 640w, {BASE}_index/films/{film["still"]}-1280.webp 1280w" sizes="(max-width: 64em) 100vw, 560px" alt="" width="1280" height="720" decoding="async" fetchpriority="high"><span class="film-slot__play"></span><span class="film-slot__time">{m}:{sec:02d}</span></a>
+<figcaption class="film-slot__caption"><p class="intro__film-kicker">{esc(film["kicker"])}</p><p class="film-slot__title"><a {open_}>{esc(film["title"])}<span class="sr-only">, video on YouTube, {spoken}</span></a></p>
+<p class="intro__film-note">In the video Will Cook follows one Lean proof into a long record, a short paper, an exposition and a video, all written with AI. His own research and the companion explanations in this library were written up this way.</p></figcaption>
 </figure>"""
 
 
@@ -384,7 +376,7 @@ def key_html() -> str:
     prov = "".join(f'<li class="prov-{k}"><span class="tag__dot" aria-hidden="true"></span>{esc(label)}</li>' for k, label in PROVENANCE)
     versions = "".join(f'<div class="key__row"><dt>{esc(label)}</dt><dd>{esc(text)}</dd></div>' for label, text in VERSION_KEY)
     return (f'<section class="key" aria-labelledby="key-title"><h2 id="key-title" class="key__title">How each entry is labelled</h2>'
-            f'<div class="key__cols"><div><p class="key__head">Who produced or supported the result</p><ul class="key__prov">{prov}</ul></div>'
+            f'<div class="key__cols"><div><p class="key__head">Who the credit goes to</p><ul class="key__prov">{prov}</ul></div>'
             f'<div><p class="key__head">What you can open</p><dl class="key__versions">{versions}</dl></div></div></section>')
 
 
@@ -449,6 +441,7 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 {notice}
 <h1 id="library-title">Mathematics papers, read beside their Lean</h1>
 <p class="lede">Each phrase of a paper that a Lean declaration states is underlined. Click it and the Lean opens beside the text, with a plain title, a comparison of what the paper and the Lean each say, and a reading note.</p>
+<p class="affiliation">Will Cook is not affiliated with Anthropic, OpenAI, Google DeepMind or any other lab. Each paper’s credit goes to its authors and to the organisations they name; the labels below repeat that credit.</p>
 {jump_html(entries)}
 <form class="search" role="search" action="{BASE}" onsubmit="return false">
 <label class="search__label" for="q">Search every paper</label>
@@ -462,13 +455,13 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 <div id="search-results" class="results" hidden></div>
 </form>
 </div>
-{specimen_html(spec)}
+{film_html(spec)}
 </section>
 {sections_html(entries)}
 <p class="caveat">The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI. The authors and other mathematicians have not reviewed them.</p>
 </main>
 <footer class="foot">
-<p>Hosted by <a href="https://wcook04.github.io/">Will Cook</a>. Each paper is its authors’ work and is credited in full on its own page. The reader is <a href="https://github.com/wcook04/lean-exposition">lean-exposition</a>, under the MIT licence.</p>
+<p>Hosted by <a href="https://wcook04.github.io/">Will Cook</a>, who is not affiliated with any of the labs named here. Each paper is its authors’ work and is credited in full on its own page. The reader is <a href="https://github.com/wcook04/lean-exposition">lean-exposition</a>, under the MIT licence.</p>
 </footer>
 <script type="application/json" id="library-data">{data}</script>
 </body>
@@ -523,6 +516,9 @@ def write_assets(out: Path) -> str:
     (target / "index.js").write_text(js)
     for name in ("plectis.svg", "favicon.svg"):
         shutil.copyfile(ROOT / "site" / "public" / name, target / name)
+    (target / "films").mkdir(exist_ok=True)
+    for still in (ROOT / "site" / "public" / "films").glob("short-funnel-*.webp"):
+        shutil.copyfile(still, target / "films" / still.name)
     import hashlib
     return hashlib.sha256((css + js).encode()).hexdigest()[:10]
 
@@ -530,27 +526,17 @@ def write_assets(out: Path) -> str:
 EDITORIAL = ("tier", "kind", "provenance", "provenance_label", "credits", "versions", "where")
 
 
-def specimen(out: Path, inst: dict, want: dict) -> dict | None:
-    """The first screen's example: one linked phrase of a published paper (its words as plain text), the
-    Lean declarations its record names with their plain titles, and the first one's AI comparison."""
-    paper = inst["id"]
-    root = out / paper / "edition"
-    index = edition_files(out, paper)
-    slot = want.get("slot", "short")
-    doc = index.get("documents", {}).get(slot)
-    ties_path = root / "ties" / f"{slot}.json"
-    core_path = root / "alignment" / "core.json"
-    if not doc or not ties_path.is_file() or not core_path.is_file():
+def family_film(want: dict) -> dict | None:
+    """The video the first screen shows, from the family registry (site/src/app/family.json), with its
+    stills copied from site/public/films."""
+    if not want:
         return None
-    tie = next((t for t in json.loads(ties_path.read_text()).get("ties", []) if t.get("phrase") == want["phrase"]), None)
-    at = re.match(r"b(\d+)-(\d+)$", (tie or {}).get("at", ""))
-    if not tie or not at:
+    family = json.loads((ROOT / "site" / "src" / "app" / "family.json").read_text())
+    film = next((f for f in family["films"] if f.get("id") == want["id"]), None)
+    if not film or not film.get("youtube") or not film.get("still"):
         return None
-    text = plain_tex((root / doc).read_bytes()[int(at[1]):int(at[2])].decode("utf8", "replace"))
-    record = json.loads(core_path.read_text()).get("records", {}).get(tie.get("record", ""), {})
-    lean = record.get("lean") or [{"name": tie["name"], "plain": tie.get("plain", ""), "relation": tie.get("relation", "")}]
-    return {"text": text, "href": f"{BASE}{paper}/@{want['phrase']}", "lean": lean, "short": record.get("short", ""),
-            "paper_title": inst["title"], "paper_name": want.get("name", "the paper")}
+    return {"title": film["title"], "href": film["youtube"], "seconds": film.get("duration_seconds") or film.get("cut_seconds"),
+            "still": film["still"].split("/")[-1], "kicker": want.get("kicker", "")}
 
 
 def main() -> None:
@@ -571,8 +557,7 @@ def main() -> None:
         mounts.append(inst["id"])
     listing_doc = json.loads((ASSETS / "papers.json").read_text())
     listing = listing_doc["papers"]
-    listing_spec = listing_doc.get("specimen") or {}
-    spec = None
+    spec = family_film(listing_doc.get("film") or {})
     # A standalone artifact keeps its source and build outside this repository.
     # It participates in the shelf when its verified export is already present.
     for item in listing:
@@ -625,8 +610,6 @@ def main() -> None:
             }
             # The index's own editorial fields: section, labels, credits by role and the versions offered.
             entry.update({k: item[k] for k in EDITORIAL if k in item})
-            if listing_spec.get("paper") == paper and search:
-                spec = specimen(out, inst, listing_spec)
             if search:
                 (out / "_index" / "search" / f"{paper}.json").write_text(json.dumps(search, ensure_ascii=False, separators=(",", ":")))
                 shards[paper] = f"{BASE}_index/search/{paper}.json"

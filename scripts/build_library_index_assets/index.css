@@ -429,97 +429,69 @@ mark {
   border-bottom-color: var(--ink);
 }
 
-/* A linked phrase beside the Lean it opens: the reader's own amber selection, then the Lean well. */
-.specimen {
+/* The funnel video: the family's film slot (styles/family.css), at the width of the column. */
+.intro__film {
   margin: 0;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-l);
-  background: var(--surface);
-  box-shadow: var(--shadow-sheet);
-  overflow: hidden;
 }
 
-.specimen__pane {
-  padding: var(--space-5) var(--space-5) var(--space-4);
-}
-
-.specimen__pane--lean {
-  border-top: 1px solid var(--rule);
-  background: var(--sunk);
-}
-
-.specimen__label {
+.intro__film .film-slot__frame {
   display: block;
-  margin-bottom: var(--space-2);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  box-shadow: var(--shadow-sheet);
+}
+
+.intro__film img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.intro__film .film-slot__caption {
+  margin-top: var(--space-3);
+}
+
+.intro__film-kicker {
   color: var(--ink-3);
-  font-family: var(--font-sans);
   font-size: var(--fs-sm);
   font-weight: 600;
 }
 
-.specimen__text {
+.intro__film .film-slot__title {
+  margin-top: 2px;
   font-family: var(--font-serif);
-  font-size: var(--fs-read);
-  line-height: var(--lh-read);
+  font-size: 1.25rem;
+  line-height: 1.3;
 }
 
-.specimen__phrase {
+.intro__film .film-slot__title a {
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--lit-line);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.22em;
-  background: var(--pin-wash);
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
 }
 
-.specimen__decls {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.specimen__decls li + li {
-  margin-top: var(--space-3);
-}
-
-.specimen__plain {
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  line-height: 1.4;
-}
-
-.specimen__name code {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  color: var(--ink-2);
-  overflow-wrap: anywhere;
-}
-
-.specimen__compare {
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
+.intro__film-note {
+  margin-top: var(--space-2);
   color: var(--ink-2);
   font-size: var(--fs-ui);
   line-height: 1.5;
 }
 
-.specimen figcaption {
-  padding: var(--space-3) var(--space-5);
-  border-top: 1px solid var(--rule);
+.affiliation {
+  max-width: 44rem;
+  margin-top: var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--rule-strong);
+  color: var(--ink-2);
   font-size: var(--fs-ui);
-  font-weight: 600;
+  line-height: 1.5;
 }
 
-.specimen figcaption a {
-  color: var(--lit);
-  text-decoration: none;
-}
-
-.specimen figcaption a:hover {
-  text-decoration: underline;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* ------------------------------------------------------------------ the label key */
@@ -644,9 +616,8 @@ mark {
   .shelf__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .shelf--own .shelf__list {
-    grid-template-columns: minmax(0, 1fr);
-    max-width: 52rem;
+  .shelf--own .shelf__list > :first-child {
+    grid-column: 1 / -1;
   }
 }
 

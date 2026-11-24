@@ -1,12 +1,6 @@
 {
  "schema": "library-index-papers/2",
  "meaning": "The library index's list of papers, in the order the page shows them. Order: the significance of the result, with work by other researchers before Will Cook's companion writing, and his own research last. tier places an entry in a section (lead, research, companion, own); kind names what the reader opens; provenance and provenance_label name who produced or supported the result (the colour is secondary to the label); credits give each role separately; versions are the direct choices shown on the entry, the first being the main one. An entry with \"library\": true is built here from instances/<id>/ (or, with \"artifact\": true, exported into the library by its own repository) and is listed only once published; its title, authors and counts come from its instance and edition. Any other entry keeps its current site's fields, read from the files named in counted_from.",
- "specimen": {
-  "paper": "navier-stokes",
-  "phrase": "s1-headline",
-  "slot": "short",
-  "name": "the Navier–Stokes paper"
- },
  "papers": [
   {
    "id": "navier-stokes",
@@ -15,15 +9,15 @@
    "tier": "lead",
    "kind": "Authors’ paper · Adapted edition",
    "provenance": "anthropic",
-   "provenance_label": "Supported by Anthropic",
+   "provenance_label": "Credit: Anthropic",
    "credits": [
     [
      "Paper and Lean",
      "Levent Alpöge and Tristan Buckmaster"
     ],
     [
-     "Support",
-     "Their paper thanks Anthropic for supporting the collaboration and says they used Claude models throughout the work."
+     "Credited in the paper",
+     "Anthropic. The authors thank Anthropic and say they used Claude models throughout the work."
     ],
     [
      "Adapted edition",
@@ -54,15 +48,15 @@
    "tier": "lead",
    "kind": "Authors’ paper · Adapted edition",
    "provenance": "anthropic",
-   "provenance_label": "Supported by Anthropic",
+   "provenance_label": "Credit: Anthropic",
    "credits": [
     [
      "Paper and Lean",
      "Levent Alpöge, Tristan Buckmaster and Matei P. Coiculescu"
     ],
     [
-     "Support",
-     "Their paper thanks Anthropic for supporting the collaboration."
+     "Credited in the paper",
+     "Anthropic. The authors thank Anthropic for the collaboration."
     ],
     [
      "Adapted edition",
@@ -94,7 +88,7 @@
    "tier": "research",
    "kind": "Community account · Community Lean",
    "provenance": "community",
-   "provenance_label": "Community work",
+   "provenance_label": "Credit: the Lean community",
    "credits": [
     [
      "Account",
@@ -125,7 +119,7 @@
    "tier": "research",
    "kind": "Authors’ paper · Independent Lean",
    "provenance": "academic",
-   "provenance_label": "Academic",
+   "provenance_label": "Credit: the authors",
    "credits": [
     [
      "Paper",
@@ -161,7 +155,7 @@
    "tier": "research",
    "kind": "Authors’ paper",
    "provenance": "google",
-   "provenance_label": "Google DeepMind and Google Quantum AI",
+   "provenance_label": "Credit: Google DeepMind and Google Quantum AI",
    "credits": [
     [
      "Paper and Lean",
@@ -206,7 +200,7 @@
    "tier": "research",
    "kind": "Authors’ paper",
    "provenance": "academic",
-   "provenance_label": "Academic",
+   "provenance_label": "Credit: the authors",
    "credits": [
     [
      "Paper and Lean",
@@ -249,7 +243,7 @@
    "tier": "research",
    "kind": "Standard · Independent Lean",
    "provenance": "academic",
-   "provenance_label": "Academic",
+   "provenance_label": "Credit: the authors",
    "credits": [
     [
      "Standard",
@@ -291,7 +285,7 @@
    "tier": "research",
    "kind": "API map",
    "provenance": "academic",
-   "provenance_label": "Open-source project",
+   "provenance_label": "Credit: the Physlib contributors",
    "credits": [
     [
      "API map and Lean",
@@ -331,7 +325,7 @@
    "tier": "companion",
    "kind": "Formalizer’s guide · Companion explanations",
    "provenance": "academic",
-   "provenance_label": "Academic",
+   "provenance_label": "Credit: the authors",
    "credits": [
     [
      "Proof",
@@ -373,7 +367,7 @@
    "tier": "companion",
    "kind": "Original paper · Companion reconstruction · New Lean",
    "provenance": "openai",
-   "provenance_label": "OpenAI",
+   "provenance_label": "Credit: OpenAI",
    "credits": [
     [
      "Theorem and proof",
@@ -411,7 +405,7 @@
    "tier": "companion",
    "kind": "Companion papers on an existing Lean proof",
    "provenance": "openai",
-   "provenance_label": "OpenAI",
+   "provenance_label": "Credit: OpenAI",
    "credits": [
     [
      "Proof and Lean",
@@ -464,7 +458,7 @@
    "tier": "companion",
    "kind": "Explanation of an existing Lean result",
    "provenance": "academic",
-   "provenance_label": "Academic",
+   "provenance_label": "Credit: the authors",
    "credits": [
     [
      "Lean",
@@ -491,7 +485,7 @@
    "tier": "own",
    "kind": "Original research",
    "provenance": "will",
-   "provenance_label": "Will Cook",
+   "provenance_label": "Will Cook’s research",
    "credits": [
     [
      "Paper, record, exposition and Lean",
@@ -524,6 +518,342 @@
      "href": "/library/erdos-257/pdf/short-paper.pdf"
     }
    ]
+  },
+  {
+   "id": "erdos-1041",
+   "title": "Erdős #1041: Lemniscates and Newton flow",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1041/erdos-1041-lemniscate-newton-flow.pdf",
+   "sentence": "Using ani’s degree-seven polynomial, Lean refutes the exact path-length statement of #1041 in Google DeepMind’s Formal Conjectures, and also checks positive trinomial and sharp collinear families. Review of how this matches Erdős’s 1958 wording is still pending.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #1041 on erdosproblems.com"
+    ],
+    [
+     "Counterexample",
+     "ani, a contributor to erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1041/erdos-1041-lemniscate-newton-flow.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1041/erdos1041-lemniscate-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_1041.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-243",
+   "title": "Erdős #243: Cubic-rate irrationality and reciprocal tails",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/243/erdos-243-reciprocal-tail-rigidity.pdf",
+   "sentence": "Proves that a strictly increasing integer sequence with a_n²/a_(n+1) = 1 + 3/n + o(n⁻³) has an irrational sum of reciprocals, and the same for every nonintegral regular rate above one, with Lean checks. The unrestricted Sylvester-tail question remains open.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #243 on erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/243/erdos-243-reciprocal-tail-rigidity.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/243/erdos243-reciprocal-tail-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_243.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-249",
+   "title": "Erdős #249: Binary totient series",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/249/erdos-249-binary-totient-series.pdf",
+   "sentence": "Classifies the base-two totient-residue series for every positive modulus, checked in Lean, and gives the exact rank kᵉ+1 of the totient kernel at every base. The original series with unreduced totients remains open.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #249 on erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/249/erdos-249-binary-totient-series.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/249/erdos249-totient-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_249.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-1049",
+   "title": "Erdős #1049: Rational-base Lambert series",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1049/erdos-1049-rational-base-lambert.pdf",
+   "sentence": "Proves irrationality in Zudilin’s rational-base contour region, with exact Hankel orders, checked in Lean. Base 3/2 and the claim for every rational base remain open.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #1049 on erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1049/erdos-1049-rational-base-lambert.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1049/erdos1049-rational-base-lambert-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_1049.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-269",
+   "title": "Erdős #269: Three-prime running LCM",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/269/erdos-269-three-prime-running-lcm.pdf",
+   "sentence": "Proves both two-prime running-LCM sums transcendental by an argument that uses a cited Hecke–Mahler theorem; Lean checks the formulas and the conditional transfer. The three-prime irrationality question remains open.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #269 on erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/269/erdos-269-three-prime-running-lcm.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/269/erdos269-running-lcm-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_269.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-68",
+   "title": "Erdős #68: Factorial-denominator irrationality",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/68/erdos-68-factorial-denominator-irrationality.pdf",
+   "sentence": "For S = ∑ 1/(n! − 1), shows that a denominator of S as a fraction would not divide 299999! and would exceed 10¹²⁰³⁸, and proves a 3/2 growth exponent for the common denominator in Lean. Irrationality itself is still unproved.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #68 on erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/68/erdos-68-factorial-denominator-irrationality.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/68/erdos68-factorial-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_68.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-251",
+   "title": "Erdős #251: Prime-gap dyadic series",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/251/erdos-251-prime-gap-dyadic-series.pdf",
+   "sentence": "Gives a synthetic prime-gap countermodel checked in Lean and a sparse-perturbation obstruction, which rule out some methods of proof. Neither concerns the actual prime gaps, and the question remains open.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Short paper · Long record",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Papers and Lean",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Question",
+     "Paul Erdős, problem #251 on erdosproblems.com"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Short paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/251/erdos-251-prime-gap-dyadic-series.pdf"
+    },
+    {
+     "label": "Long record",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/251/erdos251-prime-gap-reasoning-surface.pdf"
+    },
+    {
+     "label": "On the maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/maths/problems/erdos_251.html"
+    }
+   ]
+  },
+  {
+   "id": "erdos-synthesis",
+   "title": "Reading eight Erdős problems together",
+   "authors": [
+    "Will Cook"
+   ],
+   "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/synthesis/optimal-sparse-perturbations.pdf",
+   "sentence": "Connects the eight problems above. Its main theorems are ordinary proofs, and Lean checks the ingredients it names.",
+   "tier": "own",
+   "group": "erdos",
+   "kind": "Synthesis paper",
+   "provenance": "will",
+   "provenance_label": "Will Cook’s research",
+   "credits": [
+    [
+     "Paper",
+     "Will Cook, with AI agents"
+    ],
+    [
+     "Review",
+     "Not peer reviewed"
+    ]
+   ],
+   "versions": [
+    {
+     "label": "Paper",
+     "href": "https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/synthesis/optimal-sparse-perturbations.pdf"
+    },
+    {
+     "label": "The maths map",
+     "href": "https://wcook04.github.io/practical-formal-verification/map/#mathematics"
+    }
+   ]
   }
- ]
+ ],
+ "film": {
+  "id": "short-funnel",
+  "kicker": "How Will Cook’s own papers here are made"
+ }
 }
