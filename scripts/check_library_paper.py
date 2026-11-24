@@ -450,6 +450,13 @@ def readable_card(card, notes_optional=False):
 def check_passage_layout(page, base, tag, check):
     """Check the default pair first, then exercise both restored tabs with the subject held."""
     pane = page.locator(".map-pane")
+    annotation = pane.locator(".passage-annotation__text").first
+    if annotation.count():
+        sizes = annotation.evaluate("""note => {
+            const prose = document.querySelector('.paper .part__text');
+            return prose && [getComputedStyle(note).fontSize, getComputedStyle(prose).fontSize];
+        }""")
+        check(f"{tag} annotation matches paper type size", bool(sizes) and sizes[0] == sizes[1], str(sizes))
     check(f"{tag} phrase opens Lean", pane.get_attribute("data-view") == "lean", page.url)
     check(f"{tag} default has no tabs", not pane.locator(".mode-toggle").count(), page.url)
     subject = pane.locator(".lean-page__title").first.inner_text()

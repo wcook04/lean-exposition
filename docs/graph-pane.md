@@ -28,7 +28,7 @@ Five consequences follow for the design.
 
 ## The three views
 
-When a linked passage has both Lean and recorded neighbours, the reader opens the Lean statement and passage annotation above the local dependency graph. The upper section takes the height its content needs. The graph plans its cards with at least two fifths of the pane, then gives space a shallow drawing can spare back to the Lean statement and annotation. The AI-written credit follows the annotation, in the Sources and details summary when shown.
+When a linked passage has both Lean and recorded neighbours, the reader opens the Lean statement and passage annotation above the local dependency graph. The annotation uses the paper’s reading size. A shallow drawing leaves more room for a long annotation. The graph fills the remaining pane, with its cards, labels and arrows centred in the available width and height. The AI-written credit follows the annotation, in the Sources and details summary when shown.
 
 **Minimise graph** switches to separate Lean and Graph tabs. In that layout the Lean tab gives the statement the full pane and the Graph tab shows the drawing with its details dock. **Combine views** restores the automatic layout. Readers with a separate **Passage** view use it for the account of the paragraph across papers and the comparison of statement and Lean.
 

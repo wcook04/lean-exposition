@@ -77,7 +77,7 @@ PAIRED_GEOMETRY = """() => {
 
 
 def paired_geometry(page: Page) -> tuple[bool, dict]:
-    """The graph receives the height of its drawing and Lean uses the recovered space."""
+    """Lean has enough room for its content and the graph fills the remaining height."""
     page.wait_for_function("""() => document.querySelector('.map-pane__paired')
                           ?.style.getPropertyValue('--paired-graph-paint')""", timeout=15000)
     drawing = page.locator(".map-pane__paired .map-pane__local .fg").first
@@ -104,12 +104,12 @@ def paired_geometry(page: Page) -> tuple[bool, dict]:
     preferred_graph = fitted_height + graph["height"] - canvas["height"]
     minimum_graph = min(0.4 * pane["height"], preferred_graph)
     expected_lean = min(layout["intrinsic"], pane["height"] - minimum_graph)
-    expected_graph = min(pane["height"] - expected_lean, preferred_graph)
+    expected_graph = pane["height"] - expected_lean
     layout.update(expected_lean=expected_lean, expected_graph=expected_graph)
     fits = (abs(lean["height"] - expected_lean) <= 6 and abs(graph["height"] - expected_graph) <= 6
             and canvas["height"] > 0 and canvas["width"] > 0
             and abs(lean["top"] - pane["top"]) <= 2 and abs(lean["bottom"] - graph["top"]) <= 2
-            and graph["bottom"] <= pane["bottom"] + 2
+            and abs(graph["bottom"] - pane["bottom"]) <= 2
             and all(abs(row[edge] - pane[edge]) <= 2 for row in (lean, graph) for edge in ("left", "right"))
             and graph["left"] <= canvas["left"] < canvas["right"] <= graph["right"] + 2
             and graph["top"] <= canvas["top"] < canvas["bottom"] <= graph["bottom"] + 2)
