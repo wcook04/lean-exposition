@@ -24,7 +24,7 @@ import { arrivedBy, entryKey, namePlace, onLeave, readEntry, writeEntry } from "
 import { sectionLabel } from "../map/TheoremPlate";
 import { paperAlignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
-import { loadDocument, useDocument, type LoadedDocument } from "./documents";
+import { adaptedDisclosureHtml, loadDocument, useDocument, type LoadedDocument } from "./documents";
 import { PaperBody, type BodyHandle, type Links } from "./page/PaperBody";
 import { Inspector, type InspectorTarget } from "./page/Inspector";
 import { Chooser } from "./page/Chooser";
@@ -270,6 +270,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
+  const pdfDisclosure = pdfOn ? adaptedDisclosureHtml(stage) : null;
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
   // From 1280px the paper moves left and the argument map stands beside it, the
@@ -2083,6 +2084,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {notice}
           </p>
         )}
+        {pdfOn && pdfDisclosure && <p className="account-line" dangerouslySetInnerHTML={{ __html: pdfDisclosure }} />}
         {pdfOn && pdfMarks && (
           <PdfView
             url={pdfFile}

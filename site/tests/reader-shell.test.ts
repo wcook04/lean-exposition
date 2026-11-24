@@ -86,6 +86,20 @@ describe("an adapted edition's credit", () => {
     expect(html.match(/class="front-credit/g)).toHaveLength(1);
     expect(html.indexOf("front-credit")).toBeGreaterThan(html.indexOf("</ul>"));
   });
+
+  it("puts the process link inside the edition’s existing AI credit", () => {
+    const bytes = new TextEncoder().encode(EDITION);
+    const link = '<a href="https://www.youtube.com/watch?v=QIMDizV8u_I">2:12 funnel video</a>';
+    const doc = prepareDocument({
+      stage: "adapted", bytes, documentPath: paths.short, documentPaths: paths,
+      frontCredit: "An adapted edition prepared with AI assistance.",
+      frontCreditNote: "An adapted edition of",
+      frontCreditNoteSuffix: `See the ${link}.`,
+    });
+    const html = doc.renderAll().map((part) => part.html).join("");
+    expect(html).toMatch(/<p\b[^>]*><em>[^<]*prepared with AI assistance[^<]*<\/em> See the [^]*2:12 funnel video<\/a>\.<\/p>/);
+    expect(html.split(link)).toHaveLength(2);
+  });
 });
 
 describe("the short credit lines", () => {
@@ -98,9 +112,9 @@ describe("the short credit lines", () => {
     expect(frontCreditLine(credit)).toBe("Paper and Lean by A and B, from their repository a/b at abc1234. Links, titles and notes made with AI.");
   });
 
-  it("says an edition in one line", () => {
-    const credit = "An adapted edition of A and B's paper, prepared by Will Cook with AI assistance. The mathematics and the original text are the authors'. Every change is marked.";
-    expect(editionCreditLine(credit)).toBe("An adapted edition of A and B's paper, prepared by Will Cook with AI assistance; every change is marked.");
+  it("keeps the AI disclosure when it is a separate sentence", () => {
+    const credit = "Adapted from the paper by Alpöge and Buckmaster. Prepared by Will Cook with AI assistance.";
+    expect(editionCreditLine(credit)).toBe(`${credit} Changes are marked in the reader.`);
   });
 });
 

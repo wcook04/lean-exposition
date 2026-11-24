@@ -111,6 +111,8 @@ export interface PrepareInput {
    * the authors, so the credit is said once.
    */
   frontCreditNote?: string | null;
+  /** A process link to append to the edition's own credit paragraph, as HTML. */
+  frontCreditNoteSuffix?: string | null;
 }
 
 // ------------------------------------------------------------- section aids
@@ -1014,18 +1016,22 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
   // An adapted edition's own credit note takes the line at the end of its paragraph instead.
   const fold = (text: string) => text.replace(/[’‘]/g, "'").replace(/\s+/g, " ");
   const note = input.frontCredit && input.frontCreditNote ? fold(input.frontCreditNote) : null;
-  const authorsAt = input.frontCredit && !note ? raw.findIndex((text) => /<ul class="authors">[\s\S]*?<\/ul>/.test(text)) : -1;
+  const authorsAt = input.frontCredit ? raw.findIndex((text) => /<ul class="authors">[\s\S]*?<\/ul>/.test(text)) : -1;
   const noteAt = note ? raw.findIndex((text) => fold(text).includes(note)) : -1;
-  const creditPart = authorsAt >= 0 ? authorsAt : noteAt >= 0 ? noteAt : null;
+  const creditPart = noteAt >= 0 ? noteAt : authorsAt >= 0 ? authorsAt : input.frontCreditNoteSuffix ? 0 : null;
   const withCredit = (index: number, html: string) => {
     if (index !== creditPart || !input.frontCredit) return html;
-    if (!note) return html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n<p class="front-credit">${input.frontCredit}</p>`);
+    if (!note || noteAt < 0) {
+      const credit = `<p class="front-credit">${input.frontCredit}</p>`;
+      return authorsAt >= 0 ? html.replace(/<ul class="authors">[\s\S]*?<\/ul>/, (list) => `${list}\n${credit}`) : `${html}\n${credit}`;
+    }
     const at = fold(html).indexOf(note) >= 0 ? html.search(new RegExp(note.split(" ").map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+").replace(/'/g, "['’‘]"))) : -1;
     const open = at >= 0 ? html.lastIndexOf("<p", at) : -1;
     const close = at >= 0 ? html.indexOf("</p>", at) : -1;
     // The edition's long note gives way to its one short line (the whole credit is in About). Where the
     // note's words cannot be found in the drawn paragraph, the line still stands, after the part.
     if (open < 0 || close < 0) return `${html}\n<p class="front-credit">${input.frontCredit}</p>`;
+    if (input.frontCreditNoteSuffix) return `${html.slice(0, close)} ${input.frontCreditNoteSuffix}${html.slice(close)}`;
     return `${html.slice(0, open)}<p class="front-credit front-credit--edition">${input.frontCredit}</p>${html.slice(close + 4)}`;
   };
 

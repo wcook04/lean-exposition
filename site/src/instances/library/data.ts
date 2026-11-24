@@ -27,6 +27,8 @@ export interface LibraryDocument {
   group_title?: string;
   order?: number;
   credit?: string;
+  /** Opening words of the credit paragraph in the adapted paper. */
+  credit_note?: string;
   /** An adapted edition of another document (`of`, its id): a companion page with its own credit, a
    *  change map and its PDF with changes marked; read only when `published` (or in a local preview). */
   adapted?: boolean;

@@ -60,10 +60,9 @@ export function frontCreditLine(credit: string): string {
   return clause ? `${clause}. Links, titles and notes made with AI.` : "Links, titles and notes made with AI.";
 }
 
-/** An adapted edition's line: "An adapted edition of …'s paper, prepared by … with AI assistance; every change is marked." */
+/** Keep the full credit, including AI assistance if it is in a separate sentence. */
 export function editionCreditLine(credit: string): string {
-  const first = firstSentence(credit).replace(/[.!?]$/, "").trim();
-  return `${first}; every change is marked.`;
+  return `${sentence(credit.trim())} Changes are marked in the reader.`;
 }
 // The paper itself is the authors': its header carries their full credit line, once. A companion page
 // (an account or a guide) is about it, written for this reader with AI, and names the authors and their
@@ -189,7 +188,7 @@ const site = {
     [MAIN.slot]: frontCreditLine(CREDIT),
     ...(ADAPTED?.credit ? { [ADAPTED.slot]: editionCreditLine(ADAPTED.credit) } : {}),
   },
-  frontCreditNote: ADAPTED?.credit ? { [ADAPTED.slot]: ADAPTED.credit.split(/\s+/).slice(0, 4).join(" ") } : undefined,
+  frontCreditNote: ADAPTED?.credit_note ? { [ADAPTED.slot]: ADAPTED.credit_note } : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
   readingAids: PAPER.reading_aids,
