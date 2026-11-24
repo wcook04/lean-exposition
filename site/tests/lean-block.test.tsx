@@ -71,6 +71,7 @@ describe("LeanBlock's props", () => {
     await act(async () => fold.click());
     expect(view.querySelector(".lean-block__proof .lean-line.is-lit")).not.toBeNull();
     expect(view.querySelectorAll(".passage-annotation")).toHaveLength(1);
+    await act(async () => fold.click());
   });
 
   it("takes several ranges, and leaves the proof folded for lines in the statement", async () => {
