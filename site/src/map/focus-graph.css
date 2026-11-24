@@ -70,7 +70,7 @@
 .fg__edge--assumes { stroke-width: 1.8; stroke-dasharray: 0.5 4.5; }
 .fg__edge--use { stroke-dasharray: 1.5 3.5; }
 .fg__edge--group { stroke: color-mix(in srgb, var(--fg-wire) 80%, transparent); }
-.fg__arrow { fill: var(--fg-wire); stroke: none; }
+.fg__arrow { fill: color-mix(in srgb, var(--fg-wire) 85%, var(--fg-ink)); stroke: none; }
 .fg__arrow--hot { fill: var(--fg-accent); }
 .fg__hotline { fill: none; stroke: var(--fg-accent); stroke-width: 2.8; stroke-linecap: round; }
 
