@@ -11,7 +11,7 @@ location.replace (so Back is not broken), and a visible link for readers without
   #/ and #/read/expert…            /library/quartic/…            (the expert companion, the main document)
   #/read/exposition…, reconstruction…   /library/quartic/<slug>/…
   ed=edition-<sha>.json            /library/quartic/editions/<sha>/#<the same route>   (the frozen snapshot)
-  #/read/original…, verification…  the newest frozen snapshot, which has OpenAI's paper and the supplement
+  #/read/original…, verification…  /library/quartic/source/#<the same route>   (OpenAI's paper and the supplement)
   #/about                          /library/quartic/about/      #/results → /library/quartic/about/#results
   st= (an OpenAI statement)        the expert companion's result restating it, /<result>/
   d=, ph=, s=, a=, v=, p=, j=, step=, e=   /lean/<d>, /@<ph>, ?l=<bytes>, #<anchor>, v, page, j and step, map/?e=
@@ -40,7 +40,6 @@ a { color: var(--link); overflow-wrap: anywhere; }
 </style>
 <script>
 var TABLE = %(table)s;
-var NEWEST = %(newest)s;
 var EDITIONS = %(editions)s;
 %(script)s
 </script>
@@ -74,7 +73,7 @@ function target(hash) {
   var read = /^\/read\/([a-z]+)$/.exec(path);
   if (!read) return notFound(route);
   var paper = read[1];
-  if (paper === "original" || paper === "verification") return L + "editions/" + NEWEST + "/#" + route;
+  if (paper === "original" || paper === "verification") return L + "source/#" + route;
   if (!(paper in TABLE.papers)) return notFound(route);
   var slug = TABLE.papers[paper];
   var main = slug === "";
@@ -132,14 +131,14 @@ def main() -> int:
     ap.add_argument("out", type=Path)
     ap.add_argument("--table", type=Path, required=True)
     ap.add_argument("--editions", type=Path, required=True)
-    ap.add_argument("--newest", required=True, help="the sha256 of the edition the old reader served last")
+    ap.add_argument("--newest", required=True, help="the SHA-256 of the frozen edition used by the current source reader")
     args = ap.parse_args()
     table = json.loads(args.table.read_text())
     editions = [row["sha256"] for row in json.loads(args.editions.read_text())["editions"]]
     if args.newest not in editions:
         raise SystemExit("the newest edition has no snapshot")
     slim = {k: table[k] for k in ("papers", "statements", "selections", "anchors")}
-    page = PAGE % {"table": json.dumps(slim, ensure_ascii=False, separators=(",", ":")), "newest": json.dumps(args.newest),
+    page = PAGE % {"table": json.dumps(slim, ensure_ascii=False, separators=(",", ":")),
                    "editions": json.dumps(editions), "script": SCRIPT}
     args.out.mkdir(parents=True, exist_ok=True)
     for name in ("index.html", "404.html"):

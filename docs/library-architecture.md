@@ -26,7 +26,7 @@ The aim is one engine that reads every paper from data. All of it sits under one
 3. **No per-paper home pages.** `/<paper>/` opens the reader at the top of the paper's text. Front matter that a landing page carried moves into the reader's header line and its About panel. That covers credit, the "what this is" line and the shelf of companion pages. The landing pages themselves become redirects: the 257 and SK front pages, the quartic front page and Proof Reader's per-paper fronts.
 4. **Proof Reader's Euler and Navier–Stokes pages.** The earlier brief said to leave them up. Item 4 of the new brief says every old address redirects deeply. I follow the new brief: each Proof Reader page becomes a redirect once its library address passes its browser check. Before that, it stays up unchanged. *Please confirm.*
 5. **Navier–Stokes before the checked typeset copy.** `/navier-stokes/` opens the digest, and its header says the authors' paper is coming. When the verified copy arrives, it becomes the paper's main document and the digest moves to `/navier-stokes/digest/`. The digest's tie ids do not change, so links made in between still resolve. No page is ever set from the PDF's text layer.
-6. **Quartic's pinned editions are kept as snapshots.** The `?ed=` links went out in emails as fixed, checkable versions. Each old edition is published once, from the quartic gh-pages history, as a static read-only snapshot at `/library/quartic/editions/<ed>/`. Each snapshot carries a one-line banner linking to the current reading. An old `?ed=` link redirects to its snapshot. No new editions are made.
+6. **Quartic's pinned editions are kept as snapshots.** The `?ed=` links went out in emails as fixed, checkable versions. Each old edition is published once, from the quartic gh-pages history, as a static read-only snapshot at `/library/quartic/editions/<ed>/`. Each snapshot carries a one-line banner linking to the current reading. An old `?ed=` link redirects to its snapshot. The current source reader at `/library/quartic/source/` uses the last snapshot’s verified data for OpenAI’s paper and the verification supplement. Its application assets are built separately by the Quartic repository. No new frozen editions are made.
 
 ## 2. URL scheme
 
@@ -177,12 +177,13 @@ A phrase card and the About panel then list "also in <paper>". Euler and Navier�
 
 **`lean-exposition-site` (SK; path routes).** The same table, with paper `sk`, main document the short paper, and pages `record` and `exposition`. The SK Pages workflow then publishes the stub. The library carries the site.
 
-**`quartic-query-lean` (gh-pages; hash routes).** Paper: `quartic`. The main document is `original`, OpenAI's paper; the pages are `expert`, `exposition`, `reconstruction` and `verification`.
+**`quartic-query-lean` (gh-pages; hash routes).** The Library opens the expert companion by default. The current source reader opens OpenAI’s original paper and its verification supplement.
 
 - `#/` → `L/quartic/`
 - `#/about` → `L/quartic/about/`
 - `#/results` → `L/quartic/about/#results`
-- `#/read/<p>?…` goes to `L/quartic/` when `p` is `original`, otherwise to `L/quartic/<p>/`. The parameters map as follows:
+- An unpinned `#/read/original?…` or `#/read/verification?…` goes to `L/quartic/source/` with the complete hash route.
+- An unpinned `#/read/expert?…` goes to `L/quartic/`. The exposition and reconstruction use `L/quartic/<p>/`. Their parameters map as follows:
   - `st=<statement>` → `/<result>/`, using the converter's statement-to-result table
   - `d=<decl>` → `/lean/<decl>`
   - `ph=<phrase>` → `/@<tie>`, with ids kept
