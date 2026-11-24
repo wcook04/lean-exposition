@@ -90,7 +90,23 @@ export function atOnPage(marks: PdfMarks, page: number): string | null {
   return best?.at ?? null;
 }
 
+const ZOOM_FACTORS = [0.75, 0.9, 1, 1.15, 1.3, 1.5, 1.75, 2];
+export const PDF_FIT = ZOOM_FACTORS.indexOf(1);
+
+export function PdfZoom({ level, onChange }: { level: number; onChange(level: number): void }) {
+  return (
+    <span className="view-toggle pdf-zoom" role="group" aria-label="PDF zoom">
+      <button type="button" aria-label="Zoom out PDF" disabled={level === 0} onClick={() => onChange(level - 1)}>−</button>
+      <button type="button" aria-label="Fit PDF to width" onClick={() => onChange(PDF_FIT)}>
+        {Math.round(ZOOM_FACTORS[level] * 100)}%
+      </button>
+      <button type="button" aria-label="Zoom in PDF" disabled={level === ZOOM_FACTORS.length - 1} onClick={() => onChange(level + 1)}>+</button>
+    </span>
+  );
+}
+
 interface Props {
+  zoomLevel: number;
   url: string;
   label?: string;
   marks: PdfMarks;
@@ -105,11 +121,29 @@ interface Props {
   onPosition(page: number, at: string | undefined, byte?: number): void;
 }
 
-export function PdfView({ url, marks, at, pinned, shownTie, page, position, label, onPick, readingLine, onPosition }: Props) {
+export function PdfView({ url, marks, at, pinned, shownTie, page, position, label, onPick, readingLine, onPosition, zoomLevel }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
-  const [width, setWidth] = useState(0);
+  const [fitWidth, setFitWidth] = useState(0);
+  const width = Math.round(fitWidth * ZOOM_FACTORS[zoomLevel]);
+  const readingPoint = useRef<{ page: number; x: number; y: number } | null>(null);
+  const previousZoom = useRef(zoomLevel);
+
+  useLayoutEffect(() => {
+    if (previousZoom.current === zoomLevel || !width) return;
+    previousZoom.current = zoomLevel;
+    const view = box.current;
+    const point = readingPoint.current;
+    const pageEl = point && view?.querySelector<HTMLElement>(`[data-page="${point.page}"]`);
+    if (!view || !point || !pageEl) return;
+    const scale = width / marks.pages[point.page - 1][0];
+    window.scrollTo({
+      top: window.scrollY + pageEl.getBoundingClientRect().top + point.y * scale - readingLine(),
+      behavior: "instant",
+    });
+    view.scrollLeft = Math.max(0, point.x * width - view.clientWidth / 2);
+  }, [zoomLevel, width, marks, readingLine]);
   const byPage = useMemo(() => {
     const out = new Map<number, [string, PdfMark][]>();
     for (const [id, mark] of Object.entries(marks.marks)) for (const p of new Set(mark.boxes.map((b) => b[0]))) out.set(p, [...(out.get(p) ?? []), [id, mark]]);
@@ -130,7 +164,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
   useEffect(() => {
     const el = box.current;
     if (!el) return;
-    const measure = () => setWidth(el.clientWidth);
+    const measure = () => setFitWidth(el.clientWidth);
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
@@ -140,7 +174,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
   // Open at the selected phrase, else at the page asked for.
   const opened = useRef(false);
   useEffect(() => {
-    if (!width || !pdf) return;
+    if (!fitWidth || !pdf) return;
     const target = !position && selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
     const pageEl = !target && page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
     const el = target ?? pageEl;
@@ -149,7 +183,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
     opened.current = true;
     const landOn = (behavior: ScrollBehavior) => {
       if (position) {
-        const y = position.y * width / marks.pages[position.page - 1][0];
+        const y = position.y * el.clientWidth / marks.pages[position.page - 1][0];
         window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top + y - readingLine(), behavior });
       } else {
         el.scrollIntoView({ block: target ? "center" : "start", behavior });
@@ -185,7 +219,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       window.removeEventListener("keydown", touch);
       window.removeEventListener("touchstart", touch);
     };
-  }, [width, pdf, selected, page, position?.page, position?.y, marks, readingLine]);
+  }, [fitWidth, pdf, selected, page, position?.page, position?.y, marks, readingLine]);
 
   // Report the page at the reading line.
   useEffect(() => {
@@ -206,7 +240,8 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       const page = lo + 1;
       const rect = pages[lo].getBoundingClientRect();
       const scale = width / marks.pages[lo][0];
-      const y = (line - rect.top) / scale;
+      const y = Math.max(0, Math.min(marks.pages[lo][1], (line - rect.top) / scale));
+      readingPoint.current = { page, y, x: (el.scrollLeft + el.clientWidth / 2) / width };
       let best: PdfMark | undefined;
       let distance = Infinity;
       for (const [, mark] of byPage.get(page) ?? []) {
@@ -225,10 +260,12 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
     read();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    el.addEventListener("scroll", schedule, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      el.removeEventListener("scroll", schedule);
     };
   }, [width, byPage, marks, readingLine, onPosition]);
 
@@ -257,6 +294,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (
     <div className="pdf-view" ref={box} aria-label={label ?? "The authors’ PDF"}>
+      <div className="pdf-view__pages" style={{ width }}>
       {width > 0 &&
         marks.pages.map(([w, h], i) => {
           const scale = width / w;
@@ -283,6 +321,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
             </section>
           );
         })}
+      </div>
     </div>
   );
 }

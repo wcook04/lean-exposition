@@ -81,7 +81,7 @@ import {
   type ReadingPosition,
   type VisitOrigin,
 } from "./page/position";
-import { PdfView, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, type PdfLocation, type PdfMarks } from "./pdf/PdfView";
+import { PDF_FIT, PdfView, PdfZoom, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, type PdfLocation, type PdfMarks } from "./pdf/PdfView";
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
@@ -270,6 +270,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
+  const [pdfZoom, setPdfZoom] = useState(PDF_FIT);
   const pdfDisclosure = pdfOn ? adaptedDisclosureHtml(stage) : null;
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
@@ -2021,6 +2022,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               )}
             </div>
           )}
+          {pdfOn && <PdfZoom level={pdfZoom} onChange={setPdfZoom} />}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {side === "adapted" && (
             <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
@@ -2087,6 +2089,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {pdfOn && pdfDisclosure && <p className="account-line" dangerouslySetInnerHTML={{ __html: pdfDisclosure }} />}
         {pdfOn && pdfMarks && (
           <PdfView
+            zoomLevel={pdfZoom}
             url={pdfFile}
             label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
