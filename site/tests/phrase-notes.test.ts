@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { isFidelity, phraseVerdict } from "../src/compare/fidelityWords";
 import { noteHtml } from "../src/reader/math";
-import { tieModel, phraseHint, isPhraseRecord, partAt } from "../src/reader/ties";
+import { tieModel, topicOf, isPhraseRecord, partAt } from "../src/reader/ties";
 import type { TieIndex } from "../src/api/lean";
 
 const EXAMPLES = resolve(__dirname, "../../examples");
@@ -84,7 +84,7 @@ describe("phrase notes", () => {
     };
     const model = tieModel(index);
     expect(isPhraseRecord(model.index.ties[0].record)).toBe(true);
-    expect(phraseHint(model, 0)).toBe("Topic: Topic one. Lean: The b. Click to open it.");
+    expect(topicOf(model, 0)?.name).toBe("Topic one");
     expect(partAt(model, 150)).toBe(1);
   });
 });
