@@ -19,7 +19,7 @@
   "TorusEuler.PaperSmoothMeanSolution": "Smooth solution of the mean problem",
   "TorusEuler.ReferenceRiccati.inv_two_mul_x_le_s": "Lower bound for the late cosine",
   "TorusEuler.ReferenceRiccati.referenceV_le_at_turning_time": "Reference peak is a global maximum",
-  "TorusEuler.ReferenceRiccati.referenceY_neg_at_three": "Reference rate negative by three",
+  "TorusEuler.ReferenceRiccati.referenceY_neg_at_three": "Reference slope is negative at 3/ε",
   "TorusEuler.ReferenceRiccati.s_le_inv_x": "Upper bound for the late cosine",
   "TorusEuler.ScheduledPhysicalStage.of_actual_readout": "Next stage uses its chosen scale",
   "TorusEuler.endpointMixedPathCoefficient_inner_eq_sobolevEnergy": "Path operator has the label energy",

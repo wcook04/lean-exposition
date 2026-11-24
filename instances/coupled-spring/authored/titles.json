@@ -2,8 +2,8 @@
  "meaning": "Short titles for the page's results that Proof Reader titles in more than six words; AI-drafted from those titles.",
  "titles": {},
  "results": {
-  "local-minimum": "A local minimum at the origin",
-  "global-minimum": "The unique global minimum",
-  "cubic-local-not-global": "A cubic term: local, not global"
+  "local-minimum": "Zero locally minimizes spring energy",
+  "global-minimum": "Zero uniquely minimizes spring energy",
+  "cubic-local-not-global": "Cubic perturbation preserves local minimality"
  }
 }

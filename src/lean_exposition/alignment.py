@@ -290,13 +290,20 @@ def _plain_names(path, known, errors):
     if not isinstance(data, dict) or data.get("schema") != NAMES_SCHEMA or not isinstance(data.get("names"), dict):
         errors.append(f"{path.name}: expected schema {NAMES_SCHEMA} and a names object")
         return {}
+    bounds = data.get("title_words", [2, 6])
+    if (not isinstance(bounds, list) or len(bounds) != 2
+            or any(type(bound) is not int for bound in bounds) or not 1 <= bounds[0] <= bounds[1]):
+        errors.append(f"{path.name}: title_words must be [minimum, maximum] with positive integers")
+        return {}
+    fewest, most = bounds
     plain = {}
     for name, title in data["names"].items():
         words = len(title.split()) if type(title) is str else 0
         if name not in known:
             errors.append(f"{path.name}:{name}: not a declaration in the Lean index")
-        elif not 2 <= words <= 6:
-            errors.append(f"{path.name}:{name}: title has {words} words, expected two to six")
+        elif not fewest <= words <= most:
+            limit = "two to six" if bounds == [2, 6] else f"{fewest} to {most}"
+            errors.append(f"{path.name}:{name}: title has {words} words, expected {limit}")
         else:
             plain[name] = title
     return dict(sorted(plain.items()))

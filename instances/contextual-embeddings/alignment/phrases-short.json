@@ -119,26 +119,26 @@
    "titles": {
     "Ctx": "Contexts as snoc lists",
     "Index": "Typed de Bruijn indices",
-    "ProxyTop": "Most recent variable",
-    "ProxyVar": "A variable with its reification",
-    "ReifyIndex": "Reification between contexts",
-    "STLC": "Simply typed first-order terms",
-    "STLCCtx": "Terms with contextual variables",
+    "ProxyTop": "Proxy for the most recently bound variable",
+    "ProxyVar": "A binder proxy with an index reifier",
+    "ReifyIndex": "Reifying a binder proxy as an index in its use context",
+    "STLC": "Simply typed terms with de Bruijn indices",
+    "STLCCtx": "Simply typed terms with contextual variables",
     "Ty": "Unit and function types",
-    "closedWorld": "Assume only two instance forms",
-    "contextualise": "Convert to contextual terms",
-    "fromIndex": "Index to packaged variable",
-    "fromVar": "Packaged variable to contextual term",
-    "indexIsoL": "Recover an original index",
-    "indexIsoR": "Recover a packaged variable",
-    "instReifyIndexRefl": "Reification without context growth",
-    "instReifyIndexSnoc": "Reification after one context extension",
-    "isoL": "Recover a first-order term",
-    "isoR": "Recover a contextual term",
-    "toCVar": "Index to contextual variable",
-    "unembed": "Convert to first-order terms",
-    "varTop": "Package the most recent variable",
-    "weakenPVar": "Extend a variable’s use context"
+    "closedWorld": "Axiom restricting index reifiers to reflexivity and context extension",
+    "contextualise": "First-order terms to contextual terms",
+    "fromIndex": "A packaged variable from a de Bruijn index",
+    "fromVar": "A contextual term from a packaged variable",
+    "indexIsoL": "Reifying the packaged variable recovers its index",
+    "indexIsoR": "Reifying and repackaging gives the original variable under the reifier axiom",
+    "instReifyIndexRefl": "The newest binder has index zero in its binding context",
+    "instReifyIndexSnoc": "Appending a binder adds one to the de Bruijn index",
+    "isoL": "Unembedding after contextualising recovers the first-order term",
+    "isoR": "Contextualising after unembedding recovers the term under the reifier axiom",
+    "toCVar": "A contextual variable term from a de Bruijn index",
+    "unembed": "Contextual terms to first-order terms",
+    "varTop": "The most recent binder packaged as a contextual variable",
+    "weakenPVar": "A packaged variable in a context extended by one binder"
    },
    "notes": {
     "Ctx": "A context is either empty or an existing context extended by one guest type at the right. The final entry therefore describes the most recently introduced variable. The same contexts parameterise both term representations and their conversions, so the round-trip equations concern terms in an unchanged context, including contexts with free variables.",
@@ -164,7 +164,11 @@
     "varTop": "The newest-variable package uses the current nonempty context as both binding context and use context. Its marker identifies the last entry, and its reification is the identity-context instance, which returns Top. This is the base case for converting an index into a package. The guest type is arbitrary, provided it is the type of that final context entry.",
     "weakenPVar": "Weakening extends the use context by one type while keeping the saved binding context and marker unchanged. It also replaces the stored reification with the extension instance, so reifying the weakened package adds one Pop. The apparently unchanged package on both sides of the paper’s equation therefore has a different use context and a correspondingly extended reification."
    },
-   "partial": true
+   "partial": true,
+   "title_words": [
+    2,
+    11
+   ]
   }
  ],
  "ties": [

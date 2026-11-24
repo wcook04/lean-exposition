@@ -96,23 +96,23 @@
     }
    ],
    "titles": {
-    "coercive_of_posdef": "Positive Hessian lower bound",
-    "coercive_of_posdef_of_contdiff": "Lower bound under smoothness",
+    "coercive_of_posdef": "A positive definite Hessian bounds squared distance from below",
+    "coercive_of_posdef_of_contdiff": "A smooth function’s positive definite Hessian is coercive",
     "coupled_spring_potential": "Local minimum at the origin",
     "couplingPotential": "The coupled spring potential",
-    "couplingPotential_analyticAt": "The potential is analytic",
-    "couplingPotential_gradient_zero": "Zero gradient at the origin",
-    "couplingPotential_hasFDerivAt": "Derivative of the potential",
-    "couplingPotential_iteratedFDeriv_two": "Second derivative of the potential",
-    "couplingPotential_posDef": "Positive Hessian at the origin",
+    "couplingPotential_analyticAt": "The spring potential is analytic everywhere",
+    "couplingPotential_gradient_zero": "The spring potential has zero gradient at the origin",
+    "couplingPotential_hasFDerivAt": "First derivative of the spring potential at any point",
+    "couplingPotential_iteratedFDeriv_two": "The spring potential has constant Hessian with diagonal 2 and off-diagonal 1",
+    "couplingPotential_posDef": "The spring potential’s Hessian is positive definite at the origin",
     "isLocalMin.of_subsingleton": "Local minimum on a singleton",
-    "isLocalMin_of_posDef_of_littleo": "Minimum from the Taylor remainder",
+    "isLocalMin_of_posDef_of_littleo": "The local minimum test with a little-o quadratic remainder",
     "iteratedFDerivQuadraticMap": "The Hessian quadratic form",
-    "iteratedFDeriv_two_swap": "The second derivative is symmetric",
-    "le_of_littleO": "Comparison from the Taylor error",
-    "littleO_of_powerseries": "Taylor error from a power series",
-    "polarBilin_iteratedFDerivQuadraticMap": "Polar form of the Hessian",
-    "second_derivative_test": "Power series minimum test",
+    "iteratedFDeriv_two_swap": "Smoothness gives symmetry of the second derivative",
+    "le_of_littleO": "A Taylor lower bound with zero linear term and bounded remainder",
+    "littleO_of_powerseries": "A power series gives a little-o quadratic remainder",
+    "polarBilin_iteratedFDerivQuadraticMap": "The polar form sums both argument orders of the second derivative",
+    "second_derivative_test": "The second derivative test for a function with a power series",
     "second_derivative_test_analyticAt": "Analytic second derivative test"
    },
    "notes": {
@@ -135,7 +135,11 @@
     "second_derivative_test": "Let $f$ be real-valued on a finite-dimensional real inner product space. The formal statement assumes a convergent power series on a ball of positive radius around $a$, zero gradient there, and a positive definite Hessian. It concludes a local minimum. Its proof obtains smoothness from the power series before applying the remainder argument.",
     "second_derivative_test_analyticAt": "Let $f$ be real-valued on a finite-dimensional real inner product space. The formal statement assumes that $f$ is analytic at $a$, that $\\nabla f(a)=0$, and that $D^2f(a)[h,h]>0$ whenever $h\\ne0$. It concludes $f(a)\\le f(x)$ throughout some neighbourhood of $a$. The conclusion does not include strictness or an explicit neighbourhood size."
    },
-   "partial": true
+   "partial": true,
+   "title_words": [
+    2,
+    12
+   ]
   }
  ],
  "ties": [
