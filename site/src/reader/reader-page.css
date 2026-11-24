@@ -846,7 +846,7 @@ html.is-reading {
   .reader-strip__formats > .view-toggle button {
     padding-inline: var(--space-2);
   }
-  .reader-strip[data-away] {
+  .reader-strip[data-away]:not([data-referencing]) {
     transform: translateY(-100%);
   }
   .reader-strip .crumbs {

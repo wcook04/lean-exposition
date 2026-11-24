@@ -25,7 +25,7 @@ import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
 import { noteHtml } from "../math";
-import { dockDecl, prefetchPhraseNotes } from "./PhraseCard";
+import { dockDecl, prefetchPhraseNotes, type PaperReferenceProps } from "./PhraseCard";
 import { loadComparator } from "../../lean/comparatorMark";
 import { loadLeanNotes } from "../../lean/noteSummaries";
 import { loadOurs } from "../../lean/ours";
@@ -55,7 +55,8 @@ export interface HeldParagraph {
   block?: HTMLElement;
 }
 
-interface Props {
+interface Props extends PaperReferenceProps {
+  onReturnToSelection?: () => void;
   stage: Stage;
   structures: Structures;
   /** What changes as the reader reads; the page re-renders here, never above. */
@@ -139,7 +140,8 @@ function usePairedGraphSize(active: boolean) {
   return { pair, layoutHeight, onPaintedHeight };
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection }: Props) {
+  const paperReferenceProps = { referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection };
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -686,11 +688,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
-          <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
+          <LeanDock {...paperReferenceProps} open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" && !unlinked ? (
         <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"}>
           <LeanDock
+            {...paperReferenceProps}
             open={leanOpen}
             ties={ties}
             stage={stage}
@@ -737,6 +740,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
             </p>
           )}
           <LeanDock
+            {...paperReferenceProps}
             open={dockOpen}
             ties={ties}
             stage={stage}
@@ -775,6 +779,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           {!(unlinked && !preview) && (
           <div className="map-pane__dock">
             <LeanDock
+            {...paperReferenceProps}
               open={dockOpen}
               ties={ties}
               stage={stage}

@@ -6,7 +6,7 @@ import type { LeanDeclaration, LeanModule, LeanModules } from "../src/api/lean";
 import type { LeanShell } from "../src/lean/data";
 import { signatureText } from "../src/lean/data";
 import { DeclView, LeanFacts } from "../src/lean/LeanBlock";
-import { PassageAnnotation } from "../src/reader/page/PhraseCard";
+import { AnnotationSources, PassageAnnotation } from "../src/reader/page/PhraseCard";
 import { buildIndex } from "../src/lean/resolve";
 import { hasLeanHost, hostLean, showInHost } from "../src/lean/walk";
 import { paperBlocks, orderStatements, statementRows } from "../src/search/corpus";
@@ -90,6 +90,50 @@ describe("LeanBlock's props", () => {
     expect(text.nextElementSibling).toBe(annotation.lastElementChild);
     expect(annotation.lastElementChild?.textContent).toBe("AI-written annotation");
     expect(annotation.querySelectorAll(".lean-block__credit")).toHaveLength(1);
+  });
+
+  it("links resolvable equation lists, numbered statements and sections in annotation prose", async () => {
+    const onPaperReference = vi.fn();
+    const first = { line: 18, page: 2, y: 0.3 };
+    const view = await render(<PassageAnnotation
+      text={"Equations (1.1), (1.2)–(1.3) use Theorem 2.4, Lemmas 3.1 and 3.2, and §4. Compare (1.1–1.3), not 1.1 or (9.9). Code `(1.1)` and math $(1.1)$."}
+      referenceTargets={{
+        "equation:1.1": first, "equation:1.2": { line: 19 }, "equation:1.3": { line: 20 },
+        "theorem:2.4": { line: 32 }, "lemma:3.1": { line: 46 }, "lemma:3.2": { line: 52 },
+        "section:4": { line: 60 },
+      }}
+      paperReferenceHref={({ line }) => `/adapted/?l=${line}`}
+      onPaperReference={onPaperReference}
+    />);
+    const links = [...view.querySelectorAll<HTMLAnchorElement>("a")];
+    expect(links.map((link) => link.textContent)).toEqual([
+      "Equations (1.1)", "(1.2)", "(1.3)", "Theorem 2.4", "Lemmas 3.1", "3.2", "§4", "1.1", "1.3",
+    ]);
+    expect(links[0].getAttribute("href")).toBe("/adapted/?l=18");
+    expect(view.querySelector("code a, .katex a")).toBeNull();
+    const click = new MouseEvent("click", { bubbles: true, cancelable: true });
+    await act(async () => void links[0].dispatchEvent(click));
+    expect(click.defaultPrevented).toBe(true);
+    expect(onPaperReference).toHaveBeenCalledExactlyOnceWith(first);
+
+    links[0].href = "#equation";
+    const modifiedClick = new MouseEvent("click", { bubbles: true, cancelable: true, metaKey: true });
+    await act(async () => void links[0].dispatchEvent(modifiedClick));
+    expect(modifiedClick.defaultPrevented).toBe(false);
+    expect(onPaperReference).toHaveBeenCalledTimes(1);
+  });
+
+  it("links the local source locator and preserves an external citation's own destination", async () => {
+    const view = await render(<AnnotationSources
+      explanation={{ text: "", citations: [
+        { ref: "paper", title: "This paper", where: "Theorem 2.4" },
+        { ref: "external", title: "Other paper", where: "Theorem 2.4", url: "https://example.com/" },
+      ] }}
+      referenceTargets={{ "theorem:2.4": { line: 32 } }}
+    />);
+    expect([...view.querySelectorAll("a")].map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
+      ["Theorem 2.4", "?l=32"], ["Other paper", "https://example.com/"],
+    ]);
   });
 
   it("takes several ranges, and leaves the proof folded for lines in the statement", async () => {

@@ -3,7 +3,7 @@
 // topic were all drafted by an AI agent, and the card says so; nothing here rests on colour.
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
@@ -169,11 +169,97 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
   return [{ assessment: { fidelity: row.fidelity ?? "unassessed", fidelity_note: row.fidelity_note }, words: null }];
 }
 
+export interface PaperReferenceTarget {
+  line: number;
+  page?: number;
+  y?: number;
+}
+
+export interface PaperReferenceProps {
+  referenceTargets?: Readonly<Record<string, PaperReferenceTarget>>;
+  onPaperReference?: (target: PaperReferenceTarget) => void;
+  paperReferenceHref?: (target: PaperReferenceTarget) => string;
+}
+
+const REFERENCE_KINDS: Readonly<Record<string, string>> = {
+  equations: "equation", eq: "equation", eqs: "equation", theorems: "theorem", lemmas: "lemma",
+  propositions: "proposition", corollaries: "corollary", definitions: "definition", remarks: "remark",
+  examples: "example", sections: "section", sect: "section", sects: "section", "§": "section", "§§": "section",
+  appendices: "appendix", figures: "figure", fig: "figure", figs: "figure", tables: "table",
+};
+const REFERENCE_NUMBER = String.raw`(?:[A-Z]\.?)?\d+(?:\.\d+)*[a-z]?`;
+const REFERENCE_ITEM = String.raw`(?:\(${REFERENCE_NUMBER}\)|${REFERENCE_NUMBER}|[A-Z])(?![\p{L}\p{N}]|\.\d)`;
+const REFERENCE_JOIN = String.raw`(?:\s*[,/–—-]\s*(?:(?:and|or)\s+)?|\s+(?:and|or|through|to)\s+)`;
+const REFERENCE_LABEL = String.raw`equations?|eqs?\.?|theorems?|lemmas?|propositions?|corollar(?:y|ies)|definitions?|remarks?|examples?|sections?|sects?\.?|append(?:ix|ices)|figures?|figs?\.?|tables?`;
+const PAPER_REFERENCE = new RegExp(
+  String.raw`(?<![\p{L}\p{N}])(?:(?<kind>${REFERENCE_LABEL})\s+|(?<section>§{1,2})\s*)(?<items>${REFERENCE_ITEM}(?:${REFERENCE_JOIN}${REFERENCE_ITEM})*)|\((?<equations>${REFERENCE_NUMBER}(?:${REFERENCE_JOIN}${REFERENCE_NUMBER})*)\)`,
+  "giu",
+);
+const PAPER_REFERENCE_ITEM = new RegExp(REFERENCE_ITEM, "giu");
+
+/** Add links to the rendered prose, leaving KaTeX, code and authored links intact. */
+function linkPaperReferences(html: string, { referenceTargets, paperReferenceHref }: PaperReferenceProps): string {
+  if (!referenceTargets || typeof document === "undefined") return html;
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_TEXT);
+  const prose: Text[] = [];
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    if (!node.parentElement?.closest("a, code, math, .katex")) prose.push(node as Text);
+  }
+  for (const node of prose) {
+    const text = node.data;
+    const linked = document.createDocumentFragment();
+    let cursor = 0;
+    for (const match of text.matchAll(PAPER_REFERENCE)) {
+      const { kind, section, items, equations } = match.groups!;
+      const label = (kind ?? section ?? "equation").toLowerCase().replace(/\.$/, "");
+      const category = REFERENCE_KINDS[label] ?? label;
+      const labelEnd = items ? match[0].length - items.length : 1;
+      for (const item of (items ?? equations).matchAll(PAPER_REFERENCE_ITEM)) {
+        const number = item[0].replace(/[()]/g, "").toLowerCase();
+        const key = `${category}:${number}`;
+        const target = referenceTargets[key];
+        if (!target) continue;
+        const singleEquation = equations === item[0];
+        const includeLabel = singleEquation || (items && item.index === 0);
+        const start = match.index + (includeLabel ? 0 : labelEnd + item.index);
+        const end = singleEquation ? match.index + match[0].length : match.index + labelEnd + item.index + item[0].length;
+        const link = document.createElement("a");
+        link.className = "annotation-paper-reference";
+        link.dataset.paperReference = key;
+        link.href = paperReferenceHref?.(target) ?? `?l=${target.line}`;
+        link.textContent = text.slice(start, end);
+        linked.append(text.slice(cursor, start), link);
+        cursor = end;
+      }
+    }
+    if (cursor) {
+      linked.append(text.slice(cursor));
+      node.replaceWith(linked);
+    }
+  }
+  return template.innerHTML;
+}
+
+function referenceClick({ referenceTargets, onPaperReference }: PaperReferenceProps) {
+  if (!referenceTargets || !onPaperReference) return undefined;
+  return (event: MouseEvent<HTMLElement>) => {
+    if (event.defaultPrevented || event.button !== 0 || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const source = event.target instanceof Element && event.target.closest<HTMLAnchorElement>("a[data-paper-reference]");
+    const target = source && referenceTargets[source.dataset.paperReference ?? ""];
+    if (!target) return;
+    event.preventDefault();
+    onPaperReference(target);
+  };
+}
+
 /** The note is edited for this passage and its active declaration. */
-export function PassageAnnotation({ text, creditInSources = false }: { text: string; creditInSources?: boolean }) {
+export function PassageAnnotation({ text, creditInSources = false, ...references }: PaperReferenceProps & { text: string; creditInSources?: boolean }) {
+  const html = linkPaperReferences(noteHtml(text).html, references);
   return (
-    <section className="phrase-card passage-annotation" aria-label="Passage annotation">
-      <p className="passage-annotation__text" dangerouslySetInnerHTML={{ __html: noteHtml(text).html }} />
+    <section className="phrase-card passage-annotation" aria-label="Passage annotation" onClick={referenceClick(references)}>
+      <p className="passage-annotation__text" dangerouslySetInnerHTML={{ __html: html }} />
       {!creditInSources && <small className="lean-block__credit">AI-written annotation</small>}
     </section>
   );
@@ -350,30 +436,30 @@ function Matters({ matters, mainResult }: { matters: ComparisonMatters; mainResu
 }
 
 /** What the quoted words say, in the paper's notation, with its sources; and what is not settled from them. */
-function Explanation({ explanation, showOpen = true }: { explanation: PhraseExplanation; showOpen?: boolean }) {
+function Explanation({ explanation, showOpen = true, ...references }: PaperReferenceProps & { explanation: PhraseExplanation; showOpen?: boolean }) {
   return (
     <div className="phrase-card__explanation">
       <p className="phrase-card__label">
         What these words say <span>AI-drafted</span>
       </p>
-      <p className="phrase-card__text" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.text).html }} />
-      {showOpen && explanation.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
-      <AnnotationSources explanation={explanation} />
+      <p className="phrase-card__text" onClick={referenceClick(references)} dangerouslySetInnerHTML={{ __html: linkPaperReferences(noteHtml(explanation.text).html, references) }} />
+      {showOpen && explanation.grounded === false && explanation.open && <p className="phrase-card__open" onClick={referenceClick(references)} dangerouslySetInnerHTML={{ __html: linkPaperReferences(noteHtml(explanation.open).html, references) }} />}
+      <AnnotationSources explanation={explanation} {...references} />
     </div>
   );
 }
 
-export function AnnotationSources({ explanation }: { explanation?: PhraseExplanation }) {
+export function AnnotationSources({ explanation, ...references }: PaperReferenceProps & { explanation?: PhraseExplanation }) {
   const sources = explanation?.citations ?? [];
   if (!sources.length) return null;
   return (
-    <details className="phrase-card__sources">
+    <details className="phrase-card__sources" onClick={referenceClick(references)}>
       <summary>{sources.length === 1 ? "Source cited (1)" : `Sources cited (${sources.length})`}</summary>
       <ul>
         {sources.map((source) => (
           <li key={`${source.ref}:${source.where ?? ""}`}>
             {source.url ? <a href={source.url}>{source.title}</a> : source.title}
-            {source.where && <>, {source.where}</>}
+            {source.where && <>, {source.url ? source.where : <span dangerouslySetInnerHTML={{ __html: linkPaperReferences(noteHtml(source.where).html, references) }} />}</>}
             {source.supports && (
               <>
                 : <span dangerouslySetInnerHTML={{ __html: noteHtml(source.supports).html }} />
@@ -408,7 +494,7 @@ export function PaperPassage({ quote, collapsible = false }: { quote: string; co
   );
 }
 
-export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes }: { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
+export function PhraseCard({ row, note, quote, merged, phrase, names, explanation, mainResult, inLean = false, quoteBytes, ...references }: PaperReferenceProps & { row: PhraseLean; topic?: PhraseTopic | null; note: string | undefined; quote?: string | null; merged?: readonly MergedPhrase[]; phrase?: string | null; names?: readonly string[]; explanation?: PhraseExplanation; mainResult?: string; inLean?: boolean; quoteBytes?: number }) {
   const shown = assessmentsOf(row, merged);
   const leanNote = useLeanNote(row.name);
   const keys = useMemo(() => cardKeys(phrase, names ?? [row.name]), [phrase, names, row.name]);
@@ -419,12 +505,12 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
       <NoteBody text={note} initiallyOpen={inLean} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
     </div>
   );
-  if (row.annotation) return <PassageAnnotation text={row.annotation} />;
+  if (row.annotation) return <PassageAnnotation text={row.annotation} {...references} />;
   const foldNotes = inLean && Boolean(explanation?.text || note);
   return (
     <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label="These words and how the Lean compares with them">
       {!inLean && quote && <PaperPassage quote={quote} />}
-      {!inLean && explanation?.text && <Explanation explanation={explanation} />}
+      {!inLean && explanation?.text && <Explanation explanation={explanation} {...references} />}
       <div className="phrase-card__compare">
         {!inLean && <p className="phrase-card__label">Comparison with these words</p>}
         {!inLean && merged && merged.length > 1 && (
@@ -436,12 +522,12 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
           <Verdict key={i} assessment={assessment} words={words} />
         ))}
         {row.matters && <Matters matters={row.matters} mainResult={mainResult} />}
-        {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" dangerouslySetInnerHTML={{ __html: noteHtml(explanation.open).html }} />}
+        {inLean && explanation?.grounded === false && explanation.open && <p className="phrase-card__open" onClick={referenceClick(references)} dangerouslySetInnerHTML={{ __html: linkPaperReferences(noteHtml(explanation.open).html, references) }} />}
       </div>
       {foldNotes ? (
         <details className="phrase-card__notes" open>
           <summary>{explanation?.citations?.length ? "Reading notes and sources" : "Reading notes"}</summary>
-          {explanation?.text && <Explanation explanation={explanation} showOpen={false} />}
+          {explanation?.text && <Explanation explanation={explanation} showOpen={false} {...references} />}
           {readingNote}
           <Conventions keys={keys} />
         </details>

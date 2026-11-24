@@ -34,6 +34,7 @@ import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
+import type { PaperReferenceProps, PaperReferenceTarget } from "./page/PhraseCard";
 import type { PaneMode } from "./page/ModeToggle";
 import { applyTones, readTones } from "./page/panePrefs";
 import { PaneClose, RightSheet } from "./page/RightSheet";
@@ -99,6 +100,11 @@ const MapPane = lazyCode(mapPane, (m) => m.MapPane);
 if (window.matchMedia?.("(min-width: 1024px)").matches) mapPane.start();
 
 type ReadRoute = Extract<Route, { view: "read" }>;
+type ReferenceOrigin =
+  | { format: "text"; position: ReadingPosition }
+  | { format: "pdf"; position: PdfLocation; left: number; scrolled: boolean };
+
+type PaperReferenceTargets = NonNullable<PaperReferenceProps["referenceTargets"]>;
 
 export function ReaderPage({ route }: { route: ReadRoute }) {
   const loaded = useDocument(route.stage);
@@ -271,6 +277,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
   const [pdfZoom, setPdfZoom] = useState(PDF_FIT);
+  const paperReferences = useResource<PaperReferenceTargets | null>(`paper-references:${stage}`, async () => {
+    const response = await fetch(`${import.meta.env.BASE_URL}paper-references/${encodeURIComponent(stage)}.json`);
+    if (!response.ok) return null;
+    const value = await response.json();
+    return value.schema === "paper-references/1" ? value.targets : null;
+  });
   const pdfDisclosure = pdfOn ? adaptedDisclosureHtml(stage) : null;
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
@@ -1273,6 +1285,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const closeLean = useCallback(() => {
     setHeld(null);
     setSheetCollapsed(false);
+    referenceOrigin.current = null;
+    referenceNavigation.current++;
+    setAwayFromSelection(false);
+    setReferencePin(null);
     releaseInPlace();
   }, [releaseInPlace]);
 
@@ -1845,6 +1861,111 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       navigate(target, { replace: true });
     }
   };
+  const referenceOrigin = useRef<ReferenceOrigin | null>(null);
+  const referenceNavigation = useRef(0);
+  const [awayFromSelection, setAwayFromSelection] = useState(false);
+  const [referencePin, setReferencePin] = useState<Pin | null>(null);
+  useEffect(() => {
+    referenceOrigin.current = null;
+    referenceNavigation.current++;
+    setAwayFromSelection(false);
+    setReferencePin(null);
+    return () => { referenceNavigation.current++; };
+  }, [subjectKey, stage, pdfOn]);
+
+  const scrollToReference = (target: () => number, navigation: number, done?: () => void) => {
+    const from = window.scrollY;
+    const started = performance.now();
+    const duration = prefersReducedMotion() ? 0 : 300;
+    const move = (now: number) => {
+      if (referenceNavigation.current !== navigation) return;
+      const progress = duration ? Math.min(1, (now - started) / duration) : 1;
+      const eased = progress * progress * (3 - 2 * progress);
+      window.scrollTo({ top: Math.max(0, from + (target() - from) * eased), behavior: "instant" });
+      if (progress < 1) requestAnimationFrame(move);
+      else done?.();
+    };
+    requestAnimationFrame(move);
+  };
+
+  const pdfReferencePage = (page: number) =>
+    paperRef.current?.querySelector<HTMLElement>(`.pdf-view [data-page="${page}"]`) ?? null;
+
+  const pdfReferenceScroll = (position: PdfLocation, navigation: number, after?: () => void) => {
+    const element = pdfReferencePage(position.page);
+    const paperWidth = pdfMarks?.pages[position.page - 1]?.[0];
+    if (!element || !paperWidth) return;
+    scrollToReference(() => element.getBoundingClientRect().top + window.scrollY
+      + position.y * element.clientWidth / paperWidth - readingTop() - 16, navigation, after);
+  };
+
+  const followPaperReference = (target: PaperReferenceTarget) => {
+    if (pdfOn && (target.page === undefined || target.y === undefined)) return;
+    if (!referenceOrigin.current) {
+      if (pdfOn) {
+        const line = readingTop() + 16;
+        const pages = Array.from(paperRef.current?.querySelectorAll<HTMLElement>(".pdf-view [data-page]") ?? []);
+        const element = pages.find((page) => page.getBoundingClientRect().bottom >= line) ?? pages.at(-1);
+        const page = Number(element?.dataset.page);
+        const width = pdfMarks?.pages[page - 1]?.[0];
+        const view = element?.closest<HTMLElement>(".pdf-view");
+        if (!element || !width || !view) return;
+        const y = Math.max(0, (line - element.getBoundingClientRect().top) * width / element.clientWidth);
+        referenceOrigin.current = { format: "pdf", position: { page, y }, left: view.scrollLeft, scrolled: scrolledPdf.current };
+      } else {
+        const position = measurePosition();
+        if (!position) return;
+        referenceOrigin.current = { format: "text", position };
+      }
+    }
+    if (!pinRef.current) {
+      const shown = signals.shownTie.get();
+      const tie = shown && ties.index.ties[shown.tie];
+      const record = tie?.record ?? (tie?.phrase ? `${PHRASE_RECORD}${tie.phrase}` : null);
+      if (shown && record) setReferencePin({ tie: shown.tie, record });
+    }
+    setAwayFromSelection(true);
+    if (!paneRoom) setSheetCollapsed(true);
+    restoring.current?.();
+    const navigation = ++referenceNavigation.current;
+    requestAnimationFrame(() => {
+      if (referenceNavigation.current !== navigation) return;
+      if (pdfOn && target.page !== undefined && target.y !== undefined) {
+        pdfReferenceScroll({ page: target.page, y: target.y }, navigation);
+        return;
+      }
+      const body = bodyRef.current;
+      const part = doc.parts.findIndex((piece) => !piece.blank && piece.lines.start <= target.line && piece.lines.end >= target.line);
+      if (!body || part < 0) return;
+      const nearby = [part - 1, part, part + 1].filter((index) => index >= 0 && index < doc.parts.length);
+      void body.ensure(nearby).then(() => {
+        if (referenceNavigation.current !== navigation) return;
+        body.settle(nearby);
+        const element = blocksOf(body.partElement(part), doc.parts[part].lines.end, { start: target.line, end: target.line })[0];
+        if (!element) return;
+        scrollToReference(() => element.getBoundingClientRect().top + window.scrollY - readingTop() - 16,
+          navigation, () => body.hold(element));
+      });
+    });
+  };
+
+  const returnToSelected = () => {
+    const origin = referenceOrigin.current;
+    if (!origin) return;
+    referenceOrigin.current = null;
+    setAwayFromSelection(false);
+    const navigation = ++referenceNavigation.current;
+    if (origin.format === "pdf") {
+      pdfReferenceScroll(origin.position, navigation, () => {
+        const view = pdfReferencePage(origin.position.page)?.closest<HTMLElement>(".pdf-view");
+        if (view) view.scrollLeft = origin.left;
+        scrolledPdf.current = origin.scrolled;
+      });
+    } else {
+      void restorePosition(origin.position);
+    }
+  };
+
   // The adapted edition's credit stands beside a link to the authors' paper (and the auxiliary note's marked PDF).
   const after =
     side === "adapted" && ADAPTED ? (
@@ -1886,12 +2007,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         : null
     : null;
 
+  const targets = paperReferences.status === "ready" ? paperReferences.value : null;
+  const referenceProps: PaperReferenceProps = {
+    referenceTargets: targets ? (pdfOn ? Object.fromEntries(Object.entries(targets).filter(([, value]) =>
+      value.page !== undefined && value.y !== undefined)) : targets) : undefined,
+    onPaperReference: followPaperReference,
+    paperReferenceHref: (target) => routeHref({ view: "read", stage, at: String(target.line),
+      pdf: pdfOn || undefined, page: pdfOn ? target.page : undefined }),
+  };
   const paneProps = {
+    ...referenceProps,
+    onReturnToSelection: awayFromSelection ? returnToSelected : undefined,
     stage,
     structures,
     signals,
     ties,
-    pin,
+    pin: pin ?? referencePin,
     decl: route.decl ?? null,
     declModule: route.declModule,
     alignment,
@@ -1988,7 +2119,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             Skip to the Lean and the graph
           </a>
         )}
-        <div className="reader-strip" ref={stripRef}>
+        <div className="reader-strip" ref={stripRef} data-referencing={awayFromSelection || undefined}>
           {mid && !outlineColumn && (
             <button type="button" className="sections-toggle" ref={sectionsToggleRef} aria-expanded={sectionsSide} onClick={() => outlineAvailable ? setOutline(true) : setSectionsSide(!sectionsSide)}>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -2023,6 +2154,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </div>
           )}
           {pdfOn && <PdfZoom level={pdfZoom} onChange={setPdfZoom} />}
+          {!paneRoom && awayFromSelection && <button type="button" className="control" onClick={returnToSelected}>Return to selected</button>}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
           {side === "adapted" && (
             <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>

@@ -364,6 +364,29 @@
   box-decoration-break: clone;
 }
 
+.annotation-paper-reference {
+  color: inherit;
+  text-decoration: underline dotted var(--ink-3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.annotation-paper-reference:hover {
+  text-decoration-style: solid;
+  text-decoration-color: currentColor;
+}
+
+.annotation-paper-reference:focus-visible,
+.lean-page__return:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.lean-page__action.lean-page__return {
+  max-inline-size: 45%;
+  white-space: normal;
+}
+
 .lean-block__details {
   margin-top: var(--space-2);
   border-top: 1px solid var(--rule);
