@@ -14,7 +14,7 @@ import { kindLead } from "../checks/summary";
 import { statedDate } from "../checks/summary";
 import { closure, type ArgEdge } from "../model/graph";
 import { transitiveReduction } from "../map/engine/skeleton";
-import { recordLine, useRecordAlignment } from "../compare/useAlignment";
+import { graphRecordTitle, recordLine, useRecordAlignment } from "../compare/useAlignment";
 import { LazyStatementSlice } from "../compare/lazy";
 import { LazyLeanBlock } from "../lean/lazy";
 import { statementHref } from "../reader/links";
@@ -255,15 +255,15 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
       </div>
       <div ref={setSlot} className="lean-slot lean-slot--compact" />
       <p className="visually-hidden" aria-live="polite">
-        {leaving ? "" : announcement(node.label, kindWord(node.kind))}
+        {leaving ? "" : announcement(plainLabel(nodeId, node), kindWord(node.kind))}
       </p>
     </aside>
   );
 }
 
-/** A declaration's record goes by its short title; every other record by its label. */
+/** The argument card's words, with a declaration title or record label as fallback. */
 function plainLabel(id: string, node: { kind: string; label: string }): string {
-  return node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label;
+  return graphRecordTitle(id) ?? (node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label);
 }
 
 // ------------------------------------------------------------------ route

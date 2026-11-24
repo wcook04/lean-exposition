@@ -37,7 +37,7 @@ import { leanWidth, neighbourhood } from "../model/leanGraph";
 import { useEntryState } from "../app/trail";
 import { fullAlignmentResource, useAlignment } from "../compare/useAlignment";
 import type { LeanStep } from "../panels/model";
-import { shortTitle as recordTitle } from "../compare/useAlignment";
+import { graphRecordTitle, shortTitle as recordTitle } from "../compare/useAlignment";
 import { startLeanViewer } from "../lean/lazy";
 import type { WalkKey } from "./walk";
 import { prefersReducedMotion } from "../app/theme";
@@ -172,9 +172,9 @@ export function MapPage({ route }: { route: MapRoute }) {
     }
     return requestedGoal;
   }, [selectionIds, requestedGoal, goals, graph]);
-  const goalTitle = allGoals.find((g) => g.id === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
-  const goalFullTitle = recordTitle(goal, graph.nodes.get(goal)?.label ?? goalTitle);
-  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: recordTitle(g.id, graph.nodes.get(g.id)?.label ?? g.title) })), [goals, graph]);
+  const goalTitle = graphRecordTitle(goal) ?? allGoals.find((g) => g.id === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
+  const goalFullTitle = graphRecordTitle(goal) ?? recordTitle(goal, graph.nodes.get(goal)?.label ?? goalTitle);
+  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: graphRecordTitle(g.id) ?? recordTitle(g.id, graph.nodes.get(g.id)?.label ?? g.title) })), [goals, graph]);
   const goalReach = useMemo(() => reach(graph, goal), [graph, goal]);
   // Through a paper's lens the records it leaves out close up, so everything it uses stays connected.
   const argument = useMemo(() => {
@@ -527,7 +527,7 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // The place being left, for the Back control on the next page.
   const placeRef = useRef<string | null>(null);
-  placeRef.current = chosenDecl ? (declTitle(alignment, chosenDecl) ?? chosenDecl.slice(chosenDecl.lastIndexOf(".") + 1)) : selected ? recordTitle(selected, graph.nodes.get(selected)?.label ?? selected) : leanOn ? "the Lean graph" : "the map";
+  placeRef.current = chosenDecl ? (declTitle(alignment, chosenDecl) ?? chosenDecl.slice(chosenDecl.lastIndexOf(".") + 1)) : selected ? (graphRecordTitle(selected) ?? recordTitle(selected, graph.nodes.get(selected)?.label ?? selected)) : leanOn ? "the Lean graph" : "the map";
   useEffect(() => namePlace(() => placeRef.current), []);
 
   const chooseView = (v: View) => {
